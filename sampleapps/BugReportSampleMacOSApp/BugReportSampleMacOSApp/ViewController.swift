@@ -37,7 +37,7 @@ class ViewController: NSViewController {
                     self.statusTextField.stringValue = "Sent"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         if form.email.starts(with: "success") {
-                            result(.success(Void()))
+                            result(.success(()))
                         } else {
                             result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
                         }

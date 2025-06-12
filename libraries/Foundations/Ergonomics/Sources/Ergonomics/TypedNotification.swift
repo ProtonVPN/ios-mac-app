@@ -55,7 +55,7 @@ extension TypedNotification {
 
 protocol EmptyTypedNotification: TypedNotification<Void> {}
 extension EmptyTypedNotification {
-    var data: Void { Void() }
+    var data: Void { () }
 }
 
 /// Wraps the observer token received from NotificationCenter and unregisters it when deallocated

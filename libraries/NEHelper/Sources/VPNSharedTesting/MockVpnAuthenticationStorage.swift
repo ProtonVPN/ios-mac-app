@@ -22,8 +22,8 @@ import Domain
 import VPNShared
 
 public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
-    public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
-    public var keysStored: ((VpnKeys) -> ())?
+    public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> Void)?
+    public var keysStored: ((VpnKeys) -> Void)?
     public var certDeleted: (() -> Void)?
     public var keysDeleted: (() -> Void)?
 

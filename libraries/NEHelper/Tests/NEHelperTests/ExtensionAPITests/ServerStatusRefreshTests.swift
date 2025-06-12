@@ -27,7 +27,7 @@ import VPNShared
 class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
     var manager: ServerStatusRefreshManager!
 
-    var serverDidChange: (([ServerStatusRequest.Logical]) -> ())?
+    var serverDidChange: (([ServerStatusRequest.Logical]) -> Void)?
 
     override func setUp() async throws {
         try await super.setUp()

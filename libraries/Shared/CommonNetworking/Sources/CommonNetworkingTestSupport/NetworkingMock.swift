@@ -171,7 +171,7 @@
             }
         }
 
-        func request(_ route: Request, completion: @escaping (Result<(), Error>) -> Void) {
+        func request(_ route: Request, completion: @escaping (Result<Void, Error>) -> Void) {
             request(route) { (result: Result<Data, Error>) in
                 switch result {
                 case .success:

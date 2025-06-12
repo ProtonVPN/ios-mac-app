@@ -42,7 +42,7 @@ public final class NoOpVpnManager: VpnManagerProtocol {
         isLocalAgentConnected: Bool? = nil,
         currentVpnProtocol: Domain.VpnProtocol? = nil,
         netShieldStats: NetShield.NetShieldModel = .zero(enabled: false),
-        prepareManagersTask: Task<(), Never>? = nil
+        prepareManagersTask: Task<Void, Never>? = nil
     ) {
         self.stateChanged = stateChanged
         self.state = state
@@ -81,7 +81,7 @@ public final class NoOpVpnManager: VpnManagerProtocol {
         queue.async(execute: completion)
     }
 
-    public var prepareManagersTask: Task<(), Never>?
+    public var prepareManagersTask: Task<Void, Never>?
 
     public func set(vpnAccelerator: Bool) {}
 

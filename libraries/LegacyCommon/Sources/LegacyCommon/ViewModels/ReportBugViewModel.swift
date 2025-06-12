@@ -127,7 +127,7 @@ open class ReportBugViewModel {
 
     public var logsEnabled: Bool = true
 
-    public func send(completion: @escaping (Result<(), Error>) -> Void) {
+    public func send(completion: @escaping (Result<Void, Error>) -> Void) {
         // Debounce multiple attempts to send a bug report (i.e., by mashing a button)
         guard !sendingBug else {
             return
@@ -149,7 +149,7 @@ open class ReportBugViewModel {
         }
     }
 
-    private func send(report: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
+    private func send(report: ReportBug, completion: @escaping (Result<Void, Error>) -> Void) {
         sendingBug = true
         reportsApiService.report(bug: report) { [weak self] result in
             switch result {

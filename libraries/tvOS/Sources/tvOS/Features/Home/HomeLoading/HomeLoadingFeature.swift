@@ -68,7 +68,7 @@ struct HomeLoadingFeature {
                         await send(.finishedLoading(Result { try await refresher.refreshLogicals() }))
                     }
                 } else {
-                    return .send(.finishedLoading(.success(Void())))
+                    return .send(.finishedLoading(.success(())))
                 }
             }
         }

@@ -50,11 +50,11 @@ struct Provider: TimelineProvider {
               recentServers: [])
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
+    func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
         completion(createTimelineEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         completion(Timeline(entries: [createTimelineEntry()], policy: .never))
     }
 

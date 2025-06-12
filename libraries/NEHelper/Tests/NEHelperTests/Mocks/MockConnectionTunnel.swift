@@ -78,7 +78,7 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 
     var closedForWriting = false
 
-    var stateChangeCallback: ((NWTCPConnectionState) -> ())?
+    var stateChangeCallback: ((NWTCPConnectionState) -> Void)?
 
     func write(_ data: Data) async throws {
         guard !closedForWriting else {
@@ -125,7 +125,7 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
         closedForWriting = true
     }
 
-    func observeStateChange(withCallback callback: @escaping ((NWTCPConnectionState) -> ())) -> ObservationHandle {
+    func observeStateChange(withCallback callback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
         stateChangeCallback = callback
         factory?.stateObservingCallback(self)
         return self
@@ -137,9 +137,9 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 }
 
 class MockConnectionTunnelFactory: ConnectionTunnelFactory {
-    typealias StateObservingCallback = (MockConnectionTunnel) -> ()
+    typealias StateObservingCallback = (MockConnectionTunnel) -> Void
     typealias DataReadCallback = (MockConnectionTunnel) throws -> (Data)
-    typealias DataWriteCallback = (MockConnectionTunnel, Data) throws -> (Void)
+    typealias DataWriteCallback = (MockConnectionTunnel, Data) throws -> Void
 
     let stateObservingCallback: StateObservingCallback
     let dataReadCallback: DataReadCallback

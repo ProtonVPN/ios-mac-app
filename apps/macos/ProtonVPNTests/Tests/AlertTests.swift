@@ -217,7 +217,7 @@ private class AppSessionManagerMock: AppSessionManager {
     var loggedIn: Bool = true
     var sessionChanged: Notification.Name = .init("AppSessionManagerSessionChanged")
 
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
+    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {}
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func refreshVpnAuthCertificate() async throws {}
     func logOut(force: Bool, reason: String?) {}

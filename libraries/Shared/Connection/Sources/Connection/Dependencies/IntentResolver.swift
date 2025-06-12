@@ -33,7 +33,7 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
 
 struct ConnectionIntentResolver: DependencyKey, Sendable {
     let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
-    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> ()
+    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 
     static let liveValue: ConnectionIntentResolver = .init { intent in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider

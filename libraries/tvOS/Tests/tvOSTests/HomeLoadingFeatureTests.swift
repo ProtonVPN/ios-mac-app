@@ -31,7 +31,7 @@ final class HomeLoadingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.finishedLoading(.success(Void()))) {
+        await store.send(.finishedLoading(.success(()))) {
             $0 = .loaded(.init())
         }
     }

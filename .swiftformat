@@ -1,7 +1,6 @@
 --disable enumNamespaces
 --disable extensionAccessControl
 --disable unusedArguments
---disable void
 --disable wrap
 --disable wrapArguments
 --disable wrapAttributes

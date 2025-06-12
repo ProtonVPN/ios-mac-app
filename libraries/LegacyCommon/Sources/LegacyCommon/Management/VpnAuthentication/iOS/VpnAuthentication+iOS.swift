@@ -179,7 +179,7 @@ import VPNShared
         /// main app's responsibility to (re)fork its session and send the selector to the extension.
         private func pushSelectorToProvider(
             extensionContext context: AppContext = .wireGuardExtension,
-            completionHandler: @escaping ((Result<(), Error>) -> Void)
+            completionHandler: @escaping ((Result<Void, Error>) -> Void)
         ) {
             Task {
                 do {
@@ -192,7 +192,7 @@ import VPNShared
             }
         }
 
-        private func pushToProvider(selector: String, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+        private func pushToProvider(selector: String, completionHandler: @escaping ((Result<Void, Error>) -> Void)) {
             // If we get a success condition, we should look at the session cookie, because the network extension is going
             // to need to send it to the server to avoid getting a 422. Sending a session cookie is required if the two
             // clients aren't sending requests from the same IP, which is possible if the app hasn't connected to the VPN yet.

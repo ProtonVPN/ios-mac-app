@@ -345,7 +345,7 @@ class NWTCPDataTask: DataTaskProtocol {
         // Resolve the caller's request either by calling their completion handler with the specified error or by
         // sending the request if we reach a success condition (which will then call the completion handler with
         // the server's response data, assuming it is well-formed).
-        let resolveRequest = { [weak self] (result: Result<(), Error>) in
+        let resolveRequest = { [weak self] (result: Result<Void, Error>) in
             guard let self else {
                 log.warning("NWTCPConnection resolveRequest with released self called", category: .net)
                 return

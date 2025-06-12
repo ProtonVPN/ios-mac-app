@@ -40,7 +40,7 @@ extension DependencyContainer: VpnProtocolChangeManagerFactory {
 /// Class to request VPN protocol change.
 /// Takes care of checking if user is currently connected, if sysex is installed, etc.
 protocol VpnProtocolChangeManager {
-    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void)
+    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
@@ -74,7 +74,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     func change(
         toProtocol vpnProtocol: VpnProtocol,
         userInitiated: Bool,
-        completion: @escaping (Result<(), Error>) -> Void
+        completion: @escaping (Result<Void, Error>) -> Void
     ) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
             set(
@@ -117,7 +117,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         vpnProtocol: VpnProtocol,
         userInitiated: Bool,
         and then: ProtocolSwitchAction,
-        completion: @escaping (Result<(), Error>) -> Void
+        completion: @escaping (Result<Void, Error>) -> Void
     ) {
         let performSwitchAction = { [weak self] in
             switch then {

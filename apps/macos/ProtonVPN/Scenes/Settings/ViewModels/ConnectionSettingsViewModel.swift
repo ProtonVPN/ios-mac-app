@@ -264,13 +264,13 @@ final class ConnectionSettingsViewModel {
         protocolItem(for: protocolIndex)?.requiresSystemExtension == true && sysexPending
     }
 
-    func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+    func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<Void, Error>) -> Void) {
         sysexPending = true
         switch connectionProtocol {
         case .smartProtocol:
             confirmEnableSmartProtocol(completion)
         case let .vpnProtocol(transportProtocol):
-            let changeCompletionHandler: (Result<(), Error>) -> Void = { [weak self] result in
+            let changeCompletionHandler: (Result<Void, Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
@@ -317,7 +317,7 @@ final class ConnectionSettingsViewModel {
         reloadNeeded?()
     }
 
-    func confirmEnableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
+    func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
         switch vpnGateway.connection {
         case .connected, .connecting:
             let config = propertiesManager.smartProtocolConfig
@@ -350,7 +350,7 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
+    private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
         sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
             self?.sysexPending = false
 

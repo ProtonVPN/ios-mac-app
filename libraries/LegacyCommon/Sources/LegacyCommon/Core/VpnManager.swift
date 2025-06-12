@@ -60,7 +60,7 @@ public protocol VpnManagerProtocol {
 
     /// Task used to track when the managers are ready. Retrieve the value of the task to be sure
     /// the `VpnManager` is ready and has finished querying the device's VPN connection state.
-    var prepareManagersTask: Task<(), Never>? { get }
+    var prepareManagersTask: Task<Void, Never>? { get }
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
@@ -124,7 +124,7 @@ public final class VpnManager: VpnManagerProtocol {
     public private(set) var state: VpnState = .invalid
     public var readyGroup: DispatchGroup? = DispatchGroup()
 
-    public var prepareManagersTask: Task<(), Never>?
+    public var prepareManagersTask: Task<Void, Never>?
 
     public var currentVpnProtocol: VpnProtocol? {
         didSet {

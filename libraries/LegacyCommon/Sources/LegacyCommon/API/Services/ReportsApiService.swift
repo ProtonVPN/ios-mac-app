@@ -48,7 +48,7 @@ public class ReportsApiService {
         self.authKeychain = authKeychain
     }
 
-    public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
+    public func report(bug: ReportBug, completion: @escaping (Result<Void, Error>) -> Void) {
         let files = bug.files.reachable()
             .enumerated()
             .reduce(into: [String: URL]()) { result, file in

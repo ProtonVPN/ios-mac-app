@@ -49,7 +49,7 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
+    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
@@ -104,7 +104,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // MARK: public log in interface (completion handlers)
 
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         // Invoke async implementation
         executeOnUIThread(
             attemptLogin,

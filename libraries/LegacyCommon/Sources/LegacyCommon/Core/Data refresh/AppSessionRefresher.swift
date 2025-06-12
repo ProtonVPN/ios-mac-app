@@ -198,7 +198,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     // MARK: - Override
 
-    open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    open func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         fatalError("This method should be overridden, but it is not")
     }
 }

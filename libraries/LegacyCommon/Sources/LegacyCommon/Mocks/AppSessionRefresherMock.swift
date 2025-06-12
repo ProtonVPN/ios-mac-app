@@ -27,7 +27,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
     var loginError: Error?
 
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         defer { didAttemptLogin?() }
 
         if let loginError {

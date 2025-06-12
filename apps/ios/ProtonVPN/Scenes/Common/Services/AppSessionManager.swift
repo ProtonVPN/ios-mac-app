@@ -54,7 +54,7 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
+    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
@@ -119,7 +119,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     // MARK: - Beginning of the login logic.
 
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         guard authKeychain.fetch()?.username != nil else {
             completion(.failure(CommonVpnError.userCredentialsMissing))
             return

@@ -82,7 +82,7 @@ public final class ExtensionAPIService {
 
     /// Start a new session with the API service. This function should only be called by the refresh manager and the
     /// ExtensionAPIService. Call `startSession(withSelector:)` on `ExtensionCertificateRefreshManager` instead.
-    func startSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    func startSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<Void, Error>) -> Void)) {
         let authRequest = SessionAuthRequest(params: .init(selector: selector))
 
         // Avoid starting multiple sessions, unnecessarily approaching our client session limit.
