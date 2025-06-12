@@ -45,14 +45,14 @@ struct LoginViewModelError: Swift.Error {
 }
 
 final class LoginViewModel {
-    typealias Factory = NavigationServiceFactory &
-        PropertiesManagerFactory &
+    typealias Factory =
         AppSessionManagerFactory &
-        CoreAlertServiceFactory &
-        UpdateManagerFactory &
-        ProtonReachabilityCheckerFactory &
+        CoreAlertServiceFactory & NavigationServiceFactory &
         NetworkingFactory &
-        SystemExtensionManagerFactory
+        PropertiesManagerFactory &
+        ProtonReachabilityCheckerFactory &
+        SystemExtensionManagerFactory &
+        UpdateManagerFactory
 
     private let factory: Factory
 

@@ -36,7 +36,7 @@ extension DependencyContainer: TroubleshootCoordinatorFactory {
 protocol TroubleshootCoordinator: Coordinator {}
 
 class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
-    typealias Factory = WindowServiceFactory & TroubleshootViewModelFactory
+    typealias Factory = TroubleshootViewModelFactory & WindowServiceFactory
     private let factory: Factory
 
     private lazy var windowService: WindowService = factory.makeWindowService()

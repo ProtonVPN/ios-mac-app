@@ -32,7 +32,7 @@ import Strings
 import Domain
 
 final class OneClickPayment {
-    typealias Factory = PlanServiceFactory & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory
 
     enum UnavailableError: Error {
         case featureFlagDisabled

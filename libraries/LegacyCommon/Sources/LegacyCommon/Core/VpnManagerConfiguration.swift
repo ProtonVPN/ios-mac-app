@@ -122,9 +122,9 @@ public class VpnManagerConfigurationPreparer {
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
 
-    public typealias Factory = VpnKeychainFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        PropertiesManagerFactory
+        PropertiesManagerFactory & VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
         self.init(vpnKeychain: factory.makeVpnKeychain(),

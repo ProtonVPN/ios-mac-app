@@ -80,9 +80,9 @@ final class CorePlanService: PlanService {
         userCachedStatus.iapSupportStatus
     }
 
-    public typealias Factory = NetworkingFactory &
-        CoreAlertServiceFactory &
-        AuthKeychainHandleFactory
+    public typealias Factory =
+        AuthKeychainHandleFactory &
+        CoreAlertServiceFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
         self.init(networking: factory.makeNetworking(),

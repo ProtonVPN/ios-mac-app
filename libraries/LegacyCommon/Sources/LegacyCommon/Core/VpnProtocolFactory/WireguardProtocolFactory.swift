@@ -26,8 +26,8 @@ open class WireguardProtocolFactory {
 
     private var vpnManager: NETunnelProviderManagerWrapper?
 
-    public typealias Factory = PropertiesManagerFactory &
-        NETunnelProviderManagerWrapperFactory
+    public typealias Factory =
+        NETunnelProviderManagerWrapperFactory & PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(bundleId: config.wireguardVpnExtensionBundleIdentifier,

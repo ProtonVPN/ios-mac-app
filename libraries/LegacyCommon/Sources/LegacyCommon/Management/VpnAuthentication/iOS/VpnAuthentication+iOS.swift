@@ -32,8 +32,8 @@ import CommonNetworking
         private let authenticationStorage: VpnAuthenticationStorageSync
 
         public typealias Factory =
-            VpnAuthenticationStorageFactory &
-            SafeModePropertyProviderFactory
+            SafeModePropertyProviderFactory &
+            VpnAuthenticationStorageFactory
 
         public convenience init(_ factory: Factory) {
             self.init(

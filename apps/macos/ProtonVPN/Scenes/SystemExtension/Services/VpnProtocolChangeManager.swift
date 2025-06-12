@@ -44,11 +44,11 @@ protocol VpnProtocolChangeManager {
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
-    typealias Factory = PropertiesManagerFactory
-        & AppStateManagerFactory
+    typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & VpnGatewayFactory
+        & PropertiesManagerFactory
         & SystemExtensionManagerFactory
+        & VpnGatewayFactory
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

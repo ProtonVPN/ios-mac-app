@@ -66,7 +66,7 @@ extension TelemetryService {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator
+    public typealias Factory = AppStateManagerFactory & NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator & VpnKeychainFactory
 
     private let factory: Factory
 

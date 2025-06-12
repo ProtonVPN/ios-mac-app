@@ -57,14 +57,14 @@ protocol LoginService: AnyObject {
 final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
-        & WindowServiceFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
-        & PropertiesManagerFactory
         & NetworkingFactory
+        & PropertiesManagerFactory
+        & PushNotificationServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
-        & PushNotificationServiceFactory
+        & WindowServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher

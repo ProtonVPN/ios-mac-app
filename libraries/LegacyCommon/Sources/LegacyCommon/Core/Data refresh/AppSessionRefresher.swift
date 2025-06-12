@@ -70,11 +70,11 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     private var observation: NotificationToken?
 
-    public typealias Factory = VpnApiServiceFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        UpdateCheckerFactory
+        PropertiesManagerFactory &
+        UpdateCheckerFactory & VpnApiServiceFactory &
+        VpnKeychainFactory
 
     public init(factory: Factory) {
         vpnApiService = factory.makeVpnApiService()

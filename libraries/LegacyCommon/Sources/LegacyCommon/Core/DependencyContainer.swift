@@ -31,14 +31,14 @@ import Ergonomics
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 
-typealias PropertiesToOverride = NetworkingDelegateFactory &
+typealias PropertiesToOverride =
     CoreAlertServiceFactory &
-    WireguardProtocolFactoryCreator &
-    VpnCredentialsConfiguratorFactoryCreator &
-    VpnAuthenticationFactory &
-    LogContentProviderFactory &
+    LogContentProviderFactory & NetworkingDelegateFactory &
     UpdateCheckerFactory &
-    VpnConnectionInterceptDelegate
+    VpnAuthenticationFactory &
+    VpnConnectionInterceptDelegate &
+    VpnCredentialsConfiguratorFactoryCreator &
+    WireguardProtocolFactoryCreator
 
 open class Container: PropertiesToOverride {
     public struct Config {

@@ -35,8 +35,8 @@ public class ReportsApiService {
     private let networking: Networking
     private let authKeychain: AuthKeychainHandle
 
-    public typealias Factory = NetworkingFactory &
-        AuthKeychainHandleFactory
+    public typealias Factory =
+        AuthKeychainHandleFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
         self.init(networking: factory.makeNetworking(),

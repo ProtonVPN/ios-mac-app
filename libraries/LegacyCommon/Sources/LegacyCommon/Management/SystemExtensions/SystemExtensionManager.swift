@@ -64,9 +64,9 @@
         static let requestQueue = DispatchQueue(label: "ch.proton.sysex.requests")
 
         public typealias Factory = CoreAlertServiceFactory &
+            ProfileManagerFactory &
             PropertiesManagerFactory &
-            VpnKeychainFactory &
-            ProfileManagerFactory
+            VpnKeychainFactory
         private let factory: Factory
 
         private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]

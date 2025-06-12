@@ -32,7 +32,7 @@ import Domain
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
     
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory & PropertiesManagerFactory & VpnGatewayFactory
     
     private let factory: Factory
     

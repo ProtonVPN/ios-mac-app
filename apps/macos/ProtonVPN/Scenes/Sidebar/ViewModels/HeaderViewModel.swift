@@ -47,13 +47,13 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
 
-    public typealias Factory = AppStateManagerFactory &
-        PropertiesManagerFactory &
+    public typealias Factory =
+        AnnouncementsViewModelFactory & AppStateManagerFactory &
         CoreAlertServiceFactory &
-        ProfileManagerFactory &
         NavigationServiceFactory &
-        VpnGatewayFactory &
-        AnnouncementsViewModelFactory
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        VpnGatewayFactory
 
     private let factory: Factory
 

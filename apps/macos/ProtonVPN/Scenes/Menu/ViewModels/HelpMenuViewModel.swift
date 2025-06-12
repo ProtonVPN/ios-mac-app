@@ -39,18 +39,18 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 }
 
 class HelpMenuViewModel {
-    typealias Factory = VpnManagerFactory
-        & NavigationServiceFactory
-        & VpnKeychainFactory
-        & CoreAlertServiceFactory
-        & SystemExtensionManagerFactory
-        & PropertiesManagerFactory
-        & LogFileManagerFactory
-        & LogContentProviderFactory
+    typealias Factory = AppInfoFactory
         & AuthKeychainHandleFactory
-        & AppInfoFactory
-        & WindowServiceFactory
+        & CoreAlertServiceFactory
+        & LogContentProviderFactory
+        & LogFileManagerFactory
+        & NavigationServiceFactory
+        & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
         & VpnAuthenticationStorageFactory
+        & VpnKeychainFactory
+        & VpnManagerFactory
+        & WindowServiceFactory
     private var factory: Factory
 
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()

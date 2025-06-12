@@ -64,7 +64,7 @@ public final class AnnouncementOfferAlert: SystemAlert {
 
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
-    public typealias Factory = CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
+    public typealias Factory = AppInfoFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     private let factory: Factory
 
     @Dependency(\.announcementManager) var announcementManager

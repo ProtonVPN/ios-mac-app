@@ -45,13 +45,13 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     typealias Factory =
         AppStateManagerFactory &
-        SiriHelperFactory &
-        NetShieldPropertyProviderFactory &
-        NATTypePropertyProviderFactory &
-        SafeModePropertyProviderFactory &
-        PropertiesManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerTierCheckerFactory
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        ServerTierCheckerFactory &
+        SiriHelperFactory
 
     init(_ factory: Factory) {
         appStateManager = factory.makeAppStateManager()

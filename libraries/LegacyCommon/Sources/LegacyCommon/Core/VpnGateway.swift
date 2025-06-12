@@ -151,19 +151,19 @@ public class VpnGateway: VpnGatewayProtocol {
 
     var notificationCenter: NotificationCenter = .default
 
-    public typealias Factory = VpnApiServiceFactory &
+    public typealias Factory =
         AppStateManagerFactory &
-        CoreAlertServiceFactory &
-        VpnKeychainFactory &
         AuthKeychainHandleFactory &
-        SiriHelperFactory &
-        NetShieldPropertyProviderFactory &
-        NATTypePropertyProviderFactory &
-        SafeModePropertyProviderFactory &
-        PropertiesManagerFactory &
-        ProfileManagerFactory &
         AvailabilityCheckerResolverFactory &
-        VpnConnectionInterceptDelegate
+        CoreAlertServiceFactory &
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        SiriHelperFactory & VpnApiServiceFactory &
+        VpnConnectionInterceptDelegate &
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
         self.init(

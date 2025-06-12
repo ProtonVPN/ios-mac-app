@@ -42,18 +42,18 @@ private let connectionDurationRefreshInterval: TimeInterval = 1.0
 
 class StatusViewModel {
     typealias Factory = AppSessionManagerFactory &
-        PropertiesManagerFactory &
-        ProfileManagerFactory &
         AppStateManagerFactory &
-        VpnGatewayFactory &
         CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        NetShieldPropertyProviderFactory &
-        VpnManagerFactory &
-        VpnStateConfigurationFactory &
-        PlanServiceFactory &
         NATTypePropertyProviderFactory &
-        SafeModePropertyProviderFactory
+        NetShieldPropertyProviderFactory &
+        PlanServiceFactory &
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory &
+        VpnManagerFactory &
+        VpnStateConfigurationFactory
 
     private let factory: Factory
 

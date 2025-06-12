@@ -32,8 +32,8 @@ import Sharing
 final class HermesViewModel {
     public typealias Factory = CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
-        VpnStateConfigurationFactory &
-        VpnGatewayFactory
+        VpnGatewayFactory &
+        VpnStateConfigurationFactory
 
     enum LocationValidation {
         case empty

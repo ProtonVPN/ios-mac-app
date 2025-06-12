@@ -80,26 +80,25 @@ extension WindowService {
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 class WindowServiceImplementation: WindowService {
-    typealias Factory = CreateNewProfileViewModelFactory
-        & NavigationServiceFactory
-        & CountriesSectionViewModelFactory
-        & MapSectionViewModelFactory
-        & CoreAlertServiceFactory
-        & PropertiesManagerFactory
+    typealias Factory = AnnouncementsViewModelFactory
         & AppStateManagerFactory
-        & VpnGatewayFactory
-        & HeaderViewModelFactory
-        & AnnouncementsViewModelFactory
-        & SystemExtensionManagerFactory
+        & BugReportCreatorFactory
         & ConnectingOverlayViewModelFactory
+        & CoreAlertServiceFactory
+        & CountriesSectionViewModelFactory
+        & CreateNewProfileViewModelFactory
+        & DynamicBugReportManagerFactory
+        & HeaderViewModelFactory
+        & LogFileManagerFactory
+        & MapSectionViewModelFactory
+        & NavigationServiceFactory
         & NetShieldPropertyProviderFactory
         & ProfileManagerFactory
-        & VpnManagerFactory
-        & LogFileManagerFactory
-        & BugReportCreatorFactory
-        & DynamicBugReportManagerFactory
-        & VpnKeychainFactory
         & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
+        & VpnKeychainFactory
+        & VpnManagerFactory
 
     private let factory: Factory
     

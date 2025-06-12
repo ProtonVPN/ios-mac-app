@@ -43,17 +43,17 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = PropertiesManagerFactory
-        & VpnGatewayFactory
-        & CoreAlertServiceFactory
-        & ProfileManagerFactory
-        & SystemExtensionManagerFactory
-        & VpnProtocolChangeManagerFactory
-        & VpnManagerFactory
-        & VpnStateConfigurationFactory
+    typealias Factory = AppStateManagerFactory
         & AuthKeychainHandleFactory
-        & AppStateManagerFactory
+        & CoreAlertServiceFactory
         & NavigationServiceFactory
+        & ProfileManagerFactory
+        & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
+        & VpnManagerFactory
+        & VpnProtocolChangeManagerFactory
+        & VpnStateConfigurationFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction

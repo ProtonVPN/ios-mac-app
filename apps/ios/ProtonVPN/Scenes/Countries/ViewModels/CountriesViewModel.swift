@@ -119,15 +119,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     public typealias Factory = AppStateManagerFactory
-        & PropertiesManagerFactory
-        & CoreAlertServiceFactory
         & ConnectionStatusServiceFactory
-        & VpnKeychainFactory
-        & PlanServiceFactory
-        & SearchStorageFactory
-        & NetShieldPropertyProviderFactory
+        & CoreAlertServiceFactory
         & NATTypePropertyProviderFactory
+        & NetShieldPropertyProviderFactory
+        & PlanServiceFactory
+        & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
+        & SearchStorageFactory
+        & VpnKeychainFactory
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()

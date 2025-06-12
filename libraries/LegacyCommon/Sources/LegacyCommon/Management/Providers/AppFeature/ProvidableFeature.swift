@@ -29,7 +29,7 @@ import Domain
 /// this type.
 ///
 /// - Note: Check `VPNAccelerator` for implementation ideas.
-public typealias ProvidableFeature = AppFeature & ModularAppFeature & StorableFeature & DefaultableFeature
+public typealias ProvidableFeature = AppFeature & DefaultableFeature & ModularAppFeature & StorableFeature
 
 public protocol DefaultableFeature {
     static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> Self

@@ -53,7 +53,7 @@ public enum ServerInfoResponse {
 
 public class VpnApiService {
     @Dependency(\.serverRepository) var serverRepository
-    public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory & AuthKeychainHandleFactory
+    public typealias Factory = AuthKeychainHandleFactory & CountryCodeProviderFactory & NetworkingFactory & VpnKeychainFactory
 
     public typealias ServerInfoTuple = (
         serverInfo: ServerInfoResponse?,

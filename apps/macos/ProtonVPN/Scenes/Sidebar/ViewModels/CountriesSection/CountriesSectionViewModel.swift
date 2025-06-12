@@ -147,17 +147,16 @@ class CountriesSectionViewModel {
     private var userTier: Int = .freeTier
     private var connectedServer: ServerModel?
 
-    typealias Factory = VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & PropertiesManagerFactory
-        & AppStateManagerFactory
+        & ModelIdCheckerFactory
         & NetShieldPropertyProviderFactory
-        & CoreAlertServiceFactory
+        & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
         & VpnKeychainFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
-        & ModelIdCheckerFactory
-        & SystemExtensionManagerFactory
 
     private let factory: Factory
 

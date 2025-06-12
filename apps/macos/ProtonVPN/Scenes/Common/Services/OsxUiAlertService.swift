@@ -30,7 +30,7 @@ protocol UIAlertServiceFactory {
 }
 
 class OsxUiAlertService: UIAlertService {
-    typealias Factory = WindowServiceFactory & NavigationServiceFactory
+    typealias Factory = NavigationServiceFactory & WindowServiceFactory
     
     private let factory: Factory
     private lazy var navigationService: NavigationService = factory.makeNavigationService()

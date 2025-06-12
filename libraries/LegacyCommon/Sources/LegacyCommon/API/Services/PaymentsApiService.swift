@@ -39,8 +39,8 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
     private let vpnApiService: VpnApiService
 
     public typealias Factory = NetworkingFactory &
-        VpnKeychainFactory &
-        VpnApiServiceFactory
+        VpnApiServiceFactory &
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
         self.init(networking: factory.makeNetworking(),

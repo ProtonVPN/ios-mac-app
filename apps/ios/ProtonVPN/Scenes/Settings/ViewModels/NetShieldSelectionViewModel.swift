@@ -30,7 +30,7 @@ import VPNShared
 import VPNAppCore
 
 final class NetShieldSelectionViewModel {
-    typealias Factory = PlanServiceFactory & AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory
+    typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PlanServiceFactory
     private var factory: Factory
 
     private lazy var planService: PlanService = factory.makePlanService()

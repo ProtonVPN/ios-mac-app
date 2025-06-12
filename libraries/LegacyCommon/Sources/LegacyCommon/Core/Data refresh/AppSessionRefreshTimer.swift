@@ -67,7 +67,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
     private let refreshIntervals: RefreshIntervals
 
-    public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory & TimerFactoryCreator
+    public typealias Factory = AppSessionRefresherFactory & TimerFactoryCreator & VpnKeychainFactory
     private let factory: Factory
     private let timerFactory: TimerFactory
 

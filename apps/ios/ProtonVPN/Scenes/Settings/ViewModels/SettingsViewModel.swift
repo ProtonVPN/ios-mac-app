@@ -44,25 +44,25 @@ import Strings
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory &
-        AppSessionManagerFactory &
-        VpnGatewayFactory &
-        CoreAlertServiceFactory &
-        SettingsServiceFactory &
-        VpnKeychainFactory &
-        ConnectionStatusServiceFactory &
-        NetShieldPropertyProviderFactory &
-        VpnManagerFactory &
-        VpnStateConfigurationFactory &
-        PlanServiceFactory &
-        PropertiesManagerFactory &
+    typealias Factory =
         AppInfoFactory &
-        ProfileManagerFactory &
-        NATTypePropertyProviderFactory &
-        SafeModePropertyProviderFactory &
-        PaymentsApiServiceFactory &
+        AppSessionManagerFactory & AppStateManagerFactory &
         AuthKeychainHandleFactory &
-        NetworkingFactory
+        ConnectionStatusServiceFactory &
+        CoreAlertServiceFactory &
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        NetworkingFactory &
+        PaymentsApiServiceFactory &
+        PlanServiceFactory &
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        SettingsServiceFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory &
+        VpnManagerFactory &
+        VpnStateConfigurationFactory
 
     private let factory: Factory
 

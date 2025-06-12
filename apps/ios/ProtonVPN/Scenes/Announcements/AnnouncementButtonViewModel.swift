@@ -39,7 +39,7 @@ final class AnnouncementButtonViewModel {
     // Must be pre-set in AppDelegate!
     static var shared: AnnouncementButtonViewModel!
 
-    typealias Factory = PropertiesManagerFactory & AnnouncementsViewModelFactory
+    typealias Factory = AnnouncementsViewModelFactory & PropertiesManagerFactory
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

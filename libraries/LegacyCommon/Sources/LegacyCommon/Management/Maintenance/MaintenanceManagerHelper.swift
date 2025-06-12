@@ -35,7 +35,7 @@ public class MaintenanceManagerHelper {
         .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = MaintenanceManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & PropertiesManagerFactory & VpnGatewayFactory
     private let factory: Factory
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()

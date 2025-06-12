@@ -60,7 +60,7 @@ public final class ProfileManager {
         defaultProfiles + customProfiles
     }
 
-    public typealias Factory = PropertiesManagerFactory & ProfileStorageFactory
+    public typealias Factory = ProfileStorageFactory & PropertiesManagerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(propertiesManager: factory.makePropertiesManager(), profileStorage: factory.makeProfileStorage())

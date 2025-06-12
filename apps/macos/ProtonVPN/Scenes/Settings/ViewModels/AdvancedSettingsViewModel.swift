@@ -29,15 +29,15 @@ import Domain
 import Strings
 
 final class AdvancedSettingsViewModel {
-    typealias Factory = PropertiesManagerFactory
+    typealias Factory = CoreAlertServiceFactory
         & NATTypePropertyProviderFactory
-        & SafeModePropertyProviderFactory
         & NetShieldPropertyProviderFactory
-        & CoreAlertServiceFactory
-        & VpnStateConfigurationFactory
+        & PropertiesManagerFactory
+        & SafeModePropertyProviderFactory
+        & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
-        & TelemetrySettingsFactory
+        & VpnStateConfigurationFactory
     private let factory: Factory
 
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()

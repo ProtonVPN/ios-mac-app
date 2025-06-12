@@ -57,13 +57,13 @@ public class DynamicBugReportManager {
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
 
-    public typealias Factory = ReportsApiServiceFactory &
-        DynamicBugReportStorageFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        PropertiesManagerFactory &
+        DynamicBugReportStorageFactory &
+        LogContentProviderFactory &
+        PropertiesManagerFactory & ReportsApiServiceFactory &
         UpdateCheckerFactory &
-        VpnKeychainFactory &
-        LogContentProviderFactory
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
         self.init(

@@ -187,19 +187,19 @@ public final class VpnManager: VpnManagerProtocol {
     var notificationCenter: NotificationCenter = .default
     private var tokens: [UUID: NotificationToken] = [:]
 
-    public typealias Factory = IkeProtocolFactoryCreator
-        & WireguardProtocolFactoryCreator
-        & VpnAuthenticationFactory
-        & VpnAuthenticationStorageFactory
-        & VpnKeychainFactory
-        & PropertiesManagerFactory
-        & VpnStateConfigurationFactory
-        & CoreAlertServiceFactory
-        & VpnCredentialsConfiguratorFactoryCreator
+    public typealias Factory = CoreAlertServiceFactory
+        & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
+        & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
+        & VpnAuthenticationFactory
+        & VpnAuthenticationStorageFactory
+        & VpnCredentialsConfiguratorFactoryCreator
+        & VpnKeychainFactory
+        & VpnStateConfigurationFactory
+        & WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(

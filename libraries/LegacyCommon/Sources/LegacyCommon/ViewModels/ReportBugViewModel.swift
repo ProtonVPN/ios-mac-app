@@ -39,12 +39,12 @@ open class ReportBugViewModel {
     
     private var planTitle: String?
 
-    public typealias Factory = PropertiesManagerFactory &
-        ReportsApiServiceFactory &
+    public typealias Factory =
+        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        LogContentProviderFactory &
-        AuthKeychainHandleFactory
+        LogContentProviderFactory & PropertiesManagerFactory &
+        ReportsApiServiceFactory &
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(os: config.os,

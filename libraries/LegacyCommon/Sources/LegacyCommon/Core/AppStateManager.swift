@@ -136,18 +136,18 @@ public class AppStateManagerImplementation: AppStateManager {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
 
-    public typealias Factory = VpnApiServiceFactory &
-        VpnManagerFactory &
-        NetworkingFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        TimerFactoryCreator &
-        PropertiesManagerFactory &
-        VpnKeychainFactory &
-        VpnManagerConfigurationPreparerFactory &
-        VpnAuthenticationFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
-        SafeModePropertyProviderFactory
+        NetworkingFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        TimerFactoryCreator & VpnApiServiceFactory &
+        VpnAuthenticationFactory &
+        VpnKeychainFactory &
+        VpnManagerConfigurationPreparerFactory &
+        VpnManagerFactory
     
     public convenience init(_ factory: Factory) {
         self.init(vpnApiService: factory.makeVpnApiService(),

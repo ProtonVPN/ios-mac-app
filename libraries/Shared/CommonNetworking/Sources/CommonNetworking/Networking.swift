@@ -85,9 +85,9 @@ public final class CoreNetworking: Networking {
     private let authKeychain: AuthKeychainHandle
     private let unauthKeychain: UnauthKeychainHandle
 
-    public typealias Factory = NetworkingDelegateFactory &
+    public typealias Factory =
         AppInfoFactory &
-        AuthKeychainHandleFactory &
+        AuthKeychainHandleFactory & NetworkingDelegateFactory &
         UnauthKeychainHandleFactory
 
     public convenience init(_ factory: Factory, pinApiEndpoints: Bool) {

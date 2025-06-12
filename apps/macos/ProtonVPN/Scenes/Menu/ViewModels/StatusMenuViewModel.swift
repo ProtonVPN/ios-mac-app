@@ -40,14 +40,14 @@ protocol StatusMenuViewModelFactory {
 
 final class StatusMenuViewModel {
     typealias Factory = AppSessionManagerFactory
-        & NavigationServiceFactory
-        & VpnKeychainFactory
-        & PropertiesManagerFactory
-        & CoreAlertServiceFactory
         & AppStateManagerFactory
-        & WiFiSecurityMonitorFactory
+        & CoreAlertServiceFactory
+        & NavigationServiceFactory
         & ProfileManagerFactory
+        & PropertiesManagerFactory
         & VpnGatewayFactory
+        & VpnKeychainFactory
+        & WiFiSecurityMonitorFactory
 
     private let factory: Factory
     @Dependency(\.profileAuthorizer) private var profileAuthorizer

@@ -66,23 +66,23 @@ protocol AppSessionManager {
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory = VpnApiServiceFactory &
+    typealias Factory =
+        AppSessionRefreshTimerFactory &
         AppStateManagerFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
-        VpnGatewayFactory &
+        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
-        AppSessionRefreshTimerFactory &
-        VpnAuthenticationFactory &
         PlanServiceFactory &
         ProfileManagerFactory &
-        SearchStorageFactory &
+        PropertiesManagerFactory &
         ReviewFactory &
-        AuthKeychainHandleFactory &
+        SearchStorageFactory &
         UnauthKeychainHandleFactory &
-        UpdateCheckerFactory
+        UpdateCheckerFactory & VpnApiServiceFactory &
+        VpnAuthenticationFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory
 
     private let factory: Factory
 

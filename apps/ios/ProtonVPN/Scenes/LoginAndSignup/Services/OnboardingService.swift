@@ -45,7 +45,7 @@ protocol OnboardingService: AnyObject {
 }
 
 final class OnboardingModuleService {
-    typealias Factory = WindowServiceFactory & PlanServiceFactory & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService

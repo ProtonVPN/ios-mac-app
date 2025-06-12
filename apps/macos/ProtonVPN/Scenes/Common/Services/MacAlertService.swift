@@ -41,16 +41,16 @@ import Domain
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository
 
-    typealias Factory = UIAlertServiceFactory &
+    typealias Factory =
         AppSessionManagerFactory &
-        WindowServiceFactory &
-        NotificationManagerFactory &
-        UpdateManagerFactory &
-        PropertiesManagerFactory &
-        TroubleshootViewModelFactory &
         NavigationServiceFactory &
+        NotificationManagerFactory &
+        PropertiesManagerFactory &
         TelemetrySettingsFactory &
-        VpnKeychainFactory
+        TroubleshootViewModelFactory & UIAlertServiceFactory &
+        UpdateManagerFactory &
+        VpnKeychainFactory &
+        WindowServiceFactory
 
     private let factory: Factory
 

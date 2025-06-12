@@ -45,13 +45,13 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-    typealias Factory = CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
-        AppStateManagerFactory &
-        VpnGatewayFactory &
+    typealias Factory =
+        AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory
+        PropertiesManagerFactory &
+        SystemExtensionManagerFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>

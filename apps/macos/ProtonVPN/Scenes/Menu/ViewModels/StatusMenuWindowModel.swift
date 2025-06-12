@@ -38,7 +38,7 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 }
 
 class StatusMenuWindowModel {
-    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
+    typealias Factory = AppSessionManagerFactory & AppSessionRefreshTimerFactory & AppSessionRefresherFactory & StatusMenuViewModelFactory & VpnGatewayFactory
     private let factory: Factory
 
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()

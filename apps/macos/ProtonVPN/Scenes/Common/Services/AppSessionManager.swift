@@ -59,21 +59,21 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-    typealias Factory = VpnApiServiceFactory &
+    typealias Factory =
+        AppCertificateRefreshManagerFactory &
+        AppSessionRefreshTimerFactory &
         AppStateManagerFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
-        VpnGatewayFactory &
+        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
         NetworkingFactory &
-        AppSessionRefreshTimerFactory &
-        VpnAuthenticationFactory &
         ProfileManagerFactory &
-        AppCertificateRefreshManagerFactory &
+        PropertiesManagerFactory &
         SystemExtensionManagerFactory &
-        AuthKeychainHandleFactory &
         UnauthKeychainHandleFactory &
-        UpdateCheckerFactory
+        UpdateCheckerFactory & VpnApiServiceFactory &
+        VpnAuthenticationFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory
     private let factory: Factory
 
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()

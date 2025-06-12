@@ -38,12 +38,12 @@ import Strings
 import Domain
 
 final class IosAlertService {
-    typealias Factory = UIAlertServiceFactory &
+    typealias Factory =
         AppSessionManagerFactory &
-        WindowServiceFactory &
+        PlanServiceFactory &
         SettingsServiceFactory &
-        TroubleshootCoordinatorFactory &
-        PlanServiceFactory
+        TroubleshootCoordinatorFactory & UIAlertServiceFactory &
+        WindowServiceFactory
 
     private let factory: Factory
 

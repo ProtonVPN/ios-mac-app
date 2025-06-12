@@ -29,7 +29,7 @@ import VPNAppCore
 import Domain
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
     
     private let factory: Factory
     
