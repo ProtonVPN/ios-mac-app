@@ -52,12 +52,12 @@ public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConve
     }
 }
 
-@CasePathable
-
 /// A collection of errors that can be reported by the Local Agent.
 /// Each case is defined with an appropriate resolution strategy.
 /// For more information, check [Shared VPN Libraries](https://github.com/ProtonVPN/go-vpn-lib/tree/master/localAgent)
 /// and [Local Agent Error Codes](https://protonvpn.gitlab-pages.protontech.ch/knowledge-base/Certificates-and-Local-Agent/LocalAgent-error-codes)
+@CasePathable
+
 public enum LocalAgentError: ProtonVPNError {
     public static var errorDomain: String { "LocalAgentRemoteError" }
 

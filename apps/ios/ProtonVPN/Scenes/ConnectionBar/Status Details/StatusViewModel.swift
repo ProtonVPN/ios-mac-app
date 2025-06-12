@@ -184,6 +184,7 @@ class StatusViewModel {
 
         case .loadingConnectionInfo:
             sections.append(technicalDetailsSectionLoadingConnectionInfo)
+
         default:
             sections.append(technicalDetailsSectionDisconnected)
         }

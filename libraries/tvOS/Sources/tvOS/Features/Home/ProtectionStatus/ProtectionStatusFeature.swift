@@ -61,6 +61,7 @@ struct ProtectionStatusFeature {
                     @Dependency(\.userLocationService) var userLocationService
                     try? await userLocationService.updateUserLocation()
                 }
+
             case .delegate:
                 return .none
             }

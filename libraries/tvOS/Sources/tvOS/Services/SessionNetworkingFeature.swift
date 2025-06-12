@@ -132,11 +132,13 @@ struct SessionNetworkingFeature: Reducer {
                     @Dependency(\.alertService) var alertService
                     await alertService.feed(error)
                 }
+
             case .userTierRetrieved(let tier, let session):
                     state = .authenticated(session)
                     networking.setSession(session)
                     unauthKeychain.clear()
                     return .send(.delegate(.tier(tier)))
+
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }

@@ -201,7 +201,6 @@ public struct HomeFeature {
                     await alertService.feed(error)
                 }
                 .cancellable(id: CancelID.connectTask)
-
             case .changeServer:
                 guard case .available = authorizer.serverChangeAvailability() else {
                     log.error("User is not authorized for server change, action should have been unavailable")
@@ -211,7 +210,6 @@ public struct HomeFeature {
                 return .concatenate([
                     .send(.connect(randomConnectionSpec, .changeServer)),
                 ])
-
             case let .disconnect(trigger):
                 return .run { _ in
                     try await disconnectVPN(trigger)
@@ -219,7 +217,6 @@ public struct HomeFeature {
                     log.error("Error disconnecting from VPN: \(error)")
                     await alertService.feed(error)
                 }
-
             case .connectionStatus:
                 return .none
             case .connectionDetails:
@@ -256,7 +253,6 @@ public struct HomeFeature {
                     }
                     state.destination = .changeServer(.init(serverChangeAvailability: availability))
                     return .none
-
                 case .defaultConnectionTapped:
                     state.destination = .defaultConnection(.init())
                     return .none

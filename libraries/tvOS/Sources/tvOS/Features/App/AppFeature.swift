@@ -164,6 +164,7 @@ struct AppFeature {
             case .networking(.delegate(.displayName(let name))):
                 state.$userDisplayName.withLock { $0 = name }
                 return .none
+
             case .networking:
                 return .none
 

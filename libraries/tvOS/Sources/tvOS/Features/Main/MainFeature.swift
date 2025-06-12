@@ -82,8 +82,10 @@ struct MainFeature {
                     .send(.connection(.input(.onLaunch))),
                     .send(.observeConnectionState)
                 )
+
             case .onLogout:
                 return .send(.connection(.input(.onLogout)))
+
             case .observeConnectionState:
                 return .publisher {
                     state.$connectionState.publisher
@@ -107,6 +109,7 @@ struct MainFeature {
                 case .settings:
                     return .send(.settings(.tabSelected))
                 }
+
             case .settings:
                 return .none
 

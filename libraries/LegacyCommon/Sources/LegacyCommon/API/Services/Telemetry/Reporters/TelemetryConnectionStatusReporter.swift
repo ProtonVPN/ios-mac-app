@@ -20,7 +20,6 @@ import Foundation
 import CommonNetworking
 import Domain
 import Connection
-import Domain
 import ProtonCoreFeatureFlags
 
 protocol TelemetryTimer {

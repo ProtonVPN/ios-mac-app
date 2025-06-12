@@ -1,6 +1,3 @@
---disable consistentSwitchCaseSpacing
---disable docCommentsBeforeModifiers
---disable duplicateImports
 --disable elseOnSameLine
 --disable enumNamespaces
 --disable extensionAccessControl

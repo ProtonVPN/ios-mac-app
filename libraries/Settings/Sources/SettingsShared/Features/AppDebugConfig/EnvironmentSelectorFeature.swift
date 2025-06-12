@@ -168,10 +168,8 @@ public struct DebugConfigurationFeature {
             switch action {
             case .userDefaultsTapped:
                 state.destination = .userDefaults(.init(alert: nil, content: .none))
-
             case .keychainTapped:
                 state.destination = .keychain(.init(alert: nil, content: .none))
-
             case .atlasSecretResponseReceived(let result):
                 switch result {
                 case .success(let data):

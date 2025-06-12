@@ -109,6 +109,7 @@ public struct HomeConnectionCardFeature {
             switch action {
             case .delegate:
                 return .none
+
             case .watchConnectionStatus:
                 return .publisher {
                     state

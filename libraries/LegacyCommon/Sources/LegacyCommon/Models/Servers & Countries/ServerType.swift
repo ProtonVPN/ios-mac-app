@@ -24,7 +24,6 @@ import Foundation
 import Domain
 import Persistence
 import Strings
-import Persistence
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
     case standard = 0

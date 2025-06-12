@@ -170,6 +170,7 @@ extension ConnectionRequest {
             } else {
                 return [.logicalID(model.id)]
             }
+
         case .city(let countryCode, let city):
             return [.kind(.country(code: countryCode)), .city(city)]
 

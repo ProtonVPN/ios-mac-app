@@ -74,6 +74,7 @@ final class SwitchTableViewCell: UITableViewCell {
             log.assertionFailure("We shouldn't display cells for disabled features")
             // We shouldn't be showing UI for a feature that has been disabled, so just fall back to showing upsell
             fallthrough
+
         case .upsell:
             switchControl.isHidden = true
             upsellImageView.isHidden = false

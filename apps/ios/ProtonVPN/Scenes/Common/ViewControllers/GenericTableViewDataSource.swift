@@ -185,7 +185,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.completionHandler = handler
             
             return cell
-
         case .imageSubtitle(title: let title, subtitle: let subtitle, image: let image, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleTableViewCell.identifier) as? ImageSubtitleTableViewCell else {
                 return UITableViewCell()
@@ -197,7 +196,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.selectionHandler = handler
 
             return cell
-
         case .imageSubtitleImage(title: let title, subtitle: let subtitle, leadingImage: let leadingImage, trailingImage: let trailingImage, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageSubtitleImageTableViewCell.identifier) as? ImageSubtitleImageTableViewCell else {
                 return UITableViewCell()
@@ -237,7 +235,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.showDisclosure(true)
             
             return cell
-
         case .upsellableToggle(let title, let state, let upsell, let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
@@ -249,7 +246,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.switchControl.accessibilityLabel = title
 
             return cell
-
         case .button(title: let title, accessibilityIdentifier: let accessibilityIdentifier, color: let color, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier) as? ButtonTableViewCell else {
                 return UITableViewCell()
@@ -321,7 +317,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.tooltipLabel.attributedText = attributedText
 
             return cell
-        
         case let .pushAccountDetails(initials, username, plan, handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailsTableViewCell.identifier) as? AccountDetailsTableViewCell else {
                 return UITableViewCell()
@@ -330,7 +325,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.setup(initials: initials, username: username, plan: plan, handler: handler)
             
             return cell
-            
         case let .buttonWithLoadingIndicator(title, accessibilityIdentifier, color, controller):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonWithLoadingTableViewCell.identifier) as? ButtonWithLoadingTableViewCell else {
                 return UITableViewCell()

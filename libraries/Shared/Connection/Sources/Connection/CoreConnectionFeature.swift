@@ -334,6 +334,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.tunnel(.removeManagers)),
                 .send(.certAuth(.clearEverything))
             )
+
         case .delegate:
             return .none
         }
@@ -364,6 +365,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil)))
             )
+
         case .disconnect(.withNewKeys):
             return .merge(
                 .cancel(id: CancelID.connectionTimeout),

@@ -166,6 +166,7 @@ final class ProfileItemViewModel {
             self.underMaintenance = serverWrapper.server.underMaintenance
 
         case .fastest(let countryCode): fallthrough
+
         case .random(let countryCode):
             guard let code = countryCode else {
                 self.lowestServerTier = 0

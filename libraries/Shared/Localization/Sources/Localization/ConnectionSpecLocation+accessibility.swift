@@ -86,7 +86,6 @@ public extension ConnectionSpec.Location {
             return Localizable.viaSecureCore
         case .secureCore(.hop(_, let via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
-
         case .gateway:
             // Similarly to fastest/random/region, we're not specifying an exact server. Leave subtext blank.
             return nil

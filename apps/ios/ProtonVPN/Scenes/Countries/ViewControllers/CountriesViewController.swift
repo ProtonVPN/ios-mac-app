@@ -223,6 +223,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.viewModel = viewModel
             return cell
+
         case .offerBanner(let viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferBannerViewCell.identifier) as? OfferBannerViewCell else {
                 return UITableViewCell()

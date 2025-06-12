@@ -59,6 +59,7 @@ public struct HomeMapFeature {
             switch connectionStatus {
             case .disconnected:
                 self = .disconnected
+
             case .disconnecting(_, _):
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
@@ -69,6 +70,7 @@ public struct HomeMapFeature {
                 } else {
                     self = .disconnected
                 }
+
             case .connecting(_, .some(let server)):
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
