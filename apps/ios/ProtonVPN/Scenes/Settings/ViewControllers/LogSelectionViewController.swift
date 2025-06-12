@@ -12,7 +12,7 @@ import Strings
 import UIKit
 
 class LogSelectionViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
     
     var genericDataSource: GenericTableViewDataSource?
     

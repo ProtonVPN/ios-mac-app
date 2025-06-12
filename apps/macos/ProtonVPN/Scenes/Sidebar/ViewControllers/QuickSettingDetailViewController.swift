@@ -45,19 +45,19 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
-    @IBOutlet weak var arrowIV: NSImageView!
-    @IBOutlet weak var arrowHorizontalConstraint: NSLayoutConstraint!
+    @IBOutlet var arrowIV: NSImageView!
+    @IBOutlet var arrowHorizontalConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var contentBox: NSBox!
+    @IBOutlet var contentBox: NSBox!
 
-    @IBOutlet weak var dropdownTitle: NSTextField!
-    @IBOutlet weak var dropdownDescription: NSTextField!
-    @IBOutlet weak var dropdownLearnMore: InteractiveActionButton!
-    @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
-    @IBOutlet weak var dropdownBusinessUpsell: NSImageView!
-    @IBOutlet weak var dropdownNote: NSTextField!
+    @IBOutlet var dropdownTitle: NSTextField!
+    @IBOutlet var dropdownDescription: NSTextField!
+    @IBOutlet var dropdownLearnMore: InteractiveActionButton!
+    @IBOutlet var dropdownUpgradeButton: PrimaryActionButton!
+    @IBOutlet var dropdownBusinessUpsell: NSImageView!
+    @IBOutlet var dropdownNote: NSTextField!
 
-    @IBOutlet weak var dropdownOptionsView: NSView!
+    @IBOutlet var dropdownOptionsView: NSView!
 
     @IBOutlet var noteTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!

@@ -31,10 +31,10 @@ enum ProfilesTab: Equatable {
 }
 
 class ProfilesTabBarViewController: NSViewController {
-    @IBOutlet weak var headerLabel: NSTextField!
-    @IBOutlet weak var backgroundView: ProfilesTabBarView!
-    @IBOutlet weak var overviewButton: TabBarButton!
-    @IBOutlet weak var createNewProfileButton: TabBarButton!
+    @IBOutlet var headerLabel: NSTextField!
+    @IBOutlet var backgroundView: ProfilesTabBarView!
+    @IBOutlet var overviewButton: TabBarButton!
+    @IBOutlet var createNewProfileButton: TabBarButton!
     
     let tabChanged = Notification.Name("ProfilesTabBarViewControllerTabChanged")
     

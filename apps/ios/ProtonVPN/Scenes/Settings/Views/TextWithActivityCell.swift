@@ -23,8 +23,8 @@
 import UIKit
 
 class TextWithActivityCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

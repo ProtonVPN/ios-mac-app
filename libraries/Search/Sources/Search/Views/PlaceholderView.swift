@@ -23,9 +23,9 @@ import UIKit
 final class PlaceholderView: UIView {
     // MARK: Outlets
 
-    @IBOutlet private weak var itemsStackView: UIStackView!
+    @IBOutlet private var itemsStackView: UIStackView!
     @IBOutlet private var contentView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 

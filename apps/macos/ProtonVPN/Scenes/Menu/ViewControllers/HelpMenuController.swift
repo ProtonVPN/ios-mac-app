@@ -27,13 +27,13 @@ import Strings
 import VPNAppCore
 
 class HelpMenuController: NSObject {
-    @IBOutlet weak var helpMenu: NSMenu!
-    @IBOutlet weak var reportAnIssueItem: NSMenuItem!
-    @IBOutlet weak var logsItem: NSMenuItem!
-    @IBOutlet weak var logsWGItem: NSMenuItem!
-    @IBOutlet weak var helpItem: NSMenuItem!
-    @IBOutlet weak var systemExtensionTutorialItem: NSMenuItem!
-    @IBOutlet weak var clearApplicationDataItem: NSMenuItem!
+    @IBOutlet var helpMenu: NSMenu!
+    @IBOutlet var reportAnIssueItem: NSMenuItem!
+    @IBOutlet var logsItem: NSMenuItem!
+    @IBOutlet var logsWGItem: NSMenuItem!
+    @IBOutlet var helpItem: NSMenuItem!
+    @IBOutlet var systemExtensionTutorialItem: NSMenuItem!
+    @IBOutlet var clearApplicationDataItem: NSMenuItem!
 
     private var viewModel: HelpMenuViewModel!
 

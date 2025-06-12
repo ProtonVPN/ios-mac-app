@@ -30,10 +30,10 @@ import Timer
 import UIKit
 
 class OfferBannerViewCell: UITableViewCell {
-    @IBOutlet weak var roundedBackgroundView: RoundedBackgroundView!
-    @IBOutlet weak var offerImageView: UIImageView!
-    @IBOutlet weak var timeRemainingLabel: UILabel!
-    @IBOutlet weak var dismissButton: UIButton! {
+    @IBOutlet var roundedBackgroundView: RoundedBackgroundView!
+    @IBOutlet var offerImageView: UIImageView!
+    @IBOutlet var timeRemainingLabel: UILabel!
+    @IBOutlet var dismissButton: UIButton! {
         didSet {
             dismissButton.setImage(Theme.Asset.dismissButton.image, for: .normal)
             dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)

@@ -23,10 +23,10 @@
 import UIKit
 
 class StandardTableViewCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var iconContainer: UIView!
-    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet private var iconContainer: UIView!
+    @IBOutlet private var iconImageView: UIImageView!
 
     var completionHandler: (() -> Void)?
 

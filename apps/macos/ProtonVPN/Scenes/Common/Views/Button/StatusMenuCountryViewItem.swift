@@ -23,9 +23,9 @@
 import Cocoa
 
 class StatusMenuCountryViewItem: NSCollectionViewItem {
-    @IBOutlet weak var countryFlag: NSImageView!
-    @IBOutlet weak var countryCodeLabel: NSTextField!
-    @IBOutlet weak var button: StatusMenuItemBackground!
+    @IBOutlet var countryFlag: NSImageView!
+    @IBOutlet var countryCodeLabel: NSTextField!
+    @IBOutlet var button: StatusMenuItemBackground!
 
     var viewModel: StatusMenuCountryItemViewModel?
 

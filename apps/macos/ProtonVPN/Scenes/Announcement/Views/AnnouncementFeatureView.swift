@@ -25,8 +25,8 @@ import Cocoa
 import LegacyCommon
 
 final class AnnouncementFeatureView: NSView {
-    @IBOutlet private weak var iconImageView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField!
+    @IBOutlet private var iconImageView: NSImageView!
+    @IBOutlet private var titleLabel: NSTextField!
     @IBOutlet private var contentView: NSView!
 
     let model: OfferFeature

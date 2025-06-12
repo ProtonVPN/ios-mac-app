@@ -66,34 +66,34 @@ final class CountriesSectionViewController: NSViewController {
         case killSwitchDisplay
     }
 
-    @IBOutlet weak var searchIcon: NSImageView!
-    @IBOutlet weak var searchTextField: TextFieldWithFocus!
-    @IBOutlet weak var searchBox: NSBox!
+    @IBOutlet var searchIcon: NSImageView!
+    @IBOutlet var searchTextField: TextFieldWithFocus!
+    @IBOutlet var searchBox: NSBox!
 
-    @IBOutlet weak var bottomHorizontalLine: NSBox!
-    @IBOutlet weak var serverListScrollView: BlockableScrollView!
-    @IBOutlet weak var serverListTableView: NSTableView!
-    @IBOutlet weak var shadowView: ShadowView!
-    @IBOutlet weak var clearSearchBtn: NSButton!
+    @IBOutlet var bottomHorizontalLine: NSBox!
+    @IBOutlet var serverListScrollView: BlockableScrollView!
+    @IBOutlet var serverListTableView: NSTableView!
+    @IBOutlet var shadowView: ShadowView!
+    @IBOutlet var clearSearchBtn: NSButton!
 
-    @IBOutlet weak var quickSettingsStack: QuickSettingsStack!
-    @IBOutlet weak var secureCoreSectionView: NSView!
-    @IBOutlet weak var netShieldSectionView: NSView!
-    @IBOutlet weak var killSwitchSectionView: NSView!
+    @IBOutlet var quickSettingsStack: QuickSettingsStack!
+    @IBOutlet var secureCoreSectionView: NSView!
+    @IBOutlet var netShieldSectionView: NSView!
+    @IBOutlet var killSwitchSectionView: NSView!
 
-    @IBOutlet weak var netShieldBox: NSBox!
+    @IBOutlet var netShieldBox: NSBox!
 
-    @IBOutlet weak var secureCoreBtn: QuickSettingButton!
-    @IBOutlet weak var netShieldBtn: QuickSettingButton!
-    @IBOutlet weak var killSwitchBtn: QuickSettingButton!
+    @IBOutlet var secureCoreBtn: QuickSettingButton!
+    @IBOutlet var netShieldBtn: QuickSettingButton!
+    @IBOutlet var killSwitchBtn: QuickSettingButton!
 
-    @IBOutlet weak var listTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var listLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var listTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var secureCoreContainer: NSBox!
-    @IBOutlet weak var netshieldContainer: NSBox!
-    @IBOutlet weak var killSwitchContainer: NSBox!
-    @IBOutlet weak var netShieldStatsLabel: NSTextField?
+    @IBOutlet var secureCoreContainer: NSBox!
+    @IBOutlet var netshieldContainer: NSBox!
+    @IBOutlet var killSwitchContainer: NSBox!
+    @IBOutlet var netShieldStatsLabel: NSTextField?
 
     fileprivate let viewModel: CountriesSectionViewModel
 

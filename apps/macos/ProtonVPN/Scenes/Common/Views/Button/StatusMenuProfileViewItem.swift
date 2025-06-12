@@ -25,12 +25,12 @@ import Ergonomics
 import ProtonCoreUIFoundations
 
 class StatusMenuProfileViewItem: NSTableRowView {
-    @IBOutlet weak var profileCircle: ProfileCircle!
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var label: NSTextField!
-    @IBOutlet weak var secondaryLabel: NSTextField!
-    @IBOutlet weak var separator: NSBox!
-    @IBOutlet weak var button: StatusMenuSurfaceButton!
+    @IBOutlet var profileCircle: ProfileCircle!
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var label: NSTextField!
+    @IBOutlet var secondaryLabel: NSTextField!
+    @IBOutlet var separator: NSBox!
+    @IBOutlet var button: StatusMenuSurfaceButton!
     
     private var viewModel: StatusMenuProfileItemViewModel?
     

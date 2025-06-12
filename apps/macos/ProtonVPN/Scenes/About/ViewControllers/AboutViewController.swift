@@ -31,15 +31,15 @@ class AboutViewController: NSViewController {
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
     public var factory: Factory!
 
-    @IBOutlet weak var imageHeader: NSImageView!
-    @IBOutlet weak var backgroundView: NSView!
-    @IBOutlet weak var versionTitleLabel: PVPNTextField!
-    @IBOutlet weak var versionLabel: PVPNTextField!
-    @IBOutlet weak var dateTitleLabel: PVPNTextField!
-    @IBOutlet weak var dateLabel: PVPNTextField!
-    @IBOutlet weak var acknowledgementsButton: InteractiveActionButton!
-    @IBOutlet weak var changelogLabel: PVPNTextField!
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet var imageHeader: NSImageView!
+    @IBOutlet var backgroundView: NSView!
+    @IBOutlet var versionTitleLabel: PVPNTextField!
+    @IBOutlet var versionLabel: PVPNTextField!
+    @IBOutlet var dateTitleLabel: PVPNTextField!
+    @IBOutlet var dateLabel: PVPNTextField!
+    @IBOutlet var acknowledgementsButton: InteractiveActionButton!
+    @IBOutlet var changelogLabel: PVPNTextField!
+    @IBOutlet var webView: WKWebView!
     
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var bundle: Bundle = .main

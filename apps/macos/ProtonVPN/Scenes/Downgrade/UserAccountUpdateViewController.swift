@@ -35,35 +35,35 @@ import Strings
 import Theme
 
 class UserAccountUpdateViewController: NSViewController {
-    @IBOutlet weak var serversView: NSView!
-    @IBOutlet weak var imageView: NSImageView!
-    @IBOutlet weak var titleLbl: NSTextField!
-    @IBOutlet weak var descriptionLbl: NSTextField!
-    @IBOutlet weak var offsetView: NSView!
+    @IBOutlet var serversView: NSView!
+    @IBOutlet var imageView: NSImageView!
+    @IBOutlet var titleLbl: NSTextField!
+    @IBOutlet var descriptionLbl: NSTextField!
+    @IBOutlet var offsetView: NSView!
 
-    @IBOutlet weak var featuresTitleLbl: NSTextField!
+    @IBOutlet var featuresTitleLbl: NSTextField!
 
-    @IBOutlet weak var primaryActionBtn: NSButton!
-    @IBOutlet weak var secondActionBtn: NSButton!
+    @IBOutlet var primaryActionBtn: NSButton!
+    @IBOutlet var secondActionBtn: NSButton!
 
-    @IBOutlet weak var feature1View: NSView!
-    @IBOutlet weak var feature1Lbl: NSTextField!
+    @IBOutlet var feature1View: NSView!
+    @IBOutlet var feature1Lbl: NSTextField!
 
-    @IBOutlet weak var feature2View: NSView!
-    @IBOutlet weak var feature2Lbl: NSTextField!
+    @IBOutlet var feature2View: NSView!
+    @IBOutlet var feature2Lbl: NSTextField!
 
-    @IBOutlet weak var feature3View: NSView!
-    @IBOutlet weak var feature3Lbl: NSTextField!
+    @IBOutlet var feature3View: NSView!
+    @IBOutlet var feature3Lbl: NSTextField!
 
-    @IBOutlet weak var fromServerTitleLbl: NSTextField!
-    @IBOutlet weak var fromServerIV: NSImageView!
-    @IBOutlet weak var fromServerLbl: NSTextField!
+    @IBOutlet var fromServerTitleLbl: NSTextField!
+    @IBOutlet var fromServerIV: NSImageView!
+    @IBOutlet var fromServerLbl: NSTextField!
 
-    @IBOutlet weak var fromToArrow: NSImageView!
+    @IBOutlet var fromToArrow: NSImageView!
 
-    @IBOutlet weak var toServerTitleLbl: NSTextField!
-    @IBOutlet weak var toServerIV: NSImageView!
-    @IBOutlet weak var toServerLbl: NSTextField!
+    @IBOutlet var toServerTitleLbl: NSTextField!
+    @IBOutlet var toServerIV: NSImageView!
+    @IBOutlet var toServerLbl: NSTextField!
 
     private let alert: UserAccountUpdateAlert
 

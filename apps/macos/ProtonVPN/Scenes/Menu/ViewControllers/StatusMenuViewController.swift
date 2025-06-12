@@ -33,34 +33,34 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     let viewModel: StatusMenuViewModel
     
-    @IBOutlet private weak var backgroundView: NSView!
-    @IBOutlet private weak var dynamicContentView: NSStackView!
-    @IBOutlet private weak var loginLabel: NSTextField!
-    @IBOutlet private weak var upgradeView: NSStackView!
-    @IBOutlet private weak var upgradeLabel: NSTextField!
+    @IBOutlet private var backgroundView: NSView!
+    @IBOutlet private var dynamicContentView: NSStackView!
+    @IBOutlet private var loginLabel: NSTextField!
+    @IBOutlet private var upgradeView: NSStackView!
+    @IBOutlet private var upgradeLabel: NSTextField!
     
-    @IBOutlet private weak var connectionLabel: NSTextField!
-    @IBOutlet private weak var ipLabel: NSTextField!
-    @IBOutlet private weak var connectButton: StatusBarAppConnectButton!
-    @IBOutlet private weak var profileDropDown: StatusBarAppProfileDropdownButton!
-    @IBOutlet private weak var changeServerView: ChangeServerView!
+    @IBOutlet private var connectionLabel: NSTextField!
+    @IBOutlet private var ipLabel: NSTextField!
+    @IBOutlet private var connectButton: StatusBarAppConnectButton!
+    @IBOutlet private var profileDropDown: StatusBarAppProfileDropdownButton!
+    @IBOutlet private var changeServerView: ChangeServerView!
     
-    @IBOutlet weak var secureCoreSwitch: SwitchButton!
-    @IBOutlet private weak var secureCoreLabel: NSTextField!
+    @IBOutlet var secureCoreSwitch: SwitchButton!
+    @IBOutlet private var secureCoreLabel: NSTextField!
     
-    @IBOutlet private weak var countryScrollView: NSScrollView!
-    @IBOutlet private weak var countryClipView: NSClipView!
-    @IBOutlet private weak var countryCollection: NSCollectionView!
+    @IBOutlet private var countryScrollView: NSScrollView!
+    @IBOutlet private var countryClipView: NSClipView!
+    @IBOutlet private var countryCollection: NSCollectionView!
     
-    @IBOutlet private weak var quitButton: NSButton!
-    @IBOutlet private weak var showProtonVPNButton: NSButton!
+    @IBOutlet private var quitButton: NSButton!
+    @IBOutlet private var showProtonVPNButton: NSButton!
 
-    @IBOutlet private weak var loadingViewContainer: NSView!
-    @IBOutlet private weak var loadingView: LoadingAnimationView!
-    @IBOutlet private weak var loadingLabel: NSTextField!
-    @IBOutlet private weak var cancelConnectionButton: ConnectingOverlayButton!
+    @IBOutlet private var loadingViewContainer: NSView!
+    @IBOutlet private var loadingView: LoadingAnimationView!
+    @IBOutlet private var loadingLabel: NSTextField!
+    @IBOutlet private var cancelConnectionButton: ConnectingOverlayButton!
 
-    @IBOutlet private weak var footerView: NSView!
+    @IBOutlet private var footerView: NSView!
     
     private var profilesWindowController: StatusMenuProfilesListController?
     

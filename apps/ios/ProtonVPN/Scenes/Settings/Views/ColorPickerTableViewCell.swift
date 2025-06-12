@@ -10,7 +10,7 @@
 import UIKit
 
 class ColorPickerTableViewCell: UITableViewCell {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet var collectionView: UICollectionView!
 
     override func awakeFromNib() {
         super.awakeFromNib()

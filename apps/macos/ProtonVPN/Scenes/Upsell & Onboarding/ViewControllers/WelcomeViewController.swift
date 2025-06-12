@@ -37,16 +37,16 @@ class WelcomeViewController: NSViewController {
         case crashReports
     }
 
-    @IBOutlet weak var mapView: NSImageView!
-    @IBOutlet weak var titleLabel: NSTextField!
-    @IBOutlet weak var descriptionLabel: NSTextField!
-    @IBOutlet weak var noThanksButton: UpsellPrimaryActionButton!
-    @IBOutlet weak var usageStatisticsLabel: NSTextField!
-    @IBOutlet weak var crashReportsLabel: NSTextField!
-    @IBOutlet weak var usageStatisticsButton: SwitchButton!
-    @IBOutlet weak var crashReportsButton: SwitchButton!
-    @IBOutlet weak var telemetryStackView: NSStackView!
-    @IBOutlet weak var learnMore: InteractiveActionButton!
+    @IBOutlet var mapView: NSImageView!
+    @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var descriptionLabel: NSTextField!
+    @IBOutlet var noThanksButton: UpsellPrimaryActionButton!
+    @IBOutlet var usageStatisticsLabel: NSTextField!
+    @IBOutlet var crashReportsLabel: NSTextField!
+    @IBOutlet var usageStatisticsButton: SwitchButton!
+    @IBOutlet var crashReportsButton: SwitchButton!
+    @IBOutlet var telemetryStackView: NSStackView!
+    @IBOutlet var learnMore: InteractiveActionButton!
 
     let windowService: WindowService
     let telemetrySettings: TelemetrySettings

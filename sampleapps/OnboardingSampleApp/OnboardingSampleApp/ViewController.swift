@@ -20,9 +20,9 @@ import Onboarding
 import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var startAButton: UIButton!
-    @IBOutlet private weak var vpnSuccessSwitch: UISwitch!
-    @IBOutlet private weak var startBButton: UIButton!
+    @IBOutlet private var startAButton: UIButton!
+    @IBOutlet private var vpnSuccessSwitch: UISwitch!
+    @IBOutlet private var startBButton: UIButton!
 
     private var coordinator: OnboardingCoordinator!
 

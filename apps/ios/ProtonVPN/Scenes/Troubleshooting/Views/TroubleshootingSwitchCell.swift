@@ -24,7 +24,7 @@ import UIKit
 
 class TroubleshootingSwitchCell: TroubleshootingCell {
     // Views
-    @IBOutlet private weak var toggleSwitch: UISwitch!
+    @IBOutlet private var toggleSwitch: UISwitch!
 
     var isOn: Bool {
         get {

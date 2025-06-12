@@ -31,18 +31,18 @@ protocol ServerItemCellViewDelegate: AnyObject {
 }
 
 final class ServerItemCellView: NSView {
-    @IBOutlet private weak var loadIcon: ColoredLoadButton!
+    @IBOutlet private var loadIcon: ColoredLoadButton!
 
-    @IBOutlet private weak var serverInfoStackView: NSStackView!
+    @IBOutlet private var serverInfoStackView: NSStackView!
     private weak var featuresStackView: NSStackView!
 
-    @IBOutlet private weak var serverLbl: NSTextField!
-    @IBOutlet private weak var cityLbl: NSTextField!
-    @IBOutlet private weak var secureCoreIV: NSImageView!
-    @IBOutlet private weak var secureFlagIV: NSImageView!
-    @IBOutlet private weak var connectBtn: ConnectButton!
-    @IBOutlet private weak var maintenanceIV: NSButton!
-    @IBOutlet private weak var upgradeBtn: NSButton!
+    @IBOutlet private var serverLbl: NSTextField!
+    @IBOutlet private var cityLbl: NSTextField!
+    @IBOutlet private var secureCoreIV: NSImageView!
+    @IBOutlet private var secureFlagIV: NSImageView!
+    @IBOutlet private var connectBtn: ConnectButton!
+    @IBOutlet private var maintenanceIV: NSButton!
+    @IBOutlet private var upgradeBtn: NSButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()

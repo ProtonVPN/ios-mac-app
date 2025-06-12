@@ -30,12 +30,12 @@ import Domain
 import LegacyCommon
 
 final class AnnouncementImageViewController: AnnouncementViewController {
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var actionButton: UIButton!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var imageViewHeight: NSLayoutConstraint!
-    @IBOutlet private weak var progressIndicator: UIActivityIndicatorView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var actionButton: UIButton!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet private var progressIndicator: UIActivityIndicatorView!
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?

@@ -26,12 +26,12 @@ import LegacyCommon
 import Theme
 
 final class BannerCellView: NSView {
-    @IBOutlet private weak var leftImage: NSImageView!
-    @IBOutlet private weak var rightChevron: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var label: NSTextField!
-    @IBOutlet private weak var separatorViewTop: NSView!
-    @IBOutlet private weak var separatorViewBottom: NSView!
+    @IBOutlet private var leftImage: NSImageView!
+    @IBOutlet private var rightChevron: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var label: NSTextField!
+    @IBOutlet private var separatorViewTop: NSView!
+    @IBOutlet private var separatorViewBottom: NSView!
 
     private var viewModel: BannerViewModel!
 

@@ -38,23 +38,23 @@ final class HeaderViewController: NSViewController {
         static let headerLabel: String = "headerLabel"
     }
 
-    @IBOutlet private weak var backgroundView: NSView!
-    @IBOutlet private weak var flagView: FlagView!
-    @IBOutlet private weak var headerLabel: NSTextField!
-    @IBOutlet private weak var ipLabel: NSTextField!
-    @IBOutlet private weak var loadLabel: NSTextField!
-    @IBOutlet private weak var loadIcon: LoadCircle!
-    @IBOutlet private weak var speedLabel: NSTextField!
-    @IBOutlet private weak var connectButton: LargeConnectButton!
-    @IBOutlet private weak var changeServerView: ChangeServerView!
-    @IBOutlet private weak var announcementsContainer: NSView!
-    @IBOutlet private weak var announcementsButton: NSButton!
-    @IBOutlet private weak var protocolLabel: NSTextField!
-    @IBOutlet private weak var badgeView: NSView!
+    @IBOutlet private var backgroundView: NSView!
+    @IBOutlet private var flagView: FlagView!
+    @IBOutlet private var headerLabel: NSTextField!
+    @IBOutlet private var ipLabel: NSTextField!
+    @IBOutlet private var loadLabel: NSTextField!
+    @IBOutlet private var loadIcon: LoadCircle!
+    @IBOutlet private var speedLabel: NSTextField!
+    @IBOutlet private var connectButton: LargeConnectButton!
+    @IBOutlet private var changeServerView: ChangeServerView!
+    @IBOutlet private var announcementsContainer: NSView!
+    @IBOutlet private var announcementsButton: NSButton!
+    @IBOutlet private var protocolLabel: NSTextField!
+    @IBOutlet private var badgeView: NSView!
 
-    @IBOutlet private weak var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private weak var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private weak var ipLoadRowContainer: NSView!
+    @IBOutlet private var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private var ipLoadRowContainer: NSView!
 
     var announcementsButtonPressed: (() -> Void)?
 

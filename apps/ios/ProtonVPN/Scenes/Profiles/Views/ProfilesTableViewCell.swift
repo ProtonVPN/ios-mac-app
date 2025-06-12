@@ -25,12 +25,12 @@ import ProtonCoreUIFoundations
 import UIKit
 
 final class ProfilesTableViewCell: UITableViewCell {
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var labelsStackView: UIStackView!
-    @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var connectionDescription: UILabel!
-    @IBOutlet weak var overlayButton: UIButton!
-    @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet var profileImage: UIImageView!
+    @IBOutlet var labelsStackView: UIStackView!
+    @IBOutlet var profileName: UILabel!
+    @IBOutlet var connectionDescription: UILabel!
+    @IBOutlet var overlayButton: UIButton!
+    @IBOutlet var connectButton: UIButton!
     
     var viewModel: ProfileItemViewModel? {
         didSet {

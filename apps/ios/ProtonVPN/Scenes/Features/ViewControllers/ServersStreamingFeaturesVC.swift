@@ -28,16 +28,16 @@ import UIKit
 class ServersStreamingFeaturesVC: UIViewController {
     private let viewModel: ServersStreamingFeaturesViewModel
 
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var countryLbl: UILabel!
-    @IBOutlet private weak var featuresLbl: UILabel!
-    @IBOutlet private weak var instructionLbl: UILabel!
-    @IBOutlet private weak var noteLbl: UILabel!
-    @IBOutlet private weak var servicesCV: UICollectionView!
-    @IBOutlet private weak var extraLbl: UILabel!
-    @IBOutlet private weak var servicesCVHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var iconImageView: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var countryLbl: UILabel!
+    @IBOutlet private var featuresLbl: UILabel!
+    @IBOutlet private var instructionLbl: UILabel!
+    @IBOutlet private var noteLbl: UILabel!
+    @IBOutlet private var servicesCV: UICollectionView!
+    @IBOutlet private var extraLbl: UILabel!
+    @IBOutlet private var servicesCVHeightConstraint: NSLayoutConstraint!
 
     init(_ viewModel: ServersStreamingFeaturesViewModel) {
         self.viewModel = viewModel

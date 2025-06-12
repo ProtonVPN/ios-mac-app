@@ -21,8 +21,8 @@ import Search
 import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var userTierSegmentedControl: UISegmentedControl!
-    @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
+    @IBOutlet private var userTierSegmentedControl: UISegmentedControl!
+    @IBOutlet private var modeSegmentedControl: UISegmentedControl!
 
     private var coordinator: SearchCoordinator = .init(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
 

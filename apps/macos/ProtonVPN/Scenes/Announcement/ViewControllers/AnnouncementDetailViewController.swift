@@ -32,15 +32,15 @@ import Ergonomics
 import Strings
 
 final class AnnouncementDetailViewController: NSViewController {
-    @IBOutlet private weak var incentiveLabel: NSTextField!
-    @IBOutlet private weak var pillView: NSView!
-    @IBOutlet private weak var pillLabel: NSTextField!
-    @IBOutlet private weak var pictureView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var featuresStackView: NSStackView!
-    @IBOutlet private weak var featuresFooterLabel: NSTextField!
-    @IBOutlet private weak var actionButton: PrimaryActionButton!
-    @IBOutlet private weak var pageFooterLabel: NSTextField!
+    @IBOutlet private var incentiveLabel: NSTextField!
+    @IBOutlet private var pillView: NSView!
+    @IBOutlet private var pillLabel: NSTextField!
+    @IBOutlet private var pictureView: NSImageView!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var featuresStackView: NSStackView!
+    @IBOutlet private var featuresFooterLabel: NSTextField!
+    @IBOutlet private var actionButton: PrimaryActionButton!
+    @IBOutlet private var pageFooterLabel: NSTextField!
 
     private let data: OfferPanel.LegacyPanel
 

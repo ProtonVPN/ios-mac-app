@@ -32,9 +32,9 @@ enum SidebarTab {
 class SidebarTabBarViewController: NSViewController {
     let tabChanged = Notification.Name("SidebarTabBarViewControllerTabChanged")
     
-    @IBOutlet weak var tabBarView: SidebarTabBarView!
-    @IBOutlet weak var countriesButton: TabBarButton!
-    @IBOutlet weak var profilesButton: TabBarButton!
+    @IBOutlet var tabBarView: SidebarTabBarView!
+    @IBOutlet var countriesButton: TabBarButton!
+    @IBOutlet var profilesButton: TabBarButton!
     
     var activeTab: SidebarTab? {
         didSet {

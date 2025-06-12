@@ -26,9 +26,9 @@ import Ergonomics
 class StatusMenuProfilesListController: WindowController {
     fileprivate let statusMenuProfileItemIdentifier = "StatusMenuProfileItemCell"
     
-    @IBOutlet weak var topView: NSView!
-    @IBOutlet weak var roundedView: NSView!
-    @IBOutlet weak var profileList: NSTableView!
+    @IBOutlet var topView: NSView!
+    @IBOutlet var roundedView: NSView!
+    @IBOutlet var profileList: NSTableView!
     
     var viewModel: StatusMenuProfilesListViewModel
     

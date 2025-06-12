@@ -29,7 +29,7 @@ import Strings
 final class TroubleshootingPopup: NSViewController {
     // MARK: Outlets
 
-    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private var tableView: NSTableView!
 
     // MARK: Properties
 

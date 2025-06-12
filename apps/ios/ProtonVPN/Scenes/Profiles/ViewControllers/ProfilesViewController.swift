@@ -39,8 +39,8 @@ protocol ProfilesViewControllerDelegate: AnyObject {
 }
 
 final class ProfilesViewController: UIViewController {
-    @IBOutlet weak var connectionBarContainerView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var connectionBarContainerView: UIView!
+    @IBOutlet var tableView: UITableView!
     
     var viewModel: ProfilesViewModel?
     var connectionBarViewController: ConnectionBarViewController?

@@ -28,11 +28,11 @@ import Strings
 import UIKit
 
 final class TodayViewController: UIViewController {
-    @IBOutlet private weak var connectionLabel: UILabel!
-    @IBOutlet private weak var countryLabel: UILabel!
-    @IBOutlet private weak var ipLabel: UILabel!
-    @IBOutlet private weak var connectButton: ProtonButton!
-    @IBOutlet private weak var buttonContainerView: UIView!
+    @IBOutlet private var connectionLabel: UILabel!
+    @IBOutlet private var countryLabel: UILabel!
+    @IBOutlet private var ipLabel: UILabel!
+    @IBOutlet private var connectButton: ProtonButton!
+    @IBOutlet private var buttonContainerView: UIView!
 
     private let widgetFactory = WidgetFactory()
     private let viewModel: TodayViewModel

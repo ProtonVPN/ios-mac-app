@@ -22,15 +22,15 @@ import ModalsShared
 import Strings
 
 final class FreeConnectionsViewController: NSViewController {
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var descriptionLabel: NSTextField!
-    @IBOutlet private weak var subTitleLabel: NSTextField!
-    @IBOutlet private weak var bannerLabel: NSTextField!
-    @IBOutlet private weak var bannerImageView: NSImageView!
-    @IBOutlet private weak var bannerChevronView: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var countriesList: NSCollectionView!
-    @IBOutlet private weak var countriesListLayout: NSCollectionViewFlowLayout!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var descriptionLabel: NSTextField!
+    @IBOutlet private var subTitleLabel: NSTextField!
+    @IBOutlet private var bannerLabel: NSTextField!
+    @IBOutlet private var bannerImageView: NSImageView!
+    @IBOutlet private var bannerChevronView: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var countriesList: NSCollectionView!
+    @IBOutlet private var countriesListLayout: NSCollectionViewFlowLayout!
 
     var onBannerPress: (() -> Void)?
     var countries: [(String, Image?)]?

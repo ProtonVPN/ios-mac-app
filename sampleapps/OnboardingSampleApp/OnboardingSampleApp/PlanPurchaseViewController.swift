@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 final class PlanPurchaseViewController: UIViewController {
-    @IBOutlet private weak var planPurchasedButton: UIButton!
+    @IBOutlet private var planPurchasedButton: UIButton!
 
     var completion: OnboardingPlanPurchaseCompletion?
 

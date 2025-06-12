@@ -35,14 +35,14 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         case killSwitch
     }
 
-    @IBOutlet private weak var autoConnectView: SettingsDropDownView!
-    @IBOutlet private weak var quickConnectView: SettingsDropDownView!
-    @IBOutlet private weak var protocolView: SettingsDropDownView!
+    @IBOutlet private var autoConnectView: SettingsDropDownView!
+    @IBOutlet private var quickConnectView: SettingsDropDownView!
+    @IBOutlet private var protocolView: SettingsDropDownView!
 
-    @IBOutlet private weak var vpnAcceleratorView: SettingsTickboxView!
-    @IBOutlet private weak var plutoniumView: SettingsTickboxView!
-    @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
-    @IBOutlet private weak var allowLANView: SettingsTickboxView!
+    @IBOutlet private var vpnAcceleratorView: SettingsTickboxView!
+    @IBOutlet private var plutoniumView: SettingsTickboxView!
+    @IBOutlet private var dnsLeakProtectionView: SettingsTickboxView!
+    @IBOutlet private var allowLANView: SettingsTickboxView!
     private var viewModel: ConnectionSettingsViewModel
 
     @available(*, unavailable)

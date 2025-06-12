@@ -36,16 +36,16 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
     
-    @IBOutlet private weak var allThings: NSView!
+    @IBOutlet private var allThings: NSView!
     
-    @IBOutlet private weak var headerControllerViewContainer: NSView!
-    @IBOutlet private weak var tabBarControllerViewContainer: NSView!
-    @IBOutlet private weak var activeControllerViewContainer: NSView!
-    @IBOutlet private weak var announcementsControllerViewContainer: NSView!
-    @IBOutlet private weak var connectionOverlay: ConnectionOverlay!
-    @IBOutlet private weak var sidebarContainerView: NSView!
-    @IBOutlet private weak var expandButton: ExpandMapButton!
-    @IBOutlet private weak var expandButtonLeading: NSLayoutConstraint!
+    @IBOutlet private var headerControllerViewContainer: NSView!
+    @IBOutlet private var tabBarControllerViewContainer: NSView!
+    @IBOutlet private var activeControllerViewContainer: NSView!
+    @IBOutlet private var announcementsControllerViewContainer: NSView!
+    @IBOutlet private var connectionOverlay: ConnectionOverlay!
+    @IBOutlet private var sidebarContainerView: NSView!
+    @IBOutlet private var expandButton: ExpandMapButton!
+    @IBOutlet private var expandButtonLeading: NSLayoutConstraint!
     
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!

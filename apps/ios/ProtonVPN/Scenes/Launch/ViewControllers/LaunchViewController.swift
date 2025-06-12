@@ -29,7 +29,7 @@ final class LaunchViewController: UIViewController {
         case immediate
     }
 
-    @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet private var loadingIndicator: UIActivityIndicatorView!
 
     var mode: AnimationMode = .delayed
 

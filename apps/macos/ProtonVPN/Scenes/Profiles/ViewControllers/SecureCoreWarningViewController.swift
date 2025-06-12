@@ -26,9 +26,9 @@ import LegacyCommon
 import Strings
 
 final class SecureCoreWarningViewController: NSViewController {
-    @IBOutlet weak var descriptionLabel: NSTextField!
-    @IBOutlet weak var upgradeButton: PrimaryActionButton!
-    @IBOutlet weak var learnMoreButton: InteractiveActionButton!
+    @IBOutlet var descriptionLabel: NSTextField!
+    @IBOutlet var upgradeButton: PrimaryActionButton!
+    @IBOutlet var learnMoreButton: InteractiveActionButton!
 
     private let viewModel: SecureCoreWarningViewModel
     

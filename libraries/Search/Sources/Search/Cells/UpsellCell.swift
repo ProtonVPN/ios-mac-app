@@ -30,11 +30,11 @@ final class UpsellCell: UITableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var mainView: UIView!
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var chevronImageView: UIImageView!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var mainView: UIView!
+    @IBOutlet private var iconImageView: UIImageView!
+    @IBOutlet private var chevronImageView: UIImageView!
 
     // MARK: Properties
 

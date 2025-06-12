@@ -21,10 +21,10 @@ import UIKit
 
 /// A two-line, detail cell with a large images at both ends.
 final class ImageSubtitleImageTableViewCell: UITableViewCell {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var leadingImageView: UIImageView!
-    @IBOutlet weak var trailingImageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet var leadingImageView: UIImageView!
+    @IBOutlet var trailingImageView: UIImageView!
 
     var selectionHandler: (() -> Void)?
 

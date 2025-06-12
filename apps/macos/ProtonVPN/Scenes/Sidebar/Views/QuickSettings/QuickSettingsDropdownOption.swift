@@ -28,11 +28,11 @@ import Strings
 import Theme
 
 class QuickSettingsDropdownOption: NSView {
-    @IBOutlet weak var titleLabel: NSTextField!
-    @IBOutlet weak var containerView: NSView!
-    @IBOutlet weak var optionIconIV: NSImageView!
-    @IBOutlet weak var plusBox: NSBox!
-    @IBOutlet weak var plusText: NSTextField!
+    @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var containerView: NSView!
+    @IBOutlet var optionIconIV: NSImageView!
+    @IBOutlet var plusBox: NSBox!
+    @IBOutlet var plusText: NSTextField!
     @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
 
     var action: SuccessCallback?

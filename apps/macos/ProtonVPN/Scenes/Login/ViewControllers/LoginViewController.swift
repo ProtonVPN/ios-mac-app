@@ -56,7 +56,7 @@ final class LoginViewController: NSViewController {
 
     // MARK: - Onboarding view
 
-    @IBOutlet private weak var onboardingView: NSView!
+    @IBOutlet private var onboardingView: NSView!
 
     // MARK: - Two factor view
 
@@ -95,7 +95,7 @@ final class LoginViewController: NSViewController {
         }()
     #endif
 
-    @IBOutlet private weak var logoImage: NSImageView!
+    @IBOutlet private var logoImage: NSImageView!
     private lazy var warningView: WarningView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("WarningView", owner: nil, topLevelObjects: &nibObjects),
@@ -114,22 +114,22 @@ final class LoginViewController: NSViewController {
         return view
     }()
 
-    @IBOutlet private weak var usernameTextField: TextFieldWithFocus!
-    @IBOutlet private weak var usernameHorizontalLine: NSBox!
+    @IBOutlet private var usernameTextField: TextFieldWithFocus!
+    @IBOutlet private var usernameHorizontalLine: NSBox!
 
-    @IBOutlet private weak var passwordTextField: TextFieldWithFocus!
-    @IBOutlet private weak var passwordSecureTextField: SecureTextFieldWithFocus!
-    @IBOutlet private weak var passwordRevealButton: NSButton!
-    @IBOutlet private weak var passwordHorizontalLine: NSBox!
+    @IBOutlet private var passwordTextField: TextFieldWithFocus!
+    @IBOutlet private var passwordSecureTextField: SecureTextFieldWithFocus!
+    @IBOutlet private var passwordRevealButton: NSButton!
+    @IBOutlet private var passwordHorizontalLine: NSBox!
 
-    @IBOutlet private weak var startOnBootLabel: PVPNTextField!
-    @IBOutlet private weak var startOnBootButton: SwitchButton!
+    @IBOutlet private var startOnBootLabel: PVPNTextField!
+    @IBOutlet private var startOnBootButton: SwitchButton!
 
-    @IBOutlet private weak var loginButton: LoginButton!
-    @IBOutlet private weak var loginButtonToSSOButtonVerticalOffset: NSLayoutConstraint!
-    @IBOutlet private weak var signInWithSSO: InteractiveActionButton!
-    @IBOutlet weak var createAccountButton: InteractiveActionButton!
-    @IBOutlet weak var needHelpButton: InteractiveActionButton!
+    @IBOutlet private var loginButton: LoginButton!
+    @IBOutlet private var loginButtonToSSOButtonVerticalOffset: NSLayoutConstraint!
+    @IBOutlet private var signInWithSSO: InteractiveActionButton!
+    @IBOutlet var createAccountButton: InteractiveActionButton!
+    @IBOutlet var needHelpButton: InteractiveActionButton!
 
     #if REDESIGN
         var coordinator: LoginViewControllerRepresentable.Coordinator?
@@ -151,7 +151,7 @@ final class LoginViewController: NSViewController {
         return view
     }()
 
-    @IBOutlet private weak var reachabilityCheckIndicator: NSProgressIndicator!
+    @IBOutlet private var reachabilityCheckIndicator: NSProgressIndicator!
 
     private var helpPopover: NSPopover?
 

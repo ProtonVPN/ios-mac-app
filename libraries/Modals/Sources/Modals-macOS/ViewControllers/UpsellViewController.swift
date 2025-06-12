@@ -28,7 +28,7 @@ import SwiftUI
 import Theme
 
 public final class UpsellViewController: NSViewController {
-    @IBOutlet private weak var borderView: NSView! {
+    @IBOutlet private var borderView: NSView! {
         didSet {
             borderView.wantsLayer = true
             borderView.layer?.backgroundColor = .clear
@@ -40,13 +40,13 @@ public final class UpsellViewController: NSViewController {
         }
     }
 
-    @IBOutlet private weak var gradientView: NSView!
-    @IBOutlet private weak var flagView: NSImageView!
-    @IBOutlet private weak var featureArtView: NSView!
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var descriptionLabel: NSTextField!
-    @IBOutlet private weak var upgradeButton: UpsellPrimaryActionButton!
-    @IBOutlet private weak var featuresStackView: NSStackView!
+    @IBOutlet private var gradientView: NSView!
+    @IBOutlet private var flagView: NSImageView!
+    @IBOutlet private var featureArtView: NSView!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var descriptionLabel: NSTextField!
+    @IBOutlet private var upgradeButton: UpsellPrimaryActionButton!
+    @IBOutlet private var featuresStackView: NSStackView!
 
     var modalType: ModalType?
     private var modalModel: ModalModel? {

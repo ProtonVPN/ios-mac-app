@@ -61,10 +61,10 @@ import VPNShared
     class AppDelegate: NSObject {
         @Dependency(\.defaultsProvider) var provider
         public private(set) static var wasRecentlyActive = false
-        @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
-        @IBOutlet weak var profilesMenu: ProfilesMenuController!
-        @IBOutlet weak var helpMenu: HelpMenuController!
-        @IBOutlet weak var statusMenu: StatusMenuWindowController!
+        @IBOutlet var protonVpnMenu: ProtonVpnMenuController!
+        @IBOutlet var profilesMenu: ProfilesMenuController!
+        @IBOutlet var helpMenu: HelpMenuController!
+        @IBOutlet var statusMenu: StatusMenuWindowController!
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()

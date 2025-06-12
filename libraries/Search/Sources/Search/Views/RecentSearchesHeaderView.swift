@@ -27,8 +27,8 @@ protocol RecentSearchesHeaderViewDelegate: AnyObject {
 final class RecentSearchesHeaderView: UIView {
     // MARK: Outlets
 
-    @IBOutlet private weak var clearButton: UIButton!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var clearButton: UIButton!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 

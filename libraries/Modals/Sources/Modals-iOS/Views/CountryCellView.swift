@@ -23,8 +23,8 @@ import UIKit
 class CountryCellView: UICollectionViewCell {
     static var identifier: String { String(describing: self) }
 
-    @IBOutlet private weak var flagImageView: UIImageView!
-    @IBOutlet private weak var countryNameField: UILabel!
+    @IBOutlet private var flagImageView: UIImageView!
+    @IBOutlet private var countryNameField: UILabel!
 
     public func setCountry(_ country: String, image: Image?) {
         countryNameField.text = country

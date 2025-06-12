@@ -30,9 +30,9 @@ final class InformationTableViewCell: UITableViewCell {
         String(describing: self)
     }
 
-    @IBOutlet private weak var icon: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private var icon: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UILabel!
 
     var viewModel: ViewModel! {
         didSet {

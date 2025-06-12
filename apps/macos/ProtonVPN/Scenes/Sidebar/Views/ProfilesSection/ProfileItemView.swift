@@ -25,13 +25,13 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 
 class ProfileItemView: NSView {
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var profileCircle: ProfileCircle!
-    @IBOutlet weak var profileName: NSTextField!
-    @IBOutlet weak var secondaryDescription: PVPNTextField!
-    @IBOutlet weak var nameToDescriptionConstraint: NSLayoutConstraint!
-    @IBOutlet weak var connectButton: ConnectButton!
-    @IBOutlet weak var rowSeparator: NSBox!
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var profileCircle: ProfileCircle!
+    @IBOutlet var profileName: NSTextField!
+    @IBOutlet var secondaryDescription: PVPNTextField!
+    @IBOutlet var nameToDescriptionConstraint: NSLayoutConstraint!
+    @IBOutlet var connectButton: ConnectButton!
+    @IBOutlet var rowSeparator: NSBox!
 
     private var viewModel: ProfileItemViewModel!
     private var trackingArea: NSTrackingArea?

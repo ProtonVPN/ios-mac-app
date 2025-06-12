@@ -36,9 +36,9 @@ class ServersInformationViewController: UIViewController {
         let rowViewModels: [InformationTableViewCell.ViewModel]
     }
 
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var titleLabel: UILabel!
 
     var viewModel: ViewModel!
 

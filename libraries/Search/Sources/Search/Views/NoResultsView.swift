@@ -23,8 +23,8 @@ import UIKit
 final class NoResultsView: UIView {
     // MARK: Outlets
 
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var contentView: UIView!
 
     // MARK: Setup

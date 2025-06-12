@@ -24,9 +24,9 @@ import ProtonCoreUIFoundations
 import UIKit
 
 class ServersHeaderView: UITableViewHeaderFooterView {
-    @IBOutlet private weak var colorView: UIView!
-    @IBOutlet private weak var serversName: UILabel!
-    @IBOutlet private weak var infoBtn: UIButton!
+    @IBOutlet private var colorView: UIView!
+    @IBOutlet private var serversName: UILabel!
+    @IBOutlet private var infoBtn: UIButton!
 
     var callback: (() -> Void)? {
         didSet {

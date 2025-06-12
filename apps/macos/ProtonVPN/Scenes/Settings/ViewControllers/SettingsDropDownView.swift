@@ -32,11 +32,11 @@ class SettingsDropDownView: NSView {
 
     private var model: ViewModel?
 
-    @IBOutlet private weak var label: PVPNTextField!
-    @IBOutlet private weak var separator: NSBox!
-    @IBOutlet private weak var infoIcon: NSImageView!
-    @IBOutlet private weak var popupButton: HoverDetectionPopUpButton!
-    @IBOutlet private weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet private var label: PVPNTextField!
+    @IBOutlet private var separator: NSBox!
+    @IBOutlet private var infoIcon: NSImageView!
+    @IBOutlet private var popupButton: HoverDetectionPopUpButton!
+    @IBOutlet private var progressIndicator: NSProgressIndicator!
 
     override func accessibilityRole() -> NSAccessibility.Role? {
         .popUpButton

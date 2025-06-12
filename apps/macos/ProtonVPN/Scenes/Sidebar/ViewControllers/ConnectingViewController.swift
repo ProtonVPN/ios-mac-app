@@ -24,12 +24,12 @@ import Cocoa
 import Ergonomics
 
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
-    @IBOutlet private weak var graphicContainer: NSView!
-    @IBOutlet private weak var phaseLabel: NSTextField!
-    @IBOutlet private weak var connectionLabel: NSTextField!
+    @IBOutlet private var graphicContainer: NSView!
+    @IBOutlet private var phaseLabel: NSTextField!
+    @IBOutlet private var connectionLabel: NSTextField!
     
-    @IBOutlet private weak var mainStackView: NSStackView!
-    @IBOutlet private weak var buttonsStackView: NSStackView!
+    @IBOutlet private var mainStackView: NSStackView!
+    @IBOutlet private var buttonsStackView: NSStackView!
         
     private let viewModel: ConnectingOverlayViewModel
     

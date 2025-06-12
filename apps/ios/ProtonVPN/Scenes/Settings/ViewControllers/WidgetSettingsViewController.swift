@@ -25,7 +25,7 @@ import Strings
 import UIKit
 
 class WidgetSettingsViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
     
     var genericDataSource: GenericTableViewDataSource?
     var viewModel: WidgetSettingsViewModel

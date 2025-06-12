@@ -23,9 +23,9 @@
 import UIKit
 
 class KeyValueTableViewCell: UITableViewCell {
-    @IBOutlet weak var keyLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
-    @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet var keyLabel: UILabel!
+    @IBOutlet var valueLabel: UILabel!
+    @IBOutlet var stackView: UIStackView!
     
     var completionHandler: (() -> Void)?
     

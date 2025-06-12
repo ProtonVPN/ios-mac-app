@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable strongOutlets
 --disable strongifiedSelf
 --disable swiftTestingTestCaseNames
 --disable todos

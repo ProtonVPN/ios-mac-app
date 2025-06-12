@@ -35,10 +35,10 @@ import Theme
 import Timer
 
 final class OfferBannerView: NSView {
-    @IBOutlet private weak var image: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var label: NSTextField!
-    @IBOutlet private weak var separatorViewBottom: NSView!
+    @IBOutlet private var image: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var label: NSTextField!
+    @IBOutlet private var separatorViewBottom: NSView!
     @IBOutlet var dismissButton: NSButton!
 
     private var viewModel: OfferBannerViewModel!

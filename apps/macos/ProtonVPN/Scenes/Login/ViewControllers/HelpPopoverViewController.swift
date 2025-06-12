@@ -27,10 +27,10 @@ import Strings
 class HelpPopoverViewController: NSViewController {
     private let viewModel: HelpPopoverViewModel
     
-    @IBOutlet private weak var resetButton: InteractiveActionButton!
-    @IBOutlet private weak var forgotButton: InteractiveActionButton!
-    @IBOutlet private weak var commonIssuesButton: InteractiveActionButton!
-    @IBOutlet private weak var reportBugButton: InteractiveActionButton!
+    @IBOutlet private var resetButton: InteractiveActionButton!
+    @IBOutlet private var forgotButton: InteractiveActionButton!
+    @IBOutlet private var commonIssuesButton: InteractiveActionButton!
+    @IBOutlet private var reportBugButton: InteractiveActionButton!
     
     required init(viewModel: HelpPopoverViewModel) {
         self.viewModel = viewModel

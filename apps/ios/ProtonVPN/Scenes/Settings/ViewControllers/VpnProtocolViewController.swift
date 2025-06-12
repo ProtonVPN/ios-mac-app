@@ -12,7 +12,7 @@ import Strings
 import UIKit
 
 final class VpnProtocolViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private var tableView: UITableView!
     
     private var genericDataSource: GenericTableViewDataSource?
     

@@ -29,10 +29,10 @@ import VPNAppCore
 import Ergonomics
 
 class FeatureRowView: NSView {
-    @IBOutlet private weak var iconIV: NSImageView!
-    @IBOutlet private weak var titleLbl: NSTextField!
-    @IBOutlet private weak var descriptionLbl: NSTextField!
-    @IBOutlet private weak var learnMoreBtn: InteractiveActionButton!
+    @IBOutlet private var iconIV: NSImageView!
+    @IBOutlet private var titleLbl: NSTextField!
+    @IBOutlet private var descriptionLbl: NSTextField!
+    @IBOutlet private var learnMoreBtn: InteractiveActionButton!
 
     var viewModel: FeatureCellViewModel! {
         didSet {

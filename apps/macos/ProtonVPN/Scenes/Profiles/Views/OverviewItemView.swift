@@ -26,16 +26,16 @@ import ProtonCoreUIFoundations
 import Strings
 
 class OverviewItemView: NSTableRowView {
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var profileCircle: ProfileCircle!
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var profileCircle: ProfileCircle!
 
-    @IBOutlet weak var profileNameField: NSTextField!
-    @IBOutlet weak var connectionDescriptionField: NSTextField!
-    @IBOutlet weak var actionButtonStackView: NSStackView!
-    @IBOutlet weak var connectButton: InteractiveActionButton!
-    @IBOutlet weak var editButton: InteractiveActionButton!
-    @IBOutlet weak var deleteButton: InteractiveActionButton!
-    @IBOutlet weak var rowSeparator: NSBox!
+    @IBOutlet var profileNameField: NSTextField!
+    @IBOutlet var connectionDescriptionField: NSTextField!
+    @IBOutlet var actionButtonStackView: NSStackView!
+    @IBOutlet var connectButton: InteractiveActionButton!
+    @IBOutlet var editButton: InteractiveActionButton!
+    @IBOutlet var deleteButton: InteractiveActionButton!
+    @IBOutlet var rowSeparator: NSBox!
 
     fileprivate var viewModel: OverviewItemViewModel!
 

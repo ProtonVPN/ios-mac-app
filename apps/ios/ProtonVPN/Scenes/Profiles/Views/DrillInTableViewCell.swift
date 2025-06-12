@@ -23,8 +23,8 @@
 import UIKit
 
 class DrillInTableViewCell: UITableViewCell {
-    @IBOutlet weak var keyLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet var keyLabel: UILabel!
+    @IBOutlet var valueLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

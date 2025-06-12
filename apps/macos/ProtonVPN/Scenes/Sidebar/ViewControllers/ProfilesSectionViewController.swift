@@ -37,8 +37,8 @@ class ProfileSectionViewController: NSViewController {
         var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
     }
     
-    @IBOutlet weak var profileListTableView: NSTableView!
-    @IBOutlet weak var profileListScrollView: NSScrollView!
+    @IBOutlet var profileListTableView: NSTableView!
+    @IBOutlet var profileListScrollView: NSScrollView!
     
     fileprivate let viewModel: ProfilesSectionViewModel
     

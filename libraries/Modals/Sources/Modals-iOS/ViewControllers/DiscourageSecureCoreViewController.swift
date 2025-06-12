@@ -22,16 +22,16 @@ import UIKit
 final class DiscourageSecureCoreViewController: UIViewController {
     // MARK: Outlets
 
-    @IBOutlet private weak var dontShowAgainLabel: UILabel!
-    @IBOutlet private weak var dontShowAgainSwitch: UISwitch!
-    @IBOutlet private weak var featureView: UIView!
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var activateButton: UIButton!
-    @IBOutlet private weak var cancelButton: UIButton!
-    @IBOutlet private weak var learnMoreButton: UIButton!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var featureArtImageView: UIImageView!
+    @IBOutlet private var dontShowAgainLabel: UILabel!
+    @IBOutlet private var dontShowAgainSwitch: UISwitch!
+    @IBOutlet private var featureView: UIView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var activateButton: UIButton!
+    @IBOutlet private var cancelButton: UIButton!
+    @IBOutlet private var learnMoreButton: UIButton!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var featureArtImageView: UIImageView!
 
     private let feature = DiscourageSecureCoreFeature()
 

@@ -34,11 +34,11 @@ import Strings
 final class MapViewController: UIViewController {
     private let mapFrame = CGRect(x: 80, y: 104, width: 2600, height: 2206) // correct ratio of Mercator projection map
     
-    @IBOutlet private weak var secureCoreBar: UIView!
-    @IBOutlet private weak var secureCoreLabel: UILabel!
-    @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
-    @IBOutlet private weak var mapView: UIImageView!
-    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private var secureCoreBar: UIView!
+    @IBOutlet private var secureCoreLabel: UILabel!
+    @IBOutlet private var secureCoreSwitch: ConfirmationToggleSwitch!
+    @IBOutlet private var mapView: UIImageView!
+    @IBOutlet private var scrollView: UIScrollView!
     
     var viewModel: MapViewModel?
     
@@ -47,7 +47,7 @@ final class MapViewController: UIViewController {
     private var initialMoveAndZoomDone = false
     private var initialMoveAndZoomFrame = CGRect(x: 1040, y: 500, width: 500, height: 500)
     
-    @IBOutlet weak var connectionBarContainerView: UIView!
+    @IBOutlet var connectionBarContainerView: UIView!
     public var connectionBarViewController: ConnectionBarViewController?
 
     override func awakeFromNib() {

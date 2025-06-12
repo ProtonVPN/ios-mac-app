@@ -27,12 +27,12 @@ import Strings
 import Theme
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
-    @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!
-    @IBOutlet private weak var natTypeView: SettingsTickboxView!
-    @IBOutlet private weak var safeModeView: SettingsTickboxView!
-    @IBOutlet private weak var usageDataView: SettingsTickboxView!
-    @IBOutlet private weak var crashReportsView: SettingsTickboxView!
-    @IBOutlet private weak var hermesView: SettingsTickboxView!
+    @IBOutlet private var alternativeRoutingView: SettingsTickboxView!
+    @IBOutlet private var natTypeView: SettingsTickboxView!
+    @IBOutlet private var safeModeView: SettingsTickboxView!
+    @IBOutlet private var usageDataView: SettingsTickboxView!
+    @IBOutlet private var crashReportsView: SettingsTickboxView!
+    @IBOutlet private var hermesView: SettingsTickboxView!
 
     private var viewModel: AdvancedSettingsViewModel
 

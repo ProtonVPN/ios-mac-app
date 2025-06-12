@@ -30,11 +30,11 @@ import Ergonomics
 import Strings
 
 final class AnnouncementImageViewController: NSViewController {
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var imageViewWidth: NSLayoutConstraint!
-    @IBOutlet private weak var imageViewHeight: NSLayoutConstraint!
-    @IBOutlet private weak var progressIndicator: NSProgressIndicator!
-    @IBOutlet private weak var actionButton: PrimaryActionButton!
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var imageViewWidth: NSLayoutConstraint!
+    @IBOutlet private var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet private var progressIndicator: NSProgressIndicator!
+    @IBOutlet private var actionButton: PrimaryActionButton!
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?

@@ -26,9 +26,9 @@ import Theme
 import UIKit
 
 final class SwitchTableViewCell: UITableViewCell {
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
-    @IBOutlet weak var upsellImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var switchControl: ConfirmationToggleSwitch!
+    @IBOutlet var upsellImageView: UIImageView!
 
     var upsellTapped: (() -> Void)?
     var toggled: ((Bool, @escaping (Bool) -> Void) -> Void)?

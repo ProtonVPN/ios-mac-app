@@ -26,15 +26,15 @@ import LegacyCommon
 import Strings
 
 class WarningPopupViewController: NSViewController {
-    @IBOutlet weak var bodyView: NSView!
-    @IBOutlet weak var warningImage: NSImageView!
-    @IBOutlet weak var warningDescriptionLabel: NSTextField!
-    @IBOutlet weak var warningScrollViewContainer: NSScrollView!
+    @IBOutlet var bodyView: NSView!
+    @IBOutlet var warningImage: NSImageView!
+    @IBOutlet var warningDescriptionLabel: NSTextField!
+    @IBOutlet var warningScrollViewContainer: NSScrollView!
     @IBOutlet var warningDescription: PVPNTextViewLink!
 
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: CancellationButton!
-    @IBOutlet weak var continueButton: PrimaryActionButton!
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var cancelButton: CancellationButton!
+    @IBOutlet var continueButton: PrimaryActionButton!
     
     var viewModel: WarningPopupViewModel!
     

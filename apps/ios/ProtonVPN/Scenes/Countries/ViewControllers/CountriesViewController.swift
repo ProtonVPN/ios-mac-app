@@ -36,13 +36,13 @@ import Domain
 import Strings
 
 final class CountriesViewController: UIViewController {
-    @IBOutlet private weak var connectionBarContainerView: UIView!
-    @IBOutlet private weak var secureCoreSeparator: UIView!
-    @IBOutlet private weak var secureCoreSeparatorHeight: NSLayoutConstraint!
-    @IBOutlet private weak var secureCoreBar: UIView!
-    @IBOutlet private weak var secureCoreLabel: UILabel!
-    @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
-    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private var connectionBarContainerView: UIView!
+    @IBOutlet private var secureCoreSeparator: UIView!
+    @IBOutlet private var secureCoreSeparatorHeight: NSLayoutConstraint!
+    @IBOutlet private var secureCoreBar: UIView!
+    @IBOutlet private var secureCoreLabel: UILabel!
+    @IBOutlet private var secureCoreSwitch: ConfirmationToggleSwitch!
+    @IBOutlet private var tableView: UITableView!
 
     var viewModel: CountriesViewModel!
     var connectionBarViewController: ConnectionBarViewController?

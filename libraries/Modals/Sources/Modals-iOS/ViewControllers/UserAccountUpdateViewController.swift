@@ -25,33 +25,33 @@ import Theme
 import UIKit
 
 class UserAccountUpdateViewController: UIViewController {
-    @IBOutlet private weak var reconnectionView: UIView!
-    @IBOutlet private weak var serversView: UIView!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var descriptionLbl: UILabel!
+    @IBOutlet private var reconnectionView: UIView!
+    @IBOutlet private var serversView: UIView!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var descriptionLbl: UILabel!
 
-    @IBOutlet private weak var featuresTitleLbl: UILabel!
+    @IBOutlet private var featuresTitleLbl: UILabel!
 
-    @IBOutlet private weak var primaryActionBtn: UIButton!
-    @IBOutlet private weak var secondActionBtn: UIButton!
+    @IBOutlet private var primaryActionBtn: UIButton!
+    @IBOutlet private var secondActionBtn: UIButton!
 
-    @IBOutlet private weak var feature1View: UIView!
-    @IBOutlet private weak var feature1Lbl: UILabel!
+    @IBOutlet private var feature1View: UIView!
+    @IBOutlet private var feature1Lbl: UILabel!
 
-    @IBOutlet private weak var feature2View: UIView!
-    @IBOutlet private weak var feature2Lbl: UILabel!
+    @IBOutlet private var feature2View: UIView!
+    @IBOutlet private var feature2Lbl: UILabel!
 
-    @IBOutlet private weak var feature3View: UIView!
-    @IBOutlet private weak var feature3Lbl: UILabel!
+    @IBOutlet private var feature3View: UIView!
+    @IBOutlet private var feature3Lbl: UILabel!
 
-    @IBOutlet private weak var fromServerTitleLbl: UILabel!
-    @IBOutlet private weak var fromServerIV: UIImageView!
-    @IBOutlet private weak var fromServerLbl: UILabel!
+    @IBOutlet private var fromServerTitleLbl: UILabel!
+    @IBOutlet private var fromServerIV: UIImageView!
+    @IBOutlet private var fromServerLbl: UILabel!
 
-    @IBOutlet private weak var toServerTitleLbl: UILabel!
-    @IBOutlet private weak var toServerIV: UIImageView!
-    @IBOutlet private weak var toServerLbl: UILabel!
+    @IBOutlet private var toServerTitleLbl: UILabel!
+    @IBOutlet private var toServerIV: UIImageView!
+    @IBOutlet private var toServerLbl: UILabel!
 
     @IBOutlet private var checkmarks: [UIImageView]!
 

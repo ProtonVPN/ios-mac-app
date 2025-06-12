@@ -24,16 +24,16 @@ import Theme
 import UIKit
 
 class FreeConnectionsViewController: UIViewController {
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var subTitleLabel: UILabel!
-    @IBOutlet private weak var bannerLabel: UILabel!
-    @IBOutlet private weak var bannerImageView: UIImageView!
-    @IBOutlet private weak var bannerChevronView: UIImageView!
-    @IBOutlet private weak var bannerButton: UIButton!
-    @IBOutlet private weak var roundedBackgroundView: UIView!
-    @IBOutlet private weak var countriesList: UICollectionView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet private var subTitleLabel: UILabel!
+    @IBOutlet private var bannerLabel: UILabel!
+    @IBOutlet private var bannerImageView: UIImageView!
+    @IBOutlet private var bannerChevronView: UIImageView!
+    @IBOutlet private var bannerButton: UIButton!
+    @IBOutlet private var roundedBackgroundView: UIView!
+    @IBOutlet private var countriesList: UICollectionView!
 
     var onBannerPress: (() -> Void)?
     var countries: [(String, Image?)]?

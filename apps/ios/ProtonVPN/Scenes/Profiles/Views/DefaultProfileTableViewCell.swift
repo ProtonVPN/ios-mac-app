@@ -24,10 +24,10 @@ import LegacyCommon
 import UIKit
 
 final class DefaultProfileTableViewCell: UITableViewCell {
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet weak var connectButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var leftImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet var connectButtonTrailingConstraint: NSLayoutConstraint!
 
     var viewModel: DefaultProfileViewModel? {
         didSet {

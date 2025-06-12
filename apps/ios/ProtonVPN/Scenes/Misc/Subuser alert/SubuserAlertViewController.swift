@@ -29,12 +29,12 @@ import VPNAppCore
 import Strings
 
 class SubuserAlertViewController: UIViewController {
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var description1Label: UILabel!
-    @IBOutlet private weak var description2Label: UILabel!
-    @IBOutlet private weak var assignConnectionsButton: ProtonButton!
-    @IBOutlet private weak var loginButton: ProtonButton!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var description1Label: UILabel!
+    @IBOutlet private var description2Label: UILabel!
+    @IBOutlet private var assignConnectionsButton: ProtonButton!
+    @IBOutlet private var loginButton: ProtonButton!
 
     var role: UserRole = .noOrganization
 

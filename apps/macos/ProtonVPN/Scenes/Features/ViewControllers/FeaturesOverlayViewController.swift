@@ -26,9 +26,9 @@ import LegacyCommon
 import Theme
 
 final class FeaturesOverlayViewController: OverlayViewController {
-    @IBOutlet private weak var featuresStackView: NSStackView!
-    @IBOutlet private weak var featuresTitleTF: NSTextField!
-    @IBOutlet private weak var dismissButton: HoverDetectionButton!
+    @IBOutlet private var featuresStackView: NSStackView!
+    @IBOutlet private var featuresTitleTF: NSTextField!
+    @IBOutlet private var dismissButton: HoverDetectionButton!
 
     private let viewModel: FeaturesOverlayViewModelProtocol
 

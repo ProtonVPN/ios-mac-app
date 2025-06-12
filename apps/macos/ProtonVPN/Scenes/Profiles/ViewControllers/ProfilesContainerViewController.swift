@@ -29,8 +29,8 @@ final class ProfilesContainerViewController: NSViewController {
     typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
     private let factory: Factory
     
-    @IBOutlet weak var profilesTabBarControllerViewContainer: NSView!
-    @IBOutlet weak var activeControllerViewContainer: NSView!
+    @IBOutlet var profilesTabBarControllerViewContainer: NSView!
+    @IBOutlet var activeControllerViewContainer: NSView!
     
     private let tabChanged = Notification.Name("ProfilesSectionViewControllerTabChanged")
     private let editProfile = Notification.Name("ProfilesSectionViewControllerEditProfile")

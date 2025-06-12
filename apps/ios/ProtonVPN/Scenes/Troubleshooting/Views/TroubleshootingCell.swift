@@ -24,8 +24,8 @@ import UIKit
 
 class TroubleshootingCell: UITableViewCell {
     // Views
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UITextView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

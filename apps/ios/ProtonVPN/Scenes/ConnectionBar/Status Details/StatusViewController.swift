@@ -26,7 +26,7 @@ import Strings
 import UIKit
 
 final class StatusViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView?
+    @IBOutlet private var tableView: UITableView?
     
     var viewModel: StatusViewModel? {
         didSet {

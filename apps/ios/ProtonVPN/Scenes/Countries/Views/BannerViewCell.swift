@@ -23,10 +23,10 @@
 import UIKit
 
 class BannerViewCell: UITableViewCell {
-    @IBOutlet weak var roundedBackgroundView: UIView!
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var rightChevron: UIImageView!
+    @IBOutlet var roundedBackgroundView: UIView!
+    @IBOutlet var leftImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var rightChevron: UIImageView!
 
     var viewModel: BannerViewModel? {
         didSet {

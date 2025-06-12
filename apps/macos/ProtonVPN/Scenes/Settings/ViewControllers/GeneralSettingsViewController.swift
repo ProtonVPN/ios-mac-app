@@ -31,11 +31,11 @@ public protocol ReloadableViewController: AnyObject {
 }
 
 final class GeneralSettingsViewController: NSViewController, ReloadableViewController {
-    @IBOutlet weak var startOnBootView: SettingsTickboxView!
-    @IBOutlet weak var startMinimizedView: SettingsTickboxView!
-    @IBOutlet weak var systemNotificationsView: SettingsTickboxView!
-    @IBOutlet weak var earlyAccessView: SettingsTickboxView!
-    @IBOutlet weak var unprotectedNetworkView: SettingsTickboxView!
+    @IBOutlet var startOnBootView: SettingsTickboxView!
+    @IBOutlet var startMinimizedView: SettingsTickboxView!
+    @IBOutlet var systemNotificationsView: SettingsTickboxView!
+    @IBOutlet var earlyAccessView: SettingsTickboxView!
+    @IBOutlet var unprotectedNetworkView: SettingsTickboxView!
 
     private var viewModel: GeneralSettingsViewModel
     

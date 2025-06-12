@@ -36,19 +36,19 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var flagIcon: UIImageView!
-    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var countryName: UILabel!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var flagIcon: UIImageView!
+    @IBOutlet private var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var flagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private var countryName: UILabel!
 
-    @IBOutlet private weak var p2pIV: UIImageView!
-    @IBOutlet private weak var smartIV: UIImageView!
-    @IBOutlet private weak var torIV: UIImageView!
+    @IBOutlet private var p2pIV: UIImageView!
+    @IBOutlet private var smartIV: UIImageView!
+    @IBOutlet private var torIV: UIImageView!
 
-    @IBOutlet private weak var rightChevron: UIImageView!
-    @IBOutlet private weak var entrySeparator: UIImageView!
-    @IBOutlet private weak var flagsStackView: UIStackView!
+    @IBOutlet private var rightChevron: UIImageView!
+    @IBOutlet private var entrySeparator: UIImageView!
+    @IBOutlet private var flagsStackView: UIStackView!
 
     // MARK: Properties
 

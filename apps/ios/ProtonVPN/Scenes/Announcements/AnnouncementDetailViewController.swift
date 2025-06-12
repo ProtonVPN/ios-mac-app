@@ -28,17 +28,17 @@ import ProtonCoreUIFoundations
 import UIKit
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var actionButton: UIButton!
-    @IBOutlet private weak var pageFooterLabel: UILabel!
-    @IBOutlet private weak var incentiveLabel: UILabel!
-    @IBOutlet private weak var footerView: UIView!
-    @IBOutlet private weak var pillView: UIView!
-    @IBOutlet private weak var pillLabel: UILabel!
-    @IBOutlet private weak var pictureView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var featuresStackView: UIStackView!
-    @IBOutlet private weak var featuresFooterLabel: UILabel!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var actionButton: UIButton!
+    @IBOutlet private var pageFooterLabel: UILabel!
+    @IBOutlet private var incentiveLabel: UILabel!
+    @IBOutlet private var footerView: UIView!
+    @IBOutlet private var pillView: UIView!
+    @IBOutlet private var pillLabel: UILabel!
+    @IBOutlet private var pictureView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var featuresStackView: UIStackView!
+    @IBOutlet private var featuresFooterLabel: UILabel!
 
     private let data: OfferPanel.LegacyPanel
 

@@ -59,27 +59,27 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var serverNameLabel: UILabel!
-    @IBOutlet private weak var cityNameLabel: UILabel!
-    @IBOutlet private weak var loadLbl: UILabel!
-    @IBOutlet private weak var loadColorView: UIView!
-    @IBOutlet private weak var loadContainingView: UIView!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var serverNameLabel: UILabel!
+    @IBOutlet private var cityNameLabel: UILabel!
+    @IBOutlet private var loadLbl: UILabel!
+    @IBOutlet private var loadColorView: UIView!
+    @IBOutlet private var loadContainingView: UIView!
 
     private var partnersImageViews: [UIImageView] = []
     private var streamingIV: UIImageView?
-    @IBOutlet private weak var featuresStackView: UIStackView!
+    @IBOutlet private var featuresStackView: UIStackView!
 
-    @IBOutlet private weak var secureView: UIView!
+    @IBOutlet private var secureView: UIView!
 
-    @IBOutlet private weak var countryNameLabel: UILabel!
-    @IBOutlet private weak var exitFlagIcon: UIImageView!
-    @IBOutlet private weak var entryFlagIcon: UIImageView!
+    @IBOutlet private var countryNameLabel: UILabel!
+    @IBOutlet private var exitFlagIcon: UIImageView!
+    @IBOutlet private var entryFlagIcon: UIImageView!
 
-    @IBOutlet weak var exitFlagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var exitFlagIconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var entryFlagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var entryFlagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var exitFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var exitFlagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var entryFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var entryFlagIconWidthConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 

@@ -28,8 +28,8 @@ import LegacyCommon
 final class TroubleshootingRowItem: NSTableRowView {
     // MARK: Outlets
 
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var switchView: SwitchButton!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var switchView: SwitchButton!
     private let textView = NSTextView()
 
     // MARK: Properties

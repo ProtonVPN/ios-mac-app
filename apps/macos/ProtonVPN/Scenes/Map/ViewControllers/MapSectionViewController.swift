@@ -33,10 +33,10 @@ class MapSectionViewController: NSViewController {
     
     private let zoomLevels: CGFloat = 8
     
-    @IBOutlet weak var mapHeaderControllerViewContainer: PassThroughView!
-    @IBOutlet weak var mapView: MapView!
-    @IBOutlet weak var logoImageView: NSImageView!
-    @IBOutlet weak var zoomView: ZoomView!
+    @IBOutlet var mapHeaderControllerViewContainer: PassThroughView!
+    @IBOutlet var mapView: MapView!
+    @IBOutlet var logoImageView: NSImageView!
+    @IBOutlet var zoomView: ZoomView!
     
     private var mapHeaderViewController: MapHeaderViewController!
     

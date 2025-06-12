@@ -64,7 +64,7 @@ class ViewController: NSViewController {
         ]), "Feee servers"),
     ]
 
-    @IBOutlet weak var tableView: NSTableView! {
+    @IBOutlet var tableView: NSTableView! {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self

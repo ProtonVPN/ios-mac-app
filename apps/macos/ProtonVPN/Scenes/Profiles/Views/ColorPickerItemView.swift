@@ -23,7 +23,7 @@
 import Cocoa
 
 class ColorPickerItemView: NSCollectionViewItem {
-    @IBOutlet weak var colorPickerCircle: ColorPickerCircle!
+    @IBOutlet var colorPickerCircle: ColorPickerCircle!
 
     override var isSelected: Bool {
         didSet {

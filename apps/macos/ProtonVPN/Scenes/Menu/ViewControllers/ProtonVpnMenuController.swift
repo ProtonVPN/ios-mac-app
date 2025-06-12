@@ -25,14 +25,14 @@ import LegacyCommon
 import Strings
 
 class ProtonVpnMenuController: NSObject {
-    @IBOutlet weak var aboutItem: NSMenuItem!
-    @IBOutlet weak var checkForUpdatesItem: NSMenuItem!
-    @IBOutlet weak var preferencesItem: NSMenuItem!
-    @IBOutlet weak var hideProtonItem: NSMenuItem!
-    @IBOutlet weak var hideOthersItem: NSMenuItem!
-    @IBOutlet weak var showAllItem: NSMenuItem!
-    @IBOutlet weak var logOutItem: NSMenuItem!
-    @IBOutlet weak var quitItem: NSMenuItem!
+    @IBOutlet var aboutItem: NSMenuItem!
+    @IBOutlet var checkForUpdatesItem: NSMenuItem!
+    @IBOutlet var preferencesItem: NSMenuItem!
+    @IBOutlet var hideProtonItem: NSMenuItem!
+    @IBOutlet var hideOthersItem: NSMenuItem!
+    @IBOutlet var showAllItem: NSMenuItem!
+    @IBOutlet var logOutItem: NSMenuItem!
+    @IBOutlet var quitItem: NSMenuItem!
     
     private var viewModel: ProtonVpnMenuViewModel!
     

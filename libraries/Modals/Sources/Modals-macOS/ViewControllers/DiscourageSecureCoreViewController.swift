@@ -21,12 +21,12 @@ import Ergonomics
 import ModalsShared
 
 final class DiscourageSecureCoreViewController: NSViewController {
-    @IBOutlet private weak var dontShowAgainLabel: NSTextField!
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var learnMoreButton: NSButton!
-    @IBOutlet private weak var descriptionLabel: NSTextField!
-    @IBOutlet private weak var activateButton: UpsellPrimaryActionButton!
+    @IBOutlet private var dontShowAgainLabel: NSTextField!
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var learnMoreButton: NSButton!
+    @IBOutlet private var descriptionLabel: NSTextField!
+    @IBOutlet private var activateButton: UpsellPrimaryActionButton!
 
     private let feature = DiscourageSecureCoreFeature()
 

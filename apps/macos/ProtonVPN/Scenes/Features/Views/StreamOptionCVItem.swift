@@ -25,8 +25,8 @@ import Ergonomics
 import LegacyCommon
 
 class StreamOptionCVItem: NSCollectionViewItem {
-    @IBOutlet private weak var serviceIV: NSImageView!
-    @IBOutlet private weak var serviceLbl: NSTextField!
+    @IBOutlet private var serviceIV: NSImageView!
+    @IBOutlet private var serviceLbl: NSTextField!
         
     public var viewModel: StreamOptionCVItemViewModelProtocol? {
         didSet {

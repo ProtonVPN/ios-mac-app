@@ -24,8 +24,8 @@ import Cocoa
 import LegacyCommon
 
 final class SettingsContainerViewController: NSViewController {
-    @IBOutlet private weak var tabBarControllerViewContainer: NSView!
-    @IBOutlet private weak var activeControllerViewContainer: NSView!
+    @IBOutlet private var tabBarControllerViewContainer: NSView!
+    @IBOutlet private var activeControllerViewContainer: NSView!
 
     private let viewModel: SettingsContainerViewModel
     private var tabBarViewController: SettingsTabBarViewController!

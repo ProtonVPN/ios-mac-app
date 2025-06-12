@@ -22,8 +22,8 @@ import UIKit
 final class PlaceholderItemView: UIView {
     // MARK: - Outlets
 
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var iconImageView: UIImageView!
 
     // MARK: - Properties
 

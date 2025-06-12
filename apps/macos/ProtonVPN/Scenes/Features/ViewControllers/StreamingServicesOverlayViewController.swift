@@ -27,15 +27,15 @@ import Strings
 import Theme
 
 final class StreamingServicesOverlayViewController: OverlayViewController {
-    @IBOutlet private weak var streamingIcon: NSImageView!
-    @IBOutlet private weak var countryLbl: NSTextField!
-    @IBOutlet private weak var featuresLbl: NSTextField!
-    @IBOutlet private weak var instructionLbl: NSTextField!
-    @IBOutlet private weak var noteLbl: NSTextField!
-    @IBOutlet private weak var servicesCV: NSCollectionView!
-    @IBOutlet private weak var extraLbl: NSTextField!
-    @IBOutlet private weak var servicesCVHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var dismissButton: HoverDetectionButton!
+    @IBOutlet private var streamingIcon: NSImageView!
+    @IBOutlet private var countryLbl: NSTextField!
+    @IBOutlet private var featuresLbl: NSTextField!
+    @IBOutlet private var instructionLbl: NSTextField!
+    @IBOutlet private var noteLbl: NSTextField!
+    @IBOutlet private var servicesCV: NSCollectionView!
+    @IBOutlet private var extraLbl: NSTextField!
+    @IBOutlet private var servicesCVHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var dismissButton: HoverDetectionButton!
     
     private let viewModel: StreamingServicesOverlayViewModelProtocol
     private let cellIdentifier = NSUserInterfaceItemIdentifier("StreamOptionCVItem")

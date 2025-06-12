@@ -21,9 +21,9 @@ import NetShield
 import UIKit
 
 class NetShieldStatsItemView: UIView {
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var valueLabel: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var valueLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -26,9 +26,9 @@ import Strings
 import UIKit
 
 class ServersFeaturesInformationVC: UIViewController {
-    @IBOutlet weak var titleLbl: UILabel!
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var featuresTableView: UITableView!
+    @IBOutlet var titleLbl: UILabel!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var featuresTableView: UITableView!
     
     let viewModel: ServersFeaturesInformationViewModel
     

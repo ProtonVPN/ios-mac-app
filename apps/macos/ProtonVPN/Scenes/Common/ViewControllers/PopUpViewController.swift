@@ -25,15 +25,15 @@ import Ergonomics
 import Theme
 
 class PopUpViewController: NSViewController {
-    @IBOutlet weak var bodyView: NSView!
-    @IBOutlet weak var popUpIcon: NSImageView!
-    @IBOutlet weak var popUpDescription: NSTextField!
+    @IBOutlet var bodyView: NSView!
+    @IBOutlet var popUpIcon: NSImageView!
+    @IBOutlet var popUpDescription: NSTextField!
     @IBOutlet var popUpDescriptionTextView: NSTextView!
-    @IBOutlet weak var leadingDescriptionConstraint: NSLayoutConstraint!
+    @IBOutlet var leadingDescriptionConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: CancellationButton!
-    @IBOutlet weak var confirmButton: PrimaryActionButton!
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var cancelButton: CancellationButton!
+    @IBOutlet var confirmButton: PrimaryActionButton!
     
     let viewModel: PopUpViewModel
     

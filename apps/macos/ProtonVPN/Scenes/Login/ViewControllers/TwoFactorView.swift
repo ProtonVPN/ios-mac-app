@@ -27,12 +27,12 @@ protocol TwoFactorDelegate: WarningViewDelegate {
 }
 
 final class TwoFactorView: NSView {
-    @IBOutlet private weak var twoFactorTextField: TextFieldWithFocus!
-    @IBOutlet private weak var twoFactorHorizontalLine: NSBox!
-    @IBOutlet private weak var twoFactorButton: LoginButton!
-    @IBOutlet private weak var twoFactorModeButton: InteractiveActionButton!
-    @IBOutlet private weak var twoFactorTitle: NSTextField!
-    @IBOutlet private weak var backButton: NSButton!
+    @IBOutlet private var twoFactorTextField: TextFieldWithFocus!
+    @IBOutlet private var twoFactorHorizontalLine: NSBox!
+    @IBOutlet private var twoFactorButton: LoginButton!
+    @IBOutlet private var twoFactorModeButton: InteractiveActionButton!
+    @IBOutlet private var twoFactorTitle: NSTextField!
+    @IBOutlet private var backButton: NSButton!
     private lazy var warningView: WarningView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("WarningView", owner: nil, topLevelObjects: &nibObjects),

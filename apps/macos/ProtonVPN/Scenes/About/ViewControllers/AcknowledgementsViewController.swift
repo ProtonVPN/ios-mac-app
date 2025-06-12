@@ -25,7 +25,7 @@ import LegacyCommon
 import WebKit
 
 class AcknowledgementsViewController: NSViewController {
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet var webView: WKWebView!
     
     private lazy var bundle: Bundle = .main
     

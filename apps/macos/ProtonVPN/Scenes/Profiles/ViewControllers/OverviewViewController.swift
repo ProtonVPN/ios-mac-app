@@ -28,13 +28,13 @@ import Strings
 class OverviewViewController: NSViewController {
     fileprivate let overviewItemIdentifier = "OverviewItemCell"
 
-    @IBOutlet weak var profileLabel: PVPNTextField!
-    @IBOutlet weak var connectionLabel: PVPNTextField!
-    @IBOutlet weak var actionLabel: PVPNTextField!
-    @IBOutlet weak var profileListTableView: NSTableView!
-    @IBOutlet weak var profileListScrollView: NSScrollView!
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var createNewProfileButton: PrimaryActionButton!
+    @IBOutlet var profileLabel: PVPNTextField!
+    @IBOutlet var connectionLabel: PVPNTextField!
+    @IBOutlet var actionLabel: PVPNTextField!
+    @IBOutlet var profileListTableView: NSTableView!
+    @IBOutlet var profileListScrollView: NSScrollView!
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var createNewProfileButton: PrimaryActionButton!
 
     fileprivate var viewModel: OverviewViewModel!
     

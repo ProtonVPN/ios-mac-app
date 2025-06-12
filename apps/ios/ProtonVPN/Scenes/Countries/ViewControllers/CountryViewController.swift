@@ -26,8 +26,8 @@ import Search
 import UIKit
 
 final class CountryViewController: UIViewController {
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var connectionBarContainerView: UIView!
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var connectionBarContainerView: UIView!
     
     var viewModel: CountryItemViewModel?
     var connectionBarViewController: ConnectionBarViewController?

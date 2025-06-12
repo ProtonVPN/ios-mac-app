@@ -10,7 +10,7 @@
 import UIKit
 
 class CheckmarkTableViewCell: UITableViewCell {
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var label: UILabel!
 
     var completionHandler: (() -> Bool)?
 

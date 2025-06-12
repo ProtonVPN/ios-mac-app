@@ -26,8 +26,8 @@ import LegacyCommon
 import Strings
 
 class WindowMenuController: NSObject {
-    @IBOutlet weak var windowMenu: NSMenu!
-    @IBOutlet weak var minimizeItem: NSMenuItem!
+    @IBOutlet var windowMenu: NSMenu!
+    @IBOutlet var minimizeItem: NSMenuItem!
 
     override func awakeFromNib() {
         super.awakeFromNib()

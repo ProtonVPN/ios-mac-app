@@ -23,8 +23,8 @@
 import UIKit
 
 class InstructionStepTableViewCell: UITableViewCell {
-    @IBOutlet weak var stepView: InstructionStepView!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var stepView: InstructionStepView!
+    @IBOutlet var label: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

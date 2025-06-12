@@ -26,8 +26,8 @@ import LegacyCommon
 import UIKit
 
 class StreamingServiceCell: UICollectionViewCell {
-    @IBOutlet private weak var serviceIV: UIImageView!
-    @IBOutlet private weak var serviceLbl: UILabel!
+    @IBOutlet private var serviceIV: UIImageView!
+    @IBOutlet private var serviceLbl: UILabel!
     
     public var propertiesManager: PropertiesManagerProtocol!
     

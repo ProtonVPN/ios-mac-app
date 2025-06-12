@@ -28,17 +28,17 @@ import Strings
 import Theme
 
 final class CountryItemCellView: NSView {
-    @IBOutlet private weak var flagIV: NSImageView!
-    @IBOutlet private weak var secureIV: NSImageView!
-    @IBOutlet private weak var countryLbl: NSTextField!
-    @IBOutlet private weak var expandButton: ExpandCellButton!
-    @IBOutlet private weak var connectButton: ConnectButton!
-    @IBOutlet private weak var smartIV: NSImageView!
-    @IBOutlet private weak var p2pIV: NSImageView!
-    @IBOutlet private weak var torIV: NSImageView!
-    @IBOutlet private weak var separatorView: NSView!
-    @IBOutlet private weak var upgradeBtn: UpgradeButton!
-    @IBOutlet private weak var maintenanceBtn: NSButton!
+    @IBOutlet private var flagIV: NSImageView!
+    @IBOutlet private var secureIV: NSImageView!
+    @IBOutlet private var countryLbl: NSTextField!
+    @IBOutlet private var expandButton: ExpandCellButton!
+    @IBOutlet private var connectButton: ConnectButton!
+    @IBOutlet private var smartIV: NSImageView!
+    @IBOutlet private var p2pIV: NSImageView!
+    @IBOutlet private var torIV: NSImageView!
+    @IBOutlet private var separatorView: NSView!
+    @IBOutlet private var upgradeBtn: UpgradeButton!
+    @IBOutlet private var maintenanceBtn: NSButton!
 
     private var viewModel: CountryItemViewModel!
     private var isHovered = false

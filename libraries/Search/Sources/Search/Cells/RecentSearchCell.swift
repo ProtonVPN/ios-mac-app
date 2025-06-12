@@ -29,9 +29,9 @@ final class RecentSearchCell: UITableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet private weak var lineViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var lineView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var lineViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var lineView: UIView!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 

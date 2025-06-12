@@ -24,7 +24,7 @@ import UIKit
 
 class InstructionStepView: UIView {
     @IBOutlet var contentView: UIView!
-    @IBOutlet weak var label: UILabel!
+    @IBOutlet var label: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

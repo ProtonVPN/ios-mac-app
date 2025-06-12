@@ -25,10 +25,10 @@ import LegacyCommon
 import Strings
 
 class ProfilesMenuController: NSObject {
-    @IBOutlet weak var profilesMenuItem: NSMenuItem!
-    @IBOutlet weak var profilesMenu: NSMenu!
-    @IBOutlet weak var overviewItem: NSMenuItem!
-    @IBOutlet weak var createNewProfileItem: NSMenuItem!
+    @IBOutlet var profilesMenuItem: NSMenuItem!
+    @IBOutlet var profilesMenu: NSMenu!
+    @IBOutlet var overviewItem: NSMenuItem!
+    @IBOutlet var createNewProfileItem: NSMenuItem!
     
     private var viewModel: ProfilesMenuViewModel!
     

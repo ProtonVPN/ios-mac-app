@@ -27,15 +27,15 @@ import Strings
 import Theme
 
 final class AccountViewController: NSViewController {
-    @IBOutlet private weak var usernameLabel: PVPNTextField!
-    @IBOutlet private weak var usernameValue: PVPNTextField!
-    @IBOutlet private weak var usernameSeparator: NSBox!
+    @IBOutlet private var usernameLabel: PVPNTextField!
+    @IBOutlet private var usernameValue: PVPNTextField!
+    @IBOutlet private var usernameSeparator: NSBox!
     
-    @IBOutlet private weak var accountPlanLabel: PVPNTextField!
-    @IBOutlet private weak var accountPlanValue: PVPNTextField!
-    @IBOutlet private weak var accountPlanSeparator: NSBox!
+    @IBOutlet private var accountPlanLabel: PVPNTextField!
+    @IBOutlet private var accountPlanValue: PVPNTextField!
+    @IBOutlet private var accountPlanSeparator: NSBox!
     
-    @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
+    @IBOutlet private var manageSubscriptionButton: InteractiveActionButton!
     private var banner: BannerView?
     
     private let viewModel: AccountViewModel

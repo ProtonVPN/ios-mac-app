@@ -23,7 +23,7 @@
 import UIKit
 
 class TooltipTableViewCell: UITableViewCell {
-    @IBOutlet weak var tooltipLabel: UITextView!
+    @IBOutlet var tooltipLabel: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

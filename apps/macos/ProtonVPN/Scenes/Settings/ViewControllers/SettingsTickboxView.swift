@@ -62,12 +62,12 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private weak var delegate: TickboxViewDelegate?
 
-    @IBOutlet private weak var label: PVPNTextField!
-    @IBOutlet private weak var switchButton: SwitchButton?
-    @IBOutlet private weak var upsellImageView: HoverableButtonImageView?
-    @IBOutlet private weak var separator: NSBox!
-    @IBOutlet private weak var infoIcon: NSImageView?
-    @IBOutlet private weak var onOffLabel: NSTextField?
+    @IBOutlet private var label: PVPNTextField!
+    @IBOutlet private var switchButton: SwitchButton?
+    @IBOutlet private var upsellImageView: HoverableButtonImageView?
+    @IBOutlet private var separator: NSBox!
+    @IBOutlet private var infoIcon: NSImageView?
+    @IBOutlet private var onOffLabel: NSTextField?
 
     private var model: ViewModel?
 

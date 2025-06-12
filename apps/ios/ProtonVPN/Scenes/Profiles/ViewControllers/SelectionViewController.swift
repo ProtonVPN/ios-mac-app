@@ -47,7 +47,7 @@ struct SelectionDataSet {
 }
 
 class SelectionViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var tableView: UITableView!
     
     var dataSet: SelectionDataSet!
     var dataSelected: ((Any) -> Void)?

@@ -27,10 +27,10 @@ import UIKit
 
 class TroubleshootViewController: UIViewController {
     // Views
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var headerView: UIView!
     
     // Data
     public var viewModel: TroubleshootViewModel!

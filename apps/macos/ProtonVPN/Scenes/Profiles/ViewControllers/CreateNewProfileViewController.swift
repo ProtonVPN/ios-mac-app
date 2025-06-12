@@ -27,33 +27,33 @@ import LegacyCommon
 import Strings
 
 final class CreateNewProfileViewController: NSViewController {
-    @IBOutlet private weak var profileSettingsLabel: PVPNTextField!
-    @IBOutlet private weak var nameLabel: PVPNTextField!
-    @IBOutlet private weak var nameTextField: TextFieldWithFocus!
-    @IBOutlet private weak var nameTextFieldHorizontalLine: NSBox!
-    @IBOutlet private weak var colorPickerLabel: PVPNTextField!
-    @IBOutlet private weak var colorPickerViewContainer: NSView!
+    @IBOutlet private var profileSettingsLabel: PVPNTextField!
+    @IBOutlet private var nameLabel: PVPNTextField!
+    @IBOutlet private var nameTextField: TextFieldWithFocus!
+    @IBOutlet private var nameTextFieldHorizontalLine: NSBox!
+    @IBOutlet private var colorPickerLabel: PVPNTextField!
+    @IBOutlet private var colorPickerViewContainer: NSView!
 
-    @IBOutlet private weak var connectionSettingsLabel: PVPNTextField!
-    @IBOutlet private weak var typeLabel: PVPNTextField!
-    @IBOutlet private weak var typeList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var typeListHorizontalLine: NSBox!
-    @IBOutlet private weak var countryLabel: PVPNTextField!
-    @IBOutlet private weak var countryList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var countryListHorizontalLine: NSBox!
-    @IBOutlet private weak var serverLabel: PVPNTextField!
-    @IBOutlet private weak var serverList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var serverListHorizontalLine: NSBox!
-    @IBOutlet private weak var protocolLabel: PVPNTextField!
-    @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var protocolListHorizontalLine: NSBox!
-    @IBOutlet private weak var protocolEnablementProgress: NSProgressIndicator!
+    @IBOutlet private var connectionSettingsLabel: PVPNTextField!
+    @IBOutlet private var typeLabel: PVPNTextField!
+    @IBOutlet private var typeList: HoverDetectionPopUpButton!
+    @IBOutlet private var typeListHorizontalLine: NSBox!
+    @IBOutlet private var countryLabel: PVPNTextField!
+    @IBOutlet private var countryList: HoverDetectionPopUpButton!
+    @IBOutlet private var countryListHorizontalLine: NSBox!
+    @IBOutlet private var serverLabel: PVPNTextField!
+    @IBOutlet private var serverList: HoverDetectionPopUpButton!
+    @IBOutlet private var serverListHorizontalLine: NSBox!
+    @IBOutlet private var protocolLabel: PVPNTextField!
+    @IBOutlet private var protocolList: HoverDetectionPopUpButton!
+    @IBOutlet private var protocolListHorizontalLine: NSBox!
+    @IBOutlet private var protocolEnablementProgress: NSProgressIndicator!
 
-    @IBOutlet private weak var warningLabel: PVPNTextField!
-    @IBOutlet private weak var warningLabelHorizontalLine: NSBox!
-    @IBOutlet private weak var footerView: NSView!
-    @IBOutlet private weak var saveButton: PrimaryActionButton!
-    @IBOutlet private weak var cancelButton: CancellationButton!
+    @IBOutlet private var warningLabel: PVPNTextField!
+    @IBOutlet private var warningLabelHorizontalLine: NSBox!
+    @IBOutlet private var footerView: NSView!
+    @IBOutlet private var saveButton: PrimaryActionButton!
+    @IBOutlet private var cancelButton: CancellationButton!
 
     fileprivate var viewModel: CreateNewProfileViewModel!
 

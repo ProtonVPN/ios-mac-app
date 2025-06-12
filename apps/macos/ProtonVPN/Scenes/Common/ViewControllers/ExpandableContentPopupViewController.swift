@@ -29,15 +29,15 @@ import Theme
 class ExpandableContentPopupViewController: NSViewController {
     let viewModel: ExpandablePopupViewModel
     
-    @IBOutlet weak var actionBtn: CancellationButton!
-    @IBOutlet weak var contentView: NSView!
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var popupImage: NSImageView!
-    @IBOutlet weak var headerLbl: NSTextField!
-    @IBOutlet weak var expandableLbl: NSTextField!
-    @IBOutlet weak var footerLbl: NSTextField!
-    @IBOutlet weak var displayMoreBtn: InteractiveActionButton!
-    @IBOutlet weak var hiddenContentHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var actionBtn: CancellationButton!
+    @IBOutlet var contentView: NSView!
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var popupImage: NSImageView!
+    @IBOutlet var headerLbl: NSTextField!
+    @IBOutlet var expandableLbl: NSTextField!
+    @IBOutlet var footerLbl: NSTextField!
+    @IBOutlet var displayMoreBtn: InteractiveActionButton!
+    @IBOutlet var hiddenContentHeightConstraint: NSLayoutConstraint!
     
     private var expanded = false
     private var animating = false

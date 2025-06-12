@@ -26,12 +26,12 @@ import LegacyCommon
 import Strings
 
 final class SettingsTabBarViewController: NSViewController {
-    @IBOutlet private weak var headerLabel: NSTextField!
-    @IBOutlet private weak var tabBarView: TabBarView!
-    @IBOutlet private weak var generalButton: TabBarButton!
-    @IBOutlet private weak var connectionButton: TabBarButton!
-    @IBOutlet private weak var accountButton: TabBarButton!
-    @IBOutlet private weak var advancedButon: TabBarButton!
+    @IBOutlet private var headerLabel: NSTextField!
+    @IBOutlet private var tabBarView: TabBarView!
+    @IBOutlet private var generalButton: TabBarButton!
+    @IBOutlet private var connectionButton: TabBarButton!
+    @IBOutlet private var accountButton: TabBarButton!
+    @IBOutlet private var advancedButon: TabBarButton!
 
     private var viewModel: SettingsTabBarViewModel!
     

@@ -24,7 +24,7 @@ import Cocoa
 import Ergonomics
 
 class ColorPickerViewController: NSViewController {
-    @IBOutlet weak var collectionView: NSCollectionView!
+    @IBOutlet var collectionView: NSCollectionView!
     
     private let circleCellWidth: CGFloat = 20.0
     private let rows = 2

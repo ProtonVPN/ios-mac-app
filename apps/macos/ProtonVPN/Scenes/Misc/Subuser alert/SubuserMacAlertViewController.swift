@@ -29,13 +29,13 @@ import Strings
 import Theme
 
 final class SubuserMacAlertViewController: NSViewController {
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var titleView: NSTextField!
-    @IBOutlet private weak var description1Label: NSTextField!
-    @IBOutlet private weak var description2Label: NSTextField!
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var titleView: NSTextField!
+    @IBOutlet private var description1Label: NSTextField!
+    @IBOutlet private var description2Label: NSTextField!
         
-    @IBOutlet private weak var assignConnectionsButton: PrimaryActionButton!
-    @IBOutlet private weak var loginButton: CancellationButton!
+    @IBOutlet private var assignConnectionsButton: PrimaryActionButton!
+    @IBOutlet private var loginButton: CancellationButton!
     
     var role: UserRole = .noOrganization
     

@@ -32,9 +32,9 @@ enum WarningType {
 }
 
 class WarningView: NSStackView {
-    @IBOutlet private weak var warningLabel: PVPNTextField!
-    @IBOutlet private weak var warningIcon: NSImageView!
-    @IBOutlet private weak var helpLink: InteractiveActionButton!
+    @IBOutlet private var warningLabel: PVPNTextField!
+    @IBOutlet private var warningIcon: NSImageView!
+    @IBOutlet private var helpLink: InteractiveActionButton!
 
     weak var helpDelegate: WarningViewDelegate?
 

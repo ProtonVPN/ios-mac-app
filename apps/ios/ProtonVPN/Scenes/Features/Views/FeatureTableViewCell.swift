@@ -32,19 +32,19 @@ import VPNAppCore
 import Strings
 
 class FeatureTableViewCell: UITableViewCell {
-    @IBOutlet private weak var iconIV: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var descriptionLbl: UILabel!
-    @IBOutlet private weak var learnMoreBtn: UIButton!
+    @IBOutlet private var iconIV: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var descriptionLbl: UILabel!
+    @IBOutlet private var learnMoreBtn: UIButton!
 
-    @IBOutlet weak var loadViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var loadView: UIView!
-    @IBOutlet private weak var loadLowView: UIView!
-    @IBOutlet private weak var loadLowLbl: UILabel!
-    @IBOutlet private weak var loadMediumView: UIView!
-    @IBOutlet private weak var loadMediumLbl: UILabel!
-    @IBOutlet private weak var loadHighView: UIView!
-    @IBOutlet private weak var loadHighLbl: UILabel!
+    @IBOutlet var loadViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var loadView: UIView!
+    @IBOutlet private var loadLowView: UIView!
+    @IBOutlet private var loadLowLbl: UILabel!
+    @IBOutlet private var loadMediumView: UIView!
+    @IBOutlet private var loadMediumLbl: UILabel!
+    @IBOutlet private var loadHighView: UIView!
+    @IBOutlet private var loadHighLbl: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -29,12 +29,12 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var countryLabel: UILabel!
-    @IBOutlet private weak var cityLabel: UILabel!
-    @IBOutlet private weak var flagImageView: UIImageView!
-    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var countryLabel: UILabel!
+    @IBOutlet private var cityLabel: UILabel!
+    @IBOutlet private var flagImageView: UIImageView!
+    @IBOutlet private var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var flagIconWidthConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 

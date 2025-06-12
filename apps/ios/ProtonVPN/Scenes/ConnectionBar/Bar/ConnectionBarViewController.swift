@@ -25,10 +25,10 @@ import Strings
 import UIKit
 
 class ConnectionBarViewController: UIViewController {
-    @IBOutlet weak var notConnectedLabel: UILabel!
-    @IBOutlet weak var connectedLabel: UILabel!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var arrowImage: UIImageView!
+    @IBOutlet var notConnectedLabel: UILabel!
+    @IBOutlet var connectedLabel: UILabel!
+    @IBOutlet var timerLabel: UILabel!
+    @IBOutlet var arrowImage: UIImageView!
     
     var viewModel: ConnectionBarViewModel?
     var tap: UITapGestureRecognizer!

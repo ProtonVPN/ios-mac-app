@@ -20,12 +20,12 @@ import AppKit
 import Strings
 
 class EditMenuController: NSObject {
-    @IBOutlet weak var editMenu: NSMenu!
-    @IBOutlet weak var cutItem: NSMenuItem!
-    @IBOutlet weak var copyItem: NSMenuItem!
-    @IBOutlet weak var pasteItem: NSMenuItem!
-    @IBOutlet weak var deleteItem: NSMenuItem!
-    @IBOutlet weak var selectAllItem: NSMenuItem!
+    @IBOutlet var editMenu: NSMenu!
+    @IBOutlet var cutItem: NSMenuItem!
+    @IBOutlet var copyItem: NSMenuItem!
+    @IBOutlet var pasteItem: NSMenuItem!
+    @IBOutlet var deleteItem: NSMenuItem!
+    @IBOutlet var selectAllItem: NSMenuItem!
 
     override func awakeFromNib() {
         super.awakeFromNib()
