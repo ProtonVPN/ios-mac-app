@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import SwiftUI
 import XCTest
-import Ergonomics
 
 final class TextJoiningTests: XCTestCase {
     func testJoiningEmptyArrayReturnsNil() {

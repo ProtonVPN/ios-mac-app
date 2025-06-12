@@ -24,13 +24,13 @@ import Cocoa
 
 import LegacyCommon
 
+import Dependencies
 import Domain
+import Ergonomics
 import Localization
 import Strings
-import Dependencies
-import Ergonomics
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 final class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import Collections
 import Dependencies
 import DependenciesMacros
-import Collections
 import Domain
+import Foundation
 
 import ComposableArchitecture
 

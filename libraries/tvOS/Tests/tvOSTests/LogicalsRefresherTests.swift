@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import ComposableArchitecture
 @testable import CommonNetworking
+import ComposableArchitecture
+import Domain
+import Persistence
+@testable import PersistenceTestSupport
 @testable import tvOS
 @testable import tvOSTestSupport
-@testable import PersistenceTestSupport
-import Persistence
-import Domain
+import XCTest
 
 final class LogicalsRefresherTests: XCTestCase {
     let enoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh

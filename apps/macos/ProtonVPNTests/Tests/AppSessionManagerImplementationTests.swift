@@ -20,6 +20,7 @@ import XCTest
 
 import Dependencies
 
+import Announcement
 import CommonNetworking
 import CommonNetworkingTestSupport
 import Domain
@@ -27,12 +28,11 @@ import Ergonomics
 import LegacyCommon
 import Localization
 import Persistence
+import ProtonCoreNetworking
+@testable import ProtonVPN
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
-import ProtonCoreNetworking
-import Announcement
-@testable import ProtonVPN
 
 private let testData = MockTestData()
 private func mockAuthCredentials(username: String) -> AuthCredentials {

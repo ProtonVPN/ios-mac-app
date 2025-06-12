@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
     import Dependencies
+    import Foundation
     import IssueReporting
 
     public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {

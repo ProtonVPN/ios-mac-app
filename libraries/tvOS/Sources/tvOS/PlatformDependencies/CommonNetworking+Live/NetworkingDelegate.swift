@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import protocol ProtonCoreServices.APIService
-import protocol ProtonCoreServices.HumanVerifyResponseDelegate
-import protocol ProtonCoreServices.HumanVerifyPaymentDelegate
-import struct ProtonCoreNetworking.HumanVerifyParameters
+import Foundation
 import struct ProtonCoreNetworking.DeviceVerifyParameters
+import struct ProtonCoreNetworking.HumanVerifyParameters
+import protocol ProtonCoreServices.APIService
 import enum ProtonCoreServices.HumanVerifyFinishReason
+import protocol ProtonCoreServices.HumanVerifyPaymentDelegate
+import protocol ProtonCoreServices.HumanVerifyResponseDelegate
 
 import CommonNetworking
 

@@ -25,8 +25,8 @@ import UIKit
 
 import ProtonCoreUIFoundations
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
 import Domain
 import Strings

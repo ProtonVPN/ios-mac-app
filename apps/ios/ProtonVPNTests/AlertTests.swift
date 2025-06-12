@@ -20,18 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 import SwiftUI
+import XCTest
 
 import GSMessages
 
 import PMLogger
-import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
+import ProtonCoreNetworking
 import ProtonCorePasswordChange
 
-import Modals
 import LegacyCommon
+import Modals
 import VPNAppCore
 
 @testable import ProtonVPN

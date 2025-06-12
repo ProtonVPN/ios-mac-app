@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import Foundation
 import enum NetworkExtension.NEVPNStatus
-import CasePaths
 
 extension NEVPNStatus: @retroactive CasePathable {
     public struct AllCasePaths {

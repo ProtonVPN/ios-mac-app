@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-import SwiftUI
-import Foundation
 import AuthenticationServices
+import Cocoa
+import Foundation
+import SwiftUI
 
 import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
@@ -34,9 +34,9 @@ import LegacyCommon
 
 import Settings_macOS
 
-import Theme
 import Ergonomics
 import Strings
+import Theme
 
 final class LoginViewController: NSViewController {
     fileprivate enum TextField: Int {

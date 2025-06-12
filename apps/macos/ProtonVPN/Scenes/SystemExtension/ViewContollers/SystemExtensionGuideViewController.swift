@@ -20,8 +20,8 @@ import AppKit
 import Combine
 import SwiftUI
 
-import LegacyCommon
 import Domain
+import LegacyCommon
 
 class SystemExtensionGuideViewController: NSViewController {
     private var cancellables = Set<AnyCancellable>()

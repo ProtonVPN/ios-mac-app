@@ -19,11 +19,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
+import LegacyCommon
 import ProtonCoreDataModel
 import ProtonCorePayments
-import CommonNetworking
-import LegacyCommon
 
 class UserCachedStatus: ServicePlanDataStorage {
     var servicePlansDetails: [Plan]?

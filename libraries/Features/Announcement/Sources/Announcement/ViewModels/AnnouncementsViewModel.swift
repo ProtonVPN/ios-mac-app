@@ -24,12 +24,12 @@ import Foundation
 
 import Dependencies
 
-import VPNShared
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel

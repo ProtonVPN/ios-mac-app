@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class PopUpViewController: NSViewController {
     @IBOutlet weak var bodyView: NSView!

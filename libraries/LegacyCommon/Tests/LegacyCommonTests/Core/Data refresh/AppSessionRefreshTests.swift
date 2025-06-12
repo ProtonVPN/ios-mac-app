@@ -24,16 +24,16 @@ import Dependencies
 import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 
-@testable import LegacyCommon
+import CommonNetworkingTestSupport
 import Domain
+@testable import LegacyCommon
 import Localization
 import Persistence
 import PersistenceTestSupport
 import Timer
 import TimerMock
-import VPNSharedTesting
 import VPNAppCore
-import CommonNetworkingTestSupport
+import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!

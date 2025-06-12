@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import NetworkExtension
 import LegacyCommon
+import NetworkExtension
 
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     private let propertiesManager: PropertiesManagerProtocol

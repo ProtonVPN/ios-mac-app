@@ -18,8 +18,8 @@
 
 import Foundation
 import SwiftSyntax
-import SwiftSyntaxMacros
 import SwiftSyntaxMacroExpansion
+import SwiftSyntaxMacros
 
 public struct PerceptibleGeometryReaderMacro: ExpressionMacro {
     public static func expansion(

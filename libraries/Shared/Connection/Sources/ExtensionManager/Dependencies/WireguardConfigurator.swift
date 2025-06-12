@@ -23,10 +23,10 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import enum Domain.VpnProtocol
-import enum Domain.VPNFeatureFlagType
-import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
+import enum Domain.VPNFeatureFlagType
+import enum Domain.VpnProtocol
+import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
 import CoreConnection

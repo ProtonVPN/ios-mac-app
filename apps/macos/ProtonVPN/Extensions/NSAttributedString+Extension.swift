@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Cocoa
 import LegacyCommon
-import AppKit
 
 extension NSAttributedString {
     static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {

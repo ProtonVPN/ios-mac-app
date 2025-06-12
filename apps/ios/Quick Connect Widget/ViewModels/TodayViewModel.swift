@@ -21,11 +21,11 @@
 //
 
 import Foundation
-import Reachability
 import LegacyCommon
 import Localization
-import Strings
 import os.log
+import Reachability
+import Strings
 
 enum TodayViewModelState {
     case blank

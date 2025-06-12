@@ -21,10 +21,10 @@
 
 import Foundation
 
-import Domain
-import VPNAppCore
-import Persistence
 import Dependencies
+import Domain
+import Persistence
+import VPNAppCore
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models

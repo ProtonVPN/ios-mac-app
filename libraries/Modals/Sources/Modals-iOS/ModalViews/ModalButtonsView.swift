@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ModalsShared
-import SwiftUI
 import SharedViews
+import SwiftUI
 
 struct ModalButtonsView: View {
     let modalModel: ModalModel

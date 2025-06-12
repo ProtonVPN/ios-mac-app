@@ -26,9 +26,9 @@ import fusion
 import ProtonCoreDoh
 import ProtonCoreTestingToolkitUITestsCore
 
-import Strings
-import PMLogger
 import Ergonomics
+import PMLogger
+import Strings
 import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {

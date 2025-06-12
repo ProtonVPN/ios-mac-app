@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Strings
-import Theme
-import SwiftUI
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 #if os(macOS)
     import AppKit

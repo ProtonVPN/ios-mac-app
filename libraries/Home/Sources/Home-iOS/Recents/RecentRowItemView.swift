@@ -17,12 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import HomeShared
 import Domain
-import SwiftUI
-import Strings
-import SharedViews
+import HomeShared
 import ProtonCoreUIFoundations
+import SharedViews
+import Strings
+import SwiftUI
 
 struct RecentRowItemView: View {
     static let itemCellHeight: CGFloat = .themeSpacing64

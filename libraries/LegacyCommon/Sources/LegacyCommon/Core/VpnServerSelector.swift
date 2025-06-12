@@ -24,8 +24,8 @@ import Foundation
 
 import Dependencies
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 import Persistence
 import VPNAppCore

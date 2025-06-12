@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ModalsShared
-import Theme
 import ComposableArchitecture
 import HomeShared
-import VPNAppCore
+import ModalsShared
 import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
 
 struct ChangeServerModal: View {
     var store: StoreOf<ChangeServerFeature>

@@ -18,8 +18,8 @@
 
 #if canImport(AppKit)
 
-    import Foundation
     import Domain
+    import Foundation
 
     import ComposableArchitecture
 

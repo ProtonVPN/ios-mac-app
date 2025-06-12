@@ -18,9 +18,9 @@
 
 import ComposableArchitecture
 
+import CommonNetworking
 import Foundation
 import ProtonCoreNetworking
-import CommonNetworking
 import class VPNShared.AuthCredentials
 
 @Reducer

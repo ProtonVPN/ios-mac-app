@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import Timer
+import VPNShared
 
 /// Parent class for managers that have to perform some tasks periodically.
 public class RefreshManager {

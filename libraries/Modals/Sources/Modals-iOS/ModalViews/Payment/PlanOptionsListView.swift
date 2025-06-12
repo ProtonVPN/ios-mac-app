@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import CombineSchedulers
+import ModalsServices
+import ModalsShared
 import SharedViews
 import Strings
-import ModalsShared
-import ModalsServices
+import SwiftUI
 
 @MainActor
 struct PlanOptionsListView: View {

@@ -6,8 +6,8 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import XCTest
 import LegacyCommon
+import XCTest
 
 class ExtensionInfoComparisonTests: XCTestCase {
     func testEquality() throws {

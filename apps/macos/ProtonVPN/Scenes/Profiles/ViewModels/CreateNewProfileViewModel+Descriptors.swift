@@ -20,14 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
+import Domain
 import Foundation
 import LegacyCommon
-import AppKit
-import Theme
-import Strings
-import ProtonCoreUIFoundations
-import Domain
 import Localization
+import ProtonCoreUIFoundations
+import Strings
+import Theme
 
 // FUTUREDO: This is very similar to what we have on iOS.
 // We should work on merging code into one.

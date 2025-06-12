@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-@testable import LegacyCommon
 @testable import CommonNetworking
+import Foundation
+@testable import LegacyCommon
+import XCTest
 
 class PlanSessionTests: XCTestCase {
     func testManageSubscriptionWithoutSelector() {

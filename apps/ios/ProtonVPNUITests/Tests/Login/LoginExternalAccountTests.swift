@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkitUITestsLogin
 
 final class LoginExternalAccountTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()

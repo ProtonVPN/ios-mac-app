@@ -20,36 +20,39 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
+
 // System frameworks
 import Cocoa
-import AppKit
 import ServiceManagement
 
 // Third-party dependencies
 import Dependencies
 import TrustKit
 
-// Core dependencies
-import ProtonCoreServices
-import ProtonCoreLog
-import ProtonCoreUIFoundations
+import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
+import ProtonCoreLog
 import ProtonCoreObservability
 import ProtonCorePushNotifications
-import ProtonCoreCryptoVPNPatchedGoImplementation
+
+// Core dependencies
+import ProtonCoreServices
+import ProtonCoreUIFoundations
+
+import Announcement
+import Domain
+import Ergonomics
 
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
+import Logging
+import PMLogger
+import Settings
+import Timer
 import VPNAppCore
 import VPNShared
-import Settings
-import Announcement
-import Logging
-import Domain
-import Ergonomics
-import PMLogger
-import Timer
 
 #if !REDESIGN
 

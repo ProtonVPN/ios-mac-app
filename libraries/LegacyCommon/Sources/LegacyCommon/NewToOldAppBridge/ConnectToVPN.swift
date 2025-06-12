@@ -14,10 +14,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreFeatureFlags
 import Connection
-import Persistence
 import Domain
+import Persistence
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 import protocol Foundation.LocalizedError

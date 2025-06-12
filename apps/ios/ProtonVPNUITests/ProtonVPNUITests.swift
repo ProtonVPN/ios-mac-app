@@ -29,9 +29,9 @@ import ProtonCoreLog
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsCore
 
-import UITestsHelpers
 import Ergonomics
 import PMLogger
+import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
     let homeRobot = HomeRobot()

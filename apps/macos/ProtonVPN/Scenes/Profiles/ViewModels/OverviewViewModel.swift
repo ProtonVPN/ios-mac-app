@@ -24,8 +24,8 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
 
 import Domain
 

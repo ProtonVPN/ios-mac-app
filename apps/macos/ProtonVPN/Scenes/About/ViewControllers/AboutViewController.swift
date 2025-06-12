@@ -21,11 +21,11 @@
 //
 
 import Cocoa
-import LegacyCommon
-import WebKit
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
+import WebKit
 
 class AboutViewController: NSViewController {
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory

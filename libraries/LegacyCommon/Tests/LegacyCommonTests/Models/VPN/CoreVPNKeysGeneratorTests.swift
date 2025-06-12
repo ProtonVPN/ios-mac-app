@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-@testable import VPNShared
 @testable import LegacyCommon
+@testable import VPNShared
+import XCTest
 
 final class CoreVPNKeysGeneratorTests: XCTestCase {
     func testDifferentKeysAreGenerated() throws {

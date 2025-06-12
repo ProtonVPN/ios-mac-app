@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Cocoa
+import Foundation
 
 /// This app delegate is being used by main.c in the app if it's added to the target
 class TestAppDelegate: NSObject, NSApplicationDelegate {

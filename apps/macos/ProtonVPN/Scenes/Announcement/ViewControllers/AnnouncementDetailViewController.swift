@@ -24,8 +24,8 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 import VPNAppCore
 
 import Ergonomics

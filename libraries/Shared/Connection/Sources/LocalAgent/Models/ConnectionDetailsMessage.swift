@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Network
-import class GoLibs.LocalAgentConnectionDetails
 import CoreConnection
+import Foundation
+import class GoLibs.LocalAgentConnectionDetails
+import Network
 
 public struct ConnectionDetailsMessage: Sendable, Equatable {
     public let exitIp: IPAddress

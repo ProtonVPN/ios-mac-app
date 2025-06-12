@@ -27,12 +27,12 @@ import Dependencies
 
 import Domain
 import Ergonomics
-import Strings
-import NetShield
-import Modals
 import LegacyCommon
-import VPNShared
+import Modals
+import NetShield
+import Strings
 import VPNAppCore
+import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory & VpnStateConfigurationFactory

@@ -9,8 +9,8 @@
 import Foundation
 
 import Domain
-import VPNShared
 import LegacyCommon
+import VPNShared
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
     private let propertiesManager: PropertiesManagerProtocol

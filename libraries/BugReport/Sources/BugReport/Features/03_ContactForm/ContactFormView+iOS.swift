@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-    import Foundation
     import ComposableArchitecture
-    import SwiftUI
+    import Foundation
     import Strings
+    import SwiftUI
 
     public struct ContactFormView: View {
         @Perception.Bindable var store: StoreOf<ContactFormFeature>

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
 import Foundation
 import struct VPNShared.DefaultsProvider
 import enum VPNShared.VPNAuthenticationStorageConfigKey
-import Dependencies
-import Domain
 
 // MARK: Live implementations of dependencies required by the iOS app AND its extensions
 

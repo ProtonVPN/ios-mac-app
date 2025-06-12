@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 // Lets have this just to be consistent with all the API requests/responses
 typealias LocationResponse = UserLocation

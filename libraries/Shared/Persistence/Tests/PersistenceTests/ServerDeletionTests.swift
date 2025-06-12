@@ -22,8 +22,8 @@ import XCTest
 import Dependencies
 
 import Domain
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
     func testDeleteStalePaidServers() throws {

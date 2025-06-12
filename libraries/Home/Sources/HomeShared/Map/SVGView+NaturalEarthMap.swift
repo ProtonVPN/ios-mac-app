@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import SVGView
 import SwiftUI
-import Domain
 
 extension SVGView {
     private static let xmlMap: XMLElement = {

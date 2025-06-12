@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
 import ComposableArchitecture
+import Domain
 import Foundation
-import VPNAppCore
-import VPNShared
 import OrderedCollections
 import SwiftUI
+import VPNAppCore
+import VPNShared
 
 @Reducer
 public struct RecentsFeature {

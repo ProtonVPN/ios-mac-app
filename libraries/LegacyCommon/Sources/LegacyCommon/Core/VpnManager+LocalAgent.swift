@@ -25,9 +25,9 @@ import Foundation
 import Dependencies
 
 import ExtensionIPC
-import VPNShared
-import VPNAppCore
 import NetShield
+import VPNAppCore
+import VPNShared
 
 import Domain
 import Ergonomics

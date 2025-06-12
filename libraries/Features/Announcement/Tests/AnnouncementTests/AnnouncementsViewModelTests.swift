@@ -20,16 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-import VPNShared
 import VPNAppCore
+import VPNShared
+import XCTest
 
-import Domain
 import Dependencies
+import Domain
 
 @testable import Announcement
-@testable import VPNSharedTesting
 @testable import LegacyCommon
+@testable import VPNSharedTesting
 
 class AnnouncementsViewModelTests: XCTestCase {
 //    private var manager: AnnouncementManager!

@@ -25,8 +25,8 @@ import UIKit
 
 import AlamofireImage
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
 final class AnnouncementFeatureView: UIView {
     @IBOutlet private weak var iconImageView: UIImageView!

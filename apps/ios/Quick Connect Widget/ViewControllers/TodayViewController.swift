@@ -20,12 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Reachability
-import UIKit
 import LegacyCommon
 import NotificationCenter
 import ProtonCoreUIFoundations
+import Reachability
 import Strings
+import UIKit
 
 final class TodayViewController: UIViewController {
     @IBOutlet private weak var connectionLabel: UILabel!

@@ -21,12 +21,12 @@ import Foundation
 import CasePaths
 import Dependencies
 
-import CoreConnection
 import CertificateAuthentication
-import ExtensionManager
-import LocalAgent
+import CoreConnection
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
+import ExtensionManager
+import LocalAgent
 
 @available(iOS 16, *)
 @CasePathable

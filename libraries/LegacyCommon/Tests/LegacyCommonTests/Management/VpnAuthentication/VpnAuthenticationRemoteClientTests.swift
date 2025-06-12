@@ -22,8 +22,8 @@
 
     import Dependencies
 
-    import VPNSharedTesting
     @testable import LegacyCommon
+    import VPNSharedTesting
 
     class VPNAuthenticationRemoteClientTests: XCTestCase {
         let expectationTimeout = 1.0

@@ -19,9 +19,9 @@
 #if targetEnvironment(simulator)
     import Foundation
 
+    import class NetworkExtension.NEOnDemandRule
     import class NetworkExtension.NETunnelProviderManager
     import class NetworkExtension.NETunnelProviderProtocol
-    import class NetworkExtension.NEOnDemandRule
 
     import IssueReporting
 

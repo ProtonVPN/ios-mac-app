@@ -20,19 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
 import AppKit
+import Cocoa
 import SwiftUI
 
 import Dependencies
 
 import PMLogger
 
-import LegacyCommon
-import VPNAppCore
-import Modals
-import BugReport
 import Announcement
+import BugReport
+import LegacyCommon
+import Modals
+import VPNAppCore
 
 import Ergonomics
 import Strings

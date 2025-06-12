@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Cocoa
 import BugReport
+import Cocoa
 
 // swiftlint:disable no_print
 class ViewController: NSViewController {

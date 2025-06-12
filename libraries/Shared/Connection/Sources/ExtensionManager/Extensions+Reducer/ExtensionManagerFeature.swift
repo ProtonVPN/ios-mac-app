@@ -22,13 +22,13 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
+import let CoreConnection.log
 import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
-import let CoreConnection.log
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 @available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {

@@ -20,8 +20,8 @@ import Foundation
 import XCTest
 
 import Domain
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 final class LoadsTests: TestIsolatedDatabaseTestCase {
     func testLoadsUpdated() throws {

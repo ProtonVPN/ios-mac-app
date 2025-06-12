@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import VPNAppCore
-import Domain
 
 public protocol MaintenanceManagerHelperFactory {
     func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper

@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AppKit
 import Foundation
 import ModalsShared
-import AppKit
 import SwiftUI
 
 public struct ModalsFactory {

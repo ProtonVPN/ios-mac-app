@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
-import Theme
+import LegacyCommon
 import Strings
+import Theme
 
 final class AccountViewController: NSViewController {
     @IBOutlet private weak var usernameLabel: PVPNTextField!

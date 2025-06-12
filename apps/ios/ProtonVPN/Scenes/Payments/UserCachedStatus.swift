@@ -6,11 +6,11 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
 import Dependencies
+import Foundation
+import LegacyCommon
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import LegacyCommon
 import VPNShared
 
 final class UserCachedStatus: ServicePlanDataStorage {

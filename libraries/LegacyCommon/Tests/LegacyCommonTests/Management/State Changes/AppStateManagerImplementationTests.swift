@@ -19,12 +19,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworkingTestSupport
 @testable import LegacyCommon
-import XCTest
 import Localization
 import TimerMock
 import VPNSharedTesting
-import CommonNetworkingTestSupport
+import XCTest
 
 class AppStateManagerImplementationTests: XCTestCase {
     static let emptyError = NSError(domain: "ProtonVPNError", code: -1)

@@ -7,9 +7,9 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
 private let statusNotConnected = Localizable.notConnected
 private let statusConnected = Localizable.connectedTo

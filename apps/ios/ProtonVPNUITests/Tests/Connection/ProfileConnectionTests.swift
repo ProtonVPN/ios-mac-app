@@ -9,9 +9,9 @@
 import Foundation
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
+import Strings
 import UITestsHelpers
 import XCTest
-import Strings
 
 @MainActor
 class ProfileConnectionTests: ConnectionTestsBase {

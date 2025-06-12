@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-import Strings
 import fusion
+import Strings
 import UITestsHelpers
+import XCTest
 
 private let qcButton = Localizable.quickConnect
 private let disconnectButton = Localizable.disconnect

@@ -27,11 +27,11 @@ import Dependencies
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
 import VPNAppCore // UnauthKeychain
 import VPNShared
-import Announcement
 
 import Domain
 import Ergonomics

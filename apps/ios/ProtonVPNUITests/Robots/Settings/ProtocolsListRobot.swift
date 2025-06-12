@@ -7,9 +7,9 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
 private let smartButton = Localizable.smartTitle
 private let settingsButtonId = "Settings back btn"

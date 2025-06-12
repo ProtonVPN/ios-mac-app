@@ -19,8 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CoreLocation
+import Foundation
 
 public enum LocationUtility {
     public static func coordinate(forCountry countryCode: String) -> CLLocationCoordinate2D {

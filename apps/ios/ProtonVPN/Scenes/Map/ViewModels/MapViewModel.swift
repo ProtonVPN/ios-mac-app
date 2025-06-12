@@ -27,8 +27,8 @@ import Dependencies
 
 import Domain
 import Ergonomics
-import Persistence
 import LegacyCommon
+import Persistence
 
 class MapPin: NSObject, MKAnnotation {
     let countryCode: String

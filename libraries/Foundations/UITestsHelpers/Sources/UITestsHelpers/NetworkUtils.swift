@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Foundation
 import Network
+import XCTest
 
 public enum NetworkUtils {
     private static let jsonDecoder = JSONDecoder()

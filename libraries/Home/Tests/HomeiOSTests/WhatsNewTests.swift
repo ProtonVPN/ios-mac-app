@@ -19,9 +19,9 @@
 import Foundation
 import Testing
 
+import ComposableArchitecture
 @testable import Home
 @testable import Home_iOS
-import ComposableArchitecture
 
 // MARK: - Definitions
 

@@ -21,10 +21,10 @@
 //
 
 #if false
-    import XCTest
-    @testable import ProtonVPN
     import LegacyCommon
+    @testable import ProtonVPN
     import Strings
+    import XCTest
 
     class ConnectingOverlayViewModelTests: XCTestCase {
         var viewModel: ConnectingOverlayViewModel!

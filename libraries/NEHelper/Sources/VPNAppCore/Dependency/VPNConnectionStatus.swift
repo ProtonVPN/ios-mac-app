@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CoreLocation
 import ComposableArchitecture
+import CoreLocation
 
 #if canImport(WidgetKit)
     import WidgetKit
@@ -27,9 +27,9 @@ import Domain
 import Ergonomics
 import NetShield
 
+import CasePaths
 import ConcurrencyExtras
 import Dependencies
-import CasePaths
 import Sharing
 
 // This struct is still WIP

@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
-import Theme
 import ProtonCoreUIFoundations
+import Theme
+import UIKit
 
 extension UIColor {
     static func == (lhs: UIColor, rhs: UIColor) -> Bool {

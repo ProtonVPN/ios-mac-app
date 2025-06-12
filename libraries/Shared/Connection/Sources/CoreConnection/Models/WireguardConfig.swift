@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import enum Domain.WireGuardTransport
 import Ergonomics
+import Foundation
 
 public struct WireguardConfig: Codable, Equatable {
     public let defaultUdpPorts: [Int]

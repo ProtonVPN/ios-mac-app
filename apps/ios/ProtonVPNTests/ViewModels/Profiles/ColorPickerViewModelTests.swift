@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 import LegacyCommon
+import XCTest
 
 @testable import ProtonVPN
 

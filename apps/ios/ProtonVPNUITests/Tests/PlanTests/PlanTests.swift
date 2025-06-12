@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import fusion
 import UITestsHelpers
+import XCTest
 
 class PlanTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()

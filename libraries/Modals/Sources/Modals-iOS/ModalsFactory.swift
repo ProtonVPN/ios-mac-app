@@ -1,6 +1,6 @@
 import ModalsShared
-import UIKit
 import SwiftUI
+import UIKit
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 public final class ModalsFactory {

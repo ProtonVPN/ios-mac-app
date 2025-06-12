@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
+import ExtensionIPC
 import Foundation
 import IssueReporting
-import ExtensionIPC
-import CoreConnection
 
 extension TunnelMessageSender {
     public static let unimplemented: TunnelMessageSender = .init(send: { request in

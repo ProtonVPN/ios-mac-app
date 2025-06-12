@@ -25,17 +25,17 @@ import Foundation
 
 import Dependencies
 
+import Announcement
 import Domain
 import Ergonomics
+import LegacyCommon
 import Localization
+import Modals
+import Persistence
 import Strings
 import Theme
-import Persistence
-import LegacyCommon
-import VPNShared
 import VPNAppCore
-import Modals
-import Announcement
+import VPNShared
 
 enum CellModel {
     case header(CountriesServersHeaderViewModelProtocol)

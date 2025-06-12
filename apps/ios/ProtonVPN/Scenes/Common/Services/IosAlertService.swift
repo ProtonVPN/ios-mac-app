@@ -27,15 +27,15 @@ import Dependencies
 
 import ProtonCoreUIFoundations
 
+import Announcement
 import LegacyCommon
+import Modals
 import Persistence
 import VPNAppCore
-import Modals
-import Announcement
 
+import Domain
 import Ergonomics
 import Strings
-import Domain
 
 final class IosAlertService {
     typealias Factory =

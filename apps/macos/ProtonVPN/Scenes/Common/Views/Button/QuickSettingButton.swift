@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 class QuickSettingButton: NSButton {
     private var hovered = false

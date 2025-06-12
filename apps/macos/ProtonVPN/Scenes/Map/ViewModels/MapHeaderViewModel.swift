@@ -24,9 +24,9 @@ import Cocoa
 
 import LegacyCommon
 
-import Theme
-import Strings
 import Domain
+import Strings
+import Theme
 
 class MapHeaderViewModel {
     private let vpnGateway: VpnGatewayProtocol

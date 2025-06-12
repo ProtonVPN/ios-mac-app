@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import Modals
 import UITestsHelpers
+import XCTest
 
 class ConnectionTestsFreeUser: ProtonVPNUITests {
     private let mainRobot = MainRobot()

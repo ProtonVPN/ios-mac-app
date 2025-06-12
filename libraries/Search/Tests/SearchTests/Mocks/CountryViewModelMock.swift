@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 @testable import Search
+import UIKit
 
 final class CountryViewModelMock: CountryViewModel {
     var isGateway: Bool = false

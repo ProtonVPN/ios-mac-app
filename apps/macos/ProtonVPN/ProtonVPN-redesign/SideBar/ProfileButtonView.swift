@@ -18,9 +18,9 @@
 
 #if REDESIGN
 
+    import ProtonCoreUIFoundations
     import SwiftUI
     import Theme
-    import ProtonCoreUIFoundations
 
     struct ProfileButtonView: View {
         var body: some View {

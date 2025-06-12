@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 import Connection
-import VPNAppCore
 import Domain
+import VPNAppCore
 
 import Foundation
 

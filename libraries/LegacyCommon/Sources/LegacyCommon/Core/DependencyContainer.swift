@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Domain
-import NetworkExtension
-import Timer
-import Localization
-import PMLogger
 import CommonNetworking
+import Dependencies
+import Domain
+import Ergonomics
+import Foundation
+import Localization
+import NetworkExtension
+import PMLogger
+import Timer
 import VPNAppCore
 import VPNShared
-import Dependencies
-import Ergonomics
 
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications

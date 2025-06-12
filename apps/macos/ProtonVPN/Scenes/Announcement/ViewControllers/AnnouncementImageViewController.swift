@@ -20,14 +20,14 @@ import AppKit
 
 import Dependencies
 
-import LegacyCommon
-import CommonNetworking
-import VPNAppCore
 import Announcement
+import CommonNetworking
+import LegacyCommon
+import VPNAppCore
 
+import Domain
 import Ergonomics
 import Strings
-import Domain
 
 final class AnnouncementImageViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!

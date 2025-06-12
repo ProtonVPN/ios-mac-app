@@ -29,14 +29,14 @@ import Domain
 import Ergonomics
 import Strings
 
+import Announcement
+import LegacyCommon
 import Localization
 import Modals
-import Search
-import LegacyCommon
 import ProtonCoreFeatureFlags
+import Search
 import VPNAppCore
 import VPNShared
-import Announcement
 
 typealias Row = RowViewModel
 

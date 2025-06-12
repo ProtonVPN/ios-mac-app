@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Dependencies
+@testable import LegacyCommon
 import VPNShared
 import VPNSharedTesting
-@testable import LegacyCommon
+import XCTest
 
 final class SafeModePropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"

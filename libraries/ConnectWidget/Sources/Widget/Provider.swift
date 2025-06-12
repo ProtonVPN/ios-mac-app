@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import WidgetKit
-import Domain
-import Dependencies
-import VPNShared
-import VPNAppCore
-import ConnectionInventory
-import OrderedCollections
 import AppIntents
 import ComposableArchitecture
+import ConnectionInventory
+import Dependencies
+import Domain
+import OrderedCollections
+import VPNAppCore
+import VPNShared
+import WidgetKit
 
 struct Provider: TimelineProvider {
     @Dependency(\.authKeychain) var authKeychain

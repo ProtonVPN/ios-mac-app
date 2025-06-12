@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import BugReport
 import Foundation
 import ProtonCoreAPIClient
-import BugReport
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 #if os(iOS) || os(tvOS)
     import UIKit

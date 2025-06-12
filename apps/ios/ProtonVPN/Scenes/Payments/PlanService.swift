@@ -19,17 +19,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import CommonNetworking
 import Dependencies
+import Foundation
+import LegacyCommon
+import Modals
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import LegacyCommon
 import UIKit
-import VPNShared
-import Modals
-import CommonNetworking
 import VPNAppCore
+import VPNShared
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService

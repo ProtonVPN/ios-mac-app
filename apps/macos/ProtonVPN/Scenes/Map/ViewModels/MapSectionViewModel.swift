@@ -27,9 +27,9 @@ import Dependencies
 
 import Domain
 import Ergonomics
+import LegacyCommon
 import Localization
 import Persistence
-import LegacyCommon
 import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value

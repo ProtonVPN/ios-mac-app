@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import LegacyCommon
-import Domain
 
 class StatusMenuProfilesListViewModel {
     private let vpnGateway: VpnGatewayProtocol

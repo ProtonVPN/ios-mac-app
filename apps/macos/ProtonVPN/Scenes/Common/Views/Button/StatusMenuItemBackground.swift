@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
     required init?(coder: NSCoder) {

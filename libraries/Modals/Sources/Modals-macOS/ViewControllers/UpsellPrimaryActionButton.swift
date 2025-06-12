@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {
     override var title: String {

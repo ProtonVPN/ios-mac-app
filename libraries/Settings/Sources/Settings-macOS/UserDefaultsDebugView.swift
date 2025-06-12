@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import SettingsShared
+import SwiftUI
 
 struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>

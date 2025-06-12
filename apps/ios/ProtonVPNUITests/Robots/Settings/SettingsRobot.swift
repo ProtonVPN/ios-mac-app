@@ -7,9 +7,9 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
 private let headerTitle = Localizable.settingsTitle
 private let protocolButton = Localizable.protocol

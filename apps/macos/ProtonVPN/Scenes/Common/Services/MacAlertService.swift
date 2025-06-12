@@ -20,23 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 import Dependencies
 
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Modals
 import Announcement
+import Modals
 
-import Ergonomics
-import Theme
-import Strings
 import Domain
+import Ergonomics
+import Strings
+import Theme
 
 final class MacAlertService {
     @Dependency(\.serverRepository) var serverRepository

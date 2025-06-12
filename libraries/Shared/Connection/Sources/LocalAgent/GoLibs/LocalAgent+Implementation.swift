@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
 import Dependencies
 import Domain
-import CoreConnection
 import class GoLibs.LocalAgentFeatures
 
 final class LocalAgentImplementation: LocalAgent {

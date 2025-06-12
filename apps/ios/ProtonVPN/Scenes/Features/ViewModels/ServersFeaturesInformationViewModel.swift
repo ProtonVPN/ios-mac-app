@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 protocol ServersFeaturesInformationViewModel {
     func titleFor(_ section: Int) -> String?

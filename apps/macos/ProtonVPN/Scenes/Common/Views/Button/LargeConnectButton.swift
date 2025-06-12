@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class LargeConnectButton: HoverDetectionButton {
     override var title: String {

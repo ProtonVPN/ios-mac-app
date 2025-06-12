@@ -20,25 +20,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 import Dependencies
 
-import ProtonCoreLogin
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreFeatureFlags
-import ProtonCoreServices
+import ProtonCoreLogin
+import ProtonCoreNetworking
 import ProtonCoreObservability
+import ProtonCoreServices
 
 import CommonNetworking
 import LegacyCommon
 import VPNAppCore
 import VPNShared
 
-import Strings
 import Domain
+import Strings
 
 struct LoginViewModelError: Swift.Error {
     let localizedDescription: String

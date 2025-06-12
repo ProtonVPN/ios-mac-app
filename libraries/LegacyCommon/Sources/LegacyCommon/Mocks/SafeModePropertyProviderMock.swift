@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
     import Domain
+    import Foundation
 
     public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
         public var safeMode: Bool? = false {

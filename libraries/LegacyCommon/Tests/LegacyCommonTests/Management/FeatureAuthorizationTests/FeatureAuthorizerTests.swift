@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Dependencies
-import VPNShared
 @testable import LegacyCommon
+import VPNShared
+import XCTest
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {

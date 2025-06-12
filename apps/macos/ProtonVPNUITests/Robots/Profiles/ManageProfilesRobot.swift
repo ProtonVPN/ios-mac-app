@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
 import Strings
+import XCTest
 
 private let createProfileTitleId = "Profiles Overview"
 private let createProfileButton = "Create Profile"

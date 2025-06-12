@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import protocol VPNShared.VpnAuthenticationStorageSync
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+import protocol VPNShared.VpnAuthenticationStorageSync
 import struct VPNShared.VpnKeys
 
 // Bridge between new key models with improved error handling and old keys from LegacyCommon

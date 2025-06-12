@@ -24,8 +24,8 @@ import Cocoa
 
 import LegacyCommon
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 protocol StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel

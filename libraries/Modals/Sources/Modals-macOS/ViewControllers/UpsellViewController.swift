@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import SwiftUI
-import ModalsShared
 import Ergonomics
+import ModalsShared
 import Strings
+import SwiftUI
 import Theme
 
 public final class UpsellViewController: NSViewController {

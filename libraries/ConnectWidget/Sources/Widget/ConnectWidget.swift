@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import WidgetKit
+import Strings
 import SwiftUI
 import Theme
-import Strings
+import WidgetKit
 
 public struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"

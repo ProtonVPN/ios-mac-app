@@ -18,12 +18,12 @@
 
 #if os(macOS)
     import Foundation
-    import XCTest
     @testable import LegacyCommon
+    import XCTest
 
     import SystemExtensions
-    import VPNSharedTesting
     import VPNAppCore
+    import VPNSharedTesting
 
     class SystemExtensionManagerTests: XCTestCase {
         let expectationTimeout: TimeInterval = 10

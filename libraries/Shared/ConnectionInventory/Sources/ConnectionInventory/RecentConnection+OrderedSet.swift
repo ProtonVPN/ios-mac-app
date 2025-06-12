@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import OrderedCollections
-import Domain
-import Dependencies
-import VPNAppCore
-import Foundation
 import Algorithms
+import Dependencies
+import Domain
+import Foundation
+import OrderedCollections
+import VPNAppCore
 
 extension OrderedSet<RecentConnection> {
     private static let maxConnections = 8

@@ -23,8 +23,8 @@
 import Cocoa
 import Dependencies
 import LegacyCommon
-import VPNAppCore
 import Strings
+import VPNAppCore
 
 class HelpMenuController: NSObject {
     @IBOutlet weak var helpMenu: NSMenu!

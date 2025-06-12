@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CoreLocation
+import Foundation
 
 /// Implemented according to the definition from https://en.wikipedia.org/wiki/Natural_Earth_projection
 public enum NaturalEarthProjection {

@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-import LegacyCommon
 import AppKit
+import Cocoa
 import Ergonomics
+import LegacyCommon
 import Strings
 
 public protocol ReloadableViewController: AnyObject {

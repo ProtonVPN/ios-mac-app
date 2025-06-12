@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
-import VPNAppCore
-import Persistence
 import CommonNetworking
+import LegacyCommon
+import Persistence
+import VPNAppCore
 
 import Domain
 import Ergonomics
-import Theme
 import Strings
+import Theme
 
 protocol StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel

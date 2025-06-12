@@ -20,8 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import Strings
+import VPNShared
 
 public enum ParseError: LocalizedError {
     case authInfoParse

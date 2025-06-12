@@ -18,8 +18,8 @@
 
 #if targetEnvironment(simulator)
     import Foundation
-    import XCTest
     import struct Network.IPv4Address
+    import XCTest
 
     import ComposableArchitecture
 

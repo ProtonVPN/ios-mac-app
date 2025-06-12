@@ -23,10 +23,10 @@ import Foundation
 
 import Domain
 import Ergonomics
-import Strings
 import Localization
-import VPNShared
+import Strings
 import VPNAppCore
+import VPNShared
 
 public class ServerModel: NSObject, NSCoding, Codable {
     public let id: String

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import var ProtonCoreUIFoundations.IconProvider
+import SwiftUI
 
 public struct Accessory: View {
     private let style: Style

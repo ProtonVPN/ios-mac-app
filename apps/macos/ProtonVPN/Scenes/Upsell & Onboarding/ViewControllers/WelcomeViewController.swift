@@ -27,9 +27,9 @@ import Dependencies
 import LegacyCommon
 import VPNAppCore
 
-import Theme
 import Ergonomics
 import Strings
+import Theme
 
 class WelcomeViewController: NSViewController {
     fileprivate enum Switch: Int {

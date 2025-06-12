@@ -20,8 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreNetworking
 import Ergonomics
+import ProtonCoreNetworking
 
 public final class VPNLoadsRequest: Request {
     private let ip: String?

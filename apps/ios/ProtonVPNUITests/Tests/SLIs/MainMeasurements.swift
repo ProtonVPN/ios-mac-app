@@ -19,10 +19,10 @@
 import Foundation
 import fusion
 import ProtonCoreLog
-import ProtonCoreTestingToolkitUITestsCore
 import ProtonCoreTestingToolkitPerformance
-import XCTest
+import ProtonCoreTestingToolkitUITestsCore
 import UITestsHelpers
+import XCTest
 
 @MainActor
 class MainMeasurements: ProtonVPNUITests {

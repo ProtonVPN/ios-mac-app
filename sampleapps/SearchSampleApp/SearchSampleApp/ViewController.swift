@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import Modals
 import Search
+import UIKit
 
 final class ViewController: UIViewController {
     @IBOutlet private weak var userTierSegmentedControl: UISegmentedControl!

@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-import Ergonomics
-import VPNAppCore
 import AppIntents
-import Domain
-import UIKit
-import Connection
-import ComposableArchitecture
 import AsyncAlgorithms
+import ComposableArchitecture
+import Connection
+import Dependencies
+import Domain
+import Ergonomics
+import UIKit
+import VPNAppCore
 
 struct DisconnectFromVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Disconnect from VPN"

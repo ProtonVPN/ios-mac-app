@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import ComposableArchitecture
 import CoreConnection
-import VPNShared
+import Dependencies
 import Domain
+import Foundation
+import VPNShared
 
 /// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
 @CasePathable

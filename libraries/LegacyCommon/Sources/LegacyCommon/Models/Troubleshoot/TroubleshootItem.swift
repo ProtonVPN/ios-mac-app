@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import Strings
-import Domain
 
 public protocol TroubleshootItem {
     var title: String { get }

@@ -27,11 +27,11 @@ import Dependencies
 
 import Domain
 import Ergonomics
+import LegacyCommon
+import NetShield
 import Strings
 import Theme
-import NetShield
 import VPNShared
-import LegacyCommon
 
 class QuickSettingsStack: NSStackView {
     override func isAccessibilityElement() -> Bool {

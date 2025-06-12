@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ProtonCoreUIFoundations
 import ComposableArchitecture
-import HomeShared
-import Strings
 import Ergonomics
+import HomeShared
+import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
 
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender

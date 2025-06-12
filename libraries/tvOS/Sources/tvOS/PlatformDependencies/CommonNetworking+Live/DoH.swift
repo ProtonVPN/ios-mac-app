@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import CommonNetworking
+import Dependencies
+import Foundation
 
 extension DoHConfigurationKey: DependencyKey {
     public static var liveValue = DoHVPN(alternativeRouting: false, customHost: nil)

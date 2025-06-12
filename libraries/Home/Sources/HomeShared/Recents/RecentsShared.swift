@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import OrderedCollections
 import ComposableArchitecture
 import Domain
+import OrderedCollections
 
 public extension SharedKey where Self == InMemoryKey<OrderedSet<RecentConnection>>.Default {
     static var recents: Self {

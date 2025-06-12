@@ -22,13 +22,13 @@
 
 import UIKit
 
-import GSMessages
 import Dependencies
+import GSMessages
 
-import VPNAppCore
-import Localization
 import LegacyCommon
+import Localization
 import Persistence
+import VPNAppCore
 
 import Domain
 import Strings

@@ -21,10 +21,10 @@
 //
 
 import CoreLocation
-import UIKit
 import LegacyCommon
 import Localization
 import Strings
+import UIKit
 
 class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     private let appStateManager: AppStateManager

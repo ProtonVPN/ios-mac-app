@@ -18,8 +18,8 @@
 
 #if canImport(UIKit)
 
-    import UIKit
     import SwiftUI
+    import UIKit
 
     /// A helper for non-crucial or distracting animations that should be disabled if the user has toggled Reduce Motion
     /// in system accessibility settings.

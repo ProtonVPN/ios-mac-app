@@ -25,8 +25,8 @@ import Foundation
 import GoLibs
 
 import Domain
-import VPNShared
 import Localization
+import VPNShared
 
 public enum SmartProtocolAvailabilityCheckerResult {
     case unavailable

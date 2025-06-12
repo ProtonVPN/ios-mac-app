@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import Timer
 @testable import NEHelper
+import Timer
+import XCTest
 
 final class RefreshManagerTests: XCTestCase {
     /// Make sure `work` is not run right after manager is created.

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import CoreConnection
+import KeychainAccess
 import NetworkExtension
 import WireGuardKit
 import WireGuardLogging
-import KeychainAccess
-import CoreConnection
 
 enum PacketTunnelProviderError: String, Error {
     case savedProtocolConfigurationIsInvalid

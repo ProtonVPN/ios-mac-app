@@ -25,15 +25,15 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import Announcement
-import ConnectionDetails
 import Connection
-import ModalsServices
+import ConnectionDetails
 import LocalAgent
+import ModalsServices
 import NetShield
 import VPNAppCore
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 @Reducer
 public struct HomeFeature {

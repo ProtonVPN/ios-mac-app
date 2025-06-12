@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
 import ProtonCoreNetworking
-import CommonNetworking
 
 public enum PaymentsApiServiceSuccess {
     case planUpgraded

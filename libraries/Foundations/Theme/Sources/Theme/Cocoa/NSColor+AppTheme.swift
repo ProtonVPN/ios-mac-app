@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import SwiftUI
 import var ProtonCoreUIFoundations.ColorProvider
+import SwiftUI
 
 #if canImport(Cocoa)
     import Cocoa

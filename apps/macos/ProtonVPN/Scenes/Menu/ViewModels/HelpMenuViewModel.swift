@@ -23,10 +23,10 @@
 import Cocoa
 import Dependencies
 
+import Domain
 import LegacyCommon
 import PMLogger
 import VPNShared
-import Domain
 
 protocol HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel

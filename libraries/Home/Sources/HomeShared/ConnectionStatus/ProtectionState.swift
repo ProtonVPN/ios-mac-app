@@ -18,12 +18,12 @@
 
 import Foundation
 
+import ComposableArchitecture
 import Dependencies
 import Domain
+import NetShield
 import Strings
 import VPNAppCore
-import NetShield
-import ComposableArchitecture
 
 public enum ProtectionState: Equatable {
     case resolving // Transitionary state. Shown at app start while we figure out what state the tunnel is in.

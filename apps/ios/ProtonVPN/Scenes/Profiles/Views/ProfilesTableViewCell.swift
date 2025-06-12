@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
+import UIKit
 
 final class ProfilesTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImage: UIImageView!

@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class ClearCancellationButton: HoverDetectionButton {
     override var title: String {

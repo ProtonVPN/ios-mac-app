@@ -22,9 +22,9 @@ import XCTest
 
 import Dependencies
 
+import VPNAppCore
 import VPNShared
 import VPNSharedTesting
-import VPNAppCore
 
 import CommonNetworking
 import CommonNetworkingTestSupport

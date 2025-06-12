@@ -16,13 +16,13 @@
 
 import Foundation
 
-import Dependencies
 import ComposableArchitecture
 import ConcurrencyExtras
+import Dependencies
 
 import Domain
-import VPNAppCore
 import PMLogger
+import VPNAppCore
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 

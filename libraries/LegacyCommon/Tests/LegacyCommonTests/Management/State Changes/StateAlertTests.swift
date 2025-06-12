@@ -19,13 +19,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworkingTestSupport
 @testable import LegacyCommon
-import XCTest
 import Localization
 import TimerMock
-import VPNSharedTesting
 import VPNAppCore
-import CommonNetworkingTestSupport
+import VPNSharedTesting
+import XCTest
 
 class StateAlertTests: XCTestCase {
     let vpnConfig = VpnManagerConfiguration(

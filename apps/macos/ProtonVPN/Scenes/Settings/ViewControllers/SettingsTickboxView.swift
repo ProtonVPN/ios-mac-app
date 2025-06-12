@@ -23,10 +23,10 @@ import Perception
 
 import ProtonCoreUIFoundations
 
+import Combine
 import LegacyCommon
 import Strings
 import Theme
-import Combine
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)

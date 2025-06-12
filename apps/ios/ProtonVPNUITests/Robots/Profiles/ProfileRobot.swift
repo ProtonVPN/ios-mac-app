@@ -6,8 +6,8 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import fusion
 import Foundation
+import fusion
 import Strings
 import UITestsHelpers
 

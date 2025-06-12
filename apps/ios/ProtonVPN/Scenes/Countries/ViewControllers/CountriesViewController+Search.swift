@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Search
 import LegacyCommon
+import Search
 
 extension CountriesViewController: SearchCoordinatorDelegate {
     func userDidRequestPlanPurchase() {

@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class LoginButton: HoverDetectionButton {
     var displayTitle: String?

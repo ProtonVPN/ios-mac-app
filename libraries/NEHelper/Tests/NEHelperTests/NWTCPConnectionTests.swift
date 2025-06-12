@@ -17,13 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
+@testable import NEHelper
 import NetworkExtension
 import Timer
 import TimerMock
-@testable import NEHelper
 @testable import VPNShared
 @testable import VPNSharedTesting
+import XCTest
 
 class NWTCPConnectionTests: XCTestCase {
     let networkQueue = DispatchQueue(label: "ch.protonvpn.fake-network-request")

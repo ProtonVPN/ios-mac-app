@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import LegacyCommon
 import Alamofire
 import AlamofireImage
+import LegacyCommon
+import UIKit
 
 class StreamingServiceCell: UICollectionViewCell {
     @IBOutlet private weak var serviceIV: UIImageView!

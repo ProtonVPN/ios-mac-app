@@ -18,18 +18,18 @@
 
 #if compiler(>=6) && canImport(Testing)
 
-    import OrderedCollections
-    import Testing
-    import SnapshotTesting
     import ComposableArchitecture
-    import VPNAppCore
     import Domain
     import DomainTestSupport
     import Ergonomics
-    @testable import HomeShared
     @testable import Home
-    import SwiftUI
+    @testable import HomeShared
     import IssueReporting
+    import OrderedCollections
+    import SnapshotTesting
+    import SwiftUI
+    import Testing
+    import VPNAppCore
 
     @Suite("Home")
     struct SwiftTestingTests {

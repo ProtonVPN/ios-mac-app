@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import VPNAppCore
-import Persistence
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import Persistence
+import VPNAppCore
 
-import Theme
+import Domain
 import Ergonomics
 import Strings
-import Domain
+import Theme
 
 class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var serversView: NSView!

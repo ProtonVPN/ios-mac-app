@@ -22,12 +22,12 @@ import ComposableArchitecture
 
 import ProtonCoreFeatureFlags
 
+import Announcement
 import CommonNetworking
 import Connection
+import Domain
 import Ergonomics
 import Persistence
-import Announcement
-import Domain
 import VPNAppCore
 
 @Reducer

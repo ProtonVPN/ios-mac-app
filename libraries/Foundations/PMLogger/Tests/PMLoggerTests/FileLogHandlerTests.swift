@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import PMLogger
+import XCTest
 
 class FileLogHandlerTests: XCTestCase {
     private var folder: URL = .init(string: "/tmp")!

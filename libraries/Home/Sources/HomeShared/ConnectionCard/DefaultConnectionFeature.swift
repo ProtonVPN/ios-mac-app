@@ -18,8 +18,8 @@
 
 import Collections
 import ComposableArchitecture
-import Domain
 import ConnectionInventory
+import Domain
 
 @Reducer
 public struct DefaultConnectionFeature {

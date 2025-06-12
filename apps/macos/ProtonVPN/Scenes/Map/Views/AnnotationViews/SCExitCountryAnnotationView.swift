@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import MapKit
 import LegacyCommon
+import MapKit
 
 class SCExitCountryAnnotationView: MapAnnotationView {
     let viewModel: SCExitCountryAnnotationViewModel

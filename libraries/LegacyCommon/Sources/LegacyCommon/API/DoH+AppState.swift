@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CommonNetworking
+import Foundation
 
 extension DoHVPN {
     /// Default implementation of checking whether a `Notification` contains an `AppState` and whether its in the

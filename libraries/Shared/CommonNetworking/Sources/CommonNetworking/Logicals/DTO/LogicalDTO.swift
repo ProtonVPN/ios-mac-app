@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 struct LogicalDTO: Codable {
     public let id: String

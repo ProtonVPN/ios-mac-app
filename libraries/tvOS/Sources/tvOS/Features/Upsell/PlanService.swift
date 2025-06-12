@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import class StoreKit.SKProduct
 import Dependencies
+import Foundation
 import ProtonCorePayments
+import class StoreKit.SKProduct
 
 struct PaymentsFactory {
     var payments: @Sendable () -> Payments

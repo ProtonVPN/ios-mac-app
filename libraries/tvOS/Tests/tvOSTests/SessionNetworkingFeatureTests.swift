@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
+@testable import CommonNetworking
 import ComposableArchitecture
 import struct Ergonomics.GenericError
 import IssueReporting
+import ProtonCoreNetworking
 @testable import tvOS
-@testable import CommonNetworking
 @testable import VPNShared
 @testable import VPNSharedTesting
-import ProtonCoreNetworking
+import XCTest
 
 final class SessionNetworkingFeatureTests: XCTestCase {
     @MainActor

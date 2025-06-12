@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import Foundation
+import LegacyCommon
 
 final class TroubleshootingRowItem: NSTableRowView {
     // MARK: Outlets

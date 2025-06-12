@@ -7,9 +7,9 @@
 //
 //  See LICENSE for up to date license information.
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 final class VpnProtocolViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!

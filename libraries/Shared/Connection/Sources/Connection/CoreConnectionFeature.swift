@@ -23,8 +23,8 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import CoreConnection
 import CertificateAuthentication
+import CoreConnection
 import ExtensionManager
 import LocalAgent
 import VPNAppCore

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Cocoa
+import Domain
+import Foundation
 import LegacyCommon
 import VPNAppCore
-import Domain
 
 final class ProtocolDeprecatedViewController: WarningPopupViewController {
     override func viewDidLoad() {

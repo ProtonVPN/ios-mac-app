@@ -22,8 +22,8 @@
 
 import Foundation
 
-import ProtonCoreNetworking
 import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
 
 import Domain
 import VPNShared

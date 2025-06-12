@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import Ergonomics
 import Foundation
 import WireGuardKit
-import Ergonomics
 
 extension TunnelConfiguration {
     enum ParserState {

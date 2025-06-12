@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import VPNShared
-import VPNAppCore
-import LegacyCommon
 import Announcement
+import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Theme
 import Domain
-import Strings
 import Ergonomics
+import Strings
+import Theme
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)

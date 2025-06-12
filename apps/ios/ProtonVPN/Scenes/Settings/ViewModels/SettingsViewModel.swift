@@ -27,16 +27,16 @@ import Dependencies
 import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
 import ProtonCoreFeatureFlags
-import ProtonCoreUIFoundations
 import ProtonCoreLoginUI
+import ProtonCoreUIFoundations
 
 import CommonNetworking
-import VPNShared
 import LegacyCommon
-import VPNAppCore
+import LocalAuthentication
 import Settings
 import SwiftUI
-import LocalAuthentication
+import VPNAppCore
+import VPNShared
 
 import Domain
 import Strings

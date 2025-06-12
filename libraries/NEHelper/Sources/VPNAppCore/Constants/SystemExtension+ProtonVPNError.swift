@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(SystemExtensions)
-    import SystemExtensions
     import Domain
+    import SystemExtensions
 
     extension OSSystemExtensionError.Code: @retroactive ProtonVPNError {
         public static var errorDomain: String {

@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Cocoa
 import ProtonCoreUIFoundations
 import Theme
-import Cocoa
 #if canImport(SwiftUI)
     import SwiftUI
 #endif

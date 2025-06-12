@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 class ServersStreamingFeaturesVC: UIViewController {
     private let viewModel: ServersStreamingFeaturesViewModel

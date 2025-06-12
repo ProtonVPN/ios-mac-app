@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
+import Dependencies
 import Foundation
 import LegacyCommon
-import Dependencies
-import Announcement
 
 protocol AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel

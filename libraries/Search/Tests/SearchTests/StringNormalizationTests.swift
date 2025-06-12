@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Search
+import XCTest
 
 final class StringNormalizationTests: XCTestCase {
     func testStringAccentNormalization() {

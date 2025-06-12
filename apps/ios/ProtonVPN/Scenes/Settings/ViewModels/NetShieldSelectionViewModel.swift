@@ -26,8 +26,8 @@ import Strings
 import Theme
 
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 final class NetShieldSelectionViewModel {
     typealias Factory = AppSessionManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PlanServiceFactory

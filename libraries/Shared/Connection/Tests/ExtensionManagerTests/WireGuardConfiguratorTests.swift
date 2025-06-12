@@ -19,12 +19,12 @@
 import Foundation
 import XCTest
 
-import Ergonomics
+import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
+import Ergonomics
 import VPNShared
 import VPNSharedTesting
-import CoreConnectionTestSupport
 
 import Dependencies
 

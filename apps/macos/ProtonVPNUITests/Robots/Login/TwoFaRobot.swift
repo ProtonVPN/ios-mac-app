@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
 private let twoFaAuthentication = "Two-factor authentication"
 private let twoFaAuthenticationTextField = "twoFactorTextField"

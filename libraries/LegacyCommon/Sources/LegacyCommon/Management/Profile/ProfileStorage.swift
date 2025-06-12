@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import VPNShared
 import Domain
+import Foundation
+import VPNShared
 
 public protocol ProfileStorageFactory {
     func makeProfileStorage() -> ProfileStorage

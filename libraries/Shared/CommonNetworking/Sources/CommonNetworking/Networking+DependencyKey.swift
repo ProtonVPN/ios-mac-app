@@ -22,10 +22,10 @@ import Dependencies
 import Ergonomics
 import IssueReporting
 
-import ProtonCoreServices
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
+import ProtonCoreNetworking
+import ProtonCoreServices
 
 public protocol VPNNetworking {
     var userTier: Int { get async throws }

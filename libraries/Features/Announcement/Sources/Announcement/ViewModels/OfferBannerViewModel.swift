@@ -20,14 +20,14 @@ import Foundation
 
 import Dependencies
 
-import VPNAppCore
-import Connection
 import CommonNetworking
+import Connection
+import VPNAppCore
 
-import Strings
-import Timer
 import Domain
 import Ergonomics
+import Strings
+import Timer
 
 public struct OfferBannerViewModel {
     static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {

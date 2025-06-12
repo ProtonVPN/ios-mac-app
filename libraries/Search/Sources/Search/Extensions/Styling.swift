@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Overture
 import Theme
+import UIKit
 
 var colors = Colors()
 

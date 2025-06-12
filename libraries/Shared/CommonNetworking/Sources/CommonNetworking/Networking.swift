@@ -31,8 +31,8 @@ import ProtonCoreUtilities
 
 // Internal
 import Ergonomics
-import VPNShared // AuthKeychain
 import VPNAppCore // UnauthKeychain
+import VPNShared // AuthKeychain
 
 public typealias SuccessCallback = () -> Void
 public typealias SuccessConfirmationCallback = (@escaping SuccessCallback) -> Void

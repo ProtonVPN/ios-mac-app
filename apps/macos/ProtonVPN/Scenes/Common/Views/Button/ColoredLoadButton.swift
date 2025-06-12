@@ -22,8 +22,8 @@
 
 import Cocoa
 import LegacyCommon
-import Theme
 import Strings
+import Theme
 
 class ColoredLoadButton: NSButton {
     var load: Int? {

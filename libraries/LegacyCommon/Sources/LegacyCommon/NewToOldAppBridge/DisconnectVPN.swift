@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 import Connection
-import ProtonCoreFeatureFlags
 import Domain
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 extension DisconnectVPNKey: @retroactive DependencyKey {

@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 enum ZoomType {
     case `in`

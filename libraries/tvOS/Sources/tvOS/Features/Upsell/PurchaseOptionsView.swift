@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import struct StoreKit.Product
+import Strings
+import SwiftUI
 
 struct PurchaseOptionsView: View {
     let products: [PlanIAPTuple]

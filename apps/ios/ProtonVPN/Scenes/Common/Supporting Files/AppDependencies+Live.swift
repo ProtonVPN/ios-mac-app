@@ -22,11 +22,11 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Ergonomics
 import LegacyCommon
+import Persistence
 import VPNAppCore
 import VPNShared
-import Persistence
-import Ergonomics
 
 // MARK: Live implementations of app dependencies
 

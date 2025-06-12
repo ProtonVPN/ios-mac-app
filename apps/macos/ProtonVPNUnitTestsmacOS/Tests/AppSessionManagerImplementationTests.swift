@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import LegacyCommon
+import XCTest
 
-import VPNShared
 import Dependencies
 @testable import ProtonVPN
+import VPNShared
 
 private let testData = MockTestData()
 private let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", expiration: Date(), scopes: [])

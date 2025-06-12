@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReport
-import SwiftUI
 import ProtonCoreUIFoundations
+import SwiftUI
 
 extension BugReport.Colors {
     public init() {

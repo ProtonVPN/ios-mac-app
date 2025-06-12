@@ -18,10 +18,10 @@
 
 import ComposableArchitecture
 import Domain
-import VPNAppCore
 import Foundation
 import Localization
 import Persistence
+import VPNAppCore
 
 @Reducer
 public struct ConnectionScreenFeature {

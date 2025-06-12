@@ -21,10 +21,10 @@ import SwiftUI
 import ProtonCoreUIFoundations
 
 import Domain
+import HomeShared
 import Strings
 import Theme
 import VPNAppCore
-import HomeShared
 
 struct RecentConnectionOptionsButton: View {
     let item: RecentConnection

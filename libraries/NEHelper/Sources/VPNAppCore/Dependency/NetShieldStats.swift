@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import Ergonomics
+import Foundation
 import NetShield
 
 // This approach is broken because we're listening to the stream from two places

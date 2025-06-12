@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
-import ProtonCoreUIFoundations
 
 /// Progress indicator that changes color based on the percentage
 public struct SmallProgressView: View {

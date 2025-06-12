@@ -18,8 +18,8 @@
 
 import XCTest
 
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 /// This test case verifies that all tests operate on the same shared ephemeral database
 final class CaseIsolatedTestCaseTests: CaseIsolatedDatabaseTestCase {

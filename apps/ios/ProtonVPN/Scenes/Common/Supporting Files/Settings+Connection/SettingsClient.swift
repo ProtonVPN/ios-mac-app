@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Connection
-import Settings
 import Dependencies
+import Settings
 import Sharing
 import VPNAppCore
 

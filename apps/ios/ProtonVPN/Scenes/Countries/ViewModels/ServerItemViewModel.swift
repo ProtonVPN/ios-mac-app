@@ -27,15 +27,15 @@ import Combine
 import ComposableArchitecture
 import Dependencies
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
 import Persistence
 
-import Search
 import LegacyCommon
-import VPNAppCore
 import Localization
+import Search
+import VPNAppCore
 
 import Domain
 import Strings

@@ -24,8 +24,8 @@
 #endif
 
 import Dependencies
-import PMLogger
 import Domain
+import PMLogger
 
 public struct LinkOpener: DependencyKey {
     public let open: (URL) -> Void

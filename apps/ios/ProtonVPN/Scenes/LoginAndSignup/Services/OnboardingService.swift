@@ -24,9 +24,9 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import LegacyCommon
+import Modals
 import Persistence
 import VPNShared
-import Modals
 
 protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService

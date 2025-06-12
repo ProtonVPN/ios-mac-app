@@ -20,10 +20,10 @@ import Foundation
 
 import ComposableArchitecture
 
-import Domain
 import enum Connection.ConnectionState
-import VPNAppCore
+import Domain
 import Ergonomics
+import VPNAppCore
 
 #if canImport(UIKit)
     import class UIKit.UIApplication

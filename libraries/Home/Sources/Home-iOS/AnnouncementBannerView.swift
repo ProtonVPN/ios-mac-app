@@ -21,10 +21,10 @@ import SwiftUI
 import ComposableArchitecture
 import SDWebImageSwiftUI
 
-import Theme
 import Announcement
-import Strings
 import HomeShared
+import Strings
+import Theme
 
 struct AnnouncementBannerView: View {
     let store: StoreOf<AnnouncementBannerFeature>

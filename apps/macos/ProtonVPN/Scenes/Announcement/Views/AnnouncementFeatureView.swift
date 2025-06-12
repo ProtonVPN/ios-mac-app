@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
 import Cocoa
 import LegacyCommon
-import Announcement
 
 final class AnnouncementFeatureView: NSView {
     @IBOutlet private weak var iconImageView: NSImageView!

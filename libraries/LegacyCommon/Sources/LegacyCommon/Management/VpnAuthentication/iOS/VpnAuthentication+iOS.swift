@@ -20,11 +20,11 @@ import Foundation
 
 import Dependencies
 
+import CommonNetworking
 import Domain
 import Ergonomics
 import ExtensionIPC
 import VPNShared
-import CommonNetworking
 
 #if os(iOS)
     public final class VpnAuthenticationRemoteClient: VpnAuthentication {

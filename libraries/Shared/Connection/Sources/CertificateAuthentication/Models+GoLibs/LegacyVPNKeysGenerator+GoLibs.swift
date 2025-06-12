@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-import func GoLibs.Ed25519NewKeyPair
 import class GoLibs.Ed25519KeyPair
+import func GoLibs.Ed25519NewKeyPair
 
-import struct VPNShared.VPNKeysGenerator
-import struct VPNShared.VpnKeys
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+import struct VPNShared.VpnKeys
+import struct VPNShared.VPNKeysGenerator
 
 import CoreConnection
 

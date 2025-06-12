@@ -24,11 +24,11 @@ import DependenciesMacros
 import IssueReporting
 import SwiftNavigation
 
-import Logging
-import protocol Foundation.LocalizedError
 import struct Domain.Alert
-import protocol Domain.ProtonVPNError
 import protocol Domain.AlertConvertibleError
+import protocol Domain.ProtonVPNError
+import protocol Foundation.LocalizedError
+import Logging
 import enum Strings.Localizable
 
 package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")

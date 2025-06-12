@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import CommonNetworking
-import VPNShared
+import Foundation
 import Logging
+import VPNShared
 
 // MacOS Certificate Refresh operation
 final class CertificateRefreshAsyncOperation: AsyncOperation {

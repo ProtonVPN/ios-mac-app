@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 import Strings
 
 final class SecureCoreWarningViewController: NSViewController {

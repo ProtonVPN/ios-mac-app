@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import SnapshotTesting
 import ComposableArchitecture
-@testable import tvOS
-import SwiftUI
 @testable import Connection
 import Domain
+import DomainTestSupport
 import struct Ergonomics.GenericError
 @testable import ExtensionManager
 @testable import LocalAgent
 import PersistenceTestSupport
-import DomainTestSupport
+import SnapshotTesting
+import SwiftUI
+@testable import tvOS
+import XCTest
 
 final class MainFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightMainLoading() {

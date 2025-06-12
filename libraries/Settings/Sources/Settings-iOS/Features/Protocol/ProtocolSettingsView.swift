@@ -24,8 +24,8 @@ import Domain
 import SettingsShared
 import Strings
 import Theme
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 struct ProtocolSettingsView: View {
     let store: StoreOf<ProtocolSettingsFeature>

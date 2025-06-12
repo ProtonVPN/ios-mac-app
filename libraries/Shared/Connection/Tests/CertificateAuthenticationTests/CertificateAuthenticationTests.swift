@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
+@testable import CertificateAuthentication
 import ComposableArchitecture
-import struct Domain.VPNConnectionFeatures
-import VPNShared
-import VPNSharedTesting
 @testable import CoreConnection
 import CoreConnectionTestSupport
-@testable import CertificateAuthentication
+import struct Domain.VPNConnectionFeatures
+import Foundation
+import VPNShared
+import VPNSharedTesting
+import XCTest
 
 final class CertificateAuthenticationTests: XCTestCase {
     /// If we don't have keys at the point where we are trying to load our certificate to connect to local agent, then

@@ -21,8 +21,8 @@
 //
 
 import CoreLocation
-import UIKit
 import LegacyCommon
+import UIKit
 
 class CountryAnnotation: AnnotationView {
     private let flagView: UIImageView

@@ -18,15 +18,15 @@
 
 import Foundation
 
-import ComposableArchitecture
 import CommonNetworking
+import ComposableArchitecture
 import ModalsServices
 import ProtonCoreFeatureFlags
 
-import ProtonCoreLog
-import PMLogger
-import enum VPNShared.StorageKeys
 import struct Domain.Alert
+import PMLogger
+import ProtonCoreLog
+import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to

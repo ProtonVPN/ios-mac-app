@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 /// Controls whether traffic destined for local networks will be excluded from the tunnel
 public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {

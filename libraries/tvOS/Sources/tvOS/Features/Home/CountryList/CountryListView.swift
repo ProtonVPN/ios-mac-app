@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-import ProtonCoreUIFoundations
-import Theme
 import ComposableArchitecture
+import Foundation
+import ProtonCoreUIFoundations
+import SwiftUI
+import Theme
 
 /// Displays the list of countries (and other connectable items, like "fastest").
 struct CountryListView: View {

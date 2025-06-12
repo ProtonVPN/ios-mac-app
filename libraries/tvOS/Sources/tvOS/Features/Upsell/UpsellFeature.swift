@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Dependencies
 import Ergonomics
+import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import enum ProtonCorePayments.ProcessCompletionResult
 import enum ProtonCorePayments.PurchaseResult

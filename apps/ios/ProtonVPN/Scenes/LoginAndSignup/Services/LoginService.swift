@@ -13,8 +13,8 @@ import UIKit
 import Dependencies
 
 import ProtonCoreDataModel
-import ProtonCoreLogin
 import ProtonCoreFeatureFlags
+import ProtonCoreLogin
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePayments
@@ -24,8 +24,8 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 
 import CommonNetworking
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Settings
 

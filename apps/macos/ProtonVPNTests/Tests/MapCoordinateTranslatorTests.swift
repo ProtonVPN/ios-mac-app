@@ -21,8 +21,8 @@
 //
 
 import CoreLocation
-import XCTest
 import Ergonomics
+import XCTest
 
 @testable import ProtonVPN
 

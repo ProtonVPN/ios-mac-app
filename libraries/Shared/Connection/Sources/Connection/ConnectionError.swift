@@ -18,18 +18,18 @@
 
 import Foundation
 
-import Dependencies
 import CasePaths
+import Dependencies
 
-import Localization
-import LocalAgent
+import CertificateAuthentication
 import CoreConnection
 import ExtensionManager
-import CertificateAuthentication
+import LocalAgent
+import Localization
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 @CasePathable
 public enum ConnectionError: Error, Equatable, Sendable {

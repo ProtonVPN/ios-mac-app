@@ -19,10 +19,10 @@
 #if REDESIGN
 
     import Home
-    import SwiftUI
-    import Strings
-    import Theme
     import ProtonCoreUIFoundations
+    import Strings
+    import SwiftUI
+    import Theme
 
     enum SideBarTab: Hashable, CaseIterable {
         case home

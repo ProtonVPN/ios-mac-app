@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
 import Domain
 import DomainTestSupport
 import Ergonomics
 @testable import HomeShared
+import XCTest
 
 @MainActor
 final class UserLocationFeatureTests: XCTestCase {

@@ -20,13 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
+import Domain
 import Foundation
 import LegacyCommon
-import AppKit
-import Theme
 import Strings
+import Theme
 import VPNAppCore
-import Domain
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory

@@ -22,10 +22,10 @@ import ComposableArchitecture
 import SwiftNavigation
 
 import Localization
+import ProtonCoreUIFoundations
 import SettingsShared
 import Strings
 import Theme
-import ProtonCoreUIFoundations
 
 public struct SettingsView: View {
     typealias DestinationViewStore = ViewStore<SettingsFeature.Destination?, SettingsFeature.Action>

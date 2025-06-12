@@ -21,10 +21,10 @@ import ComposableArchitecture
 import SwiftUI
 
 import Domain
+import Ergonomics
+import Localization
 import NetShield
 import VPNAppCore
-import Localization
-import Ergonomics
 
 @Reducer
 public struct ConnectionStatusFeature {

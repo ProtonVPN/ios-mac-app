@@ -21,8 +21,8 @@
 //
 
 // System frameworks
-import UIKit
 import Foundation
+import UIKit
 
 // Third-party dependencies
 import Dependencies
@@ -41,19 +41,20 @@ import ProtonCoreNetworking
 import ProtonCoreObservability
 import ProtonCorePushNotifications
 import ProtonCoreServices
-import ProtonCoreUIFoundations
 import ProtonCoreTelemetry
+import ProtonCoreUIFoundations
+
+import Announcement
+import Domain
+import Ergonomics
 
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
-import VPNShared
-import VPNAppCore
-import Announcement
-import Settings
 import Logging
 import PMLogger
-import Domain
-import Ergonomics
+import Settings
+import VPNAppCore
+import VPNShared
 
 public let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 

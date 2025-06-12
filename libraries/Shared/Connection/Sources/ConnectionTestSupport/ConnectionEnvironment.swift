@@ -18,18 +18,18 @@
 
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
 
-    import Foundation
     import ComposableArchitecture
+    import Foundation
 
+    @testable import CertificateAuthentication
+    import Connection
+    import CoreConnection
     import Domain
     import DomainTestSupport
+    @testable import ExtensionManager
+    @testable import LocalAgent
     import VPNShared
     import VPNSharedTesting
-    import CoreConnection
-    import Connection
-    @testable import ExtensionManager
-    @testable import CertificateAuthentication
-    @testable import LocalAgent
 
     /// A collection of mocks required to perform full integration tests on the ConnectionFeature
     public final class ConnectionEnvironment {

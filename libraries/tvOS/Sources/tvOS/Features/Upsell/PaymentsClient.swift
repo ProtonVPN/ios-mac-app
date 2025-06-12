@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import StoreKit
-import ProtonCorePayments
+import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import ProtonCorePayments
+import StoreKit
 
 struct PlanIAPTuple: Identifiable, Equatable {
     let planOption: PlanOption

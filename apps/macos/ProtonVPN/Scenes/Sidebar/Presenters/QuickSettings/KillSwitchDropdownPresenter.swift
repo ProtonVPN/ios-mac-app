@@ -21,13 +21,13 @@
 //
 
 import AppKit
-import Foundation
 import Dependencies
-import LegacyCommon
-import VPNAppCore
-import Theme
-import Strings
 import Domain
+import Foundation
+import LegacyCommon
+import Strings
+import Theme
+import VPNAppCore
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider

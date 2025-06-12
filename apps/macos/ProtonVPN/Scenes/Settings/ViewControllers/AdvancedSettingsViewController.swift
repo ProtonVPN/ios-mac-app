@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import LegacyCommon
-import Ergonomics
-import Strings
-import Theme
 import ComposableArchitecture
 import Domain
+import Ergonomics
 import Hermes
+import LegacyCommon
 import ProtonCoreFeatureFlags
+import Strings
+import Theme
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
     @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!

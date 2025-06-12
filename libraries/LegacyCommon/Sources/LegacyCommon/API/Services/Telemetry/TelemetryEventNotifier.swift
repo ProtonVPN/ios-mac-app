@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Combine
+import ComposableArchitecture
+import Connection
+import Domain
+import Foundation
+import ProtonCoreFeatureFlags
 import Reachability
 import VPNAppCore
-import Domain
-import Connection
-import ComposableArchitecture
-import ProtonCoreFeatureFlags
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource

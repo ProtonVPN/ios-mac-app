@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import LegacyCommon
+import UIKit
 
 final class NetShieldSelectionViewController: UITableViewController {
     private let viewModel: NetShieldSelectionViewModel

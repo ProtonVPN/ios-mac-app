@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Logging
 import Foundation
+import Logging
 
 public protocol PMLogFormatter {
     func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String // swiftlint:disable:this function_parameter_count

@@ -6,10 +6,10 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import fusion
-import UITestsHelpers
 import Foundation
+import fusion
 import Strings
+import UITestsHelpers
 
 private let profileSameName = Localizable.profileNameNeedsToBeUnique
 private let profileNameField = Localizable.enterProfileName

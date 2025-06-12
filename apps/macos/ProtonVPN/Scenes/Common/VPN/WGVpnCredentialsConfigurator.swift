@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import NetworkExtension
 import LegacyCommon
+import NetworkExtension
 
 final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     private let xpcServiceUser: XPCServiceUser

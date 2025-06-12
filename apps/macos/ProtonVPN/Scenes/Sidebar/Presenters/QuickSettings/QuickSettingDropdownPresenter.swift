@@ -22,10 +22,10 @@
 
 import Cocoa
 import Dependencies
+import Domain
+import Ergonomics
 import LegacyCommon
 import VPNAppCore
-import Ergonomics
-import Domain
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
     var title: String! { get }

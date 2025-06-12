@@ -24,8 +24,8 @@ import Foundation
 
 import Dependencies
 
-import Persistence
 import CommonNetworking
+import Persistence
 import VPNAppCore
 
 import Domain

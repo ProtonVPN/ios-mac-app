@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
-@testable import tvOS
 @testable import Connection
 @testable import ExtensionManager
+@testable import tvOS
+import XCTest
 
 import DomainTestSupport
 @testable import LocalAgent

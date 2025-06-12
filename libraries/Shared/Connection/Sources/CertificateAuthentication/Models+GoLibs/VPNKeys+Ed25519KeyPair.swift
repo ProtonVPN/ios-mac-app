@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
 import Foundation
 import class GoLibs.Ed25519KeyPair
-import CoreConnection
 
 extension PublicKey {
     package init(keyPair: Ed25519KeyPair) throws {

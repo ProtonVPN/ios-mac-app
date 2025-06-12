@@ -23,15 +23,15 @@ import ComposableArchitecture
 import Dependencies
 
 import Announcement
+import ConnectionDetails
+import Domain
+import Ergonomics
 import HomeShared
+import Modals
+import SharedViews
 import Strings
 import Theme
-import Ergonomics
 import VPNAppCore
-import Modals
-import ConnectionDetails
-import SharedViews
-import Domain
 
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>

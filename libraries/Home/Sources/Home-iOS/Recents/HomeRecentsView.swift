@@ -23,14 +23,14 @@ import ComposableArchitecture
 import Dependencies
 
 import Domain
+import Ergonomics
 import HomeShared
+import OrderedCollections
+import ProtonCoreUIFoundations
+import SharedViews
 import Strings
 import Theme
-import Ergonomics
 import VPNAppCore
-import SharedViews
-import ProtonCoreUIFoundations
-import OrderedCollections
 
 public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>

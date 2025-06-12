@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import fusion
+import Modals
 import Strings
 import XCTest
-import Modals
-import fusion
 
 class ModalsRobot: CoreElements {
     let accessAllCountriesBanner = AllCountriesModal()

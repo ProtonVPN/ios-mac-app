@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
+@testable import Announcement
 import Dependencies
 import ProtonCoreNetworking
-@testable import Announcement
+import XCTest
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
     @Dependency(\.announcementStorage) var storage

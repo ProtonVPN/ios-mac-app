@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
-    import XCTest
-    import NetworkExtension
     import ComposableArchitecture
+    import NetworkExtension
+    import XCTest
 
     import Domain
     import DomainTestSupport
@@ -27,13 +27,13 @@
     import VPNShared
     import VPNSharedTesting
 
+    @testable import CertificateAuthentication
+    @testable import Connection
+    import ConnectionTestSupport
     @testable import CoreConnection
     import CoreConnectionTestSupport
     @testable import ExtensionManager
-    @testable import CertificateAuthentication
     @testable import LocalAgent
-    @testable import Connection
-    import ConnectionTestSupport
 
     final class ConnectionFeatureTests: XCTestCase {
         /// Verifies that a connection can be queued up if the feature is in the disconnecting state and the user

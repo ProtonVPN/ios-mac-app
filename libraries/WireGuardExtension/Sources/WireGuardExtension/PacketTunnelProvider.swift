@@ -5,13 +5,13 @@ import NetworkExtension
 import WireGuardKit
 import WireGuardLogging
 
+import CoreConnection
 import Dependencies
+import Domain
 import enum ExtensionIPC.WireguardProviderRequest
-import VPNShared // vpnAuthenticationStorage Dependency
 import NEHelper
 import Timer
-import Domain
-import CoreConnection
+import VPNShared // vpnAuthenticationStorage Dependency
 
 open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     public var dataTaskFactory: DataTaskFactory!

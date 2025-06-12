@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Combine
 import Connection
 import Dependencies
 import Domain
-import LegacyCommon
 import Hermes
+import LegacyCommon
 @testable import ProtonVPN
+import XCTest
 
 private final class HermesTestContainer: MockDependencyContainer {
     let netShieldPropertyProvider: NetShieldPropertyProviderMock

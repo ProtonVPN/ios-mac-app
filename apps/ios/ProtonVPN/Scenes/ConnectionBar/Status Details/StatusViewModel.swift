@@ -29,14 +29,14 @@ import GSMessages
 import ProtonCoreUIFoundations
 
 import LegacyCommon
+import NetShield
 import VPNAppCore
 import VPNShared
-import NetShield
 
-import Theme
 import Domain
-import Strings
 import Ergonomics
+import Strings
+import Theme
 
 private let connectionDurationRefreshInterval: TimeInterval = 1.0
 

@@ -21,9 +21,9 @@
 //
 
 import GSMessages
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 class CreateProfileViewController: UITableViewController {
     private var genericDataSource: GenericTableViewDataSource?

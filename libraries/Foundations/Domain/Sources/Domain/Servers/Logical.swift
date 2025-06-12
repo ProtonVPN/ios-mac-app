@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import struct CoreLocation.CLLocationCoordinate2D
+import Foundation
 
 public struct Logical: Codable, Equatable, Sendable {
     public let id: String

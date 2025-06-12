@@ -24,8 +24,8 @@ import Foundation
 
 import Domain
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 protocol VpnProtocolChangeManagerFactory {
     func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager

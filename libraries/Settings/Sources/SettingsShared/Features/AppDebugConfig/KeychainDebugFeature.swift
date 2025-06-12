@@ -17,9 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
 import Domain
 import Ergonomics
+import Foundation
 import VPNShared
 
 @Reducer

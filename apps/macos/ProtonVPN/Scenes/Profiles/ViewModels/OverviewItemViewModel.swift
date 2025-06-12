@@ -24,9 +24,9 @@ import Cocoa
 
 import Dependencies
 
-import VPNAppCore
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
 
 import Ergonomics
 import Strings

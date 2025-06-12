@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import SVGView
 import ComposableArchitecture
-import Ergonomics
-import Domain
 import CoreLocation
+import Domain
+import Ergonomics
+import SVGView
+import SwiftUI
 
 public struct HomeMapView: View {
     let store: StoreOf<HomeMapFeature>

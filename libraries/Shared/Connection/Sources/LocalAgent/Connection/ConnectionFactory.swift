@@ -23,9 +23,9 @@ import Dependencies
 
 import Domain
 
+import class GoLibs.LocalAgentFeatures
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
-import class GoLibs.LocalAgentFeatures
 
 import CoreConnection
 

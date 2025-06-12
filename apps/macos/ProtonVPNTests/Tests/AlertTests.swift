@@ -20,12 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-import ProtonCoreNetworking
-import VPNShared
-import VPNAppCore
 import LegacyCommon
+import ProtonCoreNetworking
 @testable import ProtonVPN
+import VPNAppCore
+import VPNShared
+import XCTest
 
 private let navigationService = NavigationService(DependencyContainer())
 private let windowService = WindowServiceMock()

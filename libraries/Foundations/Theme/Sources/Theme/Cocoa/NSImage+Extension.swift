@@ -21,8 +21,8 @@
 //
 
 #if canImport(Cocoa)
-    import Cocoa
     import AppKit
+    import Cocoa
     import Ergonomics
 
     public extension NSImage {

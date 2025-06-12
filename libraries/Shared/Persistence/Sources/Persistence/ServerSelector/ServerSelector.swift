@@ -18,8 +18,8 @@
 
 import Foundation
 
-import IssueReporting
 import Dependencies
+import IssueReporting
 
 import Domain
 import Ergonomics

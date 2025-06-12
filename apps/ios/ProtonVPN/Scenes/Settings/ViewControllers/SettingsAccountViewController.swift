@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import LegacyCommon
-import Strings
 import ProtonCoreFeatureFlags
+import Strings
+import UIKit
 
 final class SettingsAccountViewController: UIViewController {
     private let viewModel: SettingsAccountViewModel

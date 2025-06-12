@@ -22,8 +22,8 @@ import Dependencies
 
 import Domain
 import Persistence
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public protocol VpnGatewayProtocol2 {
     func connect(withIntent: ConnectionSpec) async throws

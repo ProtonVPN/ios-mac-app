@@ -23,12 +23,12 @@
 import Cocoa
 import Dependencies
 
+import Announcement
 import LegacyCommon
 import VPNShared
-import Announcement
 
-import Strings
 import Domain
+import Strings
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
     static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")

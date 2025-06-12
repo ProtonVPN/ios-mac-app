@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import XCTest
 import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
+import XCTest
 
 class LoginTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()

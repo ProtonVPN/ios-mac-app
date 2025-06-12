@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class ConnectButton: ResizingTextButton {
     override var title: String {

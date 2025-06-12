@@ -20,14 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import Theme
+import Announcement
+import Ergonomics
 import LegacyCommon
 import SDWebImage
 import Strings
+import Theme
 import Timer
-import Ergonomics
-import Announcement
+import UIKit
 
 class OfferBannerViewCell: UITableViewCell {
     @IBOutlet weak var roundedBackgroundView: RoundedBackgroundView!

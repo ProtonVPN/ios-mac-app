@@ -27,11 +27,11 @@ import Sharing
 
 import ProtonCoreFeatureFlags
 
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {

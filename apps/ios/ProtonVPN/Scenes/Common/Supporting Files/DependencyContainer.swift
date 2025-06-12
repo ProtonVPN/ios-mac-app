@@ -20,16 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import UIKit
-import CommonNetworking
-import LegacyCommon
 import BugReport
-import Search
-import Review
-import Timer
-import Ergonomics
+import CommonNetworking
 import Domain
+import Ergonomics
+import Foundation
+import LegacyCommon
+import Review
+import Search
+import Timer
+import UIKit
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 

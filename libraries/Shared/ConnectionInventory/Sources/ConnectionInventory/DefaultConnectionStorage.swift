@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
-import WidgetKit
 import Domain
+import Foundation
+import WidgetKit
 
 // Improvement: Sendable conformance (requires refactor to Storage dependency)
 @DependencyClient

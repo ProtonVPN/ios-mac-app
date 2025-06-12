@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Foundation
 import Domain
+import Foundation
 
 struct UserDefaultsClient: DependencyKey, Sendable {
     var entries: @Sendable () async throws -> [UserDefaultsEntry]

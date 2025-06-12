@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 class WidgetSettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!

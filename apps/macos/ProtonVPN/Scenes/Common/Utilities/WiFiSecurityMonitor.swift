@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import CoreWLAN
-import Reachability
+import Foundation
 import LegacyCommon
+import Reachability
 
 protocol WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor

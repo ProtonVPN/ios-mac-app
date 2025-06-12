@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import CertificateAuthentication
+import Connection
+import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
-import CoreConnectionTestSupport
-import CertificateAuthentication
+import Foundation
 import VPNShared
-import Connection
 
 extension ConnectionFeature.State {
     public static let connected: ConnectionFeature.State = {

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import AppIntents
+import Dependencies
 import Domain
 
 /// These intents are never actually used. They are only here in order to be able to invoke them from this package.

@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import ServiceManagement
-import LegacyCommon
 import Domain
+import Foundation
+import LegacyCommon
+import ServiceManagement
 
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {

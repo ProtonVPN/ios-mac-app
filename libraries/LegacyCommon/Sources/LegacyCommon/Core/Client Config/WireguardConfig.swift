@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import VPNShared
-import Ergonomics
 
 public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultUdpPorts: [Int]

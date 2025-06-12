@@ -18,8 +18,8 @@
 
 import Foundation
 
-import VPNAppCore
 import Persistence
+import VPNAppCore
 
 extension DatabaseConfiguration {
     /// Database configuration suitable for both debug and release builds.

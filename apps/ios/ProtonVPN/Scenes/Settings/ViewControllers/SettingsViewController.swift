@@ -22,14 +22,14 @@
 
 import UIKit
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
-import Strings
 import Domain
+import Strings
 
 final class SettingsViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!

@@ -20,12 +20,12 @@
 
     // MARK: - Start SwiftUI Life cycle
 
-    import SwiftUI
-    import Theme
+    import ComposableArchitecture
     import Home
     import LegacyCommon
     import Logging
-    import ComposableArchitecture
+    import SwiftUI
+    import Theme
     import VPNAppCore
 
     let log: Logging.Logger = .init(label: "ProtonVPN.logger")

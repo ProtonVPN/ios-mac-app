@@ -22,8 +22,8 @@
 import Foundation
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 class VpnConnectionPreparer {
     private let appStateManager: AppStateManager

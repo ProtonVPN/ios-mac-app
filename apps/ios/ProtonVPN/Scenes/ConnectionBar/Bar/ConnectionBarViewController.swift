@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 class ConnectionBarViewController: UIViewController {
     @IBOutlet weak var notConnectedLabel: UILabel!

@@ -18,13 +18,13 @@
 
 import ComposableArchitecture
 
-import struct Domain.VPNConnectionFeatures
-import struct Domain.Server
 import Connection
+import Domain
+import struct Domain.Server
+import struct Domain.VPNConnectionFeatures
+import Foundation
 import ModalsServices
 import Persistence
-import Foundation
-import Domain
 
 @Reducer
 struct MainFeature {

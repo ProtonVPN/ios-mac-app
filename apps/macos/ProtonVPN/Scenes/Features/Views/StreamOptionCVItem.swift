@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 
 class StreamOptionCVItem: NSCollectionViewItem {
     @IBOutlet private weak var serviceIV: NSImageView!

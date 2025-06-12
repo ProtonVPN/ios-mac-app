@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
+import Ergonomics
 import Foundation
 import NetworkExtension
-import Ergonomics
-import Domain
 import Strings
 
 public protocol ProviderMessage: Equatable {

@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import LegacyCommon
 import ProtonCoreNetworking
 import XCTest
-@testable import LegacyCommon
 
 class TelemetryTests: XCTestCase {
     func testConnectionEventParameters() {

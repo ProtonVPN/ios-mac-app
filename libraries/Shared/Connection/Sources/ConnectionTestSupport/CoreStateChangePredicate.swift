@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import CasePaths
 import Connection
+import Foundation
+import XCTest
 
 /// Helper for asserting that delegate `stateChanged` actions are received with the expected state transition
 /// - Parameters:

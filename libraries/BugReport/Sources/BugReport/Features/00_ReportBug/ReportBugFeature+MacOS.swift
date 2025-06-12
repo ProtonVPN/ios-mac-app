@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import Foundation
     import ComposableArchitecture
+    import Foundation
     import SwiftUI
 
     @Reducer

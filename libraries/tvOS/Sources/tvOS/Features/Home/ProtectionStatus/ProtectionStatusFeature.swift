@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import SwiftUI
-import ProtonCoreUIFoundations
-import Domain
 import Connection
+import Domain
+import ProtonCoreUIFoundations
+import SwiftUI
 
 @Reducer
 struct ProtectionStatusFeature {

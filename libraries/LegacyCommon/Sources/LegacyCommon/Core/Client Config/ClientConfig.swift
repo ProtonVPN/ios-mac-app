@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import VPNShared
-import Domain
 
 public struct ClientConfig {
     public let featureFlags: FeatureFlags

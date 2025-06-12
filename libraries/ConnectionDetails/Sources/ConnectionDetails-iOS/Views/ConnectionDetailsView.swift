@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ConnectionDetailsShared
+import Domain
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import ComposableArchitecture
-import Strings
-import ConnectionDetailsShared
-import ProtonCoreUIFoundations
-import Domain
 
 struct ConnectionDetailsView: View {
     let store: StoreOf<ConnectionDetailsFeature>

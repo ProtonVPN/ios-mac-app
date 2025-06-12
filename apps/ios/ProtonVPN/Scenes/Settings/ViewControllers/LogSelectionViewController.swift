@@ -7,9 +7,9 @@
 //
 //  See LICENSE for up to date license information.
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 class LogSelectionViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!

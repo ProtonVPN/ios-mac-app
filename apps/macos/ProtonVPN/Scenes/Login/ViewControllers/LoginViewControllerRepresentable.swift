@@ -18,9 +18,9 @@
 
 #if REDESIGN
 
-    import SwiftUI
     import AppKit
     import ComposableArchitecture
+    import SwiftUI
 
     struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
         typealias NSViewControllerType = LoginViewController

@@ -24,10 +24,10 @@ import ProtonCoreUIFoundations
 
 import Domain
 import HomeShared
-import VPNAppCore
+import SharedViews
 import Strings
 import Theme
-import SharedViews
+import VPNAppCore
 
 struct RecentRowItemView: View {
     let item: RecentConnection

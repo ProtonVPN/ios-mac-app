@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-import Network
 @testable import LegacyCommon
+import Network
+import XCTest
 
 class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
     let alertService = CoreAlertServiceDummy()

@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkitUITestsLogin
+import XCTest
 
 class FreeRescopeTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()

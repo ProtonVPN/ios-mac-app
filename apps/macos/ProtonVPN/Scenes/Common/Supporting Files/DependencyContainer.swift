@@ -21,12 +21,12 @@
 //
 
 import AppKit
+import BugReport
+import CommonNetworking
+import Ergonomics
 import Foundation
 import LegacyCommon
-import CommonNetworking
-import BugReport
 import NetworkExtension
-import Ergonomics
 
 final class DependencyContainer: Container {
     // Singletons

@@ -19,11 +19,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
+import Ergonomics
 import Foundation
 import KeychainAccess
-import Dependencies
-import Ergonomics
-import Domain
 
 #if canImport(WidgetKit)
     import WidgetKit

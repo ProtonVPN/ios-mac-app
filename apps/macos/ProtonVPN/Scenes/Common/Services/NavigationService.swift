@@ -28,12 +28,12 @@ import ComposableArchitecture
 
 import PMLogger
 
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
 import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService

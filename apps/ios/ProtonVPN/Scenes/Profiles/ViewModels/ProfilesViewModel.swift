@@ -20,13 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Dependencies
 import ProtonCoreFeatureFlags
+import UIKit
 
 import LegacyCommon
-import VPNAppCore
 import Strings
+import VPNAppCore
 
 class ProfilesViewModel {
     typealias Factory = ProfileService

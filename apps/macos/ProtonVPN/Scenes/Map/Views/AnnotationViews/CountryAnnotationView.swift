@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import MapKit
 import LegacyCommon
+import MapKit
 import Theme
 
 private let sqrt3 = sqrt(3)

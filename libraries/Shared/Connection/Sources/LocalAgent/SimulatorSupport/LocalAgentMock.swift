@@ -17,12 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator)
-    import Foundation
+    import CoreConnection
     import Dependencies
     import Domain
-    import IssueReporting
-    import CoreConnection
+    import Foundation
     import class GoLibs.LocalAgentFeatures
+    import IssueReporting
 
     @available(iOS 16, *)
     final class LocalAgentMock: LocalAgent {

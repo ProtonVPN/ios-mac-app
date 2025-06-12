@@ -25,11 +25,11 @@ import Cocoa
 import Dependencies
 
 import Domain
-import Theme
-import Strings
 import LegacyCommon
-import VPNShared
+import Strings
+import Theme
 import VPNAppCore
+import VPNShared
 
 enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
     static let errorDomain: String = "ConnectionSettingsErrorDomain"

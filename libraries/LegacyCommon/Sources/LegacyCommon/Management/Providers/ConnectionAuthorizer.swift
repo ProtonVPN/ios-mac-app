@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import Modals
 
 /// Responsible for authorizing or denying connection requests based on the user's plan and available features

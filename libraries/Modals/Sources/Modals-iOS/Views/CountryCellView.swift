@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import ModalsShared
+import UIKit
 
 class CountryCellView: UICollectionViewCell {
     static var identifier: String { String(describing: self) }

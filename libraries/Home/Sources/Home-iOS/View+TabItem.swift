@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import HomeShared
-import SwiftUI
-import Strings
-import Theme
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 public extension View {
     func settingsTabItem() -> some View {

@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import XCTest
 import Strings
 import UITestsHelpers
+import XCTest
 
 class ConnectionBaseRobot: CoreElements {
     public func allowVpnPermission() {

@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
-import Strings
 import ProtonCoreNetworking
+import Strings
+import VPNShared
 
 public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     public static var supportsSecureCoding: Bool = true

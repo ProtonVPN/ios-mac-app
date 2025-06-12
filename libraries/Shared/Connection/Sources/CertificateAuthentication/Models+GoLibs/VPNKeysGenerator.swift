@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
-import func GoLibs.Ed25519NewKeyPair
 import CoreConnection
+import Dependencies
+import Foundation
+import func GoLibs.Ed25519NewKeyPair
 
 // This should supercede our old VPNShared.VPNKeysGenerator
 public struct VPNKeysGenerator: DependencyKey {

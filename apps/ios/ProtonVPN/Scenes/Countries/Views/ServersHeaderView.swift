@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import ProtonCoreUIFoundations
+import UIKit
 
 class ServersHeaderView: UITableViewHeaderFooterView {
     @IBOutlet private weak var colorView: UIView!

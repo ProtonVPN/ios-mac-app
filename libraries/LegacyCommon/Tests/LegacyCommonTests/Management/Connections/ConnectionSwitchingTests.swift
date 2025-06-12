@@ -23,13 +23,13 @@ import XCTest
 import Dependencies
 
 import GoLibs
-import ProtonCoreServices
 import ProtonCoreNetworking
+import ProtonCoreServices
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 import VPNSharedTesting
 
 @testable import LegacyCommon

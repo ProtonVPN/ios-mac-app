@@ -18,8 +18,8 @@
 
 import Foundation
 
-import IssueReporting
 import ConcurrencyExtras
+import IssueReporting
 
 /// Automatically handles transferring a payload using `NotificationCenter`.
 ///

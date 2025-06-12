@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ProtonCoreUIFoundations
+import struct StoreKit.Product
 import SwiftUI
 import Theme
-import ProtonCoreUIFoundations
-import ComposableArchitecture
-import struct StoreKit.Product
 
 struct UpsellView: View {
     private static let columnWidth: CGFloat = 780

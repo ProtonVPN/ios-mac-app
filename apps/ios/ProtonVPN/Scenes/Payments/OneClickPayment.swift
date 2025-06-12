@@ -23,13 +23,13 @@ import Dependencies
 import ProtonCoreFeatureFlags
 import ProtonCorePayments
 
-import Modals
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import Modals
 import VPNAppCore
 
-import Strings
 import Domain
+import Strings
 
 final class OneClickPayment {
     typealias Factory = CoreAlertServiceFactory & PlanServiceFactory

@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 @testable import ProtonVPN
+import VPNShared
 
 class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
     // Callbacks

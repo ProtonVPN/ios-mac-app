@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Strings
+import UIKit
 
 final class NoResultsView: UIView {
     // MARK: Outlets

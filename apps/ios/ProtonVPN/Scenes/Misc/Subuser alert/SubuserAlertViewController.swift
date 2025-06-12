@@ -21,10 +21,10 @@ import UIKit
 
 import Dependencies
 
-import VPNAppCore
+import Domain
 import LegacyCommon
 import Theme
-import Domain
+import VPNAppCore
 
 import Strings
 

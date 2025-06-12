@@ -23,9 +23,9 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import Domain
+@testable import LegacyCommon
 import Persistence
 import PersistenceTestSupport
-@testable import LegacyCommon
 
 final class ServerManagerTests: XCTestCase {
     private var upsertCallback: (([VPNServer]) -> Void)?

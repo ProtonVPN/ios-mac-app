@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import ModalsShared
 import Ergonomics
+import ModalsShared
 
 final class DiscourageSecureCoreViewController: NSViewController {
     @IBOutlet private weak var dontShowAgainLabel: NSTextField!

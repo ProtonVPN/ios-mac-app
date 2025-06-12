@@ -17,11 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
+    import ComposableArchitecture
     import Foundation
+    import Strings
     import SwiftUI
     import SwiftUINavigation
-    import ComposableArchitecture
-    import Strings
 
     public struct WhatsTheIssueView: View {
         @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>

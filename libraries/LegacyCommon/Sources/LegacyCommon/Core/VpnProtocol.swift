@@ -11,8 +11,8 @@ import Foundation
 
 import VPNShared
 
-import Strings
 import Domain
+import Strings
 
 extension VpnProtocol: @retroactive DefaultableProperty {
     public init() {

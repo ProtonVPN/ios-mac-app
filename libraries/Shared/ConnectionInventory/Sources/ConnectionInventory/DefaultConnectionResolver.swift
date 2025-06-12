@@ -19,9 +19,9 @@
 import Collections
 import Dependencies
 import DependenciesMacros
-import SharedViews
-import IssueReporting
 import Domain
+import IssueReporting
+import SharedViews
 
 @DependencyClient
 public struct DefaultConnectionResolver: Sendable {

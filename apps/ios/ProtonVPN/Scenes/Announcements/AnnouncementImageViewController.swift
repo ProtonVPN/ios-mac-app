@@ -19,15 +19,15 @@
 import Foundation
 import UIKit
 
-import Dependencies
 import Alamofire
+import Dependencies
 
 import ProtonCoreUIFoundations
 
-import LegacyCommon
-import CommonNetworking
 import Announcement
+import CommonNetworking
 import Domain
+import LegacyCommon
 
 final class AnnouncementImageViewController: AnnouncementViewController {
     @IBOutlet private weak var scrollView: UIScrollView!

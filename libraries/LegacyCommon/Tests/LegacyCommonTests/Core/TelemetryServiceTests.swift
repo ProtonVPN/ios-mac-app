@@ -23,9 +23,9 @@ import Dependencies
 
 import ProtonCoreNetworking
 
-import VPNShared
 import CommonNetworking
 import CommonNetworkingTestSupport
+import VPNShared
 
 import Ergonomics
 @testable import LegacyCommon

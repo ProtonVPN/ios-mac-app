@@ -20,14 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Cocoa
+import Foundation
 
 import Sparkle
 import Version
 
-import LegacyCommon
 import Domain
+import LegacyCommon
 
 protocol UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager

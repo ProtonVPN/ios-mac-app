@@ -21,13 +21,13 @@ import Foundation
 import Reachability
 
 import CommonNetworking
+import Connection
 import VPNAppCore
 import VPNShared
-import Connection
 
+import Domain
 import Ergonomics
 import Timer
-import Domain
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService

@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import Search
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
+import Search
+import UIKit
 
 final class CountryViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!

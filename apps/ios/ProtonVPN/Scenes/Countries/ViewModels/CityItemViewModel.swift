@@ -24,11 +24,11 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 import VPNAppCore
 
+import Domain
 import Localization
 import Search
 import Strings
 import Theme
-import Domain
 
 final class CityItemViewModel: CityViewModel {
     private let alertService: AlertService

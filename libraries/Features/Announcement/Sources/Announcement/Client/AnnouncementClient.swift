@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
+import Foundation
 
 @DependencyClient
 public struct AnnouncementClient: Sendable {

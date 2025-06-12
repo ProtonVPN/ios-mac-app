@@ -20,11 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Domain
+import Foundation
 import LegacyCommon
 import VPNAppCore
-import Domain
 
 enum ProfilesSectionListCell {
     case profile(ProfileItemViewModel)

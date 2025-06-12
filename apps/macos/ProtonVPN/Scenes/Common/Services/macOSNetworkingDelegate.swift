@@ -6,13 +6,13 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import CommonNetworking
+import Domain
 import Foundation
 import LegacyCommon
 import ProtonCoreNetworking
 import ProtonCoreServices
-import CommonNetworking
 import VPNAppCore
-import Domain
 
 // swiftlint:disable type_name
 final class macOSNetworkingDelegate: NetworkingDelegate {

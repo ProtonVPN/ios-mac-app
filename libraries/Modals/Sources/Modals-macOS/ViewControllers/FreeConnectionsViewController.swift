@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Ergonomics
 import ModalsShared
 import Strings
-import Ergonomics
 
 final class FreeConnectionsViewController: NSViewController {
     @IBOutlet private weak var titleLabel: NSTextField!

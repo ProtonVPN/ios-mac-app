@@ -6,10 +6,10 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
+import XCTest
 
 class ProfilesTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()

@@ -6,11 +6,11 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import Domain
 import Foundation
+import ProtonCoreFeatureFlags
 import Sentry
 import VPNShared
-import ProtonCoreFeatureFlags
-import Domain
 
 /// `SentryHelper` defines a `log` instance method, we need to rename `log` in this file
 private let moduleLog = VPNAppCore.log

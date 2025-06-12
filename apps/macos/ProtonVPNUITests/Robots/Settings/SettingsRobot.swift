@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-import Strings
 import fusion
+import Strings
 import UITestsHelpers
+import XCTest
 
 var window: XCUIElement!
 

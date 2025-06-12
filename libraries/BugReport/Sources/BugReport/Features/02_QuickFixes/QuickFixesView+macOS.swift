@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import Foundation
     import ComposableArchitecture
-    import SwiftUI
+    import Foundation
     import Strings
+    import SwiftUI
 
     struct QuickFixesView: View {
         let store: StoreOf<QuickFixesFeature>

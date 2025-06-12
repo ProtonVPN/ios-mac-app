@@ -24,11 +24,11 @@ import Dependencies
 
 import Domain
 import HomeShared
-import Theme
-import Strings
-import VPNAppCore
-import SharedViews
 import ProtonCoreUIFoundations
+import SharedViews
+import Strings
+import Theme
+import VPNAppCore
 
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale

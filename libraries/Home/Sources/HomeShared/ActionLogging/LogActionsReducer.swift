@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Connection
+import Foundation
 
 public extension Reducer {
     func logActions(_ logger: ActionLogger<Action>) -> LogActionReducer<Self> {

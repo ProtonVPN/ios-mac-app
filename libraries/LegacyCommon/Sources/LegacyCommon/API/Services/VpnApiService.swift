@@ -23,18 +23,18 @@ import Foundation
 
 import Dependencies
 
-import ProtonCoreFeatureFlags
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
+import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
 
 import CommonNetworking
 import Localization
 import Persistence
 import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService

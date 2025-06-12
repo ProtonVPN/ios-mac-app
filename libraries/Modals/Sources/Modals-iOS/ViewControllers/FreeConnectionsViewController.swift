@@ -17,11 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import ModalsShared
 import Overture
 import Strings
 import Theme
+import UIKit
 
 class FreeConnectionsViewController: UIViewController {
     @IBOutlet private weak var titleLabel: UILabel!

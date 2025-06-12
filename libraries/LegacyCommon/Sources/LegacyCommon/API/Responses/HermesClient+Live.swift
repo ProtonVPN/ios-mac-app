@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Hermes
-import Domain
-import Sharing
 import Dependencies
+import Domain
+import Hermes
 import ProtonCoreFeatureFlags
+import Sharing
 
 private extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var hermesEnabled: Self {

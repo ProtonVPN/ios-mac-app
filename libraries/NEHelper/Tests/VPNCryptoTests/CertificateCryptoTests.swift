@@ -19,8 +19,8 @@
 #if os(iOS) // CertificateServiceImplementation is only available on iOS because of shortcomings in the Security framework
 
     import Foundation
-    import XCTest
     @testable import VPNCrypto
+    import XCTest
 
     private let certPEM = """
     -----BEGIN CERTIFICATE-----

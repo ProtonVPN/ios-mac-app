@@ -25,8 +25,8 @@ import GoLibs
 import VPNShared
 
 import Domain
-import TimerMock
 @testable import LegacyCommon
+import TimerMock
 
 final class LocalAgentTests: XCTestCase {
     func testStatsTimerStartedAfterFinishingConnecting() {

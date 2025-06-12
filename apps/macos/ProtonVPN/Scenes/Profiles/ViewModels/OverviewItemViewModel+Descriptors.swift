@@ -23,8 +23,8 @@
 import Cocoa
 import LegacyCommon
 import Localization
-import Theme
 import Strings
+import Theme
 
 extension OverviewItemViewModel {
     func attributedName(forProfile profile: Profile) -> NSAttributedString {

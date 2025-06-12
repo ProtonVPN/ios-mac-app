@@ -17,13 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
-import Domain
-import VPNAppCore
-import SwiftUI
 import CoreLocation
+import Domain
 import Ergonomics
+import Foundation
 import SVGView
+import SwiftUI
+import VPNAppCore
 
 @Reducer
 public struct HomeMapFeature {

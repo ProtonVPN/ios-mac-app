@@ -20,8 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 @testable import PMLogger
+import XCTest
 
 class LogFileManagerImplementationTests: XCTestCase {
     func testLogsArePutInSubfolder() {

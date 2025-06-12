@@ -18,14 +18,14 @@
 
 import Foundation
 
-import Dependencies
 import CasePaths
+import Dependencies
 
-import protocol GoLibs.LocalAgentNativeClientProtocol
 import class GoLibs.LocalAgentFeatures
+import protocol GoLibs.LocalAgentNativeClientProtocol
 
-import Domain
 import CoreConnection
+import Domain
 
 protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>

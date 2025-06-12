@@ -24,13 +24,13 @@ import Foundation
 
 import Dependencies
 
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Strings
 import Ergonomics
+import Strings
 
 final class AccountViewModel {
     private(set) var username: String

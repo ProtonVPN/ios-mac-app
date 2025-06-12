@@ -21,8 +21,8 @@
 //
 
 import GSMessages
-import UIKit
 import LegacyCommon
+import UIKit
 
 class UIConstants {
     // MARK: - Cell constants

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CasePaths
-import GoLibs
 import let CoreConnection.log
 import Domain
+import Foundation
+import GoLibs
 import Strings
 
 public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConvertibleError {

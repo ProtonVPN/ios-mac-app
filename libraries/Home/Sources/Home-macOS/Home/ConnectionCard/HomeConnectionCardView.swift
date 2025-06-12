@@ -24,10 +24,10 @@ import Dependencies
 
 import Domain
 import HomeShared
-import Theme
-import Strings
-import VPNAppCore
 import SharedViews
+import Strings
+import Theme
+import VPNAppCore
 
 import ProtonCoreUIFoundations
 

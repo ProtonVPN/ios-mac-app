@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
-import Strings
-import ProtonCoreUIFoundations
-import SwiftUI
+import ComposableArchitecture
+import Dependencies
 import Domain
 import Home
-import Settings
-import Dependencies
-import ComposableArchitecture
-import NEHelper
-import VPNAppCore
 import LegacyCommon
+import NEHelper
+import ProtonCoreUIFoundations
+import Settings
+import Strings
+import SwiftUI
+import UIKit
+import VPNAppCore
 
 enum HomeFeatureCreator {
     static func loadInitialState() -> HomeFeature.State {

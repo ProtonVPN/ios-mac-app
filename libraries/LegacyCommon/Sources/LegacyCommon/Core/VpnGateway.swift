@@ -25,8 +25,8 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Domain
 import Strings

@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import LegacyCommon
-import Foundation
 import Domain
+import Foundation
+import LegacyCommon
 
 protocol ProtonReachabilityCheckerFactory {
     func makeProtonReachabilityChecker() -> ProtonReachabilityChecker

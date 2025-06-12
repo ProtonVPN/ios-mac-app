@@ -23,9 +23,9 @@ import Foundation
 import KeychainAccess
 import Logging
 
-import VPNShared
-import VPNCrypto
 import VPNAppCore
+import VPNCrypto
+import VPNShared
 
 import Domain
 

@@ -21,10 +21,10 @@
 //
 
 #if os(macOS)
+    import Domain
     import Foundation
     import SystemExtensions
     import VPNAppCore
-    import Domain
 
     public protocol SystemExtensionManagerFactory {
         func makeSystemExtensionManager() -> SystemExtensionManager

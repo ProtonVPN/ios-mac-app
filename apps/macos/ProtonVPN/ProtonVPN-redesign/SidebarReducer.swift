@@ -18,8 +18,8 @@
 
 #if REDESIGN
 
-    import Foundation
     import ComposableArchitecture
+    import Foundation
     import Home
     import VPNAppCore
 

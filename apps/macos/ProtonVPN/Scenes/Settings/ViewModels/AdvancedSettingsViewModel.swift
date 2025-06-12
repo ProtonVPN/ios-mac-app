@@ -18,12 +18,12 @@
 
 import Foundation
 
-import Dependencies
 import ComposableArchitecture
+import Dependencies
 
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Domain
 import Strings

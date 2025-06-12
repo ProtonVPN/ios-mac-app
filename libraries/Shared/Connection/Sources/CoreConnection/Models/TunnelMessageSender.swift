@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 
 public struct TunnelMessageSender: TestDependencyKey {
     public var send: (WireguardProviderRequest) async throws -> WireguardProviderRequest.Response

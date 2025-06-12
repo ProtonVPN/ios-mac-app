@@ -24,12 +24,12 @@ import Dependencies
 
 import ProtonCoreUIFoundations
 
-import SettingsShared
-import Theme
-import Strings
 import Domain
-import VPNAppCore
+import SettingsShared
+import Strings
+import Theme
 import UniformTypeIdentifiers
+import VPNAppCore
 
 public struct PlutoniumView: View {
     @Perception.Bindable public var store: StoreOf<PlutoniumFeature>

@@ -10,9 +10,9 @@ import Foundation
 import NetworkExtension
 import ProtonCoreFeatureFlags
 
+import Domain
 import ExtensionIPC
 import VPNShared
-import Domain
 
 public protocol WireguardProtocolFactoryCreator {
     func makeWireguardProtocolFactory() -> WireguardProtocolFactory

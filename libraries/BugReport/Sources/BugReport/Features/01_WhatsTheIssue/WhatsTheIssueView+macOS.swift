@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-    import Foundation
-    import SwiftUI
     import ComposableArchitecture
+    import Foundation
     import Strings
+    import SwiftUI
 
     // Mac view is a little bit different. Plus it doesn't have Navigation links and all
     // navigation is handled by root view.

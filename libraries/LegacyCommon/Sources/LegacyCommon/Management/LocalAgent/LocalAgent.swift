@@ -22,13 +22,14 @@
 
 import Foundation
 import Network
+import Reachability
 
 import Dependencies
 
 import GoLibs
 
-import VPNShared
 import NetShield
+import VPNShared
 
 import Domain
 import Ergonomics

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CustomDump
-import Ergonomics
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
+import Ergonomics
+import Foundation
 import struct VPNShared.VpnCertificate
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read

@@ -26,9 +26,9 @@ import Dependencies
 
 import LegacyCommon
 
-import VPNShared
-import Ergonomics
 import Domain
+import Ergonomics
+import VPNShared
 
 public protocol AnnouncementStorage {
     func fetch() -> [Announcement]

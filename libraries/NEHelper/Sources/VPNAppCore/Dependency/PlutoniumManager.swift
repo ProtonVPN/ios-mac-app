@@ -18,9 +18,9 @@
 
 #if os(macOS)
 
-    import NetworkExtension
-    import Dependencies
     import ComposableArchitecture
+    import Dependencies
+    import NetworkExtension
 
     public struct PlutoniumManager: DependencyKey, TestDependencyKey {
         public var start: () async throws -> Void

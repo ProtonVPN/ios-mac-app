@@ -21,8 +21,8 @@
 //
 
 import Foundation
-import UIKit
 import GSMessages
+import UIKit
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService

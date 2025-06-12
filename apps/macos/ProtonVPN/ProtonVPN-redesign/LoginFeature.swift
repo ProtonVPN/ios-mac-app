@@ -18,8 +18,8 @@
 
 #if REDESIGN
 
-    import Foundation
     import ComposableArchitecture
+    import Foundation
 
     public struct LoginFeature: Reducer {
         public struct State: Equatable {

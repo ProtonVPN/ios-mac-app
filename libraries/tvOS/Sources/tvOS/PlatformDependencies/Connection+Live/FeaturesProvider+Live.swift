@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(tvOS)
-    import Domain
-    import Dependencies
     import CoreConnection
+    import Dependencies
+    import Domain
 
     extension ConnectionFeatureProvider: DependencyKey {
         public static let liveValue: ConnectionFeatureProvider = .init(

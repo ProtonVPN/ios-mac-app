@@ -20,12 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
-import LegacyCommon
-import VPNShared
-import Strings
 import Domain
+import Foundation
+import LegacyCommon
+import Strings
+import VPNShared
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: TimeInterval = 5

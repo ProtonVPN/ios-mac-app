@@ -7,19 +7,19 @@
 //
 
 import Foundation
+import Logging
 import NetworkExtension
 import os
-import Logging
 
 import WireGuardKit
 
-import VPNShared
-import NEHelper
 import ExtensionIPC
+import NEHelper
+import VPNShared
 
 import Domain
-import Timer
 import Ergonomics
+import Timer
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!

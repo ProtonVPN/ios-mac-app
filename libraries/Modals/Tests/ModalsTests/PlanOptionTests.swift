@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import ModalsServices
 @testable import ModalsShared
+import XCTest
 
 final class PlanOptionTests: XCTestCase {
     func testDiscountYearlyToMonthlyPlan() {

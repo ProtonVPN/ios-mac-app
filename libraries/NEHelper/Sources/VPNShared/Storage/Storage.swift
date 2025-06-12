@@ -19,8 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public protocol Storage {
     // TODO: these should be moved elsewhere, Coding is not really the responsibility of storage

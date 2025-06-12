@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Cocoa
 import Foundation
 import ImageIO
-import Cocoa
 
 class GIFView: NSView {
     let frames: [CGImage]

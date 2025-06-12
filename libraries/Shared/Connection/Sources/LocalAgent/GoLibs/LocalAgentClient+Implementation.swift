@@ -18,8 +18,8 @@
 
 import Foundation
 
-import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentConnectionDetails
+import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentStringToValueMap
 
 import let CoreConnection.log

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Strings
+import SwiftUI
 
 /// View representing progress of process that has steps.
 struct StepProgress: View {

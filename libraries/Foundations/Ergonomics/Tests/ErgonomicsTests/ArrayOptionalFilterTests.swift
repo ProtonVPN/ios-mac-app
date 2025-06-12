@@ -1,5 +1,5 @@
-import XCTest
 @testable import Ergonomics
+import XCTest
 
 final class ArrayOptionalFilterTests: XCTestCase {
     func testFilterAcceptsNilClosureAndReturnsTheSameArray() throws {

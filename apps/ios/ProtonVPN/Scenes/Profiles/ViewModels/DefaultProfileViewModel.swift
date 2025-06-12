@@ -20,16 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Combine
+import ComposableArchitecture
 import Dependencies
-import ProtonCoreUIFoundations
+import Domain
 import LegacyCommon
-import VPNAppCore
+import ProtonCoreUIFoundations
 import Strings
 import Theme
-import ComposableArchitecture
-import Combine
-import Domain
+import UIKit
+import VPNAppCore
 
 import ProtonCoreFeatureFlags
 

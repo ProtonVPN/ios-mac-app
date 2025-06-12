@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import HomeShared
+import Strings
 import SwiftUI
 import Theme
-import Strings
 
 public struct SettingsView: View {
     @State private var currentSubview: AnyView?

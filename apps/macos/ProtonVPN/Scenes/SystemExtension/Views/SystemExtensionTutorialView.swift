@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import SwiftUI
 import AVKit
+import SwiftUI
 
 import Dependencies
 
@@ -27,8 +27,8 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 import VPNAppCore
 
-import Strings
 import Ergonomics
+import Strings
 
 struct SystemExtensionTutorialView: View {
     static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"

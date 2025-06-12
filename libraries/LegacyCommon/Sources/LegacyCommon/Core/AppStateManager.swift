@@ -26,12 +26,12 @@ import Foundation
 
 import Reachability
 
-import Timer
 import CommonNetworking
-import VPNShared
-import VPNAppCore
-import Ergonomics
 import Domain
+import Ergonomics
+import Timer
+import VPNAppCore
+import VPNShared
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager

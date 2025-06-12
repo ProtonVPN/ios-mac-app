@@ -23,8 +23,8 @@
     import Foundation
 
     import Domain
-    import VPNShared
     import VPNAppCore
+    import VPNShared
 
     public class VpnGatewayMock: VpnGatewayProtocol {
         enum VpnGatewayMockError: Error {

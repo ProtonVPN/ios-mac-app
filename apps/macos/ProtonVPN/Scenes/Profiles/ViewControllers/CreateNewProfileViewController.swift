@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Ergonomics
-import Strings
 import Domain
+import Ergonomics
+import LegacyCommon
+import Strings
 
 final class CreateNewProfileViewController: NSViewController {
     @IBOutlet private weak var profileSettingsLabel: PVPNTextField!

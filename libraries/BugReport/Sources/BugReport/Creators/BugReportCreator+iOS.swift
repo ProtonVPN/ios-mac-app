@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-    import Foundation
-    import UIKit
-    import SwiftUI
     import ComposableArchitecture
+    import Foundation
+    import SwiftUI
+    import UIKit
 
     public protocol BugReportCreator {
         func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> UIViewController?

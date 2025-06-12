@@ -22,9 +22,9 @@
 
 import XCTest
 
+@testable import Announcement
 import Domain
 import DomainTestSupport
-@testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
     private var storage: AnnouncementStorageUserDefaults!

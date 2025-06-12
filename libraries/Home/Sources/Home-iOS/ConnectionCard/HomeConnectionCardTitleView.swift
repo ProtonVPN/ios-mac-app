@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
+import ComposableArchitecture
+import Dependencies
 import Ergonomics
 import HomeShared
+import var ProtonCoreUIFoundations.IconProvider
+import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
-import Dependencies
-import ComposableArchitecture
-import var ProtonCoreUIFoundations.IconProvider
 
 struct HomeConnectionCardHeader: View {
     private let model: ConnectionCardHeaderModel

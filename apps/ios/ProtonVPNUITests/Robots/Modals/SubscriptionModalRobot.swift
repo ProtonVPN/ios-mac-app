@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Strings
 import fusion
+import Strings
 
 private let upsellPlansListTitle = Localizable.upsellPlansListTitle
 private let upsellPlansListValidateButton = Localizable.upsellPlansListValidateButton

@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import WidgetKit
-import VPNAppCore
-import Theme
-import Strings
-import ProtonCoreUIFoundations
 import Domain
+import ProtonCoreUIFoundations
 import SharedViews
+import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
+import WidgetKit
 
 import ComposableArchitecture
 

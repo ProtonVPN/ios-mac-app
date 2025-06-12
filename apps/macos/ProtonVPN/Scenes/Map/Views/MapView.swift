@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import MapKit
 import Theme
-import Ergonomics
 
 class MapView: NSView {
     private let imageScale: CGFloat = 8

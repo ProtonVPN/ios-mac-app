@@ -21,8 +21,8 @@
 //
 
 #if false
-    import XCTest
     import LegacyCommon
+    import XCTest
 
     @testable import ProtonVPN
 

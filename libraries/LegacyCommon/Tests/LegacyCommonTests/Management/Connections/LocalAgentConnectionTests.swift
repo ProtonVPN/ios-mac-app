@@ -23,8 +23,8 @@ import XCTest
 import GoLibs
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 

@@ -22,8 +22,8 @@
 
 import Cocoa
 import LegacyCommon
-import Strings
 import ProtonCoreUIFoundations
+import Strings
 
 class OverviewItemView: NSTableRowView {
     @IBOutlet weak var profileImage: NSImageView!

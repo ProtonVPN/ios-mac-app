@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Dependencies
 import Foundation
 import VPNShared
-import Dependencies
 
 public enum AnnouncementManagerKey: DependencyKey {
     public static let liveValue: any AnnouncementManager = AnnouncementManagerImplementation()

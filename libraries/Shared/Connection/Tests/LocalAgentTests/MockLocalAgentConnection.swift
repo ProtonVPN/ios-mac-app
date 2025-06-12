@@ -19,8 +19,8 @@
 import Foundation
 
 import class GoLibs.LocalAgentAgentConnection
-import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentFeatures
+import class GoLibs.LocalAgentStatusMessage
 
 @testable import LocalAgent
 

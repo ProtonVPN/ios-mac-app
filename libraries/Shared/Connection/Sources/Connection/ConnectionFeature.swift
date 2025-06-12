@@ -22,8 +22,8 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import Domain
 import CoreConnection
+import Domain
 import LocalAgent
 import VPNAppCore
 

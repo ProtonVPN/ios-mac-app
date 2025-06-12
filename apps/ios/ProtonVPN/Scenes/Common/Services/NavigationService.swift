@@ -20,30 +20,30 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import GSMessages
 import SwiftUI
 import UIKit
-import GSMessages
 
 import ComposableArchitecture
 import Dependencies
 
-import ProtonCoreFeatureFlags
 import ProtonCoreAccountRecovery
-import ProtonCorePasswordChange
 import ProtonCoreDataModel
+import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
+import ProtonCorePasswordChange
 
-import LegacyCommon
 import CommonNetworking
-import VPNShared
+import LegacyCommon
 import VPNAppCore
+import VPNShared
 
 import BugReport
-import Strings
-import Modals
 import Domain
 import Home
+import Modals
+import Strings
 
 // MARK: Country Service
 

@@ -27,11 +27,11 @@ import ProtonCoreDataModel
 import ProtonCoreLogin
 
 import CommonNetworking
-import VPNShared
-import VPNAppCore
+import ComposableArchitecture
 import Domain
 import Ergonomics
-import ComposableArchitecture
+import VPNAppCore
+import VPNShared
 
 public protocol PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol

@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 final class CountriesSectionHeaderView: NSView {
     typealias ActionHandler = () -> Void

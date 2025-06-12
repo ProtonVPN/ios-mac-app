@@ -16,20 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
-import CoreConnection
 import CommonNetworking
+import CoreConnection
 import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
-import Localization
-import Ergonomics
-import Strings
+import protocol Domain.ProtonVPNError
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
-import protocol Domain.ProtonVPNError
+import Ergonomics
+import Localization
+import Strings
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {

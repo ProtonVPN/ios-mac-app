@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
-import Strings
 import Domain
+import LegacyCommon
+import Strings
+import Theme
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     private let vpnGateway: VpnGatewayProtocol

@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCoreUIFoundations
 import Strings
 import Theme
-import ProtonCoreUIFoundations
 
 public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))

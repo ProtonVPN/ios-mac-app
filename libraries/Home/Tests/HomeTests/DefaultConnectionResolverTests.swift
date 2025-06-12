@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import Collections
+@testable import ConnectionInventory
 import Dependencies
 @testable import Domain
+import Foundation
 @testable import HomeShared
-@testable import ConnectionInventory
+import XCTest
 
 final class DefaultConnectionResolverTests: XCTestCase {
     typealias Sut = DefaultConnectionResolverImplementation

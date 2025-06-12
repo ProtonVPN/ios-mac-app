@@ -23,8 +23,8 @@
 import Foundation
 
 import Domain
-import VPNShared
 import LegacyCommon
+import VPNShared
 
 @testable import ProtonVPN
 

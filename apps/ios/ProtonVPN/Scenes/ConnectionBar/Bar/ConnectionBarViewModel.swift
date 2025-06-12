@@ -25,8 +25,8 @@ import UIKit
 
 import LegacyCommon
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 final class ConnectionBarViewModel {
     private let appStateManager: AppStateManager

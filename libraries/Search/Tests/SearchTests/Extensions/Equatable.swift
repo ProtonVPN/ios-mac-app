@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 @testable import Search
+import UIKit
 
 extension SearchStatus: Equatable {
     public static func == (lhs: SearchStatus, rhs: SearchStatus) -> Bool {

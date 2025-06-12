@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dispatch
 import Combine
 import ComposableArchitecture
+import Dispatch
 
 public extension Effect {
     static func listen<StreamElement>(

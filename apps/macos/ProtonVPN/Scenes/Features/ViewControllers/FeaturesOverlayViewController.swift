@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 final class FeaturesOverlayViewController: OverlayViewController {
     @IBOutlet private weak var featuresStackView: NSStackView!

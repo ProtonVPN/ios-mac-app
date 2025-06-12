@@ -21,11 +21,11 @@
 //
 
 import Foundation
+import NEHelper
 import NetworkExtension
 import os
-import WireGuardKit
 import PMLogger
-import NEHelper
+import WireGuardKit
 
 final class PacketTunnelProvider: NEPacketTunnelProvider {
     deinit {

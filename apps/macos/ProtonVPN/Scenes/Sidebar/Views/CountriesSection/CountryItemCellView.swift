@@ -21,11 +21,11 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
-import Strings
+import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
+import Theme
 
 final class CountryItemCellView: NSView {
     @IBOutlet private weak var flagIV: NSImageView!

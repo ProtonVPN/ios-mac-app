@@ -22,11 +22,11 @@ import XCTest
 import Dependencies
 
 import Domain
-import Persistence
 import LegacyCommon
+import Persistence
 
-@testable import ProtonVPN
 @testable import Announcement
+@testable import ProtonVPN
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!

@@ -19,10 +19,10 @@
 import ComposableArchitecture
 import Dependencies
 
-import Ergonomics
 import Domain
-import Strings
+import Ergonomics
 import Localization
+import Strings
 import Theme
 import VPNAppCore
 

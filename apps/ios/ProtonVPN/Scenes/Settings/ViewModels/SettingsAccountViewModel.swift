@@ -29,11 +29,11 @@ import ProtonCorePasswordChange
 
 import CommonNetworking
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
-import Strings
 import Domain
+import Strings
 
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &

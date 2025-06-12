@@ -20,12 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import UIKit
-import LegacyCommon
 import Alamofire
-import ProtonCoreUIFoundations
 import Announcement
+import Foundation
+import LegacyCommon
+import ProtonCoreUIFoundations
+import UIKit
 
 final class AnnouncementDetailViewController: AnnouncementViewController {
     @IBOutlet private weak var closeButton: UIButton!

@@ -18,9 +18,9 @@
 
 import SwiftUI
 
+import ProtonCoreUIFoundations
 import SettingsShared
 import Theme
-import ProtonCoreUIFoundations
 
 struct SettingsCell: View {
     private let icon: Image

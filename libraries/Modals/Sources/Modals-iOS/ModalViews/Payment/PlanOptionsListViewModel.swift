@@ -19,8 +19,8 @@
 import Combine
 import Dependencies
 import Foundation
-import ModalsShared
 import ModalsServices
+import ModalsShared
 
 public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]

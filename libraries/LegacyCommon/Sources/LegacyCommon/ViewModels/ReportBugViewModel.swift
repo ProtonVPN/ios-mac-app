@@ -21,8 +21,8 @@
 
 import Foundation
 import ProtonCoreAPIClient
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public protocol ReportBugViewModelFactory {
     func makeReportBugViewModel() -> ReportBugViewModel

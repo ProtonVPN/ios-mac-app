@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import VPNAppCore
 import Foundation
+import VPNAppCore
 
 @Reducer
 public struct ChangeServerFeature {

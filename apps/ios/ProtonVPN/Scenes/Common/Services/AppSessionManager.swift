@@ -28,17 +28,17 @@ import Sharing
 
 import ProtonCoreFeatureFlags
 
-import VPNShared
-import LegacyCommon
+import Announcement
 import CommonNetworking
 import ExtensionIPC
+import LegacyCommon
 import VPNAppCore
-import Announcement
+import VPNShared
 
 import Domain
 import Ergonomics
-import Search
 import Review
+import Search
 
 enum SessionStatus {
     case notEstablished

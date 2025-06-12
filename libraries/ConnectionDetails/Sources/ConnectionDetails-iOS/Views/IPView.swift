@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ConnectionDetailsShared
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import ConnectionDetailsShared
-import ComposableArchitecture
-import Strings
-import ProtonCoreUIFoundations
 
 public struct IPView: View {
     let store: StoreOf<IPViewFeature>

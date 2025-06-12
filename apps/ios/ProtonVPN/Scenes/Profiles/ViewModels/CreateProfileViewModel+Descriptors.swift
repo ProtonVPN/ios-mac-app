@@ -20,14 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import LegacyCommon
-import UIKit
+import Localization
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
-import Domain
-import Localization
+import UIKit
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {

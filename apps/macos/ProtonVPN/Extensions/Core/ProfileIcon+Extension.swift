@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
 import LegacyCommon
-import AppKit
 import ProtonCoreUIFoundations
 
 extension ProfileIcon {

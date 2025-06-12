@@ -27,8 +27,8 @@ import Foundation
 import Dependencies
 
 import Domain
-import Strings
 import Localization
+import Strings
 import Theme
 
 import LegacyCommon

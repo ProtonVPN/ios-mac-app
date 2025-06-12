@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import Domain
 @testable import Announcement
+import Domain
+import Foundation
 
 public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     public var announcementStorage: AnnouncementStorage

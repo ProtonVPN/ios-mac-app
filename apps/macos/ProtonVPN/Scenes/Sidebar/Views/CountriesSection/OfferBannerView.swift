@@ -22,16 +22,16 @@
 
 import Cocoa
 
-import SDWebImage
 import Dependencies
+import SDWebImage
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
-import Announcement
 
 import Ergonomics
-import Theme
 import Strings
+import Theme
 import Timer
 
 final class OfferBannerView: NSView {

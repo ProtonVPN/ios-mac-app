@@ -6,8 +6,8 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
 import Domain
+import Foundation
 
 struct WGConstants {
     static var keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"

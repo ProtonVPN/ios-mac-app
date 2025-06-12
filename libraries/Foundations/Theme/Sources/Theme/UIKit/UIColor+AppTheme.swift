@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-import var ProtonCoreUIFoundations.ColorProvider
-import PMLogger
 import Ergonomics
+import Foundation
+import PMLogger
+import var ProtonCoreUIFoundations.ColorProvider
+import SwiftUI
 #if canImport(UIKit)
     import UIKit
 

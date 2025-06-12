@@ -22,11 +22,11 @@
 
     import Dependencies
 
+    import let CoreConnection.log
+    import struct CoreConnection.LogicalServerInfo
+    import struct Domain.ServerConnectionIntent
     import ExtensionIPC
     import VPNShared
-    import struct Domain.ServerConnectionIntent
-    import struct CoreConnection.LogicalServerInfo
-    import let CoreConnection.log
 
     @available(iOS 16, *)
     final class MockTunnelManager: TunnelManager {

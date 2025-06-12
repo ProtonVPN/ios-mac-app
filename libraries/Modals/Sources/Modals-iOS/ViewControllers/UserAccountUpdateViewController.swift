@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import ModalsShared
 import Theme
+import UIKit
 
 class UserAccountUpdateViewController: UIViewController {
     @IBOutlet private weak var reconnectionView: UIView!

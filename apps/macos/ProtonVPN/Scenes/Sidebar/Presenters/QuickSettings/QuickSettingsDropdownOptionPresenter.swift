@@ -24,10 +24,10 @@ import Cocoa
 
 import CommonNetworking
 import Domain
-import Theme
-import Strings
-import VPNShared
 import LegacyCommon
+import Strings
+import Theme
+import VPNShared
 
 import Dependencies
 

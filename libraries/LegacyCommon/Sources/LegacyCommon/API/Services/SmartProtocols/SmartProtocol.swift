@@ -25,8 +25,8 @@ import Foundation
 import IssueReporting
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 

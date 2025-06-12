@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
-import VPNAppCore
 import Domain
+import Foundation
 import Localization
+import VPNAppCore
 
 @Reducer
 public struct ConnectionDetailsFeature {

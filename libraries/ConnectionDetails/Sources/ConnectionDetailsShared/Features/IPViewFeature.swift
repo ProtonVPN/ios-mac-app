@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
-import VPNAppCore
 import Connection
+import Foundation
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct IPViewFeature {

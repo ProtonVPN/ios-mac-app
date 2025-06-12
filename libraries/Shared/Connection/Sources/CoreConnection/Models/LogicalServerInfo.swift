@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import struct Domain.Server
+import Foundation
 
 /// Contains information required to identify the server and logical that the extension is currently connected to
 public struct LogicalServerInfo: Equatable, Sendable {

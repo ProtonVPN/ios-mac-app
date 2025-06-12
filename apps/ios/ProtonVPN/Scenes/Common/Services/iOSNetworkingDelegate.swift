@@ -6,17 +6,17 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import CommonNetworking
+import Domain
 import Foundation
 import GoLibs
+import LegacyCommon
 import ProtonCoreDataModel
-import ProtonCoreNetworking
-import ProtonCoreServices
 import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
-import CommonNetworking
-import LegacyCommon
+import ProtonCoreNetworking
+import ProtonCoreServices
 import VPNAppCore
-import Domain
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Domain
-import Theme
 import ComposableArchitecture
+import Domain
 import SettingsShared
+import SwiftUI
+import Theme
 
 struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>

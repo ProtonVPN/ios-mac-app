@@ -23,10 +23,10 @@ import Dependencies
 import LegacyCommon
 import VPNAppCore
 
-import Theme
-import Strings
-import Ergonomics
 import Domain
+import Ergonomics
+import Strings
+import Theme
 
 final class SubuserMacAlertViewController: NSViewController {
     @IBOutlet private weak var imageView: NSImageView!

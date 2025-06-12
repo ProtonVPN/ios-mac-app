@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import ProtonCoreAPIClient
 import BugReport
 import CommonNetworking
+import Foundation
+import ProtonCoreAPIClient
 import VPNShared
 
 public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>

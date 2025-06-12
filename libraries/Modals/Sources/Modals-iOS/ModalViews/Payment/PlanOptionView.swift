@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
-import ModalsShared
 import ModalsServices
+import ModalsShared
+import Strings
+import SwiftUI
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64

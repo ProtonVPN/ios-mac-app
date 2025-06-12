@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Sharing
 import Foundation
+import Sharing
 private import DependenciesMacros
 
 private import Network

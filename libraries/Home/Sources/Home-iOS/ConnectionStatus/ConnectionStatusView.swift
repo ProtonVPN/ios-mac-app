@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
 import HomeShared
-import SwiftUI
-import Strings
-import VPNShared
-import ProtonCoreUIFoundations
 import NetShield
-import VPNAppCore
+import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
 import Theme
+import VPNAppCore
+import VPNShared
 
 import Dependencies
 import Localization

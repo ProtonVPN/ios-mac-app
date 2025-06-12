@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import fusion
 import Strings
-import Foundation
 
 private let upgradeButton = Localizable.upgrade
 private let getStartedButton = Localizable.modalsCommonGetStarted

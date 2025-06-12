@@ -22,8 +22,8 @@
 import Foundation
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public static let idLength = 20

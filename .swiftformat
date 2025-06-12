@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable sortImports
 --disable strongOutlets
 --disable strongifiedSelf
 --disable swiftTestingTestCaseNames

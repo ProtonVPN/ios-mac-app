@@ -20,11 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Alamofire
 import AlamofireImage
 import LegacyCommon
 import ProtonCoreUIFoundations
+import UIKit
 
 extension UIViewController {
     @objc func setupAnnouncements() {

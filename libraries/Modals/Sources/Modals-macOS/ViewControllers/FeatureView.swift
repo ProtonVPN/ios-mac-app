@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import AppKit
+import Foundation
 import ModalsShared
-import Theme
 import SwiftUI
+import Theme
 
 final class FeatureView: NSView {
     // MARK: Outlets

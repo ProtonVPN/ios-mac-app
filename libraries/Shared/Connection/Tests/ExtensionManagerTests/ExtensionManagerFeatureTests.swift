@@ -22,10 +22,10 @@
 
     import ComposableArchitecture
 
-    import Ergonomics
+    import struct CoreConnection.LogicalServerInfo
     import Domain
     import DomainTestSupport
-    import struct CoreConnection.LogicalServerInfo
+    import Ergonomics
     @testable import ExtensionManager
 
     final class ExtensionManagerFeatureTests: XCTestCase {

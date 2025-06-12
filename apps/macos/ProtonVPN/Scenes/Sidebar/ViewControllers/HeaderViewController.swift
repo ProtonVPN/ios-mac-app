@@ -24,12 +24,12 @@ import Cocoa
 
 import SDWebImage
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
-import Theme
-import Ergonomics
 import Domain
+import Ergonomics
+import Theme
 
 final class HeaderViewController: NSViewController {
     private enum AccessibilityIdentifiers {

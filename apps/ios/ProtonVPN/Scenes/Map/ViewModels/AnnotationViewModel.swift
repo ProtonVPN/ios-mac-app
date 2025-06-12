@@ -20,11 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import CoreLocation
 import LegacyCommon
 import Localization
 import Strings
+import UIKit
 
 enum AnnotationViewState {
     case idle

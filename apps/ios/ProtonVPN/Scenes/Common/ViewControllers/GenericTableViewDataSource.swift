@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import NetShield
+import UIKit
 
 enum TableViewCellModel {
     case pushStandard(title: String, handler: () -> Void)

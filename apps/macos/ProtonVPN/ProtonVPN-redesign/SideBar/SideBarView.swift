@@ -18,13 +18,13 @@
 
 #if REDESIGN
 
-    import SwiftUI
-    import Home
-    import Theme
-    import ConnectionDetails_macOS
-    import ConnectionDetails
     import ComposableArchitecture
+    import ConnectionDetails
+    import ConnectionDetails_macOS
+    import Home
     import ProtonCoreUIFoundations
+    import SwiftUI
+    import Theme
 
     public struct SideBarView: View {
         @State private var connectionDetailsVisible = false

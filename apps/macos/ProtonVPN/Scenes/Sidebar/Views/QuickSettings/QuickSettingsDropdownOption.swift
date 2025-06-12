@@ -21,11 +21,11 @@
 //
 
 import Cocoa
-import LegacyCommon
 import CommonNetworking
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class QuickSettingsDropdownOption: NSView {
     @IBOutlet weak var titleLabel: NSTextField!

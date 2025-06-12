@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import HomeShared
-import Theme
-import Strings
 import ComposableArchitecture
+import HomeShared
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 struct ConnectionStatusView: View {
     let store: StoreOf<ConnectionStatusFeature>

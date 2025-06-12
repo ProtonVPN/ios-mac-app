@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
 import UITestsHelpers
+import XCTest
 
 private let showMapButton = "Show map"
 private let hideMapButton = "Hide map"

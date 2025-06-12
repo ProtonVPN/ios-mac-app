@@ -24,16 +24,16 @@ import XCTest
 
 import CommonNetworking
 import Domain
-import Strings
-import Localization
 import LegacyCommon
+import Localization
+import Strings
 
+import Dependencies
+import Persistence
 import TimerMock
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
-import Dependencies
-import Persistence
 
 @testable import ProtonVPN
 

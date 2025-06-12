@@ -24,11 +24,11 @@ import Combine
 
 import Domain
 import Ergonomics
-import Strings
 import LegacyCommon
-import ProtonCoreFeatureFlags
 import NEHelper
+import ProtonCoreFeatureFlags
 import Sharing
+import Strings
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     fileprivate enum SwitchButtonOption: Int {

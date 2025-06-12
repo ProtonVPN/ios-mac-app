@@ -20,8 +20,8 @@ import Foundation
 import XCTest
 
 import Ergonomics
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 final class MetadataTests: TestIsolatedDatabaseTestCase {
     func testStoreRetrieveAndDeleteMetadata() throws {

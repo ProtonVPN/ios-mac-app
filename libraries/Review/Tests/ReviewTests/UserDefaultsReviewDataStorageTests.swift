@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
-@testable import Review
 import DomainTestSupport
+import Foundation
+@testable import Review
+import XCTest
 
 final class UserDefaultsReviewDataStorageTests: XCTestCase {
     private var userDefaults: UserDefaults!

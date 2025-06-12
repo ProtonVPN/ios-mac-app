@@ -27,8 +27,8 @@ import ProtonCoreUIFoundations
 #elseif canImport(AppKit)
     import AppKit
 #endif
-import Strings
 import Domain
+import Strings
 
 public protocol FeatureCellViewModel {
     var icon: Icon { get }

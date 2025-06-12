@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import Ergonomics
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
-import Ergonomics
 
 final class WhatsNewViewController: NSHostingController<WhatsNewView> {
     required init?(coder: NSCoder) {

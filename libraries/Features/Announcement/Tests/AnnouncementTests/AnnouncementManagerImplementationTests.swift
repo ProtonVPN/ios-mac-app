@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
+@testable import Announcement
 import Dependencies
 @testable import LegacyCommon
-@testable import Announcement
+import XCTest
 
 extension Offer {
     static let empty: Offer = .init(label: "", icon: "", panel: nil)

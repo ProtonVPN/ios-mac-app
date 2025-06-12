@@ -21,9 +21,9 @@
 //
 
 import GSMessages
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 final class StatusViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView?

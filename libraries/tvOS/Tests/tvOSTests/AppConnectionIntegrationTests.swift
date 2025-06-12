@@ -18,17 +18,17 @@
 
 #if targetEnvironment(simulator)
 
-    import XCTest
-    import ComposableArchitecture
-    @testable import tvOS
     @testable import CommonNetworking
+    import ComposableArchitecture
     @testable import Connection
-    @testable import LocalAgent
-    @testable import ExtensionManager
-    @testable import CoreConnection
     import ConnectionTestSupport
+    @testable import CoreConnection
     import Domain
+    @testable import ExtensionManager
+    @testable import LocalAgent
+    @testable import tvOS
     import VPNSharedTesting
+    import XCTest
 
     final class AppConnectionIntegrationTests: XCTestCase {
         @MainActor

@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import enum Domain.VPNFeatureFlagType
 import Foundation
 import ProtonCoreFeatureFlags
-import enum Domain.VPNFeatureFlagType
 
 public extension ProtonCoreFeatureFlags.FeatureFlag {
     static var sentry: Self {

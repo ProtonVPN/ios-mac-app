@@ -22,11 +22,11 @@ import ComposableArchitecture
 
 import ProtonCoreUIFoundations
 
-import Domain
-import Strings
 import ConnectionDetailsShared
+import Domain
 import Persistence
 import SharedViews
+import Strings
 import VPNAppCore
 
 public struct ConnectionScreenView: View {

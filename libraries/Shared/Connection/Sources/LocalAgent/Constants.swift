@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
 import Foundation
 import func GoLibs.LocalAgentConstants
 import class GoLibs.LocalAgentConsts
 import class GoLibs.LocalAgentStringToValueMap
-import CoreConnection
 
 /// Shared instance containing coding keys
 let localAgentConsts = {

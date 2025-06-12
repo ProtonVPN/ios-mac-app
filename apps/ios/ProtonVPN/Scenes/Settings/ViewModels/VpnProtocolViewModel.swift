@@ -10,9 +10,9 @@
 import Foundation
 
 import Domain
-import VPNAppCore
-import Localization
 import LegacyCommon
+import Localization
+import VPNAppCore
 
 final class VpnProtocolViewModel {
     enum ProtocolChangeSelectionError: String, Error {

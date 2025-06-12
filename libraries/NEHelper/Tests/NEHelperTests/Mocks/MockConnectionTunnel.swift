@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import NetworkExtension
-import XCTest
-import VPNShared
 import NEHelper
+import NetworkExtension
+import VPNShared
+import XCTest
 
 struct MockDataTaskFactory: DataTaskFactory {
     let cookieStorage: CookieStorageProtocol = HTTPCookieStorage()

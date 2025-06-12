@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Strings
+import SwiftUI
 
 struct WidgetInstructionsView: View {
     private let instructionsFormatter = {

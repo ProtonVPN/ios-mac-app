@@ -20,26 +20,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Combine
 import ComposableArchitecture
+import UIKit
 
 import Dependencies
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
 import Domain
 import Ergonomics
 import Strings
 import Theme
 
+import LegacyCommon
 import Localization
 import Persistence
 import Search
-import VPNShared
 import VPNAppCore
-import LegacyCommon
+import VPNShared
 
 class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the

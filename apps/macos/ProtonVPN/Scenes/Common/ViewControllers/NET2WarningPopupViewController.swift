@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Domain
 import LegacyCommon
 import Theme
-import Domain
 
 final class NET2WarningPopupViewController: WarningPopupViewController {
     override func viewDidLoad() {

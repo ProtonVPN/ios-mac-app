@@ -24,8 +24,8 @@ import CoreConnection
 import class GoLibs.LocalAgentFeatures
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 #if canImport(UIKit)
     import class UIKit.UIApplication

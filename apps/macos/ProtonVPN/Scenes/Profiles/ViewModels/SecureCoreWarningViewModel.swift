@@ -20,9 +20,9 @@ import Foundation
 
 import Dependencies
 
+import CommonNetworking
 import LegacyCommon
 import VPNAppCore
-import CommonNetworking
 
 final class SecureCoreWarningViewModel {
     @Dependency(\.sessionService)

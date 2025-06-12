@@ -24,16 +24,16 @@ import UIKit
 
 import Dependencies
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
-import Announcement
 import Search
 
-import Strings
 import Domain
+import Strings
 
 final class CountriesViewController: UIViewController {
     @IBOutlet private weak var connectionBarContainerView: UIView!

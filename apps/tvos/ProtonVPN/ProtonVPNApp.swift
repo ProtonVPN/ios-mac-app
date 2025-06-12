@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import CommonNetworking
 import Dependencies
+import Domain
 import PMLogger
+import ProtonCoreFeatureFlags
 import ProtonCoreLog
+import SwiftUI
 import VPNAppCore
 import VPNShared
-import Domain
-import CommonNetworking
-import ProtonCoreFeatureFlags
 
 import tvOS
 

@@ -20,8 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-    import Foundation
     import Ergonomics
+    import Foundation
     import VPNCrypto
 
     public class VpnKeychainMock: VpnKeychainProtocol {
