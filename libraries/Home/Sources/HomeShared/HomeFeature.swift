@@ -313,14 +313,13 @@ public struct HomeFeature {
                 )
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
                 return .run { [pushAlert] send in
-                    let alert: SystemAlert
-                    switch resolutionError {
+                    let alert: SystemAlert = switch resolutionError {
                     case .secureCoreUnavailable:
-                        alert = SecureCoreUpsellAlert()
+                        SecureCoreUpsellAlert()
                     case .specificCountryUnavailable(let countryCode):
-                        alert = CountryUpsellAlert(countryCode: countryCode)
+                        CountryUpsellAlert(countryCode: countryCode)
                     case let .serverChangeUnavailable(until, duration, exhaustedSkips):
-                        alert = ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
+                        ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
                             Task { [intent, send] in
                                 await send(.connection(.input(.connect(intent))))
                             }

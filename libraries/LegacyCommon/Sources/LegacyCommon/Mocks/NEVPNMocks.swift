@@ -50,10 +50,10 @@ public class NEVPNManagerMock: NEVPNManagerWrapper {
         let connection: NEVPNConnectionMock
 
         // this is a bit of a hack, since we can't override the stored property in NETunnelProviderManagerMock
-        if self is NETunnelProviderManagerMock {
-            connection = NETunnelProviderSessionMock(vpnManager: self)
+        = if self is NETunnelProviderManagerMock {
+            NETunnelProviderSessionMock(vpnManager: self)
         } else {
-            connection = NEVPNConnectionMock(vpnManager: self)
+            NEVPNConnectionMock(vpnManager: self)
         }
 
         NotificationCenter.default.post(name: NEVPNConnectionMock.connectionCreatedNotification, object: connection)

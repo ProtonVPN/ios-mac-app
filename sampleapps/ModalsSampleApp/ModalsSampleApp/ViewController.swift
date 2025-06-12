@@ -95,25 +95,24 @@ final class ViewController: UITableViewController {
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
 
-        let title: String
-        if indexPath.section == 1 {
-            title = "What's new"
+        let title: String = if indexPath.section == 1 {
+            "What's new"
         } else if indexPath.section == 2 {
-            title = upsells[indexPath.row].title
+            upsells[indexPath.row].title
         } else if indexPath.section == 3 {
             if indexPath.row == 0 {
-                title = "Discourage Secure Core"
+                "Discourage Secure Core"
             } else if indexPath.row == 1 {
-                title = "Free connections"
+                "Free connections"
             } else {
-                title = "-"
+                "-"
             }
         } else if indexPath.section == 4 {
-            title = upgrades[indexPath.row].title
+            upgrades[indexPath.row].title
         } else if indexPath.section == 5 {
-            title = "Onboarding"
+            "Onboarding"
         } else {
-            title = ""
+            ""
         }
 
         if let modalCell = cell as? ModalTableViewCell {

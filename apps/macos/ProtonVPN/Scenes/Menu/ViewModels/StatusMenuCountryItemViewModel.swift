@@ -64,12 +64,11 @@ class StatusMenuCountryItemViewModel {
         let label: NSAttributedString
         let font = NSFont.themeFont(literalSize: 11)
 
-        let name: String
-        switch serverGroup.kind {
+        let name: String = switch serverGroup.kind {
         case .country(let code):
-            name = code
+            code
         case .gateway(let gatewayName):
-            name = gatewayName
+            gatewayName
         }
 
         if type == .secureCore {

@@ -896,16 +896,15 @@ public final class SysexInstallingErrorAlert: SystemAlert {
             return nil
         }
 
-        let subcase: String
-        switch sysexError.code {
+        let subcase: String = switch sysexError.code {
         case .unsupportedParentBundleLocation:
-            subcase = Localizable.sysexErrorDescriptionSubcaseBadLocation
+            Localizable.sysexErrorDescriptionSubcaseBadLocation
         case .forbiddenBySystemPolicy:
-            subcase = Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
+            Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
         case .authorizationRequired:
-            subcase = Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
+            Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
         default:
-            subcase = Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
+            Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
         }
 
         self.message = Localizable.sysexErrorDescription(subcase)

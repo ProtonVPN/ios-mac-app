@@ -80,14 +80,13 @@ extension VPNConnectionFeatures {
 
 private extension PropertiesManagerProtocol {
     func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
-        let configuration: ConnectionConfiguration?
-        switch vpnProtocol {
+        let configuration: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
-            configuration = self.lastIkeConnection
+            self.lastIkeConnection
         case .openVpn:
-            configuration = self.lastOpenVpnConnection
+            self.lastOpenVpnConnection
         case .wireGuard:
-            configuration = self.lastWireguardConnection
+            self.lastWireguardConnection
         }
         return configuration
     }

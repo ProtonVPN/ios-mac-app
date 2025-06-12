@@ -193,13 +193,12 @@ final class WindowServiceImplementation: WindowService {
     
     private func topMostNavigationController() -> UINavigationController? {
         guard let rootViewController = window.rootViewController else { return nil }
-        var navigationController: UINavigationController?
-        if let topViewController = rootViewController.presentedViewController as? UINavigationController {
-            navigationController = topViewController
+        var navigationController: UINavigationController? = if let topViewController = rootViewController.presentedViewController as? UINavigationController {
+            topViewController
         } else if let tabBarController = rootViewController as? TabBarController, let topViewController = tabBarController.selectedViewController as? UINavigationController {
-            navigationController = topViewController
+            topViewController
         } else {
-            navigationController = rootViewController as? UINavigationController
+            rootViewController as? UINavigationController
         }
         
         // Search for modally presented controllers

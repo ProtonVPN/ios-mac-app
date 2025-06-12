@@ -60,11 +60,10 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     }
     
     private func formSecondaryDescription() -> NSAttributedString {
-        let description: String
-        if underMaintenance {
-            description = Localizable.maintenance
+        let description: String = if underMaintenance {
+            Localizable.maintenance
         } else {
-            description = ""
+            ""
         }
         
         return description.styled(.weak, font: .themeFont(.paragraph), alignment: .right)

@@ -1,4 +1,3 @@
---disable conditionalAssignment
 --disable consistentSwitchCaseSpacing
 --disable docCommentsBeforeModifiers
 --disable duplicateImports

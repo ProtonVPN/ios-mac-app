@@ -419,12 +419,11 @@ extension MacAlertService: CoreAlertService {
             log.warning("Couldn't determine panelMode from: \(alert.data)")
             return
         }
-        let vc: NSViewController
-        switch panelMode {
+        let vc: NSViewController = switch panelMode {
         case .legacy(let legacyPanel):
-            vc = AnnouncementDetailViewController(legacyPanel)
+            AnnouncementDetailViewController(legacyPanel)
         case .image(let imagePanel):
-            vc = AnnouncementImageViewController(
+            AnnouncementImageViewController(
                 data: imagePanel,
                 offerReference: alert.offerReference
             )

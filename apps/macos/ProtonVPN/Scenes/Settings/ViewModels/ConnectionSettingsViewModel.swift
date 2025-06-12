@@ -326,15 +326,14 @@ final class ConnectionSettingsViewModel {
             let supported = appStateManager.activeConnection()?.server.supports(connectionProtocol: .smartProtocol,
                                                                                 smartProtocolConfig: config) == true
 
-            let alert: SystemAlert
-            if supported {
-                alert = ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
+            let alert: SystemAlert = if supported {
+                ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
                     self?.enableSmartProtocol(and: .reconnect, completion)
                 }, cancelHandler: {
                     completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
                 })
             } else {
-                alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
+                ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
                     log.info("User changed to smart protocol, even though current server doesn't support it",
                              category: .connectionConnect, event: .trigger,
                              metadata: ["smartProtocolConfig": "\(config)"])

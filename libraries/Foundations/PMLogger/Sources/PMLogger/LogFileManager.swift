@@ -36,17 +36,15 @@ public class LogFileManagerImplementation: LogFileManager {
     /// Returns full log files URL given its name
     public func getFileUrl(named filename: String) -> URL {
         let arguments = ProcessInfo.processInfo.arguments
-        let logDirectory: URL
-
-        if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
+        let logDirectory: URL = if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
            case let next = arguments.index(after: index),
            next < arguments.count,
            case let dir = arguments[next],
            FileManager.default.fileExists(atPath: dir),
            let url = URL(string: dir) {
-            logDirectory = url
+            url
         } else {
-            logDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+            FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
                 .appendingPathComponent("Logs", isDirectory: true)
         }
 

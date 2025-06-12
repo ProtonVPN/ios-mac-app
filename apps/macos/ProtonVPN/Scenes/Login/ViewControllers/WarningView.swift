@@ -52,12 +52,11 @@ class WarningView: NSStackView {
 
         isHidden = false
 
-        var style: AppTheme.Style
-        switch warningType {
+        var style: AppTheme.Style = switch warningType {
         case .error:
-            style = .danger
+            .danger
         case .info:
-            style = .active
+            .active
         }
 
         warningLabel.attributedStringValue = message.styled(style, font: .themeFont(.small), alignment: .natural)

@@ -54,10 +54,10 @@ class TelemetryUpsellReporter {
                      vpnStatus: UpsellEvent.VPNStatus) async throws {
         let modalSource: UpsellModalSource?
         // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
-        if event == .success {
-            modalSource = _modalSource ?? previousModalSource
+        = if event == .success {
+            _modalSource ?? previousModalSource
         } else {
-            modalSource = _modalSource
+            _modalSource
         }
 
         guard let modalSource else {

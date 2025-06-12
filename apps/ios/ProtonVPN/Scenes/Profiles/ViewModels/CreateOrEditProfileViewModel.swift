@@ -174,16 +174,15 @@ class CreateOrEditProfileViewModel: NSObject {
         
         let grouping = serverGroups
 
-        let accessTier: Int
-        switch serverOffering {
+        let accessTier: Int = switch serverOffering {
         case .fastest(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
+            grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
         case .random(let countryCode):
-            accessTier = grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
+            grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
         case .custom(let serverWrapper):
-            accessTier = serverWrapper.server.tier
+            serverWrapper.server.tier
         }
 
         let profileId: String = editedProfile?.id ?? .randomString(length: Profile.idLength)
@@ -476,9 +475,8 @@ extension CreateOrEditProfileViewModel {
             return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         })
                 
-        let sections: [SelectionSection]
-        if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {
-            sections = [
+        let sections: [SelectionSection] = if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {
+            [
                 SelectionSection(
                     title: Localizable.countriesFree.uppercased(),
                     cells: rows.filter { ($0.object as! ServerGroupInfo).minTier <= userTier }),
@@ -487,7 +485,7 @@ extension CreateOrEditProfileViewModel {
                     cells: rows.filter { ($0.object as! ServerGroupInfo).minTier > userTier }),
             ]
         } else {
-            sections = [SelectionSection(
+            [SelectionSection(
                 title: nil,
                 cells: rows)
             ]

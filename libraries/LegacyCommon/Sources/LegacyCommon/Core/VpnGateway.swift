@@ -307,12 +307,11 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
-        let connectionType: ConnectionRequestType
-        switch serverGroup {
+        let connectionType: ConnectionRequestType = switch serverGroup {
         case .country(let code):
-            connectionType = .country(code, .fastest)
+            .country(code, .fastest)
         case .gateway(let name):
-            connectionType = .gateway(name: name)
+            .gateway(name: name)
         }
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
         connect(with: connectionRequest)

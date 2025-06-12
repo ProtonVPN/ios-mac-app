@@ -72,15 +72,14 @@ final class PopUpViewModel: NSObject {
     }
 
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
-        let attributedDescription: NSAttributedString
-        if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
-            attributedDescription = [
+        let attributedDescription: NSAttributedString = if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
+            [
                 title.styled(.strong, font: .themeFont(.paragraph, bold: true), alignment: .natural),
                 .lineSeparator(count: 2),
                 message.styled(alignment: .natural)
             ].joined()
         } else {
-            attributedDescription = (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
+            (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
         }
         self.init(alert: alert, attributedDescription: attributedDescription, inAppLinkManager: inAppLinkManager)
     }

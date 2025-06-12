@@ -495,12 +495,11 @@ class CreateNewProfileViewModel {
 
         let profileId = profileId ?? .randomString(length: Profile.idLength)
 
-        let accessTier: Int
-        switch serverOffering {
+        let accessTier: Int = switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedGroup.minTier
+            selectedGroup.minTier
         case .custom(let wrapper):
-            accessTier = wrapper.server.tier
+            wrapper.server.tier
         }
 
         let profile = Profile(id: profileId,

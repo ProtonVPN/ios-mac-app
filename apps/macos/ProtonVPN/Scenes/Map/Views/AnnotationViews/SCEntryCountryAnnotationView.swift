@@ -141,11 +141,10 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
         let origin = NSPoint(x: (frame.size.width - Self.circleDiameter) / CGFloat(2), y: 0)
         let size = NSSize(width: Self.circleDiameter, height: Self.circleDiameter)
         
-        let circleState: SCCoreCircleButton.ButtonState
-        if viewModel.isConnected || hovered {
-            circleState = .active
+        let circleState: SCCoreCircleButton.ButtonState = if viewModel.isConnected || hovered {
+            .active
         } else {
-            circleState = .idle
+            .idle
         }
         
         let circleButton = SCCoreCircleButton(frame: NSRect(origin: origin, size: size),

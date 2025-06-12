@@ -83,24 +83,22 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
     ) {
         var netShieldPropertyProvider = netShieldPropertyProvider
         
-        let text: String
-        switch level {
+        let text: String = switch level {
         case .level1:
-            text = Localizable.quickSettingsNetshieldOptionLevel1
+            Localizable.quickSettingsNetshieldOptionLevel1
         case .level2:
-            text = Localizable.quickSettingsNetshieldOptionLevel2
+            Localizable.quickSettingsNetshieldOptionLevel2
         case .off:
-            text = Localizable.quickSettingsNetshieldOptionOff
+            Localizable.quickSettingsNetshieldOptionOff
         }
 
-        let icon: NSImage
-        switch level {
+        let icon: NSImage = switch level {
         case .level1:
-            icon = AppTheme.Icon.shieldHalfFilled
+            AppTheme.Icon.shieldHalfFilled
         case .level2:
-            icon = AppTheme.Icon.shieldFilled
+            AppTheme.Icon.shieldFilled
         case .off:
-            icon = AppTheme.Icon.shield
+            AppTheme.Icon.shield
         }
 
         func changeNetShieldLevel(_ newLevel: NetShieldType) {

@@ -50,11 +50,10 @@ extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDele
     private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
         let result = closure()
         guard result == errSecSuccess else {
-            let userInfo: [String: Any]?
-            if let string = SecCopyErrorMessageString(result, nil) as? String {
-                userInfo = [ NSLocalizedDescriptionKey: string ]
+            let userInfo: [String: Any]? = if let string = SecCopyErrorMessageString(result, nil) as? String {
+                [ NSLocalizedDescriptionKey: string ]
             } else {
-                userInfo = nil
+                nil
             }
 
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
@@ -215,11 +214,10 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     public func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
 
-        let cookies: [HTTPCookie]
-        if let url = request.url {
-            cookies = cookieStorage.cookies(for: url) ?? []
+        let cookies: [HTTPCookie] = if let url = request.url {
+            cookieStorage.cookies(for: url) ?? []
         } else {
-            cookies = []
+            []
         }
 
         let task = NWTCPDataTask(provider: provider,

@@ -61,9 +61,8 @@ extension CreateNewProfileViewModel {
             countryString = "  " + name
         }
 
-        let nameAttributedString: NSAttributedString
-        if userTierSupports(group: group) {
-            nameAttributedString = NSMutableAttributedString(
+        let nameAttributedString: NSAttributedString = if userTierSupports(group: group) {
+            NSMutableAttributedString(
                 string: countryString,
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
@@ -72,7 +71,7 @@ extension CreateNewProfileViewModel {
                 ]
             )
         } else {
-            nameAttributedString = NSMutableAttributedString(
+            NSMutableAttributedString(
                 string: countryString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
@@ -147,9 +146,8 @@ extension CreateNewProfileViewModel {
     private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
         let countryFlag = flagString(countryCode)
         let serverString = "  " + serverName
-        let serverDescriptor: NSAttributedString
-        if userTierSupports(serverWithTier: serverTier) {
-            serverDescriptor = NSMutableAttributedString(
+        let serverDescriptor: NSAttributedString = if userTierSupports(serverWithTier: serverTier) {
+            NSMutableAttributedString(
                 string: serverString,
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
@@ -158,7 +156,7 @@ extension CreateNewProfileViewModel {
                 ]
             )
         } else {
-            serverDescriptor = NSMutableAttributedString(
+            NSMutableAttributedString(
                 string: serverString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: NSFont.themeFont(fontSize),

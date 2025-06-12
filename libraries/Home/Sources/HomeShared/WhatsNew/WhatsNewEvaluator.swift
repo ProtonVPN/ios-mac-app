@@ -75,11 +75,10 @@ extension WhatsNew {
                 }
             }
             // Now let's make sure we account possible delays between presentations
-            let minNextPresentationDate: Date
-            if let components = item.delayBetweenPresentations, let lastPresentationDate = presentationData.lastPresentationDate {
-                minNextPresentationDate = Calendar.current.date(byAdding: components, to: lastPresentationDate) ?? now
+            let minNextPresentationDate: Date = if let components = item.delayBetweenPresentations, let lastPresentationDate = presentationData.lastPresentationDate {
+                Calendar.current.date(byAdding: components, to: lastPresentationDate) ?? now
             } else {
-                minNextPresentationDate = now
+                now
             }
             return now >= minNextPresentationDate
         }

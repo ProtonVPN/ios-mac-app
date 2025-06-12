@@ -94,11 +94,10 @@ class PopUpViewController: NSViewController {
         
         // HACK: Because the text view is inside a scroll view, it doesn't resize correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
 
-        let attributedDescription: NSAttributedString
-        if viewModel.joinedTitleAndMessage {
-            attributedDescription = viewModel.attributedDescription
+        let attributedDescription: NSAttributedString = if viewModel.joinedTitleAndMessage {
+            viewModel.attributedDescription
         } else {
-            attributedDescription = viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
+            viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
         }
 
         popUpDescription.attributedStringValue = attributedDescription

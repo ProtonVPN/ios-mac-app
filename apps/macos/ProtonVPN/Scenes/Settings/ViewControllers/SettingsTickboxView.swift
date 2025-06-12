@@ -116,11 +116,10 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
                                                    height: .themeSpacing16))
         let imageAttachmentString = NSAttributedString(attachment: imageAttachment)
 
-        let text: String
-        if isOn {
-            text = Localizable.switchSideButtonOn.capitalized + "  "
+        let text: String = if isOn {
+            Localizable.switchSideButtonOn.capitalized + "  "
         } else {
-            text = Localizable.switchSideButtonOff.capitalized + "  "
+            Localizable.switchSideButtonOff.capitalized + "  "
         }
         let isOnLabel = NSMutableAttributedString()
         let isOn = text.styled(font: .themeFont(.heading4), alignment: .right)

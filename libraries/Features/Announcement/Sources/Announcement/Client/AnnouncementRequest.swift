@@ -52,13 +52,12 @@ final class AnnouncementRequest {
 #if canImport(UIKit)
         let size = UIScreen.main.sizeInPixels()
 #elseif canImport(AppKit)
-        let size: CGSize
-        if Thread.isMainThread {
-            size = MainActor.assumeIsolated {
+        let size: CGSize = if Thread.isMainThread {
+            MainActor.assumeIsolated {
                 return NSScreen.availableSizeInPixels()
             }
         } else {
-            size = DispatchQueue.main.sync {
+            DispatchQueue.main.sync {
                  return NSScreen.availableSizeInPixels()
             }
         }
@@ -117,12 +116,11 @@ extension NSScreen {
 
         let visibleFrameSize = screen.visibleFrame.size
         let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor) // in pixels
-        let fitting: CGSize
-        if scaled.width > scaled.height {
+        let fitting: CGSize = if scaled.width > scaled.height {
             // If the frame * scale is higher than 4K, dial it down to 4K.
-            fitting = scaled.fitting(CGSize(width: 3840, height: 2160))
+            scaled.fitting(CGSize(width: 3840, height: 2160))
         } else {
-            fitting = scaled.fitting(CGSize(width: 2160, height: 3840))
+            scaled.fitting(CGSize(width: 2160, height: 3840))
         }
         let freeSpace = CGSize(width: fitting.width,
                                height: fitting.height - occupiedHeight(screen))
@@ -131,11 +129,10 @@ extension NSScreen {
 
     /// Height in pixels that we need to subtract because it's occupied by system.
     private static func occupiedHeight(_ screen: NSScreen) -> CGFloat {
-        let isNotch: Bool
-        if let top = NSScreen.main?.safeAreaInsets.top {
-            isNotch = top != 0
+        let isNotch: Bool = if let top = NSScreen.main?.safeAreaInsets.top {
+            top != 0
         } else {
-            isNotch = false
+            false
         }
 
         let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ?? 24

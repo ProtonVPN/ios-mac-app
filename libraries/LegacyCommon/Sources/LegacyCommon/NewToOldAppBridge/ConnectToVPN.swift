@@ -64,12 +64,11 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         @Dependency(\.propertiesManager) var propertiesManager
         let connectionProtocol = specifiedProtocol ?? propertiesManager.connectionProtocol
-        let acceptableProtocols: ProtocolSupport
-        switch connectionProtocol {
+        let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
         case .vpnProtocol(let vpnProtocol):
-            acceptableProtocols = vpnProtocol.protocolSupport
+            vpnProtocol.protocolSupport
         case .smartProtocol:
-            acceptableProtocols = propertiesManager.smartProtocolConfig.supportedProtocols
+            propertiesManager.smartProtocolConfig.supportedProtocols
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
 

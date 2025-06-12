@@ -109,14 +109,13 @@ public class TelemetryEventNotifier {
             let reachability = notification.object as? Reachability else {
             return
         }
-        let networkType: ConnectionDimensions.NetworkType
-        switch reachability.connection {
+        let networkType: ConnectionDimensions.NetworkType = switch reachability.connection {
         case .unavailable, .none:
-            networkType = .other
+            .other
         case .wifi:
-            networkType = .wifi
+            .wifi
         case .cellular:
-            networkType = .mobile
+            .mobile
         }
         telemetryService?.reachabilityChanged(networkType)
     }

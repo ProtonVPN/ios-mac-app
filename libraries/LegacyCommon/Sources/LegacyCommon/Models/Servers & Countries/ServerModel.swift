@@ -319,26 +319,24 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        let ips: [ServerIp]
-        if let decodedIPs = try? container.decode([ServerIp].self, forKey: CodingKeys.ips) {
-            ips = decodedIPs
+        let ips: [ServerIp] = if let decodedIPs = try? container.decode([ServerIp].self, forKey: CodingKeys.ips) {
+            decodedIPs
         } else if let ipsData = try? container.decode(Data.self, forKey: CodingKeys.ips),
                   let unarchivedObject = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] {
-            ips = unarchivedObject
+            unarchivedObject
         } else {
-            ips = []
+            []
         }
 
         let feature = ServerFeature(rawValue: try container.decode(Int.self, forKey: CodingKeys.feature))
 
-        let location: ServerLocation
-        if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CodingKeys.location) {
-            location = decodedLocation
+        let location: ServerLocation = if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CodingKeys.location) {
+            decodedLocation
         } else if let locationData = try? container.decode(Data.self, forKey: CodingKeys.location),
                   let unarchivedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ServerLocation.self, from: locationData) {
-            location = unarchivedObject
+            unarchivedObject
         } else {
-            location = ServerLocation(lat: 0, long: 0)
+            ServerLocation(lat: 0, long: 0)
         }
 
         self.init(id: try container.decode(String.self, forKey: CodingKeys.id),

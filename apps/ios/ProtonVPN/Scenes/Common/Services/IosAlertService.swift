@@ -323,14 +323,13 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func showWelcomeScreen(welcomeScreenAlert: WelcomeScreenAlert) {
-        let modalType: ModalType
-        switch welcomeScreenAlert.plan {
+        let modalType: ModalType = switch welcomeScreenAlert.plan {
         case .fallback:
-            modalType = .welcomeFallback
+            .welcomeFallback
         case .unlimited:
-            modalType = .welcomeUnlimited
+            .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            modalType = .welcomePlus(
+            .welcomePlus(
                 numberOfServers: numberOfServers,
                 numberOfDevices: numberOfDevices,
                 numberOfCountries: numberOfCountries)

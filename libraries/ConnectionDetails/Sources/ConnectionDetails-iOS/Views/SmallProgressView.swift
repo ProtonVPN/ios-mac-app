@@ -35,13 +35,12 @@ public struct SmallProgressView: View {
     }
 
     private var color: Color {
-        let circleStyle: AppTheme.Style
-        if percentage < threshold1 {
-            circleStyle = .success
+        let circleStyle: AppTheme.Style = if percentage < threshold1 {
+            .success
         } else if percentage < threshold2 {
-            circleStyle = .warning
+            .warning
         } else {
-            circleStyle = .danger
+            .danger
         }
         return Color(.icon, circleStyle)
     }

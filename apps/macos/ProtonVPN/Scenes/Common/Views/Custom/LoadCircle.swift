@@ -49,13 +49,12 @@ class LoadCircle: NSView {
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
 
-        let circleStyle: AppTheme.Style
-        if load < 76 {
-            circleStyle = .success
+        let circleStyle: AppTheme.Style = if load < 76 {
+            .success
         } else if load < 91 {
-            circleStyle = .warning
+            .warning
         } else {
-            circleStyle = .danger
+            .danger
         }
         context.setStrokeColor(.cgColor(.icon, circleStyle))
 

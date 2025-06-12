@@ -199,12 +199,11 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 propertiesManager: propertiesManager)
         }
 
-        let tableViewCellTitle: String
-        switch dataSetType {
+        let tableViewCellTitle: String = switch dataSetType {
         case .country:
-            tableViewCellTitle = Localizable.country
+            Localizable.country
         case .server:
-            tableViewCellTitle = Localizable.server
+            Localizable.server
         }
 
         viewModel.tableViewData.forEach { section in

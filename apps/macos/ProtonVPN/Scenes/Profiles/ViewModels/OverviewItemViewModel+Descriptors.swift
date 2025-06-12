@@ -45,14 +45,13 @@ extension OverviewItemViewModel {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
-        let description: NSAttributedString
-        switch profile.serverOffering {
+        let description: NSAttributedString = switch profile.serverOffering {
         case .fastest:
-            description = Localizable.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
+            Localizable.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
         case .random:
-            description = Localizable.differentServerEachTime.styled(font: .themeFont(.heading4), alignment: .left)
+            Localizable.differentServerEachTime.styled(font: .themeFont(.heading4), alignment: .left)
         case .custom:
-            description = Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
+            Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         return description
     }
@@ -62,14 +61,13 @@ extension OverviewItemViewModel {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
         
-        let description: NSAttributedString
-        switch profile.serverOffering {
+        let description: NSAttributedString = switch profile.serverOffering {
         case .fastest(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
+            defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
         case .random(let cCode):
-            description = defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
+            defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
         case .custom(let sWrapper):
-            description = customServerDescriptor(forModel: sWrapper.server)
+            customServerDescriptor(forModel: sWrapper.server)
         }
         return description
     }
@@ -106,15 +104,14 @@ extension OverviewItemViewModel {
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
         let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
 
-        let prefixIcon: NSImage?
-        if serverModel.isSecureCore {
-            prefixIcon = AppTheme.Icon.locks
+        let prefixIcon: NSImage? = if serverModel.isSecureCore {
+            AppTheme.Icon.locks
         } else if serverModel.supportsTor {
-            prefixIcon = AppTheme.Icon.brandTor
+            AppTheme.Icon.brandTor
         } else if serverModel.supportsP2P {
-            prefixIcon = AppTheme.Icon.arrowsSwitch
+            AppTheme.Icon.arrowsSwitch
         } else {
-            prefixIcon = nil
+            nil
         }
         let buffer = prefixIcon == nil ? "" : "  "
 

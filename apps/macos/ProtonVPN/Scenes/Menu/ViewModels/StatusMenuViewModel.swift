@@ -522,12 +522,11 @@ final class StatusMenuViewModel {
             return nil
         }
 
-        let description: String
-        switch vpnGateway.connection {
+        let description: String = switch vpnGateway.connection {
         case .connected:
-            description = Localizable.disconnect
+            Localizable.disconnect
         case .disconnecting, .disconnected, .connecting:
-            description = Localizable.quickConnect
+            Localizable.quickConnect
         }
         return description
     }

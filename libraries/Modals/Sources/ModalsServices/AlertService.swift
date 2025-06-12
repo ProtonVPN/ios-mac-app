@@ -58,13 +58,12 @@ extension AlertService {
                 log.error("Alerting user to error: \(String(describing: error))")
             }
 
-            let alert: Alert
-            if let alertConvertibleError = error as? AlertConvertibleError {
-                alert = alertConvertibleError.alert
+            let alert: Alert = if let alertConvertibleError = error as? AlertConvertibleError {
+                alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
-                alert = Alert(localizedError: localizedError)
+                Alert(localizedError: localizedError)
             } else {
-                alert = Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
+                Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
             }
             subject.send(alert)
         } finish: {

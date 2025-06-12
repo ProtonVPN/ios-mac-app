@@ -200,12 +200,11 @@ extension NSEvent {
 
 extension StatusIcon {
     var image: NSImage {
-        var result: NSImage
-        switch self {
-        case .connected: result = Theme.Asset.connected.image
-        case .disconnected: result = Theme.Asset.disconnected.image
-        case .connecting: result = Theme.Asset.idle.image
-        case .unknown: result = Theme.Asset.emptyIcon.image
+        var result: NSImage = switch self {
+        case .connected: Theme.Asset.connected.image
+        case .disconnected: Theme.Asset.disconnected.image
+        case .connecting: Theme.Asset.idle.image
+        case .unknown: Theme.Asset.emptyIcon.image
         }
 
         result = result

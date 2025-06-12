@@ -76,12 +76,11 @@ final class TodayViewModel {
                 return
             }
 
-            let action: String
-            switch info.state {
+            let action: String = switch info.state {
             case .connected, .connecting:
-                action = URLConstants.deepLinkDisconnectAction
+                URLConstants.deepLinkDisconnectAction
             default:
-                action = URLConstants.deepLinkConnectAction
+                URLConstants.deepLinkConnectAction
             }
 
             components.host = action

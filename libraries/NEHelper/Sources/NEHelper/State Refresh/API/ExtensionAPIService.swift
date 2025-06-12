@@ -663,11 +663,10 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
     var description: String {
         switch self {
         case let .requestError(response, apiError):
-            var requestErrorString: String?
-            if let errorCode = response.apiHttpErrorCode {
-                requestErrorString = errorCode.description
+            var requestErrorString: String? = if let errorCode = response.apiHttpErrorCode {
+                errorCode.description
             } else {
-                requestErrorString = HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
+                HTTPURLResponse.localizedString(forStatusCode: response.statusCode)
             }
 
             if let apiError = apiError {

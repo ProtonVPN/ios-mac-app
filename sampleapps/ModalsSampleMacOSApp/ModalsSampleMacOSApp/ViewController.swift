@@ -75,18 +75,17 @@ class ViewController: NSViewController {
 extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         let modal = modals[row]
-        let viewController: NSViewController
-        switch modal.type {
+        let viewController: NSViewController = switch modal.type {
         case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(modalType: type, upgradeAction: {}, continueAction: {})
+            ModalsFactory.upsellViewController(modalType: type, upgradeAction: {}, continueAction: {})
         case .discourageSecureCore:
-            viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+            ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         case .freeConnections(let countries):
-            viewController = ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
+            ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
                 debugPrint(".freeConnections pressed")
             })
         case .whatsNew:
-            viewController = ModalsFactory.whatsNewViewController()
+            ModalsFactory.whatsNewViewController()
         }
 
         presentAsModalWindow(viewController)

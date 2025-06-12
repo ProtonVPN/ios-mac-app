@@ -116,11 +116,10 @@ final class ConnectionBarViewModel {
     }
     
     func timeString() -> String {
-        let time: TimeInterval
-        if case AppState.connected = appStateManager.state {
-            time = Date().timeIntervalSince(connectedDate)
+        let time: TimeInterval = if case AppState.connected = appStateManager.state {
+            Date().timeIntervalSince(connectedDate)
         } else {
-            time = 0
+            0
         }
         
         return time.asColonSeparatedString

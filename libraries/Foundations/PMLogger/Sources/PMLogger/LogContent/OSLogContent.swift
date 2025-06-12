@@ -48,12 +48,10 @@ public class OSLogContent: LogContent {
                 let dateFormatter = ISO8601DateFormatter()
                 dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
                 let store = try OSLogStore(scope: self.scope)
-                let position: OSLogPosition
-
-                if let since = self.since {
-                    position = store.position(date: since)
+                let position: OSLogPosition = if let since = self.since {
+                    store.position(date: since)
                 } else {
-                    position = store.position(timeIntervalSinceLatestBoot: 1)
+                    store.position(timeIntervalSinceLatestBoot: 1)
                 }
 
                 let entries = try store.getEntries(at: position)

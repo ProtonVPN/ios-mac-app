@@ -160,12 +160,11 @@ class MapSectionViewModel {
         do {
             let userTier = try vpnKeychain.fetchCached().maxTier
             
-            let annotations: [CountryAnnotationViewModel]
-            switch viewType {
+            let annotations: [CountryAnnotationViewModel] = switch viewType {
             case .standard, .p2p, .tor, .unspecified:
-                annotations = standardAnnotations(userTier)
+                standardAnnotations(userTier)
             case .secureCore:
-                annotations = secureCoreAnnotations(userTier)
+                secureCoreAnnotations(userTier)
             }
             return annotations
         } catch {
@@ -175,12 +174,11 @@ class MapSectionViewModel {
     }
     
     private func connections(forView viewType: ServerType) -> [ConnectionViewModel] {
-        let connections: [ConnectionViewModel]
-        switch viewType {
+        let connections: [ConnectionViewModel] = switch viewType {
         case .standard, .p2p, .tor, .unspecified:
-            connections = standardConnections()
+            standardConnections()
         case .secureCore:
-            connections = secureCoreConnections()
+            secureCoreConnections()
         }
         return connections
     }

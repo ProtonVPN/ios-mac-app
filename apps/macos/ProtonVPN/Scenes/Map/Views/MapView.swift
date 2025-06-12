@@ -160,11 +160,10 @@ class MapView: NSView {
                 adjustedZoomDelta = maxZoom / zoom
             }
             
-            let pointFromCenter: CGPoint
-            if let point = point {
-                pointFromCenter = CGPoint(x: (point.x - frame.width / 2), y: (point.y - frame.height / 2))
+            let pointFromCenter: CGPoint = if let point = point {
+                CGPoint(x: (point.x - frame.width / 2), y: (point.y - frame.height / 2))
             } else {
-                pointFromCenter = CGPoint(x: 0, y: 0)
+                CGPoint(x: 0, y: 0)
             }
             
             zoom *= adjustedZoomDelta

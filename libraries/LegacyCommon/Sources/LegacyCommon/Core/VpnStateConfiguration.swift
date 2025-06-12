@@ -222,14 +222,13 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                 return
             }
 
-            let connection: ConnectionConfiguration?
-            switch vpnProtocol {
+            let connection: ConnectionConfiguration? = switch vpnProtocol {
             case .ike:
-                connection = self.propertiesManager.lastIkeConnection
+                self.propertiesManager.lastIkeConnection
             case .openVpn:
-                connection = self.propertiesManager.lastOpenVpnConnection
+                self.propertiesManager.lastOpenVpnConnection
             case .wireGuard:
-                connection = self.propertiesManager.lastWireguardConnection
+                self.propertiesManager.lastWireguardConnection
             }
 
             self.determineActiveVpnState(vpnProtocol: vpnProtocol) { result in
@@ -258,14 +257,13 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
                                              connection: nil)
         }
 
-        let connection: ConnectionConfiguration?
-        switch vpnProtocol {
+        let connection: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
-            connection = self.propertiesManager.lastIkeConnection
+            self.propertiesManager.lastIkeConnection
         case .openVpn:
-            connection = self.propertiesManager.lastOpenVpnConnection
+            self.propertiesManager.lastOpenVpnConnection
         case .wireGuard:
-            connection = self.propertiesManager.lastWireguardConnection
+            self.propertiesManager.lastWireguardConnection
         }
         do {
             let (_, state) = try await determineActiveVpnState(vpnProtocol: vpnProtocol)

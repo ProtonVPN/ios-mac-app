@@ -381,12 +381,11 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     private func setViewController(forTab tab: SidebarTab) {
-        let newViewController: NSViewController
-        switch tab {
+        let newViewController: NSViewController = switch tab {
         case .countries:
-            newViewController = countriesSectionViewController
+            countriesSectionViewController
         case .profiles:
-            newViewController = profileSectionViewController
+            profileSectionViewController
         }
         if let activeController = activeController {
             activeControllerViewContainer.willRemoveSubview(activeController.view)
