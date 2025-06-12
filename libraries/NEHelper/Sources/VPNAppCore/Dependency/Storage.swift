@@ -35,8 +35,7 @@ public struct SettingsStorage: Sendable {
         public let atlasSecretFetchURLString: String
         public let featureFlagOverrides: [String: Bool]
 
-        @usableFromInline
-        static let empty: EnvironmentSettings = .init(apiEndpoint: "", atlasSecret: "", atlasSecretFetchURLString: "", featureFlagOverrides: [:])
+        @usableFromInline static let empty: EnvironmentSettings = .init(apiEndpoint: "", atlasSecret: "", atlasSecretFetchURLString: "", featureFlagOverrides: [:])
 
         public init(apiEndpoint: String, atlasSecret: String, atlasSecretFetchURLString: String, featureFlagOverrides: [String: Bool]) {
             self.apiEndpoint = apiEndpoint

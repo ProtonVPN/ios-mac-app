@@ -31,11 +31,9 @@ struct RecentRowItemView: View {
     let isConnected: Bool
     let sendAction: RecentsFeature.ActionSender
 
-    @ScaledMetric
-    private var iconSize: CGFloat = 16
+    @ScaledMetric private var iconSize: CGFloat = 16
 
-    @Dependency(\.locale)
-    private var locale
+    @Dependency(\.locale) private var locale
 
     private var leadingIcon: some View {
         item.icon

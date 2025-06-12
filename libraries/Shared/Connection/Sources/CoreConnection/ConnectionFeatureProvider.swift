@@ -53,8 +53,7 @@ extension DependencyValues {
 }
 
 extension VPNConnectionFeatures {
-    @usableFromInline
-    static let unimplementedFeatures: VPNConnectionFeatures = .init(
+    @usableFromInline static let unimplementedFeatures: VPNConnectionFeatures = .init(
         netshield: .off,
         vpnAccelerator: false,
         bouncing: nil, // This is set to the target server's `label` property during connection
@@ -64,8 +63,7 @@ extension VPNConnectionFeatures {
 }
 
 extension TunnelFeatures {
-    @usableFromInline
-    static let unimplementedFeatures: TunnelFeatures = {
+    @usableFromInline static let unimplementedFeatures: TunnelFeatures = {
         #if !os(tvOS)
             .init(killSwitch: false, excludeLocalNetworks: false)
         #else

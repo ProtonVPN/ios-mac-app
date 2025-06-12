@@ -33,8 +33,7 @@ final class OverviewViewModel {
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
 
-    @Dependency(\.sessionService)
-    private var sessionService: SessionService
+    @Dependency(\.sessionService) private var sessionService: SessionService
 
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?

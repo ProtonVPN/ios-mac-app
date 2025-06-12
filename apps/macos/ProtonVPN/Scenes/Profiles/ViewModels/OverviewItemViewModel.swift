@@ -40,8 +40,7 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
 
-    @Dependency(\.sessionService)
-    private var sessionService
+    @Dependency(\.sessionService) private var sessionService
 
     weak var delegate: OverviewItemViewModelDelegate?
 

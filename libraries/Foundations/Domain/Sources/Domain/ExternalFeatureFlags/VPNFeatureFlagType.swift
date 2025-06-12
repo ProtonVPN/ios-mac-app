@@ -85,9 +85,7 @@ private enum PrivateFeatureFlag: String, FeatureFlagTypeProtocol {
 
 extension FeatureFlagsRepository {
     @available(tvOS, unavailable)
-    @available(macOS, unavailable)
-
-    public static let isRedesigniOSEnabled: Bool = {
+    @available(macOS, unavailable) public static let isRedesigniOSEnabled: Bool = {
         if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
             return true
         }

@@ -34,11 +34,9 @@ class TelemetryUpsellReporter {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
 
     /// The last modal that drove an upsell event.
-    @ExpiringValue(timeout: .minutes(10))
-    var previousModalSource: UpsellModalSource?
+    @ExpiringValue(timeout: .minutes(10)) var previousModalSource: UpsellModalSource?
     /// The last notification interaction's offer reference name, if defined, that drove an upsell event.
-    @ExpiringValue(timeout: .minutes(10))
-    var previousOfferReference: String?
+    @ExpiringValue(timeout: .minutes(10)) var previousOfferReference: String?
 
     private var telemetryEventScheduler: TelemetryEventScheduler
 

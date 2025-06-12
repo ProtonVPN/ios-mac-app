@@ -57,8 +57,7 @@ final class IosAlertService {
 
     private var oneClickPayment: OneClickPayment?
 
-    @ConcurrentlyReadable
-    private var upsellAlerts: [UUID: UpsellAlert] = [:]
+    @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
     init(_ factory: Factory) {
         self.factory = factory

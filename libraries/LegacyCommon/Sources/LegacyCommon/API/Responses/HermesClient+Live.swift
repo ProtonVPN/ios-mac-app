@@ -35,8 +35,7 @@ private extension SharedKey where Self == FileStorageKey<[HermesResolver]>.Defau
 }
 
 extension HermesClient: @retroactive DependencyKey {
-    @Shared(.hermesResolvers)
-    private static var hermesResolvers
+    @Shared(.hermesResolvers) private static var hermesResolvers
 
     public static let liveValue: HermesClient = .init {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS) else { return .init(value: false) }

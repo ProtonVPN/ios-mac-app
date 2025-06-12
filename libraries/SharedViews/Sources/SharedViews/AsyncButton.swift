@@ -25,8 +25,7 @@ public struct AsyncButton<Label>: View where Label: View {
     let taskPriority: TaskPriority?
     let disableWhileInProgress: Bool
     let action: @MainActor () async -> Void
-    @ViewBuilder
-    let label: () -> Label
+    @ViewBuilder let label: () -> Label
 
     @State private var taskHandle: Task<Void, Never>?
     @State private var taskInProgress: Bool = false

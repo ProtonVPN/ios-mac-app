@@ -25,8 +25,7 @@ import LegacyCommon
 import VPNAppCore
 
 final class SecureCoreWarningViewModel {
-    @Dependency(\.sessionService)
-    var sessionService: SessionService
+    @Dependency(\.sessionService) var sessionService: SessionService
     @Dependency(\.linkOpener) var linkOpener
 
     func upgradeButtonPressed() async {

@@ -64,8 +64,7 @@ final class StatusMenuViewModel {
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
-    @Dependency(\.sessionService)
-    private var sessionService: SessionService
+    @Dependency(\.sessionService) private var sessionService: SessionService
 
     var contentChanged: (() -> Void)?
     var changeServerStateChanged: ((ServerChangeViewState) -> Void)?

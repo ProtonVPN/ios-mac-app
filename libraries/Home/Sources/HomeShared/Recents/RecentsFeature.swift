@@ -30,13 +30,10 @@ public struct RecentsFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.vpnConnectionStatus)
-        public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
-        @SharedReader(.defaultConnectionPreference)
-        private var defaultConnectionPreference
-        @Shared(.recents)
-        fileprivate var recents: OrderedSet<RecentConnection>
+        @SharedReader(.defaultConnectionPreference) private var defaultConnectionPreference
+        @Shared(.recents) fileprivate var recents: OrderedSet<RecentConnection>
 
         /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
@@ -48,8 +45,7 @@ public struct RecentsFeature {
             )
         }
 
-        @SharedReader(.userTier)
-        public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: Int?
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage

@@ -47,8 +47,7 @@ public struct ConnectionFlagInfoView: View {
     let detailAction: ((Action) -> Void)?
     let images: RecentsImages
 
-    @ScaledMetric
-    private var maintenanceIconSize: CGFloat = 24
+    @ScaledMetric private var maintenanceIconSize: CGFloat = 24
 
     @State private var showDetail = false
 

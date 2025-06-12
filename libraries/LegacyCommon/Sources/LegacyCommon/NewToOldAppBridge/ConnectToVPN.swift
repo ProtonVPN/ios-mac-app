@@ -46,8 +46,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         legacyConnect
     }
 
-    @available(iOS 16, *)
-    static let newConnect: @Sendable (
+    @available(iOS 16, *) static let newConnect: @Sendable (
         ConnectionSpec,
         ConnectionProtocol?,
         UserInitiatedVPNChange.VPNTrigger?

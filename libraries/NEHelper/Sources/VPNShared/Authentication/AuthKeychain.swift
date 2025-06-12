@@ -100,11 +100,9 @@ public final class AuthKeychain {
         label: "ch.protonvpn.VPNShared.AuthKeychain",
         attributes: .concurrent
     )
-    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
-    public var username: String? = nil
+    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue) public var username: String? = nil
 
-    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
-    public var userId: String? = nil
+    @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue) public var userId: String? = nil
 
     public static func fetch() -> AuthCredentials? {
         `default`.fetch()
