@@ -37,7 +37,7 @@ public struct ConnectionDetailsView: View {
                     }
                 })
                 .gesture(
-                    DragGesture().onChanged { value in
+                    DragGesture().onChanged { _ in
 //                        print(value) // not implemented, just print it out
                     }
                 )

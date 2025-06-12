@@ -132,7 +132,7 @@
 
         public func clearOldVpnPassword() throws {}
 
-        public func store(wireguardConfiguration: Data) throws -> Data {
+        public func store(wireguardConfiguration _: Data) throws -> Data {
             Data()
         }
 

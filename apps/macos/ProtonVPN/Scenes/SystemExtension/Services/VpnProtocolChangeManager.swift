@@ -115,7 +115,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
 
     private func set(
         vpnProtocol: VpnProtocol,
-        userInitiated: Bool,
+        userInitiated _: Bool,
         and then: ProtocolSwitchAction,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {

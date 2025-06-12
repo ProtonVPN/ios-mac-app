@@ -166,7 +166,7 @@ final class LoginViewController: NSViewController {
     // MARK: - Public functions
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -533,7 +533,7 @@ extension LoginViewController: WarningViewDelegate {
 }
 
 extension LoginViewController: NSTextFieldDelegate {
-    func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_: Notification) {
         enableLoginButtonBasedOnTextFieldsState()
     }
 
@@ -546,7 +546,7 @@ extension LoginViewController: NSTextFieldDelegate {
         }
     }
 
-    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+    func control(_: NSControl, textView _: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if commandSelector == #selector(NSResponder.insertNewline(_:)), loginButton.isEnabled {
             attemptLogin()
             return true
@@ -596,13 +596,13 @@ extension LoginViewController: SwitchButtonDelegate {
 }
 
 extension LoginViewController: NSPopoverDelegate {
-    func popoverDidClose(_ notification: Notification) {
+    func popoverDidClose(_: Notification) {
         helpPopover = nil
     }
 }
 
 extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
-    func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+    func presentationAnchor(for _: ASWebAuthenticationSession) -> ASPresentationAnchor {
         view.window!
     }
 }

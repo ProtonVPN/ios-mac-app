@@ -184,7 +184,7 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
         public static func mock(
             serverModelId: String = "server-model-id-1",
             serverExitIP: String = "188.12.32.12",
-            feature: ServerFeature = [],
+            feature _: ServerFeature = [],
             serverName: String = "SRV#12",
             country: String = "CH",
             entryCountry: String? = nil,

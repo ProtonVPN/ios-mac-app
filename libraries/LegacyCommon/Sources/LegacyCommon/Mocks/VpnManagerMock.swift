@@ -52,16 +52,16 @@
             onDemand = enabled
         }
 
-        public func disconnectAnyExistingConnectionAndPrepareToConnect(with: VpnManagerConfiguration, completion: @escaping () -> Void) {}
+        public func disconnectAnyExistingConnectionAndPrepareToConnect(with _: VpnManagerConfiguration, completion _: @escaping () -> Void) {}
 
-        public func disconnect(completion: @escaping () -> Void) {}
+        public func disconnect(completion _: @escaping () -> Void) {}
 
-        public func connectedDate(completion: @escaping (Date?) -> Void) {}
+        public func connectedDate(completion _: @escaping (Date?) -> Void) {}
         public func connectedDate() async -> Date? { nil }
 
         public func refreshState() {}
 
-        public func appBackgroundStateDidChange(isBackground: Bool) {}
+        public func appBackgroundStateDidChange(isBackground _: Bool) {}
 
         public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
             completionHandler?(removeConfigurationError)
@@ -69,25 +69,25 @@
 
         public var removeConfigurationError: Error?
 
-        public func logsContent(for vpnProtocol: VpnProtocol, completion: @escaping (String?) -> Void) {
+        public func logsContent(for _: VpnProtocol, completion: @escaping (String?) -> Void) {
             completion(nil)
         }
 
-        public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
+        public func logFile(for _: VpnProtocol) -> URL? {
             nil
         }
 
         public func refreshManagers() {}
-        public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {}
+        public func whenReady(queue _: DispatchQueue, completion _: @escaping () -> Void) {}
         public var prepareManagersTask: Task<Void, Never>?
 
-        public func set(vpnAccelerator: Bool) {}
+        public func set(vpnAccelerator _: Bool) {}
 
-        public func set(netShieldType: NetShieldType) {}
+        public func set(netShieldType _: NetShieldType) {}
 
-        public func set(natType: NATType) {}
+        public func set(natType _: NATType) {}
 
-        public func set(safeMode: Bool) {}
+        public func set(safeMode _: Bool) {}
 
         public private(set) var isLocalAgentConnected: Bool?
         public var localAgentStateChanged: ((Bool?) -> Void)?

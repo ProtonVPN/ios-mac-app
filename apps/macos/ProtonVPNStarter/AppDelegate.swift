@@ -24,7 +24,7 @@ import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         let mainAppIdentifier = "ch.protonvpn.mac"
         let running = NSWorkspace.shared.runningApplications
         var alreadyRunning = false

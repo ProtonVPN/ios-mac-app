@@ -41,11 +41,11 @@
         public var onAlternativeRoutingChange: ((Bool) -> Void)?
 
         var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
-        public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
+        public func getAutoConnect(for _: String) -> (enabled: Bool, profileId: String?) {
             autoConnect
         }
 
-        public func setAutoConnect(for username: String, enabled: Bool, profileId: String?) {
+        public func setAutoConnect(for _: String, enabled: Bool, profileId: String?) {
             autoConnect = (enabled, profileId)
         }
 
@@ -66,20 +66,20 @@
         public var lastConnectionRequest: ConnectionRequest?
 
         var lastUserAccountPlan: String?
-        public func getLastAccountPlan(for username: String) -> String? {
+        public func getLastAccountPlan(for _: String) -> String? {
             lastUserAccountPlan
         }
 
-        public func setLastAccountPlan(for username: String, plan: String?) {
+        public func setLastAccountPlan(for _: String, plan: String?) {
             lastUserAccountPlan = plan
         }
 
         public var quickConnect: String?
-        public func getQuickConnect(for username: String) -> String? {
+        public func getQuickConnect(for _: String) -> String? {
             quickConnect
         }
 
-        public func setQuickConnect(for username: String, quickConnect: String?) {
+        public func setQuickConnect(for _: String, quickConnect: String?) {
             self.quickConnect = quickConnect
         }
 

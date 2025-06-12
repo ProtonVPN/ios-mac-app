@@ -13,7 +13,7 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class ProtocolServiceMock: ProtocolService {
-    func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController {
+    func makeVpnProtocolViewController(viewModel _: VpnProtocolViewModel) -> VpnProtocolViewController {
         VpnProtocolViewController(viewModel: .init(connectionProtocol: .vpnProtocol(.ike),
                                                    smartProtocolConfig: .init(),
                                                    featureFlags: .init()))

@@ -388,7 +388,7 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
+    private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
         sysexPending = true
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }

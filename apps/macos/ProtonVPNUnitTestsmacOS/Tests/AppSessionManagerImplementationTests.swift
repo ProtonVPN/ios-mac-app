@@ -420,8 +420,8 @@ private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws {}
-    func fetch(forContext: AppContext?) -> AuthCredentials? { credentials }
+    func store(_: VPNShared.AuthCredentials, forContext _: VPNShared.AppContext?) throws {}
+    func fetch(forContext _: AppContext?) -> AuthCredentials? { credentials }
     func clear() {}
 }
 

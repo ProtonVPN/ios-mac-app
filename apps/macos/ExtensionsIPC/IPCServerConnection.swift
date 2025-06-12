@@ -47,21 +47,21 @@ class XPCBaseService: NSObject {
 }
 
 extension XPCBaseService: ProviderCommunication {
-    func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
+    func getLogs(_: @escaping (Data?) -> Void) {
         log("This is just a placeholder! Add `getLogs` in each implementation.")
     }
 
-    func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
+    func setCredentials(username _: String, password _: String, completionHandler _: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setCredentials` in each implementation.")
     }
 
-    func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
+    func setConfigData(_: Data, completionHandler _: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setConfigData` in each implementation.")
     }
 }
 
 extension XPCBaseService: NSXPCListenerDelegate {
-    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+    func listener(_: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         // Check the code signature of the remote endpoint to avoid tampering.
         let pid = newConnection.processIdentifier
         let auditToken = newConnection.auditToken

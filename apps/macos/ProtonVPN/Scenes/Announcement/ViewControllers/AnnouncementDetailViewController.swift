@@ -45,7 +45,7 @@ final class AnnouncementDetailViewController: NSViewController {
     private let data: OfferPanel.LegacyPanel
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -114,7 +114,7 @@ final class AnnouncementDetailViewController: NSViewController {
         pillView.layer?.cornerRadius = pillView.frame.height / 2
     }
 
-    @IBAction private func didTapActionButton(_ sender: Any) {
+    @IBAction private func didTapActionButton(_: Any) {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(data.button.url)
     }

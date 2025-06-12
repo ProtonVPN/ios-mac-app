@@ -45,7 +45,7 @@ class ServersStreamingFeaturesVC: UIViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -69,7 +69,7 @@ class ServersStreamingFeaturesVC: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func didTapDismiss(_ sender: Any) {
+    @IBAction private func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }
@@ -77,15 +77,15 @@ class ServersStreamingFeaturesVC: UIViewController {
 extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     // MARK: - UICollectionViewDataSource
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         0
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
         let size = collectionView.frame.width / CGFloat(viewModel.columnsAmount)
         servicesCVHeightConstraint.constant = CGFloat(viewModel.totalRows) * size
         return CGSize(width: size, height: size)
@@ -93,7 +93,7 @@ extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UIColl
 
     // MARK: - UICollectionViewDataSource
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         viewModel.totalItems
     }
 

@@ -112,7 +112,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
     /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.
     public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
-        vpnProviderManager(for: .status) { manager, error in
+        vpnProviderManager(for: .status) { manager, _ in
             guard let manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
                 responseHandler(false)
                 return

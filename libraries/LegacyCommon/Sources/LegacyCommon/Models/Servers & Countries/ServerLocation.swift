@@ -63,7 +63,7 @@ public class ServerLocation: NSObject, NSCoding, Codable {
                   long: aDecoder.decodeDouble(forKey: CoderKey.long))
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }

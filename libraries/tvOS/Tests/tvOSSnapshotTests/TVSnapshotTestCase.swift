@@ -34,7 +34,7 @@ class TVSnapshotTestCase: XCTestCase {
         timeout: TimeInterval = 5,
         fileID: StaticString = #fileID,
         file filePath: StaticString = #filePath,
-        testName: String = #function,
+        testName _: String = #function,
         line: UInt = #line,
         column: UInt = #column
     ) {

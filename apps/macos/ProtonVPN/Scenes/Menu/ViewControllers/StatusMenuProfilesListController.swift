@@ -33,7 +33,7 @@ class StatusMenuProfilesListController: WindowController {
     var viewModel: StatusMenuProfilesListViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -86,17 +86,17 @@ class StatusMenuProfilesListController: WindowController {
 }
 
 extension StatusMenuProfilesListController: NSTableViewDelegate {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         viewModel.cellCount
     }
 }
 
 extension StatusMenuProfilesListController: NSTableViewDataSource {
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    func tableView(_: NSTableView, heightOfRow _: Int) -> CGFloat {
         viewModel.cellHeight
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as! StatusMenuProfileViewItem
 
         let cellViewModel = viewModel.cellModel(forIndex: row)

@@ -49,7 +49,7 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
 
-        let content = LogContentMock(handler: { callback in
+        let content = LogContentMock(handler: { _ in
             contentRequested.fulfill()
             // Do NOT call the callback
         })

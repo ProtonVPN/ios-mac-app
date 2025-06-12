@@ -75,7 +75,7 @@ class ViewController: NSViewController {
 }
 
 extension ViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+    func tableView(_: NSTableView, shouldSelectRow row: Int) -> Bool {
         let modal = modals[row]
         let viewController: NSViewController = switch modal.type {
         case let .upsell(type):
@@ -96,11 +96,11 @@ extension ViewController: NSTableViewDelegate {
 }
 
 extension ViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         modals.count
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let modal = modals[row]
 
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ModalNameCellView"), owner: nil) as? NSTableCellView {

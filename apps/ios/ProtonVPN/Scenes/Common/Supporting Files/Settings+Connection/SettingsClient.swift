@@ -44,7 +44,7 @@ extension SettingsClient: @retroactive DependencyKey {
                 return .withConnectionUpdate
             }
         },
-        protocolChangeAvailability: { connectionProtocol in
+        protocolChangeAvailability: { _ in
             @Shared(.connectionState) var connectionState
             switch connectionState {
             case .disconnected, .disconnecting:
@@ -68,7 +68,7 @@ extension SettingsClient: @retroactive DependencyKey {
             @Dependency(\.disconnectVPN) var disconnect
             try await disconnect(.auto)
         },
-        reconnect: { featureChanges in
+        reconnect: { _ in
             @Dependency(\.connectionIntentStorage) var storage
             let lastIntent = try storage.getConnectionIntent()
 

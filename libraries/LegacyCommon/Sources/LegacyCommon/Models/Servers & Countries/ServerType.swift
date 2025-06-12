@@ -90,7 +90,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
         self.init(rawValue: Int(data[0]))
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 

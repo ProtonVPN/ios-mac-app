@@ -140,7 +140,7 @@ final class ServerItemCellView: NSView {
         connectBtn.isHidden = false
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         upgradeBtn.isHidden = !viewModel.isUsersTierTooLow
         cityLbl.isHidden = viewModel.isConnected || viewModel.isUsersTierTooLow
         connectBtn.isHidden = !viewModel.isConnected || viewModel.isUsersTierTooLow
@@ -187,15 +187,15 @@ final class ServerItemCellView: NSView {
         loadIcon.isHidden = isUnderMaintenance
     }
 
-    @IBAction private func didTapConnectBtn(_ sender: Any) {
+    @IBAction private func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
 
-    @IBAction private func didTapUpgradeBtn(_ sender: Any) {
+    @IBAction private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @objc private func didTapStreaming(_ sender: Any) {
+    @objc private func didTapStreaming(_: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
     }
 

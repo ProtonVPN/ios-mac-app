@@ -233,7 +233,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             .contains(touch.location(in: self)) ?? false
     }
 
-    @IBAction private func connectButtonTap(_ sender: Any) {
+    @IBAction private func connectButtonTap(_: Any) {
         connect()
     }
 
@@ -253,7 +253,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension ServerCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle? = nil
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

@@ -101,15 +101,15 @@ class AlertTests: XCTestCase {
 private class WindowServiceMock: WindowService {
     var displayCount = 0
 
-    func show(viewController: UIViewController) {}
-    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
-    func dismissModal(_ completion: (() -> Void)?) {}
+    func show(viewController _: UIViewController) {}
+    func addToStack(_: UIViewController, checkForDuplicates _: Bool) {}
+    func dismissModal(_: (() -> Void)?) {}
 
-    func present(modal: UIViewController) {
+    func present(modal _: UIViewController) {
         displayCount += 1
     }
 
-    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {}
+    func present(message _: String, type _: PresentedMessageType, accessibilityIdentifier _: String?) {}
 
     func popStackToRoot() {}
 
@@ -151,7 +151,7 @@ private class SettingsServiceMock: SettingsService {
         return LogSelectionViewController(viewModel: viewModel, settingsService: self)
     }
 
-    func makeLogsViewController(logSource: LogSource) -> LogsViewController {
+    func makeLogsViewController(logSource _: LogSource) -> LogsViewController {
         LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
 
@@ -183,7 +183,7 @@ private class SettingsServiceMock: SettingsService {
         return UIHostingController(rootView: AccountRecoveryView(viewModel: viewModel))
     }
 
-    func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
+    func makePasswordChangeViewController(mode _: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
         nil
     }
 }

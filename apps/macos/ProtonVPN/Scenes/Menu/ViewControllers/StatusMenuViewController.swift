@@ -65,7 +65,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     private var profilesWindowController: StatusMenuProfilesListController?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -264,7 +264,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
     }
 
-    private func setupHeaderButtons(with state: ServerChangeViewState? = nil) {
+    private func setupHeaderButtons(with _: ServerChangeViewState? = nil) {
         profileDropDown.isHidden = !viewModel.shouldShowProfileDropdown
         changeServerView.isHidden = !viewModel.shouldShowChangeServer
 
@@ -294,15 +294,15 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }
 
-    @IBAction func connect(_ sender: Any) {
+    @IBAction func connect(_: Any) {
         viewModel.quickConnectAction()
     }
 
-    @IBAction func cancelConnection(_ sender: Any) {
+    @IBAction func cancelConnection(_: Any) {
         viewModel.disconnectAction()
     }
 
-    @IBAction func toggleProfilesList(_ sender: Any) {
+    @IBAction func toggleProfilesList(_: Any) {
         if profilesWindowController == nil {
             profilesWindowController = StatusMenuProfilesListController(windowNibName: NSNib.Name("StatusMenuProfilesList"), viewModel: viewModel.profileListViewModel)
         }
@@ -316,27 +316,27 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
     }
 
-    @IBAction func upgrade(_ sender: Any) {
+    @IBAction func upgrade(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @IBAction func quit(_ sender: Any) {
+    @IBAction func quit(_: Any) {
         viewModel.quitApplicationAction()
     }
 
-    @IBAction func showProtonVPN(_ sender: Any) {
+    @IBAction func showProtonVPN(_: Any) {
         viewModel.showApplicationAction()
     }
 }
 
 extension StatusMenuViewController: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
+    func switchButtonClicked(_: NSButton) {
         viewModel.toggleSecureCore(secureCoreSwitch.currentButtonState)
     }
 }
 
 extension StatusMenuViewController: NSCollectionViewDataSource {
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
         viewModel.countryCount()
     }
 

@@ -38,19 +38,19 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
         continuation.yield(false)
     }
 
-    func set(apiService: APIService) {}
+    func set(apiService _: APIService) {}
 }
 
 // swiftlint:enable type_name
 
 extension macOSNetworkingDelegate {
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping (HumanVerifyFinishReason) -> Void) {
+    func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion: @escaping (HumanVerifyFinishReason) -> Void) {
         // report human verification as closed by the user
         // should result in the request failing with error
         completion(.verification(header: [:], verificationCodeBlock: nil))
     }
 
-    func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? {
+    func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? {
         // we simulate the device not computing the pow
         nil
     }

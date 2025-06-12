@@ -87,7 +87,7 @@ final class TabBarController: UITabBarController {
         disconnectedQuickConnect()
     }
 
-    @objc private func quickConnectTapped(_ sender: UIButton) {
+    @objc private func quickConnectTapped(_: UIButton) {
         viewModel?.quickConnectTapped()
     }
 }
@@ -120,7 +120,7 @@ extension TabBarController: TabBarViewModelDelegate {
 }
 
 extension TabBarController: UITabBarControllerDelegate {
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    func tabBarController(_: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         // to help with data updating and easier to understand navigation, pop nvc to root
         if let navigationViewController = viewController as? UINavigationController, navigationViewController != selectedViewController {
             navigationViewController.popToRootViewController(animated: false)
@@ -135,7 +135,7 @@ extension TabBarController: UITabBarControllerDelegate {
         }
     }
 
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+    func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
         if let viewModel, let navigationController = viewController as? UINavigationController,
            navigationController.visibleViewController is SettingsViewController {
             viewModel.settingsTabTapped()

@@ -57,7 +57,7 @@ struct ProtectionStatusFeature {
                 }
 
             case .onAppear:
-                .run { send in
+                .run { _ in
                     @Dependency(\.userLocationService) var userLocationService
                     try? await userLocationService.updateUserLocation()
                 }

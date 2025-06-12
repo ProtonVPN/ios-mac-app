@@ -46,7 +46,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     private var viewModel: ConnectionSettingsViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -234,7 +234,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             return
         }
 
-        viewModel.setProtocol(protocolItem) { [weak self] result in
+        viewModel.setProtocol(protocolItem) { [weak self] _ in
             executeOnUIThread {
                 self?.setupProtocolItem()
             }

@@ -38,7 +38,7 @@ final class FeaturesOverlayViewController: OverlayViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -77,7 +77,7 @@ final class FeaturesOverlayViewController: OverlayViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapDismissBtn(_ sender: Any) {
+    @IBAction func didTapDismissBtn(_: Any) {
         dismiss(self)
     }
 }

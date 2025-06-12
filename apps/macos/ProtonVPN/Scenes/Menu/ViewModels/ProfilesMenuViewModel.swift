@@ -100,15 +100,15 @@ class ProfilesMenuViewModel {
 
     // MARK: - Private functions
 
-    private func sessionChanged(data: SessionChanged.T) {
+    private func sessionChanged(data _: SessionChanged.T) {
         contentChanged?()
     }
 
-    private func featureFlagsChanged(notification: Notification) {
+    private func featureFlagsChanged(notification _: Notification) {
         contentChanged?()
     }
 
-    private func planChanged(notification: Notification) {
+    private func planChanged(notification _: Notification) {
         contentChanged?()
     }
 }

@@ -35,7 +35,7 @@ final class VpnProtocolViewModel {
     init(connectionProtocol: ConnectionProtocol,
          smartProtocolConfig: SmartProtocolConfig,
          supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
-         displaySmartProtocol: Bool = true,
+         displaySmartProtocol _: Bool = true,
          featureFlags: FeatureFlags) {
         selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig

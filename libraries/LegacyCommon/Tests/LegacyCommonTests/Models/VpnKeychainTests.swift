@@ -31,7 +31,7 @@ final class VpnKeychainTests: XCTestCase {
         let password = "qwerty"
         let key = "keychain-key"
 
-        KeychainEnvironment.secItemAdd = { (_ attributes: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
+        KeychainEnvironment.secItemAdd = { (_ attributes: CFDictionary, _: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
             XCTAssertEqual(try! attributes.getString(index: kSecAttrGeneric as String), key, "Proper keychain key is used")
             expectations.newDataSavedToKeychain.fulfill()
             return errSecSuccess
@@ -60,15 +60,15 @@ final class VpnKeychainTests: XCTestCase {
 
         let password = "123456" // The most popular password in the world
 
-        KeychainEnvironment.secItemAdd = { (_ attributes: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
+        KeychainEnvironment.secItemAdd = { (_: CFDictionary, _: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
             XCTFail("secItemAdd should not be called, because we try to set the same value as there is now")
             return errSecSuccess
         }
-        KeychainEnvironment.secItemDelete = { (_ query: CFDictionary) -> OSStatus in
+        KeychainEnvironment.secItemDelete = { (_: CFDictionary) -> OSStatus in
             XCTFail("secItemDelete should not be called")
             return errSecSuccess
         }
-        KeychainEnvironment.secItemCopyMatching = { (_ query: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
+        KeychainEnvironment.secItemCopyMatching = { (_: CFDictionary, _ result: UnsafeMutablePointer<CFTypeRef?>?) -> OSStatus in
             readDataFromKeychain.fulfill()
             let res = [kSecValueData: password.data(using: .utf8)]
             result?.initialize(to: res as CFTypeRef)
@@ -83,7 +83,7 @@ final class VpnKeychainTests: XCTestCase {
 
     // MARK: - Private helpers
 
-    private func expectation(_ description: String, fulfillmentCount: Int) -> XCTestExpectation {
+    private func expectation(_: String, fulfillmentCount: Int) -> XCTestExpectation {
         let expectation = XCTestExpectation(description: "Data from keychain was read")
         expectation.expectedFulfillmentCount = fulfillmentCount
         expectation.assertForOverFulfill = true

@@ -40,7 +40,7 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     private var viewModel: GeneralSettingsViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -99,7 +99,7 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
 }
 
 extension GeneralSettingsViewController: TickboxViewDelegate {
-    func upsellTapped(_ tickboxView: SettingsTickboxView) {
+    func upsellTapped(_: SettingsTickboxView) {
         // No upsellable features need to be handled in general settings
     }
 

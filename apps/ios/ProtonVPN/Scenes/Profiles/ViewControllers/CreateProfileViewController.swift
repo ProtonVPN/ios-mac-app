@@ -91,7 +91,7 @@ class CreateProfileViewController: UITableViewController {
         tableView.delegate = genericDataSource
     }
 
-    @objc private func handleTap(_ sender: UIGestureRecognizer) {
+    @objc private func handleTap(_: UIGestureRecognizer) {
         view.endEditing(true)
     }
 

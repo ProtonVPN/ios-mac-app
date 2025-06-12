@@ -74,7 +74,7 @@ final class TroubleshootingPopup: NSViewController {
 // MARK: Table view delegate
 
 extension TroubleshootingPopup: NSTableViewDelegate {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         viewModel?.items.count ?? 0
     }
 
@@ -97,7 +97,7 @@ extension TroubleshootingPopup: NSTableViewDelegate {
         return height > tableView.rowHeight ? height : tableView.rowHeight
     }
 
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+    func tableView(_: NSTableView, shouldSelectRow _: Int) -> Bool {
         false
     }
 }
@@ -105,7 +105,7 @@ extension TroubleshootingPopup: NSTableViewDelegate {
 // MARK: Table view data source
 
 extension TroubleshootingPopup: NSTableViewDataSource {
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as! TroubleshootingRowItem
         rowItem.item = viewModel!.items[row]
         return rowItem

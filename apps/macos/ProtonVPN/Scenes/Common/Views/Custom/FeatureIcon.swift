@@ -27,7 +27,7 @@ class FeatureIcon: NSImageView {
         false
     }
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
         // circle

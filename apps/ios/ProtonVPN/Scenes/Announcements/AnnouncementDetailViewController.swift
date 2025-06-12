@@ -43,7 +43,7 @@ final class AnnouncementDetailViewController: AnnouncementViewController {
     private let data: OfferPanel.LegacyPanel
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -103,11 +103,11 @@ final class AnnouncementDetailViewController: AnnouncementViewController {
         }
     }
 
-    @IBAction private func actionButtonTapped(_ sender: Any) {
+    @IBAction private func actionButtonTapped(_: Any) {
         urlRequested?(data.button.url)
     }
 
-    @IBAction private func closeButtonTapped(_ sender: Any) {
+    @IBAction private func closeButtonTapped(_: Any) {
         cancelled?()
     }
 }

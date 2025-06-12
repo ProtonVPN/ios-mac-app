@@ -126,7 +126,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     /// This state change calculation logic could likely be cleaned up with a higher order reducer instead.
     public var body: some Reducer<State, Action> {
         var oldStateCopy: State = .init()
-        Reduce { state, action in
+        Reduce { state, _ in
             oldStateCopy = state
             return .none
         }

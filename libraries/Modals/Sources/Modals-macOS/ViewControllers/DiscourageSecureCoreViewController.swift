@@ -36,7 +36,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
     var onLearnMore: (() -> Void)?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -78,7 +78,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
         view.window?.applyUpsellModalAppearance()
     }
 
-    @IBAction private func learnMoreButtonTapped(_ sender: Any) {
+    @IBAction private func learnMoreButtonTapped(_: Any) {
         onLearnMore?()
     }
 
@@ -86,7 +86,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
         onDontShowAgain?(sender.state == .on)
     }
 
-    @IBAction private func activateButtonTapped(_ sender: Any) {
+    @IBAction private func activateButtonTapped(_: Any) {
         onActivate?()
         dismiss(nil)
     }

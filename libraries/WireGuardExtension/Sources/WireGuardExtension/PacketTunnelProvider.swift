@@ -79,7 +79,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
-    private lazy var adapter: WireGuardAdapter = .init(with: self) { logLevel, message in
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { _, message in
         wg_log(.info, message: message)
     }
 

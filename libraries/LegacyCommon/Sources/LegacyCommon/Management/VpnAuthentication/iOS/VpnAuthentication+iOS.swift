@@ -251,7 +251,7 @@ import VPNShared
             })
         }
 
-        @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: Notification) {
+        @objc private func userDowngradedPlanOrBecameDelinquent(_: Notification) {
             log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
             var features: VPNConnectionFeatures?

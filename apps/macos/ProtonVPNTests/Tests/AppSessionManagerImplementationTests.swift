@@ -497,12 +497,12 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: AppContext?) throws {
+    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?) throws {
         self.credentials = credentials
     }
 
-    func fetch(forContext: AppContext?) -> AuthCredentials? { credentials }
-    func fetch(forContext: AppContext?) throws -> AuthCredentials {
+    func fetch(forContext _: AppContext?) -> AuthCredentials? { credentials }
+    func fetch(forContext _: AppContext?) throws -> AuthCredentials {
         guard let credentials else {
             throw KeychainError.credentialsMissing("test-auth-keychain-storage-key")
         }

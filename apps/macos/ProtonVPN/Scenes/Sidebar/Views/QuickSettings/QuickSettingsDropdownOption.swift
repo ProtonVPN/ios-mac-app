@@ -40,7 +40,7 @@ class QuickSettingsDropdownOption: NSView {
     private var state: State = .blocked(business: false)
     private var isHovered: Bool = false
 
-    @IBAction func didTapActionBtn(_ sender: Any) {
+    @IBAction func didTapActionBtn(_: Any) {
         action?()
     }
 
@@ -124,12 +124,12 @@ class QuickSettingsDropdownOption: NSView {
         addCursorRect(bounds, cursor: .pointingHand)
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with _: NSEvent) {
         isHovered = true
         setBackground()
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         isHovered = false
         setBackground()
     }

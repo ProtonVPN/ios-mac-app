@@ -87,7 +87,7 @@ class ProtonVpnMenuViewModel {
 
     // MARK: - Private functions
 
-    private func sessionChanged(data: SessionChanged.T) {
+    private func sessionChanged(data _: SessionChanged.T) {
         contentChanged?()
     }
 }

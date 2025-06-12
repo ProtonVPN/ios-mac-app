@@ -33,7 +33,7 @@ public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDict
 
     public init(dictionaryLiteral elements: (Key, Value)...) {
         rawValue = .init(elements.map { ($0.0.apiDescription, $0.1) },
-                         uniquingKeysWith: { l, r in l })
+                         uniquingKeysWith: { l, _ in l })
     }
 
     public subscript(_ vpnProtocol: VpnProtocol) -> Value? {

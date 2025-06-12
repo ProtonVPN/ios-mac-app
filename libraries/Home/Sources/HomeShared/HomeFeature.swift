@@ -272,7 +272,7 @@ public struct HomeFeature {
                 state.destination = nil
                 return .none
             case .destination(.presented(.freeConnectionsInfo(.upgradeButtonTapped))):
-                return .run { send in
+                return .run { _ in
                     @Dependency(\.pushAlert) var pushAlert
                     pushAlert(AllCountriesUpsellAlert())
                 }

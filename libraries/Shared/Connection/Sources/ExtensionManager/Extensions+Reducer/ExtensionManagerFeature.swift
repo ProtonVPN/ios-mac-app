@@ -209,11 +209,11 @@ public struct ExtensionFeature: Reducer, Sendable {
     }
 
     private var logLastDisconnectEffect: Effect<Action> {
-        .run { send in
+        .run { _ in
             if let error = try await tunnelManager.session.fetchLastDisconnectError() {
                 log.error("Last disconnect error: \(error)", category: .connection)
             }
-        } catch: { error, send in
+        } catch: { error, _ in
             log.error("Failed to determine last disconnect error \(error)", category: .connection)
         }
     }

@@ -23,7 +23,7 @@ import UIKit
 // MARK: Search bar delegate
 
 extension SearchViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_: UISearchBar, textDidChange searchText: String) {
         viewModel.search(searchText: searchText)
     }
 

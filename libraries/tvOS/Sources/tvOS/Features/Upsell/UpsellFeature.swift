@@ -75,7 +75,7 @@ struct UpsellFeature {
 
             case let .finishedLoadingProducts(.failure(error)):
                 log.error("Failed to load products with error: \(error)")
-                return .run { send in
+                return .run { _ in
                     await alertService.feed(error)
                 }
 

@@ -48,7 +48,7 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
     }
 
     /// Bridges new disconnection dependency with the legacy connection layer
-    public static let legacyDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { trigger in
+    public static let legacyDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateDisconnect()
 

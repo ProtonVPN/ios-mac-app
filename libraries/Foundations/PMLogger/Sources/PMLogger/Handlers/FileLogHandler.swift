@@ -55,7 +55,7 @@ public final class FileLogHandler: ParentLogHandler {
         try? closeFile()
     }
 
-    override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
+    override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source _: String, file: String, function: String, line: UInt) {
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
 
         Self.queue.async {

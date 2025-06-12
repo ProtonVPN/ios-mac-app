@@ -75,7 +75,7 @@ class UserAccountUpdateViewController: NSViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -167,7 +167,7 @@ class UserAccountUpdateViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapPrimaryAction(_ sender: Any) {
+    @IBAction func didTapPrimaryAction(_: Any) {
         alert.actions.first?.handler?()
 
         Task {
@@ -182,7 +182,7 @@ class UserAccountUpdateViewController: NSViewController {
         dismiss(nil)
     }
 
-    @IBAction func didTapSecondAction(_ sender: Any) {
+    @IBAction func didTapSecondAction(_: Any) {
         alert.actions.last?.handler?()
         dismissCompletion?()
         dismiss(nil)

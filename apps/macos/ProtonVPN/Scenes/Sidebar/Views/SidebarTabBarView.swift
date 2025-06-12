@@ -41,7 +41,7 @@ class SidebarTabBarView: NSView {
         }
     }
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard activeTab != nil else {
             log.error("Active tab not properly configured for sidebar tab bar view.", category: .ui)
             return

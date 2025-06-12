@@ -47,11 +47,11 @@ class ProfileItemView: NSView {
         }
     }
 
-    override open func mouseEntered(with event: NSEvent) {
+    override open func mouseEntered(with _: NSEvent) {
         connectButton.isHidden = !viewModel.enabled
     }
 
-    override open func mouseExited(with event: NSEvent) {
+    override open func mouseExited(with _: NSEvent) {
         connectButton.isHidden = true
     }
 

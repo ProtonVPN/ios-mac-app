@@ -43,7 +43,7 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
 
 #if DEBUG
     extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
-        public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
+        public func shouldEvaluateTrust(for _: NWTCPConnection) -> Bool {
             true
         }
 

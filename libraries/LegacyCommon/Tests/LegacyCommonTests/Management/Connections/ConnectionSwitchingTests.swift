@@ -127,7 +127,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let retryExpectation = XCTestExpectation()
         var seenPorts: [Int: Bool] = [:]
 
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { _, port in
             if seenPorts[port] == nil {
                 seenPorts[port] = true
                 // fail all pings on first try
@@ -172,7 +172,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
     /// the checker tries one more time and if the pings for all the ports fail again the connection fails with an error
     func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() throws {
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { _, _ in
             // fail all the pings
             false
         }

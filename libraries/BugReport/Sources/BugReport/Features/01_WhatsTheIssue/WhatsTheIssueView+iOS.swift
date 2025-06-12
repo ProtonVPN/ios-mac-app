@@ -71,7 +71,7 @@
                 onNavigate: { _ in
                     print("navigate")
                 },
-                destination: { childStore in
+                destination: { _ in
                     let childStore = store.route
                     switch childStore {
                     case .quickFixes:

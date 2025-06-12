@@ -26,7 +26,7 @@ import Theme
 class WrenchIcon: NSImageView {
     private let wrenchIcon = AppTheme.Icon.wrench
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
         // circle

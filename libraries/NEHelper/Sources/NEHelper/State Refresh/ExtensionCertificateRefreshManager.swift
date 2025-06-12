@@ -59,7 +59,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     public init(apiService: ExtensionAPIService,
                 timerFactory: TimerFactory,
                 vpnAuthenticationStorage: VpnAuthenticationStorageSync,
-                keychain: AuthKeychainHandle) {
+                keychain _: AuthKeychainHandle) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
@@ -195,7 +195,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     ///         of the synchronization in the encapsulating function, it's important to always call the completion
     ///         in error cases, otherwise the operation queue will get stuck.
     fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
-                                                      userInitiated: Bool,
+                                                      userInitiated _: Bool,
                                                       forceRefreshDueToExpiredSession: Bool,
                                                       asPartOf operation: CertificateRefreshAsyncOperation,
                                                       completion: @escaping CertificateRefreshCompletion) {

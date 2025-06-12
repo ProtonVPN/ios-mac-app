@@ -40,15 +40,15 @@ public protocol NetworkingFactory {
 final class CoreNetworkingDelegateMock: NetworkingDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { .init { $0.finish() } }
 
-    func set(apiService: APIService) {}
+    func set(apiService _: APIService) {}
     func onLogout() {}
 
-    func onForceUpgrade(message: String) {}
+    func onForceUpgrade(message _: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) {}
-    func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? { nil }
+    func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
+    func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
     func getSupportURL() -> URL { URL(string: "")! }
 }
 

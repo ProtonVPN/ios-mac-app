@@ -35,7 +35,7 @@ struct ChangeServerButtonLabel: View {
     @Dependency(\.date) var date
 
     var body: some View {
-        TimelineView(.explicit(updateSchedule)) { timeline in
+        TimelineView(.explicit(updateSchedule)) { _ in
             Button {
                 sendAction(.delegate(.changeServerButtonTapped))
             } label: {

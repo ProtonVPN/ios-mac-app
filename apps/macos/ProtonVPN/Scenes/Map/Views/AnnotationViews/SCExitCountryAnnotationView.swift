@@ -34,11 +34,11 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     override class var textLineHeight: CGFloat { 30 }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }
 
-    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Unsupported initializer \(#function)")
     }
 
@@ -121,7 +121,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         if hovered {
             viewModel.uiStateUpdate(.idle)
         }

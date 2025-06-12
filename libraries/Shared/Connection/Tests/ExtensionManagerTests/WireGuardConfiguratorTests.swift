@@ -52,7 +52,7 @@ final class WireGuardConfiguratorTests: XCTestCase {
             $0.date = .constant(.now)
             $0.bundleIDClient = .mock(bundleID: bundleID)
             $0.tunnelKeychain = .init(
-                storeWireguardConfig: { config in
+                storeWireguardConfig: { _ in
                     configStored.fulfill()
                     return Data()
                 },

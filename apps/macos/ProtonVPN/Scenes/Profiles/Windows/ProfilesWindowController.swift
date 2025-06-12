@@ -26,7 +26,7 @@ import Strings
 
 class ProfilesWindowController: WindowController {
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 

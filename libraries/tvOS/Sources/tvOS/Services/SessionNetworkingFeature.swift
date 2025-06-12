@@ -98,7 +98,7 @@ struct SessionNetworkingFeature: Reducer {
                     // we have a session, now get the user tier
                     let userTier = try await networking.userTier
                     await send(.userTierRetrieved(userTier, session))
-                } catch: { error, send in
+                } catch: { error, _ in
                     log.debug("Failed to retrieve user tier with error: \(error)", category: .api)
                 }
 

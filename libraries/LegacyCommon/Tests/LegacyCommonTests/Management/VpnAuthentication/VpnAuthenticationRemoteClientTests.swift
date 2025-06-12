@@ -39,7 +39,7 @@
 
             authStorage.certDeleted = { XCTFail("We shouldn't delete our stored certificate if the FF is off") }
 
-            tunnelMock.wireguardRequestSent = { request in
+            tunnelMock.wireguardRequestSent = { _ in
                 XCTFail("We shouldn't talk to the extension because we have a certificate in storage and we shouldn't check its validity")
                 return .success(.ok(data: nil)) // doesn't really matter what we send back, the test failed already
             }

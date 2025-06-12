@@ -34,7 +34,7 @@ struct BugReportResultFeature {
     }
 
     var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .finish:
                 .run(priority: .userInitiated) { _ in

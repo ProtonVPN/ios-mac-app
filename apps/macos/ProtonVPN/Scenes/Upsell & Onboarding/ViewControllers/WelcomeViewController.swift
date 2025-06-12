@@ -52,7 +52,7 @@ class WelcomeViewController: NSViewController {
     let telemetrySettings: TelemetrySettings
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -126,13 +126,13 @@ class WelcomeViewController: NSViewController {
         view.window?.applyInfoAppearance()
     }
 
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction func cancel(_: Any) {
         dismiss(nil)
     }
 }
 
 extension WelcomeViewController: SwitchButtonDelegate {
-    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+    func shouldToggle(_: NSButton, to _: ButtonState, completion: @escaping (Bool) -> Void) {
         completion(true)
     }
 

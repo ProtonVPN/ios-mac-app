@@ -391,12 +391,12 @@ extension IosAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert)
     }
 
-    private func show(_ alert: CannotAccessVpnCredentialsAlert) {
+    private func show(_: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
 
-    private func show(_ alert: RefreshTokenExpiredAlert) {
+    private func show(_: RefreshTokenExpiredAlert) {
         appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
@@ -409,7 +409,7 @@ extension IosAlertService: CoreAlertService {
         }
     }
 
-    private func show(_ alert: ReportBugAlert) {
+    private func show(_: ReportBugAlert) {
         settingsService.presentReportBug()
     }
 
@@ -424,7 +424,7 @@ extension IosAlertService: CoreAlertService {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
     }
 
-    private func show(_ alert: ConnectionTroubleshootingAlert) {
+    private func show(_: ConnectionTroubleshootingAlert) {
         factory.makeTroubleshootCoordinator().start()
     }
 

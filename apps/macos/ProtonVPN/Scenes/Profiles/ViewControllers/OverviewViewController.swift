@@ -115,17 +115,17 @@ class OverviewViewController: NSViewController {
 }
 
 extension OverviewViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         viewModel.cellCount
     }
 }
 
 extension OverviewViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    func tableView(_: NSTableView, heightOfRow _: Int) -> CGFloat {
         viewModel.cellHeight
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier), owner: nil) as! OverviewItemView
         let cellViewModel = viewModel.cellModel(forIndex: row)
         cellViewModel.delegate = self

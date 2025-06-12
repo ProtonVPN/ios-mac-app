@@ -88,7 +88,7 @@ final class AppDelegate: UIResponder {
 // MARK: - UIApplicationDelegate
 
 extension AppDelegate: UIApplicationDelegate {
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
             #if targetEnvironment(simulator)
                 // Force log out if running UI tests
@@ -166,11 +166,11 @@ extension AppDelegate: UIApplicationDelegate {
         #endif
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_: UIApplication) {
         appStateManager.refreshState()
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    func application(_: UIApplication, continue userActivity: NSUserActivity, restorationHandler _: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         // Handle Siri intents
         let prefix = "com.protonmail.vpn."
         guard userActivity.activityType.hasPrefix(prefix) else {
@@ -184,7 +184,7 @@ extension AppDelegate: UIApplicationDelegate {
         return handleAction(action, verified: verified)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
               let host = components.host else {
             log.error("Invalid URL", category: .app)
@@ -231,12 +231,12 @@ extension AppDelegate: UIApplicationDelegate {
         return false
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_: UIApplication) {
         log.info("applicationDidEnterBackground", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(_: UIApplication) {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
@@ -253,11 +253,11 @@ extension AppDelegate: UIApplicationDelegate {
         }
     }
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         pushNotificationService.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         pushNotificationService.didFailToRegisterForRemoteNotifications(withError: error)
     }
 
@@ -376,7 +376,7 @@ extension AppDelegate {
         PMLog.disableExternalLogging()
     }
 
-    private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
+    private func setupCoreIntegration(launchOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
         ProtonCoreLog.PMLog.callback = { message, level in

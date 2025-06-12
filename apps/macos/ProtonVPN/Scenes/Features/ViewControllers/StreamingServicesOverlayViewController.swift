@@ -46,7 +46,7 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -80,15 +80,15 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
 extension StreamingServicesOverlayViewController: NSCollectionViewDelegateFlowLayout, NSCollectionViewDataSource {
     // MARK: - NSCollectionViewDelegateFlowLayout
 
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: NSCollectionView, layout _: NSCollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
         0
     }
 
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_: NSCollectionView, layout _: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
         0
     }
 
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    func collectionView(_ collectionView: NSCollectionView, layout _: NSCollectionViewLayout, sizeForItemAt _: IndexPath) -> NSSize {
         let size = collectionView.frame.width / CGFloat(viewModel.columnsAmount)
         servicesCVHeightConstraint.constant = CGFloat(viewModel.totalRows) * size
         return CGSize(width: size, height: size)
@@ -96,7 +96,7 @@ extension StreamingServicesOverlayViewController: NSCollectionViewDelegateFlowLa
 
     // MARK: - NSCollectionViewDataSource
 
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
         viewModel.totalItems
     }
 

@@ -41,7 +41,7 @@ class ColoredLoadButton: NSButton {
         toolTip = Localizable.serverLoadPercentage(loadValueString)
     }
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let load else { return }
 
         // inner circle

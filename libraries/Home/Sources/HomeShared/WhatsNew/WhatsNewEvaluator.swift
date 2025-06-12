@@ -122,7 +122,7 @@ extension WhatsNewEvaluatorClient: DependencyKey {
         "6.0.0"
     } systemOSVersion: {
         "18.0"
-    } itemPresentationData: { item in
+    } itemPresentationData: { _ in
         let secondsInDay: TimeInterval = 24 * 60 * 60
         let yesterday = Date.now.addingTimeInterval(-secondsInDay)
         let beforeYesterday = Date.now.addingTimeInterval(-2 * secondsInDay)

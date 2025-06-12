@@ -20,7 +20,7 @@ import Foundation
 
 import XCTest
 
-public func fetch<T: Decodable>(_ type: T.Type, fromResourceNamed name: String) throws -> T {
+public func fetch<T: Decodable>(_: T.Type, fromResourceNamed name: String) throws -> T {
     let jsonPath = try XCTUnwrap(Bundle.module.path(forResource: name, ofType: "json"), "No such file found: \(name)")
     let jsonURL = URL(fileURLWithPath: jsonPath)
     let data = try Data(contentsOf: jsonURL)

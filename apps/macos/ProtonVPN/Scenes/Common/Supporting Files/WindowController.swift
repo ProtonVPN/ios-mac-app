@@ -39,7 +39,7 @@ class WindowController: NSWindowController {
     weak var delegate: WindowControllerDelegate?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -96,7 +96,7 @@ class WindowController: NSWindowController {
 // MARK: - Handling action on 'X' window button press
 
 extension WindowController: NSWindowDelegate {
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
+    func windowShouldClose(_: NSWindow) -> Bool {
         if let delegate {
             delegate.windowCloseRequested(self)
             return false
@@ -105,7 +105,7 @@ extension WindowController: NSWindowDelegate {
         }
     }
 
-    func windowWillClose(_ notification: Notification) {
+    func windowWillClose(_: Notification) {
         delegate?.windowWillClose(self)
     }
 }

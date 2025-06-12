@@ -487,7 +487,7 @@ final class SettingsViewModel {
                 title: Localizable.troubleshootItemAltTitle,
                 state: { [unowned self] in .available(enabled: propertiesManager.alternativeRouting, interactive: true) },
                 upsell: {}, // No Upsell: Alternative Routing is a free feature
-                handler: { [unowned self] toggleOn, callback in
+                handler: { [unowned self] _, callback in
                     propertiesManager.alternativeRouting.toggle()
                     callback(propertiesManager.alternativeRouting)
                 }

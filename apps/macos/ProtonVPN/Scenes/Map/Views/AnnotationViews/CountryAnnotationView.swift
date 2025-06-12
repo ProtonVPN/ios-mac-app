@@ -102,11 +102,11 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
-    override required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    override required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Unsupported initializer")
     }
 
@@ -355,12 +355,12 @@ class CountryAnnotationView: MapAnnotationView {
         setupAnnotationView()
     }
 
-    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Initializer not supported: \(#function)")
     }
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Initializer not supported: \(#function)")
     }
 
@@ -405,7 +405,7 @@ class CountryAnnotationView: MapAnnotationView {
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         viewModel.uiStateUpdate(.idle)
     }
 

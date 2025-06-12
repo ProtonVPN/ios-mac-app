@@ -63,7 +63,7 @@ class ChangeServerView: NSView {
         }
     }
 
-    @IBAction func onButtonTapped(_ sender: Any) {
+    @IBAction func onButtonTapped(_: Any) {
         handler?()
     }
 }

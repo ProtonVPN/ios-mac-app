@@ -105,7 +105,7 @@ final class CountriesSectionViewController: NSViewController {
     private var notificationTokens: [NotificationToken] = []
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -171,7 +171,7 @@ final class CountriesSectionViewController: NSViewController {
 
     func addNetShieldObservers() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: NetShieldStatsNotification.self,
-                                                                         object: nil) { [weak self] stats in
+                                                                         object: nil) { [weak self] _ in
                 DispatchQueue.main.async {
                     self?.updateBadge()
                 }
@@ -206,7 +206,7 @@ final class CountriesSectionViewController: NSViewController {
 
     /// Appearance change doesn't get propagated normally, so we have to manually update the colors when user changes appearance
     func observeAppearance() {
-        observer = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { [weak self] app, change in
+        observer = NSApp.observe(\.effectiveAppearance, options: [.new, .old, .initial, .prior]) { [weak self] _, change in
             guard let newValue = change.newValue else { return }
             newValue.performAsCurrentDrawingAppearance {
                 self?.setupColors()
@@ -302,7 +302,7 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.updateSettings()
     }
 
-    @objc private func scrolled(_ notification: Notification) {
+    @objc private func scrolled(_: Notification) {
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
     }
 
@@ -390,14 +390,14 @@ final class CountriesSectionViewController: NSViewController {
 }
 
 extension CountriesSectionViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         viewModel.cellCount
     }
 }
 
 extension CountriesSectionViewController: NSTableViewDelegate {
     // TODO: would be better to change this to autosize, because banners may have different heights
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    func tableView(_: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch viewModel.cellModel(forRow: row) {
         case .country:
             48
@@ -412,7 +412,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         guard let cellWrapper = viewModel.cellModel(forRow: row) else {
             log.error("Countries section failed to load cell for row \(row).", category: .ui)
             return nil
@@ -451,12 +451,12 @@ extension CountriesSectionViewController: NSTableViewDelegate {
 }
 
 extension CountriesSectionViewController: NSTextFieldDelegate {
-    func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_: Notification) {
         clearSearchBtn.isHidden = searchTextField.stringValue.isEmpty
         viewModel.filterContent(forQuery: searchTextField.stringValue)
     }
 
-    func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_: Notification) {
         view.effectiveAppearance.performAsCurrentDrawingAppearance {
             searchIcon.image = searchIcon.image?.colored(.weak)
             searchBox.borderColor = .color(.border)
@@ -468,7 +468,7 @@ extension CountriesSectionViewController: TextFieldFocusDelegate {
     /// Don't focus on search field when countries view is displayed
     var shouldBecomeFirstResponder: Bool { false }
 
-    func willReceiveFocus(_ textField: NSTextField) {
+    func willReceiveFocus(_: NSTextField) {
         view.effectiveAppearance.performAsCurrentDrawingAppearance {
             searchIcon.image = searchIcon.image?.colored(.normal)
             searchBox.borderColor = .color(.border, [.interactive, .strong])

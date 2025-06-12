@@ -39,7 +39,7 @@ class CountryListRobot: ConnectionBaseRobot {
     }
 
     @discardableResult
-    func connectToAPlusCountry(_ name: String) -> HomeRobot {
+    func connectToAPlusCountry(_: String) -> HomeRobot {
         button(upgradeButtonId).byIndex(1).tap()
         allowVpnPermission()
         return HomeRobot()

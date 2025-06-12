@@ -51,7 +51,7 @@ class ServerTierChecker {
         }
     }
 
-    func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
+    func notifyResolutionUnavailable(forSpecificCountry: Bool, type _: ServerType, reason: ResolutionUnavailableReason) {
         DispatchQueue.main.async { [weak self] in
             switch reason {
             case .upgrade:

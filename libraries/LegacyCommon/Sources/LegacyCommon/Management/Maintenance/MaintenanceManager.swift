@@ -72,7 +72,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             timer = nil
         }
 
-        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
             self.checkServer(completion, failure: failure)
         }
     }

@@ -38,7 +38,7 @@ struct ChangeServerModal: View {
             let shortSkip = totalDuration <= 90
             /// TimelineView only works when I specify all 3 dates below,
             /// though we really only need one, the `dateFinished`
-            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
+            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { _ in
                 VStack(spacing: .themeSpacing12) {
                     ReconnectCountdown(dateFinished: dateFinished,
                                        totalDuration: totalDuration)

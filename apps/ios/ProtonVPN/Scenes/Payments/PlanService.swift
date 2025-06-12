@@ -100,7 +100,7 @@ final class CorePlanService: PlanService {
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,
             localStorage: userCachedStatus,
-            reportBugAlertHandler: { receipt in
+            reportBugAlertHandler: { _ in
                 log.error("Error from payments, showing bug report", category: .iap)
                 alertService.push(alert: ReportBugAlert())
             }

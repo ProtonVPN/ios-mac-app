@@ -301,7 +301,7 @@ class ConnectingOverlayViewModel {
 
     // MARK: - Notification handlers
 
-    @objc private func appStateChanged(_ notification: Notification) {
+    @objc private func appStateChanged(_: Notification) {
         let state = appStateManager.state
 
         let oldState = appState

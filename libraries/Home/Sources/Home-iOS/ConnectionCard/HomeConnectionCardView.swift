@@ -274,7 +274,7 @@ private extension VPNConnectionStatus {
 
     extension HomeConnectionCardFeature.State {
         static func constant(status: VPNConnectionStatus,
-                             defaultConnection: ConnectionSpec,
+                             defaultConnection _: ConnectionSpec,
                              userTier: Int) -> Self {
             var state = HomeConnectionCardFeature.State()
             state.$userTier = .constant(userTier)

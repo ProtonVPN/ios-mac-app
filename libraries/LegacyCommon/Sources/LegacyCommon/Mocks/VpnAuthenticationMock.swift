@@ -33,11 +33,11 @@
         public var loadResult: Result<VpnAuthenticationData, Error> = .success(.mock)
         public var refreshResult: Result<VpnAuthenticationData, Error> = .success(.mock)
 
-        public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
+        public func loadAuthenticationData(features _: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
             completion(loadResult)
         }
 
-        public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+        public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
             completion(refreshResult)
         }
 

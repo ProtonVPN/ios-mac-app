@@ -103,7 +103,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     override func setUp() async throws {
         AppContext.default = .wireGuardExtension
 
-        mockDataTaskFactory = MockDataTaskFactory { session, request, completionHandler in
+        mockDataTaskFactory = MockDataTaskFactory { _, request, completionHandler in
             switch request.url?.path {
             case "/vpn/v1/certificate":
                 self.certRefreshCallback?(request, completionHandler)
@@ -155,7 +155,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     ///            and its encoded data; a fake HTTP error response with an optional corresponding API error
     ///            also encoded as JSON; or no HTTP response or data at all and the error paremeter populated
     ///            with an error result of the caller's choosing.
-    func mockEndpoint<M: MockableRequest>(_ cls: M.Type,
+    func mockEndpoint<M: MockableRequest>(_: M.Type,
                                           result: Result<[PartialKeyPath<M.Response>: Any], Error>,
                                           responseHeaders: [APIHeader: String] = [:],
                                           expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {

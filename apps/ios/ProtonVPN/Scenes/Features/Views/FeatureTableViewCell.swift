@@ -88,7 +88,7 @@ class FeatureTableViewCell: UITableViewCell {
 
     // MARK: - Actions
 
-    @IBAction private func didTapLearnMore(_ sender: Any) {
+    @IBAction private func didTapLearnMore(_: Any) {
         guard let urlContact = viewModel.urlContact else { return }
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(urlContact)

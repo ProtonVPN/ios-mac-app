@@ -39,7 +39,7 @@ final class FreeConnectionsViewController: NSViewController {
     private var _viewForSizing: CountryCellView?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -109,7 +109,7 @@ final class FreeConnectionsViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerTapped(_ sender: Any) {
+    @IBAction private func bannerTapped(_: Any) {
         onBannerPress?()
     }
 }
@@ -117,7 +117,7 @@ final class FreeConnectionsViewController: NSViewController {
 // MARK: - NSCollectionViewDataSource
 
 extension FreeConnectionsViewController: NSCollectionViewDataSource {
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
         countries?.count ?? 0
     }
 
@@ -134,7 +134,7 @@ extension FreeConnectionsViewController: NSCollectionViewDataSource {
 // MARK: - NSCollectionViewDelegateFlowLayout
 
 extension FreeConnectionsViewController: NSCollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    func collectionView(_: NSCollectionView, layout _: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         guard let cell = viewForSizing else {
             return NSSize(width: 50, height: 16)
         }

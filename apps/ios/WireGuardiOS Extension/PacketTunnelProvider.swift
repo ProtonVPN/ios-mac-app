@@ -142,7 +142,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
     }
 
-    private lazy var adapter: WireGuardAdapter = .init(with: self) { logLevel, message in
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { _, message in
         wg_log(.info, message: message)
     }
 

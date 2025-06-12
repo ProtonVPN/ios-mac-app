@@ -216,7 +216,7 @@
         }
 
         // the files argument is ignored for now...
-        public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        public func request<T>(_ route: Request, files _: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
             request(route, completion: completion)
         }
     }
@@ -238,7 +238,7 @@
             "UNIT TESTS USER AGENT"
         }
 
-        public func onUpdate(serverTime: Int64) {}
+        public func onUpdate(serverTime _: Int64) {}
 
         public func isReachable() -> Bool {
             true

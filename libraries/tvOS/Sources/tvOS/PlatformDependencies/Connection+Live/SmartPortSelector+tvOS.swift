@@ -22,7 +22,7 @@ import Domain
 
 extension SmartPortSelectorBridge: @retroactive DependencyKey {
     public static let liveValue: SmartPortSelectorBridge = .init(
-        select: { endpoint, connectionProtocol in
+        select: { endpoint, _ in
             let defaultTVOSProtocol: VpnProtocol = .wireGuard(.udp)
             @Dependency(\.connectionConfiguration) var configuration
             let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)

@@ -57,7 +57,7 @@ class HoverDetectionButtonAdvanced: NSButton {
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         discardCursorRects()
         isHovered = false
     }

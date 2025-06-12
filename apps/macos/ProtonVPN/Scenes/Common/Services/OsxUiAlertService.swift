@@ -51,7 +51,7 @@ class OsxUiAlertService: UIAlertService {
         present(alert, message: message)
     }
 
-    func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
+    func displayNotificationStyleAlert(message _: String, type _: NotificationStyleAlertType, accessibilityIdentifier _: String?) {
         fatalError("Notification syle alerts unsupported on macOS")
     }
 

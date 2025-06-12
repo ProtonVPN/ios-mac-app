@@ -29,14 +29,14 @@ private enum TestFeature: String, ProvidableFeature {
     case freeDefault
     case paidDefault
 
-    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         if userTier == 0 {
             return .failure(.requiresUpgrade)
         }
         return .success
     }
 
-    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan _: String, userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .on, .paidDefault:
             .failure(.requiresUpgrade)
@@ -45,7 +45,7 @@ private enum TestFeature: String, ProvidableFeature {
         }
     }
 
-    static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> TestFeature {
+    static func defaultValue(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> TestFeature {
         if userTier == 0 {
             return .freeDefault
         }

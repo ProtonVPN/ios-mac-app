@@ -11,7 +11,7 @@ import QuartzCore
 
 extension CABasicAnimation {
     /// Adds pulsing infinite animation to a given layet
-    static func addPulseAnimation(_ layer: CALayer?, fromValue: Any = 1.0, toValue: Any = 0.9, duration: CFTimeInterval = 0.8, name: String = "pulse") {
+    static func addPulseAnimation(_ layer: CALayer?, fromValue: Any = 1.0, toValue: Any = 0.9, duration: CFTimeInterval = 0.8, name _: String = "pulse") {
         guard let layer else {
             return
         }

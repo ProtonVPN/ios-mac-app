@@ -323,7 +323,7 @@ extension MacAlertService: CoreAlertService {
 
     // MARK: Custom Alerts
 
-    private func show(_ alert: SysexEnabledAlert) {
+    private func show(_: SysexEnabledAlert) {
         @Dependency(\.defaultsProvider) var provider
         guard !provider.getDefaults().bool(forKey: AppConstants.UserDefaults.welcomed),
               let credentials = try? vpnKeychain.fetchCached()
@@ -351,7 +351,7 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert)
     }
 
-    private func show(_ alert: CannotAccessVpnCredentialsAlert) {
+    private func show(_: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
     }
@@ -372,11 +372,11 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert, message: body)
     }
 
-    private func show(_ alert: RefreshTokenExpiredAlert) {
+    private func show(_: RefreshTokenExpiredAlert) {
         appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
 
-    private func show(_ alert: VpnServerOnMaintenanceAlert) {
+    private func show(_: VpnServerOnMaintenanceAlert) {
         guard lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
             return
         }
@@ -384,7 +384,7 @@ extension MacAlertService: CoreAlertService {
         lastTimeCheckMaintenance = Date()
     }
 
-    private func show(_ alert: ConnectionTroubleshootingAlert) {
+    private func show(_: ConnectionTroubleshootingAlert) {
         let connectionTroubleshootingAlert = TroubleshootingPopup()
         connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)

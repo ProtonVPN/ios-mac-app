@@ -71,7 +71,7 @@ final class ServerViewModelMock: ServerViewModel {
 
     func connectAction() {}
 
-    func partnersIcon(completion: @escaping (UIImage?) -> Void) {}
+    func partnersIcon(completion _: @escaping (UIImage?) -> Void) {}
 
     func cancelPartnersIconRequests() {}
 

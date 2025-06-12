@@ -61,7 +61,7 @@ final class HeaderViewController: NSViewController {
     private var viewModel: HeaderViewModel!
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -252,7 +252,7 @@ final class HeaderViewController: NSViewController {
         }
     }
 
-    @IBAction private func announcementsButtonTapped(_ sender: Any) {
+    @IBAction private func announcementsButtonTapped(_: Any) {
         announcementsButtonPressed?()
     }
 }

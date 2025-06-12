@@ -29,7 +29,7 @@
             }
         }
 
-        public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+        public func adjustAfterPlanChange(from _: Int, to tier: Int) {
             if tier.isFreeTier {
                 natType = .default
             }

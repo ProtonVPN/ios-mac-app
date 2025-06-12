@@ -43,7 +43,7 @@ open class ParentLogHandler: LogHandler {
         }
     }
 
-    open func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
+    open func log(level _: Logging.Logger.Level, message _: Logging.Logger.Message, metadata _: Logging.Logger.Metadata?, source _: String, file _: String, function _: String, line _: UInt) { // swiftlint:disable:this function_parameter_count
         // Without this method, instead of a proper method of subclasses, method with the same signature
         // on LogHandler extension is called. Which leads to infinite loop.
         // Some info can be found here: https://github.com/apple/swift-log/issues/248

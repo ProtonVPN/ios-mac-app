@@ -193,15 +193,15 @@ struct AnnouncementManagerMock: AnnouncementManager {
     var hasUnreadAnnouncements: Bool { false }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement] { [] }
     func fetchCurrentOfferBannerFromStorage() -> Announcement? { nil }
-    func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
-    func markAsRead(announcement: Announcement) {}
-    func markAsRead(notificationID: String) {}
+    func offerBannerViewModel(dismiss _: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
+    func markAsRead(announcement _: Announcement) {}
+    func markAsRead(notificationID _: String) {}
     func shouldShowAnnouncementsIcon() -> Bool { false }
 }
 
 struct CountryServiceMock: CountryService {
     func makeCountriesViewController() -> CountriesViewController { CountriesViewController() }
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController { CountryViewController() }
+    func makeCountryViewController(country _: CountryItemViewModel) -> CountryViewController { CountryViewController() }
 }
 
 enum MockServerGroup {

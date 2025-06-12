@@ -52,7 +52,7 @@ class PlanServiceMock: PlanService {
 
     func updateServicePlans() async throws {}
 
-    func presentPlanSelection(modalSource: UpsellModalSource?) {
+    func presentPlanSelection(modalSource _: UpsellModalSource?) {
         callbackPresentPlanSelection?()
     }
 
@@ -62,5 +62,5 @@ class PlanServiceMock: PlanService {
 
     func clear() {}
 
-    func createPlusPlanUI(completion: @escaping () -> Void) {}
+    func createPlusPlanUI(completion _: @escaping () -> Void) {}
 }

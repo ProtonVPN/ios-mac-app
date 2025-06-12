@@ -93,7 +93,7 @@ public final class ProfileUtility {
         profile(withConfiguration: existingProfile, in: profiles) != nil
     }
 
-    static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
+    static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield _: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
         let accessTier = server.tier
         let serverType: ServerType = server.isSecureCore ? .secureCore : .standard
         let serverOffering: ServerOffering = .custom(ServerWrapper(server: server))

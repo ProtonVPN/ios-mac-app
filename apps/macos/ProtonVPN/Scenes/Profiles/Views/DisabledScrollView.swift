@@ -30,5 +30,5 @@ class DisabledScrollView: NSScrollView {
         hasHorizontalScroller = false
     }
 
-    override func scrollWheel(with event: NSEvent) {}
+    override func scrollWheel(with _: NSEvent) {}
 }

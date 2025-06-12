@@ -60,7 +60,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         }
     }
 
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
         guard tier.isPaidTier else {
             safeMode = false
             return

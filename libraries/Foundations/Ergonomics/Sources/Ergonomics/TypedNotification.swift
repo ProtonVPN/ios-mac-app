@@ -142,7 +142,7 @@ extension NotificationCenter {
     /// of this extension is the ergonomics/conciseness of the API, when compared to the verbosity of the default
     /// NotificationCenter APIs
     public func addObserver<Notification, T>(
-        for notificationType: Notification.Type,
+        for _: Notification.Type,
         queue: OperationQueue? = nil,
         object: Any?,
         handler: @escaping (T) -> Void
@@ -156,7 +156,7 @@ extension NotificationCenter {
 
     @available(macOS 12, *)
     public func notifications<N, T>(
-        _ notificationType: N.Type
+        _: N.Type
     ) -> AsyncStream<T> where N: TypedNotification<T> {
         notifications(named: N.name)
             .compactMap { N.data(from: $0) }

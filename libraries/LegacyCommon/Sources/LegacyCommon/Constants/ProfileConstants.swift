@@ -64,7 +64,7 @@ public enum ProfileConstants {
     }
 
     // Profile that selects country and server randomly
-    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: Int) -> Profile {
+    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier _: Int) -> Profile {
         Profile(
             id: randomId,
             accessTier: 0,

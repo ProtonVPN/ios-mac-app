@@ -114,20 +114,20 @@ public class TelemetrySettingsMock: TelemetrySettings {
 private class WindowServiceMock: WindowService {
     var displayCount = 0
 
-    func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
+    func setStatusMenuWindowController(_: StatusMenuWindowController) {}
 
-    func showIfPresent(windowController: (some NSWindowController).Type) -> Bool {
+    func showIfPresent(windowController _: (some NSWindowController).Type) -> Bool {
         false
     }
 
-    func closeIfPresent(windowController: (some NSWindowController).Type) {}
-    func showLogin(viewModel: LoginViewModel) {}
-    func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
-    func openAbout(factory: AboutViewController.Factory) {}
+    func closeIfPresent(windowController _: (some NSWindowController).Type) {}
+    func showLogin(viewModel _: LoginViewModel) {}
+    func showSidebar(appStateManager _: AppStateManager, vpnGateway _: VpnGatewayProtocol) {}
+    func openAbout(factory _: AboutViewController.Factory) {}
     func openAcknowledgements() {}
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {}
-    func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
-    func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
+    func openSettingsWindow(viewModel _: SettingsContainerViewModel, tabBarViewModel _: SettingsTabBarViewModel, accountViewModel _: AccountViewModel) {}
+    func openProfilesWindow(viewModel _: ProfilesContainerViewModel) {}
+    func openReportBugWindow(viewModel _: ReportBugViewModel, alertService _: CoreAlertService) {}
     func openWhatsNewWindow() {}
     func openPlutoniumWindow() {}
 
@@ -135,23 +135,23 @@ private class WindowServiceMock: WindowService {
         false
     }
 
-    func presentKeyModal(viewController: NSViewController) {
+    func presentKeyModal(viewController _: NSViewController) {
         displayCount += 1
     }
 
-    func isKeyModalPresent(viewController: NSViewController) -> Bool {
+    func isKeyModalPresent(viewController _: NSViewController) -> Bool {
         false
     }
 
-    func closeActiveWindows(except: [NSWindowController.Type]) {}
+    func closeActiveWindows(except _: [NSWindowController.Type]) {}
 
-    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {}
+    func openSystemExtensionGuideWindow(cancelledHandler _: @escaping () -> Void) {}
 
-    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {}
+    func openSubuserAlertWindow(alert _: SubuserWithoutConnectionsAlert) {}
 
-    func windowCloseRequested(_ sender: WindowController) {}
+    func windowCloseRequested(_: WindowController) {}
 
-    func windowWillClose(_ sender: WindowController) {}
+    func windowWillClose(_: WindowController) {}
 }
 
 private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
@@ -217,10 +217,10 @@ private class AppSessionManagerMock: AppSessionManager {
     var loggedIn: Bool = true
     var sessionChanged: Notification.Name = .init("AppSessionManagerSessionChanged")
 
-    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {}
-    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
+    func attemptSilentLogIn(completion _: @escaping (Result<Void, Error>) -> Void) {}
+    func finishLogin(authCredentials _: AuthCredentials, success _: @escaping () -> Void, failure _: @escaping (Error) -> Void) {}
     func refreshVpnAuthCertificate() async throws {}
-    func logOut(force: Bool, reason: String?) {}
+    func logOut(force _: Bool, reason _: String?) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
 }

@@ -117,7 +117,7 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
             Text("Edge Case (empty)")
                 .padding()
             VStack {
-                DividedForEach([], showDividerUnderLastElement: true) { item in
+                DividedForEach([], showDividerUnderLastElement: true) { _ in
                     HStack {}
                 }
             }

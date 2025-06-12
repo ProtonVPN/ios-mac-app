@@ -181,11 +181,11 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         delegate?.upsellTapped(self)
     }
 
-    func switchButtonClicked(_ button: NSButton) {
+    func switchButtonClicked(_: NSButton) {
         delegate?.toggleTickbox(self, to: isOn ? .on : .off)
     }
 
-    override func mouseDown(with event: NSEvent) {
+    override func mouseDown(with _: NSEvent) {
         didTapHandler?()
     }
 }

@@ -234,7 +234,7 @@ final class NavigationService {
         presentWelcome(initialError: reasonForSessionChange)
     }
 
-    @objc private func refreshVpnManager(_ notification: Notification) {
+    @objc private func refreshVpnManager(_: Notification) {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             Task { @MainActor in
                 await self.vpnManager.refreshManagers()

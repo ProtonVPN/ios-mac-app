@@ -36,7 +36,7 @@ class TroubleshootViewController: UIViewController {
     public var viewModel: TroubleshootViewModel!
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -72,7 +72,7 @@ class TroubleshootViewController: UIViewController {
 
     // MARK: User actions
 
-    @IBAction func closeButtonTapped(_ sender: Any) {
+    @IBAction func closeButtonTapped(_: Any) {
         viewModel.cancel()
     }
 }
@@ -80,7 +80,7 @@ class TroubleshootViewController: UIViewController {
 // MARK: TableView
 
 extension TroubleshootViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         viewModel.items.count
     }
 

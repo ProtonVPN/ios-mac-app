@@ -39,7 +39,7 @@ class HelpPopoverViewController: NSViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Not implemented")
     }
 
@@ -52,19 +52,19 @@ class HelpPopoverViewController: NSViewController {
         reportBugButton.title = Localizable.reportBug
     }
 
-    @IBAction func resetAction(_ sender: Any) {
+    @IBAction func resetAction(_: Any) {
         viewModel.resetAction()
     }
 
-    @IBAction func forgotAction(_ sender: Any) {
+    @IBAction func forgotAction(_: Any) {
         viewModel.forgotAction()
     }
 
-    @IBAction func commonIssuesAction(_ sender: Any) {
+    @IBAction func commonIssuesAction(_: Any) {
         viewModel.commonIssuesAction()
     }
 
-    @IBAction func reportBugAction(_ sender: Any) {
+    @IBAction func reportBugAction(_: Any) {
         viewModel.reportBugAction()
     }
 }

@@ -219,7 +219,7 @@ public enum WireguardProviderRequest: ProviderRequest {
         return String(data: data[1...], encoding: .utf8) ?? ""
     }
 
-    private static func decodeInteger<N: BinaryInteger>(_ type: N.Type, data: Data) -> N? {
+    private static func decodeInteger<N: BinaryInteger>(_: N.Type, data: Data) -> N? {
         let width = MemoryLayout<N>.size
         guard data.count == 1 + width else { return nil }
 

@@ -106,7 +106,7 @@ private struct WrappingHStack: Layout {
     var horizontalSpacing: CGFloat = 10
     var verticalSpacing: CGFloat = 10
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         var width: CGFloat = 0
         var height: CGFloat = 0
         var lineWidth: CGFloat = 0
@@ -131,7 +131,7 @@ private struct WrappingHStack: Layout {
         return CGSize(width: width, height: height)
     }
 
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
         var lineHeight: CGFloat = 0

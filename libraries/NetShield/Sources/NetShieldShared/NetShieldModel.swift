@@ -41,7 +41,7 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
         self.enabled = enabled
     }
 
-    public static func zero(enabled: Bool) -> NetShieldModel {
+    public static func zero(enabled _: Bool) -> NetShieldModel {
         .init(trackersCount: 0, adsCount: 0, dataSaved: 0, enabled: false)
     }
 

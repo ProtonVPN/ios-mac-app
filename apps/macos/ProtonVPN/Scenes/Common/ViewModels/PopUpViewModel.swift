@@ -113,7 +113,7 @@ final class PopUpViewModel: NSObject {
 }
 
 extension PopUpViewModel: NSTextViewDelegate {
-    func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
+    func textView(_: NSTextView, clickedOnLink link: Any, at _: Int) -> Bool {
         guard let link = link as? String, let inAppLinkManager else { return true }
 
         do {

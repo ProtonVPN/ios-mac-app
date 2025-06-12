@@ -61,7 +61,7 @@ final class TodayViewController: UIViewController {
         viewModel.update()
     }
 
-    @IBAction private func didTapConnectButton(_ sender: Any) {
+    @IBAction private func didTapConnectButton(_: Any) {
         viewModel.connect()
     }
 
@@ -74,10 +74,10 @@ final class TodayViewController: UIViewController {
         }
     }
 
-    private func updateUI(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
+    private func updateUI(_ buttonTitle: String = "", buttonState _: ProtonButton.CustomState = .primary,
                           ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
                           connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
-                          iconTint: UIColor = .brandColor(), animate: Bool = false) {
+                          iconTint _: UIColor = .brandColor(), animate _: Bool = false) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden

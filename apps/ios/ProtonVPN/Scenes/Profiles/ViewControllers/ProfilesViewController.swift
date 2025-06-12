@@ -135,15 +135,15 @@ final class ProfilesViewController: UIViewController {
 }
 
 extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         viewModel?.sectionCount ?? 0
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         viewModel?.headerHeight ?? 0
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
 
         headerView.setName(name: viewModel?.title(for: section) ?? "")
@@ -151,7 +151,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         return headerView
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel?.cellCount(for: section) ?? 0
     }
 
@@ -172,7 +172,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell() // fallback
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 { // custom profiles
             if let vc = viewModel?.makeEditProfileViewController(for: indexPath.row) as? CreateProfileViewController {
                 vc.profilesViewControllerDelegate = self
@@ -181,7 +181,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 1 {
             return true
         }
@@ -226,7 +226,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 {
             return 0.1
         }

@@ -40,7 +40,7 @@ final class AnnouncementImageViewController: NSViewController {
     private let offerReference: String?
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,7 +83,7 @@ final class AnnouncementImageViewController: NSViewController {
             return
         }
 
-        imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
+        imageView.sd_setImage(with: imageURL) { [weak self] image, error, _, _ in
             guard error == nil,
                   let image,
                   let self else {
@@ -115,7 +115,7 @@ final class AnnouncementImageViewController: NSViewController {
         }
     }
 
-    @IBAction private func didTapActionButton(_ sender: Any) {
+    @IBAction private func didTapActionButton(_: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             return

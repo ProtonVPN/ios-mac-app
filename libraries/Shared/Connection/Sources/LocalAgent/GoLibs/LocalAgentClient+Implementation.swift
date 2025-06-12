@@ -40,7 +40,7 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
         text.map { CoreConnection.log.info("\($0)", category: .localAgent, event: .log) }
     }
 
-    func onError(_ code: Int, description: String?) {
+    func onError(_ code: Int, description _: String?) {
         let error = LocalAgentError.from(code: code)
         delegate?.didReceive(event: .error(error))
     }

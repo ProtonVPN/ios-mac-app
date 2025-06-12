@@ -281,7 +281,7 @@
 
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
 
-            store.dependencies.connectionIntentResolver = .init(resolve: { intent in
+            store.dependencies.connectionIntentResolver = .init(resolve: { _ in
                 @Dependency(\.continuousClock) var clock
                 try await clock.sleep(for: .seconds(2))
                 try Task.checkCancellation()
@@ -320,7 +320,7 @@
             let store = environment.createConnectionTestStore()
 
             store.dependencies.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
-            store.dependencies.smartPortSelector = .init(select: { endpoint, proto in
+            store.dependencies.smartPortSelector = .init(select: { _, _ in
                 @Dependency(\.continuousClock) var clock
                 try await clock.sleep(for: .seconds(2))
                 return .init(chosenProtocol: .wireGuard(.udp), ports: [1337])

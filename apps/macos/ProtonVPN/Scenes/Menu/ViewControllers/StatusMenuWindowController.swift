@@ -58,7 +58,7 @@ final class StatusMenuWindowController: WindowController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Not implemented")
     }
 
@@ -173,18 +173,18 @@ final class StatusMenuWindowController: WindowController {
 }
 
 extension StatusMenuWindowController {
-    override func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_: Notification) {
         windowService?.windowWillClose(self)
         dismissPopover()
     }
 
-    func windowDidResignKey(_ notification: Notification) {
+    func windowDidResignKey(_: Notification) {
         dismissPopover()
     }
 }
 
 extension NSStatusBarButton {
-    override open func mouseDown(with event: NSEvent) {
+    override open func mouseDown(with _: NSEvent) {
         // allow StatusMenuController to manage the behavour of clicking
     }
 }

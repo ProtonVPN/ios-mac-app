@@ -210,7 +210,7 @@ class CountriesSectionViewModel {
         updateState()
     }
 
-    func displayUpgradeMessage(_ serverModel: ServerModel?) {
+    func displayUpgradeMessage(_: ServerModel?) {
         alertService.push(alert: AllCountriesUpsellAlert())
     }
 
@@ -394,7 +394,7 @@ class CountriesSectionViewModel {
         return serverCells.count
     }
 
-    private func insertServers(_ index: Int, countryCode: String, serversFilter: ((ServerModel) -> Bool)?) -> Int {
+    private func insertServers(_ index: Int, countryCode: String, serversFilter _: ((ServerModel) -> Bool)?) -> Int {
         guard let cells = servers[countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count

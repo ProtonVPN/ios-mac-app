@@ -69,7 +69,7 @@ public enum NetworkUtils {
     }
 
     // Generic function to get JSON from any URL
-    public static func getJSON<T: Decodable>(from urlString: String, as type: T.Type) async throws -> T {
+    public static func getJSON<T: Decodable>(from urlString: String, as _: T.Type) async throws -> T {
         guard let url = URL(string: urlString) else {
             throw NetworkUtilsError.invalidURL
         }

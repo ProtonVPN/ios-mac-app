@@ -120,7 +120,7 @@ class WindowServiceImplementation: WindowService {
         statusMenuWindowController = controller
     }
 
-    func showIfPresent<T: NSWindowController>(windowController: T.Type) -> Bool {
+    func showIfPresent<T: NSWindowController>(windowController _: T.Type) -> Bool {
         var success = false
         for controller in activeWindowControllers {
             if let controller = controller as? T {
@@ -132,7 +132,7 @@ class WindowServiceImplementation: WindowService {
         return success
     }
 
-    func closeIfPresent<T: NSWindowController>(windowController: T.Type) {
+    func closeIfPresent<T: NSWindowController>(windowController _: T.Type) {
         for controller in activeWindowControllers {
             if let controller = controller as? T {
                 controller.close()
@@ -229,7 +229,7 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
 
-    func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
+    func openReportBugWindow(viewModel _: ReportBugViewModel, alertService _: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
 
         let viewController: NSViewController

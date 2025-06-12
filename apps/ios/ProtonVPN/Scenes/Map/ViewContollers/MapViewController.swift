@@ -305,7 +305,7 @@ final class MapViewController: UIViewController {
 }
 
 extension MapViewController: UIScrollViewDelegate {
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in _: UIScrollView) -> UIView? {
         mapView
     }
 

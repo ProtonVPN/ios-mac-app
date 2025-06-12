@@ -91,7 +91,7 @@ import VPNShared
 #endif
 
 extension AppDelegate: NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
 
@@ -176,7 +176,7 @@ extension AppDelegate: NSApplicationDelegate {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
 
-    @objc private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
+    @objc private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent _: NSAppleEventDescriptor) {
         guard let url = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue, url.starts(with: "protonvpn://refresh") else {
             log.debug("App activated with invalid url", category: .app)
             return
@@ -207,11 +207,11 @@ extension AppDelegate: NSApplicationDelegate {
         #endif
     }
 
-    func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
 
-    func applicationDidBecomeActive(_ notification: Notification) {
+    func applicationDidBecomeActive(_: Notification) {
         log.info("applicationDidBecomeActive", category: .os)
         updateRecentlyActive(true)
 
@@ -222,7 +222,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    func applicationDidResignActive(_ notification: Notification) {
+    func applicationDidResignActive(_: Notification) {
         log.info("applicationDidResignActive", category: .os)
 
         updateRecentlyActive(false)
@@ -248,7 +248,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+    func applicationShouldTerminate(_: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
         provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()

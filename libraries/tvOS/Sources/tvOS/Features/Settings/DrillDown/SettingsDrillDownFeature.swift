@@ -36,7 +36,7 @@ struct SettingsDrillDownFeature {
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .onExitCommand:
                 $mainBackground.withLock { $0 = .clear }

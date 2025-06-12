@@ -85,11 +85,11 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
+    func setupNetShieldStatsContainer(presenter _: NetshieldDropdownPresenter) {
         netShieldStatsView.translatesAutoresizingMaskIntoConstraints = false
         netShieldStatsContainer.addSubview(netShieldStatsView)
         netShieldStatsContainer.topAnchor.constraint(equalTo: netShieldStatsView.topAnchor).isActive = true
@@ -148,7 +148,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     func reloadOptions() {
         var needsUpgrade = false
-        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { index, presenter in
+        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { _, presenter in
             let thisNeedsUpgrade = presenter.requiresUpdate || presenter.requiresBusinessUpdate
             defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
 

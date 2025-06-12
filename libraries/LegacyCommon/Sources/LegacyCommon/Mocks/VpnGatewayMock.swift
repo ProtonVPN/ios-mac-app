@@ -72,25 +72,25 @@
 
         public func autoConnect() {}
 
-        public func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {}
+        public func quickConnect(trigger _: UserInitiatedVPNChange.VPNTrigger) {}
 
         public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
             ConnectionRequest(serverType: .standard, connectionType: .fastest, connectionProtocol: .smartProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, profileName: nil, trigger: trigger)
         }
 
-        public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger) {}
+        public func connectTo(serverGroup _: ServerGroupInfo.Kind, ofType _: ServerType, trigger _: UserInitiatedVPNChange.VPNTrigger) {}
 
-        public func connectTo(server: ServerModel) {}
+        public func connectTo(server _: ServerModel) {}
 
-        public func connectTo(profile: Profile) {}
+        public func connectTo(profile _: Profile) {}
 
         public func retryConnection() {}
 
-        public func connect(with request: ConnectionRequest?) {}
+        public func connect(with _: ConnectionRequest?) {}
 
-        public func connectTo(country countryCode: String, city: String) {}
+        public func connectTo(country _: String, city _: String) {}
 
-        public func stopConnecting(userInitiated: Bool) {
+        public func stopConnecting(userInitiated _: Bool) {
             connection = .disconnected
         }
 
@@ -103,11 +103,11 @@
             completion()
         }
 
-        public func reconnect(with netShieldType: NetShieldType) {}
+        public func reconnect(with _: NetShieldType) {}
 
-        public func reconnect(with natType: NATType) {}
+        public func reconnect(with _: NATType) {}
 
-        public func reconnect(with connectionProtocol: ConnectionProtocol) {}
+        public func reconnect(with _: ConnectionProtocol) {}
 
         public func postConnectionInformation() {}
     }

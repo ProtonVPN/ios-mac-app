@@ -180,11 +180,11 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 
-    public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
+    public func copyWith(newNetShieldType _: NetShieldType) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,

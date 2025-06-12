@@ -70,7 +70,7 @@
             self.availablePorts = availablePorts
         }
 
-        public func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
+        public func ping(protocolName _: String, server: ServerIp, port: Int, timeout _: TimeInterval, completion: @escaping (Bool) -> Void) {
             if let pingCallback {
                 completion(pingCallback(server, port))
                 return

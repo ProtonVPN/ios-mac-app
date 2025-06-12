@@ -71,7 +71,7 @@ final class TypedNotificationTests: XCTestCase {
         let notification = TestNotification(data: "Hello, World!")
 
         // Verify that the token is returned and immediately deallocated
-        _ = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
+        _ = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { _ in
             XCTFail("Handler should not be invoked since token is immediately deallocated")
         }
 

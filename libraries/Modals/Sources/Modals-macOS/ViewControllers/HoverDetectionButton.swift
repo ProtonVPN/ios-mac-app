@@ -87,13 +87,13 @@ class HoverDetectionButton: NSButton {
         addCursorRect(bounds, cursor: .pointingHand)
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with _: NSEvent) {
         if isEnabled {
             isHovered = true
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         isHovered = false
     }
 }

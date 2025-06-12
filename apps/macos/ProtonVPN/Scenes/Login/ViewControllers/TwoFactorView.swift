@@ -120,11 +120,11 @@ final class TwoFactorView: NSView {
 }
 
 extension TwoFactorView: NSTextFieldDelegate {
-    func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_: Notification) {
         twoFactorButton.isEnabled = !twoFactorTextField.stringValue.isEmpty
     }
 
-    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+    func control(_ control: NSControl, textView _: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if control == twoFactorTextField {
             if commandSelector == #selector(NSResponder.insertNewline(_:)), twoFactorButton.isEnabled {
                 twoFactorButtonAction()

@@ -167,7 +167,7 @@ public final class CoreNetworking: Networking {
                            authRetry: route.authRetry,
                            customAuthCredential: route.authCredential,
                            nonDefaultTimeout: nil,
-                           retryPolicy: route.retryPolicy) { task, result in
+                           retryPolicy: route.retryPolicy) { _, result in
             switch result {
             case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
@@ -240,7 +240,7 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.perform(request: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+        apiService.perform(request: route) { (_: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
@@ -260,7 +260,7 @@ public final class CoreNetworking: Networking {
         let method = route.httpMethod?.uppercased() ?? "GET"
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
-        let task = URLSession.shared.dataTask(with: route) { data, response, error in
+        let task = URLSession.shared.dataTask(with: route) { data, _, error in
             if let error {
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(method)"])
                 completion(.failure(error))
@@ -286,7 +286,7 @@ public final class CoreNetworking: Networking {
         let progress: ProgressCompletion = { (progress: Progress) in
             log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
         }
-        apiService.performUpload(request: route, files: files, uploadProgress: progress) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+        apiService.performUpload(request: route, files: files, uploadProgress: progress) { (_: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
@@ -379,7 +379,7 @@ extension CoreNetworking: AuthDelegate {
         }
     }
 
-    public func onAuthenticatedSessionInvalidated(sessionUID: String) {
+    public func onAuthenticatedSessionInvalidated(sessionUID _: String) {
         // invalidating authenticated session should clear the unauth session as well,
         // because we should fetch a new unauth session afterwards
         unauthKeychain.clear()
@@ -387,7 +387,7 @@ extension CoreNetworking: AuthDelegate {
         delegate.onLogout()
     }
 
-    public func onUnauthenticatedSessionInvalidated(sessionUID: String) {
+    public func onUnauthenticatedSessionInvalidated(sessionUID _: String) {
         unauthKeychain.clear()
     }
 
@@ -409,7 +409,7 @@ extension CoreNetworking: AuthDelegate {
         return .init(authCredential)
     }
 
-    public func authCredential(sessionUID: String) -> AuthCredential? {
+    public func authCredential(sessionUID _: String) -> AuthCredential? {
         if let authCredentials = authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
             ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
@@ -420,7 +420,7 @@ extension CoreNetworking: AuthDelegate {
         }
     }
 
-    public func onLogout(sessionUID: String) {
+    public func onLogout(sessionUID _: String) {
         log.error("Logout from Core because of expired token", category: .app, event: .trigger)
         delegate.onLogout()
     }
@@ -444,7 +444,7 @@ extension CoreNetworking: AuthDelegate {
 }
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
-    public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
+    public func sessionWasInvalidated(for _: String, isAuthenticatedSession: Bool) {
         authKeychain.clear()
         if isAuthenticatedSession {
             delegate.onLogout()

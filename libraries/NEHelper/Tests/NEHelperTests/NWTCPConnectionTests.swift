@@ -206,7 +206,7 @@ class NWTCPConnectionTests: XCTestCase {
             return RequestParsingTests.actual400ErrorResponse
         }
 
-        let firstDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let firstDataTask = dataTaskFactory.dataTask(urlRequest) { _, response, error in
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
 
@@ -239,7 +239,7 @@ class NWTCPConnectionTests: XCTestCase {
                 $0.isSecure
         }), "Tag cookie not found or does not match expected values")
 
-        let secondDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let secondDataTask = dataTaskFactory.dataTask(urlRequest) { _, response, error in
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
 
@@ -265,7 +265,7 @@ class NWTCPConnectionTests: XCTestCase {
             }
         }
 
-        dataWriteCallback = { tunnel, requestData in
+        dataWriteCallback = { _, _ in
             XCTFail("Should not have tried to write before state was connected")
         }
 

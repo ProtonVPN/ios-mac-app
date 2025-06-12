@@ -173,7 +173,7 @@
             }
         }
 
-        func makeNSView(context: Context) -> NSView {
+        func makeNSView(context _: Context) -> NSView {
             let view = NSView()
             DispatchQueue.main.async {
                 window = view.window
@@ -196,7 +196,7 @@
             }
         }
 
-        func updateNSView(_ nsView: NSView, context: Context) {
+        func updateNSView(_: NSView, context _: Context) {
             log.debug("updateNSView")
         }
     }

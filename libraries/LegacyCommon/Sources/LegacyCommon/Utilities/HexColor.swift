@@ -76,7 +76,7 @@ private func checkColors(_ red: Int, _ green: Int, _ blue: Int) {
     assert(blue >= 0 && blue <= 255, "Invalid blue component")
 }
 
-private func convert2Hex(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ alpha: CGFloat) -> Int {
+private func convert2Hex(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _: CGFloat) -> Int {
     let red = Int((red * 255.0).rounded())
     let green = Int((green * 255.0).rounded())
     let blue = Int((blue * 255.0).rounded())

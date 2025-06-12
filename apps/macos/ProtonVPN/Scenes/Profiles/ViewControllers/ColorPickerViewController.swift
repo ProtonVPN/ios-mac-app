@@ -33,7 +33,7 @@ class ColorPickerViewController: NSViewController {
     var viewModel: ColorPickerViewModel!
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -49,11 +49,11 @@ class ColorPickerViewController: NSViewController {
         setupCollectionView()
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with _: NSEvent) {
         collectionView.addCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         collectionView.removeCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
 
@@ -93,11 +93,11 @@ class ColorPickerViewController: NSViewController {
 }
 
 extension ColorPickerViewController: NSCollectionViewDataSource {
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
         viewModel.colorCount
     }
 
-    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+    func collectionView(_: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ColorPickerItem"), for: indexPath) as! ColorPickerItemView
         item.colorPickerCircle.color = viewModel.color(atIndex: indexPath.item)
         return item
@@ -105,7 +105,7 @@ extension ColorPickerViewController: NSCollectionViewDataSource {
 }
 
 extension ColorPickerViewController: NSCollectionViewDelegate {
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    func collectionView(_: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
         if let index = indexPaths.first?.item {
             viewModel.selectedColorIndex = index
         }

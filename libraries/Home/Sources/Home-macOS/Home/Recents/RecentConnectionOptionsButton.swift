@@ -135,7 +135,7 @@ private struct RecentConnectOptionsButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = []
         style.insert(isHovered ? .interactive : .transparent)
         return Color(.background, style)

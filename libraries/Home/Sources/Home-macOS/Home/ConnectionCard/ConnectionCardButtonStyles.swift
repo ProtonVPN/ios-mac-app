@@ -35,7 +35,7 @@ struct ConnectButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
         style.insert(isHovered ? .hovered : [])
         style.insert(isActive ? [] : .weak)
@@ -57,7 +57,7 @@ struct ShowConnectionDetailsButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = []
         style.insert(isHovered && enabled ? .hovered : [.transparent])
         return Color(.background, style)
@@ -78,7 +78,7 @@ struct HelpButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.transparent]
         style.insert(isHovered ? .hovered : [])
         return Color(.background, style)

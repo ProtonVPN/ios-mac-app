@@ -78,7 +78,7 @@ class SelectionViewController: UIViewController {
 }
 
 extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         dataSet.data.count
     }
 
@@ -92,14 +92,14 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         return UIView()
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if dataSet.section(at: section).title != nil {
             return UIConstants.headerHeight
         }
         return 0.0
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         dataSet.data[section].cells.count
     }
 
@@ -136,7 +136,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         return indexPath
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
         navigationController?.popViewController(animated: true)
     }
 }

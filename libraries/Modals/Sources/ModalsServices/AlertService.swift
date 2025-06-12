@@ -73,7 +73,7 @@ extension AlertService {
 }
 
 extension Alert {
-    public func alertState<Action>(from: Action.Type) -> AlertState<Action> {
+    public func alertState<Action>(from _: Action.Type) -> AlertState<Action> {
         let title = TextState(String(localized: title))
         let message = TextState(String(localized: message))
         return AlertState<Action>(title: title, message: message)

@@ -41,7 +41,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }()
 
-    override open func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startProxy(options _: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
         guard case .enabled = feature else {
             log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")

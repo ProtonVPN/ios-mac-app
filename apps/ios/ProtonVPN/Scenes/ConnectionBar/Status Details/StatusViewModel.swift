@@ -464,11 +464,11 @@ class StatusViewModel {
         notificationTokens = []
     }
 
-    private func connectionChanged(notification: Notification) {
+    private func connectionChanged(notification _: Notification) {
         contentChanged?()
     }
 
-    private func stateChanged(notification: Notification) {
+    private func stateChanged(notification _: Notification) {
         Task {
             await updateConnectionDate()
         }

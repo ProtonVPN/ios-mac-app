@@ -97,14 +97,14 @@ final class OfferBannerView: NSView {
 
     // MARK: - Actions
 
-    @IBAction private func didTap(_ sender: Any) {
+    @IBAction private func didTap(_: Any) {
         @Dependency(\.sessionService) var sessionService
         Task {
             await viewModel.action(sessionService)
         }
     }
 
-    @IBAction private func didDismiss(_ sender: Any) {
+    @IBAction private func didDismiss(_: Any) {
         viewModel.dismiss()
     }
 

@@ -225,7 +225,7 @@ class MapViewModel: SecureCoreToggleHandler {
         return annotationViewModel
     }
 
-    private func secureCoreEntryAnnotations(_ userTier: Int) -> Set<SecureCoreEntryCountryModel> {
+    private func secureCoreEntryAnnotations(_: Int) -> Set<SecureCoreEntryCountryModel> {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
 
         let isSecureCore = VPNServerFilter.features(.secureCore)

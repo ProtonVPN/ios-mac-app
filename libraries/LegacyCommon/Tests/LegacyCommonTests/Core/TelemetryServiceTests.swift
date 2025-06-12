@@ -32,12 +32,12 @@ import Ergonomics
 
 actor TelemetryAPIImplementationMock: TelemetryAPI {
     var events = [[String: Any]]()
-    func flushEvent(event: [String: Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvent(event: [String: Any], isBusiness _: Bool) async throws -> LegacyCommon.TelemetryResponse {
         events.append(event)
         return TelemetryResponse(code: 1000)
     }
 
-    func flushEvents(events: [String: Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
+    func flushEvents(events _: [String: Any], isBusiness _: Bool) async throws -> LegacyCommon.TelemetryResponse {
         TelemetryResponse(code: 1000)
     }
 }
@@ -45,7 +45,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
 class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, PropertiesManagerFactory, VpnKeychainFactory, TelemetrySettingsFactory, TelemetryAPIFactory, AuthKeychainHandleFactory {
     lazy var telemetryApiMock = TelemetryAPIImplementationMock()
 
-    func makeTelemetryAPI(networking: Networking) -> TelemetryAPI { telemetryApiMock }
+    func makeTelemetryAPI(networking _: Networking) -> TelemetryAPI { telemetryApiMock }
 
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock() }
 
@@ -75,7 +75,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
 class TelemetryTimerMock: TelemetryTimer {
     var reportedConnectionDuration: TimeInterval = 0
     var reportedTimeToConnect: TimeInterval = 0
-    func updateConnectionStarted(_ date: Date?) {}
+    func updateConnectionStarted(_: Date?) {}
     func markStartedConnecting() {}
     func markFinishedConnecting() {}
     func markConnectionStopped() {}

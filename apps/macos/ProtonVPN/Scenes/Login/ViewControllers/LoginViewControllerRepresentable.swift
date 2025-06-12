@@ -34,11 +34,11 @@
             self.loginViewModel = loginViewModel
         }
 
-        func makeNSViewController(context: Context) -> LoginViewController {
+        func makeNSViewController(context _: Context) -> LoginViewController {
             LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
         }
 
-        func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {}
+        func updateNSViewController(_: LoginViewController, context _: Context) {}
 
         func makeCoordinator() -> Coordinator {
             Coordinator(store: store)

@@ -65,11 +65,11 @@ class MapHeaderBackground: NSView {
         }
     }
 
-    override func mouseDragged(with event: NSEvent) {
+    override func mouseDragged(with _: NSEvent) {
         // prevents dragging in obscured views (map view)
     }
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else {
             log.error("Unable to obtain context for drawing.", category: .ui)
             return

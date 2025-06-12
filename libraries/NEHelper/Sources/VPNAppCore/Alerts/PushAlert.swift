@@ -28,6 +28,6 @@ extension DependencyValues {
 public enum PushAlertKey {}
 
 extension PushAlertKey: TestDependencyKey {
-    public static let testValue: @Sendable (SystemAlert) -> Void = { alert in
+    public static let testValue: @Sendable (SystemAlert) -> Void = { _ in
     }
 }

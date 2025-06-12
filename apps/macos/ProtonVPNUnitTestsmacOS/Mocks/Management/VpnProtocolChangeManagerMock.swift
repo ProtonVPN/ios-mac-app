@@ -28,7 +28,7 @@ import VPNShared
 class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
     var protocolChanged: ((VpnProtocol) -> Void)?
 
-    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
+    func change(toProtocol: VpnProtocol, userInitiated _: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
         protocolChanged?(toProtocol)
         completion(.success)
     }

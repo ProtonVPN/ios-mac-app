@@ -41,5 +41,5 @@ class AlertManager: AlertManagerProtocol {
     var cancelButtonTitle: String?
     var confirmButtonStyle: AlertActionStyle = .default
     var cancelButtonStyle: AlertActionStyle = .default
-    func showAlert(confirmAction: ActionCallback, cancelAction: ActionCallback) {}
+    func showAlert(confirmAction _: ActionCallback, cancelAction _: ActionCallback) {}
 }

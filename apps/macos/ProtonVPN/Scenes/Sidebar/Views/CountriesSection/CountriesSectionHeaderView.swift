@@ -57,7 +57,7 @@ final class CountriesSectionHeaderView: NSView {
         informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
     }
 
-    @IBAction private func didTapInformationBtn(_ sender: Any) {
+    @IBAction private func didTapInformationBtn(_: Any) {
         didTapInformationButton?()
     }
 }

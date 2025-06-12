@@ -59,7 +59,7 @@
 
         public func prepareToConnect() {}
 
-        public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {}
+        public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration _: ConnectionConfiguration) {}
 
         public func disconnect() {}
 
@@ -70,7 +70,7 @@
 
         public func refreshState() {}
 
-        public func connectedDate(completion: @escaping (Date?) -> Void) {}
+        public func connectedDate(completion _: @escaping (Date?) -> Void) {}
 
         public func connectedDate() async -> Date? {
             Date()

@@ -306,7 +306,7 @@ public class VpnGateway: VpnGatewayProtocol {
         )
     }
 
-    public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
+    public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType _: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
         let connectionType: ConnectionRequestType = switch serverGroup {
         case let .country(code):
             .country(code, .fastest)
@@ -711,7 +711,7 @@ public class VpnGateway: VpnGatewayProtocol {
         postConnectionInformation()
     }
 
-    @objc private func reconnectOnNotification(_ notification: Notification) {
+    @objc private func reconnectOnNotification(_: Notification) {
         connect(with: lastConnectionRequest)
     }
 }

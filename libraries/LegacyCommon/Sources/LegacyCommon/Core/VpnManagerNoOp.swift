@@ -53,17 +53,17 @@ public final class NoOpVpnManager: VpnManagerProtocol {
         self.prepareManagersTask = prepareManagersTask
     }
 
-    public func appBackgroundStateDidChange(isBackground: Bool) {}
+    public func appBackgroundStateDidChange(isBackground _: Bool) {}
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
         handler(false)
     }
 
-    public func setOnDemand(_ enabled: Bool) {}
+    public func setOnDemand(_: Bool) {}
 
-    public func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {}
+    public func disconnectAnyExistingConnectionAndPrepareToConnect(with _: VpnManagerConfiguration, completion _: @escaping () -> Void) {}
 
-    public func disconnect(completion: @escaping () -> Void) {}
+    public func disconnect(completion _: @escaping () -> Void) {}
 
     public func connectedDate() async -> Date? {
         .now
@@ -75,7 +75,7 @@ public final class NoOpVpnManager: VpnManagerProtocol {
 
     public func refreshManagers() async {}
 
-    public func removeConfigurations(completionHandler: (((any Error)?) -> Void)?) {}
+    public func removeConfigurations(completionHandler _: (((any Error)?) -> Void)?) {}
 
     public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
         queue.async(execute: completion)
@@ -83,11 +83,11 @@ public final class NoOpVpnManager: VpnManagerProtocol {
 
     public var prepareManagersTask: Task<Void, Never>?
 
-    public func set(vpnAccelerator: Bool) {}
+    public func set(vpnAccelerator _: Bool) {}
 
-    public func set(netShieldType: Domain.NetShieldType) {}
+    public func set(netShieldType _: Domain.NetShieldType) {}
 
-    public func set(natType: Domain.NATType) {}
+    public func set(natType _: Domain.NATType) {}
 
-    public func set(safeMode: Bool) {}
+    public func set(safeMode _: Bool) {}
 }

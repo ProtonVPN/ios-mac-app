@@ -42,7 +42,7 @@ class ProfilesTabBarViewController: NSViewController {
     private var activeTab: ProfilesTab?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 

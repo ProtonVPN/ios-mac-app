@@ -38,7 +38,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     // MARK: - Public functions
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 

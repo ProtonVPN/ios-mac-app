@@ -41,7 +41,7 @@ final class AccountViewController: NSViewController {
     private let viewModel: AccountViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 

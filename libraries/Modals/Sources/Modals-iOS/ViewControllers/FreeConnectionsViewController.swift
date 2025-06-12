@@ -76,11 +76,11 @@ class FreeConnectionsViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerButtonTapped(_ sender: Any) {
+    @IBAction private func bannerButtonTapped(_: Any) {
         onBannerPress?()
     }
 
-    @IBAction private func closeButtonTapped(_ sender: Any) {
+    @IBAction private func closeButtonTapped(_: Any) {
         dismiss(animated: true)
     }
 }
@@ -88,7 +88,7 @@ class FreeConnectionsViewController: UIViewController {
 extension FreeConnectionsViewController: UICollectionViewDataSource {
     // MARK: - UICollectionViewDataSource
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         countries?.count ?? 0
     }
 

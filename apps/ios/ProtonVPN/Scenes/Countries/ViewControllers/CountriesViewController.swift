@@ -173,7 +173,7 @@ final class CountriesViewController: UIViewController {
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         viewModel.numberOfSections()
     }
 
@@ -192,11 +192,11 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         return headerView
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         viewModel.headerHeight(for: section)
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.numberOfRows(in: section)
     }
 
@@ -233,7 +233,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {
         case let .serverGroup(viewModel):
@@ -254,7 +254,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
         0.1
     }
 }

@@ -116,11 +116,11 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         sections.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         sections[section].cells.count
     }
 
@@ -345,17 +345,17 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
 
     // swiftlint:enable cyclomatic_complexity function_body_length
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         sections[section].headerHeight
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
         headerView.setName(name: sections[section].title)
         return headerView
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section].cells[indexPath.row] {
         case .tooltip, .attributedTooltip:
             -1 // allows for self sizing

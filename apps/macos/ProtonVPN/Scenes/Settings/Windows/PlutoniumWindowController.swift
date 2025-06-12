@@ -33,7 +33,7 @@ class PlutoniumWindowController: WindowController {
     private let vpnGateway: VpnGatewayProtocol
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -65,7 +65,7 @@ class PlutoniumWindowController: WindowController {
         window.backgroundColor = .color(.background)
     }
 
-    override func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_: Notification) {
         guard vpnGateway.connection != .disconnected,
               store.requiresReconnection else {
             return

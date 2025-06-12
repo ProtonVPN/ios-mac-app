@@ -151,7 +151,7 @@ extension VpnManager {
         vpnAuthentication.clearEverything { [weak self] in
             // Force keygen on our end, otherwise we won't be able to fetch a certificate.
             _ = self?.vpnAuthentication.loadClientPrivateKey()
-            self?.refreshCertificateWithError { result in
+            self?.refreshCertificateWithError { _ in
                 log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
                 executeOnUIThread {
                     AppEvent.needsReconnect.post()

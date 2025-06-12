@@ -102,7 +102,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
                   mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?)
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 

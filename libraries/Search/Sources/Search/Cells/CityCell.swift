@@ -86,13 +86,13 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func connectButtonTap(_ sender: Any) {
+    @IBAction private func connectButtonTap(_: Any) {
         connect()
     }
 
     // MARK: Setup
 
-    @IBAction private func rowTapped(_ sender: Any, forEvent event: UIEvent) {
+    @IBAction private func rowTapped(_: Any, forEvent _: UIEvent) {
         connect()
     }
 
@@ -110,7 +110,7 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension CityCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle? = nil
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

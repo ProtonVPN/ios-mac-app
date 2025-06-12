@@ -305,7 +305,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             fulfillExpectationCategory(expectationCategory)
         }
 
-        container.alertService.alertAdded = { [unowned self] alert in
+        container.alertService.alertAdded = { [unowned self] _ in
             fulfillExpectationCategory(.alertDisplayed)
         }
     }
@@ -367,7 +367,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     /// the name of the parent test case, and the action that the expectation represents (e.g.,
     /// vpn connect, disconnect, cert refresh, etc.) Then, run the closure and wait for the
     /// expectations specified by the subcase.
-    func driveSubcase(_ subcase: Subcase, enforceExpectationOrder: Bool = false) {
+    func driveSubcase(_ subcase: Subcase, enforceExpectationOrder _: Bool = false) {
         populateExpectations(description: subcase.description, subcase.expectations)
         currentSubcaseDescription = "\(subcase.description)"
 

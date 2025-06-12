@@ -210,7 +210,7 @@ public struct DebugConfigurationFeature {
             case .resetAndKillAppButtonTapped:
                 state.newApiEndpointURLString = State.defaultApiUrlString
                 return .concatenate(
-                    .run { [state] send in
+                    .run { [state] _ in
                         @Dependency(\.settingsStorage) var storage
                         do {
                             try storage.setEnvironment(.init(
@@ -229,7 +229,7 @@ public struct DebugConfigurationFeature {
                 }
                 // Need to send alert telling user to kill the app
                 return .concatenate(
-                    .run { [state] send in
+                    .run { [state] _ in
                         @Dependency(\.settingsStorage) var storage
                         do {
                             try storage.setEnvironment(.init(

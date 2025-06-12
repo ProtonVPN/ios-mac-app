@@ -21,7 +21,7 @@ import Foundation
 
 /// This app delegate is being used by main.c in the app if it's added to the target
 class TestAppDelegate: NSObject, NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         debugPrint("Running Test App Delegate instead of the main one")
     }
 }

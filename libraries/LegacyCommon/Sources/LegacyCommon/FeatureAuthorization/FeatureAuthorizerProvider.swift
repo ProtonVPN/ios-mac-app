@@ -99,7 +99,7 @@ extension PaidAppFeature {
         nil
     }
 
-    public static func minTier(featureFlags: FeatureFlags) -> Int {
+    public static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 

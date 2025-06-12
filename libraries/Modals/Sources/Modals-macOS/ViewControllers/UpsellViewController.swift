@@ -57,7 +57,7 @@ public final class UpsellViewController: NSViewController {
     var continueAction: (() -> Void)?
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -169,7 +169,7 @@ public final class UpsellViewController: NSViewController {
         view.window?.applyUpsellModalAppearance()
     }
 
-    @IBAction private func upgrade(_ sender: Any) {
+    @IBAction private func upgrade(_: Any) {
         if modalType?.showUpgradeButton == false {
             continueAction?()
         } else {

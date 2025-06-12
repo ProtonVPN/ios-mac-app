@@ -40,7 +40,7 @@ final class SubuserMacAlertViewController: NSViewController {
     var role: UserRole = .noOrganization
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -91,12 +91,12 @@ final class SubuserMacAlertViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction private func assignConnectionsTapped(_ sender: NSButton) {
+    @IBAction private func assignConnectionsTapped(_: NSButton) {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
 
-    @IBAction func loginTapped(_ sender: NSButton) {
+    @IBAction func loginTapped(_: NSButton) {
         view.window?.close()
     }
 }

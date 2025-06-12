@@ -66,7 +66,7 @@ final class CreateNewProfileViewController: NSViewController {
     }
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -320,7 +320,7 @@ final class CreateNewProfileViewController: NSViewController {
 extension CreateNewProfileViewController: TextFieldFocusDelegate {
     var shouldBecomeFirstResponder: Bool { true }
 
-    func willReceiveFocus(_ textField: NSTextField) {
+    func willReceiveFocus(_: NSTextField) {
         nameTextFieldHorizontalLine.fillColor = .color(.border, .interactive)
     }
 }
@@ -328,7 +328,7 @@ extension CreateNewProfileViewController: TextFieldFocusDelegate {
 // MARK: - TextField loss of highlight on loss of focus
 
 extension CreateNewProfileViewController: NSTextFieldDelegate {
-    func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_: Notification) {
         nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
     }
 }

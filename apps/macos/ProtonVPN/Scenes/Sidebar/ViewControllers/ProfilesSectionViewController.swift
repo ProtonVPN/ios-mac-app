@@ -43,7 +43,7 @@ class ProfileSectionViewController: NSViewController {
     fileprivate let viewModel: ProfilesSectionViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -89,17 +89,17 @@ class ProfileSectionViewController: NSViewController {
 }
 
 extension ProfileSectionViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         viewModel.cellCount
     }
 }
 
 extension ProfileSectionViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
+    func tableView(_: NSTableView, heightOfRow row: Int) -> CGFloat {
         viewModel.cellHeight(forRow: row)
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let cellModel = viewModel.cellModel(forRow: row)
 
         switch cellModel {

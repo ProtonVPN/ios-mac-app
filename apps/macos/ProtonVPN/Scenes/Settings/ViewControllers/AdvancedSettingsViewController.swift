@@ -37,7 +37,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     private var viewModel: AdvancedSettingsViewModel
 
     @available(*, unavailable)
-    required init?(coder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -142,7 +142,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         }
     }
 
-    @objc private func didTapHermesView(_ sender: Any?) {
+    @objc private func didTapHermesView(_: Any?) {
         if hermesChildWindowController != nil {
             hermesChildWindowController?.window?.makeKeyAndOrderFront(self)
         } else {

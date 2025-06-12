@@ -224,7 +224,7 @@ private struct EnvironmentSelectorButtonStyle: ButtonStyle {
             .cornerRadius(.themeRadius8)
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
         style.insert(isActive ? [] : .weak)
         return Color(.background, style)

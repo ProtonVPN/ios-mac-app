@@ -25,7 +25,7 @@ extension Result {
 
 /// Allows us to define `Equatable` `Result` types for modelling domains where there is no value associated with success
 public struct None: Equatable, ExpressibleByNilLiteral {
-    public init(nilLiteral: ()) {}
+    public init(nilLiteral _: ()) {}
 }
 
 extension Result where Success == None {

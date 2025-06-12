@@ -108,7 +108,7 @@ public struct SharedPropertiesFeature {
                 return .send(.refreshServerLoads(location))
 
             case let .refreshServerLoads(location):
-                return .run { send in
+                return .run { _ in
                     let loads = try await logicalsClient.fetchLoads(location: location)
                     log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
                     repository.upsert(loads: loads)
@@ -133,7 +133,7 @@ public struct SharedPropertiesFeature {
                 return .none
 
             case .newAnnouncementBanner:
-                return .run { send in
+                return .run { _ in
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
                     await imagePrefetcher.prefetchURLs(urls)
                     $announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }

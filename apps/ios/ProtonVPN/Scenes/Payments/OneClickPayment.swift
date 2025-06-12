@@ -123,7 +123,7 @@ final class OneClickPayment {
     }
 
     @objc
-    private func userDidDismissWelcomeScreen(_ notification: Notification) {
+    private func userDidDismissWelcomeScreen(_: Notification) {
         log.debug("Received UserDismissedWelcomeScreen notification, completing flow", category: .iap)
         completionHandler()
     }

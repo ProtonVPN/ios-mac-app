@@ -171,16 +171,16 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         vpnGateway.postConnectionInformation()
     }
 
-    override func mouseDown(with event: NSEvent) {
+    override func mouseDown(with _: NSEvent) {
         view.window?.makeFirstResponder(nil)
     }
 
-    func windowDidResize(_ notification: Notification) {
+    func windowDidResize(_: Notification) {
         configureExpandButton()
         resizeOverlayWindow()
     }
 
-    func windowDidEndLiveResize(_ notification: Notification) {
+    func windowDidEndLiveResize(_: Notification) {
         guard let window = view.window else { return }
         let width = window.frame.width
 
@@ -195,12 +195,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    func windowWillEnterFullScreen(_ notification: Notification) {
+    func windowWillEnterFullScreen(_: Notification) {
         // Hide expand button
         expandButton.isHidden = true
     }
 
-    func windowWillExitFullScreen(_ notification: Notification) {
+    func windowWillExitFullScreen(_: Notification) {
         // Show expand button
         expandButton.isHidden = false
     }
@@ -254,7 +254,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         overlayWindowController!.window!.makeKey()
     }
 
-    private func loading(show: Bool, animateClose: Bool = false) {
+    private func loading(show: Bool, animateClose _: Bool = false) {
         guard let window = view.window else { return }
 
         loading = show
@@ -323,7 +323,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    @objc private func occlusionStateChanged(_ notification: Notification) {
+    @objc private func occlusionStateChanged(_: Notification) {
         if NSApp.occlusionState.contains(.visible) {
             if case AppState.connecting = appStateManager.state, let overlayViewModel {
                 showLoadingOverlay(with: overlayViewModel)
@@ -388,7 +388,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         activeControllerViewContainer.pin(viewController: activeController)
     }
 
-    @objc private func expandButtonAction(_ sender: NSButton) {
+    @objc private func expandButtonAction(_: NSButton) {
         @Dependency(\.defaultsProvider) var provider
         let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
         let mapContainerWidth: CGFloat = savedMapWidth > expandButtonWidth ? savedMapWidth : 600
@@ -449,7 +449,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
     }
 
-    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: NSStoryboardSegue, sender _: Any?) {
         if let viewController = segue.destinationController as? MapSectionViewController {
             viewController.mapHeaderViewModel = mapHeaderViewModel
             viewController.mapSectionViewModel = mapSectionViewModel

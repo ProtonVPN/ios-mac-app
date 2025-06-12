@@ -64,7 +64,7 @@ final class DefaultProfileTableViewCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    @IBAction func connect(_ sender: Any) {
+    @IBAction func connect(_: Any) {
         viewModel?.connectAction()
     }
 

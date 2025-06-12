@@ -32,7 +32,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     }
 
     public func authorizer<Feature: AppFeature>(
-        for feature: Feature.Type
+        for _: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
         {
             let (plan, tier) = accountDetails

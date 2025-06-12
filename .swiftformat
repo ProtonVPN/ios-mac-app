@@ -1,8 +1,6 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable unusedArguments
 --disable wrapMultilineStatementBraces
---disable wrapSingleLineComments
 --disable yodaConditions
 
 # no need to fix external libs

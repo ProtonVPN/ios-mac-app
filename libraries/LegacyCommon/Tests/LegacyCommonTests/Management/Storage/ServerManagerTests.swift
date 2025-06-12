@@ -82,7 +82,7 @@ final class ServerManagerTests: XCTestCase {
     func testPurgesAllTiersWhenFetchingFullServerList() {
         let deleteInvoked = XCTestExpectation()
 
-        deleteCallback = { ids, maxTier in
+        deleteCallback = { _, maxTier in
             XCTAssertGreaterThanOrEqual(maxTier, .internalTier)
             deleteInvoked.fulfill()
         }

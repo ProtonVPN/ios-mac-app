@@ -45,7 +45,7 @@ protocol SwitchButtonDelegate: AnyObject {
 }
 
 extension SwitchButtonDelegate {
-    public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: (Bool) -> Void) {
+    public func shouldToggle(_: NSButton, to _: ButtonState, completion: (Bool) -> Void) {
         completion(true)
     }
 }
@@ -167,7 +167,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
         }
     }
 
-    func animationDidStart(_ anim: CAAnimation) {
+    func animationDidStart(_: CAAnimation) {
         setInnerColor()
     }
 

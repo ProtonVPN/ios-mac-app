@@ -37,7 +37,7 @@ class TextWithActivityCell: UITableViewCell {
         selectionStyle = .none
     }
 
-    private func setupViews(inverted: Bool = false) {
+    private func setupViews(inverted _: Bool = false) {
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
     }

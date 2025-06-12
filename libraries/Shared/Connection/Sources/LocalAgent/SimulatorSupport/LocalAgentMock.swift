@@ -64,7 +64,7 @@
             return tuple.stream
         }
 
-        func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws(LAConnectionCreationError) {
+        func connect(configuration: ConnectionConfiguration, data _: VPNAuthenticationData) throws(LAConnectionCreationError) {
             disconnectionTask?.cancel()
 
             if let connectionErrorToThrow {
@@ -119,7 +119,7 @@
             streamTuple?.continuation.yield(.stats(message))
         }
 
-        func set(features: LocalAgentFeatures) {}
+        func set(features _: LocalAgentFeatures) {}
     }
 
     enum NetShieldStatsBehaviour {

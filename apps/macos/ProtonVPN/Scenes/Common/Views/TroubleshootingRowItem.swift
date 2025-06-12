@@ -114,7 +114,7 @@ final class TroubleshootingRowItem: NSTableRowView {
 // MARK: Switch button delegate
 
 extension TroubleshootingRowItem: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
+    func switchButtonClicked(_: NSButton) {
         (item as? ActionableTroubleshootItem)?.set(isOn: switchView.currentButtonState == .on)
     }
 }

@@ -45,11 +45,11 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     private var containerView: NSView?
 
     @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }
 
-    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Unsupported initializer \(#function)")
     }
 

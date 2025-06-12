@@ -125,7 +125,7 @@ final class CoreLoginService {
     }
 
     private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
-        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] viewController in
+        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] _ in
             self?.settingsService.presentReportBug()
         })
         var result = input
@@ -210,7 +210,7 @@ final class CoreLoginService {
 // MARK: LoginErrorPresenter
 
 extension CoreLoginService: LoginErrorPresenter {
-    func willPresentError(error: LoginError, from: UIViewController) -> Bool {
+    func willPresentError(error: LoginError, from _: UIViewController) -> Bool {
         switch error {
         case .generic(_, _, CommonVpnError.subuserWithoutSessions):
             let role = propertiesManager.userRole
@@ -233,35 +233,35 @@ extension CoreLoginService: LoginErrorPresenter {
         }
     }
 
-    func willPresentError(error: SignupError, from: UIViewController) -> Bool {
+    func willPresentError(error _: SignupError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: AvailabilityError, from: UIViewController) -> Bool {
+    func willPresentError(error _: AvailabilityError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: SetUsernameError, from: UIViewController) -> Bool {
+    func willPresentError(error _: SetUsernameError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: CreateAddressError, from: UIViewController) -> Bool {
+    func willPresentError(error _: CreateAddressError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: CreateAddressKeysError, from: UIViewController) -> Bool {
+    func willPresentError(error _: CreateAddressKeysError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: StoreKitManagerErrors, from: UIViewController) -> Bool {
+    func willPresentError(error _: StoreKitManagerErrors, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: ResponseError, from: UIViewController) -> Bool {
+    func willPresentError(error _: ResponseError, from _: UIViewController) -> Bool {
         false
     }
 
-    func willPresentError(error: Error, from: UIViewController) -> Bool {
+    func willPresentError(error _: Error, from _: UIViewController) -> Bool {
         false
     }
 }

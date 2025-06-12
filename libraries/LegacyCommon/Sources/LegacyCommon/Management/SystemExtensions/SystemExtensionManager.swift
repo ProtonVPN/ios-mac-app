@@ -111,7 +111,7 @@
         }
 
         /// Synchronously (!) uninstall all extensions on the system, with an optional timeout.
-        public func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
+        public func uninstallAll(userInitiated _: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
             let group = DispatchGroup()
 
             for type in SystemExtensionType.allCases {
@@ -352,7 +352,7 @@
     }
 
     extension SystemExtensionRequest: OSSystemExtensionRequestDelegate {
-        public func request(_ request: OSSystemExtensionRequest,
+        public func request(_: OSSystemExtensionRequest,
                             actionForReplacingExtension existing: OSSystemExtensionProperties,
                             withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
             assert(existing.bundleIdentifier == ext.bundleIdentifier,
@@ -373,11 +373,11 @@
             return .replace
         }
 
-        public func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+        public func requestNeedsUserApproval(_: OSSystemExtensionRequest) {
             stateChangeCallback(.userActionRequired)
         }
 
-        public func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
+        public func request(_: OSSystemExtensionRequest, didFailWithError error: Error) {
             guard let sysextError = error as? OSSystemExtensionError else {
                 stateChangeCallback(.failed(error))
                 return
@@ -395,7 +395,7 @@
             manager.outstandingRequests.remove(self)
         }
 
-        public func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+        public func request(_: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
             stateChangeCallback(.succeeded(result))
 
             manager.outstandingRequests.remove(self)

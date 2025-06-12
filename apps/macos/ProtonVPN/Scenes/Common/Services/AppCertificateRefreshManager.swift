@@ -106,7 +106,7 @@ extension AppCertificateRefreshManagerImplementation {
         stopTimer()
     }
 
-    func certificateStored(_ certificate: VpnCertificate) {
+    func certificateStored(_: VpnCertificate) {
         Task {
             await planNextRefresh()
         }

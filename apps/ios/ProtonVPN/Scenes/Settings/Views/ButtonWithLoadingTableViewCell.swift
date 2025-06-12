@@ -52,7 +52,7 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
         self.controller = controller
     }
 
-    @IBAction private func onPressed(_ sender: Any) {
+    @IBAction private func onPressed(_: Any) {
         assert(controller != nil, "It's required for the cell to have a controller associated")
         controller?.onPressed()
     }

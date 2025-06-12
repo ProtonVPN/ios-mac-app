@@ -91,7 +91,7 @@ func evaluatingItemsRules() {
         "6.0.0"
     } systemOSVersion: {
         "18.4.0"
-    } itemPresentationData: { item in
+    } itemPresentationData: { _ in
         nil
     }
 
@@ -127,7 +127,7 @@ func presentationRules() {
         "6.0.0"
     } systemOSVersion: {
         "18.4.0"
-    } itemPresentationData: { item in
+    } itemPresentationData: { _ in
         nil
     }
 

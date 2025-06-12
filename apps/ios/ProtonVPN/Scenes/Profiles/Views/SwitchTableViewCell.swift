@@ -60,7 +60,7 @@ final class SwitchTableViewCell: UITableViewCell {
         }
     }
 
-    @IBAction func upsellImageViewTapped(_ sender: Any) {
+    @IBAction func upsellImageViewTapped(_: Any) {
         guard let upsellTapped else {
             log.error("Upsell tapped but no upsell action has defined for this element")
             return

@@ -52,7 +52,7 @@ import VPNShared
             events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
         }
 
-        @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification) {
+        @objc private func userDowngradedPlanOrBecameDelinquent(_: NSNotification) {
             log.info("User plan downgraded or delinquent, deleting keys and certificate and getting new ones", category: .userCert)
 
             // certificate refresh requests might be in progress so first cancel all fo them
@@ -99,7 +99,7 @@ import VPNShared
         /// - Parameter features: The features used for the current connection. Ignored on MacOS
         /// - Parameter completion: A function which will be invoked on the UI thread with the refreshed
         ///                         certificate, or an error if the refresh failed.
-        public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+        public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
             queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking, completion: { result in
                 executeOnUIThread { completion(result) }
             }))

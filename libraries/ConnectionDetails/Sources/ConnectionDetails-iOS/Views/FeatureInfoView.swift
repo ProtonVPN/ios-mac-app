@@ -105,7 +105,7 @@ extension FeatureInfoView {
         }
     }
 
-    init(secureCore: Bool) {
+    init(secureCore _: Bool) {
         icon = IconProvider.lockLayers
         title = Localizable.connectionDetailsFeatureTitleSecureCore
         text = Localizable.connectionDetailsFeatureDescriptionSecureCore

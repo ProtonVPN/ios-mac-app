@@ -88,7 +88,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         }
     }
 
-    private func connectInformativeText(forServer server: ServerModel) -> String {
+    private func connectInformativeText(forServer _: ServerModel) -> String {
         Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
 
@@ -101,7 +101,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
 }
 
 extension NotificationManager: NSUserNotificationCenterDelegate {
-    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+    func userNotificationCenter(_: NSUserNotificationCenter, shouldPresent _: NSUserNotification) -> Bool {
         true
     }
 }

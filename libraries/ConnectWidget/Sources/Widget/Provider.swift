@@ -43,18 +43,18 @@ struct Provider: TimelineProvider {
         ).elements
     }
 
-    func placeholder(in context: Context) -> ConnectWidgetEntry {
+    func placeholder(in _: Context) -> ConnectWidgetEntry {
         .init(date: .now,
               connectionSpec: .defaultFastest,
               protectionState: .protected,
               recentServers: [])
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
+    func getSnapshot(in _: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
         completion(createTimelineEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+    func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         completion(Timeline(entries: [createTimelineEntry()], policy: .never))
     }
 

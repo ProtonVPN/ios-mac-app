@@ -177,7 +177,7 @@ struct MainFeature {
                 return .none
 
             case let .errorOccurred(error):
-                return .run { send in await alertService.feed(error) }
+                return .run { _ in await alertService.feed(error) }
             }
         }
     }

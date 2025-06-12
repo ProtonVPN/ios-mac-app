@@ -52,7 +52,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
                                             result: .success([\.original: originalServer]),
                                             expectationToFulfill: expectations.endpointHit)
 
-        serverDidChange = { newServer in
+        serverDidChange = { _ in
             fatalError("Server did not change, so nothing should have happened")
         }
 
@@ -185,7 +185,7 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
                                             result: .failure(ExtensionAPIServiceError.parseError(nil)),
                                             expectationToFulfill: expectations.firstError)
 
-        serverDidChange = { newServer in
+        serverDidChange = { _ in
             fatalError("Server did not change, so nothing should have happened")
         }
 

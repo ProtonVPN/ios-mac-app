@@ -103,7 +103,7 @@ final class HeaderViewModel {
         }
     }
 
-    init(factory: Factory, appStateManager: AppStateManager, navService: NavigationService) {
+    init(factory: Factory, appStateManager _: AppStateManager, navService _: NavigationService) {
         self.factory = factory
         startObserving()
     }

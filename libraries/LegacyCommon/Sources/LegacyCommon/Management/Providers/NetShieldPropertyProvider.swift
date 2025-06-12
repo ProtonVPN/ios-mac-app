@@ -155,7 +155,7 @@ extension NetShieldType: ModularAppFeature {
 }
 
 extension NetShieldType: PaidAppFeature {
-    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan _: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }

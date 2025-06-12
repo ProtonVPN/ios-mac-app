@@ -96,7 +96,7 @@ final class CountryItemCellView: NSView {
         addCursorRect(frame, cursor: .pointingHand)
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         expandButton.isEnabled = !disabled
         expandButton.isHovered = false
         upgradeBtn.isHovered = false
@@ -144,18 +144,18 @@ final class CountryItemCellView: NSView {
 
     // MARK: - Actions
 
-    @IBAction private func didTapExpandBtn(_ sender: Any) {
+    @IBAction private func didTapExpandBtn(_: Any) {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         setupAccessibilityCustomActions()
     }
 
-    @IBAction private func didTapUpgradeBtn(_ sender: Any) {
+    @IBAction private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @IBAction func didTapConnectBtn(_ sender: Any) {
+    @IBAction func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
 

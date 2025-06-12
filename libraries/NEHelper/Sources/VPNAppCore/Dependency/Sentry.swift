@@ -18,7 +18,7 @@ private let moduleLog = VPNAppCore.log
 public final class SentryHelper {
     public private(set) static var shared: SentryHelper?
 
-    public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId: @escaping () -> String?) {
+    public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId _: @escaping () -> String?) {
         guard shared == nil else {
             moduleLog.assertionFailure("Sentry already setup")
             return

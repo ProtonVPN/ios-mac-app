@@ -103,7 +103,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 removeAll: unimplemented(),
                 loadFromPreferences: { [providerManager] }
             )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
+            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
                 mockManager.isEnabled = true
                 managerConfigured.fulfill()
@@ -135,7 +135,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 removeAll: unimplemented(),
                 loadFromPreferences: { [providerManager] }
             )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
+            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
                 mockManager.isOnDemandEnabled = false
                 managerConfigured.fulfill()

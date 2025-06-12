@@ -13,7 +13,7 @@ class IPCWGService: XPCBaseService {
 }
 
 extension IPCWGService { // ProviderCommunication
-    override func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
+    override func setCredentials(username _: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         log("Will save config to keychain in old format.")
 
         guard let data = password.data(using: .utf8) else {

@@ -98,7 +98,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Actions
 
-    @IBAction private func connectTapped(_ sender: Any) {
+    @IBAction private func connectTapped(_: Any) {
         viewModel?.connectAction()
     }
 
@@ -130,7 +130,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension CountryCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle?
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

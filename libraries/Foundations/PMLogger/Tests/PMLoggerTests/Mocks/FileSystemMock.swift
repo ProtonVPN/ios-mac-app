@@ -51,7 +51,7 @@ class FileSystemMock {
             self.moveFileCallback?()
             self.handlerMockFactory.move(from: from, to: to)
         }
-        fileManager.contentsOfDirectoryStub.addToBody { _, folderUrl, keys, mask in
+        fileManager.contentsOfDirectoryStub.addToBody { _, folderUrl, _, _ in
             self.handlerMockFactory.files.filter { element in
                 element.key.path.hasPrefix(folderUrl.path)
             }.map(\.key)

@@ -116,7 +116,7 @@ class MapSectionViewModel {
         updateConnections()
     }
 
-    @objc private func viewToggled(_ notification: Notification) {
+    @objc private func viewToggled(_: Notification) {
         setView(propertiesManager.serverTypeToggle)
     }
 

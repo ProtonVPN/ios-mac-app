@@ -39,7 +39,7 @@ public struct FreeConnectionInfoFeature {
     public init() {}
 
     public var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .upgradeButtonTapped:
                 .none

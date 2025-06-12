@@ -76,7 +76,7 @@ public final class TimerFactoryMock: TimerFactory {
         }
     }
 
-    public func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, leeway: DispatchTimeInterval?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    public func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, leeway _: DispatchTimeInterval?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimer {
         lastQueueWorkWasScheduledOn = queue
 
         let timer = BackgroundTimerMock(nextRunTime: nextRunTime, repeating: repeating, queue: queue, closure: closure)

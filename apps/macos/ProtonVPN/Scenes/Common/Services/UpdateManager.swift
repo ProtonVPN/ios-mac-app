@@ -172,22 +172,22 @@ final class UpdateManager: NSObject {
 }
 
 extension UpdateManager: SPUUpdaterDelegate {
-    func versionComparator(for updater: SPUUpdater) -> (any SUVersionComparison)? {
+    func versionComparator(for _: SPUUpdater) -> (any SUVersionComparison)? {
         CustomVersionComparator.shared
     }
 
-    func updaterWillRelaunchApplication(_ updater: SPUUpdater) {
+    func updaterWillRelaunchApplication(_: SPUUpdater) {
         if let sessionManager = appSessionManager, sessionManager.loggedIn {
             propertiesManager.rememberLoginAfterUpdate = true
         }
     }
 
-    func updater(_ updater: SPUUpdater, didFinishLoading appcast: SUAppcast) {
+    func updater(_: SPUUpdater, didFinishLoading appcast: SUAppcast) {
         self.appcast = appcast
         stateUpdated?()
     }
 
-    func updater(_ updater: SPUUpdater, userDidMake choice: SPUUserUpdateChoice, forUpdate updateItem: SUAppcastItem, state: SPUUserUpdateState) {
+    func updater(_: SPUUpdater, userDidMake choice: SPUUserUpdateChoice, forUpdate _: SUAppcastItem, state _: SPUUserUpdateState) {
         switch choice {
         case .dismiss, .skip:
             lastUpdateDismissal = Date()
@@ -198,7 +198,7 @@ extension UpdateManager: SPUUpdaterDelegate {
         }
     }
 
-    func updater(_ updater: SPUUpdater, mayPerform updateCheck: SPUUpdateCheck) throws {
+    func updater(_: SPUUpdater, mayPerform updateCheck: SPUUpdateCheck) throws {
         switch updateCheck {
         case .updatesInBackground:
             guard !chillOut else {
@@ -211,18 +211,18 @@ extension UpdateManager: SPUUpdaterDelegate {
         }
     }
 
-    func feedURLString(for updater: SPUUpdater) -> String? {
+    func feedURLString(for _: SPUUpdater) -> String? {
         Self.feedURLString
     }
 
-    func updaterMayCheck(forUpdates updater: SPUUpdater) -> Bool {
+    func updaterMayCheck(forUpdates _: SPUUpdater) -> Bool {
         guard !propertiesManager.blockUpdatePrompt else {
             return false
         }
         return true
     }
 
-    func allowedChannels(for updater: SPUUpdater) -> Set<String> {
+    func allowedChannels(for _: SPUUpdater) -> Set<String> {
         guard let channel else { return [] }
         return [channel]
     }

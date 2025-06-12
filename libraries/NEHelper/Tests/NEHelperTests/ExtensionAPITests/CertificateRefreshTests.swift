@@ -88,7 +88,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
 
         manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
+            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { _ in
                 expectations.certResponse.fulfill()
             }
         }
@@ -719,7 +719,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             certRefreshReschedule: XCTestExpectation(description: "Cert refresh request was rescheduled")
         )
 
-        certRefreshCallback = { request, completionHandler in
+        certRefreshCallback = { _, completionHandler in
             completionHandler(nil, nil, POSIXError(.ETIMEDOUT))
             expectations.certRefreshRequest.fulfill()
         }
@@ -753,7 +753,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             managerStop: XCTestExpectation(description: "Manager should stop")
         )
 
-        certRefreshCallback = { request, completionHandler in
+        certRefreshCallback = { _, completionHandler in
             completionHandler(nil, nil, POSIXError(.ETIMEDOUT))
             expectations.certRefreshRequest.fulfill()
         }
@@ -997,7 +997,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             self?.timerFactory.runAllScheduledWork()
         }
 
-        certRefreshCallback = { request, completion in
+        certRefreshCallback = { _, completion in
             willStop.wait()
 
             completion(nil, nil, POSIXError(.ETIMEDOUT))

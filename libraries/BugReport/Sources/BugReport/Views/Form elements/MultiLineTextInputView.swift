@@ -74,7 +74,7 @@ struct MultiLineTextInputView: View {
             return textView
         }
 
-        func updateUIView(_ textView: UITextView, context: Context) {
+        func updateUIView(_ textView: UITextView, context _: Context) {
             textView.text = text
         }
 

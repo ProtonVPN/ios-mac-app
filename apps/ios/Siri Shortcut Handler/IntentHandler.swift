@@ -26,17 +26,17 @@ import NetworkExtension
 import Strings
 
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
-    func handle(intent: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
+    func handle(intent _: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
         completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
 
-    func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
+    func handle(intent _: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
         completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
 
-    func handle(intent: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
+    func handle(intent _: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
         Task {
             let status = await getVpnStatus()
             let text = self.getConnectionStatusString(status: status)
@@ -44,7 +44,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         }
     }
 
-    override func handler(for intent: INIntent) -> Any {
+    override func handler(for _: INIntent) -> Any {
         // This is the default implementation.  If you want different objects to handle different intents,
         // you can override this and return the handler you want for that particular intent.
 

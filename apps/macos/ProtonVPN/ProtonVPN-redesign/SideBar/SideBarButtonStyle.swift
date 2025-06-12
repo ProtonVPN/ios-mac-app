@@ -36,7 +36,7 @@
                 .onHover { isHovered = $0 }
         }
 
-        func backgroundColor(isPressed: Bool) -> Color {
+        func backgroundColor(isPressed _: Bool) -> Color {
             var style: AppTheme.Style = [.transparent]
             style.insert(isHovered ? .hovered : [])
             style.insert(isActive ? .active : [])

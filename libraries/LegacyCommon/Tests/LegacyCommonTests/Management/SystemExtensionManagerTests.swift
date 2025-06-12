@@ -117,7 +117,7 @@
 
             wait(for: approvalRequired, timeout: expectationTimeout)
 
-            sysextManager.requestRequiresUserApproval = { request in
+            sysextManager.requestRequiresUserApproval = { _ in
                 XCTFail("Request should have been cancelled, shouldn't ask for user approval")
             }
 
@@ -168,7 +168,7 @@
             let installFinished = XCTestExpectation(description: "Finish install")
             var result: SystemExtensionResult?
 
-            sysextManager.requestRequiresUserApproval = { request in
+            sysextManager.requestRequiresUserApproval = { _ in
                 XCTFail("Shouldn't need to request for approval, extensions are being upgraded")
             }
 

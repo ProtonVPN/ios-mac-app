@@ -59,17 +59,17 @@ class ServersInformationViewController: UIViewController {
         titleLabel.textColor = .normalTextColor()
     }
 
-    @IBAction func didTapDismiss(_ sender: Any) {
+    @IBAction func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }
 
 extension ServersInformationViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         viewModel.sections.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.sections[section].rowViewModels.count
     }
 
@@ -87,11 +87,11 @@ extension ServersInformationViewController: UITableViewDataSource {
 }
 
 extension ServersInformationViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         viewModel.sections[section].title != nil ? 56 : 0
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)

@@ -42,7 +42,7 @@ final class ViewController: UIViewController {
         modeSegmentedControl.addTarget(self, action: #selector(modeChanged), for: .valueChanged)
     }
 
-    @IBAction private func searchTapped(_ sender: Any) {
+    @IBAction private func searchTapped(_: Any) {
         coordinator.start(navigationController: navigationController!, data: createData(), mode: createMode())
     }
 
@@ -144,21 +144,21 @@ extension ViewController: SearchCoordinatorDelegate {
         navigationController?.present(upsellViewController, animated: true, completion: nil)
     }
 
-    func userDidSelectCountry(model: CountryViewModel) {}
+    func userDidSelectCountry(model _: CountryViewModel) {}
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func upsellDidDisappear(upsell: UpsellViewController?) {}
+    func upsellDidDisappear(upsell _: UpsellViewController?) {}
 
-    func userDidTapNext(upsell: UpsellViewController) {}
+    func userDidTapNext(upsell _: UpsellViewController) {}
 
-    func userDidDismissUpsell(upsell: UpsellViewController?) {}
+    func userDidDismissUpsell(upsell _: UpsellViewController?) {}
 
-    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
+    func shouldDismissUpsell(upsell _: UpsellViewController?) -> Bool {
         true
     }
 
-    func userDidRequestPlus(upsell: UpsellViewController?) {
+    func userDidRequestPlus(upsell _: UpsellViewController?) {
         coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
         navigationController?.dismiss(animated: true, completion: nil)
     }

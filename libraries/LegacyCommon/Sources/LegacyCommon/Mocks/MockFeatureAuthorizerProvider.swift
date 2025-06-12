@@ -54,7 +54,7 @@
         }
 
         public func authorizer<T: ModularAppFeature>(
-            forSubFeatureOf feature: T.Type
+            forSubFeatureOf _: T.Type
         ) -> (T) -> FeatureAuthorizationResult {
             { subFeature in
                 let key = Self.key(for: subFeature)
@@ -67,7 +67,7 @@
         }
 
         public func authorizer<T: ModularAppFeature>(
-            for feature: T.Type
+            for _: T.Type
         ) -> Authorizer<T> {
             Authorizer(canUse: { subFeature in
                 let key = Self.key(for: subFeature)
@@ -95,15 +95,15 @@
             self.result = result
         }
 
-        public func authorizer(for feature: (some AppFeature).Type) -> () -> FeatureAuthorizationResult {
+        public func authorizer(for _: (some AppFeature).Type) -> () -> FeatureAuthorizationResult {
             { result }
         }
 
-        public func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult {
+        public func authorizer<T: ModularAppFeature>(forSubFeatureOf _: T.Type) -> (T) -> FeatureAuthorizationResult {
             { _ in result }
         }
 
-        public func authorizer<T: ModularAppFeature>(for feature: T.Type) -> Authorizer<T> {
+        public func authorizer<T: ModularAppFeature>(for _: T.Type) -> Authorizer<T> {
             .init(canUse: { _ in result })
         }
     }
