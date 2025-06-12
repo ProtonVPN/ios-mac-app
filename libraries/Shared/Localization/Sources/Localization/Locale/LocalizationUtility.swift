@@ -35,7 +35,7 @@ public final class LocalizationUtility {
     }
 
     public func shortenIfNeeded(_ name: String) -> String {
-        return namesToShorten[name] ?? name
+        namesToShorten[name] ?? name
     }
 
     /// First, try to get the user's first preferred language, and return the country name for that language.
@@ -114,7 +114,7 @@ extension CountryNameProvider: DependencyKey {
     public static var testValue: CountryNameProvider { .liveValue } // Use real implementation for tests by default
 
     public static func mock(codeToNameDictionary: [String: String]) -> CountryNameProvider {
-        return CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })
+        CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })
     }
 }
 

@@ -88,7 +88,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
-        return factory.makeNavigationService()
+        factory.makeNavigationService()
     }
 
     private lazy var networking: Networking = factory.makeNetworking()
@@ -181,7 +181,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     func canPreviewApp() -> Bool {
-        return !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
+        !isServerRepositoryEmpty && self.propertiesManager.userLocation?.ip != nil
     }
 
     func loadDataWithoutLogin() async throws {

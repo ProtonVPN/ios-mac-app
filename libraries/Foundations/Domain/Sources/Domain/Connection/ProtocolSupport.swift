@@ -59,17 +59,17 @@ extension VpnProtocol {
     fileprivate var protocolSupportBitPosition: Int {
         switch self {
         case .ike:
-            return 0
+            0
         case .wireGuard(.udp):
-            return 1
+            1
         case .wireGuard(.tcp):
-            return 2
+            2
         case .wireGuard(.tls):
-            return 3
+            3
         case .openVpn(.udp):
-            return 4
+            4
         case .openVpn(.tcp):
-            return 5
+            5
         }
     }
 

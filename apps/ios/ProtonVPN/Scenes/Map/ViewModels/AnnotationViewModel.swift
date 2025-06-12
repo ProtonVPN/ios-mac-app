@@ -73,40 +73,40 @@ protocol AnnotationViewModel {
 
 extension AnnotationViewModel {
     var connectedUiState: Bool { // ui connected state
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
     
     var pinHeight: CGFloat {
         switch viewState {
         case .idle:
-            return minPinHeight
+            minPinHeight
         case .selected:
-            return maxPinHeight
+            maxPinHeight
         }
     }
     
     var outlineWidth: CGFloat {
-        return 2
+        2
     }
 
     private var localizedCountry: String? {
-        return LocalizationUtility.default.countryName(forCode: countryCode)
+        LocalizationUtility.default.countryName(forCode: countryCode)
     }
 
     var accessibilityLabel: String {
-        return localizedCountry ?? ""
+        localizedCountry ?? ""
     }
     
     var labelString: NSAttributedString {
-        return (localizedCountry ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
+        (localizedCountry ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
     
     var labelHeight: CGFloat {
-        return 36
+        36
     }
     
     var labelStringPadding: CGFloat {
-        return labelHeight - labelString.size().height
+        labelHeight - labelString.size().height
     }
     
     var labelWidth: CGFloat {
@@ -115,14 +115,14 @@ extension AnnotationViewModel {
     }
     
     var hideLabel: Bool {
-        return viewState == .idle
+        viewState == .idle
     }
     
     var maxHeight: CGFloat {
-        return maxPinHeight + labelHeight
+        maxPinHeight + labelHeight
     }
     
     var flag: UIImage? {
-        return UIImage.flag(countryCode: countryCode)
+        UIImage.flag(countryCode: countryCode)
     }
 }

@@ -33,43 +33,43 @@ public final class ProfileUtility {
     public static func index(for serverType: ServerType) -> Int {
         switch serverType {
         case .standard:
-            return 0
+            0
         case .secureCore:
-            return 1
+            1
         case .p2p:
-            return 2
+            2
         case .tor:
-            return 3
+            3
         case .unspecified:
-            return 4
+            4
         }
     }
     
     public static func serverType(for index: Int) -> ServerType {
         switch index {
         case 0:
-            return .standard
+            .standard
         case 1:
-            return .secureCore
+            .secureCore
         case 2:
-            return .p2p
+            .p2p
         case 3:
-            return .tor
+            .tor
         default:
-            return .unspecified
+            .unspecified
         }
     }
     
     static func profile(withName name: String, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.name == name }.first
+        profiles.filter { $0.name == name }.first
     }
     
     static func profile(withId id: String, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.id == id }.first
+        profiles.filter { $0.id == id }.first
     }
     
     static func existsProfile(withName name: String, in profiles: [Profile]) -> Bool {
-        return profile(withName: name, in: profiles) != nil
+        profile(withName: name, in: profiles) != nil
     }
     
     static func profile(withServer server: ServerModel, in profiles: [Profile]) -> Profile? {
@@ -82,15 +82,15 @@ public final class ProfileUtility {
     }
     
     static func existsProfile(withServer server: ServerModel, in profiles: [Profile]) -> Bool {
-        return profile(withServer: server, in: profiles) != nil
+        profile(withServer: server, in: profiles) != nil
     }
     
     static func profile(withConfiguration profile: Profile, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.serverType == profile.serverType && $0.serverOffering == profile.serverOffering }.first
+        profiles.filter { $0.serverType == profile.serverType && $0.serverOffering == profile.serverOffering }.first
     }
     
     static func existsProfile(withConfiguration existingProfile: Profile, in profiles: [Profile]) -> Bool {
-        return profile(withConfiguration: existingProfile, in: profiles) != nil
+        profile(withConfiguration: existingProfile, in: profiles) != nil
     }
     
     static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
@@ -137,7 +137,7 @@ public final class ProfileUtility {
     }
     
     static func delete(profile: Profile, in profiles: [Profile]) -> [Profile] {
-        return profiles.filter { $0.id != profile.id }
+        profiles.filter { $0.id != profile.id }
     }
     
     // MARK: - Private static functions

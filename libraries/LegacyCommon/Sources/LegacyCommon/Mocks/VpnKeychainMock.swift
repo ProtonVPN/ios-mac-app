@@ -61,7 +61,7 @@
         }
     
         public func fetchOpenVpnPassword() throws -> Data {
-            return Data()
+            Data()
         }
 
         public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
@@ -107,7 +107,7 @@
         }
     
         public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
-            return VpnCredentials(
+            VpnCredentials(
                 status: 0,
                 planTitle: planName,
                 maxConnect: 1,
@@ -127,21 +127,21 @@
         }
     
         public func hasOldVpnPassword() -> Bool {
-            return false
+            false
         }
     
         public func clearOldVpnPassword() throws {}
     
         public func store(wireguardConfiguration: Data) throws -> Data {
-            return Data()
+            Data()
         }
     
         public func fetchWireguardConfigurationReference() throws -> Data {
-            return Data()
+            Data()
         }
     
         public func fetchWireguardConfiguration() throws -> String? {
-            return nil
+            nil
         }
 
         public func fetchWidgetPublicKey() throws -> CryptoService.Key {

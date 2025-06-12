@@ -54,6 +54,6 @@ class ConnectingWindowController: WindowController {
 class ConnectingOverlayWindow: NSWindow {
     // This makes `addCursorRect` in `ConnectingOverlayButton` work.
     override var canBecomeKey: Bool {
-        return true
+        true
     }
 }

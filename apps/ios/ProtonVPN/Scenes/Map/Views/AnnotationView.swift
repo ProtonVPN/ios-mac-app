@@ -26,19 +26,19 @@ import CoreLocation
 // abstract superclass
 class AnnotationView: UIView {
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
 
     var available: Bool {
-        return false
+        false
     }
 
     var selected: Bool {
-        return false
+        false
     }
 
     var connectedState: Bool {
-        return false
+        false
     }
 
     @available(*, unavailable)

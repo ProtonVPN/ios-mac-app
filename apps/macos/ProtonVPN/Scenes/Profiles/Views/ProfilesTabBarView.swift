@@ -50,7 +50,7 @@ class ProfilesTabBarView: NSView {
     }
     
     private func isFocused(tabIndex index: ProfilesTab) -> Bool {
-        return activeTab == index
+        activeTab == index
     }
     
     override func draw(_ dirtyRect: NSRect) {

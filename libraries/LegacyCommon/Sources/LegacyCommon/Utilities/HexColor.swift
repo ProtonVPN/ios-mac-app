@@ -86,6 +86,6 @@ private func convert2Hex( _ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ a
 
 extension Int {
     fileprivate var rgbComponents: RGB {
-        return RGB( (self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF )
+        RGB( (self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF )
     }
 }

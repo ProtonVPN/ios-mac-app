@@ -24,11 +24,11 @@ import UIKit
 
 public final class CountryCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil) // swiftlint:disable:this hardcoded_assets

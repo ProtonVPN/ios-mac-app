@@ -60,6 +60,6 @@ extension WhatsNew.Item: Equatable {}
 
 extension WhatsNew.Item: CaseIterable {
     public static var allCases: [WhatsNew.Item] {
-        return [.widgetAdoption]
+        [.widgetAdoption]
     }
 }

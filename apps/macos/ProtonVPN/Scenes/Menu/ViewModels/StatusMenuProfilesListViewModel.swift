@@ -31,11 +31,11 @@ class StatusMenuProfilesListViewModel {
     var contentChanged: (() -> Void)?
     
     var cellHeight: CGFloat {
-        return 44
+        44
     }
     
     var cellCount: Int {
-        return profileManager.allProfiles.count
+        profileManager.allProfiles.count
     }
     
     private var userTier: Int {
@@ -58,7 +58,7 @@ class StatusMenuProfilesListViewModel {
     }
     
     func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel {
-        return StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
+        StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
     }
     
     @objc private func profilesChanged() {

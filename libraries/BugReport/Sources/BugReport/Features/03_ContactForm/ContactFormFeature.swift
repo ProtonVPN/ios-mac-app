@@ -43,18 +43,18 @@ struct ContactFormFeature: Reducer {
         // https://github.com/apple/swift/issues/66450
 
         var showLogsInfo: Bool {
-            return fields.last?.boolValue == false
+            fields.last?.boolValue == false
         }
 
         var canBeSent: Bool {
             // Make sure that none of the mandatory fields contains empty value or unchecked switch
             // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
-            return !fields.filter({ $0.inputField.isMandatory ?? true }).contains(where: {
+            !fields.filter({ $0.inputField.isMandatory ?? true }).contains(where: {
                 switch $0.inputField.type {
                 case .textSingleLine, .textMultiLine:
-                    return $0.stringValue.isEmpty
+                    $0.stringValue.isEmpty
                 case .switch:
-                    return !$0.boolValue
+                    !$0.boolValue
                 }
             })
         }

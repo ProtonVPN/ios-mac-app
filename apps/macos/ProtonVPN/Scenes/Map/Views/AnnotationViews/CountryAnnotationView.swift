@@ -382,7 +382,7 @@ class CountryAnnotationView: MapAnnotationView {
     }
 
     override func hitTest(_ point: NSPoint) -> NSView? {
-        return hitTestForState(point, hovered: hovered)
+        hitTestForState(point, hovered: hovered)
     }
 
     override func mouseEntered(with event: NSEvent) {

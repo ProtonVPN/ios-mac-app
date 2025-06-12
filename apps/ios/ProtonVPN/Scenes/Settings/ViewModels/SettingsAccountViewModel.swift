@@ -136,7 +136,7 @@ final class SettingsAccountViewModel {
     }
 
     private var changePasswordSection: TableViewSection {
-        return TableViewSection(title: "", cells: [
+        TableViewSection(title: "", cells: [
             .pushStandard(title: Localizable.changePassword, handler: { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in
@@ -154,7 +154,7 @@ final class SettingsAccountViewModel {
     }
 
     private var securityKeysSection: TableViewSection {
-        return TableViewSection(title: "", cells: [
+        TableViewSection(title: "", cells: [
             .pushStandard(title: Localizable.securityKeys) { [weak self] in
                 guard let self, let pushHandler else { return }
                 Task { @MainActor [weak self] in

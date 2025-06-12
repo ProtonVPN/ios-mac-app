@@ -55,7 +55,7 @@ extension TypedNotification {
 
 protocol EmptyTypedNotification: TypedNotification<Void> {}
 extension EmptyTypedNotification {
-    var data: Void { return }
+    var data: Void {}
 }
 
 /// Wraps the observer token received from NotificationCenter and unregisters it when deallocated
@@ -108,7 +108,7 @@ extension NotificationCenter {
         object: Any?,
         handler: @escaping (Notification) -> Void
     ) -> [NotificationToken] {
-        return notifications.map { addObserver(for: $0, queue: queue, object: object, handler: handler) }
+        notifications.map { addObserver(for: $0, queue: queue, object: object, handler: handler) }
     }
 
     /// Similarly to the above overloads, returns a `NotificationToken` which is used to control the lifetime of the
@@ -147,7 +147,7 @@ extension NotificationCenter {
         object: Any?,
         handler: @escaping (T) -> Void
     ) -> NotificationToken where Notification: TypedNotification<T> {
-        return addObserver(for: Notification.name, queue: queue, object: object) { notification in
+        addObserver(for: Notification.name, queue: queue, object: object) { notification in
             if let data: T = Notification.data(from: notification) {
                 handler(data)
             }

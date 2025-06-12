@@ -138,7 +138,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
 extension PropertiesManagerProtocol {
     public var connectionProtocol: ConnectionProtocol {
         get {
-            return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+            smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
         }
         set {
             switch newValue {
@@ -158,10 +158,10 @@ extension PropertiesManagerProtocol {
     public var currentProtocolSupport: ProtocolSupport {
         switch connectionProtocol {
         case .smartProtocol:
-            return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
+            ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
 
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.protocolSupport
+            vpnProtocol.protocolSupport
         }
     }
 }
@@ -354,7 +354,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @Property(.lastConnectionRequest) public var lastConnectionRequest: ConnectionRequest?
 
     public func getLastAccountPlan(for username: String) -> String? {
-        return defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username)
+        defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + username)
     }
 
     public func setLastAccountPlan(for username: String, plan: String?) {
@@ -372,7 +372,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @Shared(.secureCoreToggle) public var secureCoreToggle: Bool
 
     public var serverTypeToggle: ServerType {
-        return secureCoreToggle ? .secureCore : .standard
+        secureCoreToggle ? .secureCore : .standard
     }
 
     @StringProperty(.lastBugReportEmail) public var reportBugEmail: String?
@@ -422,9 +422,9 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     public var maintenanceServerRefreshIntereval: Int {
         get {
             if storage.contains(Keys.maintenanceServerRefreshIntereval.rawValue) {
-                return defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
+                defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
             } else {
-                return DomainConstants.Maintenance.defaultMaintenanceCheckTime
+                DomainConstants.Maintenance.defaultMaintenanceCheckTime
             }
         }
         set {
@@ -443,7 +443,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public var alternativeRouting: Bool {
         get {
-            return defaults.bool(forKey: Keys.alternativeRouting.rawValue)
+            defaults.bool(forKey: Keys.alternativeRouting.rawValue)
         }
         set {
             storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
@@ -502,7 +502,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     }
 
     public func getValue(forKey key: String) -> Bool {
-        return defaults.bool(forKey: key)
+        defaults.bool(forKey: key)
     }
 
     public func setValue(_ value: Bool, forKey key: String) {

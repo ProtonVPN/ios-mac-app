@@ -29,8 +29,8 @@ public enum KillSwitchState: LocalizedStringConvertible {
 
     public var localizedDescription: String {
         switch self {
-        case .on: return Localizable.settingsKillswitchOn
-        case .off: return Localizable.settingsKillswitchOff
+        case .on: Localizable.settingsKillswitchOn
+        case .off: Localizable.settingsKillswitchOff
         }
     }
 }

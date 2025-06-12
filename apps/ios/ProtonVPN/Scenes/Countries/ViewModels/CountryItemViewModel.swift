@@ -96,14 +96,14 @@ class CountryItemViewModel {
     var isUsersTierTooLow: Bool {
         switch serversGroup.kind {
         case .country:
-            return userTier.isFreeTier // No countries are shown as available to free users
+            userTier.isFreeTier // No countries are shown as available to free users
         case .gateway:
-            return false // atm only users who have gateways received them from api
+            false // atm only users who have gateways received them from api
         }
     }
 
     var underMaintenance: Bool {
-        return serversGroup.isUnderMaintenance
+        serversGroup.isUnderMaintenance
             || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
     }
 
@@ -137,7 +137,7 @@ class CountryItemViewModel {
     }
 
     private var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     var connectionChanged: (() -> Void)?
@@ -145,32 +145,32 @@ class CountryItemViewModel {
     var countryCode: String {
         switch serversGroup.kind {
         case let .country(code):
-            return code
+            code
         case .gateway:
-            return ""
+            ""
         }
     }
 
     var countryName: String {
         switch serversGroup.kind {
         case let .country(code):
-            return LocalizationUtility.default.countryName(forCode: code) ?? ""
+            LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
-            return ""
+            ""
         }
     }
 
     var description: String {
         switch serversGroup.kind {
         case let .country(code):
-            return LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
+            LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
         case let .gateway(name):
-            return name
+            name
         }
     }
 
     var backgroundColor: UIColor {
-        return .backgroundColor()
+        .backgroundColor()
     }
 
     var torAvailable: Bool {
@@ -186,29 +186,29 @@ class CountryItemViewModel {
     }
 
     var streamingAvailable: Bool {
-        return !streamingServices.isEmpty
+        !streamingServices.isEmpty
     }
 
     var isCurrentlyConnected: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return Theme.Asset.vpnSubscriptionBadge.image
+            Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
-            return IconProvider.wrench
+            IconProvider.wrench
         } else {
-            return IconProvider.powerOff
+            IconProvider.powerOff
         }
     }
 
     var streamingServices: [VpnStreamingOption] {
-        return propertiesManager.streamingServices[countryCode]?["2"] ?? []
+        propertiesManager.streamingServices[countryCode]?["2"] ?? []
     }
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? Localizable.upgrade : nil
+        isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     var alphaOfMainElements: CGFloat {
@@ -228,7 +228,7 @@ class CountryItemViewModel {
     private lazy var plusServerViewModels: [ServerItemViewModel] = serverViewModels(for: servers.filter(\.logical.tier.isPaidTier))
 
     private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
-        return servers.map { serverInfo -> ServerItemViewModel in
+        servers.map { serverInfo -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
                 return ServerItemViewModel(
@@ -333,11 +333,11 @@ class CountryItemViewModel {
     // MARK: Methods
 
     func serversCount(for section: Int) -> Int {
-        return serverViewModels[section].viewModels.count
+        serverViewModels[section].viewModels.count
     }
 
     func sectionsCount() -> Int {
-        return serverViewModels.count
+        serverViewModels.count
     }
 
     func titleFor(section: Int) -> String {
@@ -346,15 +346,15 @@ class CountryItemViewModel {
     }
 
     func isServerPlusOrAbove( for section: Int) -> Bool {
-        return serverViewModels[section].tier.isPaidTier
+        serverViewModels[section].tier.isPaidTier
     }
 
     func isServerFree( for section: Int) -> Bool {
-        return serverViewModels[section].tier.isFreeTier
+        serverViewModels[section].tier.isFreeTier
     }
 
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
-        return serverViewModels[section].viewModels[row]
+        serverViewModels[section].viewModels[row]
     }
 
     func connectAction() {
@@ -430,15 +430,15 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     func getCities() -> [CityViewModel] {
-        return cityItemViewModels
+        cityItemViewModels
     }
 
     var flag: UIImage? {
         switch serversGroup.kind {
         case let .country(countryCode):
-            return UIImage.flag(countryCode: countryCode)
+            UIImage.flag(countryCode: countryCode)
         case .gateway:
-            return Theme.Asset.Flags.gateway.image
+            Theme.Asset.Flags.gateway.image
         }
     }
 
@@ -453,7 +453,7 @@ extension CountryItemViewModel: CountryViewModel {
     }
 
     var textColor: UIColor {
-        return UIColor.normalTextColor()
+        UIColor.normalTextColor()
     }
 
     var isSecureCoreCountry: Bool {

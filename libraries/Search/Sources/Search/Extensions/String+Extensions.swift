@@ -20,7 +20,7 @@ import Foundation
 
 extension String {
     var normalized: String {
-        return folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+        folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
     }
 
     func findStartingRanges(of substring: String) -> [NSRange] {

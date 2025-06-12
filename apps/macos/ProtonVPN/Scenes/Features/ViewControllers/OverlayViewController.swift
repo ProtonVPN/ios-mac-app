@@ -34,7 +34,7 @@ class OverlayViewController: NSViewController {
     var shouldDismissOnKeyDownEvent: Bool = true
 
     override var acceptsFirstResponder: Bool {
-        return true
+        true
     }
 
     override func viewDidAppear() {

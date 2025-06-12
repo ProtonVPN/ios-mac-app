@@ -50,10 +50,10 @@ public struct PerceptibleGeometryReaderMacro: ExpressionMacro {
         var description: String {
             switch self {
             case .missingTrailingClosure:
-                return "\(PerceptibleGeometryReaderMacro.self) expects child views to be passed using a trailing closure."
+                "\(PerceptibleGeometryReaderMacro.self) expects child views to be passed using a trailing closure."
 
             case .missingSignature:
-                return "\(PerceptibleGeometryReaderMacro.self) expects the trailing closure signature to define the GeometryProxy argument."
+                "\(PerceptibleGeometryReaderMacro.self) expects the trailing closure signature to define the GeometryProxy argument."
             }
         }
     }

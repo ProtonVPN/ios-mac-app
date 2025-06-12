@@ -226,9 +226,9 @@ private extension ExtensionFeature.State {
     var shouldTransitionToDisconnecting: Bool {
         switch self {
         case .preparingConnection, .connecting, .connected:
-            return true
+            true
         case .unknown, .disconnecting, .disconnected:
-            return false
+            false
         }
     }
 }
@@ -245,11 +245,11 @@ public enum TunnelConnectionError: Error, Equatable {
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
         switch lhs {
         case .tunnelStartFailed:
-            return rhs.is(\.tunnelStartFailed)
+            rhs.is(\.tunnelStartFailed)
         case .unknownServer:
-            return rhs.is(\.unknownServer)
+            rhs.is(\.unknownServer)
         case .tunnelAborted:
-            return rhs.is(\.tunnelAborted)
+            rhs.is(\.tunnelAborted)
         }
     }
 }
@@ -260,11 +260,11 @@ extension TunnelConnectionError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .tunnelStartFailed:
-            return "TNST"
+            "TNST"
         case .unknownServer:
-            return "UNKS"
+            "UNKS"
         case .tunnelAborted:
-            return "TNAB"
+            "TNAB"
         }
     }
 
@@ -275,9 +275,9 @@ extension TunnelConnectionError: ProtonVPNError {
     public var underlyingError: Error? {
         switch self {
         case let .tunnelStartFailed(error):
-            return error
+            error
         default:
-            return nil
+            nil
         }
     }
 }
@@ -300,7 +300,7 @@ extension ExtensionFeature.State {
     package var isInteractionAllowed: Bool {
         switch self {
         case .connected, .disconnected:
-            return true
+            true
 
         case .connecting:
             // Technically, the network extension could be ready for interaction in this state. Currently, the
@@ -309,10 +309,10 @@ extension ExtensionFeature.State {
             // complete an ipc round trip to determine what server we are connected to. As a result, we will take
             // slightly longer to cancel our connection.
             // This could be improved by storing the last `NEVPNStatus` received in our state.
-            return false
+            false
 
         case .unknown, .preparingConnection, .disconnecting:
-            return false
+            false
         }
     }
 }

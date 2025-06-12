@@ -82,19 +82,19 @@ private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory 
     }
 
     func makeAnnouncementManager() -> AnnouncementManager {
-        return announcementManager
+        announcementManager
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
+        propertiesManager
     }
 
     func makeCoreAlertService() -> CoreAlertService {
-        return coreAlertService
+        coreAlertService
     }
 
     func makeAppInfo(context: AppContext) -> AppInfo {
-        return AppInfoImplementation(context: context)
+        AppInfoImplementation(context: context)
     }
 }
 

@@ -55,25 +55,25 @@ public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
 
 extension ServerFeature: CustomStringConvertible {
     public var description: String {
-        return "\(elements().map(\.featureName))"
+        "\(elements().map(\.featureName))"
     }
 
     private var featureName: String {
         switch self {
         case .secureCore:
-            return "secureCore"
+            "secureCore"
         case .tor:
-            return "tor"
+            "tor"
         case .p2p:
-            return "p2p"
+            "p2p"
         case .streaming:
-            return "streaming"
+            "streaming"
         case .ipv6:
-            return "ipv6"
+            "ipv6"
         case .restricted:
-            return "restricted"
+            "restricted"
         default:
-            return ""
+            ""
         }
     }
 

@@ -36,7 +36,7 @@ import Announcement
 
 private let testData = MockTestData()
 private func mockAuthCredentials(username: String) -> AuthCredentials {
-    return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
+    AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
 }
 
 private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
@@ -414,12 +414,12 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         during operation: () -> T
     ) -> T {
         let subscribeAndReturnToken = {
-            return NotificationCenter.default.addObserver(for: notification, object: object) { notification in
+            NotificationCenter.default.addObserver(for: notification, object: object) { notification in
                 XCTFail("Unexpected notification posted: \(notification)")
             }
         }
         return withExtendedLifetime(subscribeAndReturnToken()) { _ in
-            return operation()
+            operation()
         }
     }
 }
@@ -501,7 +501,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
 
-    func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
+    func fetch(forContext: AppContext?) -> AuthCredentials? { credentials }
     func fetch(forContext: AppContext?) throws -> AuthCredentials {
         guard let credentials else {
             throw KeychainError.credentialsMissing("test-auth-keychain-storage-key")

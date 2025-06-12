@@ -70,7 +70,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
         } operation: {
-            return AppSessionRefresherMock(factory: self)
+            AppSessionRefresherMock(factory: self)
         }
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -225,31 +225,31 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 
 extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
     func makeTimerFactory() -> TimerFactory {
-        return timerFactory
+        timerFactory
     }
 
     func makeCoreAlertService() -> CoreAlertService {
-        return alertService
+        alertService
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
+        propertiesManager
     }
 
     func makeVpnApiService() -> VpnApiService {
-        return apiService
+        apiService
     }
 
     func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychain
+        vpnKeychain
     }
 
     func makeAppSessionRefresher() -> AppSessionRefresher {
-        return appSessionRefresher
+        appSessionRefresher
     }
 
     func makeUpdateChecker() -> any UpdateChecker {
-        return updateChecker
+        updateChecker
     }
 }
 

@@ -37,31 +37,31 @@ class CountryAnnotation: AnnotationView {
     private var shown = false
     
     override var coordinate: CLLocationCoordinate2D {
-        return viewModel.coordinate
+        viewModel.coordinate
     }
 
     override var connectedState: Bool {
-        return viewModel.connectedUiState
+        viewModel.connectedUiState
     }
     
     var maxHeight: CGFloat {
-        return viewModel.maxPinHeight + viewModel.labelHeight
+        viewModel.maxPinHeight + viewModel.labelHeight
     }
     
     var labelHeight: CGFloat {
-        return viewModel.labelHeight
+        viewModel.labelHeight
     }
     
     var width: CGFloat {
-        return viewModel.labelWidth
+        viewModel.labelWidth
     }
     
     override var available: Bool {
-        return viewModel.available
+        viewModel.available
     }
     
     override var selected: Bool {
-        return viewModel.viewState == .selected
+        viewModel.viewState == .selected
     }
     
     override var frame: CGRect {
@@ -121,7 +121,7 @@ class CountryAnnotation: AnnotationView {
     }
     
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        return flagBoarderView.point(inside: convert(point, to: flagBoarderView), with: event)
+        flagBoarderView.point(inside: convert(point, to: flagBoarderView), with: event)
     }
     
     override func layerWillDraw(_ layer: CALayer) {

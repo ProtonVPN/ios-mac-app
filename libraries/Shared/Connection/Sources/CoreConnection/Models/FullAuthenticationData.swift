@@ -33,7 +33,7 @@ public struct FullAuthenticationData: Equatable, Sendable {
 
     /// Returns a subset of data necessary to authenticate a LocalAgent connection
     public var authenticationData: VPNAuthenticationData {
-        return VPNAuthenticationData(
+        VPNAuthenticationData(
             clientKey: keys.privateKey,
             clientCertificate: certificate.certificate
         )

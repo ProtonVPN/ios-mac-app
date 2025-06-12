@@ -27,7 +27,7 @@ final class InformationTableViewCell: UITableViewCell {
     }
 
     static var cellIdentifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     @IBOutlet private weak var icon: UIImageView!

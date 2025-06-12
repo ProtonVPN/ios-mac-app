@@ -30,15 +30,15 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     public var description: String
     
     public var major: Int {
-        return versionComponents[0]
+        versionComponents[0]
     }
     
     public var minor: Int {
-        return versionComponents[1]
+        versionComponents[1]
     }
     
     public var patch: Int {
-        return versionComponents[2]
+        versionComponents[2]
     }
     
     public init(_ version: String) throws {
@@ -108,14 +108,14 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     }
     
     public static func == (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
-        return lhs.compare(to: rhs) == .orderedSame
+        lhs.compare(to: rhs) == .orderedSame
     }
     
     public static func > (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
-        return lhs.compare(to: rhs) == .orderedDescending
+        lhs.compare(to: rhs) == .orderedDescending
     }
     
     public static func < (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
-        return lhs.compare(to: rhs) == .orderedAscending
+        lhs.compare(to: rhs) == .orderedAscending
     }
 }

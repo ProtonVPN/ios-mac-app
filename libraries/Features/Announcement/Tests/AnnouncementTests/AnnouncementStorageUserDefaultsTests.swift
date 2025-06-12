@@ -91,6 +91,6 @@ private extension Announcement {
 
 private class StaticKeyNameProvider: KeyNameProvider {
     public var storageKey: String {
-        return "announcements"
+        "announcements"
     }
 }

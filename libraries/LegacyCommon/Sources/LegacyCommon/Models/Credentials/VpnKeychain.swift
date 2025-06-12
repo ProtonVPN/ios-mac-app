@@ -155,7 +155,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func fetchCached() throws -> CachedVpnCredentials {
-        return try cached ?? CachedVpnCredentials(credentials: fetch())
+        try cached ?? CachedVpnCredentials(credentials: fetch())
     }
 
     public func fetchOpenVpnPassword() throws -> Data {
@@ -288,7 +288,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     private func formBaseQuery(forKey key: String) -> [AnyHashable: Any] {
-        return [
+        [
             kSecClass as AnyHashable: kSecClassGenericPassword,
             kSecAttrGeneric as AnyHashable: key,
             kSecAttrAccount as AnyHashable: key,
@@ -342,7 +342,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func fetchWireguardConfigurationReference() throws -> Data {
-        return try getPasswordReference(forKey: StorageKey.wireguardSettings)
+        try getPasswordReference(forKey: StorageKey.wireguardSettings)
     }
 
     public func fetchWireguardConfiguration() throws -> String? {

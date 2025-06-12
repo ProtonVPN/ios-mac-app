@@ -40,11 +40,11 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
     
     override var learnLink: String {
-        return VPNLink.killSwitchSupport.urlString
+        VPNLink.killSwitchSupport.urlString
     }
     
     override var title: String! {
-        return Localizable.killSwitch
+        Localizable.killSwitch
     }
     
     init( _ factory: Factory ) {
@@ -53,7 +53,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [killSwitchOff, killSwitchOn]
+        [killSwitchOff, killSwitchOn]
     }
     
     override func viewDidLoad() {

@@ -139,22 +139,22 @@ public enum AppTheme {
         var width: CGFloat? {
             switch self {
             case .default:
-                return nil
+                nil
             case let .square(width):
-                return width
+                width
             case let .rect(width, _):
-                return width
+                width
             }
         }
 
         var height: CGFloat? {
             switch self {
             case .default:
-                return nil
+                nil
             case let .square(width):
-                return width
+                width
             case let .rect(_, height):
-                return height
+                height
             }
         }
     }

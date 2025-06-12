@@ -246,7 +246,7 @@ public enum WireguardProviderRequest: ProviderRequest {
 
 private extension HTTPCookiePropertyKey {
     var hasDateRepresentation: Bool {
-        return rawValue.lowercased() == "created" || rawValue.lowercased() == "expires"
+        rawValue.lowercased() == "created" || rawValue.lowercased() == "expires"
     }
 }
 
@@ -284,19 +284,19 @@ extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringCo
     public var description: String {
         switch self {
         case .cancelRefreshes:
-            return "cancelRefreshes"
+            "cancelRefreshes"
         case .flushLogsToFile:
-            return "flushLogsToFile"
+            "flushLogsToFile"
         case .getRuntimeTunnelConfiguration:
-            return "getRuntimeTunnelConfiguration"
+            "getRuntimeTunnelConfiguration"
         case .setApiSelector:
-            return "setApiSelector"
+            "setApiSelector"
         case let .refreshCertificate(features):
-            return "refreshCertificate(features: \(String(describing: features))"
+            "refreshCertificate(features: \(String(describing: features))"
         case .restartRefreshes:
-            return "restartRefreshes"
+            "restartRefreshes"
         case .getCurrentLogicalAndServerId:
-            return "getCurrentLogicalAndServerId"
+            "getCurrentLogicalAndServerId"
         }
     }
 

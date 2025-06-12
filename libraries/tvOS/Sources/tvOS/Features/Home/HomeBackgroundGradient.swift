@@ -45,13 +45,13 @@ struct HomeBackgroundGradient: View {
     var color: Color {
         switch mainBackground {
         case .connected:
-            return Color(.connectedGradient)
+            Color(.connectedGradient)
         case .disconnected:
-            return Color(.disconnectedGradient)
+            Color(.disconnectedGradient)
         case .connecting:
-            return Color(.connectingGradient)
+            Color(.connectingGradient)
         default:
-            return .clear
+            .clear
         }
     }
 

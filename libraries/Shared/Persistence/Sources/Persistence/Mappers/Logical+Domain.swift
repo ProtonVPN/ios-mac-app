@@ -48,7 +48,7 @@ extension VPNServer {
     }
 
     var logicalStatus: Persistence.LogicalStatus {
-        return .init(
+        .init(
             logicalID: logical.id,
             status: logical.status,
             load: logical.load, 
@@ -57,7 +57,7 @@ extension VPNServer {
     }
 
     var endpointRecords: [Persistence.Endpoint] {
-        return endpoints.map { endpoint in
+        endpoints.map { endpoint in
             .init(
                 logicalId: id,
                 id: endpoint.id,
@@ -72,7 +72,7 @@ extension VPNServer {
     }
 
     var overrideRecords: [Persistence.EndpointOverrides] {
-        return endpoints.compactMap(\.overrideInfo)
+        endpoints.compactMap(\.overrideInfo)
     }
 }
 
@@ -112,7 +112,7 @@ extension Domain.Logical {
 
 extension ContinuousServerProperties {
     var databaseRecord: LogicalStatus {
-        return LogicalStatus(logicalID: serverId, status: status, load: load, score: score)
+        LogicalStatus(logicalID: serverId, status: status, load: load, score: score)
     }
 }
 

@@ -23,11 +23,11 @@ extension DomainConstants {
     public static func serverTierName(forTier tier: Int) -> String {
         switch tier {
         case 0:
-            return Localizable.freeServers
+            Localizable.freeServers
         case 2:
-            return Localizable.plusServers
+            Localizable.plusServers
         default:
-            return Localizable.testServers
+            Localizable.testServers
         }
     }
 }

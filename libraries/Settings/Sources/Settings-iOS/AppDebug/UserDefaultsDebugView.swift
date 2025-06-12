@@ -78,16 +78,16 @@ struct UserDefaultsDebugView: View {
     private func textValue(forEntry entry: UserDefaultsEntry) -> String {
         switch entry.value {
         case let .bool(boolValue):
-            return String(boolValue)
+            String(boolValue)
 
         case let .data(data):
-            return "Data(\(data.count) bytes)"
+            "Data(\(data.count) bytes)"
 
         case let .int(intValue):
-            return String(intValue)
+            String(intValue)
 
         case let .string(string), let .utf8(string), let .unknown(string):
-            return string.count > 80 ? string.prefix(80) + "..." : string
+            string.count > 80 ? string.prefix(80) + "..." : string
         }
     }
 }

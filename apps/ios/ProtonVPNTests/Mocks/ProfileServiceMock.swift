@@ -29,11 +29,11 @@ class ProfileServiceMock: ProfileService {
     var dataSet: SelectionDataSet?
 
     func makeProfilesViewController() -> ProfilesViewController {
-        return ProfilesViewController()
+        ProfilesViewController()
     }
 
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
-        return nil
+        nil
     }
 
     func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {

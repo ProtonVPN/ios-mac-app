@@ -27,7 +27,7 @@ public struct SessionAuthRequest: Request {
     }
 
     public var path: String {
-        return "/auth/v4/sessions/forks/\(selector)"
+        "/auth/v4/sessions/forks/\(selector)"
     }
 
     public var method: HTTPMethod { .get }

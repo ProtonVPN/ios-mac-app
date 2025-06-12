@@ -35,24 +35,24 @@ public enum ProtectionState: Equatable {
     func copy(withNetShield netShield: NetShieldModel) -> ProtectionState {
         switch self {
         case .resolving:
-            return self
+            self
         case .protected:
-            return .protected(netShield: netShield.copy(enabled: true))
+            .protected(netShield: netShield.copy(enabled: true))
         case .protectedSecureCore:
-            return .protectedSecureCore(netShield: netShield.copy(enabled: true))
+            .protectedSecureCore(netShield: netShield.copy(enabled: true))
         case .unprotected:
-            return self
+            self
         case .protecting:
-            return self
+            self
         }
     }
 
     public var netShieldModel: NetShieldModel? {
         switch self {
         case let .protected(netShield), let .protectedSecureCore(netShield):
-            return netShield
+            netShield
         case .unprotected, .protecting, .resolving:
-            return nil
+            nil
         }
     }
 }

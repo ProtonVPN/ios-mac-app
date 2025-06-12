@@ -89,13 +89,13 @@ struct CountryListItemView: View {
     private var connectedCode: String? {
         switch connectionState {
         case let .connected(_, server, _, _):
-            return server.logical.entryCountryCode
+            server.logical.entryCountryCode
         case let .connecting(.unresolved(intent)):
-            return intent.server.logical.entryCountryCode
+            intent.server.logical.entryCountryCode
         case let .connecting(.resolved(_, server)):
-            return server.logical.entryCountryCode
+            server.logical.entryCountryCode
         default:
-            return nil
+            nil
         }
     }
 }

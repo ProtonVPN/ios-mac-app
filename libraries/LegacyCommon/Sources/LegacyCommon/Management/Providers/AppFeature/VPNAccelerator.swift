@@ -29,7 +29,7 @@ extension VPNAccelerator: PaidAppFeature {
     public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.vpnAccelerator
 
     public static func minTier(featureFlags: FeatureFlags) -> Int {
-        return .paidTier
+        .paidTier
     }
 }
 

@@ -60,7 +60,7 @@ final class CreateNewProfileViewController: NSViewController {
     private var colorPickerViewController: ColorPickerViewController!
 
     private var isSessionUnderway: Bool {
-        return !nameTextField.stringValue.isEmpty ||
+        !nameTextField.stringValue.isEmpty ||
             typeList.indexOfSelectedItem != 0 ||
             countryList.indexOfSelectedItem != 0
     }

@@ -56,7 +56,7 @@ extension macOSNetworkingDelegate {
     }
 
     func getSupportURL() -> URL {
-        return VPNLink.support.url
+        VPNLink.support.url
     }
 }
 

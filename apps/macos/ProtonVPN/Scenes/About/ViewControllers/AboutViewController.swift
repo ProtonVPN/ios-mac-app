@@ -108,11 +108,11 @@ class AboutViewController: NSViewController {
     // MARK: - Texts
     
     private var currentVersion: String {
-        return updateManager.currentVersion ?? Localizable.unavailable.lowercased()
+        updateManager.currentVersion ?? Localizable.unavailable.lowercased()
     }
     
     private var currentBuild: String {
-        return updateManager.currentBuild ?? Localizable.unavailable.lowercased()
+        updateManager.currentBuild ?? Localizable.unavailable.lowercased()
     }
     
     private var currentVersionReleaseDate: String {

@@ -85,7 +85,7 @@ open class ReportBugViewModel {
     }
     
     public func getEmail() -> String? {
-        return bug.email
+        bug.email
     }
     
     public func set(country: String) {
@@ -93,7 +93,7 @@ open class ReportBugViewModel {
     }
     
     public func getCountry() -> String? {
-        return bug.country
+        bug.country
     }
     
     public func set(isp: String) {
@@ -101,15 +101,15 @@ open class ReportBugViewModel {
     }
     
     public func getISP() -> String? {
-        return bug.ISP
+        bug.ISP
     }
     
     public func getUsername() -> String? {
-        return bug.username
+        bug.username
     }
     
     public func getClientVersion() -> String? {
-        return bug.clientVersion
+        bug.clientVersion
     }
     
     public func set(planTitle: String) {
@@ -118,11 +118,11 @@ open class ReportBugViewModel {
     }
     
     public func getPlanTitle() -> String? {
-        return planTitle
+        planTitle
     }
     
     public var isSendingPossible: Bool {
-        return bug.canBeSent
+        bug.canBeSent
     }
 
     public var logsEnabled: Bool = true

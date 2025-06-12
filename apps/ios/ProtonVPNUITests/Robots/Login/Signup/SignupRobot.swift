@@ -28,7 +28,7 @@ class SignupRobot: CoreElements {
     }
     
     func enterEmail(_ email: String) -> SignupRobot {
-        return insertExternalEmail(email)
+        insertExternalEmail(email)
     }
     
     private func insertExternalEmail(_ email: String) -> SignupRobot {

@@ -115,37 +115,37 @@ final class StatusMenuViewModel {
     }
 
     var isSessionEstablished: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
 
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
 
     var isStateStable: Bool {
-        return vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
+        vpnGateway.connection == .connected || vpnGateway.connection == .disconnected
     }
 
     var profileListViewModel: StatusMenuProfilesListViewModel {
-        return StatusMenuProfilesListViewModel(vpnGateway: vpnGateway, profileManager: factory.makeProfileManager())
+        StatusMenuProfilesListViewModel(vpnGateway: vpnGateway, profileManager: factory.makeProfileManager())
     }
 
     // MARK: - Connecting screen
 
     var isConnecting: Bool {
-        return vpnGateway.connection == .connecting
+        vpnGateway.connection == .connecting
     }
 
     private var isReconnecting: Bool {
-        return isConnecting && !propertiesManager.intentionallyDisconnected
+        isConnecting && !propertiesManager.intentionallyDisconnected
     }
 
     var connectingText: NSAttributedString {
-        return NSAttributedString()
+        NSAttributedString()
     }
 
     var cancelButtonTitle: String {
-        return Localizable.cancel
+        Localizable.cancel
     }
 
     func disconnectAction() {
@@ -157,41 +157,41 @@ final class StatusMenuViewModel {
     // MARK: - Login section
 
     var loginDescription: NSAttributedString {
-        return Localizable.openAppToLogIn.styled(font: .themeFont(.heading4))
+        Localizable.openAppToLogIn.styled(font: .themeFont(.heading4))
     }
 
     // MARK: - Header section
 
     var connectionLabel: NSAttributedString {
-        return formConnectionLabel()
+        formConnectionLabel()
     }
 
     var ipAddress: NSAttributedString {
-        return formIpAddress()
+        formIpAddress()
     }
 
     // MARK: - Secure core
 
     var secureCoreLabel: NSAttributedString {
-        return Localizable.secureCore.styled()
+        Localizable.secureCore.styled()
     }
 
     var upgradeForSecureCoreLabel: NSAttributedString {
-        return Localizable.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
+        Localizable.upgradeForSecureCore.styled(lineBreakMode: .byWordWrapping)
     }
 
     var upgradeToPlusTitle: NSAttributedString {
-        return Localizable.upgradeToPlus.styled([.interactive, .active])
+        Localizable.upgradeToPlus.styled([.interactive, .active])
     }
 
     // MARK: - Quick action section - Outputs
 
     var killSwitchDescription: String? {
-        return formKillSwitchDescription()
+        formKillSwitchDescription()
     }
 
     var quickActionDescription: String? {
-        return formQuickActionDescription()
+        formQuickActionDescription()
     }
 
     // MARK: - Quick action section - Inputs
@@ -214,7 +214,7 @@ final class StatusMenuViewModel {
     // MARK: - General section
 
     var unprotectedNetworkNotifications: Bool {
-        return propertiesManager.unprotectedNetworkNotifications
+        propertiesManager.unprotectedNetworkNotifications
     }
 
     // MARK: - Connect section - Outputs
@@ -222,9 +222,9 @@ final class StatusMenuViewModel {
     func countryCount() -> Int {
         switch serverType {
         case .standard, .p2p, .tor, .unspecified:
-            return standardCountries?.count ?? 0
+            standardCountries?.count ?? 0
         case .secureCore:
-            return secureCoreCountries?.count ?? 0
+            secureCoreCountries?.count ?? 0
         }
     }
 
@@ -464,9 +464,9 @@ final class StatusMenuViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            return appStateManager.activeConnection()?.serverIp.exitIp
+            appStateManager.activeConnection()?.serverIp.exitIp
         } else {
-            return propertiesManager.userLocation?.ip
+            propertiesManager.userLocation?.ip
         }
     }
 

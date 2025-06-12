@@ -42,7 +42,7 @@ extension DependencyValues {
 private enum SiriHelperKey: DependencyKey {
     static let liveValue: @Sendable () -> SiriHelperProtocol = {
         // Can be changed to `return SiriHelper()` when getting rid of current Dependency container
-        return Container.sharedContainer.makeSiriHelper()
+        Container.sharedContainer.makeSiriHelper()
     }
 }
 

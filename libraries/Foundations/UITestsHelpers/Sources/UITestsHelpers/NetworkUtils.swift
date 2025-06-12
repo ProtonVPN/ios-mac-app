@@ -38,21 +38,21 @@ public enum NetworkUtils {
         public var errorDescription: String? {
             switch self {
             case .invalidURL:
-                return "The URL provided is invalid."
+                "The URL provided is invalid."
             case .requestFailed:
-                return "The network request failed."
+                "The network request failed."
             case .invalidResponse:
-                return "The response from the server was invalid."
+                "The response from the server was invalid."
             case .unsupportedURL:
-                return "The URL is unsupported."
+                "The URL is unsupported."
             case .commandFailed:
-                return "Failed to execute command."
+                "Failed to execute command."
             case .outputParsingFailed:
-                return "Failed to parse command output."
+                "Failed to parse command output."
             case .gatewayNotFound:
-                return "Default gateway is not found."
+                "Default gateway is not found."
             case .connectionFailed:
-                return "Failed to connect to the gateway."
+                "Failed to connect to the gateway."
             }
         }
     }
@@ -106,7 +106,7 @@ public enum NetworkUtils {
     ///   - port: The port to check for connectivity.
     /// - Returns: A Boolean indicating whether the endpoint is reachable on the specified port.
     private static func isEndpointReachable(host: String, port: UInt16) async throws -> Bool {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             let connection = NWConnection(
                 host: NWEndpoint.Host(host),
                 port: NWEndpoint.Port(rawValue: port)!,

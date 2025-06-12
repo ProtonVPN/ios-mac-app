@@ -30,11 +30,11 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     private let vpnGateway: VpnGatewayProtocol
     
     var canConnect: Bool {
-        return !underMaintenance && canUseProfile
+        !underMaintenance && canUseProfile
     }
     
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
     
     var name: NSAttributedString {
@@ -43,7 +43,7 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
     }
     
     var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
+        formSecondaryDescription()
     }
         
     init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {

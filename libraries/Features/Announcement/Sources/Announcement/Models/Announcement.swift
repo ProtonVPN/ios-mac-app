@@ -40,7 +40,7 @@ public struct Announcement: Codable {
 
     // Wrapper param that returns false in case isRead is nil
     public var wasRead: Bool {
-        return isRead == true
+        isRead == true
     }
 
     mutating func setAsRead(_ read: Bool) {

@@ -41,45 +41,45 @@ final class CityItemViewModel: CityViewModel {
     let translatedCityName: String?
 
     var countryName: String {
-        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
     }
 
     var countryFlag: UIImage? {
-        return UIImage.flag(countryCode: countryCode)
+        UIImage.flag(countryCode: countryCode)
     }
 
     var isUsersTierTooLow: Bool {
-        return servers.allSatisfy(\.isUsersTierTooLow)
+        servers.allSatisfy(\.isUsersTierTooLow)
     }
 
     var underMaintenance: Bool {
-        return servers.allSatisfy(\.underMaintenance)
+        servers.allSatisfy(\.underMaintenance)
     }
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return Theme.Asset.vpnSubscriptionBadge.image
+            Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
-            return IconProvider.wrench
+            IconProvider.wrench
         } else {
-            return IconProvider.powerOff
+            IconProvider.powerOff
         }
     }
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? Localizable.upgrade : nil
+        isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     var isConnected: Bool {
-        return servers.contains(where: \.isConnected)
+        servers.contains(where: \.isConnected)
     }
 
     var isConnecting: Bool {
-        return servers.contains(where: \.isConnecting)
+        servers.contains(where: \.isConnecting)
     }
 
     var isCurrentlyConnected: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     var connectButtonColor: UIColor {
@@ -95,7 +95,7 @@ final class CityItemViewModel: CityViewModel {
     var connectionChanged: (() -> Void)?
 
     var textColor: UIColor {
-        return UIColor.normalTextColor()
+        UIColor.normalTextColor()
     }
 
     private let servers: [ServerItemViewModel]

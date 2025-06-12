@@ -36,17 +36,17 @@ enum SmartProtocolProtocol {
     var vpnProtocol: VpnProtocol {
         switch self {
         case .ikev2:
-            return .ike
+            .ike
         case .openVpnUdp:
-            return .openVpn(.udp)
+            .openVpn(.udp)
         case .openVpnTcp:
-            return .openVpn(.tcp)
+            .openVpn(.tcp)
         case .wireguardUdp:
-            return .wireGuard(.udp)
+            .wireGuard(.udp)
         case .wireguardTcp:
-            return .wireGuard(.tcp)
+            .wireGuard(.tcp)
         case .wireguardTls:
-            return .wireGuard(.tls)
+            .wireGuard(.tls)
         }
     }
 

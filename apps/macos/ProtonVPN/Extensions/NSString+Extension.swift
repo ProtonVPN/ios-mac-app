@@ -31,6 +31,6 @@ extension NSString {
     }
 
     func base64Encoded() -> String? {
-        return data(using: String.Encoding.utf8.rawValue)?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        data(using: String.Encoding.utf8.rawValue)?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
 }

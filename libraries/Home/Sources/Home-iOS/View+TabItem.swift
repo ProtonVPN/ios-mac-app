@@ -24,7 +24,7 @@ import ProtonCoreUIFoundations
 
 public extension View {
     func settingsTabItem() -> some View {
-        return self
+        self
             .tabItem {
                 Label {
                     Text(Localizable.settingsTab)
@@ -35,7 +35,7 @@ public extension View {
     }
 
     func countriesTabItem() -> some View {
-        return self
+        self
             .tabItem {
                 Label {
                     Text(Localizable.countriesTab)
@@ -46,7 +46,7 @@ public extension View {
     }
 
     func homeTabItem() -> some View {
-        return self
+        self
             .tabItem {
                 Label {
                     Text(Localizable.homeTab)

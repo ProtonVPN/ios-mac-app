@@ -53,18 +53,18 @@ final class ViewController: UIViewController {
     private func createMode() -> SearchMode {
         switch modeSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .standard(createTier())
+            .standard(createTier())
         default:
-            return .secureCore
+            .secureCore
         }
     }
 
     private func createTier() -> UserTier {
         switch userTierSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .free
+            .free
         default:
-            return .plus
+            .plus
         }
     }
 
@@ -155,7 +155,7 @@ extension ViewController: UpsellViewControllerDelegate {
     func userDidDismissUpsell(upsell: UpsellViewController?) {}
 
     func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
-        return true
+        true
     }
 
     func userDidRequestPlus(upsell: UpsellViewController?) {

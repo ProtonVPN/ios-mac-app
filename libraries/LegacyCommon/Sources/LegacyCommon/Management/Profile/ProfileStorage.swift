@@ -97,9 +97,9 @@ public final class ProfileStorage {
     private func storageKey(for version: StorageVersion) -> String? {
         switch version {
         case .v1:
-            return authKeychain.username.map { "profiles_" + $0 }
+            authKeychain.username.map { "profiles_" + $0 }
         case .v2:
-            return authKeychain.userId.map { "profiles_" + $0 }
+            authKeychain.userId.map { "profiles_" + $0 }
         }
     }
 
@@ -135,10 +135,10 @@ public final class ProfileStorage {
     }
 
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {
-        return profiles.filter({ $0.profileType != .system })
+        profiles.filter({ $0.profileType != .system })
     }
 
     private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
-        return !profiles.filter({ $0.profileType == .system }).isEmpty
+        !profiles.filter({ $0.profileType == .system }).isEmpty
     }
 }

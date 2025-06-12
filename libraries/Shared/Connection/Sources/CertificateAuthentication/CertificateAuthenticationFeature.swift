@@ -267,37 +267,37 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     public static func == (lhs: CertificateAuthenticationError, rhs: CertificateAuthenticationError) -> Bool {
         switch (lhs, rhs) {
         case (.wontRefresh, .wontRefresh):
-            return true
+            true
 
         case (.refreshWasRateLimited, .refreshWasRateLimited):
-            return true
+            true
 
         case (.ipc, .ipc):
-            return true
+            true
 
         case (.unexpected, .unexpected):
-            return true
+            true
 
         case (.keyGenerationFailed, .keyGenerationFailed):
-            return true
+            true
 
         default:
-            return false
+            false
         }
     }
 
     public var charCode: FourCharCode {
         switch self {
         case .keyGenerationFailed:
-            return "KGEN"
+            "KGEN"
         case .wontRefresh:
-            return "RFSH"
+            "RFSH"
         case .refreshWasRateLimited:
-            return "RATE"
+            "RATE"
         case .ipc:
-            return "RIPC"
+            "RIPC"
         case .unexpected:
-            return "UNEX"
+            "UNEX"
         }
     }
 
@@ -308,9 +308,9 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     public var underlyingError: Error? {
         switch self {
         case let .keyGenerationFailed(error), let .unexpected(error):
-            return error
+            error
         default:
-            return nil
+            nil
         }
     }
 

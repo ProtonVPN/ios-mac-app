@@ -147,7 +147,7 @@ final class TelemetrySettingsReporter {
     }
 
     private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
-        return .ipv4
+        .ipv4
     }
 
     private func isSystemHermesEnabled() async -> SettingsDimensions.SystemHermesEnabled {

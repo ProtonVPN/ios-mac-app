@@ -23,12 +23,12 @@ import Foundation
         public func startUpdate() {}
 
         public func isUpdateAvailable() async -> Bool {
-            return false
+            false
         }
 
         /// Check if the latest app supports the current running OS version.
         public func minimumVersionRequiredByNextUpdate() async -> OperatingSystemVersion {
-            return ProcessInfo.processInfo.operatingSystemVersion
+            ProcessInfo.processInfo.operatingSystemVersion
         }
 
         public init() {}

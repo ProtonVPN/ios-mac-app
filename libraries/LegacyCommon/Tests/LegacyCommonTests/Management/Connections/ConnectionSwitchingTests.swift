@@ -49,7 +49,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     }
 
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
-        return withEscapedDependencies { dependencies in
+        withEscapedDependencies { dependencies in
             DispatchQueue.main.async {
                 dependencies.yield {
                     closure()
@@ -174,7 +174,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() throws {
         container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
             // fail all the pings
-            return false
+            false
         }
 
         repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])

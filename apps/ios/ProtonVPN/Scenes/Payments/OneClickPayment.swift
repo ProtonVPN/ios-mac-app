@@ -42,11 +42,11 @@ final class OneClickPayment {
         var localizedDescription: String {
             switch self {
             case .featureFlagDisabled:
-                return "Account upgrade is currently unavailable on this device."
+                "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
-                return "Account upgrade is not available on TestFlight."
+                "Account upgrade is not available on TestFlight."
             case let .iapDisabled(localizedReason: reason):
-                return reason ?? "In-App purchases are temporarily unavailable on this device."
+                reason ?? "In-App purchases are temporarily unavailable on this device."
             }
         }
     }
@@ -147,7 +147,7 @@ final class OneClickPayment {
 
     @MainActor
     func oneClickIAPViewController(dismissAction: (() -> Void)? = nil) -> UIViewController {
-        return ModalsFactory().upsellViewController(
+        ModalsFactory().upsellViewController(
             modalType: .subscription,
             client: plansClient(),
             dismissAction: dismissAction
@@ -280,13 +280,13 @@ enum OneClickPurchaseError: Error, LocalizedError {
     var localizedDescription: String? {
         switch self {
         case .defaultPlanNotFound:
-            return "Default plan not found"
+            "Default plan not found"
         case let .planNotFound(planName):
-            return "StoreKitManager plan (\(planName)) not found"
+            "StoreKitManager plan (\(planName)) not found"
         case .unfinishedPurchaseInQueue:
-            return "StoreKitManager is not ready to purchase"
+            "StoreKitManager is not ready to purchase"
         case .presentingScreenDismissed:
-            return "Presenting screen was dismissed"
+            "Presenting screen was dismissed"
         }
     }
 }

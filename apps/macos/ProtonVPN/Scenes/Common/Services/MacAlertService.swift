@@ -472,13 +472,13 @@ extension MacAlertService: CoreAlertService {
     private func welcomeScreenType(plan: WelcomeScreenAlert.Plan) -> ModalType {
         switch plan {
         case .fallback:
-            return .welcomeFallback
+            .welcomeFallback
         case .unlimited:
-            return .welcomeUnlimited
+            .welcomeUnlimited
         case let .plus(numberOfServers, numberOfDevices, numberOfCountries):
-            return .welcomePlus(numberOfServers: numberOfServers,
-                                numberOfDevices: numberOfDevices,
-                                numberOfCountries: numberOfCountries)
+            .welcomePlus(numberOfServers: numberOfServers,
+                         numberOfDevices: numberOfDevices,
+                         numberOfCountries: numberOfCountries)
         }
     }
 }

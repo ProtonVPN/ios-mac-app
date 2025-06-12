@@ -13,7 +13,7 @@ struct WGConstants {
     static var keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"
 
     static var appIdentifierPrefix: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
 
     static var appGroupId: String {

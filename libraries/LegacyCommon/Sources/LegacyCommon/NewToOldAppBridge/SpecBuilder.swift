@@ -33,6 +33,6 @@ extension DependencyValues {
 
 extension ConnectionSpecBuilder {
     public static let liveValue: ConnectionSpecBuilder = .init { request in
-        return ConnectionSpec(connectionRequest: request)
+        ConnectionSpec(connectionRequest: request)
     }
 }

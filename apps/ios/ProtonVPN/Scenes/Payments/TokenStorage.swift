@@ -17,7 +17,7 @@ final class TokenStorage: PaymentTokenStorage {
     }
 
     func get() -> PaymentToken? {
-        return token
+        token
     }
 
     func clear() {

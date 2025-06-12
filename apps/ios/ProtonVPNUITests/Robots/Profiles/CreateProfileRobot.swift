@@ -26,7 +26,7 @@ class CreateProfileRobot: CoreElements {
 
     @discardableResult
     func setProfileDetails(profile: String, country: String, server: String? = nil, secureCoreState: Bool = false) -> CreateProfileRobot {
-        return enterProfileName(profile)
+        enterProfileName(profile)
             .setSecureCoreToggle(state: secureCoreState)
             .chooseCountry(country)
             .chooseServer(server)

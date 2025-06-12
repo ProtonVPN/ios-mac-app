@@ -108,11 +108,11 @@ private enum AnimationPhase: CaseIterable {
     var animation: Animation {
         switch self {
         case .wait:
-            return .easeInOut(duration: 2)
+            .easeInOut(duration: 2)
         case .initial:
-            return .smooth(duration: 0.75)
+            .smooth(duration: 0.75)
         case .scale:
-            return .easeInOut(duration: 0.75)
+            .easeInOut(duration: 0.75)
         }
     }
 
@@ -129,11 +129,11 @@ private enum AnimationPhase: CaseIterable {
     var rotationEffect: Angle {
         switch self {
         case .wait:
-            return .degrees(180)
+            .degrees(180)
         case .initial:
-            return .degrees(90)
+            .degrees(90)
         case .scale:
-            return .degrees(0)
+            .degrees(0)
         }
     }
 }

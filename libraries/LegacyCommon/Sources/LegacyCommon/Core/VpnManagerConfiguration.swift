@@ -28,21 +28,21 @@ public enum VpnManagerClientConfiguration {
     var usernameSuffix: String {
         switch self {
         case .iOSClient:
-            return "pi"
+            "pi"
         case .macClient:
-            return "pm"
+            "pm"
         case .vpnAccelerator:
-            return "nst"
+            "nst"
         case .netShieldLevel1:
-            return "f1"
+            "f1"
         case .netShieldLevel2:
-            return "f2"
+            "f2"
         case let .label(label):
-            return "b:\(label)"
+            "b:\(label)"
         case .moderateNAT:
-            return "nr"
+            "nr"
         case let .safeMode(enabled):
-            return enabled ? "sm" : "nsm"
+            enabled ? "sm" : "nsm"
         }
     }
 }

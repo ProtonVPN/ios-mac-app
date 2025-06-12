@@ -100,11 +100,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private func getFactory(for vpnProtocol: VpnProtocol) -> VpnProtocolFactory {
         switch vpnProtocol {
         case .ike:
-            return ikeProtocolFactory
+            ikeProtocolFactory
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            return wireguardProtocolFactory
+            wireguardProtocolFactory
         }
     }
 

@@ -75,10 +75,10 @@ struct HomeConnectionCardHeader: View {
     private var action: HomeConnectionCardFeature.Action? {
         switch model {
         case .disconnected(isPaid: true):
-            return .delegate(.defaultConnectionTapped)
+            .delegate(.defaultConnectionTapped)
 
         default:
-            return nil
+            nil
         }
     }
 
@@ -89,19 +89,19 @@ struct HomeConnectionCardHeader: View {
     private var titleString: String {
         switch model {
         case .resolving:
-            return Localizable.connectionCardLoading
+            Localizable.connectionCardLoading
 
         case .disconnected(isPaid: true):
-            return Localizable.connectionCardDefaultConnection
+            Localizable.connectionCardDefaultConnection
 
         case .disconnected(isPaid: false):
-            return Localizable.connectionsFree
+            Localizable.connectionsFree
 
         case .connecting:
-            return Localizable.connectionCardConnectingTo
+            Localizable.connectionCardConnectingTo
 
         case .connected:
-            return Localizable.connectionCardSafelyBrowsingFrom
+            Localizable.connectionCardSafelyBrowsingFrom
         }
     }
 }

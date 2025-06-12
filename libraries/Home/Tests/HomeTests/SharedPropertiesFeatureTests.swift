@@ -61,7 +61,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.logicalsClient.fetchLoads = { _ in return [] }
+            $0.logicalsClient.fetchLoads = { _ in [] }
             $0.serverRepository = .init(upsertLoads: { _ in })
         }
         store.exhaustivity = .off

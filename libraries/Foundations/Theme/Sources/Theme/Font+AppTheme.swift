@@ -53,11 +53,11 @@ public extension AppTheme {
                 var rawValue: Font.Weight {
                     switch self {
                     case .regular:
-                        return .regular
+                        .regular
                     case .semibold:
-                        return .semibold
+                        .semibold
                     case .bold:
-                        return .bold
+                        .bold
                     }
                 }
             }
@@ -118,12 +118,12 @@ public extension Font {
 
 public extension Text {
     func themeFont(_ typography: AppTheme.Typography = .default) -> Text {
-        return self.font(.themeFont(typography))
+        self.font(.themeFont(typography))
     }
 }
 
 public extension View {
     @inlinable func font(_ typography: AppTheme.Typography = .default) -> some View {
-        return self.font(.themeFont(typography))
+        self.font(.themeFont(typography))
     }
 }

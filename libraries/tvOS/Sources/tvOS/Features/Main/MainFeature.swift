@@ -116,10 +116,10 @@ struct MainFeature {
             case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
                 func effect(_ server: Server?) -> Effect<Action> { // when connecting/connected to a country
                     if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
-                        return .send(.connection(.input(.disconnect))) // just disconnect
+                        .send(.connection(.input(.disconnect))) // just disconnect
                     } else { // and the selected server is different
                         // start reconnection, which will first cancel/disconnect current connection
-                        return .send(.connectDisconnectingIfNecessary(item.code))
+                        .send(.connectDisconnectingIfNecessary(item.code))
                     }
                 }
                 if case let .connected(_, server, _, _) = state.connectionState {

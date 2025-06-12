@@ -25,7 +25,7 @@ import Theme
 
 class StatusWindow: NSPanel {
     override var canBecomeKey: Bool {
-        return true
+        true
     }
 }
 
@@ -41,7 +41,7 @@ final class StatusMenuWindowController: WindowController {
     private var eventsMonitor: Any?
 
     var windowIsVisible: Bool {
-        return window?.isVisible == true
+        window?.isVisible == true
     }
 
     var lastOpenApplication: NSRunningApplication?
@@ -186,7 +186,6 @@ extension StatusMenuWindowController {
 extension NSStatusBarButton {
     override open func mouseDown(with event: NSEvent) {
         // allow StatusMenuController to manage the behavour of clicking
-        return
     }
 }
 
@@ -226,9 +225,9 @@ extension AppIcon {
     var image: NSImage {
         switch self {
         case .active:
-            return AppIcon.appIconConnected
+            AppIcon.appIconConnected
         case .disconnected:
-            return AppIcon.appIconDisconnected
+            AppIcon.appIconDisconnected
         }
     }
 }

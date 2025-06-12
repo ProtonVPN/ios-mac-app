@@ -88,7 +88,7 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     public func isLoggedIn() -> Bool {
-        return button(tabSettings).waitUntilExists(time: 4).exists()
+        button(tabSettings).waitUntilExists(time: 4).exists()
     }
 
     public func openConnectionDetails() -> ConnectionDetailsRobot {

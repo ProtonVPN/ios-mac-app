@@ -38,11 +38,11 @@ class ModalsRobot: CoreElements {
         func checkModalAppear(type: ModalType) -> ModalsRobot {
             switch type {
             case .allCountries:
-                return ModalsRobot().accessAllCountriesBanner.verify.checkModalAppear()
+                ModalsRobot().accessAllCountriesBanner.verify.checkModalAppear()
             case .cantSkip:
-                return ModalsRobot().cantSkipBanner.verify.checkModalAppear()
+                ModalsRobot().cantSkipBanner.verify.checkModalAppear()
             default:
-                return ModalsRobot()
+                ModalsRobot()
             }
         }
     }

@@ -33,6 +33,6 @@ extension Data {
     }
 
     func encodeBase64() -> String {
-        return self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        self.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }
 }

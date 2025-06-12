@@ -33,7 +33,7 @@ final class VPNPartnersRequest: Request {
     }
 
     var isAuth: Bool {
-        return true
+        true
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

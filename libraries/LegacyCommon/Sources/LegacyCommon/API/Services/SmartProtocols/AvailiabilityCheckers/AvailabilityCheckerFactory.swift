@@ -39,17 +39,17 @@ public final class AvailabilityCheckerResolverImplementation: AvailabilityChecke
     public func availabilityChecker(for vpnProtocol: VpnProtocol) -> SmartProtocolAvailabilityChecker {
         switch vpnProtocol {
         case .ike:
-            return IKEv2AvailabilityChecker()
+            IKEv2AvailabilityChecker()
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case let .wireGuard(transport):
             switch transport {
             case .udp:
-                return WireguardUDPAvailabilityChecker(config: wireguardConfig)
+                WireguardUDPAvailabilityChecker(config: wireguardConfig)
             case .tcp:
-                return WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tcp)
+                WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tcp)
             case .tls:
-                return WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tls)
+                WireguardTCPAvailabilityChecker(config: wireguardConfig, transport: .tls)
             }
         }
     }

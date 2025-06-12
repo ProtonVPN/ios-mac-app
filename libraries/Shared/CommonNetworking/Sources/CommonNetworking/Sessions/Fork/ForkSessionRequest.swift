@@ -35,31 +35,31 @@ public struct ForkSessionRequest: Request {
     }
 
     public var nonDefaultTimeout: TimeInterval? {
-        return timeout
+        timeout
     }
 
     public var path: String {
-        return "/auth/v4/sessions/forks"
+        "/auth/v4/sessions/forks"
     }
 
     public var method: HTTPMethod {
         switch useCase {
         case .getSelector:
-            return .post
+            .post
         case .getUserCode:
-            return .get
+            .get
         }
     }
 
     public var parameters: [String: Any]? {
         switch useCase {
         case let .getSelector(clientId, independent):
-            return [
+            [
                 "ChildClientID": clientId,
                 "Independent": independent ? 1 : 0,
             ]
         case .getUserCode:
-            return nil
+            nil
         }
     }
 

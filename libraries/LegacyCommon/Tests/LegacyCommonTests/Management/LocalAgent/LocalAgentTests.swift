@@ -106,21 +106,21 @@ private extension VpnAuthenticationData {
 
 private extension VPNConnectionFeatures {
     static var base: Self {
-        return VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .strictNAT, safeMode: false)
+        VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .strictNAT, safeMode: false)
     }
 
     func withNetShieldLevel(_ level: NetShieldType) -> Self {
-        return VPNConnectionFeatures(netshield: level,
-                                     vpnAccelerator: self.vpnAccelerator,
-                                     bouncing: self.bouncing,
-                                     natType: self.natType,
-                                     safeMode: self.safeMode)
+        VPNConnectionFeatures(netshield: level,
+                              vpnAccelerator: self.vpnAccelerator,
+                              bouncing: self.bouncing,
+                              natType: self.natType,
+                              safeMode: self.safeMode)
     }
 }
 
 private extension LocalAgentConfiguration {
     static func mocked(withFeatures features: VPNConnectionFeatures) -> Self {
-        return LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
+        LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
     }
 
     static func mocked(withNetShieldType netShieldType: NetShieldType) -> Self {

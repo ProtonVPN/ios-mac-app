@@ -129,14 +129,14 @@
         var value: FeatureStatisticsMessage.NetShieldStats {
             switch self {
             case .random:
-                return FeatureStatisticsMessage.NetShieldStats(
+                FeatureStatisticsMessage.NetShieldStats(
                     malwareBlocked: .random(in: 0...100),
                     adsBlocked: .random(in: 0...100),
                     trackersBlocked: .random(in: 0...100),
                     bytesSaved: .random(in: 0...100)
                 )
             case let .constant(value):
-                return value
+                value
             }
         }
     }

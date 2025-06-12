@@ -66,23 +66,23 @@ class DefaultProfileViewModel {
     private var profile: Profile {
         switch serverOffering {
         case .random:
-            return Profile(id: "st_r",
-                           accessTier: defaultAccessTier,
-                           profileIcon: .arrowsSwapRight,
-                           profileType: .system,
-                           serverType: propertiesManager.serverTypeToggle,
-                           serverOffering: serverOffering,
-                           name: Localizable.random,
-                           connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(id: "st_r",
+                    accessTier: defaultAccessTier,
+                    profileIcon: .arrowsSwapRight,
+                    profileType: .system,
+                    serverType: propertiesManager.serverTypeToggle,
+                    serverOffering: serverOffering,
+                    name: Localizable.random,
+                    connectionProtocol: propertiesManager.connectionProtocol)
         default:
-            return Profile(id: "st_f",
-                           accessTier: defaultAccessTier,
-                           profileIcon: .bolt,
-                           profileType: .system,
-                           serverType: propertiesManager.serverTypeToggle,
-                           serverOffering: serverOffering,
-                           name: Localizable.fastest,
-                           connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(id: "st_f",
+                    accessTier: defaultAccessTier,
+                    profileIcon: .bolt,
+                    profileType: .system,
+                    serverType: propertiesManager.serverTypeToggle,
+                    serverOffering: serverOffering,
+                    name: Localizable.fastest,
+                    connectionProtocol: propertiesManager.connectionProtocol)
         }
     }
 
@@ -144,11 +144,11 @@ class DefaultProfileViewModel {
     }
 
     private var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     fileprivate var isUsersTierTooLow: Bool {
-        return !authorizer.canUseProfile(ofTier: defaultAccessTier)
+        !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
 
     var connectionChanged: (() -> Void)?
@@ -158,35 +158,35 @@ class DefaultProfileViewModel {
     var title: String {
         switch serverOffering {
         case .fastest:
-            return Localizable.fastestConnection
+            Localizable.fastestConnection
         case .random:
-            return Localizable.randomConnection
+            Localizable.randomConnection
         default:
-            return ""
+            ""
         }
     }
 
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            return isRedesign ? Asset.fastest.image : IconProvider.bolt
+            isRedesign ? Asset.fastest.image : IconProvider.bolt
         case .random:
-            return IconProvider.arrowsSwapRight
+            IconProvider.arrowsSwapRight
         default:
-            return UIImage()
+            UIImage()
         }
     }
 
     var imageInPlaceOfConnectIcon: UIImage? {
-        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
+        isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
 
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        isUsersTierTooLow ? 0.5 : 1.0
     }
 
     var connectButtonMargin: CGFloat {
-        return extraMargin ? 32 : 0
+        extraMargin ? 32 : 0
     }
 
     init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, extraMargin: Bool = false) {

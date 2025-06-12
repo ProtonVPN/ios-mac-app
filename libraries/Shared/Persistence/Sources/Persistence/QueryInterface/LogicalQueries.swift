@@ -29,7 +29,7 @@ extension QueryInterfaceRequest {
         statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> Self {
-        return filters
+        filters
             .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, overrides: overrideAlias) }
             .reduce(self) { request, sqlExpression in request.filter(sqlExpression) }
     }
@@ -41,28 +41,28 @@ extension QueryInterfaceRequest {
     ) -> Self {
         switch serverOrder {
         case .none:
-            return self
+            self
 
         case .random:
-            return order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
+            order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
 
         case .fastest:
-            return order(statusAlias[LogicalStatus.Columns.score].asc)
+            order(statusAlias[LogicalStatus.Columns.score].asc)
 
         case .nameAscending:
-            return order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
+            order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
         }
     }
 
     func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
         switch groupOrder {
         case .exitCountryCodeAscending:
-            return order(
+            order(
                 logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
                 logicalAlias[Logical.Columns.exitCountryCode].asc
             )
         case .localizedCountryNameAscending:
-            return order(
+            order(
                 logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
                 localizedCountryName(logicalAlias[Logical.Columns.exitCountryCode]).asc
             )
@@ -117,7 +117,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
-        return self
+        self
             .annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
@@ -134,7 +134,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     }
 
     func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
-        return self
+        self
             .group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
             .asRequest(of: GroupInfoResult.self)
     }

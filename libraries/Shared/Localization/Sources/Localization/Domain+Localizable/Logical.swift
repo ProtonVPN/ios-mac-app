@@ -27,10 +27,10 @@ extension Logical {
     }
 
     public var exitCountry: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 
     public var country: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 }

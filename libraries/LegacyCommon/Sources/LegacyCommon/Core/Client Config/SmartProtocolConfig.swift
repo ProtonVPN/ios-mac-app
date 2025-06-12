@@ -83,11 +83,11 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
     }
 
     public func configWithWireGuard(udpEnabled: Bool? = nil, tcpEnabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
-        return SmartProtocolConfig(openVPN: openVPN,
-                                   iKEv2: iKEv2,
-                                   wireGuardUdp: udpEnabled ?? wireGuardUdp,
-                                   wireGuardTcp: tcpEnabled ?? wireGuardTcp,
-                                   wireGuardTls: tlsEnabled ?? wireGuardTls)
+        SmartProtocolConfig(openVPN: openVPN,
+                            iKEv2: iKEv2,
+                            wireGuardUdp: udpEnabled ?? wireGuardUdp,
+                            wireGuardTcp: tcpEnabled ?? wireGuardTcp,
+                            wireGuardTls: tlsEnabled ?? wireGuardTls)
     }
 
     public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {

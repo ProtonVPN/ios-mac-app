@@ -92,7 +92,7 @@ public struct Logical: Codable, Equatable, Sendable {
     }
 
     public var isUnderMaintenance: Bool {
-        return status == 0
+        status == 0
     }
 
     public var connectionSpecFeatures: [ConnectionSpec.Feature] {
@@ -112,7 +112,7 @@ public struct Logical: Codable, Equatable, Sendable {
     }
 
     public var coordinates: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 
     public var serverNameComponents: ServerNameComponents {

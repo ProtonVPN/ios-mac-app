@@ -32,26 +32,26 @@ final class PopUpViewModel: NSObject {
     var title: String {
         // Don't show a title if the the description is using the alert's title
         if attributedDescription.string == alert.title {
-            return ""
+            ""
         } else {
-            return alert.title ?? ""
+            alert.title ?? ""
         }
     }
 
     var confirmButtonTitle: String {
-        return action(0)?.title ?? Localizable.ok
+        action(0)?.title ?? Localizable.ok
     }
 
     var confirmationType: PrimaryActionType {
-        return action(0)?.style ?? .confirmative
+        action(0)?.style ?? .confirmative
     }
 
     var cancelButtonTitle: String? {
-        return action(1)?.title
+        action(1)?.title
     }
 
     var cancelType: PrimaryActionType {
-        return action(1)?.style ?? .cancel
+        action(1)?.style ?? .cancel
     }
 
     var attributedDescription: NSAttributedString
@@ -64,11 +64,11 @@ final class PopUpViewModel: NSObject {
 
     private var alert: SystemAlert
     private var onConfirm: (() -> Void)? {
-        return action(0)?.handler
+        action(0)?.handler
     }
 
     private var onCancel: (() -> Void)? {
-        return action(1)?.handler
+        action(1)?.handler
     }
 
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
@@ -108,7 +108,7 @@ final class PopUpViewModel: NSObject {
     }
 
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
-        return alert.actions[optional: index]
+        alert.actions[optional: index]
     }
 }
 

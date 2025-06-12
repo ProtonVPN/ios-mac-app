@@ -70,7 +70,7 @@ class SettingsRobot: CoreElements {
     
     @discardableResult
     func turnKillSwitchOn() -> SettingsRobot {
-        return killSwitchOn()
+        killSwitchOn()
             .tapContinueIfExist()
     }
 
@@ -87,18 +87,18 @@ class SettingsRobot: CoreElements {
 
     @discardableResult
     func turnLanConnectionOn() -> SettingsRobot {
-        return lanConnectionOn()
+        lanConnectionOn()
             .lanConnectionContinue()
     }
     
     @discardableResult
     func logOut() -> SettingsRobot {
-        return clickLogOut().tapContinueIfExist()
+        clickLogOut().tapContinueIfExist()
     }
     
     @discardableResult
     func cancelLogOut() -> HomeRobot {
-        return clickLogOut()
+        clickLogOut()
             .logOutCancel()
     }
     
@@ -188,7 +188,7 @@ class SettingsRobot: CoreElements {
 
         @discardableResult
         func correctUserIsLogedIn(_ user: Credentials) -> SettingsRobot {
-            return correctUserIsLoggedIn(user.username, user.plan)
+            correctUserIsLoggedIn(user.username, user.plan)
         }
     }
 }

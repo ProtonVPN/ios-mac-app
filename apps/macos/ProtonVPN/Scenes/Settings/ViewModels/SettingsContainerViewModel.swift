@@ -36,14 +36,14 @@ final class SettingsContainerViewModel {
     }
 
     var generalSettingsViewModel: GeneralSettingsViewModel {
-        return GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
+        GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
     }
 
     var connectionSettingsViewModel: ConnectionSettingsViewModel {
-        return ConnectionSettingsViewModel(factory: factory)
+        ConnectionSettingsViewModel(factory: factory)
     }
 
     var advancedSettingsViewModel: AdvancedSettingsViewModel {
-        return AdvancedSettingsViewModel(factory: factory)
+        AdvancedSettingsViewModel(factory: factory)
     }
 }

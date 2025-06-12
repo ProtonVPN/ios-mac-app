@@ -141,7 +141,7 @@ class ProfileRobot: ConnectionBaseRobot {
         
         @discardableResult
         private func checkProfileExists(_ profileName: String) -> UIElement {
-            return staticText()
+            staticText()
                 .containsLabel(profileName)
                 .checkExists(message: "\(profileName) profile not found")
         }

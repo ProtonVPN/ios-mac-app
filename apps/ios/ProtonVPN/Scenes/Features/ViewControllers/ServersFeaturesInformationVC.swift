@@ -63,11 +63,11 @@ class ServersFeaturesInformationVC: UIViewController {
 
 extension ServersFeaturesInformationVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.totalFeatures
+        viewModel.totalFeatures
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.featuresCount(for: section)
+        viewModel.featuresCount(for: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,7 +79,7 @@ extension ServersFeaturesInformationVC: UITableViewDataSource {
 
 extension ServersFeaturesInformationVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel.headerHeight
+        viewModel.headerHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

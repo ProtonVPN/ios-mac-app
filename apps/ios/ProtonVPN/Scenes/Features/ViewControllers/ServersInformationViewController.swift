@@ -23,7 +23,7 @@ import Strings
 
 class ServersInformationViewController: UIViewController {
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     struct ViewModel {

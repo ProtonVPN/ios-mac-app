@@ -113,58 +113,58 @@ public enum LocalAgentError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .restrictedServer:
-            return "LRXS"
+            "LRXS"
         case .certificateExpired:
-            return "LCRX"
+            "LCRX"
         case .certificateRevoked:
-            return "LCRV"
+            "LCRV"
         case .maxSessionsUnknown:
-            return "LMSU"
+            "LMSU"
         case .maxSessionsFree:
-            return "LMSF"
+            "LMSF"
         case .maxSessionsBasic:
-            return "LMSB"
+            "LMSB"
         case .maxSessionsPlus:
-            return "LMS+"
+            "LMS+"
         case .maxSessionsVisionary:
-            return "LMSV"
+            "LMSV"
         case .maxSessionsPro:
-            return "LMSP"
+            "LMSP"
         case .keyUsedMultipleTimes:
-            return "LKMT"
+            "LKMT"
         case .serverError:
-            return "LSRV"
+            "LSRV"
         case .policyViolationLowPlan:
-            return "LPVL"
+            "LPVL"
         case .policyViolationDelinquent:
-            return "LPVD"
+            "LPVD"
         case .userTorrentNotAllowed:
-            return "LTRN"
+            "LTRN"
         case .userBadBehavior:
-            return "LUBB"
+            "LUBB"
         case .guestSession:
-            return "LGSX"
+            "LGSX"
         case .badCertificateSignature:
-            return "LBCS"
+            "LBCS"
         case .certificateNotProvided:
-            return "LCNP"
+            "LCNP"
         case .serverSessionDoesNotMatch:
-            return "LSNM"
+            "LSNM"
         case .systemError:
-            return "LSER"
+            "LSER"
         case .unknown:
-            return "LUNK"
+            "LUNK"
         }
     }
 
     public var underlyingError: Error? {
         switch self {
         case let .systemError(error):
-            return error
+            error
         case let .unknown(code):
-            return NSError(domain: Self.errorDomain, code: code)
+            NSError(domain: Self.errorDomain, code: code)
         default:
-            return nil
+            nil
         }
     }
 }

@@ -337,7 +337,7 @@ extension StatusMenuViewController: SwitchButtonDelegate {
 
 extension StatusMenuViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.countryCount()
+        viewModel.countryCount()
     }
     
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {

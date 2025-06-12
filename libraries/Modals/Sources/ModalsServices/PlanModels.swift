@@ -37,11 +37,11 @@ public struct PlanDuration: Hashable {
 
 extension PlanDuration: CustomStringConvertible {
     public var description: String {
-        return components.description
+        components.description
     }
 
     public var months: Int {
-        return components.amountOfMonths
+        components.amountOfMonths
     }
 }
 

@@ -162,24 +162,24 @@ extension LAConnectionCreationError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .connectionObjectMissing:
-            return "LACO"
+            "LACO"
         case let .goTLSError(goTLSError, _):
-            return goTLSError.charCode
+            goTLSError.charCode
         case .unknownError:
-            return "LACU"
+            "LACU"
         }
     }
 
     public var underlyingError: (any Error)? {
         switch self {
         case let .goTLSError(_, underlyingError):
-            return underlyingError
+            underlyingError
 
         case let .unknownError(error):
-            return error
+            error
 
         case .connectionObjectMissing:
-            return nil
+            nil
         }
     }
 }
@@ -213,7 +213,7 @@ extension GoTLSError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .privateKeyDoesNotMatchPublicKey:
-            return "GTNM"
+            "GTNM"
         }
     }
 }

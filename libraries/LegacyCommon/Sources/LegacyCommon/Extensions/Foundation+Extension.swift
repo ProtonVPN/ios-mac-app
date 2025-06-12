@@ -32,7 +32,7 @@ public func delay(_ delay: Double, closure: @escaping () -> Void) {
 }
 
 public func NSLocalizedString(_ key: String) -> String {
-    return NSLocalizedString(key, comment: "")
+    NSLocalizedString(key, comment: "")
 }
 
 // MARK: - Internal
@@ -40,7 +40,7 @@ public func NSLocalizedString(_ key: String) -> String {
 // Allows overwriting of values by clients using vpncore
 func NSLocalizedString(_ key: String, comment: String = "") -> String {
     func enPathForBundle(_ bundle: Bundle) -> String? {
-        return bundle.path(forResource: "en", ofType: "lproj")
+        bundle.path(forResource: "en", ofType: "lproj")
     }
 
     // Look for string in client bundle

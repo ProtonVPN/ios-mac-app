@@ -90,7 +90,7 @@ class OsxUiAlertService: UIAlertService {
     }
     
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        return !currentAlerts.contains(where: { currentAlert -> Bool in
+        !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }
@@ -105,9 +105,9 @@ class OsxUiAlertService: UIAlertService {
     }
     
     private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
-        return { [weak self] in
+        { [weak self] in
             self?.currentAlerts.removeAll { currentAlert in
-                return currentAlert.className == alert.className
+                currentAlert.className == alert.className
             }
         }
     }

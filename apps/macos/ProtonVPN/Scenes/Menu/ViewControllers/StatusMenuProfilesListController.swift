@@ -87,13 +87,13 @@ class StatusMenuProfilesListController: WindowController {
 
 extension StatusMenuProfilesListController: NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+        viewModel.cellCount
     }
 }
 
 extension StatusMenuProfilesListController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight
+        viewModel.cellHeight
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

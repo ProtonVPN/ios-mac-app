@@ -391,7 +391,7 @@ final class CountriesSectionViewController: NSViewController {
 
 extension CountriesSectionViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+        viewModel.cellCount
     }
 }
 
@@ -400,15 +400,15 @@ extension CountriesSectionViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch viewModel.cellModel(forRow: row) {
         case .country:
-            return 48
+            48
         case .header:
-            return 32
+            32
         case .banner:
-            return 100
+            100
         case let .offerBanner(model):
-            return model.showCountdown ? 128 : 113
+            model.showCountdown ? 128 : 113
         default:
-            return 40
+            40
         }
     }
 

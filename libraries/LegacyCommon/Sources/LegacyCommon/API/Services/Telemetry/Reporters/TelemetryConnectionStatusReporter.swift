@@ -213,11 +213,11 @@ class TelemetryConnectionStatusReporter {
         var localizedDescription: String {
             switch self {
             case .missingEventType:
-                return "Can't determine eventType"
+                "Can't determine eventType"
             case .missingConnectionIntent:
-                return "No connection intent available"
+                "No connection intent available"
             case .missingPort:
-                return "No port detected"
+                "No port detected"
             }
         }
     }
@@ -266,9 +266,9 @@ class TelemetryConnectionStatusReporter {
     private func connection(eventType: ConnectionEvent.Event) -> ConnectionConfiguration? {
         switch eventType {
         case .vpnConnection:
-            return appStateManager.activeConnection()
+            appStateManager.activeConnection()
         case .vpnDisconnection:
-            return previousConnectionConfiguration
+            previousConnectionConfiguration
         }
     }
 

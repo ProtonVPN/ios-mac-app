@@ -32,18 +32,18 @@ class LoginRobot: CoreElements {
     
     @discardableResult
     func enterCredentials(_ name: Credentials) -> LoginRobot {
-        return typeUsername(username: name.username)
+        typeUsername(username: name.username)
             .typePassword(password: name.password)
     }
 
     func enterCredentials(_ user: User) -> LoginRobot {
-        return typeUsername(username: user.name)
+        typeUsername(username: user.name)
             .typePassword(password: user.password)
     }
 
     @discardableResult
     func enterIncorrectCredentials(_ username: String, _ password: String) -> LoginRobot {
-        return typeUsername(username: username)
+        typeUsername(username: username)
             .typePassword(password: password)
     }
     

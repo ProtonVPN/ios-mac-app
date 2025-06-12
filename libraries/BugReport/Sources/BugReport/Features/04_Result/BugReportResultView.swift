@@ -106,7 +106,7 @@ public struct BugReportResultView: View {
 
 struct BugReportResultView_Previews: PreviewProvider {
     static var previews: some View {
-        return Group {
+        Group {
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
                                              reducer: { BugReportResultFeature() }))
                 .previewDisplayName("Success")

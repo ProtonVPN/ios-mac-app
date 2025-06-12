@@ -30,11 +30,11 @@ final class VPNServerRequest: Request {
     }
 
     var path: String {
-        return "/vpn/v1/servers/" + serverId
+        "/vpn/v1/servers/" + serverId
     }
 
     var isAuth: Bool {
-        return false
+        false
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

@@ -176,6 +176,6 @@ public final class WelcomeScreenAlert: UpsellAlert {
     }
 
     override public var modalSource: UpsellModalSource? {
-        return nil
+        nil
     }
 }

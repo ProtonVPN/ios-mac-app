@@ -21,11 +21,11 @@ import Strings
 
 final class UpsellCell: UITableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets

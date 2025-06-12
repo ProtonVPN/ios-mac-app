@@ -109,31 +109,31 @@ final class HeaderViewModel {
     }
 
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
 
     var connectedCountryCode: String? {
-        return appStateManager.activeConnection()?.server.countryCode
+        appStateManager.activeConnection()?.server.countryCode
     }
 
     var headerLabel: NSAttributedString {
-        return formHeaderLabel()
+        formHeaderLabel()
     }
 
     var ipLabel: NSAttributedString {
-        return formIpLabel()
+        formIpLabel()
     }
 
     var loadLabel: NSAttributedString? {
-        return formLoadLabel()
+        formLoadLabel()
     }
 
     var loadLabelShort: NSAttributedString? {
-        return formLoadLabel(short: true)
+        formLoadLabel(short: true)
     }
 
     var loadPercentage: Int? {
-        return appStateManager.activeConnection()?.server.load
+        appStateManager.activeConnection()?.server.load
     }
 
     var vpnProtocol: NSAttributedString? {
@@ -192,7 +192,7 @@ final class HeaderViewModel {
     }
 
     var hasUnreadAnnouncements: Bool {
-        return announcementManager.hasUnreadAnnouncements
+        announcementManager.hasUnreadAnnouncements
     }
 
     var announcementIconUrl: URL? {
@@ -214,7 +214,7 @@ final class HeaderViewModel {
     }
 
     var announcementTooltip: String? {
-        return announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
+        announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
     }
 
     // MARK: - Private functions
@@ -332,9 +332,9 @@ final class HeaderViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            return appStateManager.activeConnection()?.serverIp.exitIp
+            appStateManager.activeConnection()?.serverIp.exitIp
         } else {
-            return propertiesManager.userLocation?.ip
+            propertiesManager.userLocation?.ip
         }
     }
 

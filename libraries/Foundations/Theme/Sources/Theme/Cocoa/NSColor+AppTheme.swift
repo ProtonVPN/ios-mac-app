@@ -27,7 +27,7 @@ import var ProtonCoreUIFoundations.ColorProvider
 
     private extension AppTheme.Style {
         static var signalStyles: Self {
-            return [.danger, .warning, .success, .info]
+            [.danger, .warning, .success, .info]
         }
 
         var interactiveColor: NSColor {
@@ -105,71 +105,71 @@ import var ProtonCoreUIFoundations.ColorProvider
         var backgroundColor: NSColor {
             if contains(.transparent) {
                 if contains(.hovered) {
-                    return CP.InteractionDefaultHover
+                    CP.InteractionDefaultHover
                 } else if contains(.active) {
-                    return CP.InteractionDefaultActive
+                    CP.InteractionDefaultActive
                 } else {
-                    return CP.InteractionDefault
+                    CP.InteractionDefault
                 }
             } else if contains(.inverted) {
-                return CP.TextNorm
+                CP.TextNorm
             } else if contains(.hovered) {
-                return CP.InteractionWeakHover
+                CP.InteractionWeakHover
             } else if contains(.weak) {
-                return CP.BackgroundWeak
+                CP.BackgroundWeak
             } else if contains(.strong) {
-                return CP.BackgroundStrong
+                CP.BackgroundStrong
             } else {
-                return CP.BackgroundNorm
+                CP.BackgroundNorm
             }
         }
 
         var fieldColor: NSColor {
             if contains(.hovered) {
-                return CP.FieldHover
+                CP.FieldHover
             } else if contains(.disabled) {
-                return CP.FieldDisabled
+                CP.FieldDisabled
             } else {
-                return CP.FieldNorm
+                CP.FieldNorm
             }
         }
 
         var borderColor: NSColor {
             if contains(.inverted) {
-                return CP.TextNorm
+                CP.TextNorm
             } else if contains(.weak) {
-                return CP.BorderWeak
+                CP.BorderWeak
             } else {
-                return CP.BorderNorm
+                CP.BorderNorm
             }
         }
 
         var textColor: NSColor {
             if contains(.primary) {
-                return CP.White
+                CP.White
             } else if contains(.weak) {
-                return CP.TextWeak
+                CP.TextWeak
             } else if contains(.hint) {
-                return CP.TextHint
+                CP.TextHint
             } else if contains(.disabled) {
-                return CP.TextDisabled
+                CP.TextDisabled
             } else if contains(.inverted) {
-                return CP.TextInvert
+                CP.TextInvert
             } else {
                 // workaround for a macos bug, where the pure white color in a dropdown text would appear grayed-out
                 if contains(.dropdown),
                    CP.TextNorm.redComponent == 1,
                    CP.TextNorm.blueComponent == 1,
                    CP.TextNorm.greenComponent == 1 {
-                    return .init(red: 255, green: 255, blue: 254)
+                    .init(red: 255, green: 255, blue: 254)
                 } else {
-                    return CP.TextNorm
+                    CP.TextNorm
                 }
             }
         }
 
         var iconColor: NSColor {
-            return textColor
+            textColor
         }
     }
 
@@ -222,23 +222,23 @@ import var ProtonCoreUIFoundations.ColorProvider
 
     public extension NSColor {
         static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> NSColor {
-            return context.color(style: style)
+            context.color(style: style)
         }
     }
 
     public extension CGColor {
         static func cgColor(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> CGColor {
-            return NSColor.color(context, style).cgColor
+            NSColor.color(context, style).cgColor
         }
     }
 
     public extension CustomStyleContext {
         func color(_ context: AppTheme.Context) -> NSColor {
-            return .color(context, self.customStyle(context: context))
+            .color(context, self.customStyle(context: context))
         }
 
         func cgColor(_ context: AppTheme.Context) -> CGColor {
-            return .cgColor(context, self.customStyle(context: context))
+            .cgColor(context, self.customStyle(context: context))
         }
     }
 

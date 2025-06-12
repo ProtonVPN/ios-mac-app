@@ -79,13 +79,13 @@ public struct HermesClient: Sendable {
 
 extension HermesClient: TestDependencyKey {
     public static let testValue: HermesClient = .init {
-        return SharedReader(value: false)
+        SharedReader(value: false)
     } setIsEnabled: { _ in
         ()
     } activeHermesResolvers: {
-        return SharedReader(value: [.proton])
+        SharedReader(value: [.proton])
     } validateHermesLocation: { location in
-        return HermesResolverLocationValidator.isValid(location) != nil
+        HermesResolverLocationValidator.isValid(location) != nil
     } addHermesResolver: { _ in
         false
     } removeHermesResolver: { _ in

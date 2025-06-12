@@ -29,11 +29,11 @@ public enum PlanSession {
     var queryItems: [URLQueryItem] {
         switch self {
         case .upgrade:
-            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
+            [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
         case .manageSubscription:
-            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
+            [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
         case .promo2yPlan:
-            return [
+            [
                 .actionQueryItem,
                 .appQueryItem,
                 .redirectQueryItem,

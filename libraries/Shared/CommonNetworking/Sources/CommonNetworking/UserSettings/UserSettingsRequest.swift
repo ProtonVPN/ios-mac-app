@@ -22,7 +22,7 @@ import ProtonCoreNetworking
 
 final class UserSettingsRequest: Request {
     var path: String {
-        return "/core/v4/settings"
+        "/core/v4/settings"
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

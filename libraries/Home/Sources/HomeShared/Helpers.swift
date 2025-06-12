@@ -26,7 +26,7 @@ extension Effect {
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinject transform: @escaping (Value) -> Action
     ) -> Self {
-        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
+        listen(to: shared.publisher, on: scheduler, reinjecting: transform)
     }
 
     package static func onChange<Value>(
@@ -34,7 +34,7 @@ extension Effect {
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinject transform: @escaping (Value) -> Action
     ) -> Self {
-        return listen(to: shared.publisher, on: scheduler, reinjecting: transform)
+        listen(to: shared.publisher, on: scheduler, reinjecting: transform)
     }
 
     package static func listen<Output>(
@@ -42,7 +42,7 @@ extension Effect {
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinjecting transform: @escaping (Output) -> Action
     ) -> Self {
-        return self.publisher { publisher.receive(on: scheduler).map(transform) }
+        self.publisher { publisher.receive(on: scheduler).map(transform) }
     }
 
     package static func listen<Output>(
@@ -50,6 +50,6 @@ extension Effect {
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinjecting transform: @escaping (Output) -> Action
     ) -> Self {
-        return self.publisher { publisher.receive(on: scheduler).compactMap({ $0 }).map(transform) }
+        self.publisher { publisher.receive(on: scheduler).compactMap({ $0 }).map(transform) }
     }
 }

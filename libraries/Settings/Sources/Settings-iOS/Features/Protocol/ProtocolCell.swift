@@ -104,27 +104,27 @@ enum ProtocolAttribute: Identifiable {
     var localizedTitle: String {
         switch self {
         case .new:
-            return Localizable.settingsProtocolTagNew
+            Localizable.settingsProtocolTagNew
         case .recommended:
-            return Localizable.settingsProtocolTagRecommended
+            Localizable.settingsProtocolTagRecommended
         }
     }
 
     var textColor: Color {
         switch self {
         case .new:
-            return tintColor
+            tintColor
         case .recommended:
-            return Color(.text, .normal)
+            Color(.text, .normal)
         }
     }
 
     var tintColor: Color {
         switch self {
         case .new:
-            return Color(.border, .warning)
+            Color(.border, .warning)
         case .recommended:
-            return Color(.border, .normal)
+            Color(.border, .normal)
         }
     }
 }

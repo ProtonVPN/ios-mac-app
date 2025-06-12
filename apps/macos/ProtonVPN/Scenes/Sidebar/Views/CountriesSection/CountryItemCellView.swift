@@ -198,6 +198,6 @@ final class CountryItemCellView: NSView {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return []
+        []
     }
 }

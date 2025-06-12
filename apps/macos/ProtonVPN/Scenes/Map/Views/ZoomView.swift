@@ -131,10 +131,10 @@ class ZoomView: NSView {
     // MARK: - Accessibility
     
     override func accessibilityChildren() -> [Any]? {
-        return nil
+        nil
     }
     
     override func isAccessibilityElement() -> Bool {
-        return false
+        false
     }
 }

@@ -28,15 +28,15 @@ import Strings
 
 extension OverviewItemViewModel {
     func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        return profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
+        profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
     func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
-            return systemProfileDescriptor(forProfile: profile)
+            systemProfileDescriptor(forProfile: profile)
         case .user:
-            return userProfileDescriptor(forProfile: profile)
+            userProfileDescriptor(forProfile: profile)
         }
     }
     

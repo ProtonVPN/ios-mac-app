@@ -39,8 +39,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public let lastConnectedDate: Date?
 
     override public var description: String {
-        return
-            "ID: \(id)\n" +
+        "ID: \(id)\n" +
             "Access tier: \(accessTier)\n" +
             "Profile icon: \(profileIcon.description)\n" +
             "Profile type: \(profileType.description)\n" +
@@ -52,8 +51,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     }
 
     public var logDescription: String {
-        return
-            "ID: \(id) " +
+        "ID: \(id) " +
             "Access tier: \(accessTier) " +
             "Profile icon: \(profileIcon.description) " +
             "Profile type: \(profileType.description) " +
@@ -232,21 +230,21 @@ private extension ConnectionProtocol {
     static func from(codingValue: Int) -> ConnectionProtocol? {
         switch codingValue {
         case 0:
-            return .smartProtocol
+            .smartProtocol
         case 1:
-            return .vpnProtocol(.ike)
+            .vpnProtocol(.ike)
         case 2:
-            return .vpnProtocol(.openVpn(.udp))
+            .vpnProtocol(.openVpn(.udp))
         case 3:
-            return .vpnProtocol(.openVpn(.tcp))
+            .vpnProtocol(.openVpn(.tcp))
         case 4:
-            return .vpnProtocol(.wireGuard(.udp))
+            .vpnProtocol(.wireGuard(.udp))
         case 5:
-            return .vpnProtocol(.wireGuard(.tcp))
+            .vpnProtocol(.wireGuard(.tcp))
         case 6:
-            return .vpnProtocol(.wireGuard(.tls))
+            .vpnProtocol(.wireGuard(.tls))
         default:
-            return nil
+            nil
         }
     }
 }

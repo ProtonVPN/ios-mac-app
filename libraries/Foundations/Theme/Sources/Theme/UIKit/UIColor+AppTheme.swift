@@ -26,7 +26,7 @@ import Ergonomics
 
     private extension AppTheme.Style {
         static var notificationStyles: Self {
-            return [.danger, .warning, .success, .info]
+            [.danger, .warning, .success, .info]
         }
 
         var interactiveColor: UIColor {
@@ -73,44 +73,44 @@ import Ergonomics
 
         var backgroundColor: UIColor {
             if contains(.weak) {
-                return ColorProvider.BackgroundSecondary
+                ColorProvider.BackgroundSecondary
             } else if contains(.strong) {
-                return ColorProvider.BackgroundDeep
+                ColorProvider.BackgroundDeep
             } else if contains(.success) {
-                return ColorProvider.NotificationSuccess
+                ColorProvider.NotificationSuccess
             } else if contains(.selected) {
-                return UIColor(Color(hex: 0xFAFAFB)) // (tv) prevent color scheme from changing this color
+                UIColor(Color(hex: 0xFAFAFB)) // (tv) prevent color scheme from changing this color
             } else {
-                return ColorProvider.BackgroundNorm
+                ColorProvider.BackgroundNorm
             }
         }
 
         var textColor: UIColor {
             if contains(.primary) {
-                return ColorProvider.White
+                ColorProvider.White
             } else if contains(.weak) {
-                return ColorProvider.TextWeak
+                ColorProvider.TextWeak
             } else if contains(.hint) {
-                return ColorProvider.TextHint
+                ColorProvider.TextHint
             } else if contains(.disabled) {
-                return ColorProvider.TextDisabled
+                ColorProvider.TextDisabled
             } else if contains(.inverted) {
-                return ColorProvider.TextInverted
+                ColorProvider.TextInverted
             } else if contains(.interactive) {
-                return ColorProvider.TextAccent
+                ColorProvider.TextAccent
             } else if contains(.success) {
-                return ColorProvider.NotificationSuccess
+                ColorProvider.NotificationSuccess
             } else if contains(.vpnGreen) {
-                return Asset.vpnGreen.color
+                Asset.vpnGreen.color
             } else if contains(.warning) {
-                return ColorProvider.NotificationWarning
+                ColorProvider.NotificationWarning
             } else {
-                return ColorProvider.TextNorm
+                ColorProvider.TextNorm
             }
         }
 
         var iconColor: UIColor {
-            return textColor
+            textColor
         }
     }
 
@@ -159,13 +159,13 @@ import Ergonomics
 
     public extension UIColor {
         static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> UIColor {
-            return context.color(style: style)
+            context.color(style: style)
         }
     }
 
     public extension CGColor {
         static func cgColor(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> CGColor {
-            return UIColor.color(context, style).cgColor
+            UIColor.color(context, style).cgColor
         }
     }
 
@@ -184,11 +184,11 @@ import Ergonomics
 
     public extension CustomStyleContext {
         func color(_ context: AppTheme.Context) -> UIColor {
-            return .color(context, self.customStyle(context: context))
+            .color(context, self.customStyle(context: context))
         }
 
         func cgColor(_ context: AppTheme.Context) -> CGColor {
-            return .cgColor(context, self.customStyle(context: context))
+            .cgColor(context, self.customStyle(context: context))
         }
     }
 #endif

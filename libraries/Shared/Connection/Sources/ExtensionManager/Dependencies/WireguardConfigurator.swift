@@ -116,7 +116,7 @@ extension ManagerConfigurator {
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
-        return ManagerConfigurator(
+        ManagerConfigurator(
             configure: { manager, operation in
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
 

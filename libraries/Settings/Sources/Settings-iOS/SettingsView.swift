@@ -245,7 +245,7 @@ public struct SettingsView: View {
         case: AnyCasePath<SettingsFeature.Destination, Void>,
         view destination: @escaping () -> some View
     ) -> some View {
-        return WithViewStore(store, observe: { $0.destination }) { viewStore in
+        WithViewStore(store, observe: { $0.destination }) { viewStore in
             NavigationLink(
 //                unwrapping: viewStore.binding(get: { $0 }, send: .dismissDestination),
 //                case: `case`,

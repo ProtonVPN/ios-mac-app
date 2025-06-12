@@ -29,9 +29,9 @@ public enum NATType: Int, Codable, CaseIterable, Sendable {
     public var flag: Bool {
         switch self {
         case .strictNAT:
-            return true
+            true
         case .moderateNAT:
-            return false
+            false
         }
     }
 

@@ -27,15 +27,15 @@ class SecureCoreEntryAnnotation: AnnotationView {
     let countryModel: SecureCoreEntryCountryModel
     
     override var coordinate: CLLocationCoordinate2D {
-        return countryModel.coordinate
+        countryModel.coordinate
     }
 
     var maxHeight: CGFloat {
-        return 30
+        30
     }
     
     var width: CGFloat {
-        return 30
+        30
     }
     
     override var frame: CGRect {

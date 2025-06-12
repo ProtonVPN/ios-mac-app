@@ -27,7 +27,7 @@ extension AppTheme {
     @dynamicMemberLookup
     public enum Icon {
         static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
-            return IconProvider[keyPath: keyPath]
+            IconProvider[keyPath: keyPath]
         }
 
         static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> NSImage? {

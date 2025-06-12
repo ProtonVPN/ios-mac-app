@@ -48,11 +48,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private var notificationTokens: [NotificationToken] = []
 
     override var title: String! {
-        return Localizable.netshieldTitle
+        Localizable.netshieldTitle
     }
 
     override var learnLink: String {
-        return VPNLink.netshieldSupport.urlString
+        VPNLink.netshieldSupport.urlString
     }
 
     override var alert: UpsellAlert {
@@ -89,7 +89,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
+        [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
     }
 
     override func viewDidLoad() {

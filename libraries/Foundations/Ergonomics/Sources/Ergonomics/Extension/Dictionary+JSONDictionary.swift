@@ -27,14 +27,14 @@ public typealias JSONArray = [JSONDictionary]
 public extension Dictionary where Key: ExpressibleByStringLiteral {
     subscript<ReturnType>(throwing key: Key) -> ReturnType {
         get throws {
-            return try valueOrThrow(key)
+            try valueOrThrow(key)
         }
     }
 
     // MARK: String
 
     func string(_ key: Key) -> String? {
-        return self[key] as? String
+        self[key] as? String
     }
     
     func string(key: Key, orThrow: Error) throws -> String {
@@ -43,7 +43,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
 
     func stringOrThrow(key: Key) throws -> String {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
 
     func url(key: Key) -> URL? {
@@ -60,35 +60,35 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     // MARK: Double
 
     func double(_ key: Key) -> Double? {
-        return self[key] as? Double
+        self[key] as? Double
     }
     
     func doubleOrThrow(key: Key) throws -> Double {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     // MARK: Int
 
     func int(key: Key) -> Int? {
-        return self[key] as? Int
+        self[key] as? Int
     }
     
     func intOrThrow(key: Key) throws -> Int {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     // MARK: Bool
 
     func bool(_ key: Key) -> Bool? {
-        return self[key] as? Bool
+        self[key] as? Bool
     }
     
     func bool(key: Key, or defaultValue: Bool) -> Bool {
-        return bool(key) ?? defaultValue
+        bool(key) ?? defaultValue
     }
     
     func boolOrThrow(key: Key) throws -> Bool {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     // MARK: Date
@@ -124,37 +124,37 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     // MARK: - Array
 
     func stringArray(key: Key) -> [String]? {
-        return self[key] as? [String]
+        self[key] as? [String]
     }
     
     func stringArrayOrThrow(key: Key) throws -> [String] {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     func intArray(key: Key) -> [Int]? {
-        return self[key] as? [Int]
+        self[key] as? [Int]
     }
     
     func intArrayOrThrow(key: Key) throws -> [Int] {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     // MARK: Json
 
     func jsonArray(key: Key) -> JSONArray? {
-        return self[key] as? JSONArray
+        self[key] as? JSONArray
     }
     
     func jsonArrayOrThrow(key: Key) throws -> JSONArray {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     func jsonDictionary(key: Key) -> JSONDictionary? {
-        return self[key] as? JSONDictionary
+        self[key] as? JSONDictionary
     }
     
     func jsonDictionaryOrThrow(key: Key) throws -> JSONDictionary {
-        return try valueOrThrow(key)
+        try valueOrThrow(key)
     }
     
     // MARK: - Misc
@@ -184,7 +184,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
 }
 
 func genericKeyErrorFor<T: ExpressibleByStringLiteral>(_ key: T) -> Error {
-    return NSError(domain: "Dictionary", code: -1, userInfo: [
+    NSError(domain: "Dictionary", code: -1, userInfo: [
         NSLocalizedDescriptionKey: "Dictionary doesn't contain key: \"\(key)\" of type \(T.self)"
     ])
 }

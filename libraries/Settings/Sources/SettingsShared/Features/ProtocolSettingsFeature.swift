@@ -70,14 +70,14 @@ public struct ProtocolSettingsFeature: Reducer {
             }
             if state.vpnConnectionStatus == .disconnected {
                 return .run { send in
-                    return await send(.setProtocol(TaskResult {
+                    await send(.setProtocol(TaskResult {
                         try await storage.setConnectionProtocol(`protocol`)
                         return `protocol`
                     }))
                 }
             } else {
                 return .run { send in
-                    return await send(.showReconnectionAlert(`protocol`))
+                    await send(.showReconnectionAlert(`protocol`))
                 }
             }
 
@@ -106,7 +106,6 @@ public struct ProtocolSettingsFeature: Reducer {
                 }))
                 // guard case let .connected(specs) = status else { return }
                 // connectVPN(specs)
-                return
             }
 
         case .reconnectionAlert(.dismiss):

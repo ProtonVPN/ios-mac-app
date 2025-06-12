@@ -92,11 +92,11 @@ public struct HomeMapFeature {
         fileprivate var pinMode: MapPin.Mode {
             switch self {
             case .connectedCoordinates:
-                return .exitConnected
+                .exitConnected
             case .connectingCoordinates:
-                return .connecting
+                .connecting
             case .disconnected:
-                return .disconnected
+                .disconnected
             }
         }
 
@@ -115,22 +115,22 @@ public struct HomeMapFeature {
         var code: String? {
             switch self {
             case let .connectedCoordinates(_, code):
-                return code
+                code
             case let .connectingCoordinates(_, code):
-                return code
+                code
             case .disconnected:
-                return nil
+                nil
             }
         }
 
         var coordinates: CLLocationCoordinate2D? {
             switch self {
             case let .connectedCoordinates(coordinates, _):
-                return coordinates
+                coordinates
             case let .connectingCoordinates(coordinates, _):
-                return coordinates
+                coordinates
             case .disconnected:
-                return nil
+                nil
             }
         }
     }

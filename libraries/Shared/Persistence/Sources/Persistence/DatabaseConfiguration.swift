@@ -44,7 +44,7 @@ public struct DatabaseConfiguration {
         databaseType: DatabaseType,
         schemaVersion: SchemaVersion = .latest
     ) -> DatabaseConfiguration {
-        return DatabaseConfiguration(
+        DatabaseConfiguration(
             executor: TestDatabaseExecutor(),
             databaseType: databaseType,
             schemaVersion: schemaVersion

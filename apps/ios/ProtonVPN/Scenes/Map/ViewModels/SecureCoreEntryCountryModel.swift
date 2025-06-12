@@ -68,23 +68,23 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     let maxPinHeight: CGFloat = 36
     
     var anchorPoint: CGPoint {
-        return CGPoint(x: 0.5, y: (maxPinHeight * 0.5) / maxHeight)
+        CGPoint(x: 0.5, y: (maxPinHeight * 0.5) / maxHeight)
     }
     
     var labelHeight: CGFloat {
-        return 30
+        30
     }
     
     var labelString: NSAttributedString {
-        return Localizable.viaCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
+        Localizable.viaCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
     
     var labelColor: UIColor {
-        return UIColor.brandColor().withAlphaComponent(0.75)
+        UIColor.brandColor().withAlphaComponent(0.75)
     }
     
     var flagOverlayColor: UIColor {
-        return UIColor.brandColor().withAlphaComponent(0.25)
+        UIColor.brandColor().withAlphaComponent(0.25)
     }
     
     let showAnchor: Bool = false
@@ -101,7 +101,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     }
     
     func tapped() {
-        return // don't respond to taps
+        // don't respond to taps
     }
     
     func highlight(_ highlight: Bool) {
@@ -115,7 +115,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     // MARK: - Hashable conformance
 
     static func == (lhs: SecureCoreEntryCountryModel, rhs: SecureCoreEntryCountryModel) -> Bool {
-        return lhs.countryCode == rhs.countryCode
+        lhs.countryCode == rhs.countryCode
     }
     
     func hash(into hasher: inout Hasher) {

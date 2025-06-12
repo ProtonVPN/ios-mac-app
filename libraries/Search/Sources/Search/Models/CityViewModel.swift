@@ -31,6 +31,6 @@ public protocol CityViewModel: ConnectViewModel {
 
 extension CityViewModel {
     var displayCityName: String {
-        return translatedCityName ?? cityName
+        translatedCityName ?? cityName
     }
 }

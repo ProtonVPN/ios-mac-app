@@ -37,17 +37,17 @@ struct BugReportResultFeature {
         Reduce { state, action in
             switch action {
             case .finish:
-                return .run(priority: .userInitiated) { _ in
+                .run(priority: .userInitiated) { _ in
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
 
             case .retry:
                 // Retry is done on the parent view
-                return .none
+                .none
 
             case .troubleshoot:
-                return .run(priority: .userInitiated) { _ in
+                .run(priority: .userInitiated) { _ in
                     @Dependency(\.troubleshoot) var troubleshoot
                     troubleshoot()
                 }

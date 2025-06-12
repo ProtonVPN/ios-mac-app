@@ -32,6 +32,6 @@ class TabBar: UITabBar {
 
 extension TabBar {
     override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
+        UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
     }
 }

@@ -92,7 +92,7 @@ import Foundation
 
     extension NSAttributedString {
         public static func lineSeparator(count: Int = 1) -> NSAttributedString {
-            return .init(string: String(repeating: "\n", count: count))
+            .init(string: String(repeating: "\n", count: count))
         }
     }
 

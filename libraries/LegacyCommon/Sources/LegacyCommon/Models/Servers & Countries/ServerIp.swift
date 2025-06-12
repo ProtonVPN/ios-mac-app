@@ -176,14 +176,14 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
 
     public var underMaintenance: Bool {
-        return status == 0
+        status == 0
     }
 
     // MARK: - Static functions
 
     // swiftlint:disable:next nsobject_prefer_isequal
     public static func == (lhs: ServerIp, rhs: ServerIp) -> Bool {
-        return lhs.domain == rhs.domain
+        lhs.domain == rhs.domain
     }
 }
 

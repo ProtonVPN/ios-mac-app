@@ -95,7 +95,7 @@ struct ConnectionDetailsView: View {
     }
 
     private var shouldShowCityRow: Bool {
-        return store.city != "-" && !store.city.isEmpty
+        store.city != "-" && !store.city.isEmpty
     }
 
     @MainActor
@@ -122,9 +122,9 @@ struct ConnectionDetailsView: View {
             var accessibilityValue: String {
                 switch self {
                 case let .text(string):
-                    return string
+                    string
                 case let .percentage(value):
-                    return String(value) + "%"
+                    String(value) + "%"
                 }
             }
         }

@@ -80,7 +80,7 @@ public enum TunnelKeychainImplementationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidDataFormatRetrievedFromKeychain:
-            return "Data retrieved from the Keychain isn't in the expected format."
+            "Data retrieved from the Keychain isn't in the expected format."
         }
     }
 }
@@ -194,7 +194,7 @@ struct TunnelKeychainImplementation {
     }
 
     private func formBaseQuery(forKey key: String) -> [AnyHashable: Any] {
-        return [
+        [
             kSecClass as AnyHashable: kSecClassGenericPassword,
             kSecAttrGeneric as AnyHashable: key,
             kSecAttrAccount as AnyHashable: key,
@@ -211,7 +211,7 @@ struct TunnelKeychainImplementation {
     }
 
     public func fetchWireguardConfigurationReference() throws -> Data {
-        return try getPasswordReference(forKey: StorageKey.wireguardSettings)
+        try getPasswordReference(forKey: StorageKey.wireguardSettings)
     }
 
     public func fetchWireguardConfiguration() throws -> String? {

@@ -94,7 +94,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     // swiftlint:enable function_body_length operator_usage_whitespace
 
     override func hitTest(_ point: NSPoint) -> NSView? {
-        return hitTestForState(point, hovered: hovered)
+        hitTestForState(point, hovered: hovered)
     }
 
     override func mouseEntered(with event: NSEvent) {

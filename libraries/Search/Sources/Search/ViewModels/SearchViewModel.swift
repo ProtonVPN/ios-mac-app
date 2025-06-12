@@ -40,7 +40,7 @@ final class SearchViewModel {
     weak var delegate: SearchViewModelDelegate?
 
     var numberOfCountries: Int {
-        return constants.numberOfCountries
+        constants.numberOfCountries
     }
 
     init(recentSearchesService: RecentSearchesService, data: [CountryViewModel], constants: Constants, mode: SearchMode) {

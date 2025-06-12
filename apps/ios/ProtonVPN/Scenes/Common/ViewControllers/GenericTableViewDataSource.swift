@@ -80,7 +80,7 @@ struct TableViewSection {
     }
     
     var headerHeight: CGFloat {
-        return showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
+        showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
     }
 }
 
@@ -117,11 +117,11 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections.count
+        sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].cells.count
+        sections[section].cells.count
     }
     
     // swiftlint:disable cyclomatic_complexity function_body_length
@@ -346,7 +346,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return sections[section].headerHeight
+        sections[section].headerHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -358,23 +358,23 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section].cells[indexPath.row] {
         case .tooltip, .attributedTooltip:
-            return -1 // allows for self sizing
+            -1 // allows for self sizing
         case .instructionStep:
-            return -1 // allows for self sizing
+            -1 // allows for self sizing
         case let .colorPicker(viewModel: viewModel):
-            return viewModel.height
+            viewModel.height
         case .textWithActivityCell:
-            return -1 // allows for self sizing
+            -1 // allows for self sizing
         case .pushAccountDetails:
-            return -1
+            -1
         case .imageSubtitle:
-            return -1
+            -1
         case .imageSubtitleImage:
-            return -1
+            -1
         case .netShieldStats:
-            return UITableView.automaticDimension
+            UITableView.automaticDimension
         default:
-            return UIConstants.cellHeight
+            UIConstants.cellHeight
         }
     }
 

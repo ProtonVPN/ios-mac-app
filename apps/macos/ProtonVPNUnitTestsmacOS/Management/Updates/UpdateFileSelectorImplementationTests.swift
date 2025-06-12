@@ -69,7 +69,7 @@
         }
 
         func makePropertiesManager() -> PropertiesManagerProtocol {
-            return propertiesManager
+            propertiesManager
         }
     }
 #endif

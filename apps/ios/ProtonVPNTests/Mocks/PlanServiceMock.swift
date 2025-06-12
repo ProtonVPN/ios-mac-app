@@ -43,11 +43,11 @@ class PlanServiceMock: PlanService {
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
-        return 63
+        63
     }
 
     var allowUpgrade: Bool {
-        return true
+        true
     }
 
     func updateServicePlans() async throws {}

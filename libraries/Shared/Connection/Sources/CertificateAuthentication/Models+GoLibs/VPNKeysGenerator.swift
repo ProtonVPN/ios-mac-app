@@ -26,7 +26,7 @@ public struct VPNKeysGenerator: DependencyKey {
     var generateKeys: @Sendable () throws -> VPNKeys
 
     public static var liveValue: VPNKeysGenerator {
-        return .init(generateKeys: {
+        .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)
             if let error {

@@ -61,11 +61,11 @@ class MapViewModel: SecureCoreToggleHandler {
     private let connectionStatusService: ConnectionStatusService
     
     var secureCoreOn: Bool {
-        return activeView == .secureCore
+        activeView == .secureCore
     }
     
     var annotations: [AnnotationViewModel] {
-        return [AnnotationViewModel](countryExitAnnotations) + [SecureCoreEntryCountryModel](secureCoreEntryAnnotations)
+        [AnnotationViewModel](countryExitAnnotations) + [SecureCoreEntryCountryModel](secureCoreEntryAnnotations)
     }
     
     var connections: [ConnectionViewModel] {
@@ -88,7 +88,7 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     var enableViewToggle: Bool {
-        return vpnGateway.connection != .connecting
+        vpnGateway.connection != .connecting
     }
     
     var contentChanged: (() -> Void)?

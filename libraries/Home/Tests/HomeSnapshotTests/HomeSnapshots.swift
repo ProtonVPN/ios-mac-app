@@ -139,11 +139,11 @@
     extension ProtectionState {
         fileprivate func shortDescription() -> String {
             switch self {
-            case .unprotected: return "Unprotected"
-            case .protecting: return "Protecting"
-            case .protected: return "Protected"
-            case .protectedSecureCore: return "ProtectedSecureCore"
-            case .resolving: return "Loading"
+            case .unprotected: "Unprotected"
+            case .protecting: "Protecting"
+            case .protected: "Protected"
+            case .protectedSecureCore: "ProtectedSecureCore"
+            case .resolving: "Loading"
             }
         }
     }
@@ -151,11 +151,11 @@
     extension VPNConnectionStatus {
         fileprivate func shortDescription() -> String {
             switch self {
-            case .disconnected: return "Disconnected"
-            case .connecting: return "Connecting"
-            case .resolving: return "Loading"
-            case .disconnecting: return "Disconnecting"
-            case .connected: return "Connected"
+            case .disconnected: "Disconnected"
+            case .connecting: "Connecting"
+            case .resolving: "Loading"
+            case .disconnecting: "Disconnecting"
+            case .connected: "Connected"
             }
         }
     }

@@ -64,7 +64,7 @@
         }
 
         func colored(_ color: NSColor) -> NSImage {
-            return NSImage(size: size, flipped: false) { bounds in
+            NSImage(size: size, flipped: false) { bounds in
                 DarkAppearance {
                     color.set()
                     bounds.fill()

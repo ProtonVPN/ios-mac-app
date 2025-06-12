@@ -46,13 +46,13 @@ protocol MapSectionViewModelFactory {
 
 extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
-        return MapSectionViewModel(appStateManager: makeAppStateManager(),
-                                   propertiesManager: makePropertiesManager(),
-                                   vpnGateway: makeVpnGateway(),
-                                   navService: makeNavigationService(),
-                                   vpnKeychain: makeVpnKeychain(),
-                                   viewToggle: viewToggle,
-                                   alertService: makeCoreAlertService())
+        MapSectionViewModel(appStateManager: makeAppStateManager(),
+                            propertiesManager: makePropertiesManager(),
+                            vpnGateway: makeVpnGateway(),
+                            navService: makeNavigationService(),
+                            vpnKeychain: makeVpnKeychain(),
+                            viewToggle: viewToggle,
+                            alertService: makeCoreAlertService())
     }
 }
 
@@ -285,7 +285,7 @@ class MapSectionViewModel {
     }
     
     private func standardConnections() -> [ConnectionViewModel] {
-        return annotations.filter({ annotation -> Bool in
+        annotations.filter({ annotation -> Bool in
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
             return annotation.isConnected
         }).map({ annotation -> ConnectionViewModel in

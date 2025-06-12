@@ -217,7 +217,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     authorizer.registerServerChange(connectedAt: connectedAt)
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connected(intent, intent.server, connectedAt, details)
+                    .connected(intent, intent.server, connectedAt, details)
                 }
 
             case let .core(.delegate(.stateChanged(oldState, .starting))):
@@ -228,7 +228,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .none
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connecting(.resolved(intent, intent.server))
+                    .connecting(.resolved(intent, intent.server))
                 }
 
             case .core(.delegate(.stateChanged(_, .connecting))):
@@ -238,7 +238,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .none
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connecting(.resolved(intent, intent.server))
+                    .connecting(.resolved(intent, intent.server))
                 }
 
             case let .core(.delegate(.stateChanged(oldState, .disconnecting))):
@@ -376,7 +376,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
 extension ConnectionFeature.State {
     var coreConnectionState: CoreConnectionState {
-        return CoreConnectionState(connectionFeatureState: core)
+        CoreConnectionState(connectionFeatureState: core)
     }
 }
 

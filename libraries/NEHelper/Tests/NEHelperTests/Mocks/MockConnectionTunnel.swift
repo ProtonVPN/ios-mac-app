@@ -29,7 +29,7 @@ struct MockDataTaskFactory: DataTaskFactory {
     let requestCallback: RequestCallback
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping MockDataTask.CompletionCallback) -> DataTaskProtocol {
-        return MockDataTask(request: request, dataTaskFactory: self, completionHandler: completionHandler)
+        MockDataTask(request: request, dataTaskFactory: self, completionHandler: completionHandler)
     }
 }
 

@@ -52,7 +52,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     @Dependency(\.storage) private var storage
 
     private func defaultValueForCurrentUser<T: ProvidableFeature>(for feature: T.Type) -> T {
-        return feature.defaultValue(
+        feature.defaultValue(
             onPlan: credentialsProvider.planName,
             userTier: credentialsProvider.tier,
             featureFlags: featureFlagProvider.getFeatureFlags()
@@ -172,7 +172,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
         public init() {}
 
         private func featureKey(for feature: (some ProvidableFeature).Type) -> String {
-            return "\(feature)"
+            "\(feature)"
         }
 
         public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {

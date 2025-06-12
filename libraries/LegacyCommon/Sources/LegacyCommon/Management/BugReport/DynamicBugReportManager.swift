@@ -34,7 +34,7 @@ public class DynamicBugReportManager {
     public var model: BugReportModel = .mock
     public var prefilledEmail: String {
         get {
-            return self.propertiesManager.reportBugEmail ?? ""
+            self.propertiesManager.reportBugEmail ?? ""
         }
         set {
             self.propertiesManager.reportBugEmail = newValue
@@ -42,7 +42,7 @@ public class DynamicBugReportManager {
     }
 
     public var prefilledUsername: String {
-        return AuthKeychain.default.username ?? ""
+        AuthKeychain.default.username ?? ""
     }
 
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
@@ -217,7 +217,7 @@ extension DynamicBugReportManager: BugReportDelegate {
     }
 
     public func updateApp() {
-        return updateChecker.startUpdate()
+        updateChecker.startUpdate()
     }
 
     public func checkUpdateAvailability() {

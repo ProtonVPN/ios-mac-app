@@ -37,14 +37,14 @@ class StatusMenuCountryItemViewModel {
     var flag: NSImage {
         switch serverGroup.kind {
         case let .country(code):
-            return AppTheme.Icon.flag(countryCode: code) ?? NSImage()
+            AppTheme.Icon.flag(countryCode: code) ?? NSImage()
         case .gateway:
-            return IconProvider.servers
+            IconProvider.servers
         }
     }
 
     var description: NSAttributedString {
-        return formDescription()
+        formDescription()
     }
 
     init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {

@@ -103,6 +103,6 @@ private extension ModelIdChecker {
 
 extension ModelIdChecker: ModelIdCheckerProtocol {
     var modelId: String? {
-        return sysctl(byName: "hw.model")
+        sysctl(byName: "hw.model")
     }
 }

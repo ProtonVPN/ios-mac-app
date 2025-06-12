@@ -320,19 +320,19 @@
 
     extension SystemExtensionManagerTests: SystemExtensionManager.Factory {
         func makeCoreAlertService() -> CoreAlertService {
-            return alertService
+            alertService
         }
 
         func makePropertiesManager() -> PropertiesManagerProtocol {
-            return propertiesManager
+            propertiesManager
         }
 
         func makeVpnKeychain() -> VpnKeychainProtocol {
-            return vpnKeychain
+            vpnKeychain
         }
 
         func makeProfileManager() -> ProfileManager {
-            return profileManager
+            profileManager
         }
     }
 #endif

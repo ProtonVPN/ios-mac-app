@@ -34,7 +34,7 @@ class CancellationButton: HoverDetectionButton {
     public var style: Style = .default
 
     private var isDestructive: Bool {
-        return style == .destructive
+        style == .destructive
     }
 
     override var title: String {

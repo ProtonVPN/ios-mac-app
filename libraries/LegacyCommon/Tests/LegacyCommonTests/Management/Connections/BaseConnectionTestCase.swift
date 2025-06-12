@@ -84,7 +84,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container = withDependencies {
             $0.serverRepository = repository
         } operation: {
-            return MockDependencyContainer()
+            MockDependencyContainer()
         }
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
@@ -233,17 +233,17 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         var description: String {
             switch self {
             case .vpnConnection:
-                return "vpn connection"
+                "vpn connection"
             case .vpnDisconnection:
-                return "vpn disconnection"
+                "vpn disconnection"
             case .localAgentConnection:
-                return "local agent connection"
+                "local agent connection"
             case .certificateRefresh:
-                return "certificate refresh"
+                "certificate refresh"
             case .alertDisplayed:
-                return "alert displayed"
+                "alert displayed"
             case let .custom(name):
-                return name
+                name
             }
         }
     }

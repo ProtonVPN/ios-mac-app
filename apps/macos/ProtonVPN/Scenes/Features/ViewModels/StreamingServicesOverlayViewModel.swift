@@ -48,15 +48,15 @@ class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtoc
     let columnsAmount: Int = 3
     
     var totalRows: Int {
-        return Int((Float(streamingServices.count) / Float(columnsAmount)).rounded(.up))
+        Int((Float(streamingServices.count) / Float(columnsAmount)).rounded(.up))
     }
     
     var totalItems: Int {
-        return streamingServices.count
+        streamingServices.count
     }
     
     func streamOptionViewModelFor(index: Int) -> StreamOptionCVItemViewModelProtocol {
-        return StreamOptionCVItemViewModel(streamingServices[index], propertiesManager: propertiesManager)
+        StreamOptionCVItemViewModel(streamingServices[index], propertiesManager: propertiesManager)
     }
     
     let countryName: String

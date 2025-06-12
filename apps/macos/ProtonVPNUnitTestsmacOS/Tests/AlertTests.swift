@@ -112,7 +112,7 @@ private class WindowServiceMock: WindowService {
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
 
     func showIfPresent(windowController: (some NSWindowController).Type) -> Bool {
-        return false
+        false
     }
 
     func closeIfPresent(windowController: (some NSWindowController).Type) {}
@@ -126,7 +126,7 @@ private class WindowServiceMock: WindowService {
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
 
     func bringWindowsToForeground() -> Bool {
-        return false
+        false
     }
 
     func presentKeyModal(viewController: NSViewController) {
@@ -134,7 +134,7 @@ private class WindowServiceMock: WindowService {
     }
 
     func isKeyModalPresent(viewController: NSViewController) -> Bool {
-        return false
+        false
     }
 
     func closeActiveWindows(except: [NSWindowController.Type]) {}
@@ -150,75 +150,75 @@ private class WindowServiceMock: WindowService {
 
 private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeNavigationService() -> NavigationService {
-        return navigationService
+        navigationService
     }
 
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
 
     func makeSessionService() -> SessionService {
-        return sessionService
+        sessionService
     }
 }
 
 private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
-        return VpnKeychainMock()
+        VpnKeychainMock()
     }
 
     func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
-        return telemetrySettings
+        telemetrySettings
     }
 
     func makeNavigationService() -> ProtonVPN.NavigationService {
-        return navigationService
+        navigationService
     }
 
     func makeSessionService() -> SessionService {
-        return sessionService
+        sessionService
     }
 
     func makePlanService() -> PlanService {
-        return PlanServiceMock()
+        PlanServiceMock()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
+        PropertiesManagerMock()
     }
 
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 
     func makeAppSessionManager() -> AppSessionManager {
-        return AppSessionManagerMock()
+        AppSessionManagerMock()
     }
 
     func makeUIAlertService() -> UIAlertService {
-        return uiAlertService
+        uiAlertService
     }
 
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
 
     func makeNotificationManager() -> NotificationManagerProtocol {
-        return NotificationManagerMock()
+        NotificationManagerMock()
     }
 
     func makeUpdateManager() -> UpdateManager {
-        return UpdateManager(UpdateFileSelectorFactoryMock())
+        UpdateManager(UpdateFileSelectorFactoryMock())
     }
 }
 
 private class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector {
-        return UpdateFileSelectorMock()
+        UpdateFileSelectorMock()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
+        PropertiesManagerMock()
     }
 }
 

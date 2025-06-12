@@ -92,7 +92,7 @@ class PlanTests: ProtonVPNUITests {
     }
 
     private func loginAndGoToAccountDetails(_ user: Credentials) -> AccountRobot {
-        return loginRobot
+        loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()

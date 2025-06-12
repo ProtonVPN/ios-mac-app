@@ -85,7 +85,7 @@ extension ConnectionSpec {
     static let poland = ConnectionSpec(location: .region(code: "PL"), features: [])
 
     func recent(with date: Date, pinnedDate: Date? = nil) -> RecentConnection {
-        return RecentConnection(
+        RecentConnection(
             pinnedDate: pinnedDate,
             underMaintenance: false,
             connectionDate: date,

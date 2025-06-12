@@ -27,7 +27,7 @@ class ShadowView: NSView {
     private var gradientHeight: CGFloat!
     
     override var isFlipped: Bool {
-        return true
+        true
     }
     
     required init?(coder decoder: NSCoder) {

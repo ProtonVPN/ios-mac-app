@@ -72,7 +72,7 @@
         private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
         private func reduce(installationResults: InstallationState, didRequireUserApproval: Bool) -> SystemExtensionResult {
-            return installationResults.reduce(into: .success(.alreadyThere)) { accumulator, sysexInstallationResult in
+            installationResults.reduce(into: .success(.alreadyThere)) { accumulator, sysexInstallationResult in
                 if case .failure = accumulator { return }
                 let (type, installationResult) = sysexInstallationResult
                 switch installationResult {

@@ -85,7 +85,7 @@ final class LoginViewModel {
     }
 
     var startOnBoot: Bool {
-        return propertiesManager.startOnBoot
+        propertiesManager.startOnBoot
     }
 
     func startOnBoot(enabled: Bool) {
@@ -354,6 +354,6 @@ final class LoginViewModel {
     }
 
     var helpPopoverViewModel: HelpPopoverViewModel {
-        return HelpPopoverViewModel(navigationService: navService)
+        HelpPopoverViewModel(navigationService: navService)
     }
 }

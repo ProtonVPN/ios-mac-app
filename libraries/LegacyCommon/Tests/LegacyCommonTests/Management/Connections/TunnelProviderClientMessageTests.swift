@@ -66,7 +66,7 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
         withDependencies {
             let networkingMock = NetworkingMock()
             networkingMock.requestCallback = { _ in
-                return Result { try JSONEncoder().encode(ForkSessionResponse.mock) }
+                Result { try JSONEncoder().encode(ForkSessionResponse.mock) }
             }
             $0.networking = CoreNetworkingWrapper(wrapped: networkingMock)
         } operation: {

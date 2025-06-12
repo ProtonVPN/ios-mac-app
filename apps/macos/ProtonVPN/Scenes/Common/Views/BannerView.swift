@@ -90,6 +90,6 @@ final class BannerView: NSView {
     }
 
     override var intrinsicContentSize: NSSize {
-        return size ?? .zero
+        size ?? .zero
     }
 }

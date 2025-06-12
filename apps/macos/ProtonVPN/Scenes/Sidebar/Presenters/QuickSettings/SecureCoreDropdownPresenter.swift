@@ -40,11 +40,11 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var title: String! {
-        return Localizable.secureCore
+        Localizable.secureCore
     }
     
     override var learnLink: String {
-        return VPNLink.learnMore.urlString
+        VPNLink.learnMore.urlString
     }
     
     init( _ factory: Factory ) {
@@ -53,7 +53,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [self.secureCoreOff, self.secureCoreOn]
+        [self.secureCoreOff, self.secureCoreOn]
     }
     
     override func viewDidLoad() {
@@ -123,12 +123,12 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {
-        return isOn
+        isOn
             ? currentUserTier.isFreeTier
             : false
     }
     
     private var currentUserTier: Int {
-        return(try? vpnGateway.userTier()) ?? .freeTier
+        (try? vpnGateway.userTier()) ?? .freeTier
     }
 }

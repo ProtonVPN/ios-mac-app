@@ -79,7 +79,7 @@ class StatusViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     var isSessionEstablished: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
 
     private var shouldShowNetShieldV1: Bool { isNetShieldEnabled && !isNetShieldStatsEnabled }
@@ -208,15 +208,15 @@ class StatusViewModel {
     private var connectionStatusCell: TableViewCellModel {
         switch appStateManager.displayState {
         case .connected:
-            return .textWithActivityCell(title: Localizable.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
+            .textWithActivityCell(title: Localizable.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
         case .connecting:
-            return .textWithActivityCell(title: Localizable.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            .textWithActivityCell(title: Localizable.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .loadingConnectionInfo:
-            return .textWithActivityCell(title: Localizable.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
+            .textWithActivityCell(title: Localizable.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
         case .disconnecting:
-            return .textWithActivityCell(title: Localizable.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
+            .textWithActivityCell(title: Localizable.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .disconnected:
-            return .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
+            .textWithActivityCell(title: Localizable.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
     }
 
@@ -641,7 +641,7 @@ class StatusViewModel {
     // MARK: Upsell
 
     private var changeCountryBannerCell: TableViewCellModel {
-        return .imageSubtitle(
+        .imageSubtitle(
             title: Localizable.wrongCountryBannerTitle,
             subtitle: Localizable.wrongCountryBannerSubtitle,
             image: Theme.Asset.wrongCountry.image,

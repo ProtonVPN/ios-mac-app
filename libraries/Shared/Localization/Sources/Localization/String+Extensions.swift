@@ -20,7 +20,7 @@ import Foundation
 
 extension String {
     public var normalized: String {
-        return folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+        folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
             .replacingOccurrences(of: "ł", with: "l")
     }
 }

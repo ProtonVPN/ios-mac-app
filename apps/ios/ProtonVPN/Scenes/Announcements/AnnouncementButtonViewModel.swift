@@ -31,7 +31,7 @@ protocol AnnouncementButtonViewModelFactory {
 
 extension DependencyContainer: AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel {
-        return AnnouncementButtonViewModel(factory: self)
+        AnnouncementButtonViewModel(factory: self)
     }
 }
 

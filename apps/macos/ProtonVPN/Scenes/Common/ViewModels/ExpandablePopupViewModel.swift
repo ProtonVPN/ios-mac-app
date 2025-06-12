@@ -36,23 +36,23 @@ class ExpandablePopupViewModel: NSObject {
     var dismissViewController: (() -> Void)?
 
     var title: String {
-        return alert.title ?? ""
+        alert.title ?? ""
     }
     
     var hiddenInfo: String {
-        return alert.expandableInfo ?? ""
+        alert.expandableInfo ?? ""
     }
     
     var message: String {
-        return alert.message ?? ""
+        alert.message ?? ""
     }
     
     var extraInfo: String {
-        return alert.footInfo ?? ""
+        alert.footInfo ?? ""
     }
     
     var actionButtonTitle: String {
-        return action(0)?.title ?? Localizable.ok
+        action(0)?.title ?? Localizable.ok
     }
     
     func action() {
@@ -66,10 +66,10 @@ class ExpandablePopupViewModel: NSObject {
     }
 
     private var onAction: (() -> Void)? {
-        return action(0)?.handler
+        action(0)?.handler
     }
     
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
-        return alert.actions[optional: index]
+        alert.actions[optional: index]
     }
 }

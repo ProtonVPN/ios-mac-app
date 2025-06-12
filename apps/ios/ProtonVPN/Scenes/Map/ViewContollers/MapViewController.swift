@@ -234,9 +234,9 @@ final class MapViewController: UIViewController {
     private func reorderAnnotations() {
         let selectedAnnotations: [AnnotationView] = mapView.subviews.compactMap {
             if let annotationView = $0 as? AnnotationView, annotationView.selected {
-                return annotationView
+                annotationView
             } else {
-                return nil
+                nil
             }
         }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
@@ -244,9 +244,9 @@ final class MapViewController: UIViewController {
         
         let connectedAnnotations: [AnnotationView] = mapView.subviews.compactMap {
             if let annotationView = $0 as? AnnotationView, annotationView.connectedState, !annotationView.selected {
-                return annotationView
+                annotationView
             } else {
-                return nil
+                nil
             }
         }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
@@ -254,9 +254,9 @@ final class MapViewController: UIViewController {
         
         let unselectedAnnotations: [AnnotationView] = mapView.subviews.compactMap {
             if let annotationView = $0 as? AnnotationView, !annotationView.selected, !annotationView.connectedState, annotationView.available {
-                return annotationView
+                annotationView
             } else {
-                return nil
+                nil
             }
         }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
@@ -264,9 +264,9 @@ final class MapViewController: UIViewController {
         
         let unavailableAnnotations: [AnnotationView] = mapView.subviews.compactMap {
             if let annotationView = $0 as? AnnotationView, !annotationView.selected, !annotationView.connectedState, !annotationView.available {
-                return annotationView
+                annotationView
             } else {
-                return nil
+                nil
             }
         }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
@@ -306,7 +306,7 @@ final class MapViewController: UIViewController {
 
 extension MapViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return mapView
+        mapView
     }
     
     func scrollViewDidZoom(_ scrollView: UIScrollView) {

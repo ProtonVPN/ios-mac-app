@@ -30,7 +30,7 @@ private let appStateManager: AppStateManager = Container.sharedContainer.makeApp
 @available(tvOS, unavailable)
 extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
-        return NotificationCenter.default
+        NotificationCenter.default
             .notifications(named: AppEvent.appStateManagerStateChange.name)
             .map {
                 let appStateManager = Container.sharedContainer.makeAppStateManager()
@@ -49,9 +49,9 @@ extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
 
     public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
         if #available(macOS 12, *) {
-            return displayStateStream()
+            displayStateStream()
         } else {
-            return .finished
+            .finished
         }
     }
 }

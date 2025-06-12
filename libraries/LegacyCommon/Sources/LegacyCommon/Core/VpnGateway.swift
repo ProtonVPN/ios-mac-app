@@ -40,13 +40,13 @@ public enum ConnectionStatus {
     static func forAppState(_ appState: AppState) -> ConnectionStatus {
         switch appState {
         case .disconnected, .aborted, .error:
-            return .disconnected
+            .disconnected
         case .preparingConnection, .connecting:
-            return .connecting
+            .connecting
         case .connected:
-            return .connected
+            .connected
         case .disconnecting:
-            return .disconnecting
+            .disconnecting
         }
     }
 }
@@ -103,11 +103,11 @@ public class VpnGateway: VpnGatewayProtocol {
     private let siriHelper: SiriHelperProtocol?
 
     private var tier: Int {
-        return (try? userTier()) ?? .freeTier
+        (try? userTier()) ?? .freeTier
     }
 
     private var serverTypeToggle: ServerType {
-        return propertiesManager.secureCoreToggle ? .secureCore : .standard
+        propertiesManager.secureCoreToggle ? .secureCore : .standard
     }
 
     private var globalConnectionProtocol: ConnectionProtocol {
@@ -129,22 +129,22 @@ public class VpnGateway: VpnGatewayProtocol {
     public var connection: ConnectionStatus
 
     public var lastConnectionRequest: ConnectionRequest? {
-        return propertiesManager.lastConnectionRequest
+        propertiesManager.lastConnectionRequest
     }
 
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        return netShieldPropertyProvider.netShieldType
+        netShieldPropertyProvider.netShieldType
     }
 
     private let natTypePropertyProvider: NATTypePropertyProvider
     private var natType: NATType {
-        return natTypePropertyProvider.natType
+        natTypePropertyProvider.natType
     }
 
     private let safeModePropertyProvider: SafeModePropertyProvider
     private var safeMode: Bool? {
-        return safeModePropertyProvider.safeMode
+        safeModePropertyProvider.safeMode
     }
 
     private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
@@ -231,7 +231,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func userTier() throws -> Int {
-        return try vpnKeychain.fetchCached().maxTier
+        try vpnKeychain.fetchCached().maxTier
     }
 
     public func changeActiveServerType(_ serverType: ServerType) {

@@ -150,7 +150,7 @@ public enum FeatureAuthorizerKey: DependencyKey {
         public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
 
         public static func constant(_ result: FeatureAuthorizationResult) -> FeatureAuthorizerProvider {
-            return ConstantFeatureAuthorizerProvider(result: result)
+            ConstantFeatureAuthorizerProvider(result: result)
         }
     #endif
 }

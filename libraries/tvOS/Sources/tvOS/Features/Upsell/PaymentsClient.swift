@@ -35,10 +35,10 @@ enum PaymentsError: Error, CustomStringConvertible {
     var code: Int? {
         switch self {
         case .iapDisabled:
-            return nil
+            nil
 
         case .planNotFound:
-            return -1
+            -1
         }
     }
 
@@ -48,7 +48,7 @@ enum PaymentsError: Error, CustomStringConvertible {
 
     /// Default error description, suffixed with the code if it has one, to ease error identification.
     var description: String {
-        return ["In-App Purchases are temporarily not available.", codeSuffix]
+        ["In-App Purchases are temporarily not available.", codeSuffix]
             .compactMap { $0 }
             .joined(separator: " ")
     }
@@ -125,7 +125,7 @@ struct PaymentsClient: Sendable, DependencyKey {
                 // If a purchase is already in progress, `buyPlan` returns `.planPurchaseProcessingInProgress`
                 // and carries on processing said purchase. The final result is received through the `AsyncStream`
                 // subscribed to through `startObserving`.
-                return await withCheckedContinuation {
+                await withCheckedContinuation {
                     payments.purchaseManager.buyPlan(plan: product.iap, finishCallback: $0.resume(returning:))
                 }
             }

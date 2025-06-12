@@ -84,9 +84,9 @@ enum Keychain {
     }
 
     static func verifyReference(called ref: Data) -> Bool {
-        return SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                                    kSecValuePersistentRef: ref] as CFDictionary,
-                                   nil) != errSecItemNotFound
+        SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
+                             kSecValuePersistentRef: ref] as CFDictionary,
+                            nil) != errSecItemNotFound
     }
 
     // MARK: - By name (for macOS sysex)

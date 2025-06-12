@@ -29,9 +29,9 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
     public var values: Values {
         switch event {
         case let .vpnConnection(timeToConnection):
-            return .init(timeToConnection: timeToConnection)
+            .init(timeToConnection: timeToConnection)
         case let .vpnDisconnection(sessionLength):
-            return .init(sessionLength: sessionLength)
+            .init(sessionLength: sessionLength)
         }
     }
 
@@ -47,9 +47,9 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
         var rawValue: String {
             switch self {
             case .vpnConnection:
-                return Self.CodingKeys.vpnConnection.rawValue
+                Self.CodingKeys.vpnConnection.rawValue
             case .vpnDisconnection:
-                return Self.CodingKeys.vpnDisconnection.rawValue
+                Self.CodingKeys.vpnDisconnection.rawValue
             }
         }
 

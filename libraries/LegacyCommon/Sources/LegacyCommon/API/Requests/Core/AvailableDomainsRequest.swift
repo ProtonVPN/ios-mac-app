@@ -22,15 +22,15 @@ import ProtonCoreNetworking
 
 final class AvailableDomainsRequest: Request {
     var path: String {
-        return "/core/v4/domains/available"
+        "/core/v4/domains/available"
     }
 
     var isAuth: Bool {
-        return false
+        false
     }
 
     var parameters: [String: Any]? {
-        return ["Type": "login"]
+        ["Type": "login"]
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

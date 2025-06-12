@@ -153,7 +153,7 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 
 extension DependencyContainer: NavigationServiceFactory {
     func makeNavigationService() -> NavigationService {
-        return navigationService
+        navigationService
     }
 }
 
@@ -161,7 +161,7 @@ extension DependencyContainer: NavigationServiceFactory {
 
 extension DependencyContainer: SettingsServiceFactory {
     func makeSettingsService() -> SettingsService {
-        return navigationService
+        navigationService
     }
 }
 
@@ -169,7 +169,7 @@ extension DependencyContainer: SettingsServiceFactory {
 
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
 }
 
@@ -177,7 +177,7 @@ extension DependencyContainer: WindowServiceFactory {
 
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
-        return appSessionManager
+        appSessionManager
     }
 }
 
@@ -185,7 +185,7 @@ extension DependencyContainer: AppSessionManagerFactory {
 
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
-        return uiAlertService
+        uiAlertService
     }
 }
 
@@ -193,7 +193,7 @@ extension DependencyContainer: UIAlertServiceFactory {
 
 extension DependencyContainer: AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
-        return refreshTimer
+        refreshTimer
     }
 }
 
@@ -201,7 +201,7 @@ extension DependencyContainer: AppSessionRefreshTimerFactory {
 
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
-        return appSessionManager
+        appSessionManager
     }
 }
 
@@ -209,7 +209,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 
 extension DependencyContainer: LoginServiceFactory {
     func makeLoginService() -> LoginService {
-        return CoreLoginService(factory: self)
+        CoreLoginService(factory: self)
     }
 }
 
@@ -217,7 +217,7 @@ extension DependencyContainer: LoginServiceFactory {
 
 extension DependencyContainer: PlanServiceFactory {
     func makePlanService() -> PlanService {
-        return planService
+        planService
     }
 }
 
@@ -225,7 +225,7 @@ extension DependencyContainer: PlanServiceFactory {
 
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
-        return OnboardingModuleService(factory: self)
+        OnboardingModuleService(factory: self)
     }
 }
 
@@ -233,7 +233,7 @@ extension DependencyContainer: OnboardingServiceFactory {
 
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
-        return iOSBugReportCreator()
+        iOSBugReportCreator()
     }
 }
 
@@ -241,7 +241,7 @@ extension DependencyContainer: BugReportCreatorFactory {
 
 extension DependencyContainer: SearchStorageFactory {
     func makeSearchStorage() -> SearchStorage {
-        return searchStorage
+        searchStorage
     }
 }
 
@@ -249,6 +249,6 @@ extension DependencyContainer: SearchStorageFactory {
 
 extension DependencyContainer: ReviewFactory {
     func makeReview() -> Review {
-        return review
+        review
     }
 }

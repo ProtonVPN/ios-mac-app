@@ -120,7 +120,7 @@ class ProfileItemView: NSView {
     // MARK: - Accessibility
     
     override func accessibilityChildren() -> [Any]? {
-        return nil
+        nil
     }
 
     override func accessibilityValue() -> Any? {
@@ -137,6 +137,6 @@ class ProfileItemView: NSView {
     }
 
     override func accessibilityRole() -> NSAccessibility.Role? {
-        return .button
+        .button
     }
 }

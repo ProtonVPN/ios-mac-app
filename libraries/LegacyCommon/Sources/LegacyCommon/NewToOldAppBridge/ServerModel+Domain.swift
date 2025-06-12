@@ -77,9 +77,9 @@ extension ServerModel {
 
     public var kind: ServerGroupInfo.Kind {
         if let gatewayName {
-            return .gateway(name: gatewayName)
+            .gateway(name: gatewayName)
         } else {
-            return .country(code: exitCountryCode)
+            .country(code: exitCountryCode)
         }
     }
 }

@@ -63,19 +63,19 @@ final class ViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2 // presentation mode + legacy modal
+            2 // presentation mode + legacy modal
         case 1:
-            return 1
+            1
         case 2:
-            return upsells.count
+            upsells.count
         case 3:
-            return 2 // secure core / free connections
+            2 // secure core / free connections
         case 4:
-            return upgrades.count
+            upgrades.count
         case 5:
-            return 1 // onboarding
+            1 // onboarding
         default:
-            return 1
+            1
         }
     }
 
@@ -189,7 +189,7 @@ final class ViewController: UITableViewController {
 
 private extension ViewController {
     func plansClient() -> PlansClient {
-        return PlansClient(
+        PlansClient(
             retrievePlans: {
                 [
                     PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),

@@ -150,18 +150,18 @@ class TabBarView: NSView {
     }
     
     private func isLeftNeighbourPresent(forIndex index: Int) -> Bool {
-        return index > 0
+        index > 0
     }
     
     private func isLeftNeighbourFocused(forIndex index: Int) -> Bool {
-        return isFocused(tabIndex: index - 1)
+        isFocused(tabIndex: index - 1)
     }
     
     private func isRightNeighbourPresent(forIndex index: Int) -> Bool {
-        return tabCount != index + 1
+        tabCount != index + 1
     }
     
     private func isRightNeighbourFocused(forIndex index: Int) -> Bool {
-        return isFocused(tabIndex: index + 1)
+        isFocused(tabIndex: index + 1)
     }
 }

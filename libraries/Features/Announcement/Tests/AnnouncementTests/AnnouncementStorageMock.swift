@@ -32,14 +32,14 @@ public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     }
 
     public func makeAnnouncementStorage() -> AnnouncementStorage {
-        return self.announcementStorage
+        self.announcementStorage
     }
 }
 
 extension Array<Announcement> {
     /// Helper for testing if array contains concrete Announcement
     public func containsAnnouncement(withId id: String) -> Bool {
-        return self.contains(where: {
+        self.contains(where: {
             $0.notificationID == id
         })
     }

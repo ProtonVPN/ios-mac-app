@@ -33,22 +33,22 @@ struct ConnectionStatusView: View {
     func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return Color(.background, .success)
+            Color(.background, .success)
         case .unprotected:
-            return Color(.background, .danger)
+            Color(.background, .danger)
         case .protecting:
-            return .white
+            .white
         }
     }
 
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return nil
+            nil
         case .unprotected:
-            return Localizable.connectionStatusUnprotected
+            Localizable.connectionStatusUnprotected
         case .protecting:
-            return Localizable.connectionStatusProtecting
+            Localizable.connectionStatusProtecting
         }
     }
 
@@ -79,10 +79,10 @@ struct ConnectionStatusView: View {
     func locationText(protectionState: ProtectionState) -> Text? {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return nil
+            nil
         case let .unprotected(country, ip),
              let .protecting(country, ip):
-            return Text(country)
+            Text(country)
                 .themeFont(.body(emphasised: true))
                 .foregroundColor(Color(.text))
                 + Text(" • ")

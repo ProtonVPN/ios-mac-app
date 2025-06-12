@@ -31,11 +31,11 @@ import Localization
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
-        return 17
+        17
     }
 
     private var baselineOffset: CGFloat {
-        return 4
+        4
     }
 
     // MARK: - Country / Gateway
@@ -78,7 +78,7 @@ extension CreateOrEditProfileViewModel {
     // MARK: - Server
 
     func serverDescriptor(for server: ServerModel) -> NSAttributedString {
-        return server.isSecureCore
+        server.isSecureCore
             ? serverDescriptorForSecureCore(
                 entryCountry: server.entryCountry,
                 entryCountryCode: server.entryCountryCode
@@ -91,7 +91,7 @@ extension CreateOrEditProfileViewModel {
     }
 
     func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
-        return server.logical.feature.contains(.secureCore)
+        server.logical.feature.contains(.secureCore)
             ? serverDescriptorForSecureCore(
                 entryCountry: server.logical.entryCountry,
                 entryCountryCode: server.logical.entryCountryCode

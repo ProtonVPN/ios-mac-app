@@ -33,7 +33,7 @@ class ColoredLoadButton: NSButton {
     }
     
     override var isFlipped: Bool {
-        return false
+        false
     }
     
     override func viewWillDraw() {
@@ -69,11 +69,11 @@ class ColoredLoadButton: NSButton {
     // MARK: - Accessibility
     
     override func isAccessibilityElement() -> Bool {
-        return false
+        false
     }
     
     override func accessibilityChildren() -> [Any]? {
-        return nil
+        nil
     }
 }
 

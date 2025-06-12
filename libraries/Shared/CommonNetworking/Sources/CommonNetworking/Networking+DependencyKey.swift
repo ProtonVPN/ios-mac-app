@@ -135,7 +135,7 @@ extension DependencyValues {
 
 final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate in legacy common, but we don't want to import that beast
     var path: String {
-        return "/vpn/v2"
+        "/vpn/v2"
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

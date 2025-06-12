@@ -36,10 +36,10 @@ extension UIView {
     }
 
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     static var nib: UINib {
-        return UINib(nibName: identifier, bundle: nil)
+        UINib(nibName: identifier, bundle: nil)
     }
 }

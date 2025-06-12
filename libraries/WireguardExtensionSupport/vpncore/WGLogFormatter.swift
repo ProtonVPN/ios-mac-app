@@ -39,19 +39,19 @@ extension Logging.Logger.Level {
     var stringValue: String {
         switch self {
         case .trace:
-            return "TRACE"
+            "TRACE"
         case .debug:
-            return "DEBUG"
+            "DEBUG"
         case .info:
-            return "INFO "
+            "INFO "
         case .notice:
-            return "NOTIC"
+            "NOTIC"
         case .warning:
-            return "WARN "
+            "WARN "
         case .error:
-            return "ERROR"
+            "ERROR"
         case .critical:
-            return "FATAL"
+            "FATAL"
         }
     }
 }

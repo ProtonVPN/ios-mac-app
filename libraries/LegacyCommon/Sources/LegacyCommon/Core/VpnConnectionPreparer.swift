@@ -117,8 +117,8 @@ class VpnConnectionPreparer {
 
     private func selectServerIp(server: ServerModel, connectionProtocol: ConnectionProtocol) -> ServerIp? {
         let availableServerIps = server.ips.filter {
-            return $0.supports(connectionProtocol: connectionProtocol,
-                               smartProtocolConfig: smartProtocolConfig)
+            $0.supports(connectionProtocol: connectionProtocol,
+                        smartProtocolConfig: smartProtocolConfig)
                 && !$0.underMaintenance
         }
 

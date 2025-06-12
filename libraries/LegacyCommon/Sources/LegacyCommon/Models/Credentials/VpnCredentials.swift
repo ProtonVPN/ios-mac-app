@@ -213,7 +213,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
 extension VpnCredentials {
     public var isDelinquent: Bool {
-        return delinquent > 2
+        delinquent > 2
     }
 }
 
@@ -236,7 +236,7 @@ public struct CachedVpnCredentials {
     public let businessEvents: Bool
 
     public var canUsePromoCode: Bool {
-        return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
+        !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
     }
 }
 
@@ -263,6 +263,6 @@ extension CachedVpnCredentials {
 
 extension CachedVpnCredentials {
     public var isDelinquent: Bool {
-        return delinquent > 2
+        delinquent > 2
     }
 }

@@ -340,7 +340,7 @@ class WindowServiceImplementation: WindowService {
             return false
         }
         return presentedViewControllers.contains {
-            return type(of: $0) == type(of: viewController)
+            type(of: $0) == type(of: viewController)
         }
     }
 }

@@ -33,9 +33,9 @@ extension ConnectionProtocol: @retroactive CustomStringConvertible {
     public var isDeprecated: Bool {
         switch self {
         case .smartProtocol:
-            return false
+            false
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.isDeprecated
+            vpnProtocol.isDeprecated
         }
     }
 
@@ -43,21 +43,21 @@ extension ConnectionProtocol: @retroactive CustomStringConvertible {
     /// - Parameter wireguardTLS: Whether WireGuard TLS feature flag enabled. If false, the protocol list will not
     /// include WireGuard TCP and TLS.
     public static func availableProtocols(wireguardTLSEnabled: Bool) -> [Self] {
-        return allCases
+        allCases
             .removing([.vpnProtocol(.wireGuard(.tcp)), .vpnProtocol(.wireGuard(.tls))], if: !wireguardTLSEnabled)
             .removing(deprecatedProtocols)
     }
 
     public var description: String {
-        return localizedString
+        localizedString
     }
 
     public var localizedString: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedDescription
+            vpnProtocol.localizedDescription
         case .smartProtocol:
-            return Localizable.smartTitle
+            Localizable.smartTitle
         }
     }
 
@@ -95,23 +95,23 @@ public struct ConnectionRequest: Identifiable {
     }
 
     public func withChanged(serverType: ServerType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
     }
 
     private enum Keys: CodingKey {
@@ -265,7 +265,7 @@ extension CountryConnectionRequestType: Codable {
 
 extension ConnectionRequest: Equatable {
     public static func == (lhs: ConnectionRequest, rhs: ConnectionRequest) -> Bool {
-        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
+        lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
     }
 }
 
@@ -273,13 +273,13 @@ extension ConnectionRequestType: Equatable {
     public static func == (lhs: ConnectionRequestType, rhs: ConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):
-            return true
+            true
         case (.random, .random):
-            return true
+            true
         case let (.country(code1, countryRequestType1), .country(code2, countryRequestType2)):
-            return code1 == code2 && countryRequestType1 == countryRequestType2
+            code1 == code2 && countryRequestType1 == countryRequestType2
         default:
-            return false
+            false
         }
     }
 }
@@ -288,13 +288,13 @@ extension CountryConnectionRequestType: Equatable {
     public static func == (lhs: CountryConnectionRequestType, rhs: CountryConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):
-            return true
+            true
         case (.random, .random):
-            return true
+            true
         case let (.server(server1), .server(server2)):
-            return server1 == server2
+            server1 == server2
         default:
-            return false
+            false
         }
     }
 }

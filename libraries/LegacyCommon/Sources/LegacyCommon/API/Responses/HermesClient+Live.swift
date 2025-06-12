@@ -50,7 +50,7 @@ extension HermesClient: @retroactive DependencyKey {
         @SharedReader(.hermesResolvers) var hermesResolvers
         return $hermesResolvers
     } validateHermesLocation: { location in
-        return HermesResolverLocationValidator.isValid(location) != nil
+        HermesResolverLocationValidator.isValid(location) != nil
     } addHermesResolver: { newResolver in
         let newResolvers = hermesResolvers + [newResolver]
         $hermesResolvers.withLock { $0 = newResolvers }

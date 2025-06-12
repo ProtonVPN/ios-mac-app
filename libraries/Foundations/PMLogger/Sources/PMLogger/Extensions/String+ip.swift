@@ -21,7 +21,7 @@ import Foundation
 extension String {
     /// Search for IPs and return string with IPs masked
     public var maskIPs: String {
-        return self
+        self
             .maskIPv4
             .maskIPv6
     }

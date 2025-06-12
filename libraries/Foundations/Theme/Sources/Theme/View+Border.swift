@@ -47,11 +47,11 @@
         }
 
         public func frame(_ size: AppTheme.IconSize) -> some View {
-            return frame(width: size.width, height: size.height)
+            frame(width: size.width, height: size.height)
         }
 
         public func frame(_ size: CGSize) -> some View {
-            return frame(width: size.width, height: size.height)
+            frame(width: size.width, height: size.height)
         }
     }
 #endif

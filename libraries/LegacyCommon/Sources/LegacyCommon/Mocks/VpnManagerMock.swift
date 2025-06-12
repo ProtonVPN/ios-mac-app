@@ -57,7 +57,7 @@
         public func disconnect(completion: @escaping () -> Void) {}
 
         public func connectedDate(completion: @escaping (Date?) -> Void) {}
-        public func connectedDate() async -> Date? { return nil }
+        public func connectedDate() async -> Date? { nil }
 
         public func refreshState() {}
 
@@ -74,7 +74,7 @@
         }
 
         public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
-            return nil
+            nil
         }
 
         public func refreshManagers() {}

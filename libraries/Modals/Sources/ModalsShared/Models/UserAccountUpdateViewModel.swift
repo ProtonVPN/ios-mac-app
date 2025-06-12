@@ -37,22 +37,22 @@ extension UserAccountUpdateViewModel {
     public var primaryButtonTitle: String {
         switch self {
         case .subscriptionDowngraded, .subscriptionDowngradedReconnecting:
-            return Localizable.upgradeAgain
+            Localizable.upgradeAgain
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return Localizable.updateBilling
+            Localizable.updateBilling
         case .reachedDeviceLimit:
-            return Localizable.newPlansBrandGotIt
+            Localizable.newPlansBrandGotIt
         case .reachedDevicePlanLimit:
-            return Localizable.modalsGetPlus
+            Localizable.modalsGetPlus
         }
     }
 
     public var secondaryButtonTitle: String? {
         switch self {
         case .reachedDeviceLimit:
-            return nil
+            nil
         default:
-            return Localizable.noThanks
+            Localizable.noThanks
         }
     }
 
@@ -60,50 +60,50 @@ extension UserAccountUpdateViewModel {
         switch self {
         case let .subscriptionDowngradedReconnecting(numberOfCountries, numberOfDevices, _, _),
              let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
-            return [Localizable.subscriptionUpgradeOption1(numberOfCountries),
-                    Localizable.subscriptionUpgradeOption2(numberOfDevices),
-                    Localizable.subscriptionUpgradeOption3]
+            [Localizable.subscriptionUpgradeOption1(numberOfCountries),
+             Localizable.subscriptionUpgradeOption2(numberOfDevices),
+             Localizable.subscriptionUpgradeOption3]
         default:
-            return nil
+            nil
         }
     }
 
     public var title: String? {
         switch self {
         case .subscriptionDowngradedReconnecting, .subscriptionDowngraded:
-            return Localizable.subscriptionExpiredTitle
+            Localizable.subscriptionExpiredTitle
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return Localizable.delinquentTitle
+            Localizable.delinquentTitle
         case .reachedDevicePlanLimit, .reachedDeviceLimit:
-            return Localizable.maximumDeviceTitle
+            Localizable.maximumDeviceTitle
         }
     }
 
     public var subtitle: String? {
         switch self {
         case .subscriptionDowngradedReconnecting:
-            return Localizable.subscriptionExpiredReconnectionDescription
+            Localizable.subscriptionExpiredReconnectionDescription
         case .subscriptionDowngraded:
-            return Localizable.subscriptionExpiredDescription
+            Localizable.subscriptionExpiredDescription
         case .pendingInvoicesReconnecting:
-            return Localizable.delinquentReconnectionDescription
+            Localizable.delinquentReconnectionDescription
         case .pendingInvoices:
-            return Localizable.delinquentDescription
+            Localizable.delinquentDescription
         case let .reachedDevicePlanLimit(planName, numberOfDevices):
-            return Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
+            Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
         case .reachedDeviceLimit:
-            return Localizable.maximumDeviceLimit
+            Localizable.maximumDeviceLimit
         }
     }
 
     public var image: Image? {
         switch self {
         case .reachedDevicePlanLimit:
-            return Asset.maximumDeviceLimitUpsell.image
+            Asset.maximumDeviceLimitUpsell.image
         case .reachedDeviceLimit:
-            return Asset.maximumDeviceLimitWarning.image
+            Asset.maximumDeviceLimitWarning.image
         default:
-            return nil
+            nil
         }
     }
 
@@ -114,22 +114,22 @@ extension UserAccountUpdateViewModel {
     public var fromServer: (String, Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(fromServer, _):
-            return fromServer
+            fromServer
         case let .subscriptionDowngradedReconnecting(_, _, fromServer, _):
-            return fromServer
+            fromServer
         default:
-            return nil
+            nil
         }
     }
 
     public var toServer: (String, Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(_, toServer):
-            return toServer
+            toServer
         case let .subscriptionDowngradedReconnecting(_, _, _, toServer):
-            return toServer
+            toServer
         default:
-            return nil
+            nil
         }
     }
 }

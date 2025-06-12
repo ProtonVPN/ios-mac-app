@@ -52,7 +52,7 @@ final class OverviewViewModel {
     }
 
     var cellHeight: CGFloat {
-        return 50.0
+        50.0
     }
 
     private var userTier: Int {
@@ -64,11 +64,11 @@ final class OverviewViewModel {
     }
 
     var cellCount: Int {
-        return profileManager.allProfiles.count
+        profileManager.allProfiles.count
     }
 
     func cellModel(forIndex index: Int) -> OverviewItemViewModel {
-        return OverviewItemViewModel(
+        OverviewItemViewModel(
             profile: profileManager.allProfiles[index],
             editProfile: editProfile,
             profileManager: profileManager,

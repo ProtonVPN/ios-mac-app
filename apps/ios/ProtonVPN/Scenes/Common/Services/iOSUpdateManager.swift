@@ -61,13 +61,13 @@ final class iOSUpdateManager: UpdateChecker {
 
         var errorCode: Int {
             switch self {
-            case .missingPlistKeys: return 1000
-            case .noDataReturned: return 1001
-            case .noVersionFoundInJSON: return 1002
-            case .noMinimumOSVersionFoundInJSON: return 1003
-            case .noResultsFoundInJSON: return 1004
-            case .dataReturnedWasNotValidJSON: return 1005
-            case .unrecognizedMinimumOSVersion: return 1006
+            case .missingPlistKeys: 1000
+            case .noDataReturned: 1001
+            case .noVersionFoundInJSON: 1002
+            case .noMinimumOSVersionFoundInJSON: 1003
+            case .noResultsFoundInJSON: 1004
+            case .dataReturnedWasNotValidJSON: 1005
+            case .unrecognizedMinimumOSVersion: 1006
             }
         }
     }

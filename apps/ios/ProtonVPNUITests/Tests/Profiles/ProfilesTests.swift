@@ -128,7 +128,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     private func loginAndOpenProfiles(as credentials: Credentials) -> ProfileRobot {
-        return loginRobot
+        loginRobot
             .enterCredentials(credentials)
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()

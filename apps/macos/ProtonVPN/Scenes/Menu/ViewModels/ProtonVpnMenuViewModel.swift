@@ -31,7 +31,7 @@ protocol ProtonVpnMenuViewModelFactory {
 
 extension DependencyContainer: ProtonVpnMenuViewModelFactory {
     func makeProtonVpnMenuViewModel() -> ProtonVpnMenuViewModel {
-        return ProtonVpnMenuViewModel(factory: self)
+        ProtonVpnMenuViewModel(factory: self)
     }
 }
 
@@ -54,11 +54,11 @@ class ProtonVpnMenuViewModel {
     }
     
     var isPreferencesEnabled: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
     
     var isLogOutEnabled: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
     
     func openAboutAction() {

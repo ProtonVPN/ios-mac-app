@@ -42,7 +42,7 @@ class MapHeaderViewModel {
     }
     
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
     
     var description: NSAttributedString {

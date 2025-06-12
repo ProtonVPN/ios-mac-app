@@ -122,11 +122,11 @@ extension VpnProtocol {
     public var apiDescription: String {
         switch self {
         case .ike:
-            return "IKEv2"
+            "IKEv2"
         case let .openVpn(transport):
-            return "OpenVPN" + transport.rawValue.uppercased()
+            "OpenVPN" + transport.rawValue.uppercased()
         case let .wireGuard(transport):
-            return "WireGuard" + transport.rawValue.uppercased()
+            "WireGuard" + transport.rawValue.uppercased()
         }
     }
 

@@ -20,6 +20,6 @@ import Foundation
 
 extension Data {
     public var jsonDictionary: JSONDictionary? {
-        return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
+        (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
     }
 }

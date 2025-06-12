@@ -31,23 +31,23 @@ final class GeneralSettingsViewModel {
     }
     
     var startOnBoot: Bool {
-        return propertiesManager.startOnBoot
+        propertiesManager.startOnBoot
     }
     
     var startMinimized: Bool {
-        return propertiesManager.startMinimized
+        propertiesManager.startMinimized
     }
     
     var systemNotifications: Bool {
-        return propertiesManager.systemNotifications
+        propertiesManager.systemNotifications
     }
     
     var earlyAccess: Bool {
-        return propertiesManager.earlyAccess
+        propertiesManager.earlyAccess
     }
     
     var unprotectedNetworkNotifications: Bool {
-        return propertiesManager.unprotectedNetworkNotifications
+        propertiesManager.unprotectedNetworkNotifications
     }
     
     // MARK: - Setters

@@ -28,7 +28,7 @@ public struct ChecklistToggleStyle: ToggleStyle {
     public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
-        return HStack {
+        HStack {
             configuration.label
             Spacer()
             Accessory(style: .checkmark(isActive: configuration.isOn))

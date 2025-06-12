@@ -95,20 +95,20 @@ private extension VPNConnectionStatus {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
         case .resolving, .disconnected, .disconnecting:
-            return .unprotected
+            .unprotected
         case .connecting:
-            return .protecting
+            .protecting
         case .connected:
-            return .protected
+            .protected
         }
     }
 
     var connectionSpec: ConnectionSpec? {
         switch self {
         case .resolving, .disconnected, .disconnecting:
-            return nil
+            nil
         case .connecting, .connected:
-            return self.spec
+            self.spec
         }
     }
 }

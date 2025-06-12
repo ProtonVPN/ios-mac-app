@@ -106,7 +106,7 @@ public extension Logging.Logger {
 
     /// Add our own category and event into metada data
     private func getMeta(_ originalMetadata: @escaping () -> Metadata?, category: Logger.Category? = nil, event: Logger.Event? = nil) -> (() -> Metadata?) {
-        return {
+        {
             var res: Metadata = originalMetadata() ?? Metadata()
             if let category {
                 res[MetaKey.category.rawValue] = .string(category.rawValue)

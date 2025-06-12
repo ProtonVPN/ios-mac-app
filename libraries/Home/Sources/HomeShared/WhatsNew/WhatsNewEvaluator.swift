@@ -41,7 +41,7 @@ extension WhatsNew {
         /// - Parameter items: the items you want to evaluate.
         /// - Returns: the items that should be presented.
         static func evaluate(items: [Item]) -> [Item] {
-            return items.filter { item in
+            items.filter { item in
                 let data = evaluatorClient.itemPresentationData(for: item)
                 return item.rules.allSatisfy(isSatisfied(_:)) && shouldPresent(item: item, presentationData: data)
             }
@@ -110,18 +110,18 @@ extension WhatsNew {
 
 extension WhatsNewEvaluatorClient: DependencyKey {
     static let liveValue = WhatsNewEvaluatorClient {
-        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     } systemOSVersion: {
-        return UIDevice.current.systemVersion
+        UIDevice.current.systemVersion
     } itemPresentationData: { item in
         @Shared(.whatsNew) var whatsNewData
         return whatsNewData?.items[item.id]
     }
 
     static let testValue: WhatsNewEvaluatorClient = WhatsNewEvaluatorClient {
-        return "6.0.0"
+        "6.0.0"
     } systemOSVersion: {
-        return "18.0"
+        "18.0"
     } itemPresentationData: { item in
         let secondsInDay: TimeInterval = 24*60*60
         let yesterday = Date.now.addingTimeInterval(-secondsInDay)

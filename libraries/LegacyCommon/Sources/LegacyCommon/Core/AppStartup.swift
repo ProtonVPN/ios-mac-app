@@ -44,7 +44,7 @@
 
     extension NSAppleEventDescriptor {
         var isOpenEvent: Bool {
-            return eventClass == kCoreEventClass && eventID == kAEOpenApplication
+            eventClass == kCoreEventClass && eventID == kAEOpenApplication
         }
 
         var isOpenAppLoginItemLaunchEvent: Bool {

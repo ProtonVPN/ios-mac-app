@@ -26,13 +26,13 @@ open class AsyncOperation: Operation {
     private let lockQueue = DispatchQueue(label: "ch.protonvpn.asyncoperation", attributes: .concurrent)
 
     override public var isAsynchronous: Bool {
-        return true
+        true
     }
 
     private var _isExecuting: Bool = false
     override public private(set) var isExecuting: Bool {
         get {
-            return lockQueue.sync { () -> Bool in
+            lockQueue.sync { () -> Bool in
                 return _isExecuting
             }
         }
@@ -48,7 +48,7 @@ open class AsyncOperation: Operation {
     private var _isFinished: Bool = false
     override public private(set) var isFinished: Bool {
         get {
-            return lockQueue.sync { () -> Bool in
+            lockQueue.sync { () -> Bool in
                 return _isFinished
             }
         }

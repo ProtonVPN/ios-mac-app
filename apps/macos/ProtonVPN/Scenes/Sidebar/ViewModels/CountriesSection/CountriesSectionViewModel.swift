@@ -66,7 +66,7 @@ protocol CountriesSectionViewModelFactory {
 
 extension DependencyContainer: CountriesSectionViewModelFactory {
     func makeCountriesSectionViewModel() -> CountriesSectionViewModel {
-        return CountriesSectionViewModel(factory: self)
+        CountriesSectionViewModel(factory: self)
     }
 }
 
@@ -97,11 +97,11 @@ class CountriesSectionViewModel {
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
 
     var isSecureCoreEnabled: Bool {
-        return propertiesManager.secureCoreToggle
+        propertiesManager.secureCoreToggle
     }
 
     var isNetShieldEnabled: Bool {
-        return propertiesManager.featureFlags.netShield
+        propertiesManager.featureFlags.netShield
     }
 
     public func displayFreeServices() {
@@ -109,7 +109,7 @@ class CountriesSectionViewModel {
     }
 
     private var freeCountries: [(String, NSImage?)] {
-        return serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
+        serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
             case let .country(countryCode):
                 guard serverGroup.minTier.isFreeTier else {
@@ -128,15 +128,15 @@ class CountriesSectionViewModel {
     // MARK: - QuickSettings presenters
 
     var secureCorePresenter: QuickSettingDropdownPresenter {
-        return SecureCoreDropdownPresenter(factory)
+        SecureCoreDropdownPresenter(factory)
     }
 
     var netShieldPresenter: QuickSettingDropdownPresenter {
-        return NetshieldDropdownPresenter(factory)
+        NetshieldDropdownPresenter(factory)
     }
 
     var killSwitchPresenter: QuickSettingDropdownPresenter {
-        return KillSwitchDropdownPresenter(factory)
+        KillSwitchDropdownPresenter(factory)
     }
 
     var notificationCenter: NotificationCenter = .default
@@ -277,10 +277,10 @@ class CountriesSectionViewModel {
         contentChanged?(contentChange)
     }
 
-    var cellCount: Int { return totalRowCount }
+    var cellCount: Int { totalRowCount }
 
     func cellModel(forRow row: Int) -> CellModel? {
-        return data[row]
+        data[row]
     }
 
     func showStreamingServices(server: ServerItemViewModel) {
@@ -366,18 +366,18 @@ class CountriesSectionViewModel {
         let indexes: [Int] = data.enumerated().compactMap { offset, data in
             switch data {
             case let .country(countryVM):
-                return servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
+                servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
             case let .server(serverVM):
-                return servers.first(where: { $0.id == serverVM.serverModel.logical.id }) != nil ? offset : nil
+                servers.first(where: { $0.id == serverVM.serverModel.logical.id }) != nil ? offset : nil
             default:
-                return nil
+                nil
             }
         }
         self.contentChanged?(ContentChange(reload: IndexSet(indexes)))
     }
 
     private var totalRowCount: Int {
-        return data.count
+        data.count
     }
 
     private func updateState() {
@@ -424,11 +424,11 @@ class CountriesSectionViewModel {
     }
 
     private func serverViewModel( _ server: ServerInfo) -> ServerItemViewModel {
-        return ServerItemViewModel(serverModel: server,
-                                   vpnGateway: vpnGateway,
-                                   appStateManager: appStateManager,
-                                   propertiesManager: propertiesManager,
-                                   countriesSectionViewModel: self)
+        ServerItemViewModel(serverModel: server,
+                            vpnGateway: vpnGateway,
+                            appStateManager: appStateManager,
+                            propertiesManager: propertiesManager,
+                            countriesSectionViewModel: self)
     }
 
     @objc func updateSettings() {
@@ -444,9 +444,9 @@ class CountriesSectionViewModel {
     private var supportedProtocols: [VpnProtocol] {
         switch currentConnectionProtocol {
         case let .vpnProtocol(vpnProtocol):
-            return [vpnProtocol]
+            [vpnProtocol]
         case .smartProtocol:
-            return propertiesManager.smartProtocolConfig.supportedProtocols
+            propertiesManager.smartProtocolConfig.supportedProtocols
         }
     }
 
@@ -457,7 +457,7 @@ class CountriesSectionViewModel {
     }
 
     private var serverTypeFilter: VPNServerFilter {
-        return .features(isSecureCoreEnabled ? .secureCore : .standard)
+        .features(isSecureCoreEnabled ? .secureCore : .standard)
     }
 
     private var searchQueryFilter: VPNServerFilter? {
@@ -467,7 +467,7 @@ class CountriesSectionViewModel {
     }
 
     private var globalFilters: [VPNServerFilter] {
-        return [serverTypeFilter, searchQueryFilter].compactMap { $0 }
+        [serverTypeFilter, searchQueryFilter].compactMap { $0 }
     }
 
     // MARK: - Wrong country banner
@@ -487,16 +487,16 @@ class CountriesSectionViewModel {
     }
 
     private var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
 
     private var freeUserBannerIndex: Int? {
         data.firstIndex(where: { row in
             switch row {
             case .banner:
-                return true
+                true
             default:
-                return false
+                false
             }
         })
     }
@@ -543,7 +543,7 @@ class CountriesSectionViewModel {
         displaySeparator: Bool,
         showCountryConnectButton: Bool
     ) -> CountryItemViewModel {
-        return CountryItemViewModel(
+        CountryItemViewModel(
             id: group.serverOfferingID,
             serversGroup: group,
             vpnGateway: self.vpnGateway,
@@ -594,12 +594,12 @@ class CountriesSectionViewModel {
     private func sections(for groups: [ServerGroupInfo], userType: UserType) -> [ServerSection?] {
         switch userType {
         case .paid:
-            return [
+            [
                 gatewaysSection(for: groups),
                 allLocationsSection(for: groups)
             ]
         case .free:
-            return [
+            [
                 gatewaysSection(for: groups),
                 fastestConnectionSection,
                 plusLocationsSection(for: groups, minTier: .freeTier)
@@ -608,7 +608,7 @@ class CountriesSectionViewModel {
     }
 
     private func cells(for groups: [ServerGroupInfo], showConnectButton: Bool) -> [CellModel] {
-        return groups
+        groups
             .enumerated()
             .map { index, group -> CellModel in
                 .country(countryViewModel(
@@ -717,18 +717,18 @@ extension ServerGroupInfo.Kind {
     var cacheID: String {
         switch self {
         case let .country(code):
-            return code
+            code
         case let .gateway(name):
-            return "gateway-\(name)"
+            "gateway-\(name)"
         }
     }
 
     var filter: VPNServerFilter {
         switch self {
         case let .country(code):
-            return .kind(.country(code: code))
+            .kind(.country(code: code))
         case let .gateway(name):
-            return .kind(.gateway(name: name))
+            .kind(.gateway(name: name))
         }
     }
 }

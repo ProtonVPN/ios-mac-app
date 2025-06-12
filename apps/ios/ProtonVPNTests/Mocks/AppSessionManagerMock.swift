@@ -69,7 +69,7 @@ class AppSessionManagerMock: AppSessionManager {
     }
     
     func loadDataWithoutFetching() -> Bool {
-        return callbackLadDataWithoutFetching?() ?? true
+        callbackLadDataWithoutFetching?() ?? true
     }
     
     func loadDataWithoutLogin() async throws {
@@ -85,7 +85,7 @@ class AppSessionManagerMock: AppSessionManager {
     }
     
     func canPreviewApp() -> Bool {
-        return callbackCanPreviewApp?() ?? true
+        callbackCanPreviewApp?() ?? true
     }
 
     func refreshVpnAuthCertificate() async throws {}

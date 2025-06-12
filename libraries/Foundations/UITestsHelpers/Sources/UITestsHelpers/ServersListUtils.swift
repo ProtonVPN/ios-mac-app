@@ -38,13 +38,13 @@ public enum ServersListUtils {
         public var errorDescription: String {
             switch self {
             case .failedGetRandomServer:
-                return "Failed to get random server"
+                "Failed to get random server"
             case .failedGetRandomCountry:
-                return "Failed to get random country"
+                "Failed to get random country"
             case .failedGetRandomCity:
-                return "Failed to get random city"
+                "Failed to get random city"
             case .failedGetRandomServerInfo:
-                return "Failed to get random server info"
+                "Failed to get random server info"
             }
         }
     }

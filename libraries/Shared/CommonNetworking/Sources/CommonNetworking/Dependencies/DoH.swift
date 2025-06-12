@@ -57,15 +57,15 @@ public class DoHVPN: DoH, ServerConfig {
     }
 
     public var captchaHost: String {
-        return defaultHost
+        defaultHost
     }
 
     public var apiHost: String {
-        return customApiHost
+        customApiHost
     }
 
     public var statusHost: String {
-        return "http://protonstatus.com"
+        "http://protonstatus.com"
     }
 
     public let isAppStateNotificationConnected: (Notification) -> Bool
@@ -120,7 +120,7 @@ public class DoHVPN: DoH, ServerConfig {
     }
 
     public var isAtlasRequest: Bool {
-        return defaultHost != liveURL
+        defaultHost != liveURL
     }
 
     public init(

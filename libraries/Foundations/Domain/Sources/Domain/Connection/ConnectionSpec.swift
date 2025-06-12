@@ -60,13 +60,13 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         public var description: String {
             switch self {
             case .smart:
-                return "Smart"
+                "Smart"
             case .streaming:
-                return "Streaming"
+                "Streaming"
             case .p2p:
-                return "P2P"
+                "P2P"
             case .tor:
-                return "TOR"
+                "TOR"
             }
         }
     }
@@ -104,9 +104,9 @@ public extension ConnectionSpec.Location {
     func withServer(number: Int) -> Self {
         switch self {
         case let .exact(server, logicalID, _, subregion, regionCode):
-            return .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
+            .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
         default:
-            return self
+            self
         }
     }
 }

@@ -208,6 +208,6 @@ final class ServerItemCellView: NSView {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return [connectBtn as Any]
+        [connectBtn as Any]
     }
 }

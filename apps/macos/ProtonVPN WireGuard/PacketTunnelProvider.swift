@@ -153,9 +153,9 @@ extension WireGuardLogLevel {
     var osLogLevel: OSLogType {
         switch self {
         case .verbose:
-            return .debug
+            .debug
         case .error:
-            return .error
+            .error
         }
     }
 }

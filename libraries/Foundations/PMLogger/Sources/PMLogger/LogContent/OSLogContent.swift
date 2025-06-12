@@ -77,19 +77,19 @@ extension OSLogEntryLog.Level {
     var stringValue: String {
         switch self {
         case .undefined:
-            return "Debug"
+            "Debug"
         case .debug:
-            return "Debug"
+            "Debug"
         case .info:
-            return "Info"
+            "Info"
         case .notice:
-            return "Notice"
+            "Notice"
         case .error:
-            return "Error"
+            "Error"
         case .fault:
-            return "Fatal"
+            "Fatal"
         default:
-            return "Debug"
+            "Debug"
         }
     }
 }

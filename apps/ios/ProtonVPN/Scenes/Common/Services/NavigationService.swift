@@ -98,7 +98,7 @@ protocol ConnectionStatusServiceFactory {
 
 extension DependencyContainer: ConnectionStatusServiceFactory {
     func makeConnectionStatusService() -> ConnectionStatusService {
-        return makeNavigationService()
+        makeNavigationService()
     }
 }
 
@@ -163,7 +163,7 @@ final class NavigationService {
     private lazy var tabBarController = makeTabBarController()
 
     var vpnGateway: VpnGatewayProtocol {
-        return appSessionManager.vpnGateway
+        appSessionManager.vpnGateway
     }
 
     // MARK: Initializers
@@ -389,7 +389,7 @@ extension NavigationService: SettingsService {
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        return TelemetrySettingsViewController(
+        TelemetrySettingsViewController(
             preferenceChangeUsageData: { [weak self] isOn in
                 self?.telemetrySettings.updateTelemetryUsageData(isOn: isOn)
             },
@@ -407,11 +407,11 @@ extension NavigationService: SettingsService {
     }
 
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        return LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
+        LogSelectionViewController(viewModel: LogSelectionViewModel(), settingsService: self)
     }
 
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        return LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
+        LogsViewController(viewModel: LogsViewModel(title: logSource.title, logContent: factory.makeLogContentProvider().getLogData(for: logSource)))
     }
 
     func presentReportBug() {
@@ -478,7 +478,7 @@ extension NavigationService: SettingsService {
 
 extension NavigationService: ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController {
-        return VpnProtocolViewController(viewModel: viewModel)
+        VpnProtocolViewController(viewModel: viewModel)
     }
 }
 

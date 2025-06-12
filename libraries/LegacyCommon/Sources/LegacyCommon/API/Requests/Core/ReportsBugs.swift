@@ -31,15 +31,15 @@ public final class ReportsBugs: Request {
     }
 
     public var path: String {
-        return "/core/v4/reports/bug"
+        "/core/v4/reports/bug"
     }
 
     public var method: HTTPMethod {
-        return .post
+        .post
     }
 
     public var parameters: [String: Any]? {
-        return [
+        [
             "OS": bug.os,
             "OSVersion": bug.osVersion,
             "Client": bug.client,

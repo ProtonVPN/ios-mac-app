@@ -34,7 +34,7 @@ public func stateChangePredicate<Action>(
     extract: @escaping (Action) -> (CoreConnectionState, CoreConnectionState)?,
     strict: Bool = true
 ) -> (Action) -> Bool {
-    return { action in
+    { action in
         guard let (oldState, newState) = extract(action) else {
             return false
         }

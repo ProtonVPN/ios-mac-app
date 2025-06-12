@@ -20,10 +20,10 @@ import Foundation
 
 extension Duration {
     @inlinable public static func minutes(_ minutes: some BinaryInteger) -> Self {
-        return .seconds(minutes * 60)
+        .seconds(minutes * 60)
     }
 
     @inlinable public static func hours(_ hours: some BinaryInteger) -> Self {
-        return .seconds(hours * 3600)
+        .seconds(hours * 3600)
     }
 }

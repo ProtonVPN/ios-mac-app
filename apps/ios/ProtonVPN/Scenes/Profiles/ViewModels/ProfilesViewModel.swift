@@ -67,27 +67,27 @@ class ProfilesViewModel {
     }
     
     func makeCreateProfileViewController() -> UITableViewController? {
-        return factory.makeCreateProfileViewController(for: nil)
+        factory.makeCreateProfileViewController(for: nil)
     }
     
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
-        return factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
+        factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
     }
     
     var headerHeight: CGFloat {
-        return UIConstants.headerHeight
+        UIConstants.headerHeight
     }
     
     var sectionCount: Int {
-        return 2
+        2
     }
     
     func title(for section: Int) -> String {
-        return sectionTitles[section]
+        sectionTitles[section]
     }
     
     var cellHeight: CGFloat {
-        return UIConstants.cellHeight
+        UIConstants.cellHeight
     }
 
     var canUseProfiles: Bool { profileAuthorizer.canUseProfiles }
@@ -103,9 +103,9 @@ class ProfilesViewModel {
     func cellCount(for section: Int) -> Int {
         switch section {
         case 0:
-            return 2
+            2
         default:
-            return profileManager?.customProfiles.count ?? 0
+            profileManager?.customProfiles.count ?? 0
         }
     }
     

@@ -24,9 +24,9 @@ extension ServerGroupInfo.Kind {
     public var filter: VPNServerFilter {
         switch self {
         case let .country(code):
-            return .kind(.country(code: code))
+            .kind(.country(code: code))
         case let .gateway(name):
-            return .kind(.gateway(name: name))
+            .kind(.gateway(name: name))
         }
     }
 }

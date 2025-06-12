@@ -27,7 +27,7 @@ final class VPNClientConfigRequest: Request {
     let ip: String?
 
     var path: String {
-        return "/vpn/v2/clientconfig"
+        "/vpn/v2/clientconfig"
     }
 
     var header: [String: Any] {

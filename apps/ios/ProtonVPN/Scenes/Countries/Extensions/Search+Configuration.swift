@@ -46,7 +46,7 @@ final class SearchModuleStorage: SearchStorage {
     }
 
     func get() -> [String] {
-        return (try? storage.get([String].self, forKey: key)) ?? []
+        (try? storage.get([String].self, forKey: key)) ?? []
     }
 
     func save(data: [String]) {

@@ -40,11 +40,11 @@
         body: () throws -> Result
     ) rethrows -> Result {
         if shouldAnimate() {
-            return try withAnimation(animation, body)
+            try withAnimation(animation, body)
         } else {
             // Important: explicitly evalute `body` instead of passing a nil animation, since the latter delays UI changes
             // (at least when performed within a reducer)
-            return try body()
+            try body()
         }
     }
 

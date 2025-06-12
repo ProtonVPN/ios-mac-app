@@ -118,30 +118,30 @@ private class WindowServiceMock: WindowService {
 
 private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     func makeUIAlertService() -> UIAlertService {
-        return uiAlertService
+        uiAlertService
     }
     
     func makeAppSessionManager() -> AppSessionManager {
-        return AppSessionManagerMock(sessionStatus: .established,
-                                     loggedIn: true,
-                                     sessionChanged: Notification.Name(rawValue: ""),
-                                     vpnGateway: VpnGatewayMock())
+        AppSessionManagerMock(sessionStatus: .established,
+                              loggedIn: true,
+                              sessionChanged: Notification.Name(rawValue: ""),
+                              vpnGateway: VpnGatewayMock())
     }
     
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
     
     func makeSettingsService() -> SettingsService {
-        return SettingsServiceMock()
+        SettingsServiceMock()
     }
     
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        return TroubleshootCoordinatorMock()
+        TroubleshootCoordinatorMock()
     }
 
     func makePlanService() -> PlanService {
-        return PlanServiceMock()
+        PlanServiceMock()
     }
 }
 
@@ -152,22 +152,22 @@ private class SettingsServiceMock: SettingsService {
     }
     
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        return LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
+        LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
     
     func makeSettingsViewController() -> SettingsViewController? {
-        return nil
+        nil
     }
     
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
-        return nil
+        nil
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        return TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
-                                               preferenceChangeCrashReports: { _ in },
-                                               usageStatisticsOn: { true },
-                                               crashReportsOn: { true })
+        TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
+                                        preferenceChangeCrashReports: { _ in },
+                                        usageStatisticsOn: { true },
+                                        crashReportsOn: { true })
     }
     
     func makeExtensionsSettingsViewController() -> UIViewController {
@@ -184,7 +184,7 @@ private class SettingsServiceMock: SettingsService {
     }
 
     func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
-        return nil
+        nil
     }
 }
 

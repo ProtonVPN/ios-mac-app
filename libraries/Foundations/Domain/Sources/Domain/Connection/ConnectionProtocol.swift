@@ -82,9 +82,9 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
         public var requiresSystemExtension: Bool {
             switch self {
             case .openVpn, .wireGuard:
-                return true
+                true
             default:
-                return false
+                false
             }
         }
     }

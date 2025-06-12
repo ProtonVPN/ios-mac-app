@@ -36,7 +36,7 @@ open class ParentLogHandler: LogHandler {
 
     public subscript(metadataKey key: String) -> Logging.Logger.Metadata.Value? {
         get {
-            return metadata[key]
+            metadata[key]
         }
         set(newValue) {
             metadata[key] = newValue

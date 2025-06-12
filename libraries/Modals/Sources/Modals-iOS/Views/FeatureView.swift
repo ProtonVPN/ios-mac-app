@@ -54,6 +54,6 @@ final class FeatureView: UIView {
 
 private extension AppTheme.FontSize {
     static var customFeatureViewFontSize: CGFloat {
-        return 15.0
+        15.0
     }
 }

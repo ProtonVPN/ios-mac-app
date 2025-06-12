@@ -37,6 +37,6 @@ public enum UserType {
 
     // Sample function to get credentials from a resource
     func getCredentials(fromResource resource: String) -> [Credentials] {
-        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+        Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
 }

@@ -197,13 +197,13 @@
 
     extension MockFactory: NEVPNManagerWrapperFactory {
         func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-            return neVpnManager
+            neVpnManager
         }
     }
 
     extension MockFactory: VpnCredentialsConfiguratorFactory {
         func getCredentialsConfigurator(for protocol: VpnProtocol) -> VpnCredentialsConfigurator {
-            return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
+            VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
                 self?.container.didConfigure?(config, protocolConfig)
             }
         }

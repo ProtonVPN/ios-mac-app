@@ -24,7 +24,7 @@ import ProtonCoreNetworking
 
 final class VPNSessionsCountRequest: Request {
     var path: String {
-        return "/vpn/sessioncount"
+        "/vpn/sessioncount"
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

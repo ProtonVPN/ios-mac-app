@@ -71,7 +71,7 @@ struct LogContentProviderMock: LogContentProvider {
     public var data: [LogSource: LogContent]
 
     func getLogData(for source: LogSource) -> LogContent {
-        return data[source]!
+        data[source]!
     }
 }
 

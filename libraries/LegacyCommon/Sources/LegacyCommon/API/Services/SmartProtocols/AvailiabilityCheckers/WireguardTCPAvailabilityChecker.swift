@@ -32,9 +32,9 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
 
     var defaultPorts: [Int] {
         switch transport {
-        case .udp: return config.defaultUdpPorts
-        case .tcp: return config.defaultTcpPorts
-        case .tls: return config.defaultTlsPorts
+        case .udp: config.defaultUdpPorts
+        case .tcp: config.defaultTcpPorts
+        case .tls: config.defaultTlsPorts
         }
     }
 

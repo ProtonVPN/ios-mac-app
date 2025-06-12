@@ -421,7 +421,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
     func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws {}
-    func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
+    func fetch(forContext: AppContext?) -> AuthCredentials? { credentials }
     func clear() {}
 }
 

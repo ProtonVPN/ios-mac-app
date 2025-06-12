@@ -205,7 +205,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
+        navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
@@ -327,7 +327,7 @@ extension AppDelegate: NSApplicationDelegate {
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 
     private func isTelemetryAllowed() -> Bool {

@@ -76,7 +76,7 @@ struct SystemExtensionTutorialView: View {
     }
 
     var videoView: some View {
-        return VStack(alignment: .center, spacing: .themeSpacing32) {
+        VStack(alignment: .center, spacing: .themeSpacing32) {
             Text(Localizable.sysexSetUpProtonVpn)
                 .foregroundColor(.init(NSColor.color(.text)))
                 .font(.system(size: 22, weight: .bold))

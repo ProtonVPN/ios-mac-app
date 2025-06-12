@@ -34,7 +34,7 @@ protocol HelpMenuViewModelFactory {
 
 extension DependencyContainer: HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel {
-        return HelpMenuViewModel(factory: self)
+        HelpMenuViewModel(factory: self)
     }
 }
 

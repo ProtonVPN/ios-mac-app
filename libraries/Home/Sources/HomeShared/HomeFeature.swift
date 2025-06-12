@@ -341,7 +341,7 @@ public struct HomeFeature {
 
 private extension FeatureStatisticsMessage.NetShieldStats {
     var toNetShieldModel: NetShield.NetShieldModel {
-        return NetShieldModel(
+        NetShieldModel(
             trackersCount: trackersBlocked ?? 0,
             adsCount: adsBlocked ?? 0,
             dataSaved: UInt64(bytesSaved),

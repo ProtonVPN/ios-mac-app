@@ -26,7 +26,7 @@ class ConnectionView: UIView {
     let viewModel: ConnectionViewModel
 
     var width: CGFloat {
-        return viewModel.lineWidth
+        viewModel.lineWidth
     }
 
     @available(*, unavailable)

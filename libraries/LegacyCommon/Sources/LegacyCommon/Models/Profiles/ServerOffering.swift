@@ -47,7 +47,7 @@ public struct ServerWrapper: Codable {
     }
 
     static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {
-        return lhs.server == rhs.server
+        lhs.server == rhs.server
     }
 }
 
@@ -64,22 +64,22 @@ public enum ServerOffering: Equatable, Codable {
     public var description: String {
         switch self {
         case let .fastest(cCode):
-            return "Fastest server - \(String(describing: cCode))"
+            "Fastest server - \(String(describing: cCode))"
         case let .random(cCode):
-            return "Random server - \(String(describing: cCode))"
+            "Random server - \(String(describing: cCode))"
         case let .custom(sModel):
-            return "Custom server - \(String(describing: sModel))"
+            "Custom server - \(String(describing: sModel))"
         }
     }
 
     public var countryCode: String? {
         switch self {
         case let .fastest(cCode):
-            return cCode
+            cCode
         case let .random(cCode):
-            return cCode
+            cCode
         case let .custom(sModel):
-            return sModel.server.countryCode
+            sModel.server.countryCode
         }
     }
 
@@ -152,9 +152,9 @@ extension ServerGroupInfo {
     public var serverOfferingID: String {
         switch kind {
         case let .country(countryCode):
-            return countryCode
+            countryCode
         case let .gateway(name):
-            return "gateway-\(name)"
+            "gateway-\(name)"
         }
     }
 }

@@ -85,7 +85,7 @@ final class ConnectionSettingsViewModel {
     }
 
     private var featureFlags: FeatureFlags {
-        return propertiesManager.featureFlags
+        propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
@@ -201,15 +201,15 @@ final class ConnectionSettingsViewModel {
     // MARK: - Item counts
 
     var autoConnectItemCount: Int {
-        return availableProfiles.count + 1 // Add one to account for the 'disabled' option
+        availableProfiles.count + 1 // Add one to account for the 'disabled' option
     }
 
     var quickConnectItemCount: Int {
-        return availableProfiles.count
+        availableProfiles.count
     }
 
     var protocolItemCount: Int {
-        return availableConnectionProtocols.count
+        availableConnectionProtocols.count
     }
 
     // MARK: - Setters
@@ -490,11 +490,11 @@ final class ConnectionSettingsViewModel {
     var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {
-        return profileString(for: index)
+        profileString(for: index)
     }
 
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
-        return vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
+        vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
     }
 
     // MARK: - Values

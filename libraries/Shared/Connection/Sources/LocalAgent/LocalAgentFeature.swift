@@ -253,11 +253,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
     /// We can attempt to extract connection details from the previous state in order to not lose them
     /// when flipping between connecting/connected states.
     private func previousConnectionDetails(_ state: State) -> ConnectionDetailsMessage? {
-        return (state.connecting ?? state.connected) ?? nil
+        (state.connecting ?? state.connected) ?? nil
     }
 
     private var longLivingEventObservationEffect: Effect<Action> {
-        return .listen(
+        .listen(
             to: localAgent.createEventStream(),
             reinjecting: { Action.event($0) }
         ).cancellable(id: CancelIDs.eventObservation)
@@ -286,16 +286,16 @@ public enum LocalAgentConnectionError: Error, Equatable {
     public static func == (lhs: LocalAgentConnectionError, rhs: LocalAgentConnectionError) -> Bool {
         switch (lhs, rhs) {
         case (.failedToEstablishConnection, .failedToEstablishConnection):
-            return true
+            true
 
         case (.agentError, .agentError):
-            return true
+            true
 
         case (.serverCertificateError, .serverCertificateError):
-            return true
+            true
 
         default:
-            return false
+            false
         }
     }
 }
@@ -310,22 +310,22 @@ extension LocalAgentConnectionError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case let .failedToEstablishConnection(connectionCreationError):
-            return connectionCreationError.charCode
+            connectionCreationError.charCode
         case .agentError:
-            return "AGNT"
+            "AGNT"
         case .serverCertificateError:
-            return "SCRT"
+            "SCRT"
         }
     }
 
     public var underlyingError: Error? {
         switch self {
         case let .failedToEstablishConnection(connectionError):
-            return connectionError
+            connectionError
         case let .agentError(agentError):
-            return agentError
+            agentError
         default:
-            return nil
+            nil
         }
     }
 }
@@ -408,9 +408,9 @@ private extension LocalAgentFeature.State {
     var shouldTransitionToDisconnecting: Bool {
         switch self {
         case .connecting, .connected:
-            return true
+            true
         case .disconnecting, .disconnected:
-            return false
+            false
         }
     }
 }

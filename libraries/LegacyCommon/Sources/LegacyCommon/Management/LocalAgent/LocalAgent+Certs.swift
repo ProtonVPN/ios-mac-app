@@ -24,7 +24,7 @@ import Foundation
 
 extension LocalAgentImplementation {
     var rootCerts: String {
-        return "-----BEGIN CERTIFICATE-----\n" +
+        "-----BEGIN CERTIFICATE-----\n" +
             "MIIFozCCA4ugAwIBAgIBATANBgkqhkiG9w0BAQ0FADBAMQswCQYDVQQGEwJDSDEV\n" +
             "MBMGA1UEChMMUHJvdG9uVlBOIEFHMRowGAYDVQQDExFQcm90b25WUE4gUm9vdCBD\n" +
             "QTAeFw0xNzAyMTUxNDM4MDBaFw0yNzAyMTUxNDM4MDBaMEAxCzAJBgNVBAYTAkNI\n" +

@@ -41,7 +41,7 @@ protocol ConnectingOverlayViewModelFactory {
 
 extension DependencyContainer: ConnectingOverlayViewModelFactory {
     func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void) -> ConnectingOverlayViewModel {
-        return ConnectingOverlayViewModel(factory: self, cancellation: cancellation)
+        ConnectingOverlayViewModel(factory: self, cancellation: cancellation)
     }
 }
 
@@ -66,7 +66,7 @@ class ConnectingOverlayViewModel {
     var timedOut = false
     
     private var isIkeWithKsEnabled: Bool {
-        return propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
+        propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
     }
     
     private var isReconnecting: Bool {
@@ -74,7 +74,7 @@ class ConnectingOverlayViewModel {
         case .preparingConnection, .connecting:
             return !propertiesManager.intentionallyDisconnected
         default:
-            return false
+            false
         }
     }
     
@@ -112,14 +112,14 @@ class ConnectingOverlayViewModel {
     var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
+            Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
+            (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
         }
     }
     
     var secondString: NSAttributedString {
-        return timedOut
+        timedOut
             ? timedOutSecondString
             : defaultSecondString
     }
@@ -216,22 +216,22 @@ class ConnectingOverlayViewModel {
     }
     
     private var cancelButton: ButtonInfo {
-        return (Localizable.cancel, .normal, { self.cancelConnecting() })
+        (Localizable.cancel, .normal, { self.cancelConnecting() })
     }
     
     private var doneButton: ButtonInfo {
-        return (Localizable.done, .normal, { self.cancelConnecting() })
+        (Localizable.done, .normal, { self.cancelConnecting() })
     }
     
     private var retryButton: ButtonInfo {
-        return (Localizable.tryAgain, .normal, {
+        (Localizable.tryAgain, .normal, {
             log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
-        return (Localizable.tryAgainWithoutKillswitch, .interactive, {
+        (Localizable.tryAgainWithoutKillswitch, .interactive, {
             self.disableKillSwitch()
             log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()

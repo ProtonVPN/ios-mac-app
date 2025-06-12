@@ -32,15 +32,15 @@ public struct WireguardConfig: Codable, Equatable {
     public let dnsServers: [String]
 
     public var address: String {
-        return "10.2.0.2/32"
+        "10.2.0.2/32"
     }
 
     public var allowedIPs: String {
-        return "0.0.0.0/0"
+        "0.0.0.0/0"
     }
 
     public var persistentKeepalive: Int? { // seconds
-        return 25
+        25
     }
 
     init(
@@ -62,13 +62,13 @@ public struct WireguardConfig: Codable, Equatable {
     public func defaultPorts(for transport: WireGuardTransport) -> [Int] {
         switch transport {
         case .udp:
-            return defaultUdpPorts
+            defaultUdpPorts
 
         case .tcp:
-            return defaultTcpPorts
+            defaultTcpPorts
 
         case .tls:
-            return defaultTlsPorts
+            defaultTlsPorts
         }
     }
 }
@@ -133,7 +133,7 @@ extension StoredWireguardConfig {
     /// `asWireguardConfiguration` translates this object into a text configuration file
     /// that the `wireguard-go` backend understands.
     public func asWireguardConfiguration() -> String {
-        return """
+        """
         [Interface]
         \(attribute: "PrivateKey = ", optional: clientPrivateKey)
         Address = \(wireguardConfig.address)

@@ -28,15 +28,15 @@ final class PromoCodeRequest: Request {
     }
 
     var path: String {
-        return "/payments/v4/promocode"
+        "/payments/v4/promocode"
     }
 
     var method: HTTPMethod {
-        return .post
+        .post
     }
 
     var parameters: [String: Any]? {
-        return [
+        [
             "Product": "VPN",
             "Codes": [code]
         ]

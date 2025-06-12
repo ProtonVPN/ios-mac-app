@@ -84,22 +84,22 @@ private extension RecentConnectionOptionsButton {
         var image: Image {
             switch role {
             case let .pin(isPinned):
-                return isPinned
+                isPinned
                     ? IconProvider.pinSlashFilled
                     : IconProvider.pinFilled
             case .remove:
-                return IconProvider.trashCross
+                IconProvider.trashCross
             }
         }
 
         var text: Text {
             switch role {
             case let .pin(isPinned):
-                return Text(isPinned
+                Text(isPinned
                     ? Localizable.actionHomeUnpin
                     : Localizable.actionHomePin)
             case .remove:
-                return Text(Localizable.actionRemove)
+                Text(Localizable.actionRemove)
             }
         }
 

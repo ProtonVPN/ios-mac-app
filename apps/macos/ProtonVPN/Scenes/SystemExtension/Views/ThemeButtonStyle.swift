@@ -38,18 +38,18 @@ struct ThemeButtonStyle: ButtonStyle {
         var vertical: CGFloat {
             switch self {
             case .small:
-                return .themeSpacing8
+                .themeSpacing8
             case .medium:
-                return .themeSpacing12
+                .themeSpacing12
             }
         }
 
         var horizontal: CGFloat {
             switch self {
             case .small:
-                return .themeSpacing16
+                .themeSpacing16
             case .medium:
-                return .themeSpacing24
+                .themeSpacing24
             }
         }
     }

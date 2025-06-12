@@ -118,7 +118,7 @@ final class FreeConnectionsViewController: NSViewController {
 
 extension FreeConnectionsViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return countries?.count ?? 0
+        countries?.count ?? 0
     }
 
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {

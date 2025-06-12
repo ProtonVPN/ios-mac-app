@@ -33,6 +33,6 @@ extension String {
     }
 
     func hasMatches(for regex: String) -> Bool {
-        return !matches(for: regex).isEmpty
+        !matches(for: regex).isEmpty
     }
 }

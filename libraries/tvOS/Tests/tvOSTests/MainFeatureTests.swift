@@ -83,7 +83,7 @@ final class MainFeatureTests: XCTestCase {
         // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
         // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
-            return MainFeature()
+            MainFeature()
         } withDependencies: {
             $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()

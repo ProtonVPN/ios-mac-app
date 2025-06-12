@@ -36,11 +36,11 @@ public protocol AppSessionRefreshTimerDelegate: AnyObject {
 }
 
 public extension AppSessionRefreshTimerDelegate {
-    func shouldRefreshFull() -> Bool { return true }
-    func shouldRefreshLoads() -> Bool { return true }
-    func shouldRefreshAccount() -> Bool { return true }
-    func shouldRefreshStreaming() -> Bool { return true }
-    func shouldRefreshPartners() -> Bool { return true }
+    func shouldRefreshFull() -> Bool { true }
+    func shouldRefreshLoads() -> Bool { true }
+    func shouldRefreshAccount() -> Bool { true }
+    func shouldRefreshStreaming() -> Bool { true }
+    func shouldRefreshPartners() -> Bool { true }
 }
 
 public protocol AppSessionRefreshTimer {
@@ -77,7 +77,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     private var timerStreamingRefresh: BackgroundTimer?
 
     private var appSessionRefresher: AppSessionRefresher {
-        return factory.makeAppSessionRefresher() // Do not retain it
+        factory.makeAppSessionRefresher() // Do not retain it
     }
 
     private weak var delegate: AppSessionRefreshTimerDelegate?

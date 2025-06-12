@@ -30,7 +30,7 @@ class ConnectionStatusRobot: CoreElements {
 
     @discardableResult
     public func isConnected() -> Bool {
-        return staticText(connectionStatusProtected)
+        staticText(connectionStatusProtected)
             .waitUntilExists(time: 1)
             .exists()
     }

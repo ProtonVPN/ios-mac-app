@@ -80,7 +80,7 @@ final class BannerCellView: NSView {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return []
+        []
     }
 
     // MARK: - Mouse hovering

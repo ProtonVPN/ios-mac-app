@@ -50,9 +50,9 @@ public class LocaleResolverImplementation: LocaleResolver {
 extension Locale: LocaleWrapper {
     public var ietfRegionTag: String? {
         if #available(iOS 16, macOS 13, tvOS 16, *) {
-            return self.language.region?.identifier
+            self.language.region?.identifier
         } else {
-            return self.regionCode
+            self.regionCode
         }
     }
 

@@ -60,25 +60,25 @@ extension ProviderMessageError: ProtonVPNError {
     public static let errorDomain = "ProviderMessageErrorDomain"
 
     public var errorDescription: String? {
-        return includeCode(inside: Localizable.providerMessageError)
+        includeCode(inside: Localizable.providerMessageError)
     }
 
     public var charCode: FourCharCode {
         switch self {
         case .noDataReceived:
-            return "NRCV"
+            "NRCV"
         case .cancelled:
-            return "CANC"
+            "CANC"
         case .decodingError:
-            return "MDCD"
+            "MDCD"
         case .sendingError:
-            return "MSND"
+            "MSND"
         case .unknownRequest:
-            return "UNRQ"
+            "UNRQ"
         case .unknownResponse:
-            return "UNRS"
+            "UNRS"
         case .remoteError:
-            return "RMOT"
+            "RMOT"
         }
     }
 }

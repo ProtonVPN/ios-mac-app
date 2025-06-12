@@ -170,7 +170,7 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
         }
 
         public func fetch() -> [Announcement] {
-            return announcements
+            announcements
         }
 
         public func store(_ objects: [Announcement]) {
@@ -187,11 +187,11 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
 private extension Date {
     /// Check if this date represnt time in future
     var isFuture: Bool {
-        return self.timeIntervalSinceNow > 0
+        self.timeIntervalSinceNow > 0
     }
 
     /// Check if this date represnt time in future
     var isPast: Bool {
-        return self.timeIntervalSinceNow < 0
+        self.timeIntervalSinceNow < 0
     }
 }

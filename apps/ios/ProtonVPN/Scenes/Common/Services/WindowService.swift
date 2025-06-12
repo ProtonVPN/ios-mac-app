@@ -46,8 +46,8 @@ enum PresentedMessageType {
     
     var gsMessageType: GSMessageType {
         switch self {
-        case .error: return GSMessageType.error
-        case .success: return GSMessageType.success
+        case .error: GSMessageType.error
+        case .success: GSMessageType.success
         }
     }
 }

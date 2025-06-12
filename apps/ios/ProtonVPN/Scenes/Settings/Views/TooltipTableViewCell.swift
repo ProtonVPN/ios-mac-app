@@ -43,6 +43,6 @@ class TooltipTableViewCell: UITableViewCell {
     }
     
     static func attributedText(for text: String) -> NSAttributedString {
-        return text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
+        text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
     }
 }

@@ -97,15 +97,15 @@ final class ProfileItemViewModel {
     }
 
     private var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     private var canConnect: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
 
     private var isUsersTierTooLow: Bool {
-        return !authorizer.canUseProfile(ofTier: lowestServerTier)
+        !authorizer.canUseProfile(ofTier: lowestServerTier)
     }
 
     var connectionChanged: (() -> Void)?
@@ -114,38 +114,38 @@ final class ProfileItemViewModel {
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return IconProvider.lock
+            IconProvider.lock
         } else if underMaintenance {
-            return IconProvider.wrench
+            IconProvider.wrench
         } else if connectedUiState {
-            return connectedConnectIcon
+            connectedConnectIcon
         } else {
-            return IconProvider.powerOff
+            IconProvider.powerOff
         }
     }
 
     var imageInPlaceOfConnectIcon: UIImage? {
-        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
+        isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
 
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
 
     var name: NSAttributedString {
-        return attributedName(forProfile: profile)
+        attributedName(forProfile: profile)
     }
 
     var description: NSAttributedString {
-        return attributedDescription(forProfile: profile)
+        attributedDescription(forProfile: profile)
     }
 
     var connectButtonTitle: String {
-        return underMaintenance ? Localizable.maintenance : Localizable.connect
+        underMaintenance ? Localizable.maintenance : Localizable.connect
     }
 
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        isUsersTierTooLow ? 0.5 : 1.0
     }
 
     init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
@@ -238,15 +238,15 @@ final class ProfileItemViewModel {
     // MARK: Descriptors
 
     func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
+        profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
 
     func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
-            return systemProfileDescriptor(forProfile: profile)
+            systemProfileDescriptor(forProfile: profile)
         case .user:
-            return userProfileDescriptor(forProfile: profile)
+            userProfileDescriptor(forProfile: profile)
         }
     }
 

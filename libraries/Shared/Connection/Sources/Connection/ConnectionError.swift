@@ -74,21 +74,21 @@ extension ConnectionError: ProtonVPNError {
     public var errorDescription: String? {
         switch self {
         case let .unexpectedProtocol(vpnProtocol):
-            return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
+            Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
         case let .certAuth(certAuthError):
-            return certAuthError.errorDescription
+            certAuthError.errorDescription
         case let .tunnel(tunnelError):
-            return tunnelError.errorDescription
+            tunnelError.errorDescription
         case let .agent(agentError):
-            return agentError.errorDescription
+            agentError.errorDescription
         case let .preparation(preparationError):
-            return preparationError.errorDescription
+            preparationError.errorDescription
         case .intentMissing:
-            return includeCode(inside: Localizable.connectionErrorIntentMissing)
+            includeCode(inside: Localizable.connectionErrorIntentMissing)
         case .serverMissing:
-            return includeCode(inside: Localizable.connectionErrorServerMissing)
+            includeCode(inside: Localizable.connectionErrorServerMissing)
         case .timeout:
-            return includeCode(inside: Localizable.connectionErrorTimeout)
+            includeCode(inside: Localizable.connectionErrorTimeout)
         }
     }
 
@@ -97,39 +97,39 @@ extension ConnectionError: ProtonVPNError {
         case let .unexpectedProtocol(vpnProtocol):
             switch vpnProtocol {
             case .ike:
-                return "UXIK"
+                "UXIK"
             case let .openVpn(transport):
-                return transport == .tcp ? "UXOT" : "UXOU"
+                transport == .tcp ? "UXOT" : "UXOU"
             case let .wireGuard(transport):
                 switch transport {
                 case .udp:
-                    return "UXWU"
+                    "UXWU"
                 case .tcp:
-                    return "UXWT"
+                    "UXWT"
                 case .tls:
-                    return "UXWS"
+                    "UXWS"
                 }
             }
         case .certAuth:
-            return "CRTA"
+            "CRTA"
         case .tunnel:
-            return "TUNN"
+            "TUNN"
         case .agent:
-            return "AGNT"
+            "AGNT"
         case let .preparation(preparationError):
-            return preparationError.charCode
+            preparationError.charCode
         case .intentMissing:
-            return "ITNT"
+            "ITNT"
         case .serverMissing:
-            return "SVRM"
+            "SVRM"
         case let .timeout(stage):
             switch stage {
             case .tunnelStartingAndConnecting:
-                return "TOTS"
+                "TOTS"
             case .refreshingCertificate:
-                return "TORC"
+                "TORC"
             case .connectingToLocalAgentServer:
-                return "TOLA"
+                "TOLA"
             }
         }
     }
@@ -137,15 +137,15 @@ extension ConnectionError: ProtonVPNError {
     public var underlyingError: Error? {
         switch self {
         case let .tunnel(tunnelError):
-            return tunnelError
+            tunnelError
         case let .certAuth(certAuthError):
-            return certAuthError
+            certAuthError
         case let .agent(agentError):
-            return agentError
+            agentError
         case let .preparation(preparationError):
-            return preparationError.underlyingError
+            preparationError.underlyingError
         default:
-            return nil
+            nil
         }
     }
 }
@@ -255,6 +255,6 @@ extension LocalAgentError: AlertConvertibleError {
 
 extension ConnectionError.WrappedError: AlertConvertibleError {
     public var alert: Alert {
-        return .connectionFailedAlert
+        .connectionFailedAlert
     }
 }

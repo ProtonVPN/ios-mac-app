@@ -20,11 +20,11 @@ import UIKit
 
 final class RecentSearchCell: UITableViewCell {
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets

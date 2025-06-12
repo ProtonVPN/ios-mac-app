@@ -32,33 +32,33 @@
         var title: String {
             switch self {
             case .home:
-                return Localizable.homeTab
+                Localizable.homeTab
             case .countries:
-                return Localizable.countriesTab
+                Localizable.countriesTab
             case .settings:
-                return Localizable.settingsTab
+                Localizable.settingsTab
             }
         }
 
         var accessibilityIdentifier: String {
             switch self {
             case .home:
-                return "Home tab"
+                "Home tab"
             case .countries:
-                return "Countries tab"
+                "Countries tab"
             case .settings:
-                return "Settings tab"
+                "Settings tab"
             }
         }
 
         var image: SwiftUI.Image {
             switch self {
             case .home:
-                return IconProvider.house
+                IconProvider.house
             case .countries:
-                return IconProvider.earth
+                IconProvider.earth
             case .settings:
-                return IconProvider.cogWheel
+                IconProvider.cogWheel
             }
         }
     }

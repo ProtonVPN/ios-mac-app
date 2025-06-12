@@ -63,7 +63,7 @@ class MainRobot: CoreElements {
     }
     
     func isConnected() -> Bool {
-        return button(disconnectButton).waitUntilExists(time: 1).exists()
+        button(disconnectButton).waitUntilExists(time: 1).exists()
     }
     
     func disconnect() -> MainRobot {
@@ -77,15 +77,15 @@ class MainRobot: CoreElements {
     }
     
     func waitForInitializingConnectionScreenDisappear(_ timeout: Int) -> Bool {
-        return !staticText(initializingConnectionTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
+        !staticText(initializingConnectionTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
     }
     
     func waitForSuccessfullyConnectedScreenDisappear(_ timeout: Int) -> Bool {
-        return !staticText(successfullyConnectedTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
+        !staticText(successfullyConnectedTitle).waitUntilGone(time: TimeInterval(timeout)).exists()
     }
     
     func isConnecting() -> Bool {
-        return staticText(initializingConnectionTitle).waitUntilExists(time: 1).exists()
+        staticText(initializingConnectionTitle).waitUntilExists(time: 1).exists()
     }
     
     func waitForConnected(with connectionProtocol: ConnectionProtocol) -> MainRobot {
@@ -110,27 +110,27 @@ class MainRobot: CoreElements {
     }
     
     func isConnectionTimedOut() -> Bool {
-        return staticText(Localizable.connectionTimedOut).waitUntilGone(time: 1).exists()
+        staticText(Localizable.connectionTimedOut).waitUntilGone(time: 1).exists()
     }
     
     func getHeaderLabelValue() -> String {
-        return staticText(headerLabelField).value() as? String ?? ""
+        staticText(headerLabelField).value() as? String ?? ""
     }
     
     func getConnectedCountry() -> String {
-        return getHeaderLabelValue().trimServerCode
+        getHeaderLabelValue().trimServerCode
     }
     
     func getIPLabelValue() -> String {
-        return staticText(ipLabelField).value() as? String ?? ""
+        staticText(ipLabelField).value() as? String ?? ""
     }
     
     func getProtocolLabelValue() -> String {
-        return staticText(protocolLabelField).value() as? String ?? ""
+        staticText(protocolLabelField).value() as? String ?? ""
     }
     
     func isAbleToChangeServer() -> Bool {
-        return button(Localizable.changeServer).exists()
+        button(Localizable.changeServer).exists()
     }
     
     func clickChangeServer() -> MainRobot {

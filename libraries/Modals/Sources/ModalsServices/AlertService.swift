@@ -50,7 +50,7 @@ extension AlertService {
         return AlertService {
             // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
             // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
-            return subject.compactMap { $0 }.values.eraseToStream()
+            subject.compactMap { $0 }.values.eraseToStream()
         } feed: { error in
             if let protonVpnError = error as? ProtonVPNError {
                 log.error("Alerting user to error: \(protonVpnError.debugDescription)")

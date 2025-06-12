@@ -33,50 +33,50 @@ private let assignConnectionButton = "Enable VPN connections"
 class LoginRobot: CoreElements {
     @discardableResult
     func enterCredentials(credentials: Credentials) -> LoginRobot {
-        return typeUsername(credentials.username)
+        typeUsername(credentials.username)
             .typePassword(password: credentials.password)
     }
 
     @discardableResult
     func loginUser(credentials: Credentials) -> LoginRobot {
-        return typeUsername(credentials.username)
+        typeUsername(credentials.username)
             .typePassword(password: credentials.password)
             .signIn()
     }
     
     @discardableResult
     func withIncorrectCredentials(_ username: String, _ password: String) -> LoginRobot {
-        return typeUsername(username)
+        typeUsername(username)
             .typePassword(password: password)
             .signIn()
     }
     
     func loginAsSubuser(subusercredentials: Credentials) -> LoginRobot {
-        return typeUsername(subusercredentials.username)
+        typeUsername(subusercredentials.username)
             .typePassword(password: subusercredentials.password)
             .signIn()
     }
         
     @discardableResult
     func withEmptyFields() -> LoginRobot {
-        return self
+        self
     }
 
     @discardableResult
     func withEmptyPassword(_ username: String) -> LoginRobot {
-        return typeOnlyUsername(username: username)
+        typeOnlyUsername(username: username)
             .signIn()
     }
         
     @discardableResult
     func withEmptyUsername(_ password: String) -> LoginRobot {
-        return typeOnlyPassword(password: password)
+        typeOnlyPassword(password: password)
             .signIn()
     }
         
     @discardableResult
     func withIncorrectUnicode(_ username: String, _ password: String) -> LoginRobot {
-        return typeUsername(username)
+        typeUsername(username)
             .typePassword(password: password)
             .signIn()
     }
@@ -89,7 +89,7 @@ class LoginRobot: CoreElements {
     
     @discardableResult
     func isLoginScreenVisible() -> Bool {
-        return textField(fieldUsername).waitUntilExists(time: 0.5).exists() && secureTextField(fieldPassword).waitUntilExists(time: 0.5).exists()
+        textField(fieldUsername).waitUntilExists(time: 0.5).exists() && secureTextField(fieldPassword).waitUntilExists(time: 0.5).exists()
     }
     
     @discardableResult

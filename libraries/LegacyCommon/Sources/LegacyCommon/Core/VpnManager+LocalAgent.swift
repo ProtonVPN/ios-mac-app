@@ -169,13 +169,13 @@ extension VpnManager {
         get {
             switch currentVpnProtocol {
             case .ike:
-                return propertiesManager.lastIkeConnection
+                propertiesManager.lastIkeConnection
             case .openVpn:
-                return propertiesManager.lastOpenVpnConnection
+                propertiesManager.lastOpenVpnConnection
             case .wireGuard:
-                return propertiesManager.lastWireguardConnection
+                propertiesManager.lastWireguardConnection
             case nil:
-                return nil
+                nil
             }
         }
         set {

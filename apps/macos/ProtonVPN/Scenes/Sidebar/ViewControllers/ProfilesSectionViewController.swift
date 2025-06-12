@@ -90,13 +90,13 @@ class ProfileSectionViewController: NSViewController {
 
 extension ProfileSectionViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+        viewModel.cellCount
     }
 }
 
 extension ProfileSectionViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight(forRow: row)
+        viewModel.cellHeight(forRow: row)
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {

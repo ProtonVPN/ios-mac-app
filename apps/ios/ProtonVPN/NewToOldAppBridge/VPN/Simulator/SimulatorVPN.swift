@@ -46,7 +46,7 @@
         // MARK: - Connect
 
         var connect: @Sendable (ConnectionSpec) -> Void {
-            return { specs in
+            { specs in
                 switch self.status {
                 case .disconnected, .connected:
                     let propertyManager = Container.sharedContainer.makePropertiesManager()
@@ -76,7 +76,7 @@
         // MARK: - Connect
 
         var disconnect: @Sendable () -> Void {
-            return {
+            {
                 switch self.status {
                 case let .connected(specs, _):
                     self.switchToDisconnected(specs)
@@ -114,15 +114,15 @@
         var appDisplayState: AppDisplayState {
             switch self {
             case .disconnected:
-                return .disconnected
+                .disconnected
             case .connected:
-                return .connected
+                .connected
             case .connecting:
-                return .connecting
+                .connecting
             case .resolving:
-                return .loadingConnectionInfo
+                .loadingConnectionInfo
             case .disconnecting:
-                return .disconnecting
+                .disconnecting
             }
         }
     }

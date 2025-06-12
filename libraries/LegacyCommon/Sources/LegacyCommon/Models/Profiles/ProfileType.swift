@@ -28,9 +28,9 @@ public enum ProfileType: Equatable, Codable {
     public var description: String {
         switch self {
         case .system:
-            return "System"
+            "System"
         case .user:
-            return "User"
+            "User"
         }
     }
 

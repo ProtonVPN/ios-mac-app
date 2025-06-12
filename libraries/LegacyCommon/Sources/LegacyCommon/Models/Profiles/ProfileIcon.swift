@@ -40,13 +40,13 @@ public enum ProfileIcon: Codable {
     public var description: String {
         switch self {
         case .bolt:
-            return "Image - bolt"
+            "Image - bolt"
         case .arrowsSwapRight:
-            return "Image - arrowsSwapRight"
+            "Image - arrowsSwapRight"
         case let .image(name):
-            return "Image - \(name)"
+            "Image - \(name)"
         case let .circle(color):
-            return "Color - \(String(format: "%02X", color))"
+            "Color - \(String(format: "%02X", color))"
         }
     }
 

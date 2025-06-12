@@ -30,9 +30,9 @@ extension VpnProtocol { // Authentication
 
     public var authenticationType: AuthenticationType {
         switch self {
-        case .ike: return .credentials
-        case .openVpn: return .certificate
-        case .wireGuard: return .certificate
+        case .ike: .credentials
+        case .openVpn: .certificate
+        case .wireGuard: .certificate
         }
     }
 }

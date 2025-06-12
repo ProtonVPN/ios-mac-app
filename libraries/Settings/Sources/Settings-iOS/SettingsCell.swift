@@ -114,8 +114,8 @@ struct SettingsCell: View {
 
         var iconRadiusMultiplier: CGFloat {
             switch self {
-            case .standard: return 1.0
-            case .multiline: return 1.5
+            case .standard: 1.0
+            case .multiline: 1.5
             }
         }
     }

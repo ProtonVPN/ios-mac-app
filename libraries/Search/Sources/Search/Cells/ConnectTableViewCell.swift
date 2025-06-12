@@ -56,27 +56,27 @@ extension ConnectTableViewCellMode {
     var cornerRadius: CGFloat {
         switch self {
         case .connect:
-            return 20
+            20
         case .upgrade:
-            return 8
+            8
         }
     }
 
     var contentEdgeInsets: UIEdgeInsets {
         switch self {
         case .connect:
-            return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+            UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         case .upgrade:
-            return UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+            UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         }
     }
 
     var image: UIImage? {
         switch self {
         case let .connect(image):
-            return image
+            image
         case .upgrade:
-            return nil
+            nil
         }
     }
 

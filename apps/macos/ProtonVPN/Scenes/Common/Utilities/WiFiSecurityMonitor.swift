@@ -96,6 +96,6 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 
 extension DependencyContainer: WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor {
-        return WiFiSecurityMonitor()
+        WiFiSecurityMonitor()
     }
 }

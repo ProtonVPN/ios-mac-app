@@ -42,10 +42,10 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     public var charCode: FourCharCode {
         switch self {
         case .featureNotReady:
-            return "PRNR" // PReparation Not Ready
+            "PRNR" // PReparation Not Ready
 
         case .wrapped:
-            return "PRWE" // PReparation Wrapped Error
+            "PRWE" // PReparation Wrapped Error
         }
     }
 

@@ -783,7 +783,7 @@
             to expectedState: PartialCaseKeyPath<ConnectionState>,
             strict: Bool = true
         ) -> (ConnectionFeature.Action) -> Bool {
-            return { action in
+            { action in
                 guard case let .delegate(.stateChanged(state)) = action else {
                     return false
                 }
@@ -802,7 +802,7 @@
             to newValue: PartialCaseKeyPath<CoreConnectionState>,
             strict: Bool = true
         ) -> (ConnectionFeature.Action) -> Bool {
-            return stateChangePredicate(
+            stateChangePredicate(
                 from: oldValue,
                 to: newValue,
                 extract: \ConnectionFeature.Action.[case: \.core.delegate.stateChanged],

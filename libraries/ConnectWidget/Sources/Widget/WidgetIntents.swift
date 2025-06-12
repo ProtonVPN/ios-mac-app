@@ -29,7 +29,7 @@ public struct DisconnectFromVPNIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 
@@ -48,7 +48,7 @@ public struct ConnectToVPNIntent: AppIntent {
     }
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 
@@ -59,6 +59,6 @@ public struct LoginIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }

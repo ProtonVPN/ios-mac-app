@@ -28,7 +28,7 @@ import Domain
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.earlyAccess)
+            getValue(forKey: AppConstants.UserDefaults.earlyAccess)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
@@ -40,7 +40,7 @@ extension PropertiesManagerProtocol {
 
     var unprotectedNetworkNotifications: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
+            getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
@@ -49,7 +49,7 @@ extension PropertiesManagerProtocol {
 
     var rememberLoginAfterUpdate: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
+            getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
@@ -58,7 +58,7 @@ extension PropertiesManagerProtocol {
 
     var startMinimized: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.startMinimized)
+            getValue(forKey: AppConstants.UserDefaults.startMinimized)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.startMinimized)
@@ -67,7 +67,7 @@ extension PropertiesManagerProtocol {
 
     var startOnBoot: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.startOnBoot)
+            getValue(forKey: AppConstants.UserDefaults.startOnBoot)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.startOnBoot)
@@ -77,7 +77,7 @@ extension PropertiesManagerProtocol {
 
     var systemNotifications: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.systemNotifications)
+            getValue(forKey: AppConstants.UserDefaults.systemNotifications)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.systemNotifications)
@@ -86,7 +86,7 @@ extension PropertiesManagerProtocol {
 
     var uninstallSysexesOnTerminate: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
+            getValue(forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)

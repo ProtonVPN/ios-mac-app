@@ -45,7 +45,7 @@ class ConnectingOverlayButton: HoverDetectionButton {
     
     // It differs from the one in HoverDetectionButton because this button is used in child window.
     override func trackingOptions() -> NSTrackingArea.Options {
-        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
+        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
     }
     
     override func viewDidMoveToWindow() {

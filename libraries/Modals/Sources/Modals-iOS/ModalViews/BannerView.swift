@@ -61,9 +61,9 @@ struct BannerView: View {
 
     private var bannerTextContent: String {
         if useAlternateWording {
-            return Localizable.welcomeToProtonBannerSubtitleRedesign
+            Localizable.welcomeToProtonBannerSubtitleRedesign
         } else {
-            return Localizable.welcomeToProtonBannerSubtitle
+            Localizable.welcomeToProtonBannerSubtitle
         }
     }
 }

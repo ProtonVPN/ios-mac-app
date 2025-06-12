@@ -85,9 +85,9 @@ struct HomeConnectionCardView: View {
     var showConnectionDetailsEnabled: Bool {
         switch vpnConnectionStatus {
         case .connected:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 

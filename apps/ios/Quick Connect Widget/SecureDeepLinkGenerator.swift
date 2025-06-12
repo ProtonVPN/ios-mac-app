@@ -101,7 +101,7 @@ enum SecureDeepLinkGeneratorEnvironment {
     static let publicDataKey = "ch.proton.vpn.widget.public_key"
 
     static var appIdentifierPrefix: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
 
     static let widgetKeychain = Keychain(

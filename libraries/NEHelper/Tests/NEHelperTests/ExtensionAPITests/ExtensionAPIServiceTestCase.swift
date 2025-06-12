@@ -159,7 +159,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                                           result: Result<[PartialKeyPath<M.Response>: Any], Error>,
                                           responseHeaders: [APIHeader: String] = [:],
                                           expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
-        return { request, completionHandler in
+        { request, completionHandler in
             var headers: [String: String] = [:]
             for (header, value) in responseHeaders {
                 headers[header.rawValue] = value

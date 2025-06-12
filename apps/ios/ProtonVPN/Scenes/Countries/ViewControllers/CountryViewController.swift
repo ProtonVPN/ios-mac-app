@@ -78,7 +78,7 @@ final class CountryViewController: UIViewController {
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.sectionsCount() ?? 1
+        viewModel?.sectionsCount() ?? 1
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -100,11 +100,11 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UIConstants.countriesHeaderHeight
+        UIConstants.countriesHeaderHeight
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.serversCount(for: section) ?? 0
+        viewModel?.serversCount(for: section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

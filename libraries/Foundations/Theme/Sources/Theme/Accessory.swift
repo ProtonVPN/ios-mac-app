@@ -43,8 +43,8 @@ public struct Accessory: View {
 
         var modifier: CGFloat {
             switch self {
-            case .regular: return 1.0
-            case .large: return 1.5
+            case .regular: 1.0
+            case .large: 1.5
             }
         }
     }
@@ -61,35 +61,35 @@ public struct Accessory: View {
         var image: Image? {
             switch self {
             case .disclosure:
-                return IconProvider.chevronRight
+                IconProvider.chevronRight
             case .externalLink:
-                return IconProvider.arrowOutSquare
+                IconProvider.arrowOutSquare
             case let .checkmark(isActive):
-                return isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
+                isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
             case .none:
-                return nil
+                nil
             }
         }
 
         var color: Color? {
             switch self {
             case let .checkmark(isActive):
-                return .init(.icon, isActive ? [.interactive, .active] : .weak)
+                .init(.icon, isActive ? [.interactive, .active] : .weak)
             default:
-                return .init(.icon, .weak)
+                .init(.icon, .weak)
             }
         }
 
         var iconSize: CGFloat {
             switch self {
             case .disclosure:
-                return Self.square
+                Self.square
             case .externalLink:
-                return Self.square
+                Self.square
             case .checkmark:
-                return Self.radius
+                Self.radius
             case .none:
-                return Self.radius
+                Self.radius
             }
         }
     }

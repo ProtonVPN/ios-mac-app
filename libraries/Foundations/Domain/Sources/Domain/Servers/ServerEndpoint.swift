@@ -77,7 +77,7 @@ extension ServerEndpoint {
 
     /// Returns true if any of the protocols in the set are supported by this server ip.
     public func supports(protocolSet: ProtocolSupport) -> Bool {
-        return !supportedProtocols.isDisjoint(with: protocolSet)
+        !supportedProtocols.isDisjoint(with: protocolSet)
     }
 
     public var supportedProtocols: ProtocolSupport {

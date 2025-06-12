@@ -24,15 +24,15 @@ extension SearchStatus: Equatable {
     public static func == (lhs: SearchStatus, rhs: SearchStatus) -> Bool {
         switch (lhs, rhs) {
         case (SearchStatus.placeholder, SearchStatus.placeholder):
-            return true
+            true
         case let (SearchStatus.recentSearches(ldata), SearchStatus.recentSearches(rdata)):
-            return rdata == ldata
+            rdata == ldata
         case (SearchStatus.noResults, SearchStatus.noResults):
-            return true
+            true
         case let (SearchStatus.results(ldata), SearchStatus.results(rdata)):
-            return ldata == rdata
+            ldata == rdata
         default:
-            return false
+            false
         }
     }
 }
@@ -41,24 +41,24 @@ extension SearchResult: Equatable {
     public static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
         switch (lhs, rhs) {
         case (SearchResult.upsell, SearchResult.upsell):
-            return true
+            true
         case let (SearchResult.countries(countries: ldata), SearchResult.countries(countries: rdata)):
-            return ldata.map({ $0 as! CountryViewModelMock }) == rdata.map({ $0 as! CountryViewModelMock })
+            ldata.map({ $0 as! CountryViewModelMock }) == rdata.map({ $0 as! CountryViewModelMock })
         case let (SearchResult.servers(tier: ltier, servers: ldata), SearchResult.servers(tier: rtier, servers: rdata)):
-            return ltier == rtier && ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
+            ltier == rtier && ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
         case let (SearchResult.secureCoreCountries(servers: ldata), SearchResult.secureCoreCountries(servers: rdata)):
-            return ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
+            ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
         case let (SearchResult.cities(cities: ldata), SearchResult.cities(cities: rdata)):
-            return ldata.map({ $0 as! CityViewModelMock }) == rdata.map({ $0 as! CityViewModelMock })
+            ldata.map({ $0 as! CityViewModelMock }) == rdata.map({ $0 as! CityViewModelMock })
         default:
-            return false
+            false
         }
     }
 }
 
 extension ServerViewModelMock: Equatable {
     static func == (lhs: ServerViewModelMock, rhs: ServerViewModelMock) -> Bool {
-        return lhs.description == rhs.description
+        lhs.description == rhs.description
     }
 }
 
@@ -70,6 +70,6 @@ extension CountryViewModelMock: Equatable {
 
 extension CityViewModelMock: Equatable {
     static func == (lhs: CityViewModelMock, rhs: CityViewModelMock) -> Bool {
-        return lhs.cityName == rhs.cityName
+        lhs.cityName == rhs.cityName
     }
 }

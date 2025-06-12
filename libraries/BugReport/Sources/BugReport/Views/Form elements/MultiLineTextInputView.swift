@@ -138,11 +138,11 @@ struct MultiLineTextInputView: View {
         }
 
         private var textColor: NSColor {
-            return NSColor(colors.textPrimary)
+            NSColor(colors.textPrimary)
         }
 
         private var font: NSFont {
-            return NSFont.systemFont(ofSize: fontSize)
+            NSFont.systemFont(ofSize: fontSize)
         }
 
         func makeCoordinator() -> Coordinator {

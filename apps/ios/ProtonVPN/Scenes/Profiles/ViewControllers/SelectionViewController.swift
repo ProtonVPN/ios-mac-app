@@ -38,11 +38,11 @@ struct SelectionDataSet {
     var selectedIndex: IndexPath?
     
     public func section(at index: Int) -> SelectionSection {
-        return data[index]
+        data[index]
     }
     
     public func item(at indexPath: IndexPath) -> SelectionRow {
-        return section(at: indexPath.section).cells[indexPath.row]
+        section(at: indexPath.section).cells[indexPath.row]
     }
 }
 
@@ -79,7 +79,7 @@ class SelectionViewController: UIViewController {
 
 extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSet.data.count
+        dataSet.data.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -100,7 +100,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSet.data[section].cells.count
+        dataSet.data[section].cells.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

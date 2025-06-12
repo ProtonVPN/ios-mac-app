@@ -51,7 +51,7 @@ extension AppInfo {
     }
 
     public func clientId(forContext specificContext: AppContext) -> String {
-        return clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
+        clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
     }
 
     public var clientId: String {
@@ -59,15 +59,15 @@ extension AppInfo {
     }
 
     public var bundleShortVersion: String {
-        return bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
+        bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
     }
 
     public var bundleVersion: String {
-        return bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
+        bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
     }
 
     public var revisionInfo: String {
-        return bundleInfoDictionary["RevisionInfo"] as? String ??
+        bundleInfoDictionary["RevisionInfo"] as? String ??
             "\(bundleShortVersion) (\(bundleVersion))"
     }
 

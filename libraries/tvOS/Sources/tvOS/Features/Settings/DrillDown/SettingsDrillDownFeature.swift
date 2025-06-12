@@ -54,11 +54,11 @@ enum DynamicDrillDownDestination: Equatable {
     var model: DynamicDrillDownModel {
         switch self {
         case .supportCenter:
-            return .supportCenter
+            .supportCenter
         case .contactUs:
-            return .contactUs
+            .contactUs
         case .privacyPolicy:
-            return .privacyPolicy
+            .privacyPolicy
         }
     }
 }

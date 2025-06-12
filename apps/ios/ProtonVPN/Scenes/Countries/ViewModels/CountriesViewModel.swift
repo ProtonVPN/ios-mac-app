@@ -54,17 +54,17 @@ private enum Section {
 
     var title: String {
         switch self {
-        case let .gateways(title, _, _): return title
-        case let .countries(title, _, _, _): return title
-        case let .profiles(title, _): return title
+        case let .gateways(title, _, _): title
+        case let .countries(title, _, _, _): title
+        case let .profiles(title, _): title
         }
     }
 
     var rows: [Row] {
         switch self {
-        case let .gateways(_, rows, _): return rows
-        case let .countries(_, rows, _, _): return rows
-        case let .profiles(_, rows): return rows
+        case let .gateways(_, rows, _): rows
+        case let .countries(_, rows, _, _): rows
+        case let .profiles(_, rows): rows
         }
     }
 }
@@ -87,18 +87,18 @@ class CountriesViewModel: SecureCoreToggleHandler {
         var currentContent: [ServerGroupInfo] {
             switch self {
             case let .standard(content):
-                return content
+                content
             case let .secureCore(content):
-                return content
+                content
             }
         }
 
         var serverType: ServerType {
             switch self {
             case .standard:
-                return .standard
+                .standard
             case .secureCore:
-                return .secureCore
+                .secureCore
             }
         }
     }
@@ -107,15 +107,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private var state: ModelState = .standard([])
 
     var activeView: ServerType {
-        return state.serverType
+        state.serverType
     }
 
     var secureCoreOn: Bool {
-        return state.serverType == .secureCore
+        state.serverType == .secureCore
     }
 
     var maxTier: Int {
-        return (try? keychain.fetchCached().maxTier) ?? .freeTier
+        (try? keychain.fetchCached().maxTier) ?? .freeTier
     }
 
     public typealias Factory = AppStateManagerFactory
@@ -175,7 +175,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     private var freeCountries: [(String, UIImage?)] {
-        return state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
+        state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
             switch serverGroup.kind {
             case let .country(code):
                 guard serverGroup.minTier.isFreeTier else {
@@ -192,7 +192,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     var enableViewToggle: Bool {
-        return vpnGateway.connection != .connecting
+        vpnGateway.connection != .connecting
     }
 
     func headerHeight(for section: Int) -> CGFloat {
@@ -204,11 +204,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     func numberOfSections() -> Int {
-        return tableData.count
+        tableData.count
     }
 
     func numberOfRows(in section: Int) -> Int {
-        return content(for: section).count
+        content(for: section).count
     }
 
     func titleFor(section: Int) -> String? {
@@ -250,7 +250,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) -> CountryItemViewModel {
-        return CountryItemViewModel(
+        CountryItemViewModel(
             serversGroup: serversGroup,
             serverType: state.serverType,
             appStateManager: appStateManager,
@@ -267,7 +267,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     func countryViewController(viewModel: CountryItemViewModel) -> CountryViewController? {
-        return countryService.makeCountryViewController(country: viewModel)
+        countryService.makeCountryViewController(country: viewModel)
     }
 
     // MARK: - Private functions
@@ -346,8 +346,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let gatewayContent = currentContent
             .filter {
                 switch $0.kind {
-                case .country: return false
-                case .gateway: return true
+                case .country: false
+                case .gateway: true
                 }
             }
             .map {
@@ -372,8 +372,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
             // Remove gateways from the list
             currentContent = currentContent.filter {
                 switch $0.kind {
-                case .country: return true
-                case .gateway: return false
+                case .country: true
+                case .gateway: false
                 }
             }
         }
@@ -485,9 +485,9 @@ extension CountriesViewModel {
     var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            return data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
         case let .secureCore(data):
-            return data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
         }
     }
 }

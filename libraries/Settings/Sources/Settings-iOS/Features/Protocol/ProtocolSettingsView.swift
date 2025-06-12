@@ -109,27 +109,27 @@ extension ConnectionProtocol {
     var title: String {
         switch self {
         case .smartProtocol:
-            return "Smart"
+            "Smart"
         case let .vpnProtocol(`protocol`):
-            return `protocol`.title
+            `protocol`.title
         }
     }
 
     var localizedProtocolDescription: String {
         switch self {
         case .smartProtocol:
-            return Localizable.settingsProtocolDescriptionSmart
+            Localizable.settingsProtocolDescriptionSmart
         case let .vpnProtocol(`protocol`):
-            return `protocol`.localizedProtocolDescription
+            `protocol`.localizedProtocolDescription
         }
     }
 
     var attributes: [ProtocolAttribute] {
         switch self {
         case .smartProtocol:
-            return [.recommended]
+            [.recommended]
         case let .vpnProtocol(`protocol`):
-            return `protocol`.attributes
+            `protocol`.attributes
         }
     }
 }
@@ -138,39 +138,39 @@ extension VpnProtocol {
     var title: String {
         switch self {
         case .ike:
-            return "IKEv2"
+            "IKEv2"
         case .openVpn:
-            return "OpenVPN"
+            "OpenVPN"
         case .wireGuard(.tcp), .wireGuard(.udp):
-            return "WireGuard"
+            "WireGuard"
         case .wireGuard(.tls):
-            return "Stealth"
+            "Stealth"
         }
     }
 
     var localizedProtocolDescription: String {
         switch self {
         case .ike:
-            return Localizable.settingsProtocolDescriptionSmart
+            Localizable.settingsProtocolDescriptionSmart
         case .openVpn(.udp):
-            return Localizable.settingsProtocolDescriptionOpenvpnUdp
+            Localizable.settingsProtocolDescriptionOpenvpnUdp
         case .openVpn(.tcp):
-            return Localizable.settingsProtocolDescriptionOpenvpnTcp
+            Localizable.settingsProtocolDescriptionOpenvpnTcp
         case .wireGuard(.udp):
-            return Localizable.settingsProtocolDescriptionWireguardUdp
+            Localizable.settingsProtocolDescriptionWireguardUdp
         case .wireGuard(.tcp):
-            return Localizable.settingsProtocolDescriptionWireguardTcp
+            Localizable.settingsProtocolDescriptionWireguardTcp
         case .wireGuard(.tls):
-            return Localizable.settingsProtocolDescriptionWireguardTls
+            Localizable.settingsProtocolDescriptionWireguardTls
         }
     }
 
     var attributes: [ProtocolAttribute] {
         switch self {
         case .wireGuard(.tls):
-            return [.new]
+            [.new]
         default:
-            return []
+            []
         }
     }
 }

@@ -70,6 +70,6 @@ extension FileManagerWrapper {
 
 extension FileManager: FileManagerWrapper {
     public func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper {
-        return try FileHandle(forWritingTo: url)
+        try FileHandle(forWritingTo: url)
     }
 }

@@ -29,7 +29,7 @@ class ColorPickerViewModel {
     var colorSelected: (() -> Void)?
     
     var colorCount: Int {
-        return colors.count
+        colors.count
     }
     
     var selectedColorIndex: Int {
@@ -68,7 +68,7 @@ class ColorPickerViewModel {
     }
     
     func color(atIndex index: Int) -> NSColor {
-        return colors[index]
+        colors[index]
     }
 }
 

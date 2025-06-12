@@ -24,9 +24,9 @@ extension ConnectionProtocol: LocalizedStringConvertible {
     public var localizedDescription: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedDescription
+            vpnProtocol.localizedDescription
         case .smartProtocol:
-            return "Smart"
+            "Smart"
         }
     }
 }

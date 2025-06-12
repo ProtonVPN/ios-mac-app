@@ -62,7 +62,7 @@
                 derRepresentation: @escaping (String) -> Data = { _ in Data() },
                 publicKey: @escaping (Data) -> Data = { _ in Data() }
             ) -> CertificateCryptoService {
-                return CertificateCryptoService(
+                CertificateCryptoService(
                     derRepresentation: derRepresentation,
                     publicKey: publicKey
                 )
@@ -107,13 +107,13 @@
             var description: String {
                 switch self {
                 case .invalidBase64:
-                    return "Unable to decode base 64 data"
+                    "Unable to decode base 64 data"
                 case .certificateParsingFailure:
-                    return "Failed to parse certificate - is it a valid DER-encoded X.509 certificate?"
+                    "Failed to parse certificate - is it a valid DER-encoded X.509 certificate?"
                 case .keyExtraction:
-                    return "Failed to copy public key - possible encoding issue or unsupported algorithm"
+                    "Failed to copy public key - possible encoding issue or unsupported algorithm"
                 case let .keyExport(internalError):
-                    return "Failed to export public key with internal error: \(String(describing: internalError))"
+                    "Failed to export public key with internal error: \(String(describing: internalError))"
                 }
             }
 

@@ -115,9 +115,9 @@ public final class VpnManager: VpnManagerProtocol {
     private var hasConnected: Bool {
         switch currentVpnProtocol {
         case .ike:
-            return propertiesManager.hasConnected
+            propertiesManager.hasConnected
         default:
-            return true
+            true
         }
     }
 
@@ -141,7 +141,7 @@ public final class VpnManager: VpnManagerProtocol {
     private var _isLocalAgentConnectedNoSync: Bool?
     public internal(set) var isLocalAgentConnected: Bool? {
         get {
-            return localAgentIsConnectedQueue.sync {
+            localAgentIsConnectedQueue.sync {
                 _isLocalAgentConnectedNoSync
             }
         }

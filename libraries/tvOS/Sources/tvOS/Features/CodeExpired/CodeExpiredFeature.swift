@@ -33,7 +33,7 @@ struct CodeExpiredFeature {
         Reduce { state, action in
             switch action {
             case .generateNewCode:
-                return .run { send in
+                .run { send in
                     await dismiss()
                 }
             }

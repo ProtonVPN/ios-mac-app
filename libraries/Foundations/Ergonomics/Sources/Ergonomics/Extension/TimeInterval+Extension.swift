@@ -52,7 +52,7 @@ public extension TimeInterval {
     // swiftlint:enable large_tuple
 
     var asColonSeparatedString: String {
-        return self.asColonSeparatedString(maxUnit: .day, minUnit: .hour)
+        self.asColonSeparatedString(maxUnit: .day, minUnit: .hour)
     }
 
     private func components(largestUnit: Self.Unit, smallestUnit: Self.Unit) -> [Int] {
@@ -88,10 +88,10 @@ public extension TimeInterval {
 
         var seconds: Int {
             switch self {
-            case .second: return 1
-            case .minute: return 60
-            case .hour: return 60 * 60
-            case .day: return 60 * 60 * 24
+            case .second: 1
+            case .minute: 60
+            case .hour: 60 * 60
+            case .day: 60 * 60 * 24
             }
         }
 

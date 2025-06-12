@@ -31,13 +31,13 @@ public struct ServerDescriptor {
     }
     
     public var description: String {
-        return "Server address: \(address)"
+        "Server address: \(address)"
     }
 }
 
 extension ServerDescriptor: Equatable {
     public static func == (lhs: ServerDescriptor, rhs: ServerDescriptor) -> Bool {
-        return lhs.username == rhs.username && lhs.address == rhs.address
+        lhs.username == rhs.username && lhs.address == rhs.address
     }
 }
 
@@ -128,9 +128,9 @@ public enum VpnState {
     public var stableConnection: Bool {
         switch self {
         case .connected:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
     
@@ -141,9 +141,9 @@ public enum VpnState {
     public var volatileConnection: Bool {
         switch self {
         case .connecting, .reasserting, .disconnecting:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
@@ -152,21 +152,21 @@ extension VpnState: Equatable {
     public static func == (lhs: VpnState, rhs: VpnState) -> Bool {
         switch (lhs, rhs) {
         case (.invalid, .invalid):
-            return true
+            true
         case (.disconnected, .disconnected):
-            return true
+            true
         case let (.connecting(descriptorLhs), .connecting(descriptorRhs)):
-            return descriptorLhs == descriptorRhs
+            descriptorLhs == descriptorRhs
         case let (.connected(descriptorLhs), .connected(descriptorRhs)):
-            return descriptorLhs == descriptorRhs
+            descriptorLhs == descriptorRhs
         case let (.reasserting(descriptorLhs), .reasserting(descriptorRhs)):
-            return descriptorLhs == descriptorRhs
+            descriptorLhs == descriptorRhs
         case let (.disconnecting(descriptorLhs), .disconnecting(descriptorRhs)):
-            return descriptorLhs == descriptorRhs
+            descriptorLhs == descriptorRhs
         case let (.error(errorLhs), .error(errorRhs)):
-            return (errorLhs as NSError).isEqual(errorRhs as NSError)
+            (errorLhs as NSError).isEqual(errorRhs as NSError)
         default:
-            return false
+            false
         }
     }
 }

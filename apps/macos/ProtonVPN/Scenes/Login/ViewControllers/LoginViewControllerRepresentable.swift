@@ -35,13 +35,13 @@
         }
 
         func makeNSViewController(context: Context) -> LoginViewController {
-            return LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
+            LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
         }
 
         func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {}
 
         func makeCoordinator() -> Coordinator {
-            return Coordinator(store: store)
+            Coordinator(store: store)
         }
 
         class Coordinator: NSObject {

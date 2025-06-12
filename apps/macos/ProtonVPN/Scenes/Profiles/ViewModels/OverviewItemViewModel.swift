@@ -46,27 +46,27 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     weak var delegate: OverviewItemViewModelDelegate?
 
     var canConnect: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
 
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
 
     var name: NSAttributedString {
-        return attributedName(forProfile: profile)
+        attributedName(forProfile: profile)
     }
 
     var description: NSAttributedString {
-        return attributedDescription(forProfile: profile)
+        attributedDescription(forProfile: profile)
     }
 
     var isSystemProfile: Bool {
-        return profile.profileType == .system
+        profile.profileType == .system
     }
 
     var connectButtonTitle: String {
-        return formConnectButtonTitle()
+        formConnectButtonTitle()
     }
 
     init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int) {
@@ -115,9 +115,9 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
 
     private func formConnectButtonTitle() -> String {
         if underMaintenance {
-            return Localizable.maintenance
+            Localizable.maintenance
         } else {
-            return Localizable.connect
+            Localizable.connect
         }
     }
 }

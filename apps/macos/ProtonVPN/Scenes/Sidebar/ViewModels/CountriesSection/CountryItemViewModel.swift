@@ -69,9 +69,9 @@ final class CountryItemViewModel {
     var countryCode: String {
         switch serversGroup.kind {
         case let .country(countryCode):
-            return countryCode
+            countryCode
         case .gateway:
-            return ""
+            ""
         }
     }
 
@@ -80,14 +80,14 @@ final class CountryItemViewModel {
     var countryName: String {
         switch serversGroup.kind {
         case let .country(countryCode):
-            return LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+            LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         case let .gateway(name):
-            return name
+            name
         }
     }
 
     var alphaForMainElements: CGFloat {
-        return underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
+        underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
     }
 
     var accessibilityLabel: String {

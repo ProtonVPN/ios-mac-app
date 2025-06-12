@@ -30,11 +30,11 @@ infix operator >
 func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
-        return l < r
+        l < r
     case (nil, _?):
-        return true
+        true
     default:
-        return false
+        false
     }
 }
 
@@ -43,8 +43,8 @@ func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
-        return l > r
+        l > r
     default:
-        return rhs < lhs
+        rhs < lhs
     }
 }

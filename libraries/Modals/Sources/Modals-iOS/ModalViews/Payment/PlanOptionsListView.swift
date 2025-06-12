@@ -76,7 +76,7 @@ struct PlanOptionsListView: View {
     }
 
     private func discount(option: PlanOption) -> Int? {
-        return viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
+        viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
     }
 
     private var contentView: some View {

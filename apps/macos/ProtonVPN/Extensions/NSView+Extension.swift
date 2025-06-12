@@ -129,15 +129,15 @@ extension NSView {
     }
     
     static var identifierString: String {
-        return String(describing: self)
+        String(describing: self)
     }
     
     static var identifier: NSUserInterfaceItemIdentifier {
-        return NSUserInterfaceItemIdentifier(rawValue: identifierString)
+        NSUserInterfaceItemIdentifier(rawValue: identifierString)
     }
     
     static var nib: NSNib? {
-        return NSNib(nibNamed: identifierString, bundle: nil)
+        NSNib(nibNamed: identifierString, bundle: nil)
     }
     
     /// Load a view from nib/xib file that is named the same as the class itself

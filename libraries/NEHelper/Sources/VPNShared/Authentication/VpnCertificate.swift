@@ -33,11 +33,11 @@ public struct VpnCertificate: Sendable, Equatable {
     public let refreshTime: Date
 
     public var isExpired: Bool {
-        return Date() > validUntil
+        Date() > validUntil
     }
 
     public var shouldBeRefreshed: Bool {
-        return Date() > refreshTime
+        Date() > refreshTime
     }
 
     enum CodingKeys: String, CodingKey {
@@ -113,7 +113,7 @@ extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible 
         return "VPNCertificate(\(properties.joined(separator: ", ")))"
     }
 
-    public var debugDescription: String { return description }
+    public var debugDescription: String { description }
 }
 
 public struct VpnCertificateWithFeatures {

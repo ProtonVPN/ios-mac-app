@@ -39,6 +39,6 @@ extension Bundle {
              We explore the same idea here.
          */
 
-        return Bundle.main.appStoreReceiptURL?.path().contains("sandboxReceipt") == true
+        Bundle.main.appStoreReceiptURL?.path().contains("sandboxReceipt") == true
     }
 }

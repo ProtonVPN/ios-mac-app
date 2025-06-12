@@ -27,8 +27,7 @@ public class ServerLocation: NSObject, NSCoding, Codable {
     public let long: Double
     
     override public var description: String {
-        return
-            "Lat: \(lat)\n" +
+        "Lat: \(lat)\n" +
             "Long: \(long)\n"
     }
     

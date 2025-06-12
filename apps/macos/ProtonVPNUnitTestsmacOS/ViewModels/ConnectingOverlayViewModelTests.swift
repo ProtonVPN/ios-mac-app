@@ -153,7 +153,7 @@
         var vpnProtocolChangeManager: VpnProtocolChangeManagerMock = VpnProtocolChangeManagerMock()
     
         func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
-            return vpnProtocolChangeManager
+            vpnProtocolChangeManager
         }
     
         // MARK: - AppStateManagerFactory
@@ -161,7 +161,7 @@
         var appStateManager: AppStateManagerMock = AppStateManagerMock()
     
         func makeAppStateManager() -> AppStateManager {
-            return appStateManager
+            appStateManager
         }
     
         // MARK: - PropertiesManagerFactory
@@ -169,7 +169,7 @@
         var propertiesManager: PropertiesManagerMock = PropertiesManagerMock()
     
         func makePropertiesManager() -> PropertiesManagerProtocol {
-            return propertiesManager
+            propertiesManager
         }
     
         // MARK: - VpnGatewayFactory
@@ -177,7 +177,7 @@
         var vpnGateway: VpnGatewayMock
     
         func makeVpnGateway() -> VpnGatewayProtocol {
-            return vpnGateway
+            vpnGateway
         }
     }
 

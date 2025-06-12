@@ -57,7 +57,7 @@ class TroubleshootingCell: UITableViewCell {
     
     var title: String? {
         get {
-            return titleLabel.text
+            titleLabel.text
         }
         set {
             titleLabel.text = newValue
@@ -66,7 +66,7 @@ class TroubleshootingCell: UITableViewCell {
     
     var descriptionAttributed: NSAttributedString {
         get {
-            return descriptionLabel.attributedText
+            descriptionLabel.attributedText
         }
         set {
             let string = NSMutableAttributedString(attributedString: newValue)

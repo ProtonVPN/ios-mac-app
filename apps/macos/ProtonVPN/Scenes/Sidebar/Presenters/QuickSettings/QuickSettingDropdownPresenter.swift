@@ -42,11 +42,11 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     weak var viewController: QuickSettingsDetailViewControllerProtocol?
     
     var title: String! {
-        return ""
+        ""
     }
     
     var learnLink: String {
-        return VPNLink.learnMore.urlString
+        VPNLink.learnMore.urlString
     }
     
     let vpnGateway: VpnGatewayProtocol
@@ -65,7 +65,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
     
     var options: [QuickSettingsDropdownOptionPresenter] {
-        return []
+        []
     }
     
     func viewDidLoad() {

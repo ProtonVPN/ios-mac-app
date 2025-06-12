@@ -84,11 +84,11 @@ struct ConnectToVPNIntent: AppIntent {
         try? await $connectionState.when(willMatch: { state in
             switch state {
             case let .connected(intent, _, _, _):
-                return intent.spec == spec
+                intent.spec == spec
             case let .disconnecting(intent, _):
-                return intent.spec == spec
+                intent.spec == spec
             default:
-                return false
+                false
             }
         }, every: .milliseconds(20), deadline: .seconds(Self.timeOut), operation: { state in
             if case .connected = state {
@@ -136,7 +136,7 @@ struct LoginIntent: AppIntent {
     static let openAppWhenRun = true
 
     func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 

@@ -425,7 +425,7 @@ extension Container: ReportBugViewModelFactory {
 
 extension Container: TroubleshootViewModelFactory {
     public func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 }
 
@@ -433,7 +433,7 @@ extension Container: TroubleshootViewModelFactory {
 
 extension Container: MaintenanceManagerFactory {
     public func makeMaintenanceManager() -> MaintenanceManagerProtocol {
-        return maintenanceManager
+        maintenanceManager
     }
 }
 
@@ -441,7 +441,7 @@ extension Container: MaintenanceManagerFactory {
 
 extension Container: MaintenanceManagerHelperFactory {
     public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
-        return maintenanceManagerHelper
+        maintenanceManagerHelper
     }
 }
 
@@ -449,7 +449,7 @@ extension Container: MaintenanceManagerHelperFactory {
 
 extension Container: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        return dynamicBugReportManager
+        dynamicBugReportManager
     }
 }
 
@@ -457,7 +457,7 @@ extension Container: DynamicBugReportManagerFactory {
 
 extension Container: TimerFactoryCreator {
     public func makeTimerFactory() -> TimerFactory {
-        return timerFactory
+        timerFactory
     }
 }
 
@@ -505,7 +505,7 @@ extension Container: SiriHelperFactory {
 
 extension Container: TelemetryServiceFactory {
     public func makeTelemetryService() async -> TelemetryService {
-        return await _telemetryServiceTask.value
+        await _telemetryServiceTask.value
     }
 }
 
@@ -513,7 +513,7 @@ extension Container: TelemetryServiceFactory {
 
 extension Container: TelemetrySettingsFactory {
     public func makeTelemetrySettings() -> TelemetrySettings {
-        return TelemetrySettings(self)
+        TelemetrySettings(self)
     }
 }
 

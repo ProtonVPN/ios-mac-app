@@ -96,28 +96,28 @@ extension ConnectionSpec.Location {
     public var flagComposition: FlagComposition {
         switch self {
         case .random:
-            return .standard(.random)
+            .standard(.random)
 
         case .fastest:
-            return .standard(.fastest)
+            .standard(.fastest)
 
         case .gateway:
-            return .standard(.gateway)
+            .standard(.gateway)
 
         case let .region(regionCode), let .exact(_, _, _, _, regionCode):
-            return .standard(.country(code: regionCode))
+            .standard(.country(code: regionCode))
 
         case .secureCore(.fastest):
-            return .withCurve(.fastest)
+            .withCurve(.fastest)
 
         case .secureCore(.random):
-            return .withCurve(.random)
+            .withCurve(.random)
 
         case let .secureCore(.fastestHop(regionCode)):
-            return .withCurve(.country(code: regionCode))
+            .withCurve(.country(code: regionCode))
 
         case let .secureCore(.hop(toRegionCode, viaRegionCode)):
-            return .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
+            .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
         }
     }
 }

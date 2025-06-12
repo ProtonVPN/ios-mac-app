@@ -24,7 +24,7 @@ import Cocoa
 
 class FeatureIcon: NSImageView {
     override var isFlipped: Bool {
-        return false
+        false
     }
 
     override func draw(_ dirtyRect: NSRect) {

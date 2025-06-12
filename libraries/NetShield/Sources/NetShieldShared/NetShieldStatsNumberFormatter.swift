@@ -43,17 +43,17 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
         func localized(amount: String) -> String {
             switch self {
             case .kilo:
-                return Localizable.netshieldStatsBlockedK(amount)
+                Localizable.netshieldStatsBlockedK(amount)
             case .mega:
-                return Localizable.netshieldStatsBlockedM(amount)
+                Localizable.netshieldStatsBlockedM(amount)
             case .giga:
-                return Localizable.netshieldStatsBlockedG(amount)
+                Localizable.netshieldStatsBlockedG(amount)
             case .tera:
-                return Localizable.netshieldStatsBlockedT(amount)
+                Localizable.netshieldStatsBlockedT(amount)
             case .peta:
-                return Localizable.netshieldStatsBlockedP(amount)
+                Localizable.netshieldStatsBlockedP(amount)
             case .exa:
-                return Localizable.netshieldStatsBlockedE(amount)
+                Localizable.netshieldStatsBlockedE(amount)
             }
         }
     }

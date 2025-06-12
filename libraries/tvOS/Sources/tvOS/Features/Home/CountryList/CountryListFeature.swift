@@ -42,7 +42,7 @@ struct CountryListFeature {
                 ])
                 .enumerated()
                 .compactMap { index, group in
-                    return group.item(index: index, section: 1)
+                    group.item(index: index, section: 1)
                 }
 
             let recommendedCountries: [CountryListItem] = CountryListFeature.recommendedCountries

@@ -34,11 +34,11 @@
         @MainActor static func widgetLayout(size: WidgetSize) -> PreviewTrait<T> {
             switch size {
             case .small:
-                return .fixedLayout(width: 158, height: 158)
+                .fixedLayout(width: 158, height: 158)
             case .medium:
-                return .fixedLayout(width: 338, height: 158)
+                .fixedLayout(width: 338, height: 158)
             case .large:
-                return .fixedLayout(width: 338, height: 354)
+                .fixedLayout(width: 338, height: 354)
             }
         }
     }

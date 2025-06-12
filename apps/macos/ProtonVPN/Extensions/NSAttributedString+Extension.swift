@@ -51,7 +51,7 @@ extension NSAttributedString {
     }
 
     static func imageAttachment(named name: String, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
-        return NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
+        NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
     }
 
     func applyStyle( for strings: [String], attrs: [NSAttributedString.Key: Any] ) -> NSAttributedString {

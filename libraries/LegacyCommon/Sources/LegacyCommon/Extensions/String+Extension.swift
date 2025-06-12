@@ -23,7 +23,7 @@ import Foundation
 
 public extension String {
     func contains(_ string: String) -> Bool {
-        return self.range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
+        self.range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
     }
     
     func matches(for regex: String) -> [String] {
@@ -39,11 +39,11 @@ public extension String {
     }
     
     func hasMatches(for regex: String) -> Bool {
-        return !matches(for: regex).isEmpty
+        !matches(for: regex).isEmpty
     }
     
     func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
-        return self.replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
+        self.replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
     }
     
     func preg_replace(_ partten: String, replaceto: String) -> String {
@@ -95,11 +95,11 @@ public extension String {
 
 public extension String {
     subscript (i: Int) -> Character {
-        return self[index(startIndex, offsetBy: i)]
+        self[index(startIndex, offsetBy: i)]
     }
     
     subscript (i: Int) -> String {
-        return String(self[i] as Character)
+        String(self[i] as Character)
     }
     
     subscript (r: Range<Int>) -> String {

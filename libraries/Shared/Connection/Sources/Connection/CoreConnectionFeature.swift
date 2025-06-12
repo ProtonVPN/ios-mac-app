@@ -357,17 +357,17 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     private func effectToResolve(error: LocalAgentError) -> Effect<Action> {
         switch error.resolutionStrategy {
         case .none:
-            return .none
+            .none
 
         case .disconnect(.immediately):
-            return .merge(
+            .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil)))
             )
 
         case .disconnect(.withNewKeys):
-            return .merge(
+            .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 .send(.certAuth(.regenerateKeys)), // also removes the certificate
                 .send(.localAgent(.disconnect(.agentError(error)))),
@@ -375,13 +375,13 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .reconnect(.withNewCertificate):
-            return .concatenate(
+            .concatenate(
                 .send(.localAgent(.disconnect(nil))),
                 .send(.certAuth(.loadAuthenticationData)) // will refresh our certificate
             )
 
         case .reconnect(.withExistingCertificate):
-            return .concatenate(
+            .concatenate(
                 .send(.localAgent(.disconnect(nil))),
                 .send(.certAuth(.loadAuthenticationData)) // *may* refresh our certificate
             )
@@ -464,6 +464,6 @@ extension CoreConnectionFeature.State {
     /// Network extension behaviour is undefined (at least to us) if we invoke `stopTunnel` before the tunnel enters
     /// either `.connected` or `disconnected` states following the call to `startTunnel `
     package var isInteractionAllowed: Bool {
-        return tunnel.isInteractionAllowed
+        tunnel.isInteractionAllowed
     }
 }

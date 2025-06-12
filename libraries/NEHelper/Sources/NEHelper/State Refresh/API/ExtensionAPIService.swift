@@ -690,6 +690,6 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
 
 extension AuthCredentials {
     func updatedWithAccessToken(response: TokenRefreshRequest.Response) -> AuthCredentials {
-        return AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, scopes: scopes, mailboxPassword: mailboxPassword)
+        AuthCredentials(username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, scopes: scopes, mailboxPassword: mailboxPassword)
     }
 }

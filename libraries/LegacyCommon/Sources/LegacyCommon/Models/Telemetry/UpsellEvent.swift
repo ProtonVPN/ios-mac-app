@@ -41,7 +41,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
     public struct Values: Encodable {}
 
     public var values: Values {
-        return Values()
+        Values()
     }
 
     public struct Dimensions: Encodable {
@@ -91,15 +91,15 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         var lowerBound: Int {
             switch self {
             case .zero:
-                return 0
+                0
             case .one:
-                return 1
+                1
             case .four:
-                return 4
+                4
             case .eight:
-                return 8
+                8
             case .fifteen:
-                return 15
+                15
             }
         }
 

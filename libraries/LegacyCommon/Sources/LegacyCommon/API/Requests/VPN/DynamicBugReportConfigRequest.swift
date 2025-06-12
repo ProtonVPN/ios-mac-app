@@ -20,11 +20,11 @@ import ProtonCoreNetworking
 
 class DynamicBugReportConfigRequest: Request {
     var path: String {
-        return "/vpn/v1/featureconfig/dynamic-bug-reports"
+        "/vpn/v1/featureconfig/dynamic-bug-reports"
     }
 
     var isAuth: Bool {
-        return false
+        false
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

@@ -57,7 +57,7 @@ public final class ProfileManager {
     private let profileStorage: ProfileStorage
 
     public var allProfiles: [Profile] {
-        return defaultProfiles + customProfiles
+        defaultProfiles + customProfiles
     }
 
     public typealias Factory = PropertiesManagerFactory & ProfileStorageFactory
@@ -81,7 +81,7 @@ public final class ProfileManager {
     }
 
     public var username: String? {
-        return authKeychain.username
+        authKeychain.username
     }
 
     public var autoConnectProfile: Profile? {
@@ -106,16 +106,16 @@ public final class ProfileManager {
     }
 
     public func profile(withServer server: ServerModel) -> Profile? {
-        return ProfileUtility.profile(withServer: server, in: customProfiles)
+        ProfileUtility.profile(withServer: server, in: customProfiles)
     }
 
     public func profile(withId id: String) -> Profile? {
-        return defaultProfiles.first { id == $0.id }
+        defaultProfiles.first { id == $0.id }
             ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }
 
     public func existsProfile(withServer server: ServerModel) -> Bool {
-        return ProfileUtility.existsProfile(withServer: server, in: customProfiles)
+        ProfileUtility.existsProfile(withServer: server, in: customProfiles)
     }
 
     public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?) -> ProfileManagerOperationOutcome {

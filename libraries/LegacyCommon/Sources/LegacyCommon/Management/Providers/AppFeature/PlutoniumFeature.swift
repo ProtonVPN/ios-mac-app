@@ -29,7 +29,7 @@ extension Plutonium: Codable {}
 
 extension Plutonium: PaidAppFeature {
     public static func minTier(featureFlags: FeatureFlags) -> Int {
-        return .paidTier
+        .paidTier
     }
 }
 
@@ -52,7 +52,7 @@ extension Plutonium: ModularAppFeature {
 
 extension Plutonium: DefaultableFeature {
     public static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> Plutonium {
-        return .defaultValue
+        .defaultValue
     }
 }
 

@@ -39,9 +39,9 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
     override var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
+            Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return Localizable.applyingSettings.styled(font: .themeFont(literalSize: 15))
+            Localizable.applyingSettings.styled(font: .themeFont(literalSize: 15))
         }
     }
 }

@@ -46,7 +46,7 @@ struct TokenRefreshRequest: APIRequest {
 
         /// Important! This is useful only right after the response was received
         var expirationDate: Date {
-            return Date(timeIntervalSinceNow: expiresIn)
+            Date(timeIntervalSinceNow: expiresIn)
         }
 
         enum CodingKeys: String, CodingKey {

@@ -64,9 +64,9 @@ public struct WhatsNewView: View {
     private var imageAssetView: SwiftUI.Image {
         switch variant {
         case .free, .plus:
-            return Asset.whatsNewFreePlus.swiftUIImage
+            Asset.whatsNewFreePlus.swiftUIImage
         case .business:
-            return Asset.whatsNewBusiness.swiftUIImage
+            Asset.whatsNewBusiness.swiftUIImage
         }
     }
 

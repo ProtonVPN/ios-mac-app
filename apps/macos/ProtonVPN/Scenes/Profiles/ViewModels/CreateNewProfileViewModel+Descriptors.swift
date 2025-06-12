@@ -35,11 +35,11 @@ import Localization
 // that this code will be completely deleted during redesign.
 extension CreateNewProfileViewModel {
     private var fontSize: AppTheme.FontSize {
-        return .heading4
+        .heading4
     }
 
     private var baselineOffset: CGFloat {
-        return 4
+        4
     }
 
     private func flagString(_ countryCode: String) -> NSAttributedString {
@@ -88,11 +88,11 @@ extension CreateNewProfileViewModel {
     func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
         case let .custom(serverWrapper):
-            return serverDescriptor(for: serverWrapper.server)
+            serverDescriptor(for: serverWrapper.server)
         case .fastest:
-            return defaultServerDescriptor(image: IconProvider.bolt, name: Localizable.fastest)
+            defaultServerDescriptor(image: IconProvider.bolt, name: Localizable.fastest)
         case .random:
-            return defaultServerDescriptor(image: IconProvider.arrowsSwapRight, name: Localizable.random)
+            defaultServerDescriptor(image: IconProvider.arrowsSwapRight, name: Localizable.random)
         }
     }
 
@@ -110,7 +110,7 @@ extension CreateNewProfileViewModel {
     }
 
     func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
-        return server.logical.feature.contains(.secureCore)
+        server.logical.feature.contains(.secureCore)
             ? serverDescriptorForSecureCore(
                 entryCountry: server.logical.entryCountry,
                 entryCountryCode: server.logical.entryCountryCode

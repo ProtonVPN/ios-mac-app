@@ -24,7 +24,7 @@ public protocol Joinable {
 
 extension Text: Joinable {
     public func joined(to other: Self, with separator: Self) -> Self {
-        return self + separator + other
+        self + separator + other
     }
 }
 

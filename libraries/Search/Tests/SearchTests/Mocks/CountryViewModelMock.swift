@@ -72,10 +72,10 @@ final class CountryViewModelMock: CountryViewModel {
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
-        return servers
+        servers
     }
 
     func getCities() -> [CityViewModel] {
-        return cities
+        cities
     }
 }

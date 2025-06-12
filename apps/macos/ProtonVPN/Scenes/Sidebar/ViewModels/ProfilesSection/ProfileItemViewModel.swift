@@ -36,11 +36,11 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private let sysexManager: SystemExtensionManager
     
     var enabled: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
     
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
     
     var name: NSAttributedString {
@@ -52,11 +52,11 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     }
     
     var hideDescription: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
     
     var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
+        formSecondaryDescription()
     }
     
     init(profile: Profile,

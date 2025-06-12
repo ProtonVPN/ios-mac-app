@@ -30,7 +30,7 @@ public enum TestData {
         score: Double = 1,
         status: Int = 1
     ) -> VPNServer {
-        return VPNServer(
+        VPNServer(
             logical: .init(
                 id: id,
                 name: name ?? id,

@@ -31,7 +31,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         var errorDescription: String? {
             switch self {
             case .cancelled:
-                return "Connection attempt cancelled"
+                "Connection attempt cancelled"
             }
         }
     }
@@ -40,13 +40,11 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
-    public static let liveValue = {
-        if Self.isEnabled, #available(iOS 16, *) {
-            return newConnect
-        } else {
-            return legacyConnect
-        }
-    }()
+    public static let liveValue = if Self.isEnabled, #available(iOS 16, *) {
+        newConnect
+    } else {
+        legacyConnect
+    }
 
     @available(iOS 16, *)
     static let newConnect: @Sendable (

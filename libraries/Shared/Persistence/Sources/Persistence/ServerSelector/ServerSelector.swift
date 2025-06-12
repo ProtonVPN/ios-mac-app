@@ -48,26 +48,26 @@ public struct ServerSelector: Sendable {
             var charCode: FourCharCode {
                 switch self {
                 case .featuresNotSupported:
-                    return "LFNS"
+                    "LFNS"
                 case .locationNotFound:
-                    return "LLNF"
+                    "LLNF"
                 case .protocolNotSupported:
-                    return "LPNS"
+                    "LPNS"
                 case .maintenance:
-                    return "LMNT"
+                    "LMNT"
                 }
             }
 
             var userInfo: [String: Any] {
                 switch self {
                 case let .featuresNotSupported(features):
-                    return ["features": features]
+                    ["features": features]
                 case let .locationNotFound(location):
-                    return ["location": location]
+                    ["location": location]
                 case let .protocolNotSupported(unsupportedProtocol):
-                    return ["protocol": unsupportedProtocol]
+                    ["protocol": unsupportedProtocol]
                 case .maintenance:
-                    return [:]
+                    [:]
                 }
             }
         }
@@ -79,18 +79,18 @@ public struct ServerSelector: Sendable {
             var charCode: FourCharCode {
                 switch self {
                 case .protocolNotSupported:
-                    return "EPNS"
+                    "EPNS"
                 case .maintenance:
-                    return "EMNT"
+                    "EMNT"
                 }
             }
 
             var userInfo: [String: Any] {
                 switch self {
                 case let .protocolNotSupported(unsupportedProtocol):
-                    return ["protocol": unsupportedProtocol]
+                    ["protocol": unsupportedProtocol]
                 case .maintenance:
-                    return [:]
+                    [:]
                 }
             }
         }
@@ -98,18 +98,18 @@ public struct ServerSelector: Sendable {
         public var charCode: FourCharCode {
             switch self {
             case let .noEndpoints(reason):
-                return reason.charCode
+                reason.charCode
             case let .noLogical(reason):
-                return reason.charCode
+                reason.charCode
             }
         }
 
         public var extraUserInfo: [String: Any]? {
             switch self {
             case let .noEndpoints(reason):
-                return reason.userInfo
+                reason.userInfo
             case let .noLogical(reason):
-                return reason.userInfo
+                reason.userInfo
             }
         }
     }
@@ -214,11 +214,11 @@ extension ConnectionSpec {
     var order: VPNServerOrder {
         switch location {
         case .random:
-            return .random
+            .random
         case .secureCore(.random):
-            return .random
+            .random
         default:
-            return .fastest
+            .fastest
         }
     }
 
@@ -242,35 +242,35 @@ extension ConnectionSpec {
     var serverTierFilter: VPNServerFilter? {
         switch location {
         case .exact(.free, _, _, _, _):
-            return .tier(.max(tier: 0))
+            .tier(.max(tier: 0))
 
         default:
-            return nil
+            nil
         }
     }
 
     var locationFilters: [VPNServerFilter] {
         switch location {
         case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
-            return []
+            []
 
         case let .region(code):
-            return [.exitCountryCode(code)]
+            [.exitCountryCode(code)]
 
         case let .gateway(name):
-            return [.kind(.gateway(name: name))]
+            [.kind(.gateway(name: name))]
 
         case let .exact(_, logicalID, number, subRegion, region):
-            return logicalID.map { [.logicalID($0)] } ?? [
+            logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),
                 subRegion.map(VPNServerFilter.city)
             ].compactMap { $0 }
 
         case let .secureCore(.fastestHop(to)):
-            return [.exitCountryCode(to)]
+            [.exitCountryCode(to)]
 
         case let .secureCore(.hop(to, via)):
-            return [.exitCountryCode(to), .entryCountryCode(via)]
+            [.exitCountryCode(to), .entryCountryCode(via)]
         }
     }
 

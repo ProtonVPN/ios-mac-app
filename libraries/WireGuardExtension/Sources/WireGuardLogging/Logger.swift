@@ -36,7 +36,7 @@ package final class Logger: @unchecked Sendable {
     }
 
     package func writeLog(to targetFile: String) -> Bool {
-        return write_log_to_file(targetFile, self.log) == 0
+        write_log_to_file(targetFile, self.log) == 0
     }
 
     package static func configureGlobal(tagged tag: String, withFilePath filePath: String?) {
@@ -87,15 +87,15 @@ extension OSLogType {
     var stringValue: String {
         switch self {
         case .info:
-            return "Info"
+            "Info"
         case .debug:
-            return "Debug"
+            "Debug"
         case .error:
-            return "Error"
+            "Error"
         case .fault:
-            return "Fatal"
+            "Fatal"
         default:
-            return "Debug"
+            "Debug"
         }
     }
 }

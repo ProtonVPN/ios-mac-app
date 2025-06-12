@@ -33,6 +33,6 @@ class ResizingTextButton: HoverDetectionButton {
     }
 
     override var intrinsicContentSize: NSSize {
-        return NSSize(width: attributedTitle.size().width + 30, height: bounds.height)
+        NSSize(width: attributedTitle.size().width + 30, height: bounds.height)
     }
 }

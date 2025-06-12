@@ -56,7 +56,7 @@
         public func authorizer<T: ModularAppFeature>(
             forSubFeatureOf feature: T.Type
         ) -> (T) -> FeatureAuthorizationResult {
-            return { subFeature in
+            { subFeature in
                 let key = Self.key(for: subFeature)
                 guard let authorization = self.featureAuthorizationMap[key] else {
                     reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
@@ -69,7 +69,7 @@
         public func authorizer<T: ModularAppFeature>(
             for feature: T.Type
         ) -> Authorizer<T> {
-            return Authorizer(canUse: { subFeature in
+            Authorizer(canUse: { subFeature in
                 let key = Self.key(for: subFeature)
                 guard let authorization = self.featureAuthorizationMap[key] else {
                     reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
@@ -96,15 +96,15 @@
         }
 
         public func authorizer(for feature: (some AppFeature).Type) -> () -> FeatureAuthorizationResult {
-            return { result }
+            { result }
         }
 
         public func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult {
-            return { _ in result }
+            { _ in result }
         }
 
         public func authorizer<T: ModularAppFeature>(for feature: T.Type) -> Authorizer<T> {
-            return .init(canUse: { _ in result })
+            .init(canUse: { _ in result })
         }
     }
 #endif

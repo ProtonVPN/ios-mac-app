@@ -234,35 +234,35 @@ extension CoreLoginService: LoginErrorPresenter {
     }
 
     func willPresentError(error: SignupError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: AvailabilityError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: SetUsernameError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: CreateAddressError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: CreateAddressKeysError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: StoreKitManagerErrors, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: ResponseError, from: UIViewController) -> Bool {
-        return false
+        false
     }
 
     func willPresentError(error: Error, from: UIViewController) -> Bool {
-        return false
+        false
     }
 }
 

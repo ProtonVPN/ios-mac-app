@@ -27,16 +27,16 @@ import CommonNetworkingTestSupport
 
 final class FactoryMock: CoreAlertServiceFactory, PropertiesManagerFactory, NetworkingFactory {
     func makeNetworking() -> Networking {
-        return NetworkingMock()
+        NetworkingMock()
     }
 
     let propertiesManagerMock = PropertiesManagerMock()
 
     func makeCoreAlertService() -> CoreAlertService {
-        return CoreAlertServiceDummy()
+        CoreAlertServiceDummy()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManagerMock
+        propertiesManagerMock
     }
 }

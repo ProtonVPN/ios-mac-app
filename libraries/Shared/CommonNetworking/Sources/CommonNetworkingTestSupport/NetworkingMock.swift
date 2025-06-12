@@ -223,25 +223,25 @@
 
     extension NetworkingMock: APIServiceDelegate {
         public var additionalHeaders: [String: String]? {
-            return nil
+            nil
         }
 
         public var locale: String {
-            return NSLocale.current.language.languageCode?.identifier ?? "en_US"
+            NSLocale.current.language.languageCode?.identifier ?? "en_US"
         }
 
         public var appVersion: String {
-            return "UNIT TESTS APP VERSION"
+            "UNIT TESTS APP VERSION"
         }
 
         public var userAgent: String? {
-            return "UNIT TESTS USER AGENT"
+            "UNIT TESTS USER AGENT"
         }
 
         public func onUpdate(serverTime: Int64) {}
 
         public func isReachable() -> Bool {
-            return true
+            true
         }
 
         public func onDohTroubleshot() {}

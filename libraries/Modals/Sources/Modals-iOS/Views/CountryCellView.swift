@@ -21,7 +21,7 @@ import UIKit
 import ModalsShared
 
 class CountryCellView: UICollectionViewCell {
-    static var identifier: String { return String(describing: self) }
+    static var identifier: String { String(describing: self) }
 
     @IBOutlet private weak var flagImageView: UIImageView!
     @IBOutlet private weak var countryNameField: UILabel!

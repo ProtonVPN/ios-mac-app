@@ -147,7 +147,7 @@ class OverviewItemView: NSTableRowView {
     // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
-        return viewModel.name.string
+        viewModel.name.string
     }
 
     private func setupAccessibilityCustomActions() {

@@ -27,9 +27,9 @@ import Theme
 extension ColorScheme: @retroactive LocalizedStringConvertible {
     public var localizedDescription: String {
         switch self {
-        case .auto: return Localizable.settingsThemeValueAuto
-        case .light: return Localizable.settingsThemeValueLight
-        case .dark: return Localizable.settingsThemeValueDark
+        case .auto: Localizable.settingsThemeValueAuto
+        case .light: Localizable.settingsThemeValueLight
+        case .dark: Localizable.settingsThemeValueDark
         }
     }
 }

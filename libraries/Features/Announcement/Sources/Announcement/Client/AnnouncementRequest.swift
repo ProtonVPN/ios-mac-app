@@ -54,11 +54,11 @@ final class AnnouncementRequest {
         #elseif canImport(AppKit)
             let size: CGSize = if Thread.isMainThread {
                 MainActor.assumeIsolated {
-                    return NSScreen.availableSizeInPixels()
+                    NSScreen.availableSizeInPixels()
                 }
             } else {
                 DispatchQueue.main.sync {
-                    return NSScreen.availableSizeInPixels()
+                    NSScreen.availableSizeInPixels()
                 }
             }
         #endif

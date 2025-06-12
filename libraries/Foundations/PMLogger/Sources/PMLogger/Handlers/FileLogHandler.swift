@@ -40,7 +40,7 @@ public final class FileLogHandler: ParentLogHandler {
     private var fileManager: FileManagerWrapper
 
     private var logsDirectory: URL {
-        return fileUrl.deletingLastPathComponent()
+        fileUrl.deletingLastPathComponent()
     }
     
     private static let queue: DispatchQueue = DispatchQueue(label: "FileLogHandler", qos: .background)

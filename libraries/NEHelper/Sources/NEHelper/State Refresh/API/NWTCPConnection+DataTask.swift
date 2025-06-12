@@ -44,7 +44,7 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
 #if DEBUG
     extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
         public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
-            return true
+            true
         }
 
         private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
@@ -124,19 +124,19 @@ public protocol ConnectionTunnel {
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
     public func write(_ data: Data) async throws {
-        return try await withUnsafeThrowingContinuation { c in
+        try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<Void, Error>) in
             self.write(data) { error in
                 if let error {
-                    c.resume(throwing: error)
+                    continuation.resume(throwing: error)
                     return
                 }
-                c.resume(returning: ())
+                continuation.resume(returning: ())
             }
         }
     }
 
     public func readMinimumLength(_ minimum: Int, maximumLength: Int) async throws -> Data? {
-        return try await withUnsafeThrowingContinuation { c in
+        try await withUnsafeThrowingContinuation { c in
             self.readMinimumLength(minimum, maximumLength: maximumLength) { data, error in
                 if let error {
                     c.resume(throwing: error)
@@ -432,11 +432,11 @@ class NWTCPDataTask: DataTaskProtocol {
     private func portAndTLSDetails() -> (port: Int, useTLS: Bool)? {
         switch request.url?.scheme {
         case "https":
-            return (request.url?.port ?? 443, true)
+            (request.url?.port ?? 443, true)
         case "http":
-            return (request.url?.port ?? 80, false)
+            (request.url?.port ?? 80, false)
         default:
-            return nil
+            nil
         }
     }
 

@@ -36,7 +36,7 @@ protocol ProfilesMenuViewModelFactory {
 
 extension DependencyContainer: ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel {
-        return ProfilesMenuViewModel(
+        ProfilesMenuViewModel(
             appSessionManager: makeAppSessionManager(),
             navService: makeNavigationService(),
             alertService: makeCoreAlertService()

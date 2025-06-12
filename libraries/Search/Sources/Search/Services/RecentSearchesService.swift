@@ -29,7 +29,7 @@ final class RecentSearchesService {
     }
 
     func get() -> [String] {
-        return data
+        data
     }
 
     func add(searchText: String) {

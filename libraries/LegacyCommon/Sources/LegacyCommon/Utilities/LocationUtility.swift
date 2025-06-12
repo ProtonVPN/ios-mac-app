@@ -24,6 +24,6 @@ import CoreLocation
 
 public enum LocationUtility {
     public static func coordinate(forCountry countryCode: String) -> CLLocationCoordinate2D {
-        return MapConstants.countryCoordinates[countryCode.uppercased()] ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        MapConstants.countryCoordinates[countryCode.uppercased()] ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
 }

@@ -33,7 +33,7 @@ protocol VpnProtocolChangeManagerFactory {
 
 extension DependencyContainer: VpnProtocolChangeManagerFactory {
     func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
-        return VpnProtocolChangeManagerImplementation(factory: self)
+        VpnProtocolChangeManagerImplementation(factory: self)
     }
 }
 

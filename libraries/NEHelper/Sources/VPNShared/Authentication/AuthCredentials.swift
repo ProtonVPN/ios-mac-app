@@ -39,8 +39,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public var mailboxPassword: String = ""
 
     override public var description: String {
-        return
-            "Username: \(username)\n" +
+        "Username: \(username)\n" +
             "Access token: \(accessToken)\n" +
             "Refresh token: \(refreshToken)\n" +
             "Session ID: \(sessionId)\n" +

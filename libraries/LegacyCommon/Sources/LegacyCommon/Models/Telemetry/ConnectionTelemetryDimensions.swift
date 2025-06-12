@@ -87,22 +87,22 @@ public struct ConnectionDimensions: Encodable {
     private func protocolString(_ protocol: VpnProtocol) -> String {
         switch `protocol` {
         case .ike:
-            return "ikev2"
+            "ikev2"
         case let .openVpn(openVpnTransport):
             switch openVpnTransport {
             case .tcp:
-                return "openvpn_tcp"
+                "openvpn_tcp"
             case .udp:
-                return "openvpn_udp"
+                "openvpn_udp"
             }
         case let .wireGuard(wireGuardTransport):
             switch wireGuardTransport {
             case .tcp:
-                return "wireguard_tcp"
+                "wireguard_tcp"
             case .udp:
-                return "wireguard_udp"
+                "wireguard_udp"
             case .tls:
-                return "wireguard_tls"
+                "wireguard_tls"
             }
         }
     }

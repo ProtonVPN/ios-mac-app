@@ -45,7 +45,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     fileprivate var canConnect: Bool {
-        return !isUsersTierTooLow && !underMaintenance
+        !isUsersTierTooLow && !underMaintenance
     }
 
     var serverName: String {
@@ -76,7 +76,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         if features.isEmpty { return description }
 
         return "\(description)." + features.reduce(Localizable.featuresTitle + ": ", { result, feature in
-            return result + feature + "."
+            result + feature + "."
         })
     }
 

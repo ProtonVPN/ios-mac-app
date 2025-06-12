@@ -45,7 +45,7 @@
         public var mode: Mode {
             switch self {
             case let .disabled(mode), let .enabled(mode):
-                return mode
+                mode
             }
         }
     }

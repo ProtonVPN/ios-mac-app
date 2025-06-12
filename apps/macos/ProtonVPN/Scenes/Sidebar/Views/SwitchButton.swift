@@ -30,8 +30,8 @@ enum ButtonState: Int {
     
     func toggle() -> ButtonState {
         switch self {
-        case .on: return .off
-        case .off: return .on
+        case .on: .off
+        case .off: .on
         }
     }
 }
@@ -62,7 +62,7 @@ class SwitchButton: NSView, CAAnimationDelegate {
     }
 
     var isOn: Bool {
-        return currentButtonState == .on
+        currentButtonState == .on
     }
 
     var buttonWidth: Int!
@@ -256,15 +256,15 @@ class SwitchButton: NSView, CAAnimationDelegate {
     // MARK: - Accessibility
     
     override func accessibilityValue() -> Any? {
-        return currentButtonState
+        currentButtonState
     }
     
     override func accessibilityChildren() -> [Any]? {
-        return nil
+        nil
     }
     
     override func isAccessibilityElement() -> Bool {
-        return true
+        true
     }
 }
 

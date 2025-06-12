@@ -51,9 +51,9 @@ public enum ServerChangeViewState {
     public var isUnavailable: Bool {
         switch self {
         case .unavailable:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }

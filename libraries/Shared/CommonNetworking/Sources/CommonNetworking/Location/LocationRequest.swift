@@ -21,11 +21,11 @@ import ProtonCoreNetworking
 
 public final class LocationRequest: Request {
     public var path: String {
-        return "/vpn/v1/location"
+        "/vpn/v1/location"
     }
 
     public var isAuth: Bool {
-        return false
+        false
     }
 
     public var retryPolicy: ProtonRetryPolicy.RetryMode {

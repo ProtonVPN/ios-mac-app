@@ -28,7 +28,7 @@ struct CodeSignatureError: Error, CustomStringConvertible {
 
 struct CodeSignatureComparitor {
     public static func codeSignatureMatches(auditToken: audit_token_t) throws -> Bool {
-        return try codeSigningCertificatesForSelf() == codeSigningCertificates(for: auditToken)
+        try codeSigningCertificatesForSelf() == codeSigningCertificates(for: auditToken)
     }
 
     // MARK: - Private

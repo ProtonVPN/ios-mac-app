@@ -27,9 +27,9 @@ public enum AppContext: String {
     public var clientIdKey: String {
         switch self {
         case .mainApp, .siriIntentHandler:
-            return "Id"
+            "Id"
         case .wireGuardExtension:
-            return "WireGuardId"
+            "WireGuardId"
         }
     }
 

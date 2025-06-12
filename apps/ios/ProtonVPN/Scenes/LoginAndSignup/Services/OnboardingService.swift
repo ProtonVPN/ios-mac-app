@@ -75,12 +75,12 @@ extension OnboardingModuleService: OnboardingService {
 
     private func welcomeToProtonViewController() -> UIViewController {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
-            return modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
+            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
                 let getStartedVC = self.onboardingGetStartedViewController()
                 self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
             })
         } else {
-            return modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
+            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
                 self.postOnboardingAction()
             })
         }

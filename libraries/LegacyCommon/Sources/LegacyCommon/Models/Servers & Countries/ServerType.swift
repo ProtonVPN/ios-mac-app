@@ -50,15 +50,15 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     public var description: String {
         switch self {
         case .standard:
-            return "Standard"
+            "Standard"
         case .secureCore:
-            return "Secure Core"
+            "Secure Core"
         case .p2p:
-            return "P2P"
+            "P2P"
         case .tor:
-            return "Tor"
+            "Tor"
         case .unspecified:
-            return "Unspecified"
+            "Unspecified"
         }
     }
 
@@ -67,15 +67,15 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     public var localizedString: String {
         switch self {
         case .standard:
-            return Localizable.standard
+            Localizable.standard
         case .secureCore:
-            return Localizable.secureCore
+            Localizable.secureCore
         case .p2p:
-            return Localizable.p2p
+            Localizable.p2p
         case .tor:
-            return Localizable.tor
+            Localizable.tor
         case .unspecified:
-            return "Unspecified"
+            "Unspecified"
         }
     }
 
@@ -113,30 +113,30 @@ public extension ServerType {
     var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
         switch self {
         case .standard:
-            return .standard
+            .standard
         case .secureCore:
-            return .secureCore
+            .secureCore
         case .p2p:
-            return .standard(with: .p2p)
+            .standard(with: .p2p)
         case .tor:
-            return .standard(with: .tor)
+            .standard(with: .tor)
         case .unspecified:
-            return .standard
+            .standard
         }
     }
 
     var serverFilter: VPNServerFilter {
         switch self {
         case .secureCore:
-            return .features(.secureCore)
+            .features(.secureCore)
         case .tor:
-            return .features(.standard(with: .tor))
+            .features(.standard(with: .tor))
         case .standard:
-            return .features(.standard)
+            .features(.standard)
         case .p2p:
-            return .features(.standard(with: .p2p))
+            .features(.standard(with: .p2p))
         case .unspecified:
-            return .features(.init(required: .zero, excluded: .zero))
+            .features(.init(required: .zero, excluded: .zero))
         }
     }
 }

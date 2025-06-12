@@ -23,7 +23,7 @@ import Foundation
 
     public extension NSFont {
         static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false) -> NSFont {
-            return themeFont(literalSize: semanticSize.rawValue, bold: bold)
+            themeFont(literalSize: semanticSize.rawValue, bold: bold)
         }
 
         static func themeFont(literalSize: Double, bold: Bool = false) -> NSFont {

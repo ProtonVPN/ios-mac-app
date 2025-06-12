@@ -36,11 +36,11 @@ public struct HumanVerificationToken {
     var fullValue: String {
         switch type {
         case .email, .sms:
-            return "\(input ?? ""):\(token)"
+            "\(input ?? ""):\(token)"
         case .payment, .captcha:
-            return token
+            token
         case .invite:
-            return ""
+            ""
         }
     }
     

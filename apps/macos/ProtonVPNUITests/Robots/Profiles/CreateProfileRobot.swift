@@ -49,7 +49,7 @@ private let cancelProfileDescription = "By continuing, current selection will be
 
 class CreateProfileRobot: CoreElements {
     func setProfileDetails(_ name: String, _ countryname: String) -> CreateProfileRobot {
-        return profileName(name)
+        profileName(name)
             .selectCountry()
             .chooseCountry(countryname)
             .selectServer()
@@ -57,20 +57,20 @@ class CreateProfileRobot: CoreElements {
     }
         
     func enterProfileName( _ name: String) -> CreateProfileRobot {
-        return profileName(name)
+        profileName(name)
     }
         
     func deleteProfileName() -> CreateProfileRobot {
-        return deleteName()
+        deleteName()
     }
 
     func enterProfileCountry( _ countryname: String) -> CreateProfileRobot {
-        return selectCountry()
+        selectCountry()
             .chooseCountry(countryname)
     }
         
     func enterProfileServer() -> CreateProfileRobot {
-        return selectServer()
+        selectServer()
             .chooseServer()
     }
         

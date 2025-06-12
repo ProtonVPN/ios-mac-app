@@ -186,9 +186,9 @@ private extension VPNConnectionStatus {
     var showingConnectButton: Bool {
         switch self {
         case .disconnected, .disconnecting:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
@@ -266,7 +266,7 @@ private extension VPNConnectionStatus {
     }
 
     fileprivate func cardPair(spec: ConnectionSpec, userTier: Int = 2) -> some View {
-        return HStack(spacing: .themeSpacing24) {
+        HStack(spacing: .themeSpacing24) {
             HomeConnectionCardView(store: .disconnectedStore(defaultConnection: spec, userTier: userTier))
             HomeConnectionCardView(store: .connectedStore(intentSpec: spec, userTier: userTier))
         }

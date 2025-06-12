@@ -24,7 +24,7 @@ import Cocoa
 
 class TransparentBackedScroller: NSScroller {
     override static var isCompatibleWithOverlayScrollers: Bool {
-        return true
+        true
     }
 
     override func drawKnobSlot(in slotRect: NSRect, highlight flag: Bool) {

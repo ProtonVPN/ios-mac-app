@@ -42,7 +42,7 @@
 
         var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
         public func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?) {
-            return autoConnect
+            autoConnect
         }
 
         public func setAutoConnect(for username: String, enabled: Bool, profileId: String?) {
@@ -85,7 +85,7 @@
 
         public var secureCoreToggle: Bool = false
         public var serverTypeToggle: ServerType {
-            return secureCoreToggle ? .secureCore : .standard
+            secureCoreToggle ? .secureCore : .standard
         }
 
         public var intentionallyDisconnected: Bool = false
@@ -186,13 +186,13 @@
         }
 
         public var connectionProtocol: ConnectionProtocol {
-            return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+            smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
         }
 
         public var didShowDeprecationWarningForOSVersion: String?
 
-        public func getTelemetryUsageData() -> Bool { return false }
-        public func getTelemetryCrashReports() -> Bool { return true }
+        public func getTelemetryUsageData() -> Bool { false }
+        public func getTelemetryCrashReports() -> Bool { true }
         public func setTelemetryUsageData(enabled: Bool) {
             AppEvent.telemetryUsageData.post(enabled)
         }
@@ -209,7 +209,7 @@
         private var defaultCustomBoolValue = false
 
         public func getValue(forKey key: String) -> Bool {
-            return customBools[key] ?? defaultCustomBoolValue
+            customBools[key] ?? defaultCustomBoolValue
         }
 
         public func setValue(_ value: Bool, forKey key: String) {

@@ -55,7 +55,7 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
     }
 
     public func copyWithChanged(bouncing: String?) -> Self {
-        return copy(with: (field: \.bouncing, newValue: bouncing))
+        copy(with: (field: \.bouncing, newValue: bouncing))
     }
 }
 

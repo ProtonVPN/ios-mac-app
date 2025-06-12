@@ -58,7 +58,7 @@ extension RecentConnection: Codable {}
 
 extension RecentConnection {
     public static var sampleData: [RecentConnection] {
-        return [
+        [
             RecentConnection(
                 pinnedDate: Date(),
                 underMaintenance: Bool.random(),

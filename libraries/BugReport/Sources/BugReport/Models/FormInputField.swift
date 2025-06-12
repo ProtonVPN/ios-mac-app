@@ -28,6 +28,6 @@ struct FormInputField: Equatable {
 
 extension FormInputField: Identifiable {
     var id: String {
-        return inputField.id
+        inputField.id
     }
 }

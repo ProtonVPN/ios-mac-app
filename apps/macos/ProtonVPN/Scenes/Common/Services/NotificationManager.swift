@@ -82,14 +82,14 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private func connectSubtitle(forServer server: ServerModel) -> String {
         if server.isSecureCore {
-            return server.entryCountry + " > " + server.exitCountry + " > " + server.name
+            server.entryCountry + " > " + server.exitCountry + " > " + server.name
         } else {
-            return server.country + " > " + server.name
+            server.country + " > " + server.name
         }
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
+        Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {
@@ -102,7 +102,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
 
 extension NotificationManager: NSUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
-        return true
+        true
     }
 }
 

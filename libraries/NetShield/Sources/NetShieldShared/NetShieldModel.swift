@@ -52,7 +52,7 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
 
 extension NetShieldModel: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "NetShieldModel(trackersCount: \(trackersCount), adsCount: \(adsCount), dataSaved: \(dataSaved), enabled: \(enabled))"
+        "NetShieldModel(trackersCount: \(trackersCount), adsCount: \(adsCount), dataSaved: \(dataSaved), enabled: \(enabled))"
     }
 }
 

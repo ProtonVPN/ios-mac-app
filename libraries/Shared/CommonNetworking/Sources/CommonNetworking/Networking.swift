@@ -60,10 +60,10 @@ public enum Session: Equatable {
     public var uid: String {
         switch self {
         case let .auth(uid):
-            return uid
+            uid
 
         case let .unauth(uid):
-            return uid
+            uid
         }
     }
 }
@@ -299,7 +299,7 @@ public final class CoreNetworking: Networking {
     }
 
     private func fullUrl(_ route: Request) -> String {
-        return "\(apiService.dohInterface.getCurrentlyUsedHostUrl())\(route.path)"
+        "\(apiService.dohInterface.getCurrentlyUsedHostUrl())\(route.path)"
     }
 }
 
@@ -336,7 +336,7 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var userAgent: String? {
-        return appInfo.userAgent
+        appInfo.userAgent
     }
 
     public func onUpdate(serverTime: Int64) {
@@ -345,7 +345,7 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public func isReachable() -> Bool {
-        return true
+        true
     }
 
     public func onDohTroubleshot() {}
@@ -412,11 +412,11 @@ extension CoreNetworking: AuthDelegate {
     public func authCredential(sessionUID: String) -> AuthCredential? {
         if let authCredentials = authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
-            return ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
+            ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
         } else if let unauthCredentials = unauthKeychain.fetch() {
-            return unauthCredentials
+            unauthCredentials
         } else {
-            return nil
+            nil
         }
     }
 

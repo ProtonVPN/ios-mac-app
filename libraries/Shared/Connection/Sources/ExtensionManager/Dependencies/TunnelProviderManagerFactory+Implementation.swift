@@ -47,7 +47,7 @@ extension TunnelProviderManagerFactory {
                 }
             },
             loadFromPreferences: {
-                return try await NETunnelProviderManager.loadAllFromPreferences()
+                try await NETunnelProviderManager.loadAllFromPreferences()
             }
         )
     }

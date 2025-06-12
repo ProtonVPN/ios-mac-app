@@ -29,7 +29,7 @@ protocol TroubleshootCoordinatorFactory {
 
 extension DependencyContainer: TroubleshootCoordinatorFactory {
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        return TroubleshootCoordinatorImplementation(self)
+        TroubleshootCoordinatorImplementation(self)
     }
 }
 

@@ -67,15 +67,15 @@ class VpnServerSelector {
     private var supportedProtocols: ProtocolSupport {
         switch connectionProtocol {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.protocolSupport
+            vpnProtocol.protocolSupport
         case .smartProtocol:
-            return smartProtocolConfig.supportedProtocols
+            smartProtocolConfig.supportedProtocols
                 .reduce(.zero, { $0.union($1.protocolSupport) })
         }
     }
 
     private var supportsCurrentProtocol: VPNServerFilter {
-        return .supports(protocol: supportedProtocols)
+        .supports(protocol: supportedProtocols)
     }
 
     /// Returns a server that best suits connection request
@@ -158,25 +158,25 @@ extension ConnectionRequest {
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
         case let .country(countryCode, .fastest), let .country(countryCode, .random):
-            return [.kind(.country(code: countryCode))] // inherently excludes gateways
+            [.kind(.country(code: countryCode))] // inherently excludes gateways
 
         case let .gateway(name):
-            return [.kind(.gateway(name: name))]
+            [.kind(.gateway(name: name))]
 
         case let .country(_, .server(model)):
             if serverType == .secureCore {
                 // We don’t need to find the exact server. Instead, we should focus on finding the best one based on the entryCountryCode and exitCountryCode.
-                return [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
+                [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
             } else {
-                return [.logicalID(model.id)]
+                [.logicalID(model.id)]
             }
 
         case let .city(countryCode, city):
-            return [.kind(.country(code: countryCode)), .city(city)]
+            [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
             // Exclude gateways. We could also use the .kind(.country) filter for this purpose.
-            return [.features(.init(required: .zero, excluded: .restricted))]
+            [.features(.init(required: .zero, excluded: .restricted))]
         }
     }
 
@@ -185,24 +185,24 @@ extension ConnectionRequest {
         case let .country(_, requestType):
             switch requestType {
             case .fastest:
-                return .fastest
+                .fastest
             case .random:
-                return .random
+                .random
             case .server:
-                return .fastest
+                .fastest
             }
 
         case .gateway:
-            return .fastest
+            .fastest
 
         case .city:
-            return .fastest
+            .fastest
 
         case .fastest:
-            return .fastest
+            .fastest
 
         case .random:
-            return .random
+            .random
         }
     }
 }

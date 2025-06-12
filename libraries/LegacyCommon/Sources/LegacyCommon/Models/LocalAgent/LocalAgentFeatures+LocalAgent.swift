@@ -37,7 +37,7 @@ enum LocalAgentFeaturesKeys: String {
 
 extension LocalAgentFeatures {
     func hasKey(key: LocalAgentFeaturesKeys) -> Bool {
-        return hasKey(key.rawValue)
+        hasKey(key.rawValue)
     }
 
     func getInt(key: LocalAgentFeaturesKeys) -> Int? {
@@ -81,7 +81,7 @@ extension LocalAgentFeatures {
     // MARK: Getters
 
     var vpnAccelerator: Bool? {
-        return getBool(key: .vpnAccelerator)
+        getBool(key: .vpnAccelerator)
     }
 
     var netshield: NetShieldType? {
@@ -92,7 +92,7 @@ extension LocalAgentFeatures {
     }
 
     var bouncing: String? {
-        return getString(key: .bouncing)
+        getString(key: .bouncing)
     }
 
     var natType: NATType? {
@@ -104,7 +104,7 @@ extension LocalAgentFeatures {
     }
 
     var safeMode: Bool? {
-        return getBool(key: .safeMode)
+        getBool(key: .safeMode)
     }
 
     // MARK: - Setters
@@ -144,7 +144,7 @@ extension LocalAgentFeatures {
     }
 
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
-        return self
+        self
             .with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)

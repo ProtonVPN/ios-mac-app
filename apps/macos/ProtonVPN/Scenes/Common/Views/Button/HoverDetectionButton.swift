@@ -73,7 +73,7 @@ class HoverDetectionButton: NSButton {
     }
 
     func trackingOptions() -> NSTrackingArea.Options {
-        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
+        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
 
     override func updateTrackingAreas() {

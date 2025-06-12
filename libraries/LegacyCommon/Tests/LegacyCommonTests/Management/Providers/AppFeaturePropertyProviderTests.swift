@@ -39,9 +39,9 @@ private enum TestFeature: String, ProvidableFeature {
     func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .on, .paidDefault:
-            return .failure(.requiresUpgrade)
+            .failure(.requiresUpgrade)
         case .off, .freeDefault:
-            return .success
+            .success
         }
     }
 

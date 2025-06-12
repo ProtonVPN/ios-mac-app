@@ -144,7 +144,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.credentialsProvider = .constant(credentials: .tier(tier))
         } operation: {
-            return LiveFeatureAuthorizerProvider()
+            LiveFeatureAuthorizerProvider()
                 .authorizer(for: NetShieldType.self)
         }
     }

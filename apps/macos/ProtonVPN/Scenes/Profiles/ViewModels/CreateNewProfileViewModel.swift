@@ -40,7 +40,7 @@ protocol CreateNewProfileViewModelFactory {
 
 extension DependencyContainer: CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel {
-        return CreateNewProfileViewModel(editProfile: editProfile, factory: self)
+        CreateNewProfileViewModel(editProfile: editProfile, factory: self)
     }
 }
 
@@ -152,7 +152,7 @@ class CreateNewProfileViewModel {
 
     // Filter currently available servers by their type: standard, secure core, p2p, tor
     private func serverGroups(for type: ServerType) -> [ServerGroupInfo] {
-        return serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
+        serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
     }
 
     /// Contains one placeholder item at the beginning, followed by all available countries.
@@ -436,9 +436,9 @@ class CreateNewProfileViewModel {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
                 case let .country(countryCode):
-                    return countryCode == profile.serverOffering.countryCode
+                    countryCode == profile.serverOffering.countryCode
                 case let .gateway(name):
-                    return name == profile.serverOffering.countryCode
+                    name == profile.serverOffering.countryCode
                 }
             }
 
@@ -528,11 +528,11 @@ extension CreateNewProfileViewModel: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .text:
-            return .dropdown
+            .dropdown
         case .field, .icon:
-            return .normal
+            .normal
         case .border, .background:
-            return .weak
+            .weak
         }
     }
 }

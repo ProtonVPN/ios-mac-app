@@ -79,13 +79,13 @@ public protocol LogContentProvider {
         public func getLogData(for source: LogSource) -> LogContent {
             switch source {
             case .app:
-                return AppLogContent(folder: folder)
+                AppLogContent(folder: folder)
 
             case .osLog:
-                return OSLogContent()
+                OSLogContent()
 
             case .wireguard:
-                return NELogContent(neLogProvider: wireguardProtocolFactory)
+                NELogContent(neLogProvider: wireguardProtocolFactory)
             }
         }
     }

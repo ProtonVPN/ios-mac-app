@@ -31,7 +31,7 @@ public struct ForkSessionUserCodeResponse: Codable, Equatable {
 #if DEBUG
     public extension ForkSessionResponse {
         static var mock: ForkSessionResponse {
-            return .init(code: 1000, selector: "SELECTOR")
+            .init(code: 1000, selector: "SELECTOR")
         }
     }
 #endif

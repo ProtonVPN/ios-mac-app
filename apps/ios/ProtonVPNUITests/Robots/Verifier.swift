@@ -37,9 +37,9 @@ enum UpsellModalType {
     var identifyingString: String {
         switch self {
         case .secureCore:
-            return "Double the encryption with Secure Core"
+            "Double the encryption with Secure Core"
         case .profiles:
-            return "Get quick access to your frequent connections"
+            "Get quick access to your frequent connections"
         }
     }
 }

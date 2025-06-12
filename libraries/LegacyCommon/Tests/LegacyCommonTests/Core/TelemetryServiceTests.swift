@@ -38,7 +38,7 @@ actor TelemetryAPIImplementationMock: TelemetryAPI {
     }
 
     func flushEvents(events: [String : Any], isBusiness: Bool) async throws -> LegacyCommon.TelemetryResponse {
-        return TelemetryResponse(code: 1000)
+        TelemetryResponse(code: 1000)
     }
 }
 
@@ -58,7 +58,7 @@ class TelemetryMockFactory: AppStateManagerFactory, NetworkingFactory, Propertie
     }
 
     func makeAppStateManager() -> AppStateManager {
-        return appStateManager
+        appStateManager
     }
 
     func makeAuthKeychainHandle() -> AuthKeychainHandle {

@@ -52,7 +52,7 @@ class AlertRobot: CoreElements {
         }
         
         func isVisible() -> Bool {
-            return alertContainer.waitUntilExists(time: 0.5).exists()
+            alertContainer.waitUntilExists(time: 0.5).exists()
         }
         
         let verify = Verify()

@@ -136,11 +136,11 @@ final class ProfilesViewController: UIViewController {
 
 extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.sectionCount ?? 0
+        viewModel?.sectionCount ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel?.headerHeight ?? 0 
+        viewModel?.headerHeight ?? 0 
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -152,7 +152,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.cellCount(for: section) ?? 0
+        viewModel?.cellCount(for: section) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

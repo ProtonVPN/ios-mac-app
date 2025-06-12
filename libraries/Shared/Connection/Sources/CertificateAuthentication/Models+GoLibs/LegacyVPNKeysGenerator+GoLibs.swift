@@ -36,7 +36,7 @@ import CoreConnection
 
 extension VPNShared.VPNKeysGenerator: @retroactive DependencyKey {
     private static var commonImplementation: VPNShared.VPNKeysGenerator {
-        return .init(generateKeys: {
+        .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)!
             let privateKey = PrivateKey(keyPair: keyPair)

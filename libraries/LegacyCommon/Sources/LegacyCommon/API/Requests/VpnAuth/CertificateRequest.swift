@@ -50,7 +50,7 @@ final class CertificateRequest: Request {
     }
 
     var method: HTTPMethod {
-        return .post
+        .post
     }
 
     var parameters: [String: Any]? {

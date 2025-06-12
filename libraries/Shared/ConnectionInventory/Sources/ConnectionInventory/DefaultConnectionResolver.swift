@@ -70,12 +70,12 @@ enum DefaultConnectionResolverImplementation {
 
     static func shouldOfferDefaultConnectionPreference(for recent: RecentConnection) -> Bool {
         // 'Fastest' is already a static preference, so lets not offer it as an option
-        return recent.connection.location != .fastest
+        recent.connection.location != .fastest
     }
 
     @Sendable
     static func preferenceModels(for recents: OrderedSet<RecentConnection>) -> [ConnectionPreferenceModel] {
-        return recents
+        recents
             .filter(shouldOfferDefaultConnectionPreference(for:))
             .map { recent in
                 let spec = recent.connection

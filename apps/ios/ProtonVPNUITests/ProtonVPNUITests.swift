@@ -174,7 +174,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     func getCredentials(from resource: String) -> [Credentials] {
-        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+        Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
 
     private func closeAndOpenTheApp() {
@@ -191,7 +191,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     var doh: DoH {
         if let customDomain = dynamicDomain ?? Bundle.dynamicDomain, !customDomain.isEmpty {
-            return CustomServerConfigDoH(
+            CustomServerConfigDoH(
                 signupDomain: customDomain,
                 captchaHost: "https://api.\(customDomain)",
                 humanVerificationV3Host: "https://verify.\(customDomain)",
@@ -202,7 +202,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
                 apnEnvironment: .development
             )
         } else {
-            return CustomServerConfigDoH(
+            CustomServerConfigDoH(
                 signupDomain: ObfuscatedConstants.blackSignupDomain,
                 captchaHost: ObfuscatedConstants.blackCaptchaHost,
                 humanVerificationV3Host: ObfuscatedConstants.blackHumanVerificationV3Host,

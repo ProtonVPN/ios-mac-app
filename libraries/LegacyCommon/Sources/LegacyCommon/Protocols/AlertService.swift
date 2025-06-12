@@ -51,7 +51,7 @@ public protocol UIAlertService: AnyObject {
 // Add default value to `accessibilityIdentifier`
 extension UIAlertService {
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType) {
-        return displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: nil)
+        displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: nil)
     }
 }
 

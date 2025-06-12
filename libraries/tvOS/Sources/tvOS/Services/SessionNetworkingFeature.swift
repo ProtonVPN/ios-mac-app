@@ -153,11 +153,11 @@ enum SessionFetchingError: Error, Equatable {
     static func == (lhs: SessionFetchingError, rhs: SessionFetchingError) -> Bool {
         switch (lhs, rhs) {
         case (.sessionUnavailable, .sessionUnavailable):
-            return true
+            true
         case (.network, .network):
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }

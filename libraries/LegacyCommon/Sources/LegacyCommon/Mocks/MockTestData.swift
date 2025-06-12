@@ -266,7 +266,7 @@
 
     extension ClientConfig {
         public func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
-            return ClientConfig(
+            ClientConfig(
                 featureFlags: featureFlags ?? self.featureFlags,
                 serverRefreshInterval: serverRefreshInterval,
                 wireGuardConfig: wireGuardConfig,

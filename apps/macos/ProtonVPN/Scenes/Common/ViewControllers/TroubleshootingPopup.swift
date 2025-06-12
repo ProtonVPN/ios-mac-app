@@ -75,7 +75,7 @@ final class TroubleshootingPopup: NSViewController {
 
 extension TroubleshootingPopup: NSTableViewDelegate {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel?.items.count ?? 0
+        viewModel?.items.count ?? 0
     }
 
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -98,7 +98,7 @@ extension TroubleshootingPopup: NSTableViewDelegate {
     }
 
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        return false
+        false
     }
 }
 

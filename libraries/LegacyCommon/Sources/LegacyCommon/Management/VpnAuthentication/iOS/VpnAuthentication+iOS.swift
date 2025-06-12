@@ -280,7 +280,7 @@ import CommonNetworking
 
         /// As this calls getKeys(), instead of getStoredKeys(), it can generate a new keypair if one does not exist
         public func loadClientPrivateKey() -> PrivateKey {
-            return authenticationStorage.getKeys().privateKey
+            authenticationStorage.getKeys().privateKey
         }
 
         /// Allow new certificate to be fetched on feature changes. On iOS, the NE can be launched by the system without

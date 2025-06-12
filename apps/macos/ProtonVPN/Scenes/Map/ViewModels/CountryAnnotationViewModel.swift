@@ -45,7 +45,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 
     // Returns extra width required to display the upgrade badge for countries that require an upgrade
     private var badgeImageOffset: CGFloat {
-        return available ? 0 : CountryAnnotationView.badgeSize.width + 8 // badge + padding between badge & title
+        available ? 0 : CountryAnnotationView.badgeSize.width + 8 // badge + padding between badge & title
     }
 
     var shouldShowUpgradeBadge: Bool {
@@ -65,7 +65,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     let coordinate: CLLocationCoordinate2D
     
     var isConnected: Bool {
-        return appStateManager.state.isConnected
+        appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
 
@@ -77,15 +77,15 @@ class CountryAnnotationViewModel: CustomStyleContext {
     }
 
     var attributedConnect: NSAttributedString {
-        return self.style(Localizable.connect, font: .themeFont(bold: true))
+        self.style(Localizable.connect, font: .themeFont(bold: true))
     }
 
     var attributedUpgrade: NSAttributedString {
-        return self.style(Localizable.upgrade, font: .themeFont(bold: true))
+        self.style(Localizable.upgrade, font: .themeFont(bold: true))
     }
 
     var attributedDisconnect: NSAttributedString {
-        return self.style(Localizable.disconnect, font: .themeFont(bold: true))
+        self.style(Localizable.disconnect, font: .themeFont(bold: true))
     }
     
     var attributedCountry: NSAttributedString {
@@ -173,11 +173,11 @@ class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
 
 class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     var attributedConnectTitle: NSAttributedString {
-        return isConnected ? attributedDisconnect : attributedConnect
+        isConnected ? attributedDisconnect : attributedConnect
     }
 
     override var isConnected: Bool {
-        return appStateManager.state.isConnected
+        appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.isSecureCore == false
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
@@ -213,7 +213,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     var externalViewStateChange: ((SCExitCountrySelection) -> Void)?
     
     override var isConnected: Bool {
-        return appStateManager.state.isConnected
+        appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.hasSecureCore == true
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
@@ -241,7 +241,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     }
     
     func matches(_ code: String) -> Bool {
-        return countryCode == code
+        countryCode == code
     }
     
     func attributedServer(for row: Int) -> NSAttributedString {
@@ -256,7 +256,7 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     }
     
     func attributedConnectTitle(for row: Int) -> NSAttributedString {
-        return serverIsConnected(for: row) ? attributedDisconnect : attributedConnect
+        serverIsConnected(for: row) ? attributedDisconnect : attributedConnect
     }
     
     func serverIsConnected(for row: Int) -> Bool {
@@ -281,17 +281,17 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     let country: String
     
     override var isConnected: Bool {
-        return appStateManager.state.isConnected
+        appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.hasSecureCore == true
             && appStateManager.activeConnection()?.server.entryCountryCode == countryCode
     }
     
     override var attributedCountry: NSAttributedString {
-        return Localizable.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable).styled()
+        Localizable.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable).styled()
     }
     
     override var buttonWidth: CGFloat {
-        return 2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
+        2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
     }
     
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {

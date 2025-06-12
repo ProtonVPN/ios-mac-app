@@ -26,12 +26,12 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
         switch vpnProtocol {
         case .ike:
-            return KeychainRefVpnCredentialsConfigurator()
+            KeychainRefVpnCredentialsConfigurator()
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            return WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager,
-                                                   vpnKeychain: vpnKeychain)
+            WGiOSVpnCredentialsConfigurator(propertiesManager: propertiesManager,
+                                            vpnKeychain: vpnKeychain)
         }
     }
 }

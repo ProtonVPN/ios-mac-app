@@ -336,7 +336,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
 
     public func connectedDate() async -> Date? {
-        return await vpnManager.connectedDate()
+        await vpnManager.connectedDate()
     }
 
     public func activeConnection() -> ConnectionConfiguration? {

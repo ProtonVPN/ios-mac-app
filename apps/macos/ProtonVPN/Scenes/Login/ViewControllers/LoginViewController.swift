@@ -160,7 +160,7 @@ final class LoginViewController: NSViewController {
     fileprivate var signInVariant: SigninVariant = .protonSignin
 
     fileprivate var passwordEntry: String {
-        return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
+        secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
     }
 
     // MARK: - Public functions
@@ -603,6 +603,6 @@ extension LoginViewController: NSPopoverDelegate {
 
 extension LoginViewController: ASWebAuthenticationPresentationContextProviding {
     func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-        return view.window!
+        view.window!
     }
 }

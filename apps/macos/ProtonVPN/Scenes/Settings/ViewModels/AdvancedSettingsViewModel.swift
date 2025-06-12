@@ -54,7 +54,7 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.hermesClient) private var hermesClient
 
     private var featureFlags: FeatureFlags {
-        return propertiesManager.featureFlags
+        propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
@@ -78,11 +78,11 @@ final class AdvancedSettingsViewModel {
     }
 
     var alternativeRouting: Bool {
-        return propertiesManager.alternativeRouting
+        propertiesManager.alternativeRouting
     }
 
     var isNATTypeFeatureEnabled: Bool {
-        return featureFlags.moderateNAT
+        featureFlags.moderateNAT
     }
 
     var usageData: Bool {
@@ -116,11 +116,11 @@ final class AdvancedSettingsViewModel {
     }
 
     var isSafeModeFeatureEnabled: Bool {
-        return featureFlags.safeMode
+        featureFlags.safeMode
     }
 
     var safeMode: Bool {
-        return safeModePropertyProvider.safeMode ?? true
+        safeModePropertyProvider.safeMode ?? true
     }
 
     func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {

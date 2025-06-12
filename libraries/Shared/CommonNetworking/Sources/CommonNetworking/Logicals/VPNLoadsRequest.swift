@@ -35,11 +35,11 @@ public final class VPNLoadsRequest: Request {
     }
 
     public var path: String {
-        return "/vpn/v1/loads"
+        "/vpn/v1/loads"
     }
 
     public var isAuth: Bool {
-        return false
+        false
     }
 
     public var header: [String: Any] {

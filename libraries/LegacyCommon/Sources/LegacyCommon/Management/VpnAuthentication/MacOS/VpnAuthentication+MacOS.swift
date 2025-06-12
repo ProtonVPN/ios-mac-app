@@ -106,7 +106,7 @@ import VPNShared
         }
 
         public func loadClientPrivateKey() -> PrivateKey {
-            return storage.getKeys().privateKey
+            storage.getKeys().privateKey
         }
 
         public var shouldIgnoreFeatureChanges: Bool {

@@ -46,11 +46,11 @@ import Foundation
         func resize(_ newSize: AppTheme.IconSize) -> NSImage {
             switch newSize {
             case let .square(size):
-                return self.resize(newWidth: Int(size), newHeight: Int(size))
+                self.resize(newWidth: Int(size), newHeight: Int(size))
             case let .rect(width, height):
-                return self.resize(newWidth: Int(width), newHeight: Int(height))
+                self.resize(newWidth: Int(width), newHeight: Int(height))
             case .default:
-                return self
+                self
             }
         }
     }

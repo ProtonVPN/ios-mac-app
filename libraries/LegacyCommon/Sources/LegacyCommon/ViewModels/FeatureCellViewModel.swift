@@ -47,7 +47,7 @@ public enum Icon {
 
 extension FeatureCellViewModel {
     public var displayLoads: Bool {
-        return false
+        false
     }
 }
 

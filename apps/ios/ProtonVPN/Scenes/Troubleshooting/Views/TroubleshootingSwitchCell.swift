@@ -28,7 +28,7 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
 
     var isOn: Bool {
         get {
-            return toggleSwitch.isOn
+            toggleSwitch.isOn
         }
         set {
             toggleSwitch.isOn = newValue

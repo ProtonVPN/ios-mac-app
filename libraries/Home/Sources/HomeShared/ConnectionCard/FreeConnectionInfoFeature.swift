@@ -42,9 +42,9 @@ public struct FreeConnectionInfoFeature {
         Reduce { state, action in
             switch action {
             case .upgradeButtonTapped:
-                return .none
+                .none
             case .dismissButtonTapped:
-                return .none
+                .none
             }
         }
     }

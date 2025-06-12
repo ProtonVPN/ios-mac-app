@@ -321,7 +321,7 @@ final class SettingsViewModel {
     }
 
     private var vpnAcceleratorSection: [TableViewCellModel] {
-        return [
+        [
             .upsellableToggle(
                 title: Localizable.vpnAcceleratorTitle,
                 state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
@@ -362,7 +362,7 @@ final class SettingsViewModel {
     }
 
     private var allowLanSection: [TableViewCellModel] {
-        return [
+        [
             .upsellableToggle(
                 title: Localizable.allowLanTitle,
                 state: { [unowned self] in self.displayState(for: ExcludeLocalNetworks.self) },
@@ -386,7 +386,7 @@ final class SettingsViewModel {
     }
 
     private var moderateNATSection: [TableViewCellModel] {
-        return [
+        [
             .upsellableToggle(
                 title: Localizable.moderateNatTitle,
                 state: { [unowned self] in self.moderateNATState },
@@ -441,7 +441,7 @@ final class SettingsViewModel {
     private var safeModeSection: [TableViewCellModel] {
         // the UI shows the "opposite" value of the safe mode flag
         // if safe mode is enabled the moderate nat checkbox is unchecked and vice versa
-        return [
+        [
             .upsellableToggle(
                 title: Localizable.nonStandardPortsTitle,
                 state: { [unowned self] in self.safeModeState },
@@ -481,7 +481,7 @@ final class SettingsViewModel {
     }
 
     private var alternativeRoutingSection: [TableViewCellModel] {
-        return [
+        [
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
                 state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
@@ -525,7 +525,7 @@ final class SettingsViewModel {
     }
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        return { toggleOn, callback in
+        { toggleOn, callback in
             let isActive = self.isActive()
             let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
 
@@ -564,7 +564,7 @@ final class SettingsViewModel {
     }
 
     private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        return { toggleOn, callback in
+        { toggleOn, callback in
             let isActive = self.isActive()
 
             var alert: SystemAlert
@@ -825,9 +825,9 @@ final class SettingsViewModel {
 
     func isActive() -> Bool {
         if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            return settingsClient.isActive()
+            settingsClient.isActive()
         } else {
-            return !appStateManager.state.isSafeToEnd
+            !appStateManager.state.isSafeToEnd
         }
     }
 

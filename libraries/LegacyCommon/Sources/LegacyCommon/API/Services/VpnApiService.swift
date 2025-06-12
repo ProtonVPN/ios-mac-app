@@ -42,7 +42,7 @@ public protocol VpnApiServiceFactory {
 
 extension Container: VpnApiServiceFactory {
     public func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(self)
+        VpnApiService(self)
     }
 }
 
@@ -220,7 +220,7 @@ public class VpnApiService {
     }
 
     public func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> ServerInfoResponse {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             serverInfo(ip: ip, countryCode: countryCode, freeTier: freeTier, completion: continuation.resume(with:))
         }
     }

@@ -28,11 +28,11 @@ public extension ConnectionSpec.Location {
     func accessibilityText(locale: Locale) -> String {
         switch self {
         case .fastest:
-            return Localizable.connectionCardAccessibilityFastest
+            Localizable.connectionCardAccessibilityFastest
         case .secureCore(.fastest):
-            return Localizable.connectionCardAccessibilityFastestSc
+            Localizable.connectionCardAccessibilityFastestSc
         default:
-            return text(locale: locale)
+            text(locale: locale)
         }
     }
 
@@ -40,28 +40,28 @@ public extension ConnectionSpec.Location {
     func headerText(locale: Locale) -> String? {
         switch self {
         case .random:
-            return nil
+            nil
         default:
-            return text(locale: locale)
+            text(locale: locale)
         }
     }
 
     func text(locale: Locale) -> String {
         switch self {
         case .fastest, .secureCore(.fastest):
-            return Localizable.homeDefaultConnectionFastestName
+            Localizable.homeDefaultConnectionFastestName
 
         case .random, .secureCore(.random):
-            return Localizable.homeRecentsRandomServerTitle
+            Localizable.homeRecentsRandomServerTitle
 
         case let .region(code),
              let .exact(_, _, _, _, code),
              let .secureCore(.fastestHop(code)),
              let .secureCore(.hop(code, _)):
-            return regionName(locale: locale, code: code)
+            regionName(locale: locale, code: code)
 
         case let .gateway(name):
-            return name
+            name
         }
     }
 

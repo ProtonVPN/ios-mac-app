@@ -29,7 +29,7 @@ import PMLogger
     extension WireguardIOSLogProvider: DependencyKey {
         public static let liveValue: WireguardIOSLogProvider = .init(
             logContentForAppGroup: { appGroup in
-                return WireguardIOSLogContent(appGroup: appGroup)
+                WireguardIOSLogContent(appGroup: appGroup)
             }
         )
     }

@@ -16,17 +16,17 @@ public class PMLog {
         fileprivate var description: String {
             switch self {
             case .fatal:
-                return "FATAL"
+                "FATAL"
             case .error:
-                return "ERROR"
+                "ERROR"
             case .warn:
-                return "WARN"
+                "WARN"
             case .info:
-                return "INFO"
+                "INFO"
             case .debug:
-                return "DEBUG"
+                "DEBUG"
             case .trace:
-                return "TRACE"
+                "TRACE"
             }
         }
     }

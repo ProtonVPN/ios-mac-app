@@ -26,12 +26,12 @@ final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
         switch vpnProtocol {
         case .ike:
-            return KeychainRefVpnCredentialsConfigurator()
+            KeychainRefVpnCredentialsConfigurator()
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            return WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) }),
-                                                propertiesManager: propertiesManager)
+            WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) }),
+                                         propertiesManager: propertiesManager)
         }
     }
 }

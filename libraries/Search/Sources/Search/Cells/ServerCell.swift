@@ -28,11 +28,11 @@ public protocol ServerCellDelegate: AnyObject {
 
 public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     static let featureViewTag = "Tag For Server Features Icons".hashValue
@@ -46,13 +46,13 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         var imageName: String {
             switch self {
             case .smart:
-                return "ic-globe"
+                "ic-globe"
             case .tor:
-                return "ic-brand-tor"
+                "ic-brand-tor"
             case .streaming:
-                return "ic-play"
+                "ic-play"
             case .p2p:
-                return "ic-arrows-switch"
+                "ic-arrows-switch"
             }
         }
     }

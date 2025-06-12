@@ -38,11 +38,11 @@ public enum ParseError: LocalizedError {
     public var localizedDescription: String {
         switch self {
         case .serverParse:
-            return "Can't parse the servers info"
+            "Can't parse the servers info"
         case .loadsParse:
-            return "Can't update server loads"
+            "Can't update server loads"
         default:
-            return Localizable.errorInternalError
+            Localizable.errorInternalError
         }
     }
 }

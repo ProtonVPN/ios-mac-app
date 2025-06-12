@@ -45,7 +45,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     var mockFactory: DependencyFactory {
-        return DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory(propertiesManager: mockPropertiesManager)
     }
 
     var mockGateway: VpnGatewayProtocol {
@@ -57,7 +57,7 @@ final class CountriesViewModelTests: XCTestCase {
     var serverGroups: [ServerGroupInfo]!
 
     func withMockedRepository<T>(_ operation: () -> T) -> T {
-        return withDependencies {
+        withDependencies {
             // Normally we would be able to omit all arguments except groups, but doing so triggers a linker bug with XCTDynamicOverlay.
             $0.serverRepository = .init(
                 serverCount: { 0 },

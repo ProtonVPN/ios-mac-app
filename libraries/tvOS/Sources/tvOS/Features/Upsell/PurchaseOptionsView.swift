@@ -68,12 +68,12 @@ struct PurchaseOptionsView: View {
     }
 
     private func headlineText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.system(size: 38, weight: .regular))
     }
 
     private func bodyText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(Color(.text, .weak))

@@ -46,7 +46,7 @@ class TabBarViewModel {
     weak var delegate: TabBarViewModelDelegate?
 
     var showLoginAnimated: Bool {
-        return true
+        true
     }
 
     // MARK: Initializers

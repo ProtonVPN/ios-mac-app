@@ -68,7 +68,7 @@ public struct ServerGroupInfo {
     }
 
     public var location: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
 
@@ -86,9 +86,9 @@ extension ServerGroupInfo.Kind {
     public var isGateway: Bool {
         switch self {
         case .country:
-            return false
+            false
         case .gateway:
-            return true
+            true
         }
     }
 }

@@ -46,7 +46,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     public var dataTaskFactory: DataTaskFactory!
 
     public var transport: WireGuardTransport? {
-        return tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
+        tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 
     override init() {
@@ -463,7 +463,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         if !Self.loggingSetupIsDone {
             Self.loggingSetupIsDone = true
             LoggingSystem.bootstrap { _ in
-                return WGLogHandler(formatter: WGLogFormatter())
+                WGLogHandler(formatter: WGLogFormatter())
             }
         }
         // WG logger
@@ -546,9 +546,9 @@ extension WireGuardLogLevel {
     var osLogLevel: OSLogType {
         switch self {
         case .verbose:
-            return .debug
+            .debug
         case .error:
-            return .error
+            .error
         }
     }
 }

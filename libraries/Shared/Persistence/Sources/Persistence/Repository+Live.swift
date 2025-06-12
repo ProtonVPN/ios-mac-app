@@ -33,13 +33,13 @@ extension ServerRepository {
 
         return ServerRepository(
             serverCount: {
-                return executor.read(dbWriter: dbWriter) { db in
-                    return try Logical.fetchCount(db)
+                executor.read(dbWriter: dbWriter) { db in
+                    try Logical.fetchCount(db)
                 }
             },
             countryCount: {
                 executor.read(dbWriter: dbWriter) { db in
-                    return try Logical
+                    try Logical
                         .select(Logical.Columns.exitCountryCode).distinct()
                         .fetchCount(db)
                 }
@@ -59,7 +59,7 @@ extension ServerRepository {
                 }
             },
             server: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = ServerResult.request(filters: filters, order: order)
                     let result = try ServerResult.fetchOne(db, request)
 
@@ -80,7 +80,7 @@ extension ServerRepository {
                 }
             },
             servers: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = ServerInfoResult.request(filters: filters, order: order)
 
                     let results = try ServerInfoResult.fetchAll(db, request)
@@ -96,8 +96,8 @@ extension ServerRepository {
                 }
             },
             deleteServers: { ids, maxTier in
-                return executor.write(dbWriter: dbWriter) { db in
-                    return try Logical
+                executor.write(dbWriter: dbWriter) { db in
+                    try Logical
                         .filter(!ids.contains(Logical.Columns.id))
                         .filter(Logical.Columns.tier <= maxTier)
                         .deleteAll(db)
@@ -112,7 +112,7 @@ extension ServerRepository {
                 }
             },
             groups: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
                     let groups = try GroupInfoResult.fetchAll(db, request).map(\.domainModel)
@@ -150,7 +150,7 @@ extension ServerRepository {
                 }
             },
             getMetadata: { key in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = DatabaseMetadata
                         .select(DatabaseMetadata.columns.value)
                         .filter(DatabaseMetadata.columns.key == key.rawValue)
@@ -159,7 +159,7 @@ extension ServerRepository {
                 }
             },
             setMetadata: { key, value in
-                return executor.write(dbWriter: dbWriter) { db in
+                executor.write(dbWriter: dbWriter) { db in
                     guard let value else {
                         try DatabaseMetadata
                             .filter(DatabaseMetadata.columns.key == key.rawValue)

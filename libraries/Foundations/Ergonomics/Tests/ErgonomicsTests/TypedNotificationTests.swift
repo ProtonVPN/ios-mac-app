@@ -24,7 +24,7 @@ private let timeout: TimeInterval = 1.0
 
 extension Array<NotificationToken> {
     static func + (_ lhs: Self, _ rhs: NotificationToken) -> Self {
-        return lhs + [rhs]
+        lhs + [rhs]
     }
 
     static func += (_ lhs: inout Self, _ rhs: NotificationToken) {
@@ -223,14 +223,14 @@ final class TypedNotificationTests: XCTestCase {
                 userInfo: [TestNotification.dataKey: 123] // Provide Int instead of the expected String
             )
         }, issueMatcher: { issue in
-            return issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got 123"
+            issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got 123"
         })
 
         XCTExpectFailure("Post should fail with missing data", enabled: true, strict: true, failingBlock: {
             // post notification with missing data
             NotificationCenter.default.post(name: TestNotification.name, object: self, userInfo: [:])
         }, issueMatcher: { issue in
-            return issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got nil"
+            issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got nil"
         })
     }
 }

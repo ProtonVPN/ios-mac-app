@@ -23,9 +23,9 @@ extension Optional<URL> {
     var stringOrEmpty: String {
         switch self {
         case .none:
-            return ""
+            ""
         case let .some(url):
-            return url.absoluteString
+            url.absoluteString
         }
     }
 }

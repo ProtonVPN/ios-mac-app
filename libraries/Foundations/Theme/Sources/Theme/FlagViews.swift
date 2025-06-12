@@ -36,19 +36,19 @@ public enum Flag: Equatable {
         // VPNAPPL-2543: Refer to static assets via swiftgen asset, instead of hardcoded name
         switch self {
         case .fastest:
-            return "Fastest"
+            "Fastest"
 
         case .mostRecent:
-            return "MostRecent"
+            "MostRecent"
 
         case .random:
-            return "Random"
+            "Random"
 
         case .gateway:
-            return "Gateway"
+            "Gateway"
 
         case let .country(code):
-            return code
+            code
         }
     }
 }

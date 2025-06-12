@@ -51,25 +51,25 @@ public enum VPNConnectionStatus: Equatable, Codable {
     public var actual: VPNConnectionActual? {
         switch self {
         case .disconnected:
-            return nil
+            nil
         case let .connected(_, vpnConnectionActual),
              let .resolving(_, vpnConnectionActual),
              let .disconnecting(_, vpnConnectionActual):
-            return vpnConnectionActual
+            vpnConnectionActual
         case .connecting:
-            return nil
+            nil
         }
     }
 
     public var spec: ConnectionSpec? {
         switch self {
         case .disconnected, .resolving(.none, _):
-            return nil
+            nil
         case let .connected(spec, _),
              let .connecting(spec, _),
              let .resolving(.some(spec), _),
              let .disconnecting(spec, _):
-            return spec
+            spec
         }
     }
 }
@@ -78,7 +78,7 @@ private let persistentFileUrl = FileManager.default.containerURL(forSecurityAppl
 
 public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {
-        return Self[
+        Self[
             .fileStorage(
                 persistentFileUrl,
                 decode: { data in

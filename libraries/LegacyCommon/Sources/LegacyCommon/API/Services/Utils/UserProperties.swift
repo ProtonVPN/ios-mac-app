@@ -34,7 +34,7 @@ public struct UserProperties {
     public let challenge: [String: Any]?
 
     public var description: String {
-        return """
+        """
         Username: \(username)
         ModulusID: \(modulusID)
         Salt: \(salt)

@@ -91,19 +91,19 @@ private class CoordinatorFactory: SignUpCoordinator.Factory {
     }
 
     func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
-        return PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed, servicePlanDataService: ServicePlanDataServiceMock(), planSelectionFinished: planSelectionFinished, storeKitManager: StoreKitManagerMock(), alertService: alertService)
+        PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed, servicePlanDataService: ServicePlanDataServiceMock(), planSelectionFinished: planSelectionFinished, storeKitManager: StoreKitManagerMock(), alertService: alertService)
     }
     
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel {
-        return PlanSelectionWithPurchaseViewModel(appSessionManager: appSessionManager, planService: planService, alertService: AlertServiceEmptyStub(), servicePlanDataService: ServicePlanDataServiceMock(), storeKitManager: StoreKitManagerMock())
+        PlanSelectionWithPurchaseViewModel(appSessionManager: appSessionManager, planService: planService, alertService: AlertServiceEmptyStub(), servicePlanDataService: ServicePlanDataServiceMock(), storeKitManager: StoreKitManagerMock())
     }
     
     func makeLoginService() -> LoginService {
-        return loginService
+        loginService
     }
     
     func makePlanService() -> PlanService {
-        return planService
+        planService
     }
     
     func makeSignUpFormViewModel(plan: AccountPlan) -> SignUpFormViewModel {
@@ -113,15 +113,15 @@ private class CoordinatorFactory: SignUpCoordinator.Factory {
     }
     
     func makeCoreAlertService() -> CoreAlertService {
-        return AlertServiceEmptyStub()
+        AlertServiceEmptyStub()
     }
     
     func makeStoreKitManager() -> StoreKitManager {
-        return StoreKitManagerMock()
+        StoreKitManagerMock()
     }
     
     func makeStoreKitStateChecker() -> StoreKitStateChecker {
-        return storeKitStateChecker
+        storeKitStateChecker
     }
 }
 
@@ -130,10 +130,10 @@ private class StoreKitStateCheckerMock: StoreKitStateChecker {
     public var accountPlan: AccountPlan?
     
     func isBuyProcessRunning() -> Bool {
-        return buyProcessRunning
+        buyProcessRunning
     }
     
     func planBuyStarted() -> AccountPlan? {
-        return accountPlan
+        accountPlan
     }
 }

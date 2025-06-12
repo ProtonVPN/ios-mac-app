@@ -72,7 +72,7 @@ class ConnectionDetailsRobot: CoreElements {
 
         @discardableResult
         private func checkStaticText(_ identifier: String, contains label: String) -> UIElement {
-            return staticText(identifier)
+            staticText(identifier)
                 .firstMatch()
                 .checkContainsLabel(label)
         }

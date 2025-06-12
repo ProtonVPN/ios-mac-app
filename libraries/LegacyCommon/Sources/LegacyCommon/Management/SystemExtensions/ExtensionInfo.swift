@@ -14,9 +14,9 @@ public struct ExtensionInfo: Codable {
     let bundleId: String
 
     static var current: Self {
-        return Self(version: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0",
-                    build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0",
-                    bundleId: Bundle.main.bundleIdentifier ?? "")
+        Self(version: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0",
+             build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0",
+             bundleId: Bundle.main.bundleIdentifier ?? "")
     }
 
     public init(version: String, build: String, bundleId: String) {

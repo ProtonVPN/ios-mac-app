@@ -29,8 +29,8 @@ public enum NetShieldState: LocalizedStringConvertible {
 
     public var localizedDescription: String {
         switch self {
-        case .on: return Localizable.settingsNetshieldOn
-        case .off: return Localizable.settingsNetshieldOff
+        case .on: Localizable.settingsNetshieldOn
+        case .off: Localizable.settingsNetshieldOff
         }
     }
 }

@@ -27,7 +27,7 @@ public struct ConnectionDetailsMessage: Sendable, Equatable {
     public let deviceCountry: String?
 
     public static func == (lhs: ConnectionDetailsMessage, rhs: ConnectionDetailsMessage) -> Bool {
-        return lhs.deviceCountry == rhs.deviceCountry
+        lhs.deviceCountry == rhs.deviceCountry
             && lhs.exitIp.rawValue == rhs.exitIp.rawValue
             && lhs.deviceIp?.rawValue == rhs.deviceIp?.rawValue
     }

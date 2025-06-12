@@ -52,9 +52,9 @@ class MapHeaderBackground: NSView {
     
     override func hitTest(_ point: NSPoint) -> NSView? {
         if path.contains(point) || outter.contains(point) {
-            return super.hitTest(point)
+            super.hitTest(point)
         } else {
-            return nil
+            nil
         }
     }
     

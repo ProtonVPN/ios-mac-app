@@ -34,7 +34,7 @@ import Persistence
 class VpnServerSelectorTests: XCTestCase {
     let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)
     let smartProtocolConfig = MockTestData().defaultClientConfig.smartProtocolConfig
-    let appStateGetter: (() -> AppState) = { return .disconnected }
+    let appStateGetter: (() -> AppState) = { .disconnected }
 
     static var repository: ServerRepository!
     static var mockServers: [String: VPNServer]!
@@ -88,7 +88,7 @@ class VpnServerSelectorTests: XCTestCase {
         changeActiveServerType: @escaping (ServerType) -> Void = { _ in },
         notifyResolutionUnavailable: @escaping (Bool, ServerType, ResolutionUnavailableReason) -> Void = { _, _, _ in }
     ) -> ServerModel? {
-        return withDependencies {
+        withDependencies {
             $0.serverRepository = repository
         } operation: {
             let selector = VpnServerSelector(

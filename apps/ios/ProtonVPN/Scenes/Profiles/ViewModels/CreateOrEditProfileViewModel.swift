@@ -63,7 +63,7 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private var colorPickerViewModel: ColorPickerViewModel
     private var color: UIColor {
-        return colorPickerViewModel.selectedColor
+        colorPickerViewModel.selectedColor
     }
 
     private var name: String = ""
@@ -84,7 +84,7 @@ class CreateOrEditProfileViewModel: NSObject {
     var pushHandler: ((UIViewController) -> Void)?
     
     var editingExistingProfile: Bool {
-        return editedProfile != nil
+        editedProfile != nil
     }
 
     init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
@@ -229,7 +229,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var nameCell: TableViewCellModel {
-        return TableViewCellModel.titleTextField(title: Localizable.name, textFieldText: name, textFieldPlaceholder: Localizable.enterProfileName, textFieldDelegate: self)
+        TableViewCellModel.titleTextField(title: Localizable.name, textFieldText: name, textFieldPlaceholder: Localizable.enterProfileName, textFieldDelegate: self)
     }
     
     private var secureCoreCell: TableViewCellModel {
@@ -273,13 +273,13 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var protocolCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedDescription) { [weak self] in
+        TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedDescription) { [weak self] in
             self?.pushProtocolViewController()
         }
     }
     
     private var quickConnectCell: TableViewCellModel {
-        return TableViewCellModel.upsellableToggle(
+        TableViewCellModel.upsellableToggle(
             title: Localizable.makeDefaultProfile,
             state: { [unowned self] in .available(enabled: self.isDefaultProfile, interactive: true) },
             upsell: {
@@ -293,7 +293,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var footerCell: TableViewCellModel {
-        return TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
+        TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
     
     private var selectedCountryGroup: ServerGroupInfo? {
@@ -326,9 +326,9 @@ class CreateOrEditProfileViewModel: NSObject {
         selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
             case let .country(countryCode):
-                return countryCode == profile.serverOffering.countryCode
+                countryCode == profile.serverOffering.countryCode
             case let .gateway(name):
-                return name == profile.serverOffering.countryCode
+                name == profile.serverOffering.countryCode
             }
         })
         selectedServerOffering = profile.serverOffering
@@ -361,7 +361,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var serverGroups: [ServerGroupInfo] {
-        return serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
+        serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
     }
 
     var countryGroup: ServerGroupInfo?
@@ -381,11 +381,11 @@ class CreateOrEditProfileViewModel: NSObject {
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
         case .fastest:
-            return defaultServerDescriptor(forIndex: 0)
+            defaultServerDescriptor(forIndex: 0)
         case .random:
-            return defaultServerDescriptor(forIndex: 1)
+            defaultServerDescriptor(forIndex: 1)
         case let .custom(serverWrapper):
-            return serverDescriptor(for: serverWrapper.server)
+            serverDescriptor(for: serverWrapper.server)
         }
     }
     
@@ -472,7 +472,7 @@ class CreateOrEditProfileViewModel: NSObject {
 extension CreateOrEditProfileViewModel {
     private var countrySelectionDataSet: SelectionDataSet {
         let rows: [SelectionRow] = serverGroups.map({ countryGroup in
-            return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
+            SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         })
                 
         let sections: [SelectionSection] = if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {

@@ -33,7 +33,7 @@ extension TunnelMessageSender {
         withResponse response: WireguardProviderRequest.Response,
         andOperation operation: @escaping () -> Void = {}
     ) -> TunnelMessageSender {
-        return .init(send: { outgoingRequest in
+        .init(send: { outgoingRequest in
             guard outgoingRequest == request else {
                 let requestErrorMessage = "Did not expect to send \(request) at this time"
                 reportIssue(requestErrorMessage)

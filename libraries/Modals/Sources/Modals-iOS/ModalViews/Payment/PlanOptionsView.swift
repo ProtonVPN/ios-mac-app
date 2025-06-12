@@ -109,7 +109,7 @@ struct PlanOptionsView: View {
     }
 
     private var imagePadding: EdgeInsets? {
-        return modalType.hasNewUpsellScreen ? Self.imagePadding : nil
+        modalType.hasNewUpsellScreen ? Self.imagePadding : nil
     }
 }
 

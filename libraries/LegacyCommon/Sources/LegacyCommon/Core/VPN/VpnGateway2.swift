@@ -114,17 +114,17 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        return netShieldPropertyProvider.netShieldType
+        netShieldPropertyProvider.netShieldType
     }
 
     private let natTypePropertyProvider: NATTypePropertyProvider
     private var natType: NATType {
-        return natTypePropertyProvider.natType
+        natTypePropertyProvider.natType
     }
 
     private let safeModePropertyProvider: SafeModePropertyProvider
     private var safeMode: Bool? {
-        return safeModePropertyProvider.safeMode
+        safeModePropertyProvider.safeMode
     }
 
     // MARK: - Server select

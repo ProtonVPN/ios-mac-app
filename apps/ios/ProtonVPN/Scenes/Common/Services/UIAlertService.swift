@@ -53,7 +53,7 @@ class IosUiAlertService: UIAlertService {
     }
     
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        return !currentAlerts.contains(where: { currentAlert -> Bool in
+        !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }
@@ -68,9 +68,9 @@ class IosUiAlertService: UIAlertService {
     }
     
     private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
-        return { [weak self] in
+        { [weak self] in
             self?.currentAlerts.removeAll { currentAlert in
-                return currentAlert.className == alert.className
+                currentAlert.className == alert.className
             }
         }
     }
@@ -96,11 +96,11 @@ extension PrimaryActionType {
     var alertButtonStyle: UIAlertAction.Style {
         switch self {
         case .confirmative, .secondary:
-            return .default
+            .default
         case .destructive:
-            return .destructive
+            .destructive
         case .cancel:
-            return .cancel
+            .cancel
         }
     }
 }
@@ -108,8 +108,8 @@ extension PrimaryActionType {
 extension NotificationStyleAlertType {
     var presentedMessageType: PresentedMessageType {
         switch self {
-        case .error: return PresentedMessageType.error
-        case .success: return PresentedMessageType.success
+        case .error: PresentedMessageType.error
+        case .success: PresentedMessageType.success
         }
     }
 }

@@ -29,7 +29,7 @@ extension HermesFeature: Codable {}
 
 extension HermesFeature: PaidAppFeature {
     public static func minTier(featureFlags: FeatureFlags) -> Int {
-        return .paidTier
+        .paidTier
     }
 }
 
@@ -52,7 +52,7 @@ extension HermesFeature: ModularAppFeature {
 
 extension HermesFeature: DefaultableFeature {
     public static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> HermesFeature {
-        return .defaultValue
+        .defaultValue
     }
 }
 

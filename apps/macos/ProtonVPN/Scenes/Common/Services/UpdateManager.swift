@@ -59,11 +59,11 @@ final class UpdateManager: NSObject {
     }
 
     public var currentVersion: String? {
-        return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     }
 
     public var currentBuild: String? {
-        return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
 
     public var channel: String? {
@@ -173,7 +173,7 @@ final class UpdateManager: NSObject {
 
 extension UpdateManager: SPUUpdaterDelegate {
     func versionComparator(for updater: SPUUpdater) -> (any SUVersionComparison)? {
-        return CustomVersionComparator.shared
+        CustomVersionComparator.shared
     }
 
     func updaterWillRelaunchApplication(_ updater: SPUUpdater) {
@@ -212,7 +212,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     }
 
     func feedURLString(for updater: SPUUpdater) -> String? {
-        return Self.feedURLString
+        Self.feedURLString
     }
 
     func updaterMayCheck(forUpdates updater: SPUUpdater) -> Bool {

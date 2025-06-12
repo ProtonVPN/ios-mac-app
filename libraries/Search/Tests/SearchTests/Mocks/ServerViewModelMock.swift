@@ -40,7 +40,7 @@ final class ServerViewModelMock: ServerViewModel {
     let connectIcon: UIImage? = nil
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? "UPGRADE" : nil
+        isUsersTierTooLow ? "UPGRADE" : nil
     }
 
     var connectionChanged: (() -> Void)?

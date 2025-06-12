@@ -28,6 +28,6 @@ extension Dictionary<String, String> {
     ///   - left: main dictionary used as a base.
     ///   - right: secondary dictionary that will be merged into `left` and overwrite values of duplicate keys.
     static func + (left: [Key: Value], right: [Key: Value]) -> [Key: Value] {
-        return left.merging(right) { leftValue, rightValue in rightValue }
+        left.merging(right) { leftValue, rightValue in rightValue }
     }
 }

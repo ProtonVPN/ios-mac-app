@@ -100,11 +100,11 @@ final class CountryItemViewModel: CountryViewModel {
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
-        return servers
+        servers
     }
 
     func getCities() -> [CityViewModel] {
-        return cities
+        cities
     }
 }
 
@@ -142,7 +142,7 @@ final class ServerItemViewModel: ServerViewModel {
     let connectIcon: UIImage? = UIImage(named: "ic-power-off")
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? "UPGRADE" : nil
+        isUsersTierTooLow ? "UPGRADE" : nil
     }
 
     var connectionChanged: (() -> Void)?

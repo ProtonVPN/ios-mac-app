@@ -39,15 +39,15 @@ public enum NetworkError: Int, CustomNSError {
     public var rawValue: Int {
         switch self {
         case .requestTimedOut:
-            return NetworkErrorCode.timedOut
+            NetworkErrorCode.timedOut
         case .cannotConnectToHost:
-            return NetworkErrorCode.cannotConnectToHost
+            NetworkErrorCode.cannotConnectToHost
         case .networkConnectionLost:
-            return NetworkErrorCode.networkConnectionLost
+            NetworkErrorCode.networkConnectionLost
         case .notConnectedToInternet:
-            return NetworkErrorCode.notConnectedToInternet
+            NetworkErrorCode.notConnectedToInternet
         case .tls:
-            return NetworkErrorCode.tls
+            NetworkErrorCode.tls
         }
     }
 
@@ -72,15 +72,15 @@ public enum NetworkError: Int, CustomNSError {
     public var localizedDescription: String {
         switch self {
         case .requestTimedOut:
-            return Localizable.neRequestTimedOut
+            Localizable.neRequestTimedOut
         case .cannotConnectToHost:
-            return Localizable.neUnableToConnectToHost
+            Localizable.neUnableToConnectToHost
         case .networkConnectionLost:
-            return Localizable.neNetworkConnectionLost
+            Localizable.neNetworkConnectionLost
         case .notConnectedToInternet:
-            return Localizable.neNotConnectedToTheInternet
+            Localizable.neNotConnectedToTheInternet
         case .tls:
-            return Localizable.errorMitmDescription
+            Localizable.errorMitmDescription
         }
     }
 

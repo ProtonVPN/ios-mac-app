@@ -52,7 +52,7 @@ public final class ServerRepositoryWrapper {
     }
 
     public func deleteServers(withIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
-        return repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
+        repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
     }
 
     public func upsert(loads: [ContinuousServerProperties]) {
@@ -80,7 +80,7 @@ extension ServerRepository {
     ///
     /// Unit tests should instead construct a minimal mock repository.
     public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
-        return .init(
+        .init(
             serverCount: { wrapper.serverCount },
             countryCount: { wrapper.countryCount },
             upsertServers: wrapper.upsert,

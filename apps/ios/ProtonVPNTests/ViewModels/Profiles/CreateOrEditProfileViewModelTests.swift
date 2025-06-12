@@ -65,7 +65,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         pinApiEndpoints: false
     )
     var vpnApiService: VpnApiService {
-        return VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
+        VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
     }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
@@ -74,7 +74,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: propertiesManager)
 
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(
+        AppStateManagerImplementation(
             vpnApiService: vpnApiService,
             vpnManager: VpnManagerMock(),
             networking: networking,

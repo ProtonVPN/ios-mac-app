@@ -31,19 +31,19 @@ extension Logging.Logger.Level {
     public var osLogType: OSLogType {
         switch self {
         case .trace:
-            return OSLogType.default
+            OSLogType.default
         case .debug:
-            return OSLogType.debug
+            OSLogType.debug
         case .info:
-            return OSLogType.info
+            OSLogType.info
         case .notice:
-            return OSLogType.info
+            OSLogType.info
         case .warning:
-            return OSLogType.error
+            OSLogType.error
         case .error:
-            return OSLogType.error
+            OSLogType.error
         case .critical:
-            return OSLogType.fault
+            OSLogType.fault
         }
     }
 }

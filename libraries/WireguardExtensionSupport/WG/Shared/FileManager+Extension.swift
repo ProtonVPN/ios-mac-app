@@ -6,7 +6,7 @@ import os.log
 
 extension FileManager {
     static var appGroupId: String {
-        return WGConstants.appGroupId
+        WGConstants.appGroupId
     }
 
     private static var sharedFolderURL: URL? {
@@ -23,15 +23,15 @@ extension FileManager {
     }
 
     static var logFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("WireGuard.bin")
+        sharedFolderURL?.appendingPathComponent("WireGuard.bin")
     }
 
     static var logTextFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("WireGuard.log")
+        sharedFolderURL?.appendingPathComponent("WireGuard.log")
     }
 
     static var networkExtensionLastErrorFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("last-error.txt")
+        sharedFolderURL?.appendingPathComponent("last-error.txt")
     }
 
     static func deleteFile(at url: URL) -> Bool {

@@ -51,11 +51,11 @@ public enum DatabaseType: CustomStringConvertible {
     public var description: String {
         switch self {
         case .inMemory:
-            return "inMemory"
+            "inMemory"
         case .ephemeral:
-            return "ephemeral"
+            "ephemeral"
         case let .physical(filePath):
-            return "physical(\(filePath.redactingUsername)"
+            "physical(\(filePath.redactingUsername)"
         }
     }
 }

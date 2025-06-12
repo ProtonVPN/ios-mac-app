@@ -34,7 +34,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: AppFeature>(
         for feature: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
-        return {
+        {
             let (plan, tier) = accountDetails
 
             return Feature.canUse(
@@ -48,7 +48,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: ModularAppFeature>(
         forSubFeatureOf feature: Feature.Type
     ) -> (Feature) -> FeatureAuthorizationResult {
-        return { feature in
+        { feature in
             let (plan, tier) = accountDetails
 
             return feature.canUse(
@@ -62,7 +62,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: ModularAppFeature>(
         for feature: Feature.Type
     ) -> Authorizer<Feature> {
-        return Authorizer(canUse: { feature in
+        Authorizer(canUse: { feature in
             let (plan, tier) = accountDetails
 
             return feature.canUse(

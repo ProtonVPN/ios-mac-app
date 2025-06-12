@@ -103,7 +103,7 @@
         }
 
         public func createConnectionTestStore() -> TestStore<ConnectionFeature.State, ConnectionFeature.Action> {
-            return TestStore(initialState: initialState) {
+            TestStore(initialState: initialState) {
                 ConnectionFeature()
             } withDependencies: {
                 $0.date = .constant(startDate)
@@ -128,7 +128,7 @@
                 )
 
                 $0.smartPortSelector = .init(select: { _, _ in
-                    return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tcp), ports: [80])
+                    ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tcp), ports: [80])
                 })
             }
         }

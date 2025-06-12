@@ -30,7 +30,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
 
     override class func tearDown() {
         AnnouncementClient.testValue = AnnouncementClient {
-            return .init(notifications: [])
+            .init(notifications: [])
         }
     }
 
@@ -92,7 +92,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
 
         await withDependencies {
             $0.announcementClient = AnnouncementClient {
-                return .init(notifications: [
+                .init(notifications: [
                     Announcement(
                         notificationID: "newDefault",
                         startTime: Date(),

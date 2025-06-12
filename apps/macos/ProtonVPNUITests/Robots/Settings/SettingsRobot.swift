@@ -173,12 +173,12 @@ class SettingsRobot: CoreElements {
         
         @discardableResult
         func checkLanIsOff() -> SettingsRobot {
-            return SettingsRobot()
+            SettingsRobot()
         }
         
         @discardableResult
         func checkLanIsOn() -> SettingsRobot {
-            return SettingsRobot()
+            SettingsRobot()
         }
         
         @discardableResult

@@ -77,7 +77,7 @@ final class CorePlanService: PlanService {
     weak var delegate: PlanServiceDelegate?
 
     var iapStatus: IAPSupportStatus {
-        return userCachedStatus.iapSupportStatus
+        userCachedStatus.iapSupportStatus
     }
 
     public typealias Factory = NetworkingFactory &
@@ -200,7 +200,7 @@ final class CorePlanService: PlanService {
 
 extension CorePlanService: StoreKitManagerDelegate {
     var isUnlocked: Bool {
-        return true
+        true
     }
 
     var isSignedIn: Bool {

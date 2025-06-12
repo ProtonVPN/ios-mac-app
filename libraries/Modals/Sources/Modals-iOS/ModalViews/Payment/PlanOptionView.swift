@@ -247,7 +247,7 @@ private extension DateComponents {
 }
 
 #Preview("Loading") {
-    return PlanOptionView(state: .loading)
+    PlanOptionView(state: .loading)
 }
 
 #Preview("Annoying Duration") {

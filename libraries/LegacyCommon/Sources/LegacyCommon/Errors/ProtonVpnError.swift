@@ -53,29 +53,29 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
     public var errorDescription: String? {
         switch self {
         case .fetchSession:
-            return Localizable.errorFetchSession
+            Localizable.errorFetchSession
         case .connectionFailed:
-            return Localizable.connectionFailed
+            Localizable.connectionFailed
         case .vpnManagerUnavailable:
-            return "Couldn't retrieve vpn manager"
+            "Couldn't retrieve vpn manager"
         case .removeVpnProfileFailed:
-            return "Failed to remove VPN profile"
+            "Failed to remove VPN profile"
         case .tlsInitialisation:
-            return Localizable.errorTlsInitialisation
+            Localizable.errorTlsInitialisation
         case .tlsServerVerification:
-            return Localizable.errorTlsServerVerification
+            Localizable.errorTlsServerVerification
         case .vpnSessionInProgress:
-            return Localizable.errorVpnSessionIsActive
+            Localizable.errorVpnSessionIsActive
         case .keychainWriteFailed:
-            return Localizable.errorKeychainWrite
+            Localizable.errorKeychainWrite
         case .subuserWithoutSessions:
-            return Localizable.subuserAlertDescription1
+            Localizable.subuserAlertDescription1
         case .userCredentialsMissing:
-            return Localizable.errorUserCredentialsMissing
+            Localizable.errorUserCredentialsMissing
         case .userCredentialsExpired:
-            return Localizable.errorUserCredentialsExpired
+            Localizable.errorUserCredentialsExpired
         case .vpnCredentialsMissing:
-            return Localizable.errorVpnCredentialsMissing
+            Localizable.errorVpnCredentialsMissing
         }
     }
 }

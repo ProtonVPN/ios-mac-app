@@ -151,22 +151,22 @@ extension NetShieldType {
     var quickSettingsText: String {
         switch self {
         case .level1:
-            return Localizable.quickSettingsNetshieldOptionLevel1
+            Localizable.quickSettingsNetshieldOptionLevel1
         case .level2:
-            return Localizable.quickSettingsNetshieldOptionLevel2
+            Localizable.quickSettingsNetshieldOptionLevel2
         case .off:
-            return Localizable.quickSettingsNetshieldOptionOff
+            Localizable.quickSettingsNetshieldOptionOff
         }
     }
 
     var quickSettingsIcon: NSImage {
         switch self {
         case .level1:
-            return AppTheme.Icon.shieldHalfFilled
+            AppTheme.Icon.shieldHalfFilled
         case .level2:
-            return AppTheme.Icon.shieldFilled
+            AppTheme.Icon.shieldFilled
         case .off:
-            return AppTheme.Icon.shield
+            AppTheme.Icon.shield
         }
     }
 }

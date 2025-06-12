@@ -33,7 +33,7 @@ protocol StatusMenuWindowModelFactory {
 
 extension DependencyContainer: StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel {
-        return StatusMenuWindowModel(factory: self)
+        StatusMenuWindowModel(factory: self)
     }
 }
 
@@ -54,11 +54,11 @@ class StatusMenuWindowModel {
     }
 
     var isSessionEstablished: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
 
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
 
     var statusMenuViewController: StatusMenuViewController {
@@ -89,7 +89,7 @@ class StatusMenuWindowModel {
     }
 
     var isStatusIconBlinking: Bool {
-        return vpnGateway.connection == .connecting
+        vpnGateway.connection == .connecting
     }
 
     // MARK: - Private functions

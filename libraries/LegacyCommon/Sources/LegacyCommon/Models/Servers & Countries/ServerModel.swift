@@ -47,8 +47,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public let gatewayName: String?
     
     override public var description: String {
-        return
-            "ID: \(id)\n" +
+        "ID: \(id)\n" +
             "Name: \(name)\n" +
             "Domain: \(domain)\n" +
             "Load: \(load)\n" +
@@ -67,11 +66,11 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public var logDescription: String {
-        return "\(name) (\(domain), load: \(load))"
+        "\(name) (\(domain), load: \(load))"
     }
     
     public var hasCluster: Bool {
-        return ips.count > 1
+        ips.count > 1
     }
     
     public lazy var isFree: Bool = tier == 0
@@ -80,47 +79,47 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public lazy var serverNameComponents: ServerNameComponents = .init(name: name)
     
     public var isSecureCore: Bool {
-        return self.feature.contains(.secureCore)
+        self.feature.contains(.secureCore)
     }
     
     public var hasSecureCore: Bool {
-        return self.feature.rawValue > 0
+        self.feature.rawValue > 0
     }
     
     public var supportsP2P: Bool {
-        return self.feature.contains(.p2p)
+        self.feature.contains(.p2p)
     }
 
     public var supportsTor: Bool {
-        return self.feature.contains(.tor)
+        self.feature.contains(.tor)
     }
 
     public var supportsStreaming: Bool {
-        return self.feature.contains(.streaming)
+        self.feature.contains(.streaming)
     }
     
     public var underMaintenance: Bool {
-        return status == 0
+        status == 0
     }
     
     public var serverType: ServerType {
-        return isSecureCore ? .secureCore : .standard
+        isSecureCore ? .secureCore : .standard
     }
     
     public var entryCountry: String {
-        return LocalizationUtility.default.countryName(forCode: self.entryCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: self.entryCountryCode) ?? ""
     }
     
     public var exitCountry: String {
-        return LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
     }
     
     public var country: String {
-        return LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
     }
     
     public var countryCode: String {
-        return self.exitCountryCode
+        self.exitCountryCode
     }
 
     public var isVirtual: Bool {
@@ -358,7 +357,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     
     // swiftlint:disable nsobject_prefer_isequal
     public static func == (lhs: ServerModel, rhs: ServerModel) -> Bool {
-        return lhs.name == rhs.name
+        lhs.name == rhs.name
     }
 
     // swiftlint:enable nsobject_prefer_isequal

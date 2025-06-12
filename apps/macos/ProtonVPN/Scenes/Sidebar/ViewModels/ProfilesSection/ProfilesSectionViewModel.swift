@@ -42,7 +42,7 @@ class ProfilesSectionViewModel {
     var contentChanged: (() -> Void)?
 
     var cellCount: Int {
-        return profileManager.allProfiles.count + 1
+        profileManager.allProfiles.count + 1
     }
 
     private var userTier: Int {
@@ -85,9 +85,9 @@ class ProfilesSectionViewModel {
 
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexManager: sysexManager))
+            .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexManager: sysexManager))
         } else {
-            return .footer(self)
+            .footer(self)
         }
     }
 

@@ -69,9 +69,9 @@ package extension NetShieldType {
     var shouldObserveNetShieldStats: Bool {
         switch self {
         case .off, .level1:
-            return false
+            false
         case .level2:
-            return true
+            true
         }
     }
 }

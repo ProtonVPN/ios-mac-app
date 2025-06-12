@@ -116,13 +116,13 @@ class OverviewViewController: NSViewController {
 
 extension OverviewViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+        viewModel.cellCount
     }
 }
 
 extension OverviewViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight
+        viewModel.cellHeight
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
