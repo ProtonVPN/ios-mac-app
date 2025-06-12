@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -14,17 +14,16 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
-        .package(name: "Overture",
-                 url: "https://github.com/pointfreeco/swift-overture", .exact("0.5.0")),
-        .package(path: "../Foundations/Theme")
+        .package(path: "../Foundations/Theme"),
+        .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
     ],
     targets: [
         .target(
             name: "Search",
             dependencies: [
-                "Overture",
                 "Theme",
                 "Strings",
+                .product(name: "Overture", package: "swift-overture"),
             ],
             resources: [
                 .process("Storyboard.storyboard"),
@@ -42,7 +41,10 @@ let package = Package(
             ]),
         .testTarget(
             name: "SearchTests",
-            dependencies: ["Search", "Overture"]
+            dependencies: [
+                "Search",
+                .product(name: "Overture", package: "swift-overture")
+            ]
         )
     ]
 )
