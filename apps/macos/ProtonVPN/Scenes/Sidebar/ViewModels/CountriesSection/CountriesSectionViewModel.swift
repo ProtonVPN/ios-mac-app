@@ -175,6 +175,8 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
+        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
+
         let reloadConnectionEvents: [AppEvent] = [
             .activeServerTypeChanged,
             .connectionStateChanged,
