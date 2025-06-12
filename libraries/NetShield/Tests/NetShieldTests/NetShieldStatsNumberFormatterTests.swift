@@ -42,7 +42,7 @@ final class NetShieldStatsNumberFormatterTests: XCTestCase {
     }
 
     func test1234() throws {
-        let string = formatter.string(from: 1_234)
+        let string = formatter.string(from: 1234)
         XCTAssertEqual(string, "1.2 K")
     }
 

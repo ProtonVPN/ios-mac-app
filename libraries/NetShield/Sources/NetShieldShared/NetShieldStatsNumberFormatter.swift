@@ -61,8 +61,8 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
     public func string(from number: Int) -> String {
         var reduced = CGFloat(abs(number))
         var multiplier = 0
-        while reduced >= 1_000 {
-            reduced /= 1_000
+        while reduced >= 1000 {
+            reduced /= 1000
             multiplier += 1
         }
         let suffix = Suffix(rawValue: multiplier)

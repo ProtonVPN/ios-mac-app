@@ -127,8 +127,8 @@ extension StatModel {
 public extension NetShieldModel {
     static var random: NetShieldModel { // TODO: make only available in DEBUG for previews
         let trackers = Int.random(in: 0...1000)
-        let ads = Int.random(in: 0...1000000000)
-        let data = UInt64.random(in: 0...100000000000000)
+        let ads = Int.random(in: 0...1_000_000_000)
+        let data = UInt64.random(in: 0...100_000_000_000_000)
         return NetShieldModel(trackersCount: trackers, adsCount: ads, dataSaved: data, enabled: true)
     }
 }

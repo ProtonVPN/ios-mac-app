@@ -989,7 +989,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         let expectationTimeout: TimeInterval = 5
 
         timerFactory.workWasScheduled = { [weak self] in
-            let second: Double = 1000000
+            let second: Double = 1_000_000
             usleep(UInt32(0.5 * second))
 
             self?.timerFactory.runAllScheduledWork()

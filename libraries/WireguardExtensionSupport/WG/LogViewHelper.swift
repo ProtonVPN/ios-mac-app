@@ -39,7 +39,7 @@ public class LogViewHelper {
             guard let self = self else { return }
             _ = view_lines_from_cursor(self.log, UINT32_MAX, &logEntries) { cStr, timestamp, ctx in
                 let message = cStr != nil ? String(cString: cStr!) : ""
-                let date = Date(timeIntervalSince1970: Double(timestamp) / 1000000000)
+                let date = Date(timeIntervalSince1970: Double(timestamp) / 1_000_000_000)
                 let dateString = ISO8601DateFormatter.string(from: date, timeZone: TimeZone(secondsFromGMT: 0)!, formatOptions: LogViewHelper.formatOptions)
                 if let logEntries = ctx?.bindMemory(to: LogEntries.self, capacity: 1) {
                     logEntries.pointee.entries.append(LogEntry(timestamp: dateString, message: message))

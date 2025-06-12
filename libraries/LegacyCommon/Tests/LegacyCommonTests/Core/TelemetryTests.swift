@@ -33,7 +33,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.any.connection")
         XCTAssertEqual(sut["Event"] as? String, "vpn_connection")
 
-        XCTAssertEqual(values["time_to_connection"] as? Int, 123000)
+        XCTAssertEqual(values["time_to_connection"] as? Int, 123_000)
         XCTAssertNil(values["session_length"])
 
         XCTAssertEqual(dimensions["outcome"] as? String, "success")
@@ -62,7 +62,7 @@ class TelemetryTests: XCTestCase {
         XCTAssertEqual(sut["Event"] as? String, "vpn_disconnection")
 
         XCTAssertNil(values["time_to_connection"])
-        XCTAssertEqual(values["session_length"] as? Int, 123000)
+        XCTAssertEqual(values["session_length"] as? Int, 123_000)
 
         XCTAssertEqual(dimensions["outcome"] as? String, "success")
         XCTAssertEqual(dimensions["user_tier"] as? String, "paid")

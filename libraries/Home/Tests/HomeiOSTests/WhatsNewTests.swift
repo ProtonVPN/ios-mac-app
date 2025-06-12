@@ -192,7 +192,7 @@ func presentationRules() {
     // Presented once but more than 7 days
     withDependencies {
         $0.evaluatorClient = basicEvaluatorClient
-        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + (604800 * 2)) // +2 weeks
+        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + (604_800 * 2)) // +2 weeks
     } operation: {
         #expect(Evaluator.evaluate(items: [.testingDelayItem]) == [.testingDelayItem])
     }
@@ -206,7 +206,7 @@ func presentationRules() {
     }
     withDependencies {
         $0.evaluatorClient = basicEvaluatorClient
-        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + (604800 * 2)) // +2 weeks
+        $0.date.now = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 + (604_800 * 2)) // +2 weeks
     } operation: {
         #expect(Evaluator.evaluate(items: [.testingDelayItem]) == [])
     }
@@ -216,18 +216,18 @@ func presentationRules() {
 
 private extension Date {
     static var januaryFirst2025: Date {
-        .init(timeIntervalSince1970: 1735686001)
+        .init(timeIntervalSince1970: 1_735_686_001)
     }
 
     static var aprilFirst2025: Date {
-        .init(timeIntervalSince1970: 1743458400)
+        .init(timeIntervalSince1970: 1_743_458_400)
     }
 
     static var julyFirst2025: Date {
-        .init(timeIntervalSince1970: 1751320801)
+        .init(timeIntervalSince1970: 1_751_320_801)
     }
 
     static var decemberFirst2025: Date {
-        .init(timeIntervalSince1970: 1764543600)
+        .init(timeIntervalSince1970: 1_764_543_600)
     }
 }
