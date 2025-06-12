@@ -56,7 +56,7 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case p2p
         case tor
 
-        // todo: Localized strings
+        // TODO: Localized strings
         public var description: String {
             switch self {
             case .smart:

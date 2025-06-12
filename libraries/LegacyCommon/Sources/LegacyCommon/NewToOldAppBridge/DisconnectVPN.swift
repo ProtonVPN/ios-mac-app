@@ -55,7 +55,7 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
         let gateway = Container.sharedContainer.makeVpnGateway2()
         try await gateway.disconnect()
 
-        // todo: old VpnGateway was reloading server info after disconnect. New one does not.
+        // TODO: old VpnGateway was reloading server info after disconnect. New one does not.
         // Decide where to put this functionality and implement it!
     }
 }

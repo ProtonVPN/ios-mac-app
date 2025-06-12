@@ -78,7 +78,7 @@ final class LoginViewController: NSViewController {
     #if DEBUG
         private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
             let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
-                guard let `self` = self else { return }
+                guard let self else { return }
 
                 _ = environmentSelectionView.resignFirstResponder()
                 environmentSelectionView.removeFromSuperview()

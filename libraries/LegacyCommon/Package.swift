@@ -98,7 +98,7 @@ let package = Package(
                 "BugReport",
                 "ConnectionInventory",
 
-                // Todo: move these to LegacyCommonTestSupport, if we ever can
+                // TODO: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TimerMock", package: "Timer"),

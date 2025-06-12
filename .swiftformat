@@ -1,8 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable strongifiedSelf
---disable swiftTestingTestCaseNames
---disable todos
 --disable trailingClosures
 --disable trailingCommas
 --disable trailingSpace

@@ -69,7 +69,7 @@ struct HomeConnectionCardView: View {
     var connectionLocation: some View {
         HStack(spacing: .themeSpacing12) {
             VStack(spacing: 0) {
-                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil, withDivider: false) // todo: fill in vpnConnectionActual
+                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil, withDivider: false) // TODO: fill in vpnConnectionActual
                 Spacer().frame(maxHeight: .infinity)
             }
             Spacer(minLength: 0)

@@ -396,7 +396,7 @@ extension CountriesSectionViewController: NSTableViewDataSource {
 }
 
 extension CountriesSectionViewController: NSTableViewDelegate {
-    // todo: would be better to change this to autosize, because banners may have different heights
+    // TODO: would be better to change this to autosize, because banners may have different heights
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch viewModel.cellModel(forRow: row) {
         case .country:

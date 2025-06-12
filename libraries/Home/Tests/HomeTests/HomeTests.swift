@@ -22,7 +22,7 @@ import Domain
 import HomeShared
 import VPNShared
 
-// Todo: Snapshot testing for both macOS and iOS, for the Home view
+// TODO: Snapshot testing for both macOS and iOS, for the Home view
 // and all other child views defined in the Home package.
 
 extension RecentConnection {

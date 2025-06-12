@@ -123,7 +123,7 @@
                         appDelegate.navigationService.checkForUpdates()
                     }
                     Divider()
-                    Button("Settings...") { // todo: add translation
+                    Button("Settings...") { // TODO: add translation
                         appDelegate.navigationService.openSettings(to: .general)
                     }.keyboardShortcut(",", modifiers: [.command])
                 }

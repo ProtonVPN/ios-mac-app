@@ -21,7 +21,7 @@ extension Optional where Wrapped: Collection {
     /// - Parameter defaultValue: the default value you want to assign to the receiver if it is nil or empty.
     /// - Returns: the receiver if it is not nil and non empty, otherwise the provided default value.
     public func unwrappedOr(defaultValue: @autoclosure () -> Wrapped) -> Wrapped {
-        guard let `self` = self, !self.isEmpty else {
+        guard let self, !self.isEmpty else {
             return defaultValue()
         }
         return self

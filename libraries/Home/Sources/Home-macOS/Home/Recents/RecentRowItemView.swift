@@ -40,7 +40,7 @@ struct RecentRowItemView: View {
 
     @State var isHovered: Bool = false
 
-    var isPaid: Bool { // todo: This is probably not enough to determine if server is paid
+    var isPaid: Bool { // TODO: This is probably not enough to determine if server is paid
         if case let .exact(server, _, _, _, _) = item.connection.location {
             return server == .paid
         }
@@ -118,7 +118,7 @@ struct RecentRowItemView: View {
             .lineLimit(1)
             .layoutPriority(1)
         if location.subtext(locale: locale) != nil
-            || !item.connection.features.isEmpty { // todo: will still show dash on features we don't present in UI like partners
+            || !item.connection.features.isEmpty { // TODO: will still show dash on features we don't present in UI like partners
             Text("-")
                 .themeFont(.body())
                 .foregroundColor(Color(.text, .weak))

@@ -129,7 +129,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     // MARK: - Server select
 
-    // todo: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
+    // TODO: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
     // exactly the same as old `ConnectionRequest`
     private func selectServer(intent: ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
@@ -137,7 +137,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let type = intent.serverType
 
-        // todo: when old code is deleted, refactor server selector to throw directly
+        // TODO: when old code is deleted, refactor server selector to throw directly
         var notifyResolutionUnavailableCalled: (forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason)?
 
         let selector = VpnServerSelector(serverType: type,
@@ -154,7 +154,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let selected = selector.selectServer(connectionRequest: intent.connectionRequest)
 
-        // todo: when old code is deleted, refactor server selector to throw directly
+        // TODO: when old code is deleted, refactor server selector to throw directly
         if let notifyResolutionUnavailableCalled {
             throw GatewayError.resolutionUnavailable(
                 forSpecificCountry: notifyResolutionUnavailableCalled.forSpecificCountry,

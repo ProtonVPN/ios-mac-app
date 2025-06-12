@@ -116,7 +116,7 @@ struct ConnectionStatusView: View {
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                         } else if case let .protected(netShield) = viewStore.protectionState {
-                            NetShieldStatsView() // todo: update netshield stats
+                            NetShieldStatsView() // TODO: update netshield stats
                         }
                     }
                     .background(.translucentLight,
