@@ -21,7 +21,6 @@ import UIKit
 @testable import Search
 
 final class ServerViewModelMock: ServerViewModel {
-    
     var isRedesign: Bool = false
     
     var isPartnerServer: Bool
@@ -71,7 +70,6 @@ final class ServerViewModelMock: ServerViewModel {
     let translatedCity: String?
 
     func connectAction() {
-
     }
     
     func partnersIcon(completion: @escaping (UIImage?) -> Void) { }

@@ -26,7 +26,6 @@ import LegacyCommon
 import Strings
 
 final class ProfilesContainerViewController: NSViewController {
-    
     typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
     private let factory: Factory
     

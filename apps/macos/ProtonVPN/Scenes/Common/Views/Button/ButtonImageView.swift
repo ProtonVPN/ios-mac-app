@@ -23,22 +23,20 @@
 import Cocoa
 
 class ButtonImageView: NSImageView {
-
     var imageClicked: (() -> Void)?
     
     override func mouseUp(with event: NSEvent) {
         imageClicked?()
     }
-    
 }
 
 class HoverableButtonImageView: ButtonImageView {
-
     override var isEnabled: Bool {
         didSet {
             window?.invalidateCursorRects(for: self)
         }
     }
+
     override open func awakeFromNib() {
         super.awakeFromNib()
 

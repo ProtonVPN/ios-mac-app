@@ -24,7 +24,6 @@ import AppKit
 import Theme
 
 class StatusWindow: NSPanel {
-    
     override var canBecomeKey: Bool {
         return true
     }
@@ -32,7 +31,6 @@ class StatusWindow: NSPanel {
 
 // Responsible for the status icon itself and the window for the status bar app
 final class StatusMenuWindowController: WindowController {
-
     private var windowModel: StatusMenuWindowModel?
     
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
@@ -185,7 +183,6 @@ extension StatusMenuWindowController {
 }
 
 extension NSStatusBarButton {
-    
     override open func mouseDown(with event: NSEvent) {
         // allow StatusMenuController to manage the behavour of clicking
         return
@@ -193,7 +190,6 @@ extension NSStatusBarButton {
 }
 
 extension NSEvent {
-    
     func isStatusItemClicked(event: NSEvent) -> NSStatusItem? {
         guard let window = window else { return nil }
         guard window.className.hasPrefix("NSStatusBar"), window.className.hasSuffix("Window") else { return nil }
@@ -238,7 +234,6 @@ extension AppIcon {
 }
 
 class StatusBarIconBlinker {
-    
     private var statusItem: NSStatusItem
     private var statusIcon: StatusIcon
     
@@ -290,5 +285,4 @@ class StatusBarIconBlinker {
             statusItem.button?.image = emptyImage
         }
     }
-    
 }

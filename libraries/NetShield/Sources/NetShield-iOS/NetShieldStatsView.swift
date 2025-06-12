@@ -21,7 +21,6 @@ import SwiftUI
 import Theme
 
 public struct NetShieldStatsView: View {
-
     private enum AccessibilityIdentifiers {
         static let netShieldStatsViewId: String = "net_shield_stats"
     }

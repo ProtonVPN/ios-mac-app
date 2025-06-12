@@ -21,7 +21,6 @@ import os.log
 
 /// Wraps `FileManager` to show what methods we are using and make it possible to mock them in tests
 public protocol FileManagerWrapper {
-
     // Methods from FileManager
     func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws
     func fileExists(atPath path: String) -> Bool

@@ -279,6 +279,7 @@ public enum Asset {
     public static let zm = ImageAsset(name: "Flags/ZM")
     public static let zw = ImageAsset(name: "Flags/ZW")
   }
+
   public static let ad = ImageAsset(name: "AD")
   public static let ae = ImageAsset(name: "AE")
   public static let af = ImageAsset(name: "AF")
@@ -562,6 +563,7 @@ public enum Asset {
   public static let stars = ImageAsset(name: "stars")
   public static let welcomeToProtonVpn = ImageAsset(name: "welcome-to-proton-vpn")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -781,4 +783,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

@@ -36,7 +36,6 @@ public enum KillSwitchState: LocalizedStringConvertible {
 }
 
 public struct KillSwitchSettingsFeature: Reducer {
-
     public typealias State = KillSwitchState
 
     public init() { }

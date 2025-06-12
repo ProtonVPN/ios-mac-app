@@ -41,7 +41,6 @@ import Search
 import Review
 
 enum SessionStatus {
-    
     case notEstablished
     case established
 }
@@ -67,7 +66,6 @@ protocol AppSessionManager {
 }
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-
     typealias Factory = VpnApiServiceFactory &
                         AppStateManagerFactory &
                         VpnKeychainFactory &
@@ -120,6 +118,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     // MARK: - Beginning of the login logic.
+
     override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard authKeychain.fetch()?.username != nil else {
             completion(.failure(CommonVpnError.userCredentialsMissing))
@@ -359,6 +358,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         try await refreshVpnAuthCertificate()
         try await planService.updateServicePlans()
     }
+
     // swiftlint:enable function_body_length
 
     private func resolveActiveSession() async throws {
@@ -404,6 +404,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     // MARK: - Log out
+
     func logOut(force: Bool = false, reason: String?) {
         let logOutRoutine: () -> Void = { [weak self] in
             self?.loggedIn = false
@@ -482,7 +483,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         networking.apiService.acquireSessionIfNeeded { _ in }
     }
+
     // End of the logout logic
+
     // MARK: -
     
     // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
@@ -504,10 +507,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
 
     // MARK: User plan changed (before refreshing data)
+
     override func userPlanChanged(_ notification: Notification) {
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
            downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
-
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
@@ -519,6 +522,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 }
 
 // MARK: - Plan change
+
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     @MainActor
     func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async {
@@ -538,6 +542,7 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
 }
 
 // MARK: - Review
+
 extension AppSessionManagerImplementation {
     @objc private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {

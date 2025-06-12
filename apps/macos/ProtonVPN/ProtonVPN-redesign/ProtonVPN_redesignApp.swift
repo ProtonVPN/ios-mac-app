@@ -19,6 +19,7 @@
 #if REDESIGN
 
 // MARK: - Start SwiftUI Life cycle
+
 import SwiftUI
 import Theme
 import Home
@@ -31,7 +32,6 @@ let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
 @main
 struct ProtonVPNApp: App {
-
     @Environment(\.scenePhase) var scenePhase
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -112,6 +112,7 @@ struct ProtonVPNApp: App {
         }
     }
 }
+
 // MARK: - End SwiftUI Life cycle
 
 extension Scene {
@@ -142,19 +143,14 @@ extension Scene {
                 }
 
                 Button("View Logs") {
-
                 }
                 Button("OpenVPN Logs") {
-
                 }
                 Button("WireGuard Logs") {
-
                 }
                 Button("Clear Application Data") {
-
                 }
                 Button("System Extension Tutorial") {
-
                 }
             }
             CommandGroup(replacing: .newItem, addition: { }) // block user from opening multiple windows

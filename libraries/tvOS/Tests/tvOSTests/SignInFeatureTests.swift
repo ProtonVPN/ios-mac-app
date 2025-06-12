@@ -23,7 +23,6 @@ import IssueReporting
 @testable import tvOS
 
 final class SignInFeatureTests: XCTestCase {
-
     @MainActor
     func testPollServerShouldCancelIfNotWaitingForAuthentication() async {
         let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {

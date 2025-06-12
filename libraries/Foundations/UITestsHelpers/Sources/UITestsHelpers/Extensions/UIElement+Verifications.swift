@@ -20,7 +20,6 @@
 import XCTest
 
 extension UIElement {
-    
     @discardableResult
     public func checkExists(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         XCTAssertTrue(

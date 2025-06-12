@@ -36,7 +36,6 @@ import Strings
 import Domain
 
 final class SettingsAccountViewModel {
-    
     typealias Factory = AppSessionManagerFactory &
                         AppStateManagerFactory &
                         CoreAlertServiceFactory &
@@ -126,6 +125,7 @@ final class SettingsAccountViewModel {
         init(handler: @escaping () -> Void) {
             self.handler = handler
         }
+
         func onPressed() {
             handler()
         }

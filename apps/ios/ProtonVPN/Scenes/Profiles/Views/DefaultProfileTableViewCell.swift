@@ -24,7 +24,6 @@ import UIKit
 import LegacyCommon
 
 final class DefaultProfileTableViewCell: UITableViewCell {
-
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var connectButton: UIButton!

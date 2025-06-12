@@ -35,7 +35,6 @@ import Domain
 import Ergonomics
 
 public protocol VpnManagerProtocol {
-
     var stateChanged: (() -> Void)? { get set }
     var state: VpnState { get }
     var localAgentStateChanged: ((Bool?) -> Void)? { get set }
@@ -135,6 +134,7 @@ public final class VpnManager: VpnManagerProtocol {
             }
         }
     }
+
     public var stateChanged: (() -> Void)?
 
     private let localAgentIsConnectedQueue = DispatchQueue(label: "ch.protonvpn.local-agent.is-connected")
@@ -158,6 +158,7 @@ public final class VpnManager: VpnManagerProtocol {
             localAgentStateChanged?(isLocalAgentConnected)
         }
     }
+
     public var localAgentStateChanged: ((Bool?) -> Void)?
 
     /// App group is used to read errors from OpenVPN in user defaults
@@ -455,6 +456,7 @@ public final class VpnManager: VpnManagerProtocol {
     // MARK: - Private functions
 
     // MARK: - Connecting
+
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
                                    completion: @escaping () -> Void) {
         if state.volatileConnection {
@@ -509,6 +511,7 @@ public final class VpnManager: VpnManagerProtocol {
         log.info("Configuring connection", category: .connectionConnect)
 
         // MARK: - KillSwitch configuration
+
         if #available(iOS 14.2, *) {
             configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
         }
@@ -546,7 +549,6 @@ public final class VpnManager: VpnManagerProtocol {
         } else {
             saveToPreferences()
         }
-
     }
 
     private func startConnection(requestId: UUID, originalIntent: ConnectionRequestType?, completion: @escaping () -> Void) {
@@ -622,6 +624,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     // MARK: - Disconnecting
+
     private func startDisconnect(completion: @escaping (() -> Void)) {
         log.info("Closing VPN tunnel", category: .connectionDisconnect)
 
@@ -644,6 +647,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     // MARK: - Connect on demand
+
     private func setOnDemand(_ enabled: Bool, completion: @escaping (NEVPNManagerWrapper) -> Void) {
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return

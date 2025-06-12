@@ -19,7 +19,6 @@
 import Foundation
 
 extension String {
-    
     var trimServerCode: String {
         // Regular expression pattern to match the server code at the end of the string
         let pattern = "\\b[A-Z]{2}(?:-[A-Z]{2})?#\\d+$"

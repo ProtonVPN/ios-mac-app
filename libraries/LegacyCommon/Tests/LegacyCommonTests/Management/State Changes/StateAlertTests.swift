@@ -28,7 +28,6 @@ import VPNAppCore
 import CommonNetworkingTestSupport
 
 class StateAlertTests: XCTestCase {
-
     let vpnConfig = VpnManagerConfiguration(
         id: UUID(),
         hostname: "",

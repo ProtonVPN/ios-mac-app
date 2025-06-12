@@ -33,7 +33,6 @@ extension Array where Element == NotificationToken {
 }
 
 final class TypedNotificationTests: XCTestCase {
-
     private struct TestNotification: TypedNotification {
         static let name: Notification.Name = Notification.Name("TestNotificationName")
         let data: String

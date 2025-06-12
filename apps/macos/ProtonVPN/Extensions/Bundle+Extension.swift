@@ -23,7 +23,6 @@
 import Foundation
 
 extension Bundle {
-    
     var appVersionString: String {
         if let version = infoDictionary?["CFBundleShortVersionString"] as? String {
             return "macOSVPN_" + version

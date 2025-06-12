@@ -21,7 +21,6 @@ import XCTest
 @testable import TimerMock
 
 final class BackgroundTimerMockTests: XCTestCase {
-
     private var factory: TimerFactoryMock!
 
     // We have to have a strong reference to timer object because otherwise it will be deallocated and timer will not execute out closure
@@ -86,5 +85,4 @@ final class BackgroundTimerMockTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         timer = nil
     }
-
 }

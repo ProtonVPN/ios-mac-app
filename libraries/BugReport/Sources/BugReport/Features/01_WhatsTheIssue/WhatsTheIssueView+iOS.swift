@@ -24,18 +24,15 @@ import ComposableArchitecture
 import Strings
 
 public struct WhatsTheIssueView: View {
-
     @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-
             ZStack {
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-
                     StepProgress(step: 1, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
 
@@ -75,7 +72,6 @@ public struct WhatsTheIssueView: View {
                 print("navigate")
             },
             destination: { childStore in
-
                 let childStore = store.route
                 switch childStore {
                 case .quickFixes:
@@ -91,7 +87,6 @@ public struct WhatsTheIssueView: View {
             label: { EmptyView() }
         )
     }
-
 }
 
 // MARK: - Preview

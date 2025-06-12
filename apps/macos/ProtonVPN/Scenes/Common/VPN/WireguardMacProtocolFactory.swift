@@ -36,5 +36,4 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
             completion(logs)
         }
     }
-    
 }

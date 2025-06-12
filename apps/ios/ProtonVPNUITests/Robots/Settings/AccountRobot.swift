@@ -28,7 +28,6 @@ fileprivate let deleteButton = Localizable.delete
 fileprivate let selectedEnvHeader = "Selected environment"
 
 class AccountRobot: CoreElements {
-
     @discardableResult
     func goToManageSubscription() -> SubscriptionsRobot {
         button(manageSubscriptionButton).tap()
@@ -55,7 +54,6 @@ class AccountRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func deleteAccountScreen() -> AccountRobot {
             staticText(deleteAccountText).waitUntilExists(time: 12).checkExists()

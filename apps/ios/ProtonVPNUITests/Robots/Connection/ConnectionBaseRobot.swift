@@ -22,7 +22,6 @@ import Strings
 import UITestsHelpers
 
 class ConnectionBaseRobot: CoreElements {
-
     public func allowVpnPermission() {
         let allowButton = XCUIApplication(bundleIdentifier: "com.apple.springboard")
             .buttons["Allow"]

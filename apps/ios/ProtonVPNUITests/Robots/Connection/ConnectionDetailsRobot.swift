@@ -25,7 +25,6 @@ fileprivate let connectionDetailsTitle = Localizable.connectionDetailsTitle
 fileprivate let connectionFlagInfoId = "connection_flag_info_view"
 
 class ConnectionDetailsRobot: CoreElements {
-
     let verify = Verify()
 
     @discardableResult
@@ -35,7 +34,6 @@ class ConnectionDetailsRobot: CoreElements {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func connectionDetailsIsShown() -> ConnectionDetailsRobot {
             staticText(connectionDetailsTitle).checkExists(message: "Connection details are not shown")

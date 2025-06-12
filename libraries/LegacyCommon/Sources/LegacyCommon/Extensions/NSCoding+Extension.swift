@@ -23,7 +23,6 @@ import Foundation
 import VPNShared
 
 public extension NSCoding {
-    
     // Usage: Call for each class before any decoding has been done for the class
     //
     // Allows for previously encoded objects under the ProtonVPN module

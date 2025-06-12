@@ -21,7 +21,6 @@ import Ergonomics
 import CommonNetworking
 
 class TelemetryOnboardingReporter {
-
     public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
 
     private let factory: Factory

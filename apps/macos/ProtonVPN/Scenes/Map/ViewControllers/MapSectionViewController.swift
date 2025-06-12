@@ -25,7 +25,6 @@ import MapKit
 import Theme
 
 class MapSectionViewController: NSViewController {
-    
     fileprivate struct AnnotationIdentifier {
         static let country = "Country"
         static let scEntryCountry = "secureCoreEntryCountry"
@@ -69,6 +68,7 @@ class MapSectionViewController: NSViewController {
     }
     
     // MARK: - Private functions
+
     private func setupHeader() {
         mapHeaderViewController = MapHeaderViewController(viewModel: mapHeaderViewModel)
         mapHeaderControllerViewContainer.pin(viewController: mapHeaderViewController)
@@ -113,16 +113,21 @@ class MapSectionViewController: NSViewController {
     private func addAnnotations(_ annotations: [CountryAnnotationViewModel]) {
         annotations.forEach { (annotation) in
             // MARK: - Standard country
+
             if let annotation = annotation as? StandardCountryAnnotationViewModel {
                 let annotationView = CountryAnnotationView(viewModel: annotation, reuseIdentifier: AnnotationIdentifier.country)
                 mapView.addAnnotationView(annotationView)
             }
+
             // MARK: - Secure Core entry country
+
             else if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
                 let annotationView = SCEntryCountryAnnotationView(viewModel: annotation, reuseIdentifier: AnnotationIdentifier.scEntryCountry)
                 mapView.addAnnotationView(annotationView)
             }
+
             // MARK: - Secure Core exit country
+
             else if let annotation = annotation as? SCExitCountryAnnotationViewModel {
                 let annotationView = SCExitCountryAnnotationView(viewModel: annotation, reuseIdentifier: AnnotationIdentifier.scExitCountry)
                 mapView.addAnnotationView(annotationView)

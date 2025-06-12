@@ -21,9 +21,7 @@ import Strings
 
 @MainActor
 class FreeUserConnectionTests: ConnectionTestsBase {
-
     func testConnectAndDisconnectViaQCButtonFreeUser() {
-
         login(as: UserType.Free.credentials)
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected()
@@ -36,7 +34,6 @@ class FreeUserConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectToAPlusServerWithFreeUser() async throws {
-
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
         login(as: UserType.Free.credentials)

@@ -20,7 +20,6 @@ import XCTest
 @testable import PMLogger
 
 class FileLogHandlerTests: XCTestCase {
-
     private var folder: URL = URL(string: "/tmp")!
     private var file: URL!
     
@@ -124,11 +123,9 @@ class FileLogHandlerTests: XCTestCase {
         
         wait(for: [expectationFileCount, expectationRotation, expectationDeletion], timeout: 3)
     }
-
 }
 
 private class LogDelegate: FileLogHandlerDelegate {
-    
     var newFileCallback: (() -> Void)?
     var rotationCallback: (() -> Void)?
     
@@ -139,5 +136,4 @@ private class LogDelegate: FileLogHandlerDelegate {
     func didRotateLogFile() {
         rotationCallback?()
     }
-    
 }

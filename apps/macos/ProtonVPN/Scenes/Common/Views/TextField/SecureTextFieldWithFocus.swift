@@ -23,7 +23,6 @@
 import Cocoa
 
 class SecureTextFieldWithFocus: NSSecureTextField {
-    
     private let commandKey = NSEvent.ModifierFlags.command.rawValue
     private let commandShiftKey = NSEvent.ModifierFlags.command.rawValue | NSEvent.ModifierFlags.shift.rawValue
     
@@ -76,9 +75,11 @@ class SecureTextFieldWithFocus: NSSecureTextField {
         }
         return super.performKeyEquivalent(with: event)
     }
+
     // swiftlint:enable cyclomatic_complexity
     
     // MARK: - Private functions
+
     private func setupTransparency() {
         isBordered = false
         focusRingType = .none

@@ -20,7 +20,6 @@ import Foundation
 
 // Display state for toggleable features
 public enum PaidFeatureDisplayState: Equatable {
-
     /// Feature should be shown as available
     /// - parameters:
     ///   - enabled: The current value of the feature (on/off)

@@ -22,7 +22,6 @@ import Domain
 import ComposableArchitecture
 
 public class UserLocationService {
-
     @Shared(.userLocation) var userLocation: UserLocation?
 
     /// Update user location (ip)
@@ -55,6 +54,5 @@ extension DependencyValues {
 
 class UserLocationServiceMock: UserLocationService {
     public override func updateUserLocation() async throws {
-
     }
 }

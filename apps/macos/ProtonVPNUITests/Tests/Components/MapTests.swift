@@ -20,7 +20,6 @@ import Foundation
 import XCTest
 
 class MapTests: ProtonVPNUITests {
-    
     private lazy var mapRobot = MapRobot()
     
     override func setUp() {

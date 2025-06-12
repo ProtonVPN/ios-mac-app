@@ -21,7 +21,6 @@ import Foundation
 import Domain
 
 extension VPNServer {
-
     private var serverNameComponents: ServerNameComponents {
         .init(name: logical.name)
     }

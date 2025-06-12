@@ -27,7 +27,6 @@ import Strings
 import HomeShared
 
 struct AnnouncementBannerView: View {
-
     let store: StoreOf<AnnouncementBannerFeature>
 
     public init(store: StoreOf<AnnouncementBannerFeature>) {

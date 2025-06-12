@@ -152,11 +152,9 @@ class VpnServerSelector {
             return
         }
     }
-    
 }
 
 extension ConnectionRequest {
-
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
         case .country(let countryCode, .fastest), .country(let countryCode, .random):

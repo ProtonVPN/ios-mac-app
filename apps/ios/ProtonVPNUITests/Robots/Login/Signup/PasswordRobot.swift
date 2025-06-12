@@ -14,7 +14,6 @@ fileprivate let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPa
 fileprivate let nextButtonId = "PasswordViewController.nextButton"
 
 class PasswordRobot: CoreElements {
-    
     public let verify = Verify()
     
     func enterPassword(_ password1: String) -> PasswordRobot {
@@ -33,7 +32,6 @@ class PasswordRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-
         @discardableResult
         func passwordScreenIsShown() -> PasswordRobot {
             staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()

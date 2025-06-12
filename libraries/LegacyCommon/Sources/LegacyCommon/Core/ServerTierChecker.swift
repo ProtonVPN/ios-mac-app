@@ -27,7 +27,6 @@ protocol ServerTierCheckerFactory {
 }
 
 class ServerTierChecker {
-    
     public weak var alertService: CoreAlertService?
     
     private let vpnKeychain: VpnKeychainProtocol

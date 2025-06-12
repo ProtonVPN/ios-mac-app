@@ -25,7 +25,6 @@ import ProtonCoreDataModel
 import Domain
 
 public struct VpnProperties {
-    
     public let serverInfo: ServerInfoResponse
     public let streamingResponse: VPNStreamingResponse?
     public let vpnCredentials: VpnCredentials

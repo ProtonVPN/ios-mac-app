@@ -35,7 +35,6 @@ fileprivate let ipLabelField = "ipLabel"
 fileprivate let protocolLabelField = "protocolLabel"
 
 class MainRobot: CoreElements {
-    
     func openProfiles() -> ManageProfilesRobot {
         tabGroup(Localizable.profiles).tapInCenter()
         button(Localizable.createProfile).tap()
@@ -148,7 +147,6 @@ class MainRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func checkSettingsModalIsClosed() -> MainRobot {
             windows(preferencesTitle).checkDoesNotExist()

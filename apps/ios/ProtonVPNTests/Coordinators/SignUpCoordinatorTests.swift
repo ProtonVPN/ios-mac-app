@@ -24,7 +24,6 @@ import XCTest
 import LegacyCommon
 
 class SignUpCoordinatorTests: XCTestCase {
-
     func testPlanSelectionIsFirstOption() {
         var planSelectionOpened = false
         var signupOpened = false
@@ -76,11 +75,9 @@ class SignUpCoordinatorTests: XCTestCase {
         XCTAssertTrue(signupOpened, "Signup was not opened")
         XCTAssertTrue(accountPlan == .plus, "Wrong account plan selected")
     }
-
 }
 
 fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
-    
     var appSessionManager: AppSessionManager
     var loginService: LoginService
     var planService: PlanService
@@ -129,7 +126,6 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
 }
 
 fileprivate class StoreKitStateCheckerMock: StoreKitStateChecker {
-    
     public var buyProcessRunning = false
     public var accountPlan: AccountPlan?
     
@@ -140,5 +136,4 @@ fileprivate class StoreKitStateCheckerMock: StoreKitStateChecker {
     func planBuyStarted() -> AccountPlan? {
         return accountPlan
     }
-        
 }

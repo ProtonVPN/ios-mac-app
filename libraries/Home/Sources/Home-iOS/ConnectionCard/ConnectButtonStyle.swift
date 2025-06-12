@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct ConnectButtonStyle: ButtonStyle {
-
     var isConnect = true
 
     func makeBody(configuration: Configuration) -> some View {

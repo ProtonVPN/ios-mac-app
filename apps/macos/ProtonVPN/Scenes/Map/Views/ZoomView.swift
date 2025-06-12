@@ -28,7 +28,6 @@ enum Orientation {
 }
 
 class ZoomView: NSView {
-    
     private let buttonWidth: CGFloat = 20
     
     let zoomInButton: ZoomButton

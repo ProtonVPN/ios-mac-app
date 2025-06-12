@@ -153,6 +153,7 @@ struct ConnectionCard_Previews: PreviewProvider {
             sendAction: { _ = store.send($0) }
         )
     }
+
     static var previews: some View {
         let storeConnected: StoreOf<HomeFeature> = .init(initialState: .connected, reducer: { HomeFeature() })
         let storeConnecting: StoreOf<HomeFeature> = .init(initialState: .connecting, reducer: { HomeFeature() })
@@ -334,9 +335,11 @@ private extension ConnectionStatusFeature.State {
     static func unprotected() -> Self {
         .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))
     }
+
     static func protecting() -> Self {
         .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0"))
     }
+
     static func protected() -> Self {
         .init(protectionState: .protected(netShield: .random))
     }

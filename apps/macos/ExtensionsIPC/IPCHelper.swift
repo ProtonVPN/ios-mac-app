@@ -9,7 +9,6 @@
 import Foundation
 
 class IPCHelper {
-    
     /**
      The NetworkExtension framework registers a Mach service with the name in the system extension's NEMachServiceName Info.plist key.
      The Mach service name must be prefixed with one of the app groups in the system extension's com.apple.security.application-groups entitlement.
@@ -22,5 +21,4 @@ class IPCHelper {
         }
         return machServiceName
     }
-    
 }

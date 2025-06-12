@@ -336,6 +336,7 @@ extension AppDelegate: NSApplicationDelegate {
 }
 
 // MARK: - Migration
+
 extension AppDelegate {
     fileprivate func checkMigration() {
         container.makeMigrationManager()

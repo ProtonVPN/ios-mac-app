@@ -26,7 +26,6 @@ import Theme
 import Strings
 
 class WarningPopupViewModel {
-    
     let image: NSImage?
     let title: String
     let description: String

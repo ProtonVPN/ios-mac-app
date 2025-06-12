@@ -12,7 +12,6 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class LogSelectionViewModelTests: XCTestCase {
-
     var viewModel: LogSelectionViewModel!
     let fileManager = FileManager()
     
@@ -42,7 +41,5 @@ class LogSelectionViewModelTests: XCTestCase {
         default:
             XCTFail("Wrong cell type returned")
         }
-        
     }
-
 }

@@ -76,12 +76,11 @@ protocol CountriesVMDelegate: AnyObject {
 }
 
 class CountriesViewModel: SecureCoreToggleHandler {
-
     private var tableData = [Section]()
     
     // MARK: vars and init
+
     private enum ModelState {
-        
         case standard([ServerGroupInfo])
         case secureCore([ServerGroupInfo])
 
@@ -272,6 +271,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     // MARK: - Private functions
+
     private func refreshTier() {
         do {
             if (try keychain.fetchCached()).isDelinquent {

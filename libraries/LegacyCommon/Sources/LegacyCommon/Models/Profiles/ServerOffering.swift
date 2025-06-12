@@ -29,7 +29,6 @@ import Dependencies
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models
 public struct ServerWrapper: Codable {
-    
     private var _server: ServerModel
     public var server: ServerModel {
         @Dependency(\.serverRepository) var serverRepository: ServerRepository
@@ -53,7 +52,6 @@ public struct ServerWrapper: Codable {
 }
 
 public enum ServerOffering: Equatable, Codable {
-    
     /** Country code or undefined */
     case fastest(String?)
     
@@ -86,6 +84,7 @@ public enum ServerOffering: Equatable, Codable {
     }
     
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let serverOffering = "serverOffering"
         static let fastest = "fastest"
@@ -110,6 +109,7 @@ public enum ServerOffering: Equatable, Codable {
     }
     
     // MARK: - Static functions
+
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
         var equal: Bool = false
         if case ServerOffering.fastest(let lcc) = lhs, case ServerOffering.fastest(let rcc) = rhs {
@@ -124,7 +124,6 @@ public enum ServerOffering: Equatable, Codable {
 }
 
 extension ServerOffering {
-
     /// Check if offering can find any actually available server/protocol
     public func supports(connectionProtocol: ConnectionProtocol,
                          withCountryGroup grouping: ServerGroupInfo?,

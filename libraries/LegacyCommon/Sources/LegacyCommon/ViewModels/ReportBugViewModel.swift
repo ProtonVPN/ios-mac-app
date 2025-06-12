@@ -29,7 +29,6 @@ public protocol ReportBugViewModelFactory {
 }
 
 open class ReportBugViewModel {
-
     private var bug: ReportBug
     private var sendingBug: Bool = false
     private let propertiesManager: PropertiesManagerProtocol
@@ -170,5 +169,4 @@ open class ReportBugViewModel {
             }
         }
     }
-    
 }

@@ -38,7 +38,6 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 }
 
 class StatusMenuWindowModel {
-    
     typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
     private let factory: Factory
     
@@ -94,6 +93,7 @@ class StatusMenuWindowModel {
     }
     
     // MARK: - Private functions
+
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }

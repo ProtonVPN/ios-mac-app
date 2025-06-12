@@ -22,7 +22,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
 
 class FreeRescopeTests: ProtonVPNUITests {
-    
     private let loginRobot = LoginRobot()
     
     override func setUp() {

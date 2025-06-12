@@ -23,7 +23,6 @@
 import Cocoa
 
 class ConnectionOverlay: NSView {
-
     let fullBlurRadius = 4.0
     
     var blurRadius = 4.0

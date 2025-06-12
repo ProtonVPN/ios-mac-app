@@ -30,7 +30,6 @@ import let CoreConnection.log
 
 @available(iOS 16, *)
 final class MockTunnelManager: TunnelManager {
-
     var tunnelStartErrorToThrow: Error?
     var tunnelStartDuration: Duration = .seconds(0)
     var session: VPNSession { connection }

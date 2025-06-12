@@ -50,7 +50,6 @@ public struct VpnCertificate: Sendable, Equatable {
         self.certificate = certificate
         self.validUntil = validUntil
         self.refreshTime = refreshTime
-
     }
 
     #if os(iOS)
@@ -74,7 +73,6 @@ public extension VpnCertificate {
 }
 
 extension VpnCertificate: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init(
@@ -90,7 +88,6 @@ extension VpnCertificate: Codable {
         try container.encode(validUntil, forKey: .validUntil)
         try container.encode(refreshTime, forKey: .refreshTime)
     }
-
 }
 
 extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible {

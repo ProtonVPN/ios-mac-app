@@ -24,7 +24,6 @@ import Cocoa
 import Ergonomics
 
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
-
     @IBOutlet private weak var graphicContainer: NSView!
     @IBOutlet private weak var phaseLabel: NSTextField!
     @IBOutlet private weak var connectionLabel: NSTextField!
@@ -125,7 +124,6 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         for (index, buttonInfo) in buttons.enumerated() {
             add(button: buttonInfo, atIndex: index)
         }
-        
     }
     
     private func add(button buttonInfo: ConnectingOverlayViewModel.ButtonInfo, atIndex index: Int) {
@@ -167,5 +165,4 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     func stateChanged() {
         update()
     }
-    
 }

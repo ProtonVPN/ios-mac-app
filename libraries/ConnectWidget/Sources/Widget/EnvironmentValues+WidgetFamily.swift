@@ -25,7 +25,6 @@ import WidgetKit
 /// Only remove the compiler flag temporarily for testing purposes and never commit it to develop.
 /// This extension helps to create Previews of the widget in the correct size without providing the actual timelines.
 public extension PreviewTrait where T == Preview.ViewTraits {
-
     enum WidgetSize {
         case small
         case medium

@@ -23,7 +23,6 @@
 import Foundation
 
 struct InAppLinkManager {
-    
     enum InAppLinkError: Error {
         case incompatibleUrlScheme
         case unknownDestination

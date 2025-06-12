@@ -21,7 +21,6 @@ import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
-
     public let location: Location
     public let features: Set<Feature>
     public let profileId: String?

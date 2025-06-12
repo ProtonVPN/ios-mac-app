@@ -24,7 +24,6 @@ import Strings
 import ProtonCoreUIFoundations
 
 public struct IPView: View {
-
     let store: StoreOf<IPViewFeature>
 
     @ScaledMetric var buttonSize: CGFloat = 16
@@ -52,7 +51,6 @@ public struct IPView: View {
                         .foregroundColor(Color(.text, .weak))
                     })
                     .buttonStyle(PlainButtonStyle())
-
                 }
 
                 Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))

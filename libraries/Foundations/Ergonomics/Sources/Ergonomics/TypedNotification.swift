@@ -78,7 +78,6 @@ public final class NotificationToken {
 }
 
 extension NotificationCenter {
-
     public func post<T>(_ notification: some TypedNotification<T>, object: Any?) {
         let userInfo = [type(of: notification).dataKey: notification.data]
         post(name: type(of: notification).name, object: object, userInfo: userInfo)

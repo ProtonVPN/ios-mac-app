@@ -31,7 +31,6 @@ public protocol TestIsolatedDatabaseTestDriver: AbstractDatabaseTestDriver {
 }
 
 extension TestIsolatedDatabaseTestDriver {
-
     private var setUpErrorMessage: String {
         "Did you forget to invoke `setUpRepository()` in your test case's overridden `setUp` or `setUpWithError` method?"
     }

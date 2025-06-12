@@ -13,7 +13,6 @@ import VPNShared
 import LegacyCommon
 
 final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory {
-    
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private let vpnAuthentication: VpnAuthentication
@@ -35,5 +34,4 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
                                                    vpnKeychain: vpnKeychain)
         }
     }
-    
 }

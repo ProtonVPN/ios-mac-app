@@ -62,5 +62,4 @@ extension IPCWGService { // ProviderCommunication
             completionHandler(logContent.data(using: .utf8))
         }
     }
-    
 }

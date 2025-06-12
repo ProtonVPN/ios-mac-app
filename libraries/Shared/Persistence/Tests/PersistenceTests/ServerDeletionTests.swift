@@ -26,7 +26,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
-
     func testDeleteStalePaidServers() throws {
         repository.upsert(
             servers: [

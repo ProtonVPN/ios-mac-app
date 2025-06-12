@@ -27,7 +27,6 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 public struct SideBarView: View {
-
     @State private var connectionDetailsVisible = false
 
     @State private var sidebarActive: Bool = true

@@ -22,7 +22,6 @@
 import Foundation
 
 public enum AppState {
-    
     case disconnected
     case preparingConnection
     case connecting(ServerDescriptor)

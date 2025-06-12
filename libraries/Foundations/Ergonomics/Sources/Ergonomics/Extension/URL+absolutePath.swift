@@ -19,7 +19,6 @@
 import Foundation
 
 extension URL {
-
     public var absolutePath: String {
         if #available(macOS 13.0, iOS 16.0, tvOS 16.0, *) {
             return absoluteURL.path(percentEncoded: false)
@@ -27,5 +26,4 @@ extension URL {
             return absoluteURL.path
         }
     }
-
 }

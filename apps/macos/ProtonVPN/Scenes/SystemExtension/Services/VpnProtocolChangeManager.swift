@@ -44,7 +44,6 @@ protocol VpnProtocolChangeManager {
 }
 
 final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
-    
     typealias Factory = PropertiesManagerFactory
         & AppStateManagerFactory
         & CoreAlertServiceFactory

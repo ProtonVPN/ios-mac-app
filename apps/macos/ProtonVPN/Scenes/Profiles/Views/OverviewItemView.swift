@@ -26,7 +26,6 @@ import Strings
 import ProtonCoreUIFoundations
 
 class OverviewItemView: NSTableRowView {
-    
     @IBOutlet weak var profileImage: NSImageView!
     @IBOutlet weak var profileCircle: ProfileCircle!
     

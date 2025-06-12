@@ -19,7 +19,6 @@
 import ProtonCoreNetworking
 
 final class TelemetryRequestMultiple: Request {
-
     var parameters: [String: Any]?
     let isBusiness: Bool
 

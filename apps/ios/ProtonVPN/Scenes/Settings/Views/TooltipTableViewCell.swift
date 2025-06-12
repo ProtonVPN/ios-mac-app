@@ -23,7 +23,6 @@
 import UIKit
 
 class TooltipTableViewCell: UITableViewCell {
-
     @IBOutlet weak var tooltipLabel: UITextView!
     
     override func awakeFromNib() {
@@ -35,7 +34,6 @@ class TooltipTableViewCell: UITableViewCell {
             .foregroundColor: UIColor.textAccent(),
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
-        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -47,5 +45,4 @@ class TooltipTableViewCell: UITableViewCell {
     static func attributedText(for text: String) -> NSAttributedString {
         return text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
     }
-    
 }

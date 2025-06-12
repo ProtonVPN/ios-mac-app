@@ -27,7 +27,6 @@ import DomainTestSupport
 @testable import ExtensionManager
 
 final class PacketTunnelManagerTests: XCTestCase {
-
     func testCreatesAndLoadsManagerWithNoExistingManagers() async throws {
         let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
         let newManagerLoaded = XCTestExpectation(description: "Tunnel Manager must load any newly created manager")

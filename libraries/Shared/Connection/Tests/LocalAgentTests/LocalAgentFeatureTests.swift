@@ -30,7 +30,6 @@ import DomainTestSupport
 @testable import LocalAgent
 
 final class LocalAgentFeatureTests: XCTestCase {
-
     @MainActor func testReceivesStateUpdateWhenConnectionIsEstablished() async {
         let mockClock = TestClock()
 

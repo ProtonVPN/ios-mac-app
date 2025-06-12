@@ -20,7 +20,6 @@ import UIKit
 import Theme
 
 final class AccountDetailsTableViewCell: UITableViewCell {
-
     @IBOutlet private var initialsRect: UIView!
     @IBOutlet private var initialsText: UILabel!
     @IBOutlet private var username: UILabel!

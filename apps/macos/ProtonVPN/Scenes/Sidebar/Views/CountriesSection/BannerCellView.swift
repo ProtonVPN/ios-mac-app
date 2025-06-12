@@ -26,7 +26,6 @@ import LegacyCommon
 import Theme
 
 final class BannerCellView: NSView {
-    
     @IBOutlet private weak var leftImage: NSImageView!
     @IBOutlet private weak var rightChevron: NSImageView!
     @IBOutlet private weak var roundedBackgroundView: NSView!

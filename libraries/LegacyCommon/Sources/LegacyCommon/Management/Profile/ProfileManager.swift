@@ -27,7 +27,6 @@ import Domain
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {
-    
     case success
     case nameInUse
     
@@ -105,6 +104,7 @@ public final class ProfileManager {
         }
         return profile(withId: profileID)
     }
+
     public func profile(withServer server: ServerModel) -> Profile? {
         return ProfileUtility.profile(withServer: server, in: customProfiles)
     }
@@ -158,6 +158,7 @@ public final class ProfileManager {
     }
     
     // MARK: - Private functions
+
     @objc private func profilesChanged(_ notification: Notification) {
         if let newProfiles = notification.object as? [Profile] {
             customProfiles = newProfiles

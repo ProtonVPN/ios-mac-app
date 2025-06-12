@@ -26,8 +26,8 @@ public typealias JSONDictionary = [String: AnyObject]
 public typealias JSONArray = [JSONDictionary]
 
 extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
-    
     // MARK: String
+
     public func string(_ key: Key) -> String? {
         return self[key] as? String
     }
@@ -42,6 +42,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: Double
+
     public func double(_ key: Key) -> Double? {
         return self[key] as? Double
     }
@@ -51,6 +52,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: Int
+
     public func int(key: Key) -> Int? {
         return self[key] as? Int
     }
@@ -60,6 +62,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: Bool
+
     public func bool(_ key: Key) -> Bool? {
         return self[key] as? Bool
     }
@@ -73,6 +76,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: Date
+
     public func unixTimestamp(_ key: Key) -> Date? {
         guard let timestamp = double(key) else {
             return nil
@@ -102,6 +106,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: - Array
+
     public func stringArray(key: Key) -> [String]? {
         return self[key] as? [String]
     }
@@ -111,6 +116,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: Json
+
     public func jsonArray(key: Key) -> JSONArray? {
         return self[key] as? JSONArray
     }
@@ -128,6 +134,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: - Misc
+
     public func stringOrDoubleAsString(key: Key) -> String? {
         if let str = string(key) { return str }
         if let double = double(key) { return String(double) }
@@ -143,6 +150,7 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
     }
     
     // MARK: - Generic
+
     public func valueOrThrow<T>(_ key: Key) throws -> T {
         guard let val = self[key] as? T else {
             throw genericKeyErrorFor(key)

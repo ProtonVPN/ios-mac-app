@@ -21,7 +21,6 @@ import XCTest
 import UITestsHelpers
 
 class LoginTests: ProtonVPNUITests {
-
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     private let twoFaRobot = TwoFaRobot()
@@ -48,7 +47,6 @@ class LoginTests: ProtonVPNUITests {
     }
     
     func testLoginWithIncorrectUnicodeCredentials() {
-        
         let username = "ąčęėįš"
         let userpassword = "žūųšįė"
         let errorMessage = "Invalid username"
@@ -59,7 +57,6 @@ class LoginTests: ProtonVPNUITests {
     }
     
     func disabled_testLoginAsSubuserWithNoConnectionAssigned() {
-        
         let subusercredentials = getCredentials(fromResource: "subusercredentials")
             
         loginRobot
@@ -73,7 +70,6 @@ class LoginTests: ProtonVPNUITests {
     }
     
     func testLoginWithCorrectCredentials() {
-
         let credentials = getCredentials(fromResource: "credentials")
         
         for credentials in credentials {
@@ -94,7 +90,6 @@ class LoginTests: ProtonVPNUITests {
 
     @MainActor
     func testLoginAsTwoFa() async {
-        
         let twofausercredentials = getCredentials(fromResource: "twofausercredentials")
             
         loginRobot
@@ -111,7 +106,6 @@ class LoginTests: ProtonVPNUITests {
 
     @MainActor
     func testLoginWithTwoPassAnd2FAUser() async {
-            
         let twopasstwofausercredentials = getCredentials(fromResource: "twopasstwofausercredentials")
             
         loginRobot

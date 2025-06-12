@@ -24,6 +24,7 @@ import ProtonCoreUIFoundations
 
 #if os(macOS)
 import AppKit
+
 public typealias Image = NSImage
 
 public extension Image {
@@ -33,6 +34,7 @@ public extension Image {
 }
 #else
 import UIKit
+
 public typealias Image = UIImage
 
 public extension Image {

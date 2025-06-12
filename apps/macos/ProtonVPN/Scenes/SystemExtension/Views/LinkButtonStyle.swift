@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct LinkButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
     func helpForegroundColor(isPressed: Bool) -> Color {

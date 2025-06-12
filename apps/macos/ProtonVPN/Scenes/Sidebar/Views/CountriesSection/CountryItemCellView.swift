@@ -28,7 +28,6 @@ import Strings
 import ProtonCoreUIFoundations
 
 final class CountryItemCellView: NSView {
-    
     @IBOutlet private weak var flagIV: NSImageView!
     @IBOutlet private weak var secureIV: NSImageView!
     @IBOutlet private weak var countryLbl: NSTextField!

@@ -137,11 +137,9 @@ struct PaymentsClient: Sendable, DependencyKey {
         getOptions: unimplemented(),
         attemptPurchase: unimplemented(placeholder: .purchaseCancelled)
     )
-
 }
 
 extension DependencyValues {
-
     var paymentsClient: PaymentsClient {
         get { self[PaymentsClient.self] }
         set { self[PaymentsClient.self] = newValue }

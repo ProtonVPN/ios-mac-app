@@ -25,7 +25,6 @@ import ModalsShared
 import Theme
 
 class UserAccountUpdateViewController: UIViewController {
-
     @IBOutlet private weak var reconnectionView: UIView!
     @IBOutlet private weak var serversView: UIView!
     @IBOutlet private weak var imageView: UIImageView!

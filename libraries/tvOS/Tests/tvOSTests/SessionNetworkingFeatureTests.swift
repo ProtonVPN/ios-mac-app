@@ -27,7 +27,6 @@ import IssueReporting
 import ProtonCoreNetworking
 
 final class SessionNetworkingFeatureTests: XCTestCase {
-
     @MainActor
     func testEmptyCases() async {
         let store = TestStore(initialState: SessionNetworkingFeature.State.unauthenticated(nil)) {

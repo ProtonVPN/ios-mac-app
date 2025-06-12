@@ -26,7 +26,6 @@ import Theme
 import Ergonomics
 
 class MapHeaderBackground: NSView {
-    
     private let upperBorderRadius: CGFloat = 140
     private let lowerBorderRadius: CGFloat = 75
     private let headerHeight: CGFloat = 55

@@ -356,7 +356,6 @@ package enum LocalAgentErrorResolutionStrategy {
 }
 
 extension LocalAgentError {
-
     /// Defines the appropriate way to handle each error.
     /// See documentation for each error case for context.
     package var resolutionStrategy: LocalAgentErrorResolutionStrategy {

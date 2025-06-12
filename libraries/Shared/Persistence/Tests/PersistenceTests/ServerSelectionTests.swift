@@ -26,7 +26,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
-
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")

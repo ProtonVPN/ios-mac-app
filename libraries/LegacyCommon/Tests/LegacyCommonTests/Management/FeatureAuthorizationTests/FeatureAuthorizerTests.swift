@@ -53,7 +53,6 @@ enum TestNetShieldType: ModularAppFeature {
 }
 
 class FeatureAuthorizerProviderTests: XCTestCase {
-
     func testAuthorizationOfFeatureWithNoSubFeatures() throws {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))

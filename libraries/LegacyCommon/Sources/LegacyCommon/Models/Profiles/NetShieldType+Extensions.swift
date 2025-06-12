@@ -25,7 +25,6 @@ import Strings
 import VPNShared
 
 extension NetShieldType {
-    
     public var name: String {
         switch self {
         case .off:

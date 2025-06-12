@@ -25,7 +25,6 @@ import Connection
 import Theme
 
 struct ProtectionStatusView: View {
-
     @Bindable var store: StoreOf<ProtectionStatusFeature>
 
     struct Model {
@@ -151,7 +150,6 @@ struct ProtectionStatusView: View {
 }
 
 private struct ConnectButtonStyle: ButtonStyle {
-
     @Environment(\.isFocused) var isFocused
 
     func makeBody(configuration: Configuration) -> some View {

@@ -26,7 +26,6 @@ import ProtonCoreUIFoundations
 import Strings
 
 class ServersStreamingFeaturesVC: UIViewController {
-    
     private let viewModel: ServersStreamingFeaturesViewModel
 
     @IBOutlet private weak var closeButton: UIButton!
@@ -75,7 +74,6 @@ class ServersStreamingFeaturesVC: UIViewController {
 }
 
 extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
     // MARK: - UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

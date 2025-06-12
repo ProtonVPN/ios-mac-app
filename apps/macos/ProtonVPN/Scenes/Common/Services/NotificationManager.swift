@@ -28,7 +28,6 @@ import Strings
 import Domain
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
-    
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager
     private let appSessionManager: AppSessionManager

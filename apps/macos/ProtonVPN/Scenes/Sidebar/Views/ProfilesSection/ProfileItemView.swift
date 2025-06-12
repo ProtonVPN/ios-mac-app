@@ -25,7 +25,6 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 
 class ProfileItemView: NSView {
-
     @IBOutlet weak var profileImage: NSImageView!
     @IBOutlet weak var profileCircle: ProfileCircle!
     @IBOutlet weak var profileName: NSTextField!
@@ -70,6 +69,7 @@ class ProfileItemView: NSView {
     }
     
     // MARK: - Private functions
+
     private func setupImage() {
         switch viewModel.icon {
         case .image(let image):

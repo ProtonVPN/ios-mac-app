@@ -30,7 +30,6 @@ import Ergonomics
 import Announcement
 
 class OfferBannerViewCell: UITableViewCell {
-
     @IBOutlet weak var roundedBackgroundView: RoundedBackgroundView!
     @IBOutlet weak var offerImageView: UIImageView!
     @IBOutlet weak var timeRemainingLabel: UILabel!
@@ -93,7 +92,6 @@ class OfferBannerViewCell: UITableViewCell {
 }
 
 class RoundedBackgroundView: UIView {
-
     let colors = [Theme.Asset.offerBannerGradientLeft.color,
                   Theme.Asset.offerBannerGradientRight.color]
 

@@ -31,7 +31,6 @@ import NEHelper
 import Sharing
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
-    
     fileprivate enum SwitchButtonOption: Int {
         case killSwitch
     }

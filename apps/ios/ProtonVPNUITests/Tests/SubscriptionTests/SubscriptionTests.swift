@@ -23,7 +23,6 @@ import ProtonCoreQuarkCommands
 import StoreKitTest
 
 final class SubscriptionTests: ProtonVPNUITests {
-
     private var session: SKTestSession!
 
     override func setUp() {

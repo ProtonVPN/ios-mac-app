@@ -47,7 +47,6 @@ enum CellModel {
 }
 
 struct ContentChange {
-
     let insertedRows: IndexSet?
     let removedRows: IndexSet?
     let reset: Bool
@@ -131,9 +130,11 @@ class CountriesSectionViewModel {
     var secureCorePresenter: QuickSettingDropdownPresenter {
         return SecureCoreDropdownPresenter(factory)
     }
+
     var netShieldPresenter: QuickSettingDropdownPresenter {
         return NetshieldDropdownPresenter(factory)
     }
+
     var killSwitchPresenter: QuickSettingDropdownPresenter {
         return KillSwitchDropdownPresenter(factory)
     }

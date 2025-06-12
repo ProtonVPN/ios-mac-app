@@ -24,7 +24,6 @@ import Foundation
 
 /// API calls this thing Notification
 public struct Announcement: Codable {
-    
     public let notificationID: String
     public let startTime: Date
     public let endTime: Date
@@ -32,6 +31,7 @@ public struct Announcement: Codable {
     public var knownType: NotificationType? {
         .init(rawValue: type)
     }
+
     public let offer: Offer?
     public let reference: String?
     
@@ -57,7 +57,6 @@ extension Announcement {
 }
 
 extension Announcement {
-
     var fullScreenImage: FullScreenImage? {
         guard case .image(let panel) = offer?.panel?.panelMode() else {
             return nil

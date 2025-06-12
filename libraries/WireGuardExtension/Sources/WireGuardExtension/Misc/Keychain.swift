@@ -171,6 +171,5 @@ enum Keychain {
 
         return query
     }
-
 }
 

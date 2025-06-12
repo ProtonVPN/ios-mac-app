@@ -24,7 +24,6 @@ import Cocoa
 import Ergonomics
 
 class StatusMenuProfilesListController: WindowController {
-
     fileprivate let statusMenuProfileItemIdentifier = "StatusMenuProfileItemCell"
     
     @IBOutlet weak var topView: NSView!
@@ -86,7 +85,6 @@ class StatusMenuProfilesListController: WindowController {
 }
 
 extension StatusMenuProfilesListController: NSTableViewDelegate {
-    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return viewModel.cellCount
     }

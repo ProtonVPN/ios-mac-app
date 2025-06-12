@@ -23,7 +23,6 @@
 import UIKit
 
 class StandardTableViewCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet private weak var iconContainer: UIView!
@@ -70,6 +69,5 @@ class StandardTableViewCell: UITableViewCell {
             titleLabel.textColor = .weakTextColor()
             subtitleLabel.textColor = .normalTextColor()
         }
-        
     }
 }

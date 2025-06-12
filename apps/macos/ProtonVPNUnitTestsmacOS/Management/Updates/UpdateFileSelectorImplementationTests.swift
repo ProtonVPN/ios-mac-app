@@ -27,7 +27,6 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class UpdateFileSelectorImplementationTests: XCTestCase {
-
     func testDefaultFile() throws {
         let propertyManager = PropertiesManagerMock()
         let factory = UpdateFileSelectorImplementationFactory(propertiesManager: propertyManager)
@@ -60,11 +59,9 @@ class UpdateFileSelectorImplementationTests: XCTestCase {
         propertyManager.earlyAccess = true
         XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
     }
-
 }
 
 fileprivate class UpdateFileSelectorImplementationFactory: PropertiesManagerFactory {
-    
     var propertiesManager: PropertiesManagerProtocol
     
     init(propertiesManager: PropertiesManagerProtocol) {
@@ -74,6 +71,5 @@ fileprivate class UpdateFileSelectorImplementationFactory: PropertiesManagerFact
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
     }
-    
 }
 #endif

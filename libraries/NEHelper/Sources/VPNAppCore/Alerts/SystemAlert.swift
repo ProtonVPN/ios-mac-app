@@ -101,6 +101,7 @@ public struct ReconnectInfo {
             self.name = name
             self.image = image
         }
+
         #elseif canImport(Cocoa)
         public let image: NSImage
 
@@ -153,7 +154,6 @@ public final class AccountDeletionErrorAlert: SystemAlert {
 }
 
 public final class AccountDeletionWarningAlert: SystemAlert {
-
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.accountDeletionConnectionWarning
     public var actions = [AlertAction]()
@@ -437,6 +437,7 @@ public final class ReconnectOnSettingsChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User was changing settings, but cancelled reconnecting."
     }
+
     public static let userCancelled = UserCancelledReconnect()
 
     public var title: String? = Localizable.changeSettings
@@ -510,6 +511,7 @@ public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."
     }
+
     public static let userCancelled = UserCancelledReconnect()
 
     public var title: String? = Localizable.smartProtocolReconnectModalTitle
@@ -733,6 +735,7 @@ public final class DiscourageSecureCoreAlert: SystemAlert {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.learnMore)
     }
+
     public var dismiss: (() -> Void)?
 
     public init() { }

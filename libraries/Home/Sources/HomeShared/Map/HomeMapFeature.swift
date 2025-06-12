@@ -27,7 +27,6 @@ import SVGView
 
 @Reducer
 public struct HomeMapFeature {
-
     private static let mapStateDebounceIntervalInMilliseconds: Int = 50
 
     @ObservableState

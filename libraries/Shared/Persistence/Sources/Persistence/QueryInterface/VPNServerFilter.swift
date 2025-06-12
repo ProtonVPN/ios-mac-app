@@ -22,7 +22,6 @@ import Domain
 
 /// Defines implementation agnostic filtering methods
 public enum VPNServerFilter {
-
     /// Filter by logical ID
     case logicalID(String)
 
@@ -84,7 +83,6 @@ public enum VPNServerFilter {
     }
 
     public enum ServerTypeFilter {
-
         /// Filter out gateways. Provide a string value to match only servers with the specified exitCountryCode
         case country(code: String?)
 

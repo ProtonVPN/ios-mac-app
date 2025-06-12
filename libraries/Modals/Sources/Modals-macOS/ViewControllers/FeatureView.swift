@@ -23,8 +23,8 @@ import Theme
 import SwiftUI
 
 final class FeatureView: NSView {
-
     // MARK: Outlets
+
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet weak var iconImageView: NSImageView!
     @IBOutlet var contentView: NSView!

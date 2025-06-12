@@ -26,7 +26,6 @@ import Theme
 import Ergonomics
 
 final class FeaturesOverlayViewController: OverlayViewController {
-
     @IBOutlet private weak var featuresStackView: NSStackView!
     @IBOutlet private weak var featuresTitleTF: NSTextField!
     @IBOutlet private weak var dismissButton: HoverDetectionButton!

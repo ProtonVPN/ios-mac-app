@@ -99,6 +99,7 @@ public struct RecentsSectionView: View {
     }
     .background(Color(.background, .normal))
 }
+
 @available(iOS 18, *)
 #Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
     let store: StoreOf<RecentsFeature> = .init(

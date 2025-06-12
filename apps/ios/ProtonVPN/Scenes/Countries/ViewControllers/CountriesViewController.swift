@@ -36,7 +36,6 @@ import Strings
 import Domain
 
 final class CountriesViewController: UIViewController {
-    
     @IBOutlet private weak var connectionBarContainerView: UIView!
     @IBOutlet private weak var secureCoreSeparator: UIView!
     @IBOutlet private weak var secureCoreSeparatorHeight: NSLayoutConstraint!
@@ -262,14 +261,12 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
 // MARK: - CountriesVMDelegate
 
 extension CountriesViewController: CountriesVMDelegate {
-
     func onContentChange() {
         contentChanged()
         reloadSearch()
     }
 
     func displayFastestConnectionInfo() {
-
     }
 
     func displayGatewayInfo() {

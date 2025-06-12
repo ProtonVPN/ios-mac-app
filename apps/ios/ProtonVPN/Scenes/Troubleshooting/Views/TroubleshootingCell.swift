@@ -23,7 +23,6 @@
 import UIKit
 
 class TroubleshootingCell: UITableViewCell {
-    
     // Views
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UITextView!
@@ -76,5 +75,4 @@ class TroubleshootingCell: UITableViewCell {
             descriptionLabel.sizeToFit()
         }
     }
-    
 }

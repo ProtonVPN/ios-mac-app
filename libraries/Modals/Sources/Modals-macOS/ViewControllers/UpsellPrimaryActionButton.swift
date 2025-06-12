@@ -21,7 +21,6 @@ import Theme
 import Ergonomics
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {
-
     override var title: String {
         didSet {
             configureTitle()

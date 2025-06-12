@@ -32,7 +32,6 @@ import Domain
 import Strings
 
 public enum ConnectionStatus {
-    
     case disconnected
     case connecting
     case connected
@@ -60,7 +59,6 @@ public enum ResolutionUnavailableReason: Equatable {
 }
 
 public protocol VpnGatewayProtocol: AnyObject {
-    
     var connection: ConnectionStatus { get }
     var lastConnectionRequest: ConnectionRequest? { get }
     
@@ -656,6 +654,7 @@ public class VpnGateway: VpnGatewayProtocol {
             }
         }
     }
+
     // swiftlint:enable function_body_length function_parameter_count
 
     /// - Returns: Whether or not the given policy changed connection settings.

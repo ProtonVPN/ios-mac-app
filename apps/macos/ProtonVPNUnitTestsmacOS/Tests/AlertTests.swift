@@ -32,7 +32,6 @@ fileprivate let sessionService = SessionServiceMock()
 fileprivate let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
-
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
     
     override func setUp() {
@@ -89,7 +88,6 @@ class AlertTests: XCTestCase {
         
         XCTAssert(confirmRan && cancelRan)
     }
-    
 }
 
 public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {

@@ -37,7 +37,6 @@ protocol TroubleshootCoordinator: Coordinator {
 }
 
 class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
-    
     typealias Factory = WindowServiceFactory & TroubleshootViewModelFactory
     private let factory: Factory
     
@@ -57,5 +56,4 @@ class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
         let controller = TroubleshootViewController(troubleshootViewModel)
         windowService.present(modal: controller)
     }
-    
 }

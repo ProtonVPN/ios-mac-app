@@ -25,7 +25,6 @@ import ConnectionInventory
 @testable import HomeShared
 
 class ConnectionInventoryTests: XCTestCase {
-
     func testMostRecentConnectionFilteredOutWhenNotPinnedAndPreferenceIsMostRecent() {
         let mostRecentConnection = ConnectionSpec.franceWithP2P.recent(with: .referenceDate)
         let olderRecentConnection = ConnectionSpec.poland.recent(with: .earlier)

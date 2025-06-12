@@ -197,16 +197,19 @@ public enum Localizable {
   public static func connectedToVpn(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connected_to_vpn", String(describing: p1), fallback: "Connected to %@")
   }
+
   /// iOS: main button in tabbar during connecting to vpn phase
   public static var connecting: String { return Localizable.tr("Localizable", "_connecting", fallback: "Connecting") }
   /// MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore
   public static func connectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connecting_to", String(describing: p1), fallback: "Connecting to %@")
   }
+
   /// MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed
   public static func connectingVpn(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connecting_vpn", String(describing: p1), fallback: "Connecting %@")
   }
+
   /// Connecting...
   public static var connectingDotDotDot: String { return Localizable.tr("Localizable", "_connectingDotDotDot", fallback: "Connecting...") }
   /// MacOS Profiles Overview: Table column header; MacOS Settings Tab title;
@@ -215,14 +218,17 @@ public enum Localizable {
   public static func connectionCardAccessibilityBrowsingFrom(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_browsing_from", String(describing: p1), fallback: "You are safely browsing from %@.")
   }
+
   /// Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023]
   public static func connectionCardAccessibilityBrowsingFromFullDetails(_ p1: Any, _ p2: Any, _ p3: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_browsing_from_fullDetails", String(describing: p1), String(describing: p2), String(describing: p3), fallback: "You are safely browsing from %1$@ Server %2$@ using %3$@.")
   }
+
   /// Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023]
   public static func connectionCardAccessibilityConnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_connecting_to", String(describing: p1), fallback: "Connecting to %@.")
   }
+
   /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents
   public static var connectionCardAccessibilityFastest: String { return Localizable.tr("Localizable", "_connection_card_accessibility_fastest", fallback: "The fastest country available") }
   /// The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled
@@ -231,6 +237,7 @@ public enum Localizable {
   public static func connectionCardAccessibilityLastConnectedTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_card_accessibility_last_connected_to", String(describing: p1), fallback: "You were last connected to %@.")
   }
+
   /// Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in.
   public static var connectionCardAccessibilityLoading: String { return Localizable.tr("Localizable", "_connection_card_accessibility_loading", fallback: "Loading") }
   /// For buttons which have an action that cancels connecting to a server. [Redesign_2023]
@@ -265,6 +272,7 @@ public enum Localizable {
   public static func connectionDetailsFeatureDescriptionSmartRouting(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_connection_details_feature_description_smart_routing", String(describing: p1), String(describing: p2), fallback: "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.")
   }
+
   /// Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023]
   public static var connectionDetailsFeatureDescriptionStreaming: String { return Localizable.tr("Localizable", "_connection_details_feature_description_streaming", fallback: "This server is optimized for TV and movie playback.") }
   /// Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023]
@@ -301,36 +309,44 @@ public enum Localizable {
   public static func connectionErrorCertificateAuthentication(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_certificate_authentication", String(describing: p1), fallback: "An issue occurred authenticating with the server. (Error %@)")
   }
+
   /// Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorIntentMissing(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_intent_missing", String(describing: p1), fallback: "We were unable to connect to the server. (Error %@).")
   }
+
   /// Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorLocalAgent(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_local_agent", String(describing: p1), fallback: "An unexpected error occurred while connecting: %@")
   }
+
   /// Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorPreparation(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_preparation", String(describing: p1), fallback: "There was a problem preparing the connection (Error %@)")
   }
+
   /// Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorServerMissing(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_server_missing", String(describing: p1), fallback: "The server you have chosen is no longer available. Please choose a different server. (Error %@)")
   }
+
   /// Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorTimeout(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_timeout", String(describing: p1), fallback: "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)")
   }
+
   /// Error alert title: a connection error has occurred.
   public static var connectionErrorTitle: String { return Localizable.tr("Localizable", "_connection_error_title", fallback: "Connection Error") }
   /// Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorTunnelConnection(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_tunnel_connection", String(describing: p1), fallback: "There was an issue starting the VPN. (Error %@)")
   }
+
   /// Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func connectionErrorUnexpectedProtocol(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_connection_error_unexpected_protocol", String(describing: p1), String(describing: p2), fallback: "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)")
   }
+
   /// Connection error translation. iOS quick connect widget: text shown on error.
   public static var connectionFailed: String { return Localizable.tr("Localizable", "_connection_failed", fallback: "Connection Failed") }
   /// Profile create/change form
@@ -351,10 +367,12 @@ public enum Localizable {
   public static func countriesCount(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_countries_count", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Plural format key: "%#@VARIABLE@"
   public static func countriesCountPlus(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_countries_count_plus", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// iOS: countries list section header
   public static var countriesFree: String { return Localizable.tr("Localizable", "_countries_free", fallback: "Free countries") }
   /// iOS: countries list section header
@@ -369,6 +387,7 @@ public enum Localizable {
   public static func countryServersUnderMaintenance(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_country_servers_under_maintenance", String(describing: p1), fallback: "%@ servers under maintenance")
   }
+
   /// MacOS: button in login screen
   public static var createAccount: String { return Localizable.tr("Localizable", "_create_account", fallback: "Create Account") }
   /// MacOS: Buttons in several places; iOS: profile creation screen title
@@ -385,6 +404,7 @@ public enum Localizable {
   public static func dataDisclaimerText(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_data_disclaimer_text", String(describing: p1), String(describing: p2), fallback: "Proton VPN is committed to protecting and respecting your privacy. It is our overriding policy to collect as little user data as possible to ensure a private and anonymous user experience in the use of the App, specifically:\n\n%@ – to log you in, help to recover a lost password, and send important service updates.\n\n%@ – for crash reports and errors only.\n\nThe Proton VPN App does not process any user information besides this data. We don't log your online activity nor any personal identifiable information. All data listed above is stored and processed on Proton VPN's own system, with no third party ever having access to it.")
   }
+
   /// iOS: data disclaimer screen
   public static var dataDisclaimerTitle: String { return Localizable.tr("Localizable", "_data_disclaimer_title", fallback: "Protect yourself online") }
   /// iOS: data disclaimer screen
@@ -451,6 +471,7 @@ public enum Localizable {
   public static func errorDecode(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_error_decode", String(describing: p1), fallback: "Failed to decode archived data in class: %@")
   }
+
   /// Internal application error
   public static var errorEmailVerificationDisabled: String { return Localizable.tr("Localizable", "_error_email_verification_disabled", fallback: "Email verification temporarily disabled") }
   /// Error try to restore user from the session
@@ -547,6 +568,7 @@ public enum Localizable {
   public static func freeTrialAboutToExpireDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_free_trial_about_to_expire_description", String(describing: p1), fallback: "Upgrade to %@ and continue enjoying these features:")
   }
+
   /// MacOS: \Trial about to expire\ screen title
   public static var freeTrialAboutToExpireTitle: String { return Localizable.tr("Localizable", "_free_trial_about_to_expire_title", fallback: "Your free trial is about to expire!") }
   /// %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.
@@ -554,10 +576,12 @@ public enum Localizable {
   public static func freeTrialExpiredDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_free_trial_expired_description", String(describing: p1), fallback: "Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from %@:")
   }
+
   /// %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED
   public static func freeTrialExpiredTitle(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_free_trial_expired_title", String(describing: p1), fallback: "Your free trial %@")
   }
+
   /// From Server:
   public static var fromServerTitle: String { return Localizable.tr("Localizable", "_from_server_title", fallback: "From Server:") }
   /// Gateways info modals text (both iOS and macOS)
@@ -570,12 +594,14 @@ public enum Localizable {
   public static func genericErrorDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_generic_error_description", String(describing: p1), fallback: "The operation could not be completed. (Error %@)")
   }
+
   /// Error message: Catch-all error alert title.
   public static var genericErrorTitle: String { return Localizable.tr("Localizable", "_generic_error_title", fallback: "Error") }
   /// %@ is a plan name e.g. Get Plus Plan
   public static func getPlan(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_get_plan", String(describing: p1), fallback: "Get %@ Plan")
   }
+
   /// Suggest the user to upgrade account for new features
   public static var getPlusForFeature: String { return Localizable.tr("Localizable", "_get_plus_for_feature", fallback: "Get Proton VPN Plus to unlock this and other features.") }
   /// iOS: Button in email verification screen
@@ -624,6 +650,7 @@ public enum Localizable {
   public static func hermesEntitiesHeader(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_hermes_entities_header", String(describing: p1), fallback: "Servers (%@)")
   }
+
   /// Hermes Feature Description within dedicated Hermes Settings view
   public static var hermesFeatureDescription: String { return Localizable.tr("Localizable", "_hermes_feature_description", fallback: "Connect to VPN with a ${HERMES_DESCRIPTION}") }
   /// Hermes Feature Title within app settings screens
@@ -662,6 +689,7 @@ public enum Localizable {
   public static func homeUnprotectedAccessibilityLabel(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_home_unprotected_accessibility_label", String(describing: p1), fallback: "You are browsing unprotected from %@.")
   }
+
   /// The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023]
   public static var homeUnprotectedHeader: String { return Localizable.tr("Localizable", "_home_unprotected_header", fallback: "You are unprotected") }
   /// Button in Kill switch error alert
@@ -690,6 +718,7 @@ public enum Localizable {
   public static func ipValue(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_ip_value", String(describing: p1), fallback: "IP: %@")
   }
+
   /// Your IP will not be exposed.
   public static var ipWillNotBeExposed: String { return Localizable.tr("Localizable", "_ip_will_not_be_exposed", fallback: "Your IP will not be exposed.") }
   /// MacOS: Settings -> Connection: name of field.
@@ -724,6 +753,7 @@ public enum Localizable {
   public static func loadingConnectionInfoFor(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_loading_connection_info_for", String(describing: p1), fallback: "Loading connection info for %@")
   }
+
   /// Slogan text under the logo in may places in iOS and MacOS apps
   public static var loadingScreenSlogan: String { return Localizable.tr("Localizable", "_loading_screen_slogan", fallback: "Secure Internet Anywhere") }
   /// You are not allowed to connect to the server. Choose a different server or upgrade your plan.
@@ -740,6 +770,7 @@ public enum Localizable {
   public static func locationNotAvailableForProfileText(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_location_not_available_for_profile_text", String(describing: p1), fallback: "The server you selected for '%@' is currently unavailable. Select a different server or try again later.")
   }
+
   /// User is trying to connect to a server with a profile, but the server is currently unavailable. (title)
   public static var locationNotAvailableForProfileTitle: String { return Localizable.tr("Localizable", "_location_not_available_for_profile_title", fallback: "Connection failed") }
   /// User is trying to connect to a server that is currently unavailable. (text)
@@ -864,6 +895,7 @@ public enum Localizable {
   public static func neagentDescription(_ p1: Any, _ p2: Any, _ p3: Any, _ p4: Any, _ p5: Any) -> String {
     return Localizable.tr("Localizable", "_neagent_description", String(describing: p1), String(describing: p2), String(describing: p3), String(describing: p4), String(describing: p5), fallback: "You may be asked to provide your %@\nto connect to the Proton VPN service. If this request appears,\nenter your %@ %@ and click ‘%@’ %@.")
   }
+
   /// Mac: neagent help screen
   public static var neagentFirstStep: String { return Localizable.tr("Localizable", "_neagent_first_step", fallback: "(1)") }
   /// Mac: neagent help screen
@@ -911,30 +943,37 @@ public enum Localizable {
   public static func netshieldStatsAdsBlocked(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_ads_blocked", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// The count of trackers/ads blocked in sextillions
   public static func netshieldStatsBlockedE(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_E", String(describing: p1), fallback: "%@ E")
   }
+
   /// The count of trackers/ads blocked in billions
   public static func netshieldStatsBlockedG(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_G", String(describing: p1), fallback: "%@ G")
   }
+
   /// The count of trackers/ads blocked in thousands
   public static func netshieldStatsBlockedK(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_K", String(describing: p1), fallback: "%@ K")
   }
+
   /// The count of trackers/ads blocked in millions
   public static func netshieldStatsBlockedM(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_M", String(describing: p1), fallback: "%@ M")
   }
+
   /// The count of trackers/ads blocked in quadrillions
   public static func netshieldStatsBlockedP(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_P", String(describing: p1), fallback: "%@ P")
   }
+
   /// The count of trackers/ads blocked in trillions
   public static func netshieldStatsBlockedT(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_blocked_T", String(describing: p1), fallback: "%@ T")
   }
+
   /// Data
   /// saved
   public static var netshieldStatsDataSaved: String { return Localizable.tr("Localizable", "_netshield_stats_data_saved", fallback: "Data\nsaved") }
@@ -942,6 +981,7 @@ public enum Localizable {
   public static func netshieldStatsTrackersStopped(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_netshield_stats_trackers_stopped", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Settings -> Netshield: name of field.
   public static var netshieldTitle: String { return Localizable.tr("Localizable", "_netshield_title", fallback: "NetShield") }
   /// Block advertisements, trackers and malware
@@ -978,6 +1018,7 @@ public enum Localizable {
   public static func offerEnding(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_offer_ending_", String(describing: p1), fallback: "Ending %@")
   }
+
   /// Common word
   public static var ok: String { return Localizable.tr("Localizable", "_ok", fallback: "OK") }
   /// MacOS: voice over indication for a country or server on maintenance
@@ -994,6 +1035,7 @@ public enum Localizable {
   public static func operatingSystemOutOfDateAlertDescription(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_description", String(describing: p1), String(describing: p2), fallback: "A new version of Proton VPN is available. To get the update, you’ll first need to update your device to %1$@ %2$@ or later.")
   }
+
   /// User's OS version is no longer actively supported by Proton VPN (alert title)
   public static var operatingSystemOutOfDateAlertTitle: String { return Localizable.tr("Localizable", "_operating_system_out_of_date_alert_title", fallback: "Update your software") }
   /// MacOS menu item; MacOS Profiles tab title;
@@ -1054,6 +1096,7 @@ public enum Localizable {
   public static func plansConnections(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_plans_connections", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Text description in plan selection screen
   public static var plansFooter: String { return Localizable.tr("Localizable", "_plans_footer", fallback: "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.") }
   /// Plus word that is put inside `enjoyForFree` translation instead of %@
@@ -1150,16 +1193,19 @@ public enum Localizable {
   public static func promptKillSwitchDueToBadInterfaceIpRange(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_prompt_kill_switch_due_to_bad_interface_ip_range", String(describing: p1), String(describing: p2), fallback: "Your local network might be unsafe (the interface '%@' has the IP and prefix '%@'). Your data may be sent unencrypted over the local network. Enabling Kill Switch will block this traffic. Connections to local peripherals will be interrupted.")
   }
+
   /// Protocol
   public static var `protocol`: String { return Localizable.tr("Localizable", "_protocol", fallback: "Protocol") }
   /// Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func providerMessageError(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_provider_message_error", String(describing: p1), fallback: "There was a problem with the connection. (Error %@)")
   }
+
   /// %@ is an IP address e.g. Public IP: 123.45.67.890
   public static func publicIp(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_public_ip", String(describing: p1), fallback: "Public IP: %@")
   }
+
   /// Several places in both iOS and Mac apps
   public static var quickConnect: String { return Localizable.tr("Localizable", "_quick_connect", fallback: "Quick Connect") }
   /// MacOS: Settings -> Connection: description.
@@ -1208,6 +1254,7 @@ public enum Localizable {
   public static func reconnectingTo(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_reconnecting_to", String(describing: p1), fallback: "Reconnecting to %@")
   }
+
   /// iOS & MacOS: text that requires restart connection
   public static var reconnectionRequired: String { return Localizable.tr("Localizable", "_reconnection_required", fallback: "Reconnection Required") }
   /// Re-establishing VPN connection.
@@ -1274,6 +1321,7 @@ public enum Localizable {
   public static func secureCoreCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_secure_core_country", String(describing: p1), fallback: "Secure Core %@")
   }
+
   /// MacOS: \Trial about to expire\ screen
   public static var secureCoreDescription: String { return Localizable.tr("Localizable", "_secure_core_description", fallback: "Ultra secure servers\nhosted by us") }
   /// MacOS: secure core tooltip
@@ -1282,6 +1330,7 @@ public enum Localizable {
   public static func secureCoreViaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_secure_core_via_country", String(describing: p1), fallback: "via %@")
   }
+
   /// MacOS: \Trial about to expire\ screen
   public static var secureStreamingDescription: String { return Localizable.tr("Localizable", "_secure_streaming_description", fallback: "Secure streaming of your\nfavorite content") }
   /// MacOS: \Trial about to expire\ screen
@@ -1316,6 +1365,7 @@ public enum Localizable {
   public static func serverLoadPercentage(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_server_load_percentage", String(describing: p1), fallback: "%@%% Load")
   }
+
   /// Server Load
   public static var serverLoadTitle: String { return Localizable.tr("Localizable", "_server_load_title", fallback: "Server Load") }
   /// Error when user hasn't selected profile server
@@ -1326,30 +1376,37 @@ public enum Localizable {
   public static func sessionLengthDays(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_days", p1, fallback: "Plural format key: \"%#@DAYS@\"")
   }
+
   /// Plural format key: "%#@DAYS@ %#@HOURS@"
   public static func sessionLengthDaysAndHours(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_days_and_hours", p1, p2, fallback: "Plural format key: \"%#@DAYS@ %#@HOURS@\"")
   }
+
   /// Plural format key: "%#@HOURS@"
   public static func sessionLengthHours(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_hours", p1, fallback: "Plural format key: \"%#@HOURS@\"")
   }
+
   /// Plural format key: "%#@HOURS@ %#@MINUTES@"
   public static func sessionLengthHoursAndMinutes(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_hours_and_minutes", p1, p2, fallback: "Plural format key: \"%#@HOURS@ %#@MINUTES@\"")
   }
+
   /// Plural format key: "%#@MINUTES@"
   public static func sessionLengthMinutes(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_minutes", p1, fallback: "Plural format key: \"%#@MINUTES@\"")
   }
+
   /// Plural format key: "%#@MINUTES@ %#@SECONDS@"
   public static func sessionLengthMinutesAndSeconds(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_minutes_and_seconds", p1, p2, fallback: "Plural format key: \"%#@MINUTES@ %#@SECONDS@\"")
   }
+
   /// Plural format key: "%#@SECONDS@"
   public static func sessionLengthSeconds(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_session_length_seconds", p1, fallback: "Plural format key: \"%#@SECONDS@\"")
   }
+
   /// iOS status view
   public static var sessionTime: String { return Localizable.tr("Localizable", "_session_time", fallback: "Session Time") }
   /// iOS: Settings screen title and tab title
@@ -1358,6 +1415,7 @@ public enum Localizable {
   public static func settingsAppVersion(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_settings_app_version", String(describing: p1), fallback: "App Version: %@")
   }
+
   /// Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023]
   public static var settingsKillswitchOff: String { return Localizable.tr("Localizable", "_settings_killswitch_off", fallback: "Off") }
   /// Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023]
@@ -1500,6 +1558,7 @@ public enum Localizable {
   public static func speed(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_speed", String(describing: p1), fallback: "%@ speed")
   }
+
   /// MacOS: generic failure message for SSO login
   public static var ssoLoginFailure: String { return Localizable.tr("Localizable", "_sso_login_failure", fallback: "Failed to log in with SSO. Please try again.") }
   /// MacOS profile form: feature selection value
@@ -1514,6 +1573,7 @@ public enum Localizable {
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "_step_of", p1, p2, fallback: "Plural format key: \"%#@STEP@ %#@STEPS@\"")
   }
+
   /// Connect to a Plus server in this country to start streaming.
   public static var streamingServersDescription: String { return Localizable.tr("Localizable", "_streaming_servers_description", fallback: "Connect to a Plus server in this country to start streaming.") }
   /// and more
@@ -1529,6 +1589,7 @@ public enum Localizable {
   public static func subscriptionButton(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_button", String(describing: p1), fallback: "Extend plan for 1 year \n%@.")
   }
+
   /// You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.
   public static var subscriptionDescription: String { return Localizable.tr("Localizable", "_subscription_description", fallback: "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.") }
   /// Your subscription has been downgraded.
@@ -1545,6 +1606,7 @@ public enum Localizable {
   public static func subscriptionRenewalDate(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_renewal_date", String(describing: p1), String(describing: p2), fallback: "Subscription auto-renews on %1$@ at %2$@/year")
   }
+
   /// Advanced features: NetShield, Secure Core, Tor, P2P
   public static var subscriptionUpgradeOption3: String { return Localizable.tr("Localizable", "_subscription_upgrade_option3", fallback: "Advanced features: NetShield, Secure Core, Tor, P2P") }
   /// Upgrade again to enjoy all the features:
@@ -1553,10 +1615,12 @@ public enum Localizable {
   public static func subscriptionWillExpire(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_will_expire", String(describing: p1), fallback: "Current plan will expire on %@.")
   }
+
   /// Current plan will automatically renew on %@.
   public static func subscriptionWillRenew(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_subscription_will_renew", String(describing: p1), fallback: "Current plan will automatically renew on %@.")
   }
+
   /// To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.
   public static var subuserAlertDescription1: String { return Localizable.tr("Localizable", "_subuser_alert_description1", fallback: "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.") }
   /// This step will take just a few minutes. After that you will be able to sign in and protect all your devices.
@@ -1593,6 +1657,7 @@ public enum Localizable {
   public static func sysexErrorDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_sysex_error_description", String(describing: p1), fallback: "An error occurred while enabling System Extensions: %@")
   }
+
   /// This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt.
   public static var sysexErrorDescriptionSubcaseAuthorizationRequired: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_authorization_required", fallback: "your authorization is required to continue.") }
   /// This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder.
@@ -1601,6 +1666,7 @@ public enum Localizable {
   public static func sysexErrorDescriptionSubcaseDefault(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_sysex_error_description_subcase_default", String(describing: p1), fallback: "please contact our support. (Error %@)")
   }
+
   /// This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type.
   public static var sysexErrorDescriptionSubcaseForbiddenBySystemPolicy: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_forbidden_by_system_policy", fallback: "the current system policy prohibits activating extensions on your device.") }
   /// Default action in the system extension wizard in mac. macOS Ventura
@@ -1625,6 +1691,7 @@ public enum Localizable {
   public static func termsAndConditionsDisclaimer(_ p1: Any, _ p2: Any) -> String {
     return Localizable.tr("Localizable", "_terms_and_conditions_disclaimer", String(describing: p1), String(describing: p2), fallback: "By using Proton VPN, you agree to our\n%@ and %@")
   }
+
   /// iOS: section header in countries list
   public static var testServers: String { return Localizable.tr("Localizable", "_test_servers", fallback: "TEST Servers") }
   /// Free
@@ -1678,6 +1745,7 @@ public enum Localizable {
   public static func troubleshootItemOtherDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_troubleshoot_item_other_description", String(describing: p1), fallback: "Contact us directly through our support form, email (%@), or Twitter.")
   }
+
   /// support form
   public static var troubleshootItemOtherLink1: String { return Localizable.tr("Localizable", "_troubleshoot_item_other_link1", fallback: "support form") }
   /// email
@@ -1788,6 +1856,7 @@ public enum Localizable {
   public static func viaCountry(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_via_country", String(describing: p1), fallback: "via %@")
   }
+
   /// Used for SecureCore connection labels.
   public static var viaSecureCore: String { return Localizable.tr("Localizable", "_via_secure_core", fallback: "via Secure Core") }
   /// MacOS menu item; iOS setting screen item
@@ -1824,6 +1893,7 @@ public enum Localizable {
   public static func vpnauthTooManyCertsRetryAfter(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "_vpnauth_too_many_certs_retry_after", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Authentication error
   public static var vpnauthTooManyCertsTitle: String { return Localizable.tr("Localizable", "_vpnauth_too_many_certs_title", fallback: "Authentication error") }
   /// Description of the upsell icon button for VoiceOver
@@ -1904,10 +1974,12 @@ public enum Localizable {
   public static func freeConnectionsModalServersDescription(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "free_connections_modal_servers_description", String(describing: p1), fallback: "Proton Free automatically connects you to the fastest available free server from our %@ free countries. This will normally be the closest server to your location.")
   }
+
   /// Plural format key: "%#@VARIABLE@"
   public static func freeConnectionsModalSubtitle(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "free_connections_modal_subtitle", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Modal that lists countries in which servers are available to free users: Title
   public static var freeConnectionsModalTitle: String { return Localizable.tr("Localizable", "free_connections_modal_title", fallback: "Free connections") }
   /// Free tier plan title
@@ -1926,6 +1998,7 @@ public enum Localizable {
   public static func homeFastestConnectionAdditionalCountryCount(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "home_fastest_connection_additional_country_count", String(describing: p1), fallback: "+%@")
   }
+
   /// Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023]
   public static var homeFastestConnectionSelectionDescription: String { return Localizable.tr("Localizable", "home_fastest_connection_selection_description", fallback: "Auto-selected from") }
   /// Title of the "Random" recent connection item
@@ -1942,10 +2015,12 @@ public enum Localizable {
   public static func maximumDevicePlanLimitPart1(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "maximum_device_plan_limit_part_1", String(describing: p1), fallback: "Please disconnect another device to connect to this one or upgrade to %@")
   }
+
   /// Plural format key: " to get up to %#@num_devices@ connected at the same time."
   public static func maximumDevicePlanLimitPart2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "maximum_device_plan_limit_part_2", p1, fallback: "Plural format key: \" to get up to %#@num_devices@ connected at the same time.\"")
   }
+
   /// Common button title
   public static var modalsCommonCancel: String { return Localizable.tr("Localizable", "modals_common_cancel", fallback: "Cancel") }
   /// Common button title
@@ -1968,6 +2043,7 @@ public enum Localizable {
   public static func modalsNewUpsellAllCountriesSubtitle(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle", p1, p2, fallback: "Plural format key: \"Unlock %#@num_servers@ in %#@num_countries@ with VPN Plus.\"")
   }
+
   /// The bold portion of the subtitle of All Countries upsell screen
   public static var modalsNewUpsellAllCountriesSubtitleBold: String { return Localizable.tr("Localizable", "modals_new_upsell_all_countries_subtitle_bold", fallback: "VPN Plus") }
   /// Title of All Countries upsell screen
@@ -2004,6 +2080,7 @@ public enum Localizable {
   public static func modalsUpsellAllCountriesFeatureMultipleDevices(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_multipleDevices", p1, fallback: "Plural format key: \"%#@VARIABLE@\"")
   }
+
   /// Feature of the All Countries upsell screen
   public static var modalsUpsellAllCountriesFeatureNetshield: String { return Localizable.tr("Localizable", "modals_upsell_all_countries_feature_netshield", fallback: "Block ads and malware with NetShield") }
   /// Feature of the All Countries upsell screen
@@ -2012,6 +2089,7 @@ public enum Localizable {
   public static func modalsUpsellAllCountriesTitle(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "modals_upsell_all_countries_title", p1, p2, fallback: "Plural format key: \"Access over %#@num_servers@ in %#@num_countries@\"")
   }
+
   /// Feature of the Moderate NAT upsell screen
   public static var modalsUpsellFeaturesModerateNatDirectConnections: String { return Localizable.tr("Localizable", "modals_upsell_features_moderate_nat_direct_connections", fallback: "NAT type 2 (moderate) optimizes speed and stability by enabling direct connections between devices") }
   /// Feature of the Moderate NAT upsell screen
@@ -2100,14 +2178,17 @@ public enum Localizable {
   public static func planDurationMonth(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "plan_duration_month", p1, fallback: "Plural format key: \"%#@plan_duration_month@\"")
   }
+
   /// Plural format key: "%#@plan_duration_year@"
   public static func planDurationYear(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "plan_duration_year", p1, fallback: "Plural format key: \"%#@plan_duration_year@\"")
   }
+
   /// Plural format key: "%#@plutonium_others@"
   public static func plutoniumOthers(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "plutonium_others", p1, fallback: "Plural format key: \"%#@plutonium_others@\"")
   }
+
   /// Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable
   public static var protonWebsiteUnreachable: String { return Localizable.tr("Localizable", "proton_website_unreachable", fallback: "The Proton VPN website might be temporarily unreachable due to network restrictions. Please use the mobile app to create a new Proton account.") }
   /// Placeholder for the Recovery code text field
@@ -2156,6 +2237,7 @@ public enum Localizable {
   public static func searchUpsellTitle(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "search_upsell_title", p1, fallback: "Plural format key: \"Access all %#@num_countries@\"")
   }
+
   /// Section header in search
   public static var searchUsRegions: String { return Localizable.tr("Localizable", "search_us_regions", fallback: "US regions") }
   /// Sample US regions the user can search for
@@ -2166,10 +2248,12 @@ public enum Localizable {
   public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option1", p1, fallback: "Plural format key: \"Hundreds of servers in %#@num_countries@\"")
   }
+
   /// Plural format key: "Connect up to %#@num_devices@ at the same time"
   public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option2", p1, fallback: "Plural format key: \"Connect up to %#@num_devices@ at the same time\"")
   }
+
   /// Title for the Two-factor authentication screen
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
   /// Placeholder for the Two Factor text field
@@ -2216,6 +2300,7 @@ public enum Localizable {
   public static func upsellCountriesConnectTo(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "upsell_countries_connect_to", p1, fallback: "Plural format key: \"Connect to %#@num_countries@\"")
   }
+
   /// Feature of Countries upsell modal
   public static var upsellCountriesEvenHigherSpeed: String { return Localizable.tr("Localizable", "upsell_countries_even_higher_speed", fallback: "Even higher VPN speed") }
   /// Feature of Countries upsell modal
@@ -2312,14 +2397,17 @@ public enum Localizable {
   public static func vpnFeatureCannotBeSetError(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "vpn_feature_cannot_be_set_error", String(describing: p1), fallback: "%@ setting could not be changed. Please try again later or connect to a different server")
   }
+
   /// Plural format key: "Up to %#@VARIABLE@ at once"
   public static func welcomeScreenFeatureDevices(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "welcome_screen_feature_devices", p1, fallback: "Plural format key: \"Up to %#@VARIABLE@ at once\"")
   }
+
   /// Plural format key: "%#@num_servers@ in %#@num_countries@"
   public static func welcomeScreenFeatureServersCountries(_ p1: Int, _ p2: Int) -> String {
     return Localizable.tr("Localizable", "welcome_screen_feature_servers_countries", p1, p2, fallback: "Plural format key: \"%#@num_servers@ in %#@num_countries@\"")
   }
+
   /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
   public static var welcomeToProtonBannerSubtitle: String { return Localizable.tr("Localizable", "welcome_to_proton_banner_subtitle", fallback: "Your VPN activity is protected by Swiss privacy laws. We’ll never track you online or share your information with third parties.") }
   /// Welcome to Proton screen shown during onboarding. Banner subtitle label.
@@ -2361,6 +2449,7 @@ public enum Localizable {
   /// What's new screen section title
   public static var widgetWhatsNewTitle: String { return Localizable.tr("Localizable", "widget_whats_new_title", fallback: "Widgets are back") }
 }
+
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
 

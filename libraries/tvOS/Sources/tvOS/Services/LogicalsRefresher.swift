@@ -36,7 +36,6 @@ public struct LogicalsRefresher {
 }
 
 public struct LogicalsRefresherProvider {
-
     @Shared(.lastLogicalsRefresh) private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.userLocation) var userLocation: UserLocation?
 

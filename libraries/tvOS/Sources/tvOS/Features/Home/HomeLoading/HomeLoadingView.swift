@@ -20,7 +20,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeLoadingView: View {
-
     @Bindable var store: StoreOf<HomeLoadingFeature>
 
     var body: some View {

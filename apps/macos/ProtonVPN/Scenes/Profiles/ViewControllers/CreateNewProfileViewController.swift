@@ -27,7 +27,6 @@ import Strings
 import Domain
 
 final class CreateNewProfileViewController: NSViewController {
-
     @IBOutlet private weak var profileSettingsLabel: PVPNTextField!
     @IBOutlet private weak var nameLabel: PVPNTextField!
     @IBOutlet private weak var nameTextField: TextFieldWithFocus!
@@ -316,6 +315,7 @@ final class CreateNewProfileViewController: NSViewController {
 }
 
 // MARK: - TextField highlight on focus
+
 extension CreateNewProfileViewController: TextFieldFocusDelegate {
     var shouldBecomeFirstResponder: Bool { true }
 
@@ -325,6 +325,7 @@ extension CreateNewProfileViewController: TextFieldFocusDelegate {
 }
 
 // MARK: - TextField loss of highlight on loss of focus
+
 extension CreateNewProfileViewController: NSTextFieldDelegate {
     func controlTextDidEndEditing(_ obj: Notification) {
         nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)

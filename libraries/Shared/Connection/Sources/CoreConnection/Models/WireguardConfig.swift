@@ -34,9 +34,11 @@ public struct WireguardConfig: Codable, Equatable {
     public var address: String {
         return "10.2.0.2/32"
     }
+
     public var allowedIPs: String {
         return "0.0.0.0/0"
     }
+
     public var persistentKeepalive: Int? { // seconds
         return 25
     }

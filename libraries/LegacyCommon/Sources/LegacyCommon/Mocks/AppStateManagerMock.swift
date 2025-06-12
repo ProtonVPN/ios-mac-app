@@ -26,7 +26,6 @@ import Domain
 
 // Please update as/when needed
 public class AppStateManagerMock: AppStateManager {
-
     public init() { }
 
     public var displayState: AppDisplayState = .disconnected {
@@ -52,7 +51,6 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func cancelConnectionAttempt() {
-        
     }
     
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
@@ -61,15 +59,12 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func prepareToConnect() {
-        
     }
     
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
-        
     }
     
     public func disconnect() {
-        
     }
     
     public func disconnect(completion: @escaping () -> Void) {
@@ -78,7 +73,6 @@ public class AppStateManagerMock: AppStateManager {
     }
     
     public func refreshState() {
-        
     }
     
     public func connectedDate(completion: @escaping (Date?) -> Void) {}
@@ -90,6 +84,5 @@ public class AppStateManagerMock: AppStateManager {
     public func activeConnection() -> ConnectionConfiguration? {
         return mockActiveConnection
     }
-    
 }
 #endif

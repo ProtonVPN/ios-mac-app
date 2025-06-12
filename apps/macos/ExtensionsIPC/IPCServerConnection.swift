@@ -25,7 +25,6 @@ import Foundation
 
 /// Service part working on Extension side of the connection.
 class XPCBaseService: NSObject {
-
     private let machServiceName: String
     let log: (String) -> Void
 
@@ -45,7 +44,6 @@ class XPCBaseService: NSObject {
         newListener.resume()
         listener = newListener
     }
-
 }
 
 extension XPCBaseService: ProviderCommunication {

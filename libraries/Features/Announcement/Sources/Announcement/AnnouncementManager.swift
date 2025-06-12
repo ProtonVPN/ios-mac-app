@@ -92,7 +92,6 @@ extension AnnouncementManager {
 /// Informs if there are any unread current announcements.
 /// Marks announcements as read.
 public class AnnouncementManagerImplementation: AnnouncementManager {
-    
     @Dependency(\.announcementStorage) private var announcementStorage: AnnouncementStorage
 
     public func shouldShowAnnouncementsIcon() -> Bool {

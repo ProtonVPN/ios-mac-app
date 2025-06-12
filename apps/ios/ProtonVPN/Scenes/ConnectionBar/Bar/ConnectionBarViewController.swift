@@ -25,7 +25,6 @@ import ProtonCoreUIFoundations
 import Strings
 
 class ConnectionBarViewController: UIViewController {
-    
     @IBOutlet weak var notConnectedLabel: UILabel!
     @IBOutlet weak var connectedLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!

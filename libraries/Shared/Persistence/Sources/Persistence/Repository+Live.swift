@@ -25,7 +25,6 @@ import Domain
 import Ergonomics
 
 extension ServerRepository {
-
     public static var liveValue: ServerRepository {
         @Dependency(\.databaseConfiguration) var config
 

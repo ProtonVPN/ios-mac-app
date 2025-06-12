@@ -29,7 +29,6 @@ public typealias OptionalErrorBlock = ((Error?) -> Void)
 public typealias MigrationBlock = (( _ version: String, _ completion: @escaping OptionalErrorBlock) -> Void)
 
 public protocol MigrationManagerProtocol {
-    
     init( _ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String )
     
     func addCheck( _ version: String, block: @escaping MigrationBlock ) -> MigrationManagerProtocol
@@ -42,7 +41,6 @@ public protocol MigrationManagerFactory {
 }
 
 public class MigrationManager: NSObject, MigrationManagerProtocol {
-    
     private let currentVersion: SemanticVersion
     private let propertiesManager: PropertiesManagerProtocol
     

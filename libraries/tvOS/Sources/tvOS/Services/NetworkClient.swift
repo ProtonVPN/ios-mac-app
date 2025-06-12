@@ -28,7 +28,6 @@ struct NetworkClient: Sendable {
 
 @CasePathable
 public enum SessionAuthResult: Equatable {
-
     case authenticated(SessionAuthResponse)
 
     /// When we receive code 422 (invalid selector), return this instead of throwing an error

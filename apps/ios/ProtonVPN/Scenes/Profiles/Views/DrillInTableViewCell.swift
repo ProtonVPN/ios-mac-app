@@ -23,7 +23,6 @@
 import UIKit
 
 class DrillInTableViewCell: UITableViewCell {
-
     @IBOutlet weak var keyLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     
@@ -35,5 +34,4 @@ class DrillInTableViewCell: UITableViewCell {
         valueLabel.textColor = .weakTextColor()
         selectionStyle = .none
     }
-    
 }

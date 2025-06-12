@@ -19,7 +19,6 @@
 import Foundation
 
 public extension OfferPanel {
-
     enum Mode {
         case image(ImagePanel)
         case legacy(LegacyPanel)

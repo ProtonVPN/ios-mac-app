@@ -26,7 +26,6 @@ import Domain
 import DomainTestSupport
 
 class PropertiesManagerTests: XCTestCase {
-
     var sut: PropertiesManagerProtocol!
     private var userDefaults: UserDefaults!
 

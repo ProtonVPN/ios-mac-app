@@ -138,7 +138,6 @@ class BugReportRobot {
     public let verify = Verify()
     
     class Verify {
-        
         @discardableResult
         func reportAnIssueScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[bugReportHeading].exists)

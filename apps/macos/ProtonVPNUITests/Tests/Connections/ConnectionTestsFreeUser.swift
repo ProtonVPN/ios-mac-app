@@ -22,7 +22,6 @@ import Modals
 import UITestsHelpers
 
 class ConnectionTestsFreeUser: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     private let countriesSelectionRobot = CountriesSectionRobot()
@@ -65,7 +64,6 @@ class ConnectionTestsFreeUser: ProtonVPNUITests {
     
     @MainActor
     func testChangeServer() {
-        
         mainRobot
             .quickConnectToAServer()
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, userType: .Free)

@@ -21,7 +21,6 @@ import Foundation
 
 @Reducer
 public struct FreeConnectionInfoFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var countryCodes: [String]

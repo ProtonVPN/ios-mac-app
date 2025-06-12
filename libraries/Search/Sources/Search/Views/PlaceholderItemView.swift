@@ -20,7 +20,6 @@ import Foundation
 import UIKit
 
 final class PlaceholderItemView: UIView {
-
     // MARK: - Outlets
 
     @IBOutlet private weak var titleLabel: UILabel!

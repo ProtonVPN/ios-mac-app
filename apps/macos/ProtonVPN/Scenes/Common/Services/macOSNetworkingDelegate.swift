@@ -40,6 +40,7 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 
     func set(apiService: APIService) {}
 }
+
 // swiftlint:enable type_name
 
 extension macOSNetworkingDelegate {

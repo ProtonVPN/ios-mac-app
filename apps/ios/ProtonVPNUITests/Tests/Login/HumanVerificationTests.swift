@@ -24,7 +24,6 @@ import ProtonCoreQuarkCommands
 import fusion
 
 class HumanVerificationTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     override func setUp() {
@@ -36,7 +35,6 @@ class HumanVerificationTests: ProtonVPNUITests {
     }
     
     func testLoginWithHumanVerification() throws {
-        
         let user = User(name: StringUtils.randomAlphanumericString(length: 5), password: "123")
         try quarkCommands.userCreate(user: user)
         

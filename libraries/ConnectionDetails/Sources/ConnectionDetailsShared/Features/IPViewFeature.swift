@@ -24,7 +24,6 @@ import Strings
 
 @Reducer
 public struct IPViewFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {

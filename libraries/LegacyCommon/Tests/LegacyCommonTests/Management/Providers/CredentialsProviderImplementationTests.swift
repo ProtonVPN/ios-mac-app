@@ -24,7 +24,6 @@ import XCTest
 @testable import LegacyCommon
 
 class CredentialsProviderImplementationTests: XCTestCase {
-
     func testReturnsTierSavedInKeychain() throws {
         let testPairs: [(String, Int)] = [
             ("free", .freeTier),

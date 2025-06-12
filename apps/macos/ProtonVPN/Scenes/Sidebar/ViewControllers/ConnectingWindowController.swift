@@ -23,7 +23,6 @@
 import Cocoa
 
 class ConnectingWindowController: WindowController {
-        
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -52,10 +51,8 @@ class ConnectingWindowController: WindowController {
 }
 
 class ConnectingOverlayWindow: NSWindow {
-    
     // This makes `addCursorRect` in `ConnectingOverlayButton` work.
     override var canBecomeKey: Bool {
         return true
     }
-    
 }

@@ -29,7 +29,6 @@ fileprivate let editButton = "Edit"
 fileprivate let deleteButton = "Delete"
 
 class ManageProfilesRobot: CoreElements {
-    
     func createProfile() -> CreateProfileRobot {
         button(createProfileButton).firstMatch().tap()
         return CreateProfileRobot()
@@ -48,7 +47,6 @@ class ManageProfilesRobot: CoreElements {
     let verify = Verify()
     
     class Verify: Verifier {
-        
         @discardableResult
         func checkProfileOverViewIsOpen() -> ManageProfilesRobot {
             windows(Localizable.profilesOverview).checkExists()

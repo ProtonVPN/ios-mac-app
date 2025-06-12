@@ -26,7 +26,6 @@ import LegacyCommon
 import Strings
 
 class ServersFeaturesInformationVC: UIViewController {
-
     @IBOutlet weak var titleLbl: UILabel!
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var featuresTableView: UITableView!

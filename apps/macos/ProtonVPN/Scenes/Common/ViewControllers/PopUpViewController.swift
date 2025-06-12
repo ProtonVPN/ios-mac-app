@@ -25,7 +25,6 @@ import Theme
 import Ergonomics
 
 class PopUpViewController: NSViewController {
-    
     @IBOutlet weak var bodyView: NSView!
     @IBOutlet weak var popUpIcon: NSImageView!
     @IBOutlet weak var popUpDescription: NSTextField!
@@ -148,8 +147,8 @@ class PopUpViewController: NSViewController {
 }
 
 // MARK: - Equatable
+
 extension PopUpViewController {
-    
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PopUpViewController else {
             return false

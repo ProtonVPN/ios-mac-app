@@ -28,7 +28,6 @@ import SharedViews
 import ComposableArchitecture
 
 public struct ConnectWidgetView : View {
-
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
@@ -125,7 +124,6 @@ private struct HeaderView: View {
         }
         .frame(maxWidth: .infinity, idealHeight: 40)
     }
-
 }
 
 private struct ServerInfoView: View {
@@ -159,7 +157,6 @@ private struct ServerInfoView: View {
 }
 
 private struct RecentsView: View {
-
     private static let recentsHeight: CGFloat = 90
 
     @Environment(\.widgetFamily) var widgetFamily

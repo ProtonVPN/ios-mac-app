@@ -22,7 +22,6 @@ import Foundation
 
 @Reducer
 public struct ChangeServerFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var dateFinished: Date

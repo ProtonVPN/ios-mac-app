@@ -21,7 +21,6 @@ import ComposableArchitecture
 @testable import tvOS
 
 final class WelcomeInfoFeatureTests: XCTestCase {
-
     @MainActor
     func testCreateAccount() async {
         let store = TestStore(initialState: WelcomeInfoFeature.State.createAccount) {

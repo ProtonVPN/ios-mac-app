@@ -31,7 +31,6 @@ enum ZoomType {
 }
 
 class ZoomButton: HoverDetectionButton {
-    
     let zoomType: ZoomType
     let imageView = NSImageView()
     
@@ -86,7 +85,6 @@ class ZoomButton: HoverDetectionButton {
         imageView.frame = imageFrame
         imageView.needsDisplay = true
     }
-    
 }
 
 extension ZoomButton: CustomStyleContext {

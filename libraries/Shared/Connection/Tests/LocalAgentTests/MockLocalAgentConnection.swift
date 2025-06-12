@@ -25,7 +25,6 @@ import class GoLibs.LocalAgentFeatures
 @testable import LocalAgent
 
 class MockAgentConnection: LocalAgentConnection {
-
     var currentState: LocalAgentState
     var status: LocalAgentStatusMessage?
 

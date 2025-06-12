@@ -25,7 +25,6 @@ import Theme
 import Ergonomics
 
 class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         

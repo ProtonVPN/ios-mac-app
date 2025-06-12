@@ -12,7 +12,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
 
 class LoginTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
     
     private lazy var twopassusercredentials = getCredentials(from: "twopassusercredentials")
@@ -27,7 +26,6 @@ class LoginTests: ProtonVPNUITests {
     
     @MainActor
     func testLoginWithIncorrectCredentials() {
-
         let username = twopassusercredentials[0].username
         let userpassword = "wrong_password"
 
@@ -50,7 +48,6 @@ class LoginTests: ProtonVPNUITests {
     
     @MainActor
     func testLoginAsSubuserWithNoConnectionsAssigned() {
-
         let subusercredentials = getCredentials(from: "subusercredentials")
 
         loginRobot
@@ -62,7 +59,6 @@ class LoginTests: ProtonVPNUITests {
     
     @MainActor
     func testLoginWithTwoPassUser() {
-        
         loginRobot
             .enterCredentials(twopassusercredentials[0])
             .signIn(robot: HomeRobot.self)
@@ -87,7 +83,6 @@ class LoginTests: ProtonVPNUITests {
     
     @MainActor
     func testLoginWithTwoPassAnd2FAUser() async {
-
         let twopasstwofausercredentials = getCredentials(from: "twopasstwofausercredentials")
 
         await loginRobot

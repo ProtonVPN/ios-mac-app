@@ -20,7 +20,6 @@ import Foundation
 import os.log
 
 extension String {
-    
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
@@ -36,5 +35,4 @@ extension String {
     func hasMatches(for regex: String) -> Bool {
         return !matches(for: regex).isEmpty
     }
-    
 }

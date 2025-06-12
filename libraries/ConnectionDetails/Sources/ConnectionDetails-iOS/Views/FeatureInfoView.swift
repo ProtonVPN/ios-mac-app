@@ -28,7 +28,6 @@ import Theme
 import VPNAppCore
 
 struct FeatureInfoView: View {
-
     let icon: Image
     let title: String
     let text: String
@@ -111,7 +110,6 @@ extension FeatureInfoView {
         title = Localizable.connectionDetailsFeatureTitleSecureCore
         text = Localizable.connectionDetailsFeatureDescriptionSecureCore
     }
-
 }
 
 // MARK: - Previews

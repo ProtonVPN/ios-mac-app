@@ -31,7 +31,6 @@ public protocol DynamicBugReportManagerFactory {
 }
 
 public class DynamicBugReportManager {
-    
     public var model: BugReportModel = .mock
     public var prefilledEmail: String {
         get {
@@ -41,6 +40,7 @@ public class DynamicBugReportManager {
             self.propertiesManager.reportBugEmail = newValue
         }
     }
+
     public var prefilledUsername: String {
         return AuthKeychain.default.username ?? ""
     }
@@ -173,7 +173,6 @@ public class DynamicBugReportManager {
     
     // BugReportDelegate
     public var updateAvailabilityChanged: ((Bool) -> Void)?
-    
 }
 
 extension DynamicBugReportManager: BugReportDelegate {

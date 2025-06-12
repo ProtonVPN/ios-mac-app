@@ -26,7 +26,6 @@ import Ergonomics
 import Strings
 
 class WarningPopupViewController: NSViewController {
-
     @IBOutlet weak var bodyView: NSView!
     @IBOutlet weak var warningImage: NSImageView!
     @IBOutlet weak var warningDescriptionLabel: NSTextField!

@@ -23,7 +23,6 @@ import Foundation
 import VPNShared
 
 public class ServerLocation: NSObject, NSCoding, Codable {
-    
     public let lat: Double
     public let long: Double
     
@@ -54,6 +53,7 @@ public class ServerLocation: NSObject, NSCoding, Codable {
     }
     
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let lat = "latKey"
         static let long = "longKey"

@@ -43,6 +43,7 @@ final class UserDefaultsReviewDataStorage: ReviewDataStorage {
             userDefaults.set(newValue, forKey: Keys.successConnectionsInARowCount.rawValue)
         }
     }
+
     var lastReviewShownTimestamp: Date? {
         get {
             userDefaults.date(forKey: Keys.lastReviewShownTimestamp.rawValue)
@@ -51,6 +52,7 @@ final class UserDefaultsReviewDataStorage: ReviewDataStorage {
             userDefaults.set(newValue, forKey: Keys.lastReviewShownTimestamp.rawValue)
         }
     }
+
     var activeConnectionStartTimestamp: Date? {
         get {
             userDefaults.date(forKey: Keys.activeConnectionStartTimestamp.rawValue)
@@ -59,6 +61,7 @@ final class UserDefaultsReviewDataStorage: ReviewDataStorage {
             userDefaults.set(newValue, forKey: Keys.activeConnectionStartTimestamp.rawValue)
         }
     }
+
     var firstSuccessConnectionStartTimestamp: Date? {
         get {
             userDefaults.date(forKey: Keys.firstSuccessConnectionStartTimestamp.rawValue)

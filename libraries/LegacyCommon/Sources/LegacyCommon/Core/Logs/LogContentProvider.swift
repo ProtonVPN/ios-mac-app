@@ -34,7 +34,6 @@ public protocol LogContentProvider {
 #if os(iOS)
 /// Create and return a proper LogData implementation for a given log source
 public class IOSLogContentProvider: LogContentProvider {
-
     private let folder: URL
     private let appGroup: String
     private let wireguardProtocolFactory: WireguardProtocolFactory
@@ -63,14 +62,12 @@ public class IOSLogContentProvider: LogContentProvider {
             return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
         }
     }
-
 }
 
 #elseif os(macOS)
 
 /// Create and return a proper LogData implementation for a given log source
 public class MacOSLogContentProvider: LogContentProvider {
-
     private let folder: URL
     private let wireguardProtocolFactory: WireguardProtocolFactory
 
@@ -89,9 +86,7 @@ public class MacOSLogContentProvider: LogContentProvider {
 
         case .wireguard:
             return NELogContent(neLogProvider: wireguardProtocolFactory)
-            
         }
     }
-
 }
 #endif

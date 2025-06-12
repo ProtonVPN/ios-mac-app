@@ -46,7 +46,6 @@ struct MockDataTask: DataTaskProtocol {
 }
 
 protocol MockConnectionWriteDelegate {
-
 }
 
 class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {

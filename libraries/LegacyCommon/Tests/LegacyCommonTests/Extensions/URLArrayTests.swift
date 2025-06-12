@@ -24,9 +24,7 @@ import XCTest
 @testable import LegacyCommon
 
 class URLArrayTests: XCTestCase {
-
     func testReturnsOnlyReachableFiles() {
-        
         // Existing files
         let testFile1 = Bundle.module.url(forResource: "test_log_1", withExtension: "log")!
         let testFile2 = Bundle.module.url(forResource: "test_log_2", withExtension: "log")!
@@ -39,5 +37,4 @@ class URLArrayTests: XCTestCase {
         XCTAssert(allFiles.count == 3)
         XCTAssert(allFiles.reachable().count == 2)
     }
-
 }

@@ -21,7 +21,6 @@ import Domain
 import Strings
 
 extension ConnectionProtocol: LocalizedStringConvertible {
-
     public var localizedDescription: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
@@ -33,7 +32,6 @@ extension ConnectionProtocol: LocalizedStringConvertible {
 }
 
 extension VpnProtocol: LocalizedStringConvertible {
-
     public var localizedDescription: String {
         var string: String
         switch self {

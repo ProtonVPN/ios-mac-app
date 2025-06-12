@@ -24,7 +24,6 @@ import Domain
 
 /// Wrapper around `DatabaseMigrator` that registers all known `SchemaVersion`s
 struct Migrator {
-
     static let `default` = Migrator() // A single instance is able to handle migrating to any known version
 
     private let migrator: DatabaseMigrator

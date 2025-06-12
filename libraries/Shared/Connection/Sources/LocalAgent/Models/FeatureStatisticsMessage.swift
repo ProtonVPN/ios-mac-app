@@ -33,7 +33,6 @@ public struct FeatureStatisticsMessage: Sendable {
 }
 
 extension FeatureStatisticsMessage {
-
     init(localAgentStatsDictionary: LocalAgentStringToValueMap) throws {
         let statsKey = localAgentConsts.statsNetshieldLevelKey
         guard let netShieldDictionary = localAgentStatsDictionary.getMap(statsKey) else {

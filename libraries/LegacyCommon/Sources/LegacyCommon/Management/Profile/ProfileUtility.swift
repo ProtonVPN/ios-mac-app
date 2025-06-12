@@ -30,7 +30,6 @@ enum ProfileUtilityOperationOutcome {
 }
 
 public final class ProfileUtility {
-    
     public static func index(for serverType: ServerType) -> Int {
         switch serverType {
         case .standard:
@@ -142,6 +141,7 @@ public final class ProfileUtility {
     }
     
     // MARK: - Private static functions
+
     private static func indexOfProfile(_ profile: Profile, in profiles: [Profile]) -> Int? {
         for (index, element) in profiles.enumerated() where element.id == profile.id {
             return index

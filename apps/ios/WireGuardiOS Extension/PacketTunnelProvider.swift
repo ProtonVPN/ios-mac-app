@@ -233,7 +233,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         newVpnCertificateFeatures: VPNConnectionFeatures?,
         transport: WireGuardTransport?,
         completionHandler: @escaping (Error?) -> Void) {
-
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
@@ -533,7 +532,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
 #endif
-
 }
 
 extension PacketTunnelProvider: ServerStatusRefreshDelegate {

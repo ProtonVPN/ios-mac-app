@@ -32,7 +32,6 @@ enum AnnotationViewState {
 }
 
 protocol AnnotationViewModel {
-
     var countryCode: String { get }
     var coordinate: CLLocationCoordinate2D { get }
     
@@ -73,7 +72,6 @@ protocol AnnotationViewModel {
 }
 
 extension AnnotationViewModel {
-    
     var connectedUiState: Bool { // ui connected state
         return isConnected || isConnecting
     }

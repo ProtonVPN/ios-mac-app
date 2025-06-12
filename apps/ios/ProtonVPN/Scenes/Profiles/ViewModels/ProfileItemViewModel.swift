@@ -55,7 +55,6 @@ final class ProfileItemViewModel {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     var isConnected: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connected, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
@@ -78,7 +77,6 @@ final class ProfileItemViewModel {
 
     var isConnecting: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-
             guard vpnGateway.connection == .connecting, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
             return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
@@ -237,6 +235,7 @@ final class ProfileItemViewModel {
     }
 
     // MARK: Descriptors
+
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
         return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
@@ -251,6 +250,7 @@ final class ProfileItemViewModel {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {

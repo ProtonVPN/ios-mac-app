@@ -24,7 +24,6 @@ import Cocoa
 import Ergonomics
 
 class ProfileSectionViewController: NSViewController {
-    
     fileprivate struct CellIdentifier {
         static let profile = "Profile"
         static let footer = "Footer"
@@ -89,14 +88,12 @@ class ProfileSectionViewController: NSViewController {
 }
 
 extension ProfileSectionViewController: NSTableViewDataSource {
-    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return viewModel.cellCount
     }
 }
 
 extension ProfileSectionViewController: NSTableViewDelegate {
-    
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         return viewModel.cellHeight(forRow: row)
     }

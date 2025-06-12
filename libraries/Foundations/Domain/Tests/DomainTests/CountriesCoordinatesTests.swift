@@ -20,7 +20,6 @@ import XCTest
 @testable import Domain
 
 final class CountriesCoordinatesTests: XCTestCase {
-
     func testCenterCoordinates() {
         XCTAssertEqual(CountriesCoordinates.centerCoordinates.count, 244)
         for country in CountriesCoordinates.centerCoordinates {

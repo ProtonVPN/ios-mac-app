@@ -53,7 +53,6 @@ fileprivate let troubleshootgButton = "Troubleshoot"
 fileprivate let statusLabel = "statusLabel"
 
 class BugReportRobot {
-    
     func openBugReport() -> BugReportRobot {
         app.buttons[bugReportButton].click()
         return BugReportRobot()
@@ -131,7 +130,6 @@ class BugReportRobot {
     public let verify = Verify()
     
     class Verify {
-        
         @discardableResult
         func reportAnIssueScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[stepOneTitle].exists)

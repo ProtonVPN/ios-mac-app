@@ -29,7 +29,6 @@ protocol ExtensionAlertServiceDelegate: AnyObject {
 }
 
 class ExtensionAlertService: CoreAlertService {
-    
     weak var delegate: ExtensionAlertServiceDelegate?
     
     func push(alert: SystemAlert) {

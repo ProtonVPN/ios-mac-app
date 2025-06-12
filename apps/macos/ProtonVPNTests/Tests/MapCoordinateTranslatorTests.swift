@@ -27,7 +27,6 @@ import Ergonomics
 @testable import ProtonVPN
 
 class MapCoordinateTranslatorTests: XCTestCase {
-
     func testNegativeLatPositiveLong() {
         let nzLocation = CLLocationCoordinate2D(latitude: -41.837112, longitude: 172.793343)
         let nzTranslatedCoordinate = MapCoordinateTranslator.mapImageCoordinate(from: nzLocation)
@@ -52,7 +51,6 @@ class MapCoordinateTranslatorTests: XCTestCase {
         let epsilon = 0.000000001
         XCTAssert(fabs(bjTranslatedCoordinate.latitude - bjTestTranslatedCoordinate.latitude) < epsilon)
         XCTAssert(fabs(bjTranslatedCoordinate.longitude - bjTestTranslatedCoordinate.longitude) < epsilon)
-        
     }
     
     // Map edges aren't important at this stage

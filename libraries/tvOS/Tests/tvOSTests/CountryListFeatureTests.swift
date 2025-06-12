@@ -21,7 +21,6 @@ import ComposableArchitecture
 @testable import tvOS
 
 final class CountryListFeatureTests: XCTestCase {
-
     @MainActor
     func testSelectItemAndDoNothing() async {
         let store = TestStore(initialState: CountryListFeature.State()) {

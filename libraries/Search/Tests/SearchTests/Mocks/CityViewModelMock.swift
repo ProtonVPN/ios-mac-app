@@ -42,7 +42,6 @@ final class CityViewModelMock: CityViewModel {
     var connectionChanged: (() -> Void)?
 
     func connectAction() {
-
     }
 
     init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {

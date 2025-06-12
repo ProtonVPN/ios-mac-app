@@ -21,7 +21,6 @@ import NetworkExtension
 
 @available(tvOS 17.0, *)
 extension NETunnelProviderProtocol {
-
     fileprivate enum CustomKeys: String, CaseIterable {
         case connectedLogicalIdKey = "PVPNLogicalID"
         case connectedServerIpIdKey = "PVPNServerIpID"

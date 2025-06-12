@@ -60,7 +60,6 @@ class ProfilesSectionViewModel {
         profileManager: ProfileManager,
         sysexManager: SystemExtensionManager
     ) {
-
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
@@ -115,6 +114,7 @@ class ProfilesSectionViewModel {
     }
     
     // MARK: - Private functions
+
     @objc private func profilesChanged() {
         contentChanged?()
     }

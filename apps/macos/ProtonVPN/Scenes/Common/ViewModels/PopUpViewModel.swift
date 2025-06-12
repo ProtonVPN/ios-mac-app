@@ -27,7 +27,6 @@ import Strings
 import VPNAppCore
 
 final class PopUpViewModel: NSObject {
-
     let inAppLinkManager: InAppLinkManager?
 
     var title: String {
@@ -38,15 +37,19 @@ final class PopUpViewModel: NSObject {
             return alert.title ?? ""
         }
     }
+
     var confirmButtonTitle: String {
         return action(0)?.title ?? Localizable.ok
     }
+
     var confirmationType: PrimaryActionType {
         return action(0)?.style ?? .confirmative
     }
+
     var cancelButtonTitle: String? {
         return action(1)?.title
     }
+
     var cancelType: PrimaryActionType {
         return action(1)?.style ?? .cancel
     }
@@ -63,6 +66,7 @@ final class PopUpViewModel: NSObject {
     private var onConfirm: (() -> Void)? {
         return action(0)?.handler
     }
+
     private var onCancel: (() -> Void)? {
         return action(1)?.handler
     }
@@ -110,7 +114,6 @@ final class PopUpViewModel: NSObject {
 }
 
 extension PopUpViewModel: NSTextViewDelegate {
-    
     func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
         guard let link = link as? String, let inAppLinkManager = inAppLinkManager else { return true }
         
@@ -126,8 +129,8 @@ extension PopUpViewModel: NSTextViewDelegate {
 }
 
 // MARK: - Equatable
+
 extension PopUpViewModel {
-    
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PopUpViewModel else {
             return false

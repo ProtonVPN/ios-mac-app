@@ -51,7 +51,6 @@ enum LocalAgentState {
 }
 
 extension LocalAgentState {
-
     // swiftlint:disable cyclomatic_complexity
     static func from(string: String) -> LocalAgentState? {
         guard let consts = LocalAgentConstants() else {

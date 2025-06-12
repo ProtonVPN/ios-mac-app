@@ -23,7 +23,6 @@
 import Cocoa
 
 class PVPNTextField: NSTextField {
-    
     override var attributedStringValue: NSAttributedString {
         didSet {
             setBackgroundColor()

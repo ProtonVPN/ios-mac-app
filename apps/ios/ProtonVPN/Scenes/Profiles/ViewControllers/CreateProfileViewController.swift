@@ -26,7 +26,6 @@ import LegacyCommon
 import Strings
 
 class CreateProfileViewController: UITableViewController {
-    
     private var genericDataSource: GenericTableViewDataSource?
     
     var viewModel: CreateOrEditProfileViewModel? {
@@ -64,6 +63,7 @@ class CreateProfileViewController: UITableViewController {
     }
     
     // MARK: - Private functions
+
     private func setupView() {
         self.title = Localizable.createNewProfile
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localizable.save, style: .plain, target: self, action: #selector(saveTapped))

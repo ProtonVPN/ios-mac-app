@@ -78,7 +78,6 @@ fileprivate let persistentFileUrl = FileManager.default.containerURL(forSecurity
 
 public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Default {
     static var vpnConnectionStatus: Self {
-
         return Self[
             .fileStorage(
                 persistentFileUrl,

@@ -99,6 +99,7 @@ extension PropertiesManagerProtocol {
     }
     
     // MARK: - Private
+
     private func setLoginItem(enabled: Bool) {
         if #available(macOS 13.0, *) {
             if enabled {

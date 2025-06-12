@@ -24,7 +24,6 @@ import Cocoa
 import Ergonomics
 
 class ColorPickerViewController: NSViewController {
-    
     @IBOutlet weak var collectionView: NSCollectionView!
     
     private let circleCellWidth: CGFloat = 20.0
@@ -93,7 +92,6 @@ class ColorPickerViewController: NSViewController {
 }
 
 extension ColorPickerViewController: NSCollectionViewDataSource {
-    
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.colorCount
     }
@@ -106,7 +104,6 @@ extension ColorPickerViewController: NSCollectionViewDataSource {
 }
 
 extension ColorPickerViewController: NSCollectionViewDelegate {
-    
     func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
         if let index = indexPaths.first?.item {
             viewModel.selectedColorIndex = index

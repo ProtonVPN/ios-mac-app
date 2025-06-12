@@ -20,9 +20,11 @@ public extension Int {
     var isPaidTier: Bool {
         !isFreeTier
     }
+
     var isFreeTier: Bool {
         self == Int.freeTier
     }
+
     static var freeTier: Int = VpnTiers.free
     static var paidTier: Int = VpnTiers.plus
     static var internalTier: Int = VpnTiers.internal // Dev-only

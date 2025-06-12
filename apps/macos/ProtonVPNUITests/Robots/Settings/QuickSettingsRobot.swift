@@ -36,7 +36,6 @@ fileprivate let modalTitle = "TitleLabel"
 fileprivate let modalDescription = "DescriptionLabel"
 
 class QuickSettingsRobot: CoreElements {
-    
     func secureCoreDropdown() -> QuickSettingsRobot {
         button(secureCoreButton).tapInCenter()
         return QuickSettingsRobot()
@@ -75,7 +74,6 @@ class QuickSettingsRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func checkDropdownIsOpen() -> QuickSettingsRobot {
             staticText(qsTitle).checkExists()

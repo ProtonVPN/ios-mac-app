@@ -25,7 +25,6 @@ import UIKit
 import LegacyCommon
 
 class CountryAnnotation: AnnotationView {
-
     private let flagView: UIImageView
     private let flagOverlayView: UIView
     private let flagBoarderView: UIButton

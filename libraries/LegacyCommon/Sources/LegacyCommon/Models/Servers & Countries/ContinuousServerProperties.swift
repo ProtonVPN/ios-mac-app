@@ -26,7 +26,6 @@ import Domain
 public typealias ContinuousServerPropertiesDictionary = [String: ContinuousServerProperties]
 
 extension ContinuousServerProperties {
-
     public init(dic: JSONDictionary) throws {
         self.init(
             serverId: try dic.stringOrThrow(key: "ID"), // "ID": "ABC",

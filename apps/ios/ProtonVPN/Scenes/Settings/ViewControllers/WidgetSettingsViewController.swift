@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class WidgetSettingsViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
     
     var genericDataSource: GenericTableViewDataSource?

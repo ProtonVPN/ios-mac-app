@@ -22,7 +22,6 @@ import Dependencies
 @testable import LegacyCommon
 
 public class ServerChangeAuthorizerTests: XCTestCase {
-
     func testAuthorizesServerChangeWhenStackIsEmpty() {
         let sut = ServerChangeAuthorizerImplementation()
         let now = Date()

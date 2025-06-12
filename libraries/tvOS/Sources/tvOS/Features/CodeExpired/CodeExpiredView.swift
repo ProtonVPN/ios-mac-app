@@ -20,7 +20,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct CodeExpiredView: View {
-
     var store: StoreOf<CodeExpiredFeature>
 
     @FocusState var focusState: Bool

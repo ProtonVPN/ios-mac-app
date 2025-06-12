@@ -171,5 +171,4 @@ class Keychain {
 
         return query
     }
-
 }

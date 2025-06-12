@@ -25,7 +25,6 @@ import Ergonomics
 
 @MainActor
 final class SharedPropertiesFeatureTests: XCTestCase {
-
     func testFetchesLoadsOnIPChange() async {
         @Shared(.connectionState) var connectionState = .disconnected
         let loadsFetched = XCTestExpectation(description: "We should hit the API to fetch server loads")

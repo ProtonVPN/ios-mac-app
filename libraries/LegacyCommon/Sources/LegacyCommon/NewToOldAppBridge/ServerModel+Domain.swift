@@ -21,7 +21,6 @@ import Foundation
 import Domain
 
 extension VPNServer {
-
     /// Instantiates a domain model from legacy model (DTO)
     public init(legacyModel: ServerModel) {
         self.init(
@@ -46,11 +45,9 @@ extension VPNServer {
             endpoints: legacyModel.ips.map { ServerEndpoint(legacyModel: $0) }
         )
     }
-
 }
 
 extension ServerModel {
-
     /// Instantiates a legacy model (DTO) object from a domain model
     convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
         self.init(
@@ -88,7 +85,6 @@ extension ServerModel {
 }
 
 extension Domain.ServerEndpoint {
-
     /// Instantiates a legacy model (DTO) object from a domain model
     init(legacyModel: ServerIp) {
         self.init(
@@ -105,7 +101,6 @@ extension Domain.ServerEndpoint {
 }
 
 extension ServerIp {
-
     /// Instantiates a legacy model (DTO) object from a domain model
     convenience init(endpoint: Domain.ServerEndpoint) {
         self.init(
@@ -125,7 +120,6 @@ extension ServerIp {
 /// When we get around to moving `ServerModel` DTO to an API/Networking module, or if we convert all bundled server list
 /// JSONs to encode `VPNServer` rather than `ServerModel`, we can safely remove this enum.
 public enum LegacyServerLoader {
-
     /// This used to live in `ServerStorageMock`. It's used to parse bundled server list responses for testing purposes.
     public static func parseFromJsonFile(_ fileName: String, bundle: Bundle) -> [VPNServer] {
         guard let serverJsonPath = bundle.path(forResource: fileName, ofType: "json") else {

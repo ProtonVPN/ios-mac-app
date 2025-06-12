@@ -24,7 +24,6 @@ import Cocoa
 import LegacyCommon
 
 class ColorPickerCircle: NSView {
-    
     private let radiusIndentation: CGFloat = 3
     private let selectionBorderWidth: CGFloat = 3
     private let selectionBorderColor = NSColor.white.cgColor

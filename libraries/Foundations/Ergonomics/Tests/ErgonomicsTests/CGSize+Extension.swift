@@ -19,7 +19,6 @@
 import XCTest
 
 final class CGSize_Extension: XCTestCase {
-
     func testSmallerImage() throws {
         let imageSize = CGSize(width: 100, height: 100)
         let maxSize = CGSize(width: 101, height: 101)

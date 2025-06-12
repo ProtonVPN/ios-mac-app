@@ -30,7 +30,6 @@ import Domain
 /// new user interface/new API functionality. Future extensions could include:
 ///  - Servers interface for adding/updating/deleting physical servers by ID without touching logicals
 public struct ServerRepository: DependencyKey {
-
     public var serverCount: () -> Int
     public var countryCount: () -> Int
 

@@ -19,7 +19,6 @@
 import XCTest
 
 final class ProtonVPNUITestsLaunchTests: XCTestCase {
-
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }

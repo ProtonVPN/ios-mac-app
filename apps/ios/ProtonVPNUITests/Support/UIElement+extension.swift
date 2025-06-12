@@ -20,7 +20,6 @@
 import XCTest
 
 extension UIElement {
-
     /**
      Clears the text from the targeted UI element.
      Calls `clearText()` on the located UI element and returns the current instance of `UIElement`.

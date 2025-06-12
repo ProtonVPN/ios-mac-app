@@ -24,7 +24,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class MetadataTests: TestIsolatedDatabaseTestCase {
-
     func testStoreRetrieveAndDeleteMetadata() throws {
         let valueToStore = DateFormatter.imf.string(from: Date())
         repository.setMetadata(.lastModifiedFree, valueToStore)

@@ -171,5 +171,4 @@ struct FeaturesView: View {
             Text(value)
         }
     }
-
 }

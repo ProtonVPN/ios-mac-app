@@ -27,7 +27,6 @@ import CoreConnectionTestSupport
 @testable import CertificateAuthentication
 
 final class CertificateAuthenticationTests: XCTestCase {
-
     /// If we don't have keys at the point where we are trying to load our certificate to connect to local agent, then
     /// the tunnel has already been started. If we generate keys at this point, then the certificate won't match the
     /// private key the tunnel was started/configured with. We should abort the connection and the keys will be

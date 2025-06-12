@@ -23,7 +23,6 @@
 import UIKit
 
 class BannerViewCell: UITableViewCell {
-
     @IBOutlet weak var roundedBackgroundView: UIView!
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -54,5 +53,4 @@ class BannerViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
     }
-    
 }

@@ -31,7 +31,6 @@ import Strings
 import Ergonomics
 
 struct SystemExtensionTutorialView: View {
-
     static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"
     let videoTourModel = VideoTourModel(videoFile: .systemExtension)
 

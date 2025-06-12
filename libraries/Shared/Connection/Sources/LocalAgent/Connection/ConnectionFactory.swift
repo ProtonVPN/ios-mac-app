@@ -111,7 +111,6 @@ extension LocalAgentFeatures {
         case natType = "randomized-nat"
         case bouncing
         case safeMode = "safe-mode"
-
     }
 
     func set(feature: ConnectionFeatureChange.AgentFeature) {

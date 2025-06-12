@@ -27,7 +27,6 @@ import Hermes
 import ProtonCoreFeatureFlags
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
-
     @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!
     @IBOutlet private weak var natTypeView: SettingsTickboxView!
     @IBOutlet private weak var safeModeView: SettingsTickboxView!

@@ -34,7 +34,6 @@ protocol TickboxViewDelegate: AnyObject {
 }
 
 class SettingsTickboxView: NSView, SwitchButtonDelegate {
-
     typealias ActionHandler = () -> Void
 
     struct ViewModel {

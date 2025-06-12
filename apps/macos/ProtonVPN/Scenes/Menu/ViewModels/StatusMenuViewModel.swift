@@ -39,7 +39,6 @@ protocol StatusMenuViewModelFactory {
 }
 
 final class StatusMenuViewModel {
-
     typealias Factory = AppSessionManagerFactory
         & NavigationServiceFactory
         & VpnKeychainFactory
@@ -132,6 +131,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Connecting screen
+
     var isConnecting: Bool {
         return vpnGateway.connection == .connecting
     }
@@ -155,11 +155,13 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Login section
+
     var loginDescription: NSAttributedString {
         return Localizable.openAppToLogIn.styled(font: .themeFont(.heading4))
     }
 
     // MARK: - Header section
+
     var connectionLabel: NSAttributedString {
         return formConnectionLabel()
     }
@@ -169,6 +171,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Secure core
+
     var secureCoreLabel: NSAttributedString {
         return Localizable.secureCore.styled()
     }
@@ -182,6 +185,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Quick action section - Outputs
+
     var killSwitchDescription: String? {
         return formKillSwitchDescription()
     }
@@ -191,6 +195,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Quick action section - Inputs
+
     func quickConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
@@ -207,11 +212,13 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - General section
+
     var unprotectedNetworkNotifications: Bool {
         return propertiesManager.unprotectedNetworkNotifications
     }
 
     // MARK: - Connect section - Outputs
+
     func countryCount() -> Int {
         switch serverType {
         case .standard, .p2p, .tor, .unspecified:
@@ -282,6 +289,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Footer section - Inputs
+
     func upgradeAction() {
         Task {
             guard let url = await sessionService.getPlanSession(mode: .upgrade) else { return }
@@ -298,6 +306,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Private functions
+
     private func startObserving() {
         notificationTokens.append(
             NotificationCenter.default.addObserver(
@@ -353,6 +362,7 @@ final class StatusMenuViewModel {
     }
 
     // MARK: - Present unsecure connection
+
     private func presentUnsecureWiFiWarning() {
         let confirmationClosure: () -> Void = {
             log.info("User accepted unsecure WiFi option", category: .net)
@@ -526,7 +536,6 @@ final class StatusMenuViewModel {
 // MARK: Unsecure Network Discoverage
 
 extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
-
     func unsecureWiFiDetected() {
         guard unprotectedNetworkNotifications, !isConnecting, !isConnected else { return }
         presentUnsecureWiFiWarning()

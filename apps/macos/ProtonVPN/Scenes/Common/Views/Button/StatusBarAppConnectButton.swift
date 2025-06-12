@@ -27,7 +27,6 @@ import Ergonomics
 import Strings
 
 class LargeDropdownButton: HoverDetectionButton {
-    
     var isConnected: Bool = false {
         didSet {
             needsDisplay = true
@@ -55,7 +54,6 @@ class LargeDropdownButton: HoverDetectionButton {
 
 // swiftlint:disable operator_usage_whitespace
 class StatusBarAppConnectButton: LargeDropdownButton {
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
@@ -89,6 +87,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         ))
     }
 }
+
 // swiftlint:enable operator_usage_whitespace
 
 extension StatusBarAppConnectButton: CustomStyleContext {
@@ -123,7 +122,6 @@ extension StatusBarAppConnectButton: CustomStyleContext {
 
 // swiftlint:disable operator_usage_whitespace
 class StatusBarAppProfileDropdownButton: LargeDropdownButton {
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
@@ -162,6 +160,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         context.drawPath(using: .stroke)
     }
 }
+
 // swiftlint:enable operator_usage_whitespace
 
 extension StatusBarAppProfileDropdownButton: CustomStyleContext {

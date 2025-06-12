@@ -37,5 +37,4 @@ class AnnouncementRefresherMock: AnnouncementRefresher {
     func clear() {
         clearCalled?()
     }
-
 }

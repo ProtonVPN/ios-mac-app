@@ -169,7 +169,6 @@ final class UpdateManager: NSObject {
     }
 
     private let suDateFormatter: DateFormatter = DateFormatter()
-    
 }
 
 extension UpdateManager: SPUUpdaterDelegate {
@@ -268,7 +267,6 @@ extension UpdateManager: UpdateChecker {
             return ProcessInfo.processInfo.operatingSystemVersion
         }
     }
-
 }
 
 /// Compare two versions in a custom fashion.

@@ -40,7 +40,6 @@ enum MainBackground: Equatable, Sendable {
 }
 
 struct HomeBackgroundGradient: View {
-
     var mainBackground: MainBackground
 
     var color: Color {

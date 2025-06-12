@@ -53,7 +53,6 @@ public protocol StorableFeature: Codable {
 
     /// notification sent whenever the current value changes
     static var event: AppEvent? { get }
-
 }
 
 extension StorableFeature where LegacyStorageType == Void {

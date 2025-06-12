@@ -27,6 +27,7 @@ internal enum Asset {
   internal static let themeDark = ImageAsset(name: "theme-dark")
   internal static let themeLight = ImageAsset(name: "theme-light")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -122,4 +123,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

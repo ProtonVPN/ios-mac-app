@@ -28,7 +28,6 @@ struct Bitrate {
 }
 
 class NetworkStatistics {
-    
     private struct NetworkTraffic {
         var downloadCount: UInt32 = 0
         var uploadCount: UInt32 = 0
@@ -113,7 +112,6 @@ class NetworkStatistics {
                 traffic.uploadCount += data.pointee.ifi_obytes
                 traffic.downloadCount += data.pointee.ifi_ibytes
             }
-            
         }
         
         return traffic

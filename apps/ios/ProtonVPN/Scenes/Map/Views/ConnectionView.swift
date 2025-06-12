@@ -23,7 +23,6 @@
 import UIKit
 
 class ConnectionView: UIView {
-
     let viewModel: ConnectionViewModel
     
     var width: CGFloat {

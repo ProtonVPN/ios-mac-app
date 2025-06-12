@@ -115,6 +115,7 @@ private enum PrefilledEmailKey: DependencyKey {
     static let liveValue: @Sendable () -> String? = {
         CurrentEnv.bugReportDelegate?.prefilledEmail
     }
+
     static let testValue: @Sendable () -> String? = {
         CurrentEnv.bugReportDelegate?.prefilledEmail
     }
@@ -131,6 +132,7 @@ private enum PrefilledUsernameKey: DependencyKey {
     static let liveValue: @Sendable () -> String? = {
         CurrentEnv.bugReportDelegate?.prefilledUsername
     }
+
     static let testValue: @Sendable () -> String? = {
         CurrentEnv.bugReportDelegate?.prefilledUsername
     }

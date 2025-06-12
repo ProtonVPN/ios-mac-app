@@ -26,7 +26,6 @@ import Theme
 import Ergonomics
 
 class QuickSettingButton: NSButton {
-    
     private var hovered = false
     private var trackingArea: NSTrackingArea?
     
@@ -64,7 +63,6 @@ class QuickSettingButton: NSButton {
     }
     
     override func mouseDown(with event: NSEvent) {
-        
     }
     
     override func mouseUp(with event: NSEvent) {
@@ -101,6 +99,7 @@ class QuickSettingButton: NSButton {
     }
         
     // MARK: - Mouse
+
     override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
     }

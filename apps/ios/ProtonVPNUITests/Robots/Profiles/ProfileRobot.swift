@@ -22,7 +22,6 @@ fileprivate let randomProfile = Localizable.random
 fileprivate let myProfiles = Localizable.myProfiles
 
 class ProfileRobot: ConnectionBaseRobot {
-    
     let verify = Verify()
     
     @discardableResult
@@ -104,7 +103,6 @@ class ProfileRobot: ConnectionBaseRobot {
     }
     
     class Verify: CoreElements {
-        
         @discardableResult
         func isOnProfilesScreen() -> ProfileRobot {
             staticText(myProfiles).checkExists(message: "Profiles screen is not visible")

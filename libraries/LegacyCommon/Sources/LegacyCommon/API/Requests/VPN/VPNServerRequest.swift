@@ -23,7 +23,6 @@
 import ProtonCoreNetworking
 
 final class VPNServerRequest: Request {
-    
     let serverId: String
     
     init( _ serverId: String) {

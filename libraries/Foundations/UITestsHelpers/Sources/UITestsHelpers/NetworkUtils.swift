@@ -21,7 +21,6 @@ import Foundation
 import Network
 
 public enum NetworkUtils {
-    
     private static let jsonDecoder = JSONDecoder()
     
     // MARK: - NetworkUtilsError
@@ -136,6 +135,7 @@ public enum NetworkUtils {
     }
     
 #if os(macOS)
+
     // MARK: - Gateway
     
     /// Function is used to fetch and return the default gateway address of the system.
@@ -189,7 +189,6 @@ public enum NetworkUtils {
 }
 
 extension String {
-    
     public var isValidIPv4Address: Bool {
         // Define the IPv4 address pattern
         let ipAddressPattern = #"^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})){3}$"#

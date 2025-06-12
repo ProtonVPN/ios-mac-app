@@ -22,7 +22,6 @@ import SwiftUI
 import Theme
 
 struct SideBarButtonStyle: ButtonStyle {
-
     @State var isHovered = false
     var isActive: Bool
 

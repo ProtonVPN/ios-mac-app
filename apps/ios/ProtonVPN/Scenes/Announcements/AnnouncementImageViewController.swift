@@ -30,7 +30,6 @@ import Announcement
 import Domain
 
 final class AnnouncementImageViewController: AnnouncementViewController {
-
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var actionButton: UIButton!

@@ -22,7 +22,6 @@ import UITestsHelpers
 import fusion
 
 class ProfileTests: ProtonVPNUITests {
-    
     private let loginRobot = LoginRobot()
     private let mainRobot = MainRobot()
     private let profilesRobot = ProfileRobot()
@@ -31,7 +30,6 @@ class ProfileTests: ProtonVPNUITests {
     private let settingsRobot = SettingsRobot()
     
     func testCreateEmptyProfile() {
-        
         let profileName = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
@@ -57,7 +55,6 @@ class ProfileTests: ProtonVPNUITests {
     }
     
     func testCancelProfile() {
-        
         let country = "Austria"
 
         logoutIfNeeded()
@@ -75,7 +72,6 @@ class ProfileTests: ProtonVPNUITests {
     }
     
     func testCreateProfileWithTheSameName() {
-        
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
@@ -96,7 +92,6 @@ class ProfileTests: ProtonVPNUITests {
     }
     
     func testNewProfileAppearsInTheSettings() {
-        
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
         let qcFastest = "Fastest"

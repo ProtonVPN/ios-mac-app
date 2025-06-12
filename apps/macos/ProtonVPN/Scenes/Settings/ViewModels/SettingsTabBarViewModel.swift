@@ -30,7 +30,6 @@ enum SettingsTab: Int, CaseIterable {
 }
 
 class SettingsTabBarViewModel {
-    
     let tabChanged = Notification.Name("SettingsTabBarViewModelTabChanged") // two observers
     
     var activeTab: SettingsTab {

@@ -40,7 +40,6 @@ public struct ChecklistToggleStyle: ToggleStyle {
 
 @available(tvOS 16.0, *)
 struct ToggleStyle_Previews: PreviewProvider {
-
     struct WrapperView: View {
         @State var firstToggleValue: Bool = true
         @State var secondToggleValue: Bool = false

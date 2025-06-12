@@ -23,7 +23,6 @@ import SwiftUI
 import Strings
 
 public struct ContactFormView: View {
-
     @Perception.Bindable var store: StoreOf<ContactFormFeature>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
@@ -36,7 +35,6 @@ public struct ContactFormView: View {
             ZStack {
                 colors.background.ignoresSafeArea()
                 VStack(spacing: 0) {
-
                     StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
 
@@ -44,10 +42,8 @@ public struct ContactFormView: View {
 
                     ScrollView {
                         VStack(spacing: 20) {
-
                             ForEach(store.fields) { field in
                                 if !field.hidden {
-
                                     switch field.inputField.type {
                                     case .textSingleLine:
                                         SingleLineTextInputView(field: field.inputField,
@@ -75,7 +71,6 @@ public struct ContactFormView: View {
                                         .font(.footnote)
                                         .foregroundColor(colors.textSecondary)
                                         .padding(.leading, 8)
-
                                 }
                                 .padding(.horizontal)
                             }
@@ -98,10 +93,8 @@ public struct ContactFormView: View {
                                         )
                                     },
                                    label: { EmptyView() })
-
                 }
                 .foregroundColor(colors.textPrimary)
-
                 // Custom Back button
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button(action: {
@@ -114,13 +107,11 @@ public struct ContactFormView: View {
             }
         }
     }
-
 }
 
 // MARK: - Preview
 
 struct ContactFormView_Previews: PreviewProvider {
-
     private static let bugReport = MockBugReportDelegate(model: .mock)
 
     static var previews: some View {
@@ -142,7 +133,6 @@ struct ContactFormView_Previews: PreviewProvider {
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
                                          reducer: { ContactFormFeature() }))
             .previewDisplayName("Loading")
-
         }
     }
 }

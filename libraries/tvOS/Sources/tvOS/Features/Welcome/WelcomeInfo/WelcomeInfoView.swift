@@ -20,7 +20,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct WelcomeInfoView: View {
-
     var store: StoreOf<WelcomeInfoFeature>
 
     var body: some View {
@@ -60,7 +59,6 @@ struct WelcomeInfoView: View {
 }
 
 struct UpsellAlternativeView: View {
-
     static let contentViewWidth: CGFloat = 928
 
     @Environment(\.dismiss) var dismiss

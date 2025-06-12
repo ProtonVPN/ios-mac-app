@@ -22,7 +22,6 @@ import AppKit
 import Theme
 
 class SettingsDropDownView: NSView {
-
     struct ViewModel {
         let labelText: String
         let toolTip: String?

@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 struct WidgetSettingsViewModel {
-
     var tableViewData: [TableViewSection] {
         let sections: [TableViewSection] = [
             widgetInstructions

@@ -31,6 +31,5 @@ let package = Package(
                 .product(name: "SwiftOTP", package: "SwiftOTP"),
             ]
         ),
-
     ]
 )

@@ -27,7 +27,6 @@ import Ergonomics
 import Strings
 
 class ExpandableContentPopupViewController: NSViewController {
-    
     let viewModel: ExpandablePopupViewModel
     
     @IBOutlet weak var actionBtn: CancellationButton!
@@ -87,6 +86,7 @@ class ExpandableContentPopupViewController: NSViewController {
     }
 
     // MARK: - Private
+
     @objc private func didPressActionBtn() {
         if animating { return }
         viewModel.action()

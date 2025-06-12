@@ -23,7 +23,6 @@ extension VpnProtocol: @retroactive DefaultableProperty {
 // MARK: -
 
 extension VpnProtocol { // Authentication
-
     public enum AuthenticationType {
         case credentials
         case certificate
@@ -67,7 +66,6 @@ extension VpnProtocol {
 }
 
 extension OpenVpnTransport {
-
     private struct CoderKey {
         static let transportProtocol = "transportProtocol"
     }
@@ -93,7 +91,6 @@ extension OpenVpnTransport {
 }
 
 extension WireGuardTransport {
-
     private struct CoderKey {
         static let transportProtocol = "transportProtocol"
     }

@@ -23,7 +23,6 @@
 import UIKit
 
 class SelectionTableViewCell: UITableViewCell {
-    
     @IBOutlet weak var nameLabel: UILabel!
     
     override func awakeFromNib() {
@@ -41,5 +40,4 @@ class SelectionTableViewCell: UITableViewCell {
         selectionStyle = .none
         // Configure the view for the selected state
     }
-    
 }

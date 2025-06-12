@@ -21,7 +21,6 @@ import SwiftUI
 import Theme
 
 public struct NetShieldStatsView: View {
-
     @ObservedObject public var viewModel = NetShieldModel.zero(enabled: false)
 
     public var body: some View {
@@ -34,8 +33,8 @@ public struct NetShieldStatsView: View {
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color(.background, .weak)))
     }
-    public init() {
 
+    public init() {
     }
 }
 

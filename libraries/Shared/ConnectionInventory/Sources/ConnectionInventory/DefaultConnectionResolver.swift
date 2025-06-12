@@ -50,7 +50,6 @@ enum DefaultConnectionResolverImplementation {
         recents: OrderedSet<RecentConnection>,
         secureCore: Bool
     ) -> ConnectionSpec {
-
         let fastest = ConnectionSpec(location: secureCore ? .secureCore(.fastest) : .fastest, features: [])
 
         switch preference {

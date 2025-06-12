@@ -16,7 +16,6 @@ fileprivate let upgradeButtonId = "vpn subscription badge"
 fileprivate let buttonConnectDisconnect = "ic power off"
 
 class CountryListRobot: ConnectionBaseRobot {
-    
     let verify = Verify()
     
     @discardableResult

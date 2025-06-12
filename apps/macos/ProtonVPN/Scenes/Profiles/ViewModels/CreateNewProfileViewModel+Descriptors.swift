@@ -168,7 +168,6 @@ extension CreateNewProfileViewModel {
             )
         }
         return NSAttributedString.concatenate(countryFlag, serverDescriptor)
-
     }
 
     internal func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {

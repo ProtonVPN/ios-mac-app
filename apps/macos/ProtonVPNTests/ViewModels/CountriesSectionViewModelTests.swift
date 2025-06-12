@@ -162,7 +162,6 @@ struct AnnouncementManagerMock: AnnouncementManager {
 }
 
 enum MockServerGroup {
-
     static var dev: ServerGroupInfo {
         .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
     }
@@ -174,5 +173,4 @@ enum MockServerGroup {
     static var switzerland: ServerGroupInfo {
         .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
     }
-
 }

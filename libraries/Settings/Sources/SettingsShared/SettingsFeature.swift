@@ -21,7 +21,6 @@ import Foundation
 import ComposableArchitecture
 
 public struct SettingsFeature: Reducer {
-
     public init() { }
 
     public enum Destination: Equatable {

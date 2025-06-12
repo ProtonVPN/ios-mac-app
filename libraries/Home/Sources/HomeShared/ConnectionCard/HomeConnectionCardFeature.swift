@@ -92,6 +92,7 @@ public struct HomeConnectionCardFeature {
             // Header
             case defaultConnectionTapped
         }
+
         case delegate(Delegate)
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)

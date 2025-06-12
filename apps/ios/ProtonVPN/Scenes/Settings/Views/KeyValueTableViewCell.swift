@@ -37,6 +37,7 @@ class KeyValueTableViewCell: UITableViewCell {
             }
         }
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -64,5 +65,4 @@ class KeyValueTableViewCell: UITableViewCell {
             stackView.spacing = 0
         }
     }
-    
 }

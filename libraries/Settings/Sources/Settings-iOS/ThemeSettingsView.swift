@@ -65,7 +65,6 @@ struct ThemeSettingsView: View {
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Accessory(style: .checkmark(isActive: currentValue.wrappedValue == model.colorScheme))
-
             }
         }.onTapGesture { currentValue.wrappedValue = model.colorScheme }
     }

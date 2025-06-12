@@ -26,7 +26,6 @@ import LegacyCommon
 import Ergonomics
 
 final class TroubleshootingRowItem: NSTableRowView {
-
     // MARK: Outlets
 
     @IBOutlet private weak var titleLabel: NSTextField!

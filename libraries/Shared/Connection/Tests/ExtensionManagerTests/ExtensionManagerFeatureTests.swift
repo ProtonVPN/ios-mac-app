@@ -29,7 +29,6 @@ import struct CoreConnection.LogicalServerInfo
 @testable import ExtensionManager
 
 final class ExtensionManagerFeatureTests: XCTestCase {
-
     @MainActor
     func testRequestsTunnelStart() async {
         let mockManager = MockTunnelManager()

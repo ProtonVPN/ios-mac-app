@@ -35,7 +35,6 @@ import Strings
 import Domain
 
 class UserAccountUpdateViewController: NSViewController {
-
     @IBOutlet weak var serversView: NSView!
     @IBOutlet weak var imageView: NSImageView!
     @IBOutlet weak var titleLbl: NSTextField!

@@ -138,7 +138,6 @@ enum NetShieldStatsBehaviour {
         case .constant(let value):
             return value
         }
-
     }
 }
 

@@ -46,7 +46,6 @@ public enum LocalAgentState: Sendable {
 }
 
 extension LocalAgentState {
-
     // swiftlint:disable cyclomatic_complexity
     /// For more information, check [Shared VPN Libraries](https://github.com/ProtonVPN/go-vpn-lib/tree/master/localAgent)
     static func from(string: String) -> LocalAgentState {

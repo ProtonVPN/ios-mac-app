@@ -25,7 +25,6 @@ import LegacyCommon
 import Domain
 
 class StatusMenuProfilesListViewModel {
-
     private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
     

@@ -19,7 +19,6 @@
 import XCTest
 
 extension XCUIElement {
-
     func waitForNonExistence(timeout: TimeInterval) -> Bool {
         let predicate = NSPredicate( format: "exists == FALSE" )
         let expectation = XCTNSPredicateExpectation(predicate: predicate, object: self)

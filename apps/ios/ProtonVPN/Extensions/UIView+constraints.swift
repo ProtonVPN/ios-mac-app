@@ -23,7 +23,6 @@
 import UIKit
 
 extension UIView {
-
     func addFillingSubview(_ subView: UIView) {
         self.addSubview(subView)
         
@@ -49,5 +48,4 @@ extension UIView {
             subView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: rightMargin).isActive = true
         }
     }
-    
 }

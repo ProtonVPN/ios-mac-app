@@ -23,7 +23,6 @@
 import Cocoa
 
 extension NSStackView {
-        
     /// Removed all arranged subviews.
     /// Keep in mind that views should be retained if you inted to reuse them.
     func clear() {
@@ -32,5 +31,4 @@ extension NSStackView {
             $0.removeFromSuperview()
         }
     }
-    
 }

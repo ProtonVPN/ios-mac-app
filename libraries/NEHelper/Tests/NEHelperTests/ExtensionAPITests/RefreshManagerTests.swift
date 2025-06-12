@@ -21,7 +21,6 @@ import Timer
 @testable import NEHelper
 
 final class RefreshManagerTests: XCTestCase {
-
     /// Make sure `work` is not run right after manager is created.
     func testFirstRunIsAfterRefreshIntervalTimePassed() throws {
         let expectationStart = XCTestExpectation(description: "Timer was started")
@@ -73,7 +72,6 @@ final class RefreshManagerTests: XCTestCase {
 // MARK: - Mock
 
 private class TestRefreshManager: RefreshManager {
-
     init(timerFactory: TimerFactory, workQueue: DispatchQueue, interval: TimeInterval, workCallback: @escaping (() -> Void)) {
         self.workCallback = workCallback
         self._interval = interval

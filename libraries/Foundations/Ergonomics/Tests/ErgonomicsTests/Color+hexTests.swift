@@ -22,7 +22,6 @@ import XCTest
 @testable import Ergonomics
 
 final class ColorHexTestsTests: XCTestCase {
-
     func testColorWhite() throws {
         XCTAssertEqual(Color(hex: 0xFFFFFF), .white)
     }

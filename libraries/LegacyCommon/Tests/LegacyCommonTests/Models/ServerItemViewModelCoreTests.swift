@@ -20,7 +20,6 @@ import XCTest
 @testable import LegacyCommon
 
 final class ServerItemViewModelCoreTests: XCTestCase {
-
     func testBasicServer() throws {
         let sut = ServerItemViewModelCore(serverModel: MockTestData().server1.serverInfo,
                                           vpnGateway: VpnGatewayMock(),

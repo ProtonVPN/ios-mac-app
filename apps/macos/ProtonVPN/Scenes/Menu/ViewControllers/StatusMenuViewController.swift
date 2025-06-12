@@ -29,7 +29,6 @@ protocol StatusMenuViewControllerProtocol: AnyObject {
 }
 
 class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtocol {
-    
     private static let countryCollectionItemIdentifier = NSUserInterfaceItemIdentifier("CountryItem")
     
     let viewModel: StatusMenuViewModel
@@ -211,7 +210,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
     
     private func updateViewLayout() {
-        
         if viewModel.isSessionEstablished {
             dynamicContentView.isHidden = viewModel.isConnecting
             
@@ -331,14 +329,12 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
 }
 
 extension StatusMenuViewController: SwitchButtonDelegate {
-    
     func switchButtonClicked(_ button: NSButton) {
         viewModel.toggleSecureCore(secureCoreSwitch.currentButtonState)
     }
 }
 
 extension StatusMenuViewController: NSCollectionViewDataSource {
-    
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.countryCount()
     }

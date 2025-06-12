@@ -34,7 +34,6 @@ protocol WiFiSecurityMonitorDelegate: AnyObject {
 }
 
 public final class WiFiSecurityMonitor: CWNetworkProfile {
-
     /*
      kCWSecurityNone                 = 0,
      kCWSecurityWEP                  = 1,
@@ -69,7 +68,6 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
     }
 
     @objc func reachabilityChanged(note: Notification) {
-        
         let reachability = note.object as! Reachability
         guard let interfaces = wifiClient.interfaces() else { return }
 
@@ -95,6 +93,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 }
 
 // MARK: WiFiSecurityMonitorFactory
+
 extension DependencyContainer: WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor {
         return WiFiSecurityMonitor()

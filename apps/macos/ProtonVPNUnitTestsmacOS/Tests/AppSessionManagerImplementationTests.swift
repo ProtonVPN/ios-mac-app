@@ -29,7 +29,6 @@ fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan:
 fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil)
 
 final class AppSessionManagerImplementationTests: XCTestCase {
-
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
@@ -372,7 +371,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 }
 
 fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
-
     @Dependency(\.date) var date
 
     private let container = DependencyContainer()
@@ -417,7 +415,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         self.alertService = alertService
         self.appStateManager = appStateManager
     }
-
 }
 
 class AuthKeychainHandleMock: AuthKeychainHandle {

@@ -51,6 +51,7 @@ public struct ReconnectCountdown: View {
 
         return amount / checkmarkAnimationDuration
     }
+
     var checkmarkStrokeRatioInDegrees: Double {
         checkmarkStrokeRatio * .degreesInACircle
     }

@@ -24,7 +24,6 @@ import XCTest
 @testable import LegacyCommon
 
 class MigrationVersionTest: XCTestCase {
-        
     func testSimpleMigration() {
         var checkValue = 0
         let propertiesManager = PropertiesManagerMock()
@@ -152,7 +151,6 @@ class MigrationVersionTest: XCTestCase {
         // Version is not changed because 2.0.0 block failed
         XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
     }
-    
 }
 
 private struct JustAnError: Error {}

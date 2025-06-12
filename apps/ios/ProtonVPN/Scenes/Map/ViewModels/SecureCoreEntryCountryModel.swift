@@ -27,7 +27,6 @@ import Localization
 import Strings
 
 class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
-    
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
     
@@ -114,6 +113,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     }
     
     // MARK: - Hashable conformance
+
     static func == (lhs: SecureCoreEntryCountryModel, rhs: SecureCoreEntryCountryModel) -> Bool {
         return lhs.countryCode == rhs.countryCode
     }

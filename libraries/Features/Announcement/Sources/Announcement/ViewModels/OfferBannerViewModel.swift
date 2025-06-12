@@ -30,7 +30,6 @@ import Domain
 import Ergonomics
 
 public struct OfferBannerViewModel {
-
     static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.dateTimeStyle = .named

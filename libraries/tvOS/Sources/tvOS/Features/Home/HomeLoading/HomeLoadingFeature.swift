@@ -20,7 +20,6 @@ import ComposableArchitecture
 
 @Reducer
 struct HomeLoadingFeature {
-
     @ObservableState
     enum State: Equatable {
         case loaded(HomeFeature.State)

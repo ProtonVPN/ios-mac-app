@@ -78,7 +78,6 @@ final class TelemetrySettingsReporter {
     }
 
     private func checkAndSendHeartbeat() {
-
         @Dependency(\.defaultsProvider) var provider
         let now = Date()
         let lastHeartbeat = provider.getDefaults().userObject(forKey: lastHeartbeatKey) as? Date ?? Date.distantPast
@@ -97,7 +96,6 @@ final class TelemetrySettingsReporter {
     }
 
     private func sendHeartbeat() async throws {
-
         let dimensions = SettingsDimensions(
             defaultConnectionType: defaultConnectionType(),
             appIcon: .default,

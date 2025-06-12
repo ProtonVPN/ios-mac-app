@@ -36,6 +36,7 @@ internal enum Asset {
   internal static let quickConnectConnectingButton = ImageAsset(name: "quick-connect-connecting-button")
   internal static let quickConnectInactiveButton = ImageAsset(name: "quick-connect-inactive-button")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -195,4 +196,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

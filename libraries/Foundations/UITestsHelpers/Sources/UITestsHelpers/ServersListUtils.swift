@@ -23,7 +23,6 @@ fileprivate let vpnLogicalsURL = "https://api.protonvpn.ch/vpn/logicals?WithTran
 
 /// A utility class for managing and retrieving VPN server information.
 public enum ServersListUtils {
-    
     // Static variable to store fetched logical servers
     private static var cachedLogicalServers: [LogicalServer] = []
     private static var isFetched: Bool = false

@@ -51,6 +51,7 @@ public enum Asset {
   public static let welcomeRedesigned = ImageAsset(name: "welcomeRedesigned")
   public static let worldwideCoverage = ImageAsset(name: "worldwide-coverage")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -146,4 +147,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

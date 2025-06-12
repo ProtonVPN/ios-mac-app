@@ -59,6 +59,7 @@ class VideoTourModel {
                                      templateItem: playerItem)
         return player
     }()
+
     var videoLooper: AVPlayerLooper?
 
     init(videoFile: VideoFile) {

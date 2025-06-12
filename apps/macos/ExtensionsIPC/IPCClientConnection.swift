@@ -117,5 +117,4 @@ final class XPCServiceUser {
 }
 
 extension XPCServiceUser: AppCommunication {
-
 }

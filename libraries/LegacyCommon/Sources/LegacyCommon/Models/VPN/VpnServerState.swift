@@ -24,7 +24,6 @@ import Foundation
 import VPNShared
 
 public struct VpnServerState {
-    
     public let id: String!
     public let domain: String!
     public let status: Int!

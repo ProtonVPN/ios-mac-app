@@ -30,5 +30,4 @@ extension LocalAgentFeatures {
         }
         return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
     }
-    
 }

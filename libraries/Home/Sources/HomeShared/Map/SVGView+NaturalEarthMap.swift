@@ -22,7 +22,6 @@ import SwiftUI
 import Domain
 
 extension SVGView {
-
     private static let xmlMap: XMLElement = {
         let url = Bundle.module.url(forResource: "BlankMap-World", withExtension: "svg")!
         let xml = DOMParser.parse(contentsOf: url)!

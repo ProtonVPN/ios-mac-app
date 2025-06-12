@@ -24,7 +24,6 @@ import Cocoa
 import LegacyCommon
 
 final class WiFiWarningPopupViewController: WarningPopupViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -41,5 +40,4 @@ final class WiFiWarningPopupViewController: WarningPopupViewController {
     private func setupLink() {
         warningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
     }
-
 }

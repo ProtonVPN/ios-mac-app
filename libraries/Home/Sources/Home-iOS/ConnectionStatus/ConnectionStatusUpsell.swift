@@ -26,7 +26,6 @@ import ComposableArchitecture
 import NetShield
 
 struct ConnectionStatusUpsell: View {
-
     private struct Model {
         let title: String
         let subtitle: String

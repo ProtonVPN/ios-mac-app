@@ -24,7 +24,6 @@ import LegacyCommon
 import Domain
 
 class SystemExtensionGuideViewController: NSViewController {
-
     private var cancellables = Set<AnyCancellable>()
 
     weak var windowService: WindowService?

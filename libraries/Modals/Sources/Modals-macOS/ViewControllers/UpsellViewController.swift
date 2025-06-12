@@ -28,7 +28,6 @@ import Strings
 import Theme
 
 public final class UpsellViewController: NSViewController {
-
     @IBOutlet private weak var borderView: NSView! {
         didSet {
             borderView.wantsLayer = true

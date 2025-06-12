@@ -20,7 +20,6 @@ import SwiftUI
 import Strings
 
 struct UnauthenticatedView: View {
-
     @Environment(\.widgetFamily) var widgetFamily
 
     var body: some View {

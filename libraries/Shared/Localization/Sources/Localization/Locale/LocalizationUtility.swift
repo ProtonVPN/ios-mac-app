@@ -92,7 +92,6 @@ public final class LocalizationUtility {
             namesToShorten = [String: String]()
         }
     }
-
 }
 
 public struct CountryNameProvider {

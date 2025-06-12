@@ -26,7 +26,6 @@ import Theme
 import Ergonomics
 
 class MapView: NSView {
-    
     private let imageScale: CGFloat = 8
     private let minMapScale: CGFloat = 0.8
     private let absoluteMinZoom: CGFloat = 1
@@ -57,6 +56,7 @@ class MapView: NSView {
             halfZoom = (maxZoom - minZoom) * 0.6
         }
     }
+
     var halfZoom: CGFloat = (8 - 1) * 0.6
     var zoom: CGFloat = 1 {
         didSet {
@@ -343,5 +343,4 @@ class MapView: NSView {
     override func isAccessibilityElement() -> Bool {
         return false
     }
-    
 }

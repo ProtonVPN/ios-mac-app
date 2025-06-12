@@ -25,7 +25,6 @@ import VPNAppCore
 
 @Reducer
 public struct PlutoniumFeature {
-
     @ObservableState
     public struct State: Equatable {
         enum ValidationError: Error {
@@ -92,7 +91,6 @@ public struct PlutoniumFeature {
     public init() { }
 
     public var body: some Reducer<State, Action> {
-
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:

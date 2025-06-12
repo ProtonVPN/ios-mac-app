@@ -68,7 +68,6 @@ struct ChangeServerButtonLabel: View {
 }
 
 struct ChangeServerButtonStyle: ButtonStyle {
-
     let isActive: Bool
 
     func makeBody(configuration: Configuration) -> some View {

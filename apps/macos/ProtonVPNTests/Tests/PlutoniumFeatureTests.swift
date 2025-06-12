@@ -25,7 +25,6 @@ import ComposableArchitecture
 
 @MainActor
 struct PlutoniumFeatureTests {
-
     @Test
     func onAppear() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {

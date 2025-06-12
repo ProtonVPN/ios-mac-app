@@ -23,7 +23,6 @@
 import UIKit
 
 extension UIButton {
-    
     public static func closeButton() -> UIButton {
         let closeImage = Asset.closeNavBar.image.withRenderingMode(.alwaysTemplate)
         let closeButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 44, height: 44))
@@ -34,5 +33,4 @@ extension UIButton {
         closeButton.tintColor = .normalTextColor()
         return closeButton
     }
-    
 }

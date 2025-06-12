@@ -26,14 +26,11 @@ import Strings
 // navigation is handled by root view.
 
 public struct WhatsTheIssueView: View {
-
     let store: StoreOf<WhatsTheIssueFeature>
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
-
         VStack(alignment: .center) {
-
             Text(Localizable.br1Title)
                 .font(.title2)
                 .fontWeight(.bold)
@@ -59,7 +56,6 @@ public struct WhatsTheIssueView: View {
             .padding(.top, 32)
         }
         .background(colors.background)
-
     }
 }
 

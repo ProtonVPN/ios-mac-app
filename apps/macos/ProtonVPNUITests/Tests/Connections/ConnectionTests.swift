@@ -21,7 +21,6 @@ import XCTest
 import UITestsHelpers
 
 class ConnectionTests: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     private let loginRobot = LoginRobot()
@@ -103,7 +102,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectToSpecificCountry() async throws {
-        
         let (country, _) = try await ServersListUtils.getRandomCountry()
         
         countriesSelectionRobot
@@ -119,7 +117,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectToSpecificCity() async throws {
-        
         let (country, city, _) = try await ServersListUtils.getRandomServerInfo()
         
         countriesSelectionRobot
@@ -137,7 +134,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectToSpecificServer() async throws {
-        
         let (country, _, server) = try await ServersListUtils.getRandomServerInfo()
         
         countriesSelectionRobot
@@ -166,7 +162,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testLogoutWhileConnectedContinue() {
-        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
@@ -182,7 +177,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     func testLogoutWhileConnectedCancel() {
-        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
@@ -198,7 +192,6 @@ class ConnectionTests: ProtonVPNUITests {
     
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()

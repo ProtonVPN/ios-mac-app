@@ -20,7 +20,6 @@ import SwiftUI
 
 public extension AppTheme {
     enum Typography {
-
 #if canImport(Cocoa)
 
         case largeTitle(emphasised: Bool = false)
@@ -71,7 +70,6 @@ public extension AppTheme {
 public extension Font {
     static func themeFont(_ typography: AppTheme.Typography = .default) -> Font {
         switch typography {
-
 #if canImport(Cocoa)
             // https://developer.apple.com/design/human-interface-guidelines/typography#macOS-built-in-text-styles
         case .largeTitle(let emphasised): // 26

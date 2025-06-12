@@ -21,7 +21,6 @@ import XCTest
 import Atomics
 
 final class TimerTests: XCTestCase {
-    
     private var factory: TimerFactoryImplementation!
     
     // We have to have a strong reference to timer object because otherwise it will be deallocated and timer will not execute out closure

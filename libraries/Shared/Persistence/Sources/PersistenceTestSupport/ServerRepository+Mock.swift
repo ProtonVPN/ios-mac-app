@@ -25,6 +25,7 @@ extension ServerRepository {
               server: { _, _ in nil },
               groups: { _, _ in [] })
     }
+
     public static func notEmpty() -> Self {
         .init(serverCount: { 1 },
               server: { _, _ in .mock },
@@ -55,6 +56,7 @@ extension [ServerGroupInfo] {
         ["US", "UK", "CA", "FR", "DE"]
             .map { .country(code: $0) }
     }
+
     static var someCountries: Self {
         ["PL", "AR", "RO", "LT", "CZ"]
             .map { .country(code: $0) }

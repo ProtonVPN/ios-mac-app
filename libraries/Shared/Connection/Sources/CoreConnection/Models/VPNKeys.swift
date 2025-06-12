@@ -20,7 +20,6 @@ import Foundation
 
 /// Ed25519 package key
 public struct PublicKey: Equatable, Sendable, Codable {
-
     /// 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 

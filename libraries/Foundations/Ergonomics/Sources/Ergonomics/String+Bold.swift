@@ -36,6 +36,7 @@ public extension String {
         return attributedText
     }
 }
+
 #elseif os(macOS)
 import AppKit
 

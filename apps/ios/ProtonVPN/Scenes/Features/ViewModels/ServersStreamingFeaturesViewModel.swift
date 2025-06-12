@@ -35,7 +35,6 @@ protocol ServersStreamingFeaturesViewModel {
 }
 
 class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesViewModel {
-
     private let streamingServices: [VpnStreamingOption]
     
     let propertiesManager: PropertiesManagerProtocol

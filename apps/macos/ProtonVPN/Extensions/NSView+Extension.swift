@@ -23,7 +23,6 @@
 import Cocoa
 
 extension NSView {
-    
     func animateBackgroundColor(_ color: CGColor, delegate: AnyObject? = nil) {
         let animation = CABasicAnimation(keyPath: "backgroundColor")
         animation.toValue = color
@@ -157,5 +156,4 @@ extension NSView {
         }
         return nil
     }
-    
 }

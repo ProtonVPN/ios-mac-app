@@ -31,7 +31,6 @@ enum KeyCode: UInt16, CaseIterable {
 }
 
 class OverlayViewController: NSViewController {
-
     var shouldDismissOnKeyDownEvent: Bool = true
 
     override var acceptsFirstResponder: Bool {
@@ -51,5 +50,4 @@ class OverlayViewController: NSViewController {
             super.keyDown(with: event)
         }
     }
-
 }

@@ -10,7 +10,6 @@ import Foundation
 import Domain
 
 struct WGConstants {
-
     static var keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"
 
     static var appIdentifierPrefix: String {
@@ -26,5 +25,4 @@ struct WGConstants {
         #error("Unimplemented")
         #endif
     }
-
 }

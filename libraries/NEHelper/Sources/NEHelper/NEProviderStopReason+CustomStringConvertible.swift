@@ -20,7 +20,6 @@ import Foundation
 import NetworkExtension
 
 extension NEProviderStopReason: @retroactive CustomStringConvertible {
-
     public var description: String {
         switch self {
         case .none:
@@ -63,5 +62,4 @@ extension NEProviderStopReason: @retroactive CustomStringConvertible {
             return "unknown (\(self.rawValue))"
         }
     }
-
 }

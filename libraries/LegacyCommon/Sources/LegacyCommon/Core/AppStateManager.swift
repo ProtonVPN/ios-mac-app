@@ -38,7 +38,6 @@ public protocol AppStateManagerFactory {
 }
 
 public protocol AppStateManager {
-    
     var state: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
 
@@ -108,11 +107,13 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
+
     private var vpnState: VpnState = .invalid {
         didSet {
             onVpnStateChanged?(vpnState)
         }
     }
+
     public var onVpnStateChanged: ((VpnState) -> Void)?
     private var lastAttemptedConfiguration: ConnectionConfiguration?
     private var attemptingConnection = false
@@ -123,6 +124,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
+
     private var reconnectingAfterStuckDisconnecting = false
     
     private var timeoutTimer: BackgroundTimer?
@@ -521,6 +523,7 @@ public class AppStateManagerImplementation: AppStateManager {
         
         notifyObservers()
     }
+
     // swiftlint:enable cyclomatic_complexity
 
     private func connectionFailed() {

@@ -20,7 +20,6 @@ import XCTest
 import Modals
 
 class SearchTests: ProtonVPNUITests {
-    
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let countryToSearchFor = "Japan"
     private let comparisonCountryName = "Netherlands"

@@ -24,7 +24,6 @@ import struct Ergonomics.GenericError
 import tvOSTestSupport
 
 final class HomeLoadingFeatureTests: XCTestCase {
-
     @MainActor
     func testFinishedLoadingSuccess() async {
         let store = TestStore(initialState: HomeLoadingFeature.State.loading) {

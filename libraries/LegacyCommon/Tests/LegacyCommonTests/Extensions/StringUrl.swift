@@ -24,7 +24,6 @@ import XCTest
 @testable import LegacyCommon
 
 class StringUrl: XCTestCase {
-
     func testRemovesProtocol() throws {
         let domain = "www.domain.com"
         XCTAssert("http://\(domain)".domainWithoutPathAndProtocol.elementsEqual(domain))

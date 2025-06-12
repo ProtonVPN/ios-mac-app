@@ -20,7 +20,6 @@ import Foundation
 import PMLogger
 
 class FileManagerMock: FileManagerWrapper {
-    
     init() {
     }
 

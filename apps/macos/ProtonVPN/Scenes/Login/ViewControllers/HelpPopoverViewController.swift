@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class HelpPopoverViewController: NSViewController {
-
     private let viewModel: HelpPopoverViewModel
     
     @IBOutlet private weak var resetButton: InteractiveActionButton!

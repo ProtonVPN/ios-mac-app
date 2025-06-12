@@ -23,7 +23,6 @@ import VPNAppCore
 import Domain
 
 final class ProtocolDeprecatedViewController: WarningPopupViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -40,7 +39,6 @@ final class ProtocolDeprecatedViewController: WarningPopupViewController {
     private func setupLink() {
         warningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
     }
-
 }
 
 extension WarningPopupViewModel {

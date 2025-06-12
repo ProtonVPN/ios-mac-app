@@ -34,7 +34,6 @@ public struct ConnectionDetailsMessage: Sendable, Equatable {
 }
 
 extension ConnectionDetailsMessage {
-
     /// `LocalAgentConnectionDetails` is received with the `StatusUpdate` LocalAgent message.
     ///
     /// None of the fields of `LocalAgentConnectionDetails` are optional, so an empty string indicates a missing field.

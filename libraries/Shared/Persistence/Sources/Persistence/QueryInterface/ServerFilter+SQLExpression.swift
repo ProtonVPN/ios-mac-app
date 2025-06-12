@@ -21,13 +21,11 @@ import Foundation
 import GRDB
 
 extension VPNServerFilter {
-
     func sqlExpression(
         logical: TableAlias,
         status: TableAlias,
         overrides: TableAlias
     ) -> SQLExpression {
-
         switch self {
         case .logicalID(let id):
             return logical[Logical.Columns.id] == id
@@ -93,6 +91,5 @@ extension VPNServerFilter {
         case .name(let name):
             return logical[Logical.Columns.name] == name
         }
-
     }
 }

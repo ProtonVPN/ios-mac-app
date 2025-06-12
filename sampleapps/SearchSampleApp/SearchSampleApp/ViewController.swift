@@ -27,6 +27,7 @@ final class ViewController: UIViewController {
     private var coordinator: SearchCoordinator = {
         return SearchCoordinator(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
     }()
+
     private let modals: ModalsFactory = {
         return ModalsFactory()
     }()
@@ -148,21 +149,17 @@ extension ViewController: SearchCoordinatorDelegate {
     }
 
     func userDidSelectCountry(model: CountryViewModel) {
-
     }
 }
 
 extension ViewController: UpsellViewControllerDelegate {
     func upsellDidDisappear(upsell: UpsellViewController?) {
-
     }
 
     func userDidTapNext(upsell: UpsellViewController) {
-
     }
 
     func userDidDismissUpsell(upsell: UpsellViewController?) {
-        
     }
 
     func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {

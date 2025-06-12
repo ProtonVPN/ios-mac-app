@@ -23,7 +23,6 @@
 import Cocoa
 
 class ProfileCircle: NSView {
-    
     var profileColor: NSColor? {
         didSet {
             needsDisplay = true

@@ -151,7 +151,6 @@ public struct ConnectionFlagInfoView: View {
 
 #if DEBUG
 struct ConnectionFlagView_Previews: PreviewProvider {
-
     static let cellHeight = 40.0
     static let cellWidth = 300.0
     static let spacing = 20.0

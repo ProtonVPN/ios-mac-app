@@ -20,7 +20,6 @@ import UIKit
 import ModalsShared
 
 final class DiscourageSecureCoreViewController: UIViewController {
-
     // MARK: Outlets
 
     @IBOutlet private weak var dontShowAgainLabel: UILabel!

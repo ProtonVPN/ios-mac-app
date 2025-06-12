@@ -45,7 +45,6 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 }
 
 class CreateNewProfileViewModel {
-
     typealias Factory = CoreAlertServiceFactory &
         VpnKeychainFactory &
         PropertiesManagerFactory &
@@ -355,7 +354,6 @@ class CreateNewProfileViewModel {
 
     /// Starts the system extension tour if system extensions are required for `connection protocol` but are not enabled
     private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool = false) {
-
         checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
         state = state.updating(connectionProtocol: connectionProtocol)
 
@@ -564,7 +562,6 @@ extension ModelState {
                   newTypeGrouping: [ServerGroupInfo],
                   selectedCountryGroup: ServerGroupInfo?,
                   smartProtocolConfig: SmartProtocolConfig) -> Self {
-
         // Re-select country/gateway if it's still there after ServerType change
         let countryIndex = newTypeGrouping.firstIndex { $0.kind == selectedCountryGroup?.kind }
 

@@ -21,7 +21,6 @@ import Logging
 import PMLogger
 
 class WGLogFormatter: PMLogFormatter {
-
     private let jsonEncoder = JSONEncoder()
 
     public init() {
@@ -35,7 +34,6 @@ class WGLogFormatter: PMLogFormatter {
         }
         return "\(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-
 }
 
 extension Logging.Logger.Level {

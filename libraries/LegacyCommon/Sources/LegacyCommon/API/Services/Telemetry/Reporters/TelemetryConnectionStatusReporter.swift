@@ -34,7 +34,6 @@ protocol TelemetryTimer {
 }
 
 class TelemetryConnectionStatusReporter {
-
     struct Error: Swift.Error {
         let localizedDescription: String
     }
@@ -396,7 +395,6 @@ class TelemetryConnectionStatusReporter {
     }
 
     private func vpnTrigger(eventType: ConnectionEvent.Event) -> UserInitiatedVPNChange.VPNTrigger {
-
         let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = { [weak self] in
             if FeatureFlagsRepository.isConnectionFeatureEnabled {
                 if case .connected = self?.previousConnectionState,
@@ -439,7 +437,6 @@ class TelemetryConnectionStatusReporter {
         // we want to keep the existing value.
         if case .settingsChange = userInitiatedVPNChange,
            case .vpnDisconnection = event {
-
             return false
         }
         // In all other cases, the userInitiatedVPNChange should be reset.

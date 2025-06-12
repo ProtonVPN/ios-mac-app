@@ -31,7 +31,6 @@ import Domain
 import Strings
 
 class CountryAnnotationViewModel: AnnotationViewModel {
-
     enum ViewState {
         case idle
         case selected
@@ -217,6 +216,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
 
     // MARK: - Private functions
+
     fileprivate func startObserving() {
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }

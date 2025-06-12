@@ -27,7 +27,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class GroupsTests: CaseIsolatedDatabaseTestCase {
-
     override class func setUp() {
         super.setUp()
         let servers = try! fetch([VPNServer].self, fromResourceNamed: "TestServers")
@@ -69,7 +68,6 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isUnderMaintenance: false,
             supports: [.all]
         )
-
     }
 
     func testSecureCoreGroups() throws {
@@ -106,7 +104,6 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
             isUnderMaintenance: false,
             supports: [.all]
         )
-
     }
 
     func assert(

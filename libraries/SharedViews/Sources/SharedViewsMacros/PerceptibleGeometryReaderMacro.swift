@@ -22,12 +22,10 @@ import SwiftSyntaxMacros
 import SwiftSyntaxMacroExpansion
 
 public struct PerceptibleGeometryReaderMacro: ExpressionMacro {
-
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> ExprSyntax {
-
         guard let closure = node.trailingClosure else {
             throw MacroError.missingTrailingClosure
         }

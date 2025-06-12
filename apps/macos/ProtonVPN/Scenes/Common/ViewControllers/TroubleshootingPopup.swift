@@ -27,7 +27,6 @@ import Ergonomics
 import Strings
 
 final class TroubleshootingPopup: NSViewController {
-
     // MARK: Outlets
 
     @IBOutlet private weak var tableView: NSTableView!

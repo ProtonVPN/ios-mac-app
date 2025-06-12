@@ -25,8 +25,8 @@ import UIKit
 import LegacyCommon
 
 class UIConstants {
-    
     // MARK: - Cell constants
+
     static let connectionStatusCellHeight: CGFloat = 48
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
@@ -35,6 +35,7 @@ class UIConstants {
     static let connectionBarHeight: CGFloat = 44
     
     // MARK: - Messages
+
     static let messageOptions: [GSMessageOption] = [
         .animations([.slide(.normal)]),
         .animationDuration(0.3),

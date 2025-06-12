@@ -25,7 +25,6 @@ import Domain
 import Persistence
 
 public struct ServerManager: DependencyKey {
-
     private var updateServers: @Sendable (
         _ servers: [VPNServer],
         _ freeServersOnly: Bool,

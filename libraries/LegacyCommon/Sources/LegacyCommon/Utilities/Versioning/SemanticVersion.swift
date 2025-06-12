@@ -23,7 +23,6 @@
 import Foundation
 
 public struct SemanticVersion: CustomStringConvertible, Comparable {
-    
     public let metadataComponents: [String]
     public let releaseComponents: [String]
     public let versionComponents: [Int]
@@ -119,5 +118,4 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     public static func < (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         return lhs.compare(to: rhs) == .orderedAscending
     }
-    
 }

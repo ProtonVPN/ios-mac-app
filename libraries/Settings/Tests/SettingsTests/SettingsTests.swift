@@ -24,7 +24,6 @@ import ComposableArchitecture
 
 @MainActor
 final class SettingsTests: XCTestCase {
-
     func testChildFeaturePresentedWhenTapped() async throws {
         let store = TestStore(
             initialState: SettingsFeature.State(

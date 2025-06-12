@@ -27,7 +27,6 @@ import Theme
 import Strings
 
 extension OverviewItemViewModel {
-    
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
         return profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }

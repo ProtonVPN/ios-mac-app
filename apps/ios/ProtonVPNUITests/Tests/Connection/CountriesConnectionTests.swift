@@ -20,9 +20,7 @@ import UITestsHelpers
 
 @MainActor
 class CountriesConnectionTests: ConnectionTestsBase {
-
     func testConnectAndDisconnectViaCountry() async throws {
-
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
         let back = "Countries"
 
@@ -51,7 +49,6 @@ class CountriesConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectAndDisconnectViaServer() async throws {
-
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
         login(as: UserType.Plus.credentials)
@@ -69,7 +66,6 @@ class CountriesConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectionViaSecureCore() {
-
         let protocolName = ConnectionProtocol.WireGuardUDP
 
         login(as: UserType.Plus.credentials)
@@ -98,7 +94,6 @@ class CountriesConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectionWithAllSettingsOn() {
-
         let protocolName = ConnectionProtocol.Smart
         let netshield = "Block malware, ads, & trackers"
 

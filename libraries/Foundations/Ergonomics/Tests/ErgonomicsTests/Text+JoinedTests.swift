@@ -21,7 +21,6 @@ import XCTest
 import Ergonomics
 
 final class TextJoiningTests: XCTestCase {
-
     func testJoiningEmptyArrayReturnsNil() {
         let textArrayWithNoElements: [Text] = []
         let joinedText = textArrayWithNoElements.joined(separator: Text("+"))

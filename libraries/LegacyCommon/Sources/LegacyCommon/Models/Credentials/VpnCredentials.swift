@@ -25,7 +25,6 @@ import Strings
 import ProtonCoreNetworking
 
 public class VpnCredentials: NSObject, NSSecureCoding, Codable {
-
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
@@ -161,6 +160,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     }
     
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let status = "status"
         static let planTitle = "planTitle"
@@ -260,6 +260,7 @@ extension CachedVpnCredentials {
 }
 
 // MARK: - Checks performed on CachedVpnCredentials
+
 extension CachedVpnCredentials {
     public var isDelinquent: Bool {
         return delinquent > 2

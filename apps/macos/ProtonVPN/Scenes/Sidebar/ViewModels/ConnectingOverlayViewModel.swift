@@ -46,7 +46,6 @@ extension DependencyContainer: ConnectingOverlayViewModelFactory {
 }
 
 class ConnectingOverlayViewModel {
-    
     typealias Factory = AppStateManagerFactory
         & PropertiesManagerFactory
         & VpnGatewayFactory

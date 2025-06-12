@@ -48,7 +48,6 @@ fileprivate let cancelProfileModalTitle = "Create Profile"
 fileprivate let cancelProfileDescription = "By continuing, current selection will be lost. Do you want to continue?"
 
 class CreateProfileRobot: CoreElements {
-    
     func setProfileDetails(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return profileName(name)
             .selectCountry()
@@ -159,7 +158,6 @@ class CreateProfileRobot: CoreElements {
     let verify = Verify()
 
     class Verify: CoreElements {
-            
         @discardableResult
         func checkCreateProfileViewIsOpened() -> CreateProfileRobot {
             button(cancelButton).checkExists()

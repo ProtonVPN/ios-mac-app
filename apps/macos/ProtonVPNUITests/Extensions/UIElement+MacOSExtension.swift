@@ -20,7 +20,6 @@
 import XCTest
 
 extension UIElement {
-    
     @discardableResult
     public func tapInCenter(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
         return tapOnCoordinate(withOffset: CGVector(dx: dx, dy: dy))

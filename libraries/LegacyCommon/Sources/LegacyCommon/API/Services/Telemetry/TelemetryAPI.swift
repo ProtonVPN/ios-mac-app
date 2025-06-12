@@ -30,7 +30,6 @@ public protocol TelemetryAPIFactory {
 }
 
 class TelemetryAPIImplementation: TelemetryAPI {
-
     private let networking: Networking
 
     init(networking: Networking) {

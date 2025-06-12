@@ -95,5 +95,4 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public func logs(completion: @escaping (String?) -> Void) {
         completion(nil)
     }
-    
 }

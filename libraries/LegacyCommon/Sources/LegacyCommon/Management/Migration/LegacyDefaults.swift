@@ -26,6 +26,7 @@ public enum LegacyDefaultsMigration {
     public static func migrateTo(sharedDefaults: UserDefaults) {
         migrate(from: UserDefaults.standard, to: sharedDefaults)
     }
+
     private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
         if !specifiedDefaults.bool(forKey: Self.migrationKey) {
             // Move any compatible data from old defaults to the new one

@@ -39,7 +39,6 @@ protocol ProfilesViewControllerDelegate: AnyObject {
 }
 
 final class ProfilesViewController: UIViewController {
-
     @IBOutlet weak var connectionBarContainerView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -236,7 +235,6 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension ProfilesViewController: ProfilesViewControllerDelegate {
-    
     func showProfileCreatedSuccessMessage() {
         showMessage(Localizable.profileCreatedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
     }

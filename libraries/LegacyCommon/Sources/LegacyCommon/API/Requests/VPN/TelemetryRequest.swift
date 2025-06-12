@@ -23,7 +23,6 @@ public struct TelemetryResponse: Codable {
 }
 
 final class TelemetryRequest: Request {
-
     var parameters: [String: Any]?
     let isBusiness: Bool
 

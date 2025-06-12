@@ -23,7 +23,6 @@
 import Cocoa
 
 class HoverDetectionPopUpButton: NSPopUpButton {
-
     override func awakeFromNib() {
         super.awakeFromNib()
         

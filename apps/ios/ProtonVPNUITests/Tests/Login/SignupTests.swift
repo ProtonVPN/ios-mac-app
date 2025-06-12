@@ -13,7 +13,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 fileprivate let verificationCode = "666666"
 
 class SignupTests: ProtonVPNUITests {
-
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()

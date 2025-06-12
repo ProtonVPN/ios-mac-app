@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct ConnectButtonStyle: ButtonStyle {
-
     @State var isHovered = false
     var isActive: Bool
 
@@ -45,7 +44,6 @@ struct ConnectButtonStyle: ButtonStyle {
 }
 
 struct ShowConnectionDetailsButtonStyle: ButtonStyle {
-
     @State var isHovered = false
     @State var enabled = true
 
@@ -67,7 +65,6 @@ struct ShowConnectionDetailsButtonStyle: ButtonStyle {
 }
 
 struct HelpButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
     func makeBody(configuration: Configuration) -> some View {

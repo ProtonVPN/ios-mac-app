@@ -32,7 +32,6 @@ public protocol DynamicBugReportStorage {
 }
 
 public class DynamicBugReportStorageUserDefaults: DynamicBugReportStorage {
-
     @Dependency(\.storage) var storage
     private let storageKey: String = "DynamicBugReport"
     

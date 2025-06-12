@@ -29,7 +29,6 @@ import Ergonomics
 import Domain
 
 final class ConnectionBarViewModel {
-    
     private let appStateManager: AppStateManager
     
     private var timer = Timer()

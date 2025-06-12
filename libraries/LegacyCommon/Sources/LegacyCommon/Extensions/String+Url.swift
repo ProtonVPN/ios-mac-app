@@ -23,7 +23,6 @@
 import Foundation
 
 extension String {
-    
     var domainWithoutPathAndProtocol: String {
         let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
         let noPath = url.split(separator: "/").first

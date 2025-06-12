@@ -22,7 +22,6 @@ import ComposableArchitecture
 
 @MainActor
 final class ResultTests: XCTestCase {
-
     func testPressingFinishCallsTheDelegate() async throws {
         let expectationDelegateIsCalled = XCTestExpectation(description: "Delegate has to be called")
 
@@ -58,5 +57,4 @@ final class ResultTests: XCTestCase {
 
         await fulfillment(of: [expectationDelegateIsCalled], timeout: 0.2)
     }
-
 }

@@ -52,7 +52,6 @@ struct PlanOptionView: View {
 }
 
 private struct PlanOptionLoadedView: View {
-
     private enum AccessibilityIdentifier {
         static let planOptionDuration: String = "plan_option_duration"
         static let planOptionAmount: String = "plan_option_amount"

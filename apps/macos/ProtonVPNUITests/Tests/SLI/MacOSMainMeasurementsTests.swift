@@ -21,7 +21,6 @@ import ProtonCoreTestingToolkitPerformance
 import UITestsHelpers
 
 class MacOSMainMeasurementsTests: ProtonVPNUITests {
-    
     private let workflow = "main_measurements"
     private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
     private let countriesSelectionRobot = CountriesSectionRobot()
@@ -38,7 +37,6 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             .setLokiEndpoint(ProcessInfo.processInfo.environment["LOKI_ENDPOINT"] ?? "invalid")
             .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
             .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
-
     }
     
     override func setUp() {

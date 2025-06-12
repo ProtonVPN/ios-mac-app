@@ -26,7 +26,6 @@ import VPNShared
 import VPNAppCore
 
 public class Profile: NSObject, NSCoding, Identifiable, Codable {
-
     public static let idLength = 20
 
     public let id: String
@@ -129,6 +128,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     }
 
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let id = "id"
         static let accessTier = "accessTier"
@@ -181,6 +181,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             lastConnectedDate: date
         )
     }
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }

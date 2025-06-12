@@ -23,7 +23,6 @@
 import UIKit
 
 class PrefillInformation {
-    
     let name: String
     let color: UIColor
     let usesSecureCore: Bool

@@ -29,7 +29,6 @@ import LegacyCommon
 import Announcement
 
 final class AnnouncementFeatureView: UIView {
-
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private var contentView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!

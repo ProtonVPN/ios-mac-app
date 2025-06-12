@@ -24,7 +24,6 @@ import SwiftNavigation
 import Strings
 
 public struct BugReportResultView: View {
-
     let store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
@@ -98,11 +97,9 @@ public struct BugReportResultView: View {
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 32)
-
             }
         }
     }
-
 }
 
 // MARK: - Preview
@@ -110,7 +107,6 @@ public struct BugReportResultView: View {
 struct BugReportResultView_Previews: PreviewProvider {
     static var previews: some View {
         return Group {
-
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
                                              reducer: { BugReportResultFeature() }))
             .previewDisplayName("Success")

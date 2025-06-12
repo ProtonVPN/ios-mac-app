@@ -19,7 +19,6 @@
 import Foundation
 
 extension Optional where Wrapped == URL {
-    
     /// Url as string or empty string if nil
     var stringOrEmpty: String {
         switch self {

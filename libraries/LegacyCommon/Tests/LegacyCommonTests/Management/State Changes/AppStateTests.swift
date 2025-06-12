@@ -23,7 +23,6 @@
 import XCTest
 
 class AppStateTests: XCTestCase {
-
     var descriptor: ServerDescriptor!
     var connectedState: AppState!
     var preparingState: AppState!
@@ -47,7 +46,6 @@ class AppStateTests: XCTestCase {
     }
 
     func testIsConnected() {
-        
         XCTAssert(connectedState.isConnected)
         
         XCTAssertFalse(disconnectedState.isConnected)
@@ -59,7 +57,6 @@ class AppStateTests: XCTestCase {
     }
     
     func testIsDisconnected() {
-        
         XCTAssert(disconnectedState.isDisconnected)
         XCTAssert(preparingState.isDisconnected)
         XCTAssert(connectingState.isDisconnected)
@@ -71,7 +68,6 @@ class AppStateTests: XCTestCase {
     }
     
     func testIsStable() {
-        
         XCTAssert(disconnectedState.isStable)
         XCTAssert(connectedState.isStable)
         XCTAssert(abortedState.isStable)
@@ -83,7 +79,6 @@ class AppStateTests: XCTestCase {
     }
     
     func testIsSafeToEnd() {
-        
         XCTAssert(disconnectedState.isSafeToEnd)
         XCTAssert(preparingState.isSafeToEnd)
         XCTAssert(abortedState.isSafeToEnd)

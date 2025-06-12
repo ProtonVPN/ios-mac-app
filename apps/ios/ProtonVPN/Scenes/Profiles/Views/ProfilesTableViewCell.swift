@@ -25,7 +25,6 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 
 final class ProfilesTableViewCell: UITableViewCell {
-
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var labelsStackView: UIStackView!
     @IBOutlet weak var profileName: UILabel!

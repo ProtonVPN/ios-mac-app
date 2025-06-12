@@ -298,6 +298,7 @@ extension VpnManager: LocalAgentDelegate {
             alertService?.push(alert: DomainErrorAlert(alert: error.alert))
         }
     }
+
     // swiftlint:enable cyclomatic_complexity
 
     func didChangeState(state: LocalAgentState) {

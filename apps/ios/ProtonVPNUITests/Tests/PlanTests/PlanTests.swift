@@ -21,7 +21,6 @@ import fusion
 import UITestsHelpers
 
 class PlanTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     private struct Plan {
@@ -80,7 +79,6 @@ class PlanTests: ProtonVPNUITests {
     // This test temporary disabled
     /// Test showing standard plans for upgrade but not Black Friday 2022 plans
     func testShowUpdatePlansForCurrentFreePlan() {
-        
         loginAndGoToAccountDetails(BF22Users.freeUser.credentials)
             .goToUpgradeSubscription()
             .verify.upgradeSubscriptionScreenShown()

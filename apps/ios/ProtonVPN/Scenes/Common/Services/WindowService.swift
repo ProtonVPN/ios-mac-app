@@ -53,7 +53,6 @@ enum PresentedMessageType {
 }
 
 final class WindowServiceImplementation: WindowService {
-
     private let window: UIWindow
 
     var rootViewControllerObserver: NSKeyValueObservation?

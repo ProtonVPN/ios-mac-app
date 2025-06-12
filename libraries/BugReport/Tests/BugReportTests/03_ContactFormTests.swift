@@ -22,7 +22,6 @@ import ComposableArchitecture
 
 @MainActor
 final class ContactFormTests: XCTestCase {
-
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithoutQuickFixes: BugReport.Category {
@@ -76,7 +75,6 @@ final class ContactFormTests: XCTestCase {
         await store.send(.fieldBoolValueChanged(boolFormField, false), assert: { resultState in
             resultState.fields[id: boolFormField.id]?.boolValue = false
         })
-
     }
 
     func testFormIsSent() async throws {
@@ -158,5 +156,4 @@ final class ContactFormTests: XCTestCase {
             resultState.resultState = nil
         })
     }
-
 }

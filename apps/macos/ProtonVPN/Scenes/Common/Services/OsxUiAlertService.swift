@@ -30,7 +30,6 @@ protocol UIAlertServiceFactory {
 }
 
 class OsxUiAlertService: UIAlertService {
-    
     typealias Factory = WindowServiceFactory & NavigationServiceFactory
     
     private let factory: Factory
@@ -113,5 +112,4 @@ class OsxUiAlertService: UIAlertService {
             }
         }
     }
-    
 }

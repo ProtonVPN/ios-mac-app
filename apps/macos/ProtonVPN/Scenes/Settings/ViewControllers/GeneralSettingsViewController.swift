@@ -31,7 +31,6 @@ public protocol ReloadableViewController: AnyObject {
 }
 
 final class GeneralSettingsViewController: NSViewController, ReloadableViewController {
-
     @IBOutlet weak var startOnBootView: SettingsTickboxView!
     @IBOutlet weak var startMinimizedView: SettingsTickboxView!
     @IBOutlet weak var systemNotificationsView: SettingsTickboxView!
@@ -99,7 +98,6 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
 }
 
 extension GeneralSettingsViewController: TickboxViewDelegate {
-
     func upsellTapped(_ tickboxView: SettingsTickboxView) {
         // No upsellable features need to be handled in general settings
     }

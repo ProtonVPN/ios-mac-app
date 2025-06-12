@@ -21,7 +21,6 @@ import Dependencies
 import VPNShared
 
 public extension PropertiesManager {
-    
     func logCurrentState() {
         let keysToLog = Set(Keys.allCases).subtracting([Keys.userLocation, Keys.streamingServices, Keys.servicePlans, Keys.defaultPlanDetails, Keys.streamingResourcesUrl])
 
@@ -33,5 +32,4 @@ public extension PropertiesManager {
         }
         log.info("\(message.maskIPs)", category: .settings, event: .current)
     }
-    
 }

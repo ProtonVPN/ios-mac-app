@@ -76,7 +76,6 @@ extension VPNConnectionStatusKey: @retroactive DependencyKey {
 // MARK: - AppDisplayState -> VPNConnectionStatus
 
 extension AppDisplayState {
-
     func vpnConnectionStatus(
         _ connectionConfiguration: ConnectionConfiguration?,
         lastPreparedServer: ServerModel?,

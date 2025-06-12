@@ -24,7 +24,6 @@ import UIKit
 import LegacyCommon
 
 class LogsViewController: UIViewController {
-    
     @IBOutlet weak var textView: UITextView!
     
     private let viewModel: LogsViewModel

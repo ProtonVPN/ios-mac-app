@@ -23,7 +23,6 @@
 import UIKit
 
 final class ColorPickerItem: UICollectionViewCell {
-
     @IBOutlet private weak var colorCircleView: UIView!
     
     var color: UIColor = .backgroundColor() {

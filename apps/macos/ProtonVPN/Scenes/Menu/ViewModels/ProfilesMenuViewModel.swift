@@ -99,6 +99,7 @@ class ProfilesMenuViewModel {
     }
     
     // MARK: - Private functions
+
     private func sessionChanged(data: SessionChanged.T) {
         contentChanged?()
     }

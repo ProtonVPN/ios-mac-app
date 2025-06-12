@@ -23,7 +23,6 @@
 import UIKit
 
 extension UIView {
-    
     /// Load a view from nib/xib file that is named the same as the class itself
     static func loadViewFromNib<T>() -> T {
         let nibObjects = nib.instantiate(withOwner: self, options: nil)
@@ -43,5 +42,4 @@ extension UIView {
     static var nib: UINib {
         return UINib(nibName: identifier, bundle: nil)
     }
-    
 }

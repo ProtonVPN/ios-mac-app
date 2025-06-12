@@ -28,7 +28,6 @@ import PMLogger
 import NEHelper
 
 final class PacketTunnelProvider: NEPacketTunnelProvider {
-
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
@@ -150,7 +149,6 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
     private func setupLogging() {
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
     }
-    
 }
 
 extension WireGuardLogLevel {

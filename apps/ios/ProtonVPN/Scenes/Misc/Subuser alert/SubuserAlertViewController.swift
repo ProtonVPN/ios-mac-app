@@ -29,7 +29,6 @@ import Domain
 import Strings
 
 class SubuserAlertViewController: UIViewController {
-    
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var description1Label: UILabel!

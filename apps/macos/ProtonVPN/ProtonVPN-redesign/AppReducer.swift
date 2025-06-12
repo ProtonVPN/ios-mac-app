@@ -24,7 +24,6 @@ import Home
 import VPNAppCore
 
 struct AppReducer: Reducer {
-
     public typealias ActionSender = (Action) -> Void
 
     @Dependency(\.initialStateProvider) var initialStateProvider

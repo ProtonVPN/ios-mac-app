@@ -42,7 +42,6 @@ import Strings
 import Theme
 
 class ServerItemViewModel: ServerItemViewModelCore {
-
     @Dependency(\.serverRepository) var repository
 
     private let alertService: AlertService
@@ -187,6 +186,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {
@@ -212,8 +212,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
 }
 
 // MARK: - SecureCoreServerItemViewModel subclass
-class SecureCoreServerItemViewModel: ServerItemViewModel {
 
+class SecureCoreServerItemViewModel: ServerItemViewModel {
     override var viaCountry: (name: String, code: String)? {
         return isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
     }

@@ -23,7 +23,6 @@ import Dependencies
 @testable import LocalAgent
 
 final class LocalAgentImplementationTests: XCTestCase {
-
     func testEventsAreEmittedOnSubsequentSubscriptions() async throws {
         let agent: LocalAgentImplementation = withDependencies {
             $0.date = .constant(.now)

@@ -22,7 +22,6 @@ import ProtonCoreUIFoundations
 
 /// Progress indicator that changes color based on the percentage
 public struct SmallProgressView: View {
-
     let percentage: Int
 
     private let threshold1 = 51

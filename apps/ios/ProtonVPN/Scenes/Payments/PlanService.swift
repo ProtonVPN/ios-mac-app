@@ -194,7 +194,6 @@ final class CorePlanService: PlanService {
             log.debug("Credits topped up", category: .iap)
         case let .apiMightBeBlocked(message, originalError: error):
             log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
-
         }
     }
 }

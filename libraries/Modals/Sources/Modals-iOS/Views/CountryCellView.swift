@@ -21,7 +21,6 @@ import UIKit
 import ModalsShared
 
 class CountryCellView: UICollectionViewCell {
-
     static var identifier: String { return String(describing: self) }
 
     @IBOutlet private weak var flagImageView: UIImageView!
@@ -40,5 +39,4 @@ class CountryCellView: UICollectionViewCell {
         flagImageView.layer.cornerRadius = .themeRadius4
         flagImageView.layer.masksToBounds = true
     }
-
 }

@@ -38,7 +38,6 @@ import Strings
 import Domain
 
 final class IosAlertService {
-
     typealias Factory = UIAlertServiceFactory &
         AppSessionManagerFactory &
         WindowServiceFactory &
@@ -67,7 +66,6 @@ final class IosAlertService {
 }
 
 extension IosAlertService: CoreAlertService {
-
     func push(alert: SystemAlert) {
         executeOnUIThread {
             self.pushOnUIThread(alert: alert)
@@ -281,6 +279,7 @@ extension IosAlertService: CoreAlertService {
             #endif
         }
     }
+
     // swiftlint:enable cyclomatic_complexity function_body_length
 
     // This method translates the `UserAccountUpdateAlert` subclasses to specific feature types that the Modals module expects.

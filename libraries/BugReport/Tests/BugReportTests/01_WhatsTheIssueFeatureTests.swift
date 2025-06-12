@@ -22,7 +22,6 @@ import ComposableArchitecture
 
 @MainActor
 final class WhatsTheIssueFeatureTests: XCTestCase {
-
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithQuickFixes: BugReport.Category {

@@ -4,7 +4,6 @@ import SwiftUI
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 public final class ModalsFactory {
-
     public init() {}
 
     // MARK: Properties
@@ -12,9 +11,11 @@ public final class ModalsFactory {
     private lazy var discourageStoryboard: UIStoryboard = {
         UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
     }()
+
     private lazy var userAccountUpdateStoryboard: UIStoryboard = {
         UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
     }()
+
     private lazy var freeConnectionsViewStoryboard: UIStoryboard = {
         UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
     }()

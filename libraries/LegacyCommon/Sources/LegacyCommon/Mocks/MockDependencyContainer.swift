@@ -32,7 +32,6 @@ import VPNShared
 import VPNSharedTesting
 
 open class MockDependencyContainer {
-
     @Dependency(\.serverRepository) var serverRepository
     public static let appGroup = "test"
     public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
@@ -64,6 +63,7 @@ open class MockDependencyContainer {
         )
         return result
     }()
+
     public lazy var timerFactory = TimerFactoryMock()
     public lazy var propertiesManager = PropertiesManagerMock()
     public lazy var vpnKeychain = VpnKeychainMock()

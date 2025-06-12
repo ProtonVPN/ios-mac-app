@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 public struct MapPin: View {
-
     @Binding var mode: Mode
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -61,7 +60,6 @@ public struct MapPin: View {
             .opacity(0.5)
             .frame(width: 96, height: 96)
             .withPhaseAnimation(reduceMotion: reduceMotion)
-
     }
 }
 
@@ -141,6 +139,7 @@ private enum AnimationPhase: CaseIterable {
 }
 
 // MARK: - Preview
+
 #if compiler(>=6)
 @available(iOS 17, *)
 #Preview {

@@ -24,7 +24,6 @@ import Foundation
 import LegacyCommon
 
 final class SettingsContainerViewModel {
-
     typealias Factory = PropertiesManagerFactory
         & ConnectionSettingsViewModel.Factory
         & AdvancedSettingsViewModel.Factory

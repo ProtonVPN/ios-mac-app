@@ -54,7 +54,6 @@ public enum Flag: Equatable {
 }
 
 public struct FlagSizes {
-
     let frame: CGSize
 
     // Simple flag
@@ -256,7 +255,6 @@ public struct SecureCoreFlagView: View {
 
 #Preview("Baseline Alignment") {
     VStack(alignment: .leading) {
-
         HStack(alignment: .firstTextBaseline) {
             SimpleFlagView(regionCode: "CH", flagSize: .defaultSize)
             Text("Switzerland")

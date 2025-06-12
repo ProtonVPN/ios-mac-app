@@ -12,7 +12,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreTestingToolkitUITestsCore
 
 class LoginExtAccountTests: ProtonVPNUITests {
-
     let loginRobot = ProtonCoreTestingToolkitUITestsLogin.LoginRobot()
 
     override func setUp() {

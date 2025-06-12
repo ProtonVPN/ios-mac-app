@@ -24,7 +24,6 @@ import Cocoa
 import Theme
 
 class MapHeaderViewController: NSViewController {
-
     @IBOutlet weak var backgroundView: MapHeaderBackground!
     @IBOutlet weak var connectLabel: NSTextField!
     @IBOutlet weak var connectImage: ButtonImageView!

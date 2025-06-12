@@ -20,7 +20,6 @@ import Cocoa
 
 /// Button that changes its image on hover
 class HoverDetectionImageButton: HoverDetectionButton {
-
     @IBInspectable var imageMain: NSImage?
     @IBInspectable var imageHovered: NSImage?
 

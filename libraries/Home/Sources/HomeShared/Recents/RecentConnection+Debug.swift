@@ -22,6 +22,7 @@ import Domain
 import VPNAppCore
 
 // MARK: - Debug values
+
 public extension RecentConnection {
     static var pinnedConnection: RecentConnection {
         .init(
@@ -40,6 +41,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var previousConnection: RecentConnection {
         .init(
             pinnedDate: nil,
@@ -51,6 +53,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var connectionRegion: RecentConnection {
         .init(
             pinnedDate: nil,
@@ -74,6 +77,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var previousFreeConnection: RecentConnection {
         .init(
             pinnedDate: nil,
@@ -91,6 +95,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var connectionSecureCore: RecentConnection {
         .init(
             pinnedDate: Date(),
@@ -102,6 +107,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var connectionRegionPinned: RecentConnection {
         .init(
             pinnedDate: Date(),
@@ -113,6 +119,7 @@ public extension RecentConnection {
             )
         )
     }
+
     static var connectionSecureCoreFastestTo: RecentConnection {
         .init(
             pinnedDate: nil,

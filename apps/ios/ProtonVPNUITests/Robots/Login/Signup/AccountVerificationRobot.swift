@@ -14,7 +14,6 @@ fileprivate let accountVerificationTextField = "EmailVerificationViewController.
 fileprivate let nextButtonId = Localizable.modalsCommonNext
 
 class AccountVerificationRobot: CoreElements {
-
     func enterVerificationCode(_ code: String) -> AccountVerificationRobot {
         textField(accountVerificationTextField).tap().typeText(code)
         return self
@@ -28,7 +27,6 @@ class AccountVerificationRobot: CoreElements {
     public let verify = Verify()
     
     class Verify: CoreElements {
-
         @discardableResult
         func accountVerificationScreenIsShown() -> AccountVerificationRobot {
             staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()

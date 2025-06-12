@@ -83,7 +83,6 @@ public class VpnApiService {
     public func vpnProperties(isDisconnected: Bool,
                               lastKnownLocation: UserLocation?,
                               serversAccordingToTier: Bool) async throws -> VpnProperties {
-
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
         let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
@@ -281,7 +280,6 @@ public class VpnApiService {
             case let .failure(error):
                 completion(.failure(error))
             }
-
         }
     }
 
@@ -333,5 +331,4 @@ public class VpnApiService {
             Authenticator(api: networking.apiService).getAddresses(completion: continuation.resume(with:))
         }
     }
-
 }

@@ -36,7 +36,6 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 }
 
 final class OverviewItemViewModel: AbstractProfileViewModel {
-
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol

@@ -12,7 +12,6 @@ import LegacyCommon
 import Strings
 
 class LogSelectionViewController: UIViewController {
-
     @IBOutlet weak var tableView: UITableView!
     
     var genericDataSource: GenericTableViewDataSource?

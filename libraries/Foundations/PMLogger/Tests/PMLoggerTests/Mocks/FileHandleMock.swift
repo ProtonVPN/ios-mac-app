@@ -20,7 +20,6 @@ import Foundation
 import PMLogger
 
 class FileHandleMock: FileHandleWrapper {
-
     public let url: URL
 
     required init(forWritingTo url: URL) throws {

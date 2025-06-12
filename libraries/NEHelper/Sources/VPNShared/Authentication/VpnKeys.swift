@@ -26,7 +26,6 @@ import Foundation
  Ed25519 public key
  */
 public struct PublicKey: Sendable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
-
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 

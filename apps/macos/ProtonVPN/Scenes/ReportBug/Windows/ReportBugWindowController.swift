@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class ReportBugWindowController: WindowController {
-
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -50,5 +49,4 @@ class ReportBugWindowController: WindowController {
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)
     }
-    
 }

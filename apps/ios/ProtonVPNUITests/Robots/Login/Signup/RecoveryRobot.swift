@@ -23,7 +23,6 @@ private let phoneTextFieldId = "RecoveryViewController.recoveryPhoneTextField.te
 private let nextButtonId = "RecoveryViewController.nextButton"
 
 class RecoveryRobot: CoreElements {
-    
     let coreRecoveryRobot = ProtonCoreTestingToolkitUITestsLogin.RecoveryRobot()
     
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {

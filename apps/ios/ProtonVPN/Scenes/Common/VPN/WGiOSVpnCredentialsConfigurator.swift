@@ -11,7 +11,6 @@ import NetworkExtension
 import LegacyCommon
 
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
-    
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
     
@@ -41,5 +40,4 @@ final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
 
         completionHandler(protocolConfig)
     }
-    
 }

@@ -34,7 +34,6 @@ import Theme
 import LegacyCommon
 
 class CountryAnnotationViewModel: CustomStyleContext {
-    
     enum ViewState {
         case idle
         case hovered
@@ -164,7 +163,6 @@ class CountryAnnotationViewModel: CustomStyleContext {
 }
 
 class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
-    
     fileprivate let vpnGateway: VpnGatewayProtocol
     
     init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
@@ -174,7 +172,6 @@ class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
 }
 
 class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
-
     var attributedConnectTitle: NSAttributedString {
         return isConnected ? attributedDisconnect : attributedConnect
     }
@@ -198,21 +195,18 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 }
 
 struct SCExitCountrySelection {
-
     let selected: Bool
     let connected: Bool
     let countryCode: String
 }
 
 struct SCEntryCountrySelection {
-    
     let selected: Bool
     let countryCode: String
     let exitCountryCodes: [String]
 }
 
 class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
-    
     let servers: [ServerInfo]
 
     // triggered by ui-based views' state changes
@@ -280,7 +274,6 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 }
 
 class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
-    
     // triggered by ui-based views' state changes
     var externalViewStateChange: ((SCEntryCountrySelection) -> Void)?
     
@@ -320,6 +313,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     }
     
     // MARK: - SecureCoreAnnotation protocol implementation
+
     func countrySelected(_ selection: SCExitCountrySelection) {
         if selection.selected {
             if exitCountryCodes.contains(selection.countryCode) {

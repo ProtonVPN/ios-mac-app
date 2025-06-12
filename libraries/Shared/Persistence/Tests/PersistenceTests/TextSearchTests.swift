@@ -26,7 +26,6 @@ import Localization
 import PersistenceTestSupport
 
 final class TextSearchTests: TestIsolatedDatabaseTestCase {
-
     let mockCountryNameProvider: CountryNameProvider = .mock(
         codeToNameDictionary: [
             "TR": "Türkiye", // extra diacritics for fun

@@ -23,7 +23,6 @@
 import Cocoa
 
 class VerticalScrollView: NSScrollView {
-
     override func awakeFromNib() {
         super.awakeFromNib()
         

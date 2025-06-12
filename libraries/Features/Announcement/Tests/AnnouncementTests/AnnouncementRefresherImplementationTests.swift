@@ -26,7 +26,6 @@ import ProtonCoreNetworking
 @testable import Announcement
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
-
     @Dependency(\.announcementStorage) var storage
 
     override class func tearDown() {
@@ -152,5 +151,4 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
         XCTAssertEqual(storage.fetch().count, 2)
     }
-    
 }

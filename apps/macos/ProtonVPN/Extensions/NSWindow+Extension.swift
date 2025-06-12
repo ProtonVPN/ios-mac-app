@@ -24,7 +24,6 @@ import Cocoa
 import SwiftUI
 
 extension NSWindow {
-    
     func applyModalAppearance(withTitle modalTitle: String = "Proton VPN") {
         styleMask.remove(NSWindow.StyleMask.resizable)
         title = modalTitle

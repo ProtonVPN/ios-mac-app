@@ -136,14 +136,17 @@ final class SettingsViewModel {
     var shouldShowAccountRecovery: Bool {
         accountRecoveryStatus?.isVisibleInSettings ?? false
     }
+
     var accountRecoveryStateText: String {
         accountRecoveryStatus?.valueForSettingsItem ?? ""
     }
+
     var accountRecoveryImage: UIImage? {
         accountRecoveryStatus?.imageForSettingsItem
     }
 
     // MARK: - Header section
+
     func viewForFooter() -> UIView {
         let view = AppVersionView.loadViewFromNib() as AppVersionView
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
@@ -152,6 +155,7 @@ final class SettingsViewModel {
     }
 
     // MARK: - Private functions
+
     private func startObserving() {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
 
@@ -205,7 +209,6 @@ final class SettingsViewModel {
     }
 
     private var accountSection: TableViewSection {
-
         let username: String = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
 

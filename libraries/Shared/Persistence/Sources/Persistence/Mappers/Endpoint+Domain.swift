@@ -21,7 +21,6 @@ import Foundation
 import Domain
 
 extension Domain.ServerEndpoint {
-
     init(server: Endpoint, overrides: EndpointOverrides?) {
         self.init(
             id: server.id,

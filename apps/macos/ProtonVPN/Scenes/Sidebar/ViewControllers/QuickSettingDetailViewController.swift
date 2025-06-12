@@ -45,7 +45,6 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
-
     @IBOutlet weak var arrowIV: NSImageView!
     @IBOutlet weak var arrowHorizontalConstraint: NSLayoutConstraint!
 

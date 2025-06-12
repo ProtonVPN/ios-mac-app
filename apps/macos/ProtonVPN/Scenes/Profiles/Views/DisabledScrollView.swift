@@ -23,7 +23,6 @@
 import Cocoa
 
 class DisabledScrollView: NSScrollView {
-
     override func awakeFromNib() {
         super.awakeFromNib()
         

@@ -23,7 +23,6 @@
 import UIKit
 
 class InstructionStepTableViewCell: UITableViewCell {
-
     @IBOutlet weak var stepView: InstructionStepView!
     @IBOutlet weak var label: UILabel!
     
@@ -39,5 +38,4 @@ class InstructionStepTableViewCell: UITableViewCell {
 
         selectionStyle = .none
     }
-    
 }

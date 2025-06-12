@@ -30,7 +30,6 @@ import Theme
 import LegacyCommon
 
 class StatusMenuCountryItemViewModel {
-    
     private let serverGroup: ServerGroupInfo
     private let type: ServerType
     private let vpnGateway: VpnGatewayProtocol
@@ -60,6 +59,7 @@ class StatusMenuCountryItemViewModel {
     }
     
     // MARK: - Private
+
     private func formDescription() -> NSAttributedString {
         let label: NSAttributedString
         let font = NSFont.themeFont(literalSize: 11)

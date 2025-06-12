@@ -219,7 +219,6 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
                                        "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
         return try! VpnCertificate(dict: certDict.mapValues({ $0 as AnyObject }))
     }
-
 }
 
 class ConnectionTestCaseDriver: BaseConnectionTestCase {

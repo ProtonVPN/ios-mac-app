@@ -48,6 +48,7 @@ public extension TimeInterval {
 
         return (days, hours, minutes, seconds)
     }
+
     // swiftlint:enable large_tuple
 
     var asColonSeparatedString: String {

@@ -25,11 +25,9 @@ fileprivate let creatingAccount = "Creating your account"
 fileprivate let configuringAccess = Localizable.loginFetchVpnData
 
 class CreatingAccountRobot: CoreElements {
-    
     public let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func creatingAccountScreenIsShown() -> OnboardingRobot {
             staticText(titleId).waitUntilExists(time: 110).checkExists()

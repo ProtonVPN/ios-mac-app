@@ -34,7 +34,6 @@ import Domain
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer: Container {
-    
     public static var shared: DependencyContainer = DependencyContainer()
     
     // Singletons
@@ -99,21 +98,25 @@ final class DependencyContainer: Container {
     // MARK: - Overridden factory methods
 
     // MARK: NetworkingDelegate
+
     override func makeNetworkingDelegate() -> NetworkingDelegate {
         networkingDelegate
     }
 
     // MARK: CoreAlertServiceFactory
+
     override func makeCoreAlertService() -> CoreAlertService {
         iosAlertService
     }
 
     // MARK: WireguardProtocolFactoryCreator
+
     override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         wireguardFactory
     }
 
     // MARK: VpnCredentialsConfiguratorFactoryCreator
+
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
                                              vpnKeychain: makeVpnKeychain(),
@@ -121,11 +124,13 @@ final class DependencyContainer: Container {
     }
 
     // MARK: VpnAuthentication
+
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
     }
 
     // MARK: LogContentProviderFactory
+
     override func makeLogContentProvider() -> LogContentProvider {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
@@ -147,6 +152,7 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 }
 
 // MARK: NavigationServiceFactory
+
 extension DependencyContainer: NavigationServiceFactory {
     func makeNavigationService() -> NavigationService {
         return navigationService
@@ -154,6 +160,7 @@ extension DependencyContainer: NavigationServiceFactory {
 }
 
 // MARK: SettingsServiceFactory
+
 extension DependencyContainer: SettingsServiceFactory {
     func makeSettingsService() -> SettingsService {
         return navigationService
@@ -161,6 +168,7 @@ extension DependencyContainer: SettingsServiceFactory {
 }
 
 // MARK: WindowServiceFactory
+
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
         return windowService
@@ -168,6 +176,7 @@ extension DependencyContainer: WindowServiceFactory {
 }
 
 // MARK: AppSessionManagerFactory
+
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         return appSessionManager
@@ -175,6 +184,7 @@ extension DependencyContainer: AppSessionManagerFactory {
 }
 
 // MARK: UIAlertServiceFactory
+
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
@@ -182,6 +192,7 @@ extension DependencyContainer: UIAlertServiceFactory {
 }
 
 // MARK: AppSessionRefreshTimerFactory
+
 extension DependencyContainer: AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         return refreshTimer
@@ -189,6 +200,7 @@ extension DependencyContainer: AppSessionRefreshTimerFactory {
 }
 
 // MARK: - AppSessionRefresherFactory
+
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         return appSessionManager
@@ -196,6 +208,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 }
 
 // MARK: LoginServiceFactory
+
 extension DependencyContainer: LoginServiceFactory {
     func makeLoginService() -> LoginService {
         return CoreLoginService(factory: self)
@@ -203,6 +216,7 @@ extension DependencyContainer: LoginServiceFactory {
 }
 
 // MARK: PlanServiceFactory
+
 extension DependencyContainer: PlanServiceFactory {
     func makePlanService() -> PlanService {
         return planService
@@ -210,6 +224,7 @@ extension DependencyContainer: PlanServiceFactory {
 }
 
 // MARK: OnboardingServiceFactory
+
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
         return OnboardingModuleService(factory: self)
@@ -217,6 +232,7 @@ extension DependencyContainer: OnboardingServiceFactory {
 }
 
 // MARK: BugReportCreatorFactory
+
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
         return iOSBugReportCreator()
@@ -224,6 +240,7 @@ extension DependencyContainer: BugReportCreatorFactory {
 }
 
 // MARK: SearchStorageFactory
+
 extension DependencyContainer: SearchStorageFactory {
     func makeSearchStorage() -> SearchStorage {
         return searchStorage
@@ -231,6 +248,7 @@ extension DependencyContainer: SearchStorageFactory {
 }
 
 // MARK: ReviewFactory
+
 extension DependencyContainer: ReviewFactory {
     func makeReview() -> Review {
         return review

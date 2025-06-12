@@ -37,7 +37,6 @@ enum ButtonState: Int {
 }
 
 protocol SwitchButtonDelegate: AnyObject {
-    
     /// Asks delegate if button state should be switched. If completion if returned with false, button should not switch.
     func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void)
     
@@ -52,7 +51,6 @@ extension SwitchButtonDelegate {
 }
 
 class SwitchButton: NSView, CAAnimationDelegate {
-    
     weak var delegate: SwitchButtonDelegate?
     var buttonView: NSButton?
     var innerView: NSView?

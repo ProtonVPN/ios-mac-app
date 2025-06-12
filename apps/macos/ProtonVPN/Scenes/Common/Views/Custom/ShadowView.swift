@@ -23,7 +23,6 @@
 import Cocoa
 
 class ShadowView: NSView {
-
     private var darkness = NSColor(red: 0, green: 0, blue: 0, alpha: 0.25)
     private var gradientHeight: CGFloat!
     

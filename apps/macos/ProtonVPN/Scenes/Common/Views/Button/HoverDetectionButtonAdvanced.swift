@@ -24,7 +24,6 @@ import Cocoa
 
 // Use for buttons that shouldn't hover when obscured (less efficient than HoverDetectionButton)
 class HoverDetectionButtonAdvanced: NSButton {
-    
     var isHovered: Bool = false {
         didSet {
             resetCursorRects()
@@ -89,6 +88,7 @@ class HoverDetectionButtonAdvanced: NSButton {
     }
     
     // MARK: - Private
+
     private func updateHoveredState(with event: NSEvent?) {
         let newHovered = mouseInside(with: event)
         if let newHovered = newHovered, newHovered != isHovered {

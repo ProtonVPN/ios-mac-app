@@ -22,7 +22,6 @@
 import Foundation
 
 public enum ProfileType: Equatable, Codable {
-    
     case system
     case user
     
@@ -36,6 +35,7 @@ public enum ProfileType: Equatable, Codable {
     }
     
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let profileType = "profileType"
     }

@@ -218,7 +218,6 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                      responseHeaders: responseHeaders,
                      expectationToFulfill: expectationToFulfill)
     }
-
 }
 
 protocol MockableAPIResponse: Codable {

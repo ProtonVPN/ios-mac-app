@@ -33,7 +33,6 @@ protocol StreamingServicesOverlayViewModelProtocol {
 }
 
 class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtocol {
-
     private let streamingServices: [VpnStreamingOption]
     
     let propertiesManager: PropertiesManagerProtocol

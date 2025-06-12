@@ -26,7 +26,6 @@ protocol SearchViewControllerDelegate: AnyObject {
 }
 
 final class SearchViewController: UIViewController {
-
     // MARK: Outlets
 
     @IBOutlet weak var searchBar: UISearchBar!

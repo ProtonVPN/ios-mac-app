@@ -23,7 +23,6 @@
 import Cocoa
 
 class FeatureIcon: NSImageView {
-        
     override var isFlipped: Bool {
         return false
     }

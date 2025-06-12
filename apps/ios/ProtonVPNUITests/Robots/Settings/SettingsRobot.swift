@@ -23,7 +23,6 @@ fileprivate let cancelButton = Localizable.cancel
 fileprivate let firstAppScreen = "SELECTED ENVIRONMENT"
 
 class SettingsRobot: CoreElements {
-    
     let verify = Verify()
     
     /// - Precondition: Protocol submenu of Settings menu
@@ -138,7 +137,6 @@ class SettingsRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-        
         @discardableResult
         func bugReportFormIsClosed() -> SettingsRobot {
             staticText(headerTitle).waitUntilExists().checkExists()

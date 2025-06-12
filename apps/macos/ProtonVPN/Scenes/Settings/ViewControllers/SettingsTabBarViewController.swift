@@ -26,7 +26,6 @@ import Ergonomics
 import Strings
 
 final class SettingsTabBarViewController: NSViewController {
-    
     @IBOutlet private weak var headerLabel: NSTextField!
     @IBOutlet private weak var tabBarView: TabBarView!
     @IBOutlet private weak var generalButton: TabBarButton!

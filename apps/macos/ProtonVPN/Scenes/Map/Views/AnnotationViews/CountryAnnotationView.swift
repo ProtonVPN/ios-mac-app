@@ -71,6 +71,7 @@ class MapAnnotationView: MKAnnotationView {
         case middle = 50
         case upFront = 100
     }
+
     /// What tag the object should take on for element ordering when hovered.
     private let hoveredTag: ForegroundOrder
 
@@ -292,6 +293,7 @@ class MapAnnotationView: MKAnnotationView {
             textLine.draw(in: CGRect(x: textOffsetX, y: textY, width: textFrameWidth, height: textHeight))
         }
     }
+
     // swiftlint:enable function_body_length operator_usage_whitespace
 
     internal func mouseInside(with event: NSEvent, hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {

@@ -26,7 +26,6 @@ import Theme
 import Strings
 
 class QuitApplicationButton: HoverDetectionButton {
- 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 

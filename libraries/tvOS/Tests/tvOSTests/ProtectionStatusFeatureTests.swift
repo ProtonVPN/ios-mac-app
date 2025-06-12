@@ -23,7 +23,6 @@ import Connection
 import DomainTestSupport
 
 final class ProtectionStatusFeatureTests: XCTestCase {
-
     @MainActor
     func testOnAppear() async {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {

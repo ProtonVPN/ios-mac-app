@@ -19,7 +19,6 @@
 import Cocoa
 
 class ReportBugWindowController: NSWindowController {
-
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -41,5 +40,4 @@ class ReportBugWindowController: NSWindowController {
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
     }
-    
 }

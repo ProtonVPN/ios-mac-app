@@ -21,7 +21,6 @@ import ComposableArchitecture
 
 @Reducer
 struct WhatsTheIssueFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var categories: [Category]
@@ -45,7 +44,6 @@ struct WhatsTheIssueFeature: Reducer {
 
     @Reducer
     struct Route {
-
         @ObservableState
         enum State: Equatable {
             case quickFixes(QuickFixesFeature.State)
@@ -101,5 +99,4 @@ struct WhatsTheIssueFeature: Reducer {
             })
         })
     }
-
 }

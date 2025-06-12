@@ -291,6 +291,7 @@ class NWTCPDataTask: DataTaskProtocol {
             timeoutTimer?.invalidate()
         }
     }
+
     /// Id used to identify tasks for exmaple in logs
     let taskId: UUID
 

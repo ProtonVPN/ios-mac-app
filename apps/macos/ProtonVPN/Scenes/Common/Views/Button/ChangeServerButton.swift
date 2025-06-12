@@ -27,7 +27,6 @@ import Ergonomics
 /// Uses text fields and an image view to display the `unavailable` state, because I went mad trying to implement an
 /// NSButton subclass with multiple strings aligned to different edges, with padding and an image
 class ChangeServerView: NSView {
-
     @IBOutlet private weak var button: ChangeServerButton!
     @IBOutlet private weak var changeServerLabel: NSTextField!
     @IBOutlet private weak var hourglassImageView: NSImageView!
@@ -68,6 +67,7 @@ class ChangeServerView: NSView {
         handler?()
     }
 }
+
 extension ChangeServerView: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {

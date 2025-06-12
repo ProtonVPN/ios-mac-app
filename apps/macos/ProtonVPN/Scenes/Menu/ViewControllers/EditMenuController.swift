@@ -20,7 +20,6 @@ import AppKit
 import Strings
  
 class EditMenuController: NSObject {
-
     @IBOutlet weak var editMenu: NSMenu!
     @IBOutlet weak var cutItem: NSMenuItem!
     @IBOutlet weak var copyItem: NSMenuItem!
@@ -34,6 +33,7 @@ class EditMenuController: NSObject {
     }
 
     // MARK: - Private functions
+
     private func setupPersistentView() {
         editMenu.title = Localizable.editMenuTitle
         cutItem.title = Localizable.cutMenuTitle

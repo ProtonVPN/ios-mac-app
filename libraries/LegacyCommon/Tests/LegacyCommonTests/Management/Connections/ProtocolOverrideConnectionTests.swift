@@ -240,15 +240,12 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
 
     #if false
     func testExclusiveServerSwitchingDueToMaintenance() {
-
     }
 
     func testConnectingToProfileWithOverriddenIP() {
-
     }
 
     func testConnectingToProfileWithChangedOverride() {
-
     }
     #endif
 }

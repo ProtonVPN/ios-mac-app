@@ -39,7 +39,6 @@ fileprivate let upsellModalTitle = "TitleLabel"
 fileprivate let modalDescription = "DescriptionLabel"
 
 class SettingsRobot: CoreElements {
-    
     func generalTabClick() -> SettingsRobot {
         tabGroup(generalTab).tap()
         return SettingsRobot()
@@ -114,7 +113,6 @@ class SettingsRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-                    
         @discardableResult
         func checkSettingsIsOpen() -> SettingsRobot {
             staticText(preferencesTitleId).checkExists()

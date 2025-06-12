@@ -59,7 +59,6 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-
     typealias Factory = VpnApiServiceFactory &
                         AppStateManagerFactory &
                         VpnKeychainFactory &
@@ -396,10 +395,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: User plan changed (before refreshing data)
+
     override func userPlanChanged(_ notification: Notification) {
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
            downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
-
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil

@@ -28,7 +28,6 @@ fileprivate let invalidUsernameErrorMessage = "Invalid username"
 fileprivate let captchaNextButton = Localizable.modalsCommonNext
 
 class LoginRobot: CoreElements {
-    
     public let verify = Verify()
     
     @discardableResult
@@ -71,7 +70,6 @@ class LoginRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-        
         @discardableResult
         func loginScreenIsShown() -> LoginRobot {
             staticText(titleId).waitUntilExists().checkExists()

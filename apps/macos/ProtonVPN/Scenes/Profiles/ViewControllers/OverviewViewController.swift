@@ -26,7 +26,6 @@ import Ergonomics
 import Strings
 
 class OverviewViewController: NSViewController {
-    
     fileprivate let overviewItemIdentifier = "OverviewItemCell"
 
     @IBOutlet weak var profileLabel: PVPNTextField!
@@ -116,14 +115,12 @@ class OverviewViewController: NSViewController {
 }
 
 extension OverviewViewController: NSTableViewDataSource {
-    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return viewModel.cellCount
     }
 }
 
 extension OverviewViewController: NSTableViewDelegate {
-    
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         return viewModel.cellHeight
     }
@@ -138,7 +135,6 @@ extension OverviewViewController: NSTableViewDelegate {
 }
 
 extension OverviewViewController: OverviewItemViewModelDelegate {
-    
     func showDeleteWarning(_ viewModel: WarningPopupViewModel) {
         presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }

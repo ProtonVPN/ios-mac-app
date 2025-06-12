@@ -24,7 +24,6 @@ import Localization
 
 @Reducer
 public struct ConnectionDetailsFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var connectedSince: Date

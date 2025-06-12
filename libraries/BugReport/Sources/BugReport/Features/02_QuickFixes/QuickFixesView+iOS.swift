@@ -23,7 +23,6 @@ import SwiftUI
 import Strings
 
 public struct QuickFixesView: View {
-
     @Perception.Bindable var store: StoreOf<QuickFixesFeature>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
@@ -38,7 +37,6 @@ public struct QuickFixesView: View {
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-
                     StepProgress(step: 2, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                         .padding(.bottom)
 
@@ -54,7 +52,6 @@ public struct QuickFixesView: View {
                     }.padding(.horizontal)
 
                     VStack {
-
                         if let suggestions = store.category.suggestions {
                             ForEach(suggestions) { suggestion in
                                 VStack(alignment: .leading) {
@@ -88,7 +85,6 @@ public struct QuickFixesView: View {
                                 }
                             }
                         }
-
                     }
                     .padding(.top, 36)
                     .padding(.bottom, 24)
@@ -143,11 +139,9 @@ public struct QuickFixesView: View {
                 }, label: {
                     Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                 }))
-
             }
         }
     }
-
 }
 
 // MARK: - Preview

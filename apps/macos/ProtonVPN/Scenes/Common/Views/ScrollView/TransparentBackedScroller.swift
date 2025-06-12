@@ -23,7 +23,6 @@
 import Cocoa
 
 class TransparentBackedScroller: NSScroller {
-    
     override static var isCompatibleWithOverlayScrollers: Bool {
         return true
     }

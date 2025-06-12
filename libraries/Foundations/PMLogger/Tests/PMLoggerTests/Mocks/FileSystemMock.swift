@@ -23,7 +23,6 @@ import Foundation
 ///
 /// Expectations can be set in case they are needed for async testing.
 class FileSystemMock {
-
     let fileManager = FileManagerMock()
     let handlerMockFactory = SizeWatchingFileHandleMockFactory()
 
@@ -61,13 +60,11 @@ class FileSystemMock {
             return [FileAttributeKey.creationDate: self.handlerMockFactory.creationDate(for: URL(string: path)!) as Any]
         }
     }
-
 }
 
 /// Creates FileHandleMocks and tracks their size by adding the size of written data to its current size counter.
 /// It also keeps track of URLs and returns the same instance for the same URL.
 class SizeWatchingFileHandleMockFactory {
-
     var files = [URL: (FileHandleMock, Date)]()
 
     func handler(for url: URL) throws -> FileHandleMock {
@@ -105,5 +102,4 @@ class SizeWatchingFileHandleMockFactory {
     func creationDate(for url: URL) -> Date? {
         return files[url]?.1
     }
-
 }

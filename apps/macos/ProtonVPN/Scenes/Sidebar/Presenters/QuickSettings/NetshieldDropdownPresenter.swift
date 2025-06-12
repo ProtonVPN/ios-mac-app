@@ -35,7 +35,6 @@ import VPNShared
 import VPNAppCore
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
-    
     typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     
     private let factory: Factory

@@ -25,7 +25,6 @@ public typealias JSONDictionary = [String: Any]
 public typealias JSONArray = [JSONDictionary]
 
 public extension Dictionary where Key: ExpressibleByStringLiteral {
-
     subscript<ReturnType>(throwing key: Key) -> ReturnType {
         get throws {
             return try valueOrThrow(key)
@@ -33,6 +32,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
 
     // MARK: String
+
     func string(_ key: Key) -> String? {
         return self[key] as? String
     }
@@ -58,6 +58,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: Double
+
     func double(_ key: Key) -> Double? {
         return self[key] as? Double
     }
@@ -67,6 +68,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: Int
+
     func int(key: Key) -> Int? {
         return self[key] as? Int
     }
@@ -76,6 +78,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: Bool
+
     func bool(_ key: Key) -> Bool? {
         return self[key] as? Bool
     }
@@ -89,6 +92,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: Date
+
     func unixTimestamp(_ key: Key) -> Date? {
         guard let timestamp = double(key) else {
             return nil
@@ -118,6 +122,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: - Array
+
     func stringArray(key: Key) -> [String]? {
         return self[key] as? [String]
     }
@@ -135,6 +140,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: Json
+
     func jsonArray(key: Key) -> JSONArray? {
         return self[key] as? JSONArray
     }
@@ -152,6 +158,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: - Misc
+
     func stringOrDoubleAsString(key: Key) -> String? {
         if let str = string(key) { return str }
         if let double = double(key) { return String(double) }
@@ -167,6 +174,7 @@ public extension Dictionary where Key: ExpressibleByStringLiteral {
     }
     
     // MARK: - Generic
+
     func valueOrThrow<T>(_ key: Key) throws -> T {
         guard let val = self[key] as? T else {
             throw genericKeyErrorFor(key)

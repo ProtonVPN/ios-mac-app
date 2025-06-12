@@ -78,5 +78,4 @@ public class SiriHelper: SiriHelperProtocol {
         })
         #endif
     }
-    
 }

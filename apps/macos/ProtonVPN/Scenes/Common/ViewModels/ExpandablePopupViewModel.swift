@@ -26,7 +26,6 @@ import Strings
 import VPNAppCore
 
 class ExpandablePopupViewModel: NSObject {
-    
     private let alert: ExpandableSystemAlert
     
     init( _ alert: ExpandableSystemAlert ) {

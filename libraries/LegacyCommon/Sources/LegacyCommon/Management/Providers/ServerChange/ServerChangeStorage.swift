@@ -56,7 +56,6 @@ extension DependencyValues {
 }
 
 extension ServerChangeStorage {
-
     public func push(item: ConnectionStackItem) {
         var connectionStackCopy = connectionStack
         connectionStackCopy.insert(item, at: 0)

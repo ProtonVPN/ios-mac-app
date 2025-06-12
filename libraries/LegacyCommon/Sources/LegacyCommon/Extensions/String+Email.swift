@@ -34,7 +34,6 @@ public extension String {
 }
 
 public extension Optional where Wrapped == String {
-    
     var isEmpty: Bool {
         return self?.isEmpty ?? true
     }
@@ -50,5 +49,4 @@ public extension Optional where Wrapped == String {
         }
         return a.elementsEqual(b)
     }
-    
 }

@@ -28,7 +28,6 @@ import Ergonomics
 
 @Reducer
 public struct ConnectionStatusFeature {
-
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) package var protectionState: ProtectionState

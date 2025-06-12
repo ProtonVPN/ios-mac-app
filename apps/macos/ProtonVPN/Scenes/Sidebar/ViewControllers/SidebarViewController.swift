@@ -31,7 +31,6 @@ import Strings
 import Domain
 
 final class SidebarViewController: NSViewController, NSWindowDelegate {
-
     static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
 
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
@@ -118,6 +117,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     // MARK: Functions
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -218,6 +218,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     // MARK: - Private
+
     private func configureExpandButton() {
         guard let window = view.window else { return }
         

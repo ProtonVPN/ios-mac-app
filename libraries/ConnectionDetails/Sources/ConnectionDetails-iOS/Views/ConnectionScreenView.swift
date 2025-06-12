@@ -30,7 +30,6 @@ import SharedViews
 import VPNAppCore
 
 public struct ConnectionScreenView: View {
-
     let store: StoreOf<ConnectionScreenFeature>
 
     private enum AccessibilityIdentifiers {
@@ -101,7 +100,6 @@ public struct ConnectionScreenView: View {
                             .padding(.bottom, .themeRadius8)
                         }
                     }
-
                 }
                 .padding(.horizontal, .themeSpacing16)
             }

@@ -26,13 +26,11 @@ import LegacyCommon
 import VPNAppCore
 
 class IosUiAlertService: UIAlertService {
-    
     private let windowService: WindowService
     private var currentAlerts = [SystemAlert]()
     
     public init(windowService: WindowService) {
         self.windowService = windowService
-
     }
     
     func displayAlert(_ alert: SystemAlert) {
@@ -95,7 +93,6 @@ class IosUiAlertService: UIAlertService {
 }
 
 extension PrimaryActionType {
-    
     var alertButtonStyle: UIAlertAction.Style {
         switch self {
         case .confirmative, .secondary:

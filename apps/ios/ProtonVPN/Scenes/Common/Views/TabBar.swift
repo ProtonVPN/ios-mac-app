@@ -23,7 +23,6 @@
 import UIKit
 
 class TabBar: UITabBar {
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -32,7 +31,6 @@ class TabBar: UITabBar {
 }
 
 extension TabBar {
-    
     override var traitCollection: UITraitCollection {
         return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
     }

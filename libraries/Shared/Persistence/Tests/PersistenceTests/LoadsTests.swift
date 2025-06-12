@@ -24,7 +24,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class LoadsTests: TestIsolatedDatabaseTestCase {
-
     func testLoadsUpdated() throws {
         repository.upsert(servers: [
             TestData.createMockServer(withID: "a", load: 50, score: 2, status: 1),
@@ -60,5 +59,4 @@ final class LoadsTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(updatedServerB?.logical.score, 0)
         XCTAssertEqual(updatedServerB?.logical.status, 1)
     }
-
 }

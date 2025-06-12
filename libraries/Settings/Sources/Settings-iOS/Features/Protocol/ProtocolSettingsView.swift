@@ -28,7 +28,6 @@ import VPNShared
 import VPNAppCore
 
 struct ProtocolSettingsView: View {
-
     let store: StoreOf<ProtocolSettingsFeature>
 
     // Remove default leading indentation and add padding above and below the header

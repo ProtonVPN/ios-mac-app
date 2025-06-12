@@ -93,7 +93,6 @@ class TelemetryTimerMock: TelemetryTimer {
 }
 
 class TelemetryServiceTests: XCTestCase {
-
     var container: TelemetryMockFactory!
     var service: TelemetryUpsellReporter!
     var appStateManager: AppStateManagerMock!

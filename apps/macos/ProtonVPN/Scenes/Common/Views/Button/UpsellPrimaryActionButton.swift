@@ -27,7 +27,6 @@ import Ergonomics
 import VPNAppCore
 
 class UpsellPrimaryActionButton: HoverDetectionButton {
-
     var actionType = PrimaryActionType.confirmative {
         didSet {
             configureButton()

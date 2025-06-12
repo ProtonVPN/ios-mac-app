@@ -12,7 +12,6 @@ import LegacyCommon
 import Strings
 
 final class VpnProtocolViewController: UIViewController {
-
     @IBOutlet private weak var tableView: UITableView!
     
     private var genericDataSource: GenericTableViewDataSource?
@@ -69,5 +68,4 @@ final class VpnProtocolViewController: UIViewController {
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
-
 }

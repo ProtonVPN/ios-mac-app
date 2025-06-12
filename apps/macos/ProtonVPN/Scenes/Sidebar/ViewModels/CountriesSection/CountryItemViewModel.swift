@@ -74,6 +74,7 @@ final class CountryItemViewModel {
             return ""
         }
     }
+
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
 
     var countryName: String {
@@ -117,7 +118,6 @@ final class CountryItemViewModel {
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) {
-
         self.id = id
         self.serversGroup = serversGroup
         self.vpnGateway = vpnGateway

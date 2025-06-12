@@ -10,7 +10,6 @@
 import UIKit
 
 class TitleTextFieldTableViewCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     
@@ -30,5 +29,4 @@ class TitleTextFieldTableViewCell: UITableViewCell {
         
         selectionStyle = .none
     }
-    
 }

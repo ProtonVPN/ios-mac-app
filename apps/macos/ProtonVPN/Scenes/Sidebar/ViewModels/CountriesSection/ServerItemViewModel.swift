@@ -30,7 +30,6 @@ import Strings
 import LegacyCommon
 
 class ServerItemViewModel: ServerItemViewModelCore {
-
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
 
     private var legacyServerModel: ServerModel? {

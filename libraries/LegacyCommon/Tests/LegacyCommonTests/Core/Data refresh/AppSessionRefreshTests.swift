@@ -224,7 +224,6 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
 }
 
 extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
-
     func makeTimerFactory() -> TimerFactory {
         return timerFactory
     }

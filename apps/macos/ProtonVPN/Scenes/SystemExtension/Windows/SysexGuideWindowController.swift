@@ -9,7 +9,6 @@
 import Cocoa
 
 class SysexGuideWindowController: WindowController {
-    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

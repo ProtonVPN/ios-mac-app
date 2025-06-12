@@ -10,7 +10,6 @@ import XCTest
 import LegacyCommon
 
 class ExtensionInfoComparisonTests: XCTestCase {
-
     func testEquality() throws {
         XCTAssertEqual(ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"), ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
     }
@@ -19,5 +18,4 @@ class ExtensionInfoComparisonTests: XCTestCase {
         XCTAssertTrue(ExtensionInfo(version: "2.1.1", build: "1", bundleId: "id") > ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
         XCTAssertTrue(ExtensionInfo(version: "1.1.1", build: "125", bundleId: "id") > ExtensionInfo(version: "1.1.1", build: "1", bundleId: "id"))
     }
-    
 }

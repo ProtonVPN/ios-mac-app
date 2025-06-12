@@ -25,7 +25,6 @@ import LegacyCommon
 import NetShield
 
 enum TableViewCellModel {
-    
     case pushStandard(title: String, handler: () -> Void)
     case pushKeyValue(key: String, value: String, icon: UIImage? = nil, handler: () -> Void)
     case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: () -> Void)
@@ -87,7 +86,6 @@ struct TableViewSection {
 
 // A generic data source for table views
 class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
     var sections: [TableViewSection]
     var onSelectionChange: (() -> Void)?
     
@@ -301,7 +299,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             return cell
         case .textWithActivityCell(title: let title, textColor: let textColor, backgroundColor: let backgroundColor, showActivity: let showActivity):
-            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TextWithActivityCell.identifier) as? TextWithActivityCell else {
                 return UITableViewCell()
             }
@@ -351,6 +348,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return cell
         }
     }
+
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -426,6 +424,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return
         }
     }
+
     // swiftlint:enable cyclomatic_complexity
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

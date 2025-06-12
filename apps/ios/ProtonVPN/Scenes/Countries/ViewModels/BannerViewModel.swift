@@ -23,5 +23,4 @@ struct BannerViewModel {
     var leftIcon: Modals.ImageAsset
     var text: String
     var action: () -> Void
-
 }

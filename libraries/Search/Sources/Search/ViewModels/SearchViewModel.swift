@@ -23,7 +23,6 @@ protocol SearchViewModelDelegate: AnyObject {
 }
 
 final class SearchViewModel {
-
     // MARK: Properties
 
     private let recentSearchesService: RecentSearchesService

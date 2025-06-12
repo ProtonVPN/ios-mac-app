@@ -25,7 +25,6 @@ import Theme
 import Strings
 
 public struct HomeView: View {
-
     let store: StoreOf<HomeFeature>
 
     public init(store: StoreOf<HomeFeature>) {

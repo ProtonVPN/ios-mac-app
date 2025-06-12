@@ -24,7 +24,6 @@ import ComposableArchitecture
 import ProtonCoreUIFoundations
 
 struct ConnectionStatusView: View {
-
     let store: StoreOf<ConnectionStatusFeature>
 
     public init(store: StoreOf<ConnectionStatusFeature>) {
@@ -134,7 +133,6 @@ struct ConnectionStatusView: View {
 
 struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-
         ConnectionStatusView(store: .init(initialState: .init(protectionState: .protected(netShield: .random)),
                                           reducer: { ConnectionStatusFeature() }))
         .previewDisplayName("Protected")

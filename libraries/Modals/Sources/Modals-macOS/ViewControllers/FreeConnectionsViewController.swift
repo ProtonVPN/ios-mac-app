@@ -22,7 +22,6 @@ import Strings
 import Ergonomics
 
 final class FreeConnectionsViewController: NSViewController {
-
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var descriptionLabel: NSTextField!
     @IBOutlet private weak var subTitleLabel: NSTextField!
@@ -117,7 +116,6 @@ final class FreeConnectionsViewController: NSViewController {
 // MARK: - NSCollectionViewDataSource
 
 extension FreeConnectionsViewController: NSCollectionViewDataSource {
-
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         return countries?.count ?? 0
     }
@@ -135,7 +133,6 @@ extension FreeConnectionsViewController: NSCollectionViewDataSource {
 // MARK: - NSCollectionViewDelegateFlowLayout
 
 extension FreeConnectionsViewController: NSCollectionViewDelegateFlowLayout {
-
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         guard let cell = viewForSizing else {
             return NSSize(width: 50, height: 16)
@@ -157,5 +154,4 @@ extension FreeConnectionsViewController: NSCollectionViewDelegateFlowLayout {
         }
         return _viewForSizing
     }
-
 }

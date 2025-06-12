@@ -27,7 +27,6 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 
 extension UIViewController {
-
     @objc func setupAnnouncements() {
         Task {
             await setupAnnouncementsAsync()
@@ -103,5 +102,4 @@ extension UIViewController {
         let viewModel = AnnouncementButtonViewModel.shared
         viewModel?.showAnnouncement()
     }
-    
 }

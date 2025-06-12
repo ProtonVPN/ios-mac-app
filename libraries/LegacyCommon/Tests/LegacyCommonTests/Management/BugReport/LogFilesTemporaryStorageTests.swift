@@ -21,7 +21,6 @@ import PMLogger
 @testable import LegacyCommon
 
 class LogFilesTemporaryStorageTests: XCTestCase {
-
     func testSavesDataToFileAndDeletesTempFile() throws {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
@@ -69,7 +68,6 @@ class LogFilesTemporaryStorageTests: XCTestCase {
 }
 
 struct LogContentProviderMock: LogContentProvider {
-
     public var data: [LogSource: LogContent]
 
     func getLogData(for source: LogSource) -> LogContent {

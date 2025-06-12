@@ -19,7 +19,6 @@
 import UIKit
 
 final class ButtonWithLoadingTableViewCell: UITableViewCell {
-    
     @IBOutlet private var button: UIButton!
     @IBOutlet private var loading: UIActivityIndicatorView!
     

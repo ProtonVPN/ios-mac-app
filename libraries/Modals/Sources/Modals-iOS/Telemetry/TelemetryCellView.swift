@@ -21,7 +21,6 @@ import Theme
 import Strings
 
 struct TelemetryCellView: View {
-
     let title: String
     let description: String
 

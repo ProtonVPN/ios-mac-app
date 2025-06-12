@@ -28,7 +28,6 @@ import VPNShared
 import VPNAppCore
 
 extension ConnectionProtocol: @retroactive CustomStringConvertible {
-
     public static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
 
     public var isDeprecated: Bool {
@@ -172,7 +171,6 @@ public enum CountryConnectionRequestType {
 }
 
 extension ConnectionRequestType: Codable {
-    
     private enum Key: CodingKey {
         case rawValue
         case countryCode
@@ -228,7 +226,6 @@ extension ConnectionRequestType: Codable {
 }
 
 extension CountryConnectionRequestType: Codable {
-    
     private enum Key: CodingKey {
         case rawValue
         case associatedValue
@@ -267,14 +264,12 @@ extension CountryConnectionRequestType: Codable {
 // MARK: Equatable conformance
 
 extension ConnectionRequest: Equatable {
-    
     public static func == (lhs: ConnectionRequest, rhs: ConnectionRequest) -> Bool {
         return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
     }
 }
 
 extension ConnectionRequestType: Equatable {
-    
     public static func == (lhs: ConnectionRequestType, rhs: ConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):
@@ -290,7 +285,6 @@ extension ConnectionRequestType: Equatable {
 }
 
 extension CountryConnectionRequestType: Equatable {
-    
     public static func == (lhs: CountryConnectionRequestType, rhs: CountryConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):

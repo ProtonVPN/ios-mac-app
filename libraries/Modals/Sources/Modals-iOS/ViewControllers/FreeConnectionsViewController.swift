@@ -24,7 +24,6 @@ import Strings
 import Theme
 
 class FreeConnectionsViewController: UIViewController {
-
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var descriptionLabel: UILabel!
@@ -84,11 +83,9 @@ class FreeConnectionsViewController: UIViewController {
     @IBAction private func closeButtonTapped(_ sender: Any) {
         dismiss(animated: true)
     }
-
 }
 
 extension FreeConnectionsViewController: UICollectionViewDataSource {
-
     // MARK: - UICollectionViewDataSource
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -24,7 +24,6 @@ import UIKit
 import CoreLocation
 
 class SecureCoreEntryAnnotation: AnnotationView {
-
     let countryModel: SecureCoreEntryCountryModel
     
     override var coordinate: CLLocationCoordinate2D {

@@ -27,7 +27,6 @@ fileprivate let statusDisconnected = "ConnectionStatus"
 fileprivate let connectImage = "ConnectImage"
 
 class MapRobot: CoreElements {
-    
     func clickShowMap() -> MapRobot {
         if button(hideMapButton).waitUntilExists(time: 1).hittable() {
             return self
@@ -44,7 +43,6 @@ class MapRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-
         @discardableResult
         func checkMapIsOpen() -> MapRobot {
             button(hideMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()

@@ -25,7 +25,6 @@ import Ergonomics
 
 @MainActor
 final class UserLocationFeatureTests: XCTestCase {
-
     func testFetchesLocationOnLaunch() async {
         @Shared(.connectionState) var connectionState = .disconnected
 

@@ -24,7 +24,6 @@ import Foundation
 import Algorithms
 
 extension OrderedSet<RecentConnection> {
-
     private static let maxConnections = 8
 
     func index(for spec: ConnectionSpec) -> Self.Index? {

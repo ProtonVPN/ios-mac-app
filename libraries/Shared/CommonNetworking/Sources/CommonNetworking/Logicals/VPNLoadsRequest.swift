@@ -24,7 +24,6 @@ import ProtonCoreNetworking
 import Ergonomics
 
 public final class VPNLoadsRequest: Request {
-
     private let ip: String?
 
     private init(ip: String?) {

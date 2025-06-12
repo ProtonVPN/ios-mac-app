@@ -29,7 +29,6 @@ import Ergonomics
 import Domain
 
 final class SubuserMacAlertViewController: NSViewController {
-    
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var titleView: NSTextField!
     @IBOutlet private weak var description1Label: NSTextField!

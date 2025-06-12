@@ -9,8 +9,6 @@
 import Foundation
 
 public struct CertificateConstants {
-    
     /// Certificate life duration requested from API. Set to nil to get default duration from API (24h). For testing use "10 minutes" or similar.
     public static var certificateDuration: String?
-    
 }

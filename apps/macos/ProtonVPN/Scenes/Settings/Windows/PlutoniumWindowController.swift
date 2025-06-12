@@ -25,7 +25,6 @@ import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-
     typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     let store: StoreOf<PlutoniumFeature>

@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class AboutWindowController: WindowController {
-    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

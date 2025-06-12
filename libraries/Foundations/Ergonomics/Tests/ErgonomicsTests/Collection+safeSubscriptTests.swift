@@ -20,7 +20,6 @@ import XCTest
 @testable import Ergonomics
 
 final class CollectionSafeSubscriptTests: XCTestCase {
-
     func testCollectionSafeSubscriptReturnsNilForNonExistingIndex() throws {
         let array = [100, 200, 300, 400, 500]
         XCTAssertEqual(array[safe: 10], nil)

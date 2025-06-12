@@ -10,7 +10,6 @@ import Foundation
 
 // Version used only in WireGuard extension
 public class PMLog {
-    
     public enum LogLevel {
         case fatal, error, warn, info, debug, trace
         
@@ -43,5 +42,4 @@ public class PMLog {
     public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         wg_log(.error, message: error.localizedDescription)
     }
-    
 }

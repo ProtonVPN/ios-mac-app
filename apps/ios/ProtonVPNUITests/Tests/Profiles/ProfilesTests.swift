@@ -12,7 +12,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
 
 class ProfilesTests: ProtonVPNUITests {
-    
     private let loginRobot = LoginRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
@@ -117,7 +116,6 @@ class ProfilesTests: ProtonVPNUITests {
     
     @MainActor
     func testFreeUserCannotCreateProfile() {
-        
         loginAndOpenProfiles(as: UserType.Free.credentials)
             .tapAddNewProfile()
             .verify.isShowingUpsellModal(ofType: .profiles)

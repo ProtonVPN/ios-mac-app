@@ -36,7 +36,6 @@ extension DependencyContainer: AnnouncementButtonViewModelFactory {
 }
 
 final class AnnouncementButtonViewModel {
-    
     // Must be pre-set in AppDelegate!
     static var shared: AnnouncementButtonViewModel!
     

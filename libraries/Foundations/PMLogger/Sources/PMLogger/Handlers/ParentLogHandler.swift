@@ -24,7 +24,6 @@ import Logging
 /// - Important: The documentation states that LogHandler implementations must be structs (VPNAPPL-1753).
 /// If something strange is going on, check that it's not because this, and concrete log handlers, are classes.
 open class ParentLogHandler: LogHandler {
-
     public var formatter: PMLogFormatter
     public var logLevel = Logging.Logger.Level.trace
     public var metadata = Logging.Logger.Metadata()
@@ -50,5 +49,4 @@ open class ParentLogHandler: LogHandler {
         // Some info can be found here: https://github.com/apple/swift-log/issues/248
         fatalError("Please override this method")
     }
-
 }

@@ -122,7 +122,6 @@ struct DefaultConnectionSheet: View {
                 DefaultConnectionSheet(store: previewStore)
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.medium, .large])
-
             }
             .preferredColorScheme(.dark)
     }

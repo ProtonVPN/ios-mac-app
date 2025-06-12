@@ -26,7 +26,6 @@ import LegacyCommon
 import VPNShared
 
 class AppLaunchRoutine {
-    
     static var launchedBefore = true
     
     static func execute(propertiesManager: PropertiesManagerProtocol) {

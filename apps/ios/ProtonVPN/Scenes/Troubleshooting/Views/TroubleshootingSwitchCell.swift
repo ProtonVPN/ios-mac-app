@@ -23,7 +23,6 @@
 import UIKit
 
 class TroubleshootingSwitchCell: TroubleshootingCell {
-    
     // Views
     @IBOutlet private weak var toggleSwitch: UISwitch!
 

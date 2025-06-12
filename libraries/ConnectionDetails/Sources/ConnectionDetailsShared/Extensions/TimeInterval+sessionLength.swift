@@ -20,7 +20,6 @@ import Foundation
 import Strings
 
 public extension TimeInterval {
-
     /// VPN session length text (with translation)
     var sessionLengthText: String {
         let time = -self
@@ -58,5 +57,4 @@ public extension TimeInterval {
     static var minute: Self = 60
     static var hour: Self = 60 * 60
     static var day: Self = 60 * 60 * 24
-
 }

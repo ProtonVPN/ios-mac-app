@@ -28,7 +28,6 @@ import Ergonomics
 import Domain
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
-    
     var title: String! { get }
     
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
@@ -40,7 +39,6 @@ protocol QuickSettingDropdownPresenterProtocol: AnyObject {
 }
 
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
-
     weak var viewController: QuickSettingsDetailViewControllerProtocol?
     
     var title: String! {

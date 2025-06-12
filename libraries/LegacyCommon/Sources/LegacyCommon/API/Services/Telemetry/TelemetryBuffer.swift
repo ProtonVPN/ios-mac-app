@@ -29,6 +29,7 @@ actor TelemetryBuffer {
         static let maxStorageDuration: TimeInterval = .days(7)
         static let measurementGroup: String = "vpn.any.connection"
     }
+
     @Dependency(DataManager.self) var dataManager
     @Dependency(\.date) var date
 
@@ -39,6 +40,7 @@ actor TelemetryBuffer {
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }()
+
     let decoder = JSONDecoder()
 
     enum BufferType: String {

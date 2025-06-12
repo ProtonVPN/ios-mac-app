@@ -32,7 +32,6 @@ public protocol UnauthKeychainHandle {
 }
 
 public final class UnauthKeychain: UnauthKeychainHandle {
-
     private struct StorageKey {
         static let unauthSessionCredentials = "unauthSessionCredentials"
     }

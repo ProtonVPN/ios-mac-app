@@ -19,7 +19,6 @@
 import XCTest
 
 extension XCUIElement {
-
     /**
      * Deletes text value from the text field.
      */

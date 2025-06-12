@@ -45,6 +45,7 @@ class ProfilesMenuController: NSObject {
     }
     
     // MARK: - Private functions
+
     private func setupPersistentView() {
         profilesMenu.title = Localizable.profiles
         profilesMenu.autoenablesItems = false

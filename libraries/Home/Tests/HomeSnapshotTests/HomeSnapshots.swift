@@ -33,7 +33,6 @@ import IssueReporting
 
 @Suite("Home")
 struct SwiftTestingTests {
-
     static let homeTestData = [
         (
             ProtectionState.unprotected,

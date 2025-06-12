@@ -23,7 +23,6 @@
 import Foundation
 
 public extension String {
-    
     /// Compare two version strings
     /// Compares according to https://semver.org/#spec-item-11
     /// Important: not all comparison rules are imlemented. Only basis pre-release versions check is done.
@@ -37,5 +36,4 @@ public extension String {
         }
         return this.compare(to: other)
     }
-    
 }

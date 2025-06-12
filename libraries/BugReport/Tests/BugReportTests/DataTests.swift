@@ -20,7 +20,6 @@ import XCTest
 @testable import BugReport
 
 final class DataTests: XCTestCase {
-    
     func testJSONDecodes() throws {
         let bundle = Bundle.module
         guard let testFile1 = bundle.url(forResource: "example1", withExtension: "json") else {
@@ -36,5 +35,4 @@ final class DataTests: XCTestCase {
         XCTAssertEqual(model.categories.first?.label, "Browsing speed_")
         XCTAssertEqual(model.categories.first?.suggestions?.last?.text, "Try a different server. Servers in nearby countries often have faster connection speeds.")
     }
-    
 }

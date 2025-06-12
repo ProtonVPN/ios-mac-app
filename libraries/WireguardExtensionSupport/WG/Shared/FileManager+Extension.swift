@@ -5,7 +5,6 @@ import Foundation
 import os.log
 
 extension FileManager {
-
     static var appGroupId: String {
         return WGConstants.appGroupId
     }

@@ -26,7 +26,6 @@ import Ergonomics
 import Dependencies
 
 public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
-
     public var id: String { bundleIdentifier }
 
     public func hash(into hasher: inout Hasher) {

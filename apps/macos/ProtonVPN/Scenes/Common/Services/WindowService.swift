@@ -44,7 +44,6 @@ protocol WindowServiceFactory {
 }
 
 protocol WindowService: WindowControllerDelegate {
-
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController)
     
     func showIfPresent<T: NSWindowController>(windowController: T.Type) -> Bool
@@ -81,7 +80,6 @@ extension WindowService {
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 class WindowServiceImplementation: WindowService {
-    
     typealias Factory = CreateNewProfileViewModelFactory
         & NavigationServiceFactory
         & CountriesSectionViewModelFactory
@@ -345,7 +343,6 @@ class WindowServiceImplementation: WindowService {
             return type(of: $0) == type(of: viewController)
         }
     }
-    
 }
 
 extension WindowServiceImplementation: WindowControllerDelegate {

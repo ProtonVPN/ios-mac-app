@@ -23,7 +23,6 @@
 import UIKit
 
 class InstructionStepView: UIView {
-    
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var label: UILabel!
     

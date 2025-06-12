@@ -81,6 +81,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     }
     
     // MARK: - NSCoding
+
     private enum CoderKey: String, CodingKey {
         case serverType = "serverType"
     }
@@ -95,6 +96,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     }
     
     // MARK: - Codable
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CoderKey.self)
         let rawValue = try container.decode(Int.self, forKey: .serverType)
@@ -108,7 +110,6 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
 }
 
 public extension ServerType {
-
     /// Feature filter for searching the repository
     var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
         switch self {

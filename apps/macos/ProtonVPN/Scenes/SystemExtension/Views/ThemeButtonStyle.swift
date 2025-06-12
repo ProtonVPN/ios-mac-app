@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct ThemeButtonStyle: ButtonStyle {
-
     let padding: Padding
     let style: Style
 

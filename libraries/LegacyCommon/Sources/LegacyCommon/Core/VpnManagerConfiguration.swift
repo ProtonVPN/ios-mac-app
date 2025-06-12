@@ -48,7 +48,6 @@ public enum VpnManagerClientConfiguration {
 }
 
 public struct VpnManagerConfiguration: Identifiable {
-    
     public static let configConcatChar: Character = "+"
 
     public let id: UUID
@@ -185,7 +184,6 @@ public class VpnManagerConfigurationPreparer {
     // MARK: - Private
     
     private func extraConfiguration(with connectionConfig: ConnectionConfiguration) -> String {
-        
         #if os(iOS)
         var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
         #else

@@ -32,7 +32,6 @@ import Strings
 import Domain
 
 final class SettingsViewController: UIViewController {
-
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var connectionBarContainerView: UIView!
 

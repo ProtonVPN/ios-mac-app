@@ -27,7 +27,6 @@ import Strings
 import Domain
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
-    
     private let vpnGateway: VpnGatewayProtocol
     
     var canConnect: Bool {

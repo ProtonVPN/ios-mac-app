@@ -11,7 +11,6 @@ import NetworkExtension
 import LegacyCommon
 
 final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
-    
     private let xpcServiceUser: XPCServiceUser
     private let propertiesManager: PropertiesManagerProtocol
     
@@ -42,5 +41,4 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
             completionHandler(protocolConfig)
         }
     }
-    
 }

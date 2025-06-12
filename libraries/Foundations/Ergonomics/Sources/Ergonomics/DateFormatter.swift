@@ -19,7 +19,6 @@
 import Foundation
 
 extension DateFormatter {
-
     /// IMF-fixdate formatter.
     ///
     /// [RFC-9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-date-time-formats)

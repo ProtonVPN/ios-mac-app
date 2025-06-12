@@ -24,7 +24,6 @@ import UIKit
 import LegacyCommon
 
 extension NSAttributedString {
-    
     static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         strings.forEach { mutableAttributedString.append($0) }

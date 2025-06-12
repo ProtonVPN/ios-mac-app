@@ -21,7 +21,6 @@ import ModalsShared
 import Ergonomics
 
 final class DiscourageSecureCoreViewController: NSViewController {
-
     @IBOutlet private weak var dontShowAgainLabel: NSTextField!
     @IBOutlet private weak var imageView: NSImageView!
     @IBOutlet private weak var titleLabel: NSTextField!

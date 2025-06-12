@@ -20,8 +20,6 @@ import XCTest
 @testable import NEHelper
 
 final class ModelCodingTests: XCTestCase {
-
-    
     func testServerStatusResponseDecoding() throws {
         let data = alternativesJson.data(using: .utf8)!
         let decoder = JSONDecoder()
@@ -31,7 +29,6 @@ final class ModelCodingTests: XCTestCase {
         XCTAssertEqual(model.code, 1000)
         XCTAssertEqual(model.original.status, 1)
     }
-
 }
 
 private let alternativesJson = """

@@ -37,7 +37,6 @@ public class TelemetryEventNotifier {
     }
 
     private func startObserving() {
-
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
         NotificationCenter.default

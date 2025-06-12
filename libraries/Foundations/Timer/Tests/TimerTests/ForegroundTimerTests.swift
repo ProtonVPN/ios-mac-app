@@ -20,7 +20,6 @@ import XCTest
 @testable import Timer
 
 final class ForegroundTimerTests: XCTestCase {
-
     func testForegroundTimerFiresNormally() throws {
         let expectation = XCTestExpectation(description: "Foreground timer should fire when scheduled if it has not been suspended")
         expectation.expectedFulfillmentCount = 1

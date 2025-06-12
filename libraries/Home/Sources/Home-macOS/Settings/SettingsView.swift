@@ -22,7 +22,6 @@ import Theme
 import Strings
 
 public struct SettingsView: View {
-
     @State private var currentSubview: AnyView?
     @State private var title = Localizable.settingsTab
     @State private var subviewTitle: String

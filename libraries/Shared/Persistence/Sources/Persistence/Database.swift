@@ -26,7 +26,6 @@ import GRDB
 /// ":memory:" will create two independent in-memory databases.
 /// [In-Memory Databases](https://www.sqlite.org/inmemorydb.html)
 public enum DatabaseType: CustomStringConvertible {
-
     /// Global in-memory database shared across all `DatabaseWriter` instances initialised with this type
     case inMemory
 
@@ -62,7 +61,6 @@ public enum DatabaseType: CustomStringConvertible {
 }
 
 extension DatabaseWriter {
-
     private static func createQueue(databaseType: DatabaseType, configuration: Configuration) throws -> DatabaseQueue {
         switch databaseType {
         case .inMemory:

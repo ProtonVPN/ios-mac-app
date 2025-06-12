@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 public struct PrimaryButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
     public init() { }
@@ -68,7 +67,6 @@ public struct PrimaryButtonStyle: ButtonStyle {
 struct PrimaryButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
         Button {
-
         } label: {
             Text("Preview button")
         }

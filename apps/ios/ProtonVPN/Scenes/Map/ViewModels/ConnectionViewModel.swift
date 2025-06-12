@@ -24,7 +24,6 @@ import Foundation
 import MapKit
 
 struct ConnectionViewModel {
-    
     enum State {
         case connected
         case proposed

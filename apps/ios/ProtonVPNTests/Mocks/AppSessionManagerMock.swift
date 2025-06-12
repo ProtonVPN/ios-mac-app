@@ -27,7 +27,6 @@ import VPNShared
 @testable import ProtonVPN
 
 class AppSessionManagerMock: AppSessionManager {
-    
     init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol) {
         self.sessionStatus = sessionStatus
         self.loggedIn = loggedIn
@@ -64,7 +63,6 @@ class AppSessionManagerMock: AppSessionManager {
     }
 
     func finishLogin(authCredentials: AuthCredentials) async throws {
-
     }
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
@@ -92,10 +90,8 @@ class AppSessionManagerMock: AppSessionManager {
     }
 
     func refreshVpnAuthCertificate() async throws {
-        
     }
 
     func refreshUserInfo() {
-        
     }
 }

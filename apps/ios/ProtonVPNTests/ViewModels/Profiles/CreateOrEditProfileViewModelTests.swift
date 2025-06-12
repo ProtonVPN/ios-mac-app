@@ -38,7 +38,6 @@ import Persistence
 @testable import ProtonVPN
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
-
     lazy var servers = [
         serverModel("serv3", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
         serverModel("serv4", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
@@ -181,7 +180,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     }
 
     private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) throws {
-
         let serverRepository: ServerRepository = .liveValue
         try serverRepository.upsert(servers: servers)
 

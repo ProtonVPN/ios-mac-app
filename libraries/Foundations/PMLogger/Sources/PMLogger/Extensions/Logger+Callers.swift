@@ -20,7 +20,6 @@ import Logging
 
 // Only levels that we actually use are added here
 public extension Logging.Logger {
-    
     func debug(
         _ message: @autoclosure () -> Message,
         category: Logger.Category? = nil,
@@ -118,5 +117,4 @@ public extension Logging.Logger {
             return res
         }
     }
-    
 }

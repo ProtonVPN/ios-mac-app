@@ -117,6 +117,7 @@ extension VpnProtocol {
 }
 
 // MARK: - API description
+
 extension VpnProtocol {
     public var apiDescription: String {
         switch self {

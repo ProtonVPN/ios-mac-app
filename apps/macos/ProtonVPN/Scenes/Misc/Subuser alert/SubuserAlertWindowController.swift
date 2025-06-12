@@ -19,7 +19,6 @@
 import Cocoa
 
 class SubuserAlertWindowController: WindowController {
-    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

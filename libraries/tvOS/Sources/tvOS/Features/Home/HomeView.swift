@@ -20,7 +20,6 @@ import ComposableArchitecture
 import SwiftUI
 
 struct HomeView: View {
-
     @Bindable var store: StoreOf<HomeFeature>
 
     private static let contentAllowedWidth: Double = 1460

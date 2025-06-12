@@ -21,7 +21,6 @@ import Foundation
 import GRDB
 
 extension DatabaseExecutor {
-
     /// Convenience function that wraps operation with `dbWriter.write`, useful for reducing nesting
     public func write<T>(
         dbWriter: DatabaseQueue,

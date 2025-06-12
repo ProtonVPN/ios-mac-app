@@ -27,7 +27,6 @@ import DomainTestSupport
 import PersistenceTestSupport
 
 final class MainFeatureTests: XCTestCase {
-
     @MainActor
     func testTabSelection() async {
         let store = TestStore(initialState: MainFeature.State()) {

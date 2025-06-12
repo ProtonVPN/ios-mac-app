@@ -34,7 +34,6 @@ import VPNShared
 import LegacyCommon
 
 class QuickSettingsStack: NSStackView {
-
     override func isAccessibilityElement() -> Bool {
         true
     }
@@ -49,7 +48,6 @@ class QuickSettingsStack: NSStackView {
 }
 
 final class CountriesSectionViewController: NSViewController {
-
     fileprivate enum Cell: String, CaseIterable {
         case country = "CountryItemCellView"
         case server = "ServerItemCellView"
@@ -329,7 +327,6 @@ final class CountriesSectionViewController: NSViewController {
     }
     
     private func didDisplayQuickSetting(_ quickSettingItem: QuickSettingType? = nil, appear: Bool ) {
-        
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
         let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear
@@ -367,7 +364,6 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func contentChanged(_ contentChange: ContentChange) {
-        
         if contentChange.reset {
             serverListTableView.reloadData()
             return
@@ -399,7 +395,6 @@ extension CountriesSectionViewController: NSTableViewDataSource {
 }
 
 extension CountriesSectionViewController: NSTableViewDelegate {
-
     // todo: would be better to change this to autosize, because banners may have different heights
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         switch viewModel.cellModel(forRow: row) {

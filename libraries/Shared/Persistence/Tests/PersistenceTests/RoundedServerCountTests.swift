@@ -26,7 +26,6 @@ import PersistenceTestSupport
 @testable import Persistence
 
 final class RoundingTests: CaseIsolatedDatabaseTestCase {
-
     func testRoundToSmallest100() {
         XCTAssertEqual(4123.roundedServerCount(), 4100)
     }

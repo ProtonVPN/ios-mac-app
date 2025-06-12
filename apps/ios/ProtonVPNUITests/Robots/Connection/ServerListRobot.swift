@@ -12,7 +12,6 @@ import UITestsHelpers
 fileprivate let buttonConnectDisconnect = "ic power off"
 
 class ServerListRobot: ConnectionBaseRobot {
-    
     let verify = Verify()
     
     @discardableResult
@@ -36,7 +35,6 @@ class ServerListRobot: ConnectionBaseRobot {
     }
     
     class Verify: CoreElements {
-        
         @discardableResult
         func serverListIsOpened(_ name: String) -> ServerListRobot {
             staticText(name).waitUntilExists().checkExists()

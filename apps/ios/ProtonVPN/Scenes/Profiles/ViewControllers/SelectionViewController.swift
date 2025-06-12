@@ -47,7 +47,6 @@ struct SelectionDataSet {
 }
 
 class SelectionViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     
     var dataSet: SelectionDataSet!
@@ -79,7 +78,6 @@ class SelectionViewController: UIViewController {
 }
 
 extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSet.data.count
     }
@@ -107,7 +105,6 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: SelectionTableViewCell.identifier, for: indexPath) as? SelectionTableViewCell {
-            
             cell.nameLabel.attributedText = dataSet.item(at: indexPath).title
             
             if let index = dataSet.selectedIndex, index == indexPath {

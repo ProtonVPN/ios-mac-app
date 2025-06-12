@@ -19,7 +19,6 @@
 import XCTest
 
 class BugReportSampleiOSAppUITests: XCTestCase {
-
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -40,7 +39,6 @@ class BugReportSampleiOSAppUITests: XCTestCase {
     private let bugReportRobot = BugReportRobot()
 
      func testSendBugReportSomethingElse() {
-         
          let email = "success@email.com"
          let description = "Description"
               
@@ -56,7 +54,6 @@ class BugReportSampleiOSAppUITests: XCTestCase {
      }
      
      func testSendBugReportBrowsingSpeed() {
-
          let email = "success@email.com"
          let text = "Description"
          
@@ -74,7 +71,6 @@ class BugReportSampleiOSAppUITests: XCTestCase {
      }
      
      func testSendBugReportWithError() {
-         
          let email = "success@email"
          let description = "Description"
          
@@ -93,7 +89,6 @@ class BugReportSampleiOSAppUITests: XCTestCase {
      }
      
      func testBugReportBackButton() {
-         
          bugReportRobot
              .openBugReport()
              .verify.reportAnIssueScreenIsShown()

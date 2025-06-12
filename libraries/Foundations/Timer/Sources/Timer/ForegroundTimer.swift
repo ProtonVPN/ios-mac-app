@@ -20,13 +20,16 @@ import Foundation
 
 #if canImport(UIKit)
 import UIKit
+
 struct Notifications {
     public static let shouldResume = UIApplication.didBecomeActiveNotification
     public static let shouldSuspend = UIApplication.willResignActiveNotification
 }
+
 #elseif canImport(AppKit)
 import AppKit
 import Cocoa
+
 struct Notifications {
     public static let shouldResume = NSApplication.willBecomeActiveNotification
     public static let shouldSuspend = NSApplication.willResignActiveNotification

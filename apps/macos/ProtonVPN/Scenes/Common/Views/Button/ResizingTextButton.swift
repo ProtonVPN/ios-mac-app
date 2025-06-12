@@ -23,7 +23,6 @@
 import Cocoa
 
 class ResizingTextButton: HoverDetectionButton {
-    
     override func updateTrackingAreas() {
         trackingAreas.forEach { (area) in
             removeTrackingArea(area)
@@ -36,5 +35,4 @@ class ResizingTextButton: HoverDetectionButton {
     override var intrinsicContentSize: NSSize {
         return NSSize(width: attributedTitle.size().width + 30, height: bounds.height)
     }
-    
 }

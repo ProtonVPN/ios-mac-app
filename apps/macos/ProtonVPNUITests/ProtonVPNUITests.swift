@@ -169,7 +169,6 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
     
     func login(withCredentials credentials: Credentials) {
-        
         loginRobot
             .loginUser(credentials: credentials)
         

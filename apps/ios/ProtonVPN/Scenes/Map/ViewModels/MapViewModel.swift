@@ -31,7 +31,6 @@ import Persistence
 import LegacyCommon
 
 class MapPin: NSObject, MKAnnotation {
-    
     let countryCode: String
     let locationName: String
     let coordinate: CLLocationCoordinate2D
@@ -46,7 +45,6 @@ class MapPin: NSObject, MKAnnotation {
 }
 
 class MapViewModel: SecureCoreToggleHandler {
-    
     let alertService: AlertService
     var vpnGateway: VpnGatewayProtocol
     
@@ -134,6 +132,7 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     // MARK: - Private functions
+
     private func addObservers() {
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(connectionChanged))
@@ -277,7 +276,6 @@ class MapViewModel: SecureCoreToggleHandler {
     
     @objc private func connectionChanged() {
         if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
-            
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),
                 let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {

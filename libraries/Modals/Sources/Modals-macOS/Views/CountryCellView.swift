@@ -20,7 +20,6 @@ import Cocoa
 import ModalsShared
 
 class CountryCellView: NSCollectionViewItem {
-
     @IBOutlet private weak var flagImageView: NSImageView!
     @IBOutlet private weak var countryNameField: NSTextField!
 

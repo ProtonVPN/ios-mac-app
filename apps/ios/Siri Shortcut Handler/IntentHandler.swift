@@ -26,7 +26,6 @@ import NetworkExtension
 import Strings
 
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
-    
     func handle(intent: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
         completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
@@ -92,5 +91,4 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             return Localizable.disconnected
         }
     }
-
 }

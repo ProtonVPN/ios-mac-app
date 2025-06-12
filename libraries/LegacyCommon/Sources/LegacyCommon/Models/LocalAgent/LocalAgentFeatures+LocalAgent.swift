@@ -78,7 +78,6 @@ extension LocalAgentFeatures {
 }
 
 extension LocalAgentFeatures {
-    
     // MARK: Getters
     
     var vpnAccelerator: Bool? {

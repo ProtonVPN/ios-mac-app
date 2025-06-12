@@ -73,5 +73,4 @@ public class MaintenanceManagerHelper {
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })
     }
-    
 }

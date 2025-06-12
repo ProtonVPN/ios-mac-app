@@ -99,6 +99,7 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden config methods
+
     override var modelId: String? {
         makeModelIdChecker().modelId
     }
@@ -106,21 +107,25 @@ final class DependencyContainer: Container {
     // MARK: - Overridden factory methods
 
     // MARK: NetworkingDelegate
+
     override func makeNetworkingDelegate() -> NetworkingDelegate {
         networkingDelegate
     }
 
     // MARK: CoreAlertServiceFactory
+
     override func makeCoreAlertService() -> CoreAlertService {
         macAlertService
     }
 
     // MARK: WireguardProtocolFactoryCreator
+
     override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         wireguardFactory
     }
 
     // MARK: VpnCredentialsConfiguratorFactoryCreator
+
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
                                              vpnAuthentication: makeVpnAuthentication(),
@@ -128,11 +133,13 @@ final class DependencyContainer: Container {
     }
 
     // MARK: VpnAuthentication
+
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
     }
 
     // MARK: LogContentProviderFactory
+
     override func makeLogContentProvider() -> LogContentProvider {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
@@ -142,6 +149,7 @@ final class DependencyContainer: Container {
     }
 
     // MARK: UpdateManagerFactory
+
     override func makeUpdateChecker() -> UpdateChecker {
         updateManager
     }
@@ -176,6 +184,7 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 }
 
 // MARK: NavigationServiceFactory
+
 extension DependencyContainer: NavigationServiceFactory {
     func makeNavigationService() -> NavigationService {
         return navigationService
@@ -183,6 +192,7 @@ extension DependencyContainer: NavigationServiceFactory {
 }
 
 // MARK: WindowServiceFactory
+
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
         return windowService
@@ -190,6 +200,7 @@ extension DependencyContainer: WindowServiceFactory {
 }
 
 // MARK: OsxUiAlertServiceFactory
+
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
         return OsxUiAlertService(factory: self)
@@ -197,6 +208,7 @@ extension DependencyContainer: UIAlertServiceFactory {
 }
 
 // MARK: AppSessionManagerFactory
+
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
         return appSessionManager
@@ -204,6 +216,7 @@ extension DependencyContainer: AppSessionManagerFactory {
 }
 
 // MARK: NotificationManagerFactory
+
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
         return NotificationManager(appStateManager: makeAppStateManager(),
@@ -212,6 +225,7 @@ extension DependencyContainer: NotificationManagerFactory {
 }
 
 // MARK: MigrationManagerFactory
+
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
         let propertiesManager = makePropertiesManager()
@@ -221,6 +235,7 @@ extension DependencyContainer: MigrationManagerFactory {
 }
 
 // MARK: RefreshTimerFactory
+
 extension DependencyContainer: AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         return refreshTimer
@@ -228,6 +243,7 @@ extension DependencyContainer: AppSessionRefreshTimerFactory {
 }
 
 // MARK: - AppSessionRefresherFactory
+
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         return appSessionManager
@@ -235,6 +251,7 @@ extension DependencyContainer: AppSessionRefresherFactory {
 }
 
 // MARK: - HeaderViewModelFactory
+
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
         return HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
@@ -242,6 +259,7 @@ extension DependencyContainer: HeaderViewModelFactory {
 }
 
 // MARK: - SystemExtensionManagerFactory
+
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
         return sysexManager
@@ -249,6 +267,7 @@ extension DependencyContainer: SystemExtensionManagerFactory {
 }
 
 // MARK: XPCConnectionsRepositoryFactory
+
 extension DependencyContainer: XPCConnectionsRepositoryFactory {
     func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
         return xpcConnectionsRepository
@@ -256,6 +275,7 @@ extension DependencyContainer: XPCConnectionsRepositoryFactory {
 }
 
 // MARK: BugReportCreatorFactory
+
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
         return MacOSBugReportCreator()
@@ -263,6 +283,7 @@ extension DependencyContainer: BugReportCreatorFactory {
 }
 
 // MARK: AppCertificateRefreshManagerFactory
+
 extension DependencyContainer: AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
         return appCertificateRefreshManager
@@ -270,6 +291,7 @@ extension DependencyContainer: AppCertificateRefreshManagerFactory {
 }
 
 // MARK: ModelIdCheckerFactory
+
 extension DependencyContainer: ModelIdCheckerFactory {
     func makeModelIdChecker() -> ModelIdCheckerProtocol {
         return ModelIdChecker()
@@ -277,6 +299,7 @@ extension DependencyContainer: ModelIdCheckerFactory {
 }
 
 // MARK: ProtonReachabilityCheckerFactory
+
 extension DependencyContainer: ProtonReachabilityCheckerFactory {
     func makeProtonReachabilityChecker() -> ProtonReachabilityChecker {
         return URLSessionProtonReachabilityChecker()
@@ -284,6 +307,7 @@ extension DependencyContainer: ProtonReachabilityCheckerFactory {
 }
 
 // MARK: StatusMenuViewModelFactory
+
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
         return StatusMenuViewModel(factory: self)
@@ -291,6 +315,7 @@ extension DependencyContainer: StatusMenuViewModelFactory {
 }
 
 // MARK: UpdateManagerFactory
+
 extension DependencyContainer: UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager {
         return updateManager

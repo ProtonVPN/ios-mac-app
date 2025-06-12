@@ -69,8 +69,8 @@ public enum Session: Equatable {
 }
 
 // MARK: CoreNetworking
-public final class CoreNetworking: Networking {
 
+public final class CoreNetworking: Networking {
     public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
         (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
@@ -304,6 +304,7 @@ public final class CoreNetworking: Networking {
 }
 
 // MARK: APIServiceDelegate
+
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
         @Dependency(\.dohConfiguration) var doh
@@ -351,6 +352,7 @@ extension CoreNetworking: APIServiceDelegate {
 }
 
 // MARK: AuthDelegate
+
 extension CoreNetworking: AuthDelegate {
     public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCoreServices.AuthSessionInvalidatedDelegate? {
         get { self }
@@ -427,12 +429,10 @@ extension CoreNetworking: AuthDelegate {
         do {
             if let authCredentials = authKeychain.fetch(),
                authCredentials.sessionId == sessionUID {
-
                 try authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
 
             } else if let unauthCredential = unauthKeychain.fetch(),
                       unauthCredential.sessionID == sessionUID {
-
                 unauthKeychain.store(AuthCredential(credential))
             }
         } catch {

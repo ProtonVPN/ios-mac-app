@@ -366,6 +366,5 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
             }
             delegate?.didReceiveFeatures(vpnFeatures)
         }
-        
     }
 }

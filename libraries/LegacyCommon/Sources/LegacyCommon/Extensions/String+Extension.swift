@@ -22,7 +22,6 @@
 import Foundation
 
 public extension String {
-    
     func contains(_ string: String) -> Bool {
         return self.range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
     }
@@ -95,7 +94,6 @@ public extension String {
 }
 
 public extension String {
-    
     subscript (i: Int) -> Character {
         return self[index(startIndex, offsetBy: i)]
     }

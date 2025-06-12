@@ -22,7 +22,6 @@ import SwiftUI
 
 @Reducer
 struct QuickFixesFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var category: Category
@@ -67,5 +66,4 @@ struct QuickFixesFeature: Reducer {
             ContactFormFeature()
         }
     }
-
 }

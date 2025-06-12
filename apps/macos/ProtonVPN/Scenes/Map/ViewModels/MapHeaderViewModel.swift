@@ -29,7 +29,6 @@ import Strings
 import Domain
 
 class MapHeaderViewModel {
-    
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     

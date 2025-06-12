@@ -22,7 +22,6 @@ import AppKit
 import SwiftUI
 
 public struct ModalsFactory {
-
     // MARK: Properties
 
     static public func upsellViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {

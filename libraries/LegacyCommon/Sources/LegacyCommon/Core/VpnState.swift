@@ -22,7 +22,6 @@
 import Foundation
 
 public struct ServerDescriptor {
-    
     public let username: String
     public let address: String
     
@@ -37,14 +36,12 @@ public struct ServerDescriptor {
 }
 
 extension ServerDescriptor: Equatable {
-    
     public static func == (lhs: ServerDescriptor, rhs: ServerDescriptor) -> Bool {
         return lhs.username == rhs.username && lhs.address == rhs.address
     }
 }
 
 public enum VpnState {
-
     /*
      *  NEVPNStatusInvalid - VPN is not configured.
      */
@@ -152,7 +149,6 @@ public enum VpnState {
 }
 
 extension VpnState: Equatable {
-    
     public static func == (lhs: VpnState, rhs: VpnState) -> Bool {
         switch (lhs, rhs) {
         case (.invalid, .invalid):

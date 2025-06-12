@@ -38,7 +38,6 @@ public protocol VpnGateway2Factory {
 /// It still uses `AppStateManager` but doesn't have complexity of original `VpnGateway`.
 /// Some of the features of `VpnGateway` should be moved to other places.
 public class VpnGateway2: VpnGatewayProtocol2 {
-
     private let appStateManager: AppStateManager
     private let propertiesManager: PropertiesManagerProtocol
     private let serverTierChecker: ServerTierChecker
@@ -133,7 +132,6 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     // todo: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
     // exactly the same as old `ConnectionRequest`
     private func selectServer(intent: ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
-
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
         let currentUserTier = (try? getCurrentUserTier()) ?? .freeTier
 
@@ -200,7 +198,6 @@ extension ConnectionSpec {
 }
 
 fileprivate extension ConnectionSpec {
-
     // Important! Use only for server selection. Only serverType and connectionType are filled in correctly.
     // If used elsewhere, please fill in other properties properly.
     var connectionRequest: ConnectionRequest {

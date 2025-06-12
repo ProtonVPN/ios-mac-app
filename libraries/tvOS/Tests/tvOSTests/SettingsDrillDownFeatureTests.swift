@@ -21,7 +21,6 @@ import ComposableArchitecture
 @testable import tvOS
 
 final class SettingsDrillDownFeatureTests: XCTestCase {
-
     @MainActor
     func testContactUs() async {
         let store = TestStore(initialState: SettingsDrillDownFeature.State.dynamic(.contactUs)) {

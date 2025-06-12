@@ -26,7 +26,6 @@ import ProtonCoreUIFoundations
 import Strings
 
 class TroubleshootViewController: UIViewController {
-
     // Views
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var closeButton: UIButton!
@@ -75,13 +74,11 @@ class TroubleshootViewController: UIViewController {
     @IBAction func closeButtonTapped(_ sender: Any) {
         viewModel.cancel()
     }
-
 }
 
 // MARK: TableView
 
 extension TroubleshootViewController: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.items.count
     }
@@ -109,5 +106,4 @@ extension TroubleshootViewController: UITableViewDataSource {
         cell.descriptionAttributed = item.description
         return cell
     }
-    
 }

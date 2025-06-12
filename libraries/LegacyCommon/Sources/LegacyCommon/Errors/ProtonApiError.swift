@@ -24,7 +24,6 @@ import VPNShared
 import Strings
 
 public enum ParseError: LocalizedError {
-    
     case authInfoParse
     case authCredentialsParse
     case modulusParse

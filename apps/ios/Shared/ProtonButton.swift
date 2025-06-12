@@ -23,7 +23,6 @@
 import UIKit
 
 class ProtonButton: UIButton {
-    
     enum CustomState {
         case primary // e.g. connect
         case secondary
@@ -136,5 +135,4 @@ class ProtonButton: UIButton {
         titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.textAlignment = .center
     }
-    
 }

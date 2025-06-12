@@ -56,6 +56,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             }
         }
     }
+
     public var blockOneTimeAnnouncement: Bool = false
     public var blockUpdatePrompt: Bool = false
     public var lastIkeConnection: ConnectionConfiguration?
@@ -86,12 +87,14 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var serverTypeToggle: ServerType {
         return secureCoreToggle ? .secureCore : .standard
     }
+
     public var intentionallyDisconnected: Bool = false
     public var userLocation: UserLocation? {
         didSet {
             AppEvent.userIp.post(userLocation)
         }
     }
+
     public var userDataDisclaimerAgreed: Bool = false
     public var userAccountCreationDate: Date? = nil
 
@@ -116,6 +119,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             AppEvent.vpnProtocol.post(vpnProtocol)
         }
     }
+
     public var apiEndpoint: String?
     public var lastAppVersion = "0.0.0"
     public var featureFlags: FeatureFlags = FeatureFlags() {
@@ -123,23 +127,27 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
             AppEvent.featureFlags.post(featureFlags)
         }
     }
+
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false {
         didSet {
             AppEvent.vpnAccelerator.post(vpnAcceleratorEnabled)
         }
     }
+
     public var killSwitch: Bool = false {
         didSet {
             AppEvent.killSwitch.post(killSwitch)
         }
     }
+
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false {
         didSet {
             onAlternativeRoutingChange?(alternativeRouting)
         }
     }
+
     public var smartProtocol: Bool = false {
         didSet {
             AppEvent.smartProtocol.post(smartProtocol)
@@ -188,6 +196,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public func setTelemetryUsageData(enabled: Bool) {
         AppEvent.telemetryUsageData.post(enabled)
     }
+
     public func setTelemetryCrashReports(enabled: Bool) {
         AppEvent.telemetryCrashReports.post(enabled)
     }

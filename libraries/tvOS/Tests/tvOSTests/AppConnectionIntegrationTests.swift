@@ -31,7 +31,6 @@ import Domain
 import VPNSharedTesting
 
 final class AppConnectionIntegrationTests: XCTestCase {
-
     @MainActor
     func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async throws {
         let clock = TestClock()

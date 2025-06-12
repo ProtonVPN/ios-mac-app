@@ -26,7 +26,6 @@ fileprivate let buttonConnectDisconnect = "ic power off"
 fileprivate let clearTextButton = "Clear text"
 
 class CountrySearchRobot: ConnectionBaseRobot {
-
     let verify = Verify()
 
     @discardableResult

@@ -30,6 +30,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     enum VpnGatewayMockError: Error {
         case missingUserTier
     }
+
     public static var connectionChanged: Notification.Name = Notification.Name("")
     public static var activeServerTypeChanged: Notification.Name = Notification.Name("")
     public static var needsReconnectNotification: Notification.Name = Notification.Name("")
@@ -52,6 +53,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
             AppEvent.connectionStateChanged.post(connection)
         }
     }
+
     public var activeIp: String?
     public var activeServer: ServerModel?
     public var lastConnectionRequest: ConnectionRequest?
@@ -69,11 +71,9 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func autoConnect() {
-
     }
     
     public func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {
-        
     }
     
     public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
@@ -81,27 +81,21 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger) {
-
     }
     
     public func connectTo(server: ServerModel) {
-        
     }
     
     public func connectTo(profile: Profile) {
-        
     }
     
     public func retryConnection() {
-        
     }
     
     public func connect(with request: ConnectionRequest?) {
-        
     }
 
     public func connectTo(country countryCode: String, city: String) {
-        
     }
     
     public func stopConnecting(userInitiated: Bool) {
@@ -118,19 +112,15 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func reconnect(with netShieldType: NetShieldType) {
-        
     }
 
     public func reconnect(with natType: NATType) {
-        
     }
     
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
-        
     }
 
     public func postConnectionInformation() {
-
     }
 }
 #endif

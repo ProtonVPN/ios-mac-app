@@ -19,7 +19,6 @@
 import VPNAppCore
 
 extension PlutoniumFeature.State {
-
     var remainingApps: [PlutoniumApp] {
         discoveredApps.filter {
             !activatedApps.contains($0)

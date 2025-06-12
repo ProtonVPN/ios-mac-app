@@ -25,13 +25,11 @@ import UITestsHelpers
 let app = XCUIApplication()
 
 class AlertRobot: CoreElements {
-    
     let logoutWarningAlert = LogoutWarningAlert()
 
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func checkLogoutWarningAlertAppear() -> AlertRobot {
             AlertRobot().logoutWarningAlert.verify.checkAlertAppear()
@@ -60,7 +58,6 @@ class AlertRobot: CoreElements {
         let verify = Verify()
         
         class Verify: CoreElements {
-            
             func checkAlertAppear() -> LogoutWarningAlert {
                 let container = LogoutWarningAlert().alertContainer
                 

@@ -208,6 +208,7 @@ final class CoreLoginService {
 }
 
 // MARK: LoginErrorPresenter
+
 extension CoreLoginService: LoginErrorPresenter {
     func willPresentError(error: LoginError, from: UIViewController) -> Bool {
         switch error {
@@ -216,7 +217,6 @@ extension CoreLoginService: LoginErrorPresenter {
             alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
             return true
         case let .generic(_, code: _, originalError: originalError):
-
             // show a custom alert with a way to show the troubleshooting screen
             // for networking and tls errors
             let error = convertError(from: originalError)

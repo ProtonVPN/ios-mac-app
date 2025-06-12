@@ -20,7 +20,6 @@ import XCTest
 @testable import Announcement
 
 class FullScreenImageTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
     }
@@ -40,5 +39,4 @@ class FullScreenImageTests: XCTestCase {
         let sut = FullScreenImage(source: [], alternativeText: "")
         XCTAssertEqual(sut.firstURL, nil)
     }
-
 }

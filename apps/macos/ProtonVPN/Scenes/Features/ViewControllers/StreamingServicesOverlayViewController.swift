@@ -77,7 +77,6 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
 }
 
 extension StreamingServicesOverlayViewController: NSCollectionViewDelegateFlowLayout, NSCollectionViewDataSource {
-    
     // MARK: - NSCollectionViewDelegateFlowLayout
     
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -25,7 +25,6 @@ import Theme
 import Ergonomics
 
 final class CountriesSectionHeaderView: NSView {
-
     typealias ActionHandler = () -> Void
 
     @IBOutlet private weak var titleLbl: NSTextField!

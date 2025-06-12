@@ -21,7 +21,6 @@ import XCTest
 @testable import LegacyCommon
 
 final class CoreVPNKeysGeneratorTests: XCTestCase {
-
     func testDifferentKeysAreGenerated() throws {
         let generator = VPNKeysGenerator.liveValue
 
@@ -36,5 +35,4 @@ final class CoreVPNKeysGeneratorTests: XCTestCase {
         
         XCTAssertNotEqual(key1.publicKey.derRepresentation, key2.publicKey.derRepresentation)
     }
-
 }

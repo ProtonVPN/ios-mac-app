@@ -25,9 +25,11 @@ final class InformationTableViewCell: UITableViewCell {
         let description: String
         let icon: Icon
     }
+
     static var cellIdentifier: String {
         return String(describing: self)
     }
+
     @IBOutlet private weak var icon: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UILabel!

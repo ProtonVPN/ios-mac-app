@@ -116,7 +116,6 @@ public struct EnvironmentSelectorDesktopView: View {
             .scrollContentBackground(.hidden)
             .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
-
     }
 
     private var userDefaultsCell: some View {

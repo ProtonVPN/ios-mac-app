@@ -24,7 +24,6 @@ import SharedViews
 import Strings
 
 struct WidgetAdoptionView: View {
-
     let primaryAction: () -> Void
 
     init(primaryAction: @escaping () -> Void) {

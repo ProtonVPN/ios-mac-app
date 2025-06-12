@@ -155,7 +155,6 @@ class RequestParsingTests: XCTestCase {
         } catch {
             XCTFail("Shouldn't fail")
         }
-
     }
 
     func testValidHTTPRequestGeneration() throws {

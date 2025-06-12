@@ -44,6 +44,7 @@ public enum ConnectionError: Error, Equatable, Sendable {
             String(reflecting: lhs.wrapped) == String(reflecting: rhs.wrapped)
         }
     }
+
     /// Asked to connect with a protocol that is no longer supported, such as OpenVPN.
     ///
     /// This error (should be) quite rare and will only happen when the user has stale configuration data from a

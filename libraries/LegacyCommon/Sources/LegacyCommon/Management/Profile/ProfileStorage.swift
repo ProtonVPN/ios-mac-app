@@ -141,5 +141,4 @@ public final class ProfileStorage {
     private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
         return !profiles.filter({ $0.profileType == .system }).isEmpty
     }
-    
 }

@@ -21,7 +21,6 @@ import ProtonCoreUIFoundations
 
 /// A two-line, detail accessory cell with a large image at the leading edge.
 final class ImageSubtitleTableViewCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet private weak var _imageView: UIImageView!

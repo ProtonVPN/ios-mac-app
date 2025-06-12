@@ -22,7 +22,6 @@ import UIKit
 #endif
 
 final class VPNPartnersRequest: Request {
-
     var path: String {
 #if os(iOS)
         return "/vpn/v1/partners?WithImageScale=\(Int(UIScreen.main.scale))"

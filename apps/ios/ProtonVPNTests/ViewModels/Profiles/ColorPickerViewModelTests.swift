@@ -26,7 +26,6 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class ColorPickerViewModelTests: XCTestCase {
-
     func testCorrectColorSelection() {
         let viewModel = ColorPickerViewModel()
         let newCorrectColor = ProfileConstants.profileColors.first
@@ -42,5 +41,4 @@ class ColorPickerViewModelTests: XCTestCase {
         XCTAssertNotNil(viewModel.selectedColorIndex)
         XCTAssertFalse(newWrongColor == viewModel.colorAt(index: viewModel.selectedColorIndex!), "Color not from the list was selected")
     }
-
 }

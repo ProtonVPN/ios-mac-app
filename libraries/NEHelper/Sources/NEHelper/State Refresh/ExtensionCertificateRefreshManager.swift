@@ -38,6 +38,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         /// `checkInterval`, so check happens at least once during this period.
         var refreshEarlierBy: TimeInterval = -3 * 60
     }
+
     fileprivate static var intervals = Intervals()
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
@@ -149,6 +150,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     }
 
     // MARK: - Private
+
     private func certificateDoesNeedRefreshing(features: VPNConnectionFeatures?) -> Bool {
         // If we're able to get a certificate from the keychain...
         guard let storedCert = vpnAuthenticationStorage.getStoredCertificate() else {

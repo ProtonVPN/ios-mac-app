@@ -23,7 +23,6 @@ import AppKit
 import ComposableArchitecture
 
 struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
-
     typealias NSViewControllerType = LoginViewController
 
     let loginViewModel: LoginViewModel
@@ -40,7 +39,6 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
     }
 
     func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {
-
     }
 
     func makeCoordinator() -> Coordinator {
@@ -52,6 +50,7 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
         init(store: StoreOf<LoginFeature>) {
             self.store = store
         }
+
         func login() {
             store.send(.loginButtonPressed(username: "", password: ""))
         }

@@ -26,7 +26,6 @@ import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
 
 final class CountryViewController: UIViewController {
-
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var connectionBarContainerView: UIView!
     
@@ -78,7 +77,6 @@ final class CountryViewController: UIViewController {
 }
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel?.sectionsCount() ?? 1
     }

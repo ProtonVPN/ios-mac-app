@@ -72,7 +72,6 @@ final class MacAlertService {
     init(factory: Factory) {
         self.factory = factory
     }
-    
 }
 
 public final class NEKSOnT2Alert: SystemAlert {
@@ -93,7 +92,6 @@ public final class NEKSOnT2Alert: SystemAlert {
 }
 
 extension MacAlertService: CoreAlertService {
-    
     func push(alert: SystemAlert) {
         executeOnUIThread {
             self.pushOnUIThread(alert: alert)
@@ -311,6 +309,7 @@ extension MacAlertService: CoreAlertService {
             #endif
         }
     }
+
     // swiftlint:enable cyclomatic_complexity function_body_length
 
     // MARK: Alerts UI

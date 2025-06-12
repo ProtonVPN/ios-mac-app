@@ -26,7 +26,6 @@ import AppKit
 import Strings
 
 class WindowMenuController: NSObject {
-    
     @IBOutlet weak var windowMenu: NSMenu!
     @IBOutlet weak var minimizeItem: NSMenuItem!
     
@@ -36,9 +35,9 @@ class WindowMenuController: NSObject {
     }
     
     // MARK: - Private functions
+
     private func setupPersistentView() {
         windowMenu.title = Localizable.menuWindow
         minimizeItem.title = Localizable.menuMinimize
     }
-    
 }

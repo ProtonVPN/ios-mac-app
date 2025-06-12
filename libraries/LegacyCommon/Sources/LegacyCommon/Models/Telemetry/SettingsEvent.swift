@@ -19,7 +19,6 @@
 import Foundation
 
 public struct SettingsEvent: TelemetryEvent, Encodable {
-
     public let measurementGroup: String = "vpn.any.settings"
     public let event: Event
     public let dimensions: SettingsDimensions

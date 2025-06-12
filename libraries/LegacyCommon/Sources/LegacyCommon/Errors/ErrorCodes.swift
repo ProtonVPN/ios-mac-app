@@ -23,7 +23,6 @@ import Foundation
 import ProtonCoreServices
 
 public class ErrorCode {
-    
     public static let descriptionUnavailable = 1
     public static let vpnSessionInProgress = 20
     public static let vpnStuckDisconnecting = 21
@@ -66,7 +65,6 @@ public enum NetworkErrorCode {
 }
 
 public enum ApiErrorCode { // error codes returned by the api
-    
     public static let alreadyRegistered = 2500
     
     public static let authInfo = 5001

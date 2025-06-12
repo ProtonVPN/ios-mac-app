@@ -189,6 +189,7 @@ struct ConnectionDetailsView: View {
         }
     }
 }
+
 // MARK: - Previews
 
 struct ConnectionDetailsView_Previews: PreviewProvider {

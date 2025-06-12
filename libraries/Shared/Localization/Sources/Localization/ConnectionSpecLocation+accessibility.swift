@@ -21,7 +21,6 @@ import Foundation
 import Strings
 
 public extension ConnectionSpec.Location {
-
     private func regionName(locale: Locale, code: String) -> String {
         locale.localizedString(forRegionCode: code) ?? code
     }

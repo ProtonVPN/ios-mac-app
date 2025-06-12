@@ -24,7 +24,6 @@ import Cocoa
 import Theme
 
 class WrenchIcon: NSImageView {
-
     private let wrenchIcon = AppTheme.Icon.wrench
 
     override func draw(_ dirtyRect: NSRect) {
@@ -47,5 +46,4 @@ class WrenchIcon: NSImageView {
             context.draw(image, in: infoRect)
         }
     }
-    
 }

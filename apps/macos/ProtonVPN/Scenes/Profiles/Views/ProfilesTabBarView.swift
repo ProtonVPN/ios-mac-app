@@ -24,7 +24,6 @@ import Cocoa
 import LegacyCommon
 
 class ProfilesTabBarView: NSView {
-
     private let tabWidth: CGFloat = 200
     private let tabHeight: CGFloat = 40
     
@@ -137,6 +136,7 @@ class ProfilesTabBarView: NSView {
     }
     
     // MARK: - Colors
+
     private func getColor(forFocus present: Bool) -> CGColor {
         TabBarButton.backgroundColor(forFocus: present)
     }

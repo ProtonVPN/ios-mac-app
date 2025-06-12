@@ -23,7 +23,6 @@ import ProtonCoreQuarkCommands
 import fusion
 
 class TokenRefreshTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     override func setUp() {

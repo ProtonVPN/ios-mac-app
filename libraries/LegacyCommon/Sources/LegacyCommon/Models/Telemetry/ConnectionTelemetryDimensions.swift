@@ -142,5 +142,4 @@ public struct ConnectionDimensions: Encodable {
         case mobile
         case other
     }
-
 }

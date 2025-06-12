@@ -36,7 +36,6 @@ import Strings
 import ProtonCoreFeatureFlags
 
 class CreateOrEditProfileViewModel: NSObject {
-    
     private let username: String?
     private let profileService: ProfileService
     private let protocolService: ProtocolService
@@ -66,6 +65,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var color: UIColor {
         return colorPickerViewModel.selectedColor
     }
+
     private var name: String = ""
     private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
@@ -77,6 +77,7 @@ class CreateOrEditProfileViewModel: NSObject {
             saveButtonUpdated?()
         }
     }
+
     var saveButtonUpdated: (() -> Void)?
     var contentChanged: (() -> Void)?
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -165,7 +166,6 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
-        
         guard let serverOffering = selectedServerOffering else {
             messageHandler?(Localizable.serverSelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
@@ -468,11 +468,9 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }
-    
 }
 
 extension CreateOrEditProfileViewModel {
-    
     private var countrySelectionDataSet: SelectionDataSet {
         let rows: [SelectionRow] = serverGroups.map({ countryGroup in
             return SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
@@ -611,11 +609,9 @@ extension CreateOrEditProfileViewModel {
             selectedIndex: selectedIndex
         )
     }
-    
 }
 
 extension CreateOrEditProfileViewModel: UITextFieldDelegate {
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =

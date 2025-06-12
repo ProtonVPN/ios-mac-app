@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class ProtonVpnMenuController: NSObject {
-    
     @IBOutlet weak var aboutItem: NSMenuItem!
     @IBOutlet weak var checkForUpdatesItem: NSMenuItem!
     @IBOutlet weak var preferencesItem: NSMenuItem!
@@ -48,8 +47,8 @@ class ProtonVpnMenuController: NSObject {
     }
     
     // MARK: - Private functions
+
     private func setupPersistentView() {
-        
         aboutItem.title = Localizable.menuAbout
         aboutItem.isEnabled = true
         aboutItem.target = self

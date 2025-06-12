@@ -34,7 +34,6 @@ import Ergonomics
 import PMLogger
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
-
     let homeRobot = HomeRobot()
     let settingsRobot = SettingsRobot()
 

@@ -23,7 +23,6 @@ import Domain
 
 @Reducer
 struct CountryListFeature {
-
     /// More info about recommended countries selection:
     /// https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
     static let recommendedCountries: [String] = ["US", "UK", "CA", "FR", "DE"]

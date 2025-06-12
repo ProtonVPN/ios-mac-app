@@ -24,7 +24,6 @@ import UIKit
 import LegacyCommon
 
 extension String {
-    
     public func attributed(withColor color: UIColor,
                            fontSize: CGFloat,
                            bold: Bool = false,
@@ -40,7 +39,6 @@ extension String {
                     alignment: NSTextAlignment = .natural,
                     lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
-        
         let newString = NSMutableAttributedString(string: self)
         newString.addTextAttributes(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
         return newString
@@ -51,7 +49,6 @@ extension String {
                             withTextColor textColor: UIColor,
                             textFont: UIFont
                             ) -> NSAttributedString {
-        
         let newString = NSMutableAttributedString(string: self)
         
         let range = (self as NSString).range(of: self)
@@ -70,5 +67,4 @@ extension String {
         
         return newString
     }
-    
 }

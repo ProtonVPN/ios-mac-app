@@ -32,6 +32,7 @@ struct CodeSignatureComparitor {
     }
 
     // MARK: - Private
+
     private static func execute(secFunction: () -> OSStatus) throws {
         let status = secFunction()
         guard status == errSecSuccess else {

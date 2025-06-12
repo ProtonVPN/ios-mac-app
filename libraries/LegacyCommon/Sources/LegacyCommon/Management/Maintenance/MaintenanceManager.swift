@@ -40,7 +40,6 @@ public protocol MaintenanceManagerProtocol {
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-    
     public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory
     
     private let factory: Factory

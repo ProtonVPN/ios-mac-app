@@ -32,7 +32,6 @@ import VPNAppCore
 import Strings
 
 class FeatureTableViewCell: UITableViewCell {
-    
     @IBOutlet private weak var iconIV: UIImageView!
     @IBOutlet private weak var titleLbl: UILabel!
     @IBOutlet private weak var descriptionLbl: UILabel!

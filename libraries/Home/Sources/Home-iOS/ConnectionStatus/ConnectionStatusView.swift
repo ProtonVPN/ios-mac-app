@@ -32,7 +32,6 @@ import Localization
 
 @MainActor
 public struct ConnectionStatusView: View {
-
     private static let maxContentWidth: CGFloat = 480
 
     @Perception.Bindable var store: StoreOf<ConnectionStatusFeature>

@@ -23,7 +23,6 @@
 import Cocoa
 
 class ClickDetectingVisualEffectView: NSVisualEffectView {
-
     var clickAction: (() -> Void)?
     
     override func mouseDown(with event: NSEvent) {

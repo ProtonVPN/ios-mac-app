@@ -36,7 +36,6 @@ extension DependencyContainer: ProtonVpnMenuViewModelFactory {
 }
 
 class ProtonVpnMenuViewModel {
-    
     typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & UpdateManagerFactory
     public let factory: Factory
     
@@ -87,6 +86,7 @@ class ProtonVpnMenuViewModel {
     }
     
     // MARK: - Private functions
+
     private func sessionChanged(data: SessionChanged.T) {
         contentChanged?()
     }

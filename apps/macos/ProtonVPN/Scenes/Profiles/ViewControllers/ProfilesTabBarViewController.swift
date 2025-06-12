@@ -26,13 +26,11 @@ import Ergonomics
 import Strings
 
 enum ProfilesTab: Equatable {
-    
     case overview
     case createNewProfile
 }
 
 class ProfilesTabBarViewController: NSViewController {
-
     @IBOutlet weak var headerLabel: NSTextField!
     @IBOutlet weak var backgroundView: ProfilesTabBarView!
     @IBOutlet weak var overviewButton: TabBarButton!

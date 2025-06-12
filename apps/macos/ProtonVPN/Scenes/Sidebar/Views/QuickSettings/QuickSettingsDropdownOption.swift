@@ -28,7 +28,6 @@ import Ergonomics
 import Strings
 
 class QuickSettingsDropdownOption: NSView {
-        
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var containerView: NSView!
     @IBOutlet weak var optionIconIV: NSImageView!

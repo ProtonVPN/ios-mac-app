@@ -23,7 +23,6 @@
 import UIKit
 
 final class BadgedBarButtonItem: UIBarButtonItem {
-    
     var badgeColor: UIColor = .brandColor()
     var showBadge: Bool = false {
         didSet {
@@ -61,5 +60,4 @@ final class BadgedBarButtonItem: UIBarButtonItem {
     @objc private func buttonPressed() {
         onTouchUpInside?()
     }
-    
 }

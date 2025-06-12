@@ -56,7 +56,6 @@ final class CountryViewModelMock: CountryViewModel {
     let isSecureCoreCountry: Bool
 
     func connectAction() {
-
     }
 
     let cities: [CityViewModel]

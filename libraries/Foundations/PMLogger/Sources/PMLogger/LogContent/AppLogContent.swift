@@ -20,7 +20,6 @@ import Foundation
 
 /// App logs can be split into several files. This class collects logs from all of them.
 public class AppLogContent: LogContent {
-
     private let folder: URL
     private let filenameWithoutExtension: String = "ProtonVPN"
     private let fileManager = FileManager.default
@@ -47,5 +46,4 @@ public class AppLogContent: LogContent {
             callback(result)
         }
     }
-
 }

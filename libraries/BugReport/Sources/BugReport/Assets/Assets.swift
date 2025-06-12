@@ -30,6 +30,7 @@ internal enum Asset {
   internal static let icFailure = ImageAsset(name: "ic_failure")
   internal static let icSuccess = ImageAsset(name: "ic_success")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -125,4 +126,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

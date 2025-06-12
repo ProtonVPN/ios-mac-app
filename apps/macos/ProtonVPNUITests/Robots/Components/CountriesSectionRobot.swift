@@ -26,7 +26,6 @@ fileprivate let clearSearchButton = "ClearSearchButton"
 fileprivate let serverListTableId = "ServerListTable"
 
 class CountriesSectionRobot: CoreElements {
-    
     func searchForServer(serverName: String) -> CountriesSectionRobot {
         textField(searchTextField).tap().typeText(serverName)
         return self
@@ -70,7 +69,6 @@ class CountriesSectionRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func checkCountryExists(_ name: String) -> CountriesSectionRobot {
             cell(name).checkExists(message: "'\(name)' country does not exist at the servers list table")

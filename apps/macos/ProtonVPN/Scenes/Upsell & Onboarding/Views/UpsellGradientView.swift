@@ -24,7 +24,6 @@ import Cocoa
 import Theme
 
 class UpsellGradientView: NSView {
-
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 

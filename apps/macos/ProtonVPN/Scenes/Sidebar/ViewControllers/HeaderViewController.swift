@@ -32,7 +32,6 @@ import Ergonomics
 import Domain
 
 final class HeaderViewController: NSViewController {
-    
     private enum AccessibilityIdentifiers {
         static let ipLabel: String = "ipLabel"
         static let protocolLabel: String = "protocolLabel"
@@ -139,7 +138,6 @@ final class HeaderViewController: NSViewController {
     
     private func setupLoad() {
         if viewModel.isConnected, let loadDescription = viewModel.loadLabel, let loadDescriptionShort = viewModel.loadLabelShort, let loadPercentage = viewModel.loadPercentage {
-
             if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
                 loadLabel.attributedStringValue = loadDescriptionShort
                 loadLabel.toolTip = loadDescription.string

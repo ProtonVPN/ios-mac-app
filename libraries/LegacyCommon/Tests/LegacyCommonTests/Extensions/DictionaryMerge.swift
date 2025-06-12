@@ -24,7 +24,6 @@ import XCTest
 @testable import LegacyCommon
 
 class DictionaryMerge: XCTestCase {
-
     func testMerge() {
         let first = [
             "key1": "value1"
@@ -51,7 +50,5 @@ class DictionaryMerge: XCTestCase {
         
         let resultOther = second + first
         XCTAssert(resultOther["key1"] == first["key1"])
-        
     }
-    
 }

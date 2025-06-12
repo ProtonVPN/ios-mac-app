@@ -26,7 +26,6 @@ import class NetworkExtension.NEOnDemandRule
 import IssueReporting
 
 final class MockTunnelProviderManager: TunnelProviderManager {
-
     var loadFromPreferencesBlock: (() -> Void)?
     var saveToPreferencesBlock: (() -> Void)?
     var localizedDescription: String?

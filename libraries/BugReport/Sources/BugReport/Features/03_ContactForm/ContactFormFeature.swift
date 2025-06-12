@@ -23,7 +23,6 @@ import Strings
 
 @Reducer
 struct ContactFormFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var fields: IdentifiedArrayOf<FormInputField>
@@ -149,7 +148,6 @@ struct ContactFormFeature: Reducer {
 
             return BugReportResult(email: email, username: username, text: text, logs: logs)
         }
-
     }
 
     enum Action: BindableAction, Equatable {
@@ -208,9 +206,7 @@ struct ContactFormFeature: Reducer {
         }
 
         .ifLet(\.resultState, action: /Action.resultViewAction, then: { BugReportResultFeature() })
-
     }
-
 }
 
 fileprivate extension TaskResult<Bool> {

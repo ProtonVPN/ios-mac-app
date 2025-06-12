@@ -93,9 +93,11 @@ class TextFieldWithFocus: NSTextField {
 
         return super.performKeyEquivalent(with: event)
     }
+
     // swiftlint:enable cyclomatic_complexity
     
     // MARK: - Private functions
+
     private func setupTransparency() {
         isBordered = false
         focusRingType = .none

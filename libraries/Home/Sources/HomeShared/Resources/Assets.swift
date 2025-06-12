@@ -39,6 +39,7 @@ public enum HomeAsset {
   public static let lockSingle = SymbolAsset(name: "lock.single")
   public static let wrongCountrySmall = ImageAsset(name: "wrong-country-small")
 }
+
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
@@ -194,4 +195,5 @@ private final class BundleToken {
     #endif
   }()
 }
+
 // swiftlint:enable convenience_type

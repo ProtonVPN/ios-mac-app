@@ -20,7 +20,6 @@ import Foundation
 import Logging
 
 extension Logger {
-    
     public enum Category: String {
         case connection = "conn"
         case connectionConnect = "conn.connect"

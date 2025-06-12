@@ -26,7 +26,6 @@ extension DoHConfigurationKey: DependencyKey {
 
 extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?) {
-
         let apiHost: String = ObfuscatedConstants.apiHost
         let humanVerificationV3Host = ObfuscatedConstants.humanVerificationV3Host
 #if DEBUG

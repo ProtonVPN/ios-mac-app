@@ -26,7 +26,6 @@ import Theme
 import Strings
 
 final class SwitchTableViewCell: UITableViewCell {
-
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
     @IBOutlet weak var upsellImageView: UIImageView!

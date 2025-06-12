@@ -23,7 +23,6 @@
 import Cocoa
 
 class StatusMenuSurfaceButton: CellSurfaceButton {
-    
     var stateChanged: (() -> Void)?
     
     override func awakeFromNib() {

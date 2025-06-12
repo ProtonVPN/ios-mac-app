@@ -23,10 +23,8 @@ import SwiftUI
 
 @Reducer
 struct ReportBugFeatureMacOS: Reducer {
-
     @ObservableState
     struct State {
-
         var steps: UInt = 3
         var step: UInt {
             if step4State != nil {
@@ -37,7 +35,6 @@ struct ReportBugFeatureMacOS: Reducer {
                 return 2
             }
             return 1
-
         }
 
         // We have two possible paths: 1st with quick fixes view and 2nd that goes
@@ -169,11 +166,9 @@ struct ReportBugFeatureMacOS: Reducer {
             }
         }
     }
-
 }
 
 public struct ReportBugView: View {
-
     @Perception.Bindable var store: StoreOf<ReportBugFeatureMacOS>
     @Environment(\.colors) var colors: Colors
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
@@ -184,14 +179,12 @@ public struct ReportBugView: View {
     public var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-
                 if let childStore = store.scope(state: \.step4State, action: \.step4) {
                     BugReportResultView(store: childStore)
                         .padding(.horizontal, horizontalPadding)
 
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
-
                         Button("", action: { store.send(.backPressed, animation: .default) })
                             .buttonStyle(BackButtonStyle())
                             .opacity(store.step > 1 ? 1 : 0)
@@ -225,7 +218,6 @@ public struct ReportBugView: View {
             }
             .padding(.top, verticalPadding)
             .background(colors.background)
-
         }
     }
 }

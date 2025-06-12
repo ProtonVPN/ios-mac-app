@@ -26,7 +26,6 @@ import ComposableArchitecture
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
-
     public override init() {
         super.init()
         setupLogs()

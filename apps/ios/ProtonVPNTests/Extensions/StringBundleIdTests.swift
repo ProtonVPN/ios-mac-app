@@ -20,7 +20,6 @@ import XCTest
 @testable import ProtonVPN
 
 class StringBundleIdTests: XCTestCase {
-
     func testExample() throws {
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.widget".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.Siri-Shortcut-Handler".asMainAppBundleIdentifier)
@@ -32,5 +31,4 @@ class StringBundleIdTests: XCTestCase {
         XCTAssertEqual("ch.protonmail.vpn.debug", "ch.protonmail.vpn.debug.OpenVPN-Extension".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn.debug", "ch.protonmail.vpn.debug.WireGuardiOS-Extension".asMainAppBundleIdentifier)
     }
-
 }

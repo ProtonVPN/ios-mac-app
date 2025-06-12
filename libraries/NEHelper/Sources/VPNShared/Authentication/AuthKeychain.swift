@@ -115,6 +115,7 @@ public final class AuthKeychain {
     public static func clear() {
         `default`.clear()
     }
+
     private let keychain = KeychainActor()
 
     @Dependency(\.appContext) private var context

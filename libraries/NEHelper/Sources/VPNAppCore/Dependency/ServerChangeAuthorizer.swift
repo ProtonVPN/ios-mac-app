@@ -49,7 +49,6 @@ extension ServerChangeAuthorizer: TestDependencyKey {
     public static let testValue = ServerChangeAuthorizer {
         .unavailable(until: .distantFuture, duration: .infinity, exhaustedSkips: true)
     } registerServerChangeAtDate: { date in
-
     }
 
     public static let previewValue = ServerChangeAuthorizer {
@@ -57,12 +56,10 @@ extension ServerChangeAuthorizer: TestDependencyKey {
                      duration: 60 * 60 * 2,
                      exhaustedSkips: true)
     } registerServerChangeAtDate: { date in
-
     }
 
     public static let availableValue = ServerChangeAuthorizer {
         .available
     } registerServerChangeAtDate: { date in
-
     }
 }

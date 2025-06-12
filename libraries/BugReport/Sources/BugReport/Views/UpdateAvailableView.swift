@@ -20,7 +20,6 @@ import SwiftUI
 import Strings
 
 struct UpdateAvailableView: View {
-
     @Binding var isActive: Bool
 
     @Environment(\.colors) var colors: Colors
@@ -35,7 +34,6 @@ struct UpdateAvailableView: View {
 
     var updatevView: some View {
         VStack(spacing: 0) {
-
             #if os(iOS)
             Color.clear.frame(maxWidth: .infinity, maxHeight: 1) // Prevents UpdateAvailableView's background bleeding on NavigationBar
             #endif
@@ -58,7 +56,6 @@ struct UpdateAvailableView: View {
                 Button(Localizable.updateViewButton, action: { CurrentEnv.bugReportDelegate?.updateApp() })
                     .buttonStyle(UpdateButtonStyle())
                     .accessibilityIdentifier("Update app button")
-
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 24)

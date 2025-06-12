@@ -79,7 +79,6 @@ struct DatabaseExtension {
 }
 
 extension DatabaseExtension {
-
     /// Creates a `DatabaseFunction` instance, passing the real implementation that is created with the current
     /// `@Dependency` environment. This is the implementation that is executed by the database whenever this instance
     /// is used to  evaluate `SQLExpressions` using `callAsFunction`

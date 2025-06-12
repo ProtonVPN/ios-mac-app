@@ -42,7 +42,6 @@ final class CityItemViewModel: CityViewModel {
     let connectButtonColor: UIColor = .darkGray
 
     func connectAction() {
-
     }
 
     init(cityName: String, countryName: String, countryFlag: UIImage?) {
@@ -53,7 +52,6 @@ final class CityItemViewModel: CityViewModel {
 }
 
 final class CountryItemViewModel: CountryViewModel {
-    
     var isRedesign: Bool = false
     
     var showCountryConnectButton: Bool = false
@@ -89,7 +87,6 @@ final class CountryItemViewModel: CountryViewModel {
     let cities: [CityViewModel]
 
     func connectAction() {
-
     }
 
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
@@ -114,7 +111,6 @@ final class CountryItemViewModel: CountryViewModel {
 }
 
 final class ServerItemViewModel: ServerViewModel {
-
     var isRedesign: Bool = false
     
     var isPartnerServer: Bool = false
@@ -178,7 +174,6 @@ final class ServerItemViewModel: ServerViewModel {
     let translatedCity: String? = nil
 
     func connectAction() {
-
     }
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil) {

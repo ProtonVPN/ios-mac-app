@@ -50,7 +50,6 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 }
 
 class DefaultProfileViewModel {
-
     @Dependency(\.profileAuthorizer) var authorizer
     fileprivate let alertService: AlertService
 
@@ -94,7 +93,6 @@ class DefaultProfileViewModel {
 
     var isConnected: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-
             guard vpnGateway.connection == .connected else { return false }
 
             return vpnGateway.lastConnectionRequest == profile.connectionRequest(
@@ -120,7 +118,6 @@ class DefaultProfileViewModel {
     }
 
     var isConnecting: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connecting else { return false }
             
@@ -236,6 +233,7 @@ class DefaultProfileViewModel {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {

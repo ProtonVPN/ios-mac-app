@@ -24,7 +24,6 @@ import Cocoa
 import LegacyCommon
 
 class TabBarView: NSView {
-    
     private let minimumTabWidth: CGFloat = 150
     private let minimumTabHeight: CGFloat = 40
 

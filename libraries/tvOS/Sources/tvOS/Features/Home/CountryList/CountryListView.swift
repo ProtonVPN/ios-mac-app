@@ -24,7 +24,6 @@ import ComposableArchitecture
 
 /// Displays the list of countries (and other connectable items, like "fastest").
 struct CountryListView: View {
-
     @Bindable var store: StoreOf<CountryListFeature>
 
     // Watch which item is focused to highlight selected row

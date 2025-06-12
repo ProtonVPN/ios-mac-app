@@ -24,7 +24,6 @@ import Cocoa
 import Ergonomics
 
 class HelpPopoverBackgroundView: NSView {
-
     override func viewDidMoveToSuperview() {
         guard let superview = superview else {
             return
@@ -35,5 +34,4 @@ class HelpPopoverBackgroundView: NSView {
             superview.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
 }

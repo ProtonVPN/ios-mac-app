@@ -24,7 +24,6 @@ public protocol NetworkExtensionLogProvider {
 
 /// Helps receiving logs from Network Extensions
 public class NELogContent: LogContent {
-
     private let neLogProvider: NetworkExtensionLogProvider
 
     public init(neLogProvider: NetworkExtensionLogProvider) {

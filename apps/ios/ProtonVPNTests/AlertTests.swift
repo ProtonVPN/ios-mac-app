@@ -40,7 +40,6 @@ fileprivate let windowService = WindowServiceMock()
 fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
 
 class AlertTests: XCTestCase {
-
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
     
     override func setUp() {
@@ -97,7 +96,6 @@ class AlertTests: XCTestCase {
         
         XCTAssert(confirmRan && cancelRan)
     }
-    
 }
 
 fileprivate class WindowServiceMock: WindowService {
@@ -115,7 +113,6 @@ fileprivate class WindowServiceMock: WindowService {
     }
     
     func popStackToRoot() {
-    
     }
 
     var topmostPresentedViewController: UIViewController?

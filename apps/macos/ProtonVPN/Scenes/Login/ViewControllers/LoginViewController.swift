@@ -39,7 +39,6 @@ import Ergonomics
 import Strings
 
 final class LoginViewController: NSViewController {
-    
     fileprivate enum TextField: Int {
         case username
         case password
@@ -56,9 +55,11 @@ final class LoginViewController: NSViewController {
     }
     
     // MARK: - Onboarding view
+
     @IBOutlet private weak var onboardingView: NSView!
 
     // MARK: - Two factor view
+
     private lazy var twoFactorView: TwoFactorView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("TwoFactorView", owner: nil, topLevelObjects: &nibObjects),
@@ -135,6 +136,7 @@ final class LoginViewController: NSViewController {
 #endif
 
     // MARK: - Loading view
+
     private lazy var loadingView: LoadingView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("LoadingView", owner: nil, topLevelObjects: &nibObjects),
@@ -162,9 +164,11 @@ final class LoginViewController: NSViewController {
     }
 
     // MARK: - Public functions
+
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
+
 #if REDESIGN
     required init(viewModel: LoginViewModel, coordinator: LoginViewControllerRepresentable.Coordinator? = nil) {
         self.coordinator = coordinator
@@ -200,6 +204,7 @@ final class LoginViewController: NSViewController {
     }
     
     // MARK: - Private functions
+
     private func setupLoadingView() {
         loadingView.isHidden = true
         reachabilityCheckIndicator.set(tintColor: .color(.icon, .interactive))
@@ -541,7 +546,6 @@ extension LoginViewController: NSTextFieldDelegate {
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-
         if commandSelector == #selector(NSResponder.insertNewline(_:)), loginButton.isEnabled {
             attemptLogin()
             return true

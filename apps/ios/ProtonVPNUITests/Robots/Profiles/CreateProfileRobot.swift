@@ -22,7 +22,6 @@ fileprivate let secureCoreToggle = Localizable.secureCore
 fileprivate let protocolCellId = Localizable.protocol
 
 class CreateProfileRobot: CoreElements {
-
     let verify = Verify()
 
     @discardableResult
@@ -121,7 +120,6 @@ class CreateProfileRobot: CoreElements {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func profileWithSameName() -> CreateProfileRobot {
             staticText(profileSameName).checkExists()

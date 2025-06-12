@@ -117,6 +117,7 @@ final class NavigationService {
     private let factory: Factory
     
     // MARK: Storyboards
+
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
     private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
@@ -124,6 +125,7 @@ final class NavigationService {
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
     
     // MARK: Properties
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
@@ -140,6 +142,7 @@ final class NavigationService {
         loginService.delegate = self
         return loginService
     }()
+
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
@@ -168,6 +171,7 @@ final class NavigationService {
     }
     
     // MARK: Initializers
+
     init(_ factory: Factory) {
         self.factory = factory
     }
@@ -363,7 +367,6 @@ extension NavigationService: ProfileService {
 }
 
 extension NavigationService: SettingsService {
-    
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
             settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
@@ -485,11 +488,9 @@ extension NavigationService: ProtocolService {
 
 extension NavigationService: ConnectionStatusService {
     func makeConnectionBarViewController() -> ConnectionBarViewController? {
-        
         if let connectionBarViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: ConnectionBarViewController.self)) as? ConnectionBarViewController {
-            
             connectionBarViewController.viewModel = ConnectionBarViewModel(appStateManager: appStateManager)
             connectionBarViewController.connectionStatusService = self
             return connectionBarViewController
@@ -521,6 +522,7 @@ extension NavigationService: ConnectionStatusService {
 }
 
 // MARK: Account Recovery
+
 extension NavigationService {
     func presentAccountRecoveryViewController() {
         guard FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature) else { return }

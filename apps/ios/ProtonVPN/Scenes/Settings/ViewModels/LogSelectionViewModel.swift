@@ -11,7 +11,6 @@ import Foundation
 import LegacyCommon
 
 final class LogSelectionViewModel {
-    
     var pushHandler: ((LogSource) -> Void)?
     
     init() {
@@ -34,5 +33,4 @@ final class LogSelectionViewModel {
     private func pushApplicationLogsViewController(source: LogSource) {
         pushHandler?(source)
     }
-        
 }

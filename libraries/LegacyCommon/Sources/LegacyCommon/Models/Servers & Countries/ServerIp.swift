@@ -137,6 +137,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
     
     // MARK: - NSCoding
+
     private enum CodingKeys: String, CodingKey {
         case id = "IDKey"
         case entryIp = "entryIpKey"

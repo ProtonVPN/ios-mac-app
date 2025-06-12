@@ -20,7 +20,6 @@ import XCTest
 @testable import LegacyCommon
 
 final class VpnKeychainTests: XCTestCase {
-
     private var expectationTimeout: TimeInterval = 2
 
     func testSetPasswordDataSavedToKeychain() throws {

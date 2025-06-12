@@ -37,6 +37,7 @@ protocol TabBarViewModelDelegate: AnyObject {
 
 class TabBarViewModel {
     // MARK: Properties
+
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
     let appStateManager: AppStateManager
@@ -49,6 +50,7 @@ class TabBarViewModel {
     }
 
     // MARK: Initializers
+
     init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.navigationService = navigationService
         self.sessionManager = sessionManager
@@ -109,6 +111,7 @@ class TabBarViewModel {
     }
 
     // MARK: - Private
+
     private func startObserving() {
         AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(stateChanged))
     }

@@ -27,7 +27,6 @@ import Ergonomics
 import Strings
 
 class ConnectButton: ResizingTextButton {
-    
     override var title: String {
         didSet {
             needsDisplay = true

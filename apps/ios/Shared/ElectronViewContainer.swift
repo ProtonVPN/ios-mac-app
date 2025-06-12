@@ -23,7 +23,6 @@
 import UIKit
 
 class ElectronViewContainer: UIView {
-    
     private let electron = UIView()
     
     var padding = UIEdgeInsets.zero // FUTUREDO: use padding to indent all calculations from the edge of the image

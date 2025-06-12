@@ -20,7 +20,6 @@ import SwiftUI
 
 /// Multiline text input styled for usage in bug report form.
 struct MultiLineTextInputView: View {
-
     var field: InputField
     @Binding var value: String
     @Environment(\.colors) var colors: Colors
@@ -61,7 +60,6 @@ struct MultiLineTextInputView: View {
 import UIKit
 
 struct TextView: UIViewRepresentable {
-
     @Binding var text: String
 
     var fontSize: CGFloat
@@ -101,7 +99,6 @@ struct TextView: UIViewRepresentable {
 import AppKit
 
 struct TextView: NSViewRepresentable {
-
     @Binding var text: String
 
     var fontSize: CGFloat
@@ -180,7 +177,6 @@ struct TextView: NSViewRepresentable {
             self.text.wrappedValue = textView.string
             self.selectedRanges = textView.selectedRanges
         }
-
     }
 }
 #endif

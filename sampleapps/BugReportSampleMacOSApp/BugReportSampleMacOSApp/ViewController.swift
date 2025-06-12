@@ -21,7 +21,6 @@ import BugReport
 
 // swiftlint:disable no_print
 class ViewController: NSViewController {
-    
     private var bugReportDelegate: MockDelegate?
     @IBOutlet private var updateSwitch: NSSwitch!
     @IBOutlet private var statusTextField: NSTextField!
@@ -90,11 +89,9 @@ class ViewController: NSViewController {
     @IBAction private func updateSwitchChanged(_ sender: Any) {
         bugReportDelegate?.updateAvailable = updateSwitch.state == .on
     }
-
 }
 
 class MockDelegate: BugReportDelegate {
-    
     var model: BugReportModel
     var prefilledEmail: String = ""
     var prefilledUsername: String = ""

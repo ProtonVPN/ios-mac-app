@@ -25,7 +25,6 @@ import AppKit
 import VPNAppCore
 
 public class FreeConnectionsAlert: SystemAlert {
-
     #if canImport(UIKit)
     public typealias FreeCountriesArray = [(String, UIImage?)]
     #elseif canImport(AppKit)
@@ -42,5 +41,4 @@ public class FreeConnectionsAlert: SystemAlert {
     public init(countries: FreeCountriesArray) {
         self.countries = countries
     }
-
 }

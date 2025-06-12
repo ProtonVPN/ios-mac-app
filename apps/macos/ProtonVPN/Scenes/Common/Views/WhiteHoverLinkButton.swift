@@ -23,7 +23,6 @@
 import Cocoa
 
 class WhiteHoverLinkButton: NSButton {
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Setup tracking area

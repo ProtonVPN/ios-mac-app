@@ -27,7 +27,6 @@ import DomainTestSupport
 @testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
-    
     private var storage: AnnouncementStorageUserDefaults!
     private var userDefaults: UserDefaults!
     
@@ -82,7 +81,6 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
     @objc func notificationFired() {
         expectationNotificationFired.fulfill()
     }
-    
 }
 
 fileprivate extension Announcement {

@@ -27,7 +27,6 @@ import VPNAppCore
 import Strings
 
 class HelpMenuController: NSObject {
-    
     @IBOutlet weak var helpMenu: NSMenu!
     @IBOutlet weak var reportAnIssueItem: NSMenuItem!
     @IBOutlet weak var logsItem: NSMenuItem!
@@ -48,6 +47,7 @@ class HelpMenuController: NSObject {
     }
     
     // MARK: - Private
+
     private func setupPersistentView() {
         helpMenu.title = Localizable.help
         

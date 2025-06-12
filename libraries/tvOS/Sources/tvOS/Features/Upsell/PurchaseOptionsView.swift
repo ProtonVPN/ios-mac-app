@@ -22,7 +22,6 @@ import ModalsServices // Borrow logic from iOS OneClick until we migrate to Paym
 import struct StoreKit.Product
 
 struct PurchaseOptionsView: View {
-    
     let products: [PlanIAPTuple]
 
     let sendAction: UpsellFeature.ActionSender

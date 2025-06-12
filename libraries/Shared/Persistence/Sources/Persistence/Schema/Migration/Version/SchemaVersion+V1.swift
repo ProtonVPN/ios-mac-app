@@ -21,7 +21,6 @@ import Foundation
 import GRDB
 
 extension SchemaVersion {
-
     public static let v1: SchemaVersion = {
         let migrationBlock: MigrationBlock = { db in
             try db.create(table: "logical") { t in

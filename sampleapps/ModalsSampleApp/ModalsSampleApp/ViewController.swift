@@ -20,7 +20,6 @@ import Modals
 import UIKit
 
 final class ViewController: UITableViewController {
-    
     let upsells: [(type: ModalType, title: String)] = [
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
         (.welcomeUnlimited, "Welcome Unlimited"),

@@ -18,8 +18,10 @@
 
 #if canImport(UIKit)
 import UIKit
+
 public typealias Image = UIImage
 #elseif canImport(AppKit)
 import AppKit
+
 public typealias Image = NSImage
 #endif

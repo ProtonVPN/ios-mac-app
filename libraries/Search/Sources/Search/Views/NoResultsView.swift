@@ -21,7 +21,6 @@ import UIKit
 import Strings
 
 final class NoResultsView: UIView {
-
     // MARK: Outlets
 
     @IBOutlet private weak var subtitleLabel: UILabel!

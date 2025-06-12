@@ -23,7 +23,6 @@
 import Cocoa
 
 class PVPNTextViewLink: NSTextView {
-
     var lineSpacing: CGFloat = 14
     var textViewFont = NSFont.themeFont()
     var defaultStyle: NSMutableParagraphStyle
@@ -77,5 +76,4 @@ class PVPNTextViewLink: NSTextView {
         defaultStyle.lineSpacing = self.lineSpacing / self.textViewFont.pointSize
         defaultStyle.alignment = .left
     }
-    
 }

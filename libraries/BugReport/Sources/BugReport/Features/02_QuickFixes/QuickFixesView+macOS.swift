@@ -31,7 +31,6 @@ struct QuickFixesView: View {
     var body: some View {
         WithPerceptionTracking {
         VStack(alignment: .center) {
-
             VStack(alignment: .center, spacing: 8) {
                 Text(Localizable.br2Title)
                     .font(.title2)
@@ -87,7 +86,6 @@ struct QuickFixesView: View {
                             }
                         }
                     }
-
             }
             .padding(.top, 32)
             .padding(.bottom, 16)

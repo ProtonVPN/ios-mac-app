@@ -31,7 +31,6 @@ protocol ServerItemCellViewDelegate: AnyObject {
 }
 
 final class ServerItemCellView: NSView {
-    
     @IBOutlet private weak var loadIcon: ColoredLoadButton!
 
     @IBOutlet private weak var serverInfoStackView: NSStackView!
@@ -201,6 +200,7 @@ final class ServerItemCellView: NSView {
     }
 
     // MARK: - Accessibility
+
     private func setupAccessibility() {
         setAccessibilityLabel(viewModel.accessibilityLabel)
         connectBtn.nameForAccessibility = viewModel.serverName

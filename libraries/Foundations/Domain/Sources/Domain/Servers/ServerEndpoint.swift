@@ -55,7 +55,6 @@ typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]
 
 // VPNAPPL-2099 This connection/business logic should probably live in a shared package in a layer above Domain.
 extension ServerEndpoint {
-
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }

@@ -19,7 +19,6 @@
 import SwiftUI
 
 struct TVButtonStyle: ButtonStyle {
-
     @Environment(\.isFocused) var isFocused
 
     func makeBody(configuration: Configuration) -> some View {
@@ -36,7 +35,6 @@ struct TVButtonStyle: ButtonStyle {
 }
 
 struct UpsellButtonStyle: ButtonStyle {
-
     @Environment(\.isFocused) var isFocused
 
     private static let width: CGFloat = 700

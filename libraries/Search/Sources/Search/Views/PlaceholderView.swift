@@ -21,7 +21,6 @@ import UIKit
 import Strings
 
 final class PlaceholderView: UIView {
-
     // MARK: Outlets
 
     @IBOutlet private weak var itemsStackView: UIStackView!

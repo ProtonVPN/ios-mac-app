@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct RecentsButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
     func makeBody(configuration: Configuration) -> some View {
@@ -43,7 +42,6 @@ struct RecentsButtonStyle: ButtonStyle {
 
 
 struct RecentConnectButtonStyle: ButtonStyle {
-
     @Binding var isHovered: Bool
 
     func makeBody(configuration: Configuration) -> some View {

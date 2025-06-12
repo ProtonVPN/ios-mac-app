@@ -32,7 +32,6 @@ internal struct DisconnectFromVPNIntent: AppIntent {
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult {
-
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
         try? await disconnectVPN(.widget)
         return .result()
@@ -40,7 +39,6 @@ internal struct DisconnectFromVPNIntent: AppIntent {
 }
 
 internal struct ConnectToVPNIntent: AppIntent {
-
     static var title: LocalizedStringResource = "Connect to VPN"
     static var openAppWhenRun = true
 
@@ -110,7 +108,6 @@ internal struct ConnectToVPNIntent: AppIntent {
     @Dependencies.Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
-
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory
 
         return connectionInventory.recentConnectionList(

@@ -168,6 +168,7 @@ public final class WelcomeScreenAlert: UpsellAlert {
         case unlimited
         case fallback
     }
+
     public let plan: Plan
 
     public init(plan: Plan) {

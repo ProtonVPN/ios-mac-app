@@ -18,6 +18,7 @@
 
 import Foundation
 import DictionaryCoder
+
 fileprivate let encoder = DictionaryEncoder()
 
 public protocol TelemetryEvent: Encodable {

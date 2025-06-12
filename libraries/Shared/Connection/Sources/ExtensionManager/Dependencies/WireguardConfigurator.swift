@@ -51,7 +51,6 @@ extension DependencyValues {
 }
 
 extension ManagerConfigurator {
-
     private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
         let bundleID: String = bundleIDClient.bundleIdentifierForTarget()

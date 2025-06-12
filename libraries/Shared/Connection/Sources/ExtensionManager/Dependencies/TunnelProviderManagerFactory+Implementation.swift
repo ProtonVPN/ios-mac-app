@@ -23,7 +23,6 @@ import class NetworkExtension.NETunnelProviderManager
 import let CoreConnection.log
 
 extension TunnelProviderManagerFactory {
-
     static var liveValue: TunnelProviderManagerFactory {
         .init(
             create: {

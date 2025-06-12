@@ -20,7 +20,6 @@ import UIKit
 import BugReport
 
 class ViewController: UIViewController {
-    
     @IBOutlet private var updateSwitch: UISwitch!
     @IBOutlet private var statusLabel: UILabel!
     
@@ -92,11 +91,9 @@ class ViewController: UIViewController {
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         return try! decoder.decode(BugReportModel.self, from: data)
     }
-
 }
 
 class MockBugReportDelegate: BugReportDelegate {
-    
     var model: BugReportModel
     var prefilledEmail: String = ""
     var prefilledUsername: String = ""

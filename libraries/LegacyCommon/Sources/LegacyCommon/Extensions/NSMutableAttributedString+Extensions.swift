@@ -30,7 +30,6 @@ import Cocoa
 // MARK: - Links
 
 extension NSMutableAttributedString {
-
     /// Add a `.link` attribute to a given text
     /// - Parameters:
     ///     - links: Parameters to pass to `add(link: String, withUrl url: String)` method
@@ -55,5 +54,4 @@ extension NSMutableAttributedString {
 
         return self
     }
-
 }

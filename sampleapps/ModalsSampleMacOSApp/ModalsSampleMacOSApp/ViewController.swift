@@ -20,7 +20,6 @@ import Cocoa
 import Modals
 
 class ViewController: NSViewController {
-
     enum Modal {
         case upsell(ModalType)
         case discourageSecureCore

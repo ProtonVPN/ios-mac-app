@@ -112,7 +112,6 @@ public struct Accessory: View {
 }
 
 struct Accessory_Previews: PreviewProvider {
-
     struct Cell: View {
         let title: String
         let accessory: Accessory

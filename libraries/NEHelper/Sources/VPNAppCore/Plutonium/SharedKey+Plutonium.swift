@@ -57,6 +57,7 @@ public struct PlutoniumActivated: Codable, Equatable {
         self.apps = apps
         self.ips = ips
     }
+
     public static func == (lhs: Self, rhs: Self) -> Bool {
         Set(lhs.apps) == Set(rhs.apps)
         && Set(lhs.ips) == Set(rhs.ips)
@@ -70,21 +71,27 @@ private extension URL {
             .appending(component: "plutonium")
             .appending(component: file.rawValue)
     }
+
     static var excludeListURL: URL {
         .plutoniumDirectory(for: .excludeList)
     }
+
     static var excludeListURLApplied: URL {
         .plutoniumDirectory(for: .excludeListApplied)
     }
+
     static var includeListURL: URL {
         .plutoniumDirectory(for: .includeList)
     }
+
     static var includeListURLApplied: URL {
         .plutoniumDirectory(for: .includeListApplied)
     }
+
     static var plutoniumFeatureURL: URL {
         .plutoniumDirectory(for: .plutoniumFeature)
     }
+
     static var plutoniumFeatureURLApplied: URL {
         .plutoniumDirectory(for: .plutoniumFeatureApplied)
     }

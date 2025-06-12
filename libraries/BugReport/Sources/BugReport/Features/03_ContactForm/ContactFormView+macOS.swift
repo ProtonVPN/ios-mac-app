@@ -23,7 +23,6 @@ import SwiftUI
 import Strings
 
 public struct ContactFormView: View {
-
     let store: StoreOf<ContactFormFeature>
 
     @Environment(\.colors) var colors: Colors
@@ -77,7 +76,6 @@ public struct ContactFormView: View {
                                 .font(.footnote)
                                 .foregroundColor(colors.textSecondary)
                                 .padding(.leading, 8)
-
                         }
                         .padding(.horizontal)
                     }
@@ -95,13 +93,11 @@ public struct ContactFormView: View {
             .background(colors.background)
         }
     }
-
 }
 
 // MARK: - Preview
 
 struct ContactFormView_Previews: PreviewProvider {
-
     private static let bugReport = MockBugReportDelegate(model: .mock)
 
     static var previews: some View {
@@ -122,7 +118,6 @@ struct ContactFormView_Previews: PreviewProvider {
             ContactFormView(store: Store(initialState: ContactFormFeature.State(fields: formFields, isSending: true),
                                          reducer: { ContactFormFeature() }))
             .previewDisplayName("Loading")
-
         }
         .frame(width: 400)
     }

@@ -20,7 +20,6 @@ import XCTest
 @testable import Domain
 
 final class ProtocolSupportTests: XCTestCase {
-
     func testConversionFromVpnProtocolToProtocolSupport() throws {
         // Test empty, full and few variations
         XCTAssertEqual(ProtocolSupport(vpnProtocols: []), ProtocolSupport.zero)
@@ -51,5 +50,4 @@ final class ProtocolSupportTests: XCTestCase {
             ProtocolSupport([.wireGuardTCP, .ikev2])
         )
     }
-
 }

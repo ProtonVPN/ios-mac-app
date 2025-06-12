@@ -59,7 +59,6 @@ fileprivate enum TestFeature: String, ProvidableFeature {
 }
 
 class AppFeaturePropertyProviderTests: XCTestCase {
-
     func testReturnsUserSpecificValueFromStorage() {
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))

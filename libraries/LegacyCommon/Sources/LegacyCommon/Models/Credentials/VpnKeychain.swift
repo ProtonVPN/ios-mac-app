@@ -346,7 +346,6 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func fetchWireguardConfiguration() throws -> String? {
-        
         var query = formBaseQuery(forKey: StorageKey.wireguardSettings)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecValuePersistentRef as AnyHashable] = try fetchWireguardConfigurationReference()
@@ -371,6 +370,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     // MARK: - Widget
+
     #if os(iOS)
     public func fetchWidgetPublicKey() throws -> CryptoService.Key {
         guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {

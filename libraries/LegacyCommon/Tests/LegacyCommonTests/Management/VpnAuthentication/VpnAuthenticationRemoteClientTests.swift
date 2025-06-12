@@ -26,7 +26,6 @@ import VPNSharedTesting
 @testable import LegacyCommon
 
 class VPNAuthenticationRemoteClientTests: XCTestCase {
-
     let expectationTimeout = 1.0
 
     func testCertificateMismatchNotTestedWhenFeatureFlagIsOff() async { // swiftlint:disable:this function_body_length

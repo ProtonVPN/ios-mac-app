@@ -20,7 +20,6 @@ import Foundation
 import CoreLocation
 
 public enum CountriesCoordinates {
-
     static let countryCenterCoordinatesFile = "CountryCenterCoordinates"
     static let countryBoundingBoxesFile = "CountryBoundingBoxes"
     static let countriesWithDisputedTerritoriesFile = "CountriesWithDisputedTerritories"

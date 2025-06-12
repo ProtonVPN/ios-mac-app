@@ -30,7 +30,6 @@ fileprivate let okButtonId = "OK"
 // HomeRobot class contains actions for Home view.
 
 class HomeRobot: ConnectionBaseRobot {
-
     let verify = Verify()
 
     @discardableResult
@@ -98,7 +97,6 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func qcButtonConnected() -> HomeRobot {
             button(quickDisconnectButtonId).waitUntilExists().checkExists()

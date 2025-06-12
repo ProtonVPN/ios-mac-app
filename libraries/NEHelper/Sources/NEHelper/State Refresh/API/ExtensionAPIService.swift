@@ -46,6 +46,7 @@ public final class ExtensionAPIService {
         /// If a retry-after header is not sent, this should be the maximum jitter value added to the retry interval.
         var defaultJitterMax: TimeInterval = 90
     }
+
     public static var intervals = Intervals()
 
     /// If a retry-after header is sent, this value should be multiplied by the retry-after value, and that value
@@ -62,7 +63,6 @@ public final class ExtensionAPIService {
     func refreshCertificate(publicKey: String,
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
-
         if operation.isUserInitiated, userInitiatedRequestHasNotYetBeenMade {
             userInitiatedRequestHasNotYetBeenMade = false
             mainAppSessionHasExpired = false // if the app is able to send a request, it is likely logged in
@@ -171,6 +171,7 @@ public final class ExtensionAPIService {
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.wireguard-extension.requests")
 
     // MARK: - Private helper functions
+
     private func jitter(forRetryAfterInterval retryAfter: TimeInterval? = nil) -> TimeInterval {
         let jitterMax: UInt32
 
@@ -217,6 +218,7 @@ public final class ExtensionAPIService {
     }
 
     // MARK: - Base API request handling
+
     private func request<R: APIRequest>(_ request: R,
                                         headers: [(APIHeader, String?)] = [],
                                         completion: @escaping (Result<R.Response, ExtensionAPIServiceError>) -> Void) {

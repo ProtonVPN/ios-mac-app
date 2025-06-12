@@ -20,7 +20,6 @@ import Foundation
 
 public extension CGSize {
     func fitting(_ size: CGSize) -> CGSize {
-        
         let imageRatio = width / height
 
         if height > size.height {

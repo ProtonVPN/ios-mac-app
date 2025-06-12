@@ -23,10 +23,8 @@
 import Foundation
 
 extension Array where Element == URL {
-    
     /// Only reachable URLs
     public func reachable() -> Self {
         return self.compactMap { (try? $0.checkPromisedItemIsReachable()) ?? false ? $0 : nil }
     }
-    
 }

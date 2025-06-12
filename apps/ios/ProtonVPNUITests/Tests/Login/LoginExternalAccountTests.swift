@@ -21,7 +21,6 @@ import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
 
 final class LoginExternalAccountTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     override func setUp() {
@@ -52,7 +51,6 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
     }
 
     func testSignInWithExternalAccountWorks() throws {
-
         let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@gmail.com"
         let randomName = "\(StringUtils.randomAlphanumericString(length: 8))"
         let randomPassword = StringUtils.randomAlphanumericString(length: 8)

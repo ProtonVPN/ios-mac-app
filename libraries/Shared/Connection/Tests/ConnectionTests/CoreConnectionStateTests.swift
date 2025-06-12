@@ -25,7 +25,6 @@ import LocalAgent
 import Ergonomics
 
 final class CoreConnectionStateTests: XCTestCase {
-
     func testLocalAgentErrorResolvesToError() async {
         let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(

@@ -76,5 +76,4 @@ class AbstractProfileViewModel {
     var alphaOfMainElements: CGFloat {
         return canUseProfile ? 1.0 : 0.5
     }
-    
 }

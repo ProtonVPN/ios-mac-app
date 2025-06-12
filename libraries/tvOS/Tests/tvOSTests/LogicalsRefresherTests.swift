@@ -26,7 +26,6 @@ import Persistence
 import Domain
 
 final class LogicalsRefresherTests: XCTestCase {
-
     let enoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh
     let notEnoughTimePassed: TimeInterval = Date().timeIntervalSince1970 - Constants.Time.fullServerRefresh + 1
 

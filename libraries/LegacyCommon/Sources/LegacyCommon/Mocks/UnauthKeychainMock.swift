@@ -25,7 +25,6 @@ import ProtonCoreNetworking
 import VPNAppCore // UnauthKeychain
 
 public class UnauthKeychainMock: UnauthKeychainHandle {
-
     public init() {}
 
     public var unauthCredentialsCachedInMemory: AuthCredential?

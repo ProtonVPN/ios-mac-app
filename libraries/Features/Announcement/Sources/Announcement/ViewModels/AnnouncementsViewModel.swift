@@ -36,6 +36,7 @@ public protocol AnnouncementsViewModelFactory {
 }
 
 // MARK: AnnouncementsViewModelFactory
+
 extension Container: AnnouncementsViewModelFactory {
     public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
         AnnouncementsViewModel(factory: self)
@@ -63,7 +64,6 @@ public final class AnnouncementOfferAlert: SystemAlert {
 
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
-    
     public typealias Factory = CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
     private let factory: Factory
 

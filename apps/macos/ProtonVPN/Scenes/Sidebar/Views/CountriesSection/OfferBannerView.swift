@@ -35,7 +35,6 @@ import Strings
 import Timer
 
 final class OfferBannerView: NSView {
-
     @IBOutlet private weak var image: NSImageView!
     @IBOutlet private weak var roundedBackgroundView: NSView!
     @IBOutlet private weak var label: NSTextField!

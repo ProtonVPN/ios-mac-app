@@ -23,7 +23,6 @@
 import UIKit
 
 class TextWithActivityCell: UITableViewCell {
-
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
@@ -42,5 +41,4 @@ class TextWithActivityCell: UITableViewCell {
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
     }
-    
 }

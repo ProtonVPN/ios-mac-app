@@ -28,6 +28,7 @@ import IssueReporting
 /// - Note: wherever possible, try to use TCA events instead, since this relies on NotificationCenter.
 public enum AppEvent: String {
     // MARK: Connection state
+
     /// The current active connection changed.
     case activeConnectionChanged
     /// The current active server type changed.
@@ -44,6 +45,7 @@ public enum AppEvent: String {
     case needsReconnect
 
     // MARK: User settings
+
     /// The user's kill switch setting has changed.
     case killSwitch
     /// The user's "exclude local networks" setting has changed.
@@ -76,6 +78,7 @@ public enum AppEvent: String {
     case plutonium
 
     // MARK: API-Driven
+
     /// New announcements are available.
     case announcementStorageContent
     /// The user's VPN credentials changed on the backend.
@@ -94,6 +97,7 @@ public enum AppEvent: String {
     case sessionManagerSessionRefreshed
 
     // MARK: User events (mostly for Telemetry)
+
     /// The app has been opened through a deep-link by the website, and we need to refresh our data.
     case urlActivationRefresh
     /// A user initiated a change to the VPN configuration.
@@ -113,6 +117,7 @@ public enum AppEvent: String {
     case userEngagedWithAnnouncement
 
     // MARK: Platform-Specific
+
     #if os(macOS)
     /// The `earlyAccess` value changed. This happens when a user wants to use the beta version of the app.
     case earlyAccess

@@ -22,7 +22,6 @@ import Strings
 import ProtonCoreFeatureFlags
 
 final class SettingsAccountViewController: UIViewController {
-    
     private let viewModel: SettingsAccountViewModel
     private let tableView: UITableView
     private let genericDataSource: GenericTableViewDataSource
@@ -96,5 +95,4 @@ final class SettingsAccountViewController: UIViewController {
         super.viewWillAppear(animated)   
         tableView.reloadData()
     }
-    
 }

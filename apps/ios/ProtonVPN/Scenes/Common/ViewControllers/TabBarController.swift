@@ -27,7 +27,6 @@ import Strings
 import ProtonCoreFeatureFlags
 
 final class TabBarController: UITabBarController {
-
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
     
@@ -121,7 +120,6 @@ extension TabBarController: TabBarViewModelDelegate {
 }
 
 extension TabBarController: UITabBarControllerDelegate {
-    
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         // to help with data updating and easier to understand navigation, pop nvc to root
         if let navigationViewController = viewController as? UINavigationController, navigationViewController != self.selectedViewController {

@@ -44,7 +44,6 @@ struct FreeConnectionInfoModal: View {
                     IconProvider.cross
                         .foregroundColor(Color(.icon))
                 }
-
             }
             Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
                 .font(.themeFont(.body3(emphasised: false)))

@@ -26,7 +26,6 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class ProfileServiceMock: ProfileService {
-    
     var dataSet: SelectionDataSet?
     
     func makeProfilesViewController() -> ProfilesViewController {
@@ -41,5 +40,4 @@ class ProfileServiceMock: ProfileService {
         self.dataSet = dataSet
         return SelectionViewController()
     }
-    
 }

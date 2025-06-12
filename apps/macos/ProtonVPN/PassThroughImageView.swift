@@ -9,7 +9,6 @@
 import Cocoa
 
 class PassThroughImageView: NSImageView {
-
     override func hitTest(_ point: NSPoint) -> NSView? {
         if let view = super.hitTest(point) {
             if view == self {

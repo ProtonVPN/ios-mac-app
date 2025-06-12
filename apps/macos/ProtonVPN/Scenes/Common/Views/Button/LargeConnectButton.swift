@@ -27,7 +27,6 @@ import Ergonomics
 import Strings
 
 class LargeConnectButton: HoverDetectionButton {
-    
     override var title: String {
         didSet {
             needsDisplay = true

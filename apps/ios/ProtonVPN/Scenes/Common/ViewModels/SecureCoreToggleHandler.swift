@@ -27,7 +27,6 @@ import VPNAppCore
 import ComposableArchitecture
 
 protocol SecureCoreToggleHandler: AnyObject {
-
     var alertService: AlertService { get }
     var propertiesManager: PropertiesManagerProtocol { get }
     var vpnGateway: VpnGatewayProtocol { get }
@@ -39,7 +38,6 @@ protocol SecureCoreToggleHandler: AnyObject {
 
 extension SecureCoreToggleHandler {
     private func completionWrapper(succeeded: Bool, completion: @escaping (Bool) -> Void) {
-
         @Shared(.secureCoreToggle) var secureCoreToggle
 
         DispatchQueue.global(qos: .background).async {

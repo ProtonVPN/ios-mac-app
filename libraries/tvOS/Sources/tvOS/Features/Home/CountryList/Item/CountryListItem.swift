@@ -27,6 +27,7 @@ struct CountryListItem: Identifiable, Equatable, Hashable {
     var name: String {
         LocalizationUtility.default.countryName(forCode: code) ?? code
     }
+
     init(section: Int, row: Int, code: String) {
         self.id = "\(section)" + code
         self.section = section

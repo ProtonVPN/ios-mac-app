@@ -22,7 +22,6 @@ import XCTest
 import Ergonomics
 
 final class DateFormatterTests: XCTestCase {
-
     struct DateTestCase {
         let timestamp: TimeInterval
         let imfString: String

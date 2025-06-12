@@ -54,7 +54,6 @@ public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
 }
 
 extension ServerFeature: CustomStringConvertible {
-
     public var description: String {
         return "\(elements().map(\.featureName))"
     }

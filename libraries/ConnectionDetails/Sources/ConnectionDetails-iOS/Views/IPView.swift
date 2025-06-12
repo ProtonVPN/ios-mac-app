@@ -24,7 +24,6 @@ import Strings
 import ProtonCoreUIFoundations
 
 public struct IPView: View {
-
     let store: StoreOf<IPViewFeature>
 
     private let minTopHeight: CGFloat = 16

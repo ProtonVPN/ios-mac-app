@@ -24,7 +24,6 @@ import Cocoa
 import Theme
 
 class SCCoreCircleButton: HoverDetectionButtonAdvanced {
-    
     enum ButtonState {
         case idle
         case active

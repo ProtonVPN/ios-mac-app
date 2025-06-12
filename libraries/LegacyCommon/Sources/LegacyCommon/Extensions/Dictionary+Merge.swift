@@ -23,7 +23,6 @@
 import Foundation
 
 extension Dictionary where Key == String, Value == String {
-    
     /// Merge two dictionaries. If duplicate key is found, value from the right dictionary is used.
     /// - Parameters:
     ///   - left: main dictionary used as a base.
@@ -31,5 +30,4 @@ extension Dictionary where Key == String, Value == String {
     static func + (left: [Key: Value], right: [Key: Value]) -> [Key: Value] {
         return left.merging(right) { (leftValue, rightValue) in rightValue }
     }
-    
 }

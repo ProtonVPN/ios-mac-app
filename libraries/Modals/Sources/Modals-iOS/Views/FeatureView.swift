@@ -22,8 +22,8 @@ import UIKit
 import Theme
 
 final class FeatureView: UIView {
-
     // MARK: Outlets
+
     @IBOutlet private weak var iconImageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
 

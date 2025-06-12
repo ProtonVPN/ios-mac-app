@@ -30,7 +30,5 @@ class AppVersionView: UIView {
         
         backgroundColor = .backgroundColor()
         appVersionLabel.textColor = .weakTextColor()
-        
     }
-
 }

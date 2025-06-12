@@ -30,7 +30,6 @@ import Theme
 import SharedViews
 
 struct RecentsSectionView: View {
-
     let items: [RecentConnection]
 
     let sendAction: HomeFeature.ActionSender

@@ -26,7 +26,6 @@ import Alamofire
 import AlamofireImage
 
 class StreamingServiceCell: UICollectionViewCell {
-
     @IBOutlet private weak var serviceIV: UIImageView!
     @IBOutlet private weak var serviceLbl: UILabel!
     

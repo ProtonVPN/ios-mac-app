@@ -29,7 +29,6 @@ import VPNShared
 import VPNAppCore
 
 public class ServerModel: NSObject, NSCoding, Codable {
-    
     public let id: String
     public let name: String
     public let domain: String
@@ -367,6 +366,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public static func == (lhs: ServerModel, rhs: ServerModel) -> Bool {
         return lhs.name == rhs.name
     }
+
     // swiftlint:enable nsobject_prefer_isequal
     
     public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {

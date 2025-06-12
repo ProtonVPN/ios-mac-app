@@ -74,6 +74,7 @@ class CountryItemViewModel {
     public var showServerHeaders: Bool { showFeatureIcons }
 
     // MARK: Dependencies
+
     private let appStateManager: AppStateManager
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
@@ -83,6 +84,7 @@ class CountryItemViewModel {
     internal let propertiesManager: PropertiesManagerProtocol
 
     // MARK: Computed properties
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -106,7 +108,6 @@ class CountryItemViewModel {
     }
 
     private var isConnected: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             return vpnGateway.connection == .connected && appStateManager.activeConnection()?.server.kind == serversGroup.kind
         }
@@ -119,7 +120,6 @@ class CountryItemViewModel {
     }
 
     private var isConnecting: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
                 // If a connect button is ever added to gateway groups, this check will also need to verify that the last
@@ -304,6 +304,7 @@ class CountryItemViewModel {
     }()
 
     // MARK: Init routine
+
     init(
         serversGroup: ServerGroupInfo,
         serverType: ServerType,
@@ -334,6 +335,7 @@ class CountryItemViewModel {
     }
 
     // MARK: Methods
+
     func serversCount(for section: Int) -> Int {
         return serverViewModels[section].viewModels.count
     }
@@ -386,6 +388,7 @@ class CountryItemViewModel {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {

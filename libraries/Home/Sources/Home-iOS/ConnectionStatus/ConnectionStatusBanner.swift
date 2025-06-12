@@ -23,7 +23,6 @@ import HomeShared
 import NetShield
 
 struct ConnectionStatusBanner: View {
-
     private enum AccessibilityIdentifiers {
         static let locationText: String = "location_text"
     }

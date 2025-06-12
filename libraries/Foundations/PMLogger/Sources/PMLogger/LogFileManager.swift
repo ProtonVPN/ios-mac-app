@@ -64,5 +64,4 @@ public class LogFileManagerImplementation: LogFileManager {
             os_log("Error dumping logs to file: %{public}s", log: OSLog(subsystem: "PMLogger", category: "LogFileManager"), type: OSLogType.error, error as CVarArg)
         }
     }
-    
 }

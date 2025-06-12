@@ -26,7 +26,6 @@ import Cocoa
 #endif
 
 public enum ProfileIcon: Codable {
-
     case bolt
     case arrowsSwapRight
     case image(Image) //left for historical reasons, used for migration
@@ -52,6 +51,7 @@ public enum ProfileIcon: Codable {
     }
     
     // MARK: - NSCoding
+
     private struct CoderKey {
         static let profileIcon = "profileIcon"
         static let image = "image"

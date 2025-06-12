@@ -90,7 +90,6 @@ public enum NetworkError: Int, CustomNSError {
 }
 
 extension Error {
-
     /// Returns true if the request failed due to a network error, and it is reasonably safe to retry.
     ///
     /// - Note: In contrast to `isNetworkError`, this returns false when we *really* might be blocked (for example, when
@@ -149,7 +148,6 @@ extension Error {
             return false
         }
     }
-
 }
 
 extension NSError {

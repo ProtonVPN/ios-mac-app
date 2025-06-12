@@ -50,7 +50,6 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
 // This view exceptionally contains string literals because it is not used anywhere,
 // and may be redesigned soon.
 struct WhatsNewView: View {
-
     public var dismiss: () -> Void = { }
 
     var body: some View {
@@ -89,7 +88,6 @@ struct WhatsNewView: View {
                 }
             }
             Button {
-                
                 dismiss()
             } label: {
                 Text(Localizable.gotIt)

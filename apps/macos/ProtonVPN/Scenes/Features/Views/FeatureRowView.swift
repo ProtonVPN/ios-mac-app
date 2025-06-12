@@ -29,7 +29,6 @@ import VPNAppCore
 import Ergonomics
 
 class FeatureRowView: NSView {
-    
     @IBOutlet private weak var iconIV: NSImageView!
     @IBOutlet private weak var titleLbl: NSTextField!
     @IBOutlet private weak var descriptionLbl: NSTextField!

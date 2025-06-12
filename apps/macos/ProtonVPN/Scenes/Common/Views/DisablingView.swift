@@ -23,7 +23,6 @@
 import Cocoa
 
 extension NSView {
-
     func set(enabled: Bool) {
         for subview in subviews {
             if subview.isKind(of: NSControl.self), let control = subview as? NSControl {

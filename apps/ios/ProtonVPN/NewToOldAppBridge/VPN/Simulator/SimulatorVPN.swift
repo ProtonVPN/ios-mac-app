@@ -31,7 +31,6 @@ import LegacyCommon
 /// .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
 ///
 class SimulatorHelper {
-
     public static var shared = SimulatorHelper()
 
     private var status: VPNConnectionStatus = .disconnected {
@@ -107,7 +106,6 @@ class SimulatorHelper {
         ServerChangeAuthorizer {
             .unavailable(until: .now + 5, duration: 5, exhaustedSkips: false)
         } registerServerChangeAtDate: { date in
-
         }
     }()
 }

@@ -74,7 +74,6 @@ public class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
     }
 
     public func sendGetStatus(_: Bool) {
-
     }
 }
 
@@ -105,6 +104,7 @@ public class LocalAgentConnectionMockFactory: LocalAgentConnectionFactory {
         connectionWasCreated?(result)
         return result
     }
+
     // swiftlint:enable function_parameter_count
 
     public init() {}

@@ -24,11 +24,9 @@ fileprivate let upsellPlansListValidateButton = Localizable.upsellPlansListValid
 fileprivate let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
 
 class SubscriptionModalRobot: ModalRobot {
-    
     public let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func subscriptionModalIsShown() -> SubscriptionModalRobot {
             staticText(upsellPlansListTitle).checkExists()
@@ -47,7 +45,6 @@ class SubscriptionModalRobot: ModalRobot {
                 .checkExists(message: "Plan option element plan_option_amount not found")
                 .hasLabel(planAmount)
             return SubscriptionModalRobot()
-            
         }
     }
 }

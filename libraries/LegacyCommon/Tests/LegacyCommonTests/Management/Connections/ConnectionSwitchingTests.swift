@@ -35,7 +35,6 @@ import VPNSharedTesting
 @testable import LegacyCommon
 
 final class ConnectionSwitchingTests: BaseConnectionTestCase {
-
     override func setUpWithError() throws {
 #if os(macOS)
         throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
@@ -719,7 +718,6 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             default:
                 break
             }
-
         }
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
         wait(for: [expectations.connections[0], expectations.appStateConnectedTransitions[0]], timeout: expectationTimeout)
@@ -1066,7 +1064,6 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             default:
                 break
             }
-
         }
 
         // We want to create a different one every time so the request UUID can change.

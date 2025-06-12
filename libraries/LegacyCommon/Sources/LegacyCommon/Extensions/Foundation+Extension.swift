@@ -36,6 +36,7 @@ public func NSLocalizedString(_ key: String) -> String {
 }
 
 // MARK: - Internal
+
 // Allows overwriting of values by clients using vpncore
 internal func NSLocalizedString(_ key: String, comment: String = "") -> String {
     func enPathForBundle(_ bundle: Bundle) -> String? {

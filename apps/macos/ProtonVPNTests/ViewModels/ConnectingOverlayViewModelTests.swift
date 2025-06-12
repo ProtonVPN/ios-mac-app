@@ -26,7 +26,6 @@ import LegacyCommon
 import Strings
 
 class ConnectingOverlayViewModelTests: XCTestCase {
-    
     var viewModel: ConnectingOverlayViewModel!
     var container: ConnectingOverlayViewModelMockFactory!
     
@@ -134,7 +133,6 @@ class ConnectingOverlayViewModelTests: XCTestCase {
 }
 
 class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesManagerFactory, VpnGatewayFactory, VpnProtocolChangeManagerFactory {
-    
     public init(vpnGateway: VpnGatewayMock) {
         self.vpnGateway = vpnGateway
     }
@@ -170,11 +168,9 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesM
     func makeVpnGateway() -> VpnGatewayProtocol {
         return vpnGateway
     }
-    
 }
 
 class OverlayViewModelDelegateMock: OverlayViewModelDelegate {
-    
     var stateChangedCalled: (() -> Void)?
     
     init(stateChangedCalled: @escaping (() -> Void)) {

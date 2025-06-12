@@ -25,7 +25,6 @@ fileprivate let resetPuzzleButton = "Reset puzzle piece"
 fileprivate let retryButton = Localizable.retry
 
 class HumanVerificationRobot: CoreElements {
-    
     public let verify = Verify()
     
     @discardableResult
@@ -35,7 +34,6 @@ class HumanVerificationRobot: CoreElements {
     }
     
     class Verify: CoreElements {
-        
         @discardableResult
         func captchaScreenIsShown() -> HumanVerificationRobot {
             staticText(humanVerificationHeader).checkExists()

@@ -85,10 +85,9 @@ final class AppDelegate: UIResponder {
 }
 
 // MARK: - UIApplicationDelegate
+
 extension AppDelegate: UIApplicationDelegate {
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
         #if DEBUG
         #if targetEnvironment(simulator)
         // Force log out if running UI tests
@@ -273,12 +272,10 @@ extension AppDelegate: UIApplicationDelegate {
 }
 
 fileprivate extension AppDelegate {
-
     // MARK: - Private
 
     func handleAction(_ action: String, verified: Bool = false) -> Bool {
         switch action {
-
         case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
                 self?.navigationService.presentWelcome(initialError: nil)

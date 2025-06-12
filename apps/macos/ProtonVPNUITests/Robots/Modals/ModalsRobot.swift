@@ -23,7 +23,6 @@ import Modals
 import fusion
 
 class ModalsRobot: CoreElements {
-    
     let accessAllCountriesBanner = AllCountriesModal()
     let cantSkipBanner = CantSkipBanner()
     
@@ -35,7 +34,6 @@ class ModalsRobot: CoreElements {
     let verify = Verify()
     
     class Verify {
-        
         @discardableResult
         func checkModalAppear(type: ModalType) -> ModalsRobot {
             switch type {
@@ -50,11 +48,9 @@ class ModalsRobot: CoreElements {
     }
     
     class AllCountriesModal {
-        
         let verify = Verify()
         
         class Verify: CoreElements {
-            
             func checkModalAppear() -> ModalsRobot {
                 let container = dialog("Untitled")
                 container.checkExists()
@@ -72,7 +68,6 @@ class ModalsRobot: CoreElements {
         let verify = Verify()
         
         class Verify: CoreElements {
-            
             func checkModalAppear() -> ModalsRobot {
                 let container = dialog("Untitled")
                 container.checkExists()

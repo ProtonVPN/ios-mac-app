@@ -10,7 +10,6 @@
 import UIKit
 
 class ColorPickerTableViewCell: UITableViewCell {
-
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func awakeFromNib() {
@@ -22,5 +21,4 @@ class ColorPickerTableViewCell: UITableViewCell {
         collectionView.register(ColorPickerItem.nib,
                                 forCellWithReuseIdentifier: ColorPickerItem.identifier)
     }
-    
 }

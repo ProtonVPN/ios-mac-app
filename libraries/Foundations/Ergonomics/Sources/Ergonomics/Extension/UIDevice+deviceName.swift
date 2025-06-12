@@ -11,7 +11,6 @@ import Foundation
 import UIKit
 
 extension UIDevice {
-
     /// Get device model name
     public var modelName: String {
         var systemInfo = utsname()
@@ -25,6 +24,5 @@ extension UIDevice {
         }
         return identifier
     }
-
 }
 #endif

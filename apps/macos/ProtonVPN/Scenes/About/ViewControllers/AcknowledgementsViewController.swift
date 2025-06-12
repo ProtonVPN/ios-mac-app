@@ -25,7 +25,6 @@ import LegacyCommon
 import WebKit
 
 class AcknowledgementsViewController: NSViewController {
-
     @IBOutlet weak var webView: WKWebView!
     
     private lazy var bundle: Bundle = Bundle.main
@@ -67,5 +66,4 @@ class AcknowledgementsViewController: NSViewController {
         let html = htmlTemplate.replacingOccurrences(of: "</body>", with: "\(htmlBody)</body>")
         return html
     }
-    
 }

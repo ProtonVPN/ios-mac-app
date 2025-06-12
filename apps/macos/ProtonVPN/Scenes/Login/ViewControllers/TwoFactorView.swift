@@ -120,7 +120,6 @@ final class TwoFactorView: NSView {
 }
 
 extension TwoFactorView: NSTextFieldDelegate {
-
     func controlTextDidChange(_ obj: Notification) {
         twoFactorButton.isEnabled = !twoFactorTextField.stringValue.isEmpty
     }

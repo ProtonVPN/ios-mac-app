@@ -26,7 +26,6 @@ fileprivate let netShieldStatsViewId = "net_shield_stats"
 fileprivate let locationTextId = "location_text"
 
 class ConnectionStatusRobot: CoreElements {
-    
     let verify = Verify()
 
     @discardableResult
@@ -37,7 +36,6 @@ class ConnectionStatusRobot: CoreElements {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func connectedToAServer(_ name: String) -> HomeRobot {
             staticText(connectionStatusProtected)
@@ -67,7 +65,6 @@ class ConnectionStatusRobot: CoreElements {
             if let locationText = staticText(locationTextId)
                 .checkExists(message: "Location text is not visible")
                 .label() {
-
                 if let result = splitCountryAndIP(from: locationText) {
                     XCTAssertTrue(
                         result.ipAddress.isValidIPv4Address,

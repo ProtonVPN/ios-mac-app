@@ -59,7 +59,6 @@ struct TelemetryTogglesView_Previews: PreviewProvider {
 }
 
 struct OnboardingFooter: View {
-
     private let urlUsageStatistics = URL(string: "https://protonvpn.com/support/share-usage-statistics")!
 
     var body: some View {

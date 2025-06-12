@@ -23,7 +23,6 @@
 import ProtonCoreNetworking
 
 final class VPNStreamingRequest: Request {
-        
     var path: String {
         return "/vpn/v1/streamingservices"
     }

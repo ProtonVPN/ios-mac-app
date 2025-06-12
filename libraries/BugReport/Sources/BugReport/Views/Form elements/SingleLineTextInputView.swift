@@ -45,7 +45,6 @@ struct SingleLineTextInputView: View {
             .padding(.vertical, 6)
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 8).foregroundColor(colors.backgroundWeak))
-
         }
         .padding(.horizontal)
     }

@@ -30,7 +30,6 @@ import CommonNetworking
 import Domain
 
 final class OverviewViewModel {
-    
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
 

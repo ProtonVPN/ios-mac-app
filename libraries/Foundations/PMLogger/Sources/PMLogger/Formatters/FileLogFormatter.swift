@@ -20,7 +20,6 @@ import Foundation
 import Logging
 
 public class FileLogFormatter: PMLogFormatter {
-    
     internal let dateFormatter = ISO8601DateFormatter()
     private let jsonEncoder = JSONEncoder()
 
@@ -37,5 +36,4 @@ public class FileLogFormatter: PMLogFormatter {
         }
         return "\(dateTime) | \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-    
 }

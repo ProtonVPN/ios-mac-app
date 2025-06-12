@@ -23,7 +23,6 @@
 import Foundation
 
 struct URLConstants {
-    
     private init () { }
     
     // MARK: - DeepLinking
@@ -51,5 +50,4 @@ struct URLConstants {
     static let utmSource = "app-ios"
 
     static let appStoreUrl = "itms-apps://itunes.apple.com/app/id1437005085"
-    
 }

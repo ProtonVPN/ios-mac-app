@@ -38,6 +38,7 @@ fileprivate let testData = MockTestData()
 fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
     return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
 }
+
 fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
 fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
@@ -47,7 +48,6 @@ fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: Ht
 
 // We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
 final class AppSessionManagerImplementationTests: XCTestCase {
-
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
@@ -427,7 +427,6 @@ final class AppSessionManagerImplementationTests: XCTestCase {
 fileprivate let propertiesManagerMock = PropertiesManagerMock()
 
 fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
-
     @Dependency(\.date) var date
 
     private let vpnAPIService: VpnApiService
@@ -481,7 +480,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         self.appStateManager = appStateManager
         self.updateChecker = updateChecker
     }
-
 }
 
 class AuthKeychainHandleMock: AuthKeychainHandle {
@@ -491,15 +489,18 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
             userId = credentials?.userId
         }
     }
+
     var username: String?
     var userId: String?
 
     func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
         self.credentials = credentials
     }
+
     func store(_ credentials: VPNShared.AuthCredentials, forContext: AppContext?) throws {
         self.credentials = credentials
     }
+
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
     func fetch(forContext: AppContext?) throws -> AuthCredentials {
         guard let credentials else {
@@ -507,6 +508,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         }
         return credentials
     }
+
     func clear() { }
 }
 

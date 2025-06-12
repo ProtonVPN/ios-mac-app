@@ -32,7 +32,6 @@ fileprivate let welcomeBannerTitle = Localizable.welcomeToProtonBannerTitle
 fileprivate let settingsTitleCensorship = Localizable.settingsTitleCensorship
 
 class OnboardingRobot: CoreElements {
-    
     @discardableResult
     func tapGetStarted() -> SubscriptionModalRobot {
         button(getStartedButton).tap()
@@ -67,7 +66,6 @@ class OnboardingRobot: CoreElements {
     public let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func onboardingScreenStep1IsShown(time: TimeInterval = 120) -> OnboardingRobot {
             staticText(welcomeTitle).waitUntilExists(time: time).checkExists()

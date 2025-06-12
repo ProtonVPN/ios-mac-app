@@ -6,7 +6,6 @@ import WireGuardKit
 import Ergonomics
 
 extension TunnelConfiguration {
-
     enum ParserState {
         case inInterfaceSection
         case inPeerSection
@@ -250,6 +249,5 @@ extension TunnelConfiguration {
         }
         return peer
     }
-
 }
 

@@ -37,7 +37,6 @@ import ConnectionTestSupport
 @testable import Connection
 
 final class CoreConnectionFeatureTests: XCTestCase {
-
     /// Happy path test. Uses mocked dependencies to verify that the `ExtensionManagerFeature` and `LocalAgentFeature`
     /// reducers are correctly stitched together by the `ConnectionFeature` reducer.
     @MainActor func testEndToEndConnection() async {

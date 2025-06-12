@@ -26,7 +26,6 @@ import Ergonomics
 import Strings
 
 final class SecureCoreWarningViewController: NSViewController {
-    
     @IBOutlet weak var descriptionLabel: NSTextField!
     @IBOutlet weak var upgradeButton: PrimaryActionButton!
     @IBOutlet weak var learnMoreButton: InteractiveActionButton!

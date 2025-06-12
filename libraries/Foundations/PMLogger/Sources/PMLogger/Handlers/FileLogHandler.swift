@@ -26,7 +26,6 @@ public protocol FileLogHandlerDelegate: AnyObject {
 
 // swiftlint:disable no_print
 public final class FileLogHandler: ParentLogHandler {
-    
     /// After log file size reaches 100 KiB in size it is moved to archive and new log file is created
     public var maxFileSize = 1024 * 100
 
@@ -177,6 +176,6 @@ public final class FileLogHandler: ParentLogHandler {
         print(message)
         #endif
     }
-    
 }
+
 // swiftlint:enable no_print

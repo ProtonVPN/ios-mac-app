@@ -27,7 +27,6 @@ import AppIntents
 import ComposableArchitecture
 
 struct Provider: TimelineProvider {
-
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
@@ -35,7 +34,6 @@ struct Provider: TimelineProvider {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     func recentConnectionList() -> [RecentConnection] {
-
         let preference = try? defaultConnectionStorage.getPreference()
 
         return connectionInventory.recentConnectionList(

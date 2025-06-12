@@ -31,7 +31,6 @@ import Theme
 import Domain
 
 final class CityItemViewModel: CityViewModel {
-
     private let alertService: AlertService
     private var vpnGateway: VpnGatewayProtocol
     private let connectionStatusService: ConnectionStatusService

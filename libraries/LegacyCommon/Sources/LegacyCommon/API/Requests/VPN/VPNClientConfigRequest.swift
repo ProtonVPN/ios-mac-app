@@ -23,7 +23,6 @@
 import ProtonCoreNetworking
 
 final class VPNClientConfigRequest: Request {
-
     let isAuth: Bool
     let ip: String?
 

@@ -23,7 +23,6 @@ import SwiftUI
 
 @Reducer
 struct ReportBugFeatureiOS: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var whatsTheIssueState: WhatsTheIssueFeature.State
@@ -42,11 +41,9 @@ struct ReportBugFeatureiOS: Reducer {
             WhatsTheIssueFeature()
         }
     }
-
 }
 
 public struct ReportBugView: View {
-
     @Perception.Bindable var store: StoreOf<ReportBugFeatureiOS>
 
     @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel

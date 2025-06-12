@@ -26,7 +26,6 @@ import Theme
 import ProtonCoreUIFoundations
 
 extension UIColor {
-    
     static func == (lhs: UIColor, rhs: UIColor) -> Bool {
         guard let lhsComponents = lhs.cgColor.components, let rhsComponents = rhs.cgColor.components else {
             return false

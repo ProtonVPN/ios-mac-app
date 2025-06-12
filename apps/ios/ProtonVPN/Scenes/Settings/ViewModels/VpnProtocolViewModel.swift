@@ -15,7 +15,6 @@ import Localization
 import LegacyCommon
 
 final class VpnProtocolViewModel {
-
     enum ProtocolChangeSelectionError: String, Error {
         case userCancelled = "The user cancelled the operation."
     }

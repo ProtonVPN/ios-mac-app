@@ -23,9 +23,7 @@
 import Foundation
 
 extension Array {
-    
     public subscript(optional index: Array.Index) -> Array.Element? {
         return indices.contains(index) ? self[index] : nil
     }
-    
 }

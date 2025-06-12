@@ -32,7 +32,6 @@ import Domain
 import Strings
 
 final class MapViewController: UIViewController {
-
     private let mapFrame = CGRect(x: 80, y: 104, width: 2600, height: 2206) // correct ratio of Mercator projection map
     
     @IBOutlet private weak var secureCoreBar: UIView!
@@ -306,7 +305,6 @@ final class MapViewController: UIViewController {
 }
 
 extension MapViewController: UIScrollViewDelegate {
-    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return mapView
     }

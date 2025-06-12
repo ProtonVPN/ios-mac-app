@@ -52,6 +52,7 @@ class WindowController: NSWindowController {
     }
     
     // MARK: - Private functions
+
     private func configureEventMonitor() {
         guard let monitorsKeyEvents = monitorsKeyEvents else {
             return
@@ -92,6 +93,7 @@ class WindowController: NSWindowController {
 }
 
 // MARK: - Handling action on 'X' window button press
+
 extension WindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         if let delegate = delegate {

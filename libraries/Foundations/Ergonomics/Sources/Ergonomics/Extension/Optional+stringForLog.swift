@@ -19,7 +19,6 @@
 import Foundation
 
 public extension Optional where Wrapped: Any {
-    
     /// Removes 'Optional' from the string and decodes Data to String.
     var stringForLog: String {
         guard let value = self else {

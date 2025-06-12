@@ -10,7 +10,6 @@ import Foundation
 import UITestsHelpers
 
 class SettingsTests: ProtonVPNUITests {
-    
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
@@ -23,7 +22,6 @@ class SettingsTests: ProtonVPNUITests {
     }
     
     func testKillSwitchAndLANConnectionOnOff() {
-        
         homeRobot
             .goToSettingsTab()
             .turnKillSwitchOn()
@@ -33,7 +31,6 @@ class SettingsTests: ProtonVPNUITests {
     }
     
     func testSmartProtocolOffAndOn() {
-        
         homeRobot
             .goToSettingsTab()
             .goToProtocolsList()

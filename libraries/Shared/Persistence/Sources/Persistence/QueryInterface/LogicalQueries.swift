@@ -96,7 +96,6 @@ extension Endpoint {
 }
 
 extension QueryInterfaceRequest where RowDecoder == Endpoint {
-
     /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
     private func isVirtual(_ logicalAlias: TableAlias) -> SQLExpression {
         let exitCountryCode = logicalAlias[Logical.Columns.exitCountryCode]
@@ -142,7 +141,6 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
 }
 
 extension GroupInfoResult {
-
     static func request(
         filters: [VPNServerFilter],
         groupOrder: VPNServerGroupOrder

@@ -22,7 +22,6 @@ import Strings
 import Theme
 
 struct UpsellCarousel: View {
-
     @State private var scrollViewWidth: CGFloat = .zero
     let sendAction: RecentsFeature.ActionSender
 
@@ -71,7 +70,6 @@ extension View {
 }
 
 fileprivate struct UpsellBanner: View {
-
     let model: BannerModel
     let width: CGFloat
 

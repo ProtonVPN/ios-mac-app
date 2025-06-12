@@ -45,6 +45,7 @@ public protocol AnnouncementStorageFactory {
 }
 
 // MARK: AnnouncementStorageFactory
+
 extension Container: AnnouncementStorageFactory {
     public func makeAnnouncementStorage() -> AnnouncementStorage {
         @Dependency(\.defaultsProvider) var provider
@@ -53,12 +54,12 @@ extension Container: AnnouncementStorageFactory {
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
-
     static let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder
     }()
+
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
     
@@ -108,7 +109,6 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
     private var storageKey: String {
         return keyNameProvider.storageKey
     }
-    
 }
 
 /// Generates key depending on currently logged in user.

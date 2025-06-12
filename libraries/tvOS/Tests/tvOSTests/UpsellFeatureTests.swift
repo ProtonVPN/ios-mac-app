@@ -24,7 +24,6 @@ import Ergonomics
 @testable import CommonNetworking
 
 final class UpsellFeatureTests: XCTestCase {
-
     let monthlyPlan = PlanIAPTuple(
         planOption: .init(duration: .oneMonth, price: .init(amount: 9.99, currency: "GBP")),
         iap: .freePlan

@@ -19,7 +19,6 @@
 import XCTest
 
 final class ProtonVPNmac_redesign_UITests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     func testFirstLevelNavigation() throws {

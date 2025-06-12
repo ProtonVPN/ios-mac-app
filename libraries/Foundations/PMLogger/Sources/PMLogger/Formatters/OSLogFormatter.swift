@@ -20,7 +20,6 @@ import Foundation
 import Logging
 
 public class OSLogFormatter: PMLogFormatter {
-
     private let jsonEncoder = JSONEncoder()
 
     public init() {
@@ -39,5 +38,4 @@ public class OSLogFormatter: PMLogFormatter {
         #endif
         return "\(prepend)\(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-
 }

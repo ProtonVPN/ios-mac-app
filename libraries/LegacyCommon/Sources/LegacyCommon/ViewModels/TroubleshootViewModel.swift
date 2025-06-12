@@ -28,7 +28,6 @@ public protocol TroubleshootViewModelFactory {
 }
 
 public final class TroubleshootViewModel {
-
     // Data
     public let items: [TroubleshootItem]
 
@@ -90,5 +89,4 @@ public final class TroubleshootViewModel {
                                             ])),
         ]
     }
-
 }

@@ -24,7 +24,6 @@ import UIKit
 import LegacyCommon
 
 class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
     var colorChanged: (() -> Void)?
     
     var cellHeight: CGFloat {

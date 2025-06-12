@@ -21,7 +21,6 @@ import VPNShared
 @testable import ProtonVPN
 
 class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
-
     // Callbacks
     var planNextRefreshCalled: (() -> Void)?
     var certificateDeletedCalled: (() -> Void)?

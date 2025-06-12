@@ -24,7 +24,6 @@ import Home
 import VPNAppCore
 
 struct SidebarReducer: Reducer {
-
     public typealias ActionSender = (Action) -> Void
     
     struct State: Equatable {

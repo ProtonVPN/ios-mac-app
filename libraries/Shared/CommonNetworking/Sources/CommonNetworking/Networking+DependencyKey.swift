@@ -168,7 +168,6 @@ struct VPNNetworkingMock: VPNNetworking {
     }
 
     func setSession(_ session: Session) {
-
     }
 
     func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {

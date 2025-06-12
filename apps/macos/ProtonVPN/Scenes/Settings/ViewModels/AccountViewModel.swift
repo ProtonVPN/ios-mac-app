@@ -33,7 +33,6 @@ import Strings
 import Ergonomics
 
 final class AccountViewModel {
-
     private(set) var username: String
     private(set) var planTitle: String?
     private(set) var maxTier: Int

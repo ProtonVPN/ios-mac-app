@@ -29,7 +29,6 @@ import Strings
 import Domain
 
 class ProfileItemViewModel: AbstractProfileViewModel {
-    
     private static let maxCharCount = 30
     
     private let vpnGateway: VpnGatewayProtocol

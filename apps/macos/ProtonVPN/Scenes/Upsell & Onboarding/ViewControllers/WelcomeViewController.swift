@@ -32,7 +32,6 @@ import Ergonomics
 import Strings
 
 class WelcomeViewController: NSViewController {
-
     fileprivate enum Switch: Int {
         case usageData
         case crashReports
@@ -130,6 +129,7 @@ class WelcomeViewController: NSViewController {
         dismiss(nil)
     }
 }
+
 extension WelcomeViewController: SwitchButtonDelegate {
     func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
         completion(true)

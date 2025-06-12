@@ -33,6 +33,7 @@ extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
         return 17
     }
+
     private var baselineOffset: CGFloat {
         return 4
     }

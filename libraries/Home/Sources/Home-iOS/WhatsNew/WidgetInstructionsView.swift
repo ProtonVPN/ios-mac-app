@@ -20,7 +20,6 @@ import SwiftUI
 import Strings
 
 struct WidgetInstructionsView: View {
-
     private let instructionsFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

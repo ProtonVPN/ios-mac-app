@@ -25,7 +25,6 @@ import Ergonomics
 import ProtonCoreUIFoundations
 
 class StatusMenuProfileViewItem: NSTableRowView {
-    
     @IBOutlet weak var profileCircle: ProfileCircle!
     @IBOutlet weak var profileImage: NSImageView!
     @IBOutlet weak var label: NSTextField!
@@ -50,6 +49,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     }
     
     // MARK: - Private
+
     private func setupIcon() {
         guard let viewModel = viewModel else { return }
         

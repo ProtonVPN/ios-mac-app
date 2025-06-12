@@ -224,7 +224,6 @@ class StatusViewModel {
     }
 
     private var connectionCountryString: String {
-
         guard let lastPreparedServer = propertiesManager.lastPreparedServer else { return "" }
 
         if propertiesManager.serverTypeToggle == .secureCore {
@@ -536,7 +535,6 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
 
         cells.append(.attributedKeyValue(key: Localizable.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: Localizable.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-
             guard let self, self.userIsEligibleForNetshield else { return }
             self.alertService.push(alert: NetShieldUpsellAlert())
         }))

@@ -19,7 +19,6 @@
 import Foundation
 
 public struct OnboardingEvent: TelemetryEvent, Encodable {
-
     public let measurementGroup: String = "vpn.any.onboarding"
     public let event: Event
     public let dimensions: Dimensions
@@ -37,6 +36,7 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
             case userCountry = "user_country"
             case userPlan = "user_plan"
         }
+
         public let userCountry: String
         public let userPlan: String
     }

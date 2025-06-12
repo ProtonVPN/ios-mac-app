@@ -28,7 +28,6 @@ import VPNShared
 import NetShield
 
 public class VpnManagerMock: VpnManagerProtocol {
-
     public var netShieldStats: NetShieldModel = .zero(enabled: false)
 
     private let serverDescriptor = ServerDescriptor(username: "", address: "")
@@ -40,6 +39,7 @@ public class VpnManagerMock: VpnManagerProtocol {
             stateChanged?()
         }
     }
+
     public var currentVpnProtocol: VpnProtocol? = .ike
     
     public init() {}
@@ -82,19 +82,15 @@ public class VpnManagerMock: VpnManagerProtocol {
     public var prepareManagersTask: Task<(), Never>?
 
     public func set(vpnAccelerator: Bool) {
-
     }
 
     public func set(netShieldType: NetShieldType) {
-
     }
 
     public func set(natType: NATType) {
-        
     }
 
     public func set(safeMode: Bool) {
-        
     }
 
     public private(set) var isLocalAgentConnected: Bool?

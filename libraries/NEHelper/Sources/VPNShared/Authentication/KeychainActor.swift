@@ -23,7 +23,6 @@ import KeychainAccess
 /// of the async keychain changes that caused multiple fires in production. The class was left here as
 /// an easy way of resuming the work in the future.
 public class KeychainActor {
-
     private let keychain: KeychainAccess.Keychain
 
     public init(accessGroup: String) {
@@ -55,5 +54,4 @@ public class KeychainActor {
     public func remove(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws {
         try keychain.remove(key, ignoringAttributeSynchronizable: ignoringAttributeSynchronizable)
     }
-
 }

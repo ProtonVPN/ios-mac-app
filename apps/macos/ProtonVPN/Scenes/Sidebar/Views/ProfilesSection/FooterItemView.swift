@@ -25,7 +25,6 @@ import LegacyCommon
 import Strings
 
 class FooterItemView: NSView {
-
     @IBOutlet weak var createNewProfileButton: PrimaryActionButton!
     @IBOutlet weak var manageProfilesButton: InteractiveActionButton!
     

@@ -89,6 +89,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
 
         super.drawAnnotation(context: context, text: text)
     }
+
     // swiftlint:enable function_body_length operator_usage_whitespace
     
     override func hitTest(_ point: NSPoint) -> NSView? {
@@ -139,6 +140,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     }
     
     // MARK: - Private functions
+
     private func setupAnnotationView() {
         setSelection()
         setupFrame()

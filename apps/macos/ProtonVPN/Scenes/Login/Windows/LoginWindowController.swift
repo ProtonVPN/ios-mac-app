@@ -23,7 +23,6 @@
 import Cocoa
 
 class LoginWindowController: WindowController {
-    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

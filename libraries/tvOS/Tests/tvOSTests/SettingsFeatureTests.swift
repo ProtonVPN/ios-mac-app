@@ -21,7 +21,6 @@ import ComposableArchitecture
 @testable import tvOS
 
 final class SettingsFeatureTests: XCTestCase {
-
     @MainActor
     func testClearLoginDetails() async {
         let store = TestStore(initialState: SettingsFeature.State()) {

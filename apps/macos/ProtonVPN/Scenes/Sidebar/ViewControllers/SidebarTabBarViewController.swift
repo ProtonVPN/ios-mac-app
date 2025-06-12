@@ -30,7 +30,6 @@ enum SidebarTab {
 }
 
 class SidebarTabBarViewController: NSViewController {
-    
     let tabChanged = Notification.Name("SidebarTabBarViewControllerTabChanged")
     
     @IBOutlet weak var tabBarView: SidebarTabBarView!
@@ -68,7 +67,6 @@ class SidebarTabBarViewController: NSViewController {
         
         countriesButton.setAccessibilityIdentifier("CountriesButton")
         profilesButton.setAccessibilityIdentifier("ProfilesButton")
-
     }
     
     private func new(tab: SidebarTab) {

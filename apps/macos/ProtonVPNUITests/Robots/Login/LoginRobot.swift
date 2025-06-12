@@ -31,7 +31,6 @@ fileprivate let loginAgainButton = "Sign in again"
 fileprivate let assignConnectionButton = "Enable VPN connections"
 
 class LoginRobot: CoreElements {
-    
     @discardableResult
     func enterCredentials(credentials: Credentials) -> LoginRobot {
         return typeUsername(credentials.username)
@@ -124,7 +123,6 @@ class LoginRobot: CoreElements {
     let verify = Verify()
 
     class Verify: CoreElements {
-        
         @discardableResult
         func checkLoginScreenIsShown() -> LoginRobot {
             button(Localizable.createAccount).checkExists()

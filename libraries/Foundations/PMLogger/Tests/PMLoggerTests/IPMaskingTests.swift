@@ -20,7 +20,6 @@ import XCTest
 import PMLogger
 
 final class IPMaskingTests: XCTestCase {
-
     func testIPV4MaskingWorks() throws {
         XCTAssertEqual("1.2.3.4".maskIPv4, "1.2.*.*")
         XCTAssertEqual("1.20.3.4".maskIPv4, "1.20.*.*")
@@ -61,5 +60,4 @@ final class IPMaskingTests: XCTestCase {
     func testIPMaskingWorks() throws {
         XCTAssertEqual("1.2.3.4 and 2a02:120b:2c0d:5600:e4d4:2ff:fe01:b9d4".maskIPs, "1.2.*.* and ip:v6:removed")
     }
-
 }

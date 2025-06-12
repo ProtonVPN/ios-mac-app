@@ -25,7 +25,6 @@ fileprivate let twoFaAuthenticationTextField = "twoFactorTextField"
 fileprivate let authButton = "Authenticate"
 
 class TwoFaRobot: CoreElements {
-    
     @discardableResult
     func fillTwoFACode(code: String) -> MainRobot {
         textField(twoFaAuthenticationTextField).tap().typeText(code)
@@ -36,7 +35,6 @@ class TwoFaRobot: CoreElements {
     let verify = Verify()
     
     class Verify: CoreElements {
-        
         @discardableResult
         func twoFaAuthenticationIsShown() -> TwoFaRobot {
             staticText(twoFaAuthentication).checkExists()

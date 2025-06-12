@@ -16,7 +16,6 @@ fileprivate let settingsButtonId = "Settings back btn"
 fileprivate let stealthButton = Localizable.wireguardTls
 
 class ProtocolsListRobot: CoreElements {
-
     @discardableResult
     func stealthProtocolOn() -> ProtocolsListRobot {
         cell(stealthButton).tap()

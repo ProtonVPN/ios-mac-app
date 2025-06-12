@@ -21,7 +21,6 @@ import SwiftUI
 import Theme
 
 struct GhostButtonStyle: ButtonStyle {
-
     @State var isHovered: Bool = false
     @Environment(\.isEnabled) var isEnabled
 

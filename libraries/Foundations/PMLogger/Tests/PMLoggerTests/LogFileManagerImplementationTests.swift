@@ -24,7 +24,6 @@ import XCTest
 @testable import PMLogger
 
 class LogFileManagerImplementationTests: XCTestCase {
-
     func testLogsArePutInSubfolder() {
         let manager = LogFileManagerImplementation()
         let logUrl = manager.getFileUrl(named: "logfile.txt")
@@ -33,7 +32,6 @@ class LogFileManagerImplementationTests: XCTestCase {
     }
     
     func testDumpWritesAndOverwritesFileContents() throws {
-        
         let filename = "testLog.txt"
         let log = "Very interesting and useful log entry"
         let log2 = "Not su useful log that should overwrite previous"
@@ -55,5 +53,4 @@ class LogFileManagerImplementationTests: XCTestCase {
         
         try FileManager.default.removeItem(at: logUrl)
     }
-
 }

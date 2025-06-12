@@ -134,6 +134,7 @@ final class ConnectionSettingsViewModel {
     }
 
     // MARK: - Quick and auto connect for current user
+
     var username: String? {
         authKeychain.username
     }
@@ -545,5 +546,4 @@ final class ConnectionSettingsViewModel {
     func showPlutoniumSettings() {
         navService.showPlutonium()
     }
-
 }

@@ -30,7 +30,6 @@ extension Offer {
 }
 
 class AnnouncementManagerImplementationTests: XCTestCase {
-
     @Dependency(\.announcementStorage) var storage
     @Dependency(\.announcementManager) var manager
 

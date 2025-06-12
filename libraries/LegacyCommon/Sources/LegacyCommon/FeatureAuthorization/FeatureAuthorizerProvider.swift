@@ -25,7 +25,6 @@ import IssueReporting
 ///
 /// Check `FeatureAuthorizerProviderTests` for example usage.
 public protocol FeatureAuthorizerProvider {
-
     /// Returns an authorizer for the given feature
     func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult
 

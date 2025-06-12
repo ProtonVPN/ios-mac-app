@@ -52,7 +52,6 @@ class AutoConnectTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectionAutoConnectFastest() {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
@@ -83,12 +82,10 @@ class AutoConnectTests: ProtonVPNUITests {
         let connectedServer2 = mainRobot.getConnectedCountry()
         
         XCTAssertEqual(connectedServer1, connectedServer2, "App shoudl connect to same server, but connected to different. 1st attempt: \(connectedServer1), 2nd attempt: \(connectedServer2)")
-        
     }
     
     @MainActor
     func testConnectionAutoConnectRandom() {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
@@ -123,7 +120,6 @@ class AutoConnectTests: ProtonVPNUITests {
     
     @MainActor
     func testConnectionAutoConnectDisabled() {
-        
         mainRobot
             .openAppSettings()
             .connectionTabClick()

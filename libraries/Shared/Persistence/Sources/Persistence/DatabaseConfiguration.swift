@@ -53,7 +53,6 @@ public struct DatabaseConfiguration {
 }
 
 public enum DatabaseConfigurationKey: TestDependencyKey {
-
     /// Configured with global/shared in-memory database
     public static var testValue: DatabaseConfiguration {
         .withTestExecutor(databaseType: .inMemory)

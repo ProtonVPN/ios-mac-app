@@ -23,7 +23,6 @@
 import Cocoa
 
 class CustomOverlayView: NSView {
-
     var clicked: (() -> Void)?
     
     required init?(coder decoder: NSCoder) {

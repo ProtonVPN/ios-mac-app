@@ -20,7 +20,6 @@ import Foundation
 import XCTest
 
 class SettingsTests: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     
@@ -31,7 +30,6 @@ class SettingsTests: ProtonVPNUITests {
     }
     
     func testNavigateThroughSettings() {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()

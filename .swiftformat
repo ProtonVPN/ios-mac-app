@@ -1,9 +1,3 @@
---disable blankLineAfterImports
---disable blankLinesAroundMark
---disable blankLinesAtEndOfScope
---disable blankLinesAtStartOfScope
---disable blankLinesBetweenChainedFunctions
---disable blankLinesBetweenScopes
 --disable braces
 --disable conditionalAssignment
 --disable consecutiveBlankLines

@@ -20,7 +20,6 @@ import XCTest
 @testable import NetShieldShared
 
 final class NetShieldStatsNumberFormatterTests: XCTestCase {
-
     var formatter = {
         let formatter = NetShieldStatsNumberFormatter()
         formatter.decimalSeparator = "."

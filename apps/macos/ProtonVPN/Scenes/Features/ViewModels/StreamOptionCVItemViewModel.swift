@@ -29,7 +29,6 @@ protocol StreamOptionCVItemViewModelProtocol {
 }
 
 class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
-    
     var serviceName: String { option.name }
     
     var url: URL? {

@@ -24,7 +24,6 @@ import UIKit
 import VPNShared
 
 class AppConstants {
-
     static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
     
     struct NetworkExtensions {

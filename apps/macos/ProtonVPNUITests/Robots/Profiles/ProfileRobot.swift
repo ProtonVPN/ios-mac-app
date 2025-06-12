@@ -27,7 +27,6 @@ fileprivate let createProfileButton = "Create Profile"
 fileprivate let manageProfileButton = "Manage Profiles"
 
 class ProfileRobot: CoreElements {
-    
     @discardableResult
     func createProfile() -> CreateProfileRobot {
         button(createProfileButton).tap()
@@ -42,7 +41,6 @@ class ProfileRobot: CoreElements {
     let verify = Verify()
 
     class Verify: CoreElements {
-         
         @discardableResult
         func checkDefaultProfilesExist() -> ProfileRobot {
             table().onChild(cell(fastestButton)).waitUntilExists().checkExists()

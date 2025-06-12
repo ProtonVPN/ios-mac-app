@@ -28,7 +28,6 @@ import Ergonomics
 import Strings
 
 class AboutViewController: NSViewController {
-    
     typealias Factory = NavigationServiceFactory & UpdateManagerFactory
     public var factory: Factory!
 
@@ -85,7 +84,6 @@ class AboutViewController: NSViewController {
     }
     
     private func setupComponents() {
-        
         let versionString = NSMutableAttributedString()
         versionString.append(currentVersion.styled(font: .themeFont(bold: true), alignment: .left))
         versionString.append(" (\(currentBuild))".styled(.weak, font: .themeFont(bold: true), alignment: .left))
@@ -143,5 +141,4 @@ class AboutViewController: NSViewController {
         result = result.replacingOccurrences(of: "]]>", with: "")
         return result
     }
-        
 }

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+
 // Several types are used directly because we don't need to wrap them for stubbing
 import class NetworkExtension.NEOnDemandRule
 import class NetworkExtension.NETunnelProviderProtocol

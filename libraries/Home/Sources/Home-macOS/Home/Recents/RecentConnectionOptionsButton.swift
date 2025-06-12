@@ -78,6 +78,7 @@ private extension RecentConnectionOptionsButton {
             case pin(isPinned: Bool)
             case remove
         }
+
         let role: Role
         let action: () -> Void
 
@@ -91,6 +92,7 @@ private extension RecentConnectionOptionsButton {
                 return IconProvider.trashCross
             }
         }
+
         var text: Text {
             switch role {
             case .pin(let isPinned):
@@ -122,7 +124,6 @@ private extension RecentConnectionOptionsButton {
 }
 
 private struct RecentConnectOptionsButtonStyle: ButtonStyle {
-
     @State var isHovered: Bool = false
 
     func makeBody(configuration: Configuration) -> some View {

@@ -23,7 +23,6 @@
 import Foundation
 
 extension Date {
-    
     private var shortDateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
@@ -34,5 +33,4 @@ extension Date {
     public var formattedShortDate: String {
         shortDateFormatter.string(from: self)
     }
-    
 }

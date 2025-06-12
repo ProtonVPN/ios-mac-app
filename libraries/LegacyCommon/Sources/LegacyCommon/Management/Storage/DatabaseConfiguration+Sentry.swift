@@ -22,7 +22,6 @@ import VPNAppCore
 import Persistence
 
 extension DatabaseConfiguration {
-
     /// Database configuration suitable for both debug and release builds.
     ///  - Database file located in Application Support directory
     ///  - Errors during database operations after initialisation are caught, logged, reported with sentry

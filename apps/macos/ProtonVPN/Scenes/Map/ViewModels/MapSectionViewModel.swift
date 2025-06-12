@@ -57,7 +57,6 @@ extension DependencyContainer: MapSectionViewModelFactory {
 }
 
 class MapSectionViewModel {
-    
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
@@ -79,7 +78,6 @@ class MapSectionViewModel {
     init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
          vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
          viewToggle: Notification.Name, alertService: CoreAlertService) {
-        
         self.appStateManager = appStateManager
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -100,6 +98,7 @@ class MapSectionViewModel {
     }
     
     // MARK: - Private functions
+
     @objc private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
@@ -155,7 +154,6 @@ class MapSectionViewModel {
 
             self.contentChanged?(contentChange)
         }
-        
     }
     
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
@@ -363,5 +361,4 @@ class MapSectionViewModel {
         return connections
     }
     // swiftlint:enable cyclomatic_complexity
-    
 }

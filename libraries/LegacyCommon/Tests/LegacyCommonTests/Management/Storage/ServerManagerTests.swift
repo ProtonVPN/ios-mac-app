@@ -28,7 +28,6 @@ import PersistenceTestSupport
 @testable import LegacyCommon
 
 final class ServerManagerTests: XCTestCase {
-
     private var upsertCallback: (([VPNServer]) -> Void)?
     private var deleteCallback: ((Set<String>, Int) -> Void)?
     private var metadataCallback: ((DatabaseMetadata.Key, String?) -> Void)?

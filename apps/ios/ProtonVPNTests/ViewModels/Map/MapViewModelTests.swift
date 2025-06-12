@@ -39,7 +39,6 @@ import VPNSharedTesting
 @testable import ProtonVPN
 
 class MapViewModelTests: XCTestCase {
-
     lazy var networking = CoreNetworking(
         delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceDummy()),
         appInfo: AppInfoImplementation(),

@@ -27,7 +27,6 @@ import Theme
 import Strings
 
 final class AccountViewController: NSViewController {
-
     @IBOutlet private weak var usernameLabel: PVPNTextField!
     @IBOutlet private weak var usernameValue: PVPNTextField!
     @IBOutlet private weak var usernameSeparator: NSBox!
@@ -101,7 +100,6 @@ final class AccountViewController: NSViewController {
     private func setupActions() {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
-
     }
     
     private func setupData() {

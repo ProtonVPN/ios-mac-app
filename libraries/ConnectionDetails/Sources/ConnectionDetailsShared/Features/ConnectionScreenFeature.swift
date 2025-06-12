@@ -25,7 +25,6 @@ import Persistence
 
 @Reducer
 public struct ConnectionScreenFeature {
-
     @Dependency(\.dismiss) var dismiss
 
     @ObservableState

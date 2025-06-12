@@ -24,7 +24,6 @@ import Dependencies
 import OrderedCollections
 
 final class RecentsStorageTests: XCTestCase {
-
     func testPiningASpecMovesTheCorrespondingRecentToTheTopOfTheListsAndMarksItAsPinned() {
         let now = Date()
         var defaultFastest = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now, connection: .defaultFastest)
