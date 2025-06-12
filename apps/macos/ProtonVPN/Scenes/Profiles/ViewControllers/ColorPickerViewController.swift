@@ -32,6 +32,7 @@ class ColorPickerViewController: NSViewController {
     
     var viewModel: ColorPickerViewModel!
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

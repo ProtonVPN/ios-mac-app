@@ -39,6 +39,7 @@ final class AnnouncementImageViewController: NSViewController {
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

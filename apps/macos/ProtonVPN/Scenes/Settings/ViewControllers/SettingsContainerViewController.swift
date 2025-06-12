@@ -46,6 +46,7 @@ final class SettingsContainerViewController: NSViewController {
     
     let accountViewController: AccountViewController
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

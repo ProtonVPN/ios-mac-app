@@ -37,6 +37,7 @@ class PopUpViewController: NSViewController {
     
     let viewModel: PopUpViewModel
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

@@ -41,6 +41,7 @@ class ProfilesTabBarViewController: NSViewController {
     private var tabChangedExternally: Notification.Name!
     private var activeTab: ProfilesTab?
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

@@ -53,6 +53,7 @@ final class ProfilesContainerViewController: NSViewController {
         return viewController
     }()
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer")
     }

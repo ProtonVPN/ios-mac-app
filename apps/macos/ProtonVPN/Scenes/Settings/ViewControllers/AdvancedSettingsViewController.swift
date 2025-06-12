@@ -36,6 +36,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private var viewModel: AdvancedSettingsViewModel
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

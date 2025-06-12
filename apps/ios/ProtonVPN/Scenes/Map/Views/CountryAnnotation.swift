@@ -70,6 +70,7 @@ class CountryAnnotation: AnnotationView {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }

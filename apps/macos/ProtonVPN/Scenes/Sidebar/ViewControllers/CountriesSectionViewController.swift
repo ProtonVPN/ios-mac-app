@@ -104,6 +104,7 @@ final class CountriesSectionViewController: NSViewController {
 
     private var notificationTokens: [NotificationToken] = []
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

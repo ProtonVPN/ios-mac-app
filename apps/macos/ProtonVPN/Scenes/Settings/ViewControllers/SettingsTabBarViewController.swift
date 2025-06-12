@@ -35,6 +35,7 @@ final class SettingsTabBarViewController: NSViewController {
 
     private var viewModel: SettingsTabBarViewModel!
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

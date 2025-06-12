@@ -44,6 +44,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
 
     private var containerView: NSView?
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }

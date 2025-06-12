@@ -43,6 +43,7 @@ public class TelemetrySettingsViewController: UIViewController {
         self.title = title
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

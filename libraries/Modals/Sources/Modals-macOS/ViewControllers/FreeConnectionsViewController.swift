@@ -38,6 +38,7 @@ final class FreeConnectionsViewController: NSViewController {
     /// Used for calculating size of country cells
     private var _viewForSizing: CountryCellView?
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -56,6 +56,7 @@ public final class UpsellViewController: NSViewController {
     var upgradeAction: (() -> Void)?
     var continueAction: (() -> Void)?
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

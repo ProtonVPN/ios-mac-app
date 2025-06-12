@@ -38,6 +38,7 @@ class WindowController: NSWindowController {
     
     weak var delegate: WindowControllerDelegate?
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

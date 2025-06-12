@@ -101,6 +101,7 @@ class MapAnnotationView: MKAnnotationView {
         set { _tag = newValue }
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -358,6 +359,7 @@ class CountryAnnotationView: MapAnnotationView {
         fatalError("Initializer not supported: \(#function)")
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Initializer not supported: \(#function)")
     }

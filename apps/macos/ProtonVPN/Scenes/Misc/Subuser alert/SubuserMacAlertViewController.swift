@@ -39,6 +39,7 @@ final class SubuserMacAlertViewController: NSViewController {
     
     var role: UserRole = .noOrganization
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

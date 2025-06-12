@@ -32,6 +32,7 @@ class PlutoniumWindowController: WindowController {
     private let alertService: CoreAlertService
     private let vpnGateway: VpnGatewayProtocol
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

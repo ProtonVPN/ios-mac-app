@@ -38,6 +38,7 @@ class HelpPopoverViewController: NSViewController {
         super.init(nibName: NSNib.Name("HelpPopover"), bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

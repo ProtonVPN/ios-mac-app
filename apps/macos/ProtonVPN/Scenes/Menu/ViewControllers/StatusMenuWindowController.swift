@@ -57,6 +57,7 @@ final class StatusMenuWindowController: WindowController {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }

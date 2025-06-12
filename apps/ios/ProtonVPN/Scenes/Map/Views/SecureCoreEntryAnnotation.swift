@@ -44,6 +44,7 @@ class SecureCoreEntryAnnotation: AnnotationView {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }

@@ -37,6 +37,7 @@ class MapHeaderViewController: NSViewController {
         }
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

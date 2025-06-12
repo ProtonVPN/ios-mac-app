@@ -41,6 +41,7 @@ class AnnotationView: UIView {
         return false
     }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }

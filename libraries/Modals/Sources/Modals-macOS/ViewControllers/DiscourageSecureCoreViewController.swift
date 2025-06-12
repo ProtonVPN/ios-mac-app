@@ -35,6 +35,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
     var onCancel: (() -> Void)?
     var onLearnMore: (() -> Void)?
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

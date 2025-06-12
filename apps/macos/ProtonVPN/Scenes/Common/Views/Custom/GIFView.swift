@@ -31,6 +31,7 @@ class GIFView: NSView {
     private var animating: Bool = false
     private var timer: Timer?
 
+    @available(*, unavailable)
     required init?(coder decoder: NSCoder) {
         fatalError("Not implemented: \(#function)")
     }

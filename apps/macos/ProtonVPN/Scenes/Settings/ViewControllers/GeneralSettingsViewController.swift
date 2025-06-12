@@ -39,6 +39,7 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
 
     private var viewModel: GeneralSettingsViewModel
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

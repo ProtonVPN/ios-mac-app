@@ -65,6 +65,7 @@ final class CreateNewProfileViewController: NSViewController {
             countryList.indexOfSelectedItem != 0
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

@@ -23,6 +23,7 @@
 import Cocoa
 
 class SidebarWindowController: WindowController {
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

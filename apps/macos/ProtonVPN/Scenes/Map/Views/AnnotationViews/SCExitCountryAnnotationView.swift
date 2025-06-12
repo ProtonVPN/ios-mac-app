@@ -33,6 +33,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
 
     override class var textLineHeight: CGFloat { 30 }
 
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }

@@ -64,6 +64,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     private var profilesWindowController: StatusMenuProfilesListController?
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

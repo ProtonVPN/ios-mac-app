@@ -45,6 +45,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var allowLANView: SettingsTickboxView!
     private var viewModel: ConnectionSettingsViewModel
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }

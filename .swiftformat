@@ -1,7 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable initCoderUnavailable
---disable leadingDelimiters
 --disable linebreakAtEndOfFile
 --disable linebreaks
 --disable modifierOrder
