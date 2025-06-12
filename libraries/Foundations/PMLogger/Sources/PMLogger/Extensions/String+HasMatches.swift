@@ -26,7 +26,7 @@ extension String {
             let nsString = self as NSString
             let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range) }
-        } catch let error {
+        } catch {
             os_log("Invalid regex: %{public}s", log: OSLog(subsystem: "PMLogger", category: "LogFileManager"), type: OSLogType.error, error as CVarArg)
             return []
         }

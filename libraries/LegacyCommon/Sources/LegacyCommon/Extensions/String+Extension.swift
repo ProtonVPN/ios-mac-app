@@ -32,7 +32,7 @@ public extension String {
             let nsString = self as NSString
             let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range) }
-        } catch let error {
+        } catch {
             log.error("Invalid regex", category: .app, metadata: ["error": "\(error)"])
             return []
         }

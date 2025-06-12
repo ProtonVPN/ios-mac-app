@@ -38,9 +38,9 @@ class NetworkStatistics {
         }
     }
     
-    private var timer: Timer! = nil
+    private var timer: Timer!
     private var timeInterval: TimeInterval = 1
-    private var traffic: NetworkTraffic! = nil
+    private var traffic: NetworkTraffic!
     private var updateWithBitrate: ((Bitrate) -> Void)?
     
     init(with timeInterval: TimeInterval, and updateHandler: @escaping (Bitrate) -> Void) {

@@ -68,7 +68,7 @@ open class ReportBugViewModel {
 
         do {
             planTitle = try vpnKeychain.fetchCached().planTitle
-        } catch let error {
+        } catch {
             log.error("\(error)", category: .ui)
         }
         

@@ -95,7 +95,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
             executeOnUIThread {
                 AppEvent.announcementStorageContent.post(objects)
             }
-        } catch let error {
+        } catch {
             log.error("Announcement error: \(error)", category: .ui)
         }
     }

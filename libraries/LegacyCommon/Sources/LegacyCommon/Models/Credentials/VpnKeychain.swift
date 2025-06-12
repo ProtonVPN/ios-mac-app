@@ -162,7 +162,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         do {
             let password = try getPasswordReference(forKey: StorageKey.vpnServerPassword)
             return password
-        } catch let error {
+        } catch {
             log.error("Error while fetching open vpn password from the keychain", category: .keychain, metadata: ["error": "\(error)"])
             throw CommonVpnError.vpnCredentialsMissing
         }
@@ -191,13 +191,13 @@ public class VpnKeychain: VpnKeychainProtocol {
             let data = try encoder.encode(vpnCredentials)
             try appKeychain.set(data, key: StorageKey.vpnCredentials)
             cached = CachedVpnCredentials(credentials: vpnCredentials)
-        } catch let error {
+        } catch {
             log.error("Keychain (vpn) write error", category: .keychain, metadata: ["error": "\(error)"])
         }
 
         do {
             try setPassword(vpnCredentials.password, forKey: StorageKey.vpnServerPassword)
-        } catch let error {
+        } catch {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
 

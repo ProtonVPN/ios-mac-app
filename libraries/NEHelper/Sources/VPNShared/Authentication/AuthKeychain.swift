@@ -197,7 +197,7 @@ extension AuthKeychain: AuthKeychainHandle {
         do {
             let data = try JSONEncoder().encode(credentials)
             try keychain.set(data, key: key)
-        } catch let error {
+        } catch {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()

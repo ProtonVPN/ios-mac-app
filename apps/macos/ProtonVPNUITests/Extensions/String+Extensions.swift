@@ -32,7 +32,7 @@ extension String {
 
             // Trim any trailing whitespace that might be left
             return trimmedString.trimmingCharacters(in: .whitespacesAndNewlines)
-        } catch let error {
+        } catch {
             return self
         }
     }

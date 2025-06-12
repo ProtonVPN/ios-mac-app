@@ -1,9 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantLet
---disable redundantLetError
---disable redundantNilInit
---disable redundantObjc
 --disable redundantOptionalBinding
 --disable redundantParens
 --disable redundantPattern

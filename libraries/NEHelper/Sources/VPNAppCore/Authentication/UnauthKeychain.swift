@@ -48,7 +48,7 @@ public final class UnauthKeychain: UnauthKeychainHandle {
                 return nil
             }
             return AuthCredential.unarchive(data: data as NSData)
-        } catch let error {
+        } catch {
             log.error("Keychain (unauth) read error: \(error)", category: .keychain)
             return nil
         }
