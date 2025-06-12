@@ -18,7 +18,7 @@
 
 public extension OptionSet where RawValue == Int {
     init(bitPosition: Int) {
-        assert(0 <= bitPosition && bitPosition < Int.bitWidth)
+        assert(bitPosition >= 0 && bitPosition < Int.bitWidth)
         self = Self(rawValue: 1 << bitPosition)
     }
 

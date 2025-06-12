@@ -31,9 +31,9 @@ extension String {
         guard let regexp = try? NSRegularExpression(pattern: "([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})") else {
             return self
         }
-        if 0 < regexp.replaceMatches(in: result,
-                                     range: NSRange(location: 0, length: count),
-                                     withTemplate: "$1.$2.*.*") {
+        if regexp.replaceMatches(in: result,
+                                 range: NSRange(location: 0, length: count),
+                                 withTemplate: "$1.$2.*.*") > 0 {
             return String(result)
         } else {
             return self
@@ -46,9 +46,9 @@ extension String {
         guard let regexp = try? NSRegularExpression(pattern: "([a-f0-9:]+:+)+[a-f0-9]+") else {
             return self
         }
-        if 0 < regexp.replaceMatches(in: result,
-                                     range: NSRange(location: 0, length: count),
-                                     withTemplate: "ip:v6:removed") {
+        if regexp.replaceMatches(in: result,
+                                 range: NSRange(location: 0, length: count),
+                                 withTemplate: "ip:v6:removed") > 0 {
             return String(result)
         } else {
             return self
