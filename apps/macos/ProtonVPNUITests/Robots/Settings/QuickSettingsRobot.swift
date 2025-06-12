@@ -40,39 +40,39 @@ class QuickSettingsRobot: CoreElements {
         button(secureCoreButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func netShieldDropdown() -> QuickSettingsRobot {
         button(netShieldButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func killSwitchDropdown() -> QuickSettingsRobot {
         button(killSwitchButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func continueEnable() -> QuickSettingsRobot {
         button(continueButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func enableNotNow() -> QuickSettingsRobot {
         button(notNowButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func upgradeFeature() -> QuickSettingsRobot {
         button(upgradeButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func closeUpsellModal() -> QuickSettingsRobot {
         dialog().firstMatch().onChild(button("_XCUI:CloseWindow")).tap()
         return QuickSettingsRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func checkDropdownIsOpen() -> QuickSettingsRobot {
@@ -82,13 +82,13 @@ class QuickSettingsRobot: CoreElements {
             staticText(qsNote).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkUpgradeRequired() -> QuickSettingsRobot {
             button(upgradeButton).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkModalIsOpen() -> QuickSettingsRobot {
             staticText("By activating Kill Switch, you won't be able to access devices on your local network. ").checkExists()
@@ -96,7 +96,7 @@ class QuickSettingsRobot: CoreElements {
             button(continueButton).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkUpsellModalIsOpen() -> QuickSettingsRobot {
             staticText(modalTitle).checkExists()

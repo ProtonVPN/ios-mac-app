@@ -31,31 +31,31 @@ import VPNAppCore
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-    
+
     typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory & PropertiesManagerFactory & VpnGatewayFactory
-    
+
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
-    
+
     override var learnLink: String {
         VPNLink.killSwitchSupport.urlString
     }
-    
+
     override var title: String! {
         Localizable.killSwitch
     }
-    
+
     init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
-    
+
     override var options: [QuickSettingsDropdownOptionPresenter] {
         [killSwitchOff, killSwitchOn]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
@@ -67,9 +67,9 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 5) + 12
         }
     }
-    
+
     // MARK: - Private
-    
+
     private var killSwitchOff: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOff.capitalized
@@ -83,7 +83,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             dismissCallback()
         })
     }
-    
+
     private var killSwitchOn: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOn.capitalized

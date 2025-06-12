@@ -29,16 +29,16 @@ import ProtonCoreFeatureFlags
 final class TabBarController: UITabBarController {
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
-    
+
     var viewModel: TabBarViewModel? {
         didSet {
             viewModel?.delegate = self
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if #available(iOS 17.0, *) {
             traitOverrides.horizontalSizeClass = .compact
         }
@@ -49,10 +49,10 @@ final class TabBarController: UITabBarController {
             setupQuickConnectView()
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         viewModel?.stateChanged()
     }
 
@@ -60,23 +60,23 @@ final class TabBarController: UITabBarController {
         view.backgroundColor = .backgroundColor()
         selectedIndex = 0
     }
-    
+
     private func setupQuickConnectView() {
         quickConnectButton.backgroundColor = .clear
         quickConnectButton.layer.masksToBounds = true
-        
+
         quickConnectButton.contentVerticalAlignment = .top
         quickConnectButton.contentHorizontalAlignment = .center
         quickConnectButton.imageView?.contentMode = .scaleAspectFit
         quickConnectButton.adjustsImageWhenHighlighted = false
-        
+
         quickConnectButton.addTarget(self, action: #selector(quickConnectTapped), for: .touchUpInside)
-        
+
         view.addSubview(quickConnectButton)
-        
+
         let bottomItem: Any
         bottomItem = view.safeAreaLayoutGuide
-        
+
         quickConnectButton.translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .width, relatedBy: .equal, toItem: tabBar, attribute: .width, multiplier: 1 / CGFloat(tabBar.items?.count ?? 5), constant: 4)
         let heightConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 66)
@@ -86,7 +86,7 @@ final class TabBarController: UITabBarController {
 
         disconnectedQuickConnect()
     }
-    
+
     @objc private func quickConnectTapped(_ sender: UIButton) {
         viewModel?.quickConnectTapped()
     }
@@ -99,17 +99,17 @@ extension TabBarController: TabBarViewModelDelegate {
         tabBar.items?[2].title = Localizable.disconnect
         quickConnectButton.setImage(Asset.quickConnectActiveButton.image, for: .normal)
     }
-    
+
     func connectingQuickConnect() {
         if !quickConnectButtonConnecting { // to avoid animation jumping, don't reset animation during multiple connecting stage calls
             tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .normal)
             tabBar.items?[2].title = Localizable.connecting
             quickConnectButton.setImage(Asset.quickConnectConnectingButton.image, for: .normal)
         }
-        
+
         quickConnectButtonConnecting = true
     }
-    
+
     func disconnectedQuickConnect() {
         quickConnectButtonConnecting = false
         guard tabBar.items?.count > 2 else { return }
@@ -125,7 +125,7 @@ extension TabBarController: UITabBarControllerDelegate {
         if let navigationViewController = viewController as? UINavigationController, navigationViewController != selectedViewController {
             navigationViewController.popToRootViewController(animated: false)
         }
-        
+
         if viewController is ProtonQCViewController {
             return false
         } else if let viewModel, viewController == viewControllers?.last { // settings

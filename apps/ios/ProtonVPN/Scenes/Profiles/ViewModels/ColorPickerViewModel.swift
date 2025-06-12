@@ -25,7 +25,7 @@ import UIKit
 
 class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     var colorChanged: (() -> Void)?
-    
+
     var cellHeight: CGFloat {
         var d: CGFloat = 40
         if UIDevice.current.screenType == .iPhones_5_5s_5c_SE {
@@ -33,12 +33,12 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
         }
         return d
     }
-    
+
     var height: CGFloat {
         let numberOfLines: CGFloat = UIDevice.current.isIpad ? 1 : 2
         return (cellHeight + interitemSpacing) * numberOfLines + inset
     }
-    
+
     var inset: CGFloat {
         12
     }
@@ -50,7 +50,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         colors.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let item = collectionView.dequeueReusableCell(withReuseIdentifier: ColorPickerItem.identifier, for: indexPath) as? ColorPickerItem {
             item.color = colorAt(index: indexPath.row)
@@ -58,11 +58,11 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
         }
         return UICollectionViewCell()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         CGSize(width: cellHeight, height: cellHeight)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         interitemSpacing
     }
@@ -74,41 +74,41 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedColorIndex = indexPath.row
         colorChanged?()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         collectionView.selectItem(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .top)
     }
-    
+
     private let colors: [UIColor]
-    
+
     var selectedColorIndex: Int!
     var selectedColor: UIColor {
         colorAt(index: selectedColorIndex)
     }
-    
+
     init(with color: UIColor? = nil) {
         colors = ProfileConstants.profileColors
-        
+
         super.init()
-        
+
         select(color: color)
     }
-    
+
     func selectRandom() {
         selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count))) // swiftlint:disable:this legacy_random
     }
-    
+
     func select(color newColor: UIColor?) {
         guard let newColor else {
             selectRandom()
             return
         }
-        
+
         if let index = colors.enumerated().first(where: { index, color -> Bool in
             color.hexRepresentation == newColor.hexRepresentation
         })?.offset {
@@ -117,13 +117,13 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
             selectedColorIndex = 0
         }
     }
-    
+
     func select(color index: Int) {
         if index >= 0, index < colors.count {
             selectedColorIndex = index
         }
     }
-    
+
     func colorAt(index: Int) -> UIColor {
         colors[index]
     }

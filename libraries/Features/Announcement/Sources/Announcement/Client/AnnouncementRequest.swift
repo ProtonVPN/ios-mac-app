@@ -139,7 +139,7 @@ extension AnnouncementRequest: Request {
             let appTitleBarHeight: CGFloat = 28
             let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
             let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32
-            return screen.backingScaleFactor * 
+            return screen.backingScaleFactor *
                 (menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight)
         }
     }

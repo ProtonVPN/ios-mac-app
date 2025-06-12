@@ -41,7 +41,7 @@ private let uiAlertService = IosUiAlertService(windowService: windowService)
 
 class AlertTests: XCTestCase {
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
-    
+
     override func setUp() {
         super.setUp()
         windowService.displayCount = 0
@@ -49,30 +49,30 @@ class AlertTests: XCTestCase {
 
     func testSingleInstanceOfAlerts() {
         XCTAssertEqual(windowService.displayCount, 0)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
     }
-    
+
     func testUpdatingAlertCompletionHandlers() {
         XCTAssertEqual(windowService.displayCount, 0)
-        
+
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
         let cancellationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
-        
+
         var confirmRan = false
         var cancelRan = false
         let confirmationHandler2 = {
@@ -81,36 +81,36 @@ class AlertTests: XCTestCase {
         let cancellationHandler2 = {
             cancelRan = true
         }
-        
+
         let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
-        
+
         alertService.push(alert: alert1)
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: alert2)
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
-        
+
         XCTAssert(confirmRan && cancelRan)
     }
 }
 
 private class WindowServiceMock: WindowService {
     var displayCount = 0
-    
+
     func show(viewController: UIViewController) {}
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
     func dismissModal(_ completion: (() -> Void)?) {}
-    
+
     func present(modal: UIViewController) {
         displayCount += 1
     }
-    
+
     func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {}
-    
+
     func popStackToRoot() {}
 
     var topmostPresentedViewController: UIViewController?
@@ -120,22 +120,22 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     func makeUIAlertService() -> UIAlertService {
         uiAlertService
     }
-    
+
     func makeAppSessionManager() -> AppSessionManager {
         AppSessionManagerMock(sessionStatus: .established,
                               loggedIn: true,
                               sessionChanged: Notification.Name(rawValue: ""),
                               vpnGateway: VpnGatewayMock())
     }
-    
+
     func makeWindowService() -> WindowService {
         windowService
     }
-    
+
     func makeSettingsService() -> SettingsService {
         SettingsServiceMock()
     }
-    
+
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
         TroubleshootCoordinatorMock()
     }
@@ -150,15 +150,15 @@ private class SettingsServiceMock: SettingsService {
         let viewModel = LogSelectionViewModel()
         return LogSelectionViewController(viewModel: viewModel, settingsService: self)
     }
-    
+
     func makeLogsViewController(logSource: LogSource) -> LogsViewController {
         LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
-    
+
     func makeSettingsViewController() -> SettingsViewController? {
         nil
     }
-    
+
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
         nil
     }
@@ -169,12 +169,12 @@ private class SettingsServiceMock: SettingsService {
                                         usageStatisticsOn: { true },
                                         crashReportsOn: { true })
     }
-    
+
     func makeExtensionsSettingsViewController() -> UIViewController {
         let viewModel = WidgetSettingsViewModel()
         return WidgetSettingsViewController(viewModel: viewModel)
     }
-    
+
     func presentLogs() {}
     func presentReportBug() {}
 

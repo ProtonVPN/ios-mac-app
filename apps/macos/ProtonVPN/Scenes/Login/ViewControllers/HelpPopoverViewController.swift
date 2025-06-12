@@ -26,32 +26,32 @@ import Strings
 
 class HelpPopoverViewController: NSViewController {
     private let viewModel: HelpPopoverViewModel
-    
+
     @IBOutlet private var resetButton: InteractiveActionButton!
     @IBOutlet private var forgotButton: InteractiveActionButton!
     @IBOutlet private var commonIssuesButton: InteractiveActionButton!
     @IBOutlet private var reportBugButton: InteractiveActionButton!
-    
+
     required init(viewModel: HelpPopoverViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: NSNib.Name("HelpPopover"), bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         resetButton.title = Localizable.resetPassword
         forgotButton.title = Localizable.forgotUsername
         commonIssuesButton.title = Localizable.commonIssues
         reportBugButton.title = Localizable.reportBug
     }
-    
+
     @IBAction func resetAction(_ sender: Any) {
         viewModel.resetAction()
     }

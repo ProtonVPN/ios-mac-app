@@ -27,7 +27,7 @@ class SignUpCoordinatorTests: XCTestCase {
     func testPlanSelectionIsFirstOption() {
         var planSelectionOpened = false
         var signupOpened = false
-        
+
         let loginService = LoginServiceMock()
         loginService.callbackPresentSignup = { _ in
             signupOpened = true
@@ -39,7 +39,7 @@ class SignUpCoordinatorTests: XCTestCase {
         let appSessionManager = AppSessionManagerMock(sessionStatus: .notEstablished, loggedIn: false, sessionChanged: Notification.Name("sessionChanged"))
         let factory = CoordinatorFactory(appSessionManager: appSessionManager, loginService: loginService, planService: planService, storeKitStateChecker: StoreKitStateCheckerMock())
         let coordinator = SignUpCoordinator(factory: factory)
-        
+
         XCTAssertFalse(planSelectionOpened)
         XCTAssertFalse(signupOpened)
         coordinator.start()
@@ -51,7 +51,7 @@ class SignUpCoordinatorTests: XCTestCase {
         var planSelectionOpened = false
         var signupOpened = false
         var accountPlan: AccountPlan?
-        
+
         let loginService = LoginServiceMock()
         loginService.callbackPresentRegistrationForm = { viewModel in
             signupOpened = true
@@ -67,7 +67,7 @@ class SignUpCoordinatorTests: XCTestCase {
         stateChecker.buyProcessRunning = true
         let factory = CoordinatorFactory(appSessionManager: appSessionManager, loginService: loginService, planService: planService, storeKitStateChecker: stateChecker)
         let coordinator = SignUpCoordinator(factory: factory)
-        
+
         XCTAssertFalse(planSelectionOpened)
         XCTAssertFalse(signupOpened)
         coordinator.start()
@@ -93,33 +93,33 @@ private class CoordinatorFactory: SignUpCoordinator.Factory {
     func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
         PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed, servicePlanDataService: ServicePlanDataServiceMock(), planSelectionFinished: planSelectionFinished, storeKitManager: StoreKitManagerMock(), alertService: alertService)
     }
-    
+
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel {
         PlanSelectionWithPurchaseViewModel(appSessionManager: appSessionManager, planService: planService, alertService: AlertServiceEmptyStub(), servicePlanDataService: ServicePlanDataServiceMock(), storeKitManager: StoreKitManagerMock())
     }
-    
+
     func makeLoginService() -> LoginService {
         loginService
     }
-    
+
     func makePlanService() -> PlanService {
         planService
     }
-    
+
     func makeSignUpFormViewModel(plan: AccountPlan) -> SignUpFormViewModel {
         let mock = SignUpFormViewModelMock()
         mock.accountPlan = plan
         return mock
     }
-    
+
     func makeCoreAlertService() -> CoreAlertService {
         AlertServiceEmptyStub()
     }
-    
+
     func makeStoreKitManager() -> StoreKitManager {
         StoreKitManagerMock()
     }
-    
+
     func makeStoreKitStateChecker() -> StoreKitStateChecker {
         storeKitStateChecker
     }
@@ -128,11 +128,11 @@ private class CoordinatorFactory: SignUpCoordinator.Factory {
 private class StoreKitStateCheckerMock: StoreKitStateChecker {
     public var buyProcessRunning = false
     public var accountPlan: AccountPlan?
-    
+
     func isBuyProcessRunning() -> Bool {
         buyProcessRunning
     }
-    
+
     func planBuyStarted() -> AccountPlan? {
         accountPlan
     }

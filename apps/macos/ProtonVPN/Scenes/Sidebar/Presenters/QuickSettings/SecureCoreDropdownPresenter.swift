@@ -30,32 +30,32 @@ import VPNAppCore
 
 class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
-    
+
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    
+
     override var alert: UpsellAlert {
         SecureCoreUpsellAlert()
     }
-    
+
     override var title: String! {
         Localizable.secureCore
     }
-    
+
     override var learnLink: String {
         VPNLink.learnMore.urlString
     }
-    
+
     init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
-    
+
     override var options: [QuickSettingsDropdownOptionPresenter] {
         [secureCoreOff, secureCoreOn]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
@@ -66,9 +66,9 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 5) - 12
         }
     }
-    
+
     // MARK: - Private
-    
+
     private var secureCoreOff: QuickSettingGenericOption {
         let active = !propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOff.capitalized
@@ -85,7 +85,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
             }
         )
     }
-    
+
     private var secureCoreOn: QuickSettingGenericOption {
         let active = propertiesManager.secureCoreToggle
         let text = Localizable.secureCore + " " + Localizable.switchSideButtonOn.capitalized
@@ -121,13 +121,13 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
             }
         )
     }
-    
+
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {
         isOn
             ? currentUserTier.isFreeTier
             : false
     }
-    
+
     private var currentUserTier: Int {
         (try? vpnGateway.userTier()) ?? .freeTier
     }

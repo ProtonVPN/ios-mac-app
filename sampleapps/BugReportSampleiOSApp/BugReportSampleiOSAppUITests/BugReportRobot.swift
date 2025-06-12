@@ -64,39 +64,39 @@ class BugReportRobot {
         app.buttons[somethingElseIssue].tap()
         return BugReportRobot()
     }
-    
+
     func contactUs() -> BugReportRobot {
         app.buttons[contactUsButton].tap()
         return BugReportRobot()
     }
-    
+
     func cancelReport() -> BugReportRobot {
         app.buttons[cancelButton].tap()
         return BugReportRobot()
     }
-    
+
     func reportUsingTheAppIssue() -> BugReportRobot {
         app.buttons[usingTheAppIssue].tap()
         return BugReportRobot()
     }
-    
+
     func reportBrowsingSpeedIssue() -> BugReportRobot {
         app.buttons[browsingSpeedIssue].tap()
         return BugReportRobot()
     }
-    
+
     func enterEmailAddress(_ email: String) -> BugReportRobot {
         app.textFields[emailTextField].tap()
         app.textFields[emailTextField].typeText(email)
         return BugReportRobot()
     }
-    
+
     func enterDescription(_ text: String) -> BugReportRobot {
         app.textViews[whatWentWrongTextField].tap()
         app.textViews[whatWentWrongTextField].typeText(text)
         return BugReportRobot()
     }
-    
+
     func fillDetails(_ text: String) -> BugReportRobot {
         app.textFields[networkTypeTextField].tap()
         app.textFields[networkTypeTextField].typeText(text)
@@ -109,12 +109,12 @@ class BugReportRobot {
         XCUIApplication().keyboards.buttons["Return"].tap()
         return BugReportRobot()
     }
-    
+
     func sendBugReport() -> BugReportRobot {
         app.buttons[sendReportButton].tap()
         return BugReportRobot()
     }
-    
+
     // need to fix toggle a11y
     func toggleSendLogs() -> BugReportRobot {
         app.switches[logsSwitch].firstMatch.tap()
@@ -122,20 +122,20 @@ class BugReportRobot {
         app.switches[logsSwitch].firstMatch.tap()
         return BugReportRobot()
     }
-    
+
     func backToPreviousScreen() -> BugReportRobot {
         app.buttons[backButton].tap()
         return BugReportRobot()
     }
-    
+
     func openTroubleshootScreen() -> BugReportRobot {
         XCTAssert(app.buttons[troubleshootgButton].waitForExistence(timeout: 3))
         app.buttons[troubleshootgButton].tap()
         return BugReportRobot()
     }
-    
+
     public let verify = Verify()
-    
+
     class Verify {
         @discardableResult
         func reportAnIssueScreenIsShown() -> BugReportRobot {
@@ -145,7 +145,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[somethingElseIssue].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func usingTheAppScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[stepTwoTitle].exists)
@@ -156,7 +156,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[cancelButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         func browsingSpeedScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[stepTwoTitle].exists)
             XCTAssertTrue(app.staticTexts[stepTwoSubtitle].exists)
@@ -165,20 +165,20 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[cancelButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func bugReportFormIsShown() -> BugReportRobot {
             XCTAssert(app.textFields[emailTextField].waitForExistence(timeout: 6))
             XCTAssertFalse(app.buttons[sendReportButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func sendErrorLogsWarningIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[logsWarning].exists)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func successMessageIsShown() -> BugReportRobot {
             XCTAssert(app.staticTexts[successMessageTitle].waitForExistence(timeout: 5))
@@ -186,7 +186,7 @@ class BugReportRobot {
             app.buttons[gotItButton].tap()
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func errorMessageIsShown() -> BugReportRobot {
             XCTAssert(app.staticTexts[errorMessageTitle].waitForExistence(timeout: 5))
@@ -196,7 +196,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[sendReportButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func troubleshootButtonIsClicked() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[statusLabel].exists)

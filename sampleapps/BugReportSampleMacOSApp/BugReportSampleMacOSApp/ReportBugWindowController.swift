@@ -23,19 +23,19 @@ class ReportBugWindowController: NSWindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: NSViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
     }
-    
+
     private func setupWindow() {
         guard let window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = "Bug report"
         window.titlebarAppearsTransparent = true

@@ -38,7 +38,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
         case idle
         case hovered
     }
-    
+
     private let minWidth: CGFloat = 100
     private let fallBackWidth: CGFloat = 160
     fileprivate let titlePadding: CGFloat = 15
@@ -54,16 +54,16 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
         return true
     }
-    
+
     // triggered by any state change
     var viewStateChange: (() -> Void)?
-    
+
     fileprivate let appStateManager: AppStateManager
-    
+
     let available: Bool
     let countryCode: String
     let coordinate: CLLocationCoordinate2D
-    
+
     var isConnected: Bool {
         appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.countryCode == countryCode
@@ -87,12 +87,12 @@ class CountryAnnotationViewModel: CustomStyleContext {
     var attributedDisconnect: NSAttributedString {
         style(Localizable.disconnect, font: .themeFont(bold: true))
     }
-    
+
     var attributedCountry: NSAttributedString {
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         return style(countryName, font: .themeFont(bold: true))
     }
-    
+
     var buttonWidth: CGFloat {
         let countryWidth = attributedCountry.size().width + titlePadding * 2 + badgeImageOffset
         let connectWidth = attributedConnect.size().width + titlePadding * 2
@@ -101,13 +101,13 @@ class CountryAnnotationViewModel: CustomStyleContext {
         let widths = [minWidth, countryWidth, connectWidth, upgradeWidth, disconnectWidth]
         return 2 * round((widths.max() ?? fallBackWidth) / 2) // prevents bluring on non-retina
     }
-    
+
     fileprivate(set) var state: ViewState = .idle {
         didSet {
             viewStateChange?()
         }
     }
-    
+
     init(appStateManager: AppStateManager, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
@@ -118,18 +118,18 @@ class CountryAnnotationViewModel: CustomStyleContext {
         }
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
-    
+
     init(appStateManager: AppStateManager, countryCode: String, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
         available = true
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
-    
+
     func uiStateUpdate(_ state: ViewState) {
         self.state = state
     }
-    
+
     func appStateChanged(to appState: AppState) {
         if !appState.isStable {
             state = .idle
@@ -164,7 +164,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
 
 class ConnectableAnnotationViewModel: CountryAnnotationViewModel {
     fileprivate let vpnGateway: VpnGatewayProtocol
-    
+
     init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.vpnGateway = vpnGateway
         super.init(appStateManager: appStateManager, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
@@ -181,7 +181,7 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             && appStateManager.activeConnection()?.server.isSecureCore == false
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
-    
+
     func countryConnectAction() {
         if isConnected {
             log.debug("Disconnect requested by pressing on country on the map.", category: .connectionDisconnect, event: .trigger)
@@ -211,18 +211,18 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 
     // triggered by ui-based views' state changes
     var externalViewStateChange: ((SCExitCountrySelection) -> Void)?
-    
+
     override var isConnected: Bool {
         appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.hasSecureCore == true
             && appStateManager.activeConnection()?.server.countryCode == countryCode
     }
-    
+
     init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, countryCode: String, minTier: Int, servers: [ServerInfo], userTier: Int, coordinate: CLLocationCoordinate2D) {
         self.servers = servers
         super.init(appStateManager: appStateManager, vpnGateway: vpnGateway, countryCode: countryCode, minTier: minTier, userTier: userTier, coordinate: coordinate)
     }
-    
+
     func serverConnectAction(forRow row: Int) {
         if serverIsConnected(for: row) {
             log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
@@ -239,11 +239,11 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
             vpnGateway.connectTo(server: serverLegacyModel)
         }
     }
-    
+
     func matches(_ code: String) -> Bool {
         countryCode == code
     }
-    
+
     func attributedServer(for row: Int) -> NSAttributedString {
         guard servers.count > row else { return NSAttributedString() }
         let font = NSFont.themeFont()
@@ -254,18 +254,18 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
         title.setAlignment(.center, range: range)
         return title
     }
-    
+
     func attributedConnectTitle(for row: Int) -> NSAttributedString {
         serverIsConnected(for: row) ? attributedDisconnect : attributedConnect
     }
-    
+
     func serverIsConnected(for row: Int) -> Bool {
         guard servers.count > row else { return false }
         return appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.exitCountryCode == servers[row].logical.exitCountryCode
             && appStateManager.activeConnection()?.server.entryCountryCode == servers[row].logical.entryCountryCode
     }
-    
+
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
         super.uiStateUpdate(state)
         let selection = SCExitCountrySelection(selected: state == .hovered, connected: isConnected, countryCode: countryCode)
@@ -276,42 +276,42 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
 class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     // triggered by ui-based views' state changes
     var externalViewStateChange: ((SCEntryCountrySelection) -> Void)?
-    
+
     let exitCountryCodes: [String]
     let country: String
-    
+
     override var isConnected: Bool {
         appStateManager.state.isConnected
             && appStateManager.activeConnection()?.server.hasSecureCore == true
             && appStateManager.activeConnection()?.server.entryCountryCode == countryCode
     }
-    
+
     override var attributedCountry: NSAttributedString {
         Localizable.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable).styled()
     }
-    
+
     override var buttonWidth: CGFloat {
         2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
     }
-    
+
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
         country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
     }
-    
+
     func toggleState() {
         state = (state == .idle) ? .hovered : .idle
         let selection = SCEntryCountrySelection(selected: state == .hovered, countryCode: countryCode, exitCountryCodes: exitCountryCodes)
         externalViewStateChange?(selection)
     }
-    
+
     override func uiStateUpdate(_ state: CountryAnnotationViewModel.ViewState) {
         super.uiStateUpdate(state)
         let selection = SCEntryCountrySelection(selected: state == .hovered, countryCode: countryCode, exitCountryCodes: exitCountryCodes)
         externalViewStateChange?(selection)
     }
-    
+
     // MARK: - SecureCoreAnnotation protocol implementation
 
     func countrySelected(_ selection: SCExitCountrySelection) {
@@ -329,7 +329,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
             }
         }
     }
-    
+
     func secureCoreSelected(_ selection: SCEntryCountrySelection) {
         if selection.countryCode != countryCode {
             state = .idle

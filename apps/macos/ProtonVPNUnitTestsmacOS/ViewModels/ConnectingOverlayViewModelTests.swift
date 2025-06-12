@@ -29,7 +29,7 @@
     class ConnectingOverlayViewModelTests: XCTestCase {
         var viewModel: ConnectingOverlayViewModel!
         var container: ConnectingOverlayViewModelMockFactory!
-    
+
         override func setUpWithError() throws {
             try super.setUpWithError()
             container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
@@ -41,7 +41,7 @@
             viewModel = nil
             container = nil
         }
-    
+
         func testWhenAppStateIsChangedDelegateIsInformed() throws {
             let expectation = XCTestExpectation(description: "Delegate method is called")
             let delegate: OverlayViewModelDelegateMock? = OverlayViewModelDelegateMock(stateChangedCalled: {
@@ -49,10 +49,10 @@
             })
             viewModel.delegate = delegate
             container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
-        
+
             wait(for: [expectation], timeout: 5)
         }
-    
+
         func testAfterStateIsConnectedViewModelStopsChanging() throws {
             let expectation = XCTestExpectation(description: "Delegate method is called")
             expectation.expectedFulfillmentCount = 1
@@ -65,10 +65,10 @@
             container.appStateManager.state = .preparingConnection
             container.appStateManager.state = .preparingConnection
             container.appStateManager.state = .aborted(userInitiated: false)
-        
+
             wait(for: [expectation], timeout: 5)
         }
-    
+
         func testAfterStateIsDisconnectedAndOnDemandEnabledNothingHappens() throws {
             let expectation = XCTestExpectation(description: "Delegate method is called")
             expectation.isInverted = true
@@ -78,63 +78,63 @@
             viewModel.delegate = delegate
             container.appStateManager.isOnDemand = true
             container.appStateManager.state = .disconnected
-        
+
             wait(for: [expectation], timeout: 0.5)
         }
-    
+
         func testWhenAppStateIsPreparingConnectionCancelButtonIsShown() throws {
             container.appStateManager.state = .preparingConnection
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 1)
             XCTAssert(buttons[0].0 == Localizable.cancel)
         }
-    
+
         func testWhenAppStateIsConnectingCancelButtonIsShown() throws {
             container.appStateManager.state = .connecting(ServerDescriptor(username: "", address: ""))
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 1)
             XCTAssert(buttons[0].0 == Localizable.cancel)
         }
-    
+
         func testWhenAppStateIsConnnectedDoneButtonIsShown() throws {
             container.appStateManager.state = .connected(ServerDescriptor(username: "", address: ""))
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 1)
             XCTAssert(buttons[0].0 == Localizable.done)
         }
-    
+
         func testWhenAppStateIsDisconnectingCancelButtonIsShown() throws {
             container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 1)
             XCTAssert(buttons[0].0 == Localizable.cancel)
         }
-    
+
         func testWhenAppStateIsErrorCancelButtonIsShown() throws {
             container.appStateManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 1)
             XCTAssert(buttons[0].0 == Localizable.cancel)
         }
-    
+
         func testWhenAppStateIsAbortedRetryAndCancelButtonsAreShown() throws {
             container.appStateManager.state = .aborted(userInitiated: false)
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 2)
             XCTAssert(buttons[0].0 == Localizable.tryAgain)
             XCTAssert(buttons[1].0 == Localizable.cancel)
         }
-    
+
         func testWhenAppStateIsAbortedAndIkev2AndKSAreDetectedDisableKSAndSwitchToOpenVpnAreShown() throws {
             container.appStateManager.state = .aborted(userInitiated: false)
             container.propertiesManager.killSwitch = true
-        
+
             let buttons = viewModel.buttons
             XCTAssert(buttons.count == 3)
             XCTAssert(buttons[0].0 == Localizable.timeoutKsIkeSwitchProtocol)
@@ -147,35 +147,35 @@
         public init(vpnGateway: VpnGatewayMock) {
             self.vpnGateway = vpnGateway
         }
-    
+
         // MARK: - VpnProtocolChangeManagerFactory
-    
+
         var vpnProtocolChangeManager: VpnProtocolChangeManagerMock = .init()
-    
+
         func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
             vpnProtocolChangeManager
         }
-    
+
         // MARK: - AppStateManagerFactory
-    
+
         var appStateManager: AppStateManagerMock = .init()
-    
+
         func makeAppStateManager() -> AppStateManager {
             appStateManager
         }
-    
+
         // MARK: - PropertiesManagerFactory
-    
+
         var propertiesManager: PropertiesManagerMock = .init()
-    
+
         func makePropertiesManager() -> PropertiesManagerProtocol {
             propertiesManager
         }
-    
+
         // MARK: - VpnGatewayFactory
-    
+
         var vpnGateway: VpnGatewayMock
-    
+
         func makeVpnGateway() -> VpnGatewayProtocol {
             vpnGateway
         }
@@ -183,11 +183,11 @@
 
     class OverlayViewModelDelegateMock: OverlayViewModelDelegate {
         var stateChangedCalled: (() -> Void)?
-    
+
         init(stateChangedCalled: @escaping (() -> Void)) {
             self.stateChangedCalled = stateChangedCalled
         }
-    
+
         func stateChanged() {
             stateChangedCalled?()
         }

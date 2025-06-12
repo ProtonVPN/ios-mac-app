@@ -33,19 +33,19 @@ class ProtonVpnMenuController: NSObject {
     @IBOutlet var showAllItem: NSMenuItem!
     @IBOutlet var logOutItem: NSMenuItem!
     @IBOutlet var quitItem: NSMenuItem!
-    
+
     private var viewModel: ProtonVpnMenuViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupPersistentView()
     }
-    
+
     func update(with viewModel: ProtonVpnMenuViewModel) {
         self.viewModel = viewModel
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
-    
+
     // MARK: - Private functions
 
     private func setupPersistentView() {
@@ -53,61 +53,61 @@ class ProtonVpnMenuController: NSObject {
         aboutItem.isEnabled = true
         aboutItem.target = self
         aboutItem.action = #selector(aboutItemAction)
-        
+
         checkForUpdatesItem.title = Localizable.menuCheckUpdates
         checkForUpdatesItem.isEnabled = true
         checkForUpdatesItem.target = self
         checkForUpdatesItem.action = #selector(checkForUpdatesAction)
-        
+
         preferencesItem.title = Localizable.menuPreferences
         preferencesItem.isEnabled = false
         preferencesItem.target = self
         preferencesItem.action = #selector(preferencesItemAction)
-        
+
         logOutItem.title = Localizable.menuLogout
         logOutItem.isEnabled = false
         logOutItem.target = self
         logOutItem.action = #selector(logOutItemAction)
-        
+
         showAllItem.title = Localizable.menuShowAll
         showAllItem.isEnabled = true
         showAllItem.target = self
         showAllItem.action = #selector(showAllItemAction)
-        
+
         quitItem.title = Localizable.menuQuit
         quitItem.isEnabled = true
         quitItem.target = self
         quitItem.action = #selector(quitItemAction)
-        
+
         hideProtonItem.title = Localizable.menuHideSelf
         hideOthersItem.title = Localizable.menuHideOthers
     }
-    
+
     private func setupEphemeralView() {
         preferencesItem.isEnabled = viewModel.isPreferencesEnabled
         logOutItem.isEnabled = viewModel.isLogOutEnabled
     }
-    
+
     @objc private func aboutItemAction() {
         viewModel.openAboutAction()
     }
-    
+
     @objc private func checkForUpdatesAction() {
         viewModel.checkForUpdatesAction()
     }
-    
+
     @objc private func preferencesItemAction() {
         viewModel.openPreferencesAction()
     }
-    
+
     @objc private func logOutItemAction() {
         viewModel.logOutAction()
     }
-    
+
     @objc private func showAllItemAction() {
         viewModel.showAllAction()
     }
-    
+
     @objc private func quitItemAction() {
         viewModel.quitAction()
     }

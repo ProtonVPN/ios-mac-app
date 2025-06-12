@@ -86,7 +86,7 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    // MARK: - 
+    // MARK: -
 
     public func backupCustomSettings() -> [String: Any] {
         ensureProviderConfig()

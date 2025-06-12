@@ -31,7 +31,7 @@ final class ProfilesTableViewCell: UITableViewCell {
     @IBOutlet var connectionDescription: UILabel!
     @IBOutlet var overlayButton: UIButton!
     @IBOutlet var connectButton: UIButton!
-    
+
     var viewModel: ProfileItemViewModel? {
         didSet {
             guard let viewModel else { return }
@@ -47,19 +47,19 @@ final class ProfilesTableViewCell: UITableViewCell {
                 profileImage.layer.cornerRadius = 10
                 profileImage.layer.masksToBounds = true
             }
-            
+
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             profileName.attributedText = viewModel.description // e.g. Country >> Server
             connectionDescription.attributedText = viewModel.name
-            
+
             for view in [profileImage, labelsStackView] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
-            
+
             stateChanged()
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -71,7 +71,7 @@ final class ProfilesTableViewCell: UITableViewCell {
         tintColor = .normalTextColor()
         connectButton.backgroundColor = .weakInteractionColor()
     }
-    
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         if editing {
@@ -87,17 +87,17 @@ final class ProfilesTableViewCell: UITableViewCell {
             overlayButton.isUserInteractionEnabled = true
         }
     }
-    
+
     @IBAction func connect(_ sender: Any) {
         viewModel?.connectAction()
     }
-    
+
     private func stateChanged() {
         if !isEditing {
             renderConnectButton()
         }
     }
-    
+
     private func renderConnectButton() {
         guard let viewModel else {
             return
@@ -112,7 +112,7 @@ final class ProfilesTableViewCell: UITableViewCell {
             connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             connectButton.layer.cornerRadius = 20
             connectButton.backgroundColor = viewModel.isConnected || viewModel.isConnecting ?
-                .brandColor() : 
+                .brandColor() :
                 .weakInteractionColor()
         }
     }

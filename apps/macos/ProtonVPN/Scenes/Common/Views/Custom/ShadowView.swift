@@ -25,29 +25,29 @@ import Cocoa
 class ShadowView: NSView {
     private var darkness = NSColor(red: 0, green: 0, blue: 0, alpha: 0.25)
     private var gradientHeight: CGFloat!
-    
+
     override var isFlipped: Bool {
         true
     }
-    
+
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
-        
+
         gradientHeight = bounds.height
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
+
         let colors = [darkness.cgColor, NSColor.clear.cgColor]
         let colorPoints: [CGFloat] = [0, 1]
         let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors as CFArray, locations: colorPoints)!
-        
+
         context.drawLinearGradient(gradient, start: bounds.origin, end: CGPoint(x: 0, y: gradientHeight), options: [])
     }
-    
+
     func shadow(for height: CGFloat) {
         darkness = NSColor(red: 0, green: 0, blue: 0, alpha: height < bounds.height ? abs((0.25 * height) / bounds.height) : 0.25)
         needsDisplay = true

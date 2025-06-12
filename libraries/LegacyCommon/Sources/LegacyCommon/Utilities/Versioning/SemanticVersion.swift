@@ -26,21 +26,21 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     public let metadataComponents: [String]
     public let releaseComponents: [String]
     public let versionComponents: [Int]
-    
+
     public var description: String
-    
+
     public var major: Int {
         versionComponents[0]
     }
-    
+
     public var minor: Int {
         versionComponents[1]
     }
-    
+
     public var patch: Int {
         versionComponents[2]
     }
-    
+
     public init(_ version: String) throws {
         description = version
         metadataComponents = version.components(separatedBy: "+")
@@ -51,13 +51,13 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
         }
         versionComponents = versionStringComponents.map { Int($0) ?? 0 }
     }
-    
+
     enum SemanticVersionError: Error {
         case wrongVersionComponentsCount
     }
-    
+
     // MARK: Comparison
-    
+
     /// Compare two version strings
     /// Compares according to https://semver.org/#spec-item-11
     /// Important: not all comparison rules are imlemented. Only basis pre-release versions check is done.
@@ -66,55 +66,55 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
         for i in 0 ..< versionComponents.count {
             let thisVersion = versionComponents[i]
             let otherVersion = other.versionComponents[i]
-            
+
             guard thisVersion != otherVersion else {
                 continue
             }
-            
+
             return thisVersion < otherVersion ? .orderedAscending : .orderedDescending
         }
-        
+
         let preReleaseOrder = comparePreRelease(to: other)
         guard preReleaseOrder == .orderedSame else {
             return preReleaseOrder
         }
-        
+
         return .orderedSame
     }
-    
+
     private func comparePreRelease(to other: SemanticVersion) -> ComparisonResult {
         if releaseComponents.count > other.releaseComponents.count {
             return .orderedAscending
         } else if releaseComponents.count < other.releaseComponents.count {
             return .orderedDescending
         }
-        
+
         guard releaseComponents.count > 1 else {
             return .orderedSame
         }
-        
+
         for i in 1 ..< releaseComponents.count {
             let thisPreRelease = releaseComponents[i]
             let otherPreRelease = other.releaseComponents[i]
-            
+
             guard thisPreRelease != otherPreRelease else {
                 continue
             }
-            
+
             return thisPreRelease.compare(otherPreRelease)
         }
-        
+
         return .orderedSame
     }
-    
+
     public static func == (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         lhs.compare(to: rhs) == .orderedSame
     }
-    
+
     public static func > (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         lhs.compare(to: rhs) == .orderedDescending
     }
-    
+
     public static func < (lhs: SemanticVersion, rhs: SemanticVersion) -> Bool {
         lhs.compare(to: rhs) == .orderedAscending
     }

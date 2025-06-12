@@ -28,14 +28,14 @@ protocol ServerTierCheckerFactory {
 
 class ServerTierChecker {
     public weak var alertService: CoreAlertService?
-    
+
     private let vpnKeychain: VpnKeychainProtocol
-    
+
     init(alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
     }
-    
+
     func serverRequiresUpgrade(_ server: ServerModel) -> Bool? {
         do {
             let userTier = try userTier()
@@ -50,7 +50,7 @@ class ServerTierChecker {
             return false
         }
     }
-    
+
     func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
         DispatchQueue.main.async { [weak self] in
             switch reason {
@@ -65,7 +65,7 @@ class ServerTierChecker {
             }
         }
     }
-    
+
     private func userTier() throws -> Int {
         let tier = try vpnKeychain.fetchCached().maxTier
         return tier

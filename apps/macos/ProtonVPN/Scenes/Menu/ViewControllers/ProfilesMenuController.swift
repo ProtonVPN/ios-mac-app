@@ -29,42 +29,42 @@ class ProfilesMenuController: NSObject {
     @IBOutlet var profilesMenu: NSMenu!
     @IBOutlet var overviewItem: NSMenuItem!
     @IBOutlet var createNewProfileItem: NSMenuItem!
-    
+
     private var viewModel: ProfilesMenuViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         setupPersistentView()
     }
-    
+
     func update(with viewModel: ProfilesMenuViewModel) {
         self.viewModel = viewModel
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
         viewModel.contentChanged?()
     }
-    
+
     // MARK: - Private functions
 
     private func setupPersistentView() {
         profilesMenu.title = Localizable.profiles
         profilesMenu.autoenablesItems = false
-        
+
         overviewItem.title = Localizable.overview
         overviewItem.isEnabled = false
         overviewItem.target = self
         overviewItem.action = #selector(overviewItemAction)
-        
+
         createNewProfileItem.title = Localizable.createNewProfile
         createNewProfileItem.isEnabled = false
         createNewProfileItem.target = self
         createNewProfileItem.action = #selector(createNewProfileItemAction)
     }
-    
+
     @objc private func overviewItemAction() {
         viewModel.overviewAction()
     }
-    
+
     @objc private func createNewProfileItemAction() {
         viewModel.createNewProfileAction()
     }

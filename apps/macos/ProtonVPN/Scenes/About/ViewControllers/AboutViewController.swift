@@ -40,25 +40,25 @@ class AboutViewController: NSViewController {
     @IBOutlet var acknowledgementsButton: InteractiveActionButton!
     @IBOutlet var changelogLabel: PVPNTextField!
     @IBOutlet var webView: WKWebView!
-    
+
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var bundle: Bundle = .main
     private lazy var navigationService = factory.makeNavigationService()
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required init() {
         super.init(nibName: NSNib.Name("About"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
         setupComponents()
@@ -66,23 +66,23 @@ class AboutViewController: NSViewController {
             self?.setupComponents()
         }
     }
-    
+
     override func viewWillDisappear() {
         super.viewWillDisappear()
         updateManager.stateUpdated = nil
     }
-    
+
     @IBAction func acknowledgementsPressed(_ sender: Any) {
         navigationService.openAcknowledgements()
     }
-    
+
     private func setupView() {
         backgroundView.wantsLayer = true
         DarkAppearance {
             backgroundView.layer?.backgroundColor = .cgColor(.background)
         }
     }
-    
+
     private func setupComponents() {
         let versionString = NSMutableAttributedString()
         versionString.append(currentVersion.styled(font: .themeFont(bold: true), alignment: .left))
@@ -91,12 +91,12 @@ class AboutViewController: NSViewController {
         imageHeader.image = Theme.Asset.vpnWordmarkAlwaysDark.image
         versionTitleLabel.attributedStringValue = Localizable.versionCurrent.styled(alignment: .left)
         versionLabel.attributedStringValue = versionString
-                            
+
         dateTitleLabel.attributedStringValue = Localizable.releaseDate.styled(alignment: .left)
         dateLabel.attributedStringValue = currentVersionReleaseDate.styled(font: .themeFont(bold: true), alignment: .left)
 
         acknowledgementsButton.title = Localizable.acknowledgements
-        
+
         changelogLabel.attributedStringValue = Localizable.changelog.styled(font: .themeFont(.heading3, bold: true), alignment: .left)
 
         DarkAppearance {
@@ -104,17 +104,17 @@ class AboutViewController: NSViewController {
         }
         webView.loadHTMLString(changelogHtml, baseURL: nil)
     }
-        
+
     // MARK: - Texts
-    
+
     private var currentVersion: String {
         updateManager.currentVersion ?? Localizable.unavailable.lowercased()
     }
-    
+
     private var currentBuild: String {
         updateManager.currentBuild ?? Localizable.unavailable.lowercased()
     }
-    
+
     private var currentVersionReleaseDate: String {
         guard let currentDate = updateManager.currentVersionReleaseDate else {
             return Localizable.unavailable.lowercased()
@@ -124,7 +124,7 @@ class AboutViewController: NSViewController {
         dateFormatter.timeStyle = .none
         return dateFormatter.string(from: currentDate)
     }
-    
+
     private var changelogHtml: String {
         guard let path = Bundle.main.path(forResource: "text-template", ofType: "html"), let htmlTemplate = try? String(contentsOfFile: path) else {
             return ""
@@ -134,7 +134,7 @@ class AboutViewController: NSViewController {
         let html = htmlTemplate.replacingOccurrences(of: "</body>", with: "\(htmlBody)</body>")
         return html
     }
-    
+
     private func extractHtmlBody(_ input: String) -> String {
         var result = input.replacingOccurrences(of: "<![CDATA[", with: "")
         result = result.replacingOccurrences(of: "<!DOCTYPE html>", with: "")

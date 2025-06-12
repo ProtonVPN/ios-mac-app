@@ -24,7 +24,7 @@ import UIKit
 
 final class ColorPickerItem: UICollectionViewCell {
     @IBOutlet private var colorCircleView: UIView!
-    
+
     var color: UIColor = .backgroundColor() {
         didSet {
             colorCircleView.backgroundColor = color
@@ -41,23 +41,23 @@ final class ColorPickerItem: UICollectionViewCell {
             }
         }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         layer.cornerRadius = layer.frame.size.height / 2
         colorCircleView.layer.cornerRadius = colorCircleView.layer.frame.size.height / 2
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
         translatesAutoresizingMaskIntoConstraints = true
 
         colorCircleView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         colorCircleView.translatesAutoresizingMaskIntoConstraints = true
-        
+
         backgroundColor = isSelected ? .normalTextColor() : .clear
     }
 }

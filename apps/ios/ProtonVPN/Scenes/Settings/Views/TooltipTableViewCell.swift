@@ -24,10 +24,10 @@ import UIKit
 
 class TooltipTableViewCell: UITableViewCell {
     @IBOutlet var tooltipLabel: UITextView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .backgroundColor()
         tooltipLabel.textColor = UIColor.weakTextColor()
         tooltipLabel.linkTextAttributes = [
@@ -35,13 +35,13 @@ class TooltipTableViewCell: UITableViewCell {
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
+
     static func attributedText(for text: String) -> NSAttributedString {
         text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
     }

@@ -29,33 +29,33 @@ class ServersFeaturesInformationVC: UIViewController {
     @IBOutlet var titleLbl: UILabel!
     @IBOutlet var closeButton: UIButton!
     @IBOutlet var featuresTableView: UITableView!
-    
+
     let viewModel: ServersFeaturesInformationViewModel
-    
+
     init(_ viewModel: ServersFeaturesInformationViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - ViewCycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor()
         titleLbl.text = Localizable.informationTitle
-        closeButton.setImage(IconProvider.crossBig, for: .normal) 
+        closeButton.setImage(IconProvider.crossBig, for: .normal)
         featuresTableView.register(FeatureTableViewCell.nib, forCellReuseIdentifier: FeatureTableViewCell.identifier)
         featuresTableView.dataSource = self
         featuresTableView.delegate = self
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func didTapDismiss(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -65,11 +65,11 @@ extension ServersFeaturesInformationVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.totalFeatures
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.featuresCount(for: section)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FeatureTableViewCell.identifier, for: indexPath) as! FeatureTableViewCell
         cell.viewModel = viewModel.getFeatureViewModel(indexPath: indexPath)
@@ -81,7 +81,7 @@ extension ServersFeaturesInformationVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         viewModel.headerHeight
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
         headerView.setName(name: viewModel.titleFor(section))

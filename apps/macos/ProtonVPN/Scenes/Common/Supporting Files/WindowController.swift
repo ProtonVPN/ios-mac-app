@@ -29,45 +29,45 @@ protocol WindowControllerDelegate: AnyObject {
 
 class WindowController: NSWindowController {
     private var eventMonitor: Any?
-    
+
     var monitorsKeyEvents: Bool? {
         didSet {
             configureEventMonitor()
         }
     }
-    
+
     weak var delegate: WindowControllerDelegate?
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     override init(window: NSWindow?) {
         super.init(window: window)
         window?.delegate = self
     }
-    
+
     deinit {
         removeEventMonitor()
     }
-    
+
     // MARK: - Private functions
 
     private func configureEventMonitor() {
         guard let monitorsKeyEvents else {
             return
         }
-        
+
         monitorsKeyEvents ? addEventMonitor() : removeEventMonitor()
     }
-    
+
     private func addEventMonitor() {
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
             guard let self else {
                 return nil
             }
-            
+
             if event.window != window {
                 return event
             }
@@ -83,12 +83,12 @@ class WindowController: NSWindowController {
             return event
         }
     }
-    
+
     private func removeEventMonitor() {
         guard let eventMonitor else {
             return
         }
-        
+
         NSEvent.removeMonitor(eventMonitor)
     }
 }

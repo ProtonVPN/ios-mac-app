@@ -23,7 +23,7 @@ import Foundation
         static func tier(_ tier: Int, planName: String = "Awesome") -> Self {
             .init(
                 status: 0,
-                planName: planName, 
+                planName: planName,
                 planTitle: "does it matter?",
                 maxConnect: 10,
                 maxTier: tier,

@@ -30,26 +30,26 @@ class AutoConnectTests: ProtonVPNUITests {
         logoutIfNeeded()
         loginAsPlusUser()
     }
-    
+
     override func tearDown() {
         super.tearDown()
-        
+
         // wating for loading screen disappear in case app stuck
         waitForLoaderDisappear(60)
-        
+
         if mainRobot.isConnected() {
             mainRobot.disconnect()
         } else if mainRobot.isConnecting() || mainRobot.isConnectionTimedOut() {
             mainRobot.cancelConnecting()
         }
-        
+
         mainRobot
             .openAppSettings()
             .connectionTabClick()
             .selectAutoConnect(AutoConnectOptions.Disabled)
             .closeSettings()
     }
-    
+
     @MainActor
     func testConnectionAutoConnectFastest() {
         mainRobot
@@ -61,29 +61,29 @@ class AutoConnectTests: ProtonVPNUITests {
             .verify.checkAutoConnectSelected(AutoConnectOptions.Fastest)
             .closeSettings()
             .verify.checkConnectionCardIsDisconnected()
-        
+
         relaunchApp()
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
-        
+
         let connectedServer1 = mainRobot.getConnectedCountry()
-        
+
         mainRobot
             .disconnect()
-        
+
         relaunchApp()
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
-        
+
         let connectedServer2 = mainRobot.getConnectedCountry()
-        
+
         XCTAssertEqual(connectedServer1, connectedServer2, "App shoudl connect to same server, but connected to different. 1st attempt: \(connectedServer1), 2nd attempt: \(connectedServer2)")
     }
-    
+
     @MainActor
     func testConnectionAutoConnectRandom() {
         mainRobot
@@ -95,29 +95,29 @@ class AutoConnectTests: ProtonVPNUITests {
             .verify.checkAutoConnectSelected(AutoConnectOptions.Random)
             .closeSettings()
             .verify.checkConnectionCardIsDisconnected()
-        
+
         relaunchApp()
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
-        
+
         let connectedServer1 = mainRobot.getHeaderLabelValue()
-        
+
         mainRobot
             .disconnect()
-        
+
         relaunchApp()
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
-        
+
         let connetedServer2 = mainRobot.getConnectedCountry()
-        
+
         XCTAssertNotEqual(connectedServer1, connetedServer2, "App shoudl connect to differend random server, but connected to the same one. 1st attempt: \(connectedServer1), 2nd attempt: \(connetedServer2)")
     }
-    
+
     @MainActor
     func testConnectionAutoConnectDisabled() {
         mainRobot
@@ -128,9 +128,9 @@ class AutoConnectTests: ProtonVPNUITests {
             .selectAutoConnect(AutoConnectOptions.Disabled)
             .verify.checkAutoConnectSelected(AutoConnectOptions.Disabled)
             .closeSettings()
-        
+
         relaunchApp()
-        
+
         mainRobot
             .verify.checkConnectionCardIsDisconnected()
     }

@@ -73,7 +73,7 @@ public struct FlagSizes {
             frame: CGSize(width: 30, height: 24),
             simpleFlag: CGSize(width: 30, height: 20),
             scTopFlag: CGSize(width: 24, height: 16),
-            scBottomFlag: CGSize(width: 18, height: 12), 
+            scBottomFlag: CGSize(width: 18, height: 12),
             cornerRadius: .themeRadius4,
             folder: "Flags/"
         )

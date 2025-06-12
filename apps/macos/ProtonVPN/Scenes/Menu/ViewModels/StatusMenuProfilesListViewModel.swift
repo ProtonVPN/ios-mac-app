@@ -27,17 +27,17 @@ import LegacyCommon
 class StatusMenuProfilesListViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
-    
+
     var contentChanged: (() -> Void)?
-    
+
     var cellHeight: CGFloat {
         44
     }
-    
+
     var cellCount: Int {
         profileManager.allProfiles.count
     }
-    
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -45,22 +45,22 @@ class StatusMenuProfilesListViewModel {
             return .freeTier
         }
     }
-    
+
     init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel {
         StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
     }
-    
+
     @objc private func profilesChanged() {
         contentChanged?()
     }

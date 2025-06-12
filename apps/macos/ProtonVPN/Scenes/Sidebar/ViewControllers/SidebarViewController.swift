@@ -35,9 +35,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
-    
+
     @IBOutlet private var allThings: NSView!
-    
+
     @IBOutlet private var headerControllerViewContainer: NSView!
     @IBOutlet private var tabBarControllerViewContainer: NSView!
     @IBOutlet private var activeControllerViewContainer: NSView!
@@ -46,22 +46,22 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     @IBOutlet private var sidebarContainerView: NSView!
     @IBOutlet private var expandButton: ExpandMapButton!
     @IBOutlet private var expandButtonLeading: NSLayoutConstraint!
-    
+
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
     private var viewToggle: NSNotification.Name!
-    
+
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var loading = false
     private var overlayViewModel: ConnectingOverlayViewModel?
     // Retain header view model to set `changeServerStateUpdated` when needed
     private var headerViewModel: HeaderViewModel?
-    
+
     var appStateManager: AppStateManager!
     var vpnGateway: VpnGatewayProtocol!
     var navService: NavigationService!
-    
+
     typealias Factory = AnnouncementsViewModelFactory
         & ConnectingOverlayViewModelFactory
         & CoreAlertServiceFactory
@@ -72,9 +72,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & PropertiesManagerFactory
         & SystemExtensionManagerFactory
     public var factory: Factory!
-    
+
     private lazy var tabBarViewController: SidebarTabBarViewController = .init()
-    
+
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         let viewModel = factory.makeCountriesSectionViewModel()
         viewToggle = viewModel.contentSwitch
@@ -88,7 +88,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         }
         return countriesViewController
     }()
-    
+
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
         let viewModel = ProfilesSectionViewModel(
             vpnGateway: vpnGateway,
@@ -99,25 +99,25 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         )
         return ProfileSectionViewController(viewModel: viewModel)
     }()
-    
+
     private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
         return MapHeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager)
     }()
-    
+
     private lazy var mapSectionViewModel: MapSectionViewModel = factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
 
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
-    
+
     // MARK: Functions
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupMainView()
         setupHeader()
         setupTabBar()
         tabBarViewController.activeTab = .countries
-        
+
         loading(show: false)
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
@@ -157,12 +157,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             object: nil
         )
     }
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
         view.window?.applySidebarAppearance()
         configureExpandButton()
-        
+
         if let overlayViewModel, !appStateManager.state.isConnected {
             showLoadingOverlay(with: overlayViewModel)
         } else {
@@ -174,46 +174,46 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     override func mouseDown(with event: NSEvent) {
         view.window?.makeFirstResponder(nil)
     }
-    
+
     func windowDidResize(_ notification: Notification) {
         configureExpandButton()
         resizeOverlayWindow()
     }
-    
+
     func windowDidEndLiveResize(_ notification: Notification) {
         guard let window = view.window else { return }
         let width = window.frame.width
-        
+
         if !window.styleMask.contains(.fullScreen), expandButton.expandState == .expanded, width > sidebarWidth + expandButtonWidth {
             @Dependency(\.defaultsProvider) var provider
             provider.getDefaults().set(Int(width - sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
         }
-        
+
         if width > sidebarWidth + expandButtonWidth, expandButton.expandState == .compact {
             expandButton.expandState = .expanded
             expandButtonLeading.constant = -expandButtonWidth
         }
     }
-    
+
     func windowWillEnterFullScreen(_ notification: Notification) {
         // Hide expand button
         expandButton.isHidden = true
     }
-    
+
     func windowWillExitFullScreen(_ notification: Notification) {
         // Show expand button
         expandButton.isHidden = false
     }
-    
+
     func setTab(tab: SidebarTab) {
         tabBarViewController.activeTab = tab
     }
-    
+
     // MARK: - Private
 
     private func configureExpandButton() {
         guard let window = view.window else { return }
-        
+
         if window.frame.width <= sidebarWidth + expandButtonWidth {
             expandButton.expandState = .compact
             expandButtonLeading.constant = 0.0
@@ -223,7 +223,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             expandButtonLeading.constant = -expandButtonWidth
             expandButton.setAccessibilityLabel(Localizable.mapHide)
         }
-        
+
         switch view.userInterfaceLayoutDirection {
         case .leftToRight:
             expandButton.transform = NSAffineTransform()
@@ -235,30 +235,30 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             expandButton.transform = NSAffineTransform()
         }
     }
-    
+
     private func showLoadingOverlay(with viewModel: ConnectingOverlayViewModel) {
         guard let window = view.window else { return }
-        
+
         if let overlayWindow = overlayWindowController?.window, let childWindows = window.childWindows {
             if childWindows.contains(overlayWindow) {
                 return // window is already displayed
             }
         }
-        
+
         let connectingViewController = ConnectingViewController(viewModel: viewModel)
         overlayWindowController = ConnectingWindowController(viewController: connectingViewController)
-        
+
         connectionOverlay.isHidden = false
         window.addChildWindow(overlayWindowController!.window!, ordered: .above)
         resizeOverlayWindow()
         overlayWindowController!.window!.makeKey()
     }
-    
+
     private func loading(show: Bool, animateClose: Bool = false) {
         guard let window = view.window else { return }
-        
+
         loading = show
-        
+
         if show {
             removeConnectingOverlay()
             let cancellation: (() -> Void) = { [weak self] in
@@ -268,9 +268,9 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
 
                 removeConnectingOverlay()
             }
-                        
+
             overlayViewModel = factory.makeConnectingOverlayViewModel(cancellation: cancellation)
-            
+
             if window.isVisible, NSApp.occlusionState.contains(.visible) {
                 showLoadingOverlay(with: overlayViewModel!)
             }
@@ -282,21 +282,21 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 removeConnectingOverlay()
             }
         }
-            
+
         if window.styleMask.contains(.fullScreen) {
             expandButton.isHidden = true
         }
     }
-    
+
     private func removeConnectingOverlay(animated: Bool = false) {
         guard let window = view.window else { return }
-        
+
         overlayViewModel = nil
-        
+
         if let overlayWindowController, let overlayWindow = overlayWindowController.window, let viewController = overlayWindowController.contentViewController as? ConnectingViewController {
             connectionOverlay.stopBlurAnimation()
             viewController.stopAnimatingFade()
-            
+
             if animated {
                 if !connectionOverlay.isHidden {
                     connectionOverlay.removeBlur(over: 0.5) { [weak self] in
@@ -307,7 +307,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                         connectionOverlay.isHidden = true
                     }
                 }
-                
+
                 viewController.fade(over: 0.5, completion: { [weak self] in
                     window.removeChildWindow(overlayWindow)
                     overlayWindowController.close()
@@ -315,14 +315,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 })
             } else {
                 connectionOverlay.isHidden = true
-                
+
                 window.removeChildWindow(overlayWindow)
                 overlayWindowController.close()
                 self.overlayWindowController = nil
             }
         }
     }
-    
+
     @objc private func occlusionStateChanged(_ notification: Notification) {
         if NSApp.occlusionState.contains(.visible) {
             if case AppState.connecting = appStateManager.state, let overlayViewModel {
@@ -335,22 +335,22 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             removeConnectingOverlay()
         }
     }
-    
+
     private func resizeOverlayWindow() {
         guard let overlayWindowController,
               let window = view.window,
               let contentView = window.contentView else { return }
-        
+
         let windowRect = window.frame
         let contentRect = contentView.frame
-        
+
         overlayWindowController.window?.setFrame(CGRect(x: windowRect.origin.x, y: windowRect.origin.y, width: contentRect.width, height: contentRect.height), display: true)
     }
-    
+
     private func setupMainView() {
         view.wantsLayer = true
     }
-    
+
     private func setupHeader() {
         headerViewModel = factory.makeHeaderViewModel()
         headerViewController = HeaderViewController(viewModel: headerViewModel!)
@@ -358,12 +358,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             self?.announcementsViewModel.open()
         }
         headerControllerViewContainer.pin(viewController: headerViewController)
-        
+
         expandButton.target = self
         expandButton.action = #selector(expandButtonAction(_:))
         expandButton.expandState = .compact
     }
-    
+
     private func setupTabBar() {
         tabBarControllerViewContainer.pin(viewController: tabBarViewController)
         NotificationCenter.default.addObserver(self,
@@ -371,7 +371,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                                                name: tabBarViewController.tabChanged,
                                                object: nil)
     }
-    
+
     private func setViewController(forTab tab: SidebarTab) {
         let newViewController: NSViewController = switch tab {
         case .countries:
@@ -387,7 +387,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         activeController = newViewController
         activeControllerViewContainer.pin(viewController: activeController)
     }
-    
+
     @objc private func expandButtonAction(_ sender: NSButton) {
         @Dependency(\.defaultsProvider) var provider
         let savedMapWidth = CGFloat(provider.getDefaults().integer(forKey: AppConstants.UserDefaults.mapWidth))
@@ -410,7 +410,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             }
         }
     }
-    
+
     @objc private func appStateChanged() {
         switch appStateManager.state {
         case .preparingConnection, .connecting:
@@ -442,17 +442,17 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
             break
         }
     }
-    
+
     @objc private func handleTabChanged(_ notification: Notification) {
         if let tab = notification.object as? SidebarTab {
             setViewController(forTab: tab)
         }
     }
-    
+
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
         if let viewController = segue.destinationController as? MapSectionViewController {
             viewController.mapHeaderViewModel = mapHeaderViewModel
-            viewController.mapSectionViewModel = mapSectionViewModel            
+            viewController.mapSectionViewModel = mapSectionViewModel
         }
     }
 }

@@ -26,7 +26,7 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-        
+
         let app = XCUIApplication()
         app.launch()
     }
@@ -34,13 +34,13 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-    
+
     private let bugReportRobot = BugReportRobot()
-        
+
     func testSendBugReportSomethingElse() {
         let email = "success@email.com"
         let text = "Desccription"
-            
+
         bugReportRobot
             .openBugReport()
             .reportSomethingElseIssue()
@@ -50,11 +50,11 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
             .sendBugReport()
             .verify.successMessageIsShown()
     }
-        
+
     func testSendBugReportBrowsingSpeed() {
         let email = "success@email.com"
         let text = "Description"
-            
+
         bugReportRobot
             .openBugReport()
             .reportBrowsingSpeedIssue()
@@ -67,11 +67,11 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
             .sendBugReport()
             .verify.successMessageIsShown()
     }
-        
+
     func testSendBugReportWithError() {
         let email = "wrong@email"
         let description = "Description"
-        
+
         bugReportRobot
             .openBugReport()
             .reportSomethingElseIssue()
@@ -83,7 +83,7 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
             .verify.troubleshootButtonIsClicked()
             .verify.errorMessageIsShown()
     }
-        
+
     func testBugReportBackButton() {
         bugReportRobot
             .openBugReport()

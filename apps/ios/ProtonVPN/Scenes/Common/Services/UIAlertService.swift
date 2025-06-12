@@ -28,45 +28,45 @@ import VPNAppCore
 class IosUiAlertService: UIAlertService {
     private let windowService: WindowService
     private var currentAlerts = [SystemAlert]()
-    
+
     public init(windowService: WindowService) {
         self.windowService = windowService
     }
-    
+
     func displayAlert(_ alert: SystemAlert) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
         }
-        
+
         currentAlerts.append(alert)
         displayTrackedAlert(alert: alert)
     }
-    
+
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
         alert.message = message.string
         displayAlert(alert)
     }
-    
+
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
         windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
-    
+
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
         !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }
-    
+
     private func updateOldAlert(with newAlert: SystemAlert) {
         let oldAlert = currentAlerts.first { alert -> Bool in
             return alert.className == newAlert.className
         }
-    
+
         // In particular this means the alert's completion handlers will be updated
         oldAlert?.actions = newAlert.actions
     }
-    
+
     private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
         { [weak self] in
             self?.currentAlerts.removeAll { currentAlert in
@@ -74,7 +74,7 @@ class IosUiAlertService: UIAlertService {
             }
         }
     }
-    
+
     private func displayTrackedAlert(alert: SystemAlert) {
         let alertController = TrackedAlertController(title: alert.title, message: alert.message, preferredStyle: .alert)
         for action in alert.actions {
@@ -82,12 +82,12 @@ class IosUiAlertService: UIAlertService {
                 action.handler?()
             }))
         }
-        
+
         alertController.dismissCompletion = dismissCompletion(alert)
         alert.dismiss = {
             alertController.dismiss(animated: true, completion: nil)
         }
-        
+
         windowService.present(modal: alertController)
     }
 }

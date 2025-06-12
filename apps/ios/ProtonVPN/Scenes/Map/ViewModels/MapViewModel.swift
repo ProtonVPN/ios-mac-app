@@ -34,12 +34,12 @@ class MapPin: NSObject, MKAnnotation {
     let countryCode: String
     let locationName: String
     let coordinate: CLLocationCoordinate2D
-    
+
     init(countryCode: String, locationName: String, coordinate: CLLocationCoordinate2D) {
         self.countryCode = countryCode
         self.locationName = locationName
         self.coordinate = coordinate
-        
+
         super.init()
     }
 }
@@ -47,27 +47,27 @@ class MapPin: NSObject, MKAnnotation {
 class MapViewModel: SecureCoreToggleHandler {
     let alertService: AlertService
     var vpnGateway: VpnGatewayProtocol
-    
+
     var activeView: ServerType = .standard
-    
+
     private let appStateManager: AppStateManager
     private let vpnKeychain: VpnKeychainProtocol
     let propertiesManager: PropertiesManagerProtocol
-    
+
     private var countryExitAnnotations: [CountryAnnotationViewModel] = []
     private var secureCoreEntryAnnotations: Set<SecureCoreEntryCountryModel> = []
     private var secureCoreConnections: [ConnectionViewModel] = []
     private var activeConnection: ConnectionViewModel?
     private let connectionStatusService: ConnectionStatusService
-    
+
     var secureCoreOn: Bool {
         activeView == .secureCore
     }
-    
+
     var annotations: [AnnotationViewModel] {
         [AnnotationViewModel](countryExitAnnotations) + [SecureCoreEntryCountryModel](secureCoreEntryAnnotations)
     }
-    
+
     var connections: [ConnectionViewModel] {
         var cons: [ConnectionViewModel] = []
         if let connection = activeConnection {
@@ -83,21 +83,21 @@ class MapViewModel: SecureCoreToggleHandler {
                 cons.append(contentsOf: secureCoreConnections)
             }
         }
-        
+
         return cons
     }
-    
+
     var enableViewToggle: Bool {
         vpnGateway.connection != .connecting
     }
-    
+
     var contentChanged: (() -> Void)?
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
 
     init(
         appStateManager: AppStateManager,
-        alertService: AlertService, 
+        alertService: AlertService,
         vpnGateway: VpnGatewayProtocol,
         vpnKeychain: VpnKeychainProtocol,
         propertiesManager: PropertiesManagerProtocol,
@@ -109,35 +109,35 @@ class MapViewModel: SecureCoreToggleHandler {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
-        
+
         secureCoreConnections = []
-        
+
         setStateOf(type: propertiesManager.serverTypeToggle)
-        
+
         refreshAnnotations(forView: activeView)
-        
+
         addObservers()
     }
-    
+
     @objc func mapTapped() {
         for annotation in countryExitAnnotations {
             annotation.deselect()
         }
-        
+
         for annotation in secureCoreEntryAnnotations {
             annotation.highlight(false)
         }
-        
+
         reorderAnnotations?()
     }
-    
+
     // MARK: - Private functions
 
     private func addObservers() {
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(connectionChanged))
         AppEvent.planChanged.subscribe(self, selector: #selector(resetCurrentState))
-        
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(resetCurrentState),
@@ -145,13 +145,13 @@ class MapViewModel: SecureCoreToggleHandler {
             object: nil
         )
     }
-    
+
     private func refreshAnnotations(forView viewType: ServerType) {
         let vpnCredentials = try? vpnKeychain.fetchCached()
         let userTier = vpnCredentials?.maxTier ?? .paidTier
 
         countryExitAnnotations = exitAnnotations(type: viewType, userTier: userTier)
-        
+
         switch viewType {
         case .standard, .p2p, .tor, .unspecified:
             secureCoreEntryAnnotations = []
@@ -159,7 +159,7 @@ class MapViewModel: SecureCoreToggleHandler {
             secureCoreEntryAnnotations = secureCoreEntryAnnotations(userTier)
         }
     }
-    
+
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
         let isMapConnectionDisabled = userTier.isFreeTier
@@ -260,20 +260,20 @@ class MapViewModel: SecureCoreToggleHandler {
         refreshAnnotations(forView: activeView)
         connectionChanged()
     }
-    
+
     @objc private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
-        
+
         resetCurrentState()
     }
-    
+
     @objc private func resetCurrentState() {
         executeOnUIThread {
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.contentChanged?()
         }
     }
-    
+
     @objc private func connectionChanged() {
         if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             // draw connection line
@@ -292,7 +292,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 annotation.highlight(false)
             }
         }
-        
+
         connectionStateChanged?()
     }
 }

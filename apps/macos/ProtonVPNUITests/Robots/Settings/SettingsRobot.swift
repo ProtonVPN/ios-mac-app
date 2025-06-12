@@ -43,56 +43,56 @@ class SettingsRobot: CoreElements {
         tabGroup(generalTab).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func connectionTabClick() -> SettingsRobot {
         tabGroup(connectionTab).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func advancedTabClick() -> SettingsRobot {
         tabGroup(advancedTab).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func accountTabClick() -> SettingsRobot {
         tabGroup(accountTab).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func notNowClick() -> SettingsRobot {
         button(notNowButton).tap()
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func continueClick() -> SettingsRobot {
         button(continueButton).tap()
         return SettingsRobot()
     }
-    
+
     func closeSettings() -> MainRobot {
         windows(Localizable.preferences).typeKey("w", [.command])
         return MainRobot()
     }
-    
+
     func selectAutoConnect(_ autoConnect: AutoConnectOptions) -> SettingsRobot {
         popUpButton(Localizable.autoConnect).onChild(popUpButton().firstMatch()).tap()
         let predicate = NSPredicate(format: "title CONTAINS[c] %@", autoConnect.rawValue)
         menuItem(predicate).tap()
         return SettingsRobot()
     }
-    
+
     func selectQuickConnect(_ qc: String) -> SettingsRobot {
         popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
         let predicate = NSPredicate(format: "title CONTAINS[c] %@", qc)
         menuItem(predicate).tap()
         return SettingsRobot()
     }
-    
+
     func selectProtocol(_ connectionProtocol: ConnectionProtocol) -> SettingsRobot {
         popUpButton(Localizable.protocol).onChild(popUpButton().firstMatch()).tap()
         menuItem(connectionProtocol.rawValue).tap()
@@ -103,22 +103,22 @@ class SettingsRobot: CoreElements {
         }
         return SettingsRobot()
     }
-    
+
     func selectProfile(_ name: String) -> SettingsRobot {
         popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
         menuItem(name).tap()
         return SettingsRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func checkSettingsIsOpen() -> SettingsRobot {
             staticText(preferencesTitleId).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkProfileIsCreated(_ profileName: String) -> SettingsRobot {
             popUpButton(Localizable.quickConnect).onChild(popUpButton().firstMatch()).tap()
@@ -127,60 +127,60 @@ class SettingsRobot: CoreElements {
             popUpButton(Localizable.quickConnect).tap()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkGeneralTabIsOpen() -> SettingsRobot {
             staticText(Localizable.startOnBoot).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkConnectionTabIsOpen() -> SettingsRobot {
             staticText(Localizable.autoConnect).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkAdvancedTabIsOpen() -> SettingsRobot {
             staticText(Localizable.troubleshootItemAltTitle).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkAccountTabIsOpen() -> SettingsRobot {
             staticText(Localizable.username).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkAccountTabUserName(username: String) -> SettingsRobot {
             staticText(username).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkAccountTabPlan(planName: String) -> SettingsRobot {
             staticText(planName).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkModalIsOpen() -> SettingsRobot {
             staticText(modalTitle).waitUntilExists(time: WaitTimeout.normal).checkExists()
             staticText(modalDescription).waitUntilExists(time: WaitTimeout.normal).checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func checkLanIsOff() -> SettingsRobot {
             SettingsRobot()
         }
-        
+
         @discardableResult
         func checkLanIsOn() -> SettingsRobot {
             SettingsRobot()
         }
-        
+
         @discardableResult
         func checkUpsellModalIsOpen() -> QuickSettingsRobot {
             staticText(upsellModalTitle).checkExists()
@@ -188,7 +188,7 @@ class SettingsRobot: CoreElements {
             button(modalUpgradeButton).checkEnabled()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkProtocolSelected(_ expectedProtocol: ConnectionProtocol) -> SettingsRobot {
             popUpButton(Localizable.protocol)
@@ -197,7 +197,7 @@ class SettingsRobot: CoreElements {
                 .checkHasValue(expectedProtocol.rawValue)
             return SettingsRobot()
         }
-        
+
         func checkAutoConnectSelected(_ expectedAutoConnectOption: AutoConnectOptions) -> SettingsRobot {
             popUpButton(Localizable.autoConnect)
                 .waitUntilExists(time: WaitTimeout.normal)

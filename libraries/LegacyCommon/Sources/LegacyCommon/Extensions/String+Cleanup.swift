@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension String {    
+extension String {
     /// Returns the first characters in the string until the startingCharacter
     public func removeSubstring(startingWithCharacter char: Character) -> String {
         guard let last = firstIndex(of: char) else {

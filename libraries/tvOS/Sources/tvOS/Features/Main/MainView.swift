@@ -33,7 +33,7 @@ struct MainView: View {
             .tabItem { Text("Home", comment: "Title of the tab bar item.") }
 
             NavigationStack {
-                SettingsView(store: store.scope(state: \.settings, 
+                SettingsView(store: store.scope(state: \.settings,
                                                 action: \.settings))
             }
             .tag(MainFeature.Tab.settings)

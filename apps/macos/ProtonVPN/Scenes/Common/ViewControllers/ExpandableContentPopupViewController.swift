@@ -28,7 +28,7 @@ import Theme
 
 class ExpandableContentPopupViewController: NSViewController {
     let viewModel: ExpandablePopupViewModel
-    
+
     @IBOutlet var actionBtn: CancellationButton!
     @IBOutlet var contentView: NSView!
     @IBOutlet var footerView: NSView!
@@ -38,13 +38,13 @@ class ExpandableContentPopupViewController: NSViewController {
     @IBOutlet var footerLbl: NSTextField!
     @IBOutlet var displayMoreBtn: InteractiveActionButton!
     @IBOutlet var hiddenContentHeightConstraint: NSLayoutConstraint!
-    
+
     private var expanded = false
     private var animating = false
-    
+
     private let closedHeight: CGFloat = 0
     private lazy var expandedHeight: CGFloat = self.expandableLbl.realHeight(self.headerLbl.bounds.width)
-    
+
     required init(viewModel: ExpandablePopupViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("ExpandableContentPopup"), bundle: nil)
@@ -54,14 +54,14 @@ class ExpandableContentPopupViewController: NSViewController {
             }
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = viewModel.title
@@ -92,12 +92,12 @@ class ExpandableContentPopupViewController: NSViewController {
         if animating { return }
         viewModel.action()
     }
-    
+
     @objc private func expandBtnTap() {
         if animating { return }
         animating = true
         expanded = !expanded
-        
+
         displayMoreBtn.title = (expanded ? Localizable.lessInfo : Localizable.moreInfo) + "  "
         displayMoreBtn.image = expanded ? AppTheme.Icon.arrowUp : AppTheme.Icon.arrowDown
         hiddenContentHeightConstraint.constant = expanded ? closedHeight : expandedHeight

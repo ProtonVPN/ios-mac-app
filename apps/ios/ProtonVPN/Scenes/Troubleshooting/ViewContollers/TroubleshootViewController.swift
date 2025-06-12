@@ -31,27 +31,27 @@ class TroubleshootViewController: UIViewController {
     @IBOutlet var closeButton: UIButton!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var headerView: UIView!
-    
+
     // Data
     public var viewModel: TroubleshootViewModel!
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(_ viewModel: TroubleshootViewModel) {
         super.init(nibName: "TroubleshootViewController", bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupTableView()
         setupView()
     }
-    
+
     private func setupTableView() {
         tableView.register(TroubleshootingCell.nib, forCellReuseIdentifier: TroubleshootingCell.identifier)
         tableView.register(TroubleshootingSwitchCell.nib, forCellReuseIdentifier: TroubleshootingSwitchCell.identifier)
@@ -59,19 +59,19 @@ class TroubleshootViewController: UIViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.dataSource = self
     }
-    
+
     private func setupView() {
         view.backgroundColor = .backgroundColor()
         tableView.backgroundColor = .backgroundColor()
-        
+
         headerView.backgroundColor = .secondaryBackgroundColor()
         titleLabel.attributedText = Localizable.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
         closeButton.setImage(IconProvider.crossBig, for: .normal)
         closeButton.tintColor = .normalTextColor()
     }
-    
+
     // MARK: User actions
-    
+
     @IBAction func closeButtonTapped(_ sender: Any) {
         viewModel.cancel()
     }
@@ -83,7 +83,7 @@ extension TroubleshootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.items.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = viewModel.items[indexPath.row]
 

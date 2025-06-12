@@ -44,10 +44,10 @@
         public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {
             self.connection = connection
             self.activeServerType = activeServerType
-        
+
             propertiesManager.secureCoreToggle = activeServerType == .secureCore
         }
-    
+
         public var connection: ConnectionStatus {
             didSet {
                 AppEvent.connectionStateChanged.post(connection)
@@ -58,55 +58,55 @@
         public var activeServer: ServerModel?
         public var lastConnectionRequest: ConnectionRequest?
         public var activeServerType: ServerType
-    
+
         public var _userTier: Int?
 
         public func userTier() throws -> Int {
             guard let _userTier else { throw VpnGatewayMockError.missingUserTier }
             return _userTier
         }
-    
+
         public func changeActiveServerType(_ serverType: ServerType) {
             activeServerType = serverType
         }
-    
+
         public func autoConnect() {}
-    
+
         public func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {}
-    
+
         public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
             ConnectionRequest(serverType: .standard, connectionType: .fastest, connectionProtocol: .smartProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, profileName: nil, trigger: trigger)
         }
-    
+
         public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger) {}
-    
+
         public func connectTo(server: ServerModel) {}
-    
+
         public func connectTo(profile: Profile) {}
-    
+
         public func retryConnection() {}
-    
+
         public func connect(with request: ConnectionRequest?) {}
 
         public func connectTo(country countryCode: String, city: String) {}
-    
+
         public func stopConnecting(userInitiated: Bool) {
             connection = .disconnected
         }
-    
+
         public func disconnect() {
             connection = .disconnected
         }
-    
+
         public func disconnect(completion: @escaping () -> Void) {
             connection = .disconnected
             completion()
         }
-    
+
         public func reconnect(with netShieldType: NetShieldType) {}
 
         public func reconnect(with natType: NATType) {}
-    
+
         public func reconnect(with connectionProtocol: ConnectionProtocol) {}
 
         public func postConnectionInformation() {}

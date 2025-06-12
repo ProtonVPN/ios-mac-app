@@ -73,7 +73,7 @@ final class LogicalsRefresherTests: XCTestCase {
 
     @MainActor
     func testRefreshLogicals() async throws {
-        @Shared(.lastLogicalsRefresh) 
+        @Shared(.lastLogicalsRefresh)
         var lastLogicalsRefresh: TimeInterval = enoughTimePassed
 
         var upserted: [VPNServer] = []

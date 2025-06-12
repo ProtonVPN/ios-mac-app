@@ -35,64 +35,64 @@ class WarningPopupViewController: NSViewController {
     @IBOutlet var footerView: NSView!
     @IBOutlet var cancelButton: CancellationButton!
     @IBOutlet var continueButton: PrimaryActionButton!
-    
+
     var viewModel: WarningPopupViewModel!
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required init(viewModel: WarningPopupViewModel) {
         super.init(nibName: NSNib.Name("WarningPopup"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupBodySection()
         setupFooterSection()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         view.window?.applyWarningAppearance(withTitle: viewModel.title)
     }
-    
+
     private func setupBodySection() {
         warningScrollViewContainer.isHidden = true
         bodyView.wantsLayer = true
         DarkAppearance {
             bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         warningImage.image = viewModel.image
         warningDescriptionLabel.attributedStringValue = viewModel.description.styled(alignment: .natural)
     }
-    
+
     private func setupFooterSection() {
         footerView.wantsLayer = true
         DarkAppearance {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         cancelButton.title = Localizable.cancel
         cancelButton.fontSize = .paragraph
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonAction)
-        
+
         continueButton.title = Localizable.continue
         continueButton.fontSize = .paragraph
         continueButton.target = self
         continueButton.action = #selector(continueButtonAction)
     }
-    
+
     @objc private func cancelButtonAction() {
         viewModel.onCancel?()
         dismiss(nil)
     }
-    
+
     @objc private func continueButtonAction() {
         viewModel.onConfirm()
         dismiss(nil)

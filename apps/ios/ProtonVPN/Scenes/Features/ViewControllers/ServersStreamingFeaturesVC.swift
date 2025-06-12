@@ -43,14 +43,14 @@ class ServersStreamingFeaturesVC: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - View Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         closeButton.setImage(IconProvider.crossBig, for: .normal)
@@ -66,9 +66,9 @@ class ServersStreamingFeaturesVC: UIViewController {
         servicesCV.dataSource = self
         view.backgroundColor = .backgroundColor()
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction private func didTapDismiss(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -76,27 +76,27 @@ class ServersStreamingFeaturesVC: UIViewController {
 
 extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     // MARK: - UICollectionViewDataSource
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let size = collectionView.frame.width / CGFloat(viewModel.columnsAmount)
         servicesCVHeightConstraint.constant = CGFloat(viewModel.totalRows) * size
         return CGSize(width: size, height: size)
     }
-    
+
     // MARK: - UICollectionViewDataSource
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.totalItems
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StreamingServiceCell.identifier, for: indexPath) as! StreamingServiceCell
         cell.propertiesManager = viewModel.propertiesManager

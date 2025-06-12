@@ -24,10 +24,10 @@ class ViewController: NSViewController {
     private var bugReportDelegate: MockDelegate?
     @IBOutlet private var updateSwitch: NSSwitch!
     @IBOutlet private var statusTextField: NSTextField!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+
         statusTextField.setAccessibilityIdentifier("statusLabel")
 
         bugReportDelegate = MockDelegate(
@@ -66,13 +66,13 @@ class ViewController: NSViewController {
             // Update the view, if already loaded.
         }
     }
-    
+
     private var model: BugReportModel {
         let bundle = Bundle.main
         guard let testFile1 = bundle.url(forResource: "sample", withExtension: "json") else {
             return BugReportModel()
         }
-        
+
         let data = try! Data(contentsOf: testFile1)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
@@ -85,7 +85,7 @@ class ViewController: NSViewController {
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.showWindow(self)
     }
-    
+
     @IBAction private func updateSwitchChanged(_ sender: Any) {
         bugReportDelegate?.updateAvailable = updateSwitch.state == .on
     }
@@ -95,7 +95,7 @@ class MockDelegate: BugReportDelegate {
     var model: BugReportModel
     var prefilledEmail: String = ""
     var prefilledUsername: String = ""
-    
+
     public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?, updateAppCallback: (() -> Void)?) {
         self.model = model
         self.sendCallback = sendCallback
@@ -103,25 +103,25 @@ class MockDelegate: BugReportDelegate {
         self.troubleshootingCallback = troubleshootingCallback
         self.updateAppCallback = updateAppCallback
     }
-    
+
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
-    
+
     func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
         sendCallback?(form, result)
     }
-    
+
     var finishedCallback: (() -> Void)?
-    
+
     func finished() {
         finishedCallback?()
     }
-    
+
     var troubleshootingCallback: (() -> Void)?
-    
+
     func troubleshootingRequired() {
         troubleshootingCallback?()
     }
-    
+
     var updateAvailable: Bool = true {
         didSet {
             updateAvailabilityChanged?(updateAvailable)
@@ -129,14 +129,14 @@ class MockDelegate: BugReportDelegate {
     }
 
     var updateAppCallback: (() -> Void)?
-    
+
     func updateApp() {
         updateAppCallback?()
     }
-    
+
     func checkUpdateAvailability() {
         updateAvailabilityChanged?(updateAvailable)
     }
-    
+
     var updateAvailabilityChanged: ((Bool) -> Void)?
 }

@@ -66,12 +66,12 @@ class MapSectionViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let alertService: CoreAlertService
-    
+
     var contentChanged: ((AnnotationChange) -> Void)?
     var connectionsChanged: (([ConnectionViewModel]) -> Void)?
-    
+
     private var activeView: ServerType = .standard
-    
+
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
@@ -96,7 +96,7 @@ class MapSectionViewModel {
         annotations = annotations(forView: activeView)
         connections = connections(forView: activeView)
     }
-    
+
     // MARK: - Private functions
 
     @objc private func appStateChanged(_ notification: Notification) {
@@ -108,25 +108,25 @@ class MapSectionViewModel {
            let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)
         }
-        
+
         for annotation in annotations {
             annotation.appStateChanged(to: state)
         }
-        
+
         updateConnections()
     }
-    
+
     @objc private func viewToggled(_ notification: Notification) {
         setView(propertiesManager.serverTypeToggle)
     }
-    
+
     @objc private func resetCurrentState() {
         executeOnUIThread {
             self.setView(self.activeView)
             self.updateConnections()
         }
     }
-    
+
     private func updateConnections() {
         connections = connections(forView: activeView)
 
@@ -138,15 +138,15 @@ class MapSectionViewModel {
             connectionsChanged?(connections)
         }
     }
-    
+
     private func setView(_ newView: ServerType) {
         let oldAnnotations = annotations
         activeView = newView
         annotations = annotations(forView: activeView)
         let contentChange = AnnotationChange(oldAnnotations: oldAnnotations, newAnnotations: annotations)
-        
+
         connections = connections(forView: activeView)
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self else {
                 return
@@ -155,11 +155,11 @@ class MapSectionViewModel {
             contentChanged?(contentChange)
         }
     }
-    
+
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
         do {
             let userTier = try vpnKeychain.fetchCached().maxTier
-            
+
             let annotations: [CountryAnnotationViewModel] = switch viewType {
             case .standard, .p2p, .tor, .unspecified:
                 standardAnnotations(userTier)
@@ -172,7 +172,7 @@ class MapSectionViewModel {
             return []
         }
     }
-    
+
     private func connections(forView viewType: ServerType) -> [ConnectionViewModel] {
         let connections: [ConnectionViewModel] = switch viewType {
         case .standard, .p2p, .tor, .unspecified:
@@ -182,7 +182,7 @@ class MapSectionViewModel {
         }
         return connections
     }
-    
+
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
         let isCountry = VPNServerFilter.kind(.country)
@@ -203,7 +203,7 @@ class MapSectionViewModel {
             )
         }
     }
-    
+
     private func secureCoreEntrySelectionChange(_ selection: SCEntryCountrySelection) {
         for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
@@ -212,10 +212,10 @@ class MapSectionViewModel {
                 }
             }
         }
-        
+
         updateConnections()
     }
-    
+
     private func secureCoreExitSelectionChange(_ selection: SCExitCountrySelection) {
         for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
@@ -224,7 +224,7 @@ class MapSectionViewModel {
                 }
             }
         }
-        
+
         updateConnections()
     }
 
@@ -267,7 +267,7 @@ class MapSectionViewModel {
                 .filter { $0.logical.entryCountryCode == entryCode }
                 .map(\.logical.exitCountryCode)
         }
-        
+
         let entryCountryAnnotations: [CountryAnnotationViewModel] = entryToExitCountryCodeMap.map { entry, exits in
             let annotation = SCEntryCountryAnnotationViewModel(
                 appStateManager: appStateManager,
@@ -280,10 +280,10 @@ class MapSectionViewModel {
             }
             return annotation
         }
-        
+
         return entryCountryAnnotations + exitCountryAnnotations
     }
-    
+
     private func standardConnections() -> [ConnectionViewModel] {
         annotations.filter { annotation -> Bool in
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
@@ -292,7 +292,7 @@ class MapSectionViewModel {
             return ConnectionViewModel(.connected, fromHomeTo: annotation)
         }
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     private func secureCoreConnections() -> [ConnectionViewModel] {
         var secureCores = [SCEntryCountryAnnotationViewModel]()
@@ -313,9 +313,9 @@ class MapSectionViewModel {
                 }
             }
         }
-        
+
         var connections = [ConnectionViewModel]()
-        
+
         if let connectedAnnotation {
             if let exitAnnotation = connectedAnnotation as? SCExitCountryAnnotationViewModel {
                 for annotation in annotations {
@@ -330,7 +330,7 @@ class MapSectionViewModel {
         if let selectedAnnotation {
             if let entryAnnotation = selectedAnnotation as? SCEntryCountryAnnotationViewModel {
                 connections.append(ConnectionViewModel(.proposed, fromHomeTo: entryAnnotation))
-                
+
                 for code in entryAnnotation.exitCountryCodes {
                     for annotation in annotations {
                         if let serverAnnotation = annotation as? SCExitCountryAnnotationViewModel,
@@ -349,13 +349,13 @@ class MapSectionViewModel {
                 }
             }
         }
-        
+
         if connectedAnnotation == nil, selectedAnnotation == nil {
             for (index, element) in secureCores.enumerated() {
                 connections.append(ConnectionViewModel(.connected, between: element, and: secureCores[(index + 1) % secureCores.count]))
             }
         }
-        
+
         return connections
     }
     // swiftlint:enable cyclomatic_complexity

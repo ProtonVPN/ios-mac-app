@@ -38,53 +38,53 @@ extension DependencyContainer: ProtonVpnMenuViewModelFactory {
 class ProtonVpnMenuViewModel {
     typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & UpdateManagerFactory
     public let factory: Factory
-    
+
     private let appSessionManager: AppSessionManager
     private let navService: NavigationService
-    
+
     var contentChanged: (() -> Void)?
 
     private var notificationTokens: [NotificationToken] = []
-    
+
     init(factory: Factory) {
         self.factory = factory
         appSessionManager = factory.makeAppSessionManager()
         navService = factory.makeNavigationService()
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
-    
+
     var isPreferencesEnabled: Bool {
         appSessionManager.sessionStatus == .established
     }
-    
+
     var isLogOutEnabled: Bool {
         appSessionManager.sessionStatus == .established
     }
-    
+
     func openAboutAction() {
         navService.openAbout(factory: factory)
     }
-    
+
     func checkForUpdatesAction() {
         navService.checkForUpdates()
     }
-    
+
     func openPreferencesAction() {
         navService.openSettings(to: .general)
     }
-    
+
     func logOutAction() {
         navService.logOutRequested()
     }
-    
+
     func showAllAction() {
         navService.showApplication()
     }
-    
+
     func quitAction() {
         NSApp.terminate(self)
     }
-    
+
     // MARK: - Private functions
 
     private func sessionChanged(data: SessionChanged.T) {

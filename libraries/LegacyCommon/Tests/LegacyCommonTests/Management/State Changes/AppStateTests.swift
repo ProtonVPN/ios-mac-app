@@ -31,11 +31,11 @@ class AppStateTests: XCTestCase {
     var disconnectedState: AppState!
     var disconnectingState: AppState!
     var errorState: AppState!
-    
+
     override func setUp() {
         super.setUp()
         descriptor = ServerDescriptor(username: "test_user", address: "test_password")
-        
+
         connectedState = AppState.connected(descriptor)
         preparingState = AppState.preparingConnection
         connectingState = AppState.connecting(descriptor)
@@ -47,7 +47,7 @@ class AppStateTests: XCTestCase {
 
     func testIsConnected() {
         XCTAssert(connectedState.isConnected)
-        
+
         XCTAssertFalse(disconnectedState.isConnected)
         XCTAssertFalse(preparingState.isConnected)
         XCTAssertFalse(connectingState.isConnected)
@@ -55,35 +55,35 @@ class AppStateTests: XCTestCase {
         XCTAssertFalse(abortedState.isConnected)
         XCTAssertFalse(errorState.isConnected)
     }
-    
+
     func testIsDisconnected() {
         XCTAssert(disconnectedState.isDisconnected)
         XCTAssert(preparingState.isDisconnected)
         XCTAssert(connectingState.isDisconnected)
         XCTAssert(abortedState.isDisconnected)
         XCTAssert(errorState.isDisconnected)
-        
+
         XCTAssertFalse(connectedState.isDisconnected)
         XCTAssertFalse(disconnectingState.isDisconnected)
     }
-    
+
     func testIsStable() {
         XCTAssert(disconnectedState.isStable)
         XCTAssert(connectedState.isStable)
         XCTAssert(abortedState.isStable)
         XCTAssert(errorState.isStable)
-        
+
         XCTAssertFalse(preparingState.isStable)
         XCTAssertFalse(connectingState.isStable)
         XCTAssertFalse(disconnectingState.isStable)
     }
-    
+
     func testIsSafeToEnd() {
         XCTAssert(disconnectedState.isSafeToEnd)
         XCTAssert(preparingState.isSafeToEnd)
         XCTAssert(abortedState.isSafeToEnd)
         XCTAssert(errorState.isSafeToEnd)
-        
+
         XCTAssertFalse(connectingState.isSafeToEnd)
         XCTAssertFalse(connectedState.isSafeToEnd)
         XCTAssertFalse(disconnectingState.isSafeToEnd)

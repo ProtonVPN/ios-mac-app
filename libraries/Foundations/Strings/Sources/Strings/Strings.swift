@@ -84,7 +84,7 @@ public enum Localizable {
     /// Allow
     public static var allow: String { Localizable.tr("Localizable", "_allow", fallback: "Allow") }
     /// In order to allow LAN access, kill switch must be turned off.
-    /// 
+    ///
     /// Continue?
     public static var allowLanDescription: String { Localizable.tr("Localizable", "_allow_lan_description", fallback: "In order to allow LAN access, kill switch must be turned off.\n\nContinue?") }
     /// Allows to bypass the VPN and connect to devices on your local network, like your printer.
@@ -907,7 +907,7 @@ public enum Localizable {
     /// Enable anyway
     public static var neksT2Connect: String { Localizable.tr("Localizable", "_neks_t2_connect", fallback: "Enable anyway") }
     /// The use of kill switch is unstable on this device.
-    /// 
+    ///
     /// Your device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.
     public static var neksT2Description: String { Localizable.tr("Localizable", "_neks_t2_description", fallback: "The use of kill switch is unstable on this device.\n\nYour device has a T2 Security Chip, which can result in system stability issues if the kill switch functionality of macOS is used by Proton VPN.") }
     /// Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string.
@@ -1584,7 +1584,7 @@ public enum Localizable {
     public static var streamingTitle: String { Localizable.tr("Localizable", "_streaming_title", fallback: "Streaming") }
     /// iOS: button in human verification code form
     public static var submitVerificationCode: String { Localizable.tr("Localizable", "_submit_verification_code", fallback: "Submit") }
-    /// Extend plan for 1 year 
+    /// Extend plan for 1 year
     /// %@.
     public static func subscriptionButton(_ p1: Any) -> String {
         Localizable.tr("Localizable", "_subscription_button", String(describing: p1), fallback: "Extend plan for 1 year \n%@.")
@@ -1714,7 +1714,7 @@ public enum Localizable {
     public static var torServer: String { Localizable.tr("Localizable", "_tor_server", fallback: "Tor Server") }
     /// Tor
     public static var torTitle: String { Localizable.tr("Localizable", "_tor_title", fallback: "Tor") }
-    /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. 
+    /// In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability.
     /// Learn more
     public static var troubleshootItemAltDescription: String { Localizable.tr("Localizable", "_troubleshoot_item_alt_description", fallback: "In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. \nLearn more") }
     /// Learn more

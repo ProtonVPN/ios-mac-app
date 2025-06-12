@@ -27,11 +27,11 @@ import LegacyCommon
 class StreamOptionCVItem: NSCollectionViewItem {
     @IBOutlet private var serviceIV: NSImageView!
     @IBOutlet private var serviceLbl: NSTextField!
-        
+
     public var viewModel: StreamOptionCVItemViewModelProtocol? {
         didSet {
             guard let viewModel else { return }
-            
+
             serviceLbl.stringValue = viewModel.serviceName
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
@@ -39,9 +39,9 @@ class StreamOptionCVItem: NSCollectionViewItem {
             DarkAppearance {
                 view.layer?.backgroundColor = .cgColor(.background)
             }
-            
+
             guard let url = viewModel.url else { return }
-            
+
             serviceIV.sd_cancelCurrentImageLoad()
             serviceIV.sd_setImage(with: url) { [weak self] _, _, _, _ in
                 self?.serviceIV.isHidden = false

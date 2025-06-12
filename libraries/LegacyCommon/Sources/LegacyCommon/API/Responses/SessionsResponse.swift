@@ -9,5 +9,5 @@
 import Foundation
 
 public struct SessionsResponse: Codable {
-    public let sessionCount: Int    
+    public let sessionCount: Int
 }

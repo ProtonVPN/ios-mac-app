@@ -17,19 +17,19 @@ private let buttonConnectDisconnect = "ic power off"
 
 class CountryListRobot: ConnectionBaseRobot {
     let verify = Verify()
-    
+
     @discardableResult
     func openServerList(_ name: String) -> ServerListRobot {
         staticText(name).tap()
         return ServerListRobot()
     }
-    
+
     @discardableResult
     func searchForServer(serverName: String) -> CountrySearchRobot {
         button(countrySearchButtonId).tap()
         return CountrySearchRobot().search(for: serverName)
     }
-    
+
     @discardableResult
     func connectToCountry(_ countryName: String) -> ConnectionStatusRobot {
         staticText(countryName).firstMatch().tap()
@@ -37,21 +37,21 @@ class CountryListRobot: ConnectionBaseRobot {
         allowVpnPermission()
         return ConnectionStatusRobot()
     }
-    
+
     @discardableResult
     func connectToAPlusCountry(_ name: String) -> HomeRobot {
         button(upgradeButtonId).byIndex(1).tap()
         allowVpnPermission()
         return HomeRobot()
     }
-    
+
     @discardableResult
     func secureCoreOn() -> CountryListRobot {
         swittch(secureCoreSwitchId).tap()
         button(activateSCButton).tap()
         return CountryListRobot()
     }
-    
+
     @discardableResult
     func getRandomServerFromList() -> String {
         let serverCount = app.buttons.matching(
@@ -63,13 +63,13 @@ class CountryListRobot: ConnectionBaseRobot {
             .onChild(staticText().firstMatch())
             .label() ?? ""
     }
-    
+
     @discardableResult
     func secureCoreOFf() -> CountryListRobot {
         swittch(secureCoreSwitchId).tap()
         return CountryListRobot()
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func serverFound(server: String) -> CountryListRobot {

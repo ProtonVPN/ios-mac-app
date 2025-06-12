@@ -30,28 +30,28 @@ protocol StatusMenuViewControllerProtocol: AnyObject {
 
 class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtocol {
     private static let countryCollectionItemIdentifier = NSUserInterfaceItemIdentifier("CountryItem")
-    
+
     let viewModel: StatusMenuViewModel
-    
+
     @IBOutlet private var backgroundView: NSView!
     @IBOutlet private var dynamicContentView: NSStackView!
     @IBOutlet private var loginLabel: NSTextField!
     @IBOutlet private var upgradeView: NSStackView!
     @IBOutlet private var upgradeLabel: NSTextField!
-    
+
     @IBOutlet private var connectionLabel: NSTextField!
     @IBOutlet private var ipLabel: NSTextField!
     @IBOutlet private var connectButton: StatusBarAppConnectButton!
     @IBOutlet private var profileDropDown: StatusBarAppProfileDropdownButton!
     @IBOutlet private var changeServerView: ChangeServerView!
-    
+
     @IBOutlet var secureCoreSwitch: SwitchButton!
     @IBOutlet private var secureCoreLabel: NSTextField!
-    
+
     @IBOutlet private var countryScrollView: NSScrollView!
     @IBOutlet private var countryClipView: NSClipView!
     @IBOutlet private var countryCollection: NSCollectionView!
-    
+
     @IBOutlet private var quitButton: NSButton!
     @IBOutlet private var showProtonVPNButton: NSButton!
 
@@ -61,18 +61,18 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     @IBOutlet private var cancelConnectionButton: ConnectingOverlayButton!
 
     @IBOutlet private var footerView: NSView!
-    
+
     private var profilesWindowController: StatusMenuProfilesListController?
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(with viewModel: StatusMenuViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("StatusMenu"), bundle: nil)
-        
+
         viewModel.contentChanged = { [weak self] in
             self?.contentChanged()
         }
@@ -80,7 +80,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         viewModel.changeServerStateChanged = { [weak self] state in
             self?.setupHeaderButtons(with: state)
         }
-        
+
         viewModel.disconnectWarning = { [weak self] viewModel in
             self?.disconnectWarning(viewModel)
         }
@@ -88,25 +88,25 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         viewModel.unsecureWiFiWarning = { [weak self] viewModel in
             self?.unsecureWarning(viewModel)
         }
-        
+
         viewModel.viewController = self
         initialViewSetup()
     }
-    
+
     override func viewDidLoad() {
         setupBackgroundColor()
         setupSecureCoreSection()
         setupCountryCollection()
         super.viewDidLoad()
     }
-    
+
     override func viewDidDisappear() {
         hideProfilesList()
     }
-    
-    private func initialViewSetup() {        
+
+    private func initialViewSetup() {
         view.wantsLayer = true
-        
+
         if let visualEffectView = view as? ClickDetectingVisualEffectView {
             visualEffectView.clickAction = { [weak self] in
                 guard let self else {
@@ -116,22 +116,22 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
                 guard let window = view.window, let profilesWindow = profilesWindowController?.window else {
                     return
                 }
-                
+
                 if let contains = window.childWindows?.contains(profilesWindow), contains {
                     hideProfilesList()
                 }
             }
         }
-        
+
         loginLabel.attributedStringValue = viewModel.loginDescription
-                
+
         let upgradeText = NSMutableAttributedString()
         upgradeText.append(viewModel.upgradeToPlusTitle)
         upgradeText.append(viewModel.upgradeForSecureCoreLabel)
         upgradeLabel.attributedStringValue = upgradeText
         upgradeLabel.addGestureRecognizer(NSClickGestureRecognizer(target: self, action: #selector(upgrade)))
         changeServerView.handler = viewModel.changeServerAction
-        
+
         updateViewLayout()
     }
 
@@ -145,7 +145,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             backgroundView.layer?.backgroundColor = .cgColor(.background)
         }
     }
-        
+
     private func setupSecureCoreSection() {
         secureCoreSwitch.drawsUnderOverlay = true
         DarkAppearance {
@@ -153,20 +153,20 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
         secureCoreSwitch.registerDelegate(self)
         secureCoreSwitch.setState(.off)
-        
+
         secureCoreLabel.attributedStringValue = viewModel.secureCoreLabel
     }
-    
+
     private func setupCountryCollection() {
         countryClipView.postsBoundsChangedNotifications = true
         countryScrollView.backgroundColor = .clear
         NotificationCenter.default.addObserver(self, selector: #selector(countriesScrolled), name: NSView.boundsDidChangeNotification, object: countryClipView)
-        
+
         let nib = NSNib(nibNamed: NSNib.Name("StatusMenuCountryViewItem"), bundle: nil)
         countryCollection.register(nib, forItemWithIdentifier: StatusMenuViewController.countryCollectionItemIdentifier)
-        
+
         countryCollection.dataSource = self
-        
+
         let horizontalSpacing: CGFloat = 8
         let verticalSpacing: CGFloat = 1
         let horizontalMargin: CGFloat = 16
@@ -174,7 +174,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         let itemWidthMin: CGFloat = 56
         let itemWidthMax: CGFloat = 65
         let itemHeight: CGFloat = 56
-        
+
         let layout = NSCollectionViewGridLayout()
         layout.minimumItemSize = CGSize(width: itemWidthMin, height: itemHeight)
         layout.maximumItemSize = CGSize(width: itemWidthMax, height: itemHeight)
@@ -183,13 +183,13 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         layout.margins = NSEdgeInsets(top: verticalMargin, left: horizontalMargin, bottom: verticalMargin, right: horizontalMargin)
         countryCollection.collectionViewLayout = layout
     }
-    
+
     private func showProfileList() {
         guard let window = view.window, let profilesWindow = profilesWindowController?.window else { return }
-        
+
         connectButton.dropDownExpanded = true
         profileDropDown.dropDownExpanded = true
-        
+
         window.addChildWindow(profilesWindow, ordered: .above)
         let connectFrameInWindow = connectButton.convert(connectButton.bounds, to: nil)
         let tableHeight: CGFloat = 200
@@ -198,22 +198,22 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         profilesWindowController?.window?.setFrame(profilesWindowFrame, display: true)
         profilesWindowController?.window?.makeKeyAndOrderFront(self)
     }
-    
+
     private func hideProfilesList() {
         guard let window = view.window, let profilesWindow = profilesWindowController?.window else { return }
-        
+
         window.removeChildWindow(profilesWindow)
         profilesWindowController?.close()
         profilesWindowController = nil
-        
+
         connectButton.dropDownExpanded = false
         profileDropDown.dropDownExpanded = false
     }
-    
+
     private func updateViewLayout() {
         if viewModel.isSessionEstablished {
             dynamicContentView.isHidden = viewModel.isConnecting
-            
+
             loadingViewContainer.isHidden = !viewModel.isConnecting
             loadingView.animate(viewModel.isConnecting)
             loadingLabel.attributedStringValue = viewModel.connectingText
@@ -223,7 +223,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             } else {
                 cancelConnectionButton.isHidden = true
             }
-            
+
             if viewModel.isConnecting {
                 hideProfilesList()
             }
@@ -245,13 +245,13 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             upgradeView.isHidden = true
         }
     }
-    
+
     private func contentChanged() {
         DispatchQueue.main.async { [weak self] in
             guard let self else {
                 return
             }
-            
+
             connectionLabel.attributedStringValue = viewModel.connectionLabel
             ipLabel.attributedStringValue = viewModel.ipAddress
 
@@ -259,7 +259,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             setupHeaderButtons(with: .from(state: viewModel.canChangeServer))
 
             secureCoreSwitch.setState(viewModel.serverType == .secureCore ? .on : .off)
-            
+
             countryCollection.reloadData()
         }
     }
@@ -272,7 +272,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         profileDropDown.isConnected = viewModel.isConnected
         changeServerView.state = .from(state: viewModel.canChangeServer)
     }
-    
+
     @objc private func countriesScrolled() {
         for item in countryCollection.visibleItems() {
             if let countryItem = item as? StatusMenuCountryViewItem {
@@ -288,42 +288,42 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
         }
         presentAsModalWindow(WiFiWarningPopupViewController(viewModel: viewModel))
     }
-    
+
     private func disconnectWarning(_ viewModel: WarningPopupViewModel) {
         secureCoreSwitch.setState(ButtonState(rawValue: 1 - secureCoreSwitch.currentButtonState.rawValue)!)
         presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
     }
-    
+
     @IBAction func connect(_ sender: Any) {
         viewModel.quickConnectAction()
     }
-    
+
     @IBAction func cancelConnection(_ sender: Any) {
         viewModel.disconnectAction()
     }
-    
+
     @IBAction func toggleProfilesList(_ sender: Any) {
         if profilesWindowController == nil {
             profilesWindowController = StatusMenuProfilesListController(windowNibName: NSNib.Name("StatusMenuProfilesList"), viewModel: viewModel.profileListViewModel)
         }
-        
+
         guard let window = view.window, let profilesWindow = profilesWindowController?.window else { return }
-        
+
         if let childWindows = window.childWindows, childWindows.contains(profilesWindow) {
             hideProfilesList()
         } else {
             showProfileList()
         }
     }
-    
+
     @IBAction func upgrade(_ sender: Any) {
         viewModel.upgradeAction()
     }
-    
+
     @IBAction func quit(_ sender: Any) {
         viewModel.quitApplicationAction()
     }
-    
+
     @IBAction func showProtonVPN(_ sender: Any) {
         viewModel.showApplicationAction()
     }
@@ -339,14 +339,14 @@ extension StatusMenuViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.countryCount()
     }
-    
+
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: StatusMenuViewController.countryCollectionItemIdentifier, for: indexPath)
-        
+
         if let countryItem = item as? StatusMenuCountryViewItem, let updatedViewModel = viewModel.countryViewModel(at: indexPath) {
             countryItem.update(viewModel: updatedViewModel)
         }
-        
+
         return item
     }
 }

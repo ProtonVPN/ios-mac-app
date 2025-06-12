@@ -36,7 +36,7 @@ open class ReportBugViewModel {
     private let alertService: CoreAlertService
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
-    
+
     private var planTitle: String?
 
     public typealias Factory =
@@ -56,14 +56,14 @@ open class ReportBugViewModel {
                   logContentProvider: factory.makeLogContentProvider(),
                   authKeychain: factory.makeAuthKeychainHandle())
     }
-    
+
     public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
         self.propertiesManager = propertiesManager
         self.reportsApiService = reportsApiService
         self.alertService = alertService
         self.logContentProvider = logContentProvider
         self.logSources = logSources
-        
+
         let username = authKeychain.username ?? ""
 
         do {
@@ -71,56 +71,56 @@ open class ReportBugViewModel {
         } catch {
             log.error("\(error)", category: .ui)
         }
-        
+
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
     }
-    
+
     public func set(description: String) {
         bug.description = description
     }
-    
+
     public func set(email: String) {
         bug.email = email
     }
-    
+
     public func getEmail() -> String? {
         bug.email
     }
-    
+
     public func set(country: String) {
         bug.country = country
     }
-    
+
     public func getCountry() -> String? {
         bug.country
     }
-    
+
     public func set(isp: String) {
         bug.ISP = isp
     }
-    
+
     public func getISP() -> String? {
         bug.ISP
     }
-    
+
     public func getUsername() -> String? {
         bug.username
     }
-    
+
     public func getClientVersion() -> String? {
         bug.clientVersion
     }
-    
+
     public func set(planTitle: String) {
         self.planTitle = planTitle
         bug.plan = planTitle
     }
-    
+
     public func getPlanTitle() -> String? {
         planTitle
     }
-    
+
     public var isSendingPossible: Bool {
         bug.canBeSent
     }

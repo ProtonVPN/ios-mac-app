@@ -33,7 +33,7 @@ class AppSessionManagerMock: AppSessionManager {
         self.sessionChanged = sessionChanged
         self.vpnGateway = vpnGateway
     }
-    
+
     public var callbackLogIn: ((String, String, () -> Void, (Error) -> Void) -> Void)?
     public var callbackLogOut: (() -> Void)?
     public var callbackAttemptDataRefreshWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
@@ -42,48 +42,48 @@ class AppSessionManagerMock: AppSessionManager {
     public var callbackRefreshData: (() -> Void)?
     public var callbackRefreshServerLoads: (() -> Void)?
     public var callbackCanPreviewApp: (() -> Bool)?
-    
+
     // MARK: AppSessionManager implementation
-    
+
     var vpnGateway: VpnGatewayProtocol
-    
+
     var sessionStatus: SessionStatus
-    
+
     var loggedIn: Bool
-    
+
     var sessionChanged: Notification.Name
     let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
-    
+
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         callbackLogIn?(username, password, success, failure)
     }
-    
+
     func logOut(force: Bool, reason: String?) {
         callbackLogOut?()
     }
 
     func finishLogin(authCredentials: AuthCredentials) async throws {}
-    
+
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         callbackAttemptDataRefreshWithoutLogin?({ completion(.success) }, { error in completion(.failure(error)) })
     }
-    
+
     func loadDataWithoutFetching() -> Bool {
         callbackLadDataWithoutFetching?() ?? true
     }
-    
+
     func loadDataWithoutLogin() async throws {
         callbackLoadDataWithoutLogin?()
     }
-    
+
     func refreshData() {
         callbackRefreshData?()
     }
-    
+
     func refreshServerLoads() {
         callbackRefreshServerLoads?()
     }
-    
+
     func canPreviewApp() -> Bool {
         callbackCanPreviewApp?() ?? true
     }

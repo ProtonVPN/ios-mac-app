@@ -21,26 +21,26 @@ private let okButton = Localizable.ok
 
 class SignupRobot: CoreElements {
     public let verify = Verify()
-    
+
     func signinButtonTap() -> LoginRobot {
         button(signInButtonId).tap()
         return LoginRobot()
     }
-    
+
     func enterEmail(_ email: String) -> SignupRobot {
         insertExternalEmail(email)
     }
-    
+
     private func insertExternalEmail(_ email: String) -> SignupRobot {
         textField(externalEmailTextFieldId).tap().typeText(email)
         return self
     }
-    
+
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()
         return T()
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func signupScreenIsShown() -> SignupRobot {
@@ -48,14 +48,14 @@ class SignupRobot: CoreElements {
             staticText(subtitleId).waitUntilExists(time: 10).checkExists()
             return SignupRobot()
         }
-        
+
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
             textView(protonmailErrorMessage).waitUntilExists(time: 10).checkExists()
             button(okButton).waitUntilExists().checkExists().tap()
             return SignupRobot()
         }
-        
+
         @discardableResult
         func usernameErrorIsShown() -> SignupRobot {
             textView(usernameErrorMessage).waitUntilExists(time: 2).checkExists()

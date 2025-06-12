@@ -514,7 +514,7 @@ extension NavigationService: ConnectionStatusService {
             }
             windowService.addToStack(viewController, checkForDuplicates: true)
         }
-    }    
+    }
 }
 
 // MARK: Account Recovery

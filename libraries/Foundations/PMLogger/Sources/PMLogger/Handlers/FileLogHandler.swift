@@ -31,9 +31,9 @@ public final class FileLogHandler: ParentLogHandler {
 
     /// Maximum number of log files that were rotated. This number doesn't include the main log file where app is writing it's logs.
     public var maxArchivedFilesCount = 1
-    
+
     public weak var delegate: FileLogHandlerDelegate?
-    
+
     private let fileUrl: URL
     private var fileHandle: FileHandleWrapper?
     private var currentSize: UInt64 = 0
@@ -42,22 +42,22 @@ public final class FileLogHandler: ParentLogHandler {
     private var logsDirectory: URL {
         fileUrl.deletingLastPathComponent()
     }
-    
+
     private static let queue: DispatchQueue = .init(label: "FileLogHandler", qos: .background)
-    
+
     public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter(), fileManager: FileManagerWrapper = FileManager.default) {
         self.fileUrl = fileUrl
         self.fileManager = fileManager
         super.init(formatter: formatter)
     }
-    
+
     deinit {
         try? closeFile()
     }
-    
+
     override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
-           
+
         Self.queue.async {
             if let data = (text + "\r\n").data(using: .utf8) {
                 do {
@@ -69,13 +69,13 @@ public final class FileLogHandler: ParentLogHandler {
             }
         }
     }
-    
+
     // MARK: - File
-    
+
     private func openFile() throws {
         try closeFile()
         try fileManager.createDirectory(at: logsDirectory, withIntermediateDirectories: true, attributes: nil)
-        
+
         if !fileManager.fileExists(atPath: fileUrl.path) {
             fileManager.createFile(atPath: fileUrl.path, contents: nil, attributes: nil)
             #if !os(OSX)
@@ -86,17 +86,17 @@ public final class FileLogHandler: ParentLogHandler {
 
         fileHandle = try fileManager.createFileHandle(forWritingTo: fileUrl)
     }
-    
+
     private func closeFile() throws {
         guard let fileHandle else {
             return
         }
         try fileHandle.synchronize()
         try fileHandle.close()
-        
+
         self.fileHandle = nil
     }
-    
+
     private func getFileHandleAtTheEndOfFile() -> FileHandleWrapper? {
         if fileHandle == nil {
             do {
@@ -112,7 +112,7 @@ public final class FileLogHandler: ParentLogHandler {
         }
         return fileHandle
     }
-    
+
     private func rotate() throws {
         if currentSize < 1 {
             do {
@@ -129,10 +129,10 @@ public final class FileLogHandler: ParentLogHandler {
         try moveToNextFile()
         try removeOldFiles()
         // File will be reopened next time write operation is needed
-        
+
         delegate?.didRotateLogFile()
     }
-        
+
     private func moveToNextFile() throws {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYMMddHHmmssSSS"
@@ -156,21 +156,21 @@ public final class FileLogHandler: ParentLogHandler {
             guard oldFiles.count > maxArchivedFilesCount else {
                 return
             }
-            
+
             let sortedFiles = oldFiles.sorted(by: fileManager.fileCreationDateSort)
-            
+
             for i in 0 ..< sortedFiles.count - maxArchivedFilesCount {
                 try fileManager.removeItem(at: sortedFiles[i])
             }
-        
+
         } catch {
             debugLog("🔴🔴 Error while removing old logfiles: \(error)")
             throw error
         }
     }
-    
+
     // MARK: - Debugging
-    
+
     public func debugLog(_ message: String) {
         #if DEBUG
             print(message)

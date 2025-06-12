@@ -30,33 +30,33 @@ class ConnectingOverlayButton: HoverDetectionButton {
         case normal
         case interactive
     }
-    
+
     public var style: Style = .normal {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     override var title: String {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     // It differs from the one in HoverDetectionButton because this button is used in child window.
     override func trackingOptions() -> NSTrackingArea.Options {
         [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
     }
-    
+
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
-        
+
         updateTrackingAreas()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius

@@ -25,7 +25,7 @@ import UIKit
 
 class SecureCoreEntryAnnotation: AnnotationView {
     let countryModel: SecureCoreEntryCountryModel
-    
+
     override var coordinate: CLLocationCoordinate2D {
         countryModel.coordinate
     }
@@ -33,27 +33,27 @@ class SecureCoreEntryAnnotation: AnnotationView {
     var maxHeight: CGFloat {
         30
     }
-    
+
     var width: CGFloat {
         30
     }
-    
+
     override var frame: CGRect {
         didSet {
             layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
-    
+
     init(frame: CGRect, scEntryCountryModel: SecureCoreEntryCountryModel) {
         countryModel = scEntryCountryModel
-        
+
         super.init(frame: frame)
-        
+
         layer.cornerRadius = maxHeight * 0.5
         backgroundColor = .brandColor()
     }

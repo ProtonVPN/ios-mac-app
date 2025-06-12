@@ -29,7 +29,7 @@ private let captchaNextButton = Localizable.modalsCommonNext
 
 class LoginRobot: CoreElements {
     public let verify = Verify()
-    
+
     @discardableResult
     func enterCredentials(_ name: Credentials) -> LoginRobot {
         typeUsername(username: name.username)
@@ -46,29 +46,29 @@ class LoginRobot: CoreElements {
         typeUsername(username: username)
             .typePassword(password: password)
     }
-    
+
     @discardableResult
     func signIn<T: CoreElements>(robot _: T.Type) -> T {
         button(signInButtonId).tap()
         return T()
     }
-    
+
     @discardableResult
     func verifyCaptcha() -> LoginRobot {
         button(captchaNextButton).tap()
         return LoginRobot()
     }
-    
+
     private func typeUsername(username: String) -> LoginRobot {
         textField(loginTextFieldId).tap().typeText(username)
         return self
     }
-    
+
     private func typePassword(password: String) -> LoginRobot {
         secureTextField(passwordTextFieldId).tap().typeText(password)
         return self
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func loginScreenIsShown() -> LoginRobot {
@@ -92,21 +92,21 @@ class LoginRobot: CoreElements {
             button(okButton).checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func specialCharErrorDialog() -> LoginRobot {
             textView(invalidUsernameErrorMessage).waitUntilExists().checkExists()
             button(okButton).checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func emailAddressAlreadyExists() -> LoginRobot {
             textView(errorBannerMessage).waitUntilExists().checkExists()
             button(okButton).waitUntilExists().checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
             staticText(assignConnectionErrorBannerMessage).waitUntilExists().checkExists()

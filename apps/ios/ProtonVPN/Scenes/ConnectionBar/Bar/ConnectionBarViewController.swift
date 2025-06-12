@@ -29,23 +29,23 @@ class ConnectionBarViewController: UIViewController {
     @IBOutlet var connectedLabel: UILabel!
     @IBOutlet var timerLabel: UILabel!
     @IBOutlet var arrowImage: UIImageView!
-    
+
     var viewModel: ConnectionBarViewModel?
     var tap: UITapGestureRecognizer!
     var connectionStatusService: ConnectionStatusService!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
-        
+
         view.backgroundColor = .secondaryBackgroundColor()
         connectedLabel.textColor = .normalTextColor()
         timerLabel.textColor = .normalTextColor()
-        
+
         connectedLabel.text = Localizable.connected
-        
+
         arrowImage.image = IconProvider.chevronRight.imageFlippedForRightToLeftLayoutDirection()
         arrowImage.tintColor = .iconWeak()
 
@@ -66,7 +66,7 @@ class ConnectionBarViewController: UIViewController {
         viewModel?.updateDisplayStateFromUIThread()
         viewModel?.updateStateFromUIThread()
     }
-    
+
     func embed(in parentViewController: UIViewController, with containerView: UIView) {
         willMove(toParent: parentViewController)
         if let connectionBarView = view {
@@ -88,7 +88,7 @@ class ConnectionBarViewController: UIViewController {
         notConnectedLabel.textColor = .normalTextColor()
         view.setNeedsDisplay()
     }
-    
+
     private func setConnecting() {
         view.backgroundColor = .secondaryBackgroundColor()
         connectedLabel.isHidden = true
@@ -98,23 +98,23 @@ class ConnectionBarViewController: UIViewController {
         notConnectedLabel.textColor = .notificationWarningColor()
         view.setNeedsDisplay()
     }
-    
+
     private func setConnected() {
         view.backgroundColor = .brandColor()
         connectedLabel.isHidden = false
         timerLabel.isHidden = false
         notConnectedLabel.isHidden = true
-        
+
         view.setNeedsDisplay()
         view.setNeedsLayout()
-        
+
         updateConnected()
     }
 
     private func updateConnected() {
         timerLabel.text = viewModel?.timeString()
     }
-    
+
     private func setDisconnected() {
         view.backgroundColor = .secondaryBackgroundColor()
         connectedLabel.isHidden = true
@@ -123,10 +123,10 @@ class ConnectionBarViewController: UIViewController {
         notConnectedLabel.text = Localizable.notConnected
         notConnectedLabel.textColor = .notificationErrorColor()
         arrowImage.isHidden = false
-        
+
         view.setNeedsDisplay()
     }
-    
+
     @objc private func handleTap() {
         connectionStatusService.presentStatusViewController()
     }

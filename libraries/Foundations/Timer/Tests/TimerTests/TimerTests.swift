@@ -22,71 +22,71 @@ import XCTest
 
 final class TimerTests: XCTestCase {
     private var factory: TimerFactoryImplementation!
-    
+
     // We have to have a strong reference to timer object because otherwise it will be deallocated and timer will not execute out closure
     var timer: BackgroundTimer?
-    
+
     override func setUp() {
         super.setUp()
         factory = TimerFactoryImplementation()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         factory = nil
     }
-    
+
     func testDateTimer() throws {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
-        
+
         timer = factory.scheduledTimer(runAt: Date(), queue: DispatchQueue.global()) {
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 10)
         timer = nil
     }
-    
+
     func testDateWithLeewayTimer() throws {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
-        
+
         timer = factory.scheduledTimer(runAt: Date(), leeway: .never, queue: DispatchQueue.global()) {
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 10)
         timer = nil
     }
-    
+
     func testTimeIntervalTimer() throws {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
-        
+
         timer = factory.scheduledTimer(timeInterval: 0.01, repeats: false, queue: DispatchQueue.global()) {
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 10)
         timer = nil
     }
-    
+
     func testDispatchTimeIntervalTimer() throws {
         let expectation = XCTestExpectation(description: "Timer closure was called")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 1
-        
+
         factory.scheduleAfter(.milliseconds(1), on: .global()) {
             expectation.fulfill()
         }
-        
+
         wait(for: [expectation], timeout: 10)
     }
-    
+
     func testRepeatingTimer() throws {
         let repeats = 3
         let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
@@ -101,11 +101,11 @@ final class TimerTests: XCTestCase {
                 return
             }
         }
-        
+
         wait(for: [expectation], timeout: 10)
         timer = nil
     }
-    
+
     func testRepeatingTimeIntervalTimer() throws {
         let repeats = 3
         let expectation = XCTestExpectation(description: "Timer closure was called \(repeats) times")
@@ -120,7 +120,7 @@ final class TimerTests: XCTestCase {
                 return
             }
         }
-        
+
         wait(for: [expectation], timeout: 1)
         timer = nil
     }

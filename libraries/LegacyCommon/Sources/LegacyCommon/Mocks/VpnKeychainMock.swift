@@ -26,24 +26,24 @@
 
     public class VpnKeychainMock: VpnKeychainProtocol {
         public var didStoreCredentials: ((VpnCredentials) -> Void)?
-    
+
         public enum KeychainMockError: Error {
             case fetchError
             case getCertificateError
         }
-    
+
         public var throwsOnFetch: Bool = false
-    
+
         public static var vpnCredentialsChanged = Notification.Name("vpnCredentialsChanged")
         public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
         public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
-    
+
         public var credentials: VpnCredentials?
-    
+
         public init(planName: String = "free", maxTier: Int = 0) {
             credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
         }
-    
+
         public func fetch() throws -> VpnCredentials {
             if throwsOnFetch {
                 throw KeychainMockError.fetchError
@@ -59,7 +59,7 @@
         public func fetchCached() throws -> CachedVpnCredentials {
             try CachedVpnCredentials(credentials: fetch())
         }
-    
+
         public func fetchOpenVpnPassword() throws -> Data {
             Data()
         }
@@ -91,21 +91,21 @@
 
             didStoreCredentials?(newCredentials)
         }
-    
+
         public func getServerCertificate() throws -> SecCertificate {
             throw KeychainMockError.getCertificateError
         }
-    
+
         public func storeServerCertificate() throws {}
 
         public func clear() {
             credentials = nil
         }
-    
+
         public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
             credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
         }
-    
+
         public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
             VpnCredentials(
                 status: 0,
@@ -125,21 +125,21 @@
                 businessEvents: false
             )
         }
-    
+
         public func hasOldVpnPassword() -> Bool {
             false
         }
-    
+
         public func clearOldVpnPassword() throws {}
-    
+
         public func store(wireguardConfiguration: Data) throws -> Data {
             Data()
         }
-    
+
         public func fetchWireguardConfigurationReference() throws -> Data {
             Data()
         }
-    
+
         public func fetchWireguardConfiguration() throws -> String? {
             nil
         }

@@ -85,7 +85,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 offer: Offer.empty,
                 reference: nil
             ),
-        ])        
+        ])
     }
 
     func testFetchesOnlyCurrentNotifications() {

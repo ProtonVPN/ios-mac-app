@@ -110,7 +110,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         _ group: ServerGroupInfo,
         isOfKind kind: ServerGroupInfo.Kind,
         hasServerCount count: Int,
-        isUnderMaintenance: Bool, 
+        isUnderMaintenance: Bool,
         supports protocolSet: ProtocolSupport
     ) {
         XCTAssertEqual(group.kind, kind)

@@ -31,37 +31,37 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager
     private let appSessionManager: AppSessionManager
-    
+
     private var nonTransientState: AppState = .disconnected
-    
+
     private var shouldShowNotification: Bool {
         @Dependency(\.defaultsProvider) var provider
 
         return appSessionManager.sessionStatus == .established
             && provider.getDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
-    
+
     init(appStateManager: AppStateManager, appSessionManager: AppSessionManager) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
-        
+
         super.init()
-        
+
         setNonTransientState(state: appStateManager.state)
         NSUserNotificationCenter.default.delegate = self
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
     }
-    
+
     @objc private func appStateChanged(_ notification: Notification) {
         if let newState = notification.object as? AppState {
             if case AppState.connected = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
                 fire(connectedNotification(for: server))
             }
-            
+
             setNonTransientState(state: newState)
         }
     }
-    
+
     private func setNonTransientState(state: AppState) {
         switch state {
         case .connected, .disconnected, .aborted, .error:
@@ -70,7 +70,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
             break
         }
     }
-    
+
     private func connectedNotification(for server: ServerModel) -> NSUserNotification {
         let notification = NSUserNotification()
         notification.title = "Proton VPN " + Localizable.connected
@@ -79,7 +79,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         notification.hasActionButton = false
         return notification
     }
-    
+
     private func connectSubtitle(forServer server: ServerModel) -> String {
         if server.isSecureCore {
             server.entryCountry + " > " + server.exitCountry + " > " + server.name
@@ -87,11 +87,11 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
             server.country + " > " + server.name
         }
     }
-    
+
     private func connectInformativeText(forServer server: ServerModel) -> String {
         Localizable.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? Localizable.unavailable)
     }
-    
+
     private func fire(_ notification: NSUserNotification) {
         NSUserNotificationCenter.default.deliver(notification)
         NSUserNotificationCenter.default.perform(#selector(NSUserNotificationCenter.removeDeliveredNotification(_:)),

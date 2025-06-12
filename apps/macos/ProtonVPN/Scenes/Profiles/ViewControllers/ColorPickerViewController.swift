@@ -25,38 +25,38 @@ import Ergonomics
 
 class ColorPickerViewController: NSViewController {
     @IBOutlet var collectionView: NSCollectionView!
-    
+
     private let circleCellWidth: CGFloat = 20.0
     private let rows = 2
     private let columns = 5
-    
+
     var viewModel: ColorPickerViewModel!
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: ColorPickerViewModel) {
         super.init(nibName: NSNib.Name("ColorPicker"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupCollectionView()
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         collectionView.addCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         collectionView.removeCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
-    
+
     private func setupView() {
         let view = NSView()
         view.wantsLayer = true
@@ -65,7 +65,7 @@ class ColorPickerViewController: NSViewController {
         }
         collectionView.backgroundView = view
     }
-    
+
     private func setupCollectionView() {
         let gridLayout = NSCollectionViewGridLayout()
         gridLayout.maximumItemSize = NSSize(width: circleCellWidth, height: circleCellWidth)
@@ -83,10 +83,10 @@ class ColorPickerViewController: NSViewController {
         collectionView.allowsMultipleSelection = false
 
         setSelection()
-        
+
         viewModel.colorSelected = { [weak self] in self?.setSelection() }
     }
-    
+
     private func setSelection() {
         collectionView.selectionIndexPaths = [IndexPath(item: viewModel.selectedColorIndex, section: 0)]
     }
@@ -96,7 +96,7 @@ extension ColorPickerViewController: NSCollectionViewDataSource {
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.colorCount
     }
-    
+
     func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ColorPickerItem"), for: indexPath) as! ColorPickerItemView
         item.colorPickerCircle.color = viewModel.color(atIndex: indexPath.item)

@@ -18,7 +18,7 @@ class LoginTests: ProtonVPNUITests {
 
     override func setUp() {
         super.setUp()
-        setupProdEnvironment() 
+        setupProdEnvironment()
         homeRobot
             .showLogin()
             .verify.loginScreenIsShown()

@@ -25,46 +25,46 @@ import Ergonomics
 
 class StatusMenuProfilesListController: WindowController {
     fileprivate let statusMenuProfileItemIdentifier = "StatusMenuProfileItemCell"
-    
+
     @IBOutlet var topView: NSView!
     @IBOutlet var roundedView: NSView!
     @IBOutlet var profileList: NSTableView!
-    
+
     var viewModel: StatusMenuProfilesListViewModel
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     init(windowNibName nibName: NSNib.Name, viewModel: StatusMenuProfilesListViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(window: nil)
-        
+
         Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: nil)
-        
+
         setupWindow()
         setupProfilesList()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
         guard let window else { return }
-        
+
         window.styleMask = .borderless
         window.backgroundColor = NSColor.clear
         window.isOpaque = false
         window.hasShadow = false
-        
+
         window.ignoresMouseEvents = false
-        
+
         window.contentView?.wantsLayer = true
         window.contentView?.layer?.backgroundColor = .clear
         window.appearance = NSAppearance(named: .darkAqua)
-        
+
         topView.wantsLayer = true
-        
+
         roundedView.wantsLayer = true
         roundedView.layer?.cornerRadius = 8
         DarkAppearance {
@@ -72,7 +72,7 @@ class StatusMenuProfilesListController: WindowController {
             roundedView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupProfilesList() {
         profileList.dataSource = self
         profileList.delegate = self
@@ -95,7 +95,7 @@ extension StatusMenuProfilesListController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         viewModel.cellHeight
     }
-    
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as! StatusMenuProfileViewItem
 

@@ -29,7 +29,7 @@ public enum AppState {
     case disconnecting(ServerDescriptor)
     case aborted(userInitiated: Bool)
     case error(Error)
-    
+
     public var description: String {
         let base = "AppState - "
         switch self {
@@ -49,7 +49,7 @@ public enum AppState {
             return base + "Error: \(error.localizedDescription)"
         }
     }
-    
+
     public var isConnected: Bool {
         switch self {
         case .connected:
@@ -58,7 +58,7 @@ public enum AppState {
             false
         }
     }
-    
+
     public var isDisconnected: Bool {
         switch self {
         case .disconnected, .preparingConnection, .connecting, .aborted, .error:
@@ -67,7 +67,7 @@ public enum AppState {
             false
         }
     }
-    
+
     public var isStable: Bool {
         switch self {
         case .disconnected, .connected, .aborted, .error:
@@ -76,7 +76,7 @@ public enum AppState {
             false
         }
     }
-    
+
     public var isSafeToEnd: Bool {
         switch self {
         case .connecting, .connected, .disconnecting:
@@ -85,7 +85,7 @@ public enum AppState {
             true
         }
     }
-    
+
     public var descriptor: ServerDescriptor? {
         switch self {
         case let .connecting(desc), let .connected(desc), let .disconnecting(desc):

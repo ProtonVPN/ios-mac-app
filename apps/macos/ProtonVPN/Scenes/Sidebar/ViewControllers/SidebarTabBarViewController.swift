@@ -31,51 +31,51 @@ enum SidebarTab {
 
 class SidebarTabBarViewController: NSViewController {
     let tabChanged = Notification.Name("SidebarTabBarViewControllerTabChanged")
-    
+
     @IBOutlet var tabBarView: SidebarTabBarView!
     @IBOutlet var countriesButton: TabBarButton!
     @IBOutlet var profilesButton: TabBarButton!
-    
+
     var activeTab: SidebarTab? {
         didSet {
             new(tab: activeTab!)
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required init() {
         super.init(nibName: NSNib.Name("SidebarTabBar"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+
         setupButtons()
     }
-    
+
     private func setupButtons() {
         countriesButton.title = Localizable.countries
         countriesButton.target = self
         countriesButton.action = #selector(countriesTabAction(_:))
-        
+
         profilesButton.title = Localizable.profiles
         profilesButton.target = self
         profilesButton.action = #selector(profilesTabAction(_:))
-        
+
         countriesButton.setAccessibilityIdentifier("CountriesButton")
         profilesButton.setAccessibilityIdentifier("ProfilesButton")
     }
-    
+
     private func new(tab: SidebarTab) {
         tabBarView.activeTab = tab
         countriesButton.isFocused = tab == .countries
         profilesButton.isFocused = tab == .profiles
         NotificationCenter.default.post(name: tabChanged, object: activeTab!)
     }
-    
+
     @objc private func countriesTabAction(_ sender: NSButton) {
         if activeTab != .countries {
             activeTab = .countries

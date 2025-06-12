@@ -45,7 +45,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public let hostCountry: String?
     public let translatedCity: String?
     public let gatewayName: String?
-    
+
     override public var description: String {
         "ID: \(id)\n" +
             "Name: \(name)\n" +
@@ -64,28 +64,28 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "TranslatedCity: \(String(describing: translatedCity))\n" +
             "gatewayName: \(String(describing: gatewayName))\n"
     }
-    
+
     public var logDescription: String {
         "\(name) (\(domain), load: \(load))"
     }
-    
+
     public var hasCluster: Bool {
         ips.count > 1
     }
-    
+
     public lazy var isFree: Bool = tier == 0
 
     /// The server name, split into the name prefix and sequence number (if it exists).
     public lazy var serverNameComponents: ServerNameComponents = .init(name: name)
-    
+
     public var isSecureCore: Bool {
         feature.contains(.secureCore)
     }
-    
+
     public var hasSecureCore: Bool {
         feature.rawValue > 0
     }
-    
+
     public var supportsP2P: Bool {
         feature.contains(.p2p)
     }
@@ -97,27 +97,27 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public var supportsStreaming: Bool {
         feature.contains(.streaming)
     }
-    
+
     public var underMaintenance: Bool {
         status == 0
     }
-    
+
     public var serverType: ServerType {
         isSecureCore ? .secureCore : .standard
     }
-    
+
     public var entryCountry: String {
         LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
-    
+
     public var exitCountry: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
-    
+
     public var country: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
-    
+
     public var countryCode: String {
         exitCountryCode
     }
@@ -163,7 +163,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.gatewayName = gatewayName
         super.init()
     }
-    
+
     public init(dic: JSONDictionary) throws {
         id = try dic.stringOrThrow(key: "ID") // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
         name = try dic.stringOrThrow(key: "Name") // "Name": "ES#1"
@@ -218,22 +218,22 @@ public class ServerModel: NSObject, NSCoding, Codable {
 
         return result
     }
-    
+
     public func matches(searchQuery: String) -> Bool {
         let query = searchQuery.lowercased()
-        
+
         if isSecureCore {
             return entryCountry.lowercased().contains(query)
         }
-        
+
         if name.lowercased().contains(query) {
             return true
         }
-        
+
         if country.lowercased().contains(query) {
             return true
         }
-        
+
         if let city, city.lowercased().contains(query) {
             return true
         }
@@ -241,7 +241,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         if let translatedCity, translatedCity.lowercased().contains(query) {
             return true
         }
-        
+
         return false
     }
 
@@ -250,9 +250,9 @@ public class ServerModel: NSObject, NSCoding, Codable {
         score = continuousProperties.score
         status = continuousProperties.status
     }
-    
+
     // MARK: - NSCoding
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -278,14 +278,14 @@ public class ServerModel: NSObject, NSCoding, Codable {
             ips = NSKeyedUnarchiver.unarchiveObject(with: ipsData) as? [ServerIp] ?? []
         }
         let feature = ServerFeature(rawValue: aDecoder.decodeInteger(forKey: CodingKeys.feature.rawValue))
-        
+
         var location = ServerLocation(lat: 0.0, long: 0.0)
         if let locationData = aDecoder.decodeObject(forKey: CodingKeys.location.rawValue) as? Data {
             if let loc = (NSKeyedUnarchiver.unarchiveObject(with: locationData) as? ServerLocation) {
                 location = loc
             }
         }
-        
+
         self.init(id: aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as! String,
                   name: aDecoder.decodeObject(forKey: CodingKeys.name.rawValue) as! String,
                   domain: aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as! String,
@@ -304,13 +304,13 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   gatewayName: aDecoder.decodeObject(forKey: CodingKeys.gatewayName.rawValue) as? String
         )
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     // MARK: - Codable
-    
+
     public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -352,16 +352,16 @@ public class ServerModel: NSObject, NSCoding, Codable {
                       gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
         )
     }
-    
+
     // MARK: - Static functions
-    
+
     // swiftlint:disable nsobject_prefer_isequal
     public static func == (lhs: ServerModel, rhs: ServerModel) -> Bool {
         lhs.name == rhs.name
     }
 
     // swiftlint:enable nsobject_prefer_isequal
-    
+
     public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
         // Servers whose name contains word Free come
         // first in the ordering.

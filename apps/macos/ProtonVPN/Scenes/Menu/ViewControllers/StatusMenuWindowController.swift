@@ -32,10 +32,10 @@ class StatusWindow: NSPanel {
 // Responsible for the status icon itself and the window for the status bar app
 final class StatusMenuWindowController: WindowController {
     private var windowModel: StatusMenuWindowModel?
-    
+
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let statusMenu = NSMenu()
-    
+
     private let iconManager: StatusBarIconBlinker
 
     private var eventsMonitor: Any?
@@ -47,7 +47,7 @@ final class StatusMenuWindowController: WindowController {
     var lastOpenApplication: NSRunningApplication?
 
     weak var windowService: WindowService?
-    
+
     override var contentViewController: NSViewController? {
         didSet {
             if let viewController = contentViewController {
@@ -56,37 +56,37 @@ final class StatusMenuWindowController: WindowController {
             }
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     override init(window: NSWindow?) {
         iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
-        
+
         super.init(window: window)
-        
+
         monitorsKeyEvents = true
     }
-    
+
     deinit {
         eventsMonitor.map { NSEvent.removeMonitor($0) }
     }
-    
+
     func update(with windowModel: StatusMenuWindowModel) {
         self.windowModel = windowModel
-        
+
         contentViewController = windowModel.statusMenuViewController
-        
+
         setupIcon()
-        
+
         self.windowModel?.contentChanged = { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.setupIcon()
             }
         }
-        
+
         eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
             switch event.type {
             case .leftMouseDown:
@@ -98,17 +98,17 @@ final class StatusMenuWindowController: WindowController {
             default:
                 break
             }
-            
+
             return event
         }
     }
-    
+
     private func setupIcon() {
         iconManager.setImage(windowModel?.statusIcon ?? .unknown)
         iconManager.isBlinking = windowModel?.isStatusIconBlinking ?? false
         NSApp.applicationIconImage = (windowModel?.appIcon ?? .active).image
     }
-    
+
     private func togglePopover() {
         if windowIsVisible {
             dismissPopover()
@@ -116,26 +116,26 @@ final class StatusMenuWindowController: WindowController {
             showPopover()
         }
     }
-    
+
     private func showPopover() {
         guard let button = statusItem.button, let frame = button.window?.frame else { return }
-        
+
         button.isHighlighted = true
         showWindow(self, relativeTo: frame)
     }
-    
+
     private func dismissPopover() {
         if windowIsVisible {
             close()
             statusItem.button?.isHighlighted = false
         }
     }
-    
+
     private func showWindow(_ sender: Any?, relativeTo frame: CGRect) {
         super.showWindow(sender)
-        
+
         guard let window else { return }
-        
+
         let height: CGFloat = 436 // positions countries so that 3.5 rows are showing
         let width: CGFloat = 300
         var extensionFrame = CGRect(x: frame.minX, y: frame.minY - height, width: width, height: height)
@@ -148,11 +148,11 @@ final class StatusMenuWindowController: WindowController {
         window.setFrame(extensionFrame, display: true)
         window.makeKeyAndOrderFront(sender)
     }
-    
+
     override func close() {
         window?.orderOut(nil)
     }
-    
+
     private func setupWindow() {
         guard let window else {
             return
@@ -164,7 +164,7 @@ final class StatusMenuWindowController: WindowController {
         window.backgroundColor = NSColor.clear
         window.hidesOnDeactivate = false
         window.hasShadow = true
-        
+
         window.styleMask = .nonactivatingPanel
         window.level = .popUpMenu
         window.collectionBehavior = [.fullScreenAuxiliary]
@@ -177,7 +177,7 @@ extension StatusMenuWindowController {
         windowService?.windowWillClose(self)
         dismissPopover()
     }
-    
+
     func windowDidResignKey(_ notification: Notification) {
         dismissPopover()
     }
@@ -235,11 +235,11 @@ extension AppIcon {
 class StatusBarIconBlinker {
     private var statusItem: NSStatusItem
     private var statusIcon: StatusIcon
-    
+
     private var emptyImage: NSImage = StatusIcon.unknown.image
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
-    
+
     public var isBlinking: Bool = false {
         didSet {
             if isBlinking, timer == nil {
@@ -252,12 +252,12 @@ class StatusBarIconBlinker {
             }
         }
     }
-    
+
     public init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
         self.statusItem = statusItem
         self.statusIcon = statusIcon
     }
-    
+
     public func setImage(_ statusIcon: StatusIcon) {
         if statusIcon != self.statusIcon {
             self.statusIcon = statusIcon
@@ -266,17 +266,17 @@ class StatusBarIconBlinker {
             }
         }
     }
-    
+
     private func start() {
         timer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
-    
+
     private func stop() {
         timer?.invalidate()
         timer = nil
         statusItem.button?.image = statusIcon.image
     }
-    
+
     @objc func fireTimer() {
         if statusItem.button?.image == emptyImage {
             statusItem.button?.image = statusIcon.image

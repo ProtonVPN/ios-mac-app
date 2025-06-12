@@ -244,7 +244,7 @@ extension CachedVpnCredentials {
     init(credentials: VpnCredentials) {
         self.init(
             status: credentials.status,
-            planName: credentials.planName, 
+            planName: credentials.planName,
             planTitle: credentials.planTitle,
             maxConnect: credentials.maxConnect,
             maxTier: credentials.maxTier,
@@ -253,7 +253,7 @@ extension CachedVpnCredentials {
             credit: credentials.credit,
             currency: credentials.currency,
             hasPaymentMethod: credentials.hasPaymentMethod,
-            subscribed: credentials.subscribed, 
+            subscribed: credentials.subscribed,
             businessEvents: credentials.businessEvents
         )
     }

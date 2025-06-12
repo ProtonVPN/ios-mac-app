@@ -24,17 +24,17 @@ class LoginTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     private let twoFaRobot = TwoFaRobot()
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
     }
-    
+
     func testLoginWithIncorrectCredentials() {
         let username = "wrong_username"
         let userpassword = "wrong_password"
         let errorMessage = "The password is not correct. Please try again with a different password."
-            
+
         loginRobot
             .withEmptyFields()
             .verify.checkLoginButtonIsNotEnabled()
@@ -45,20 +45,20 @@ class LoginTests: ProtonVPNUITests {
             .withIncorrectCredentials(username, userpassword)
             .verify.checkErrorMessageIsShown(message: errorMessage)
     }
-    
+
     func testLoginWithIncorrectUnicodeCredentials() {
         let username = "ąčęėįš"
         let userpassword = "žūųšįė"
         let errorMessage = "Invalid username"
-            
+
         loginRobot
             .withIncorrectUnicode(username, userpassword)
             .verify.checkErrorMessageIsShown(message: errorMessage)
     }
-    
+
     func disabled_testLoginAsSubuserWithNoConnectionAssigned() {
         let subusercredentials = getCredentials(fromResource: "subusercredentials")
-            
+
         loginRobot
             .loginAsSubuser(subusercredentials: subusercredentials[0])
             .verify.checkModalIsShown(timeout: 10)
@@ -68,10 +68,10 @@ class LoginTests: ProtonVPNUITests {
             .clickLoginAgain()
             .verify.checkLoginButtonIsEnabled()
     }
-    
+
     func testLoginWithCorrectCredentials() {
         let credentials = getCredentials(fromResource: "credentials")
-        
+
         for credentials in credentials {
             login(withCredentials: credentials)
             verifyLoggedInUser(withCredentials: credentials)
@@ -80,7 +80,7 @@ class LoginTests: ProtonVPNUITests {
             app.launch()
         }
     }
-    
+
     func testLoginWithTwoPassUser() {
         login(withCredentials: twopassusercredentials[0])
 
@@ -91,15 +91,15 @@ class LoginTests: ProtonVPNUITests {
     @MainActor
     func testLoginAsTwoFa() async {
         let twofausercredentials = getCredentials(fromResource: "twofausercredentials")
-            
+
         loginRobot
             .loginUser(credentials: twofausercredentials[0])
         await twoFaRobot
             .verify.twoFaAuthenticationIsShown()
             .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
-        
+
         waitForLoaderDisappear()
-        
+
         mainRobot
             .verify.userIsLoggedIn()
     }
@@ -107,15 +107,15 @@ class LoginTests: ProtonVPNUITests {
     @MainActor
     func testLoginWithTwoPassAnd2FAUser() async {
         let twopasstwofausercredentials = getCredentials(fromResource: "twopasstwofausercredentials")
-            
+
         loginRobot
             .loginUser(credentials: twopasstwofausercredentials[0])
         await twoFaRobot
             .verify.twoFaAuthenticationIsShown()
             .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
-        
+
         waitForLoaderDisappear()
-        
+
         mainRobot
             .verify.userIsLoggedIn()
     }

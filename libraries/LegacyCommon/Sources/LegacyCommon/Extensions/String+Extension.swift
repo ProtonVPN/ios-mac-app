@@ -25,7 +25,7 @@ public extension String {
     func contains(_ string: String) -> Bool {
         range(of: string, options: NSString.CompareOptions.caseInsensitive) != nil ? true : false
     }
-    
+
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
@@ -37,15 +37,15 @@ public extension String {
             return []
         }
     }
-    
+
     func hasMatches(for regex: String) -> Bool {
         !matches(for: regex).isEmpty
     }
-    
+
     func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
         replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
     }
-    
+
     func preg_replace(_ partten: String, replaceto: String) -> String {
         let options: NSRegularExpression.Options = [.caseInsensitive, .dotMatchesLineSeparators]
         do {
@@ -59,49 +59,49 @@ public extension String {
         }
         return self
     }
-    
+
     static func randomString(length: Int) -> String {
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         let allowedCharsCount = UInt32(allowedChars.count)
         var randomString = ""
-        
+
         for _ in 0 ..< length {
             let randomNum = Int(arc4random_uniform(allowedCharsCount)) // swiftlint:disable:this legacy_random
             let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
             let newCharacter = allowedChars[randomIndex]
             randomString += String(newCharacter)
         }
-        
+
         return randomString
     }
-    
+
     func encodeBase64() -> String {
         let utf8str = data(using: String.Encoding.utf8)
         let base64Encoded = utf8str!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         return base64Encoded
     }
-    
+
     func decodeBase64() -> String {
         let decodedData = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
         let decodedString = NSString(data: decodedData!, encoding: String.Encoding.utf8.rawValue)
         return decodedString! as String
     }
-    
+
     func decodeBase64() -> Data {
         let decodedData = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
         return decodedData!
-    }    
+    }
 }
 
 public extension String {
     subscript(i: Int) -> Character {
         self[index(startIndex, offsetBy: i)]
     }
-    
+
     subscript(i: Int) -> String {
         String(self[i] as Character)
     }
-    
+
     subscript(r: Range<Int>) -> String {
         let start = index(startIndex, offsetBy: r.lowerBound)
         let end = index(startIndex, offsetBy: r.upperBound)

@@ -179,7 +179,7 @@ final class ViewController: UITableViewController {
     }
 
     func pushAllCountries() {
-        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
+        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63),
                                                              primaryAction: { self.presentedViewController?.dismiss(animated: true) },
                                                              dismissAction: { self.presentedViewController?.dismiss(animated: true) })
 

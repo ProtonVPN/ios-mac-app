@@ -34,7 +34,7 @@ private let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
-    
+
     override func setUp() {
         super.setUp()
         windowService.displayCount = 0
@@ -42,30 +42,30 @@ class AlertTests: XCTestCase {
 
     func testSingleInstanceOfAlerts() {
         XCTAssert(windowService.displayCount == 0)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssert(windowService.displayCount == 2)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssert(windowService.displayCount == 2)
     }
-    
+
     func testUpdatingAlertCompletionHandlers() {
         XCTAssert(windowService.displayCount == 0)
-        
+
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
         let cancellationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
-        
+
         var confirmRan = false
         var cancelRan = false
         let confirmationHandler2 = {
@@ -74,19 +74,19 @@ class AlertTests: XCTestCase {
         let cancellationHandler2 = {
             cancelRan = true
         }
-        
+
         let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
-        
+
         alertService.push(alert: alert1)
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: alert2)
         XCTAssert(windowService.displayCount == 1)
-        
+
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
-        
+
         XCTAssert(confirmRan && cancelRan)
     }
 }
@@ -95,7 +95,7 @@ public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
     public func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
         VpnKeychainMock()
     }
-    
+
     public func makeAuthKeychainHandle() -> VPNShared.AuthKeychainHandle {
         AuthKeychainHandleMock()
     }
@@ -113,13 +113,13 @@ public class TelemetrySettingsMock: TelemetrySettings {
 
 private class WindowServiceMock: WindowService {
     var displayCount = 0
-    
+
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
-    
+
     func showIfPresent(windowController: (some NSWindowController).Type) -> Bool {
         false
     }
-    
+
     func closeIfPresent(windowController: (some NSWindowController).Type) {}
     func showLogin(viewModel: LoginViewModel) {}
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
@@ -134,19 +134,19 @@ private class WindowServiceMock: WindowService {
     func bringWindowsToForeground() -> Bool {
         false
     }
-    
+
     func presentKeyModal(viewController: NSViewController) {
         displayCount += 1
     }
-    
+
     func isKeyModalPresent(viewController: NSViewController) -> Bool {
         false
     }
-    
+
     func closeActiveWindows(except: [NSWindowController.Type]) {}
 
     func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {}
-    
+
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {}
 
     func windowCloseRequested(_ sender: WindowController) {}
@@ -158,7 +158,7 @@ private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeNavigationService() -> NavigationService {
         navigationService
     }
-    
+
     func makeWindowService() -> WindowService {
         windowService
     }
@@ -188,19 +188,19 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeAppSessionManager() -> AppSessionManager {
         AppSessionManagerMock()
     }
-    
+
     func makeUIAlertService() -> UIAlertService {
         uiAlertService
     }
-    
+
     func makeWindowService() -> WindowService {
         windowService
     }
-    
+
     func makeNotificationManager() -> NotificationManagerProtocol {
         NotificationManagerMock()
     }
-    
+
     func makeUpdateManager() -> UpdateManager {
         UpdateManager(UpdateManagerFactoryMock())
     }
@@ -216,7 +216,7 @@ private class AppSessionManagerMock: AppSessionManager {
     var sessionStatus: SessionStatus = .established
     var loggedIn: Bool = true
     var sessionChanged: Notification.Name = .init("AppSessionManagerSessionChanged")
-    
+
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func refreshVpnAuthCertificate() async throws {}

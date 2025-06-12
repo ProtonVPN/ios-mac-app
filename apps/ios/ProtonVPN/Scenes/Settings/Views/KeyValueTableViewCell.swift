@@ -26,9 +26,9 @@ class KeyValueTableViewCell: UITableViewCell {
     @IBOutlet var keyLabel: UILabel!
     @IBOutlet var valueLabel: UILabel!
     @IBOutlet var stackView: UIStackView!
-    
+
     var completionHandler: (() -> Void)?
-    
+
     var viewModel: [String: String]? {
         didSet {
             if let viewModel {
@@ -40,7 +40,7 @@ class KeyValueTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         keyLabel.textColor = .weakTextColor()
         valueLabel.textColor = .normalTextColor()
@@ -48,14 +48,14 @@ class KeyValueTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
+
     func select() {
         completionHandler?()
     }
-    
+
     public func showDisclosure(_ show: Bool) {
         if show {
             accessoryType = .disclosureIndicator

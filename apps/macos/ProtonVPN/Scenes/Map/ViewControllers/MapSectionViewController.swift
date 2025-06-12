@@ -30,19 +30,19 @@ class MapSectionViewController: NSViewController {
         static let scEntryCountry = "secureCoreEntryCountry"
         static let scExitCountry = "secureCoreExitCountry"
     }
-    
+
     private let zoomLevels: CGFloat = 8
-    
+
     @IBOutlet var mapHeaderControllerViewContainer: PassThroughView!
     @IBOutlet var mapView: MapView!
     @IBOutlet var logoImageView: NSImageView!
     @IBOutlet var zoomView: ZoomView!
-    
+
     private var mapHeaderViewController: MapHeaderViewController!
-    
+
     var mapSectionViewModel: MapSectionViewModel!
     var mapHeaderViewModel: MapHeaderViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -53,7 +53,7 @@ class MapSectionViewController: NSViewController {
         setupHeader()
         setupMapView()
     }
-    
+
     override func viewDidLayout() {
         super.viewDidLayout()
         if view.frame.width < 600, zoomView.orientation == .horizontal {
@@ -63,53 +63,53 @@ class MapSectionViewController: NSViewController {
             zoomView.orientation = .horizontal
             logoImageView.isHidden = false
         }
-        
+
         mapView.hideConnections = mapHeaderViewController.backgroundView.frame.width < mapHeaderViewController.backgroundView.width
     }
-    
+
     // MARK: - Private functions
 
     private func setupHeader() {
         mapHeaderViewController = MapHeaderViewController(viewModel: mapHeaderViewModel)
         mapHeaderControllerViewContainer.pin(viewController: mapHeaderViewController)
     }
-    
+
     private func setupMapView() {
         mapHeaderViewController.headerClicked = { [weak self] in
             guard let self else {
                 return
             }
-            
+
             mapView.zoomOutAndCenter()
         }
-        
+
         zoomView.zoomLevels = zoomLevels
         zoomView.zoomInButton.target = self
         zoomView.zoomInButton.action = #selector(zoom(_:))
         zoomView.zoomOutButton.target = self
         zoomView.zoomOutButton.action = #selector(zoom(_:))
-        
+
         let homeFrame = mapHeaderViewController.connectImage.frame
         mapView.setHomeDistanceFromTop(mapHeaderViewController.view.frame.height - (homeFrame.origin.y + 3))
-        
+
         addAnnotations(mapSectionViewModel.annotations)
         setConnections(mapSectionViewModel.connections)
-        
+
         mapView.didZoom = { [weak self] in
             guard let self else {
                 return
             }
-            
+
             zoomView.zoom = (((mapView.zoom - mapView.minZoom) / (mapView.maxZoom - mapView.minZoom)) * (zoomLevels - 1)).rounded(.toNearestOrAwayFromZero)
         }
-        
+
         mapSectionViewModel.contentChanged = { [weak self] change in self?.setAnnotations(change) }
         mapSectionViewModel.connectionsChanged = { [weak self] connections in self?.setConnections(connections) }
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(mapShouldResize),
                                                name: NSWindow.didChangeBackingPropertiesNotification, object: nil)
     }
-    
+
     private func addAnnotations(_ annotations: [CountryAnnotationViewModel]) {
         for annotation in annotations {
             // MARK: - Standard country
@@ -134,25 +134,25 @@ class MapSectionViewController: NSViewController {
             }
         }
     }
-    
+
     private func setConnections(_ connections: [ConnectionViewModel]) {
         mapView.setConnections(connections)
     }
-    
+
     private func removeAnnotations(_ annotations: [CountryAnnotationViewModel]) {
         mapView.removeAnnotations(annotations)
     }
-    
+
     @objc private func zoom(_ button: ZoomButton) {
         let zoomInterval = (mapView.maxZoom - mapView.minZoom) / (zoomLevels - 1)
         let nextInterval = (mapView.zoom + (button == zoomView.zoomInButton ? zoomInterval : -zoomInterval))
         mapView.zoom(to: nextInterval)
     }
-    
+
     @objc private func mapShouldResize() {
         mapView.resize()
     }
-    
+
     private func setAnnotations(_ change: AnnotationChange) {
         removeAnnotations(change.oldAnnotations)
         addAnnotations(change.newAnnotations)

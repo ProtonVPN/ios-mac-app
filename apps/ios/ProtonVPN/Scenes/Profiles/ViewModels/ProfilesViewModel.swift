@@ -52,7 +52,7 @@ class ProfilesViewModel {
             return .freeTier
         }
     }
-    
+
     init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
@@ -65,27 +65,27 @@ class ProfilesViewModel {
         self.planService = planService
         self.profileManager = profileManager
     }
-    
+
     func makeCreateProfileViewController() -> UITableViewController? {
         factory.makeCreateProfileViewController(for: nil)
     }
-    
+
     func makeEditProfileViewController(for index: Int) -> UITableViewController? {
         factory.makeCreateProfileViewController(for: profileManager?.customProfiles[index])
     }
-    
+
     var headerHeight: CGFloat {
         UIConstants.headerHeight
     }
-    
+
     var sectionCount: Int {
         2
     }
-    
+
     func title(for section: Int) -> String {
         sectionTitles[section]
     }
-    
+
     var cellHeight: CGFloat {
         UIConstants.cellHeight
     }
@@ -99,7 +99,7 @@ class ProfilesViewModel {
         }
         alertService.push(alert: ProfilesUpsellAlert())
     }
-    
+
     func cellCount(for section: Int) -> Int {
         switch section {
         case 0:
@@ -108,7 +108,7 @@ class ProfilesViewModel {
             profileManager?.customProfiles.count ?? 0
         }
     }
-    
+
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
         return DefaultProfileViewModel(serverOffering: serverOffering,
@@ -121,7 +121,7 @@ class ProfilesViewModel {
                                        safeModePropertyProvider: safeModePropertyProvider
         )
     }
-    
+
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
             return ProfileItemViewModel(profile: profile,
@@ -137,14 +137,14 @@ class ProfilesViewModel {
         }
         return nil
     }
-    
+
     func deleteProfile(for index: Int) {
         if let profile = profileManager?.customProfiles[index],
            let profileManager {
             profileManager.deleteProfile(profile)
         }
     }
-    
+
     func reloadData() {
         profileManager?.refreshProfiles()
     }

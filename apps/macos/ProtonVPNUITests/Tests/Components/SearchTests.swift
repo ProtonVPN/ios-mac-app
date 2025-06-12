@@ -23,15 +23,15 @@ class SearchTests: ProtonVPNUITests {
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let countryToSearchFor = "Japan"
     private let comparisonCountryName = "Netherlands"
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
     }
-    
+
     func testSearchCountry() {
         loginAsPlusUser()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
@@ -39,16 +39,16 @@ class SearchTests: ProtonVPNUITests {
             .clearSearch()
             .verify.checkCountryExists(comparisonCountryName)
     }
-    
+
     func testSearchFreeUser() {
         loginAsFreeUser()
-        
+
         countriesSelectionRobot
             .verify.checkUpgradeBannerVisible()
             .clickUpgradeBanner()
             .verify.checkModalAppear(type: ModalType.allCountries)
             .closeModal()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)

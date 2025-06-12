@@ -29,21 +29,21 @@ class ReportBugWindowController: WindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: NSViewController) {
         let window = NSWindow(contentViewController: viewController)
         window.title = viewController.title ?? ""
         super.init(window: window)
-        
+
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
         guard let window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.reportBug
         window.titlebarAppearsTransparent = true

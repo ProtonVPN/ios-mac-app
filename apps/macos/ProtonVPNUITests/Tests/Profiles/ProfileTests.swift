@@ -124,4 +124,4 @@ class ProfileTests: ProtonVPNUITests {
             .openProfiles()
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
-}	
+}

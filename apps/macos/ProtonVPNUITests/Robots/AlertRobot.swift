@@ -28,7 +28,7 @@ class AlertRobot: CoreElements {
     let logoutWarningAlert = LogoutWarningAlert()
 
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func checkLogoutWarningAlertAppear() -> AlertRobot {
@@ -36,34 +36,34 @@ class AlertRobot: CoreElements {
             return AlertRobot()
         }
     }
-    
+
     class LogoutWarningAlert: CoreElements {
         private lazy var alertContainer = dialog(Localizable.vpnConnectionActive)
-        
+
         func clickContinue() -> LogoutWarningAlert {
             button(Localizable.continue).tap()
             return self
         }
-        
+
         func clickCancel() -> LogoutWarningAlert {
             alertContainer.onChild(button(Localizable.cancel)).tap()
-            
+
             return self
         }
-        
+
         func isVisible() -> Bool {
             alertContainer.waitUntilExists(time: 0.5).exists()
         }
-        
+
         let verify = Verify()
-        
+
         class Verify: CoreElements {
             func checkAlertAppear() -> LogoutWarningAlert {
                 let container = LogoutWarningAlert().alertContainer
-                
+
                 container.waitUntilExists(time: WaitTimeout.normal).checkExists()
                 container.onChild(staticText(Localizable.logOutWarningLong)).checkExists()
-                
+
                 return LogoutWarningAlert()
             }
         }

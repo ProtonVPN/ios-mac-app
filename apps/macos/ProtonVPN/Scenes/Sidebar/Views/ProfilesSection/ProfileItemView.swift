@@ -35,10 +35,10 @@ class ProfileItemView: NSView {
 
     private var viewModel: ProfileItemViewModel!
     private var trackingArea: NSTrackingArea?
-    
+
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
-        
+
         if newSuperview != nil {
             trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
             addTrackingArea(trackingArea!)
@@ -46,28 +46,28 @@ class ProfileItemView: NSView {
             removeTrackingArea(trackingArea)
         }
     }
-    
+
     override open func mouseEntered(with event: NSEvent) {
         connectButton.isHidden = !viewModel.enabled
     }
-    
+
     override open func mouseExited(with event: NSEvent) {
         connectButton.isHidden = true
     }
-    
+
     func updateView(withModel viewModel: ProfileItemViewModel, hideSeparator: Bool = false) {
         self.viewModel = viewModel
-        
+
         setupImage()
         setupProfileName()
         setupSecondaryDescription()
         setupConnectButton()
         setupAvailability()
-        
+
         rowSeparator.fillColor = .color(.border, .weak)
         rowSeparator.isHidden = hideSeparator
     }
-    
+
     // MARK: - Private functions
 
     private func setupImage() {
@@ -88,37 +88,37 @@ class ProfileItemView: NSView {
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupProfileName() {
         profileName.attributedStringValue = viewModel.name
         profileName.usesSingleLineMode = true
     }
-    
+
     private func setupSecondaryDescription() {
         secondaryDescription.isHidden = viewModel.hideDescription
         nameToDescriptionConstraint.constant = viewModel.hideDescription ? 0 : 15
         secondaryDescription.attributedStringValue = viewModel.secondaryDescription
     }
-    
+
     private func setupConnectButton() {
         connectButton.isHidden = true
         connectButton.target = self
         connectButton.action = #selector(connectButtonAction)
     }
-    
+
     @objc private func connectButtonAction() {
         viewModel.connectAction()
     }
-    
+
     private func setupAvailability() {
         for view in [profileImage, profileCircle, profileName, secondaryDescription] {
             view?.alphaValue = viewModel.alphaOfMainElements
         }
         connectButton.upgradeRequired = !viewModel.canUseProfile
     }
-    
+
     // MARK: - Accessibility
-    
+
     override func accessibilityChildren() -> [Any]? {
         nil
     }

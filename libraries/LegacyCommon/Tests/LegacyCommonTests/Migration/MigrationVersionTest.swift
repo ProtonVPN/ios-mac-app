@@ -28,7 +28,7 @@ class MigrationVersionTest: XCTestCase {
         var checkValue = 0
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
-        
+
         MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
             .addCheck("1.6.1") { _, completion in
                 checkValue += 1
@@ -37,12 +37,12 @@ class MigrationVersionTest: XCTestCase {
                 XCTAssertEqual(checkValue, 1)
             }
     }
-    
+
     func testNoMigrationWhenNotNeeded() {
         var checkValue = 0
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "1.6.0"
-        
+
         MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
@@ -56,12 +56,12 @@ class MigrationVersionTest: XCTestCase {
                 XCTAssertEqual(checkValue, 0)
             }
     }
-    
+
     func testMigratesOnlyWhatIsNeeded() {
         var checkValue = 0
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "1.6.0"
-        
+
         MigrationManager(propertiesManager, currentAppVersion: "1.8.0")
             .addCheck("1.5.9") { _, completion in
                 checkValue += 1
@@ -84,12 +84,12 @@ class MigrationVersionTest: XCTestCase {
                 XCTAssertEqual(checkValue, 3)
             }
     }
-    
+
     func testMigrationSavesCurrentAppVersionToProperties() {
         var checkValue = 0
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
-        
+
         let current = "2.4.0"
         MigrationManager(propertiesManager, currentAppVersion: current)
             .addCheck("1.6.1") { _, completion in
@@ -98,56 +98,56 @@ class MigrationVersionTest: XCTestCase {
             }.migrate { _ in
                 XCTAssertEqual(checkValue, 1)
             }
-        
+
         XCTAssertEqual(current, propertiesManager.lastAppVersion)
     }
-    
+
     func testMigrationSavesMigratedVersionToPropertiesAfterEachStep() {
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
-        
+
         let current = "2.4.0"
         let manager = MigrationManager(propertiesManager, currentAppVersion: current)
         _ = manager.addCheck("1.6.1") { _, completion in
             completion(nil)
         }
-        
+
         _ = manager.addCheck("2.0.0") { _, completion in
             // At this point migration manager had to save last succeeded migration version into properties
             XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
             completion(nil)
         }
-        
+
         manager.migrate { _ in
         }
-        
+
         XCTAssertEqual(current, propertiesManager.lastAppVersion)
     }
-    
+
     func testMigrationDoesntSaveVersionToPropertiesAfterError() {
         let propertiesManager = PropertiesManagerMock()
         propertiesManager.lastAppVersion = "0.0.0"
-        
+
         let current = "2.4.0"
         let manager = MigrationManager(propertiesManager, currentAppVersion: current)
         _ = manager.addCheck("1.6.1") { _, completion in
             completion(nil)
         }
-        
+
         _ = manager.addCheck("2.0.0") { _, completion in
             // At this point migration manager had to save last succeeded migration version into properties
             XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
             completion(JustAnError())
         }
-        
+
         _ = manager.addCheck("2.2.0") { _, completion in
             XCTFail("This update block should not be run!")
             completion(nil)
         }
-        
+
         manager.migrate { _ in
         }
-        
+
         // Version is not changed because 2.0.0 block failed
         XCTAssertEqual("1.6.1", propertiesManager.lastAppVersion)
     }

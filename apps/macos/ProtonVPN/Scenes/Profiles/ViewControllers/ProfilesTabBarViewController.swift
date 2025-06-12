@@ -35,76 +35,76 @@ class ProfilesTabBarViewController: NSViewController {
     @IBOutlet var backgroundView: ProfilesTabBarView!
     @IBOutlet var overviewButton: TabBarButton!
     @IBOutlet var createNewProfileButton: TabBarButton!
-    
+
     let tabChanged = Notification.Name("ProfilesTabBarViewControllerTabChanged")
-    
+
     private var tabChangedExternally: Notification.Name!
     private var activeTab: ProfilesTab?
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(tabChangedExternally: Notification.Name) {
         super.init(nibName: NSNib.Name("ProfilesTabBar"), bundle: nil)
         self.tabChangedExternally = tabChangedExternally
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupComponents()
         NotificationCenter.default.addObserver(self, selector: #selector(tabChanged(_:)),
                                                name: tabChangedExternally, object: nil)
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background)
         }
     }
-    
+
     private func setupComponents() {
         headerLabel.attributedStringValue = Localizable.profiles.styled(font: .themeFont(.heading1), alignment: .left)
-        
+
         overviewButton.title = Localizable.overview
         overviewButton.target = self
         overviewButton.action = #selector(overviewButtonAction)
-        
+
         createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
-        
+
         overviewButton.setAccessibilityIdentifier("OverviewButton")
         createNewProfileButton.setAccessibilityIdentifier("CreateNewProfileButton")
     }
-    
+
     private func new(tab: ProfilesTab, externalSource: Bool = false) {
         activeTab = tab
         backgroundView.activeTab = activeTab
         overviewButton.isFocused = activeTab == .overview
         createNewProfileButton.isFocused = activeTab == .createNewProfile
-        
+
         if !externalSource {
             NotificationCenter.default.post(name: tabChanged, object: activeTab!)
         }
     }
-    
+
     @objc private func overviewButtonAction() {
         if activeTab != .overview {
             new(tab: .overview)
         }
     }
-    
+
     @objc private func createNewProfileButtonAction() {
         if activeTab != .createNewProfile {
             new(tab: .createNewProfile)
         }
     }
-    
+
     @objc private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? ProfilesTab {
             new(tab: tab, externalSource: true)

@@ -51,7 +51,7 @@ class OnboardingSlidesRobot {
     func nextStepB() -> OnboardingPaymentRobot {
         app.buttons[nextButton].tap()
         return OnboardingPaymentRobot(app: app)
-    }    
+    }
 
     class Verify {
         let app: XCUIApplication

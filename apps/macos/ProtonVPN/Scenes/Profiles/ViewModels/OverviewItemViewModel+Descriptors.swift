@@ -30,7 +30,7 @@ extension OverviewItemViewModel {
     func attributedName(forProfile profile: Profile) -> NSAttributedString {
         profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
-    
+
     func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
@@ -39,12 +39,12 @@ extension OverviewItemViewModel {
             userProfileDescriptor(forProfile: profile)
         }
     }
-    
+
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        
+
         let description: NSAttributedString = switch profile.serverOffering {
         case .fastest:
             Localizable.fastestAvailableServer.styled(font: .themeFont(.heading4), alignment: .left)
@@ -55,12 +55,12 @@ extension OverviewItemViewModel {
         }
         return description
     }
-    
+
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
             return Localizable.unavailable.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        
+
         let description: NSAttributedString = switch profile.serverOffering {
         case let .fastest(cCode):
             defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
@@ -71,12 +71,12 @@ extension OverviewItemViewModel {
         }
         return description
     }
-    
+
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
         guard let countryCode else {
             return description.styled(font: .themeFont(.heading4), alignment: .left)
         }
-        
+
         let profileDescription = ("  " + description).styled(font: .themeFont(.heading4), alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = (countryName + "  ").styled(font: .themeFont(.heading4), alignment: .left)
@@ -97,10 +97,10 @@ extension OverviewItemViewModel {
             let icon = AppTheme.Icon.brandTor.asAttachment(style: .normal, size: .square(15))
             result = NSAttributedString.concatenate(icon, buffer, attributedCountryName, doubleArrow, profileDescription)
         }
-        
+
         return result
     }
-    
+
     private func customServerDescriptor(forModel serverModel: ServerModel) -> NSAttributedString {
         let doubleArrow = AppTheme.Icon.chevronRight.asAttachment(style: .normal, size: .square(10))
 

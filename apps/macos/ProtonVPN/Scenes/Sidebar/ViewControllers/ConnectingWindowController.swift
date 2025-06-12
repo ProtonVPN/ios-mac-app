@@ -27,26 +27,26 @@ class ConnectingWindowController: WindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: ConnectingViewController) {
         let window = ConnectingOverlayWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
         guard let window else {
             return
         }
-        
+
         window.styleMask = .borderless
         window.backgroundColor = NSColor.clear
         window.isOpaque = false
         window.hasShadow = false
         window.appearance = NSAppearance(named: .darkAqua)
-        
+
         window.ignoresMouseEvents = false
     }
 }

@@ -29,7 +29,7 @@ final class ViewController: UIViewController {
     private let modals: ModalsFactory = .init()
 
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
 
         navigationController?.navigationBar.barTintColor = UIColor.black
         navigationController?.navigationBar.tintColor = UIColor.white

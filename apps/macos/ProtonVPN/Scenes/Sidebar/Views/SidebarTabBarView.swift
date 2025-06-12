@@ -29,7 +29,7 @@ class SidebarTabBarView: NSView {
             needsDisplay = true
         }
     }
-    
+
     private func isFocused(tabIndex index: SidebarTab) -> Bool {
         switch userInterfaceLayoutDirection {
         case .leftToRight:
@@ -40,38 +40,38 @@ class SidebarTabBarView: NSView {
             return activeTab == index
         }
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         guard activeTab != nil else {
             log.error("Active tab not properly configured for sidebar tab bar view.", category: .ui)
             return
         }
-        
+
         guard let context = NSGraphicsContext.current?.cgContext else {
             log.error("Unable to obtain context for drawing.", category: .ui)
             return
         }
-        
+
         let leftRect = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width / 2, height: bounds.height)
         let rightRect = NSRect(x: bounds.origin.x + bounds.width / 2, y: bounds.origin.y, width: bounds.width / 2, height: bounds.height)
-        
+
         drawBackground(context: context, rect: bounds)
         drawLeftSection(context: context, rect: leftRect, focused: isFocused(tabIndex: .countries))
         drawRightSection(context: context, rect: rightRect, focused: isFocused(tabIndex: .profiles))
     }
-    
+
     private func drawBackground(context: CGContext, rect: CGRect) {
         let path = CGMutablePath()
         path.addRect(rect)
-        
+
         context.setFillColor(.cgColor(.background))
         context.addPath(path)
         context.fillPath()
     }
-    
+
     private func drawLeftSection(context: CGContext, rect: CGRect, focused: Bool) {
         var path = CGMutablePath()
-        
+
         path.move(to: CGPoint(x: rect.minX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX - 35, y: rect.maxY))
@@ -79,27 +79,27 @@ class SidebarTabBarView: NSView {
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + 15))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        
+
         var color = getColor(forFocus: focused)
         context.setFillColor(color)
         context.addPath(path)
         context.fillPath()
-        
+
         if !focused {
             path = CGMutablePath()
-            
+
             path.move(to: CGPoint(x: rect.maxX, y: rect.minY + 15))
             path.addQuadCurve(to: CGPoint(x: rect.maxX - 25, y: rect.minY), control: CGPoint(x: rect.maxX - 5, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY + 15))
-            
+
             color = getColor(forFocus: !focused)
             context.setFillColor(color)
             context.addPath(path)
             context.fillPath()
         }
     }
-    
+
     private func drawRightSection(context: CGContext, rect: CGRect, focused: Bool) {
         var path = CGMutablePath()
 
@@ -110,27 +110,27 @@ class SidebarTabBarView: NSView {
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 15))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        
+
         var color = getColor(forFocus: focused)
         context.setFillColor(color)
         context.addPath(path)
         context.fillPath()
-        
+
         if !focused {
             path = CGMutablePath()
-            
+
             path.move(to: CGPoint(x: rect.minX, y: rect.minY + 15))
             path.addQuadCurve(to: CGPoint(x: rect.minX + 25, y: rect.minY), control: CGPoint(x: rect.minX + 5, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + 15))
-            
+
             color = getColor(forFocus: !focused)
             context.setFillColor(color)
             context.addPath(path)
             context.fillPath()
         }
     }
-    
+
     private func getColor(forFocus present: Bool) -> CGColor {
         TabBarButton.backgroundColor(forFocus: present)
     }

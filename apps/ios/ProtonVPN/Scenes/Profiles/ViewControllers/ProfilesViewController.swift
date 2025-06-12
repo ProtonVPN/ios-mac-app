@@ -41,7 +41,7 @@ protocol ProfilesViewControllerDelegate: AnyObject {
 final class ProfilesViewController: UIViewController {
     @IBOutlet var connectionBarContainerView: UIView!
     @IBOutlet var tableView: UITableView!
-    
+
     var viewModel: ProfilesViewModel?
     var connectionBarViewController: ConnectionBarViewController?
 
@@ -68,10 +68,10 @@ final class ProfilesViewController: UIViewController {
         setupTableView()
         addObservers()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView.reloadData()
         renderEditButton()
         renderEditing(tableView.isEditing)
@@ -81,25 +81,25 @@ final class ProfilesViewController: UIViewController {
         navigationItem.title = Localizable.profiles
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createProfile))
         renderEditButton()
-        
+
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func renderEditButton() {
         navigationItem.leftBarButtonItem = tableView(tableView, numberOfRowsInSection: 2) > 0 ? editButtonItem : nil
     }
-    
+
     private func setupConnectionBar() {
         if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
-    
+
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         // Fixes inset for profiles, which is not sufficient in the storyboard file
         tableView.separatorInsetReference = .fromAutomaticInsets
 
@@ -112,16 +112,16 @@ final class ProfilesViewController: UIViewController {
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
-    
+
     private func addObservers() {
         AppEvent.credentialsChanged.subscribe(self, selector: #selector(contentChanged))
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(contentChanged))
     }
-    
+
     @objc private func contentChanged() {
         reloadProfiles()
     }
-    
+
     @objc private func createProfile() {
         guard viewModel?.canUseProfiles == true else {
             viewModel?.showProfilesUpsellAlert()
@@ -138,23 +138,23 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel?.sectionCount ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        viewModel?.headerHeight ?? 0 
+        viewModel?.headerHeight ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
-        
+
         headerView.setName(name: viewModel?.title(for: section) ?? "")
-        
+
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel?.cellCount(for: section) ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: DefaultProfileTableViewCell.identifier) as? DefaultProfileTableViewCell,
@@ -171,7 +171,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return UITableViewCell() // fallback
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 { // custom profiles
             if let vc = viewModel?.makeEditProfileViewController(for: indexPath.row) as? CreateProfileViewController {
@@ -180,7 +180,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
     }
-    
+
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if indexPath.section == 1 {
             return true
@@ -205,7 +205,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         action.backgroundColor = .color(.background, .danger)
         return UISwipeActionsConfiguration(actions: [action])
     }
-    
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         guard viewModel?.canUseProfiles == true else {
             viewModel?.showProfilesUpsellAlert()
@@ -214,7 +214,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
         super.setEditing(editing, animated: animated)
         renderEditing(editing)
     }
-    
+
     private func renderEditing(_ editing: Bool) {
         if editing, !tableView.isEditing {
             tableView.setEditing(true, animated: true)
@@ -225,7 +225,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
             renderEditButton()
         }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 {
             return 0.1
@@ -238,11 +238,11 @@ extension ProfilesViewController: ProfilesViewControllerDelegate {
     func showProfileCreatedSuccessMessage() {
         showMessage(Localizable.profileCreatedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
     }
-    
+
     func showProfileEditedSuccessMessage() {
         showMessage(Localizable.profileEditedSuccessfully, type: GSMessageType.success, options: UIConstants.messageOptions)
     }
-    
+
     func reloadProfiles() {
         viewModel?.reloadData()
         tableView.reloadData()

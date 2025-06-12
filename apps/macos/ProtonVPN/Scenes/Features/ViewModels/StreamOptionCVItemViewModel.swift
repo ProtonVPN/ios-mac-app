@@ -44,5 +44,5 @@ class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
     init(_ option: VpnStreamingOption, propertiesManager: PropertiesManagerProtocol) {
         self.option = option
         self.propertiesManager = propertiesManager
-    }    
+    }
 }

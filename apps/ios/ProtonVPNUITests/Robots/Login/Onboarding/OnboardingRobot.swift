@@ -37,34 +37,34 @@ class OnboardingRobot: CoreElements {
         button(getStartedButton).tap()
         return SubscriptionModalRobot()
     }
-    
+
     @discardableResult
     func tapContinueButton() -> OnboardingRobot {
         button(continueButton).tap()
         return self
     }
-    
+
     @discardableResult
     func skipUpgrade() -> OnboardingRobot {
         button(closeButton).tap()
         return self
     }
-    
+
     @discardableResult
     func tapUpgradePlan() -> SubscriptionModalRobot {
         button(upgradeButton).tap()
         return SubscriptionModalRobot()
     }
-    
+
     @discardableResult
     func startUsingApp() -> HomeRobot {
         button(upgradeButton).tap()
         skipUpgrade()
         return HomeRobot()
     }
-    
+
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func onboardingScreenStep1IsShown(time: TimeInterval = 120) -> OnboardingRobot {

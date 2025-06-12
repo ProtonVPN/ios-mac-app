@@ -22,9 +22,9 @@ import XCTest
 
 public enum NetworkUtils {
     private static let jsonDecoder = JSONDecoder()
-    
+
     // MARK: - NetworkUtilsError
-    
+
     private enum NetworkUtilsError: Error, LocalizedError {
         case invalidURL
         case requestFailed
@@ -34,7 +34,7 @@ public enum NetworkUtils {
         case outputParsingFailed
         case gatewayNotFound
         case connectionFailed
-        
+
         public var errorDescription: String? {
             switch self {
             case .invalidURL:
@@ -56,38 +56,38 @@ public enum NetworkUtils {
             }
         }
     }
-    
+
     // MARK: - Constants
-    
+
     private static let ipifyJsonEndpoint = "https://api64.ipify.org/?format=json"
-    
+
     // MARK: - Networking
-    
+
     public static func getIpAddress() async throws -> String {
         let ipfyResponse: IpifyResponse = try await getJSON(from: ipifyJsonEndpoint, as: IpifyResponse.self)
         return ipfyResponse.ip
     }
-    
+
     // Generic function to get JSON from any URL
     public static func getJSON<T: Decodable>(from urlString: String, as type: T.Type) async throws -> T {
         guard let url = URL(string: urlString) else {
             throw NetworkUtilsError.invalidURL
         }
-        
+
         let (data, response) = try await URLSession.shared.data(from: url)
         guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             throw NetworkUtilsError.invalidResponse
         }
-        
+
         do {
             return try jsonDecoder.decode(T.self, from: data)
         } catch {
             throw NetworkUtilsError.outputParsingFailed
         }
     }
-    
+
     // MARK: - Check Gateway Accessibility
-    
+
     /// Function is used to check whether the given IP address is accessible or not.
     /// - Parameter ipAddress: A String representing the IP address to check.
     /// - Returns: A Boolean which is true if the IP address is accessible and false otherwise.
@@ -97,9 +97,9 @@ public enum NetworkUtils {
         }
         return try await isEndpointReachable(host: ipAddress, port: 80)
     }
-    
+
     // MARK: - Helper Functions
-    
+
     /// Checks if a given endpoint (IP/Hostname) is reachable on the specified port.
     /// - Parameters:
     ///   - host: The hostname or IP address of the endpoint.
@@ -112,44 +112,44 @@ public enum NetworkUtils {
                 port: NWEndpoint.Port(rawValue: port)!,
                 using: .tcp
             )
-            
+
             connection.stateUpdateHandler = { [weak connection] state in
                 switch state {
                 case .ready:
                     // Connection succeeded
                     connection?.cancel() // Close the connection
                     continuation.resume(returning: true)
-                    
+
                 case .failed:
                     // Connection failed
                     connection?.cancel() // Close the connection
                     continuation.resume(returning: false)
-                    
+
                 default:
                     break
                 }
             }
-            
+
             connection.start(queue: .global())
         }
     }
-    
+
     #if os(macOS)
 
         // MARK: - Gateway
-    
+
         /// Function is used to fetch and return the default gateway address of the system.
         /// - Returns: A String representing the default gateway address.
         public static func getDefaultGatewayAddress() throws -> String {
             let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
-        
+
             let defaultGateway = try parseGateway(from: output)
             guard defaultGateway.isValidIPv4Address else {
                 throw NetworkUtilsError.gatewayNotFound
             }
             return defaultGateway
         }
-    
+
         private static func parseGateway(from output: String) throws -> String {
             let lines = output.split(separator: "\n")
             for line in lines {
@@ -158,10 +158,10 @@ public enum NetworkUtils {
                     return String(components[1])
                 }
             }
-        
+
             throw NetworkUtilsError.gatewayNotFound
         }
-    
+
         /// Function is used to run shell command with given launchPath and arguments.
         /// - Parameters:
         ///     - launchPath: A String representing the path to launch.
@@ -171,18 +171,18 @@ public enum NetworkUtils {
             let task = Process()
             task.launchPath = launchPath
             task.arguments = arguments
-        
+
             let pipe = Pipe()
             task.standardOutput = pipe
-        
+
             try task.run()
             task.waitUntilExit()
-        
+
             let data = pipe.fileHandleForReading.readDataToEndOfFile()
             guard let output = String(data: data, encoding: .utf8) else {
                 throw NetworkUtilsError.outputParsingFailed
             }
-        
+
             return output
         }
     #endif
@@ -192,14 +192,14 @@ extension String {
     public var isValidIPv4Address: Bool {
         // Define the IPv4 address pattern
         let ipAddressPattern = #"^(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})(\.(25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})){3}$"#
-        
+
         // Create the regular expression
         let regex = try? NSRegularExpression(pattern: ipAddressPattern, options: [])
-        
+
         // Check if the string matches the pattern
         let range = NSRange(location: 0, length: count)
         let match = regex?.firstMatch(in: self, options: [], range: range)
-        
+
         // Return true if a match is found
         return match != nil
     }

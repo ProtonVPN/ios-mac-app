@@ -93,7 +93,7 @@ final class SettingsAccountViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)   
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
 }

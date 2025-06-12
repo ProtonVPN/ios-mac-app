@@ -21,7 +21,7 @@ import UIKit
 final class ButtonWithLoadingTableViewCell: UITableViewCell {
     @IBOutlet private var button: UIButton!
     @IBOutlet private var loading: UIActivityIndicatorView!
-    
+
     var controller: ButtonWithLoadingIndicatorController? {
         didSet {
             controller?.startLoading = { [weak self] in
@@ -34,14 +34,14 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     }
-    
+
     func setup(title: String,
                accessibilityIdentifier: String?,
                color: UIColor,
@@ -51,7 +51,7 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
         button.accessibilityIdentifier = accessibilityIdentifier
         self.controller = controller
     }
-    
+
     @IBAction private func onPressed(_ sender: Any) {
         assert(controller != nil, "It's required for the cell to have a controller associated")
         controller?.onPressed()

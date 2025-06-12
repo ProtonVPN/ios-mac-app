@@ -24,12 +24,12 @@ import Foundation
 public struct ServerDescriptor {
     public let username: String
     public let address: String
-    
+
     public init(username: String, address: String) {
         self.username = username
         self.address = address
     }
-    
+
     public var description: String {
         "Server address: \(address)"
     }
@@ -46,42 +46,42 @@ public enum VpnState {
      *  NEVPNStatusInvalid - VPN is not configured.
      */
     case invalid
-    
+
     /*
      *  NEVPNStatusDisconnected - VPN is disconnected.
      */
     case disconnected
-    
+
     /*
      *  NEVPNStatusConnecting - VPN is connecting to server whose
      *  properties are given through ServerDescriptor.
      */
     case connecting(ServerDescriptor)
-    
+
     /*
      *  NEVPNStatusConnected - VPN is connected to server whose
      *  properties are given through ServerDescriptor.
      */
     case connected(ServerDescriptor)
-    
+
     /*
      *  NEVPNStatusReasserting - VPN is reconnecting following loss
      *  of underlying network connectivity to server whose properties
      *  are givent through ServerDescriptor.
      */
     case reasserting(ServerDescriptor)
-    
+
     /*
      *  NEVPNStatusDisconnecting - The VPN is disconnecting from
      *  server whose properties are given through ServerDescriptor.
      */
     case disconnecting(ServerDescriptor)
-    
+
     /*
      *  Error state.
      */
     case error(Error)
-    
+
     public var description: String {
         let base = "VPN state - "
         switch self {
@@ -101,7 +101,7 @@ public enum VpnState {
             return base + "Error: \(error.localizedDescription)"
         }
     }
-    
+
     public var logDescription: String {
         let base = "VPN state - "
         switch self {
@@ -121,7 +121,7 @@ public enum VpnState {
             return base + "Error: \(error.localizedDescription)"
         }
     }
-    
+
     /*
      *  Stable connection is one that is already fully asserted.
      */
@@ -133,7 +133,7 @@ public enum VpnState {
             false
         }
     }
-    
+
     /*
      *  Volatile connection is one whose status is not yet fully
      *  asserted due to ongoing transition between stable states.

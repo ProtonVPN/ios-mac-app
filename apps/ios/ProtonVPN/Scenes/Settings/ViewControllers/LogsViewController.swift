@@ -25,17 +25,17 @@ import UIKit
 
 class LogsViewController: UIViewController {
     @IBOutlet var textView: UITextView!
-    
+
     private let viewModel: LogsViewModel
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(viewModel: LogsViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: "Logs", bundle: nil)
     }
 
@@ -44,10 +44,10 @@ class LogsViewController: UIViewController {
             try? FileManager.default.removeItem(at: file)
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .backgroundColor()
         textView.layoutManager.allowsNonContiguousLayout = false
         textView.backgroundColor = .clear
@@ -60,12 +60,12 @@ class LogsViewController: UIViewController {
                 self.textView.text = logs
             }
         }
-        
+
         navigationItem.title = viewModel.title
-        
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }
-    
+
     // MARK: - Private
 
     private var fileToDelete: URL?

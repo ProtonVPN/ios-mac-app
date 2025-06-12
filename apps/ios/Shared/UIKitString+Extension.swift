@@ -33,7 +33,7 @@ extension String {
         let font = bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
         return attributed(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
     }
-    
+
     func attributed(withColor color: UIColor,
                     font: UIFont,
                     alignment: NSTextAlignment = .natural,
@@ -43,19 +43,19 @@ extension String {
         newString.addTextAttributes(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
         return newString
     }
-    
+
     func attributedCurrency(withNumberColor numberColor: UIColor,
                             numberFont: UIFont,
                             withTextColor textColor: UIColor,
                             textFont: UIFont
     ) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
-        
+
         let range = (self as NSString).range(of: self)
         newString.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: range)
         newString.addAttribute(NSAttributedString.Key.font, value: textFont, range: range)
         newString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
-        
+
         let regex = try? NSRegularExpression(pattern: #"[\d\,\.\ ]+"#, options: NSRegularExpression.Options())
         if let matches = regex?.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: range) {
             for match in matches {
@@ -64,7 +64,7 @@ extension String {
                 newString.addAttribute(NSAttributedString.Key.font, value: numberFont, range: nsRange)
             }
         }
-        
+
         return newString
     }
 }

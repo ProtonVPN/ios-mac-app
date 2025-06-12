@@ -28,17 +28,17 @@ extension NSView {
         animation.toValue = color
         animation.duration = 0.2
         animation.repeatCount = 0
-        
+
         if let delegate: AnyObject = delegate {
             animation.delegate = delegate as? CAAnimationDelegate
         }
-        
+
         layer?.add(animation, forKey: nil)
     }
-    
+
     func pin(viewController: NSViewController) {
         addSubview(viewController.view)
-        
+
         NSLayoutConstraint(item: viewController.view,
                            attribute: NSLayoutConstraint.Attribute.top,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -46,7 +46,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.top,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: viewController.view,
                            attribute: NSLayoutConstraint.Attribute.trailing,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -54,7 +54,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.trailing,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: viewController.view,
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -62,7 +62,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: viewController.view,
                            attribute: NSLayoutConstraint.Attribute.leading,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -71,7 +71,7 @@ extension NSView {
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
     }
-    
+
     func pinTo(view: NSView) {
         NSLayoutConstraint(item: view,
                            attribute: NSLayoutConstraint.Attribute.top,
@@ -80,7 +80,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.top,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: view,
                            attribute: NSLayoutConstraint.Attribute.trailing,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -88,7 +88,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.trailing,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: view,
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -96,7 +96,7 @@ extension NSView {
                            attribute: NSLayoutConstraint.Attribute.bottom,
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
-        
+
         NSLayoutConstraint(item: view,
                            attribute: NSLayoutConstraint.Attribute.leading,
                            relatedBy: NSLayoutConstraint.Relation.equal,
@@ -105,50 +105,50 @@ extension NSView {
                            multiplier: 1.0,
                            constant: 0.0).isActive = true
     }
-    
+
     func fillVertically(withViews views: [NSView]) {
         var lastView: NSView?
         for view in views {
             view.translatesAutoresizingMaskIntoConstraints = false
             addSubview(view)
-            
+
             if lastView == nil { // first row
                 NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0).isActive = true
             } else {
                 NSLayoutConstraint(item: lastView!, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1.0, constant: 0.0).isActive = true
             }
             NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: 0.0).isActive = true
-            
+
             NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: view, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1.0, constant: 0.0).isActive = true
-            
+
             lastView = view
         }
         if lastView != nil {
             NSLayoutConstraint(item: self, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: lastView, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1.0, constant: 0.0).isActive = true
         }
     }
-    
+
     static var identifierString: String {
         String(describing: self)
     }
-    
+
     static var identifier: NSUserInterfaceItemIdentifier {
         NSUserInterfaceItemIdentifier(rawValue: identifierString)
     }
-    
+
     static var nib: NSNib? {
         NSNib(nibNamed: identifierString, bundle: nil)
     }
-    
+
     /// Load a view from nib/xib file that is named the same as the class itself
     static func loadViewFromNib<T>() -> T? {
         var nibObjects: NSArray?
         let nibName = identifierString
-        
+
         if Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: &nibObjects) {
             guard let nibObjects else { return nil }
             let viewObjects = nibObjects.filter { $0 is T }
-            
+
             if !viewObjects.isEmpty {
                 guard let view = viewObjects[0] as? T else { return nil }
                 return view

@@ -26,13 +26,13 @@ import WebKit
 
 class AcknowledgementsViewController: NSViewController {
     @IBOutlet var webView: WKWebView!
-    
+
     private lazy var bundle: Bundle = .main
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required init() {
         super.init(nibName: NSNib.Name("Acknowledgements"), bundle: nil)
     }
@@ -41,11 +41,11 @@ class AcknowledgementsViewController: NSViewController {
         super.viewWillAppear()
         setupComponents()
     }
-    
-    private func setupComponents() {        
+
+    private func setupComponents() {
         webView.loadHTMLString(html, baseURL: nil)
     }
-    
+
     private var html: String {
         guard let path = Bundle.main.path(forResource: "text-template", ofType: "html"), let htmlTemplate = try? String(contentsOfFile: path) else {
             return ""
@@ -56,7 +56,7 @@ class AcknowledgementsViewController: NSViewController {
         else {
             return htmlTemplate
         }
-        
+
         let htmlBody = libraries.map {
             let title = $0["name"] as? String ?? ""
             var description = $0["licenseText"] as? String ?? ""

@@ -45,7 +45,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                     return []
                 }
             )
-        } operation: { 
+        } operation: {
             try await PacketTunnelManager().status
         }
 

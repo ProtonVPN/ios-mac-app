@@ -43,13 +43,13 @@ class AppStateManagerImplementationTests: XCTestCase {
         super.setUp()
 
         setUpNSCoding(withModuleName: "ProtonVPN")
-        
+
         propertiesManager.hasConnected = true
-        
+
         let networking = NetworkingMock()
         networking.delegate = networkingDelegate
         vpnManager = VpnManagerMock()
-        
+
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
         appStateManager = AppStateManagerImplementation(
             vpnApiService: VpnApiService(
@@ -83,7 +83,7 @@ class AppStateManagerImplementationTests: XCTestCase {
             XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
         }
     }
-    
+
     func startConnection() {
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: connectionConfig)
         vpnManager.state = .connecting(serverDescriptor)
@@ -95,13 +95,13 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func startConnectionFromConnected() {
         startExplicitDisconnectingAsPartOfConnect()
         successfullyDisconnectAsPartOfConnect()
         startConnection()
     }
-    
+
     func successfullyConnect() {
         vpnManager.state = .connected(serverDescriptor)
 
@@ -112,7 +112,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssert(state.isConnected)
         XCTAssertFalse(state.isDisconnected)
     }
-    
+
     func startDisconnecting() {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
@@ -124,7 +124,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssertFalse(state.isDisconnected)
     }
-    
+
     func successfullyDisconnect() {
         vpnManager.state = .disconnected
 
@@ -135,7 +135,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func startExplicitDisconnectingAsPartOfConnect() {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
@@ -147,7 +147,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func startImplicitDisconnectingAsPartOfConnect() {
         vpnManager.state = .disconnecting(serverDescriptor)
 
@@ -158,7 +158,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func successfullyDisconnectAsPartOfConnect() {
         vpnManager.state = .disconnected
 
@@ -169,7 +169,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func userInitatedCancel() {
         appStateManager.cancelConnectionAttempt()
 
@@ -180,7 +180,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func initialError() {
         vpnManager.state = .error(Self.emptyError)
 
@@ -191,7 +191,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func subsequentError() {
         vpnManager.state = .error(Self.emptyError)
 
@@ -202,32 +202,32 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func testConnectionFromInvalidOrDisconnected() {
         prepareToConnect()
         startConnection()
         successfullyConnect()
     }
-    
+
     func testDisconnectionFromConnected() {
         testConnectionFromInvalidOrDisconnected()
         startDisconnecting()
         successfullyDisconnect()
     }
-    
+
     func testConnectionFromConnected() {
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
         successfullyConnect()
     }
-    
+
     func testDisconnectionFromDisconnected() {
         successfullyDisconnect()
         startDisconnecting()
         successfullyDisconnect()
     }
-    
+
     func testDisconnectDuringConnectingFromConnected() {
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
@@ -235,18 +235,18 @@ class AppStateManagerImplementationTests: XCTestCase {
         startImplicitDisconnectingAsPartOfConnect()
         successfullyDisconnect()
     }
-    
+
     func testCancelConnecting() {
         prepareToConnect()
         startConnection()
         userInitatedCancel()
-        
+
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
         userInitatedCancel()
     }
-    
+
     func testTimedOutConnecting() {
         prepareToConnect()
         startConnection()
@@ -259,7 +259,7 @@ class AppStateManagerImplementationTests: XCTestCase {
 
         startDisconnecting()
         successfullyDisconnect()
-        
+
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
@@ -269,22 +269,22 @@ class AppStateManagerImplementationTests: XCTestCase {
             secondTimeout.fulfill()
         }
         wait(for: [secondTimeout], timeout: 5)
-        
+
         startDisconnecting()
         successfullyDisconnect()
     }
-    
+
     func testErrorConnecting() {
         prepareToConnect()
         startConnection()
         subsequentError()
-        
+
         testConnectionFromInvalidOrDisconnected()
         prepareToConnect()
         startConnectionFromConnected()
         subsequentError()
     }
-    
+
     func testReasserting() {
         vpnManager.state = .connecting(serverDescriptor)
         vpnManager.state = .reasserting(serverDescriptor)
@@ -296,7 +296,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssert(state.isDisconnected)
     }
-    
+
     func testSupressesInitialError() {
         initialError()
         subsequentError()
@@ -324,7 +324,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(state.isConnected)
         XCTAssertTrue(state.isDisconnected)
     }
-    
+
     lazy var connectionConfig: ConnectionConfiguration = {
         let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0), hostCountry: nil, translatedCity: nil, gatewayName: nil)
         let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)

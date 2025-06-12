@@ -34,30 +34,30 @@ protocol StreamingServicesOverlayViewModelProtocol {
 
 class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtocol {
     private let streamingServices: [VpnStreamingOption]
-    
+
     let propertiesManager: PropertiesManagerProtocol
-    
+
     init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
         countryName = country
         streamingServices = streamServices
         self.propertiesManager = propertiesManager
     }
-    
+
     // MARK: - ServersStreamingFeaturesViewModel
-    
+
     let columnsAmount: Int = 3
-    
+
     var totalRows: Int {
         Int((Float(streamingServices.count) / Float(columnsAmount)).rounded(.up))
     }
-    
+
     var totalItems: Int {
         streamingServices.count
     }
-    
+
     func streamOptionViewModelFor(index: Int) -> StreamOptionCVItemViewModelProtocol {
         StreamOptionCVItemViewModel(streamingServices[index], propertiesManager: propertiesManager)
     }
-    
+
     let countryName: String
 }

@@ -23,7 +23,7 @@ import GoLibs
 import Domain
 import VPNShared
 
-extension LocalAgentFeatures {   
+extension LocalAgentFeatures {
     var vpnFeatures: VPNConnectionFeatures? {
         guard let netshield, let vpnAccelerator, let natType, let safeMode else {
             return nil

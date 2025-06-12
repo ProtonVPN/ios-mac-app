@@ -30,21 +30,21 @@ final class AccountViewController: NSViewController {
     @IBOutlet private var usernameLabel: PVPNTextField!
     @IBOutlet private var usernameValue: PVPNTextField!
     @IBOutlet private var usernameSeparator: NSBox!
-    
+
     @IBOutlet private var accountPlanLabel: PVPNTextField!
     @IBOutlet private var accountPlanValue: PVPNTextField!
     @IBOutlet private var accountPlanSeparator: NSBox!
-    
+
     @IBOutlet private var manageSubscriptionButton: InteractiveActionButton!
     private var banner: BannerView?
-    
+
     private let viewModel: AccountViewModel
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(accountViewModel: AccountViewModel) {
         viewModel = accountViewModel
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
@@ -53,10 +53,10 @@ final class AccountViewController: NSViewController {
             self?.setupData()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         setupActions()
         setupData()
@@ -70,26 +70,26 @@ final class AccountViewController: NSViewController {
         setupStackView()
         setupFooterView()
     }
-    
+
     private func setupStackView() {
         usernameLabel.attributedStringValue = Localizable.username.styled(font: .themeFont(.heading4), alignment: .left)
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         usernameSeparator.fillColor = .color(.border, .weak)
-        
+
         accountPlanLabel.attributedStringValue = Localizable.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
         accountPlanSeparator.fillColor = .color(.border, .weak)
-        
+
         if let planTitle = viewModel.planTitle {
             accountPlanValue.attributedStringValue = planTitle.styled(AppTheme.Style(viewModel.maxTier),
                                                                       font: .themeFont(.heading4),
                                                                       alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak,
                                                                                     font: .themeFont(.heading4),
                                                                                     alignment: .right)
         }
     }
-    
+
     private func setupFooterView() {
         manageSubscriptionButton.title = Localizable.manageSubscription
         manageSubscriptionButton.target = self
@@ -102,7 +102,7 @@ final class AccountViewController: NSViewController {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
     }
-    
+
     private func setupData() {
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
 
@@ -111,12 +111,12 @@ final class AccountViewController: NSViewController {
                                                                       font: .themeFont(.heading4),
                                                                       alignment: .right)
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak,
                                                                                     font: .themeFont(.heading4),
                                                                                     alignment: .right)
         }
     }
-    
+
     @objc private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
     }

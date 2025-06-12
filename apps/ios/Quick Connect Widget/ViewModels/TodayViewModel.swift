@@ -96,7 +96,7 @@ final class TodayViewModel {
     }
 
     deinit {
-        reachability?.stopNotifier()        
+        reachability?.stopNotifier()
     }
 
     // MARK: - Utils

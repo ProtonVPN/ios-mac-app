@@ -31,28 +31,28 @@ class StatusMenuProfileViewItem: NSTableRowView {
     @IBOutlet var secondaryLabel: NSTextField!
     @IBOutlet var separator: NSBox!
     @IBOutlet var button: StatusMenuSurfaceButton!
-    
+
     private var viewModel: StatusMenuProfileItemViewModel?
-    
+
     func updateView(withModel viewModel: StatusMenuProfileItemViewModel) {
         self.viewModel = viewModel
-        
+
         setupIcon()
         setupLabels()
         setupSeparator()
         setupButton()
         setupAvailability()
     }
-    
+
     @IBAction func selected(_ sender: Any) {
         viewModel?.connectAction()
     }
-    
+
     // MARK: - Private
 
     private func setupIcon() {
         guard let viewModel else { return }
-        
+
         switch viewModel.icon {
         case let .image(image):
             profileImage.image = image.colored()
@@ -70,18 +70,18 @@ class StatusMenuProfileViewItem: NSTableRowView {
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupLabels() {
         guard let viewModel else { return }
-        
+
         label.attributedStringValue = viewModel.name
         secondaryLabel.attributedStringValue = viewModel.secondaryDescription
     }
-    
+
     private func setupSeparator() {
         separator.fillColor = .color(.border, .strong)
     }
-    
+
     private func setupButton() {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -106,7 +106,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
             button.needsDisplay = true
         }
     }
-    
+
     private func setupAvailability() {
         for view in [profileImage, profileCircle, label, secondaryLabel] {
             view?.alphaValue = viewModel?.alphaOfMainElements ?? 1

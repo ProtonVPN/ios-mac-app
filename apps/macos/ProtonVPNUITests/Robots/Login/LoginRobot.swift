@@ -43,20 +43,20 @@ class LoginRobot: CoreElements {
             .typePassword(password: credentials.password)
             .signIn()
     }
-    
+
     @discardableResult
     func withIncorrectCredentials(_ username: String, _ password: String) -> LoginRobot {
         typeUsername(username)
             .typePassword(password: password)
             .signIn()
     }
-    
+
     func loginAsSubuser(subusercredentials: Credentials) -> LoginRobot {
         typeUsername(subusercredentials.username)
             .typePassword(password: subusercredentials.password)
             .signIn()
     }
-        
+
     @discardableResult
     func withEmptyFields() -> LoginRobot {
         self
@@ -67,31 +67,31 @@ class LoginRobot: CoreElements {
         typeOnlyUsername(username: username)
             .signIn()
     }
-        
+
     @discardableResult
     func withEmptyUsername(_ password: String) -> LoginRobot {
         typeOnlyPassword(password: password)
             .signIn()
     }
-        
+
     @discardableResult
     func withIncorrectUnicode(_ username: String, _ password: String) -> LoginRobot {
         typeUsername(username)
             .typePassword(password: password)
             .signIn()
     }
-        
+
     @discardableResult
     func clickLoginAgain() -> LoginRobot {
         button(loginAgainButton).tap()
         return self
     }
-    
+
     @discardableResult
     func isLoginScreenVisible() -> Bool {
         textField(fieldUsername).waitUntilExists(time: 0.5).exists() && secureTextField(fieldPassword).waitUntilExists(time: 0.5).exists()
     }
-    
+
     @discardableResult
     func signIn() -> LoginRobot {
         button(loginButton).tap()
@@ -102,24 +102,24 @@ class LoginRobot: CoreElements {
         textField(fieldUsername).tap().clearText().typeText(username)
         return self
     }
-    
+
     private func typePassword(password: String) -> LoginRobot {
         secureTextField(fieldPassword).tap().clearText().typeText(password)
         return self
     }
-    
+
     private func typeOnlyPassword(password: String) -> LoginRobot {
         textField(fieldUsername).tap().clearText().typeText("")
         secureTextField(fieldPassword).tap().clearText().typeText(password)
         return self
     }
-    
+
     private func typeOnlyUsername(username: String) -> LoginRobot {
         textField(fieldUsername).tap().clearText().typeText(username)
         secureTextField(fieldPassword).tap().clearText().typeText("")
         return self
     }
-    
+
     let verify = Verify()
 
     class Verify: CoreElements {
@@ -130,25 +130,25 @@ class LoginRobot: CoreElements {
             secureTextField(fieldPassword).checkExists()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func checkLoginButtonIsNotEnabled() -> LoginRobot {
             button(loginButton).checkDisabled()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func checkLoginButtonIsEnabled() -> LoginRobot {
             button(loginButton).checkEnabled()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func checkErrorMessageIsShown(message: String) -> LoginRobot {
             staticText(message).checkExists()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func checkModalIsShown(timeout: TimeInterval = WaitTimeout.normal) -> LoginRobot {
             staticText(modalTitle).waitUntilExists(time: timeout).checkExists()

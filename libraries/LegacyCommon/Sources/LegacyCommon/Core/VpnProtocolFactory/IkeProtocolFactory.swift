@@ -30,11 +30,11 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public typealias Factory = NEVPNManagerWrapperFactory
 
     private let vpnManager: NEVPNManagerWrapper
-    
+
     public init(factory: Factory) {
         vpnManager = factory.makeNEVPNManagerWrapper()
     }
-    
+
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
 
@@ -45,41 +45,41 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         config.disconnectOnSleep = false
         config.enablePFS = false
         config.deadPeerDetectionRate = .high
-        
+
         #if os(OSX)
             config.authenticationMethod = .certificate
             config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
         #endif
-        
+
         config.disableMOBIKE = false
         config.disableRedirect = false
         config.enableRevocationCheck = false
         config.useConfigurationAttributeInternalIPSubnet = false
-        
+
         config.ikeSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
         config.ikeSecurityAssociationParameters.integrityAlgorithm = .SHA384
         config.ikeSecurityAssociationParameters.diffieHellmanGroup = .group20 // .group15
         config.ikeSecurityAssociationParameters.lifetimeMinutes = 480
-        
+
         config.childSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256
         config.childSecurityAssociationParameters.integrityAlgorithm = .SHA256
         config.childSecurityAssociationParameters.diffieHellmanGroup = .group20
         config.childSecurityAssociationParameters.lifetimeMinutes = 60
-        
+
         return config
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
         vpnManager.loadFromPreferences { loadError in
             if let loadError {
                 completion(nil, loadError)
                 return
             }
-            
+
             completion(self.vpnManager, nil)
         }
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
         try await withCheckedThrowingContinuation { continuation in
             vpnManager.loadFromPreferences { loadError in

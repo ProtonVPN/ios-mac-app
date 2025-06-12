@@ -29,29 +29,29 @@ import UIKit
 class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
-    
+
     var buttonStateChanged: (() -> Void)?
-    
+
     let countryCode: String
     private(set) var exitCountryCodes: Set<String> = []
     let coordinate: CLLocationCoordinate2D
-    
+
     var isConnected: Bool {
         if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.serverType == .secureCore, activeServer.countryCode == countryCode {
             return true
         }
         return false
     }
-    
+
     var isConnecting: Bool {
         if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case let ConnectionRequestType.country(activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
     }
-    
+
     var available: Bool = true
-    
+
     var viewState: AnnotationViewState = .idle {
         didSet {
             if oldValue != viewState { // to prevent excessive draw calls
@@ -59,51 +59,51 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
             }
         }
     }
-    
+
     let outlineColor: UIColor = .brandColor()
     let connectIconTint: UIColor = .clear
     let connectIcon: UIImage? = nil
-    
+
     let minPinHeight: CGFloat = 36
     let maxPinHeight: CGFloat = 36
-    
+
     var anchorPoint: CGPoint {
         CGPoint(x: 0.5, y: (maxPinHeight * 0.5) / maxHeight)
     }
-    
+
     var labelHeight: CGFloat {
         30
     }
-    
+
     var labelString: NSAttributedString {
         Localizable.viaCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
-    
+
     var labelColor: UIColor {
         UIColor.brandColor().withAlphaComponent(0.75)
     }
-    
+
     var flagOverlayColor: UIColor {
         UIColor.brandColor().withAlphaComponent(0.25)
     }
-    
+
     let showAnchor: Bool = false
-    
+
     init(appStateManager: AppStateManager, countryCode: String, location: CLLocationCoordinate2D, vpnGateway: VpnGatewayProtocol) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
         coordinate = location
         self.vpnGateway = vpnGateway
     }
-    
+
     func addExitCountryCode(_ code: String) {
         exitCountryCodes.insert(code)
     }
-    
+
     func tapped() {
         // don't respond to taps
     }
-    
+
     func highlight(_ highlight: Bool) {
         if highlight, viewState == .idle {
             viewState = .selected
@@ -111,13 +111,13 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
             viewState = .idle
         }
     }
-    
+
     // MARK: - Hashable conformance
 
     static func == (lhs: SecureCoreEntryCountryModel, rhs: SecureCoreEntryCountryModel) -> Bool {
         lhs.countryCode == rhs.countryCode
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(countryCode)
     }

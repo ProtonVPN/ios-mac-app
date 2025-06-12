@@ -55,11 +55,11 @@ class CreateProfileRobot: CoreElements {
             .selectServer()
             .chooseServer()
     }
-        
+
     func enterProfileName(_ name: String) -> CreateProfileRobot {
         profileName(name)
     }
-        
+
     func deleteProfileName() -> CreateProfileRobot {
         deleteName()
     }
@@ -68,32 +68,32 @@ class CreateProfileRobot: CoreElements {
         selectCountry()
             .chooseCountry(countryname)
     }
-        
+
     func enterProfileServer() -> CreateProfileRobot {
         selectServer()
             .chooseServer()
     }
-        
+
     func saveProfile() -> CreateProfileRobot {
         button(saveButton).tap()
         return CreateProfileRobot()
     }
-        
+
     func saveProfileSuccessfully() -> ManageProfilesRobot {
         button(saveButton).tap()
         return ManageProfilesRobot()
     }
-        
+
     func cancelProfile() -> CreateProfileRobot {
         button(cancelButton).tap()
         return CreateProfileRobot()
     }
-        
+
     func cancelProfileModal() -> CreateProfileRobot {
         button(cancelButton).firstMatch().tap()
         return CreateProfileRobot()
     }
-        
+
     func continueProfileModal() -> ManageProfilesRobot {
         button(continueButton).firstMatch().tap()
         return ManageProfilesRobot()
@@ -103,58 +103,58 @@ class CreateProfileRobot: CoreElements {
         button(featureStandard).firstMatch().tap()
         return CreateProfileRobot()
     }
-        
+
     private func chooseFeature() -> CreateProfileRobot {
         button(featureTor).tap()
         return CreateProfileRobot()
     }
-        
+
     private func profileName(_ name: String) -> CreateProfileRobot {
         textField(profileNameTextField).tap()
         textField(profileNameTextField).typeText(name)
         return self
     }
-        
+
     private func deleteName() -> CreateProfileRobot {
         textField(profileNameTextField).clearText().typeText("")
         return self
     }
-        
+
     private func selectCountry() -> CreateProfileRobot {
         popUpButton(countryField).tap()
         return self
     }
-        
+
     private func chooseCountry(_ countryname: String) -> CreateProfileRobot {
         menuItem("￼  \(countryname)").tap()
         return self
     }
-        
+
     private func selectServer() -> CreateProfileRobot {
         popUpButton(serverField).tap()
         return self
     }
-        
+
     private func chooseServer() -> CreateProfileRobot {
         menuItem("￼  Fastest").tap()
         return self
     }
-        
+
     private func selectProtocol(_ oldProtocol: String) -> CreateProfileRobot {
         popUpButton(oldProtocol).tap()
         return self
     }
-    
+
     private func chooseProtocol(_ newProtocol: String) -> CreateProfileRobot {
         popUpButton(newProtocol).tap()
         return self
     }
-        
+
     private func saveProfileClick() -> CreateProfileRobot {
         button(saveButton).tap()
         return self
     }
-        
+
     let verify = Verify()
 
     class Verify: CoreElements {
@@ -164,43 +164,43 @@ class CreateProfileRobot: CoreElements {
             button(saveButton).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageEmptyProfileExists() -> CreateProfileRobot {
             staticText(errorMessageEmptyProfile).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageSameNameExists() -> CreateProfileRobot {
             staticText(errorMessageSameName).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageEnterName() -> CreateProfileRobot {
             staticText(errorMessageEnterName).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageSelectServerAndCountry() -> CreateProfileRobot {
             staticText(errorMessageSelectServerAndCountry).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageSelectCountry() -> CreateProfileRobot {
             staticText(errorMessageSelectCountry).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkErrorMessageSelectServer() -> CreateProfileRobot {
             staticText(errorMessageSelectServer).waitUntilExists(time: 1).checkExists()
             return CreateProfileRobot()
         }
-            
+
         @discardableResult
         func checkModalIsOpen() -> CreateProfileRobot {
             staticText(cancelProfileModalTitle).waitUntilExists(time: 1).checkExists()

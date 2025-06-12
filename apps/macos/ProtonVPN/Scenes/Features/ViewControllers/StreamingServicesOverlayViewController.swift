@@ -36,20 +36,20 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
     @IBOutlet private var extraLbl: NSTextField!
     @IBOutlet private var servicesCVHeightConstraint: NSLayoutConstraint!
     @IBOutlet private var dismissButton: HoverDetectionButton!
-    
+
     private let viewModel: StreamingServicesOverlayViewModelProtocol
     private let cellIdentifier = NSUserInterfaceItemIdentifier("StreamOptionCVItem")
-    
+
     init(viewModel: StreamingServicesOverlayViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let backgroundColor: NSColor = .color(.background)
@@ -69,9 +69,9 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
             view.layer?.backgroundColor = backgroundColor.cgColor
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func didTapDismiss(_ sender: Any) {
         dismiss(sender)
     }
@@ -79,27 +79,27 @@ final class StreamingServicesOverlayViewController: OverlayViewController {
 
 extension StreamingServicesOverlayViewController: NSCollectionViewDelegateFlowLayout, NSCollectionViewDataSource {
     // MARK: - NSCollectionViewDelegateFlowLayout
-    
+
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         0
     }
-    
+
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         0
     }
-    
+
     func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         let size = collectionView.frame.width / CGFloat(viewModel.columnsAmount)
         servicesCVHeightConstraint.constant = CGFloat(viewModel.totalRows) * size
         return CGSize(width: size, height: size)
     }
-    
+
     // MARK: - NSCollectionViewDataSource
-    
+
     func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.totalItems
     }
-    
+
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let cell = collectionView.makeItem(withIdentifier: cellIdentifier, for: indexPath) as! StreamOptionCVItem
         cell.viewModel = viewModel.streamOptionViewModelFor(index: indexPath.item)

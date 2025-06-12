@@ -28,35 +28,35 @@ protocol ServersStreamingFeaturesViewModel {
     var columnsAmount: Int { get }
     var totalRows: Int { get }
     var totalItems: Int { get }
-    
+
     func vpnOption(for index: Int) -> VpnStreamingOption
-    
+
     var propertiesManager: PropertiesManagerProtocol { get }
 }
 
 class ServersStreamingFeaturesViewModelImplementation: ServersStreamingFeaturesViewModel {
     private let streamingServices: [VpnStreamingOption]
-    
+
     let propertiesManager: PropertiesManagerProtocol
-    
+
     init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
         countryName = country
         streamingServices = streamServices
         self.propertiesManager = propertiesManager
     }
-        
+
     let columnsAmount: Int = 4
-    
+
     var totalRows: Int {
         Int((Float(streamingServices.count) / Float(columnsAmount)).rounded(.up))
     }
-    
+
     let countryName: String
-    
+
     var totalItems: Int {
         streamingServices.count
     }
-    
+
     func vpnOption(for index: Int) -> VpnStreamingOption {
         streamingServices[index]
     }

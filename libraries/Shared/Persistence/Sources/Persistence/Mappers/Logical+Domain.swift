@@ -51,7 +51,7 @@ extension VPNServer {
         .init(
             logicalID: logical.id,
             status: logical.status,
-            load: logical.load, 
+            load: logical.load,
             score: logical.score
         )
     }

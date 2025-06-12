@@ -48,16 +48,16 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     private let loginRobot = LoginRobot()
     private let mainRobot = MainRobot()
     private let alertRobot = AlertRobot()
-    
+
     lazy var credentials = self.getCredentials(fromResource: "credentials")
     lazy var twopassusercredentials = self.getCredentials(fromResource: "twopassusercredentials")
-    
+
     lazy var logFileUrl = LogFileManagerImplementation().getFileUrl(named: "ProtonVPN.log")
-    
+
     override func setUp() {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-        
+
         launchArguments = [
             "UITests",
             "-BlockOneTimeAnnouncement", "YES",
@@ -77,10 +77,10 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
         beforeSetUp(bundleIdentifier: "ch.protonmail.vpn.ProtonVPNUITests", launchArguments: launchArguments)
         super.setUp()
-        
+
         window = XCUIApplication().windows["Proton VPN"]
         waitForLoaderDisappear()
-        
+
         switch environment {
         case .production:
             setupProdEnvironment()
@@ -90,7 +90,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             openLoginScreen()
         }
     }
-    
+
     override open func tearDownWithError() throws {
         if let logData = try? Data(contentsOf: logFileUrl),
            let logString = String(data: logData, encoding: .utf8) {
@@ -101,13 +101,13 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         }
         try super.tearDownWithError()
     }
-    
+
     // MARK: - Helper methods
-    
+
     func getCredentials(fromResource resource: String) -> [Credentials] {
         Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
-    
+
     func setupAtlasEnvironment() {
         let url = doh.getCurrentlyUsedHostUrl()
         if staticText(url).waitUntilExists(time: 1).exists() {
@@ -147,19 +147,19 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     func loginAsFreeUser() {
         login(withCredentials: credentials[0])
     }
-    
+
     func loginAsBasicUser() {
         login(withCredentials: credentials[1])
     }
-    
+
     func loginAsPlusUser() {
         login(withCredentials: credentials[2])
     }
-    
+
     func loginAsTwoPassUser() {
         login(withCredentials: twopassusercredentials[0])
     }
-    
+
     func waitForLoaderDisappear(_ loadingTimeout: TimeInterval = 20) {
         let loadingScreen = app.staticTexts[Localizable.loadingScreenSlogan]
         _ = loadingScreen.waitForExistence(timeout: WaitTimeout.normal)
@@ -167,17 +167,17 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             XCTFail("Loading screen does not disappear after \(loadingTimeout) seconds")
         }
     }
-    
+
     func login(withCredentials credentials: Credentials) {
         loginRobot
             .loginUser(credentials: credentials)
-        
+
         waitForLoaderDisappear()
     }
-    
+
     func verifyLoggedInUser(withCredentials credentials: Credentials) {
         let plan = credentials.plan.replacingOccurrences(of: "ProtonVPN", with: "Proton VPN")
-        
+
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()
@@ -187,30 +187,30 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             .verify.checkAccountTabPlan(planName: plan)
             .closeSettings()
     }
-    
+
     func logoutIfNeeded() {
         defer {
             if !loginRobot.isLoginScreenVisible() {
                 XCTFail("Failed to log out. Login screen does not appear")
             }
         }
-        
+
         if !loginRobot.isLoginScreenVisible() {
             _ = mainRobot
                 .logOut()
-            
+
             if alertRobot.logoutWarningAlert.isVisible() {
                 alertRobot.logoutWarningAlert.clickContinue()
             }
-            
+
             // give the main window time to load and show OpenVPN alert if needed
             sleep(2)
-            
+
             dismissPopups()
             dismissDialogs()
         }
     }
-    
+
     // to remove created profiles
     func clearAppData() -> Bool {
         let clearAppDataButton = app.menuBars.menuItems["Clear Application Data"]
@@ -222,14 +222,14 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
         deleteButton.click()
         return true
     }
-    
+
     func dismissPopups() {
         let dismissButtons = ["Cancel", "No thanks", "Take a Tour", "Got it!"]
-        
+
         for button in dismissButtons {
             if app.buttons[button].exists {
                 app.buttons[button].firstMatch.click()
-                
+
                 // repeat in case another alert is queued
                 sleep(1)
                 dismissPopups()
@@ -237,14 +237,14 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             }
         }
     }
-    
+
     func dismissDialogs() {
         let dialogs = ["Enabling custom protocols"]
-        
+
         for dialog in dialogs {
             if app.dialogs[dialog].exists {
                 app.dialogs[dialog].firstMatch.buttons["_XCUI:CloseWindow"].click()
-                
+
                 // repeat in case another alert is queued
                 sleep(1)
                 dismissDialogs()
@@ -252,7 +252,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             }
         }
     }
-    
+
     func relaunchApp() {
         app.terminate()
         app.launch()

@@ -100,7 +100,7 @@
                             NavigationLink(
                                 item: $store.contactFormState,
                                 onNavigate: { active in
-                                    if active { 
+                                    if active {
                                         Task {
                                             await store.send(.next)
                                         }

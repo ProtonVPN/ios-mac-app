@@ -31,16 +31,16 @@ class ColoredLoadButton: NSButton {
             needsDisplay = true
         }
     }
-    
+
     override var isFlipped: Bool {
         false
     }
-    
+
     override func viewWillDraw() {
         let loadValueString = load != nil ? "\(load!)" : Localizable.unavailable
         toolTip = Localizable.serverLoadPercentage(loadValueString)
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let load else { return }
 
@@ -50,7 +50,7 @@ class ColoredLoadButton: NSButton {
         context.addEllipse(in: icb)
         context.setStrokeColor(cgColor(.icon))
         context.drawPath(using: .stroke)
-        
+
         // outer circle segment
         let ocb = CGRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2)
         let startAngle: CGFloat = .pi / 2
@@ -65,13 +65,13 @@ class ColoredLoadButton: NSButton {
                        clockwise: true)
         context.drawPath(using: .stroke)
     }
-    
+
     // MARK: - Accessibility
-    
+
     override func isAccessibilityElement() -> Bool {
         false
     }
-    
+
     override func accessibilityChildren() -> [Any]? {
         nil
     }
@@ -84,7 +84,7 @@ extension ColoredLoadButton: CustomStyleContext {
             return .hint
         case .border:
             guard let load else { return .normal }
-            
+
             if load < 76 {
                 return .success
             } else if load < 91 {

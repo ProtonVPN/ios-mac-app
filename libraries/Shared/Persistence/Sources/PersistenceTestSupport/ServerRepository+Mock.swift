@@ -39,7 +39,7 @@ extension ServerRepository {
     }
 
     public static func emptyWithUpsert() -> Self {
-        .init(serverCount: { 0 }, 
+        .init(serverCount: { 0 },
               upsertServers: { _ in },
               groups: { _, _ in [] })
     }

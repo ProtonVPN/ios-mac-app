@@ -37,44 +37,44 @@ class OverviewViewController: NSViewController {
     @IBOutlet var createNewProfileButton: PrimaryActionButton!
 
     fileprivate var viewModel: OverviewViewModel!
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     required init(viewModel: OverviewViewModel) {
         super.init(nibName: NSNib.Name("Overview"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupHeaderView()
         setupTableView()
         setupFooterView()
     }
-    
+
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        
+
         createNewProfileButton.isHovered = false
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupHeaderView() {
         profileLabel.attributedStringValue = Localizable.profile.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
         connectionLabel.attributedStringValue = Localizable.connection.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
         actionLabel.attributedStringValue = Localizable.action.uppercased().styled(context: .field, font: .themeFont(.small, bold: true), alignment: .left)
     }
-    
+
     private func setupTableView() {
         profileListTableView.dataSource = self
         profileListTableView.delegate = self
@@ -82,33 +82,33 @@ class OverviewViewController: NSViewController {
         profileListTableView.selectionHighlightStyle = .none
         profileListTableView.backgroundColor = .color(.background, .weak)
         profileListTableView.register(NSNib(nibNamed: NSNib.Name("OverviewItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier))
-        
+
         profileListScrollView.backgroundColor = .color(.background, .weak)
-        
+
         viewModel.contentChanged = { [weak self] in self?.contentChanged() }
     }
-    
+
     private func setupFooterView() {
         footerView.wantsLayer = true
         DarkAppearance {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
-        
+
         createNewProfileButton.setAccessibilityIdentifier("CreateProfile")
     }
-    
+
     private func contentChanged() {
         let oldIndices = IndexSet(integersIn: 0 ..< profileListTableView.numberOfRows)
         let newIndices = IndexSet(integersIn: 0 ..< viewModel.cellCount)
-        
+
         profileListTableView.removeRows(at: oldIndices, withAnimation: [])
         profileListTableView.insertRows(at: newIndices, withAnimation: [])
     }
-    
+
     @objc private func createNewProfileButtonAction() {
         viewModel.createNewProfileAction()
     }
@@ -124,7 +124,7 @@ extension OverviewViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         viewModel.cellHeight
     }
-    
+
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: overviewItemIdentifier), owner: nil) as! OverviewItemView
         let cellViewModel = viewModel.cellModel(forIndex: row)

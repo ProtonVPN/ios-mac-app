@@ -30,19 +30,19 @@ import Strings
 
 class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
-    
+
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
     private let sysexManager: SystemExtensionManager
-    
+
     var enabled: Bool {
         !underMaintenance
     }
-    
+
     var icon: ProfileIcon {
         profile.profileIcon
     }
-    
+
     var name: NSAttributedString {
         var adjustedName = profile.name
         if adjustedName.count > ProfileItemViewModel.maxCharCount {
@@ -50,15 +50,15 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         }
         return adjustedName.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
-    
+
     var hideDescription: Bool {
         !underMaintenance
     }
-    
+
     var secondaryDescription: NSAttributedString {
         formSecondaryDescription()
     }
-    
+
     init(profile: Profile,
          vpnGateway: VpnGatewayProtocol,
          userTier: Int,
@@ -69,10 +69,10 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         self.sysexManager = sysexManager
         super.init(profile: profile, userTier: userTier)
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
-        
+
         guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             alertService.push(alert: AllCountriesUpsellAlert())
@@ -103,7 +103,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             }
         }
     }
-    
+
     private func formSecondaryDescription() -> NSAttributedString {
         let description: String = if underMaintenance {
             Localizable.maintenance

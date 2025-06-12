@@ -38,44 +38,44 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     @IBOutlet var unprotectedNetworkView: SettingsTickboxView!
 
     private var viewModel: GeneralSettingsViewModel
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: GeneralSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("GeneralSettings"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadView()
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupStartOnBootItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startOnBoot, buttonState: viewModel.startOnBoot)
         startOnBootView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupStartMinimizedItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startMinimized, buttonState: viewModel.startMinimized)
         startMinimizedView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupSystemNotificationsItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.systemNotifications, buttonState: viewModel.systemNotifications)
         systemNotificationsView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupEarlyAccessItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.earlyAccess, buttonState: viewModel.earlyAccess, toolTip: Localizable.earlyAccessTooltip)
         earlyAccessView.setupItem(model: viewModel, delegate: self)
@@ -85,9 +85,9 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.unprotectedNetwork, buttonState: viewModel.unprotectedNetworkNotifications, toolTip: Localizable.unprotectedNetworkTooltip)
         unprotectedNetworkView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     // MARK: - ReloadableView
-    
+
     func reloadView() {
         setupView()
         setupStartOnBootItem()

@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable trailingSpace
 --disable typeSugar
 --disable unusedArguments
 --disable void

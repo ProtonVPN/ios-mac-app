@@ -33,19 +33,19 @@ class ManageProfilesRobot: CoreElements {
         button(createProfileButton).firstMatch().tap()
         return CreateProfileRobot()
     }
-    
+
     func editProfile() -> CreateProfileRobot {
         button(editButton).firstMatch().tap()
         return CreateProfileRobot()
     }
-    
+
     func deleteProfile() -> ManageProfilesRobot {
         button(deleteButton).firstMatch().tap()
         return ManageProfilesRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: Verifier {
         @discardableResult
         func checkProfileOverViewIsOpen() -> ManageProfilesRobot {
@@ -53,7 +53,7 @@ class ManageProfilesRobot: CoreElements {
             cell(Localizable.fastest).checkExists()
             return ManageProfilesRobot()
         }
-        
+
         @discardableResult
         func checkProfileIsCreated(_ name: String) -> ManageProfilesRobot {
             cell(name).waitUntilExists(time: 2).checkExists()

@@ -27,24 +27,24 @@ class SidebarWindowController: WindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: SidebarViewController) {
         let window = NSWindow()
         window.appearance = NSAppearance(named: .darkAqua)
         window.contentViewController = viewController
         super.init(window: window)
-        
+
         windowFrameAutosaveName = NSWindow.FrameAutosaveName("Main Window")
-        
+
         setupWindow()
         setupControls()
     }
-    
+
     private func setupWindow() {
         guard let window else {
             return
         }
-        
+
         window.titlebarAppearsTransparent = true
         window.title = "Proton VPN"
         window.appearance = NSAppearance(named: .darkAqua)
@@ -61,7 +61,7 @@ class SidebarWindowController: WindowController {
             window.setContentSize(CGSize(width: initialWidth, height: initialHeight))
         }
     }
-    
+
     private func setupControls() {
         monitorsKeyEvents = true
     }

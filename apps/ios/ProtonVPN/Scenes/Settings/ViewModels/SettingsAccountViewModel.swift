@@ -47,7 +47,7 @@ final class SettingsAccountViewModel {
         VpnKeychainFactory
 
     private let factory: Factory
-    
+
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -60,32 +60,32 @@ final class SettingsAccountViewModel {
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
     var reloadNeeded: (() -> Void)?
-    
+
     init(factory: Factory) {
         self.factory = factory
 
         AppEvent.sessionManagerDataReloaded.subscribe(self, selector: #selector(reload))
     }
-    
+
     var tableViewData: [TableViewSection] {
         var sections: [TableViewSection] = []
-        
+
         sections.append(accountSection)
         if canShowChangePassword {
             sections.append(changePasswordSection)
         }
         sections.append(securityKeysSection)
         sections.append(deleteAccountSection)
-        
+
         return sections
     }
-    
+
     private var accountSection: TableViewSection {
         let username = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String
         let allowUpgrade: Bool
         let allowPlanManagement: Bool
-        
+
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
@@ -95,7 +95,7 @@ final class SettingsAccountViewModel {
             allowUpgrade = false
             allowPlanManagement = false
         }
-        
+
         var cells: [TableViewCellModel] = [
             .staticKeyValue(key: Localizable.username, value: username),
             .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName),
@@ -117,7 +117,7 @@ final class SettingsAccountViewModel {
 
         return TableViewSection(title: Localizable.account.uppercased(), cells: cells)
     }
-    
+
     final class ButtonWithLoadingIndicatorControllerImplementation: ButtonWithLoadingIndicatorController {
         var startLoading: () -> Void = {}
         var stopLoading: () -> Void = {}
@@ -130,7 +130,7 @@ final class SettingsAccountViewModel {
             handler()
         }
     }
-    
+
     private lazy var controller = ButtonWithLoadingIndicatorControllerImplementation { [weak self] in
         self?.deleteAccount()
     }
@@ -184,7 +184,7 @@ final class SettingsAccountViewModel {
         ]
         return TableViewSection(title: "", cells: cells)
     }
-    
+
     /// Open modal with new plan selection (for free/trial users and non-renewing plans)
     private func buySubscriptionAction() {
         planService.presentPlanSelection()
@@ -194,20 +194,20 @@ final class SettingsAccountViewModel {
     private func manageSubscriptionAction() {
         planService.presentSubscriptionManagement()
     }
-    
+
     private func deleteAccount() {
         guard let viewController = viewControllerFetcher?() else {
             log.assertionFailure("SettingsViewModel.viewControllerFetcher must be set for account deletion flow to be presented")
             return
         }
-        
+
         controller.startLoading()
-        
+
         guard !appStateManager.state.isSafeToEnd else {
             proceedWithAccountDeletion(viewController: viewController)
             return
         }
-        
+
         alertService.push(alert: AccountDeletionWarningAlert { [weak self] in
             guard let self else { return }
             switch appStateManager.state {
@@ -224,7 +224,7 @@ final class SettingsAccountViewModel {
             self?.controller.stopLoading()
         })
     }
-    
+
     private func proceedWithAccountDeletion(viewController: UIViewController) {
         let deletionService = AccountDeletionService(api: factory.makeNetworking().apiService)
         deletionService.initiateAccountDeletionProcess(
@@ -241,11 +241,11 @@ final class SettingsAccountViewModel {
                 }
             })
     }
-    
+
     private func handleAccountDeletionSuccess() {
         appSessionManager.logOut(force: true, reason: nil)
     }
-    
+
     private func handleAccountDeletionFailure(_ error: AccountDeletionError) {
         switch error {
         case .closedByUser: break
@@ -254,7 +254,7 @@ final class SettingsAccountViewModel {
             alertService.push(alert: alert)
         }
     }
-    
+
     @objc private func reload() {
         reloadNeeded?()
     }

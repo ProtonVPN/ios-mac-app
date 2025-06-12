@@ -28,7 +28,7 @@ import VPNShared
 public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>
 
 public protocol ReportsApiServiceFactory {
-    func makeReportsApiService() -> ReportsApiService    
+    func makeReportsApiService() -> ReportsApiService
 }
 
 public class ReportsApiService {

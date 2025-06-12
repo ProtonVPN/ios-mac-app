@@ -25,45 +25,45 @@ import LegacyCommon
 
 final class GeneralSettingsViewModel {
     private let propertiesManager: PropertiesManagerProtocol
-    
+
     init(propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
     }
-    
+
     var startOnBoot: Bool {
         propertiesManager.startOnBoot
     }
-    
+
     var startMinimized: Bool {
         propertiesManager.startMinimized
     }
-    
+
     var systemNotifications: Bool {
         propertiesManager.systemNotifications
     }
-    
+
     var earlyAccess: Bool {
         propertiesManager.earlyAccess
     }
-    
+
     var unprotectedNetworkNotifications: Bool {
         propertiesManager.unprotectedNetworkNotifications
     }
-    
+
     // MARK: - Setters
-    
+
     func setStartOnBoot(_ enabled: Bool) {
         propertiesManager.startOnBoot = enabled
     }
-    
+
     func setStartMinimized(_ enabled: Bool) {
         propertiesManager.startMinimized = enabled
     }
-    
+
     func setSystemNotifications(_ enabled: Bool) {
         propertiesManager.systemNotifications = enabled
     }
-    
+
     func setEarlyAccess(_ enabled: Bool) {
         propertiesManager.earlyAccess = enabled
     }

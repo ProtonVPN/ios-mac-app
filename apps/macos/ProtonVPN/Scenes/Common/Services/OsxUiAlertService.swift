@@ -31,40 +31,40 @@ protocol UIAlertServiceFactory {
 
 class OsxUiAlertService: UIAlertService {
     typealias Factory = NavigationServiceFactory & WindowServiceFactory
-    
+
     private let factory: Factory
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    
+
     private var windowService: WindowService
     private var currentAlerts = [SystemAlert]()
-    
+
     public init(factory: Factory) {
         self.factory = factory
         windowService = factory.makeWindowService()
     }
-    
+
     func displayAlert(_ alert: SystemAlert) {
         present(alert)
     }
-    
+
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
         present(alert, message: message)
     }
-    
+
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
         fatalError("Notification syle alerts unsupported on macOS")
     }
-    
+
     private func present(_ alert: SystemAlert, message: NSAttributedString? = nil) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
         }
-        
+
         currentAlerts.append(alert)
-        
+
         var modalVC: NSViewController!
-        
+
         switch alert {
         case let userAccountUpdateAlert as UserAccountUpdateAlert:
             let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
@@ -85,25 +85,25 @@ class OsxUiAlertService: UIAlertService {
             alert.dismiss = { popUp.close() }
             modalVC = PopUpViewController(viewModel: popUp)
         }
-        
+
         windowService.presentKeyModal(viewController: modalVC)
     }
-    
+
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
         !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }
-    
+
     private func updateOldAlert(with newAlert: SystemAlert) {
         let oldAlert = currentAlerts.first { alert -> Bool in
             return alert.className == newAlert.className
         }
-    
+
         // In particular this means the alert's completion handlers will be updated
         oldAlert?.actions = newAlert.actions
     }
-    
+
     private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
         { [weak self] in
             self?.currentAlerts.removeAll { currentAlert in

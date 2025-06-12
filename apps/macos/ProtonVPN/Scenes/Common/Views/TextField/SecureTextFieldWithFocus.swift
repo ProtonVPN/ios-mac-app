@@ -25,30 +25,30 @@ import Cocoa
 class SecureTextFieldWithFocus: NSSecureTextField {
     private let commandKey = NSEvent.ModifierFlags.command.rawValue
     private let commandShiftKey = NSEvent.ModifierFlags.command.rawValue | NSEvent.ModifierFlags.shift.rawValue
-    
+
     weak var focusDelegate: TextFieldFocusDelegate?
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupTransparency()
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupTransparency()
     }
-    
+
     override func becomeFirstResponder() -> Bool {
         if let focusDelegate {
             guard focusDelegate.shouldBecomeFirstResponder else {
                 return false
             }
-            
+
             focusDelegate.willReceiveFocus(self)
         }
         return super.becomeFirstResponder()
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         if event.type == NSEvent.EventType.keyDown {
@@ -77,7 +77,7 @@ class SecureTextFieldWithFocus: NSSecureTextField {
     }
 
     // swiftlint:enable cyclomatic_complexity
-    
+
     // MARK: - Private functions
 
     private func setupTransparency() {

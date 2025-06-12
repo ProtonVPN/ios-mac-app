@@ -47,7 +47,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private let appStateManager: AppStateManager
     private var vpnGateway: VpnGatewayProtocol
     @Dependency(\.serverRepository) private var serverRepository
-    
+
     private var state: ServerType = .standard {
         didSet {
             saveButtonEnabled = true
@@ -60,7 +60,7 @@ class CreateOrEditProfileViewModel: NSObject {
             ? .standard
             : .secureCore
     }
-    
+
     private var colorPickerViewModel: ColorPickerViewModel
     private var color: UIColor {
         colorPickerViewModel.selectedColor
@@ -69,7 +69,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var name: String = ""
     private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
-    
+
     var userTier: Int = 0 // used by class extension
 
     var saveButtonEnabled = false {
@@ -82,7 +82,7 @@ class CreateOrEditProfileViewModel: NSObject {
     var contentChanged: (() -> Void)?
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
     var pushHandler: ((UIViewController) -> Void)?
-    
+
     var editingExistingProfile: Bool {
         editedProfile != nil
     }
@@ -112,19 +112,19 @@ class CreateOrEditProfileViewModel: NSObject {
            let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
             isDefaultProfile = profile == quickConnectProfile
         }
-        
+
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
             userTier = vpnCredentials.maxTier
         }
-        
+
         super.init()
-        
+
         if let profile = editedProfile {
             prefillInfo(for: profile)
             saveButtonEnabled = false
         }
     }
-    
+
     var tableViewData: [TableViewSection] {
         var cells = [TableViewCellModel]()
         cells.append(colorCell)
@@ -140,38 +140,38 @@ class CreateOrEditProfileViewModel: NSObject {
 
         return [TableViewSection(title: Localizable.selectProfileColor, cells: cells)]
     }
-    
+
     func saveProfile(completion: @escaping (Bool) -> Void) {
         guard !name.isEmpty else {
             messageHandler?(Localizable.profileNameIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
-        
+
         guard selectedCountryGroup != nil else {
             messageHandler?(Localizable.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
-        
+
         // If not connected to current profile, just save it
         guard !appStateManager.state.isSafeToEnd, let editedProfile, propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
             finishSaveProfile(completion: completion)
             return
         }
-        
+
         // Here you can ask user if he wants to continue/reconnect/etc.
-        
+
         finishSaveProfile(completion: completion)
     }
-    
+
     private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
         guard let serverOffering = selectedServerOffering else {
             messageHandler?(Localizable.serverSelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
-        
+
         let grouping = serverGroups
 
         let accessTier: Int = switch serverOffering {
@@ -196,7 +196,7 @@ class CreateOrEditProfileViewModel: NSObject {
                               connectionProtocol: selectedProtocol)
 
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
-        
+
         guard result == .success else {
             messageHandler?(Localizable.profileNameNeedsToBeUnique, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
@@ -215,23 +215,23 @@ class CreateOrEditProfileViewModel: NSObject {
         } else if let quickConnectId = propertiesManager.getQuickConnect(for: username), quickConnectId == profile.id { // default was on and has now been turned off for this profile
             propertiesManager.setQuickConnect(for: username, quickConnect: nil)
         }
-        
+
         completion(true)
     }
-    
+
     private var colorCell: TableViewCellModel {
         colorPickerViewModel = ColorPickerViewModel(with: color)
         colorPickerViewModel.colorChanged = { [weak self] in
             self?.saveButtonEnabled = true
         }
-        
+
         return TableViewCellModel.colorPicker(viewModel: colorPickerViewModel)
     }
-    
+
     private var nameCell: TableViewCellModel {
         TableViewCellModel.titleTextField(title: Localizable.name, textFieldText: name, textFieldPlaceholder: Localizable.enterProfileName, textFieldDelegate: self)
     }
-    
+
     private var secureCoreCell: TableViewCellModel {
         TableViewCellModel.upsellableToggle(
             title: Localizable.featureSecureCore,
@@ -245,12 +245,12 @@ class CreateOrEditProfileViewModel: NSObject {
             }
         )
     }
-    
+
     private var countryCell: TableViewCellModel {
         let completionHandler: (() -> Void) = { [weak self] in
             self?.pushCountrySelectionViewController()
         }
-        
+
         if let selectedCountry = selectedCountryGroup {
             let countryAttibutedString = countryDescriptor(for: selectedCountry)
             return TableViewCellModel.pushKeyValueAttributed(key: Localizable.country, value: countryAttibutedString, handler: completionHandler)
@@ -258,12 +258,12 @@ class CreateOrEditProfileViewModel: NSObject {
             return TableViewCellModel.pushKeyValue(key: Localizable.country, value: Localizable.selectCountry, handler: completionHandler)
         }
     }
-    
+
     private var serverCell: TableViewCellModel {
         let completionHandler: (() -> Void) = { [weak self] in
             self?.pushServerSelectionViewController()
         }
-        
+
         if let selectedServer = selectedServerOffering {
             let serverAttibutedString = serverName(forServerOffering: selectedServer)
             return TableViewCellModel.pushKeyValueAttributed(key: Localizable.server, value: serverAttibutedString, handler: completionHandler)
@@ -271,13 +271,13 @@ class CreateOrEditProfileViewModel: NSObject {
             return TableViewCellModel.pushKeyValue(key: Localizable.server, value: Localizable.selectServer, handler: completionHandler)
         }
     }
-    
+
     private var protocolCell: TableViewCellModel {
         TableViewCellModel.pushKeyValue(key: Localizable.protocol, value: selectedProtocol.localizedDescription) { [weak self] in
             self?.pushProtocolViewController()
         }
     }
-    
+
     private var quickConnectCell: TableViewCellModel {
         TableViewCellModel.upsellableToggle(
             title: Localizable.makeDefaultProfile,
@@ -291,11 +291,11 @@ class CreateOrEditProfileViewModel: NSObject {
             }
         )
     }
-    
+
     private var footerCell: TableViewCellModel {
         TableViewCellModel.tooltip(text: Localizable.defaultProfileTooltip)
     }
-    
+
     private var selectedCountryGroup: ServerGroupInfo? {
         didSet {
             selectedServerOffering = nil
@@ -313,16 +313,16 @@ class CreateOrEditProfileViewModel: NSObject {
             saveButtonEnabled = true
         }
     }
-    
+
     private func prefillInfo(for profile: Profile) {
         guard profile.profileType == .user, case let ProfileIcon.circle(color) = profile.profileIcon else {
             return
         }
-        
+
         colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
         name = profile.name
         state = profile.serverType == .secureCore ? .secureCore : .standard
-        
+
         selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
             case let .country(countryCode):
@@ -335,31 +335,31 @@ class CreateOrEditProfileViewModel: NSObject {
 
         selectedProtocol = profile.connectionProtocol
     }
-    
+
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case .standard = state {
             guard userTier.isPaidTier else {
                 alertService.push(alert: SecureCoreUpsellAlert())
                 return
             }
-            
+
             state = .secureCore
         } else {
             state = .standard
         }
-        
+
         // reset country and server selections
         selectedCountryGroup = nil
         selectedServerOffering = nil
-        
+
         completion(state == .secureCore)
     }
-    
+
     private func toggleDefault() {
         isDefaultProfile = !isDefaultProfile
         saveButtonEnabled = true
     }
-    
+
     private var serverGroups: [ServerGroupInfo] {
         serverRepository.getGroups(filteredBy: [.features(secureCoreServerFilter)])
     }
@@ -377,7 +377,7 @@ class CreateOrEditProfileViewModel: NSObject {
             smartProtocolConfig: propertiesManager.smartProtocolConfig
         )
     }
-    
+
     private func serverName(forServerOffering serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
         case .fastest:
@@ -388,24 +388,24 @@ class CreateOrEditProfileViewModel: NSObject {
             serverDescriptor(for: serverWrapper.server)
         }
     }
-    
+
     private func pushCountrySelectionViewController() {
         let selectionViewController = profileService.makeSelectionViewController(dataSet: countrySelectionDataSet) { [weak self] selectedObject in
             guard let selectedCountryGroup = selectedObject as? ServerGroupInfo else {
                 return
             }
-            
+
             self?.selectedCountryGroup = selectedCountryGroup
         }
         pushHandler?(selectionViewController)
     }
-    
+
     func pushServerSelectionViewController() {
         guard let dataSet = serverSelectionDataSet else {
             messageHandler?(Localizable.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
             return
         }
-        
+
         let selectionViewController = profileService.makeSelectionViewController(dataSet: dataSet) { [weak self] selectedObject in
             guard let `self` else {
                 return
@@ -429,7 +429,7 @@ class CreateOrEditProfileViewModel: NSObject {
 
             resetProtocolIfNotSupportedBySelectedServerOffering()
         }
-        
+
         pushHandler?(selectionViewController)
     }
 
@@ -451,7 +451,7 @@ class CreateOrEditProfileViewModel: NSObject {
             selectedProtocol = .smartProtocol
         }
     }
-    
+
     private func pushProtocolViewController() {
         let supportedProtocols = ConnectionProtocol.allCases
             .filter { !$0.isDeprecated && selectedServerOfferingSupports(connectionProtocol: $0) }
@@ -474,7 +474,7 @@ extension CreateOrEditProfileViewModel {
         let rows: [SelectionRow] = serverGroups.map { countryGroup in
             SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
         }
-                
+
         let sections: [SelectionSection] = if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {
             [
                 SelectionSection(
@@ -490,7 +490,7 @@ extension CreateOrEditProfileViewModel {
                 cells: rows),
             ]
         }
-        
+
         var selectedIndex: IndexPath?
         if let countryGroup = selectedCountryGroup {
             var sectionIndex = 0
@@ -506,7 +506,7 @@ extension CreateOrEditProfileViewModel {
                 sectionIndex += 1
             }
         }
-        
+
         return SelectionDataSet(
             dataTitle: Localizable.countries,
             data: sections,
@@ -544,7 +544,7 @@ extension CreateOrEditProfileViewModel {
             }
         })
     }
-    
+
     private var serverSelectionDataSet: SelectionDataSet? {
         guard let countryGroup else { return nil }
 
@@ -600,7 +600,7 @@ extension CreateOrEditProfileViewModel {
                 sectionIndex += 1
             }
         }
-        
+
         return SelectionDataSet(
             dataTitle: Localizable.server,
             data: sections,
@@ -614,16 +614,16 @@ extension CreateOrEditProfileViewModel: UITextFieldDelegate {
         let currentString: NSString = textField.text! as NSString
         let newString: NSString =
             currentString.replacingCharacters(in: range, with: string) as NSString
-        
+
         saveButtonEnabled = true
         name = newString as String
-        
+
         return newString.length <= UIConstants.maxProfileNameLength
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        
+
         return true
     }
 }

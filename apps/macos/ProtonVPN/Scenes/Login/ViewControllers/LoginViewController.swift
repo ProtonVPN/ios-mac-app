@@ -484,7 +484,7 @@ final class LoginViewController: NSViewController {
 
     private func startWebAuthenticationSession(_ authURL: URL) {
         let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: "protonvpn") { callbackURL, error in
-            guard error == nil, let callbackURL else { 
+            guard error == nil, let callbackURL else {
                 DispatchQueue.main.async { [weak self] in
                     ObservabilityEnv.report(.ssoIdentityProviderLoginResult(status: .failed))
 

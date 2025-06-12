@@ -27,7 +27,7 @@ import UIKit
 
 final class StatusViewController: UIViewController {
     @IBOutlet private var tableView: UITableView?
-    
+
     var viewModel: StatusViewModel? {
         didSet {
             viewModel?.messageHandler = { [weak self] text, type, options in
@@ -50,41 +50,41 @@ final class StatusViewController: UIViewController {
             }
         }
     }
-    
+
     private var genericDataSource: GenericTableViewDataSource?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView?.reloadData()
     }
-    
+
     func setupView() {
         navigationItem.title = Localizable.status
-        
+
         view.backgroundColor = .backgroundColor()
     }
-    
+
     private func setupTableView() {
         updateTableView()
-        
+
         tableView?.separatorColor = .normalSeparatorColor()
         tableView?.backgroundColor = UIColor.backgroundColor()
         tableView?.cellLayoutMarginsFollowReadableWidth = true
     }
-    
+
     private func updateTableView() {
         guard let viewModel, let tableView else {
             return
         }
-        
+
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
