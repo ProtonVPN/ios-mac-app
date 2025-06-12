@@ -59,8 +59,8 @@ extension ImagePrefetcher: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var imagePrefetcher: ImagePrefetcher {
+public extension DependencyValues {
+    var imagePrefetcher: ImagePrefetcher {
         get { self[ImagePrefetcher.self] }
         set { self[ImagePrefetcher.self] = newValue }
     }

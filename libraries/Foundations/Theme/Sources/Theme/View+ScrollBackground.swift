@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-extension View {
+public extension View {
     /// Makes the background of lists, forms and scroll views transparent
     ///
     /// - Important: This is not supported before iOS 16 and MacOS 13. On those versions, this must be achieved using
@@ -28,7 +28,7 @@ extension View {
     /// UITableView.appearance().backgroundColor = .clear
     /// ```
     @available(tvOS, unavailable)
-    public var hidingScrollBackground: some View {
+    var hidingScrollBackground: some View {
         if #available(iOS 16, macOS 13, *) {
             return self.scrollContentBackground(.hidden)
         }

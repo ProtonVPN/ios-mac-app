@@ -24,8 +24,8 @@ import DomainTestSupport
 import Foundation
 import VPNShared
 
-extension ConnectionFeature.State {
-    public static let connected: ConnectionFeature.State = {
+public extension ConnectionFeature.State {
+    static let connected: ConnectionFeature.State = {
         let now = Date.now
         let tomorrow = now.addingTimeInterval(.days(1))
 

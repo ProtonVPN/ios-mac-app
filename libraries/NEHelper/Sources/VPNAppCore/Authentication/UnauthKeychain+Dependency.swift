@@ -24,8 +24,8 @@ public struct UnauthKeychainHandleDependencyKey: DependencyKey {
     public static let testValue = liveValue
 }
 
-extension DependencyValues {
-    public var unauthKeychain: UnauthKeychainHandle {
+public extension DependencyValues {
+    var unauthKeychain: UnauthKeychainHandle {
         get { self[UnauthKeychainHandleDependencyKey.self] }
         set { self[UnauthKeychainHandleDependencyKey.self] = newValue }
     }

@@ -18,15 +18,15 @@
 
 import Foundation
 
-extension String {
+public extension String {
     /// Search for IPs and return string with IPs masked
-    public var maskIPs: String {
+    var maskIPs: String {
         maskIPv4
             .maskIPv6
     }
 
     /// Search for IP v4 addresses and mask last two parts
-    public var maskIPv4: String {
+    var maskIPv4: String {
         let result = NSMutableString(string: self as NSString)
         guard let regexp = try? NSRegularExpression(pattern: "([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})\\.([0-9]{1,3})") else {
             return self
@@ -43,7 +43,7 @@ extension String {
     }
 
     /// Search for IP v6 addresses and mask the IP
-    public var maskIPv6: String {
+    var maskIPv6: String {
         let result = NSMutableString(string: self as NSString)
         guard let regexp = try? NSRegularExpression(pattern: "([a-f0-9:]+:+)+[a-f0-9]+") else {
             return self

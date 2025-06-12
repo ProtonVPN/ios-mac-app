@@ -30,22 +30,22 @@ public protocol TestIsolatedDatabaseTestDriver: AbstractDatabaseTestDriver {
     var internalRepository: ServerRepository? { get set }
 }
 
-extension TestIsolatedDatabaseTestDriver {
+public extension TestIsolatedDatabaseTestDriver {
     private var setUpErrorMessage: String {
         "Did you forget to invoke `setUpRepository()` in your test case's overridden `setUp` or `setUpWithError` method?"
     }
 
-    public var repositoryWrapper: ServerRepositoryWrapper {
+    var repositoryWrapper: ServerRepositoryWrapper {
         assert(internalRepositoryWrapper != nil, setUpErrorMessage)
         return internalRepositoryWrapper!
     }
 
-    public var repository: ServerRepository {
+    var repository: ServerRepository {
         assert(internalRepository != nil, setUpErrorMessage)
         return internalRepository!
     }
 
-    public func setUpRepository() throws {
+    func setUpRepository() throws {
         let repositoryImplementation = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
@@ -56,7 +56,7 @@ extension TestIsolatedDatabaseTestDriver {
         internalRepository = .wrapped(wrappedWith: internalRepositoryWrapper!)
     }
 
-    public static func setUpRepository() throws {
+    static func setUpRepository() throws {
         assertionFailure("Invoke the instance version of this method in the `XCTestCase` instance method `setUp()``")
     }
 }

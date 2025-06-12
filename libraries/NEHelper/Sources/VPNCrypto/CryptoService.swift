@@ -123,13 +123,13 @@ private extension NSError {
     }
 }
 
-extension CryptoService.KeyClass {
-    public static let publicKey = Self(rawValue: kSecAttrKeyClassPublic as String)
-    public static let privateKey = Self(rawValue: kSecAttrKeyClassPrivate as String)
+public extension CryptoService.KeyClass {
+    static let publicKey = Self(rawValue: kSecAttrKeyClassPublic as String)
+    static let privateKey = Self(rawValue: kSecAttrKeyClassPrivate as String)
 }
 
-extension CryptoService.KeyType {
-    public static let rsa = Self(rawValue: kSecAttrKeyTypeRSA as String)
+public extension CryptoService.KeyType {
+    static let rsa = Self(rawValue: kSecAttrKeyTypeRSA as String)
 
     /**
      * According to Apples documentation:
@@ -140,19 +140,19 @@ extension CryptoService.KeyType {
      * `kSecAttrKeyTypeEC` is the legacy name for `kSecAttrKeyTypeECSECPrimeRandom`.
      *    New applications should not use it.
      */
-    public static let elliptic = Self(rawValue: kSecAttrKeyTypeECSECPrimeRandom as String)
+    static let elliptic = Self(rawValue: kSecAttrKeyTypeECSECPrimeRandom as String)
 
-    public var stringValue: String {
+    var stringValue: String {
         rawValue
     }
 }
 
-extension CryptoService.Algorithm {
+public extension CryptoService.Algorithm {
     /// "RSA signature with PKCS#1 padding, SHA-256 digest is generated from input data of any size."
     /// - Note: This algorithm generates the SHA-256 itself.
-    public static let rsaSignatureMessagePKCS1v15SHA256: Self = .init(rawValue: .rsaSignatureMessagePKCS1v15SHA256)
+    static let rsaSignatureMessagePKCS1v15SHA256: Self = .init(rawValue: .rsaSignatureMessagePKCS1v15SHA256)
 
-    public var stringValue: String {
+    var stringValue: String {
         rawValue.rawValue as String
     }
 }
@@ -230,8 +230,8 @@ extension CryptoService: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var cryptoService: CryptoService {
+public extension DependencyValues {
+    var cryptoService: CryptoService {
         get { self[CryptoService.self] }
         set { self[CryptoService.self] = newValue }
     }

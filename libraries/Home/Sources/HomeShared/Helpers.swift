@@ -20,8 +20,8 @@ import Clocks
 import Combine
 import ComposableArchitecture
 
-extension Effect {
-    package static func onChange<Value>(
+package extension Effect {
+    static func onChange<Value>(
         of shared: SharedReader<Value>,
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinject transform: @escaping (Value) -> Action
@@ -29,7 +29,7 @@ extension Effect {
         listen(to: shared.publisher, on: scheduler, reinjecting: transform)
     }
 
-    package static func onChange<Value>(
+    static func onChange<Value>(
         of shared: SharedReader<Value?>,
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinject transform: @escaping (Value) -> Action
@@ -37,7 +37,7 @@ extension Effect {
         listen(to: shared.publisher, on: scheduler, reinjecting: transform)
     }
 
-    package static func listen<Output>(
+    static func listen<Output>(
         to publisher: some Publisher<Output, Never>,
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinjecting transform: @escaping (Output) -> Action
@@ -45,7 +45,7 @@ extension Effect {
         self.publisher { publisher.receive(on: scheduler).map(transform) }
     }
 
-    package static func listen<Output>(
+    static func listen<Output>(
         to publisher: some Publisher<Output?, Never>,
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinjecting transform: @escaping (Output) -> Action

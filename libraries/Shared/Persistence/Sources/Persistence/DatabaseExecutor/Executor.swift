@@ -41,12 +41,12 @@ public protocol DatabaseExecutor {
     func execute<T>(operation: () throws -> T, fallback: T) -> T
 }
 
-extension DatabaseExecutor {
-    public func execute(operation: () throws -> Void) {
+public extension DatabaseExecutor {
+    func execute(operation: () throws -> Void) {
         execute(operation: operation, fallback: ())
     }
 
-    public func execute<T: DatabaseExecutorResult>(operation: () throws -> T, fallback: T? = nil) -> T {
+    func execute<T: DatabaseExecutorResult>(operation: () throws -> T, fallback: T? = nil) -> T {
         execute(operation: operation, fallback: fallback ?? T.fallbackValue)
     }
 }

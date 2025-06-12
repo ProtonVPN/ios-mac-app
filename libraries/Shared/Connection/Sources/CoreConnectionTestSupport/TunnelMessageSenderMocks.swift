@@ -21,14 +21,14 @@ import ExtensionIPC
 import Foundation
 import IssueReporting
 
-extension TunnelMessageSender {
-    public static let unimplemented: TunnelMessageSender = .init(send: { request in
+public extension TunnelMessageSender {
+    static let unimplemented: TunnelMessageSender = .init(send: { request in
         let requestErrorMessage = "Did not expect to send \(request) at this time"
         reportIssue(requestErrorMessage)
         return .error(message: requestErrorMessage)
     })
 
-    public static func sender(
+    static func sender(
         forRequest request: WireguardProviderRequest,
         withResponse response: WireguardProviderRequest.Response,
         andOperation operation: @escaping () -> Void = {}

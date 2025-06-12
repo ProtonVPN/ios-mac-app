@@ -27,8 +27,8 @@ public final class OSLogHandler: ParentLogHandler {
     }
 }
 
-extension Logging.Logger.Level {
-    public var osLogType: OSLogType {
+public extension Logging.Logger.Level {
+    var osLogType: OSLogType {
         switch self {
         case .trace:
             OSLogType.default

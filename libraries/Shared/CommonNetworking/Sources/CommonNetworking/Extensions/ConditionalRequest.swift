@@ -27,8 +27,8 @@ public protocol ConditionalRequest: Request {
     var baseHeaders: [String: Any] { get }
 }
 
-extension ConditionalRequest {
-    public var header: [String: Any] {
+public extension ConditionalRequest {
+    var header: [String: Any] {
         guard let condition else {
             return baseHeaders
         }

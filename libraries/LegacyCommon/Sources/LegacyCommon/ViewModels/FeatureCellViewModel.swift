@@ -45,8 +45,8 @@ public enum Icon {
     case url(URL?)
 }
 
-extension FeatureCellViewModel {
-    public var displayLoads: Bool {
+public extension FeatureCellViewModel {
+    var displayLoads: Bool {
         false
     }
 }

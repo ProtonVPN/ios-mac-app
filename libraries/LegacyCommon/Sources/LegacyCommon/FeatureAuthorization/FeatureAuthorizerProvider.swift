@@ -37,22 +37,22 @@ public protocol FeatureAuthorizerProvider {
 
 public typealias FeatureAuthorizationResult = Result<None, FeatureAuthorizationFailureReason>
 
-extension FeatureAuthorizationResult {
-    public static var success: FeatureAuthorizationResult {
+public extension FeatureAuthorizationResult {
+    static var success: FeatureAuthorizationResult {
         .success(nil)
     }
 
-    public var isAllowed: Bool {
+    var isAllowed: Bool {
         guard case .success = self else { return false }
         return true
     }
 
-    public var requiresUpgrade: Bool {
+    var requiresUpgrade: Bool {
         guard case .failure(.requiresUpgrade) = self else { return false }
         return true
     }
 
-    public var featureDisabled: Bool {
+    var featureDisabled: Bool {
         guard case .failure(.featureDisabled) = self else { return false }
         return true
     }
@@ -94,24 +94,24 @@ public protocol PaidAppFeature: AppFeature {
     static var excludedAccountPlans: [String]? { get }
 }
 
-extension PaidAppFeature {
-    public static var featureFlag: KeyPath<FeatureFlags, Bool>? {
+public extension PaidAppFeature {
+    static var featureFlag: KeyPath<FeatureFlags, Bool>? {
         nil
     }
 
-    public static func minTier(featureFlags _: FeatureFlags) -> Int {
+    static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 
-    public static var includedAccountPlans: [String]? {
+    static var includedAccountPlans: [String]? {
         nil
     }
 
-    public static var excludedAccountPlans: [String]? {
+    static var excludedAccountPlans: [String]? {
         nil
     }
 
-    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if let featureFlag {
             guard featureFlags[keyPath: featureFlag] else {
                 return .failure(.featureDisabled)
@@ -155,8 +155,8 @@ public enum FeatureAuthorizerKey: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var featureAuthorizerProvider: FeatureAuthorizerProvider {
+public extension DependencyValues {
+    var featureAuthorizerProvider: FeatureAuthorizerProvider {
         get { self[FeatureAuthorizerKey.self] }
         set { self[FeatureAuthorizerKey.self] = newValue }
     }

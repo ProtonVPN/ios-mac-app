@@ -396,8 +396,8 @@ public enum ConnectionState: Equatable, Sendable {
     }
 }
 
-extension ConnectionFeature.State {
-    public static let initialState = ConnectionFeature.State(
+public extension ConnectionFeature.State {
+    static let initialState = ConnectionFeature.State(
         currentIntent: nil,
         queuedIntent: nil,
         connectionState: .resolving,

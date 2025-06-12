@@ -24,9 +24,9 @@ public protocol PMLogFormatter {
 }
 
 // `Logging.` has to be prepended in some cases because this file is also included in WireGuard extension, which has its own `Logger` class.
-extension PMLogFormatter {
+public extension PMLogFormatter {
     /// Extract category and  event from metada. Return metadata without extracted elements.
-    public func extract(metadata: [String: String]) -> (String, String, [String: String]) { // swiftlint:disable:this large_tuple
+    func extract(metadata: [String: String]) -> (String, String, [String: String]) { // swiftlint:disable:this large_tuple
         let category = metadata[Logging.Logger.MetaKey.category.rawValue] != nil ? "\(metadata[Logging.Logger.MetaKey.category.rawValue]!)" : ""
         let event = metadata[Logging.Logger.MetaKey.event.rawValue] != nil ? ":\(metadata[Logging.Logger.MetaKey.event.rawValue]!)" : ""
 

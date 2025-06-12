@@ -23,17 +23,17 @@ import Foundation
 import OrderedCollections
 import VPNAppCore
 
-extension OrderedSet<RecentConnection> {
+public extension OrderedSet<RecentConnection> {
     private static let maxConnections = 8
 
-    func index(for spec: ConnectionSpec) -> Self.Index? {
+    internal func index(for spec: ConnectionSpec) -> Self.Index? {
         firstIndex { recent in
             recent.connection.location == spec.location
                 && recent.connection.features == spec.features
         }
     }
 
-    func sanitized() -> OrderedSet<RecentConnection> {
+    internal func sanitized() -> OrderedSet<RecentConnection> {
         OrderedSet(
             chunked { $0.pinned }
                 .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
@@ -48,13 +48,13 @@ extension OrderedSet<RecentConnection> {
         )
     }
 
-    public var mostRecent: RecentConnection? {
+    var mostRecent: RecentConnection? {
         sorted(using: [
             KeyPathComparator(\.connectionDate, order: .reverse),
         ]).first
     }
 
-    public mutating func updateList(with spec: ConnectionSpec) {
+    mutating func updateList(with spec: ConnectionSpec) {
         var oldRecent: RecentConnection?
         if let index = index(for: spec) {
             oldRecent = remove(at: index)
@@ -72,11 +72,11 @@ extension OrderedSet<RecentConnection> {
         self = sanitized()
     }
 
-    public mutating func unpin(recent: RecentConnection) {
+    mutating func unpin(recent: RecentConnection) {
         updatePin(recent: recent, pinnedDate: nil)
     }
 
-    public mutating func pin(recent: RecentConnection, pinnedDate: Date) {
+    mutating func pin(recent: RecentConnection, pinnedDate: Date) {
         updatePin(recent: recent, pinnedDate: pinnedDate)
     }
 

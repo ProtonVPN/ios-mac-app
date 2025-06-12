@@ -78,8 +78,8 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
 }
 
 #if os(macOS)
-    extension VpnProtocol {
-        public var requiresSystemExtension: Bool {
+    public extension VpnProtocol {
+        var requiresSystemExtension: Bool {
             switch self {
             case .openVpn, .wireGuard:
                 true

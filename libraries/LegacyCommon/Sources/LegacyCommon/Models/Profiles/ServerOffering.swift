@@ -123,9 +123,9 @@ public enum ServerOffering: Equatable, Codable {
     }
 }
 
-extension ServerOffering {
+public extension ServerOffering {
     /// Check if offering can find any actually available server/protocol
-    public func supports(
+    func supports(
         connectionProtocol: ConnectionProtocol,
         withCountryGroup grouping: ServerGroupInfo?,
         smartProtocolConfig: SmartProtocolConfig
@@ -152,8 +152,8 @@ extension ServerOffering {
     }
 }
 
-extension ServerGroupInfo {
-    public var serverOfferingID: String {
+public extension ServerGroupInfo {
+    var serverOfferingID: String {
         switch kind {
         case let .country(countryCode):
             countryCode

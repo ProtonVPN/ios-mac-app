@@ -19,8 +19,8 @@
 import Domain
 import Persistence
 
-extension ServerRepository {
-    public static func empty() -> Self {
+public extension ServerRepository {
+    static func empty() -> Self {
         .init(
             serverCount: { 0 },
             server: { _, _ in nil },
@@ -28,7 +28,7 @@ extension ServerRepository {
         )
     }
 
-    public static func notEmpty() -> Self {
+    static func notEmpty() -> Self {
         .init(
             serverCount: { 1 },
             server: { _, _ in .mock },
@@ -36,7 +36,7 @@ extension ServerRepository {
         )
     }
 
-    public static func somePlusRecommendedCountries() -> Self {
+    static func somePlusRecommendedCountries() -> Self {
         .init(
             serverCount: { 0 },
             server: { _, _ in nil },
@@ -44,7 +44,7 @@ extension ServerRepository {
         )
     }
 
-    public static func emptyWithUpsert() -> Self {
+    static func emptyWithUpsert() -> Self {
         .init(
             serverCount: { 0 },
             upsertServers: { _ in },

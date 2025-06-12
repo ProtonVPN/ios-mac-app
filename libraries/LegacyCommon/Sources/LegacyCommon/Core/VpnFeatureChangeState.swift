@@ -28,8 +28,8 @@ import VPNShared
 
 public typealias VpnFeatureChangeState = FeatureChangeAvailability
 
-extension VpnFeatureChangeState {
-    public init(state: VpnState, vpnProtocol: VpnProtocol?) {
+public extension VpnFeatureChangeState {
+    init(state: VpnState, vpnProtocol: VpnProtocol?) {
         switch state {
         case .connected where vpnProtocol?.authenticationType == .certificate:
             self = .withConnectionUpdate

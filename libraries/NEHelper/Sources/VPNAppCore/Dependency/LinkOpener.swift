@@ -60,8 +60,8 @@ public struct LinkOpener: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var linkOpener: LinkOpener {
+public extension DependencyValues {
+    var linkOpener: LinkOpener {
         get { self[LinkOpener.self] }
         set { self[LinkOpener.self] = newValue }
     }

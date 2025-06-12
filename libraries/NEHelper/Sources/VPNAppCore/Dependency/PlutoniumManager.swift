@@ -108,8 +108,8 @@
         }
     }
 
-    extension DependencyValues {
-        public var plutoniumManager: PlutoniumManager {
+    public extension DependencyValues {
+        var plutoniumManager: PlutoniumManager {
             get { self[PlutoniumManager.self] }
             set { self[PlutoniumManager.self] = newValue }
         }

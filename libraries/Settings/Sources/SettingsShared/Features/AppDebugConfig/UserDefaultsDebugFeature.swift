@@ -113,9 +113,9 @@ public struct UserDefaultsDebugFeature {
     }
 }
 
-extension UserDefaultsDebugFeature.State {
+public extension UserDefaultsDebugFeature.State {
     @CasePathable
-    public enum Content: Equatable {
+    enum Content: Equatable {
         case none
         case loading
         case loaded([UserDefaultsEntry])

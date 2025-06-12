@@ -129,10 +129,10 @@ public struct StoredWireguardConfig: Codable {
 
 /// This is what gets stored in the keychain, to communicate the connection
 /// details with the WireGuard network extension.
-extension StoredWireguardConfig {
+public extension StoredWireguardConfig {
     /// `asWireguardConfiguration` translates this object into a text configuration file
     /// that the `wireguard-go` backend understands.
-    public func asWireguardConfiguration() -> String {
+    func asWireguardConfiguration() -> String {
         """
         [Interface]
         \(attribute: "PrivateKey = ", optional: clientPrivateKey)

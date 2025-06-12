@@ -42,8 +42,8 @@ extension LocationClient: DependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var locationClient: LocationClient {
+public extension DependencyValues {
+    var locationClient: LocationClient {
         get { self[LocationClient.self] }
         set { self[LocationClient.self] = newValue }
     }

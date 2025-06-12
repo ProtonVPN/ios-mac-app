@@ -43,8 +43,8 @@ public enum ConnectionConfigurationKey: DependencyKey {
     public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
 
-extension DependencyValues {
-    public var connectionConfiguration: ConnectionConfiguration {
+public extension DependencyValues {
+    var connectionConfiguration: ConnectionConfiguration {
         get { self[ConnectionConfigurationKey.self] }
         set { self[ConnectionConfigurationKey.self] = newValue }
     }

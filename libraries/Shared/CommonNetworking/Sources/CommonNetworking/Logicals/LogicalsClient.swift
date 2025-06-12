@@ -52,8 +52,8 @@ extension LogicalsClient: DependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var logicalsClient: LogicalsClient {
+public extension DependencyValues {
+    var logicalsClient: LogicalsClient {
         get { self[LogicalsClient.self] }
         set { self[LogicalsClient.self] = newValue }
     }

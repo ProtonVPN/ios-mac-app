@@ -87,9 +87,9 @@ public enum Feature: Hashable, Identifiable {
 
 extension Feature: Equatable {}
 
-extension Feature {
+public extension Feature {
     // swiftlint:disable:next cyclomatic_complexity
-    public func title() -> String? {
+    func title() -> String? {
         switch self {
         case .streaming:
             Localizable.modalsUpsellAllCountriesFeatureStreaming
@@ -152,7 +152,7 @@ extension Feature {
         }
     }
 
-    public func boldTitleElements() -> [String] {
+    func boldTitleElements() -> [String] {
         switch self {
         case .gaming:
             [Localizable.modalsUpsellModerateNatSubtitleBold]
@@ -169,7 +169,7 @@ extension Feature {
         }
     }
 
-    public var image: Image? {
+    var image: Image? {
         switch self {
         case .streaming:
             IconProvider.play

@@ -43,12 +43,12 @@ package struct TunnelKeychain: DependencyKey {
     }()
 }
 
-extension TunnelKeychain {
-    package func store(wireguardConfigData data: Data) throws -> Data {
+package extension TunnelKeychain {
+    func store(wireguardConfigData data: Data) throws -> Data {
         try storeWireguardConfig(data)
     }
 
-    package func store(wireguardConfigString: String) throws -> Data {
+    func store(wireguardConfigString: String) throws -> Data {
         guard let configData = wireguardConfigString.data(using: .utf8) else {
             throw VPNKeychainError.encodingError
         }
@@ -57,8 +57,8 @@ extension TunnelKeychain {
     }
 }
 
-extension DependencyValues {
-    package var tunnelKeychain: TunnelKeychain {
+package extension DependencyValues {
+    var tunnelKeychain: TunnelKeychain {
         get { self[TunnelKeychain.self] }
         set { self[TunnelKeychain.self] = newValue }
     }

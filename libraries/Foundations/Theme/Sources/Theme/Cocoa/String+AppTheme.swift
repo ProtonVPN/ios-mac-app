@@ -21,8 +21,8 @@ import Foundation
 #if canImport(AppKit)
     import AppKit
 
-    extension String {
-        public func styled(
+    public extension String {
+        func styled(
             _ style: AppTheme.Style = .normal,
             context: AppTheme.Context = .text,
             font: NSFont = .themeFont(),
@@ -53,8 +53,8 @@ import Foundation
         }
     }
 
-    extension Collection<String> {
-        public func styled(
+    public extension Collection<String> {
+        func styled(
             _ style: AppTheme.Style = .normal,
             context: AppTheme.Context = .text,
             font: NSFont = .themeFont(),
@@ -81,8 +81,8 @@ import Foundation
         }
     }
 
-    extension RandomAccessCollection where Element: NSAttributedString {
-        public func joined() -> NSAttributedString {
+    public extension RandomAccessCollection where Element: NSAttributedString {
+        func joined() -> NSAttributedString {
             let joinedString = NSMutableAttributedString()
             for element in self {
                 joinedString.append(element)
@@ -91,8 +91,8 @@ import Foundation
         }
     }
 
-    extension NSAttributedString {
-        public static func lineSeparator(count: Int = 1) -> NSAttributedString {
+    public extension NSAttributedString {
+        static func lineSeparator(count: Int = 1) -> NSAttributedString {
             .init(string: String(repeating: "\n", count: count))
         }
     }

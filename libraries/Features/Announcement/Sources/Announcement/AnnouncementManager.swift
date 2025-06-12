@@ -80,8 +80,8 @@ public protocol AnnouncementManager {
     func shouldShowAnnouncementsIcon() -> Bool
 }
 
-extension AnnouncementManager {
-    public static var notification: Notification.Name {
+public extension AnnouncementManager {
+    static var notification: Notification.Name {
         .init("Announcements")
     }
 }

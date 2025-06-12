@@ -75,8 +75,8 @@ public struct AuthKeychainHandleDependencyKey: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var authKeychain: AuthKeychainHandle {
+public extension DependencyValues {
+    var authKeychain: AuthKeychainHandle {
         get { self[AuthKeychainHandleDependencyKey.self] }
         set { self[AuthKeychainHandleDependencyKey.self] = newValue }
     }

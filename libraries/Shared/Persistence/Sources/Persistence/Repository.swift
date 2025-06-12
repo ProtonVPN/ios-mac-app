@@ -86,49 +86,49 @@ public struct ServerRepository: DependencyKey {
 }
 
 /// Public interface with labels
-extension ServerRepository {
-    public var isEmpty: Bool {
+public extension ServerRepository {
+    var isEmpty: Bool {
         serverCount() == 0
     }
 
-    public func upsert(servers: [VPNServer]) {
+    func upsert(servers: [VPNServer]) {
         upsertServers(servers)
     }
 
-    public func delete(serversWithIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
+    func delete(serversWithIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
         deleteServers(ids, maxTier)
     }
 
-    public func upsert(loads: [ContinuousServerProperties]) {
+    func upsert(loads: [ContinuousServerProperties]) {
         upsertLoads(loads)
     }
 
-    public func getGroups(
+    func getGroups(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerGroupOrder = .localizedCountryNameAscending
     ) -> [ServerGroupInfo] {
         groups(filters, order)
     }
 
-    public func getFirstServer(
+    func getFirstServer(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerOrder
     ) -> VPNServer? {
         server(filters, order)
     }
 
-    public func getServers(
+    func getServers(
         filteredBy filters: [VPNServerFilter],
         orderedBy order: VPNServerOrder
     ) -> [ServerInfo] {
         servers(filters, order)
     }
 
-    public func setMetadata(_ value: String, for key: DatabaseMetadata.Key) {
+    func setMetadata(_ value: String, for key: DatabaseMetadata.Key) {
         setMetadata(key, value)
     }
 
-    public func deleteMetadata(for key: DatabaseMetadata.Key) {
+    func deleteMetadata(for key: DatabaseMetadata.Key) {
         setMetadata(key, nil)
     }
 }
@@ -154,8 +154,8 @@ extension BinaryInteger {
     }
 }
 
-extension DependencyValues {
-    public var serverRepository: ServerRepository {
+public extension DependencyValues {
+    var serverRepository: ServerRepository {
         get { self[ServerRepository.self] }
         set { self[ServerRepository.self] = newValue }
     }

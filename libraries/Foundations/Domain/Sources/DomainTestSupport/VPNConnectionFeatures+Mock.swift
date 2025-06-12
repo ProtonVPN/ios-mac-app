@@ -19,8 +19,8 @@
 import struct Domain.VPNConnectionFeatures
 import Foundation
 
-extension VPNConnectionFeatures {
-    public static let mock = VPNConnectionFeatures(
+public extension VPNConnectionFeatures {
+    static let mock = VPNConnectionFeatures(
         netshield: .level1,
         vpnAccelerator: true,
         bouncing: "1",

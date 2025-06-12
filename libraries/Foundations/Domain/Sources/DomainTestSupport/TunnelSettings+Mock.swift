@@ -20,8 +20,8 @@ import struct Domain.TunnelFeatures
 import struct Domain.TunnelSettings
 import Foundation
 
-extension TunnelSettings {
-    public static let mock = TunnelSettings(
+public extension TunnelSettings {
+    static let mock = TunnelSettings(
         transport: .udp,
         ports: [],
         features: TunnelFeatures.mock

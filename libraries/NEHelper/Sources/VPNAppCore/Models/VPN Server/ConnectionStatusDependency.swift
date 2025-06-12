@@ -24,8 +24,8 @@ import Domain
 
 @available(macOS 13, *)
 @available(tvOS, unavailable)
-extension DependencyValues {
-    public var vpnConnectionStatus: @Sendable () async -> VPNConnectionStatus {
+public extension DependencyValues {
+    var vpnConnectionStatus: @Sendable () async -> VPNConnectionStatus {
         get { self[VPNConnectionStatusKey.self] }
         set { self[VPNConnectionStatusKey.self] = newValue }
     }

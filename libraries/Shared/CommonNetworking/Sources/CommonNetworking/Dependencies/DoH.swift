@@ -195,8 +195,8 @@ public enum DoHConfigurationKey: TestDependencyKey {
     public static var testValue: DoHVPN { .mock }
 }
 
-extension DependencyValues {
-    public var dohConfiguration: DoHVPN {
+public extension DependencyValues {
+    var dohConfiguration: DoHVPN {
         get { self[DoHConfigurationKey.self] }
         set { self[DoHConfigurationKey.self] = newValue }
     }

@@ -82,8 +82,8 @@ extension ServerGroupInfo: Equatable {
     }
 }
 
-extension ServerGroupInfo.Kind {
-    public var isGateway: Bool {
+public extension ServerGroupInfo.Kind {
+    var isGateway: Bool {
         switch self {
         case .country:
             false

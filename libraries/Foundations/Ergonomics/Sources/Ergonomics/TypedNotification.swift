@@ -77,8 +77,8 @@ public final class NotificationToken {
     }
 }
 
-extension NotificationCenter {
-    public func post(_ notification: some TypedNotification<some Any>, object: Any?) {
+public extension NotificationCenter {
+    func post(_ notification: some TypedNotification<some Any>, object: Any?) {
         let userInfo = [type(of: notification).dataKey: notification.data]
         post(name: type(of: notification).name, object: object, userInfo: userInfo)
     }
@@ -87,7 +87,7 @@ extension NotificationCenter {
     /// any object if nil is provided.
     ///
     /// The notification center copies the handler, and strongly holds it until NotificationToken is deinited.
-    public func addObserver(
+    func addObserver(
         for notificationName: Notification.Name,
         queue: OperationQueue? = nil,
         object: Any?,
@@ -102,7 +102,7 @@ extension NotificationCenter {
     ///
     /// The notification center copies the block for each notification and strongly holds each separately while the
     /// corresponding token exists.
-    public func addObservers(
+    func addObservers(
         for notifications: [Notification.Name],
         queue: OperationQueue? = nil,
         object: Any?,
@@ -141,7 +141,7 @@ extension NotificationCenter {
     /// The first argument of this function should conventionally be `forNotificationsOfType`, but one of the strengths
     /// of this extension is the ergonomics/conciseness of the API, when compared to the verbosity of the default
     /// NotificationCenter APIs
-    public func addObserver<Notification, T>(
+    func addObserver<Notification, T>(
         for _: Notification.Type,
         queue: OperationQueue? = nil,
         object: Any?,
@@ -155,7 +155,7 @@ extension NotificationCenter {
     }
 
     @available(macOS 12, *)
-    public func notifications<N, T>(
+    func notifications<N, T>(
         _: N.Type
     ) -> AsyncStream<T> where N: TypedNotification<T> {
         notifications(named: N.name)

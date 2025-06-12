@@ -173,13 +173,13 @@ extension CapturedArguments where Input == Void, A1 == Absent, A2 == Absent, A3 
     }
 }
 
-extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
+    var a1: A1 { argument1 }
 
-    public var value: A1 { a1 }
+    var value: A1 { a1 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input,
             a2: .nothing,
@@ -197,15 +197,15 @@ extension CapturedArguments where Input == A1, A2 == Absent, A3 == Absent, A4 ==
     }
 }
 
-extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
 
-    public var first: A1 { a1 }
-    public var second: A2 { a2 }
+    var first: A1 { a1 }
+    var second: A2 { a2 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -223,17 +223,17 @@ extension CapturedArguments where Input == (A1, A2), A3 == Absent, A4 == Absent,
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
 
-    public var first: A1 { a1 }
-    public var second: A2 { a2 }
-    public var third: A3 { a3 }
+    var first: A1 { a1 }
+    var second: A2 { a2 }
+    var third: A3 { a3 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -251,19 +251,19 @@ extension CapturedArguments where Input == (A1, A2, A3), A4 == Absent, A5 == Abs
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
+public extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
 
-    public var first: A1 { a1 }
-    public var second: A2 { a2 }
-    public var third: A3 { a3 }
-    public var forth: A4 { a4 }
+    var first: A1 { a1 }
+    var second: A2 { a2 }
+    var third: A3 { a3 }
+    var forth: A4 { a4 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -281,18 +281,18 @@ extension CapturedArguments where Input == (A1, A2, A3, A4), A5 == Absent, A6 ==
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
 
-    public var first: A1 { a1 }
-    public var last: A5 { a5 }
+    var first: A1 { a1 }
+    var last: A5 { a5 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -310,19 +310,19 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5), A6 == Absent, A
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent,
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
 
-    public var first: A1 { a1 }
-    public var last: A6 { a6 }
+    var first: A1 { a1 }
+    var last: A6 { a6 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -340,20 +340,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6), A7 == Absen
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
 
-    public var first: A1 { a1 }
-    public var last: A7 { a7 }
+    var first: A1 { a1 }
+    var last: A7 { a7 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -371,20 +371,20 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7),
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
-    public var a8: A8 { argument8 }
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
+    var a8: A8 { argument8 }
 
-    public var first: A1 { a1 }
-    public var last: A8 { a8 }
+    var first: A1 { a1 }
+    var last: A8 { a8 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -402,21 +402,21 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
-    public var a8: A8 { argument8 }
-    public var a9: A9 { argument9 }
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
+    var a8: A8 { argument8 }
+    var a9: A9 { argument9 }
 
-    public var first: A1 { a1 }
-    public var last: A9 { a9 }
+    var first: A1 { a1 }
+    var last: A9 { a9 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -434,22 +434,22 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9),
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
-    public var a8: A8 { argument8 }
-    public var a9: A9 { argument9 }
-    public var a10: A10 { argument10 }
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
+    var a8: A8 { argument8 }
+    var a9: A9 { argument9 }
+    var a10: A10 { argument10 }
 
-    public var first: A1 { a1 }
-    public var last: A10 { a10 }
+    var first: A1 { a1 }
+    var last: A10 { a10 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -467,23 +467,23 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
-    public var a8: A8 { argument8 }
-    public var a9: A9 { argument9 }
-    public var a10: A10 { argument10 }
-    public var a11: A11 { argument11 }
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
+    var a8: A8 { argument8 }
+    var a9: A9 { argument9 }
+    var a10: A10 { argument10 }
+    var a11: A11 { argument11 }
 
-    public var first: A1 { a1 }
-    public var last: A11 { a11 }
+    var first: A1 { a1 }
+    var last: A11 { a11 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -501,24 +501,24 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     }
 }
 
-extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public var a1: A1 { argument1 }
-    public var a2: A2 { argument2 }
-    public var a3: A3 { argument3 }
-    public var a4: A4 { argument4 }
-    public var a5: A5 { argument5 }
-    public var a6: A6 { argument6 }
-    public var a7: A7 { argument7 }
-    public var a8: A8 { argument8 }
-    public var a9: A9 { argument9 }
-    public var a10: A10 { argument10 }
-    public var a11: A11 { argument11 }
-    public var a12: A12 { argument12 }
+public extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
+    var a1: A1 { argument1 }
+    var a2: A2 { argument2 }
+    var a3: A3 { argument3 }
+    var a4: A4 { argument4 }
+    var a5: A5 { argument5 }
+    var a6: A6 { argument6 }
+    var a7: A7 { argument7 }
+    var a8: A8 { argument8 }
+    var a9: A9 { argument9 }
+    var a10: A10 { argument10 }
+    var a11: A11 { argument11 }
+    var a12: A12 { argument12 }
 
-    public var first: A1 { a1 }
-    public var last: A12 { a12 }
+    var first: A1 { a1 }
+    var last: A12 { a12 }
 
-    init(input: Input) {
+    internal init(input: Input) {
         self.init(
             a1: input.0,
             a2: input.1,
@@ -536,9 +536,9 @@ extension CapturedArguments where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, 
     }
 }
 
-extension ThrowingFuncStub where Input == Void, Output == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == Void, Output == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () throws -> Void,
         function: String = #function,
         line: UInt = #line,
@@ -548,9 +548,9 @@ extension ThrowingFuncStub where Input == Void, Output == Void, A1 == Absent, A2
     }
 }
 
-extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -560,7 +560,7 @@ extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () throws -> Output,
         initialReturn: @escaping () throws -> Output,
         function: String = #function,
@@ -570,7 +570,7 @@ extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -581,9 +581,9 @@ extension ThrowingFuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 =
     }
 }
 
-extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -593,7 +593,7 @@ extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -603,7 +603,7 @@ extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -613,7 +613,7 @@ extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -623,9 +623,9 @@ extension ThrowingFuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == 
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -635,7 +635,7 @@ extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -645,7 +645,7 @@ extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -655,7 +655,7 @@ extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -665,9 +665,9 @@ extension ThrowingFuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, 
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -677,7 +677,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Abse
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -687,7 +687,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Abse
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -697,7 +697,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Abse
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -707,9 +707,9 @@ extension ThrowingFuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Abse
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -719,7 +719,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -729,7 +729,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -739,7 +739,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -749,9 +749,9 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == 
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -761,7 +761,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -771,7 +771,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -781,7 +781,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -791,8 +791,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -802,7 +802,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -812,7 +812,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -822,7 +822,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -832,8 +832,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -843,7 +843,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Ab
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -853,7 +853,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Ab
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -863,7 +863,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Ab
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -873,8 +873,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Ab
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -884,7 +884,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 =
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -894,7 +894,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -904,7 +904,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -914,8 +914,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 =
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -925,7 +925,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -935,7 +935,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -945,7 +945,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -955,8 +955,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), 
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -966,7 +966,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -976,7 +976,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -986,7 +986,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -996,8 +996,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1007,7 +1007,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1017,7 +1017,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1027,7 +1027,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1037,8 +1037,8 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
     }
 }
 
-extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public convenience init<T>(
+public extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1048,7 +1048,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1058,7 +1058,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1068,7 +1068,7 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1078,174 +1078,174 @@ extension ThrowingFuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A
     }
 }
 
-extension ThrowingStubbedFunction where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt) throws -> Output) {
         replaceBody { counter, _ in try implementation(counter) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt) throws -> Output) {
         appendBody { counter, _ in try implementation(counter) }
     }
 
-    public func callAsFunction() throws -> Output {
+    func callAsFunction() throws -> Output {
         let input: Void = ()
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1) throws -> Output) {
         replaceBody { try implementation($0, $1) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1) throws -> Output) {
         appendBody { try implementation($0, $1) }
     }
 
-    public func callAsFunction(_ a1: A1) throws -> Output {
+    func callAsFunction(_ a1: A1) throws -> Output {
         let input = a1
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2) throws -> Output {
         let input = (a1, a2)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3) throws -> Output {
         let input = (a1, a2, a3)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) throws -> Output {
         let input = (a1, a2, a3, a4)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) throws -> Output {
         let input = (a1, a2, a3, a4, a5)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6),
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6),
     A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7),
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7),
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) throws -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output) {
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output) {
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) throws -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9)
         return try callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output) {
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9) }
     }
 
-    public func callAsFunction(
+    func callAsFunction(
         _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10
     ) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
@@ -1253,16 +1253,16 @@ extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output) {
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10) }
     }
 
-    public func callAsFunction(
+    func callAsFunction(
         _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10, _ a11: A11
     ) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)
@@ -1270,16 +1270,16 @@ extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8
     }
 }
 
-extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output) {
+public extension ThrowingStubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output) {
         replaceBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10, $1.11) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) throws -> Output) {
         appendBody { try implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10, $1.11) }
     }
 
-    public func callAsFunction(
+    func callAsFunction(
         _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10, _ a11: A11, _ a12: A12
     ) throws -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)
@@ -1366,9 +1366,9 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
     }
 }
 
-extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1378,7 +1378,7 @@ extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () -> Output,
         initialReturn: @escaping () throws -> Output,
         function: String = #function,
@@ -1388,7 +1388,7 @@ extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1398,7 +1398,7 @@ extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> () -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1408,9 +1408,9 @@ extension FuncStub where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent
     }
 }
 
-extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1420,7 +1420,7 @@ extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1430,7 +1430,7 @@ extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1440,7 +1440,7 @@ extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1450,9 +1450,9 @@ extension FuncStub where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, 
     }
 }
 
-extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1462,7 +1462,7 @@ extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Ab
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1472,7 +1472,7 @@ extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Ab
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1482,7 +1482,7 @@ extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Ab
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1492,9 +1492,9 @@ extension FuncStub where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Ab
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1504,7 +1504,7 @@ extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 =
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1514,7 +1514,7 @@ extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1524,7 +1524,7 @@ extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 =
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1534,9 +1534,9 @@ extension FuncStub where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 =
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1546,7 +1546,7 @@ extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1556,7 +1556,7 @@ extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1566,7 +1566,7 @@ extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1576,9 +1576,9 @@ extension FuncStub where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, 
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
+public extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1588,7 +1588,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Abse
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1598,7 +1598,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Abse
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1608,7 +1608,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Abse
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1618,8 +1618,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Abse
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1629,7 +1629,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == 
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1639,7 +1639,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1649,7 +1649,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == 
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1659,8 +1659,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6), A7 == Absent, A8 == 
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1670,7 +1670,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1680,7 +1680,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1690,7 +1690,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1700,8 +1700,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7), A8 == Absent, A9
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1711,7 +1711,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1721,7 +1721,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1731,7 +1731,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1741,8 +1741,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1752,7 +1752,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == A
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1762,7 +1762,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1772,7 +1772,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == A
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1782,8 +1782,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == A
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1793,7 +1793,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1803,7 +1803,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1813,7 +1813,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1823,8 +1823,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1834,7 +1834,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1844,7 +1844,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1854,7 +1854,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1864,8 +1864,8 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
     }
 }
 
-extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public convenience init<T>(
+public extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
         initialReturn: @autoclosure @escaping () throws -> Output,
         function: String = #function,
@@ -1875,7 +1875,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
         self.init(initialReturn: { _ in try initialReturn() }, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
         initialReturn: @escaping (Input) throws -> Output,
         function: String = #function,
@@ -1885,7 +1885,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: @escaping (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
         initialReturn: InitialReturn<Input, Output>,
         function: String = #function,
@@ -1895,7 +1895,7 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
         self.init(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
-    public convenience init<T>(
+    convenience init<T>(
         _: (T) -> (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output,
         function: String = #function,
         line: UInt = #line,
@@ -1905,189 +1905,189 @@ extension FuncStub where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11,
     }
 }
 
-extension StubbedFunction where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == Void, A1 == Absent, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt) -> Output) {
         replaceBody { counter, _ in implementation(counter) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt) -> Output) {
         appendBody { counter, _ in implementation(counter) }
     }
 
-    public func callAsFunction() -> Output {
+    func callAsFunction() -> Output {
         let input: Void = ()
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == A1, A2 == Absent, A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1) -> Output) {
         replaceBody { implementation($0, $1) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1) -> Output) {
         appendBody { implementation($0, $1) }
     }
 
-    public func callAsFunction(_ a1: A1) -> Output {
+    func callAsFunction(_ a1: A1) -> Output {
         let input = a1
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == (A1, A2), A3 == Absent, A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2) -> Output) {
         appendBody { implementation($0, $1.0, $1.1) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2) -> Output {
         let input = (a1, a2)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == (A1, A2, A3), A4 == Absent, A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3) -> Output {
         let input = (a1, a2, a3)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == (A1, A2, A3, A4), A5 == Absent, A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4) -> Output {
         let input = (a1, a2, a3, a4)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5), A6 == Absent, A7 == Absent,
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5) -> Output {
         let input = (a1, a2, a3, a4, a5)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6),
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6),
     A7 == Absent, A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6) -> Output {
         let input = (a1, a2, a3, a4, a5, a6)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7),
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7),
     A8 == Absent, A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) -> Output) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) -> Output) {
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8), A9 == Absent, A10 == Absent, A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output) {
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9), A10 == Absent, A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output) {
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10), A11 == Absent, A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9) }
     }
 
-    public func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10) -> Output {
+    func callAsFunction(_ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)
         return callAsFunction(input: input, arguments: CapturedArguments(input: input))
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output) {
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11), A12 == Absent {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10) }
     }
 
-    public func callAsFunction(
+    func callAsFunction(
         _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10, _ a11: A11
     ) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)
@@ -2095,16 +2095,16 @@ extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A1
     }
 }
 
-extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
-    public func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output) {
+public extension StubbedFunction where Input == (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) {
+    func bodyIs(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output) {
         replaceBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10, $1.11) }
     }
 
-    public func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output) {
+    func addToBody(_ implementation: @escaping (UInt, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) -> Output) {
         appendBody { implementation($0, $1.0, $1.1, $1.2, $1.3, $1.4, $1.5, $1.6, $1.7, $1.8, $1.9, $1.10, $1.11) }
     }
 
-    public func callAsFunction(
+    func callAsFunction(
         _ a1: A1, _ a2: A2, _ a3: A3, _ a4: A4, _ a5: A5, _ a6: A6, _ a7: A7, _ a8: A8, _ a9: A9, _ a10: A10, _ a11: A11, _ a12: A12
     ) -> Output {
         let input = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)

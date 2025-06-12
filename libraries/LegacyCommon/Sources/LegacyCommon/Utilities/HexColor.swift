@@ -22,18 +22,18 @@
 #if canImport(UIKit)
     import UIKit
 
-    extension UIColor {
-        public convenience init(red: Int, green: Int, blue: Int) {
+    public extension UIColor {
+        convenience init(red: Int, green: Int, blue: Int) {
             checkColors(red, green, blue)
             self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
         }
 
-        public convenience init(rgbHex: Int) {
+        convenience init(rgbHex: Int) {
             let components = rgbHex.rgbComponents
             self.init(red: components.r, green: components.g, blue: components.b)
         }
 
-        public var hexRepresentation: Int {
+        var hexRepresentation: Int {
             var red: CGFloat = 0
             var green: CGFloat = 0
             var blue: CGFloat = 0
@@ -46,18 +46,18 @@
 #elseif canImport(AppKit)
     import AppKit
 
-    extension NSColor {
-        public convenience init(red: Int, green: Int, blue: Int) {
+    public extension NSColor {
+        convenience init(red: Int, green: Int, blue: Int) {
             checkColors(red, green, blue)
             self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
         }
 
-        public convenience init(rgbHex: Int) {
+        convenience init(rgbHex: Int) {
             let components = rgbHex.rgbComponents
             self.init(red: components.r, green: components.g, blue: components.b)
         }
 
-        public var hexRepresentation: Int {
+        var hexRepresentation: Int {
             var red: CGFloat = 0
             var green: CGFloat = 0
             var blue: CGFloat = 0
@@ -84,8 +84,8 @@ private func convert2Hex(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _: C
     return hex
 }
 
-extension Int {
-    fileprivate var rgbComponents: RGB {
+private extension Int {
+    var rgbComponents: RGB {
         RGB((self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF)
     }
 }

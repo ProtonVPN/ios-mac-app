@@ -22,7 +22,6 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 
 // MARK: - Asset Catalogs
 
-
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
   public static let wrongCountry = ImageAsset(name: "wrong-country")

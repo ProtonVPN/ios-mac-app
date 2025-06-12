@@ -34,8 +34,8 @@ public struct TunnelMessageSender: TestDependencyKey {
     public static let testValue = TunnelMessageSender(send: unimplemented())
 }
 
-extension DependencyValues {
-    public var tunnelMessageSender: TunnelMessageSender {
+public extension DependencyValues {
+    var tunnelMessageSender: TunnelMessageSender {
         get { self[TunnelMessageSender.self] }
         set { self[TunnelMessageSender.self] = newValue }
     }

@@ -19,9 +19,9 @@
 @testable import fusion
 import XCTest
 
-extension UIElement {
+public extension UIElement {
     @discardableResult
-    public func tapInCenter(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
+    func tapInCenter(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
         tapOnCoordinate(withOffset: CGVector(dx: dx, dy: dy))
     }
 
@@ -31,7 +31,7 @@ extension UIElement {
     ///   - dx: The x-coordinate normalized offset. Default value is 0.5.
     ///   - dy: The y-coordinate normalized offset. Default value is 0.5.
     @discardableResult
-    public func forceHover(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
+    func forceHover(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
         uiElement()!.forceHover(dx: dx, dy: dy)
         return self
     }

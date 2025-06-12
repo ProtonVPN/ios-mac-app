@@ -303,8 +303,8 @@
         public lazy var clientConfigNoWireGuardTls = defaultClientConfig.with(featureFlags: .wireGuardTlsDisabled)
     }
 
-    extension ClientConfig {
-        public func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
+    public extension ClientConfig {
+        func with(featureFlags: FeatureFlags? = nil, smartProtocolConfig: SmartProtocolConfig? = nil) -> ClientConfig {
             ClientConfig(
                 featureFlags: featureFlags ?? self.featureFlags,
                 serverRefreshInterval: serverRefreshInterval,
@@ -316,8 +316,8 @@
         }
     }
 
-    extension FeatureFlags {
-        public static let allDisabled: Self = .init(
+    public extension FeatureFlags {
+        static let allDisabled: Self = .init(
             smartReconnect: false,
             vpnAccelerator: false,
             netShield: false,
@@ -335,7 +335,7 @@
             unsafeLanWarnings: false,
             mismatchedCertificateRecovery: false
         )
-        public static let allEnabled: Self = .init(
+        static let allEnabled: Self = .init(
             smartReconnect: true,
             vpnAccelerator: true,
             netShield: true,
@@ -354,13 +354,13 @@
             mismatchedCertificateRecovery: true
         )
 
-        public static let wireGuardTlsDisabled: Self = .allEnabled
+        static let wireGuardTlsDisabled: Self = .allEnabled
             .disabling(\.wireGuardTls)
     }
 
-    extension SmartProtocolConfig {
-        public static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
-        public static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
+    public extension SmartProtocolConfig {
+        static let onlyWgTcpAndTls = SmartProtocolConfig(openVPN: false, iKEv2: false, wireGuardUdp: false, wireGuardTcp: true, wireGuardTls: true)
+        static let onlyIke = SmartProtocolConfig(openVPN: false, iKEv2: true, wireGuardUdp: false, wireGuardTcp: false, wireGuardTls: false)
     }
 
     extension ServerModel {

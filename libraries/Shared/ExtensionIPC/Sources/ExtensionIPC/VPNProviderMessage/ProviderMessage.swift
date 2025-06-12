@@ -36,8 +36,8 @@ public protocol ProviderMessageSender: AnyObject {
     func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
 }
 
-extension ProviderMessageSender {
-    public func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
+public extension ProviderMessageSender {
+    func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
         try await withCheckedThrowingContinuation { continuation in
             send(message) {
                 continuation.resume(with: $0)

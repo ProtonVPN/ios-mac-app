@@ -194,8 +194,8 @@ extension VPNServerFilter {
     }
 }
 
-extension DependencyValues {
-    public var serverSelector: ServerSelector {
+public extension DependencyValues {
+    var serverSelector: ServerSelector {
         get { self[ServerSelector.self] }
         set { self[ServerSelector.self] = newValue }
     }

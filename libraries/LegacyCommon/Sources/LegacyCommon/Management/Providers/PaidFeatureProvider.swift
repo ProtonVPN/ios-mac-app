@@ -37,8 +37,8 @@ public struct AppFeaturePropertyProviderKey: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var appFeaturePropertyProvider: AppFeaturePropertyProvider {
+public extension DependencyValues {
+    var appFeaturePropertyProvider: AppFeaturePropertyProvider {
         get { self[AppFeaturePropertyProviderKey.self] }
         set { self[AppFeaturePropertyProviderKey.self] = newValue }
     }

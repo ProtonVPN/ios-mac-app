@@ -45,8 +45,8 @@ extension UserLocationService: DependencyKey {
     public static var liveValue: UserLocationService = .init()
 }
 
-extension DependencyValues {
-    public var userLocationService: UserLocationService {
+public extension DependencyValues {
+    var userLocationService: UserLocationService {
         get { self[UserLocationService.self] }
         set { self[UserLocationService.self] = newValue }
     }

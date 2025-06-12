@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension String {
-    public var redactingUsername: String {
+public extension String {
+    var redactingUsername: String {
         replacingOccurrences(of: NSUserName(), with: "<redacted>")
     }
 }

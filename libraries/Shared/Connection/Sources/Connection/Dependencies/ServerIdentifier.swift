@@ -36,8 +36,8 @@ public struct ServerIdentifier: TestDependencyKey, Sendable {
     public static let testValue = ServerIdentifier(fullServerInfo: unimplemented(placeholder: nil))
 }
 
-extension DependencyValues {
-    public var serverIdentifier: ServerIdentifier {
+public extension DependencyValues {
+    var serverIdentifier: ServerIdentifier {
         get { self[ServerIdentifier.self] }
         set { self[ServerIdentifier.self] = newValue }
     }

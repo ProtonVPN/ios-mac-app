@@ -119,9 +119,9 @@ public enum VPNServerOrder {
     case nameAscending
 }
 
-extension ServerGroupInfo.Kind {
+public extension ServerGroupInfo.Kind {
     /// Convert Kind of server group into a filter for repository
-    public var serverTypeFilter: VPNServerFilter.ServerTypeFilter {
+    var serverTypeFilter: VPNServerFilter.ServerTypeFilter {
         switch self {
         case let .country(code):
             .country(code: code)

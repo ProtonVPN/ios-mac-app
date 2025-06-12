@@ -19,9 +19,9 @@
 import Foundation
 import ProtonCoreTestingToolkitPerformance
 
-extension MeasurementConfig {
+public extension MeasurementConfig {
     @discardableResult
-    public static func setProduct(_ product: String) -> MeasurementConfig.Type {
+    static func setProduct(_ product: String) -> MeasurementConfig.Type {
         self.product = product
         return self
     }

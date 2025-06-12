@@ -35,16 +35,16 @@
         var publicKey: (Data) throws -> Data
     }
 
-    extension CertificateCryptoService {
+    public extension CertificateCryptoService {
         /// Parses the textual representation of a PEM encoded certificate, according to the format defined by RFC-7468
         /// https://www.rfc-editor.org/rfc/rfc7468#section-5.1
-        public func derRepresentation(ofPEMEncodedCertificate pem: String) throws -> Data {
+        func derRepresentation(ofPEMEncodedCertificate pem: String) throws -> Data {
             try derRepresentation(pem)
         }
 
         /// Returns the raw representation of the public key of a DER encoded certificate, without key metadata (e.g.
         /// algoorithm type and key length)
-        public func publicKey(ofDEREncodedCertificate der: Data) throws -> Data {
+        func publicKey(ofDEREncodedCertificate der: Data) throws -> Data {
             try publicKey(der)
         }
     }
@@ -70,8 +70,8 @@
         #endif
     }
 
-    extension DependencyValues {
-        public var certificateCryptoService: CertificateCryptoService {
+    public extension DependencyValues {
+        var certificateCryptoService: CertificateCryptoService {
             get { self[CertificateCryptoService.self] }
             set { self[CertificateCryptoService.self] = newValue }
         }

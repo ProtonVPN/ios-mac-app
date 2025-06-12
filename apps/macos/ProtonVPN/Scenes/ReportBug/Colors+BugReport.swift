@@ -20,8 +20,8 @@ import BugReport
 import ProtonCoreUIFoundations
 import SwiftUI
 
-extension BugReport.Colors {
-    public init() {
+public extension BugReport.Colors {
+    init() {
         self.init(
             primary: ColorProvider.Primary,
             interactive: ColorProvider.InteractionNorm,

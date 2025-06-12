@@ -90,8 +90,8 @@
         }
     }
 
-    extension NEVPNManagerMock.SavedPreferences {
-        public init(_ manager: NEVPNManagerWrapper) {
+    public extension NEVPNManagerMock.SavedPreferences {
+        init(_ manager: NEVPNManagerWrapper) {
             self.isOnDemandEnabled = manager.isOnDemandEnabled
             self.isEnabled = manager.isEnabled
             self.onDemandRules = manager.onDemandRules

@@ -19,7 +19,7 @@
 #if canImport(SwiftUI)
     import SwiftUI
 
-    extension Shape {
+    public extension Shape {
         /// Stroke and fill the shape in one single modifier.
         ///
         /// From: https://www.swiftbysundell.com/articles/stroking-and-filling-a-swiftui-shape-at-the-same-time/
@@ -28,7 +28,7 @@
         ///   - lineWidth: The width of the stroke that outlines this shape.
         ///   - fillContent: The style options that determine how the fill renders.
         /// - Returns: A stroked and filled shape.
-        public func style(
+        func style(
             withStroke strokeContent: some ShapeStyle,
             lineWidth: CGFloat = 1,
             fill fillContent: some ShapeStyle

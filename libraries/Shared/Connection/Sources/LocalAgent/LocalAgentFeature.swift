@@ -355,10 +355,10 @@ package enum LocalAgentErrorResolutionStrategy {
     }
 }
 
-extension LocalAgentError {
+package extension LocalAgentError {
     /// Defines the appropriate way to handle each error.
     /// See documentation for each error case for context.
-    package var resolutionStrategy: LocalAgentErrorResolutionStrategy {
+    var resolutionStrategy: LocalAgentErrorResolutionStrategy {
         switch self {
         case .systemError:
             // Most likely we just failed to apply a feature/setting

@@ -100,8 +100,8 @@
         public static var testValue: AppsProvider = .init { [.huzza] }
     }
 
-    extension DependencyValues {
-        public var appsProvider: AppsProvider {
+    public extension DependencyValues {
+        var appsProvider: AppsProvider {
             get { self[AppsProvider.self] }
             set { self[AppsProvider.self] = newValue }
         }

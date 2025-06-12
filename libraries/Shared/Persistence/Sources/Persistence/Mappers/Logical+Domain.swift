@@ -76,8 +76,8 @@ extension VPNServer {
     }
 }
 
-extension Domain.Logical {
-    init(
+public extension Domain.Logical {
+    internal init(
         staticInfo: Persistence.Logical,
         dynamicInfo: Persistence.LogicalStatus
     ) {
@@ -103,11 +103,11 @@ extension Domain.Logical {
 
     /// For non-secure core logicals, this is equal to `exitCountryCode`. The access modifier is public while
     /// LegacyCommon code still relies on `entryCountryCode` directly rather than `kind`.
-    public var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
+    var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
 
     /// Returns nil if this logical is not a gateway. The access modifier is public while LegacyCommon code still relies
     /// on `gatewayName` directly rather than `kind`.
-    public var gatewayName: String? { kind.gatewayName }
+    var gatewayName: String? { kind.gatewayName }
 }
 
 extension ContinuousServerProperties {
@@ -116,15 +116,15 @@ extension ContinuousServerProperties {
     }
 }
 
-extension Domain.Logical.Kind {
-    public var entryCountryCode: String? {
+public extension Domain.Logical.Kind {
+    var entryCountryCode: String? {
         if case let .secureCore(entryCountryCode) = self {
             return entryCountryCode
         }
         return nil
     }
 
-    public var gatewayName: String? {
+    var gatewayName: String? {
         if case let .gateway(name) = self {
             return name
         }

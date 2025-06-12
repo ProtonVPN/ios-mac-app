@@ -3,8 +3,8 @@
 
 import Foundation
 
-extension String {
-    public func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
+public extension String {
+    func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
         split(separator: separator)
             .map {
                 if let charSet = trimmingCharacters {
@@ -16,8 +16,8 @@ extension String {
     }
 }
 
-extension String? {
-    public func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
+public extension String? {
+    func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
         switch self {
         case .none:
             []

@@ -39,8 +39,8 @@ public enum TelemetryKeys: String, CodingKey {
     case dimensions = "Dimensions"
 }
 
-extension TelemetryEvent {
-    public func encode(to encoder: Encoder) throws {
+public extension TelemetryEvent {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: TelemetryKeys.self)
 
         try container.encode(measurementGroup, forKey: .measurementGroup)
@@ -49,7 +49,7 @@ extension TelemetryEvent {
         try container.encode(dimensions, forKey: .dimensions)
     }
 
-    public func toJSONDictionary() -> JSONDictionary {
+    func toJSONDictionary() -> JSONDictionary {
         let result = (try? encoder.encode(self)) ?? [:]
         return result.mapValues { $0 as AnyObject }
     }

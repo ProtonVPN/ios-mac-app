@@ -316,6 +316,7 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
     public var rawValue: String
 }
 
+// swiftformat:disable:next extensionAccessControl
 extension DebugConfigurationFeature {
     @Reducer
     public enum Destination {

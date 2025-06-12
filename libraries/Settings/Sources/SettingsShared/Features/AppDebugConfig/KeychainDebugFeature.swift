@@ -141,16 +141,16 @@ public struct KeychainDebugFeature {
     }
 }
 
-extension KeychainDebugFeature.State {
+public extension KeychainDebugFeature.State {
     @CasePathable
-    public enum Content: Equatable, Sendable {
+    enum Content: Equatable, Sendable {
         case none
         case loading
         case loaded(AuthKeychainData)
         case failed(String)
     }
 
-    public struct AuthKeychainData: Equatable, Sendable {
+    struct AuthKeychainData: Equatable, Sendable {
         public let keys: Keys?
         public let certificate: Certificate?
 

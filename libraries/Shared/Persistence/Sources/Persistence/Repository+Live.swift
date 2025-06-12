@@ -24,8 +24,8 @@ import GRDB
 import Domain
 import Ergonomics
 
-extension ServerRepository {
-    public static var liveValue: ServerRepository {
+public extension ServerRepository {
+    static var liveValue: ServerRepository {
         @Dependency(\.databaseConfiguration) var config
 
         let dbWriter = DatabaseQueue.from(databaseConfiguration: config)

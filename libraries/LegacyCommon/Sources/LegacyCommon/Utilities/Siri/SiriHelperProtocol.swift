@@ -32,8 +32,8 @@ public protocol SiriHelperProtocol {
     func donateDisconnect()
 }
 
-extension DependencyValues {
-    public var siriHelper: @Sendable () -> SiriHelperProtocol {
+public extension DependencyValues {
+    var siriHelper: @Sendable () -> SiriHelperProtocol {
         get { self[SiriHelperKey.self] }
         set { self[SiriHelperKey.self] = newValue }
     }

@@ -56,8 +56,8 @@ public enum CoreNetworkingDelegateKey: TestDependencyKey {
     public static let testValue: NetworkingDelegate = CoreNetworkingDelegateMock()
 }
 
-extension DependencyValues {
-    public var networkingDelegate: NetworkingDelegate {
+public extension DependencyValues {
+    var networkingDelegate: NetworkingDelegate {
         get { self[CoreNetworkingDelegateKey.self] }
         set { self[CoreNetworkingDelegateKey.self] = newValue }
     }

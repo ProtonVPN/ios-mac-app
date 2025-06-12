@@ -33,8 +33,8 @@ public struct NetShieldStatsProvider: TestDependencyKey, Sendable {
     )
 }
 
-extension DependencyValues {
-    public var netShieldStatsProvider: NetShieldStatsProvider {
+public extension DependencyValues {
+    var netShieldStatsProvider: NetShieldStatsProvider {
         get { self[NetShieldStatsProvider.self] }
         set { self[NetShieldStatsProvider.self] = newValue }
     }

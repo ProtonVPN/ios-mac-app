@@ -83,17 +83,17 @@ private enum PrivateFeatureFlag: String, FeatureFlagTypeProtocol {
     case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
 }
 
-extension FeatureFlagsRepository {
+public extension FeatureFlagsRepository {
     @available(tvOS, unavailable)
     @available(macOS, unavailable)
-    public static let isRedesigniOSEnabled: Bool = {
+    static let isRedesigniOSEnabled: Bool = {
         if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
             return true
         }
         return false
     }()
 
-    public static let isConnectionFeatureEnabled: Bool = {
+    static let isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
             guard isRedesigniOSEnabled else {
                 // ConnectionFeature requires redesign to function since the feature currently lives as a child of the

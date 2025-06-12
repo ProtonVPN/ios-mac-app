@@ -20,9 +20,9 @@ import Foundation
 
 import Domain
 
-extension VPNServer {
+public extension VPNServer {
     /// Instantiates a domain model from legacy model (DTO)
-    public init(legacyModel: ServerModel) {
+    init(legacyModel: ServerModel) {
         self.init(
             logical: Logical(
                 id: legacyModel.id,
@@ -47,9 +47,9 @@ extension VPNServer {
     }
 }
 
-extension ServerModel {
+public extension ServerModel {
     /// Instantiates a legacy model (DTO) object from a domain model
-    convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
+    internal convenience init(logical: Domain.Logical, endpoints: [Domain.ServerEndpoint]) {
         self.init(
             id: logical.id,
             name: logical.name,
@@ -71,11 +71,11 @@ extension ServerModel {
     }
 
     /// Instantiates a legacy model (DTO) object from a domain model
-    public convenience init(server: Domain.VPNServer) {
+    convenience init(server: Domain.VPNServer) {
         self.init(logical: server.logical, endpoints: server.endpoints)
     }
 
-    public var kind: ServerGroupInfo.Kind {
+    var kind: ServerGroupInfo.Kind {
         if let gatewayName {
             .gateway(name: gatewayName)
         } else {

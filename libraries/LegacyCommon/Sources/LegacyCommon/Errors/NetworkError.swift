@@ -89,12 +89,12 @@ public enum NetworkError: Int, CustomNSError {
     }
 }
 
-extension Error {
+public extension Error {
     /// Returns true if the request failed due to a network error, and it is reasonably safe to retry.
     ///
     /// - Note: In contrast to `isNetworkError`, this returns false when we *really* might be blocked (for example, when
     /// the underlying error is HTTP 451: Unavailable For Legal Reasons)
-    public var shouldRetry: Bool {
+    var shouldRetry: Bool {
         let nsError = self as NSError
         let retriableNSURLDomainErrorCodes = [
             NetworkErrorCode.timedOut,
@@ -120,7 +120,7 @@ extension Error {
         return false
     }
 
-    public var isNetworkError: Bool {
+    var isNetworkError: Bool {
         let nsError = self as NSError
         switch nsError.code {
         case NetworkErrorCode.timedOut,
@@ -139,7 +139,7 @@ extension Error {
         }
     }
 
-    public var isTlsError: Bool {
+    var isTlsError: Bool {
         let nsError = self as NSError
         switch nsError.code {
         case NetworkErrorCode.tls:

@@ -45,8 +45,8 @@ extension ProfileAuthorizer: DependencyKey {
     }()
 }
 
-extension DependencyValues {
-    public var profileAuthorizer: ProfileAuthorizer {
+public extension DependencyValues {
+    var profileAuthorizer: ProfileAuthorizer {
         get { self[ProfileAuthorizer.self] }
         set { self[ProfileAuthorizer.self] = newValue }
     }

@@ -24,15 +24,15 @@ public struct ConnectionSpecBuilder: DependencyKey {
     public internal(set) var spec: (_ from: ConnectionRequest) -> ConnectionSpec = { _ in .defaultFastest }
 }
 
-extension DependencyValues {
-    public var specBuilder: ConnectionSpecBuilder {
+public extension DependencyValues {
+    var specBuilder: ConnectionSpecBuilder {
         get { self[ConnectionSpecBuilder.self] }
         set { self[ConnectionSpecBuilder.self] = newValue }
     }
 }
 
-extension ConnectionSpecBuilder {
-    public static let liveValue: ConnectionSpecBuilder = .init { request in
+public extension ConnectionSpecBuilder {
+    static let liveValue: ConnectionSpecBuilder = .init { request in
         ConnectionSpec(connectionRequest: request)
     }
 }

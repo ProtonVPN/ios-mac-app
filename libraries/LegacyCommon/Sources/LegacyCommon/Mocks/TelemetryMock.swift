@@ -19,24 +19,24 @@
 #if DEBUG
     import Foundation
 
-    extension ConnectionEvent {
-        public static let connectionMock1 = ConnectionEvent(
+    public extension ConnectionEvent {
+        static let connectionMock1 = ConnectionEvent(
             event: .vpnConnection(timeToConnection: 123),
             dimensions: .connectionSuccessMock1
         )
-        public static let disconnectionMock1 = ConnectionEvent(
+        static let disconnectionMock1 = ConnectionEvent(
             event: .vpnDisconnection(sessionLength: 123),
             dimensions: .disconnectionSuccessMock1
         )
     }
 
-    extension ConnectionEvent.Values {
-        public static let connectionMock1 = ConnectionEvent.Values(timeToConnection: 123)
-        public static let disconnectionMock1 = ConnectionEvent.Values(sessionLength: 123)
+    public extension ConnectionEvent.Values {
+        static let connectionMock1 = ConnectionEvent.Values(timeToConnection: 123)
+        static let disconnectionMock1 = ConnectionEvent.Values(sessionLength: 123)
     }
 
-    extension ConnectionDimensions {
-        public static let connectionSuccessMock1 = ConnectionDimensions(
+    public extension ConnectionDimensions {
+        static let connectionSuccessMock1 = ConnectionDimensions(
             outcome: .success,
             userTier: .free,
             vpnStatus: .on,
@@ -52,7 +52,7 @@
             isServerFree: false
         )
 
-        public static let disconnectionSuccessMock1 = ConnectionDimensions(
+        static let disconnectionSuccessMock1 = ConnectionDimensions(
             outcome: .success,
             userTier: .paid,
             vpnStatus: .off,
@@ -75,8 +75,8 @@
         static let upsellEventSuccessMock: Self = .init(event: .success, dimensions: .upsellEventDimensionsMock2)
     }
 
-    extension UpsellEvent.Dimensions {
-        public static let upsellEventDimensionsMock1: Self = .init(
+    public extension UpsellEvent.Dimensions {
+        static let upsellEventDimensionsMock1: Self = .init(
             modalSource: .changeServer,
             userPlan: "free",
             vpnStatus: .off,
@@ -86,7 +86,7 @@
             reference: nil
         )
 
-        public static let upsellEventDimensionsMock2: Self = .init(
+        static let upsellEventDimensionsMock2: Self = .init(
             modalSource: .changeServer,
             userPlan: "free",
             vpnStatus: .off,

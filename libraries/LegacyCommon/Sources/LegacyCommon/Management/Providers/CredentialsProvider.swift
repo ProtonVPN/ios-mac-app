@@ -45,8 +45,8 @@ extension CredentialsProvider: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var credentialsProvider: CredentialsProvider {
+public extension DependencyValues {
+    var credentialsProvider: CredentialsProvider {
         get { self[CredentialsProvider.self] }
         set { self[CredentialsProvider.self] = newValue }
     }

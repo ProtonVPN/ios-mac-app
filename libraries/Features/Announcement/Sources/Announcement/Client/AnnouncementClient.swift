@@ -43,8 +43,8 @@ extension AnnouncementClient: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var announcementClient: AnnouncementClient {
+public extension DependencyValues {
+    var announcementClient: AnnouncementClient {
         get { self[AnnouncementClient.self] }
         set { self[AnnouncementClient.self] = newValue }
     }

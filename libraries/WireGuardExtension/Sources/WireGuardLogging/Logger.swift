@@ -63,13 +63,13 @@ package final class Logger: @unchecked Sendable {
     }
 }
 
-extension OSLog {
+package extension OSLog {
     #if swift(>=6.0)
         #warning("Reevaluate whether this concurrency decoration is necessary.")
     #elseif swift(>=5.10)
-        package nonisolated(unsafe) static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+        nonisolated(unsafe) static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
     #else
-        package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+        static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
     #endif
 }
 

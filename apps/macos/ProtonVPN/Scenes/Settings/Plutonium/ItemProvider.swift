@@ -30,15 +30,15 @@ public struct ItemProvider: @unchecked Sendable {
     }
 }
 
-extension NSItemProvider {
-    fileprivate func clone() -> NSItemProvider {
+private extension NSItemProvider {
+    func clone() -> NSItemProvider {
         // swiftlint:disable:next force_cast
         copy() as! NSItemProvider
     }
 }
 
-extension ItemProvider {
-    public func loadFileURL() async -> URL? {
+public extension ItemProvider {
+    func loadFileURL() async -> URL? {
         guard let item = try? await provider.loadItem(forTypeIdentifier: UTType.fileURL.identifier),
               let data = item as? Data,
               let url = URL(dataRepresentation: data, relativeTo: nil) else {

@@ -55,8 +55,8 @@ public struct LogActionReducer<Base: Reducer>: Reducer {
     }
 }
 
-extension ActionLogger {
-    package static var connectionLogger: Self {
+package extension ActionLogger {
+    static var connectionLogger: Self {
         Self {
             log.debug("\(ConnectionFeature.self) received action: \($0)", category: .connection)
         }

@@ -142,8 +142,8 @@
         static let en = Locale(identifier: "en")
     }
 
-    extension ProtectionState {
-        fileprivate func shortDescription() -> String {
+    fileprivate extension ProtectionState {
+        func shortDescription() -> String {
             switch self {
             case .unprotected: "Unprotected"
             case .protecting: "Protecting"
@@ -154,8 +154,8 @@
         }
     }
 
-    extension VPNConnectionStatus {
-        fileprivate func shortDescription() -> String {
+    fileprivate extension VPNConnectionStatus {
+        func shortDescription() -> String {
             switch self {
             case .disconnected: "Disconnected"
             case .connecting: "Connecting"

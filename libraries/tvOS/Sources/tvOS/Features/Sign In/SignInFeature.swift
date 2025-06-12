@@ -113,8 +113,8 @@ struct SignInFeature {
     }
 }
 
-extension AuthCredentials {
-    public convenience init(from sessionAuthResponse: SessionAuthResponse) {
+public extension AuthCredentials {
+    convenience init(from sessionAuthResponse: SessionAuthResponse) {
         // HACK: Set a non-empty username mocked username for now
         self.init(
             username: "username", // Missing from response

@@ -20,17 +20,17 @@ import Domain
 import Foundation
 import Strings
 
-extension Logical {
-    public var entryCountry: String {
+public extension Logical {
+    var entryCountry: String {
         guard case let .secureCore(entryCountryCode) = kind else { return "" }
         return LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
 
-    public var exitCountry: String {
+    var exitCountry: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 
-    public var country: String {
+    var country: String {
         LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 }

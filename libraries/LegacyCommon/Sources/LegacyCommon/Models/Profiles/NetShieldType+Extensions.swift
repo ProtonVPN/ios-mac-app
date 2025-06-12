@@ -24,8 +24,8 @@ import Domain
 import Strings
 import VPNShared
 
-extension NetShieldType {
-    public var name: String {
+public extension NetShieldType {
+    var name: String {
         switch self {
         case .off:
             Localizable.netshieldOff
@@ -36,7 +36,7 @@ extension NetShieldType {
         }
     }
 
-    public var icon: Image {
+    var icon: Image {
         switch self {
         case .off: IconProvider.shield
         case .level1: IconProvider.shieldHalfFilled
@@ -44,7 +44,7 @@ extension NetShieldType {
         }
     }
 
-    public var lowestTier: Int {
+    var lowestTier: Int {
         switch self {
         case .off:
             .freeTier
@@ -53,11 +53,11 @@ extension NetShieldType {
         }
     }
 
-    public func isUserTierTooLow(_ userTier: Int) -> Bool {
+    func isUserTierTooLow(_ userTier: Int) -> Bool {
         userTier < lowestTier
     }
 
-    public var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
+    var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
         switch self {
         case .off:
             []

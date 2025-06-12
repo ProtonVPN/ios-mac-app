@@ -20,9 +20,9 @@ import Foundation
 
 import GRDB
 
-extension DatabaseExecutor {
+public extension DatabaseExecutor {
     /// Convenience function that wraps operation with `dbWriter.write`, useful for reducing nesting
-    public func write<T>(
+    func write<T>(
         dbWriter: DatabaseQueue,
         operation: (Database) throws -> T,
         fallback: T
@@ -33,7 +33,7 @@ extension DatabaseExecutor {
     }
 
     /// Convenience function that wraps operation with `dbWriter.write`, useful for reducing nesting
-    public func write<T: DatabaseExecutorResult>(
+    func write<T: DatabaseExecutorResult>(
         dbWriter: DatabaseQueue,
         operation: (Database) throws -> T,
         fallback: T? = nil
@@ -44,12 +44,12 @@ extension DatabaseExecutor {
     }
 
     /// Overload of write for operations with a Void return type and hence no fallback value
-    public func write(dbWriter: DatabaseQueue, operation: (Database) throws -> Void) {
+    func write(dbWriter: DatabaseQueue, operation: (Database) throws -> Void) {
         execute(operation: { try dbWriter.write { try operation($0) } })
     }
 
     /// Convenience function that wraps operation with `dbWriter.read`, useful for reducing nesting
-    public func read<T>(
+    func read<T>(
         dbWriter: DatabaseQueue,
         operation: (Database) throws -> T,
         fallback: T
@@ -58,7 +58,7 @@ extension DatabaseExecutor {
     }
 
     /// Convenience function that wraps operation with `dbWriter.read`, useful for reducing nesting
-    public func read<T: DatabaseExecutorResult>(
+    func read<T: DatabaseExecutorResult>(
         dbWriter: DatabaseQueue,
         operation: (Database) throws -> T,
         fallback: T? = nil

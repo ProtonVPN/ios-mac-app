@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension ProcessInfo {
-    public func firstArgumentValue(forKey key: String) -> String? {
+public extension ProcessInfo {
+    func firstArgumentValue(forKey key: String) -> String? {
         let prefix = "\(key)="
         for argument in arguments {
             guard argument.starts(with: prefix) else { continue }

@@ -1,4 +1,3 @@
---disable extensionAccessControl
 --disable wrapMultilineStatementBraces
 
 --enable isEmpty

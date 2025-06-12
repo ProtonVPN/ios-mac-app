@@ -121,8 +121,8 @@ public struct SessionService: DependencyKey {
     public static let testValue: SessionService = liveValue
 }
 
-extension SessionService {
-    public func getPlanSession(mode: PlanSession) async -> URL? {
+public extension SessionService {
+    func getPlanSession(mode: PlanSession) async -> URL? {
         @Dependency(\.networking) var networking
         guard let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost()) else {
             log.error("Failed to fork session, invalid Account Host URL", category: .app)
@@ -140,7 +140,7 @@ extension SessionService {
         }
     }
 
-    public func getUpgradePlanSession(url: String) async -> String {
+    func getUpgradePlanSession(url: String) async -> String {
         do {
             let selector = try await selector(.webLogin)
             return url + "#selector=" + selector
@@ -153,13 +153,13 @@ extension SessionService {
         }
     }
 
-    public func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
+    func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
         try await selector(.appContext(extensionContext))
     }
 }
 
-extension DependencyValues {
-    public var sessionService: SessionService {
+public extension DependencyValues {
+    var sessionService: SessionService {
         get { self[SessionService.self] }
         set { self[SessionService.self] = newValue }
     }

@@ -59,8 +59,8 @@ public enum DatabaseConfigurationKey: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var databaseConfiguration: DatabaseConfiguration {
+public extension DependencyValues {
+    var databaseConfiguration: DatabaseConfiguration {
         get { self[DatabaseConfigurationKey.self] }
         set { self[DatabaseConfigurationKey.self] = newValue }
     }

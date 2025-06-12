@@ -54,12 +54,12 @@ public struct ServerEndpoint: Codable, Equatable, Identifiable, Sendable {
 typealias ProtocolOverrides = [VpnProtocol: ServerProtocolEntry]
 
 // VPNAPPL-2099 This connection/business logic should probably live in a shared package in a layer above Domain.
-extension ServerEndpoint {
-    public func supports(vpnProtocol: VpnProtocol) -> Bool {
+public extension ServerEndpoint {
+    func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }
 
-    public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
+    func entryIp(using vpnProtocol: VpnProtocol) -> String? {
         guard let protocolEntries else {
             return entryIp
         }
@@ -67,7 +67,7 @@ extension ServerEndpoint {
         return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
 
-    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
+    func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
         guard let protocolEntries else {
             return nil
         }
@@ -76,11 +76,11 @@ extension ServerEndpoint {
     }
 
     /// Returns true if any of the protocols in the set are supported by this server ip.
-    public func supports(protocolSet: ProtocolSupport) -> Bool {
+    func supports(protocolSet: ProtocolSupport) -> Bool {
         !supportedProtocols.isDisjoint(with: protocolSet)
     }
 
-    public var supportedProtocols: ProtocolSupport {
+    var supportedProtocols: ProtocolSupport {
         if protocolEntries == nil {
             return .all
         }

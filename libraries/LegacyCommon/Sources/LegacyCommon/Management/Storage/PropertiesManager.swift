@@ -135,8 +135,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     func logCurrentState()
 }
 
-extension PropertiesManagerProtocol {
-    public var connectionProtocol: ConnectionProtocol {
+public extension PropertiesManagerProtocol {
+    var connectionProtocol: ConnectionProtocol {
         get {
             smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
         }
@@ -155,7 +155,7 @@ extension PropertiesManagerProtocol {
     ///
     /// This depends on the user's protocol choice, and, if they have chosen smart protocol, the smart protocol
     /// configuration that comes from the API.
-    public var currentProtocolSupport: ProtocolSupport {
+    var currentProtocolSupport: ProtocolSupport {
         switch connectionProtocol {
         case .smartProtocol:
             ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
@@ -519,8 +519,8 @@ public enum PropertiesManagerDependencyKey: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var propertiesManager: PropertiesManagerProtocol {
+public extension DependencyValues {
+    var propertiesManager: PropertiesManagerProtocol {
         get { self[PropertiesManagerDependencyKey.self] }
         set { self[PropertiesManagerDependencyKey.self] = newValue }
     }

@@ -596,7 +596,7 @@ public final class VpnManager: VpnManagerProtocol {
                             log.debug("Server change observer received status", category: .connection, metadata: [
                                 "requestId": "\(requestId)",
                                 "connection": "\(connection)",
-                                "status": "\(connection.status)"
+                                "status": "\(connection.status)",
                             ])
                             guard connection.status != .connecting else {
                                 return
@@ -751,18 +751,18 @@ public final class VpnManager: VpnManagerProtocol {
             "currentProtocol": "\(optional: currentVpnProtocol)",
         ])
 
-#if os(macOS)
-        // Prevents creating a plutonium tunnel config if the FF is disabled.
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
-            Task {
-                do {
-                    try await updatePlutoniumStateIfNeeded()
-                } catch {
-                    log.error("Error while updating plutonium state: \(error.localizedDescription)")
+        #if os(macOS)
+            // Prevents creating a plutonium tunnel config if the FF is disabled.
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+                Task {
+                    do {
+                        try await updatePlutoniumStateIfNeeded()
+                    } catch {
+                        log.error("Error while updating plutonium state: \(error.localizedDescription)")
+                    }
                 }
             }
-        }
-#endif
+        #endif
 
         switch state {
         case .connecting:

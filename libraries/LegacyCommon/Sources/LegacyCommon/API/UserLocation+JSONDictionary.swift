@@ -18,8 +18,8 @@
 
 import Domain
 
-extension Domain.UserLocation {
-    public init(dic: JSONDictionary) throws {
+public extension Domain.UserLocation {
+    init(dic: JSONDictionary) throws {
         try self.init(
             ip: dic[throwing: "IP"],
             country: dic[throwing: "Country"],

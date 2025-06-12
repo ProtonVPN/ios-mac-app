@@ -79,14 +79,14 @@ extension DependencyValues {
     }
 }
 
-extension UserDefaultsEntry {
-    public init(key: String, object: Any) {
+public extension UserDefaultsEntry {
+    init(key: String, object: Any) {
         self.init(key: key, value: Value(object))
     }
 }
 
-extension UserDefaultsEntry.Value {
-    public init(_ object: Any) {
+public extension UserDefaultsEntry.Value {
+    init(_ object: Any) {
         switch object {
         case let string as String:
             self = .string(string)

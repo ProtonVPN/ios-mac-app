@@ -140,14 +140,14 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
 // MARK: - Mock for previews
 
 #if DEBUG || targetEnvironment(simulator)
-    extension CLLocationCoordinate2D {
-        public static func mockPoland() -> Self {
+    public extension CLLocationCoordinate2D {
+        static func mockPoland() -> Self {
             .init(latitude: 52.229675, longitude: 21.012231)
         }
     }
 
-    extension VPNConnectionActual {
-        public static func mock(
+    public extension VPNConnectionActual {
+        static func mock(
             connectedDate: Date = Date(),
             serverModelId: String = "server-model-id-1",
             serverExitIP: String = "188.12.32.12",
@@ -180,8 +180,8 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
         }
     }
 
-    extension Server {
-        public static func mock(
+    public extension Server {
+        static func mock(
             serverModelId: String = "server-model-id-1",
             serverExitIP: String = "188.12.32.12",
             feature _: ServerFeature = [],

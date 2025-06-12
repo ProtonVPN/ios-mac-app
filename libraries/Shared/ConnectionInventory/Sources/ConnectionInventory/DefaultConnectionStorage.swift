@@ -39,8 +39,8 @@ public struct DefaultConnectionPreferenceStorage: DependencyKey {
     }
 }
 
-extension DefaultConnectionPreferenceStorage {
-    public static let liveValue: DefaultConnectionPreferenceStorage = {
+public extension DefaultConnectionPreferenceStorage {
+    static let liveValue: DefaultConnectionPreferenceStorage = {
         @Dependency(\.storage) var storage
         @Dependency(\.defaultsProvider) var defaultsProvider
 
@@ -66,8 +66,8 @@ extension DefaultConnectionPreferenceStorage {
     }()
 }
 
-extension DependencyValues {
-    public var defaultConnectionStorage: DefaultConnectionPreferenceStorage {
+public extension DependencyValues {
+    var defaultConnectionStorage: DefaultConnectionPreferenceStorage {
         get { self[DefaultConnectionPreferenceStorage.self] }
         set { self[DefaultConnectionPreferenceStorage.self] = newValue }
     }

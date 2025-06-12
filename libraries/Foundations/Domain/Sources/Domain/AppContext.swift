@@ -42,8 +42,8 @@ extension AppContext: DependencyKey {
     public static let testValue: AppContext = .mainApp
 }
 
-extension DependencyValues {
-    public var appContext: AppContext {
+public extension DependencyValues {
+    var appContext: AppContext {
         get { self[AppContext.self] }
         set { self[AppContext.self] = newValue }
     }

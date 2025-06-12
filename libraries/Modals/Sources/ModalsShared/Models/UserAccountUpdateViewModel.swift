@@ -30,11 +30,11 @@ public enum UserAccountUpdateViewModel {
     case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
 }
 
-extension UserAccountUpdateViewModel {
-    public var fromServerTitle: String { Localizable.fromServerTitle }
-    public var toServerTitle: String { Localizable.toServerTitle }
+public extension UserAccountUpdateViewModel {
+    var fromServerTitle: String { Localizable.fromServerTitle }
+    var toServerTitle: String { Localizable.toServerTitle }
 
-    public var primaryButtonTitle: String {
+    var primaryButtonTitle: String {
         switch self {
         case .subscriptionDowngraded, .subscriptionDowngradedReconnecting:
             Localizable.upgradeAgain
@@ -47,7 +47,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var secondaryButtonTitle: String? {
+    var secondaryButtonTitle: String? {
         switch self {
         case .reachedDeviceLimit:
             nil
@@ -56,7 +56,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var options: [String]? {
+    var options: [String]? {
         switch self {
         case let .subscriptionDowngradedReconnecting(numberOfCountries, numberOfDevices, _, _),
              let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
@@ -70,7 +70,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var title: String? {
+    var title: String? {
         switch self {
         case .subscriptionDowngradedReconnecting, .subscriptionDowngraded:
             Localizable.subscriptionExpiredTitle
@@ -81,7 +81,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var subtitle: String? {
+    var subtitle: String? {
         switch self {
         case .subscriptionDowngradedReconnecting:
             Localizable.subscriptionExpiredReconnectionDescription
@@ -98,7 +98,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var image: Image? {
+    var image: Image? {
         switch self {
         case .reachedDevicePlanLimit:
             Asset.maximumDeviceLimitUpsell.image
@@ -109,11 +109,11 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var checkmark: Image? {
+    var checkmark: Image? {
         IconProvider.checkmarkCircleFilled
     }
 
-    public var fromServer: (String, Image)? {
+    var fromServer: (String, Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(fromServer, _):
             fromServer
@@ -124,7 +124,7 @@ extension UserAccountUpdateViewModel {
         }
     }
 
-    public var toServer: (String, Image)? {
+    var toServer: (String, Image)? {
         switch self {
         case let .pendingInvoicesReconnecting(_, toServer):
             toServer

@@ -55,8 +55,8 @@ public protocol StorableFeature: Codable {
     static var event: AppEvent? { get }
 }
 
-extension StorableFeature where LegacyStorageType == Void {
-    public static var legacyConversion: ((LegacyStorageType) -> Self)? { nil }
+public extension StorableFeature where LegacyStorageType == Void {
+    static var legacyConversion: ((LegacyStorageType) -> Self)? { nil }
 }
 
 /// Helper protocol that simplifies display/interaction logic in the view and business layers by enabling generic

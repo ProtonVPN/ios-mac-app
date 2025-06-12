@@ -56,8 +56,8 @@ extension RecentConnection: Identifiable {
 
 extension RecentConnection: Codable {}
 
-extension RecentConnection {
-    public static var sampleData: [RecentConnection] {
+public extension RecentConnection {
+    static var sampleData: [RecentConnection] {
         [
             RecentConnection(
                 pinnedDate: Date(),

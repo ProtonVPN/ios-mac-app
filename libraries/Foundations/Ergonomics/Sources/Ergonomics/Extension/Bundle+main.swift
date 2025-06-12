@@ -1,7 +1,7 @@
 import Foundation
 
-extension Bundle {
-    public static var atlasSecret: String? {
+public extension Bundle {
+    static var atlasSecret: String? {
         #if DEBUG
             let key = "ATLAS_SECRET"
             return ProcessInfo.processInfo.firstArgumentValue(forKey: key) ?? Bundle.main.infoDictionary?[key] as? String
@@ -10,7 +10,7 @@ extension Bundle {
         #endif
     }
 
-    public static var dynamicDomain: String? {
+    static var dynamicDomain: String? {
         #if DEBUG
             let key = "DYNAMIC_DOMAIN"
             let value = ProcessInfo.processInfo.firstArgumentValue(forKey: key) ?? Bundle.main.infoDictionary?[key] as? String
@@ -27,7 +27,7 @@ extension Bundle {
         #endif
     }
 
-    public static var isTestflight: Bool {
+    static var isTestflight: Bool {
         /*
              Checking for sandbox appstore receipt to determine if the app is beta version
              installed through Testflight is used by:

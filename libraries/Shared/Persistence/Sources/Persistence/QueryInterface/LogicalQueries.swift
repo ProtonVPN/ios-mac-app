@@ -22,8 +22,8 @@ import GRDB
 
 import Domain
 
-extension QueryInterfaceRequest {
-    public func filterServers(
+public extension QueryInterfaceRequest {
+    func filterServers(
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias,
         statusAlias: TableAlias,
@@ -34,7 +34,7 @@ extension QueryInterfaceRequest {
             .reduce(self) { request, sqlExpression in request.filter(sqlExpression) }
     }
 
-    public func order(
+    func order(
         _ serverOrder: VPNServerOrder,
         logicalAlias: TableAlias,
         statusAlias: TableAlias
@@ -54,7 +54,7 @@ extension QueryInterfaceRequest {
         }
     }
 
-    func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
+    internal func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
         switch groupOrder {
         case .exitCountryCodeAscending:
             order(

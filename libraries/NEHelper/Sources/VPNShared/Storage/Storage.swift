@@ -62,13 +62,13 @@ public struct DefaultsProvider: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var storage: Storage {
+public extension DependencyValues {
+    var storage: Storage {
         get { self[StorageKey.self] }
         set { self[StorageKey.self] = newValue }
     }
 
-    public var defaultsProvider: DefaultsProvider {
+    var defaultsProvider: DefaultsProvider {
         get { self[DefaultsProvider.self] }
         set { self[DefaultsProvider.self] = newValue }
     }

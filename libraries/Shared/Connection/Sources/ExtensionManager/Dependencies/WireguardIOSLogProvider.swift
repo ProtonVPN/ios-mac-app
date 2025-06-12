@@ -34,8 +34,8 @@ import PMLogger
         )
     }
 
-    extension DependencyValues {
-        public var wireguardIOSLogProvider: WireguardIOSLogProvider {
+    public extension DependencyValues {
+        var wireguardIOSLogProvider: WireguardIOSLogProvider {
             get { self[WireguardIOSLogProvider.self] }
             set { self[WireguardIOSLogProvider.self] = newValue }
         }

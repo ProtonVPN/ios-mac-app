@@ -82,8 +82,8 @@ extension VPNConnectionFeatures: Codable {
     }
 }
 
-extension VPNConnectionFeatures {
-    public func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
+public extension VPNConnectionFeatures {
+    func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
         let equalsWithoutSafeMode = netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && bouncing == other?.bouncing && natType == other?.natType
 
         // if Safe Mode is disabled by feature flag ignore it when doing the comparison

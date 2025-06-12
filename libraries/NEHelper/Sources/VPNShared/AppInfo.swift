@@ -29,8 +29,8 @@ public protocol AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo
 }
 
-extension AppInfoFactory {
-    public func makeAppInfo() -> AppInfo {
+public extension AppInfoFactory {
+    func makeAppInfo() -> AppInfo {
         makeAppInfo(context: .default)
     }
 }
@@ -45,28 +45,28 @@ public protocol AppInfo {
     var osVersion: OperatingSystemVersion { get }
 }
 
-extension AppInfo {
-    public var appVersion: String {
+public extension AppInfo {
+    var appVersion: String {
         clientId + "@" + bundleShortVersion
     }
 
-    public func clientId(forContext specificContext: AppContext) -> String {
+    func clientId(forContext specificContext: AppContext) -> String {
         clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
     }
 
-    public var clientId: String {
+    var clientId: String {
         clientId(forContext: context)
     }
 
-    public var bundleShortVersion: String {
+    var bundleShortVersion: String {
         bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
     }
 
-    public var bundleVersion: String {
+    var bundleVersion: String {
         bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
     }
 
-    public var revisionInfo: String {
+    var revisionInfo: String {
         bundleInfoDictionary["RevisionInfo"] as? String ??
             "\(bundleShortVersion) (\(bundleVersion))"
     }
@@ -98,11 +98,11 @@ extension AppInfo {
         return "\(osVersionString)\(modelString)"
     }
 
-    public var userAgent: String {
+    var userAgent: String {
         "\(processName)/\(bundleShortVersion) (\(osVersionAndModelString))"
     }
 
-    public var debugInfoString: String {
+    var debugInfoString: String {
         "\(osVersionAndModelString). \(processName): \(revisionInfo)"
     }
 }
@@ -159,8 +159,8 @@ public enum AppInfoKey: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var appInfo: AppInfo {
+public extension DependencyValues {
+    var appInfo: AppInfo {
         get { self[AppInfoKey.self] }
         set { self[AppInfoKey.self] = newValue }
     }

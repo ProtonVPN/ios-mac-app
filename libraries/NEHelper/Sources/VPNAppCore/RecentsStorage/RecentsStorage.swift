@@ -32,8 +32,8 @@ extension RecentsStorage: DependencyKey {
     )
 }
 
-extension DependencyValues {
-    public var recentsStorage: RecentsStorage {
+public extension DependencyValues {
+    var recentsStorage: RecentsStorage {
         get { self[RecentsStorage.self] }
         set { self[RecentsStorage.self] = newValue }
     }

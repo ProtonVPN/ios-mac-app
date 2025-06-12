@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension Data {
-    public var jsonDictionary: JSONDictionary? {
+public extension Data {
+    var jsonDictionary: JSONDictionary? {
         (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
     }
 }

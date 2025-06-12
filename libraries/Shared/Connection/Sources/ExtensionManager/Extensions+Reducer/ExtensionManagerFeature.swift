@@ -292,12 +292,12 @@ public struct TunnelConnectionResponse: Equatable, Sendable {
     }
 }
 
-extension ExtensionFeature.State {
+package extension ExtensionFeature.State {
     /// The network extension process has a mind of its own. If we've previously invoked `startTunnel`, and we invoke
     /// `stopTunnel` before waiting for the extension to actually transition to `.connected` or `.disconnected`, we
     /// may get unexpected results. For now, the parent feature should delay disconnection until this feature is ready
     /// to accept such events.
-    package var isInteractionAllowed: Bool {
+    var isInteractionAllowed: Bool {
         switch self {
         case .connected, .disconnected:
             true

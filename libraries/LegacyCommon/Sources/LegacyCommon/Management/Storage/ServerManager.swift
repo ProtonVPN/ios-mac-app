@@ -76,22 +76,22 @@ public struct ServerManager: DependencyKey {
     public static let testValue = liveValue
 }
 
-extension ServerManager {
-    public func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
+public extension ServerManager {
+    func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         updateServers(servers, freeServersOnly, lastModifiedAt)
     }
 }
 
 #if DEBUG
-    extension ServerManager {
-        public static var noOp: ServerManager {
+    public extension ServerManager {
+        static var noOp: ServerManager {
             ServerManager { _, _, _ in () }
         }
     }
 #endif
 
-extension DependencyValues {
-    public var serverManager: ServerManager {
+public extension DependencyValues {
+    var serverManager: ServerManager {
         get { self[ServerManager.self] }
         set { self[ServerManager.self] = newValue }
     }

@@ -19,8 +19,8 @@
 import Domain
 import Strings
 
-extension DomainConstants {
-    public static func serverTierName(forTier tier: Int) -> String {
+public extension DomainConstants {
+    static func serverTierName(forTier tier: Int) -> String {
         switch tier {
         case 0:
             Localizable.freeServers

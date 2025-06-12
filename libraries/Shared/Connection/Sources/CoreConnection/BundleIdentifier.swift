@@ -25,8 +25,8 @@ package struct BundleIDClient: Sendable {
     package let bundleIdentifierForTarget: @Sendable () -> String
 }
 
-extension DependencyValues {
-    package var bundleIDClient: BundleIDClient {
+package extension DependencyValues {
+    var bundleIDClient: BundleIDClient {
         get { self[BundleIDClient.self] }
         set { self[BundleIDClient.self] = newValue }
     }

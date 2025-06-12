@@ -46,14 +46,14 @@ public struct FeatureFlagProvider: DependencyKey {
     #endif
 }
 
-extension FeatureFlagProvider {
-    public subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
+public extension FeatureFlagProvider {
+    subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
         getFeatureFlags()[keyPath: keyPath]
     }
 }
 
-extension DependencyValues {
-    public var featureFlagProvider: FeatureFlagProvider {
+public extension DependencyValues {
+    var featureFlagProvider: FeatureFlagProvider {
         get { self[FeatureFlagProvider.self] }
         set { self[FeatureFlagProvider.self] = newValue }
     }

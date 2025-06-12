@@ -36,8 +36,8 @@ public struct VPNKeysGenerator: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var vpnKeysGenerator: VPNKeysGenerator {
+public extension DependencyValues {
+    var vpnKeysGenerator: VPNKeysGenerator {
         get { self[VPNKeysGenerator.self] }
         set { self[VPNKeysGenerator.self] = newValue }
     }

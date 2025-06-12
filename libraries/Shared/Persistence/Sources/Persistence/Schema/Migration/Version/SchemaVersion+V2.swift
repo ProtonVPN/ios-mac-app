@@ -19,8 +19,8 @@
 import Foundation
 import GRDB
 
-extension SchemaVersion {
-    public static let v2: SchemaVersion = {
+public extension SchemaVersion {
+    static let v2: SchemaVersion = {
         let migrationBlock: MigrationBlock = { db in
             try db.create(table: "databaseMetadata") { t in
                 t.column("key", .text).notNull().primaryKey(onConflict: .replace)

@@ -59,13 +59,13 @@ public enum VPNAuthenticationStorageKey: DependencyKey {
     public static let liveValue: VpnAuthenticationStorageSync = VpnAuthenticationKeychain()
 }
 
-extension DependencyValues {
-    public var vpnAuthenticationStorage: VpnAuthenticationStorageSync {
+public extension DependencyValues {
+    var vpnAuthenticationStorage: VpnAuthenticationStorageSync {
         get { self[VPNAuthenticationStorageKey.self] }
         set { self[VPNAuthenticationStorageKey.self] = newValue }
     }
 
-    public var vpnAuthenticationStorageConfig: String {
+    var vpnAuthenticationStorageConfig: String {
         get { self[VPNAuthenticationStorageConfigKey.self] }
         set { self[VPNAuthenticationStorageConfigKey.self] = newValue }
     }

@@ -20,8 +20,8 @@ import Domain
 
 import ProtonCoreFeatureFlags
 
-extension ConnectionSpec {
-    public init(connectionRequest: ConnectionRequest) {
+public extension ConnectionSpec {
+    init(connectionRequest: ConnectionRequest) {
         let location: ConnectionSpec.Location
         var features: Set<ConnectionSpec.Feature> = []
         switch connectionRequest.connectionType {

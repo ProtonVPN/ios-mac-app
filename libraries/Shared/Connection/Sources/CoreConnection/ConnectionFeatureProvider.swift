@@ -45,8 +45,8 @@ extension ConnectionFeatureProvider: TestDependencyKey {
     public static let testValue: ConnectionFeatureProvider = .init()
 }
 
-extension DependencyValues {
-    public var connectionFeatureProvider: ConnectionFeatureProvider {
+public extension DependencyValues {
+    var connectionFeatureProvider: ConnectionFeatureProvider {
         get { self[ConnectionFeatureProvider.self] }
         set { self[ConnectionFeatureProvider.self] = newValue }
     }

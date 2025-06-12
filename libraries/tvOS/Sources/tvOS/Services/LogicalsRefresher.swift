@@ -81,8 +81,8 @@ extension LogicalsRefresher: DependencyKey {
     public static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
 }
 
-extension DependencyValues {
-    public var logicalsRefresher: LogicalsRefresher {
+public extension DependencyValues {
+    var logicalsRefresher: LogicalsRefresher {
         get { self[LogicalsRefresher.self] }
         set { self[LogicalsRefresher.self] = newValue }
     }

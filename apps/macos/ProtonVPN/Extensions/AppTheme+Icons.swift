@@ -23,9 +23,9 @@ import Theme
     import SwiftUI
 #endif
 
-extension AppTheme {
+public extension AppTheme {
     @dynamicMemberLookup
-    public enum Icon {
+    enum Icon {
         static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
             IconProvider[keyPath: keyPath]
         }

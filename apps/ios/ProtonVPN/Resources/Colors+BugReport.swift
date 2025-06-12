@@ -19,8 +19,8 @@
 import BugReport
 import SwiftUI
 
-extension BugReport.Colors {
-    public init() {
+public extension BugReport.Colors {
+    init() {
         self.init(
             primary: Color(.brandLighten20Color()),
             interactive: Color(.brandColor()),

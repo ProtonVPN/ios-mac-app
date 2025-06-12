@@ -48,8 +48,8 @@ public struct Announcement: Codable {
     }
 }
 
-extension Announcement {
-    public enum NotificationType: Int, Codable {
+public extension Announcement {
+    enum NotificationType: Int, Codable {
         case `default` = 0
         case oneTime = 1
         case banner = 2

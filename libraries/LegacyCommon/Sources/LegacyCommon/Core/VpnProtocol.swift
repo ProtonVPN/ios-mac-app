@@ -22,13 +22,13 @@ extension VpnProtocol: @retroactive DefaultableProperty {
 
 // MARK: -
 
-extension VpnProtocol { // Authentication
-    public enum AuthenticationType {
+public extension VpnProtocol { // Authentication
+    enum AuthenticationType {
         case credentials
         case certificate
     }
 
-    public var authenticationType: AuthenticationType {
+    var authenticationType: AuthenticationType {
         switch self {
         case .ike: .credentials
         case .openVpn: .certificate
@@ -39,13 +39,13 @@ extension VpnProtocol { // Authentication
 
 // MARK: - NSCoding (used by Profile)
 
-extension VpnProtocol {
+public extension VpnProtocol {
     private enum CoderKey {
         static let vpnProtocol = "vpnProtocol"
         static let transportProtocol = "transportProtocol"
     }
 
-    public init?(coder aDecoder: NSCoder) {
+    init?(coder aDecoder: NSCoder) {
         guard let data = aDecoder.decodeObject(forKey: CoderKey.vpnProtocol) as? Data else {
             return nil
         }
@@ -60,17 +60,17 @@ extension VpnProtocol {
         }
     }
 
-    public func encode(with _: NSCoder) {
+    func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
-extension OpenVpnTransport {
+public extension OpenVpnTransport {
     private enum CoderKey {
         static let transportProtocol = "transportProtocol"
     }
 
-    public init(coder aDecoder: NSCoder) {
+    init(coder aDecoder: NSCoder) {
         guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
             self = .defaultValue
             return
@@ -85,17 +85,17 @@ extension OpenVpnTransport {
         }
     }
 
-    public func encode(with _: NSCoder) {
+    func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
-extension WireGuardTransport {
+public extension WireGuardTransport {
     private enum CoderKey {
         static let transportProtocol = "transportProtocol"
     }
 
-    public init(coder aDecoder: NSCoder) {
+    init(coder aDecoder: NSCoder) {
         guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
             self = .defaultValue
             return
@@ -112,7 +112,7 @@ extension WireGuardTransport {
         }
     }
 
-    public func encode(with _: NSCoder) {
+    func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }

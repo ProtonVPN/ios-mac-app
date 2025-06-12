@@ -19,8 +19,8 @@
 import Domain
 import Foundation
 
-extension Logical {
-    public static let mock = Logical(
+public extension Logical {
+    static let mock = Logical(
         id: "oMDUA_xB",
         name: "CH#1", domain: "node-ch-1.mock.protonvpn.net",
         load: 50,
@@ -37,7 +37,7 @@ extension Logical {
         longitude: 4.3,
         gatewayName: nil
     )
-    public static let ca = Logical(
+    static let ca = Logical(
         id: "oMDUA_xB",
         name: "CA#1", domain: "node-ca-1.mock.protonvpn.net",
         load: 50,
@@ -56,8 +56,8 @@ extension Logical {
     )
 }
 
-extension ServerEndpoint {
-    public static let mock = ServerEndpoint(
+public extension ServerEndpoint {
+    static let mock = ServerEndpoint(
         id: "SHdjRDAd",
         entryIp: "1.2.3.4",
         exitIp: "5.6.7.8",
@@ -69,11 +69,11 @@ extension ServerEndpoint {
     )
 }
 
-extension VPNServer {
-    public static let mock = VPNServer(logical: .mock, endpoints: [.mock])
+public extension VPNServer {
+    static let mock = VPNServer(logical: .mock, endpoints: [.mock])
 }
 
-extension Server {
-    public static let mock = Server(logical: .mock, endpoint: .mock)
-    public static let ca = Server(logical: .ca, endpoint: .mock)
+public extension Server {
+    static let mock = Server(logical: .mock, endpoint: .mock)
+    static let ca = Server(logical: .ca, endpoint: .mock)
 }

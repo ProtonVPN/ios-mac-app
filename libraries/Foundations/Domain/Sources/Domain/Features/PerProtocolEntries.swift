@@ -69,11 +69,11 @@ extension PerProtocolEntries: CustomStringConvertible {
     }
 }
 
-extension PerProtocolEntries {
+public extension PerProtocolEntries {
     /// Determine the appropriate entry IP to use for the given `ServerIp` object and
     /// protocol, according to the `entryIp` and `rawValue` properties.
     /// - Warning: The `entryIp` property is nullable, be careful when changing this function.
-    public func overrides(vpnProtocol: VpnProtocol, defaultIp: String?) -> String? {
+    func overrides(vpnProtocol: VpnProtocol, defaultIp: String?) -> String? {
         // Check to see if the given server IP contains a per-protocol override.
         guard let override = self[vpnProtocol] else {
             // An override does not exist on the server IP for the current protocol.
@@ -100,7 +100,7 @@ extension PerProtocolEntries {
         return ip
     }
 
-    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
+    func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
         self[vpnProtocol]??.ports
     }
 }

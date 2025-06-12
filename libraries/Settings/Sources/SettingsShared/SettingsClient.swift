@@ -55,8 +55,8 @@ public struct SettingsClient: TestDependencyKey, Sendable {
     )
 }
 
-extension DependencyValues {
-    public var settingsClient: SettingsClient {
+public extension DependencyValues {
+    var settingsClient: SettingsClient {
         get { self[SettingsClient.self] }
         set { self[SettingsClient.self] = newValue }
     }

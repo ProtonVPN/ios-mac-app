@@ -145,7 +145,7 @@ struct LoginIntent: AppIntent {
 
 private struct SharedReaderTimeoutError: Error {}
 
-extension SharedReader {
+private extension SharedReader {
     /// Regularly checks when the underlying value satisfies the provided matching condition.
     /// When the value matches (i.e. the matcher returns true), the `operation` closure is executed once with the matched value, and the function returns.
     /// If the deadline passes, the function throws a timeout error.
@@ -155,7 +155,7 @@ extension SharedReader {
     ///   - clock: The clock on which we base time calculations.
     ///   - deadlineDuration: The deadline after which the check times out.
     ///   - operation: The operation to perform when a match occurs, receiving the matched value.
-    fileprivate func when<C: Clock>(
+    func when<C: Clock>(
         willMatch matcher: @escaping (Value) -> Bool,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),

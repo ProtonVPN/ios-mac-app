@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-extension Optional where Wrapped: Collection {
+public extension Optional where Wrapped: Collection {
     /// Return default value in case the collection is nil or empty
     /// - Parameter defaultValue: the default value you want to assign to the receiver if it is nil or empty.
     /// - Returns: the receiver if it is not nil and non empty, otherwise the provided default value.
-    public func unwrappedOr(defaultValue: @autoclosure () -> Wrapped) -> Wrapped {
+    func unwrappedOr(defaultValue: @autoclosure () -> Wrapped) -> Wrapped {
         guard let self, !self.isEmpty else {
             return defaultValue()
         }

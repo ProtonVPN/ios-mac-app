@@ -44,8 +44,8 @@ extension UserSettingsClient: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var userSettingsClient: UserSettingsClient {
+public extension DependencyValues {
+    var userSettingsClient: UserSettingsClient {
         get { self[UserSettingsClient.self] }
         set { self[UserSettingsClient.self] = newValue }
     }

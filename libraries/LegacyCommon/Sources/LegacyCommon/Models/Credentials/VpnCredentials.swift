@@ -211,8 +211,8 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     }
 }
 
-extension VpnCredentials {
-    public var isDelinquent: Bool {
+public extension VpnCredentials {
+    var isDelinquent: Bool {
         delinquent > 2
     }
 }
@@ -261,8 +261,8 @@ extension CachedVpnCredentials {
 
 // MARK: - Checks performed on CachedVpnCredentials
 
-extension CachedVpnCredentials {
-    public var isDelinquent: Bool {
+public extension CachedVpnCredentials {
+    var isDelinquent: Bool {
         delinquent > 2
     }
 }

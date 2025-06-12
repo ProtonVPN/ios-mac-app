@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension OperatingSystemVersion {
+public extension OperatingSystemVersion {
     /// Initialize an OperatingSystemVersion from an osVersionString, like 16.0.1.
-    public init?(osVersionString: String) {
+    init?(osVersionString: String) {
         let keys: [WritableKeyPath<Self, Int>] = [\.majorVersion, \.minorVersion, \.patchVersion]
         let components = osVersionString.split(separator: ".")
 
@@ -33,7 +33,7 @@ extension OperatingSystemVersion {
         self = version
     }
 
-    public var osVersionString: String {
+    var osVersionString: String {
         var result = "\(majorVersion)"
 
         guard minorVersion > 0 || patchVersion > 0 else { return result }

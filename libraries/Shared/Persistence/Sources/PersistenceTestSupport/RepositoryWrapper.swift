@@ -71,7 +71,7 @@ public final class ServerRepositoryWrapper {
     }
 }
 
-extension ServerRepository {
+public extension ServerRepository {
     /// Returns a `ServerRepository` which itself wraps a `ServerRepositoryWrapper`. This allows integration tests to
     /// use real SQL based repository functions, while exposing callbacks such as `didStoreServers`.
     ///
@@ -79,7 +79,7 @@ extension ServerRepository {
     /// such as whenever servers are inserted.
     ///
     /// Unit tests should instead construct a minimal mock repository.
-    public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
+    static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
         .init(
             serverCount: { wrapper.serverCount },
             countryCount: { wrapper.countryCount },

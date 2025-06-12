@@ -98,8 +98,8 @@ public struct CountryNameProvider {
     var localizedCountryName: (String) -> String?
 }
 
-extension CountryNameProvider {
-    public func countryName(forCode countryCode: String) -> String? {
+public extension CountryNameProvider {
+    func countryName(forCode countryCode: String) -> String? {
         localizedCountryName(countryCode)
     }
 }
@@ -118,8 +118,8 @@ extension CountryNameProvider: DependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var countryNameProvider: CountryNameProvider {
+public extension DependencyValues {
+    var countryNameProvider: CountryNameProvider {
         get { self[CountryNameProvider.self] }
         set { self[CountryNameProvider.self] = newValue }
     }

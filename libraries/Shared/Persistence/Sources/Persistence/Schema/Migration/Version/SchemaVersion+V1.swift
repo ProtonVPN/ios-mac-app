@@ -20,8 +20,8 @@ import Foundation
 
 import GRDB
 
-extension SchemaVersion {
-    public static let v1: SchemaVersion = {
+public extension SchemaVersion {
+    static let v1: SchemaVersion = {
         let migrationBlock: MigrationBlock = { db in
             try db.create(table: "logical") { t in
                 t.column("id", .text).notNull().primaryKey()

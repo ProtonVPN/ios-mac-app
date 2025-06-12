@@ -71,8 +71,8 @@ public enum SettingsStorageKey: TestDependencyKey {
     public static let testValue: SettingsStorage = .mock
 }
 
-extension DependencyValues {
-    public var settingsStorage: SettingsStorage {
+public extension DependencyValues {
+    var settingsStorage: SettingsStorage {
         get { self[SettingsStorageKey.self] }
         set { self[SettingsStorageKey.self] = newValue }
     }

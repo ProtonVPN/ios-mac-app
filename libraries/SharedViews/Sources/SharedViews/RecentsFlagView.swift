@@ -92,8 +92,8 @@ struct SecureCoreFlagView_Previews: PreviewProvider {
     }
 }
 
-extension ConnectionSpec.Location {
-    public var flagComposition: FlagComposition {
+public extension ConnectionSpec.Location {
+    var flagComposition: FlagComposition {
         switch self {
         case .random:
             .standard(.random)

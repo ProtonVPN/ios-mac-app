@@ -146,8 +146,8 @@ public struct SharedPropertiesFeature {
 #if DEBUG
     import Combine
 
-    extension LocationClient {
-        public static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
+    public extension LocationClient {
+        static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
             Timer.publish(every: interval, on: .main, in: .default)
                 .autoconnect()
                 .map { _ in UserLocation.samples.randomElement()! }

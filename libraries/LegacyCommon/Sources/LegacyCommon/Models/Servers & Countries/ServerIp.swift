@@ -191,13 +191,13 @@ public class ServerIp: NSObject, NSCoding, Codable {
     }
 }
 
-extension PerProtocolEntries {
+public extension PerProtocolEntries {
     // looks like:
     // "EntryPerProtocol": {
     //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
     //     "OpenVPNTCP": {"Ports": [22, 23]}
     //  }
-    public init?(dic: JSONDictionary) {
+    init?(dic: JSONDictionary) {
         guard let entries = dic["EntryPerProtocol"] as? [String: JSONDictionary] else {
             return nil
         }
@@ -205,19 +205,19 @@ extension PerProtocolEntries {
         self = .init(rawValue: entries.mapValues(ServerProtocolEntry.init(dic:)))
     }
 
-    public var asDict: JSONDictionary {
+    var asDict: JSONDictionary {
         rawValue.reduce(into: [:]) { partialResult, keyPair in
             partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
         }
     }
 }
 
-extension ServerProtocolEntry {
-    public init?(dic: JSONDictionary) {
+public extension ServerProtocolEntry {
+    init?(dic: JSONDictionary) {
         self.init(ipv4: dic.string("IPv4"), ports: dic.intArray(key: "Ports"))
     }
 
-    public var asDict: JSONDictionary {
+    var asDict: JSONDictionary {
         var result: JSONDictionary = [:]
         if let ipv4 {
             result["IPv4"] = ipv4 as AnyObject

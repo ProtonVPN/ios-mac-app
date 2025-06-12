@@ -20,9 +20,9 @@ import SwiftUI
 
 public protocol ViewDimensionPreferenceKey: PreferenceKey {}
 
-extension ViewDimensionPreferenceKey {
-    public static var defaultValue: CGFloat { .zero }
-    public static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+public extension ViewDimensionPreferenceKey {
+    static var defaultValue: CGFloat { .zero }
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
 }

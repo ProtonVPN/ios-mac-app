@@ -18,12 +18,12 @@
 
 import SwiftUI
 
-extension Text {
-    package init(_ key: LocalizedStringKey) {
+package extension Text {
+    init(_ key: LocalizedStringKey) {
         self.init(key, bundle: .module)
     }
 
-    package init(_ key: LocalizedStringKey, comment: StaticString? = nil) {
+    init(_ key: LocalizedStringKey, comment: StaticString? = nil) {
         self.init(key, bundle: .module, comment: comment)
     }
 }

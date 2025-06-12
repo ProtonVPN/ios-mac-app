@@ -48,15 +48,15 @@ public class ServerChangeStorage: DependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var serverChangeStorage: ServerChangeStorage {
+public extension DependencyValues {
+    var serverChangeStorage: ServerChangeStorage {
         get { self[ServerChangeStorage.self] }
         set { self[ServerChangeStorage.self] = newValue }
     }
 }
 
-extension ServerChangeStorage {
-    public func push(item: ConnectionStackItem) {
+public extension ServerChangeStorage {
+    func push(item: ConnectionStackItem) {
         var connectionStackCopy = connectionStack
         connectionStackCopy.insert(item, at: 0)
 
@@ -66,19 +66,19 @@ extension ServerChangeStorage {
         setConnectionStack(connectionStackCopy)
     }
 
-    public var config: ServerChangeConfig {
+    var config: ServerChangeConfig {
         get { getConfig() }
         set { setConfig(newValue) }
     }
 
-    public var connectionStack: [ConnectionStackItem] {
+    var connectionStack: [ConnectionStackItem] {
         get { getConnectionStack() }
         set { setConnectionStack(newValue) }
     }
 }
 
-extension ServerChangeStorage {
-    public static var liveValue: ServerChangeStorage = .init(
+public extension ServerChangeStorage {
+    static var liveValue: ServerChangeStorage = .init(
         getConfig: {
             @Dependency(\.propertiesManager) var propertiesManager
             return propertiesManager.serverChangeConfig
@@ -114,6 +114,6 @@ extension ServerChangeStorage {
     )
 
     #if DEBUG
-        public static let testValue: ServerChangeStorage = liveValue
+        static let testValue: ServerChangeStorage = liveValue
     #endif
 }

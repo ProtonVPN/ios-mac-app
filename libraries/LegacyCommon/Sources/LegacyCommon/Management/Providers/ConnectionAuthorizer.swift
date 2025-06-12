@@ -83,8 +83,8 @@ extension ConnectionAuthorizer: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
-    public var connectionAuthorizer: ConnectionAuthorizer {
+public extension DependencyValues {
+    var connectionAuthorizer: ConnectionAuthorizer {
         get { self[ConnectionAuthorizer.self] }
         set { self[ConnectionAuthorizer.self] = newValue }
     }

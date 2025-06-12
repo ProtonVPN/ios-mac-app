@@ -37,8 +37,8 @@ public struct ConnectionBridge: Sendable {
     public internal(set) var pushStatus: @MainActor (_ status: VPNConnectionStatus) -> Void
 }
 
-extension DependencyValues {
-    public var connectionBridge: ConnectionBridge {
+public extension DependencyValues {
+    var connectionBridge: ConnectionBridge {
         get { self[ConnectionBridge.self] }
         set { self[ConnectionBridge.self] = newValue }
     }

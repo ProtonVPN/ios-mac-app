@@ -95,11 +95,11 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
 
 // MARK: - Default values
 
-extension VpnProtocol {
+public extension VpnProtocol {
     #if os(iOS)
-        public static let defaultValue: Self = .openVpn(.udp)
+        static let defaultValue: Self = .openVpn(.udp)
     #else
-        public static let defaultValue: Self = .ike
+        static let defaultValue: Self = .ike
     #endif
 
     private static var uiOrder: [VpnProtocol: Int] = [
@@ -111,15 +111,15 @@ extension VpnProtocol {
         .wireGuard(.tls): 6,
     ]
 
-    public static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
+    static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
         uiOrder[lhs] ?? 0 < uiOrder[rhs] ?? 0
     }
 }
 
 // MARK: - API description
 
-extension VpnProtocol {
-    public var apiDescription: String {
+public extension VpnProtocol {
+    var apiDescription: String {
         switch self {
         case .ike:
             "IKEv2"
@@ -130,7 +130,7 @@ extension VpnProtocol {
         }
     }
 
-    public init?(apiDescription: String) {
+    init?(apiDescription: String) {
         switch apiDescription {
         case "IKEv2":
             self = .ike

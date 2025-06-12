@@ -126,8 +126,8 @@ public enum VPNNetworkingKey: TestDependencyKey {
     }
 #endif
 
-extension DependencyValues {
-    public var networking: VPNNetworking {
+public extension DependencyValues {
+    var networking: VPNNetworking {
         get { self[VPNNetworkingKey.self] }
         set { self[VPNNetworkingKey.self] = newValue }
     }

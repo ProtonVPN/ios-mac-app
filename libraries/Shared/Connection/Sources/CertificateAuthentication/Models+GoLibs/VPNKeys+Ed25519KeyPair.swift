@@ -20,8 +20,8 @@ import CoreConnection
 import Foundation
 import class GoLibs.Ed25519KeyPair
 
-extension PublicKey {
-    package init(keyPair: Ed25519KeyPair) throws {
+package extension PublicKey {
+    init(keyPair: Ed25519KeyPair) throws {
         var error: NSError?
         let derRepresentation = keyPair.publicKeyPKIXPem(&error)
         if let error {
@@ -37,8 +37,8 @@ extension PublicKey {
     }
 }
 
-extension PrivateKey {
-    package init(keyPair: Ed25519KeyPair) throws {
+package extension PrivateKey {
+    init(keyPair: Ed25519KeyPair) throws {
         guard let privateKeyBytes = keyPair.privateKeyBytes() else {
             throw GoLibsCryptoError.missingData(nil)
         }

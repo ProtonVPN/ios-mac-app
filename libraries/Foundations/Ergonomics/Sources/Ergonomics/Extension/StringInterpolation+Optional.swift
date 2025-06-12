@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension DefaultStringInterpolation {
+public extension DefaultStringInterpolation {
     /// Overload for "String interpolation produces a debug description for an optional value" warnings.
-    public mutating func appendInterpolation(optional: (some Any)?) {
+    mutating func appendInterpolation(optional: (some Any)?) {
         appendInterpolation(String(describing: optional))
     }
 }

@@ -19,7 +19,7 @@
 #if canImport(SwiftUI)
     import SwiftUI
 
-    extension View {
+    public extension View {
         private static func dashStroke(lineWidth: CGFloat) -> StrokeStyle {
             StrokeStyle(
                 lineWidth: lineWidth,
@@ -29,7 +29,7 @@
             )
         }
 
-        public func themeBorder(
+        func themeBorder(
             style: AppTheme.Style = .weak,
             dashed: Bool = false,
             lineWidth: CGFloat = 1,
@@ -44,16 +44,16 @@
                 .overlay(stroke)
         }
 
-        public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
+        func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
             let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
             return clipShape(rectangle)
         }
 
-        public func frame(_ size: AppTheme.IconSize) -> some View {
+        func frame(_ size: AppTheme.IconSize) -> some View {
             frame(width: size.width, height: size.height)
         }
 
-        public func frame(_ size: CGSize) -> some View {
+        func frame(_ size: CGSize) -> some View {
             frame(width: size.width, height: size.height)
         }
     }

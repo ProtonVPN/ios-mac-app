@@ -122,8 +122,10 @@ extension AnnouncementRequest: Request {
             } else {
                 scaled.fitting(CGSize(width: 2160, height: 3840))
             }
-            let freeSpace = CGSize(width: fitting.width,
-                                   height: fitting.height - occupiedHeight(screen))
+            let freeSpace = CGSize(
+                width: fitting.width,
+                height: fitting.height - occupiedHeight(screen)
+            )
             return freeSpace
         }
 
@@ -146,12 +148,12 @@ extension AnnouncementRequest: Request {
 
 #endif
 
-extension CGSize {
-    fileprivate func scaled(by scale: CGFloat) -> CGSize {
+private extension CGSize {
+    func scaled(by scale: CGFloat) -> CGSize {
         CGSize(width: width * scale, height: height * scale)
     }
 
-    fileprivate func horizontal() -> CGSize {
+    func horizontal() -> CGSize {
         let newWidth = max(width, height)
         let newHeight = min(width, height)
         return CGSize(width: newWidth, height: newHeight)

@@ -150,8 +150,8 @@ extension ConnectionError: ProtonVPNError {
     }
 }
 
-extension Alert {
-    public static let connectionFailedAlert = Self(message: Localizable.connectionFailed)
+public extension Alert {
+    static let connectionFailedAlert = Self(message: Localizable.connectionFailed)
 }
 
 extension ConnectionError: AlertConvertibleError {

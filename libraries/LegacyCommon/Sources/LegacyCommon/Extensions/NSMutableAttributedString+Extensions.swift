@@ -29,11 +29,11 @@ import Foundation
 
 // MARK: - Links
 
-extension NSMutableAttributedString {
+public extension NSMutableAttributedString {
     /// Add a `.link` attribute to a given text
     /// - Parameters:
     ///     - links: Parameters to pass to `add(link: String, withUrl url: String)` method
-    public func add(links: [(String, String)]) -> NSMutableAttributedString {
+    func add(links: [(String, String)]) -> NSMutableAttributedString {
         for (link, url) in links {
             _ = add(link: link, withUrl: url)
         }
@@ -44,7 +44,7 @@ extension NSMutableAttributedString {
     /// - Parameters:
     ///     - link: Text that will become a link
     ///     - withUrl: String representation or URL for a link
-    public func add(link: String, withUrl: String) -> NSMutableAttributedString {
+    func add(link: String, withUrl: String) -> NSMutableAttributedString {
         let fullText = string
         guard let url = URL(string: withUrl), let subrange = fullText.range(of: link) else {
             return self

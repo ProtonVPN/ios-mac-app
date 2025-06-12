@@ -77,12 +77,12 @@ public final class DomainErrorAlert: SystemAlert {
     }
 }
 
-extension SystemAlert {
-    public static var className: String {
+public extension SystemAlert {
+    static var className: String {
         String(describing: self)
     }
 
-    public var className: String {
+    var className: String {
         String(describing: type(of: self))
     }
 }

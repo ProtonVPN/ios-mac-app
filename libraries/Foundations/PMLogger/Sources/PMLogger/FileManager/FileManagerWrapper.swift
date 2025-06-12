@@ -40,12 +40,12 @@ public protocol FileManagerWrapper {
     func creationDate(of url: URL) -> Date?
 }
 
-extension FileManagerWrapper {
-    public func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool {
+public extension FileManagerWrapper {
+    func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool {
         creationDate(of: lhs)?.timeIntervalSince1970 ?? 0 < creationDate(of: rhs)?.timeIntervalSince1970 ?? 0
     }
 
-    public func creationDate(of url: URL) -> Date? {
+    func creationDate(of url: URL) -> Date? {
         let attributes: [FileAttributeKey: Any]
         do {
             attributes = try attributesOfItem(atPath: url.path)

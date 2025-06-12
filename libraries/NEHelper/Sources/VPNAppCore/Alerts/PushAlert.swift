@@ -18,8 +18,8 @@
 
 import Dependencies
 
-extension DependencyValues {
-    public var pushAlert: @Sendable (SystemAlert) -> Void {
+public extension DependencyValues {
+    var pushAlert: @Sendable (SystemAlert) -> Void {
         get { self[PushAlertKey.self] }
         set { self[PushAlertKey.self] = newValue }
     }

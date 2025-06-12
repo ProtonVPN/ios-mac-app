@@ -95,15 +95,15 @@ extension HermesClient: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var hermesClient: HermesClient {
+public extension DependencyValues {
+    var hermesClient: HermesClient {
         get { self[HermesClient.self] }
         set { self[HermesClient.self] = newValue }
     }
 }
 
-extension HermesResolver {
-    public static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")
+public extension HermesResolver {
+    static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")
 }
 
 #if DEBUG
@@ -113,13 +113,13 @@ extension HermesResolver {
         }
     }
 
-    extension HermesResolver {
-        public static let cloudFlare: HermesResolver = "1.1.1.1"
-        public static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
-        public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
-        public static let google: HermesResolver = "8.8.8.8"
-        public static let googleDoT: HermesResolver = "tls://8.8.8.8"
-        public static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
-        public static let quadNine: HermesResolver = "9.9.9.9"
+    public extension HermesResolver {
+        static let cloudFlare: HermesResolver = "1.1.1.1"
+        static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
+        static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
+        static let google: HermesResolver = "8.8.8.8"
+        static let googleDoT: HermesResolver = "tls://8.8.8.8"
+        static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
+        static let quadNine: HermesResolver = "9.9.9.9"
     }
 #endif

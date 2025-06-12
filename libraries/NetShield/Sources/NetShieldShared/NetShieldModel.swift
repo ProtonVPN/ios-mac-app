@@ -74,7 +74,7 @@ public struct StatModel: Equatable {
     package static let emptyData: StatModel = .data(value: "–", isEnabled: true)
 }
 
-extension NetShieldModel {
+public extension NetShieldModel {
     private static let formatter = NetShieldStatsNumberFormatter()
     private static let byteCountFormatter = {
         let formatter = ByteCountFormatter()
@@ -82,21 +82,21 @@ extension NetShieldModel {
         return formatter
     }()
 
-    public var ads: StatModel {
+    var ads: StatModel {
         .ads(value: Self.formatter.string(from: adsCount), count: adsCount, isEnabled: enabled)
     }
 
-    public var trackers: StatModel {
+    var trackers: StatModel {
         .trackers(value: Self.formatter.string(from: trackersCount), count: trackersCount, isEnabled: enabled)
     }
 
-    public var data: StatModel {
+    var data: StatModel {
         .data(value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)), isEnabled: enabled)
     }
 }
 
-extension StatModel {
-    public static func trackers(value: String, count: Int, isEnabled: Bool) -> StatModel {
+public extension StatModel {
+    static func trackers(value: String, count: Int, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsTrackersStopped(count).replacingOccurrences(of: "\n", with: " "),
@@ -105,7 +105,7 @@ extension StatModel {
         )
     }
 
-    public static func ads(value: String, count: Int, isEnabled: Bool) -> StatModel {
+    static func ads(value: String, count: Int, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsAdsBlocked(count).replacingOccurrences(of: "\n", with: " "),
@@ -114,7 +114,7 @@ extension StatModel {
         )
     }
 
-    public static func data(value: String, isEnabled: Bool) -> StatModel {
+    static func data(value: String, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsDataSaved.replacingOccurrences(of: "\n", with: " "),

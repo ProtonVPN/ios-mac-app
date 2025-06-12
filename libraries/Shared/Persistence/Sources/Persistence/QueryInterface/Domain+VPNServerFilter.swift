@@ -20,8 +20,8 @@ import Foundation
 
 import Domain
 
-extension ServerGroupInfo.Kind {
-    public var filter: VPNServerFilter {
+public extension ServerGroupInfo.Kind {
+    var filter: VPNServerFilter {
         switch self {
         case let .country(code):
             .kind(.country(code: code))
