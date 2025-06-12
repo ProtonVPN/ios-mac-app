@@ -1,9 +1,5 @@
---disable elseOnSameLine
 --disable enumNamespaces
 --disable extensionAccessControl
---disable fileHeader
---disable fileMacro
---disable genericExtensions
 --disable headerFileName
 --disable hoistAwait
 --disable hoistPatternLet

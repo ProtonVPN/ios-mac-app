@@ -22,7 +22,7 @@ import XCTest
 
 private let timeout: TimeInterval = 1.0
 
-extension Array where Element == NotificationToken {
+extension Array<NotificationToken> {
     static func + (_ lhs: Self, _ rhs: NotificationToken) -> Self {
         return lhs + [rhs]
     }

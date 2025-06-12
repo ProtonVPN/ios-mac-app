@@ -16,7 +16,7 @@ extension String {
     }
 }
 
-extension Optional where Wrapped == String {
+extension Optional<String> {
     func splitToArray(separator: Character = ",", trimmingCharacters: CharacterSet? = nil) -> [String] {
         switch self {
         case .none:

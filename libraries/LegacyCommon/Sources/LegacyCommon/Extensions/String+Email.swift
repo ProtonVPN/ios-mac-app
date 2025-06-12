@@ -33,7 +33,7 @@ public extension String {
     }
 }
 
-public extension Optional where Wrapped == String {
+public extension Optional<String> {
     var isEmpty: Bool {
         return self?.isEmpty ?? true
     }

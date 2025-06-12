@@ -36,7 +36,7 @@ public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     }
 }
 
-extension Array where Element == Announcement {
+extension Array<Announcement> {
     /// Helper for testing if array contains concrete Announcement
     public func containsAnnouncement(withId id: String) -> Bool {
         return self.contains(where: {

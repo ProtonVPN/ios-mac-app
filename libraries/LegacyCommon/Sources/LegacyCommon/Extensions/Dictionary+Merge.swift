@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension Dictionary where Key == String, Value == String {
+extension Dictionary<String, String> {
     /// Merge two dictionaries. If duplicate key is found, value from the right dictionary is used.
     /// - Parameters:
     ///   - left: main dictionary used as a base.

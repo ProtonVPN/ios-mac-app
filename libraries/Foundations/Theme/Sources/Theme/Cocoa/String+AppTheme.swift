@@ -53,7 +53,7 @@ extension String {
     }
 }
 
-extension Collection where Element == String {
+extension Collection<String> {
     public func styled(
         _ style: AppTheme.Style = .normal,
         context: AppTheme.Context = .text,
