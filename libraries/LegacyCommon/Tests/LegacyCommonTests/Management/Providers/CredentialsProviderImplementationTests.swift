@@ -27,7 +27,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
     func testReturnsTierSavedInKeychain() throws {
         let testPairs: [(String, Int)] = [
             ("free", .freeTier),
-            ("plus", .paidTier)
+            ("plus", .paidTier),
         ]
 
         for (plan, tier) in testPairs {

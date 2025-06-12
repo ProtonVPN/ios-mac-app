@@ -108,7 +108,7 @@ private extension DateFormatter {
                 retrievePlans: {
                     [
                         PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
-                        PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
+                        PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF")),
                     ]
                 },
                 validate: { option in

@@ -85,7 +85,7 @@ public final class TroubleshootViewModel {
                                       .add(links: [
                                           (Localizable.troubleshootItemOtherLink1, urlSupportForm),
                                           (Localizable.troubleshootItemOtherLink2, String(format: "mailto:%@", supportEmail)),
-                                          (Localizable.troubleshootItemOtherLink3, urlTwitter)
+                                          (Localizable.troubleshootItemOtherLink3, urlTwitter),
                                       ])),
         ]
     }

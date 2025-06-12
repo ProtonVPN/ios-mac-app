@@ -304,7 +304,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let reloadEvents: [AppEvent] = [
             .planChanged,
             .vpnProtocol,
-            .smartProtocol
+            .smartProtocol,
         ]
 
         reloadEvents.subscribe(self, selector: #selector(reloadContent))

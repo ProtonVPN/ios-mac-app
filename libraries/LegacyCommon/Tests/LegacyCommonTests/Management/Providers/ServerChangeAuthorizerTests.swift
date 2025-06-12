@@ -111,7 +111,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
                 .init(intent: .fastest, date: later, upsellNext: false),
                 .init(intent: .fastest, date: later, upsellNext: false),
                 .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .random, date: start, upsellNext: false)
+                .init(intent: .random, date: start, upsellNext: false),
             ]
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
@@ -227,14 +227,14 @@ public class ServerChangeAuthorizerTests: XCTestCase {
             )
         } operation: {
             var expectedItems = [
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: start)
             XCTAssertEqual(connectionStack, expectedItems)
 
             expectedItems = [
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: second)
             XCTAssertEqual(connectionStack, expectedItems)
@@ -242,7 +242,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
             expectedItems = [
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: third, upsellNext: false),
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: third)
             XCTAssertEqual(connectionStack, expectedItems)

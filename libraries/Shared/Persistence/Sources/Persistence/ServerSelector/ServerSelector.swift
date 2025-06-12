@@ -132,7 +132,7 @@ extension ServerSelector: DependencyKey {
         let steps: [(VPNServerFilter, ServerSelectionError.LogicalResolutionFailureReason)] = [
             (.features(spec.serverFeatureFilter), .featuresNotSupported(spec.features)),
             (.supports(protocol: acceptableProtocols), .protocolNotSupported(acceptableProtocols)),
-            (.isNotUnderMaintenance, .maintenance)
+            (.isNotUnderMaintenance, .maintenance),
         ]
 
         for (filter, reason) in steps {
@@ -263,7 +263,7 @@ extension ConnectionSpec {
         case let .exact(_, logicalID, number, subRegion, region):
             logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),
-                subRegion.map(VPNServerFilter.city)
+                subRegion.map(VPNServerFilter.city),
             ].compactMap { $0 }
 
         case let .secureCore(.fastestHop(to)):

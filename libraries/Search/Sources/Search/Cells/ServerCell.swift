@@ -178,7 +178,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         if let iconSize {
             imageView.addConstraints([
                 imageView.widthAnchor.constraint(equalToConstant: iconSize),
-                imageView.heightAnchor.constraint(equalToConstant: iconSize)
+                imageView.heightAnchor.constraint(equalToConstant: iconSize),
             ])
         }
         return imageView

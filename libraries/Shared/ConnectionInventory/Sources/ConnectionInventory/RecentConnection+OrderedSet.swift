@@ -49,7 +49,7 @@ extension OrderedSet<RecentConnection> {
 
     public var mostRecent: RecentConnection? {
         sorted(using: [
-            KeyPathComparator(\.connectionDate, order: .reverse)
+            KeyPathComparator(\.connectionDate, order: .reverse),
         ]).first
     }
 

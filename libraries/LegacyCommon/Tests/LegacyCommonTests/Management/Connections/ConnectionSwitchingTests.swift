@@ -475,7 +475,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 .ike,
                 .openVpn(.tcp),
                 .openVpn(.udp),
-                .wireGuard(.udp)
+                .wireGuard(.udp),
             ]
 
             for vpnProtocol in unavailableProtocols {
@@ -935,7 +935,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             for: [
                 expectations.connections[0],
                 expectations.appStateConnectedTransitions[0],
-                expectations.serverSaves[0]
+                expectations.serverSaves[0],
             ],
             timeout: expectationTimeout
         )
@@ -975,7 +975,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             for: [
                 expectations.upgradeNotification,
                 expectations.refreshLogicalsAfterPlanUpgrade,
-                expectations.serverSaves[1]
+                expectations.serverSaves[1],
             ],
             timeout: expectationTimeout
         )

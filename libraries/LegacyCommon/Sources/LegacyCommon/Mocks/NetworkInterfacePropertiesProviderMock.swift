@@ -35,7 +35,7 @@
                 mask: IPv4Address("255.0.0.0")!,
                 dest: IPv4Address("127.255.255.255")!,
                 flags: [.up, .running, .loopback]
-            )
+            ),
         ]
 
         public func withNetworkInterfaceInfo<T>(_ closure: ([NetworkInterface]) throws -> T) throws -> T {

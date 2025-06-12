@@ -38,7 +38,7 @@ final class PromoCodeRequest: Request {
     var parameters: [String: Any]? {
         [
             "Product": "VPN",
-            "Codes": [code]
+            "Codes": [code],
         ]
     }
 

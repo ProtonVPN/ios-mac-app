@@ -55,7 +55,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
             LogFileManagerImplementation.logDirLaunchArgument,
-            logFileUrl.absoluteString
+            logFileUrl.absoluteString,
         ]
 
         if let dynamicDomain = Bundle.dynamicDomain {

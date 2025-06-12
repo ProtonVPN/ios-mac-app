@@ -52,7 +52,7 @@ class PVPNTextViewLink: NSTextView {
         linkTextAttributes = [
             NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint]),
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.cursor: NSCursor.pointingHand
+            NSAttributedString.Key.cursor: NSCursor.pointingHand,
         ]
 
         textStorage?.setAttributedString(attributedOriginalText)

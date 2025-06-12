@@ -73,7 +73,7 @@ final class AnnouncementRequest {
         [
             queryItem(.formats, value: supportedImageFormats),
             queryItem(.width, value: "\(Int(screenSize.width))"),
-            queryItem(.height, value: "\(Int(screenSize.height))")
+            queryItem(.height, value: "\(Int(screenSize.height))"),
         ]
     }
 }

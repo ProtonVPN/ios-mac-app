@@ -23,13 +23,13 @@
         func attributedString(size: CGFloat, color: UIColor, boldStrings: [String]) -> NSAttributedString {
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: UIFont.systemFont(ofSize: size, weight: .regular),
-                .foregroundColor: color
+                .foregroundColor: color,
             ]
             let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
             for boldText in boldStrings {
                 let range = (self as NSString).range(of: boldText)
                 let attrsBold: [NSAttributedString.Key: Any] = [
-                    .font: UIFont.systemFont(ofSize: size, weight: .bold)
+                    .font: UIFont.systemFont(ofSize: size, weight: .bold),
                 ]
                 attributedText.addAttributes(attrsBold, range: range)
             }
@@ -48,13 +48,13 @@
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: NSFont.systemFont(ofSize: size, weight: .regular),
                 .paragraphStyle: paragraphStyle,
-                .foregroundColor: color
+                .foregroundColor: color,
             ]
             let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
             for boldText in boldStrings {
                 let range = (self as NSString).range(of: boldText)
                 let attrsBold: [NSAttributedString.Key: Any] = [
-                    .font: NSFont.systemFont(ofSize: size, weight: .bold)
+                    .font: NSFont.systemFont(ofSize: size, weight: .bold),
                 ]
                 attributedText.addAttributes(attrsBold, range: range)
             }

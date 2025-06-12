@@ -10,7 +10,7 @@ class Keychain {
         let ret = SecItemCopyMatching([
             kSecClass: kSecClassGenericPassword,
             kSecValuePersistentRef: ref,
-            kSecReturnData: true
+            kSecReturnData: true,
         ] as CFDictionary, &result)
         if ret != errSecSuccess || result == nil {
             wg_log(.error, message: "Unable to open config from keychain: \(ret)")
@@ -32,7 +32,7 @@ class Keychain {
             kSecAttrDescription: "wg-quick(8) config",
             kSecAttrService: bundleIdentifier,
             kSecValueData: value.data(using: .utf8) as Any,
-            kSecReturnPersistentRef: true
+            kSecReturnPersistentRef: true,
         ]
 
         #if os(iOS)

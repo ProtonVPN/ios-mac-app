@@ -93,6 +93,6 @@ public enum ProfileConstants {
         ColorProvider.PacificBase,
         ColorProvider.ReefBase,
         ColorProvider.FernBase,
-        ColorProvider.OliveBase
+        ColorProvider.OliveBase,
     ]
 }

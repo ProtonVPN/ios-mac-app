@@ -58,7 +58,7 @@ final class CertificateRequest: Request {
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
-            "Mode": "session"
+            "Mode": "session",
         ] as [String: Any]
 
         // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times

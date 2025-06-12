@@ -39,7 +39,7 @@ class ProviderMessageTests: XCTestCase {
             .errorTooManyCertRequests(retryAfter: 15213),
             .errorTooManyCertRequests(retryAfter: nil),
             .errorSessionExpired,
-            .errorNeedKeyRegeneration
+            .errorNeedKeyRegeneration,
         ]
 
         for message in messages {

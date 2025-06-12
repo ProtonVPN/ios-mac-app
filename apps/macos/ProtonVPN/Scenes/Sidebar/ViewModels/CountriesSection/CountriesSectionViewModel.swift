@@ -197,7 +197,7 @@ class CountriesSectionViewModel {
             .featureFlags,
             .planChanged,
             .userDelinquent,
-            .announcementStorageContent
+            .announcementStorageContent,
         ]
         reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
 
@@ -595,13 +595,13 @@ class CountriesSectionViewModel {
         case .paid:
             [
                 gatewaysSection(for: groups),
-                allLocationsSection(for: groups)
+                allLocationsSection(for: groups),
             ]
         case .free:
             [
                 gatewaysSection(for: groups),
                 fastestConnectionSection,
-                plusLocationsSection(for: groups, minTier: .freeTier)
+                plusLocationsSection(for: groups, minTier: .freeTier),
             ]
         }
     }

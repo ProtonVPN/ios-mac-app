@@ -183,7 +183,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .chrząszczyrzewoszczyce
-            )
+            ),
         ],
         connectionStatus: .protected(),
         vpnConnectionStatus: .connected)
@@ -196,7 +196,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .dibba
-            )
+            ),
         ],
         connectionStatus: .protecting(),
         vpnConnectionStatus: .connecting)
@@ -209,7 +209,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .fastest
-            )
+            ),
         ],
         connectionStatus: .unprotected(),
         vpnConnectionStatus: .disconnected)
@@ -222,7 +222,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .region
-            )
+            ),
         ],
         connectionStatus: .protecting(),
         vpnConnectionStatus: .loadingConnectionInfo)
@@ -235,7 +235,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreFastest
-            )
+            ),
         ],
         connectionStatus: .protected(),
         vpnConnectionStatus: .connected)
@@ -248,7 +248,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreFastestHop
-            )
+            ),
         ],
         connectionStatus: .unprotected(),
         vpnConnectionStatus: .disconnected)
@@ -261,7 +261,7 @@ private extension HomeFeature.State {
                 underMaintenance: false,
                 connectionDate: Date(),
                 connection: .secureCoreHopToVia
-            )
+            ),
         ],
         connectionStatus: .protected(),
         vpnConnectionStatus: .connected)

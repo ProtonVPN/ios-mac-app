@@ -100,7 +100,7 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             (subcaseDescription("certificate has expired"),
              simpleErrorCase(laConsts.errorCodeCertificateExpired), expectations),
             (subcaseDescription("no certificate provided"),
-             simpleErrorCase(laConsts.errorCodeCertNotProvided), expectations)
+             simpleErrorCase(laConsts.errorCodeCertNotProvided), expectations),
         ]
 
         connectSynchronously(expectCertRefresh: true)
@@ -130,7 +130,7 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
                 mockProviderState.forceResponse = .error(message: "Internal server error")
                 laError(laConsts.errorCodeCertificateExpired, nil)
-            }, [.vpnDisconnection, .alertDisplayed])
+            }, [.vpnDisconnection, .alertDisplayed]),
         ]
 
         var first = true

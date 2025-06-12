@@ -38,7 +38,7 @@ struct ThemeSettingsView: View {
     let options = [
         OptionModel(colorScheme: .light, asset: Asset.themeLight),
         OptionModel(colorScheme: .dark, asset: Asset.themeDark),
-        OptionModel(colorScheme: .auto, asset: Asset.themeAuto)
+        OptionModel(colorScheme: .auto, asset: Asset.themeAuto),
     ]
 
     var body: some View {

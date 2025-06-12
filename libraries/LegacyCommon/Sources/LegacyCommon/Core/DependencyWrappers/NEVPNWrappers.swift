@@ -130,7 +130,7 @@ extension NETunnelProviderSessionWrapper {
                 category: .ipc,
                 metadata: [
                     "message": "\(message)",
-                    "request": "\(String(describing: message as? WireguardProviderRequest))"
+                    "request": "\(String(describing: message as? WireguardProviderRequest))",
                 ]
             )
             try sendProviderMessage(message.asData) { [weak self] maybeData in

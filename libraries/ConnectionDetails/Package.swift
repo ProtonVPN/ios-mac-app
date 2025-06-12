@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
 
     products: [
@@ -65,7 +65,7 @@ let package = Package(
         .target(
             name: "ConnectionDetails-macOS",
             dependencies: [
-                "ConnectionDetailsShared"
+                "ConnectionDetailsShared",
             ],
             resources: []
         ),

@@ -45,7 +45,7 @@ extension WhatsNew.Item {
         rules: [
             .appVersions(["6.1.0", "6.0.0"]),
             .osVersion("18.4"),
-            .timeWindow(start: .januaryFirst2025, end: .julyFirst2025)
+            .timeWindow(start: .januaryFirst2025, end: .julyFirst2025),
         ],
         presentationAmount: 1,
         delayBetweenPresentations: nil
@@ -54,7 +54,7 @@ extension WhatsNew.Item {
     static let testingDelayItem: Self = .init(
         id: "testingDelayItem",
         rules: [
-            .appVersions(["6.0.0"])
+            .appVersions(["6.0.0"]),
         ],
         delayBeforeFirstPresentation: .init(day: 2),
         presentationAmount: 3,
@@ -64,7 +64,7 @@ extension WhatsNew.Item {
     static let testingWeirdItem: Self = .init(
         id: "testingWeirdItem",
         rules: [
-            .appVersions(["6.0.99"])
+            .appVersions(["6.0.99"]),
         ],
         presentationAmount: 0,
         delayBetweenPresentations: nil
@@ -74,7 +74,7 @@ extension WhatsNew.Item {
         id: "testingWeirdItem2",
         rules: [
             .appVersions(["6.0.0"]),
-            .osVersion("19.0")
+            .osVersion("19.0"),
         ],
         presentationAmount: 0,
         delayBetweenPresentations: nil

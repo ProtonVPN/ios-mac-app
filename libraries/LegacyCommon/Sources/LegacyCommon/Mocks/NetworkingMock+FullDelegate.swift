@@ -114,7 +114,7 @@
                 // for fetching server list
                 let servers = serverList.map(\.asDict)
                 let data = try JSONSerialization.data(withJSONObject: [
-                    "LogicalServers": servers
+                    "LogicalServers": servers,
                 ])
 
                 return .success(data)
@@ -124,7 +124,7 @@
                                                     resourceBaseURL: "https://protonvpn.com/resources",
                                                     streamingServices: ["IT": [
                                                         "1": [.init(name: "Rai", icon: "rai.jpg")],
-                                                        "2": [.init(name: "Netflix", icon: "netflix.jpg")]
+                                                        "2": [.init(name: "Netflix", icon: "netflix.jpg")],
                                                     ]])
                 let data = try responseEncoder.encode(response)
                 return .success(data)
@@ -139,7 +139,7 @@
 
                 let servers = apiServerLoads.map(\.asDict)
                 let data = try JSONSerialization.data(withJSONObject: [
-                    "LogicalServers": servers
+                    "LogicalServers": servers,
                 ])
                 return .success(data)
             case .certificate:

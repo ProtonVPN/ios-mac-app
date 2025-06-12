@@ -380,7 +380,7 @@ private extension ModalType {
             [
                 .welcomeNewServersCountries(numberOfServers, numberOfCountries),
                 .welcomeAdvancedFeatures,
-                .welcomeDevices(numberOfDevices)
+                .welcomeDevices(numberOfDevices),
             ]
         case .welcomeUnlimited:
             []
@@ -401,7 +401,7 @@ private extension ModalType {
                     title: Localizable.onboardingGetStartedCrashesToggleTitle,
                     subtitle: Localizable.onboardingGetStartedCrashesToggleSubtitle,
                     state: true
-                )
+                ),
             ]
         case .subscription:
             []

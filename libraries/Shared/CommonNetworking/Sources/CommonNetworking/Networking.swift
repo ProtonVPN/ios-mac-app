@@ -187,7 +187,7 @@ public final class CoreNetworking: Networking {
         log.debug("Request started", category: .net, metadata: [
             "url": "\(url)",
             "method": "\(route.method.rawValue.uppercased())",
-            "condition": "\(optional: route.condition)"
+            "condition": "\(optional: route.condition)",
         ])
 
         apiService.request(
@@ -209,7 +209,7 @@ public final class CoreNetworking: Networking {
                 log.debug("Request finished OK", category: .net, metadata: [
                     "url": "\(url)",
                     "method": "\(route.method.rawValue.uppercased())",
-                    "Last-Modified": "\(lastModified ?? "nil")"
+                    "Last-Modified": "\(lastModified ?? "nil")",
                 ])
                 completion(.success(.modified(at: lastModified, value: data)))
 
@@ -219,7 +219,7 @@ public final class CoreNetworking: Networking {
                         "error": "\(error)",
                         "url": "\(url)",
                         "method": "\(route.method.rawValue.uppercased())",
-                        "Last-Modified": "\(optional: lastModified)"
+                        "Last-Modified": "\(optional: lastModified)",
                     ])
                     completion(.success(.notModified(since: lastModified)))
                     return
@@ -229,7 +229,7 @@ public final class CoreNetworking: Networking {
                     "error": "\(error)",
                     "url": "\(url)",
                     "method": "\(route.method.rawValue.uppercased())",
-                    "code": "\(statusCode ?? -1)"
+                    "code": "\(statusCode ?? -1)",
                 ])
                 completion(.failure(error))
             }

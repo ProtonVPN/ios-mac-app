@@ -293,7 +293,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             kSecAttrGeneric as AnyHashable: key,
             kSecAttrAccount as AnyHashable: key,
             kSecAttrService as AnyHashable: key,
-            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         ] as [AnyHashable: Any]
     }
 

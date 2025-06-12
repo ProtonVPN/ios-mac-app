@@ -39,7 +39,7 @@ private func generateLocalizedCountryNameDatabaseExecutable() -> DatabaseExecuta
 
     // Codes for countries returned by our API, but missing from Locale.isoRegionCodes
     let additionalRegionCodes = [
-        "UK" // Missing from `Locale.isoRegionCodes`. Possibly due to "GB" being the real ISO code for United Kingdom?
+        "UK", // Missing from `Locale.isoRegionCodes`. Possibly due to "GB" being the real ISO code for United Kingdom?
     ]
     let knownRegionCodes = Locale.isoRegionCodes + additionalRegionCodes
 

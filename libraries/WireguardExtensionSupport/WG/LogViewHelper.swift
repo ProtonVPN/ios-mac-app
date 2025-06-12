@@ -6,7 +6,7 @@ import Foundation
 public class LogViewHelper {
     var log: OpaquePointer
     static let formatOptions: ISO8601DateFormatter.Options = [
-        .withInternetDateTime, .withFractionalSeconds
+        .withInternetDateTime, .withFractionalSeconds,
     ]
 
     struct LogEntry {

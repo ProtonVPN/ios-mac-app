@@ -35,7 +35,7 @@ struct AnnouncementBannerView: View {
 
     private let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
-        Theme.Asset.offerBannerGradientLeft.swiftUIColor
+        Theme.Asset.offerBannerGradientLeft.swiftUIColor,
     ]
 
     private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {

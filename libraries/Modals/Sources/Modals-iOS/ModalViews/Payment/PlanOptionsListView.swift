@@ -128,7 +128,7 @@ struct PlanOptionsListView: View {
 #Preview("Classic") {
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     let viewModel = PlanOptionsListViewModel(client: client)
@@ -140,7 +140,7 @@ struct PlanOptionsListView: View {
     let plans: [PlanOption] = [
         .twoYearsWebPlan,
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(
         retrievePlans: {

@@ -32,7 +32,7 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
                 TestData.createMockServer(withID: "free1", tier: 0),
                 TestData.createMockServer(withID: "stale1", tier: 0),
                 TestData.createMockServer(withID: "paid1", tier: 1),
-                TestData.createMockServer(withID: "stale2", tier: 2)
+                TestData.createMockServer(withID: "stale2", tier: 2),
             ]
         )
 

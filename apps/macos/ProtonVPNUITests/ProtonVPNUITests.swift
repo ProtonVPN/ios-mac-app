@@ -64,7 +64,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-BlockUpdatePrompt", "YES",
             "-AppleLanguages", "(en)",
             "-AppleLocale en_US",
-            LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString
+            LogFileManagerImplementation.logDirLaunchArgument, logFileUrl.absoluteString,
         ]
 
         if let dynamicDomain = Bundle.dynamicDomain {

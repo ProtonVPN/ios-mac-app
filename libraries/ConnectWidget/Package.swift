@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -36,7 +36,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
             ],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]),
         .testTarget(
             name: "ConnectWidgetTests",

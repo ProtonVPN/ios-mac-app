@@ -67,7 +67,7 @@ final class AdvancedSettingsViewModel {
         let events: [AppEvent] = [
             .natType,
             .featureFlags,
-            .safeMode
+            .safeMode,
         ]
 
         events.subscribe(self, selector: #selector(settingsChanged))

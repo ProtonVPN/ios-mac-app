@@ -209,7 +209,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         if let translatedCity {
             result["Translations"] = [
-                "City": translatedCity
+                "City": translatedCity,
             ]
         }
         if let gatewayName {

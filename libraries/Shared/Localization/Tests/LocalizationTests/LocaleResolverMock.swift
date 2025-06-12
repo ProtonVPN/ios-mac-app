@@ -31,14 +31,14 @@
             regionCodeDict: [
                 "CH": "Switzerland",
                 "US": "United States",
-                "FR": "France"
+                "FR": "France",
             ]),
         "fr": LocaleWrapperMock(
             ietfRegionTag: "ch",
             regionCodeDict: [
                 "CH": "Suisse",
-                "US": "Etats-Unis"
-            ])
+                "US": "Etats-Unis",
+            ]),
     ]
 
     public class LocaleResolverMock: LocaleResolver {

@@ -57,7 +57,7 @@ public enum CountriesCoordinates {
         }
         return [
             CLLocationCoordinate2D(latitude: doubles[1], longitude: doubles[0]),
-            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2])
+            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2]),
         ]
     }
 }

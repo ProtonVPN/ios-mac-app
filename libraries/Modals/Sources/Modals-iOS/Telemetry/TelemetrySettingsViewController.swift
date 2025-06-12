@@ -65,7 +65,7 @@ public class TelemetrySettingsViewController: UIViewController {
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             // No bottom constraint on purpose, we want the view to be pinned to the top of the available space
         ])
     }

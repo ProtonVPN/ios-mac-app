@@ -211,7 +211,7 @@ class CreateNewProfileViewModel {
             // Add default "profiles": fastest and random (only for countries, not gateways)
             result += [
                 ServerOffering.fastest(group.serverOfferingID),
-                ServerOffering.random(group.serverOfferingID)
+                ServerOffering.random(group.serverOfferingID),
             ].map { offering in
                 PopUpButtonItemViewModel(
                     title: serverDescriptor(for: offering),

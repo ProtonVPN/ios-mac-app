@@ -67,7 +67,7 @@ func ipv6Validation() {
         "2001:db8::",
         "2001:0db8::1:0:0:1",
         "0:0:0:0:0:0:0:1",
-        "FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF"
+        "FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF",
     ]
 
     for address in validIPv6Addresses {

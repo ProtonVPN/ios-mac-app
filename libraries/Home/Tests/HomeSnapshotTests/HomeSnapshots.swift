@@ -47,7 +47,7 @@
                 ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
                 VPNConnectionStatus.connected(.specificCountryServer, .mock(country: "PL",
                                                                             coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
-            )
+            ),
         ]
 
         @Shared(.protectionState) var protectionState

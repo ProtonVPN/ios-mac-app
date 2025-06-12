@@ -104,7 +104,7 @@ extension Error {
             NetworkErrorCode.cannotFindHost,
             NetworkErrorCode.dnsLookupFailed,
             NetworkErrorCode.secureConnectionFailed,
-            NetworkErrorCode.cannotParseResponse // Potentially returned when requests are interrupted by network interface changes
+            NetworkErrorCode.cannotParseResponse, // Potentially returned when requests are interrupted by network interface changes
         ]
 
         if nsError.domain == NSURLErrorDomain, retriableNSURLDomainErrorCodes.contains(nsError.code) {

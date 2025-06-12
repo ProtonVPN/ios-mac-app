@@ -59,7 +59,7 @@ public enum TestData {
                     label: nil,
                     x25519PublicKey: "",
                     protocolEntries: nil
-                )
+                ),
             ]
         )
     }
@@ -94,7 +94,7 @@ public enum TestData {
                 x25519PublicKey: "",
                 protocolEntries: [
                     .openVpn(.udp): .init(ipv4: "10.0.1.12", ports: [25565]),
-                    .wireGuard(.tls): .init(ipv4: "10.0.2.12", ports: [32400])
+                    .wireGuard(.tls): .init(ipv4: "10.0.2.12", ports: [32400]),
                 ]
             ),
             ServerEndpoint(
@@ -106,7 +106,7 @@ public enum TestData {
                 label: nil,
                 x25519PublicKey: "",
                 protocolEntries: nil
-            )
+            ),
         ]
     )
 
@@ -141,9 +141,9 @@ public enum TestData {
                 x25519PublicKey: "",
                 protocolEntries: [
                     .ike: .init(ipv4: nil, ports: [25565]),
-                    .wireGuard(.tls): .init(ipv4: "10.0.2.12", ports: [32400])
+                    .wireGuard(.tls): .init(ipv4: "10.0.2.12", ports: [32400]),
                 ]
-            )
+            ),
         ]
     )
 
@@ -176,7 +176,7 @@ public enum TestData {
                 label: nil,
                 x25519PublicKey: "",
                 protocolEntries: nil
-            )
+            ),
         ]
     )
 }

@@ -8,13 +8,13 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .tvOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
             name: "Theme",
             targets: ["Theme"]
-        )
+        ),
     ],
     dependencies: [
         .package(path: "../Ergonomics"),
@@ -29,7 +29,7 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 "Ergonomics",
                 "PMLogger",
-                .product(name: "Logging", package: "swift-log")
+                .product(name: "Logging", package: "swift-log"),
             ],
             exclude: ["swiftgen.yml"],
             resources: [.process("Resources")],

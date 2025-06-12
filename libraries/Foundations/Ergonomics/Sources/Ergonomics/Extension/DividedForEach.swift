@@ -84,7 +84,7 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
             "globe",
             "externaldrive.fill.badge.plus",
             "speaker.zzz",
-            "exclamationmark.triangle"
+            "exclamationmark.triangle",
         ]
 
         VStack(alignment: .leading) {

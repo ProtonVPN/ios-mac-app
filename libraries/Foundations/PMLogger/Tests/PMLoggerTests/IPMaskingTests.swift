@@ -43,7 +43,7 @@ final class IPMaskingTests: XCTestCase {
             "2001:0db8:0000:0000:0000:0000:0000:0001",
             "2001:4860:4860::8888",
             "2a02:120b:2c0d:5600:e4d4:2ff:fe01:b9d4",
-            "2400:cb00:2048:1::681f:3a6d"
+            "2400:cb00:2048:1::681f:3a6d",
         ]
 
         for ip in ipv6Addresses {

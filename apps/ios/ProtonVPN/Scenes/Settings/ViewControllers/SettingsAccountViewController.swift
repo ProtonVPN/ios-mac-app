@@ -75,7 +75,7 @@ final class SettingsAccountViewController: UIViewController {
 
                 connectionBarContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
                 connectionBarContainerView.topAnchor.constraint(equalTo: view.topAnchor),
-                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight)
+                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight),
             ])
 
             connectionBar.embed(in: self, with: connectionBarContainerView)

@@ -108,7 +108,7 @@ extension VpnProtocol {
         .openVpn(.udp): 3,
         .openVpn(.tcp): 4,
         .ike: 5,
-        .wireGuard(.tls): 6
+        .wireGuard(.tls): 6,
     ]
 
     public static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {

@@ -98,7 +98,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
             (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
             (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full),
             (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming)
+            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming),
         ]
 
         for (timerPath, timerFunction, refreshInterval) in refreshes {

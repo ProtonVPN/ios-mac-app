@@ -90,7 +90,7 @@ public final class AuthKeychain {
 
         static let contextKeys: [AppContext: String] = [
             .mainApp: authCredentials,
-            .wireGuardExtension: "\(authCredentials)_\(AppContext.wireGuardExtension)"
+            .wireGuardExtension: "\(authCredentials)_\(AppContext.wireGuardExtension)",
         ]
     }
 

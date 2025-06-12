@@ -37,14 +37,14 @@ let package = Package(
                 .process("Cells/ServerCell.xib"),
                 .process("Cells/UpsellCell.xib"),
                 .process("Cells/CityCell.xib"),
-                .process("Assets.xcassets")
+                .process("Assets.xcassets"),
             ]),
         .testTarget(
             name: "SearchTests",
             dependencies: [
                 "Search",
-                .product(name: "Overture", package: "swift-overture")
+                .product(name: "Overture", package: "swift-overture"),
             ]
-        )
+        ),
     ]
 )

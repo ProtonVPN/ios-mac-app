@@ -36,7 +36,7 @@ extension ServerIdentifier: DependencyKey {
                     category: .persistence,
                     metadata: [
                         "logicalID": "\(logicalServerInfo.logicalID)",
-                        "serverID": "\(logicalServerInfo.serverID)"
+                        "serverID": "\(logicalServerInfo.serverID)",
                     ]
                 )
                 return nil

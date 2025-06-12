@@ -83,7 +83,7 @@ extension SVGNode {
         [
             code,
             code + "x",
-            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+            Self.alternativeCountryCodes[code], // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
         .lazy
         .compactMap { $0.flatMap { self.getNode(byId: $0) } }
@@ -94,7 +94,7 @@ extension SVGNode {
         [
             code + "x", // add "x" for mainland only
             code,
-            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+            Self.alternativeCountryCodes[code], // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
         .lazy
         .compactMap { $0.flatMap { self.getNode(byId: $0) } }

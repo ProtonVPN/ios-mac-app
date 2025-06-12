@@ -259,7 +259,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         let cert = VpnCertificate(fakeData: [
             \.certificate: "This is a certificate",
             \.refreshTime: Date().addingTimeInterval(60 * 60),
-            \.validUntil: Date().addingTimeInterval(2 * 60 * 60)
+            \.validUntil: Date().addingTimeInterval(2 * 60 * 60),
         ])
         authenticationStorage.features = features
         authenticationStorage.cert = cert
@@ -302,12 +302,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             currentCert: VpnCertificate(fakeData: [
                 \.certificate: "This is a certificate",
                 \.refreshTime: Date().addingTimeInterval(60 * 60),
-                \.validUntil: Date().addingTimeInterval(2 * 60 * 60)
+                \.validUntil: Date().addingTimeInterval(2 * 60 * 60),
             ]),
             updatedCert: VpnCertificate(fakeData: [
                 \.certificate: "This is a new certificate",
                 \.refreshTime: Date().addingTimeInterval(20 * 60),
-                \.validUntil: Date().addingTimeInterval(1 * 60 * 60)
+                \.validUntil: Date().addingTimeInterval(1 * 60 * 60),
             ])
         )
 
@@ -315,7 +315,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                            result: .success([
                                                \.certificate: testData.updatedCert.certificate,
                                                \.refreshTime: testData.updatedCert.refreshTime,
-                                               \.validUntil: testData.updatedCert.validUntil
+                                               \.validUntil: testData.updatedCert.validUntil,
                                            ]),
                                            expectationToFulfill: expectations.certRefresh)
 
@@ -357,7 +357,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expiredCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(-7 * 60),
                 \.refreshTime: Date().addingTimeInterval(-4 * 60),
-                \.certificate: "This is an expired certificate"
+                \.certificate: "This is an expired certificate",
             ]),
             updatedCert: VpnCertificate(fakeData: [:]) // just use default values, we don't care
         )
@@ -368,7 +368,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                            result: .success([
                                                \.certificate: testData.updatedCert.certificate,
                                                \.refreshTime: testData.updatedCert.refreshTime,
-                                               \.validUntil: testData.updatedCert.validUntil
+                                               \.validUntil: testData.updatedCert.validUntil,
                                            ]),
                                            expectationToFulfill: expectations.certRefresh)
 
@@ -406,12 +406,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expiredCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(-7 * 60),
                 \.refreshTime: Date().addingTimeInterval(-4 * 60),
-                \.certificate: "This is an expired certificate"
+                \.certificate: "This is an expired certificate",
             ]),
             updatedCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(7 * 60),
                 \.refreshTime: Date().addingTimeInterval(4 * 60),
-                \.certificate: "This is an updated certificate"
+                \.certificate: "This is an updated certificate",
             ])
         )
 
@@ -812,7 +812,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             sessionId: "session",
                             userId: "user",
                             scopes: [],
-                            mailboxPassword: "")
+                            mailboxPassword: ""),
         ]
 
         var numCertRequests = 0
@@ -921,7 +921,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                             sessionId: "session",
                             userId: "user",
                             scopes: [],
-                            mailboxPassword: "")
+                            mailboxPassword: ""),
         ]
 
         certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,

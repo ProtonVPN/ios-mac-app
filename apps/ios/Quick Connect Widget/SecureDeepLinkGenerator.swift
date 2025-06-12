@@ -63,8 +63,8 @@ class SecureDeepLinkGenerator {
             kSecAttrCanSign as String: true,
             kSecPrivateKeyAttrs as String: [
                 kSecAttrIsPermanent as String: true,
-                kSecAttrApplicationTag as String: Env.privateDataKey.data(using: .utf8)!
-            ] as [String: Any]
+                kSecAttrApplicationTag as String: Env.privateDataKey.data(using: .utf8)!,
+            ] as [String: Any],
         ])
 
         guard let publicKey = key.publicKey else {

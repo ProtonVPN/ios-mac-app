@@ -320,7 +320,7 @@ final class StatusMenuViewModel {
             .userIp,
             .activeConnectionChanged,
             .hasConnected,
-            .planChanged
+            .planChanged,
         ]
         events.subscribe(self, selector: #selector(handleDataChange))
     }
@@ -493,7 +493,7 @@ final class StatusMenuViewModel {
                 attributes: [
                     .font: NSFont.themeFont(bold: true),
                     .baselineOffset: 4,
-                    .foregroundColor: NSColor.color(.text)
+                    .foregroundColor: NSColor.color(.text),
                 ]
             )
             let serverName = NSMutableAttributedString(
@@ -501,7 +501,7 @@ final class StatusMenuViewModel {
                 attributes: [
                     .font: NSFont.themeFont(),
                     .baselineOffset: 4,
-                    .foregroundColor: NSColor.color(.text)
+                    .foregroundColor: NSColor.color(.text),
                 ]
             )
             return NSAttributedString.concatenate(flag, country, serverName)

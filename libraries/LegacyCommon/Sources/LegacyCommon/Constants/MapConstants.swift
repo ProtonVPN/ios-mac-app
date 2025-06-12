@@ -266,6 +266,6 @@ public enum MapConstants {
         "YT": CLLocationCoordinate2D(latitude: -12.8275, longitude: 45.166244),
         "ZA": CLLocationCoordinate2D(latitude: -29.140993, longitude: 24.367459),
         "ZM": CLLocationCoordinate2D(latitude: -13.133897, longitude: 27.849332),
-        "ZW": CLLocationCoordinate2D(latitude: -19.015438, longitude: 29.154857)
+        "ZW": CLLocationCoordinate2D(latitude: -19.015438, longitude: 29.154857),
     ]
 }

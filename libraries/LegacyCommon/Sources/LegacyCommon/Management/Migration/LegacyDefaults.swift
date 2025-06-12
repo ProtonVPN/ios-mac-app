@@ -43,7 +43,7 @@ public enum LegacyDefaultsMigration {
     public static func migrateLargeData(from userDefaults: UserDefaults) {
         // Remove values of large objects that may potentially cause issues if left in user defaults
         let keysForDataToRemove = [
-            "servers" // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
+            "servers", // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
             // In the future, we may choose to migrate Profiles too.
         ] // hardcoded in case the keys are changed in the future
         for key in keysForDataToRemove {

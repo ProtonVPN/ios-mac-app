@@ -63,7 +63,7 @@ struct Migrator {
             category: .persistence,
             metadata: [
                 "appliedMigrations": "\(appliedMigrations)",
-                "registeredMigrations": "\(migrator.migrations)"
+                "registeredMigrations": "\(migrator.migrations)",
             ]
         )
 
@@ -77,7 +77,7 @@ struct Migrator {
             category: .persistence,
             metadata: [
                 "currentVersion": "\(appliedMigrations.last ?? "-")",
-                "targetVersion": "\(targetVersion.identifier)"
+                "targetVersion": "\(targetVersion.identifier)",
             ]
         )
 

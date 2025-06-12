@@ -814,7 +814,7 @@ public final class ConnectingWithBadLANAlert: SystemAlert {
 
         actions.append(contentsOf: [
             .init(title: Localizable.killSwitchEnable, style: .confirmative, handler: killSwitchOnHandler),
-            .init(title: Localizable.continue, style: .destructive, handler: connectAnywayHandler)
+            .init(title: Localizable.continue, style: .destructive, handler: connectAnywayHandler),
         ])
     }
 }
@@ -844,7 +844,7 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
         title = Localizable.operatingSystemOutOfDateAlertTitle
         message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
         actions = [
-            .init(title: Localizable.gotIt, style: .confirmative, handler: nil)
+            .init(title: Localizable.gotIt, style: .confirmative, handler: nil),
         ]
     }
 }

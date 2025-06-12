@@ -98,7 +98,7 @@ final class SettingsAccountViewModel {
         
         var cells: [TableViewCellModel] = [
             .staticKeyValue(key: Localizable.username, value: username),
-            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName)
+            .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName),
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
@@ -149,7 +149,7 @@ final class SettingsAccountViewModel {
                         pushHandler(viewController)
                     }
                 }
-            })
+            }),
         ])
     }
 
@@ -162,7 +162,7 @@ final class SettingsAccountViewModel {
                         pushHandler(viewController)
                     }
                 }
-            }
+            },
         ])
     }
 
@@ -180,7 +180,7 @@ final class SettingsAccountViewModel {
                                         accessibilityIdentifier: "Delete account",
                                         color: .notificationErrorColor(),
                                         controller: controller),
-            .tooltip(text: AccountDeletionService.defaultExplanationMessage)
+            .tooltip(text: AccountDeletionService.defaultExplanationMessage),
         ]
         return TableViewSection(title: "", cells: cells)
     }

@@ -78,7 +78,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
 
         textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint])
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint]),
         ]
 
         textView.isEditable = false
@@ -90,7 +90,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             textView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -4),
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
         trailingConstraint = textView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8)
         trailingConstraint?.isActive = true

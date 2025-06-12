@@ -47,7 +47,7 @@ import VPNShared
 
             let events: [AppEvent] = [
                 .planChanged,
-                .userDelinquent
+                .userDelinquent,
             ]
             events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
         }

@@ -20,7 +20,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
-        .package(path: "../../Foundations/Ergonomics")
+        .package(path: "../../Foundations/Ergonomics"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

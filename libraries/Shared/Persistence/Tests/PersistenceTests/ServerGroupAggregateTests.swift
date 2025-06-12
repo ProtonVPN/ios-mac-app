@@ -40,7 +40,7 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     func testMaintenanceWithAllUnderMaintenanceStatus() throws {
         let maintenanceServers = [
             TestData.createMockServer(withID: "UK#01", status: 0),
-            TestData.createMockServer(withID: "UK#02", status: 0)
+            TestData.createMockServer(withID: "UK#02", status: 0),
         ]
 
         repository.upsert(servers: maintenanceServers)

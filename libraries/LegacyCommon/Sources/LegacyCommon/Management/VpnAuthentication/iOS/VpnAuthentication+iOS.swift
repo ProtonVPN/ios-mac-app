@@ -48,7 +48,7 @@ import VPNShared
 
             let events: [AppEvent] = [
                 .planChanged,
-                .userDelinquent
+                .userDelinquent,
             ]
             events.subscribe(self, selector: #selector(userDowngradedPlanOrBecameDelinquent))
         }
@@ -342,7 +342,7 @@ import VPNShared
                         category: .userCert,
                         metadata: [
                             "publicKeyFingerprint": "\(publicKey.fingerprint)",
-                            "certificatePublicKeyFingerprint": "\(certificatePublicKey.fingerprint)"
+                            "certificatePublicKeyFingerprint": "\(certificatePublicKey.fingerprint)",
                         ]
                     )
                     return false

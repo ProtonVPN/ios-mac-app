@@ -43,7 +43,7 @@ public enum PlanSession {
                 .disableCycleSelectorQueryItem,
                 .disablePlanSelectorQueryItem,
                 .startCheckoutQueryItem,
-                .hideCloseQueryItem
+                .hideCloseQueryItem,
             ]
         }
     }

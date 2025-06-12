@@ -29,7 +29,7 @@ final class ProtocolSupportTests: XCTestCase {
             .wireGuard(.tls),
             .wireGuard(.udp),
             .openVpn(.udp),
-            .openVpn(.tcp)
+            .openVpn(.tcp),
         ]), ProtocolSupport.all)
 
         XCTAssertEqual(

@@ -134,7 +134,7 @@ class HelpMenuViewModel {
         let itemsToDelete = [
             FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.path(), // legacy: old server storage
             AppConstants.FilePaths.sandbox, // legacy
-            AppConstants.FilePaths.starterSandbox // legacy
+            AppConstants.FilePaths.starterSandbox, // legacy
         ]
 
         itemsToDelete.compactMap { $0 }.forEach { path in

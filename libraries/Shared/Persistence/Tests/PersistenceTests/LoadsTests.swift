@@ -27,7 +27,7 @@ final class LoadsTests: TestIsolatedDatabaseTestCase {
     func testLoadsUpdated() throws {
         repository.upsert(servers: [
             TestData.createMockServer(withID: "a", load: 50, score: 2, status: 1),
-            TestData.createMockServer(withID: "b", load: 25, score: 1, status: 0)
+            TestData.createMockServer(withID: "b", load: 25, score: 1, status: 0),
         ])
 
         let serverA = repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)
@@ -45,7 +45,7 @@ final class LoadsTests: TestIsolatedDatabaseTestCase {
 
         repository.upsert(loads: [
             .init(serverId: "a", load: 75, score: 3, status: 1),
-            .init(serverId: "b", load: 0, score: 0, status: 1)
+            .init(serverId: "b", load: 0, score: 0, status: 1),
         ])
 
         let updatedServerA = repository.getFirstServer(filteredBy: [.logicalID("a")], orderedBy: .none)

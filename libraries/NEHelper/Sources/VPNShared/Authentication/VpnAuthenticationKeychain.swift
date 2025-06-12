@@ -126,7 +126,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
                 category: .userCert,
                 metadata: [
                     "certificate": "\(certificate)",
-                    "features": "\(String(describing: certificate.features))"
+                    "features": "\(String(describing: certificate.features))",
                 ]
             )
             delegate?.certificateStored(certificate.certificate)

@@ -119,7 +119,7 @@ public struct ConnectionStatusFeature {
                                 .receive(on: UIScheduler.shared)
                                 .map(Action.newConnectionStatus)
                         }.cancellable(id: IDs.watchConnectionStatus)
-                    )
+                    ),
                 ]
                 if !state.isUsingConnectionPackage {
                     effects.append(

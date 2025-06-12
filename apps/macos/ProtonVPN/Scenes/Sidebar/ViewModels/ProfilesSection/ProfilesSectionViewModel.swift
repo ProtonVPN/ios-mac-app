@@ -71,7 +71,7 @@ class ProfilesSectionViewModel {
             .planChanged,
             .featureFlags,
             .vpnProtocol,
-            .smartProtocol
+            .smartProtocol,
         ]
         events.subscribe(self, selector: #selector(profilesChanged))
     }

@@ -88,7 +88,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
             button.centerXAnchor.constraint(equalTo: centerXAnchor),
             button.centerYAnchor.constraint(equalTo: centerYAnchor),
             button.widthAnchor.constraint(equalTo: widthAnchor),
-            button.heightAnchor.constraint(equalTo: heightAnchor)
+            button.heightAnchor.constraint(equalTo: heightAnchor),
         ])
 
         button.stateChanged = { [weak self] in

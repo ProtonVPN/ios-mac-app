@@ -76,7 +76,7 @@ final class PopUpViewModel: NSObject {
             [
                 title.styled(.strong, font: .themeFont(.paragraph, bold: true), alignment: .natural),
                 .lineSeparator(count: 2),
-                message.styled(alignment: .natural)
+                message.styled(alignment: .natural),
             ].joined()
         } else {
             (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)

@@ -100,7 +100,7 @@ final class ConnectionSettingsViewModel {
         let settingsChangedEvents: [AppEvent] = [
             .vpnProtocol,
             .excludeLocalNetworks,
-            .vpnAccelerator
+            .vpnAccelerator,
         ]
         settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
 

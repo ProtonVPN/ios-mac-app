@@ -99,7 +99,7 @@ let highlightMatches = { (label: UILabel, string: String?, searchText: String?) 
 
     let text = NSMutableAttributedString(string: string, attributes: [
         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-        NSAttributedString.Key.foregroundColor: colors.weakText
+        NSAttributedString.Key.foregroundColor: colors.weakText,
     ])
 
     for findStartingRange in string.findStartingRanges(of: searchText) {

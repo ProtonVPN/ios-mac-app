@@ -53,7 +53,7 @@ public struct ServerManager: DependencyKey {
             let deletedServerCount = repository.delete(serversWithIDsNotIn: newServerIDs, maxTier: maxTierToPurge)
             log.info("Purged stale servers", category: .persistence, metadata: [
                 "deletedServerCount": "\(deletedServerCount)",
-                "maxTier": "\(maxTierToPurge))"
+                "maxTier": "\(maxTierToPurge))",
             ])
 
             repository.upsert(servers: servers)

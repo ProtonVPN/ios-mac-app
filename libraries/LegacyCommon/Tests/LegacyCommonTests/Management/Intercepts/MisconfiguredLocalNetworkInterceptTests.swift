@@ -47,7 +47,7 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
     func testImproperlyConfiguredNetworksWithKillSwitchLeadToNoIntercept() async {
         networkInterfacePropertiesProvider.interfaces = [
             .defaultLoopback,
-            .pretendingToBeGoogle
+            .pretendingToBeGoogle,
         ]
 
         let allowExpectation = XCTestExpectation(description: "Should allow connection")
@@ -69,13 +69,13 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
         let weirdInterfaces: [NetworkInterface] = [
             .pretendingToBeGoogle,
             .nonRfc1918WithWeirdMask,
-            .subnetWithWeirdMask
+            .subnetWithWeirdMask,
         ]
 
         for interface in weirdInterfaces {
             networkInterfacePropertiesProvider.interfaces = [
                 interface,
-                .defaultLoopback
+                .defaultLoopback,
             ]
 
             let alertExpectation = XCTestExpectation(description: "Show connection security alert")
@@ -107,13 +107,13 @@ class MisconfiguredLocalNetworkInterceptTests: XCTestCase {
         let weirdInterfaces: [NetworkInterface] = [
             .pretendingToBeGoogle,
             .nonRfc1918WithWeirdMask,
-            .subnetWithWeirdMask
+            .subnetWithWeirdMask,
         ]
 
         for interface in weirdInterfaces {
             networkInterfacePropertiesProvider.interfaces = [
                 interface,
-                .defaultLoopback
+                .defaultLoopback,
             ]
 
             let alertExpectation = XCTestExpectation(description: "Show connection security alert")

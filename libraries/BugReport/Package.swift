@@ -20,7 +20,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", .upToNextMajor(from: "1.1.1")),
-        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1"))
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
     ],
     targets: [
         .target(
@@ -34,13 +34,13 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]
         ),
         .testTarget(
             name: "BugReportTests",
             dependencies: [
-                "BugReport"
+                "BugReport",
             ],
             resources: [
                 .process("example1.json"),

@@ -70,7 +70,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
                     duration: .oneYear, price: .init(amount: 12, currency: "USD", locale: .en_US)
                 ),
                 iap: .freePlan
-            )
+            ),
         ]))))
         snap(appView, caseName: "8 Upsell Loaded", trait: trait)
     }

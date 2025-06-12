@@ -114,7 +114,7 @@ struct DefaultConnectionSheet: View {
             @Shared(.recents) var recents: OrderedSet<RecentConnection> = [
                 .pinnedFastest,
                 .connectionRegion,
-                .connectionSecureCoreFastest
+                .connectionSecureCoreFastest,
             ]
             let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
             VStack {} // Any old view that we can hook the sheet onto

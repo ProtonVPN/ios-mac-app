@@ -77,7 +77,7 @@ final class ViewController: UIViewController {
         let switzerlandServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -86,8 +86,8 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
@@ -95,7 +95,7 @@ final class ViewController: UIViewController {
         let usServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -104,8 +104,8 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
@@ -113,7 +113,7 @@ final class ViewController: UIViewController {
         let czechiaServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -122,8 +122,8 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
@@ -131,7 +131,7 @@ final class ViewController: UIViewController {
         return [
             CountryItemViewModel(country: "Switzerland", servers: switzerlandServers, isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: usServers, isSecureCoreCountry: isSecureCoreCountry),
-            CountryItemViewModel(country: "Czechia", servers: czechiaServers, isSecureCoreCountry: isSecureCoreCountry)
+            CountryItemViewModel(country: "Czechia", servers: czechiaServers, isSecureCoreCountry: isSecureCoreCountry),
         ]
     }
 }

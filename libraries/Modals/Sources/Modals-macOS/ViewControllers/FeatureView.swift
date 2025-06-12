@@ -50,7 +50,7 @@ final class FeatureView: NSView {
             trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topAnchor.constraint(equalTo: contentView.topAnchor),
-            bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 

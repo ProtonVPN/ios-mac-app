@@ -117,7 +117,7 @@ private extension NSError {
             domain: domain as String,
             code: code,
             userInfo: [
-                NSLocalizedDescriptionKey: description ?? ""
+                NSLocalizedDescriptionKey: description ?? "",
             ]
         )
     }
@@ -187,7 +187,7 @@ public extension CryptoService.Key {
         let options: [String: Any] = [
             kSecAttrKeyType as String: keyType.rawValue,
             kSecAttrKeySizeInBits as String: keySize,
-            kSecAttrKeyClass as String: keyClass.rawValue
+            kSecAttrKeyClass as String: keyClass.rawValue,
         ]
 
         var cfError: Unmanaged<CFError>?

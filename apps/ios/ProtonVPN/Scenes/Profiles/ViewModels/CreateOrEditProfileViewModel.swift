@@ -487,7 +487,7 @@ extension CreateOrEditProfileViewModel {
         } else {
             [SelectionSection(
                 title: nil,
-                cells: rows)
+                cells: rows),
             ]
         }
         
@@ -528,7 +528,7 @@ extension CreateOrEditProfileViewModel {
                 .features(secureCoreServerFilter), // Secure core or not
                 .supports(protocol: ProtocolSupport(vpnProtocols: supportedProtocols)), // Only the ones supporting selected protocol
                 .kind(countryGroup.kind.serverTypeFilter), // Only from selected country/gateway
-                .tier(.exact(tier: tier))
+                .tier(.exact(tier: tier)),
             ],
             orderedBy: .nameAscending
         )
@@ -556,7 +556,7 @@ extension CreateOrEditProfileViewModel {
                 SelectionSection(title: nil, cells: [
                     SelectionRow(title: defaultServerDescriptor(forIndex: 0), object: ServerOffering.fastest(countryGroup.serverOfferingID)),
                     SelectionRow(title: defaultServerDescriptor(forIndex: 1), object: ServerOffering.random(countryGroup.serverOfferingID)),
-                ])
+                ]),
             ])
         }
 

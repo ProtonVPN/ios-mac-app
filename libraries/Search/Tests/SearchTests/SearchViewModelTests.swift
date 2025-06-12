@@ -57,7 +57,7 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingInFreeModeShouldContainsUpsell() {
         let data: [CountryViewModel] = [
-            CountryViewModelMock(country: "France", servers: [:])
+            CountryViewModelMock(country: "France", servers: [:]),
         ]
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: data, constants: Constants(numberOfCountries: 61), mode: .standard(.free))
         vm.search(searchText: "Fra")
@@ -66,7 +66,7 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingInStandardModeShouldDoesNotContainUpsell() {
         let data: [CountryViewModel] = [
-            CountryViewModelMock(country: "France", servers: [:])
+            CountryViewModelMock(country: "France", servers: [:]),
         ]
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: data, constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
         vm.search(searchText: "Fra")
@@ -75,7 +75,7 @@ final class SearchViewModelTests: XCTestCase {
 
     func testSearchingInSecureCoreModeShouldDoesNotContainUpsell() {
         let data: [CountryViewModel] = [
-            CountryViewModelMock(country: "France", servers: [:])
+            CountryViewModelMock(country: "France", servers: [:]),
         ]
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: data, constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
         vm.search(searchText: "Fra")
@@ -132,7 +132,7 @@ final class SearchViewModelTests: XCTestCase {
         vm.search(searchText: "ch")
         XCTAssertEqual(vm.status, SearchStatus.results([
             SearchResult.servers(tier: ServerTier.plus, servers: [ch2]),
-            SearchResult.servers(tier: ServerTier.free, servers: [ch1])
+            SearchResult.servers(tier: ServerTier.free, servers: [ch1]),
         ]))
 
         vm.search(searchText: "ch#1")
@@ -144,7 +144,7 @@ final class SearchViewModelTests: XCTestCase {
         XCTAssertEqual(vm.status, SearchStatus.results([
             SearchResult.countries(countries: [france, finland]),
             SearchResult.cities(cities: [marseille, paris]),
-            SearchResult.servers(tier: ServerTier.plus, servers: [fr1, fr2])
+            SearchResult.servers(tier: ServerTier.plus, servers: [fr1, fr2]),
         ]))
 
         vm.search(searchText: "sta")
@@ -188,7 +188,7 @@ final class SearchViewModelTests: XCTestCase {
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
         let france = CountryViewModelMock(country: "France", servers: [
             ServerTier.free: [free1, free2],
-            ServerTier.plus: [plus1]
+            ServerTier.plus: [plus1],
         ])
 
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: [france], constants: Constants(numberOfCountries: 61), mode: .standard(.free))
@@ -199,7 +199,7 @@ final class SearchViewModelTests: XCTestCase {
             SearchResult.countries(countries: [france]),
             SearchResult.cities(cities: [marseille, paris]),
             SearchResult.servers(tier: ServerTier.free, servers: [free1, free2]),
-            SearchResult.servers(tier: ServerTier.plus, servers: [plus1])
+            SearchResult.servers(tier: ServerTier.plus, servers: [plus1]),
         ]))
     }
 
@@ -211,7 +211,7 @@ final class SearchViewModelTests: XCTestCase {
         let plus1 = ServerViewModelMock(server: "FR#5", city: "Marseille", countryName: "France")
         let france = CountryViewModelMock(country: "France", servers: [
             ServerTier.free: [free1, free2],
-            ServerTier.plus: [plus1]
+            ServerTier.plus: [plus1],
         ])
 
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: [france], constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
@@ -221,7 +221,7 @@ final class SearchViewModelTests: XCTestCase {
             SearchResult.countries(countries: [france]),
             SearchResult.cities(cities: [marseille, paris]),
             SearchResult.servers(tier: ServerTier.plus, servers: [plus1]),
-            SearchResult.servers(tier: ServerTier.free, servers: [free1, free2])
+            SearchResult.servers(tier: ServerTier.free, servers: [free1, free2]),
         ]))
     }
 
@@ -237,18 +237,18 @@ final class SearchViewModelTests: XCTestCase {
 
         let data: [CountryViewModel] = [
             france,
-            finland
+            finland,
         ]
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: data, constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
 
         vm.search(searchText: "Pa")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            SearchResult.cities(cities: [paimo, paris])
+            SearchResult.cities(cities: [paimo, paris]),
         ]))
 
         vm.search(searchText: "M")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            SearchResult.cities(cities: [marseille])
+            SearchResult.cities(cities: [marseille]),
         ]))
     }
 
@@ -264,7 +264,7 @@ final class SearchViewModelTests: XCTestCase {
 
         let data: [CountryViewModel] = [
             france,
-            finland
+            finland,
         ]
         let vm = SearchViewModel(recentSearchesService: RecentSearchesService(storage: SearchStorageMock()), data: data, constants: Constants(numberOfCountries: 61), mode: .standard(.plus))
 
@@ -272,7 +272,7 @@ final class SearchViewModelTests: XCTestCase {
         XCTAssertEqual(vm.status, SearchStatus.results([
             SearchResult.countries(countries: [france, finland]),
             SearchResult.cities(cities: [marseille, paimo, paris]),
-            SearchResult.servers(tier: ServerTier.plus, servers: [fr1, fr2, fi1])
+            SearchResult.servers(tier: ServerTier.plus, servers: [fr1, fr2, fi1]),
         ]))
     }
 
@@ -286,12 +286,12 @@ final class SearchViewModelTests: XCTestCase {
 
         vm.search(searchText: "Prag")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            SearchResult.cities(cities: [prague])
+            SearchResult.cities(cities: [prague]),
         ]))
 
         vm.search(searchText: "Prah")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            SearchResult.cities(cities: [prague])
+            SearchResult.cities(cities: [prague]),
         ]))
     }
 
@@ -301,22 +301,22 @@ final class SearchViewModelTests: XCTestCase {
 
         vm.search(searchText: "united")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            .countries(countries: [us])
+            .countries(countries: [us]),
         ]))
 
         vm.search(searchText: "united ")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            .countries(countries: [us])
+            .countries(countries: [us]),
         ]))
 
         vm.search(searchText: "united st")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            .countries(countries: [us])
+            .countries(countries: [us]),
         ]))
 
         vm.search(searchText: "united states")
         XCTAssertEqual(vm.status, SearchStatus.results([
-            .countries(countries: [us])
+            .countries(countries: [us]),
         ]))
     }
 }

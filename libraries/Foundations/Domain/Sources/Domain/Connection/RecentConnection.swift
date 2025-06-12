@@ -100,7 +100,7 @@ extension RecentConnection {
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
-            )
+            ),
         ]
     }
 }

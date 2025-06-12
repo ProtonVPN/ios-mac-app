@@ -95,7 +95,7 @@ final class HermesSettingsViewAlert: SystemAlert {
         message = type.message
         actions = [
             AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler),
-            AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler)
+            AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler),
         ]
     }
 }

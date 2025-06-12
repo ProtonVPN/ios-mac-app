@@ -151,7 +151,7 @@ open class Container: PropertiesToOverride {
 
     open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
         [
-            MisconfiguredLocalNetworkIntercept(factory: self)
+            MisconfiguredLocalNetworkIntercept(factory: self),
         ]
     }
 

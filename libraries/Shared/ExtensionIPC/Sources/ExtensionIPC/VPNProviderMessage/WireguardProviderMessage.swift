@@ -125,7 +125,7 @@ public enum WireguardProviderRequest: ProviderRequest {
 
         let dict: JSONDictionary = [
             Keys.selector.rawValue: selector as AnyObject,
-            Keys.sessionCookie.rawValue: cookieDict as AnyObject
+            Keys.sessionCookie.rawValue: cookieDict as AnyObject,
         ]
 
         let data = datagram(.setApiSelector) + ((try? JSONSerialization.data(withJSONObject: dict)) ?? Data())

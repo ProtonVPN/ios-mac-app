@@ -47,7 +47,7 @@ class LoadingAnimationView: NSView {
             gifView.centerXAnchor.constraint(equalTo: centerXAnchor),
             gifView.centerYAnchor.constraint(equalTo: centerYAnchor),
             gifView.heightAnchor.constraint(equalTo: heightAnchor),
-            gifView.widthAnchor.constraint(equalTo: widthAnchor)
+            gifView.widthAnchor.constraint(equalTo: widthAnchor),
         ])
     }
 

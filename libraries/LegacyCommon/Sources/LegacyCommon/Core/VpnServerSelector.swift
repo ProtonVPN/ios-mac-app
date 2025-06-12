@@ -98,7 +98,7 @@ class VpnServerSelector {
             metadata: [
                 "connectionRequest": "\(connectionRequest)",
                 "filters": "\(filters)",
-                "order": "\(order)"
+                "order": "\(order)",
             ]
         )
 

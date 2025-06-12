@@ -222,14 +222,14 @@ final class HeaderViewModel {
     private func startObserving() {
         let connectionChangedEvents: [AppEvent] = [
             .activeServerTypeChanged,
-            .connectionStateChanged
+            .connectionStateChanged,
         ]
         connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
 
         let contentChangedEvents: [AppEvent] = [
             .userIp,
             .activeConnectionChanged,
-            .profileContentChanged
+            .profileContentChanged,
         ]
         contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
 

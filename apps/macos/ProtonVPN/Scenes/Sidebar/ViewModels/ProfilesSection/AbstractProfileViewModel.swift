@@ -52,7 +52,7 @@ class AbstractProfileViewModel {
             var allServersUnderMaintenance = true
             let filters: [VPNServerFilter] = [
                 .kind(.country(code: countryCode)),
-                .features(profile.serverType.serverTypeFilter)
+                .features(profile.serverType.serverTypeFilter),
             ]
 
             @Dependency(\.serverRepository) var repository

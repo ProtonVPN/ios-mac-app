@@ -51,7 +51,7 @@ public final class ReportsBugs: Request {
             "Email": bug.email,
             "Country": bug.country,
             "ISP": bug.ISP,
-            "Plan": bug.plan
+            "Plan": bug.plan,
         ]
     }
 

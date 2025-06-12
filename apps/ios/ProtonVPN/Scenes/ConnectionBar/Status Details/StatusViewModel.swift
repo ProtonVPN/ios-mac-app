@@ -242,7 +242,7 @@ class StatusViewModel {
             .staticKeyValue(key: Localizable.ip, value: activeConnection?.serverIp.exitIp ?? ""),
             .staticKeyValue(key: Localizable.server, value: (activeConnection?.server.name ?? "") + city),
             .staticKeyValue(key: Localizable.protocol, value: activeConnection?.vpnProtocol.localizedDescription ?? ""),
-            timeCell
+            timeCell,
         ]
 
         return TableViewSection(title: Localizable.technicalDetails, cells: cells)
@@ -442,7 +442,7 @@ class StatusViewModel {
             .appStateManagerStateChange,
             .netShield,
             .natType,
-            .planChanged
+            .planChanged,
         ]
 
         let connectionChangedTokens = NotificationCenter.default.addObservers(for: events.map(\.name), object: nil) { [weak self] notification in

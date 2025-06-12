@@ -95,7 +95,7 @@ extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible 
         var properties = [
             "certificateFingerprint: '\(certificate.fingerprint)'",
             "validUntil: '\(validUntil)'",
-            "refreshTime: '\(refreshTime)'"
+            "refreshTime: '\(refreshTime)'",
         ]
         #if os(iOS) && DEBUG
             do {
@@ -103,7 +103,7 @@ extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible 
                 // On release builds, let's avoid the costly process of parsing the certificate every time we want to log it
                 properties.append(contentsOf: [
                     "certificatePublicKeyFingerprint: '\(publicKey.fingerprint)'",
-                    "certificatePublicKey: '\(publicKey.base64EncodedString())'"
+                    "certificatePublicKey: '\(publicKey.base64EncodedString())'",
                 ])
             } catch {
                 properties.append("certificateError: \(error)")

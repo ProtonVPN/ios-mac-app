@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "WireGuardExtension",
     platforms: [
-        .tvOS(.v17)
+        .tvOS(.v17),
     ],
     products: [
         .library(
@@ -43,24 +43,24 @@ let package = Package(
                 "Ergonomics",
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "CoreConnection", package: "Connection"),
-                .product(name: "Dependencies", package: "swift-dependencies")
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
+                .enableExperimentalFeature("StrictConcurrency"),
             ]
         ),
         .target(
             name: "WireGuardLogging",
             dependencies: ["WireGuardLoggingC"],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
+                .enableExperimentalFeature("StrictConcurrency"),
             ]
         ),
         .target(
             name: "WireGuardLoggingC",
             dependencies: [],
             swiftSettings: [
-                .enableExperimentalFeature("StrictConcurrency")
+                .enableExperimentalFeature("StrictConcurrency"),
             ]
         ),
         .testTarget(

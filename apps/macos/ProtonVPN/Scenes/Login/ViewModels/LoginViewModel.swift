@@ -185,7 +185,7 @@ final class LoginViewModel {
             apiService.dohInterface.getAccountHost(),
             apiService.dohInterface.getCurrentlyUsedHostUrl(),
             apiService.dohInterface.getHumanVerificationV3Host(),
-            apiService.dohInterface.getCaptchaHostUrl()
+            apiService.dohInterface.getCaptchaHostUrl(),
         ]
         return hosts.contains(where: url.absoluteString.contains)
     }

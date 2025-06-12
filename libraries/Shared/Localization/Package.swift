@@ -8,7 +8,7 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .tvOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -35,6 +35,6 @@ let package = Package(
         .testTarget(
             name: "LocalizationTests",
             dependencies: ["Localization"]
-        )
+        ),
     ]
 )

@@ -32,7 +32,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
             "LV": "Łotwa", // 'Ł' edge case (apparently is not a diacritic)
             "UK": "A Kingdom United", // ISO region API edge case (United Kingdom is represented under ISO code "GB")
             "US": "'Merica", // code and name with disjoint character sets: testMatchesFullCountryCode
-            "ZZ": "Zzz"
+            "ZZ": "Zzz",
         ]
     )
 
@@ -70,7 +70,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
             // The following are not necessarily functional requirements, but help highlight unintentional changes
             ("king dom", nil, "Spaces should be evaluated when matching against country name"),
             (" ", server, "If the country name contains spaces, ' ' queries should match against it"),
-            ("", server, "Empty queries should match against everything")
+            ("", server, "Empty queries should match against everything"),
         ]
 
         evaluate(scenarios: scenarios)
@@ -102,7 +102,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         let scenarios: [(String, VPNServer?, String)] = [
             ("U", nil, "Partial country codes should not be matched"),
             ("US", server, "Full country codes should be matched"),
-            ("uS", server, "Country code search should be case insensitive")
+            ("uS", server, "Country code search should be case insensitive"),
         ]
 
         evaluate(scenarios: scenarios)

@@ -36,7 +36,7 @@ struct UserDefaultsStorage: Storage {
                 metadata: [
                     "error": "\(error)",
                     "key": "\(key)",
-                    "type": "\(type)"
+                    "type": "\(type)",
                     // Omit logging value we failed to decode in case it contains sensitive information
                 ]
             )
@@ -60,7 +60,7 @@ struct UserDefaultsStorage: Storage {
                 metadata: [
                     "error": "\(error)",
                     "key": "\(key)",
-                    "type": "\(T.self)"
+                    "type": "\(T.self)",
                     // Omit logging value we failed to encode in case it contains sensitive information
                 ]
             )

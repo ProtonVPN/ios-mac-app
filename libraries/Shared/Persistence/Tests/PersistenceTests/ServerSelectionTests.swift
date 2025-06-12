@@ -46,7 +46,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let result = repository.getFirstServer(
             filteredBy: [
                 .features(.standard),
-                .tier(.max(tier: 0))
+                .tier(.max(tier: 0)),
             ],
             orderedBy: .fastest
         )
@@ -62,7 +62,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             filteredBy: [
                 .features(.standard),
                 .supports(protocol: [.wireGuardUDP]),
-                .tier(.max(tier: 0))
+                .tier(.max(tier: 0)),
             ],
             orderedBy: .fastest
         )
@@ -105,7 +105,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let result = repository.getFirstServer(
             filteredBy: [
                 .kind(.country(code: "US")),
-                .features(.standard(with: .tor))
+                .features(.standard(with: .tor)),
             ],
             orderedBy: .fastest
         )
@@ -141,7 +141,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let results = repository.getServers(
             filteredBy: [
                 .features(.standard(with: .tor)),
-                .tier(.max(tier: 0))
+                .tier(.max(tier: 0)),
             ],
             orderedBy: .nameAscending
         )
@@ -153,7 +153,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         let results = repository.getServers(
             filteredBy: [
                 .kind(.country(code: "US")),
-                .features(.secureCore)
+                .features(.secureCore),
             ],
             orderedBy: .nameAscending
         )

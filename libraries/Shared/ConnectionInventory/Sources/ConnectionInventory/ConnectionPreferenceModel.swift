@@ -47,6 +47,6 @@ public struct ConnectionPreferenceModel: Equatable, Hashable {
                 header: .init(title: Localizable.homeDefaultConnectionMostRecentName, showConnectedPin: false),
                 subheader: .textual(.withoutFeatures(location: Localizable.homeDefaultConnectionMostRecentDescription))
             )
-        )
+        ),
     ]
 }

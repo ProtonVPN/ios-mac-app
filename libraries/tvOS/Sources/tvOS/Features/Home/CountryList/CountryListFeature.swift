@@ -38,7 +38,7 @@ struct CountryListFeature {
             let allCountries = repository
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
-                    .kind(.country)
+                    .kind(.country),
                 ])
                 .enumerated()
                 .compactMap { index, group in

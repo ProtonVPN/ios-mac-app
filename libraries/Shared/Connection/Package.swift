@@ -8,7 +8,7 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
-        .tvOS(.v17)
+        .tvOS(.v17),
     ],
     products: [
         .library(name: "CertificateAuthentication", targets: ["CertificateAuthentication"]),

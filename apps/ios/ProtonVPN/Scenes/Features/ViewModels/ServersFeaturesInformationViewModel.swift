@@ -40,11 +40,11 @@ struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInforma
                 SmartRoutingFeatureCellViewModel(),
                 StreamingFeatureCellViewModel(),
                 P2PFeatureCellViewModel(),
-                TorFeatureCellViewModel()
+                TorFeatureCellViewModel(),
             ],
             [
-                LoadPerformanceFeatureCellViewModel()
-            ]
+                LoadPerformanceFeatureCellViewModel(),
+            ],
         ]
     )
 

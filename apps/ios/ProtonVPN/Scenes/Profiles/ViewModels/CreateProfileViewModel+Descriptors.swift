@@ -59,7 +59,7 @@ extension CreateOrEditProfileViewModel {
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
+                    .foregroundColor: UIColor.normalTextColor(),
                 ]
             )
         } else {
@@ -68,7 +68,7 @@ extension CreateOrEditProfileViewModel {
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.weakTextColor()
+                    .foregroundColor: UIColor.weakTextColor(),
                 ]
             )
         }
@@ -109,7 +109,7 @@ extension CreateOrEditProfileViewModel {
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: UIColor.normalTextColor()
+                .foregroundColor: UIColor.normalTextColor(),
             ]
         )
         let entryCountryFlag = embeddedCountryFlag(countryCode: entryCountryCode)
@@ -118,7 +118,7 @@ extension CreateOrEditProfileViewModel {
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: UIColor.normalTextColor()
+                .foregroundColor: UIColor.normalTextColor(),
             ]
         )
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
@@ -133,7 +133,7 @@ extension CreateOrEditProfileViewModel {
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
+                    .foregroundColor: UIColor.normalTextColor(),
                 ]
             )
         } else {
@@ -142,7 +142,7 @@ extension CreateOrEditProfileViewModel {
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.weakTextColor()
+                    .foregroundColor: UIColor.weakTextColor(),
                 ]
             )
         }
@@ -169,7 +169,7 @@ extension CreateOrEditProfileViewModel {
             string: "  " + name,
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
-                .baselineOffset: baselineOffset
+                .baselineOffset: baselineOffset,
             ]
         )
         nameAttributedString.insert(imageAttributedString, at: 0)

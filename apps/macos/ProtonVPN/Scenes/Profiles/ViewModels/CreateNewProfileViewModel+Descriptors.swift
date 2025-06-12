@@ -67,7 +67,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: color(.text)
+                    .foregroundColor: color(.text),
                 ]
             )
         } else {
@@ -76,7 +76,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: NSColor.color(.text, .weak)
+                    .foregroundColor: NSColor.color(.text, .weak),
                 ]
             )
         }
@@ -128,7 +128,7 @@ extension CreateNewProfileViewModel {
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: color(.text)
+                .foregroundColor: color(.text),
             ]
         )
         let entryCountryFlag = flagString(entryCountryCode)
@@ -137,7 +137,7 @@ extension CreateNewProfileViewModel {
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: color(.text)
+                .foregroundColor: color(.text),
             ]
         )
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
@@ -152,7 +152,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: color(.text)
+                    .foregroundColor: color(.text),
                 ]
             )
         } else {
@@ -161,7 +161,7 @@ extension CreateNewProfileViewModel {
                 attributes: [
                     .font: NSFont.themeFont(fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: color(.text)
+                    .foregroundColor: color(.text),
                 ]
             )
         }
@@ -175,7 +175,7 @@ extension CreateNewProfileViewModel {
             attributes: [
                 .font: NSFont.themeFont(fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: color(.text)
+                .foregroundColor: color(.text),
             ]
         )
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)

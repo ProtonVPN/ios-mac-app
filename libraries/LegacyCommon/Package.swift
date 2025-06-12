@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -136,7 +136,7 @@ let package = Package(
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ],
             plugins: [
 //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")

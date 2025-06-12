@@ -161,6 +161,6 @@ extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObject {
 
 func genericKeyErrorFor<T: ExpressibleByStringLiteral>(_ key: T) -> Error {
     NSError(domain: "Dictionary", code: -1, userInfo: [
-        NSLocalizedDescriptionKey: "Dictionary doesn't contain key: \"\(key)\" of type \(T.self)"
+        NSLocalizedDescriptionKey: "Dictionary doesn't contain key: \"\(key)\" of type \(T.self)",
     ])
 }

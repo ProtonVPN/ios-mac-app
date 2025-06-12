@@ -167,7 +167,7 @@ final class SettingsViewModel {
             .featureFlags,
             .safeMode,
             .credentialsChanged,
-            .smartProtocol
+            .smartProtocol,
         ]
         reloadEvents.subscribe(self, selector: #selector(reload))
     }
@@ -189,7 +189,7 @@ final class SettingsViewModel {
 
         let reloadEvents: [AppEvent] = [
             .connectionStateChanged,
-            .profileContentChanged
+            .profileContentChanged,
         ]
 
         reloadEvents.subscribe(self, selector: #selector(reload))
@@ -303,7 +303,7 @@ final class SettingsViewModel {
                     value: netShieldPropertyProvider.netShieldType.name,
                     handler: { [weak self] in self?.pushNetshieldSelectionViewController() }
                 ),
-                .tooltip(text: Localizable.netshieldTitleTooltip)
+                .tooltip(text: Localizable.netshieldTitleTooltip),
             ]
         case .failure(.requiresUpgrade):
             return [
@@ -313,7 +313,7 @@ final class SettingsViewModel {
                     upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
                     handler: { _, _ in }
                 ),
-                .tooltip(text: Localizable.netshieldTitleTooltip)
+                .tooltip(text: Localizable.netshieldTitleTooltip),
             ]
         case .failure(.featureDisabled):
             return []
@@ -345,7 +345,7 @@ final class SettingsViewModel {
                     }
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.vpnAcceleratorDescriptionAltLink, withUrl: VPNLink.vpnAccelerator.urlString)),
         ]
     }
 
@@ -369,7 +369,7 @@ final class SettingsViewModel {
                 upsell: { [weak self] in self?.alertService.push(alert: CustomizationUpsellAlert()) },
                 handler: switchLANCallback()
             ),
-            .tooltip(text: Localizable.allowLanInfo)
+            .tooltip(text: Localizable.allowLanInfo),
         ]
     }
 
@@ -422,7 +422,7 @@ final class SettingsViewModel {
                     link: Localizable.moderateNatExplanationLink,
                     withUrl: VPNLink.moderateNAT.urlString
                 )
-            )
+            ),
         ]
     }
 
@@ -476,7 +476,7 @@ final class SettingsViewModel {
                         withColor: UIColor.weakTextColor(),
                         fontSize: 13))
                     .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
-            )
+            ),
         ]
     }
 
@@ -491,7 +491,7 @@ final class SettingsViewModel {
                     callback(propertiesManager.alternativeRouting)
                 }
             ),
-            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString))
+            .attributedTooltip(text: NSMutableAttributedString(attributedString: Localizable.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)),
         ]
     }
 
@@ -608,7 +608,7 @@ final class SettingsViewModel {
                 handler: { [pushExtensionsViewController] in
                     pushExtensionsViewController()
                 }
-            )
+            ),
         ]
 
         return TableViewSection(title: Localizable.extensions, cells: cells)
@@ -621,7 +621,7 @@ final class SettingsViewModel {
                 handler: { [pushUsageStatisticsViewController] in
                     pushUsageStatisticsViewController()
                 }
-            )
+            ),
         ]
 
         return TableViewSection(title: "", cells: cells)
@@ -631,7 +631,7 @@ final class SettingsViewModel {
         let cells: [TableViewCellModel] = [
             .pushStandard(title: Localizable.viewLogs, handler: { [pushLogSelectionViewController] in
                 pushLogSelectionViewController()
-            })
+            }),
         ]
 
         return TableViewSection(title: "", cells: cells)
@@ -644,7 +644,7 @@ final class SettingsViewModel {
             }),
             .button(title: Localizable.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
                 logOut()
-            })
+            }),
         ]
 
         return TableViewSection(title: "", cells: cells)

@@ -61,7 +61,7 @@ final class BannerView: NSView {
         addSubview(label)
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: centerYAnchor),
-            label.centerXAnchor.constraint(equalTo: centerXAnchor)
+            label.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }
 
@@ -71,13 +71,13 @@ final class BannerView: NSView {
         invalidateIntrinsicContentSize()
         NSLayoutConstraint.activate([
             label.widthAnchor.constraint(equalToConstant: labelSize.width + 2 * margin),
-            label.heightAnchor.constraint(equalToConstant: labelSize.height)
+            label.heightAnchor.constraint(equalToConstant: labelSize.height),
         ])
 
         parentView.addSubview(self)
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: parentView.topAnchor, constant: 2 * margin),
-            centerXAnchor.constraint(equalTo: parentView.centerXAnchor)
+            centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
         ])
 
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in

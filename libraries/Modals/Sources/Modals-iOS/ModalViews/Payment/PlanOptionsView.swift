@@ -119,7 +119,7 @@ import CombineSchedulers
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
         try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
@@ -131,7 +131,7 @@ import CombineSchedulers
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(
         retrievePlans: {
@@ -149,7 +149,7 @@ import CombineSchedulers
         .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
         .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)

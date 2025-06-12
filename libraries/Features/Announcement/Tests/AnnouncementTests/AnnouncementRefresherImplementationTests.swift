@@ -87,7 +87,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     func testSavesNewAnnouncementsToStorage() async {
         storage.store([
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
-            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)
+            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil),
         ])
 
         await withDependencies {
@@ -108,7 +108,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
                         type: Announcement.NotificationType.oneTime.rawValue,
                         offer: nil,
                         reference: nil
-                    )
+                    ),
                 ])
             }
         } operation: {
