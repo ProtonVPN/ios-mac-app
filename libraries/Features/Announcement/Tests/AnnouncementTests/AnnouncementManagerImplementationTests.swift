@@ -26,7 +26,7 @@ import Dependencies
 @testable import Announcement
 
 extension Offer {
-    static let empty: Offer = Offer(label: "", icon: "", panel: nil)
+    static let empty: Offer = .init(label: "", icon: "", panel: nil)
 }
 
 class AnnouncementManagerImplementationTests: XCTestCase {

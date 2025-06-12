@@ -41,7 +41,7 @@
 
         private var targetStatus: VPNConnectionStatus?
 
-        private let queue: DispatchQueue = DispatchQueue.main
+        private let queue: DispatchQueue = .main
 
         // MARK: - Connect
 

@@ -129,7 +129,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
     }
 
     func testDoesntSaveNewAnnouncementsToStorageOnError() {
-        let storage: AnnouncementStorageMock = AnnouncementStorageMock()
+        let storage = AnnouncementStorageMock()
         storage.store([
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
             Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)]

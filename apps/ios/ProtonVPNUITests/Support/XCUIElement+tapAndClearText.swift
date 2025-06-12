@@ -31,7 +31,7 @@ extension XCUIElement {
             )
             lowerRightCorner.tap()
 
-            let delete: String = String(
+            let delete = String(
                 repeating: XCUIKeyboardKey.delete.rawValue,
                 count: stringValue.count
             )

@@ -32,7 +32,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
-    private lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { logLevel, message in
         wg_log(.info, message: message)
     }
 
@@ -50,7 +50,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             return
         }
 
-        var socket: String = "udp"
+        var socket = "udp"
         if let socketTypeInput = tunnelProviderProtocol.providerConfiguration?["wg-protocol"] as? String {
             switch socketTypeInput {
             case "tcp": socket = "tcp"

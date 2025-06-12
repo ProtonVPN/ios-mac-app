@@ -53,7 +53,7 @@ final class IosAlertService {
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var modalsFactory: ModalsFactory = ModalsFactory()
+    private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
 

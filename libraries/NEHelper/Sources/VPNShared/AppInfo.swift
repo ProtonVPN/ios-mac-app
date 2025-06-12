@@ -90,7 +90,7 @@ extension AppInfo {
     }
 
     private var osVersionAndModelString: String {
-        var modelString: String = ""
+        var modelString = ""
         if let modelName {
             modelString = "; \(modelName)"
         }

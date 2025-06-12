@@ -42,7 +42,7 @@ public class UserLocationService {
 }
 
 extension UserLocationService: DependencyKey {
-    public static var liveValue: UserLocationService = UserLocationService()
+    public static var liveValue: UserLocationService = .init()
 }
 
 extension DependencyValues {

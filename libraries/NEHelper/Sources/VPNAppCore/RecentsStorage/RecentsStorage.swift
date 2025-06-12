@@ -26,7 +26,7 @@ public struct RecentsStorage {
 }
 
 extension RecentsStorage: DependencyKey {
-    public static var liveValue: RecentsStorage = RecentsStorage(
+    public static var liveValue: RecentsStorage = .init(
         readFromStorage: RecentsStorageImplementation.readFromStorage,
         saveToStorage: RecentsStorageImplementation.saveToStorage
     )

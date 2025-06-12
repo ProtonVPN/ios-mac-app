@@ -65,5 +65,5 @@ extension NEVPNStatus: @retroactive CasePathable {
         }
     }
 
-    public static let allCasePaths: AllCasePaths = AllCasePaths()
+    public static let allCasePaths: AllCasePaths = .init()
 }

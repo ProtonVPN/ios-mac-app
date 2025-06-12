@@ -24,9 +24,9 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var userTierSegmentedControl: UISegmentedControl!
     @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
 
-    private var coordinator: SearchCoordinator = SearchCoordinator(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
+    private var coordinator: SearchCoordinator = .init(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
 
-    private let modals: ModalsFactory = ModalsFactory()
+    private let modals: ModalsFactory = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()        

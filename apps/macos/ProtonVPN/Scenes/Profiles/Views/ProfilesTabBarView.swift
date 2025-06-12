@@ -34,7 +34,7 @@ class ProfilesTabBarView: NSView {
         }
     }
     
-    private var transform: NSAffineTransform = NSAffineTransform()
+    private var transform: NSAffineTransform = .init()
     
     private func prepareTransformation() {
         switch userInterfaceLayoutDirection {

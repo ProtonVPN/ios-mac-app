@@ -38,8 +38,8 @@ final class DependencyContainer: Container {
                                                                     factory: self)
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
-    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
-    private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
+    private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
+    private lazy var macAlertService: MacAlertService = .init(factory: self)
 
     private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
 

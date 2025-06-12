@@ -21,7 +21,7 @@ import Domain
 import Connection
 
 extension SmartPortSelectorBridge: @retroactive DependencyKey {
-    public static let liveValue: SmartPortSelectorBridge = SmartPortSelectorBridge(
+    public static let liveValue: SmartPortSelectorBridge = .init(
         select: { endpoint, connectionProtocol in
             let defaultTVOSProtocol: VpnProtocol = .wireGuard(.udp)
             @Dependency(\.connectionConfiguration) var configuration

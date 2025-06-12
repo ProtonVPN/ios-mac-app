@@ -53,7 +53,7 @@ import Timer
 
 #if !REDESIGN
 
-    let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+    let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
     class AppDelegate: NSObject {
         @Dependency(\.defaultsProvider) var provider

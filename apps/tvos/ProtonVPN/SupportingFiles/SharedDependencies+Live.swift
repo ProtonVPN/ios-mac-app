@@ -27,7 +27,7 @@ enum Constants {
 }
 
 extension DefaultsProvider: DependencyKey {
-    public static let liveValue: DefaultsProvider = DefaultsProvider(
+    public static let liveValue: DefaultsProvider = .init(
         getDefaults: {
             // Use shared defaults
             UserDefaults(suiteName: Constants.appGroup)!

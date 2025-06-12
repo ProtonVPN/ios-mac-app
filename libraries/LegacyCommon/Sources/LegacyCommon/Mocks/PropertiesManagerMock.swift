@@ -103,11 +103,11 @@
         public var warnedTrialExpired: Bool = false
         public var reportBugEmail: String?
         public var discourageSecureCore: Bool = false
-        public var wireguardConfig: WireguardConfig = WireguardConfig()
-        public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
-        public var ratingSettings: RatingSettings = RatingSettings()
-        public var lastConnectionIntent: ConnectionSpec = ConnectionSpec()
-        public var serverChangeConfig: ServerChangeConfig = ServerChangeConfig()
+        public var wireguardConfig: WireguardConfig = .init()
+        public var smartProtocolConfig: SmartProtocolConfig = .init()
+        public var ratingSettings: RatingSettings = .init()
+        public var lastConnectionIntent: ConnectionSpec = .init()
+        public var serverChangeConfig: ServerChangeConfig = .init()
 
         #if os(macOS)
             public var forceExtensionUpgrade: Bool = false
@@ -122,7 +122,7 @@
 
         public var apiEndpoint: String?
         public var lastAppVersion = "0.0.0"
-        public var featureFlags: FeatureFlags = FeatureFlags() {
+        public var featureFlags: FeatureFlags = .init() {
             didSet {
                 AppEvent.featureFlags.post(featureFlags)
             }

@@ -78,7 +78,7 @@ extension ServerChangeStorage {
 }
 
 extension ServerChangeStorage {
-    public static var liveValue: ServerChangeStorage = ServerChangeStorage(
+    public static var liveValue: ServerChangeStorage = .init(
         getConfig: {
             @Dependency(\.propertiesManager) var propertiesManager
             return propertiesManager.serverChangeConfig

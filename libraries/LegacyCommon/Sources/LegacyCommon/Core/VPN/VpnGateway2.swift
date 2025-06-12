@@ -103,7 +103,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     }
 
     public func disconnect() async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             appStateManager.disconnect {
                 continuation.resume()
             }

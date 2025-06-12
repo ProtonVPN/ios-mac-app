@@ -27,7 +27,7 @@ import WebKit
 class AcknowledgementsViewController: NSViewController {
     @IBOutlet weak var webView: WKWebView!
     
-    private lazy var bundle: Bundle = Bundle.main
+    private lazy var bundle: Bundle = .main
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)

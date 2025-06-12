@@ -34,12 +34,12 @@ extension Array<NotificationToken> {
 
 final class TypedNotificationTests: XCTestCase {
     private struct TestNotification: TypedNotification {
-        static let name: Notification.Name = Notification.Name("TestNotificationName")
+        static let name: Notification.Name = .init("TestNotificationName")
         let data: String
     }
 
     private struct TestEmptyNotification: EmptyTypedNotification {
-        static let name: Notification.Name = Notification.Name("EmptyNotificationName")
+        static let name: Notification.Name = .init("EmptyNotificationName")
     }
 
     /// Used to verify that notifications are handled according to the object field

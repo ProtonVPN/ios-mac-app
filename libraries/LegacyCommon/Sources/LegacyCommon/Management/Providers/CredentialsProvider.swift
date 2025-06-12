@@ -32,7 +32,7 @@ public struct CredentialsProvider {
 }
 
 extension CredentialsProvider: DependencyKey {
-    public static let liveValue: CredentialsProvider = CredentialsProvider(
+    public static let liveValue: CredentialsProvider = .init(
         getCredentials: VpnKeychain.instance.fetchCached
     )
 

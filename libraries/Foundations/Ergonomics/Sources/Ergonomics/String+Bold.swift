@@ -42,7 +42,7 @@
 
     public extension String {
         func attributedString(size: CGFloat, color: NSColor, boldStrings: [String], alignment: NSTextAlignment = .natural) -> NSAttributedString {
-            let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+            let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = alignment
 
             let attrs: [NSAttributedString.Key: Any] = [

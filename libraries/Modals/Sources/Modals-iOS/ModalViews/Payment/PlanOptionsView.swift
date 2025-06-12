@@ -21,7 +21,7 @@ import ModalsShared
 import ModalsServices
 
 struct PlanOptionsView: View {
-    private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)
+    private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
     private static let maxContentWidth: CGFloat = 480
 
     typealias ActionHandler = () -> Void

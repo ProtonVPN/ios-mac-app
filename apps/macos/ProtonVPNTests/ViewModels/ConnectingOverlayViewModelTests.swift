@@ -139,7 +139,7 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesM
     
     // MARK: - VpnProtocolChangeManagerFactory
     
-    var vpnProtocolChangeManager: VpnProtocolChangeManagerMock = VpnProtocolChangeManagerMock()
+    var vpnProtocolChangeManager: VpnProtocolChangeManagerMock = .init()
     
     func makeVpnProtocolChangeManager() -> VpnProtocolChangeManager {
         vpnProtocolChangeManager
@@ -147,7 +147,7 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesM
     
     // MARK: - AppStateManagerFactory
     
-    var appStateManager: AppStateManagerMock = AppStateManagerMock()
+    var appStateManager: AppStateManagerMock = .init()
     
     func makeAppStateManager() -> AppStateManager {
         appStateManager
@@ -155,7 +155,7 @@ class ConnectingOverlayViewModelMockFactory: AppStateManagerFactory, PropertiesM
     
     // MARK: - PropertiesManagerFactory
     
-    var propertiesManager: PropertiesManagerMock = PropertiesManagerMock()
+    var propertiesManager: PropertiesManagerMock = .init()
     
     func makePropertiesManager() -> PropertiesManagerProtocol {
         propertiesManager

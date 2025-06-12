@@ -1,8 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantType
---disable redundantTypedThrows
---disable redundantVoidReturnType
 --disable semicolons
 --disable sortDeclarations
 --disable sortImports

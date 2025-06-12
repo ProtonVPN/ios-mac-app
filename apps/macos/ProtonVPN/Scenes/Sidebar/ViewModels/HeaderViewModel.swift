@@ -285,7 +285,7 @@ final class HeaderViewModel {
     }
 
     private func rateString(for rate: UInt32) -> String {
-        let rateString: String = switch rate {
+        let rateString = switch rate {
         case let rate where rate >= UInt32(pow(1024.0, 3)):
             "\(String(format: "%.1f", Double(rate) / pow(1024.0, 3))) GB/s"
         case let rate where rate >= UInt32(pow(1024.0, 2)):

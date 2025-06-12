@@ -279,7 +279,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         }
         let feature = ServerFeature(rawValue: aDecoder.decodeInteger(forKey: CodingKeys.feature.rawValue))
         
-        var location: ServerLocation = ServerLocation(lat: 0.0, long: 0.0)
+        var location = ServerLocation(lat: 0.0, long: 0.0)
         if let locationData = aDecoder.decodeObject(forKey: CodingKeys.location.rawValue) as? Data {
             if let loc = (NSKeyedUnarchiver.unarchiveObject(with: locationData) as? ServerLocation) {
                 location = loc

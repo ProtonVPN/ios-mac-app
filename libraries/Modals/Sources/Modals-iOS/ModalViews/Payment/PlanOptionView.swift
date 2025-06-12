@@ -205,7 +205,7 @@ private extension DateComponents {
     // This property is a fallback in case where DateComponentsFormatter returns `nil`
     // Not ideal but should do the job
     var fallbackDuration: String {
-        var duration: String = ""
+        var duration = ""
         if let year, year != 0 {
             duration += Localizable.planDurationYear(year)
         }

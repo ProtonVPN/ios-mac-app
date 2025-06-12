@@ -168,7 +168,7 @@ final class UpdateManager: NSObject {
         }
     }
 
-    private let suDateFormatter: DateFormatter = DateFormatter()
+    private let suDateFormatter: DateFormatter = .init()
 }
 
 extension UpdateManager: SPUUpdaterDelegate {

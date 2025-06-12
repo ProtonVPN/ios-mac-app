@@ -56,7 +56,7 @@ public extension TimeInterval {
     }
 
     private func components(largestUnit: Self.Unit, smallestUnit: Self.Unit) -> [Int] {
-        var totalSeconds: Int = Int(self)
+        var totalSeconds = Int(self)
         var previousUnit: Self.Unit?
         let components: [Int] = Unit.allCases
             .reduce(

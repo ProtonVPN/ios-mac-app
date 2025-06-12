@@ -20,7 +20,7 @@ import XCTest
 @testable import PMLogger
 
 class FileLogHandlerTests: XCTestCase {
-    private var folder: URL = URL(string: "/tmp")!
+    private var folder: URL = .init(string: "/tmp")!
     private var file: URL!
 
     override func setUp() async throws {

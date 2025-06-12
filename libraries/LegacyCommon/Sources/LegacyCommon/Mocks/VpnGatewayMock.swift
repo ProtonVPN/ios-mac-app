@@ -31,9 +31,9 @@
             case missingUserTier
         }
 
-        public static var connectionChanged: Notification.Name = Notification.Name("")
-        public static var activeServerTypeChanged: Notification.Name = Notification.Name("")
-        public static var needsReconnectNotification: Notification.Name = Notification.Name("")
+        public static var connectionChanged: Notification.Name = .init("")
+        public static var activeServerTypeChanged: Notification.Name = .init("")
+        public static var needsReconnectNotification: Notification.Name = .init("")
 
         public init(userTier: Int? = nil) {
             connection = .disconnected

@@ -21,7 +21,7 @@ import CasePaths
 import ProtonCorePayments
 
 extension PurchaseResult: CasePathable {
-    public static let allCasePaths: AllCasePaths = AllCasePaths()
+    public static let allCasePaths: AllCasePaths = .init()
 
     public struct AllCasePaths {
         public var purchasedPlan: AnyCasePath<PurchaseResult, InAppPurchasePlan> {

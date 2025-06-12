@@ -35,7 +35,7 @@ public struct ServerManager: DependencyKey {
         self.updateServers = updateServers
     }
 
-    public static let liveValue: ServerManager = ServerManager(
+    public static let liveValue: ServerManager = .init(
         updateServers: { servers, freeServersOnly, lastModified in
             @Dependency(\.serverRepository) var repository
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it

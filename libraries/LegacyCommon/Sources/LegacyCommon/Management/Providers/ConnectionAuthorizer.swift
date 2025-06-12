@@ -35,7 +35,7 @@ public enum ConnectionAuthorizationFailureReason: Error, Equatable {
 }
 
 extension ConnectionAuthorizer: DependencyKey {
-    public static var liveValue: ConnectionAuthorizer = ConnectionAuthorizer(
+    public static var liveValue: ConnectionAuthorizer = .init(
         authorize: { request in
             @Dependency(\.credentialsProvider) var credentials
             @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer

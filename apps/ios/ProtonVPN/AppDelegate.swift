@@ -55,7 +55,7 @@ import PMLogger
 import Domain
 import Ergonomics
 
-public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+public let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
 final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10

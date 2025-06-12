@@ -46,7 +46,7 @@ extension TunnelConfiguration {
         var attributes = [String: String]()
 
         for (lineIndex, line) in lines.enumerated() {
-            var trimmedLine: String = if let commentRange = line.range(of: "#") {
+            var trimmedLine = if let commentRange = line.range(of: "#") {
                 String(line[..<commentRange.lowerBound])
             } else {
                 String(line)

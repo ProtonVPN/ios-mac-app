@@ -97,7 +97,7 @@ open class Container: PropertiesToOverride {
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)

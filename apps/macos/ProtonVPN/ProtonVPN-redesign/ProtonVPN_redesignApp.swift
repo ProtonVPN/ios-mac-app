@@ -28,7 +28,7 @@
     import ComposableArchitecture
     import VPNAppCore
 
-    let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+    let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
     @main
     struct ProtonVPNApp: App {

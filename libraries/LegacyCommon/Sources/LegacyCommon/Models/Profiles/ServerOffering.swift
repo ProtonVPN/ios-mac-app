@@ -111,7 +111,7 @@ public enum ServerOffering: Equatable, Codable {
     // MARK: - Static functions
 
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
-        var equal: Bool = false
+        var equal = false
         if case let ServerOffering.fastest(lcc) = lhs, case let ServerOffering.fastest(rcc) = rhs {
             equal = lcc == rcc
         } else if case let ServerOffering.random(lcc) = lhs, case let ServerOffering.random(rcc) = rhs {

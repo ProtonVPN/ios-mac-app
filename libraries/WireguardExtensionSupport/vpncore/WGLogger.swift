@@ -10,7 +10,7 @@ import Foundation
 import Logging
 import PMLogger
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.WG.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.WG.logger")
 
 public final class WGLogHandler: ParentLogHandler {
     override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) {

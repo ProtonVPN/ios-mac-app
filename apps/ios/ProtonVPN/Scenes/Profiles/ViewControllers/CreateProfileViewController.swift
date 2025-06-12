@@ -70,7 +70,7 @@ class CreateProfileViewController: UITableViewController {
         renderSaveButton()
         
         // for dismissing keyboard after name is entered
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }

@@ -31,7 +31,7 @@
     }
 
     extension VPNConnectionFeatures {
-        static let defaultFeatures: VPNConnectionFeatures = VPNConnectionFeatures(
+        static let defaultFeatures: VPNConnectionFeatures = .init(
             netshield: .level1,
             vpnAccelerator: true,
             bouncing: nil, // This is set to the target server's `label` property during connection

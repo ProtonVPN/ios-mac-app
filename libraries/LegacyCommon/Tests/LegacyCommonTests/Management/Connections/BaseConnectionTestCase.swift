@@ -72,7 +72,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         }
     }
 
-    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) -> Void {
+    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) {
         withDependencies { $0.serverRepository = repository } operation: {
             container.vpnGateway.connect(with: request)
         }

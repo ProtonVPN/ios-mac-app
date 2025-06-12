@@ -21,7 +21,7 @@ import Search
 import UIKit
 
 final class CityItemViewModel: CityViewModel {
-    let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
+    let textColor: UIColor = .init(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
 
     let cityName: String
 
@@ -127,7 +127,7 @@ final class ServerItemViewModel: ServerViewModel {
 
     func cancelPartnersIconRequests() {}
 
-    let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
+    let textColor: UIColor = .init(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
 
     let description: String
 

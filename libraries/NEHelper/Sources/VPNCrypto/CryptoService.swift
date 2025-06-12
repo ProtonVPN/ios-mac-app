@@ -224,7 +224,7 @@ public extension CryptoService.Key {
 }
 
 extension CryptoService: DependencyKey {
-    public static let liveValue: CryptoService = CryptoService()
+    public static let liveValue: CryptoService = .init()
     #if DEBUG
         public static var testValue: CryptoService = .liveValue
     #endif

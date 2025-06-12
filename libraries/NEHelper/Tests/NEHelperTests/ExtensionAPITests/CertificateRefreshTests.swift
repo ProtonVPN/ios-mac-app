@@ -418,7 +418,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         // Set an expired certificate to force the manager to refresh.
         authenticationStorage.cert = testData.expiredCert
 
-        var already: Bool = false
+        var already = false
         certRefreshCallback = { request, completionHandler in
             XCTAssertFalse(already, "Should only need to send this request once")
             already = true

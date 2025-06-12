@@ -142,7 +142,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
     }
 
-    private lazy var adapter: WireGuardAdapter = WireGuardAdapter(with: self) { logLevel, message in
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { logLevel, message in
         wg_log(.info, message: message)
     }
 
@@ -488,7 +488,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         // Please make sure this is NEVER enabled on Release builds!
 
         private var connectivityTimer: Timer?
-        private var lastConnectivityCheck: Date = Date()
+        private var lastConnectivityCheck: Date = .init()
 
         private func startTestingConnectivity() {
             DispatchQueue.main.async {

@@ -215,7 +215,7 @@ private class UpdateManagerFactoryMock: PropertiesManagerFactory {
 private class AppSessionManagerMock: AppSessionManager {
     var sessionStatus: SessionStatus = .established
     var loggedIn: Bool = true
-    var sessionChanged: Notification.Name = Notification.Name("AppSessionManagerSessionChanged")
+    var sessionChanged: Notification.Name = .init("AppSessionManagerSessionChanged")
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}

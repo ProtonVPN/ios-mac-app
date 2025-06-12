@@ -91,7 +91,7 @@ extension ServerRepository {
         serverCount() == 0
     }
 
-    public func upsert(servers: [VPNServer]) -> Void {
+    public func upsert(servers: [VPNServer]) {
         upsertServers(servers)
     }
 
@@ -99,7 +99,7 @@ extension ServerRepository {
         deleteServers(ids, maxTier)
     }
 
-    public func upsert(loads: [ContinuousServerProperties]) -> Void {
+    public func upsert(loads: [ContinuousServerProperties]) {
         upsertLoads(loads)
     }
 

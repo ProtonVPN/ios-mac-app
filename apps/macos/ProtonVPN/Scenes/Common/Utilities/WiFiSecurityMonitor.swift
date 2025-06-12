@@ -50,7 +50,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      */
 
     private var reachability: Reachability?
-    private let wifiClient: CWWiFiClient = CWWiFiClient()
+    private let wifiClient: CWWiFiClient = .init()
 
     public private(set) var wifiName: String?
 

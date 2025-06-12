@@ -75,7 +75,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & ProfileManagerFactory
     public var factory: Factory!
     
-    private lazy var tabBarViewController: SidebarTabBarViewController = SidebarTabBarViewController()
+    private lazy var tabBarViewController: SidebarTabBarViewController = .init()
     
     private lazy var countriesSectionViewController: CountriesSectionViewController = { [unowned self] in
         let viewModel = factory.makeCountriesSectionViewModel()

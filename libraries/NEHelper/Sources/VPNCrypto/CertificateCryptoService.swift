@@ -50,7 +50,7 @@
     }
 
     extension CertificateCryptoService: DependencyKey {
-        public static let liveValue: CertificateCryptoService = CertificateCryptoService(
+        public static let liveValue: CertificateCryptoService = .init(
             derRepresentation: CertificateServiceImplementation.derRepresentation,
             publicKey: CertificateServiceImplementation.publicKey
         )

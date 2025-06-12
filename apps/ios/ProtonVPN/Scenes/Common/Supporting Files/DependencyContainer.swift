@@ -34,7 +34,7 @@ import Domain
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer: Container {
-    public static var shared: DependencyContainer = DependencyContainer()
+    public static var shared: DependencyContainer = .init()
 
     // Singletons
     private lazy var navigationService = NavigationService(self)

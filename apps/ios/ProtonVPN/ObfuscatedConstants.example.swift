@@ -38,9 +38,9 @@ class ObfuscatedConstants {
     static let sentryDsnmacOS: String = ""
     static let sentryDsniOS: String = ""
 
-    static let internalUrls: [String] = [String]()
+    static let internalUrls: [String] = .init()
 
-    static let specialCoupons: [String] = [String]()
+    static let specialCoupons: [String] = .init()
 
     static let apiHost: String = ""
 

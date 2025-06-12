@@ -23,7 +23,7 @@ import Theme
 public struct ReconnectCountdown: View {
     static let timerQuantum = 0.1
 
-    @State private var currentTime: Date = Date()
+    @State private var currentTime: Date = .init()
 
     /// The time when the timer should finish.
     let dateFinished: Date

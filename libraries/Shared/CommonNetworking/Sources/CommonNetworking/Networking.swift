@@ -283,7 +283,7 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        let progress: ProgressCompletion = { (progress: Progress) -> Void in
+        let progress: ProgressCompletion = { (progress: Progress) in
             log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
         }
         apiService.performUpload(request: route, files: files, uploadProgress: progress) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
