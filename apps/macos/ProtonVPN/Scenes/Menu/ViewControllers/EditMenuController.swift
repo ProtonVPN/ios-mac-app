@@ -18,7 +18,7 @@
 
 import AppKit
 import Strings
- 
+
 class EditMenuController: NSObject {
     @IBOutlet weak var editMenu: NSMenu!
     @IBOutlet weak var cutItem: NSMenuItem!

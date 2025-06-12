@@ -13,27 +13,27 @@ fileprivate let buttonConnectDisconnect = "ic power off"
 
 class ServerListRobot: ConnectionBaseRobot {
     let verify = Verify()
-    
+
     @discardableResult
     func connectToAServerViaServer() -> ConnectionStatusRobot {
         button(buttonConnectDisconnect).byIndex(0).forceTap()
         allowVpnPermission()
         return ConnectionStatusRobot()
     }
-    
+
     @discardableResult
     func disconnectFromAServerViaServer() -> HomeRobot {
         button(buttonConnectDisconnect).byIndex(0).forceTap()
         return HomeRobot()
     }
-    
+
     @discardableResult
     func connectToAPlusServer(_ name: String) -> HomeRobot {
         staticText(name).tap()
         allowVpnPermission()
         return HomeRobot()
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func serverListIsOpened(_ name: String) -> ServerListRobot {

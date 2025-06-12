@@ -77,9 +77,9 @@ final class DependencyContainer: Container {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
         #if TLS_PIN_DISABLE
-        let pin = false
+            let pin = false
         #else
-        let pin = true
+            let pin = true
         #endif
 
         super.init(

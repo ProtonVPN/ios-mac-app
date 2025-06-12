@@ -28,13 +28,13 @@ public class KeychainActor {
     public init(accessGroup: String) {
         self.keychain =
             .init(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
+                .accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public init() {
         self.keychain =
             .init(service: KeychainConstants.appKeychain)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
+                .accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public func getData(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws -> Data? {
@@ -50,7 +50,7 @@ public class KeychainActor {
             keychain[data: storageKey] = nil
         }
     }
-    
+
     public func remove(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws {
         try keychain.remove(key, ignoringAttributeSynchronizable: ignoringAttributeSynchronizable)
     }

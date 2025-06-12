@@ -31,7 +31,7 @@ extension String {
             return []
         }
     }
-    
+
     func hasMatches(for regex: String) -> Bool {
         return !matches(for: regex).isEmpty
     }

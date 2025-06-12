@@ -57,17 +57,17 @@ final class DefaultProfileTableViewCell: UITableViewCell {
         connectButton.tintColor = .white
         label.textColor = .normalTextColor()
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
+
     @IBAction func connect(_ sender: Any) {
         viewModel?.connectAction()
     }
-    
+
     private func stateChanged() {
         guard let viewModel = viewModel else {
             return

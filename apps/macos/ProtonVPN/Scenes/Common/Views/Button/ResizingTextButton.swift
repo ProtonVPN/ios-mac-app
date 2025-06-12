@@ -31,7 +31,7 @@ class ResizingTextButton: HoverDetectionButton {
         let trackingArea = NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
+
     override var intrinsicContentSize: NSSize {
         return NSSize(width: attributedTitle.size().width + 30, height: bounds.height)
     }

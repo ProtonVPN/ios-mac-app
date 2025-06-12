@@ -84,7 +84,7 @@ struct SessionNetworkingFeature: Reducer {
                 }
 
             case let .sessionFetched(.success(.sessionAlreadyPresent(credentials))),
-                    let .sessionFetched(.success(.sessionFetchedAndAvailable(credentials))):
+                 let .sessionFetched(.success(.sessionFetchedAndAvailable(credentials))):
                 // Credentials already stored in keychain by Networking implementation in CommonNetworking
                 let session: CommonNetworking.Session = credentials.isForUnauthenticatedSession
                     ? .unauth(uid: credentials.sessionID)
@@ -134,10 +134,10 @@ struct SessionNetworkingFeature: Reducer {
                 }
 
             case let .userTierRetrieved(tier, session):
-                    state = .authenticated(session)
-                    networking.setSession(session)
-                    unauthKeychain.clear()
-                    return .send(.delegate(.tier(tier)))
+                state = .authenticated(session)
+                networking.setSession(session)
+                unauthKeychain.clear()
+                return .send(.delegate(.tier(tier)))
 
             case .forkedSessionAuthenticated(.failure):
                 return .none

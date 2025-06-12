@@ -37,9 +37,9 @@ import Foundation
 class ObfuscatedConstants {
     static let sentryDsnmacOS: String = ""
     static let sentryDsniOS: String = ""
-    
+
     static let internalUrls: [String] = [String]()
-    
+
     static let specialCoupons: [String] = [String]()
 
     static let apiHost: String = ""
@@ -49,7 +49,7 @@ class ObfuscatedConstants {
     static let humanVerificationV3Host = ""
 
     static let planNames: Set<String> = []
-    
+
     static let blackSignupDomain: String = ""
     static let blackDefaultHostWithoutHttps: String = ""
     static let blackDefaultHost: String = ""

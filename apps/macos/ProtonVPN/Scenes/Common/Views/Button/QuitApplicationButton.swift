@@ -31,13 +31,13 @@ class QuitApplicationButton: HoverDetectionButton {
 
         configureView()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         configureView()
     }
-    
+
     private func configureView() {
         let style: AppTheme.Style = isHovered ? [.danger, .hovered] : .weak
         let show = (" " + Localizable.quit).styled(style)

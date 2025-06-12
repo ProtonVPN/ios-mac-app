@@ -18,30 +18,30 @@
 
 #if REDESIGN
 
-import SwiftUI
-import Theme
+    import SwiftUI
+    import Theme
 
-struct SideBarButtonStyle: ButtonStyle {
-    @State var isHovered = false
-    var isActive: Bool
+    struct SideBarButtonStyle: ButtonStyle {
+        @State var isHovered = false
+        var isActive: Bool
 
-    func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .foregroundColor(Color(.text))
-            .padding([.horizontal, .vertical], .themeSpacing8)
-            .background(backgroundColor(isPressed: configuration.isPressed))
-            .cornerRadius(.themeRadius8)
-            .padding(.horizontal, .themeRadius16)
-            .onHover { isHovered = $0 }
+        func makeBody(configuration: Configuration) -> some View {
+            configuration
+                .label
+                .foregroundColor(Color(.text))
+                .padding([.horizontal, .vertical], .themeSpacing8)
+                .background(backgroundColor(isPressed: configuration.isPressed))
+                .cornerRadius(.themeRadius8)
+                .padding(.horizontal, .themeRadius16)
+                .onHover { isHovered = $0 }
+        }
+
+        func backgroundColor(isPressed: Bool) -> Color {
+            var style: AppTheme.Style = [.transparent]
+            style.insert(isHovered ? .hovered : [])
+            style.insert(isActive ? .active : [])
+            return Color(.background, style)
+        }
     }
-
-    func backgroundColor(isPressed: Bool) -> Color {
-        var style: AppTheme.Style = [.transparent]
-        style.insert(isHovered ? .hovered : [])
-        style.insert(isActive ? .active : [])
-        return Color(.background, style)
-    }
-}
 
 #endif

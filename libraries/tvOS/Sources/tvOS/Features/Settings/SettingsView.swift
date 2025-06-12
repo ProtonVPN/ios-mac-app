@@ -58,11 +58,11 @@ struct SettingsView: View {
         .fullScreenCover(isPresented: .init(get: { store.isLoading }, set: { _ in }),
                          onDismiss: { store.send(.showProgressView) },
                          content: {
-            ProgressView("Signing out...")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea()
-                .background(.ultraThinMaterial)
-        })
+                             ProgressView("Signing out...")
+                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                 .ignoresSafeArea()
+                                 .background(.ultraThinMaterial)
+                         })
         .navigationDestination(item: $store.scope(state: \.destination?.settingsDrillDown,
                                                   action: \.destination.settingsDrillDown)) { store in
             SettingsDrillDownView(store: store)

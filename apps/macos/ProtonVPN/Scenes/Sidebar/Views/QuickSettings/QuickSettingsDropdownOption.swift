@@ -34,7 +34,7 @@ class QuickSettingsDropdownOption: NSView {
     @IBOutlet weak var plusBox: NSBox!
     @IBOutlet weak var plusText: NSTextField!
     @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
-    
+
     var action: SuccessCallback?
 
     private var state: State = .blocked(business: false)
@@ -43,14 +43,14 @@ class QuickSettingsDropdownOption: NSView {
     @IBAction func didTapActionBtn(_ sender: Any) {
         action?()
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         applyTrackingArea()
-        
+
         wantsLayer = true
         layer?.masksToBounds = false
-        
+
         containerView.wantsLayer = true
         containerView.layer?.masksToBounds = false
         containerView.layer?.borderWidth = 1
@@ -63,33 +63,33 @@ class QuickSettingsDropdownOption: NSView {
 
         optionIconIV.cell?.setAccessibilityElement(false)
     }
-    
+
     // MARK: - Styles
-    
+
     private enum State {
         case selected
         case unselected
         case blocked(business: Bool)
     }
-    
+
     func selectedStyle() {
         state = .selected
         containerView.shadow = nil
         applyState()
     }
-    
+
     func disabledStyle() {
         state = .unselected
         applyState()
     }
-    
+
     func blockedStyle(business: Bool) {
         state = .blocked(business: business)
         plusBox.isHidden = business
         plusAndTitleConstraint.isActive = true
         applyState()
     }
-    
+
     // MARK: - Private
 
     private func setBackground() {
@@ -106,17 +106,17 @@ class QuickSettingsDropdownOption: NSView {
         }
         titleLabel.attributedStringValue = self.style(titleLabel.stringValue, alignment: .left)
     }
-    
+
     private func applyTrackingArea() {
         let trackingArea = NSTrackingArea(rect: bounds, options: [
-                                        NSTrackingArea.Options.mouseEnteredAndExited,
-                                        NSTrackingArea.Options.mouseMoved,
-                                        NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
+            NSTrackingArea.Options.mouseEnteredAndExited,
+            NSTrackingArea.Options.mouseMoved,
+            NSTrackingArea.Options.activeInKeyWindow],
+        owner: self,
+        userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
+
     // MARK: - Mouse
 
     override func resetCursorRects() {
@@ -127,7 +127,7 @@ class QuickSettingsDropdownOption: NSView {
         self.isHovered = true
         setBackground()
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         self.isHovered = false
         setBackground()

@@ -33,7 +33,7 @@ class StatusMenuCountryItemViewModel {
     private let serverGroup: ServerGroupInfo
     private let type: ServerType
     private let vpnGateway: VpnGatewayProtocol
-    
+
     var flag: NSImage {
         switch serverGroup.kind {
         case let .country(code):
@@ -42,22 +42,22 @@ class StatusMenuCountryItemViewModel {
             return IconProvider.servers
         }
     }
-    
+
     var description: NSAttributedString {
         return formDescription()
     }
-    
+
     init(countryGroup: ServerGroupInfo, type: ServerType, vpnGateway: VpnGatewayProtocol) {
         self.serverGroup = countryGroup
         self.type = type
         self.vpnGateway = vpnGateway
     }
-    
+
     func connect() {
         log.debug("Connect requested by selecting a country in status menu. Will connect to country: \(serverGroup) serverType: \(type)", category: .connectionConnect, event: .trigger)
         vpnGateway.connectTo(serverGroup: serverGroup.kind, ofType: type, trigger: .country)
     }
-    
+
     // MARK: - Private
 
     private func formDescription() -> NSAttributedString {

@@ -62,20 +62,20 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
-    
+
     public init(userDefaults: UserDefaults, keyNameProvider: KeyNameProvider?) {
         self.userDefaults = userDefaults
         self.keyNameProvider = keyNameProvider ?? AuthKeychainStorageKeyProvider()
     }
-    
+
     public func fetch() -> [Announcement] {
         guard let data = userDefaults.data(forKey: storageKey),
               let result = try? Self.decoder.decode([Announcement].self, from: data) else {
-                return []
+            return []
         }
         return result
     }
-    
+
     public func store(_ objects: [Announcement]) {
         // Read and apply isRead flags from current objects
         let current = fetch().reduce(into: [String: Bool]()) { result, element in
@@ -103,9 +103,9 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
     public func clear() {
         userDefaults.removeObject(forKey: storageKey)
     }
- 
+
     // MARK: - Private
-    
+
     private var storageKey: String {
         return keyNameProvider.storageKey
     }

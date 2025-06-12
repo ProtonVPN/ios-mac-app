@@ -64,13 +64,13 @@ class NetworkStatistics {
         
         // usage can overflow
         let bitrate = Bitrate(download: UInt32(TimeInterval(latestTraffic.downloadCount >= self.traffic.downloadCount
-                                                            ? latestTraffic.downloadCount - self.traffic.downloadCount
-                                                            : latestTraffic.downloadCount)
-                                                            / timeInterval),
-                              upload: UInt32(TimeInterval(latestTraffic.uploadCount >= self.traffic.uploadCount
-                                                          ? latestTraffic.uploadCount - self.traffic.uploadCount
-                                                          : latestTraffic.uploadCount)
-                                                          / timeInterval))
+                ? latestTraffic.downloadCount - self.traffic.downloadCount
+                : latestTraffic.downloadCount)
+            / timeInterval),
+        upload: UInt32(TimeInterval(latestTraffic.uploadCount >= self.traffic.uploadCount
+                ? latestTraffic.uploadCount - self.traffic.uploadCount
+                : latestTraffic.uploadCount)
+            / timeInterval))
         
         self.traffic = latestTraffic
         

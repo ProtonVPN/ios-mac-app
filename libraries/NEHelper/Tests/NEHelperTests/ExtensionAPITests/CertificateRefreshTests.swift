@@ -646,7 +646,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
                 if case let .failure(error) = result {
                     XCTFail("Should not return error here. This should be called with success when the " +
-                            "completion handler is rescheduled and returns successfully (got '\(error)')")
+                        "completion handler is rescheduled and returns successfully (got '\(error)')")
                 }
                 // note: this won't be fulfilled until three blocks down, when the cert retry succeeds
                 expectations.sessionAuthSuccessfulManagerRestart.fulfill()

@@ -53,11 +53,11 @@ public struct DefaultsProvider: TestDependencyKey {
 
     public static var testValue: DefaultsProvider {
         #if DEBUG
-        return DefaultsProvider(
-            getDefaults: { UserDefaults(suiteName: "ch.protonvpn.userdefaults.test")! }
-        )
+            return DefaultsProvider(
+                getDefaults: { UserDefaults(suiteName: "ch.protonvpn.userdefaults.test")! }
+            )
         #else
-        fatalError("No live value is set for defaults")
+            fatalError("No live value is set for defaults")
         #endif
     }
 }

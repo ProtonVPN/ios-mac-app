@@ -34,11 +34,11 @@ extension XCUIElement {
             XCTFail("Tried to clear and enter text into a non string value")
             return
         }
-        
+
         self.click()
-        
+
         let deleteString = String(repeating: XCUIKeyboardKey.delete.rawValue, count: stringValue.count)
-        
+
         self.typeText(deleteString)
         if text.isEmpty {
             self.typeText(String(XCUIKeyboardKey.tab.rawValue))

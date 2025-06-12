@@ -25,16 +25,16 @@ import UIKit
 extension UIView {
     func addFillingSubview(_ subView: UIView) {
         self.addSubview(subView)
-        
+
         subView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         subView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         subView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
         subView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
     }
-    
+
     func add(subView: UIView, withTopMargin topMargin: CGFloat? = nil, rightMargin: CGFloat? = nil, bottomMargin: CGFloat? = nil, leftMargin: CGFloat? = nil) {
         self.addSubview(subView)
-        
+
         if let topMargin = topMargin {
             subView.topAnchor.constraint(equalTo: self.topAnchor, constant: topMargin).isActive = true
         }

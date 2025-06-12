@@ -318,12 +318,12 @@ private extension ModalType {
         case .welcomePlus:
             return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
-#if os(iOS)
-            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, 
-                         boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold])
-#else
-            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
-#endif
+            #if os(iOS)
+                return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, 
+                             boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold])
+            #else
+                return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
+            #endif
         case .welcomeFallback:
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback)
         case .welcomeToProton:

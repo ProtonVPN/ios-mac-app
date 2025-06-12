@@ -69,21 +69,21 @@ extension XPCBaseService: NSXPCListenerDelegate {
         do {
             let matches = try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken)
             #if DEBUG
-            if !matches {
-                self.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
-            }
+                if !matches {
+                    self.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
+                }
             #else
-            guard matches else {
-                self.log("Refusing XPC connection with pid \(pid): code signature does not match")
-                return false
-            }
+                guard matches else {
+                    self.log("Refusing XPC connection with pid \(pid): code signature does not match")
+                    return false
+                }
             #endif
         } catch {
             self.log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
 
             #if !DEBUG
-            self.log("Rejecting XPC connection.")
-            return false
+                self.log("Rejecting XPC connection.")
+                return false
             #endif
         }
 

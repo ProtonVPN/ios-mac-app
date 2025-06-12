@@ -37,7 +37,7 @@ extension PropertiesManagerProtocol {
             }
         }
     }
-    
+
     var unprotectedNetworkNotifications: Bool {
         get {
             return getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
@@ -46,7 +46,7 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
     }
-    
+
     var rememberLoginAfterUpdate: Bool {
         get {
             return getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
@@ -55,7 +55,7 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
     }
-    
+
     var startMinimized: Bool {
         get {
             return getValue(forKey: AppConstants.UserDefaults.startMinimized)
@@ -64,7 +64,7 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.startMinimized)
         }
     }
-    
+
     var startOnBoot: Bool {
         get {
             return getValue(forKey: AppConstants.UserDefaults.startOnBoot)
@@ -74,7 +74,7 @@ extension PropertiesManagerProtocol {
             self.setLoginItem(enabled: newValue)
         }
     }
-    
+
     var systemNotifications: Bool {
         get {
             return getValue(forKey: AppConstants.UserDefaults.systemNotifications)
@@ -92,12 +92,12 @@ extension PropertiesManagerProtocol {
             setValue(newValue, forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
         }
     }
-    
+
     func restoreStartOnBootStatus() {
         let enabled = self.startOnBoot
         self.setLoginItem(enabled: enabled)
     }
-    
+
     // MARK: - Private
 
     private func setLoginItem(enabled: Bool) {

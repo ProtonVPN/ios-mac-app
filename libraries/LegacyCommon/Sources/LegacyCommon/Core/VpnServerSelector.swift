@@ -43,13 +43,13 @@ class VpnServerSelector {
     public var notifyResolutionUnavailable: ResolutionNotification?
     typealias AppStateGetter = (() -> AppState)
     typealias ResolutionNotification = ((_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void)
-    
+
     // Settings for selection
     private var serverTypeToggle: ServerType
     private var userTier: Int
     private var connectionProtocol: ConnectionProtocol
     private var smartProtocolConfig: SmartProtocolConfig
-    
+
     public init(
         serverType: ServerType,
         userTier: Int,

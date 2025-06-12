@@ -35,7 +35,7 @@ import Theme
 import Strings
 
 protocol StatusMenuViewModelFactory {
-     func makeStatusMenuViewModel() -> StatusMenuViewModel
+    func makeStatusMenuViewModel() -> StatusMenuViewModel
 }
 
 final class StatusMenuViewModel {

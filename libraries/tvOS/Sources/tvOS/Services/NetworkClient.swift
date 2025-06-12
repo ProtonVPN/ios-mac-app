@@ -62,8 +62,8 @@ extension NetworkClient: DependencyKey {
 
 extension DependencyValues {
     var networkClient: NetworkClient {
-      get { self[NetworkClient.self] }
-      set { self[NetworkClient.self] = newValue }
+        get { self[NetworkClient.self] }
+        set { self[NetworkClient.self] = newValue }
     }
 }
 

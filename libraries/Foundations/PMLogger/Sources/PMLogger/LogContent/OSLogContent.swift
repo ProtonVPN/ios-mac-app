@@ -26,7 +26,7 @@ public class OSLogContent: LogContent {
     private var filter: ((OSLogEntryLog) -> Bool) = {
         $0.process == "ProtonVPN"
     }
-    
+
     public init(
         scope: OSLogStore.Scope = .currentProcessIdentifier,
         since: Date? = nil,
@@ -39,7 +39,7 @@ public class OSLogContent: LogContent {
             self.filter = filter
         }
     }
-    
+
     private let dateFormatter = ISO8601DateFormatter()
 
     public func loadContent(callback: @escaping (String) -> Void) {
@@ -59,10 +59,10 @@ public class OSLogContent: LogContent {
                     .filter(self.filter)
                     .map {
                         "\($0.process) | " +
-                        "\($0.subsystem) | " +
-                        "\(dateFormatter.string(from: $0.date)) | " +
-                        "\($0.level.stringValue.uppercased()) | " +
-                        "\($0.composedMessage)"
+                            "\($0.subsystem) | " +
+                            "\(dateFormatter.string(from: $0.date)) | " +
+                            "\($0.level.stringValue.uppercased()) | " +
+                            "\($0.composedMessage)"
                     }
                 let result = entries.joined(separator: "\n")
                 callback(result)

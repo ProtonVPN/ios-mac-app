@@ -17,28 +17,28 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(tvOS)
-import Domain
-import Dependencies
-import CoreConnection
+    import Domain
+    import Dependencies
+    import CoreConnection
 
-extension ConnectionFeatureProvider: DependencyKey {
-    public static let liveValue: ConnectionFeatureProvider = .init(
-        connectionFeatures: { .defaultFeatures },
-        setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },
-        tunnelFeatures: { .init() },
-        connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
-    )
-}
-
-extension VPNConnectionFeatures {
-    static let defaultFeatures: VPNConnectionFeatures = {
-        VPNConnectionFeatures(
-            netshield: .level1,
-            vpnAccelerator: true,
-            bouncing: nil, // This is set to the target server's `label` property during connection
-            natType: .moderateNAT,
-            safeMode: false
+    extension ConnectionFeatureProvider: DependencyKey {
+        public static let liveValue: ConnectionFeatureProvider = .init(
+            connectionFeatures: { .defaultFeatures },
+            setConnectionFeatures: { _ in log.assertionFailure("Nothing to do on tvOS yet") },
+            tunnelFeatures: { .init() },
+            connectionProtocol: { .vpnProtocol(.wireGuard(.udp)) }
         )
-    }()
-}
+    }
+
+    extension VPNConnectionFeatures {
+        static let defaultFeatures: VPNConnectionFeatures = {
+            VPNConnectionFeatures(
+                netshield: .level1,
+                vpnAccelerator: true,
+                bouncing: nil, // This is set to the target server's `label` property during connection
+                natType: .moderateNAT,
+                safeMode: false
+            )
+        }()
+    }
 #endif

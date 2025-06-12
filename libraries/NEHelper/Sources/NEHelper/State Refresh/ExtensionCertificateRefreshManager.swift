@@ -200,7 +200,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
                                                       asPartOf operation: CertificateRefreshAsyncOperation,
                                                       completion: @escaping CertificateRefreshCompletion) {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
         guard forceRefreshDueToExpiredSession || certificateDoesNeedRefreshing(features: features) else {

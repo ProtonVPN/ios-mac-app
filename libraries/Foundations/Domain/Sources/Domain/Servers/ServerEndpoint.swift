@@ -58,7 +58,7 @@ extension ServerEndpoint {
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }
-    
+
     public func entryIp(using vpnProtocol: VpnProtocol) -> String? {
         guard let protocolEntries else {
             return entryIp

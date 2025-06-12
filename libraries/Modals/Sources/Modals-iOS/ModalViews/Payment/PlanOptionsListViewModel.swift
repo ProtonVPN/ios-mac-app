@@ -102,22 +102,22 @@ private extension DateFormatter {
 }
 
 #if DEBUG
-public extension PlansClient {
-    static func mock() -> PlansClient {
-        PlansClient(
-            retrievePlans: {
-                [
-                    PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
-                    PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
-                ]
-            },
-            validate: { option in
-                print("User wants to go with \(option)")
-            },
-            notNow: {
-                print("User wants to stay with free plan")
-            }
-        )
+    public extension PlansClient {
+        static func mock() -> PlansClient {
+            PlansClient(
+                retrievePlans: {
+                    [
+                        PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
+                        PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
+                    ]
+                },
+                validate: { option in
+                    print("User wants to go with \(option)")
+                },
+                notNow: {
+                    print("User wants to stay with free plan")
+                }
+            )
+        }
     }
-}
 #endif

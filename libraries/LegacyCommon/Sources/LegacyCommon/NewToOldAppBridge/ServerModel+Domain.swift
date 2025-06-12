@@ -117,42 +117,42 @@ extension ServerIp {
 }
 
 #if DEBUG
-/// When we get around to moving `ServerModel` DTO to an API/Networking module, or if we convert all bundled server list
-/// JSONs to encode `VPNServer` rather than `ServerModel`, we can safely remove this enum.
-public enum LegacyServerLoader {
-    /// This used to live in `ServerStorageMock`. It's used to parse bundled server list responses for testing purposes.
-    public static func parseFromJsonFile(_ fileName: String, bundle: Bundle) -> [VPNServer] {
-        guard let serverJsonPath = bundle.path(forResource: fileName, ofType: "json") else {
-            fatalError("Couldn't find servers file")
-        }
-
-        let jsonDictionary: JSONDictionary
-        do {
-            let jsonData = try Data(contentsOf: URL(fileURLWithPath: serverJsonPath))
-            let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
-            guard let jsonDict = jsonObject as? JSONDictionary else {
-                throw NSError()
+    /// When we get around to moving `ServerModel` DTO to an API/Networking module, or if we convert all bundled server list
+    /// JSONs to encode `VPNServer` rather than `ServerModel`, we can safely remove this enum.
+    public enum LegacyServerLoader {
+        /// This used to live in `ServerStorageMock`. It's used to parse bundled server list responses for testing purposes.
+        public static func parseFromJsonFile(_ fileName: String, bundle: Bundle) -> [VPNServer] {
+            guard let serverJsonPath = bundle.path(forResource: fileName, ofType: "json") else {
+                fatalError("Couldn't find servers file")
             }
-            jsonDictionary = jsonDict
-        } catch {
-            fatalError("Error loading JSON servers: \(error)")
-        }
 
-        guard let serversJson = jsonDictionary.jsonArray(key: "LogicalServers") else {
-            fatalError()
-        }
-
-        var serverModels: [ServerModel] = []
-        for json in serversJson {
+            let jsonDictionary: JSONDictionary
             do {
-                try serverModels.append(ServerModel(dic: json))
+                let jsonData = try Data(contentsOf: URL(fileURLWithPath: serverJsonPath))
+                let jsonObject = try JSONSerialization.jsonObject(with: jsonData, options: .mutableLeaves)
+                guard let jsonDict = jsonObject as? JSONDictionary else {
+                    throw NSError()
+                }
+                jsonDictionary = jsonDict
             } catch {
-                let error = ParseError.serverParse
-                log.error("Failed to parse serves in mock with \(error)", category: .app)
+                fatalError("Error loading JSON servers: \(error)")
             }
-        }
 
-        return serverModels.map { VPNServer(legacyModel: $0) }
+            guard let serversJson = jsonDictionary.jsonArray(key: "LogicalServers") else {
+                fatalError()
+            }
+
+            var serverModels: [ServerModel] = []
+            for json in serversJson {
+                do {
+                    try serverModels.append(ServerModel(dic: json))
+                } catch {
+                    let error = ParseError.serverParse
+                    log.error("Failed to parse serves in mock with \(error)", category: .app)
+                }
+            }
+
+            return serverModels.map { VPNServer(legacyModel: $0) }
+        }
     }
-}
 #endif

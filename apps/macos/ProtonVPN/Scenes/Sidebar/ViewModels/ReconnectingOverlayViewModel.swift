@@ -35,7 +35,7 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
                 .styled(font: .themeFont(.heading2))
         }
     }
-    
+
     override var firstString: NSAttributedString {
         switch appState {
         case .connected:

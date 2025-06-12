@@ -28,7 +28,7 @@ class ProfileTests: ProtonVPNUITests {
     private let createProfileRobot = CreateProfileRobot()
     private let manageProfilesRobot = ManageProfilesRobot()
     private let settingsRobot = SettingsRobot()
-    
+
     func testCreateEmptyProfile() {
         let profileName = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
@@ -53,7 +53,7 @@ class ProfileTests: ProtonVPNUITests {
             .saveProfile()
             .verify.checkErrorMessageEnterName()
     }
-    
+
     func testCancelProfile() {
         let country = "Austria"
 
@@ -70,7 +70,7 @@ class ProfileTests: ProtonVPNUITests {
             .continueProfileModal()
             .verify.checkProfileOverViewIsOpen()
     }
-    
+
     func testCreateProfileWithTheSameName() {
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
@@ -90,7 +90,7 @@ class ProfileTests: ProtonVPNUITests {
             .saveProfile()
             .verify.checkErrorMessageSameNameExists()
     }
-    
+
     func testNewProfileAppearsInTheSettings() {
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"

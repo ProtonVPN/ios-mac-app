@@ -31,7 +31,7 @@ extension DependencyValues {
 public enum ConnectToVPNKey: TestDependencyKey {
     public static let testValue: @Sendable (ConnectionSpec, ConnectionProtocol?, UserInitiatedVPNChange.VPNTrigger?) async throws -> Void = {
         _,
-        _,
-        _ in
+            _,
+            _ in
     }
 }

@@ -124,8 +124,8 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {
         return isOn
-        ? currentUserTier.isFreeTier
-        : false
+            ? currentUserTier.isFreeTier
+            : false
     }
     
     private var currentUserTier: Int {

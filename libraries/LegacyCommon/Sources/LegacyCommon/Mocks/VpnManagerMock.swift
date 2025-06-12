@@ -20,76 +20,76 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-import Domain
-import VPNShared
+    import Domain
+    import VPNShared
 
-import NetShield
+    import NetShield
 
-public class VpnManagerMock: VpnManagerProtocol {
-    public var netShieldStats: NetShieldModel = .zero(enabled: false)
+    public class VpnManagerMock: VpnManagerProtocol {
+        public var netShieldStats: NetShieldModel = .zero(enabled: false)
 
-    private let serverDescriptor = ServerDescriptor(username: "", address: "")
-    private var onDemand: Bool = false
-    
-    public var stateChanged: (() -> Void)?
-    public var state: VpnState = .invalid {
-        didSet {
-            stateChanged?()
+        private let serverDescriptor = ServerDescriptor(username: "", address: "")
+        private var onDemand: Bool = false
+
+        public var stateChanged: (() -> Void)?
+        public var state: VpnState = .invalid {
+            didSet {
+                stateChanged?()
+            }
         }
+
+        public var currentVpnProtocol: VpnProtocol? = .ike
+
+        public init() {}
+
+        public func isOnDemandEnabled(handler: (Bool) -> Void) {
+            handler(onDemand)
+        }
+
+        public func setOnDemand(_ enabled: Bool) {
+            onDemand = enabled
+        }
+
+        public func disconnectAnyExistingConnectionAndPrepareToConnect(with: VpnManagerConfiguration, completion: @escaping () -> Void) {}
+
+        public func disconnect(completion: @escaping () -> Void) {}
+
+        public func connectedDate(completion: @escaping (Date?) -> Void) {}
+        public func connectedDate() async -> Date? { return nil }
+
+        public func refreshState() {}
+
+        public func appBackgroundStateDidChange(isBackground: Bool) {}
+
+        public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
+            completionHandler?(removeConfigurationError)
+        }
+
+        public var removeConfigurationError: Error?
+
+        public func logsContent(for vpnProtocol: VpnProtocol, completion: @escaping (String?) -> Void) {
+            completion(nil)
+        }
+
+        public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
+            return nil
+        }
+
+        public func refreshManagers() {}
+        public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {}
+        public var prepareManagersTask: Task<(), Never>?
+
+        public func set(vpnAccelerator: Bool) {}
+
+        public func set(netShieldType: NetShieldType) {}
+
+        public func set(natType: NATType) {}
+
+        public func set(safeMode: Bool) {}
+
+        public private(set) var isLocalAgentConnected: Bool?
+        public var localAgentStateChanged: ((Bool?) -> Void)?
     }
-
-    public var currentVpnProtocol: VpnProtocol? = .ike
-    
-    public init() {}
-    
-    public func isOnDemandEnabled(handler: (Bool) -> Void) {
-        handler(onDemand)
-    }
-    
-    public func setOnDemand(_ enabled: Bool) {
-        onDemand = enabled
-    }
-    
-    public func disconnectAnyExistingConnectionAndPrepareToConnect(with: VpnManagerConfiguration, completion: @escaping () -> Void) {}
-    
-    public func disconnect(completion: @escaping () -> Void) {}
-    
-    public func connectedDate(completion: @escaping (Date?) -> Void) {}
-    public func connectedDate() async -> Date? { return nil }
-    
-    public func refreshState() {}
-
-    public func appBackgroundStateDidChange(isBackground: Bool) {}
-        
-    public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
-        completionHandler?(removeConfigurationError)
-    }
-    
-    public var removeConfigurationError: Error?
-    
-    public func logsContent(for vpnProtocol: VpnProtocol, completion: @escaping (String?) -> Void) {
-        completion(nil)
-    }
-    
-    public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
-        return nil
-    }
-    
-    public func refreshManagers() {}
-    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {}
-    public var prepareManagersTask: Task<(), Never>?
-
-    public func set(vpnAccelerator: Bool) {}
-
-    public func set(netShieldType: NetShieldType) {}
-
-    public func set(natType: NATType) {}
-
-    public func set(safeMode: Bool) {}
-
-    public private(set) var isLocalAgentConnected: Bool?
-    public var localAgentStateChanged: ((Bool?) -> Void)?
-}
 #endif

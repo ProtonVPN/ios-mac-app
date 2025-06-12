@@ -34,7 +34,7 @@ class VpnConnectionPreparer {
 
     private var smartProtocol: SmartProtocol?
     private var smartPortSelector: SmartPortSelector?
-    
+
     init(
         appStateManager: AppStateManager,
         serverTierChecker: ServerTierChecker,
@@ -48,7 +48,7 @@ class VpnConnectionPreparer {
         self.smartProtocolConfig = smartProtocolConfig
         self.wireguardConfig = wireguardConfig
     }
-    
+
     func determineServerParametersAndConnect(
         requestId: UUID,
         with connectionProtocol: ConnectionProtocol,
@@ -61,12 +61,12 @@ class VpnConnectionPreparer {
         guard let serverIp = selectServerIp(server: server, connectionProtocol: connectionProtocol) else {
             return
         }
-        
+
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
             let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
             log.info(
                 "Connecting with \(vpnProtocol) to \(server.name) via \(String(describing: entryIp)):\(ports)",
-                 category: .connectionConnect
+                category: .connectionConnect
             )
             self.formConfigurationWithParametersAndConnect(
                 requestId: requestId,
@@ -81,7 +81,7 @@ class VpnConnectionPreparer {
             )
         }
     }
-    
+
     // MARK: - Private functions
 
     // swiftlint:disable:next function_parameter_count
@@ -131,7 +131,7 @@ class VpnConnectionPreparer {
         log.info("Selected \(serverIp) as server ip for \(server.domain)", category: .connectionConnect)
         return serverIp
     }
-    
+
     private func selectVpnProtocol(for connectionProtocol: ConnectionProtocol, toIP serverIp: ServerIp, completion: @escaping (VpnProtocol, [Int]) -> Void) {
         switch connectionProtocol {
         case .smartProtocol:
@@ -143,7 +143,7 @@ class VpnConnectionPreparer {
             smartProtocol?.determineBestProtocol(server: serverIp) { (vpnProtocol, ports) in
                 completion(vpnProtocol, ports)
             }
-            
+
         case let .vpnProtocol(vpnProtocol):
             smartPortSelector = SmartPortSelectorImplementation(
                 wireguardUdpChecker: availabilityCheckerResolver.availabilityChecker(for: .wireGuard(.udp)),
@@ -170,7 +170,7 @@ class VpnConnectionPreparer {
         if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
             return nil
         }
-        
+
         return ConnectionConfiguration(
             id: requestId,
             server: server,

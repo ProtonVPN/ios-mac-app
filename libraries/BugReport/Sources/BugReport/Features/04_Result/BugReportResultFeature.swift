@@ -41,7 +41,7 @@ struct BugReportResultFeature {
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
-                
+
             case .retry:
                 // Retry is done on the parent view
                 return .none

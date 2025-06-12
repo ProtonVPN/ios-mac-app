@@ -27,7 +27,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.
 
     public static var supportsSecureCoding: Bool = true
-    
+
     public let cacheVersion: Int // Cached version default is 0
     public let username: String
     public let accessToken: String
@@ -48,7 +48,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
             "Scopes: \(scopes)\n" +
             "Mailbox Password: \(mailboxPassword)\n"
     }
-    
+
     public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
@@ -60,7 +60,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.mailboxPassword = mailboxPassword ?? ""
         super.init()
     }
-    
+
     public init(username: String, dic: JSONDictionary) throws {
         self.cacheVersion = Self.VERSION
         self.username = username
@@ -85,14 +85,14 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         static let scopes = "scopes"
         static let mailboxPassword = "mailboxPassword"
     }
-    
+
     public required convenience init(coder aDecoder: NSCoder) {
         var scopes: [String] = []
         if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data,
            let unarchivedScopes = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, NSString.self], from: scopesData) {
             scopes = unarchivedScopes as? [String] ?? []
         }
-        
+
         self.init(version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
                   username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
                   accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,

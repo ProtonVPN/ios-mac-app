@@ -51,9 +51,9 @@ extension VpnCertificate: @retroactive CustomDumpStringConvertible {
 extension PrivateKey: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         #if DEBUG
-        return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
+            return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
         #else
-        return "PrivateKey"
+            return "PrivateKey"
         #endif
     }
 }
@@ -61,9 +61,9 @@ extension PrivateKey: CustomDumpStringConvertible {
 extension PublicKey: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         #if DEBUG
-        return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
+            return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
         #else
-        return "PublicKey"
+            return "PublicKey"
         #endif
     }
 }

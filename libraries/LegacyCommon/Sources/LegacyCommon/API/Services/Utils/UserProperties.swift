@@ -24,7 +24,7 @@ import Foundation
 
 public struct UserProperties {
     public static let sessionIdCookieName = "Session-Id"
-    
+
     public let email: String
     public let username: String
     public let modulusID: String
@@ -32,17 +32,17 @@ public struct UserProperties {
     public let verifier: String
     public let appleToken: Data?
     public let challenge: [String: Any]?
-    
+
     public var description: String {
         return """
-            Username: \(username)
-            ModulusID: \(modulusID)
-            Salt: \(salt)
-            Verifier: \(verifier)
-            HasAppleToken: \(appleToken != nil)\n
-            """
+        Username: \(username)
+        ModulusID: \(modulusID)
+        Salt: \(salt)
+        Verifier: \(verifier)
+        HasAppleToken: \(appleToken != nil)\n
+        """
     }
-    
+
     public init(email: String, username: String, modulusID: String, salt: String, verifier: String, appleToken: Data?, challenge: [String: Any]?) {
         self.email = email
         self.username = username

@@ -18,110 +18,110 @@
 
 #if os(macOS)
 
-import NetworkExtension
-import Dependencies
-import ComposableArchitecture
+    import NetworkExtension
+    import Dependencies
+    import ComposableArchitecture
 
-public struct PlutoniumManager: DependencyKey, TestDependencyKey {
-    public var start: () async throws -> Void
-    public var stop: () async throws -> Void
+    public struct PlutoniumManager: DependencyKey, TestDependencyKey {
+        public var start: () async throws -> Void
+        public var stop: () async throws -> Void
 
-    private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
-    private static let descriptionText = "ProtonVPN Plutonium"
+        private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
+        private static let descriptionText = "ProtonVPN Plutonium"
 
-    private init(
-        start: @escaping () async throws -> Void,
-        stop: @escaping () async throws -> Void
-    ) {
-        self.start = start
-        self.stop = stop
-    }
-
-    public static let liveValue = PlutoniumManager(
-        start: {
-            let manager = try await makeOrGetManager()
-            try manager.connection.startVPNTunnel()
-            log.info("Plutonium started")
-        },
-        stop: {
-            updateAppliedConfiguration()
-            let manager = try await makeOrGetManager()
-            guard manager.connection.status == .connected else { return }
-            manager.connection.stopVPNTunnel()
-            log.info("Plutonium stopped")
+        private init(
+            start: @escaping () async throws -> Void,
+            stop: @escaping () async throws -> Void
+        ) {
+            self.start = start
+            self.stop = stop
         }
-    )
 
-    public static let testValue = PlutoniumManager(
-        start: {},
-        stop: {}
-    )
-
-    private static func makeOrGetManager() async throws -> NETransparentProxyManager {
-        // 1. load everything
-        let managers = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[NETransparentProxyManager], Error>) in
-            NETransparentProxyManager.loadAllFromPreferences { list, error in
-                if let error { continuation.resume(throwing: error) }
-                else { continuation.resume(returning: list ?? []) }
+        public static let liveValue = PlutoniumManager(
+            start: {
+                let manager = try await makeOrGetManager()
+                try manager.connection.startVPNTunnel()
+                log.info("Plutonium started")
+            },
+            stop: {
+                updateAppliedConfiguration()
+                let manager = try await makeOrGetManager()
+                guard manager.connection.status == .connected else { return }
+                manager.connection.stopVPNTunnel()
+                log.info("Plutonium stopped")
             }
-        }
+        )
 
-        // 2. find an existing one
-        if let existing = managers.firstMatching(bundleId: bundleId) {
-            return existing
-        }
+        public static let testValue = PlutoniumManager(
+            start: {},
+            stop: {}
+        )
 
-        // 3. create + save + load a brand-new one
-        let newManager = NETransparentProxyManager()
-        let config = NETunnelProviderProtocol()
-        config.providerBundleIdentifier = bundleId
-        config.serverAddress = "127.0.0.1"
-        newManager.protocolConfiguration = config
-        newManager.localizedDescription = descriptionText
-        newManager.isEnabled = true
-
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            newManager.saveToPreferences { saveError in
-                if let saveError {
-                    continuation.resume(throwing: saveError)
-                    return
+        private static func makeOrGetManager() async throws -> NETransparentProxyManager {
+            // 1. load everything
+            let managers = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[NETransparentProxyManager], Error>) in
+                NETransparentProxyManager.loadAllFromPreferences { list, error in
+                    if let error { continuation.resume(throwing: error) }
+                    else { continuation.resume(returning: list ?? []) }
                 }
-                continuation.resume(returning: ())
+            }
+
+            // 2. find an existing one
+            if let existing = managers.firstMatching(bundleId: bundleId) {
+                return existing
+            }
+
+            // 3. create + save + load a brand-new one
+            let newManager = NETransparentProxyManager()
+            let config = NETunnelProviderProtocol()
+            config.providerBundleIdentifier = bundleId
+            config.serverAddress = "127.0.0.1"
+            newManager.protocolConfiguration = config
+            newManager.localizedDescription = descriptionText
+            newManager.isEnabled = true
+
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                newManager.saveToPreferences { saveError in
+                    if let saveError {
+                        continuation.resume(throwing: saveError)
+                        return
+                    }
+                    continuation.resume(returning: ())
+                }
+            }
+
+            return newManager
+        }
+
+        private static func updateAppliedConfiguration() {
+            @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+            @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+            @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+
+            @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
+            @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
+            @Shared(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
+
+            $featureApplied.withLock { $0 = feature }
+            $inclusionActivatedApplied.withLock { $0 = inclusionActivated }
+            $exclusionActivatedApplied.withLock { $0 = exclusionActivated }
+        }
+    }
+
+    extension DependencyValues {
+        public var plutoniumManager: PlutoniumManager {
+            get { self[PlutoniumManager.self] }
+            set { self[PlutoniumManager.self] = newValue }
+        }
+    }
+
+    extension Collection where Element: NETransparentProxyManager {
+        func firstMatching(bundleId: String) -> NETransparentProxyManager? {
+            first {
+                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
+                    .providerBundleIdentifier == bundleId
             }
         }
-
-        return newManager
     }
-
-    private static func updateAppliedConfiguration() {
-        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-        @Shared(.inclusionActivated) var inclusionActivated: PlutoniumActivated
-        @Shared(.exclusionActivated) var exclusionActivated: PlutoniumActivated
-
-        @Shared(.plutoniumFeatureApplied) var featureApplied: PlutoniumFeatureToggle
-        @Shared(.inclusionActivatedApplied) var inclusionActivatedApplied: PlutoniumActivated
-        @Shared(.exclusionActivatedApplied) var exclusionActivatedApplied: PlutoniumActivated
-
-        $featureApplied.withLock { $0 = feature }
-        $inclusionActivatedApplied.withLock { $0 = inclusionActivated }
-        $exclusionActivatedApplied.withLock { $0 = exclusionActivated }
-    }
-}
-
-extension DependencyValues {
-    public var plutoniumManager: PlutoniumManager {
-        get { self[PlutoniumManager.self] }
-        set { self[PlutoniumManager.self] = newValue }
-    }
-}
-
-extension Collection where Element: NETransparentProxyManager {
-    func firstMatching(bundleId: String) -> NETransparentProxyManager? {
-        first {
-            ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                .providerBundleIdentifier == bundleId
-        }
-    }
-}
 
 #endif

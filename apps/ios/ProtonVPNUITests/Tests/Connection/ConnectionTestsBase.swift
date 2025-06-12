@@ -49,7 +49,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
             homeRobot.quickDisconnectViaQCButton()
         }
     }
-    
+
     func closePopUpButtonIfNeeded() {
         if homeRobot.button(okButtonId).exists() {
             homeRobot.button(okButtonId).tap()

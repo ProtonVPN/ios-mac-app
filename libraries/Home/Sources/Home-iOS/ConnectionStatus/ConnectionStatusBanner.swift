@@ -26,9 +26,9 @@ struct ConnectionStatusBanner: View {
     private enum AccessibilityIdentifiers {
         static let locationText: String = "location_text"
     }
-    
+
     let store: StoreOf<ConnectionStatusBannerFeature>
-    
+
     var body: some View {
         WithPerceptionTracking {
             switch store.protectionState {
@@ -67,9 +67,9 @@ struct ConnectionStatusBanner: View {
         return Text(displayCountry)
             .font(.themeFont(.body2()))
             .foregroundColor(Color(.text))
-        + Text(" • ")
+            + Text(" • ")
             .foregroundColor(Color(.text))
-        + Text(displayIP)
+            + Text(displayIP)
             .font(.themeFont(.body2()))
             .foregroundColor(Color(.text, .weak))
     }

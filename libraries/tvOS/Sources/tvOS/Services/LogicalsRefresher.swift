@@ -29,7 +29,7 @@ public struct LogicalsRefresher {
     public var shouldRefreshLogicals: () -> Bool
 
     public init(refreshLogicals: @escaping () async throws -> Void = unimplemented(),
-         shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
+                shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
         self.refreshLogicals = refreshLogicals
         self.shouldRefreshLogicals = shouldRefreshLogicals
     }
@@ -79,7 +79,7 @@ extension LogicalsRefresher: DependencyKey {
 
 extension DependencyValues {
     public var logicalsRefresher: LogicalsRefresher {
-      get { self[LogicalsRefresher.self] }
-      set { self[LogicalsRefresher.self] = newValue }
+        get { self[LogicalsRefresher.self] }
+        set { self[LogicalsRefresher.self] = newValue }
     }
 }

@@ -269,7 +269,7 @@ final class MapViewController: UIViewController {
                 return nil
             }
         }.sorted { (view1, view2) -> Bool in
-                return view1.frame.origin.y < view2.frame.origin.y
+            return view1.frame.origin.y < view2.frame.origin.y
         }
         
         mapView.subviews.forEach { (subview) in

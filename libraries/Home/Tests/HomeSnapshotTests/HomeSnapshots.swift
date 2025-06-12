@@ -18,147 +18,147 @@
 
 #if compiler(>=6) && canImport(Testing)
 
-import OrderedCollections
-import Testing
-import SnapshotTesting
-import ComposableArchitecture
-import VPNAppCore
-import Domain
-import DomainTestSupport
-import Ergonomics
-@testable import HomeShared
-@testable import Home
-import SwiftUI
-import IssueReporting
+    import OrderedCollections
+    import Testing
+    import SnapshotTesting
+    import ComposableArchitecture
+    import VPNAppCore
+    import Domain
+    import DomainTestSupport
+    import Ergonomics
+    @testable import HomeShared
+    @testable import Home
+    import SwiftUI
+    import IssueReporting
 
-@Suite("Home")
-struct SwiftTestingTests {
-    static let homeTestData = [
-        (
-            ProtectionState.unprotected,
-            VPNConnectionStatus.disconnected
-        ),
-        (
-            ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            VPNConnectionStatus.connecting(.specificCountryServer, .mock(country: "PL",
-                                                                         coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
-        ),
-        (
-            ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
-            VPNConnectionStatus.connected(.specificCountryServer, .mock(country: "PL",
-                                                                        coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
-        )
-    ]
+    @Suite("Home")
+    struct SwiftTestingTests {
+        static let homeTestData = [
+            (
+                ProtectionState.unprotected,
+                VPNConnectionStatus.disconnected
+            ),
+            (
+                ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
+                VPNConnectionStatus.connecting(.specificCountryServer, .mock(country: "PL",
+                                                                             coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
+            ),
+            (
+                ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
+                VPNConnectionStatus.connected(.specificCountryServer, .mock(country: "PL",
+                                                                            coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
+            )
+        ]
 
-    @Shared(.protectionState) var protectionState
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    @Shared(.userTier) var userTier
-    @Shared(.userCountry) var userCountry
-    @Shared(.userIP) var userIP
-    @Shared(.recents) var recents
-    @Shared(.netShieldLevel) var netShieldLevel
+        @Shared(.protectionState) var protectionState
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+        @Shared(.userTier) var userTier
+        @Shared(.userCountry) var userCountry
+        @Shared(.userIP) var userIP
+        @Shared(.recents) var recents
+        @Shared(.netShieldLevel) var netShieldLevel
 
-    @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
-    @MainActor
-    func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) async throws {
-        let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
-            $0.serverChangeAuthorizer = .availableValue
-            $0.locale = .en
-            $0.date = .constant(Date())
+        @Test("Home screen", arguments: [Int.freeTier, Int.paidTier], homeTestData)
+        @MainActor
+        func homeScreen(tier: Int, state: (protection: ProtectionState, connection: VPNConnectionStatus)) async throws {
+            let store = Store(initialState: HomeFeature.State(), reducer: HomeFeature.init) {
+                $0.serverChangeAuthorizer = .availableValue
+                $0.locale = .en
+                $0.date = .constant(Date())
+            }
+            let appView = HomeView(store: store)
+                .frame(.rect(width: 375, height: 667)) // iphone se 2022 size
+                .environment(\._accessibilityReduceMotion, true)
+                .environment(\.colorScheme, .dark)
+
+            withDependencies {
+                $0.locale = .en
+                $0.date = .constant(Date())
+            } operation: {
+                $netShieldLevel |=| .level2
+                $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
+                $userCountry |=| "PL"
+                $userIP |=| "1.2.3.4"
+                $userTier |=| tier
+                $protectionState |=| state.protection
+                $vpnConnectionStatus |=| state.connection
+
+                let testName = [tier.isFreeTier ? "Free" : "Paid",
+                                protectionState.shortDescription(),
+                                vpnConnectionStatus.shortDescription()].joined(separator: "-")
+
+                self.assertSnapshot(of: appView, as: .image, testName: testName)
+            }
         }
-        let appView = HomeView(store: store)
-            .frame(.rect(width: 375, height: 667)) // iphone se 2022 size
-            .environment(\._accessibilityReduceMotion, true)
-            .environment(\.colorScheme, .dark)
 
-        withDependencies {
-            $0.locale = .en
-            $0.date = .constant(Date())
-        } operation: {
-            $netShieldLevel |=| .level2
-            $recents |=| [.connectionRegion, .connectionSecureCoreFastest, .connectionSecureCore]
-            $userCountry |=| "PL"
-            $userIP |=| "1.2.3.4"
-            $userTier |=| tier
-            $protectionState |=| state.protection
-            $vpnConnectionStatus |=| state.connection
+        private func assertSnapshot<Value, Format>(
+            of value: @autoclosure () throws -> Value,
+            as snapshotting: Snapshotting<Value, Format>,
+            named name: String? = nil,
+            record recording: Bool? = nil,
+            timeout: TimeInterval = 5,
+            fileID: StaticString = #fileID,
+            file filePath: StaticString = #filePath,
+            testName: String = #function,
+            line: UInt = #line,
+            column: UInt = #column
+        ) {
+            var snapshotDirectory: String?
+            if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
+                snapshotDirectory = "\(projectDir)/libraries/Home/Tests/HomeSnapshotTests/__Snapshots__/HomeSnapshots"
+            }
 
-            let testName = [tier.isFreeTier ? "Free" : "Paid",
-                            protectionState.shortDescription(),
-                            vpnConnectionStatus.shortDescription()].joined(separator: "-")
+            let failure = try verifySnapshot(
+                of: value(),
+                as: snapshotting,
+                named: name,
+                record: recording,
+                snapshotDirectory: snapshotDirectory,
+                timeout: timeout,
+                fileID: fileID,
+                file: filePath,
+                testName: testName,
+                line: line,
+                column: column
+            )
+            guard let message = failure else { return }
+            reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
+        }
+    }
 
-            self.assertSnapshot(of: appView, as: .image, testName: testName)
+    infix operator |=|
+
+    public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
+        lhs.withLock { $0 = rhs }
+    }
+
+    extension Locale {
+        static let en = Locale(identifier: "en")
+    }
+
+    extension ProtectionState {
+        fileprivate func shortDescription() -> String {
+            switch self {
+            case .unprotected: return "Unprotected"
+            case .protecting: return "Protecting"
+            case .protected: return "Protected"
+            case .protectedSecureCore: return "ProtectedSecureCore"
+            case .resolving: return "Loading"
+            }
         }
     }
 
-    private func assertSnapshot<Value, Format>(
-        of value: @autoclosure () throws -> Value,
-        as snapshotting: Snapshotting<Value, Format>,
-        named name: String? = nil,
-        record recording: Bool? = nil,
-        timeout: TimeInterval = 5,
-        fileID: StaticString = #fileID,
-        file filePath: StaticString = #filePath,
-        testName: String = #function,
-        line: UInt = #line,
-        column: UInt = #column
-    ) {
-        var snapshotDirectory: String?
-        if let projectDir = ProcessInfo.processInfo.environment["CI_PROJECT_DIR"] {
-            snapshotDirectory = "\(projectDir)/libraries/Home/Tests/HomeSnapshotTests/__Snapshots__/HomeSnapshots"
-        }
-
-        let failure = try verifySnapshot(
-            of: value(),
-            as: snapshotting,
-            named: name,
-            record: recording,
-            snapshotDirectory: snapshotDirectory,
-            timeout: timeout,
-            fileID: fileID,
-            file: filePath,
-            testName: testName,
-            line: line,
-            column: column
-        )
-        guard let message = failure else { return }
-        reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
-    }
-}
-
-infix operator |=|
-
-public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
-    lhs.withLock { $0 = rhs }
-}
-
-extension Locale {
-    static let en = Locale(identifier: "en")
-}
-
-extension ProtectionState {
-    fileprivate func shortDescription() -> String {
-        switch self {
-        case .unprotected: return "Unprotected"
-        case .protecting: return "Protecting"
-        case .protected: return "Protected"
-        case .protectedSecureCore: return "ProtectedSecureCore"
-        case .resolving: return "Loading"
+    extension VPNConnectionStatus {
+        fileprivate func shortDescription() -> String {
+            switch self {
+            case .disconnected: return "Disconnected"
+            case .connecting: return "Connecting"
+            case .resolving: return "Loading"
+            case .disconnecting: return "Disconnecting"
+            case .connected: return "Connected"
+            }
         }
     }
-}
-
-extension VPNConnectionStatus {
-    fileprivate func shortDescription() -> String {
-        switch self {
-        case .disconnected: return "Disconnected"
-        case .connecting: return "Connecting"
-        case .resolving: return "Loading"
-        case .disconnecting: return "Disconnecting"
-        case .connected: return "Connected"
-        }
-    }
-}
 
 #endif
 

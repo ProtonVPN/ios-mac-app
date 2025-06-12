@@ -25,7 +25,7 @@ public protocol TelemetryEvent: Encodable {
     associatedtype Event: Encodable
     associatedtype Dimensions: Encodable
     associatedtype Values: Encodable
-    
+
     var measurementGroup: String { get }
     var event: Event { get }
     var values: Values { get }

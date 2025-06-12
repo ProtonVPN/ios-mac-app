@@ -24,11 +24,11 @@ import ProtonCoreNetworking
 
 final class VPNServerRequest: Request {
     let serverId: String
-    
+
     init( _ serverId: String) {
         self.serverId = serverId
     }
-    
+
     var path: String {
         return "/vpn/v1/servers/" + serverId
     }

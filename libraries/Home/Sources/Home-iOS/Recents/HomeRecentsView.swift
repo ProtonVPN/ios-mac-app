@@ -88,27 +88,27 @@ public struct RecentsSectionView: View {
 }
 
 #if DEBUG && compiler(>=6)
-@available(iOS 18, *)
-#Preview("Recents", traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(),
-        reducer: RecentsFeature.init
-    )
-    return ScrollView {
-        RecentsSectionView(store: store)
+    @available(iOS 18, *)
+    #Preview("Recents", traits: .dependencies { $0.recentsStorage = .previewValue }) {
+        let store: StoreOf<RecentsFeature> = .init(
+            initialState: .init(),
+            reducer: RecentsFeature.init
+        )
+        return ScrollView {
+            RecentsSectionView(store: store)
+        }
+        .background(Color(.background, .normal))
     }
-    .background(Color(.background, .normal))
-}
 
-@available(iOS 18, *)
-#Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
-    let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(),
-        reducer: RecentsFeature.init
-    )
-    return ScrollView {
-        RecentsSectionView(store: store)
+    @available(iOS 18, *)
+    #Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
+        let store: StoreOf<RecentsFeature> = .init(
+            initialState: .init(),
+            reducer: RecentsFeature.init
+        )
+        return ScrollView {
+            RecentsSectionView(store: store)
+        }
+        .background(Color(.background, .normal))
     }
-    .background(Color(.background, .normal))
-}
 #endif

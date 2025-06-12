@@ -102,9 +102,9 @@ extension ViewController: NSTableViewDataSource {
         let modal = modals[row]
 
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ModalNameCellView"), owner: nil) as? NSTableCellView {
-              cell.textField?.stringValue = modal.title
-              return cell
-            }
+            cell.textField?.stringValue = modal.title
+            return cell
+        }
         return nil
     }
 }

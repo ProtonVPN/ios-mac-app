@@ -44,7 +44,7 @@ extension IPCWGService { // ProviderCommunication
         log("New config saved.")
         completionHandler(true)
     }
-    
+
     override func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
         log("Got getLogs XPC request")
         if Logger.global == nil {

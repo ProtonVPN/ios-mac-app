@@ -23,21 +23,21 @@ public enum LegacyDefaultsMigration {
     private static var migrationKey: String { "migratedTo" }
 
     #if os(iOS)
-    public static func migrateTo(sharedDefaults: UserDefaults) {
-        migrate(from: UserDefaults.standard, to: sharedDefaults)
-    }
-
-    private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
-        if !specifiedDefaults.bool(forKey: Self.migrationKey) {
-            // Move any compatible data from old defaults to the new one
-            standardDefaults.dictionaryRepresentation().forEach { (key, value) in
-                specifiedDefaults.set(value, forKey: key)
-            }
-
-            specifiedDefaults.setValue(true, forKey: Self.migrationKey)
-            specifiedDefaults.synchronize()
+        public static func migrateTo(sharedDefaults: UserDefaults) {
+            migrate(from: UserDefaults.standard, to: sharedDefaults)
         }
-    }
+
+        private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
+            if !specifiedDefaults.bool(forKey: Self.migrationKey) {
+                // Move any compatible data from old defaults to the new one
+                standardDefaults.dictionaryRepresentation().forEach { (key, value) in
+                    specifiedDefaults.set(value, forKey: key)
+                }
+
+                specifiedDefaults.setValue(true, forKey: Self.migrationKey)
+                specifiedDefaults.synchronize()
+            }
+        }
     #endif
 
     public static func migrateLargeData(from userDefaults: UserDefaults) {

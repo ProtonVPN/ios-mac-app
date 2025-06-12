@@ -71,7 +71,7 @@ public struct ServerChangeAuthorizerImplementation {
             intent: .random,
             date: connectionDate,
             upsellNext: recentConnections.count >= (config.changeServerAttemptLimit - 1) &&
-            !recentlyUpsold
+                !recentlyUpsold
         )
 
         log.debug("Registering server change", metadata: ["item": "\(serverChangeItem)"])

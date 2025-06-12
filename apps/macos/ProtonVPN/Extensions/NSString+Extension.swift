@@ -29,7 +29,7 @@ extension NSString {
         }
         return nil
     }
-    
+
     func base64Encoded() -> String? {
         return data(using: String.Encoding.utf8.rawValue)?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
     }

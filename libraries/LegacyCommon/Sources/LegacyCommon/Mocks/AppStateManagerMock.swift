@@ -21,63 +21,63 @@
 //
 
 #if DEBUG
-import Foundation
-import Domain
+    import Foundation
+    import Domain
 
-// Please update as/when needed
-public class AppStateManagerMock: AppStateManager {
-    public init() {}
+    // Please update as/when needed
+    public class AppStateManagerMock: AppStateManager {
+        public init() {}
 
-    public var displayState: AppDisplayState = .disconnected {
-        didSet {
-            AppEvent.appStateManagerDisplayStateChange.post(displayState)
+        public var displayState: AppDisplayState = .disconnected {
+            didSet {
+                AppEvent.appStateManagerDisplayStateChange.post(displayState)
+            }
+        }
+
+        public var state: AppState = .disconnected {
+            didSet {
+                AppEvent.appStateManagerStateChange.post(state)
+            }
+        }
+
+        public var mockActiveConnection: ConnectionConfiguration?
+    
+        public var onVpnStateChanged: ((VpnState) -> Void)?
+    
+        public var isOnDemand: Bool = true
+    
+        public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
+            handler(isOnDemand)
+        }
+    
+        public func cancelConnectionAttempt() {}
+    
+        public func cancelConnectionAttempt(completion: @escaping () -> Void) {
+            state = .disconnected
+            completion()
+        }
+    
+        public func prepareToConnect() {}
+    
+        public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {}
+    
+        public func disconnect() {}
+    
+        public func disconnect(completion: @escaping () -> Void) {
+            state = .disconnected
+            completion()
+        }
+    
+        public func refreshState() {}
+    
+        public func connectedDate(completion: @escaping (Date?) -> Void) {}
+
+        public func connectedDate() async -> Date? {
+            return Date()
+        }
+    
+        public func activeConnection() -> ConnectionConfiguration? {
+            return mockActiveConnection
         }
     }
-
-    public var state: AppState = .disconnected {
-        didSet {
-            AppEvent.appStateManagerStateChange.post(state)
-        }
-    }
-
-    public var mockActiveConnection: ConnectionConfiguration?
-    
-    public var onVpnStateChanged: ((VpnState) -> Void)?
-    
-    public var isOnDemand: Bool = true
-    
-    public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
-        handler(isOnDemand)
-    }
-    
-    public func cancelConnectionAttempt() {}
-    
-    public func cancelConnectionAttempt(completion: @escaping () -> Void) {
-        state = .disconnected
-        completion()
-    }
-    
-    public func prepareToConnect() {}
-    
-    public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {}
-    
-    public func disconnect() {}
-    
-    public func disconnect(completion: @escaping () -> Void) {
-        state = .disconnected
-        completion()
-    }
-    
-    public func refreshState() {}
-    
-    public func connectedDate(completion: @escaping (Date?) -> Void) {}
-
-    public func connectedDate() async -> Date? {
-        return Date()
-    }
-    
-    public func activeConnection() -> ConnectionConfiguration? {
-        return mockActiveConnection
-    }
-}
 #endif

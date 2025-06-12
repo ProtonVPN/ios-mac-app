@@ -40,32 +40,32 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 class StatusMenuWindowModel {
     typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
     private let factory: Factory
-    
+
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    
+
     var contentChanged: (() -> Void)?
 
     private var notificationTokens: [NotificationToken] = []
-    
+
     init(factory: Factory) {
         self.factory = factory
         startObserving()
     }
-    
+
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
     }
-    
+
     var isConnected: Bool {
         return vpnGateway.connection == .connected
     }
-    
+
     var statusMenuViewController: StatusMenuViewController {
         let viewModel = factory.makeStatusMenuViewModel()
         return StatusMenuViewController(with: viewModel)
     }
-    
+
     var statusIcon: StatusIcon {
         guard isSessionEstablished else { return .disconnected }
         switch vpnGateway.connection {
@@ -87,11 +87,11 @@ class StatusMenuWindowModel {
             return .disconnected
         }
     }
-    
+
     var isStatusIconBlinking: Bool {
         return vpnGateway.connection == .connecting
     }
-    
+
     // MARK: - Private functions
 
     private func startObserving() {
@@ -107,22 +107,22 @@ class StatusMenuWindowModel {
         } else {
             sessionEnded()
         }
-        
+
         contentChanged?()
     }
-    
+
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
 
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(handleChange))
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(handleChange))
     }
-    
+
     private func sessionEnded() {
         AppEvent.activeServerTypeChanged.unsubscribe(self)
         AppEvent.connectionStateChanged.unsubscribe(self)
     }
-    
+
     @objc private func handleChange() {
         contentChanged?()
     }

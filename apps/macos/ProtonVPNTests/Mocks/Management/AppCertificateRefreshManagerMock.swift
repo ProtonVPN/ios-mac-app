@@ -27,7 +27,7 @@ class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
     var certificateStoredCalled: ((VPNShared.VpnCertificate) -> Void)?
 
     // AppCertificateRefreshManager
-    
+
     func planNextRefresh() {
         planNextRefreshCalled?()
     }

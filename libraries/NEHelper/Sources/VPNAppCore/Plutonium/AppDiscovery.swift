@@ -18,97 +18,97 @@
 
 #if canImport(AppKit)
 
-import AppKit
-import SwiftUI
+    import AppKit
+    import SwiftUI
 
-import Ergonomics
+    import Ergonomics
 
-import Dependencies
+    import Dependencies
 
-public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
-    public var id: String { bundleIdentifier }
+    public struct PlutoniumApp: Identifiable, Hashable, Codable, Equatable {
+        public var id: String { bundleIdentifier }
 
-    public func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
-    }
-
-    public let bundleIdentifier: String
-    public var title: String
-    public var icon: Image {
-        NSWorkspace.shared.icon(application: bundleIdentifier)
-    }
-
-    public init(bundleIdentifier: String, title: String) {
-        self.bundleIdentifier = bundleIdentifier
-        self.title = title
-    }
-
-    public init?(url: URL) {
-        guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
-        self.bundleIdentifier = bundleIdentifier
-        self.title = url.deletingPathExtension().lastPathComponent
-    }
-
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.hashValue == rhs.hashValue
-    }
-}
-
-// MARK: - App Icons
-
-extension NSWorkspace {
-    func icon(application: String) -> Image {
-        guard let path = urlForApplication(withBundleIdentifier: application) else {
-            return Image(nsImage: icon(for: .application))
+        public func hash(into hasher: inout Hasher) {
+            id.hash(into: &hasher)
         }
-        return Image(nsImage: icon(forFile: path.absolutePath))
+
+        public let bundleIdentifier: String
+        public var title: String
+        public var icon: Image {
+            NSWorkspace.shared.icon(application: bundleIdentifier)
+        }
+
+        public init(bundleIdentifier: String, title: String) {
+            self.bundleIdentifier = bundleIdentifier
+            self.title = title
+        }
+
+        public init?(url: URL) {
+            guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
+            self.bundleIdentifier = bundleIdentifier
+            self.title = url.deletingPathExtension().lastPathComponent
+        }
+
+        public static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.hashValue == rhs.hashValue
+        }
     }
-}
 
-public extension FileManager {
-    func enumerateAppsFolder() -> [PlutoniumApp] {
-        let applicationsURLs = urls(for: .applicationDirectory, in: .allDomainsMask)
-        var apps = [PlutoniumApp]()
-        for applicationsURL in applicationsURLs {
-            do {
-                let contents = try contentsOfDirectory(at: applicationsURL,
-                                                       includingPropertiesForKeys: nil,
-                                                       options: .skipsSubdirectoryDescendants)
-                let urls = contents
-                    .compactMap(PlutoniumApp.init(url:))
-                    .uniqued
+    // MARK: - App Icons
 
-                apps.append(contentsOf: urls)
-            } catch {
-                log.debug("Couldn't enumerate apps folder: \(applicationsURL), with error: \(error)")
+    extension NSWorkspace {
+        func icon(application: String) -> Image {
+            guard let path = urlForApplication(withBundleIdentifier: application) else {
+                return Image(nsImage: icon(for: .application))
             }
+            return Image(nsImage: icon(forFile: path.absolutePath))
         }
-
-        return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
     }
-}
 
-public struct AppsProvider {
-    public var enumerateAppsFolder: () -> [PlutoniumApp]
-}
+    public extension FileManager {
+        func enumerateAppsFolder() -> [PlutoniumApp] {
+            let applicationsURLs = urls(for: .applicationDirectory, in: .allDomainsMask)
+            var apps = [PlutoniumApp]()
+            for applicationsURL in applicationsURLs {
+                do {
+                    let contents = try contentsOfDirectory(at: applicationsURL,
+                                                           includingPropertiesForKeys: nil,
+                                                           options: .skipsSubdirectoryDescendants)
+                    let urls = contents
+                        .compactMap(PlutoniumApp.init(url:))
+                        .uniqued
 
-extension AppsProvider: DependencyKey {
-    public static let liveValue: AppsProvider = .init(enumerateAppsFolder: FileManager.default.enumerateAppsFolder)
+                    apps.append(contentsOf: urls)
+                } catch {
+                    log.debug("Couldn't enumerate apps folder: \(applicationsURL), with error: \(error)")
+                }
+            }
 
-    public static var testValue: AppsProvider = .init { [.huzza] }
-}
-
-extension DependencyValues {
-    public var appsProvider: AppsProvider {
-        get { self[AppsProvider.self] }
-        set { self[AppsProvider.self] = newValue }
+            return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
+        }
     }
-}
 
-extension PlutoniumApp {
-    static var huzza: PlutoniumApp {
-        .init(bundleIdentifier: "test_bundle_id", title: "Huzza!")
+    public struct AppsProvider {
+        public var enumerateAppsFolder: () -> [PlutoniumApp]
     }
-}
+
+    extension AppsProvider: DependencyKey {
+        public static let liveValue: AppsProvider = .init(enumerateAppsFolder: FileManager.default.enumerateAppsFolder)
+
+        public static var testValue: AppsProvider = .init { [.huzza] }
+    }
+
+    extension DependencyValues {
+        public var appsProvider: AppsProvider {
+            get { self[AppsProvider.self] }
+            set { self[AppsProvider.self] = newValue }
+        }
+    }
+
+    extension PlutoniumApp {
+        static var huzza: PlutoniumApp {
+            .init(bundleIdentifier: "test_bundle_id", title: "Huzza!")
+        }
+    }
 
 #endif

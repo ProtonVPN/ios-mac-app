@@ -178,7 +178,7 @@ extension ConnectionRequestType: Codable {
         case city
         case gatewayName
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(Int.self, forKey: .rawValue)
@@ -202,7 +202,7 @@ extension ConnectionRequestType: Codable {
             throw CodingError.unknownValue
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
         switch self {
@@ -230,7 +230,7 @@ extension CountryConnectionRequestType: Codable {
         case rawValue
         case associatedValue
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(Int.self, forKey: .rawValue)
@@ -246,7 +246,7 @@ extension CountryConnectionRequestType: Codable {
             throw CodingError.unknownValue
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
         switch self {

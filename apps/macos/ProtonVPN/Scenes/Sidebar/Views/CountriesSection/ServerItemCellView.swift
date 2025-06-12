@@ -43,7 +43,7 @@ final class ServerItemCellView: NSView {
     @IBOutlet private weak var connectBtn: ConnectButton!
     @IBOutlet private weak var maintenanceIV: NSButton!
     @IBOutlet private weak var upgradeBtn: NSButton!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         wantsLayer = true
@@ -124,9 +124,9 @@ final class ServerItemCellView: NSView {
         view.wantsLayer = true
         featuresStackView.addArrangedSubview(view)
     }
-    
+
     private var viewModel: ServerItemViewModel!
-    
+
     var disabled: Bool = false
 
     weak var delegate: ServerItemCellViewDelegate?
@@ -139,13 +139,13 @@ final class ServerItemCellView: NSView {
         cityLbl.isHidden = true
         connectBtn.isHidden = false
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         upgradeBtn.isHidden = !viewModel.isUsersTierTooLow
         cityLbl.isHidden = viewModel.isConnected || viewModel.isUsersTierTooLow
         connectBtn.isHidden = !viewModel.isConnected || viewModel.isUsersTierTooLow
     }
-    
+
     func updateView(withModel viewModel: ServerItemViewModel) {
         self.viewModel = viewModel
         loadIcon.load = viewModel.load
@@ -163,7 +163,7 @@ final class ServerItemCellView: NSView {
         setupInfoView()
 
         addFeatures()
-        
+
         [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl].forEach {
             $0?.alphaValue = viewModel.alphaOfMainElements
         }
@@ -171,11 +171,11 @@ final class ServerItemCellView: NSView {
         featuresStackView.views.forEach {
             $0.alphaValue = viewModel.alphaOfMainElements
         }
-                
+
         if let code = viewModel.entryCountry {
             secureFlagIV.image = AppTheme.Icon.flag(countryCode: code)
         }
-        
+
         setupAccessibility()
     }
 
@@ -186,11 +186,11 @@ final class ServerItemCellView: NSView {
         maintenanceIV.isHidden = !isUnderMaintenance
         loadIcon.isHidden = isUnderMaintenance
     }
-    
+
     @IBAction private func didTapConnectBtn(_ sender: Any) {
         viewModel.connectAction()
     }
-    
+
     @IBAction private func didTapUpgradeBtn(_ sender: Any) {
         viewModel.upgradeAction()
     }
@@ -206,7 +206,7 @@ final class ServerItemCellView: NSView {
         connectBtn.nameForAccessibility = viewModel.serverName
         connectBtn.setAccessibilityElement(true)
     }
-    
+
     override func accessibilityChildren() -> [Any]? {
         return [connectBtn as Any]
     }

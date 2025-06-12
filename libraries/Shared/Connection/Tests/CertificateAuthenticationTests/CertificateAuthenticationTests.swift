@@ -212,7 +212,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             certificate: mockCertificate,
             features: storedFeatures
         )
-        
+
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {

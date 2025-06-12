@@ -37,7 +37,7 @@ public extension Optional<String> {
     var isEmpty: Bool {
         return self?.isEmpty ?? true
     }
-    
+
     var isEmail: Bool {
         return self?.isEmail ?? false
     }

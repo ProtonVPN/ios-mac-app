@@ -75,7 +75,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     private var timerLoadsRefresh: BackgroundTimer?
     private var timerAccountRefresh: BackgroundTimer?
     private var timerStreamingRefresh: BackgroundTimer?
-    
+
     private var appSessionRefresher: AppSessionRefresher {
         return factory.makeAppSessionRefresher() // Do not retain it
     }
@@ -92,7 +92,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         self.refreshIntervals = refreshIntervals
         self.delegate = delegate
     }
-    
+
     public func startTimers() {
         let refreshes = [
             (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
@@ -114,7 +114,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
             }
         }
     }
-    
+
     public func stopTimers() {
         timerFullRefresh?.invalidate()
         timerLoadsRefresh?.invalidate()
@@ -126,17 +126,17 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         timerAccountRefresh = nil
         timerStreamingRefresh = nil
     }
-    
+
     private func refreshFull() {
         guard let delegate, delegate.shouldRefreshFull() else { return }
         appSessionRefresher.refreshData()
     }
-    
+
     private func refreshLoads() {
         guard let delegate, delegate.shouldRefreshLoads() else { return }
         appSessionRefresher.refreshServerLoads()
     }
-    
+
     private func refreshAccount() {
         guard let delegate, delegate.shouldRefreshAccount() else { return }
         appSessionRefresher.refreshAccount()

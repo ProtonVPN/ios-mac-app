@@ -36,7 +36,7 @@ import VPNAppCore
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory & PropertiesManagerFactory
-    
+
     private let factory: Factory
 
     lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -46,11 +46,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     public private(set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
-    
+
     override var title: String! {
         return Localizable.netshieldTitle
     }
-    
+
     override var learnLink: String {
         return VPNLink.netshieldSupport.urlString
     }
@@ -77,8 +77,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
 
         notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
                                                                          object: nil) { [weak self] _ in
-            self?.contentChanged()
-        })
+                self?.contentChanged()
+            })
     }
 
     var netShieldViewModel: NetShieldModel {
@@ -87,11 +87,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         netShieldStats = netShieldStats.copy(enabled: isActive)
         return netShieldStats
     }
-    
+
     override var options: [QuickSettingsDropdownOptionPresenter] {
         return [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownUpgradeButton.isHidden = true
@@ -102,7 +102,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private func contentChanged() {
         viewController?.updateNetshieldStats()
     }
-    
+
     // MARK: - Private
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {

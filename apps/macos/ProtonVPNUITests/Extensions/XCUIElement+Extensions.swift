@@ -32,7 +32,7 @@ extension XCUIElement {
             coordinatesClick(dx: dx, dy: dy)
         }
     }
-    
+
     /// Clicks at a given coordinate.
     ///
     /// - Parameters:
@@ -42,7 +42,7 @@ extension XCUIElement {
         let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector.init(dx: dx, dy: dy))
         coordinate.click()
     }
-    
+
     /// Forcibly hovers the element if its not hittable.
     ///
     /// - Parameters:
@@ -55,7 +55,7 @@ extension XCUIElement {
             coordinatesHover(dx: dx, dy: dy)
         }
     }
-    
+
     /// Hovers over a given coordinate.
     ///
     /// - Parameters:

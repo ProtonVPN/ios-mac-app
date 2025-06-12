@@ -19,21 +19,21 @@
 import Foundation
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 
-struct Notifications {
-    public static let shouldResume = UIApplication.didBecomeActiveNotification
-    public static let shouldSuspend = UIApplication.willResignActiveNotification
-}
+    struct Notifications {
+        public static let shouldResume = UIApplication.didBecomeActiveNotification
+        public static let shouldSuspend = UIApplication.willResignActiveNotification
+    }
 
 #elseif canImport(AppKit)
-import AppKit
-import Cocoa
+    import AppKit
+    import Cocoa
 
-struct Notifications {
-    public static let shouldResume = NSApplication.willBecomeActiveNotification
-    public static let shouldSuspend = NSApplication.willResignActiveNotification
-}
+    struct Notifications {
+        public static let shouldResume = NSApplication.willBecomeActiveNotification
+        public static let shouldSuspend = NSApplication.willResignActiveNotification
+    }
 #endif
 
 /// Timer implementation that is paused while the application is in the background

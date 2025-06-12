@@ -51,7 +51,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
-        
+
         var socket: String = "udp"
         if let socketTypeInput = tunnelProviderProtocol.providerConfiguration?["wg-protocol"] as? String {
             switch socketTypeInput {
@@ -60,7 +60,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             default: socket = "udp"
             }
         }
-        
+
         guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -75,7 +75,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
-                                
+
                 return
             }
 
@@ -122,17 +122,17 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler()
 
             #if os(macOS)
-            // HACK: This is a filthy hack to work around Apple bug 32073323 (dup'd by us as 47526107).
-            // Remove it when they finally fix this upstream and the fix has been rolled out to
-            // sufficient quantities of users.
-            exit(0)
+                // HACK: This is a filthy hack to work around Apple bug 32073323 (dup'd by us as 47526107).
+                // Remove it when they finally fix this upstream and the fix has been rolled out to
+                // sufficient quantities of users.
+                exit(0)
             #endif
         }
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
-        
+
         if let completionHandler = completionHandler, messageData.count == 1, messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
@@ -145,7 +145,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler?(nil)
         }
     }
-    
+
     private func setupLogging() {
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
     }

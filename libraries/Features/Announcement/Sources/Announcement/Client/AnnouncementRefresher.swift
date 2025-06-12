@@ -52,7 +52,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     @Dependency(\.announcementStorage) private var announcementStorage
 
     private let refreshInterval: TimeInterval
-    
+
     @Shared(.lastAnnouncementRefreshDate) public var lastRefreshDate
 
     public init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
@@ -61,7 +61,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))
     }
-    
+
     @objc public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
            Date().timeIntervalSince(lastRefresh) < refreshInterval {
@@ -107,7 +107,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         }
         announcementStorage.clear()
     }
-    
+
     @objc func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? LegacyCommon.FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {

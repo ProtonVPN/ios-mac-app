@@ -43,10 +43,10 @@ struct RecentsSectionView: View {
             } label: {
                 HStack(spacing: .themeSpacing4) {
                     (recentsHidden
-                     ? IconProvider.chevronRightFilled
-                     : IconProvider.chevronDownFilled)
-                    .resizable()
-                    .frame(.square(16))
+                        ? IconProvider.chevronRightFilled
+                        : IconProvider.chevronDownFilled)
+                        .resizable()
+                        .frame(.square(16))
                     Text(Localizable.homeRecentsRecentSection)
                     Spacer()
                         .frame(maxWidth: .infinity)
@@ -76,9 +76,9 @@ struct HomeRecentsSectionView_Previews: PreviewProvider {
                 .connectionSecureCore, // maintenance
                 .connectionSecureCoreFastest
             ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                  vpnConnectionStatus: .disconnected),
-                                                reducer: { HomeFeature() }
+            connectionStatus: .init(protectionState: .protected(netShield: .random)),
+            vpnConnectionStatus: .disconnected),
+            reducer: { HomeFeature() }
         )
         WithViewStore(store, observe: { $0 }) { store in
             RecentsSectionView(

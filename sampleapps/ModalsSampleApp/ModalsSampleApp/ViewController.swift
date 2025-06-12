@@ -59,7 +59,7 @@ final class ViewController: UITableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         6
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
@@ -78,7 +78,7 @@ final class ViewController: UITableViewController {
             return 1
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchTableViewCell", for: indexPath) as! SwitchTableViewCell
@@ -118,10 +118,10 @@ final class ViewController: UITableViewController {
         if let modalCell = cell as? ModalTableViewCell {
             modalCell.modalTitle.text = title
         }
-        
+
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else {
             return

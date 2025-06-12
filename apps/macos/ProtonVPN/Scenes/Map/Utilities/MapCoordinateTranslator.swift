@@ -39,28 +39,28 @@ struct MapCoordinateTranslator {
         // MARK: Offset for the incomplete map
         
         /**
-         * Updating image instructions:
-         *
-         * If the image changes in resolution (proportions remain the same),
-         * multiply the imageOriginSffset and realMapSize by the proportional change.
-         * e.g. image dimensions both double, imageOriginSffset and realMapSize values should double.
-         *
-         * Otherwise, get imageOriginOffset and realMapSize by overlaying a full
-         * Miller Cylindrical projection
-         * (https://map-projections.net/img/gruen-w/tobler-cylindrical-1.png) on
-         * top of the actual map image at desired resolution.
-         *
-         *  ----------------------------------
-         *  | -----------------              |
-         *  | |               |              |
-         *  | |               |              |
-         *  | -----------------              |
-         *  | ←--image width--→   ↑          |
-         *  |                     | offset.y |
-         *  |                     ↓          |
-         *  ----------------------------------
-         *  ←---------real map width---------→
-        **/
+          * Updating image instructions:
+          *
+          * If the image changes in resolution (proportions remain the same),
+          * multiply the imageOriginSffset and realMapSize by the proportional change.
+          * e.g. image dimensions both double, imageOriginSffset and realMapSize values should double.
+          *
+          * Otherwise, get imageOriginOffset and realMapSize by overlaying a full
+          * Miller Cylindrical projection
+          * (https://map-projections.net/img/gruen-w/tobler-cylindrical-1.png) on
+          * top of the actual map image at desired resolution.
+          *
+          *  ----------------------------------
+          *  | -----------------              |
+          *  | |               |              |
+          *  | |               |              |
+          *  | -----------------              |
+          *  | ←--image width--→   ↑          |
+          *  |                     | offset.y |
+          *  |                     ↓          |
+          *  ----------------------------------
+          *  ←---------real map width---------→
+         **/
         
         let realMapWidth = 3116.0 * 2
         let realMapHeight = 2250.0 * 2

@@ -37,22 +37,22 @@ class OnboardingSlidesRobot {
         self.app = app
         self.verify = Verify(app: app)
     }
-    
+
     func nextOnboardingScreen() -> OnboardingSlidesRobot {
         app.buttons[nextButton].tap()
         return OnboardingSlidesRobot(app: app)
     }
-    
+
     func nextStepA() -> OnboardingConnectionRobot {
         app.buttons[nextButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     func nextStepB() -> OnboardingPaymentRobot {
         app.buttons[nextButton].tap()
         return OnboardingPaymentRobot(app: app)
     }    
-    
+
     class Verify {
         let app: XCUIApplication
 
@@ -68,7 +68,7 @@ class OnboardingSlidesRobot {
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
             return OnboardingSlidesRobot(app: app)
         }
-        
+
         @discardableResult
         func onboardingSecondSlideIsShown() -> OnboardingSlidesRobot {
             XCTAssert(app.staticTexts[slideTwoTitle].waitForExistence(timeout: 5))

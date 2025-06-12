@@ -24,13 +24,13 @@ import UIKit
 
 class SelectionTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         tintColor = .normalTextColor()
-        
+
         nameLabel.textColor = .normalTextColor()
     }
 

@@ -207,9 +207,9 @@ extension ProcessCompletionResult {
             return .success(false)
 
         case .finished(.withoutObtainingToken),
-                .finished(.withoutExchangingToken),
-                .finished(.resolvingIAPToSubscription),
-                .finished(.withPurchaseAlreadyProcessed):
+             .finished(.withoutExchangingToken),
+             .finished(.resolvingIAPToSubscription),
+             .finished(.withPurchaseAlreadyProcessed):
             return .success(true)
 
         case let .errored(error):
@@ -219,8 +219,8 @@ extension ProcessCompletionResult {
             return .failure(error)
 
         case .finished(.withoutIAP),
-                .finished(.resolvingIAPToCredits),
-                .finished(.resolvingIAPToCreditsCausedByError):
+             .finished(.resolvingIAPToCredits),
+             .finished(.resolvingIAPToCreditsCausedByError):
             log.assertionFailure("Unexpected IAP purchase result: \(self)")
             return .failure(ProcessCompletionResultError("Unexpected IAP purchase result: \(self)"))
         }

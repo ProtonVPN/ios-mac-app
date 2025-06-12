@@ -109,7 +109,7 @@ public enum WireguardProviderRequest: ProviderRequest {
                let decodedFeatures = try? JSONDecoder().decode(VPNConnectionFeatures.self, from: messageData) {
                 features = decodedFeatures
             }
-            
+
             return .refreshCertificate(features: features)
         case .cancelRefreshOperations:
             return .cancelRefreshes

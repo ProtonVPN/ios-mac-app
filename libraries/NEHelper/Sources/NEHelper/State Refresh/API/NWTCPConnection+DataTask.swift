@@ -33,76 +33,76 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
         let endpoint = NWHostEndpoint(hostname: hostname, port: port)
 
         #if DEBUG
-        let delegate: NWTCPConnectionAuthenticationDelegate = self
+            let delegate: NWTCPConnectionAuthenticationDelegate = self
         #else
-        let delegate: NWTCPConnectionAuthenticationDelegate? = nil
+            let delegate: NWTCPConnectionAuthenticationDelegate? = nil
         #endif
         return createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: delegate)
     }
 }
 
 #if DEBUG
-extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
-    public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
-        return true
-    }
-
-    private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
-        let result = closure()
-        guard result == errSecSuccess else {
-            let userInfo: [String: Any]? = if let string = SecCopyErrorMessageString(result, nil) as? String {
-                [ NSLocalizedDescriptionKey: string ]
-            } else {
-                nil
-            }
-
-            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
-        }
-    }
-
-    /// This allows BTI to work on debug builds.
-    ///
-    /// - Warning: This overrides **all** TLS validation errors. It should **never** be enabled in production.
-    public func evaluateTrust(for connection: NWTCPConnection, peerCertificateChain: [Any], completionHandler completion: @escaping (SecTrust) -> Void) {
-        log.info("Debug: overriding trust for \(connection)")
-        var secTrust: SecTrust?
-
-        do {
-            // Create a trust object with the certificates from the chain.
-            try secEvaluate {
-                SecTrustCreateWithCertificates(
-                    peerCertificateChain as CFArray,
-                    nil,
-                    &secTrust
-                )
-            }
-
-            guard let secTrust else {
-                throw POSIXError(.ENOENT)
-            }
-
-            // Evaluate the trust. This is necessary to copy the exceptions out in the next step.
-            // We don't care about return values or errors here.
-            var error: CFError?
-            _ = SecTrustEvaluateWithError(secTrust, &error)
-
-            // Now that we've evaluated the trust, if we're on a test environment, the Security
-            // stack's head probably exploded and filled the SecTrust object with validation
-            // errors. Create exceptions for all of these errors and add them back to the trust
-            // object for re-evaluation.
-            let exceptions = SecTrustCopyExceptions(secTrust)
-            guard SecTrustSetExceptions(secTrust, exceptions) else {
-                throw POSIXError(.EPERM)
-            }
-        } catch {
-            log.error("Couldn't evaluate trust of \(connection): \(error)")
+    extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
+        public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
+            return true
         }
 
-        if let secTrust {
-            completion(secTrust)
+        private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
+            let result = closure()
+            guard result == errSecSuccess else {
+                let userInfo: [String: Any]? = if let string = SecCopyErrorMessageString(result, nil) as? String {
+                    [ NSLocalizedDescriptionKey: string ]
+                } else {
+                    nil
+                }
+
+                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
+            }
+        }
+
+        /// This allows BTI to work on debug builds.
+        ///
+        /// - Warning: This overrides **all** TLS validation errors. It should **never** be enabled in production.
+        public func evaluateTrust(for connection: NWTCPConnection, peerCertificateChain: [Any], completionHandler completion: @escaping (SecTrust) -> Void) {
+            log.info("Debug: overriding trust for \(connection)")
+            var secTrust: SecTrust?
+
+            do {
+                // Create a trust object with the certificates from the chain.
+                try secEvaluate {
+                    SecTrustCreateWithCertificates(
+                        peerCertificateChain as CFArray,
+                        nil,
+                        &secTrust
+                    )
+                }
+
+                guard let secTrust else {
+                    throw POSIXError(.ENOENT)
+                }
+
+                // Evaluate the trust. This is necessary to copy the exceptions out in the next step.
+                // We don't care about return values or errors here.
+                var error: CFError?
+                _ = SecTrustEvaluateWithError(secTrust, &error)
+
+                // Now that we've evaluated the trust, if we're on a test environment, the Security
+                // stack's head probably exploded and filled the SecTrust object with validation
+                // errors. Create exceptions for all of these errors and add them back to the trust
+                // object for re-evaluation.
+                let exceptions = SecTrustCopyExceptions(secTrust)
+                guard SecTrustSetExceptions(secTrust, exceptions) else {
+                    throw POSIXError(.EPERM)
+                }
+            } catch {
+                log.error("Couldn't evaluate trust of \(connection): \(error)")
+            }
+
+            if let secTrust {
+                completion(secTrust)
+            }
         }
     }
-}
 #endif
 
 /// Wrapper protocol for `NWTCPConnectionTunnel`, providing most of the same properties and methods (besides `observeStateChange`).
@@ -227,24 +227,24 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
                                  timeoutInterval: timeoutInterval,
                                  taskId: id,
                                  completionHandler: { [weak self] data, response, error in
-            if let error = error {
-                log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-            } else {
-                log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-            }
+                                     if let error = error {
+                                         log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                                     } else {
+                                         log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                                     }
 
-            if let response = response, let url = request.url {
-                let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
-                self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
-            }
+                                     if let response = response, let url = request.url {
+                                         let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
+                                         let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
+                                         self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
+                                     }
 
-            self?.tasksQueue.async {
-                // We're going away, but we don't care if deallocation is synchronous or not
-                self?.tasks.removeValue(forKey: id)
-            }
-            completionHandler(data, response, error)
-        })
+                                     self?.tasksQueue.async {
+                                         // We're going away, but we don't care if deallocation is synchronous or not
+                                         self?.tasks.removeValue(forKey: id)
+                                     }
+                                     completionHandler(data, response, error)
+                                 })
 
         // This needs to be synchronous so we don't go away immediately after returning
         tasksQueue.sync {
@@ -315,7 +315,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
     deinit {
         #if DEBUG
-        log.debug("NWTCPDataTask.deinit", category: .net, metadata: ["id": "\(taskId)"])
+            log.debug("NWTCPDataTask.deinit", category: .net, metadata: ["id": "\(taskId)"])
         #endif
         self.observation?.invalidate()
         self.timeoutTimer?.invalidate()

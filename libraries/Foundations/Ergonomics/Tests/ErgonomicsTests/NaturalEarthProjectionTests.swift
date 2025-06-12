@@ -37,7 +37,7 @@ final class NaturalEarthProjectionTests: XCTestCase {
                                                            in: CGSize(width: Self.rangeX, height: Self.rangeY))
         XCTAssertEqual(projection, .init(x: 0, y: 0))
     }
-    
+
     func testTopLat() throws {
         let projection = NaturalEarthProjection.projection(from: CLLocationCoordinate2D(latitude: 90, longitude: 0),
                                                            in: CGSize(width: Self.rangeX, height: Self.rangeY))

@@ -33,9 +33,9 @@ import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 class LocalAgentConnectionTests: ConnectionTestCaseDriver {
     override func setUp() async throws {
         #if os(macOS)
-        throw XCTSkip("LocalAgent connection tests are skipped on macOS, since there is no cert refresh provider.")
+            throw XCTSkip("LocalAgent connection tests are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try await super.setUp()
+            try await super.setUp()
         #endif
     }
 
@@ -128,9 +128,9 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             (subcaseDescription("user bad behavior"),
              simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection]),
             (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
-                 self.mockProviderState.forceResponse = .error(message: "Internal server error")
-                 self.laError(self.laConsts.errorCodeCertificateExpired, nil)
-             }, [.vpnDisconnection, .alertDisplayed])
+                self.mockProviderState.forceResponse = .error(message: "Internal server error")
+                self.laError(self.laConsts.errorCodeCertificateExpired, nil)
+            }, [.vpnDisconnection, .alertDisplayed])
         ]
 
         var first = true

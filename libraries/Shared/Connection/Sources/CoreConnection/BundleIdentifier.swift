@@ -40,13 +40,13 @@ extension BundleIDClient: DependencyKey {
 
     package static let liveValue = BundleIDClient {
         #if os(iOS)
-        return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
+            return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
         #elseif os(macOS)
-        return "ch.protonvpn.mac.WireGuard-Extension"
+            return "ch.protonvpn.mac.WireGuard-Extension"
         #elseif os(tvOS)
-        return "ch.protonmail.vpn.WireGuard-tvOS"
+            return "ch.protonmail.vpn.WireGuard-tvOS"
         #else
-        fatalError("Unsupported platform")
+            fatalError("Unsupported platform")
         #endif
     }
 

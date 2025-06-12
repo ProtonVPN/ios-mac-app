@@ -33,13 +33,13 @@ enum ZoomType {
 class ZoomButton: HoverDetectionButton {
     let zoomType: ZoomType
     let imageView = NSImageView()
-    
+
     override var frame: NSRect {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     init(type zoomType: ZoomType) {
         self.zoomType = zoomType
 
@@ -52,14 +52,14 @@ class ZoomButton: HoverDetectionButton {
         isTransparent = true
         addSubview(imageView)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         guard let context = NSGraphicsContext.current?.cgContext else {
             return
         }

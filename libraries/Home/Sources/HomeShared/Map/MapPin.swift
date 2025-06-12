@@ -69,13 +69,13 @@ extension View {
         if #available(iOS 17.0, *) {
             self
                 .phaseAnimator(AnimationPhase.allCases) { content, phase in
-                content
-                    .scaleEffect(phase.scaleEffect)
-                    .rotationEffect(phase.rotationEffect)
-            } animation: {
-                guard !reduceMotion else { return nil }
-                return $0.animation
-            }
+                    content
+                        .scaleEffect(phase.scaleEffect)
+                        .rotationEffect(phase.rotationEffect)
+                } animation: {
+                    guard !reduceMotion else { return nil }
+                    return $0.animation
+                }
         } else {
             self
         }
@@ -141,22 +141,22 @@ private enum AnimationPhase: CaseIterable {
 // MARK: - Preview
 
 #if compiler(>=6)
-@available(iOS 17, *)
-#Preview {
-    @Previewable @State var mode: MapPin.Mode = .exitConnected
+    @available(iOS 17, *)
+    #Preview {
+        @Previewable @State var mode: MapPin.Mode = .exitConnected
 
-    VStack {
-        MapPin(mode: $mode)
-        ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
-            Button {
-                withAnimation {
-                    mode = newMode
+        VStack {
+            MapPin(mode: $mode)
+            ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
+                Button {
+                    withAnimation {
+                        mode = newMode
+                    }
+                } label: {
+                    Text(String(describing: newMode))
                 }
-            } label: {
-                Text(String(describing: newMode))
             }
         }
     }
-}
 
 #endif

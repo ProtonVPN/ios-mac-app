@@ -40,11 +40,11 @@ final class SubscriptionTests: ProtonVPNUITests {
     }
 
     func testUpgradeAccountFromFreeToUnlimited() throws {
-         try createUserVerifySubscription(plan: .unlimited)
+        try createUserVerifySubscription(plan: .unlimited)
     }
 
     func testUpgradeAccountFromFreeToVPN2022() throws {
-         try createUserVerifySubscription(plan: .vpn2022)
+        try createUserVerifySubscription(plan: .vpn2022)
     }
 
     private func createUserVerifySubscription(plan: PaymentsPlan) throws {

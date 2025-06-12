@@ -54,27 +54,27 @@ public class SiriHelper: SiriHelperProtocol {
 
     public func donateQuickConnect() {
         #if os(iOS)
-        guard let quickConnectIntent = Self.quickConnectIntent else { return }
+            guard let quickConnectIntent = Self.quickConnectIntent else { return }
 
-        let interaction = INInteraction(intent: quickConnectIntent, response: nil)
-        interaction.donate(completion: {error in
-            if let error = error {
-                log.error("Error on QuickConnectIntent donation: \(error)", category: .app)
-            }
-        })
+            let interaction = INInteraction(intent: quickConnectIntent, response: nil)
+            interaction.donate(completion: {error in
+                if let error = error {
+                    log.error("Error on QuickConnectIntent donation: \(error)", category: .app)
+                }
+            })
         #endif
     }
-    
+
     public func donateDisconnect() {
         #if os(iOS)
-        guard let disconnectIntent = Self.disconnectIntent else { return }
+            guard let disconnectIntent = Self.disconnectIntent else { return }
 
-        let interaction = INInteraction(intent: disconnectIntent, response: nil)
-        interaction.donate(completion: {error in
-            if let error = error {
-                log.error("Error on DisconnectIntent donation: \(error)", category: .app)
-            }
-        })
+            let interaction = INInteraction(intent: disconnectIntent, response: nil)
+            interaction.donate(completion: {error in
+                if let error = error {
+                    log.error("Error on DisconnectIntent donation: \(error)", category: .app)
+                }
+            })
         #endif
     }
 }

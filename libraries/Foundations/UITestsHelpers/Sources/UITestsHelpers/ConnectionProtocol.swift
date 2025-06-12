@@ -21,7 +21,7 @@ public enum ConnectionProtocol: String {
     case WireGuardTCP = "WireGuard (TCP)"
     case Smart = "Smart"
     case Stealth = "Stealth"
-#if os(macOS)
-    case IKEv2 = "IKEv2"
-#endif
+    #if os(macOS)
+        case IKEv2 = "IKEv2"
+    #endif
 }

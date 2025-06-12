@@ -30,15 +30,15 @@ final class SettingsContainerViewModel {
         & NetShieldPropertyProviderFactory
 
     private let factory: Factory
-    
+
     init(factory: Factory) {
         self.factory = factory
     }
-    
+
     var generalSettingsViewModel: GeneralSettingsViewModel {
         return GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
     }
-    
+
     var connectionSettingsViewModel: ConnectionSettingsViewModel {
         return ConnectionSettingsViewModel(factory: factory)
     }

@@ -19,12 +19,12 @@
 import Foundation
 
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 
-public extension NSGradient {
-    convenience init?(context: AppTheme.Context = .background, starting startingStyle: AppTheme.Style, ending endingStyle: AppTheme.Style) {
-        self.init(starting: .color(context, startingStyle), ending: .color(context, endingStyle))
+    public extension NSGradient {
+        convenience init?(context: AppTheme.Context = .background, starting startingStyle: AppTheme.Style, ending endingStyle: AppTheme.Style) {
+            self.init(starting: .color(context, startingStyle), ending: .color(context, endingStyle))
+        }
     }
-}
 
 #endif

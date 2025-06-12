@@ -60,20 +60,20 @@ protocol AppSessionManager {
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     typealias Factory = VpnApiServiceFactory &
-                        AppStateManagerFactory &
-                        VpnKeychainFactory &
-                        PropertiesManagerFactory &
-                        VpnGatewayFactory &
-                        CoreAlertServiceFactory &
-                        NetworkingFactory &
-                        AppSessionRefreshTimerFactory &
-                        VpnAuthenticationFactory &
-                        ProfileManagerFactory &
-                        AppCertificateRefreshManagerFactory &
-                        SystemExtensionManagerFactory &
-                        AuthKeychainHandleFactory &
-                        UnauthKeychainHandleFactory &
-                        UpdateCheckerFactory
+        AppStateManagerFactory &
+        VpnKeychainFactory &
+        PropertiesManagerFactory &
+        VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        NetworkingFactory &
+        AppSessionRefreshTimerFactory &
+        VpnAuthenticationFactory &
+        ProfileManagerFactory &
+        AppCertificateRefreshManagerFactory &
+        SystemExtensionManagerFactory &
+        AuthKeychainHandleFactory &
+        UnauthKeychainHandleFactory &
+        UpdateCheckerFactory
     private let factory: Factory
 
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -330,12 +330,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func logOutCleanup() {
         let group = DispatchGroup()
         appSessionRefreshTimer.stopTimers()
-        
+
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)
             FeatureFlagsRepository.shared.clearUserId()
         }
-        
+
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()

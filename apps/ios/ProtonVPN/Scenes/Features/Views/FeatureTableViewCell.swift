@@ -36,7 +36,7 @@ class FeatureTableViewCell: UITableViewCell {
     @IBOutlet private weak var titleLbl: UILabel!
     @IBOutlet private weak var descriptionLbl: UILabel!
     @IBOutlet private weak var learnMoreBtn: UIButton!
-    
+
     @IBOutlet weak var loadViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var loadView: UIView!
     @IBOutlet private weak var loadLowView: UIView!
@@ -45,7 +45,7 @@ class FeatureTableViewCell: UITableViewCell {
     @IBOutlet private weak var loadMediumLbl: UILabel!
     @IBOutlet private weak var loadHighView: UIView!
     @IBOutlet private weak var loadHighLbl: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
@@ -54,7 +54,7 @@ class FeatureTableViewCell: UITableViewCell {
         learnMoreBtn.tintColor = UIColor.textAccent()
         learnMoreBtn.setImage(IconProvider.arrowOutSquare, for: .normal)
     }
-    
+
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.text = viewModel.title
@@ -69,7 +69,7 @@ class FeatureTableViewCell: UITableViewCell {
 
             descriptionLbl.text = viewModel.description
             learnMoreBtn.setTitle(Localizable.learnMore, for: .normal)
-            
+
             if viewModel.displayLoads {
                 loadView.isHidden = false
                 loadViewHeightConstraint.constant = 32
@@ -85,9 +85,9 @@ class FeatureTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction private func didTapLearnMore(_ sender: Any) {
         guard let urlContact = viewModel.urlContact else { return }
         @Dependency(\.linkOpener) var linkOpener

@@ -27,7 +27,7 @@ import Strings
 class ProtonQCViewController: UIViewController {
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         tabBarItem = UITabBarItem(title: Localizable.quickConnect, image: nil, tag: 2)
         tabBarItem.accessibilityIdentifier = "Quick Connect"
     }

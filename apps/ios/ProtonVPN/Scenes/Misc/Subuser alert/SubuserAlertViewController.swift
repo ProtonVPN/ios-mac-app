@@ -37,7 +37,7 @@ class SubuserAlertViewController: UIViewController {
     @IBOutlet private weak var loginButton: ProtonButton!
 
     var role: UserRole = .noOrganization
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTranslations()
@@ -45,7 +45,7 @@ class SubuserAlertViewController: UIViewController {
         description1Label.accessibilityIdentifier = "subuserAlertDescription1"
         description2Label.accessibilityIdentifier = "subuserAlertDescription2"
     }
-    
+
     private func setupTranslations() {
         titleLabel.text = Localizable.subuserAlertTitle
         if role == .organizationAdmin {
@@ -61,31 +61,31 @@ class SubuserAlertViewController: UIViewController {
 
         loginButton.setTitle(Localizable.subuserAlertLoginButton, for: .normal)
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .backgroundColor()
 
         imageView.image = Theme.Asset.icAlertProAccount.image
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        
+
         description1Label.textColor = .normalTextColor()
         description1Label.font = UIFont.systemFont(ofSize: 16)
-        
+
         description2Label.textColor = .weakTextColor()
         description2Label.font = UIFont.systemFont(ofSize: 14)
-        
+
         assignConnectionsButton.customState = .primary
         loginButton.customState = .secondary
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction private func assignConnectionsTapped() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
-    
+
     @IBAction private func loginTapped() {
         self.dismiss(animated: true, completion: {})
     }

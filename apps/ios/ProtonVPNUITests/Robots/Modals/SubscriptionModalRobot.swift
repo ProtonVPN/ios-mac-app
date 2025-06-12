@@ -25,7 +25,7 @@ fileprivate let upsellPlansListSectionHeader = Localizable.upsellPlansListSectio
 
 class SubscriptionModalRobot: ModalRobot {
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func subscriptionModalIsShown() -> SubscriptionModalRobot {
@@ -34,13 +34,13 @@ class SubscriptionModalRobot: ModalRobot {
             staticText(upsellPlansListSectionHeader).checkExists()
             return SubscriptionModalRobot()
         }
-        
+
         @discardableResult
         public func verifyPlanOptions(planDuration: String, planAmount: String) -> SubscriptionModalRobot {
             staticText("plan_option_duration").firstMatch()
                 .checkExists(message: "Plan option element plan_option_duration not found")
                 .hasLabel(planDuration)
-            
+
             staticText("plan_option_amount").firstMatch()
                 .checkExists(message: "Plan option element plan_option_amount not found")
                 .hasLabel(planAmount)

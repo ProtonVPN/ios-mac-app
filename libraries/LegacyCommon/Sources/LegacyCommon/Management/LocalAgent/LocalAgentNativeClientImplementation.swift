@@ -55,7 +55,7 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
             LegacyCommon.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }
-        
+
         LegacyCommon.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
         delegate?.didChangeState(state: LocalAgentState.from(string: state))
     }

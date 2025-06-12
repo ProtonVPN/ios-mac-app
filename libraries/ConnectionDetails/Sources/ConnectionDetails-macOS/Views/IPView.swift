@@ -45,10 +45,10 @@ public struct IPView: View {
                         store.send(.changeIPVisibility)
                     }, label: {
                         (store.localIpHidden
-                         ? IconProvider.eye
-                         : IconProvider.eyeSlash)
-                        .resizable().frame(width: buttonSize, height: buttonSize)
-                        .foregroundColor(Color(.text, .weak))
+                            ? IconProvider.eye
+                            : IconProvider.eyeSlash)
+                            .resizable().frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(Color(.text, .weak))
                     })
                     .buttonStyle(PlainButtonStyle())
                 }

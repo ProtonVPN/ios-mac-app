@@ -28,7 +28,7 @@ import Ergonomics
 class QuickSettingButton: NSButton {
     private var hovered = false
     private var trackingArea: NSTrackingArea?
-    
+
     var detailOpened: Bool = false {
         didSet {
             if detailOpened {
@@ -38,9 +38,9 @@ class QuickSettingButton: NSButton {
             }
         }
     }
-    
+
     var callback: ((QuickSettingButton) -> Void)?
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         wantsLayer = true
@@ -53,7 +53,7 @@ class QuickSettingButton: NSButton {
     override func accessibilityRole() -> NSAccessibility.Role? {
         .button
     }
-    
+
     override func updateLayer() {
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.masksToBounds = false
@@ -61,13 +61,13 @@ class QuickSettingButton: NSButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
     }
-    
+
     override func mouseDown(with event: NSEvent) {}
-    
+
     override func mouseUp(with event: NSEvent) {
         callback?(self)
     }
-    
+
     func switchState(_ image: NSImage, enabled: Bool) {
         self.image = image.colored(enabled ? [.interactive, .strong] : .normal)
     }
@@ -75,14 +75,14 @@ class QuickSettingButton: NSButton {
     override func layoutSubtreeIfNeeded() {
         if let area = self.trackingArea { removeTrackingArea(area) }
         trackingArea = NSTrackingArea(rect: bounds, options: [
-                                        NSTrackingArea.Options.mouseEnteredAndExited,
-                                        NSTrackingArea.Options.mouseMoved,
-                                        NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
+            NSTrackingArea.Options.mouseEnteredAndExited,
+            NSTrackingArea.Options.mouseMoved,
+            NSTrackingArea.Options.activeInKeyWindow],
+        owner: self,
+        userInfo: nil)
         addTrackingArea(trackingArea!)
     }
-    
+
     // MARK: - Styles
 
     private var currentStyle: Style = .disabled {
@@ -91,12 +91,12 @@ class QuickSettingButton: NSButton {
             updateLayer()
         }
     }
-    
+
     private enum Style {
         case enabled
         case disabled
     }
-        
+
     // MARK: - Mouse
 
     override func resetCursorRects() {
@@ -109,7 +109,7 @@ class QuickSettingButton: NSButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         hovered = false
         DarkAppearance {

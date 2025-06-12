@@ -64,7 +64,7 @@ class PVPNTextViewLink: NSTextView {
         isEditable = false
         isSelectable = true
         isAutomaticLinkDetectionEnabled = true
-        
+
         guard let text = textStorage?.string, !text.isEmpty else { return }
         let titleAttributes = [NSAttributedString.Key.font: self.textViewFont,
                                NSAttributedString.Key.foregroundColor: self.textColor ?? .color(.text),
@@ -72,7 +72,7 @@ class PVPNTextViewLink: NSTextView {
 
         let titleString = NSAttributedString(string: text, attributes: titleAttributes)
         textStorage?.setAttributedString(titleString)
-        
+
         defaultStyle.lineSpacing = self.lineSpacing / self.textViewFont.pointSize
         defaultStyle.alignment = .left
     }

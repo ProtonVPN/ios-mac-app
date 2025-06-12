@@ -32,16 +32,16 @@ class LargeConnectButton: HoverDetectionButton {
             needsDisplay = true
         }
     }
-    
+
     var isConnected: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
@@ -49,7 +49,7 @@ class LargeConnectButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
-        
+
         let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
         attributedTitle = self.style(title, font: .themeFont(.heading4))
     }

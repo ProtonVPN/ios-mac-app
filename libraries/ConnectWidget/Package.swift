@@ -22,7 +22,7 @@ let package = Package(
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
         .package(path: "../Shared/ConnectionInventory"),
-        ],
+    ],
     targets: [
         .target(
             name: "ConnectWidget",

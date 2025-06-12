@@ -30,7 +30,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
         completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
-    
+
     func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
         completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
@@ -47,7 +47,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     override func handler(for intent: INIntent) -> Any {
         // This is the default implementation.  If you want different objects to handle different intents,
         // you can override this and return the handler you want for that particular intent.
-        
+
         return self
     }
 

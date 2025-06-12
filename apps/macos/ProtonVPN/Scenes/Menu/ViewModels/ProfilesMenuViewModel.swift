@@ -79,7 +79,7 @@ class ProfilesMenuViewModel {
     func showProfilesUpsellAlert() {
         alertService.push(alert: ProfilesUpsellAlert())
     }
-    
+
     func overviewAction() {
         guard canUserUseProfiles else {
             // The menu shouldn't be visible for free users, so this is just a failsafe
@@ -88,7 +88,7 @@ class ProfilesMenuViewModel {
         }
         navService.openProfiles(ProfilesTab.overview)
     }
-    
+
     func createNewProfileAction() {
         guard canUserUseProfiles else {
             // The menu shouldn't be visible for free users, so this is just a failsafe
@@ -97,7 +97,7 @@ class ProfilesMenuViewModel {
         }
         navService.openProfiles(ProfilesTab.createNewProfile)
     }
-    
+
     // MARK: - Private functions
 
     private func sessionChanged(data: SessionChanged.T) {

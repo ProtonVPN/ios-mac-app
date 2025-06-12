@@ -50,10 +50,10 @@ class FreeConnectionsViewController: UIViewController {
         closeButtonStyle(closeButton)
         topTitleStyle(titleLabel)
         middleSubtitleStyle(subTitleLabel)
-        
+
         descriptionLabel.font = .systemFont(ofSize: 15, weight: .regular)
         descriptionLabel.textColor = .color(.text)
-        
+
         bannerButton.setTitle("", for: .normal)
 
         // Banner

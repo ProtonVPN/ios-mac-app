@@ -28,12 +28,12 @@ class ProfileCircle: NSView {
             needsDisplay = true
         }
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let profileColor = profileColor else {
             return
         }
-        
+
         context.setFillColor(profileColor.cgColor)
         context.fillEllipse(in: bounds)
     }

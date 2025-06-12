@@ -17,136 +17,136 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator) // `MockTunnelManager` is only built for the simulator
-import Foundation
-import XCTest
+    import Foundation
+    import XCTest
 
-import ComposableArchitecture
+    import ComposableArchitecture
 
-import Ergonomics
-import Domain
-import DomainTestSupport
-import struct CoreConnection.LogicalServerInfo
-@testable import ExtensionManager
+    import Ergonomics
+    import Domain
+    import DomainTestSupport
+    import struct CoreConnection.LogicalServerInfo
+    @testable import ExtensionManager
 
-final class ExtensionManagerFeatureTests: XCTestCase {
-    @MainActor
-    func testRequestsTunnelStart() async {
-        let mockManager = MockTunnelManager()
-        let mockClock = TestClock()
+    final class ExtensionManagerFeatureTests: XCTestCase {
+        @MainActor
+        func testRequestsTunnelStart() async {
+            let mockManager = MockTunnelManager()
+            let mockClock = TestClock()
 
-        let server = Server.ca // Canadian server mock
-        let features = VPNConnectionFeatures.mock
-        let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let tunnelSettings = TunnelSettings.mock
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
-        let now = Date.now
+            let server = Server.ca // Canadian server mock
+            let features = VPNConnectionFeatures.mock
+            let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+            let tunnelSettings = TunnelSettings.mock
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+            let now = Date.now
 
-        mockManager.connection = VPNSessionMock(
-            status: .disconnected,
-            connectedDate: nil,
-            lastDisconnectError: nil
-        )
-        mockManager.connection.startupDuration = .milliseconds(250)
-        mockManager.connection.connectionDuration = .milliseconds(500)
+            mockManager.connection = VPNSessionMock(
+                status: .disconnected,
+                connectedDate: nil,
+                lastDisconnectError: nil
+            )
+            mockManager.connection.startupDuration = .milliseconds(250)
+            mockManager.connection.connectionDuration = .milliseconds(500)
 
-        let disconnected = ExtensionFeature.State.disconnected(nil)
-        let store = TestStore(initialState: disconnected) {
-            ExtensionFeature()
-        } withDependencies: {
-            $0.continuousClock = mockClock
-            $0.tunnelManager = mockManager
-            $0.date = .constant(now)
+            let disconnected = ExtensionFeature.State.disconnected(nil)
+            let store = TestStore(initialState: disconnected) {
+                ExtensionFeature()
+            } withDependencies: {
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.date = .constant(now)
+            }
+
+            await store.send(.startObservingStateChanges)
+            await store.receive(\.tunnelStatusChanged.disconnected)
+
+            await store.send(.connect(intent)) {
+                $0 = .preparingConnection(logicalServerInfo)
+            }
+
+            await store.receive(\.tunnelStartRequestFinished.success)
+            await mockClock.advance(by: .milliseconds(250))
+            await store.receive(\.tunnelStatusChanged.connecting) {
+                $0 = .connecting(logicalServerInfo)
+            }
+
+            await mockClock.advance(by: .milliseconds(500))
+            await store.receive(\.tunnelStatusChanged.connected)
+            await store.receive(\.connectionFinished.success) {
+                $0 = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
+            }
+
+            await store.send(.stopObservingStateChanges)
         }
 
-        await store.send(.startObservingStateChanges)
-        await store.receive(\.tunnelStatusChanged.disconnected)
+        @MainActor
+        func testStateSetToConnectedIfExistingTunnelIsConnected() async {
+            let mockManager = MockTunnelManager()
+            mockManager.connection = VPNSessionMock(
+                status: .connected,
+                connectedDate: nil,
+                lastDisconnectError: nil
+            )
+            let previouslyConnectedServer = LogicalServerInfo(logicalID: "logical", serverID: "server")
+            mockManager.connection.connectedServer = previouslyConnectedServer
+            let now = Date.now
 
-        await store.send(.connect(intent)) {
-            $0 = .preparingConnection(logicalServerInfo)
+            let store = TestStore(initialState: .unknown) {
+                ExtensionFeature()
+            } withDependencies: {
+                $0.tunnelManager = mockManager
+                $0.date = .constant(now)
+            }
+
+            await store.send(.startObservingStateChanges)
+            await store.receive(\.tunnelStatusChanged.connected) {
+                $0 = .connecting(nil)
+            }
+            await store.receive(\.connectionFinished.success) {
+                $0 = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
+            }
+
+            await store.send(.stopObservingStateChanges)
         }
 
-        await store.receive(\.tunnelStartRequestFinished.success)
-        await mockClock.advance(by: .milliseconds(250))
-        await store.receive(\.tunnelStatusChanged.connecting) {
-            $0 = .connecting(logicalServerInfo)
-        }
+        @MainActor func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
+            let mockClock = TestClock()
+            let mockManager = MockTunnelManager()
+            mockManager.connection = VPNSessionMock(
+                status: .invalid,
+                connectedDate: nil,
+                lastDisconnectError: nil
+            )
 
-        await mockClock.advance(by: .milliseconds(500))
-        await store.receive(\.tunnelStatusChanged.connected)
-        await store.receive(\.connectionFinished.success) {
-            $0 = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
-        }
+            let disconnected = ExtensionFeature.State.disconnected(nil)
+            let store = TestStore(initialState: disconnected) {
+                ExtensionFeature()
+            } withDependencies: {
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+            }
 
-        await store.send(.stopObservingStateChanges)
+            let server = Server.mock
+            let features = VPNConnectionFeatures.mock
+            let tunnelSettings = TunnelSettings.mock
+            let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+            await store.send(.startObservingStateChanges)
+            await store.receive(\.tunnelStatusChanged.invalid)
+
+            let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
+            mockManager.tunnelStartErrorToThrow = permissionDenied
+
+            await store.send(.connect(intent)) {
+                $0 = .preparingConnection(logicalServerInfo)
+            }
+            await store.receive(\.tunnelStartRequestFinished.failure) {
+                $0 = .disconnected(.tunnelStartFailed(permissionDenied))
+            }
+
+            await store.send(.stopObservingStateChanges)
+        }
     }
-
-    @MainActor
-    func testStateSetToConnectedIfExistingTunnelIsConnected() async {
-        let mockManager = MockTunnelManager()
-        mockManager.connection = VPNSessionMock(
-            status: .connected,
-            connectedDate: nil,
-            lastDisconnectError: nil
-        )
-        let previouslyConnectedServer = LogicalServerInfo(logicalID: "logical", serverID: "server")
-        mockManager.connection.connectedServer = previouslyConnectedServer
-        let now = Date.now
-
-        let store = TestStore(initialState: .unknown) {
-            ExtensionFeature()
-        } withDependencies: {
-            $0.tunnelManager = mockManager
-            $0.date = .constant(now)
-        }
-
-        await store.send(.startObservingStateChanges)
-        await store.receive(\.tunnelStatusChanged.connected) {
-            $0 = .connecting(nil)
-        }
-        await store.receive(\.connectionFinished.success) {
-            $0 = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
-        }
-
-        await store.send(.stopObservingStateChanges)
-    }
-
-    @MainActor func testDisconnectsWhenVPNConfigurationPermissionDenied() async {
-        let mockClock = TestClock()
-        let mockManager = MockTunnelManager()
-        mockManager.connection = VPNSessionMock(
-            status: .invalid,
-            connectedDate: nil,
-            lastDisconnectError: nil
-        )
-
-        let disconnected = ExtensionFeature.State.disconnected(nil)
-        let store = TestStore(initialState: disconnected) {
-            ExtensionFeature()
-        } withDependencies: {
-            $0.continuousClock = mockClock
-            $0.tunnelManager = mockManager
-        }
-
-        let server = Server.mock
-        let features = VPNConnectionFeatures.mock
-        let tunnelSettings = TunnelSettings.mock
-        let logicalServerInfo = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
-        let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
-
-        await store.send(.startObservingStateChanges)
-        await store.receive(\.tunnelStatusChanged.invalid)
-
-        let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
-        mockManager.tunnelStartErrorToThrow = permissionDenied
-
-        await store.send(.connect(intent)) {
-            $0 = .preparingConnection(logicalServerInfo)
-        }
-        await store.receive(\.tunnelStartRequestFinished.failure) {
-            $0 = .disconnected(.tunnelStartFailed(permissionDenied))
-        }
-
-        await store.send(.stopObservingStateChanges)
-    }
-}
 #endif

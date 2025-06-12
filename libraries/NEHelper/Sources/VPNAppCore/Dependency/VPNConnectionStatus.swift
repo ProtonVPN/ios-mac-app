@@ -20,7 +20,7 @@ import CoreLocation
 import ComposableArchitecture
 
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 import Domain
@@ -53,8 +53,8 @@ public enum VPNConnectionStatus: Equatable, Codable {
         case .disconnected:
             return nil
         case let .connected(_, vpnConnectionActual),
-                let .resolving(_, vpnConnectionActual),
-                let .disconnecting(_, vpnConnectionActual):
+             let .resolving(_, vpnConnectionActual),
+             let .disconnecting(_, vpnConnectionActual):
             return vpnConnectionActual
         case .connecting:
             return nil
@@ -66,9 +66,9 @@ public enum VPNConnectionStatus: Equatable, Codable {
         case .disconnected, .resolving(.none, _):
             return nil
         case let .connected(spec, _),
-                let .connecting(spec, _),
-                let .resolving(.some(spec), _),
-                let .disconnecting(spec, _):
+             let .connecting(spec, _),
+             let .resolving(.some(spec), _),
+             let .disconnecting(spec, _):
             return spec
         }
     }
@@ -85,11 +85,11 @@ public extension SharedKey where Self == FileStorageKey<VPNConnectionStatus>.Def
                     try JSONDecoder().decode(VPNConnectionStatus.self, from: data)
                 },
                 encode: { status in
-#if canImport(WidgetKit)
-                    defer {
-                        WidgetCenter.shared.reloadAllTimelines()
-                    }
-#endif
+                    #if canImport(WidgetKit)
+                        defer {
+                            WidgetCenter.shared.reloadAllTimelines()
+                        }
+                    #endif
                     return try JSONEncoder().encode(status)
                 }
             ),
@@ -140,87 +140,87 @@ public enum VPNConnectionStatusPublisherKey: TestDependencyKey {
 // MARK: - Mock for previews
 
 #if DEBUG || targetEnvironment(simulator)
-extension CLLocationCoordinate2D {
-    public static func mockPoland() -> Self {
-        .init(latitude: 52.229675, longitude: 21.012231)
+    extension CLLocationCoordinate2D {
+        public static func mockPoland() -> Self {
+            .init(latitude: 52.229675, longitude: 21.012231)
+        }
     }
-}
 
-extension VPNConnectionActual {
-    public static func mock(
-        connectedDate: Date = Date(),
-        serverModelId: String = "server-model-id-1",
-        serverExitIP: String = "188.12.32.12",
-        vpnProtocol: VpnProtocol = .wireGuard(.tcp),
-        natType: NATType = .moderateNAT,
-        safeMode: Bool? = nil,
-        feature: ServerFeature = [],
-        serverName: String = "SRV#12",
-        country: String = "CH",
-        entryCountry: String? = nil,
-        city: String? = "Bern",
-        coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
-    ) -> VPNConnectionActual {
-        VPNConnectionActual(
-            connectedDate: connectedDate,
-            vpnProtocol: vpnProtocol,
-            natType: natType,
-            safeMode: safeMode,
-            server: Server.mock(
-                serverModelId: serverModelId,
-                serverExitIP: serverExitIP,
-                feature: feature,
-                serverName: serverName,
-                country: country,
-                entryCountry: entryCountry,
-                city: city,
-                coordinates: coordinates
+    extension VPNConnectionActual {
+        public static func mock(
+            connectedDate: Date = Date(),
+            serverModelId: String = "server-model-id-1",
+            serverExitIP: String = "188.12.32.12",
+            vpnProtocol: VpnProtocol = .wireGuard(.tcp),
+            natType: NATType = .moderateNAT,
+            safeMode: Bool? = nil,
+            feature: ServerFeature = [],
+            serverName: String = "SRV#12",
+            country: String = "CH",
+            entryCountry: String? = nil,
+            city: String? = "Bern",
+            coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
+        ) -> VPNConnectionActual {
+            VPNConnectionActual(
+                connectedDate: connectedDate,
+                vpnProtocol: vpnProtocol,
+                natType: natType,
+                safeMode: safeMode,
+                server: Server.mock(
+                    serverModelId: serverModelId,
+                    serverExitIP: serverExitIP,
+                    feature: feature,
+                    serverName: serverName,
+                    country: country,
+                    entryCountry: entryCountry,
+                    city: city,
+                    coordinates: coordinates
+                )
             )
-        )
+        }
     }
-}
 
-extension Server {
-    public static func mock(
-        serverModelId: String = "server-model-id-1",
-        serverExitIP: String = "188.12.32.12",
-        feature: ServerFeature = [],
-        serverName: String = "SRV#12",
-        country: String = "CH",
-        entryCountry: String? = nil,
-        city: String? = "Bern",
-        coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
-    ) -> Server {
-        Server(
-            logical: Logical(
-                id: serverModelId,
-                name: serverName,
-                domain: "",
-                load: 50,
-                entryCountryCode: entryCountry ?? country,
-                exitCountryCode: country,
-                tier: 2,
-                score: 1,
-                status: 1,
-                feature: .zero,
-                city: city,
-                hostCountry: nil,
-                translatedCity: city,
-                latitude: coordinates.latitude,
-                longitude: coordinates.longitude,
-                gatewayName: nil
-            ),
-            endpoint: ServerEndpoint(
-                id: "server-endpoint-id-1",
-                entryIp: nil,
-                exitIp: serverExitIP,
-                domain: "",
-                status: 1,
-                label: nil,
-                x25519PublicKey: nil,
-                protocolEntries: nil
+    extension Server {
+        public static func mock(
+            serverModelId: String = "server-model-id-1",
+            serverExitIP: String = "188.12.32.12",
+            feature: ServerFeature = [],
+            serverName: String = "SRV#12",
+            country: String = "CH",
+            entryCountry: String? = nil,
+            city: String? = "Bern",
+            coordinates: CLLocationCoordinate2D = .init(latitude: 46.948076, longitude: 7.459652)
+        ) -> Server {
+            Server(
+                logical: Logical(
+                    id: serverModelId,
+                    name: serverName,
+                    domain: "",
+                    load: 50,
+                    entryCountryCode: entryCountry ?? country,
+                    exitCountryCode: country,
+                    tier: 2,
+                    score: 1,
+                    status: 1,
+                    feature: .zero,
+                    city: city,
+                    hostCountry: nil,
+                    translatedCity: city,
+                    latitude: coordinates.latitude,
+                    longitude: coordinates.longitude,
+                    gatewayName: nil
+                ),
+                endpoint: ServerEndpoint(
+                    id: "server-endpoint-id-1",
+                    entryIp: nil,
+                    exitIp: serverExitIP,
+                    domain: "",
+                    status: 1,
+                    label: nil,
+                    x25519PublicKey: nil,
+                    protocolEntries: nil
+                )
             )
-        )
+        }
     }
-}
 #endif

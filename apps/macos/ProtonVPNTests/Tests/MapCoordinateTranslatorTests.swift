@@ -33,25 +33,25 @@ class MapCoordinateTranslatorTests: XCTestCase {
         let nzTestTranslatedCoordinate = CLLocationCoordinate2D(latitude: -68.006924793328423, longitude: 163.53251774624999)
         XCTAssert(nzTranslatedCoordinate == nzTestTranslatedCoordinate)
     }
-    
+
     func testPositiveLatNegativeLong() {
         let caLocation = CLLocationCoordinate2D(latitude: 58.111966, longitude: -102.032381)
         let caTranslatedCoordinate = MapCoordinateTranslator.mapImageCoordinate(from: caLocation)
         let caTestTranslatedCoordinate = CLLocationCoordinate2D(latitude: 41.824379313067276, longitude: -104.07903099874999)
         XCTAssert(caTranslatedCoordinate == caTestTranslatedCoordinate)
     }
-    
+
     func testSignChange() {
         let bjLocation = CLLocationCoordinate2D(latitude: 9.618953, longitude: 2.337772)
         let bjTranslatedCoordinate = MapCoordinateTranslator.mapImageCoordinate(from: bjLocation)
         let bjTestTranslatedCoordinate = CLLocationCoordinate2D(latitude: -14.114529720762075, longitude: -2.4485945149999964)
-        
+
 //        XCTAssert(bjTranslatedCoordinate == bjTestTranslatedCoordinate)
         // tan(0.8525511235752827) gives different results on intel and arm architectures.         
         let epsilon = 0.000000001
         XCTAssert(fabs(bjTranslatedCoordinate.latitude - bjTestTranslatedCoordinate.latitude) < epsilon)
         XCTAssert(fabs(bjTranslatedCoordinate.longitude - bjTestTranslatedCoordinate.longitude) < epsilon)
     }
-    
+
     // Map edges aren't important at this stage
 }

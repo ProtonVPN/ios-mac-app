@@ -60,8 +60,8 @@ public struct HomeConnectionCardFeature {
                     secureCore: secureCoreToggle
                 )
             case let .connected(connectionSpec, _),
-                    let .connecting(connectionSpec, _),
-                    let .resolving(.some(connectionSpec), _):
+                 let .connecting(connectionSpec, _),
+                 let .resolving(.some(connectionSpec), _):
                 return connectionSpec
             }
         }

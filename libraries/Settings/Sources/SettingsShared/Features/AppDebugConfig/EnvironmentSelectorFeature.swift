@@ -86,9 +86,9 @@ public struct DebugConfigurationFeature {
 
             if !atlasSecretFetchURLString.isEmpty {
                 return (.normal, """
-                     Tap 'Fetch' to refresh atlas secret from
-                     \(atlasSecretFetchURLString).
-                     """
+                    Tap 'Fetch' to refresh atlas secret from
+                    \(atlasSecretFetchURLString).
+                    """
                 )
             }
 
@@ -102,10 +102,10 @@ public struct DebugConfigurationFeature {
             }
 
             return (
-                 .normal, """
-                 Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
-                 and tap 'Fetch' to set it automatically.
-                 """
+                .normal, """
+                Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
+                and tap 'Fetch' to set it automatically.
+                """
             )
         }
 
@@ -313,7 +313,7 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
     public init?(rawValue: String) {
         self.rawValue = rawValue
     }
-    
+
     public var rawValue: String
 }
 

@@ -19,7 +19,7 @@
 import Foundation
 import NetworkExtension
 #if os(iOS)
-import UIKit // sus UI import in business logic file
+    import UIKit // sus UI import in business logic file
 #endif
 
 import Dependencies
@@ -59,7 +59,7 @@ public final class ExtensionAPIService {
 
     /// If not empty will be added as a header to all requests
     public let atlasSecret: String
-    
+
     func refreshCertificate(publicKey: String,
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
@@ -143,11 +143,11 @@ public final class ExtensionAPIService {
 
     private var apiUrl: String {
         #if DEBUG
-        let storageKey = StorageKeys.apiEndpoint
-        if storage.contains(storageKey), let url = storage.getValue(forKey: storageKey) as? String {
-            log.debug("Using API: \(url) ", category: .api)
-            return url
-        }
+            let storageKey = StorageKeys.apiEndpoint
+            if storage.contains(storageKey), let url = storage.getValue(forKey: storageKey) as? String {
+                log.debug("Using API: \(url) ", category: .api)
+                return url
+            }
         #endif
 
         return "https://vpn-api.proton.me"
@@ -527,8 +527,8 @@ public final class ExtensionAPIService {
                                          usingCredentialsFrom: credentialContext,
                                          retryBlock: retryBlock,
                                          errorHandler: { unhandledError in
-                    completionHandler(.failure(unhandledError))
-                })
+                                             completionHandler(.failure(unhandledError))
+                                         })
             }
         }
     }
@@ -596,8 +596,8 @@ public final class ExtensionAPIService {
                                          asPartOf: operation,
                                          retryBlock: { retryBlock(handleTokenRefreshInRetry) },
                                          errorHandler: { unhandledError in
-                    completionHandler(.failure(unhandledError))
-                })
+                                             completionHandler(.failure(unhandledError))
+                                         })
             }
         }
     }
@@ -647,8 +647,8 @@ public final class ExtensionAPIService {
                                          asPartOf: operation,
                                          retryBlock: retryBlock,
                                          errorHandler: { unhandledError in
-                    completionHandler(.failure(unhandledError))
-                })
+                                             completionHandler(.failure(unhandledError))
+                                         })
             }
         }
     }

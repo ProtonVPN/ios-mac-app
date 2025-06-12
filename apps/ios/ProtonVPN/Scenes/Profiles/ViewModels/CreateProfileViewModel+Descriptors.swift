@@ -154,7 +154,7 @@ extension CreateOrEditProfileViewModel {
     internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
         let image: UIImage
         let name: String
-        
+
         switch index {
         case 0:
             image = IconProvider.bolt

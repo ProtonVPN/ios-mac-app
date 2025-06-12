@@ -31,9 +31,9 @@ class TwoFaRobot: CoreElements {
         button(authButton).tap()
         return MainRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func twoFaAuthenticationIsShown() -> TwoFaRobot {

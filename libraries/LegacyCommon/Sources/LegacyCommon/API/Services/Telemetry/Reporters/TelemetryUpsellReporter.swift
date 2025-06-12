@@ -53,8 +53,8 @@ class TelemetryUpsellReporter {
                      offerReference: String?,
                      vpnStatus: UpsellEvent.VPNStatus) async throws {
         let modalSource: UpsellModalSource?
-        // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
-        = if event == .success {
+            // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
+            = if event == .success {
             _modalSource ?? previousModalSource
         } else {
             _modalSource
@@ -95,10 +95,10 @@ class TelemetryUpsellReporter {
 }
 
 #if DEBUG
-extension TelemetryUpsellReporter {
-    func setValueTimeout(_ timeout: TimeInterval?) {
-        _previousModalSource.timeout = timeout
-        _previousOfferReference.timeout = timeout
+    extension TelemetryUpsellReporter {
+        func setValueTimeout(_ timeout: TimeInterval?) {
+            _previousModalSource.timeout = timeout
+            _previousOfferReference.timeout = timeout
+        }
     }
-}
 #endif

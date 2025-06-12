@@ -27,13 +27,13 @@ class ProtocolsListRobot: CoreElements {
         cell(smartButton).tap()
         return ProtocolsListRobot()
     }
-    
+
     @discardableResult
     func returnToSettings() -> SettingsRobot {
         button(settingsButtonId).tap()
         return SettingsRobot()
     }
-    
+
     /// Choose protocol from the protocol list
     /// - Precondition: Default protocol is Smart
     @discardableResult

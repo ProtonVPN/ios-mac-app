@@ -39,7 +39,7 @@ protocol QuickSettingsDropdownOptionPresenter: AnyObject {
     var requiresUpdate: Bool! { get }
     /// B2B users should see a "business" badge for disabled features, but no upsell modals.
     var requiresBusinessUpdate: Bool! { get }
-    
+
     var selectCallback: SuccessConfirmationCallback { get }
 }
 
@@ -82,7 +82,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         openUpgradeLink: @escaping () -> Void
     ) {
         var netShieldPropertyProvider = netShieldPropertyProvider
-        
+
         let text: String = switch level {
         case .level1:
             Localizable.quickSettingsNetshieldOptionLevel1

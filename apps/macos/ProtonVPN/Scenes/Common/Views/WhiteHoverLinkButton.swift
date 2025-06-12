@@ -29,7 +29,7 @@ class WhiteHoverLinkButton: NSButton {
         let trackingArea = NSTrackingArea(rect: self.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         self.addTrackingArea(trackingArea)
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         if isEnabled {
             var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
@@ -38,7 +38,7 @@ class WhiteHoverLinkButton: NSButton {
             addCursorRect(bounds, cursor: .pointingHand)
         }
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
         attributes[NSAttributedString.Key.foregroundColor] = NSColor.color(.text, .interactive)

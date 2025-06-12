@@ -35,14 +35,14 @@ public struct FeatureFlagProvider: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+        public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
 
-    public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
-        return FeatureFlagProvider(
-            getFeatureFlags: { flags },
-            setFeatureFlags: { _ in }
-        )
-    }
+        public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
+            return FeatureFlagProvider(
+                getFeatureFlags: { flags },
+                setFeatureFlags: { _ in }
+            )
+        }
     #endif
 }
 

@@ -25,7 +25,7 @@ import Cocoa
 class CellSurfaceButton: HoverDetectionButton {
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         title = ""
         isTransparent = true
     }

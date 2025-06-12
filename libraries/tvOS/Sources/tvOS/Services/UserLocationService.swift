@@ -47,8 +47,8 @@ extension UserLocationService: DependencyKey {
 
 extension DependencyValues {
     public var userLocationService: UserLocationService {
-      get { self[UserLocationService.self] }
-      set { self[UserLocationService.self] = newValue }
+        get { self[UserLocationService.self] }
+        set { self[UserLocationService.self] = newValue }
     }
 }
 

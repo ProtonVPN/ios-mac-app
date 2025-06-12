@@ -34,17 +34,17 @@ public protocol DynamicBugReportStorage {
 public class DynamicBugReportStorageUserDefaults: DynamicBugReportStorage {
     @Dependency(\.storage) var storage
     private let storageKey: String = "DynamicBugReport"
-    
+
     public init() {}
-    
+
     public func fetch() -> BugReportModel? {
         try? storage.get(BugReportModel.self, forKey: storageKey)
     }
-    
+
     public func store(_ bugReport: BugReportModel) {
         try? storage.set(bugReport, forKey: storageKey)
     }
-    
+
     public func clear() {
         storage.removeObject(forKey: storageKey)
     }

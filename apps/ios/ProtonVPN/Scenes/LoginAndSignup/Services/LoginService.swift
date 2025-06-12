@@ -165,11 +165,11 @@ final class CoreLoginService {
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
         #if DEBUG
-        if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
-            LoginExternalAccountNotSupportedSetup.start()
-        }
+            if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
+                LoginExternalAccountNotSupportedSetup.start()
+            }
         #endif
-        
+
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result)
         }
@@ -294,21 +294,21 @@ extension CoreLoginService: LoginService {
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         DispatchQueue.main.async {
             #if DEBUG
-            self.showAppDebugConfiguration()
+                self.showAppDebugConfiguration()
             #else
-            self.show(initialError: initialError, withOverlayViewController: overlayViewController)
+                self.show(initialError: initialError, withOverlayViewController: overlayViewController)
             #endif
         }
     }
 
-#if DEBUG
-    private func showAppDebugConfiguration() {
-        let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
-            self?.show(initialError: nil, withOverlayViewController: nil)
-        }
+    #if DEBUG
+        private func showAppDebugConfiguration() {
+            let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
+                self?.show(initialError: nil, withOverlayViewController: nil)
+            }
 
-        let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
-        windowService.show(viewController: environmentsViewController)
-    }
-#endif
+            let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
+            windowService.show(viewController: environmentsViewController)
+        }
+    #endif
 }

@@ -32,7 +32,7 @@ final class BannerCellView: NSView {
     @IBOutlet private weak var label: NSTextField!
     @IBOutlet private weak var separatorViewTop: NSView!
     @IBOutlet private weak var separatorViewBottom: NSView!
-    
+
     private var viewModel: BannerViewModel!
 
     override func awakeFromNib() {
@@ -68,11 +68,11 @@ final class BannerCellView: NSView {
     }
 
     // MARK: - Actions
-    
+
     @IBAction private func didTap(_ sender: Any) {
         viewModel.action()
     }
-    
+
     // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
@@ -84,7 +84,7 @@ final class BannerCellView: NSView {
     }
 
     // MARK: - Mouse hovering
-   
+
     override func resetCursorRects() {
         addCursorRect(roundedBackgroundView.frame, cursor: .pointingHand)
     }

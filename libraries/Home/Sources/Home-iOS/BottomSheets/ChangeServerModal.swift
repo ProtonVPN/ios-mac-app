@@ -42,8 +42,8 @@ struct ChangeServerModal: View {
                 VStack(spacing: .themeSpacing12) {
                     ReconnectCountdown(dateFinished: dateFinished,
                                        totalDuration: totalDuration)
-                    .padding(.top, .themeSpacing48)
-                    .padding(.bottom, .themeSpacing16)
+                        .padding(.top, .themeSpacing48)
+                        .padding(.bottom, .themeSpacing16)
 
                     if dateFinished > date.now {
                         Group {

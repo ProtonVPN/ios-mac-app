@@ -70,7 +70,7 @@ struct UpsellBackgroundView<Content>: View where Content: View {
                     LinearGradient(gradient: gradient,
                                    startPoint: .top,
                                    endPoint: .bottom)
-                    .opacity(0.4)
+                        .opacity(0.4)
                     let fadingGradient = Gradient(colors: [.clear, Color(.background)])
                     LinearGradient(gradient: fadingGradient,
                                    startPoint: .top,

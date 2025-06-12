@@ -28,11 +28,11 @@ final class CoreVPNKeysGeneratorTests: XCTestCase {
         let key1 = try generator.generateKeys()
         XCTAssertFalse(key1.publicKey.derRepresentation.isEmpty)
         XCTAssertFalse(key1.privateKey.derRepresentation.isEmpty)
-        
+
         let key2 = try generator.generateKeys()
         XCTAssertFalse(key2.publicKey.derRepresentation.isEmpty)
         XCTAssertFalse(key2.privateKey.derRepresentation.isEmpty)
-        
+
         XCTAssertNotEqual(key1.publicKey.derRepresentation, key2.publicKey.derRepresentation)
     }
 }

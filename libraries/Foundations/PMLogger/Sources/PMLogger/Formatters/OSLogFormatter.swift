@@ -31,9 +31,9 @@ public class OSLogFormatter: PMLogFormatter {
             metaString = String(data: metaJsonData, encoding: .utf8) ?? ""
         }
         #if DEBUG
-        let prepend = "\(level.emoji) \(level.stringValue) | "
+            let prepend = "\(level.emoji) \(level.stringValue) | "
         #else
-        let prepend = ""
+            let prepend = ""
         #endif
         return "\(prepend)\(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }

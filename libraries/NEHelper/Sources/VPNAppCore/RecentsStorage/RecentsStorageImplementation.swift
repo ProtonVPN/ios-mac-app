@@ -23,7 +23,7 @@ import Dependencies
 import Ergonomics
 
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 public final class RecentsStorageImplementation {
@@ -49,9 +49,9 @@ public final class RecentsStorageImplementation {
             log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
                       category: .persistence)
         }
-#if canImport(WidgetKit)
-        WidgetCenter.shared.reloadAllTimelines()
-#endif
+        #if canImport(WidgetKit)
+            WidgetCenter.shared.reloadAllTimelines()
+        #endif
     }
 
     public static func readFromStorage() -> OrderedSet<RecentConnection> {

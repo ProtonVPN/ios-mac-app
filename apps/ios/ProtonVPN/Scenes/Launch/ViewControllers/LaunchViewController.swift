@@ -32,13 +32,13 @@ final class LaunchViewController: UIViewController {
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
 
     var mode: AnimationMode = .delayed
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         loadingIndicator.isHidden = true
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -51,10 +51,10 @@ final class LaunchViewController: UIViewController {
             loadingIndicator.isHidden = false
         }
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         loadingIndicator.isHidden = true
     }
 }

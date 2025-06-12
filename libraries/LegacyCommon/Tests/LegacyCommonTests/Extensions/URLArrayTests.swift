@@ -28,11 +28,11 @@ class URLArrayTests: XCTestCase {
         // Existing files
         let testFile1 = Bundle.module.url(forResource: "test_log_1", withExtension: "log")!
         let testFile2 = Bundle.module.url(forResource: "test_log_2", withExtension: "log")!
-        
+
         // File that doesn't exist
         let logsDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true)
         let testFile3 = logsDirectory.appendingPathComponent("test.log", isDirectory: false)
-        
+
         let allFiles = [testFile1, testFile2, testFile3]
         XCTAssert(allFiles.count == 3)
         XCTAssert(allFiles.reachable().count == 2)

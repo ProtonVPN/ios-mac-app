@@ -27,13 +27,13 @@ class ServersHeaderView: UITableViewHeaderFooterView {
     @IBOutlet private weak var colorView: UIView!
     @IBOutlet private weak var serversName: UILabel!
     @IBOutlet private weak var infoBtn: UIButton!
-        
+
     var callback: ( () -> Void )? {
         didSet {
             infoBtn.isHidden = callback == nil
         }
     }
-    
+
     func setName(name: String?) {
         guard let name else {
             serversName.isHidden = true
@@ -43,11 +43,11 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         serversName.isHidden = false
         serversName.text = name
     }
-    
+
     func setColor(color: UIColor) {
         colorView.backgroundColor = color
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         colorView.backgroundColor = .backgroundColor()

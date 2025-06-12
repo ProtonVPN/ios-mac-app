@@ -185,8 +185,8 @@ private extension HomeFeature.State {
                 connection: .chrząszczyrzewoszczyce
             )
         ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        connectionStatus: .protected(),
+        vpnConnectionStatus: .connected)
     }
 
     static var connecting: Self {
@@ -198,8 +198,8 @@ private extension HomeFeature.State {
                 connection: .dibba
             )
         ],
-              connectionStatus: .protecting(),
-              vpnConnectionStatus: .connecting)
+        connectionStatus: .protecting(),
+        vpnConnectionStatus: .connecting)
     }
 
     static var disconnected: Self {
@@ -211,8 +211,8 @@ private extension HomeFeature.State {
                 connection: .fastest
             )
         ],
-              connectionStatus: .unprotected(),
-              vpnConnectionStatus: .disconnected)
+        connectionStatus: .unprotected(),
+        vpnConnectionStatus: .disconnected)
     }
 
     static var loadingConnectionInfo: Self {
@@ -224,8 +224,8 @@ private extension HomeFeature.State {
                 connection: .region
             )
         ],
-              connectionStatus: .protecting(),
-              vpnConnectionStatus: .loadingConnectionInfo)
+        connectionStatus: .protecting(),
+        vpnConnectionStatus: .loadingConnectionInfo)
     }
 
     static var secureCoreFastest: Self {
@@ -237,8 +237,8 @@ private extension HomeFeature.State {
                 connection: .secureCoreFastest
             )
         ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        connectionStatus: .protected(),
+        vpnConnectionStatus: .connected)
     }
 
     static var secureCoreFastestHop: Self {
@@ -250,8 +250,8 @@ private extension HomeFeature.State {
                 connection: .secureCoreFastestHop
             )
         ],
-              connectionStatus: .unprotected(),
-              vpnConnectionStatus: .disconnected)
+        connectionStatus: .unprotected(),
+        vpnConnectionStatus: .disconnected)
     }
 
     static var secureCoreHopToVia: Self {
@@ -263,8 +263,8 @@ private extension HomeFeature.State {
                 connection: .secureCoreHopToVia
             )
         ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        connectionStatus: .protected(),
+        vpnConnectionStatus: .connected)
     }
 }
 

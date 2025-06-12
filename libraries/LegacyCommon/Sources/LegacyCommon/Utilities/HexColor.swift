@@ -20,52 +20,52 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 
-extension UIColor {
-    public convenience init(red: Int, green: Int, blue: Int) {
-        checkColors(red, green, blue)
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
+    extension UIColor {
+        public convenience init(red: Int, green: Int, blue: Int) {
+            checkColors(red, green, blue)
+            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+        }
 
-    public convenience init(rgbHex: Int) {
-        let components = rgbHex.rgbComponents
-        self.init( red: components.r, green: components.g, blue: components.b )
-    }
+        public convenience init(rgbHex: Int) {
+            let components = rgbHex.rgbComponents
+            self.init( red: components.r, green: components.g, blue: components.b )
+        }
 
-    public var hexRepresentation: Int {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return convert2Hex(red, green, blue, alpha)
+        public var hexRepresentation: Int {
+            var red: CGFloat = 0
+            var green: CGFloat = 0
+            var blue: CGFloat = 0
+            var alpha: CGFloat = 0
+            getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            return convert2Hex(red, green, blue, alpha)
+        }
     }
-}
 
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 
-extension NSColor {
-    public convenience init(red: Int, green: Int, blue: Int) {
-        checkColors(red, green, blue)
-        self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
-    }
+    extension NSColor {
+        public convenience init(red: Int, green: Int, blue: Int) {
+            checkColors(red, green, blue)
+            self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
+        }
 
-    public convenience init(rgbHex: Int) {
-        let components = rgbHex.rgbComponents
-        self.init( red: components.r, green: components.g, blue: components.b )
-    }
+        public convenience init(rgbHex: Int) {
+            let components = rgbHex.rgbComponents
+            self.init( red: components.r, green: components.g, blue: components.b )
+        }
 
-    public var hexRepresentation: Int {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return convert2Hex(red, green, blue, alpha)
+        public var hexRepresentation: Int {
+            var red: CGFloat = 0
+            var green: CGFloat = 0
+            var blue: CGFloat = 0
+            var alpha: CGFloat = 0
+            getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+            return convert2Hex(red, green, blue, alpha)
+        }
     }
-}
 #endif
 
 private typealias RGB = (r: Int, g: Int, b: Int)

@@ -57,8 +57,8 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let appGroup: String
 
     public typealias Factory = IkeProtocolFactoryCreator &
-    WireguardProtocolFactoryCreator &
-    PropertiesManagerFactory
+        WireguardProtocolFactoryCreator &
+        PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),

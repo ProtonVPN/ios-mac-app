@@ -53,38 +53,38 @@ import Timer
 
 #if !REDESIGN
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+    let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
 
-class AppDelegate: NSObject {
-    @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
-    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
-    @IBOutlet weak var profilesMenu: ProfilesMenuController!
-    @IBOutlet weak var helpMenu: HelpMenuController!
-    @IBOutlet weak var statusMenu: StatusMenuWindowController!
-    let container = DependencyContainer()
-    lazy var navigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var appInfo: AppInfo = container.makeAppInfo()
-    private var appInactivityTimer: BackgroundTimer?
-    private lazy var pushNotificationService = PushNotificationService.shared
-    private var notificationManager: NotificationManagerProtocol!
-    private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
+    class AppDelegate: NSObject {
+        @Dependency(\.defaultsProvider) var provider
+        public private(set) static var wasRecentlyActive = false
+        @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
+        @IBOutlet weak var profilesMenu: ProfilesMenuController!
+        @IBOutlet weak var helpMenu: HelpMenuController!
+        @IBOutlet weak var statusMenu: StatusMenuWindowController!
+        let container = DependencyContainer()
+        lazy var navigationService = container.makeNavigationService()
+        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        private var appInactivityTimer: BackgroundTimer?
+        private lazy var pushNotificationService = PushNotificationService.shared
+        private var notificationManager: NotificationManagerProtocol!
+        private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
 
-    private var tokens: [NotificationToken] = []
-}
+        private var tokens: [NotificationToken] = []
+    }
 #else
-class AppDelegate: NSObject {
-    @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
-    let container = DependencyContainer()
-    lazy var navigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var appInfo: AppInfo = container.makeAppInfo()
-    private var appInactivityTimer: BackgroundTimer?
-    private lazy var pushNotificationService = PushNotificationService.shared
-    private var notificationManager: NotificationManagerProtocol!
-}
+    class AppDelegate: NSObject {
+        @Dependency(\.defaultsProvider) var provider
+        public private(set) static var wasRecentlyActive = false
+        let container = DependencyContainer()
+        lazy var navigationService = container.makeNavigationService()
+        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        private var appInactivityTimer: BackgroundTimer?
+        private lazy var pushNotificationService = PushNotificationService.shared
+        private var notificationManager: NotificationManagerProtocol!
+    }
 #endif
 
 extension AppDelegate: NSApplicationDelegate {
@@ -133,13 +133,13 @@ extension AppDelegate: NSApplicationDelegate {
             }
 
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-#if !REDESIGN
-            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-#endif
+            #if !REDESIGN
+                self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
+                self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
+                self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
+                self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
+                self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+            #endif
             self.notificationManager = self.container.makeNotificationManager()
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
             _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
@@ -200,7 +200,7 @@ extension AppDelegate: NSApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
     }
 

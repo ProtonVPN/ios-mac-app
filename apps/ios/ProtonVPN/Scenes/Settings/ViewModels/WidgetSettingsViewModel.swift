@@ -29,7 +29,7 @@ struct WidgetSettingsViewModel {
         let sections: [TableViewSection] = [
             widgetInstructions
         ]
-        
+
         return sections
     }
 
@@ -39,7 +39,7 @@ struct WidgetSettingsViewModel {
             .instructionStep(number: 2, text: Localizable.activateWidgetStep2),
             .instructionStep(number: 3, text: Localizable.activateWidgetStep3)
         ]
-        
+
         return TableViewSection(title: Localizable.activateWidget.uppercased(), cells: cells)
     }
 }

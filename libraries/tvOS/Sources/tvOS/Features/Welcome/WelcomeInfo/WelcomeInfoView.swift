@@ -44,7 +44,7 @@ struct WelcomeInfoView: View {
                     Text(model.subtitle)
                         .font(.title3)
                         .foregroundStyle(Color(.text, .weak)) +
-                    Text(verbatim: model.displayURL ?? "")
+                        Text(verbatim: model.displayURL ?? "")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Color(.text, .interactive))

@@ -74,10 +74,10 @@ extension ManagerConfigurator {
         @Dependency(\.date) var date
         protocolConfiguration.username = nil // Only required for IKEv2.
 
-#if os(iOS)
-        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
-        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
-#endif
+        #if os(iOS)
+            protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
+            protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
+        #endif
 
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
@@ -136,14 +136,14 @@ extension ManagerConfigurator {
     }
 
     private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
-#if DEBUG
-        let serverName = intent.server.logical.name
-        let transport = intent.tunnelSettings.transport
-        let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
-        return "\(serverName) - \(connectionProtocol)"
-#else
-        return "Proton VPN"
-#endif
+        #if DEBUG
+            let serverName = intent.server.logical.name
+            let transport = intent.tunnelSettings.transport
+            let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
+            return "\(serverName) - \(connectionProtocol)"
+        #else
+            return "Proton VPN"
+        #endif
     }
 }
 

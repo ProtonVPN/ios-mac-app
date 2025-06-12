@@ -48,12 +48,12 @@ final class SmartProtocolImplementation: SmartProtocol {
         var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
         #if os(macOS)
-        if smartProtocolConfig.iKEv2 {
-            log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
+            if smartProtocolConfig.iKEv2 {
+                log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
+                checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
 
-            fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
-        }
+                fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
+            }
         #endif
 
         if smartProtocolConfig.wireGuardUdp {
@@ -77,9 +77,9 @@ final class SmartProtocolImplementation: SmartProtocol {
             self.fallback = fallback
         } else {
             #if os(macOS)
-            self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
+                self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
             #else
-            self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
+                self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
             #endif
         }
 

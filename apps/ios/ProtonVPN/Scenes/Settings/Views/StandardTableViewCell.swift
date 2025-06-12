@@ -27,9 +27,9 @@ class StandardTableViewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet private weak var iconContainer: UIView!
     @IBOutlet private weak var iconImageView: UIImageView!
-    
+
     var completionHandler: (() -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
@@ -37,7 +37,7 @@ class StandardTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
 
@@ -47,15 +47,15 @@ class StandardTableViewCell: UITableViewCell {
             iconContainer.isHidden = icon == nil
         }
     }
-    
+
     func select() {
         completionHandler?()
     }
-    
+
     func invert() {
         setupViews(inverted: true)
     }
-    
+
     func setupViews(inverted: Bool = false, icon: UIImage? = nil) {
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)

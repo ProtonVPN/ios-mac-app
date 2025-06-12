@@ -57,32 +57,32 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private weak var ipLoadRowContainer: NSView!
 
     var announcementsButtonPressed: (() -> Void)?
-    
+
     private var viewModel: HeaderViewModel!
-    
+
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: HeaderViewModel) {
         super.init(nibName: NSNib.Name("Header"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         viewModel.delegate = self
         setupPersistentView()
         setupEphemeralView()
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
-        
+
         setupAnnouncements()
         setupBadgeView()
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
         viewModel.isVisible = true
@@ -93,34 +93,34 @@ final class HeaderViewController: NSViewController {
         super.viewDidDisappear()
         viewModel.isVisible = false
     }
-    
+
     private func setupPersistentView() {
         backgroundView.wantsLayer = true
         DarkAppearance {
             backgroundView.layer?.backgroundColor = .cgColor(.background)
         }
-                
+
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)
 
         changeServerView.handler = changeServerButtonAction
     }
-    
+
     private func setupEphemeralView() {
         setupFlagView()
-        
+
         headerLabel.attributedStringValue = viewModel.headerLabel
         headerLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.headerLabel)
         ipLabel.attributedStringValue = viewModel.ipLabel
         ipLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.ipLabel)
-        
+
         setupLoad()
         setupProtocol()
         setupBitrate()
-        
+
         setupButtons()
     }
-    
+
     private func setupFlagView() {
         if viewModel.isConnected, let countryCode = viewModel.connectedCountryCode {
             flagView.backgroundImage = AppTheme.Icon.flag(countryCode: countryCode, style: .large)
@@ -135,7 +135,7 @@ final class HeaderViewController: NSViewController {
 
         return ipLoadRowContainer.bounds.width - widthOfOtherElements - padding
     }
-    
+
     private func setupLoad() {
         if viewModel.isConnected, let loadDescription = viewModel.loadLabel, let loadDescriptionShort = viewModel.loadLabelShort, let loadPercentage = viewModel.loadPercentage {
             if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
@@ -166,7 +166,7 @@ final class HeaderViewController: NSViewController {
         protocolLabel.attributedStringValue = vpnProcol
         protocolLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.protocolLabel)
     }
-    
+
     private func setupBitrate() {
         if viewModel.isConnected {
             speedLabel.isHidden = false
@@ -185,7 +185,7 @@ final class HeaderViewController: NSViewController {
 
         changeServerView.isHidden = !shouldShowChangeServer
     }
-    
+
     @objc private func quickConnectButtonAction() {
         viewModel.quickConnectAction()
     }
@@ -193,9 +193,9 @@ final class HeaderViewController: NSViewController {
     @objc private func changeServerButtonAction() {
         viewModel.changeServerAction()
     }
-    
+
     // MARK: Announcements
-    
+
     fileprivate func setupBadgeView() {
         badgeView.wantsLayer = true
         badgeView.layer?.cornerRadius = 3
@@ -212,7 +212,7 @@ final class HeaderViewController: NSViewController {
         }
         Task {
             await viewModel.prefetchImages()
-            
+
             guard viewModel.showAnnouncements else {
                 announcementsButton.isHidden = true
                 return
@@ -250,7 +250,7 @@ final class HeaderViewController: NSViewController {
             }
         }
     }
-    
+
     @IBAction private func announcementsButtonTapped(_ sender: Any) {
         announcementsButtonPressed?()
     }

@@ -181,14 +181,14 @@ class NWTCPConnectionTests: XCTestCase {
 
             if numRequests == 0 {
                 XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                          cookieLine.contains("testing=12345"))
+                    cookieLine.contains("testing=12345"))
                 expectations.firstRequest.fulfill()
             } else {
                 XCTAssertEqual(numRequests, 1, "Should only run two requests")
                 XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                          cookieLine.contains("testing=12345") &&
-                          cookieLine.contains("Tag=vpn-a") &&
-                          cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
+                    cookieLine.contains("testing=12345") &&
+                    cookieLine.contains("Tag=vpn-a") &&
+                    cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
                 expectations.secondRequest.fulfill()
             }
 
@@ -225,18 +225,18 @@ class NWTCPConnectionTests: XCTestCase {
 
         XCTAssert(cookies.contains(where: {
             $0.name == "Session-Id" &&
-            $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
-            $0.domain == ".proton.me" &&
-            $0.path == "/" &&
-            $0.isHTTPOnly &&
-            $0.isSecure
+                $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
+                $0.domain == ".proton.me" &&
+                $0.path == "/" &&
+                $0.isHTTPOnly &&
+                $0.isSecure
         }), "Session-Id cookie not found or does not match expected values")
 
         XCTAssert(cookies.contains(where: {
             $0.name == "Tag" &&
-            $0.value == "vpn-a" &&
-            $0.path == "/" &&
-            $0.isSecure
+                $0.value == "vpn-a" &&
+                $0.path == "/" &&
+                $0.isSecure
         }), "Tag cookie not found or does not match expected values")
 
         let secondDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in

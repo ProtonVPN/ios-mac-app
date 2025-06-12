@@ -84,7 +84,7 @@ final class NATTypePropertyProviderImplementationTests: XCTestCase {
             @Dependency(\.defaultsProvider) var defaultsProvider
             defaultsProvider.getDefaults()
                 .setUserValue(natType?.rawValue, forKey: "NATType")
-            
+
             closure(NATTypePropertyProviderImplementation())
         }
     }

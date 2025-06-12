@@ -22,9 +22,9 @@ import UIKit
 
 final class CountryViewModelMock: CountryViewModel {
     var isGateway: Bool = false
-    
+
     var isRedesign: Bool = false
-    
+
     var showCountryConnectButton: Bool = true
 
     var showFeatureIcons: Bool = true

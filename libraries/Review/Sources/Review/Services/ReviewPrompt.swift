@@ -24,19 +24,19 @@ protocol ReviewPrompt: AnyObject {
 }
 
 final class AppStoreReviewPrompt: ReviewPrompt {
-#if os(iOS)
-    private var foregroundActiveScene: UIWindowScene? {
-        UIApplication.shared.connectedScenes.first { $0.activationState == .foregroundActive } as? UIWindowScene
-    }
-
-    func show() {
-        if let windowScene = foregroundActiveScene {
-            SKStoreReviewController.requestReview(in: windowScene)
+    #if os(iOS)
+        private var foregroundActiveScene: UIWindowScene? {
+            UIApplication.shared.connectedScenes.first { $0.activationState == .foregroundActive } as? UIWindowScene
         }
-    }
-#else
-    func show() {
-        SKStoreReviewController.requestReview()
-    }
-#endif
+
+        func show() {
+            if let windowScene = foregroundActiveScene {
+                SKStoreReviewController.requestReview(in: windowScene)
+            }
+        }
+    #else
+        func show() {
+            SKStoreReviewController.requestReview()
+        }
+    #endif
 }

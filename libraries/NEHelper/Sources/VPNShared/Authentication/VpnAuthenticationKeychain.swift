@@ -75,7 +75,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     }
 
     public func getStoredCertificate() -> VpnCertificate? {
-       do {
+        do {
             guard let json = try appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
                 return nil
             }

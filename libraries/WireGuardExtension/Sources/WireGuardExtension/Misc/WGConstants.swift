@@ -31,9 +31,9 @@ enum WGConstants {
 
     static var appGroupId: String {
         #if os(tvOS)
-        return AppGroups.main
+            return AppGroups.main
         #else
-        #error("Unimplemented")
+            #error("Unimplemented")
         #endif
     }
 }

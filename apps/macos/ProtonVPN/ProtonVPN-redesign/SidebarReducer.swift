@@ -18,52 +18,52 @@
 
 #if REDESIGN
 
-import Foundation
-import ComposableArchitecture
-import Home
-import VPNAppCore
+    import Foundation
+    import ComposableArchitecture
+    import Home
+    import VPNAppCore
 
-struct SidebarReducer: Reducer {
-    public typealias ActionSender = (Action) -> Void
-    
-    struct State: Equatable {
-        public var home: HomeFeature.State
-        public var connectionDetailsVisible: Bool
+    struct SidebarReducer: Reducer {
+        public typealias ActionSender = (Action) -> Void
+
+        struct State: Equatable {
+            public var home: HomeFeature.State
+            public var connectionDetailsVisible: Bool
 //        public var countries: CountriesFeature.State
 //        public var settings: SettingsFeature.State
-    }
+        }
 
-    enum Action: Equatable {
-        case home(HomeFeature.Action)
-    }
+        enum Action: Equatable {
+            case home(HomeFeature.Action)
+        }
 
-    var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case let .home(.connect(specs)):
-                return .run { _ in
-                    @Dependency(\.connectToVPN) var connectToVPN
-                    try? await connectToVPN(specs)
+        var body: some ReducerOf<Self> {
+            Reduce { state, action in
+                switch action {
+                case let .home(.connect(specs)):
+                    return .run { _ in
+                        @Dependency(\.connectToVPN) var connectToVPN
+                        try? await connectToVPN(specs)
+                    }
+
+                case .home(.disconnect):
+                    return .run { _ in
+                        @Dependency(\.disconnectVPN) var disconnectVPN
+                        try? await disconnectVPN()
+                    }
+
+                case .home(.showConnectionDetails):
+                    state.connectionDetailsVisible.toggle()
+                    return .none
+
+                case .home:
+                    return .none
                 }
-
-            case .home(.disconnect):
-                return .run { _ in
-                    @Dependency(\.disconnectVPN) var disconnectVPN
-                    try? await disconnectVPN()
-                }
-
-            case .home(.showConnectionDetails):
-                state.connectionDetailsVisible.toggle()
-                return .none
-                
-            case .home:
-                return .none
+            }
+            Scope(state: \.home, action: /Action.home) {
+                HomeFeature()
             }
         }
-        Scope(state: \.home, action: /Action.home) {
-            HomeFeature()
-        }
     }
-}
 
 #endif

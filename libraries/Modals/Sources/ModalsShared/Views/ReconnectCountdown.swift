@@ -112,7 +112,7 @@ public struct ReconnectCountdown: View {
             .foregroundColor(Color(.text))
         }
     }
-    
+
     public init(dateFinished: Date, totalDuration: TimeInterval, checkmarkAnimationDuration: TimeInterval = 1) {
         self.dateFinished = dateFinished
         self.totalDuration = totalDuration
@@ -201,8 +201,8 @@ fileprivate extension StrokeStyle {
 #Preview("In Progress", traits: .sizeThatFitsLayout) {
     ReconnectCountdown(dateFinished: Date().addingTimeInterval(15),
                        totalDuration: 50)
-    .frame(width: 86, height: 86)
-    .padding()
+        .frame(width: 86, height: 86)
+        .padding()
 }
 
 @available(iOS 17, macOS 14.0, tvOS 17, *)
@@ -210,6 +210,6 @@ fileprivate extension StrokeStyle {
     ReconnectCountdown(dateFinished: Date(),
                        totalDuration: 50,
                        checkmarkAnimationDuration: 0)
-    .frame(width: 86, height: 86)
-    .padding()
+        .frame(width: 86, height: 86)
+        .padding()
 }

@@ -18,50 +18,50 @@
 
 #if REDESIGN
 
-import Foundation
-import ComposableArchitecture
-import Home
-import VPNAppCore
+    import Foundation
+    import ComposableArchitecture
+    import Home
+    import VPNAppCore
 
-struct AppReducer: Reducer {
-    public typealias ActionSender = (Action) -> Void
+    struct AppReducer: Reducer {
+        public typealias ActionSender = (Action) -> Void
 
-    @Dependency(\.initialStateProvider) var initialStateProvider
+        @Dependency(\.initialStateProvider) var initialStateProvider
 
-    enum State: Equatable {
-        case loading
-        case notLoggedIn(LoginFeature.State)
-        case loggedIn(SidebarReducer.State)
-    }
+        enum State: Equatable {
+            case loading
+            case notLoggedIn(LoginFeature.State)
+            case loggedIn(SidebarReducer.State)
+        }
 
-    enum Action: Equatable {
-        case showLogin(LoginFeature.Action)
-        case logIn(LoginFeature.State)
-        case loggedIn(SidebarReducer.State)
-        case app(SidebarReducer.Action)
-    }
+        enum Action: Equatable {
+            case showLogin(LoginFeature.Action)
+            case logIn(LoginFeature.State)
+            case loggedIn(SidebarReducer.State)
+            case app(SidebarReducer.Action)
+        }
 
-    var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .showLogin:
-                state = .notLoggedIn(.init())
-                return .none
-            case .logIn:
-                guard case .notLoggedIn = state else { return .none }
-                return .run { send in await send(.loggedIn(initialStateProvider.initialState)) }
-            case let .loggedIn(appState):
-                state = .loggedIn(appState)
-                return .none
-            case .app: return .none // App actions are handled by the SidebarReducer
+        var body: some ReducerOf<Self> {
+            Reduce { state, action in
+                switch action {
+                case .showLogin:
+                    state = .notLoggedIn(.init())
+                    return .none
+                case .logIn:
+                    guard case .notLoggedIn = state else { return .none }
+                    return .run { send in await send(.loggedIn(initialStateProvider.initialState)) }
+                case let .loggedIn(appState):
+                    state = .loggedIn(appState)
+                    return .none
+                case .app: return .none // App actions are handled by the SidebarReducer
+                }
+            }
+            .ifCaseLet(/State.loggedIn, action: /Action.app) {
+                SidebarReducer()
+                    .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
+                    ._printChanges()
             }
         }
-        .ifCaseLet(/State.loggedIn, action: /Action.app) {
-            SidebarReducer()
-                .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
-                ._printChanges()
-        }
     }
-}
 
 #endif

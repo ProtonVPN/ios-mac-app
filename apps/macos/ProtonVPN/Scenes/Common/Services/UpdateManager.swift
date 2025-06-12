@@ -39,29 +39,29 @@ final class UpdateManager: NSObject {
 
     public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
-    
+
     // Callback for UI
     public var stateUpdated: (() -> Void)?
-    
+
     private var appSessionManager: AppSessionManager?
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    
+
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
-    
+
     private var lastUpdateDismissal: Date?
     private var chillOut: Bool {
         if let lastUpdateDismissal, Date().timeIntervalSince(lastUpdateDismissal) < Self.updateChillInterval {
             return true
         }
-        
+
         return false
     }
 
     public var currentVersion: String? {
         return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
     }
-    
+
     public var currentBuild: String? {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
@@ -80,7 +80,7 @@ final class UpdateManager: NSObject {
         }
         return suDateFormatter.date(from: dateString)
     }
-    
+
     public var releaseNotes: [String]? {
         guard let items = appcast?.items else {
             return nil
@@ -93,7 +93,7 @@ final class UpdateManager: NSObject {
             return item.itemDescription ?? ""
         }
     }
-    
+
     public init(_ factory: Factory) {
         self.factory = factory
         super.init()
@@ -101,27 +101,27 @@ final class UpdateManager: NSObject {
         AppEvent.earlyAccess.subscribe(self, selector: #selector(earlyAccessChanged))
 
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
-        
+
         updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
     }
-        
+
     @objc private func earlyAccessChanged(_ notification: NSNotification) {
         turnOnEarlyAccess((notification.object as? Bool) ?? false)
     }
-    
+
     private func turnOnEarlyAccess(_ earlyAccess: Bool) {
         lastUpdateDismissal = nil
-        
+
         if earlyAccess {
             checkForUpdates(nil, userInitiated: true)
         }
     }
-    
+
     func checkForUpdates(_ appSessionManager: AppSessionManager?, userInitiated: Bool) {
         self.appSessionManager = appSessionManager
-        
+
         propertiesManager.rememberLoginAfterUpdate = false
-        
+
         NSApp.windows.forEach { (window) in
             if window.title == "Software Update" {
                 window.makeKeyAndOrderFront(self)
@@ -129,21 +129,21 @@ final class UpdateManager: NSObject {
                 return
             }
         }
-        
+
         guard userInitiated else {
             updater?.updater.checkForUpdatesInBackground()
             return
         }
-        
+
         updater?.checkForUpdates(self)
     }
-    
+
     func startUpdate() {
         updater?.checkForUpdates(self)
     }
-    
+
     // MARK: - Private data
-        
+
     private var currentAppCastItem: SUAppcastItem? {
         guard let items = appcast?.items else {
             return nil
@@ -154,7 +154,7 @@ final class UpdateManager: NSObject {
         }
         return nil
     }
-    
+
     private var newestAppCastItem: SUAppcastItem? {
         appcast?.items.first {
             $0.channel == nil || $0.channel == channel
@@ -164,7 +164,7 @@ final class UpdateManager: NSObject {
     private var newestAppCastItemThatSupportsThisOS: SUAppcastItem? {
         appcast?.items.first {
             $0.minimumOperatingSystemVersionIsOK && $0.maximumOperatingSystemVersionIsOK &&
-            ($0.channel == nil || $0.channel == channel)
+                ($0.channel == nil || $0.channel == channel)
         }
     }
 
@@ -181,12 +181,12 @@ extension UpdateManager: SPUUpdaterDelegate {
             propertiesManager.rememberLoginAfterUpdate = true
         }
     }
-    
+
     func updater(_ updater: SPUUpdater, didFinishLoading appcast: SUAppcast) {
         self.appcast = appcast
         stateUpdated?()
     }
-    
+
     func updater(_ updater: SPUUpdater, userDidMake choice: SPUUserUpdateChoice, forUpdate updateItem: SUAppcastItem, state: SPUUserUpdateState) {
         switch choice {
         case .dismiss, .skip:
@@ -197,7 +197,7 @@ extension UpdateManager: SPUUpdaterDelegate {
             break
         }
     }
-    
+
     func updater(_ updater: SPUUpdater, mayPerform updateCheck: SPUUpdateCheck) throws {
         switch updateCheck {
         case .updatesInBackground:
@@ -210,11 +210,11 @@ extension UpdateManager: SPUUpdaterDelegate {
             break
         }
     }
-    
+
     func feedURLString(for updater: SPUUpdater) -> String? {
         return Self.feedURLString
     }
-    
+
     func updaterMayCheck(forUpdates updater: SPUUpdater) -> Bool {
         guard !propertiesManager.blockUpdatePrompt else {
             return false

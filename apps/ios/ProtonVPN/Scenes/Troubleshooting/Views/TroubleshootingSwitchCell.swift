@@ -36,7 +36,7 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
     }
 
     var isOnChanged: ((Bool) -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 

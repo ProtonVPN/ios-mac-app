@@ -45,7 +45,7 @@ public struct SettingsStorage: Sendable {
             self.featureFlagOverrides = featureFlagOverrides
         }
     }
-    
+
     public var getEnvironment: @Sendable () -> EnvironmentSettings
     public var setEnvironment: @Sendable (EnvironmentSettings) throws -> Void
 

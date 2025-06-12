@@ -31,7 +31,7 @@ public class ClearApplicationDataAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
-    
+
     public init(confirmHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.delete, style: .destructive, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
@@ -44,7 +44,7 @@ public class ActiveSessionWarningAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
-    
+
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
@@ -57,7 +57,7 @@ public class QuitWarningAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
-    
+
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))

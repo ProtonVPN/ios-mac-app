@@ -56,36 +56,36 @@ public enum ConnectionProtocol: Equatable, Hashable, CaseIterable, Sendable, Cod
 
     public var shouldBeEnabledByDefault: Bool {
         guard self == .smartProtocol else { return false }
-#if os(macOS)
-        // On MacOS, the user must approve system extensions before Smart Protocol can be used
-        return false
-#else
-        return true
-#endif
+        #if os(macOS)
+            // On MacOS, the user must approve system extensions before Smart Protocol can be used
+            return false
+        #else
+            return true
+        #endif
     }
 
-#if os(macOS)
-    public var requiresSystemExtension: Bool {
-        guard self != .smartProtocol else {
-            return true
+    #if os(macOS)
+        public var requiresSystemExtension: Bool {
+            guard self != .smartProtocol else {
+                return true
+            }
+            return vpnProtocol?.requiresSystemExtension == true
         }
-        return vpnProtocol?.requiresSystemExtension == true
-    }
-#endif
+    #endif
 
     public static let allCases: [ConnectionProtocol] = [.smartProtocol] +
-    VpnProtocol.allCases.map(Self.vpnProtocol)
+        VpnProtocol.allCases.map(Self.vpnProtocol)
 }
 
 #if os(macOS)
-extension VpnProtocol {
-    public var requiresSystemExtension: Bool {
-        switch self {
-        case .openVpn, .wireGuard:
-            return true
-        default:
-            return false
+    extension VpnProtocol {
+        public var requiresSystemExtension: Bool {
+            switch self {
+            case .openVpn, .wireGuard:
+                return true
+            default:
+                return false
+            }
         }
     }
-}
 #endif

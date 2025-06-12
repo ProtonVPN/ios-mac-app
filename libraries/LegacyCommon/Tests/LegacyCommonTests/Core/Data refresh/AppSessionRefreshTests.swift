@@ -207,18 +207,18 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             // If you tried fixing this and failed, increase the counter :)
             // Failed attempts: 1
 
-    //        appSessionRefresher.didAttemptLogin = {
-    //            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
-    //        }
-    //        serverStorage.didUpdateServers = { _ in
-    //            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
-    //        }
-    //        vpnKeychain.didStoreCredentials = { _ in
-    //            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
-    //        }
-    //        appSessionRefreshTimer.start(now: true)
-    //        sleep(2) // give time to make sure API isn't being hit
-    //        appSessionRefreshTimer.stop()
+            //        appSessionRefresher.didAttemptLogin = {
+            //            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
+            //        }
+            //        serverStorage.didUpdateServers = { _ in
+            //            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
+            //        }
+            //        vpnKeychain.didStoreCredentials = { _ in
+            //            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
+            //        }
+            //        appSessionRefreshTimer.start(now: true)
+            //        sleep(2) // give time to make sure API isn't being hit
+            //        appSessionRefreshTimer.stop()
         }
     }
 }

@@ -21,7 +21,7 @@ import Strings
 import ProtonCoreUtilities // Array and Dictionary extensions
 
 #if canImport(CoreTelephony)
-import CoreTelephony
+    import CoreTelephony
 #endif
 
 public protocol CountryCodeProvider {
@@ -64,23 +64,23 @@ public class CountryCodeProviderImplementation: CountryCodeProvider {
     /// Only available on iOS devices before iOS 16, where this functionality was senselessly deprecated.
     private static var carrierIsoCountryCodes: Set<String> {
         #if os(iOS)
-        guard #unavailable(iOS 16) else {
-            return []
-        }
-
-        let netInfo = CTTelephonyNetworkInfo()
-        guard let carriers = netInfo.serviceSubscriberCellularProviders else {
-            return []
-        }
-
-        return carriers.values.reduce(into: Set()) { partialResult, carrier in
-            guard let iso = carrier.isoCountryCode, iso != "--" else {
-                return
+            guard #unavailable(iOS 16) else {
+                return []
             }
-            partialResult.insert(iso.lowercased())
-        }
+
+            let netInfo = CTTelephonyNetworkInfo()
+            guard let carriers = netInfo.serviceSubscriberCellularProviders else {
+                return []
+            }
+
+            return carriers.values.reduce(into: Set()) { partialResult, carrier in
+                guard let iso = carrier.isoCountryCode, iso != "--" else {
+                    return
+                }
+                partialResult.insert(iso.lowercased())
+            }
         #else
-        return []
+            return []
         #endif
     }
 }

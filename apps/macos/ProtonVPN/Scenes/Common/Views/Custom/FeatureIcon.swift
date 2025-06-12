@@ -26,17 +26,17 @@ class FeatureIcon: NSImageView {
     override var isFlipped: Bool {
         return false
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
-        
+
         // circle
         let icb = CGRect(x: 0.5, y: 0.5, width: bounds.width - 1, height: bounds.height - 1)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
         context.setStrokeColor(.cgColor(.icon, .weak))
         context.drawPath(using: .stroke)
-        
+
         // draw image
         if let image = image {
             var imageRect: CGRect
@@ -44,12 +44,12 @@ class FeatureIcon: NSImageView {
                 let desiredHeight = 0.75 * bounds.height
                 let desiredSize = CGSize(width: image.size.width / (image.size.height / desiredHeight), height: desiredHeight)
                 imageRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
-                                      size: desiredSize)
+                                   size: desiredSize)
             } else {
                 let desiredWidth = 0.75 * bounds.width
                 let desiredSize = CGSize(width: desiredWidth, height: image.size.height / (image.size.width / desiredWidth))
                 imageRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredWidth / 2, y: bounds.height / 2 - desiredSize.height / 2),
-                                      size: desiredSize)
+                                   size: desiredSize)
             }
             if let image = image.colored(.weak).cgImage(forProposedRect: &imageRect, context: nil, hints: nil) {
                 context.draw(image, in: imageRect)

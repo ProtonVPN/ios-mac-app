@@ -97,10 +97,10 @@ class TelemetryTests: XCTestCase {
 
     func checkUpsellEventDimensions(request: TelemetryRequest, event: UpsellEvent.Event, upgradedUserPlan: String?) {
         guard let sut = request.parameters,
-                  let values = sut["Values"] as? [String: Any],
-                  let dimensions = sut["Dimensions"] as? [String: Any] else {
-                XCTFail("Parameters not in the expected type")
-                return
+              let values = sut["Values"] as? [String: Any],
+              let dimensions = sut["Dimensions"] as? [String: Any] else {
+            XCTFail("Parameters not in the expected type")
+            return
         }
 
         XCTAssertEqual(sut["MeasurementGroup"] as? String, "vpn.any.upsell")

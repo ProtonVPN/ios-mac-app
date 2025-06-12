@@ -24,7 +24,7 @@ extension UIElement {
     public func tapInCenter(dx: Double = 0.5, dy: Double = 0.5) -> UIElement {
         return tapOnCoordinate(withOffset: CGVector(dx: dx, dy: dy))
     }
-    
+
     /// Forcibly hovers the element if its not hittable.
     ///
     /// - Parameters:

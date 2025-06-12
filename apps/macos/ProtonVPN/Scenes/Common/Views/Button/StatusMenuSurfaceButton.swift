@@ -24,16 +24,16 @@ import Cocoa
 
 class StatusMenuSurfaceButton: CellSurfaceButton {
     var stateChanged: (() -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
         layer?.cornerRadius = 3
-        
+
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
+
     override func viewWillDraw() {
         stateChanged?()
     }

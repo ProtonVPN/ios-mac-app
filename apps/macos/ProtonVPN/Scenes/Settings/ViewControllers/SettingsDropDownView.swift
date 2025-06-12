@@ -78,7 +78,7 @@ class SettingsDropDownView: NSView {
         infoIcon.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
         infoIcon.toolTip = model.toolTip
         separator.fillColor = .color(.border, .weak)
-        
+
         popupButton.isBordered = false
         popupButton.target = target
         popupButton.action = action

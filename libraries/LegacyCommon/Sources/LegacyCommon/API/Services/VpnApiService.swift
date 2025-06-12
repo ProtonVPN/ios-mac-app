@@ -128,7 +128,7 @@ public class VpnApiService {
         ifIpHasChangedFrom lastKnownIp: String? = nil,
         freeTier: Bool,
         completion: @escaping (Result<ServerInfoTuple?, Error>
-    ) -> Void) {
+        ) -> Void) {
         Task {
             do {
                 let prop = try await refreshServerInfo(ifIpHasChangedFrom: lastKnownIp, freeTier: freeTier)

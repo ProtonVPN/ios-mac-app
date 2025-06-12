@@ -29,9 +29,9 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
     // TODO: With VPNAPPL-2541, remove this below since we'll get it for free
     public static func == (lhs: NetShieldModel, rhs: NetShieldModel) -> Bool {
         lhs.ads == rhs.ads &&
-        lhs.trackers == rhs.trackers &&
-        lhs.data == rhs.data &&
-        lhs.enabled == rhs.enabled
+            lhs.trackers == rhs.trackers &&
+            lhs.data == rhs.data &&
+            lhs.enabled == rhs.enabled
     }
 
     public init(trackersCount: Int, adsCount: Int, dataSaved: UInt64, enabled: Bool) {

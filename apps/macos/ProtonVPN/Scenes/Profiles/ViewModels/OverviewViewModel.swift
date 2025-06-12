@@ -39,22 +39,22 @@ final class OverviewViewModel {
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
-    
+
     init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
-    
+
     @objc private func profilesChanged() {
         contentChanged?()
     }
-    
+
     var cellHeight: CGFloat {
         return 50.0
     }
-    
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -62,11 +62,11 @@ final class OverviewViewModel {
             return .freeTier
         }
     }
-    
+
     var cellCount: Int {
         return profileManager.allProfiles.count
     }
-    
+
     func cellModel(forIndex index: Int) -> OverviewItemViewModel {
         return OverviewItemViewModel(
             profile: profileManager.allProfiles[index],
@@ -76,7 +76,7 @@ final class OverviewViewModel {
             userTier: userTier
         )
     }
-    
+
     func createNewProfileAction() {
         createNewProfile?()
     }

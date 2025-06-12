@@ -109,19 +109,19 @@ extension HermesResolver {
 }
 
 #if DEBUG
-extension HermesResolver: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
-        self.location = value
+    extension HermesResolver: ExpressibleByStringLiteral {
+        public init(stringLiteral value: StringLiteralType) {
+            self.location = value
+        }
     }
-}
 
-extension HermesResolver {
-    public static let cloudFlare: HermesResolver = "1.1.1.1"
-    public static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
-    public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
-    public static let google: HermesResolver = "8.8.8.8"
-    public static let googleDoT: HermesResolver = "tls://8.8.8.8"
-    public static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
-    public static let quadNine: HermesResolver = "9.9.9.9"
-}
+    extension HermesResolver {
+        public static let cloudFlare: HermesResolver = "1.1.1.1"
+        public static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
+        public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
+        public static let google: HermesResolver = "8.8.8.8"
+        public static let googleDoT: HermesResolver = "tls://8.8.8.8"
+        public static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
+        public static let quadNine: HermesResolver = "9.9.9.9"
+    }
 #endif

@@ -24,7 +24,7 @@ import Foundation
 public enum ProfileType: Equatable, Codable {
     case system
     case user
-    
+
     public var description: String {
         switch self {
         case .system:
@@ -33,13 +33,13 @@ public enum ProfileType: Equatable, Codable {
             return "User"
         }
     }
-    
+
     // MARK: - NSCoding
 
     private struct CoderKey {
         static let profileType = "profileType"
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.profileType) as! Data
         switch data[0] {
@@ -49,7 +49,7 @@ public enum ProfileType: Equatable, Codable {
             self = .user
         }
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }

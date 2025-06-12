@@ -51,9 +51,9 @@ final class MacAlertService {
         NavigationServiceFactory &
         TelemetrySettingsFactory &
         VpnKeychainFactory
-    
+
     private let factory: Factory
-    
+
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
@@ -68,7 +68,7 @@ final class MacAlertService {
     @Dependency(\.linkOpener) var linkOpener
 
     private var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
-    
+
     init(factory: Factory) {
         self.factory = factory
     }
@@ -101,20 +101,20 @@ extension MacAlertService: CoreAlertService {
     // swiftlint:disable cyclomatic_complexity function_body_length
     func pushOnUIThread(alert: SystemAlert) {
         log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
-        
+
         switch alert {
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
-            
+
         case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
             show(cannotAccessVpnCredentialsAlert)
 
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let p2pForwardedAlert as P2pForwardedAlert:
             show(p2pForwardedAlert)
-            
+
         case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
             show(refreshTokenExpiredAlert)
 
@@ -168,19 +168,19 @@ extension MacAlertService: CoreAlertService {
 
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is VpnNetworkUnreachableAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
 
@@ -189,25 +189,25 @@ extension MacAlertService: CoreAlertService {
 
         case is ClearApplicationDataAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is ActiveSessionWarningAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is QuitWarningAlert:
             showDefaultSystemAlert(alert)
-        
+
         case let alert as IkeDeprecatedAlert:
             show(alert)
 
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
             show(vpnServerOnMaintenanceAlert)
-            
+
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is NetShieldRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
 
@@ -216,16 +216,16 @@ extension MacAlertService: CoreAlertService {
 
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let sysexAlert as SysexEnabledAlert:
             show(sysexAlert)
-            
+
         case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
-            
+
         case let systemExtensionTourAlert as SystemExtensionTourAlert:
             show(systemExtensionTourAlert)
-            
+
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
 
@@ -234,13 +234,13 @@ extension MacAlertService: CoreAlertService {
 
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is TurnOnKillSwitchAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is AllowLANConnectionsAlert:
             showDefaultSystemAlert(alert)
 
@@ -249,16 +249,16 @@ extension MacAlertService: CoreAlertService {
 
         case is VpnServerSubscriptionErrorAlert:
             showDefaultSystemAlert(alert)
-            
+
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
 
         case let announcementOfferAlert as AnnouncementOfferAlert:
             show(announcementOfferAlert)
-            
+
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
-            
+
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
 
@@ -303,9 +303,9 @@ extension MacAlertService: CoreAlertService {
 
         default:
             #if DEBUG
-            fatalError("Alert type handling not implemented: \(String(describing: alert))")
+                fatalError("Alert type handling not implemented: \(String(describing: alert))")
             #else
-            showDefaultSystemAlert(alert)
+                showDefaultSystemAlert(alert)
             #endif
         }
     }
@@ -313,14 +313,14 @@ extension MacAlertService: CoreAlertService {
     // swiftlint:enable cyclomatic_complexity function_body_length
 
     // MARK: Alerts UI
-    
+
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
         }
         uiAlertService.displayAlert(alert)
     }
-    
+
     // MARK: Custom Alerts
 
     private func show(_ alert: SysexEnabledAlert) {
@@ -336,7 +336,7 @@ extension MacAlertService: CoreAlertService {
 
         provider.getDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
     }
-    
+
     private func show(_ alert: AppUpdateRequiredAlert) {
         let supportAction = AlertAction(title: Localizable.updateRequiredSupport, style: .confirmative) { [weak self] in
             self?.linkOpener.open(.supportForm)
@@ -344,13 +344,13 @@ extension MacAlertService: CoreAlertService {
         let updateAction = AlertAction(title: Localizable.updateRequiredUpdate, style: .confirmative) {
             self.updateManager.startUpdate()
         }
-        
+
         alert.actions.append(supportAction)
         alert.actions.append(updateAction)
-        
+
         uiAlertService.displayAlert(alert)
     }
-    
+
     private func show(_ alert: CannotAccessVpnCredentialsAlert) {
         guard appSessionManager.sessionStatus == .established else { return } // already logged out
         appSessionManager.logOut(force: true, reason: Localizable.errorSignInAgain)
@@ -359,19 +359,19 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: SystemExtensionTourAlert) {
         windowService.openSystemExtensionGuideWindow(cancelledHandler: alert.cancelHandler)
     }
-    
+
     private func show(_ alert: P2pForwardedAlert) {
         let p2pIcon = AppTheme.Icon.arrowsSwitch.asAttachment(size: .rect(width: 15, height: 12))
-        
+
         let bodyP1 = (Localizable.p2pForwardedPopupBodyP1 + " ").styled(alignment: .natural)
         let bodyP2 = (" " + Localizable.p2pForwardedPopupBodyP2).styled(alignment: .natural)
         let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
-        
+
         alert.actions.append(AlertAction(title: Localizable.ok, style: .confirmative, handler: nil))
-        
+
         uiAlertService.displayAlert(alert, message: body)
     }
-    
+
     private func show(_ alert: RefreshTokenExpiredAlert) {
         appSessionManager.logOut(force: true, reason: Localizable.invalidRefreshTokenPleaseLogin)
     }
@@ -402,7 +402,7 @@ extension MacAlertService: CoreAlertService {
                 self?.linkOpener.open(url)
             }
         }
-        
+
         AppEvent.upsellAlertWasDisplayed.post(modalSource)
 
         let upsellViewController = ModalsFactory.upsellViewController(
@@ -431,7 +431,7 @@ extension MacAlertService: CoreAlertService {
 
         windowService.presentKeyModal(viewController: vc)
     }
-    
+
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
         windowService.openSubuserAlertWindow(alert: alert)
     }
@@ -450,7 +450,7 @@ extension MacAlertService: CoreAlertService {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
     }
-    
+
     private func show(_ alert: IkeDeprecatedAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)

@@ -26,11 +26,11 @@ class LoginWindowController: WindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: LoginViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
         setupControls()
     }
@@ -39,14 +39,14 @@ class LoginWindowController: WindowController {
         guard let window = window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = "Proton VPN"
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background)
     }
-    
+
     private func setupControls() {
         monitorsKeyEvents = false
     }

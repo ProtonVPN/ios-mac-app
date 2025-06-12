@@ -28,7 +28,7 @@ import ProtonCoreUIFoundations
 class OverviewItemView: NSTableRowView {
     @IBOutlet weak var profileImage: NSImageView!
     @IBOutlet weak var profileCircle: ProfileCircle!
-    
+
     @IBOutlet weak var profileNameField: NSTextField!
     @IBOutlet weak var connectionDescriptionField: NSTextField!
     @IBOutlet weak var actionButtonStackView: NSStackView!
@@ -36,7 +36,7 @@ class OverviewItemView: NSTableRowView {
     @IBOutlet weak var editButton: InteractiveActionButton!
     @IBOutlet weak var deleteButton: InteractiveActionButton!
     @IBOutlet weak var rowSeparator: NSBox!
-    
+
     fileprivate var viewModel: OverviewItemViewModel!
 
     private lazy var accessibilityConnectAction: NSAccessibilityCustomAction = {
@@ -51,24 +51,24 @@ class OverviewItemView: NSTableRowView {
     private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = {
         NSAccessibilityCustomAction(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
     }()
-    
+
     func updateView(withModel viewModel: OverviewItemViewModel) {
         self.viewModel = viewModel
-        
+
         setupImage()
         setupLabels()
         setupButtons()
         setupAvailability()
         setupAccessibilityCustomActions()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         editButton.isHovered = false
         deleteButton.isHovered = false
     }
-    
+
     private func setupImage() {
         switch viewModel.icon {
         case let .image(image):
@@ -87,7 +87,7 @@ class OverviewItemView: NSTableRowView {
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupLabels() {
         profileNameField.attributedStringValue = viewModel.name
         connectionDescriptionField.attributedStringValue = viewModel.description
@@ -127,28 +127,28 @@ class OverviewItemView: NSTableRowView {
         deleteButton.target = action.target
         deleteButton.action = action.selector
     }
-    
+
     private func setupAvailability() {
         [profileImage, profileCircle, profileNameField, connectionDescriptionField].forEach { view in
             view?.alphaValue = viewModel.alphaOfMainElements
         }
     }
-    
+
     @objc private func connectButtonAction(_ sender: Any) {
         viewModel.connectAction {
             window?.close()
         }
     }
-    
+
     @objc private func editButtonAction(_ sender: Any) {
         viewModel.editAction()
     }
-    
+
     @objc private func deleteButtonAction(_ sender: Any) {
         viewModel.deleteAction()
     }
 
-// MARK: - Accessibility
+    // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
         return viewModel.name.string

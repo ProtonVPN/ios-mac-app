@@ -44,10 +44,10 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
 
         let refresher = AnnouncementRefresherImplementation()
         refresher.tryRefreshing()
-        
+
         wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
-    
+
     func testDoNotRefreshTooOften() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 1
@@ -67,7 +67,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             refresher.tryRefreshing()
         }
     }
-    
+
     func testRefreshesAfterMinTimePassed() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 2
@@ -80,7 +80,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
         refresher.tryRefreshing()
         refresher.tryRefreshing()
-        
+
         wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
 
@@ -127,7 +127,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             XCTAssert(storage.fetch().containsAnnouncement(withId: "newOneTime"))
         }
     }
-    
+
     func testDoesntSaveNewAnnouncementsToStorageOnError() {
         let storage: AnnouncementStorageMock = AnnouncementStorageMock()
         storage.store([
@@ -144,7 +144,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
         XCTAssertEqual(storage.fetch().count, 2)
-        
+
         refresher.tryRefreshing()
 
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))

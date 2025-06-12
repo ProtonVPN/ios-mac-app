@@ -13,12 +13,12 @@ import LegacyCommon
 final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     private let xpcServiceUser: XPCServiceUser
     private let propertiesManager: PropertiesManagerProtocol
-    
+
     init(xpcServiceUser: XPCServiceUser, propertiesManager: PropertiesManagerProtocol) {
         self.xpcServiceUser = xpcServiceUser
         self.propertiesManager = propertiesManager
     }
-    
+
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
 

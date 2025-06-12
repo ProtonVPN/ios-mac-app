@@ -33,7 +33,7 @@ class UIConstants {
     static let separatorHeight: CGFloat = 8
     static let countriesHeaderHeight: CGFloat = 40
     static let connectionBarHeight: CGFloat = 44
-    
+
     // MARK: - Messages
 
     static let messageOptions: [GSMessageOption] = [
@@ -51,6 +51,6 @@ class UIConstants {
         .textColor(.white),
         .textNumberOfLines(0),
     ]
-    
+
     static let maxProfileNameLength = 25
 }

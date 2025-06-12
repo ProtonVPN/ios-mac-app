@@ -36,14 +36,14 @@ class Keychain {
         ]
 
         #if os(iOS)
-        items[kSecAttrAccessGroup] = FileManager.appGroupId
-        items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
+            items[kSecAttrAccessGroup] = FileManager.appGroupId
+            items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
         #elseif os(macOS)
-        items[kSecAttrSynchronizable] = false
-        items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            items[kSecAttrSynchronizable] = false
+            items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
 
         #else
-        #error("Unimplemented")
+            #error("Unimplemented")
         #endif
 
         var ref: CFTypeRef?

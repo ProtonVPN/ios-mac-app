@@ -39,7 +39,7 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
         self.event = event
         self.dimensions = dimensions
     }
-    
+
     public enum Event: Encodable {
         case vpnConnection(timeToConnection: TimeInterval)
         case vpnDisconnection(sessionLength: TimeInterval)

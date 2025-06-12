@@ -17,17 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(Cocoa)
-import Cocoa
+    import Cocoa
 
-/// Use this method to force the usage of dark theme on macOS, where we set the background color using CGColor
-@available(macOS 11, *)
-public struct DarkAppearance {
-    @discardableResult
-    public init(_ draw: () -> Void) {
-        NSAppearance(named: .darkAqua)?.performAsCurrentDrawingAppearance {
-            draw()
+    /// Use this method to force the usage of dark theme on macOS, where we set the background color using CGColor
+    @available(macOS 11, *)
+    public struct DarkAppearance {
+        @discardableResult
+        public init(_ draw: () -> Void) {
+            NSAppearance(named: .darkAqua)?.performAsCurrentDrawingAppearance {
+                draw()
+            }
         }
     }
-}
 
 #endif

@@ -46,16 +46,16 @@ struct LoginViewModelError: Swift.Error {
 
 final class LoginViewModel {
     typealias Factory = NavigationServiceFactory &
-                        PropertiesManagerFactory &
-                        AppSessionManagerFactory &
-                        CoreAlertServiceFactory &
-                        UpdateManagerFactory &
-                        ProtonReachabilityCheckerFactory &
-                        NetworkingFactory &
-                        SystemExtensionManagerFactory
+        PropertiesManagerFactory &
+        AppSessionManagerFactory &
+        CoreAlertServiceFactory &
+        UpdateManagerFactory &
+        ProtonReachabilityCheckerFactory &
+        NetworkingFactory &
+        SystemExtensionManagerFactory
 
     private let factory: Factory
-    
+
     private lazy var apiService: APIService = factory.makeNetworking().apiService
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -83,15 +83,15 @@ final class LoginViewModel {
         self.factory = factory
         self.initialError = initialError
     }
-    
+
     var startOnBoot: Bool {
         return propertiesManager.startOnBoot
     }
-    
+
     func startOnBoot(enabled: Bool) {
         propertiesManager.startOnBoot = enabled
     }
-    
+
     func logInSilently() {
         logInInProgress?()
         appSessionManager.attemptSilentLogIn { result in
@@ -107,7 +107,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     func logInAppeared() {
         guard initialError == nil else {
             logInFailure?(initialError, nil)
@@ -131,7 +131,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     func logIn(username: String, password: String) {
         logInInProgress?()
         loginService.login(
@@ -143,7 +143,7 @@ final class LoginViewModel {
             self?.handleLoginResult(result: result)
         }
     }
-    
+
     func logInWithSSO(username: String) {
         logInInProgress?()
         loginService.login(
@@ -155,7 +155,7 @@ final class LoginViewModel {
             self?.handleLoginResult(result: result)
         }
     }
-    
+
     func identifyAndProcessSSOResponseToken(from url: URL?, username: String) -> Bool {
         guard let token = getSSOTokenFromURL(url: url) else { return false }
         loginService.processResponseToken(idpEmail: username, responseToken: token) { [weak self] result in
@@ -163,22 +163,22 @@ final class LoginViewModel {
         }
         return true
     }
-    
+
     private func getSSOTokenFromURL(url: URL?) -> SSOResponseToken? {
         guard let url, url.path == "/sso/login" else { return nil }
-        
+
         var components = URLComponents()
         components.query = url.fragment
-        
+
         guard let items = components.queryItems,
               let token = (items.first { $0.name == "token" }?.value),
               let uid = (items.first { $0.name == "uid" }?.value) else {
             return nil
         }
-        
+
         return .init(token: token, uid: uid)
     }
-    
+
     func isProtonPage(url: URL?) -> Bool {
         guard let url else { return false }
         let hosts = [
@@ -320,7 +320,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     private func specialErrorCaseNotification(_ error: Error) {
         if (error as NSError).code == NetworkErrorCode.timedOut ||
             (error as NSError).code == ApiErrorCode.apiVersionBad ||
@@ -328,16 +328,16 @@ final class LoginViewModel {
             logInFailureWithSupport?(error.localizedDescription)
         }
     }
-    
+
     private func checkForUpdatesInBackground() {
         updateManager.checkForUpdates(appSessionManager, userInitiated: false)
     }
-    
+
     func keychainHelpAction() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.supportCommonIssues)
     }
-    
+
     func createAccountAction() {
         checkInProgress?(true)
 

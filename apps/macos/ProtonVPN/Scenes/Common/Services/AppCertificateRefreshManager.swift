@@ -59,7 +59,7 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 
         startTimer(at: nextRefreshTime)
     }
-    
+
     @objc private func refreshCertificateTimerTick() {
         Task {
             await refreshCertificate()

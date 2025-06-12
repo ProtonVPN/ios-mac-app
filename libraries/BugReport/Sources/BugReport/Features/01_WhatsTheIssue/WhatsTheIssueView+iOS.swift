@@ -17,18 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-import Foundation
-import SwiftUI
-import SwiftUINavigation
-import ComposableArchitecture
-import Strings
+    import Foundation
+    import SwiftUI
+    import SwiftUINavigation
+    import ComposableArchitecture
+    import Strings
 
-public struct WhatsTheIssueView: View {
-    @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
-    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-    @Environment(\.colors) var colors: Colors
+    public struct WhatsTheIssueView: View {
+        @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+        @Environment(\.colors) var colors: Colors
 
-    public var body: some View {
+        public var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 
@@ -63,48 +63,48 @@ public struct WhatsTheIssueView: View {
                 .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)
             }
-    }
+        }
 
-    private func nextView() -> some View {
-        NavigationLink(
-            item: $store.route,
-            onNavigate: { _ in
-                print("navigate")
-            },
-            destination: { childStore in
-                let childStore = store.route
-                switch childStore {
-                case .quickFixes:
-                    QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
+        private func nextView() -> some View {
+            NavigationLink(
+                item: $store.route,
+                onNavigate: { _ in
+                    print("navigate")
+                },
+                destination: { childStore in
+                    let childStore = store.route
+                    switch childStore {
+                    case .quickFixes:
+                        QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
 
-                case .contactForm(_):
-                    ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
-                    
-                case .none:
-                    EmptyView()
-                }
-            },
-            label: { EmptyView() }
-        )
-    }
-}
+                    case .contactForm(_):
+                        ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
 
-// MARK: - Preview
-
-struct WhatsTheIssueView_Previews: PreviewProvider {
-    private static let bugReport = MockBugReportDelegate(model: .mock)
-
-    static var previews: some View {
-        CurrentEnv.bugReportDelegate = bugReport
-        CurrentEnv.updateViewModel.updateIsAvailable = true
-
-        return Group {
-            WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                                           reducer: { WhatsTheIssueFeature() }
-                                          )
+                    case .none:
+                        EmptyView()
+                    }
+                },
+                label: { EmptyView() }
             )
         }
     }
-}
+
+    // MARK: - Preview
+
+    struct WhatsTheIssueView_Previews: PreviewProvider {
+        private static let bugReport = MockBugReportDelegate(model: .mock)
+
+        static var previews: some View {
+            CurrentEnv.bugReportDelegate = bugReport
+            CurrentEnv.updateViewModel.updateIsAvailable = true
+
+            return Group {
+                WhatsTheIssueView(store: Store(initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+                                               reducer: { WhatsTheIssueFeature() }
+                    )
+                )
+            }
+        }
+    }
 
 #endif

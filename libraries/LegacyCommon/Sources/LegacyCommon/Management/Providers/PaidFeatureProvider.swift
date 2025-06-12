@@ -28,12 +28,12 @@ public protocol AppFeaturePropertyProvider {
 public struct AppFeaturePropertyProviderKey: DependencyKey {
     public static var liveValue: AppFeaturePropertyProvider { AppFeaturePropertyProviderImplementation() }
     #if DEBUG
-    public static var testValue: AppFeaturePropertyProvider {
-        let provider = MockFeaturePropertyProvider()
-        provider.setValue(VPNAccelerator.on)
-        provider.setValue(ExcludeLocalNetworks.on)
-        return provider
-    }
+        public static var testValue: AppFeaturePropertyProvider {
+            let provider = MockFeaturePropertyProvider()
+            provider.setValue(VPNAccelerator.on)
+            provider.setValue(ExcludeLocalNetworks.on)
+            return provider
+        }
     #endif
 }
 
@@ -166,30 +166,30 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 }
 
 #if DEBUG
-public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
-    public var featureValueMap: [String: Any] = [:]
+    public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
+        public var featureValueMap: [String: Any] = [:]
 
-    public init() {}
+        public init() {}
 
-    private func featureKey<T: ProvidableFeature>(for feature: T.Type) -> String {
-        return "\(feature)"
-    }
-
-    public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
-        let key = featureKey(for: feature)
-        guard let storedValue = featureValueMap[key] else {
-            reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
-            return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+        private func featureKey<T: ProvidableFeature>(for feature: T.Type) -> String {
+            return "\(feature)"
         }
-        guard let value = storedValue as? T else {
-            reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
-            return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
-        }
-        return value
-    }
 
-    public func setValue<T: ProvidableFeature>(_ value: T) {
-        featureValueMap[featureKey(for: T.self)] = value
+        public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
+            let key = featureKey(for: feature)
+            guard let storedValue = featureValueMap[key] else {
+                reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
+                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+            }
+            guard let value = storedValue as? T else {
+                reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
+                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+            }
+            return value
+        }
+
+        public func setValue<T: ProvidableFeature>(_ value: T) {
+            featureValueMap[featureKey(for: T.self)] = value
+        }
     }
-}
 #endif

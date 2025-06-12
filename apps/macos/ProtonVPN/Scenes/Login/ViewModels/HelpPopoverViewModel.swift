@@ -39,7 +39,7 @@ final class HelpPopoverViewModel {
     func resetAction() {
         linkOpener.open(.resetPassword)
     }
-    
+
     func forgotAction() {
         linkOpener.open(.forgotUsername)
     }

@@ -78,18 +78,18 @@ enum DefaultConnectionResolverImplementation {
         return recents
             .filter(shouldOfferDefaultConnectionPreference(for:))
             .map { recent in
-            let spec = recent.connection
-            let infoBuilder = ConnectionInfoBuilder(intent: spec, server: nil, withServerNumber: false)
+                let spec = recent.connection
+                let infoBuilder = ConnectionInfoBuilder(intent: spec, server: nil, withServerNumber: false)
 
-            return ConnectionPreferenceModel(
-                preference: .recent(spec),
-                locationFeatureModel: .init(
-                    flag: spec.location.flagComposition,
-                    header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
-                    subheader: infoBuilder.subheader
+                return ConnectionPreferenceModel(
+                    preference: .recent(spec),
+                    locationFeatureModel: .init(
+                        flag: spec.location.flagComposition,
+                        header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
+                        subheader: infoBuilder.subheader
+                    )
                 )
-            )
-        }
+            }
     }
 }
 

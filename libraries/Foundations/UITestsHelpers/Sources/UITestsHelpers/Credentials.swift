@@ -26,13 +26,13 @@ public struct Credentials: Decodable {
     public let username: String
     public let password: String
     public let plan: String
-    
+
     public init(username: String, password: String, plan: String) {
         self.username = username
         self.password = password
         self.plan = plan
     }
-    
+
     public static func loadFrom(plistUrl: URL) -> [Credentials] {
         let data = try! Data(contentsOf: plistUrl)
         let decoder = PropertyListDecoder()

@@ -17,11 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import Timer
-import TimerMock
+    import Foundation
+    import Timer
+    import TimerMock
 
-public extension TimerFactoryKey {
-    static let testValue: TimerFactory = TimerFactoryMock()
-}
+    public extension TimerFactoryKey {
+        static let testValue: TimerFactory = TimerFactoryMock()
+    }
 #endif

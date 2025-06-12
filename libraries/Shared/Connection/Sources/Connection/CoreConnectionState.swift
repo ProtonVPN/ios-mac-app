@@ -85,7 +85,7 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
             self = .disconnecting
 
         case let (.disconnected(possibleTunnelError), .connecting),
-            let (.disconnected(possibleTunnelError), .connected):
+             let (.disconnected(possibleTunnelError), .connected):
             // Same as the above case, the user may have initiated a disconnection while the app was in the background
             self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 

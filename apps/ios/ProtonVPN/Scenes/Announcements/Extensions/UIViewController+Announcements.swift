@@ -32,7 +32,7 @@ extension UIViewController {
             await setupAnnouncementsAsync()
         }
     }
-    
+
     private func setupAnnouncementsAsync() async {
         guard let viewModel = AnnouncementButtonViewModel.shared else {
             removeBadgedBarButtonItem()
@@ -68,7 +68,7 @@ extension UIViewController {
                 self?.navigationItem.rightBarButtonItems?.insert(button, at: 1)
             }
         }
-        
+
         if navigationItem.rightBarButtonItems?.contains(where: { $0 is BadgedBarButtonItem }) == false {
             if let iconUrl = iconUrl {
                 let downloader = ImageDownloader()
@@ -92,12 +92,12 @@ extension UIViewController {
 
         setup()
     }
-    
+
     func renderAnnouncementsButtonBadge() {
         let button = navigationItem.rightBarButtonItems?.compactMap({ $0 as? BadgedBarButtonItem }).first
         button?.showBadge = AnnouncementButtonViewModel.shared.hasUnreadAnnouncements
     }
-    
+
     @IBAction func announcementsButtonTapped() {
         let viewModel = AnnouncementButtonViewModel.shared
         viewModel?.showAnnouncement()

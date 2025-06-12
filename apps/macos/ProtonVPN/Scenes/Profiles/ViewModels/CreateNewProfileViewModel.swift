@@ -144,9 +144,9 @@ class CreateNewProfileViewModel {
 
     var serverTypeMenuItems: [PopUpButtonItemViewModel] {
         ServerType.humanReadableCases.map { item in
-                .init(title: menuStyle(item.localizedString),
-                      checked: state.serverType == item,
-                      handler: { [weak self] in self?.update(type: item) })
+            .init(title: menuStyle(item.localizedString),
+                  checked: state.serverType == item,
+                  handler: { [weak self] in self?.update(type: item) })
         }
     }
 
@@ -163,14 +163,14 @@ class CreateNewProfileViewModel {
             checked: state.countryIndex == nil,
             handler: { [weak self] in self?.update(countryIndex: nil) }
         )] +
-        // Countries by index in their grouping
-        state.serverGroups.enumerated().map { (index, grouping) in
-            PopUpButtonItemViewModel(
-                title: countryDescriptor(for: grouping),
-                checked: state.countryIndex == index,
-                handler: { [weak self] in self?.update(countryIndex: index) }
-            )
-        }
+            // Countries by index in their grouping
+            state.serverGroups.enumerated().map { (index, grouping) in
+                PopUpButtonItemViewModel(
+                    title: countryDescriptor(for: grouping),
+                    checked: state.countryIndex == index,
+                    handler: { [weak self] in self?.update(countryIndex: index) }
+                )
+            }
     }
 
     /// Helper function to get the list of servers according to a group (country) selected
@@ -240,8 +240,8 @@ class CreateNewProfileViewModel {
                     // not effective to pre-fill ServerOffering objects before one is selected,
                     // so we do it here, only for the selected object.
                     if let vpnServer = self?.serverRepository.getFirstServer(
-                            filteredBy: [.logicalID(server.logical.id)],
-                            orderedBy: .fastest) {
+                        filteredBy: [.logicalID(server.logical.id)],
+                        orderedBy: .fastest) {
                         let serverModel = ServerModel(server: vpnServer)
                         let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
                         self?.update(serverOffering: offering)

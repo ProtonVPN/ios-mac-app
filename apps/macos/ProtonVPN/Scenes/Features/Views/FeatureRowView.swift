@@ -33,7 +33,7 @@ class FeatureRowView: NSView {
     @IBOutlet private weak var titleLbl: NSTextField!
     @IBOutlet private weak var descriptionLbl: NSTextField!
     @IBOutlet private weak var learnMoreBtn: InteractiveActionButton!
-    
+
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.attributedStringValue = viewModel.title.styled(.normal, font: .themeFont(.small))

@@ -24,7 +24,7 @@ public enum BF22Users {
     case cycle15User
     case cycle30User
     case freeUser
-    
+
     public var credentials: Credentials {
         let allCredentials = getCredentials(fromResource: "credentials_bf22")
         switch self {
@@ -38,7 +38,7 @@ public enum BF22Users {
             return allCredentials[3]
         }
     }
-    
+
     // Sample function to get credentials from a resource
     func getCredentials(fromResource resource: String) -> [Credentials] {
         return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)

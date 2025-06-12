@@ -33,7 +33,7 @@ import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
     override func setUpWithError() throws {
         #if os(macOS)
-        throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
+            throw XCTSkip("Protocol override tests are skipped on macOS, since there is no cert refresh provider.")
         #endif
         try super.setUpWithError()
 
@@ -239,10 +239,10 @@ class ProtocolOverrideConnectionTests: ConnectionTestCaseDriver {
     }
 
     #if false
-    func testExclusiveServerSwitchingDueToMaintenance() {}
+        func testExclusiveServerSwitchingDueToMaintenance() {}
 
-    func testConnectingToProfileWithOverriddenIP() {}
+        func testConnectingToProfileWithOverriddenIP() {}
 
-    func testConnectingToProfileWithChangedOverride() {}
+        func testConnectingToProfileWithChangedOverride() {}
     #endif
 }

@@ -19,55 +19,55 @@
 import Foundation
 import QuartzCore
 #if os(iOS)
-import UIKit
+    import UIKit
 
-public extension CALayer {
-    private static let kLayerNameGradientBorder = "GradientBorderLayer"
+    public extension CALayer {
+        private static let kLayerNameGradientBorder = "GradientBorderLayer"
 
-    func gradientBorder(
-        width: CGFloat = 1,
-        colors: [UIColor],
-        startPoint: CGPoint = .CoordinateSpace.left,
-        endPoint: CGPoint = .CoordinateSpace.right,
-        andRoundCornersWithRadius cornerRadius: CGFloat = 0
-    ) {
-        let existingBorder = gradientBorderLayer()
-        existingBorder?.removeFromSuperlayer()
-        let border = CAGradientLayer()
-        border.name = Self.kLayerNameGradientBorder
-        border.frame = CGRect(x: bounds.origin.x,
-                              y: bounds.origin.y,
-                              width: bounds.size.width + width,
-                              height: bounds.size.height + width)
-        border.colors = colors.map(\.cgColor)
-        border.startPoint = startPoint
-        border.endPoint = endPoint
+        func gradientBorder(
+            width: CGFloat = 1,
+            colors: [UIColor],
+            startPoint: CGPoint = .CoordinateSpace.left,
+            endPoint: CGPoint = .CoordinateSpace.right,
+            andRoundCornersWithRadius cornerRadius: CGFloat = 0
+        ) {
+            let existingBorder = gradientBorderLayer()
+            existingBorder?.removeFromSuperlayer()
+            let border = CAGradientLayer()
+            border.name = Self.kLayerNameGradientBorder
+            border.frame = CGRect(x: bounds.origin.x,
+                                  y: bounds.origin.y,
+                                  width: bounds.size.width + width,
+                                  height: bounds.size.height + width)
+            border.colors = colors.map(\.cgColor)
+            border.startPoint = startPoint
+            border.endPoint = endPoint
 
-        let mask = CAShapeLayer()
-        let maskRect = CGRect(x: bounds.origin.x + width / 2,
-                              y: bounds.origin.y + width / 2,
-                              width: bounds.size.width - width,
-                              height: bounds.size.height - width)
-        mask.path = UIBezierPath(roundedRect: maskRect,
-                                 cornerRadius: cornerRadius).cgPath
-        mask.fillColor = UIColor.clear.cgColor
-        mask.strokeColor = UIColor.white.cgColor
-        mask.lineWidth = width
+            let mask = CAShapeLayer()
+            let maskRect = CGRect(x: bounds.origin.x + width / 2,
+                                  y: bounds.origin.y + width / 2,
+                                  width: bounds.size.width - width,
+                                  height: bounds.size.height - width)
+            mask.path = UIBezierPath(roundedRect: maskRect,
+                                     cornerRadius: cornerRadius).cgPath
+            mask.fillColor = UIColor.clear.cgColor
+            mask.strokeColor = UIColor.white.cgColor
+            mask.lineWidth = width
 
-        border.mask = mask
+            border.mask = mask
 
-        addSublayer(border)
-    }
-
-    private func gradientBorderLayer() -> CAGradientLayer? {
-        let borderLayers = sublayers?.filter {
-            $0.name == Self.kLayerNameGradientBorder
+            addSublayer(border)
         }
-        if borderLayers?.count ?? 0 > 1 {
-            fatalError()
+
+        private func gradientBorderLayer() -> CAGradientLayer? {
+            let borderLayers = sublayers?.filter {
+                $0.name == Self.kLayerNameGradientBorder
+            }
+            if borderLayers?.count ?? 0 > 1 {
+                fatalError()
+            }
+            return borderLayers?.first as? CAGradientLayer
         }
-        return borderLayers?.first as? CAGradientLayer
     }
-}
 
 #endif

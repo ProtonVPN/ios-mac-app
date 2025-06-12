@@ -17,29 +17,29 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(SwiftUI)
-import SwiftUI
+    import SwiftUI
 
-@available(iOS 13.0, macOS 10.15, *)
-public struct SizeCalculator: ViewModifier {
-    @Binding var size: CGSize
+    @available(iOS 13.0, macOS 10.15, *)
+    public struct SizeCalculator: ViewModifier {
+        @Binding var size: CGSize
 
-    public func body(content: Content) -> some View {
-        content
-            .background(
-                GeometryReader { proxy in
-                    Color.clear // we just want the reader to get triggered, so let's use an empty color
-                        .onAppear {
-                            size = proxy.size
-                        }
-                }
-            )
+        public func body(content: Content) -> some View {
+            content
+                .background(
+                    GeometryReader { proxy in
+                        Color.clear // we just want the reader to get triggered, so let's use an empty color
+                            .onAppear {
+                                size = proxy.size
+                            }
+                    }
+                )
+        }
     }
-}
 
-@available(iOS 13.0, macOS 10.15, *)
-public extension View {
-    func saveSize(in size: Binding<CGSize>) -> some View {
-        modifier(SizeCalculator(size: size))
+    @available(iOS 13.0, macOS 10.15, *)
+    public extension View {
+        func saveSize(in size: Binding<CGSize>) -> some View {
+            modifier(SizeCalculator(size: size))
+        }
     }
-}
 #endif

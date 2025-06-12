@@ -20,7 +20,7 @@
 public struct LogicalServersResponse: Codable {
     let code: Int
     let logicalServers: [LogicalServer]
-    
+
     enum CodingKeys: String, CodingKey {
         case code = "Code"
         case logicalServers = "LogicalServers"
@@ -43,7 +43,7 @@ public struct LogicalServer: Codable {
     let status: Int
     let servers: [Server]
     let load: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case name = "Name"
         case entryCountry = "EntryCountry"
@@ -66,7 +66,7 @@ public struct LogicalServer: Codable {
 public struct Location: Codable {
     let lat: Double
     let long: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case lat = "Lat"
         case long = "Long"
@@ -84,7 +84,7 @@ public struct Server: Codable {
     let status: Int
     let servicesDown: Int
     let servicesDownReason: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case entryIP = "EntryIP"
         case exitIP = "ExitIP"

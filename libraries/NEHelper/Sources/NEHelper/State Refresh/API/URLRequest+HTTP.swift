@@ -54,9 +54,9 @@ extension URLRequest {
 
         if let httpHeaders = allHTTPHeaderFields, !httpHeaders.isEmpty {
             #if DEBUG
-            let headerKeys = httpHeaders.keys.sorted()
+                let headerKeys = httpHeaders.keys.sorted()
             #else
-            let headerKeys = httpHeaders.keys
+                let headerKeys = httpHeaders.keys
             #endif
             for header in headerKeys {
                 try addToRequest("\(header): \(httpHeaders[header] ?? "")\r\n")

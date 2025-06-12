@@ -138,7 +138,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
             cancelled?()
             return
         }
-        
+
         DispatchQueue.main.async { [offerReference] in
             AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }

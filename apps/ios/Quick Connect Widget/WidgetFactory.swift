@@ -34,7 +34,7 @@ final class WidgetFactory {
 
     private let alertService = ExtensionAlertService()
     private let propertiesManager = PropertiesManager()
-    
+
     init() {
         injectDefaultCryptoImplementation()
         setUpNSCoding(withModuleName: "ProtonVPN")
@@ -72,7 +72,7 @@ extension WidgetFactory: NETunnelProviderManagerWrapperFactory {
             completionHandler(managers, error)
         }
     }
-    
+
     func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
         try await NETunnelProviderManager.loadAllFromPreferences()
     }

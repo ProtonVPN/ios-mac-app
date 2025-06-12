@@ -21,13 +21,13 @@ import XCTest
 
 class MapTests: ProtonVPNUITests {
     private lazy var mapRobot = MapRobot()
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
         loginAsPlusUser()
     }
-    
+
     func testOpenAndHideMap() {
         mapRobot
             .clickShowMap()

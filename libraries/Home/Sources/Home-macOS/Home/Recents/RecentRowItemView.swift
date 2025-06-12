@@ -59,7 +59,7 @@ struct RecentRowItemView: View {
     var isDisabled: Bool {
         item.underMaintenance || isPaid
     }
-    
+
     var body: some View {
         HStack(spacing: 0) {
             mainButton

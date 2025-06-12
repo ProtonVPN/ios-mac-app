@@ -44,26 +44,26 @@ struct UserDefaultsClient: DependencyKey, Sendable {
     }
 
     static func getUserDefaults() throws -> UserDefaults {
-#if os(iOS)
-        let suiteName = try getSuiteName()
-        guard let defaults = UserDefaults(suiteName: suiteName) else {
-            throw UserDefaultsError.userDefaultsMissing(suiteName)
-        }
-        return defaults
-#elseif os(macOS)
-        return UserDefaults.standard
-#endif
+        #if os(iOS)
+            let suiteName = try getSuiteName()
+            guard let defaults = UserDefaults(suiteName: suiteName) else {
+                throw UserDefaultsError.userDefaultsMissing(suiteName)
+            }
+            return defaults
+        #elseif os(macOS)
+            return UserDefaults.standard
+        #endif
     }
 
     static func getSuiteName() throws -> String {
-#if os(iOS)
-        return DomainConstants.AppGroups.main
-#elseif os(macOS)
-        guard let suiteName = Bundle.main.bundleIdentifier else {
-            fatalError()
-        }
-        return suiteName
-#endif
+        #if os(iOS)
+            return DomainConstants.AppGroups.main
+        #elseif os(macOS)
+            guard let suiteName = Bundle.main.bundleIdentifier else {
+                fatalError()
+            }
+            return suiteName
+        #endif
     }
 
     enum UserDefaultsError: Error {

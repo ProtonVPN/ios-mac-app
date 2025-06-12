@@ -29,11 +29,11 @@ import Domain
 import VPNShared
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 
-fileprivate let deviceName = UIDevice.current.name
+    fileprivate let deviceName = UIDevice.current.name
 #else
-fileprivate let deviceName = Host.current().localizedName ?? ""
+    fileprivate let deviceName = Host.current().localizedName ?? ""
 #endif
 
 final class CertificateRequest: Request {
@@ -60,12 +60,12 @@ final class CertificateRequest: Request {
             "DeviceName": deviceName,
             "Mode": "session"
         ] as [String: Any]
-        
+
         // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
         if let features = features {
             params["Features"] = features.asDict
         }
-        
+
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
         }
@@ -74,7 +74,7 @@ final class CertificateRequest: Request {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew) {
             params["Renew"] = true
         }
-        
+
         return params
     }
 

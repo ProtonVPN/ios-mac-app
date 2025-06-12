@@ -10,11 +10,11 @@ package final class Logger: @unchecked Sendable {
         case openFailure
     }
 
-#if swift(>=5.10)
-    nonisolated(unsafe) package private(set) static var global: Logger?
-#else
-    package private(set) static var global: Logger?
-#endif
+    #if swift(>=5.10)
+        nonisolated(unsafe) package private(set) static var global: Logger?
+    #else
+        package private(set) static var global: Logger?
+    #endif
 
     private static let lock = NSLock()
 
@@ -64,13 +64,13 @@ package final class Logger: @unchecked Sendable {
 }
 
 extension OSLog {
-#if swift(>=6.0)
-    #warning("Reevaluate whether this concurrency decoration is necessary.")
-#elseif swift(>=5.10)
-    nonisolated(unsafe) package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
-#else
-    package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
-#endif
+    #if swift(>=6.0)
+        #warning("Reevaluate whether this concurrency decoration is necessary.")
+    #elseif swift(>=5.10)
+        nonisolated(unsafe) package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+    #else
+        package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+    #endif
 }
 
 package func wg_log(_ type: OSLogType, staticMessage msg: StaticString) {

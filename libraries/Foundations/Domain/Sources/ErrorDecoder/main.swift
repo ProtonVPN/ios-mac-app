@@ -20,7 +20,7 @@ import Foundation
 
 /**
  Run this in your terminal by navigating to `libraries/Foundation/Domain` and running `swift run errordecoder <value>`.
-*/
+ */
 
 extension String {
     init?(charCode: FourCharCode) {

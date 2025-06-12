@@ -50,38 +50,38 @@ class HoverDetectionButton: NSButton {
             }
         }
     }
-    
+
     var isHovered: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         layer?.masksToBounds = false
-        
+
         isBordered = false
         setButtonType(.momentaryChange)
-        
+
         addMouseTracking()
     }
-    
+
     private func addMouseTracking() {
         trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
     }
-    
+
     func trackingOptions() -> NSTrackingArea.Options {
         return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
-    
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
-        
+
         addMouseTracking()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         layer?.masksToBounds = false

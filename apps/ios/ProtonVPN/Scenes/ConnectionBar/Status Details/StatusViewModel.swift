@@ -306,15 +306,15 @@ class StatusViewModel {
                            accessibilityIdentifier: "Delete Profile",
                            color: .notificationErrorColor(),
                            handler: { [deleteProfile] in
-                deleteProfile()
-            })
+                               deleteProfile()
+                           })
         } else {
             return .button(title: Localizable.saveAsProfile,
                            accessibilityIdentifier: "Save as Profile",
                            color: .normalTextColor(),
                            handler: { [saveAsProfile] in
-                saveAsProfile()
-            })
+                               saveAsProfile()
+                           })
         }
     }
 

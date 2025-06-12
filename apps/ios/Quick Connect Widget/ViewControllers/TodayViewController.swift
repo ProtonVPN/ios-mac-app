@@ -36,7 +36,7 @@ final class TodayViewController: UIViewController {
 
     private let widgetFactory = WidgetFactory()
     private let viewModel: TodayViewModel
-    
+
     required init?(coder aDecoder: NSCoder) {
         viewModel = widgetFactory.makeTodayViewModel()
         super.init(coder: aDecoder)
@@ -55,16 +55,16 @@ final class TodayViewController: UIViewController {
         ipLabel.backgroundColor = .clear
         buttonContainerView.backgroundColor = .clear
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.update()
     }
-    
+
     @IBAction private func didTapConnectButton(_ sender: Any) {
         viewModel.connect()
     }
-    
+
     // MARK: - Util
 
     private func setConnectButtonTitle(_ title: String) {
@@ -73,7 +73,7 @@ final class TodayViewController: UIViewController {
             connectButton.layoutIfNeeded()
         }
     }
-    
+
     private func updateUI(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
                           ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
                           connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
@@ -110,7 +110,7 @@ extension TodayViewController: TodayViewModelDelegate {
             updateUI(buttonHidden: true, iconTint: .backgroundColor())
         case let .connected(server, entryCountry: entryCountry, country: country):
             let connectionString: String = if let entryCountry = entryCountry {
-                 "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
+                "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
             } else {
                 Localizable.connected
             }

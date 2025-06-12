@@ -51,13 +51,13 @@ class StateAlertTests: XCTestCase {
     )
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
-    
+
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
     var timerFactory: TimerFactoryMock!
     var propertiesManager: PropertiesManagerProtocol!
     var appStateManager: AppStateManager!
-    
+
     override func setUp() {
         super.setUp()
         vpnManager = VpnManagerMock()
@@ -88,22 +88,22 @@ class StateAlertTests: XCTestCase {
 
     func testDisconnectingAlertFirtTimeConnecting() {
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
-    
+
     func testDisconnectingAlertPreviouslyConnected() {
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.isEmpty)
 
         let timeouts = (1...2).map { XCTestExpectation(description: "connection timeout \($0)") }
@@ -121,12 +121,12 @@ class StateAlertTests: XCTestCase {
         XCTAssertEqual(alertService.alerts.count, 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
-    
+
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.isEmpty)
     }
 }

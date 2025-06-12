@@ -47,7 +47,7 @@ extension LocalAgentFeatures {
 
         return Int(getInt(key.rawValue))
     }
-    
+
     func getBool(key: LocalAgentFeaturesKeys) -> Bool? {
         guard hasKey(key: key) else {
             return nil
@@ -55,7 +55,7 @@ extension LocalAgentFeatures {
 
         return getBool(key.rawValue)
     }
-    
+
     func getString(key: LocalAgentFeaturesKeys) -> String? {
         guard hasKey(key: key) else {
             return nil
@@ -79,7 +79,7 @@ extension LocalAgentFeatures {
 
 extension LocalAgentFeatures {
     // MARK: Getters
-    
+
     var vpnAccelerator: Bool? {
         return getBool(key: .vpnAccelerator)
     }
@@ -90,7 +90,7 @@ extension LocalAgentFeatures {
         }
         return NetShieldType(rawValue: value)
     }
-    
+
     var bouncing: String? {
         return getString(key: .bouncing)
     }
@@ -106,7 +106,7 @@ extension LocalAgentFeatures {
     var safeMode: Bool? {
         return getBool(key: .safeMode)
     }
-    
+
     // MARK: - Setters
 
     func with(netshield: NetShieldType) -> LocalAgentFeatures {

@@ -134,58 +134,58 @@ public enum NetworkUtils {
         }
     }
     
-#if os(macOS)
+    #if os(macOS)
 
-    // MARK: - Gateway
+        // MARK: - Gateway
     
-    /// Function is used to fetch and return the default gateway address of the system.
-    /// - Returns: A String representing the default gateway address.
-    public static func getDefaultGatewayAddress() throws -> String {
-        let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
+        /// Function is used to fetch and return the default gateway address of the system.
+        /// - Returns: A String representing the default gateway address.
+        public static func getDefaultGatewayAddress() throws -> String {
+            let output = try runShellCommand("/usr/sbin/netstat", arguments: ["-nr"])
         
-        let defaultGateway = try parseGateway(from: output)
-        guard defaultGateway.isValidIPv4Address else {
+            let defaultGateway = try parseGateway(from: output)
+            guard defaultGateway.isValidIPv4Address else {
+                throw NetworkUtilsError.gatewayNotFound
+            }
+            return defaultGateway
+        }
+    
+        private static func parseGateway(from output: String) throws -> String {
+            let lines = output.split(separator: "\n")
+            for line in lines {
+                let components = line.split(separator: " ", omittingEmptySubsequences: true)
+                if components.count >= 2, components[0] == "default" {
+                    return String(components[1])
+                }
+            }
+        
             throw NetworkUtilsError.gatewayNotFound
         }
-        return defaultGateway
-    }
     
-    private static func parseGateway(from output: String) throws -> String {
-        let lines = output.split(separator: "\n")
-        for line in lines {
-            let components = line.split(separator: " ", omittingEmptySubsequences: true)
-            if components.count >= 2, components[0] == "default" {
-                return String(components[1])
+        /// Function is used to run shell command with given launchPath and arguments.
+        /// - Parameters:
+        ///     - launchPath: A String representing the path to launch.
+        ///     - arguments: An array of Strings representing the arguments.
+        /// - Returns: A string representing the output of the executed command.
+        private static func runShellCommand(_ launchPath: String, arguments: [String]) throws -> String {
+            let task = Process()
+            task.launchPath = launchPath
+            task.arguments = arguments
+        
+            let pipe = Pipe()
+            task.standardOutput = pipe
+        
+            try task.run()
+            task.waitUntilExit()
+        
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            guard let output = String(data: data, encoding: .utf8) else {
+                throw NetworkUtilsError.outputParsingFailed
             }
+        
+            return output
         }
-        
-        throw NetworkUtilsError.gatewayNotFound
-    }
-    
-    /// Function is used to run shell command with given launchPath and arguments.
-    /// - Parameters:
-    ///     - launchPath: A String representing the path to launch.
-    ///     - arguments: An array of Strings representing the arguments.
-    /// - Returns: A string representing the output of the executed command.
-    private static func runShellCommand(_ launchPath: String, arguments: [String]) throws -> String {
-        let task = Process()
-        task.launchPath = launchPath
-        task.arguments = arguments
-        
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        
-        try task.run()
-        task.waitUntilExit()
-        
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        guard let output = String(data: data, encoding: .utf8) else {
-            throw NetworkUtilsError.outputParsingFailed
-        }
-        
-        return output
-    }
-#endif
+    #endif
 }
 
 extension String {

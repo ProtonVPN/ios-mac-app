@@ -41,11 +41,11 @@ public struct ServerWrapper: Codable {
             return _server
         }
     }
-    
+
     public init(server: ServerModel) {
         _server = server
     }
-    
+
     static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {
         return lhs.server == rhs.server
     }
@@ -54,13 +54,13 @@ public struct ServerWrapper: Codable {
 public enum ServerOffering: Equatable, Codable {
     /** Country code or undefined */
     case fastest(String?)
-    
+
     /** Country code or undefined */
     case random(String?)
-    
+
     /** Specific server */
     case custom(ServerWrapper)
-    
+
     public var description: String {
         switch self {
         case let .fastest(cCode):
@@ -71,7 +71,7 @@ public enum ServerOffering: Equatable, Codable {
             return "Custom server - \(String(describing: sModel))"
         }
     }
-    
+
     public var countryCode: String? {
         switch self {
         case let .fastest(cCode):
@@ -82,7 +82,7 @@ public enum ServerOffering: Equatable, Codable {
             return sModel.server.countryCode
         }
     }
-    
+
     // MARK: - NSCoding
 
     private struct CoderKey {
@@ -91,7 +91,7 @@ public enum ServerOffering: Equatable, Codable {
         static let random = "random"
         static let custom = "custom"
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.serverOffering) as! Data
         switch data[0] {
@@ -103,11 +103,11 @@ public enum ServerOffering: Equatable, Codable {
             self = .custom(ServerWrapper(server: aDecoder.decodeObject(forKey: CoderKey.custom) as! ServerModel))
         }
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     // MARK: - Static functions
 
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {

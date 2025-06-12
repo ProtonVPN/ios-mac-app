@@ -25,7 +25,7 @@ import UIKit
 class TabBar: UITabBar {
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         isTranslucent = false
     }
 }

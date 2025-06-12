@@ -43,7 +43,7 @@ final class CountriesViewController: UIViewController {
     @IBOutlet private weak var secureCoreLabel: UILabel!
     @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
     @IBOutlet private weak var tableView: UITableView!
-    
+
     var viewModel: CountriesViewModel!
     var connectionBarViewController: ConnectionBarViewController?
 
@@ -59,7 +59,7 @@ final class CountriesViewController: UIViewController {
 
         tabBarItem.accessibilityIdentifier = "Countries"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
@@ -75,25 +75,25 @@ final class CountriesViewController: UIViewController {
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupAnnouncements()
         }
     }
-    
+
     private func setupView() {
         navigationItem.title = Localizable.countries
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func setupConnectionBar() {
         if let connectionBarViewController = connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
-    
+
     private func setupSecureCoreBar() {
         secureCoreSeparator.backgroundColor = .normalSeparatorColor()
         secureCoreSeparatorHeight.constant = 1 / UIScreen.main.scale
@@ -122,7 +122,7 @@ final class CountriesViewController: UIViewController {
             }
         }
     }
-    
+
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -135,21 +135,21 @@ final class CountriesViewController: UIViewController {
         tableView.register(BannerViewCell.nib, forCellReuseIdentifier: BannerViewCell.identifier)
         tableView.register(OfferBannerViewCell.nib, forCellReuseIdentifier: OfferBannerViewCell.identifier)
     }
-    
+
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(image: IconProvider.infoCircle, style: .plain, target: self, action: #selector(displayServicesInfo))
         let searchButton = UIBarButtonItem(image: IconProvider.magnifier, style: .plain, target: self, action: #selector(showSearch))
         searchButton.accessibilityIdentifier = "countrySearchButton"
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
-    
+
     @objc private func displayServicesInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
     }
-    
+
     private func contentChanged() {
         guard let viewModel = viewModel else { return }
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
@@ -176,30 +176,30 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections()
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if viewModel.numberOfSections() < 2 {
             return nil
         }
-        
+
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
             return nil
         }
-        
+
         headerView.setName(name: viewModel.titleFor(section: section) ?? "")
         headerView.callback = viewModel.callback(forSection: section)
 
         return headerView
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return viewModel.headerHeight(for: section)
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows(in: section)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {

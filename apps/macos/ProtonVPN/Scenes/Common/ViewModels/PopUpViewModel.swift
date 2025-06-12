@@ -53,7 +53,7 @@ final class PopUpViewModel: NSObject {
     var cancelType: PrimaryActionType {
         return action(1)?.style ?? .cancel
     }
-    
+
     var attributedDescription: NSAttributedString
     var showIcon = true
     var updateInterface: (() -> Void)?
@@ -83,30 +83,30 @@ final class PopUpViewModel: NSObject {
         }
         self.init(alert: alert, attributedDescription: attributedDescription, inAppLinkManager: inAppLinkManager)
     }
-    
+
     init(alert: SystemAlert, attributedDescription: NSAttributedString, inAppLinkManager: InAppLinkManager? = nil) {
         self.alert = alert
         self.attributedDescription = attributedDescription
         self.inAppLinkManager = inAppLinkManager
         self.joinedTitleAndMessage = alert.joinedTitleAndMessage
     }
-    
+
     func confirm() {
         onConfirm?()
     }
-    
+
     func cancel() {
         onCancel?()
     }
-    
+
     func close() {
         dismissViewController?()
     }
-    
+
     func cleanUp() {
         dismissCompletion?()
     }
-    
+
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
         return alert.actions[optional: index]
     }
@@ -115,14 +115,14 @@ final class PopUpViewModel: NSObject {
 extension PopUpViewModel: NSTextViewDelegate {
     func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
         guard let link = link as? String, let inAppLinkManager = inAppLinkManager else { return true }
-        
+
         do {
             try inAppLinkManager.openLink(link)
             close()
         } catch {
             log.error("Failed to open internal link", category: .user, metadata: ["error": "\(error)"])
         }
-        
+
         return true
     }
 }
@@ -134,7 +134,7 @@ extension PopUpViewModel {
         guard let other = object as? PopUpViewModel else {
             return false
         }
-        
+
         return title == other.title && attributedDescription.string == other.attributedDescription.string
     }
 }

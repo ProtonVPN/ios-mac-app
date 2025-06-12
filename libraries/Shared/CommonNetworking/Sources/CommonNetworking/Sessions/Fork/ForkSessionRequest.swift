@@ -64,8 +64,8 @@ public struct ForkSessionRequest: Request {
     }
 
     #if canImport(Alamofire)
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
-    }
+        public var retryPolicy: ProtonRetryPolicy.RetryMode {
+            .background
+        }
     #endif
 }

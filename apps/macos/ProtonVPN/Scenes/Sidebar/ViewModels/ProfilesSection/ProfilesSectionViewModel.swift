@@ -44,7 +44,7 @@ class ProfilesSectionViewModel {
     var cellCount: Int {
         return profileManager.allProfiles.count + 1
     }
-    
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -52,7 +52,7 @@ class ProfilesSectionViewModel {
             return .freeTier
         }
     }
-    
+
     init(
         vpnGateway: VpnGatewayProtocol,
         navService: NavigationService,
@@ -75,14 +75,14 @@ class ProfilesSectionViewModel {
         ]
         events.subscribe(self, selector: #selector(profilesChanged))
     }
-    
+
     func cellHeight(forRow index: Int) -> CGFloat {
         if index < cellCount - 1 {
             return 50
         }
         return 150
     }
-    
+
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
             return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService, sysexManager: sysexManager))
@@ -96,7 +96,7 @@ class ProfilesSectionViewModel {
     private func showProfilesUpsellAlert() {
         alertService.push(alert: ProfilesUpsellAlert())
     }
-    
+
     func createNewProfileAction() {
         guard canUseProfiles else {
             showProfilesUpsellAlert()
@@ -104,7 +104,7 @@ class ProfilesSectionViewModel {
         }
         navService.openProfiles(ProfilesTab.createNewProfile)
     }
-    
+
     func manageProfilesAction() {
         guard canUseProfiles else {
             showProfilesUpsellAlert()
@@ -112,7 +112,7 @@ class ProfilesSectionViewModel {
         }
         navService.openProfiles(ProfilesTab.overview)
     }
-    
+
     // MARK: - Private functions
 
     @objc private func profilesChanged() {

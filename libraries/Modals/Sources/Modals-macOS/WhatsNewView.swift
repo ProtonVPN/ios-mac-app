@@ -81,9 +81,9 @@ struct WhatsNewView: View {
                     Text("""
                     To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.
                     """)
-                        .themeFont(.body())
-                        .fixedSize(horizontal: false, vertical: true) // allow multiline
-                        .foregroundColor(Color(.text, .weak))
+                    .themeFont(.body())
+                    .fixedSize(horizontal: false, vertical: true) // allow multiline
+                    .foregroundColor(Color(.text, .weak))
                     Spacer(minLength: 0)
                 }
             }

@@ -28,7 +28,7 @@ class PrefillInformation {
     let usesSecureCore: Bool
     let countryIndex: Int
     let serverIndex: Int
-    
+
     init(name: String, color: UIColor, usesSecureCore: Bool, countryIndex: Int, serverIndex: Int) {
         self.name = name
         self.color = color

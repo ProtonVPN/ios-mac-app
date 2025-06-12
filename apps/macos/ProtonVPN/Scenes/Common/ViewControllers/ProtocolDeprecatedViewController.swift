@@ -54,7 +54,7 @@ extension WarningPopupViewModel {
             cancelTitle: alert.dismissTitle
         )
     }
-    
+
     convenience init(alert: IkeDeprecatedAlert) {
         self.init(
             title: alert.title!,

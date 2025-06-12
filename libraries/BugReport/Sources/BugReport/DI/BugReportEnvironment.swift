@@ -41,10 +41,10 @@ enum BugReportEnvironmentError: Error {
 // MARK: - Send bug report
 
 extension DependencyValues {
-  var sendBugReport: @Sendable (BugReportResult) async throws -> Bool {
-    get { self[SendBugReportKey.self] }
-    set { self[SendBugReportKey.self] = newValue }
-  }
+    var sendBugReport: @Sendable (BugReportResult) async throws -> Bool {
+        get { self[SendBugReportKey.self] }
+        set { self[SendBugReportKey.self] = newValue }
+    }
 }
 
 private enum SendBugReportKey: DependencyKey {
@@ -75,10 +75,10 @@ private enum SendBugReportKey: DependencyKey {
 // MARK: - Troubleshooting
 
 extension DependencyValues {
-  var troubleshoot: @Sendable () -> Void {
-    get { self[TroubleShootingKey.self] }
-    set { self[TroubleShootingKey.self] = newValue }
-  }
+    var troubleshoot: @Sendable () -> Void {
+        get { self[TroubleShootingKey.self] }
+        set { self[TroubleShootingKey.self] = newValue }
+    }
 }
 
 private enum TroubleShootingKey: DependencyKey {
@@ -90,10 +90,10 @@ private enum TroubleShootingKey: DependencyKey {
 // MARK: - Finish
 
 extension DependencyValues {
-  var finishBugReport: @Sendable () -> Void {
-    get { self[FinishBugReportKey.self] }
-    set { self[FinishBugReportKey.self] = newValue }
-  }
+    var finishBugReport: @Sendable () -> Void {
+        get { self[FinishBugReportKey.self] }
+        set { self[FinishBugReportKey.self] = newValue }
+    }
 }
 
 private enum FinishBugReportKey: DependencyKey {
@@ -105,10 +105,10 @@ private enum FinishBugReportKey: DependencyKey {
 // MARK: - Pre-filled values
 
 extension DependencyValues {
-  var preFilledEmail: @Sendable () -> String? {
-    get { self[PrefilledEmailKey.self] }
-    set { self[PrefilledEmailKey.self] = newValue }
-  }
+    var preFilledEmail: @Sendable () -> String? {
+        get { self[PrefilledEmailKey.self] }
+        set { self[PrefilledEmailKey.self] = newValue }
+    }
 }
 
 private enum PrefilledEmailKey: DependencyKey {
@@ -122,10 +122,10 @@ private enum PrefilledEmailKey: DependencyKey {
 }
 
 extension DependencyValues {
-  var preFilledUsername: @Sendable () -> String? {
-    get { self[PrefilledUsernameKey.self] }
-    set { self[PrefilledUsernameKey.self] = newValue }
-  }
+    var preFilledUsername: @Sendable () -> String? {
+        get { self[PrefilledUsernameKey.self] }
+        set { self[PrefilledUsernameKey.self] = newValue }
+    }
 }
 
 private enum PrefilledUsernameKey: DependencyKey {

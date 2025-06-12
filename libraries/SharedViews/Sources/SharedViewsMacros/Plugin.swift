@@ -21,7 +21,7 @@ import SwiftSyntaxMacros
 
 @main
 struct CasePathsPlugin: CompilerPlugin {
-  let providingMacros: [Macro.Type] = [
-    PerceptibleGeometryReaderMacro.self
-  ]
+    let providingMacros: [Macro.Type] = [
+        PerceptibleGeometryReaderMacro.self
+    ]
 }

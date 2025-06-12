@@ -34,14 +34,14 @@ class MapRobot: CoreElements {
         button(showMapButton).tap()
         return self
     }
-    
+
     func clickHideMap() -> MapRobot {
         button(hideMapButton).tapInCenter()
         return self
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func checkMapIsOpen() -> MapRobot {
@@ -50,7 +50,7 @@ class MapRobot: CoreElements {
             image(connectImage).checkExists()
             return MapRobot()
         }
-        
+
         @discardableResult
         func checkMapIsHidden() -> MapRobot {
             button(showMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()

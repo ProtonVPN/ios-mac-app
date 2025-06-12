@@ -71,7 +71,7 @@ public class AnnouncementsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    
+
     // Data
     private(set) var items: [Announcement] = []
 
@@ -85,7 +85,7 @@ public class AnnouncementsViewModel {
 
     // Callbacks
     public var refreshView: (() -> Void)?
-    
+
     public init(factory: Factory) {
         self.factory = factory
         fillItems()
@@ -124,13 +124,13 @@ public class AnnouncementsViewModel {
         }
         alertService.push(alert: AnnouncementOfferAlert(data: data, offerReference: announcement.reference))
     }
-        
+
     // MARK: - Data
-    
+
     private func fillItems() {
         items = announcementManager.fetchCurrentAnnouncementsFromStorage()
     }
-    
+
     @objc func dataChanged() {
         fillItems()
         refreshView?()

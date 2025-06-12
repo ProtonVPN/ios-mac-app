@@ -34,7 +34,7 @@ class SignupRobot: CoreElements {
     private func insertExternalEmail(_ email: String) -> SignupRobot {
         textField(externalEmailTextFieldId).tap().typeText(email)
         return self
-     }
+    }
     
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()

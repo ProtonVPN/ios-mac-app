@@ -13,12 +13,12 @@ import LegacyCommon
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
-    
+
     init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
         self.propertiesManager = propertiesManager
         self.vpnKeychain = vpnKeychain
     }
-    
+
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
 

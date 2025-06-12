@@ -25,12 +25,12 @@ import VPNShared
 
 class AppConstants {
     static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
-    
+
     struct NetworkExtensions {
         static let openVpn = "\(appBundleId).OpenVPN-Extension"
         static let wireguard = "\(appBundleId).WireGuardiOS-Extension"
     }
-    
+
     struct Time {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: TimeInterval = 3 // seconds
@@ -39,7 +39,7 @@ class AppConstants {
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = .hours(3)
         static let serverLoadsRefresh: TimeInterval = .minutes(15)
-        
+
         // Account
         static let userAccountRefresh: TimeInterval = .minutes(3)
 
@@ -50,7 +50,7 @@ class AppConstants {
         // Payments
         static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
     }
-    
+
     struct Filenames {
         static let appLogFilename = "ProtonVPN.log"
     }

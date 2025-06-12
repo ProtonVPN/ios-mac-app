@@ -120,33 +120,33 @@ extension ServerRepository {
                         if case .gateway = $0.kind { return true }
                         return false
                     }, by: \.kind)
-                    .compactMap { (key, values) in
-                        guard let first = values.first else { return nil }
-                        return .init(
-                            kind: key,
-                            featureIntersection: first.featureIntersection,
-                            featureUnion: first.featureUnion,
-                            minTier: first.minTier,
-                            maxTier: first.maxTier,
-                            serverCount: values.count, // Passing correct serverCount in the group
-                            cityCount: 1,
-                            latitude: first.latitude,
-                            longitude: first.longitude,
-                            supportsSmartRouting: first.supportsSmartRouting,
-                            isUnderMaintenance: first.isUnderMaintenance,
-                            protocolSupport: first.protocolSupport
-                        )
-                    } // We group gateways by gateway name.
-                    .sorted {
-                        if case let (.gateway(name1), .gateway(name2)) = ($0.kind, $1.kind) {
-                            return name1 < name2
-                        }
-                        return false
-                    } // Sorting gateways by gateway name.
-                    + groups.filter {
-                        if case .gateway = $0.kind { return false }
-                        return true
-                    } // Then adding all other kinds.
+                        .compactMap { (key, values) in
+                            guard let first = values.first else { return nil }
+                            return .init(
+                                kind: key,
+                                featureIntersection: first.featureIntersection,
+                                featureUnion: first.featureUnion,
+                                minTier: first.minTier,
+                                maxTier: first.maxTier,
+                                serverCount: values.count, // Passing correct serverCount in the group
+                                cityCount: 1,
+                                latitude: first.latitude,
+                                longitude: first.longitude,
+                                supportsSmartRouting: first.supportsSmartRouting,
+                                isUnderMaintenance: first.isUnderMaintenance,
+                                protocolSupport: first.protocolSupport
+                            )
+                        } // We group gateways by gateway name.
+                        .sorted {
+                            if case let (.gateway(name1), .gateway(name2)) = ($0.kind, $1.kind) {
+                                return name1 < name2
+                            }
+                            return false
+                        } // Sorting gateways by gateway name.
+                        + groups.filter {
+                            if case .gateway = $0.kind { return false }
+                            return true
+                        } // Then adding all other kinds.
                 }
             },
             getMetadata: { key in

@@ -16,13 +16,13 @@ final class IOSVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private let vpnAuthentication: VpnAuthentication
-    
+
     init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, vpnAuthentication: VpnAuthentication) {
         self.propertiesManager = propertiesManager
         self.vpnKeychain = vpnKeychain
         self.vpnAuthentication = vpnAuthentication
     }
-    
+
     func getCredentialsConfigurator(for vpnProtocol: VpnProtocol) -> VpnCredentialsConfigurator {
         switch vpnProtocol {
         case .ike:

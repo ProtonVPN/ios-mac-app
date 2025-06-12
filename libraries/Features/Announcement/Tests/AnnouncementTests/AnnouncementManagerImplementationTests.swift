@@ -35,7 +35,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
+
         storage.store([
             Announcement(
                 notificationID: "1-no-offer",
@@ -87,7 +87,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
             ),
         ])        
     }
-    
+
     func testFetchesOnlyCurrentNotifications() {
         let filtered = manager.fetchCurrentAnnouncementsFromStorage()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
@@ -97,7 +97,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-ended"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-future"))
     }
-    
+
     func testMarksAsRead() {
         let announcement = manager.fetchCurrentAnnouncementsFromStorage()[0]
         XCTAssertFalse(announcement.wasRead)

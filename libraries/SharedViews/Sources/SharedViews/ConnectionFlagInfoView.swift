@@ -141,136 +141,136 @@ public struct ConnectionFlagInfoView: View {
     var textHeader: some View {
         Text(textHeaderString)
             .styled()
-#if canImport(Cocoa)
+        #if canImport(Cocoa)
             .themeFont(.body(emphasised: true))
-#elseif canImport(UIKit)
+        #elseif canImport(UIKit)
             .themeFont(.body1(.semibold))
-#endif
+        #endif
     }
 }
 
 #if DEBUG
-struct ConnectionFlagView_Previews: PreviewProvider {
-    static let cellHeight = 40.0
-    static let cellWidth = 300.0
-    static let spacing = 20.0
+    struct ConnectionFlagView_Previews: PreviewProvider {
+        static let cellHeight = 40.0
+        static let cellWidth = 300.0
+        static let spacing = 20.0
 
-    static func sideBySide(intent: ConnectionSpec, actual: VPNConnectionActual) -> some View {
-        HStack(alignment: .top, spacing: spacing) {
-            ConnectionFlagInfoView(intent: intent,
-                                   underMaintenance: false,
-                                   isPinned: true,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            .frame(width: cellWidth)
-
-            Divider()
-
-            ConnectionFlagInfoView(intent: intent,
-                                   isPinned: true,
-                                   server: actual.server,
-                                   isConnected: .random())
+        static func sideBySide(intent: ConnectionSpec, actual: VPNConnectionActual) -> some View {
+            HStack(alignment: .top, spacing: spacing) {
+                ConnectionFlagInfoView(intent: intent,
+                                       underMaintenance: false,
+                                       isPinned: true,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
                 .frame(width: cellWidth)
-        }
-        .frame(height: cellHeight)
-    }
 
-    static var previews: some View {
-        VStack {
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                          features: []),
-                                   isPinned: true,
-                                   server: VPNConnectionActual.mock().server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                          features: []),
-                                   isPinned: false,
-                                   server: VPNConnectionActual.mock().server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                          features: [.p2p, .tor]),
-                                   isPinned: true,
-                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
-                                                          features: [.p2p, .tor]),
-                                   isPinned: true,
-                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
-                                                          features: []),
-                                   isPinned: true,
-                                   server: VPNConnectionActual.mock().server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-            ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
-                                                          features: [.p2p, .tor]),
-                                   isPinned: true,
-                                   server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
-                                   isConnected: .random()) { _ in
-                // NO-OP
-            }
-        }
-        .previewLayout(.sizeThatFits)
-        .padding()
-        .preferredColorScheme(.dark)
-        .previewDisplayName("Single")
-
-        VStack(alignment: .leading, spacing: spacing) {
-            HStack(alignment: .bottom, spacing: spacing) {
-                Text("Not connected").frame(width: cellWidth)
                 Divider()
-                Text("Connected").frame(width: cellWidth)
-            }.frame(height: cellHeight)
-            Divider().frame(width: (cellWidth + spacing) * 2)
 
-            sideBySide(
-                intent: ConnectionSpec(location: .fastest, features: []),
-                actual: .mock()
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .region(code: "US"), features: []),
-                actual: .mock()
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .region(code: "US"), features: [.tor]),
-                actual: .mock(feature: .tor)
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .exact(.free, logicalID: nil, number: 1, subregion: nil, regionCode: "US"), features: []),
-                actual: .mock(serverName: "FREE #1")
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
-                actual: .mock(feature: [.p2p, .tor])
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: 1, subregion: "AR", regionCode: "US"), features: []),
-                actual: .mock()
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .secureCore(.fastest), features: []),
-                actual: .mock(country: "SE")
-            )
-            sideBySide(
-                intent: ConnectionSpec(location: .secureCore(.hop(to: "JP", via: "CH")), features: []),
-                actual: .mock()
-            )
+                ConnectionFlagInfoView(intent: intent,
+                                       isPinned: true,
+                                       server: actual.server,
+                                       isConnected: .random())
+                    .frame(width: cellWidth)
+            }
+            .frame(height: cellHeight)
         }
-        .previewLayout(.sizeThatFits)
-        .padding()
-        .preferredColorScheme(.dark)
-        .previewDisplayName("sideBySide")
+
+        static var previews: some View {
+            VStack {
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                              features: []),
+                                       isPinned: true,
+                                       server: VPNConnectionActual.mock().server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                              features: []),
+                                       isPinned: false,
+                                       server: VPNConnectionActual.mock().server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                              features: [.p2p, .tor]),
+                                       isPinned: true,
+                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .region(code: "US"),
+                                                              features: [.p2p, .tor]),
+                                       isPinned: true,
+                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
+                                                              features: []),
+                                       isPinned: true,
+                                       server: VPNConnectionActual.mock().server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+                ConnectionFlagInfoView(intent: ConnectionSpec(location: .fastest,
+                                                              features: [.p2p, .tor]),
+                                       isPinned: true,
+                                       server: VPNConnectionActual.mock(feature: ServerFeature(arrayLiteral: .p2p, .tor)).server,
+                                       isConnected: .random()) { _ in
+                    // NO-OP
+                }
+            }
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .preferredColorScheme(.dark)
+            .previewDisplayName("Single")
+
+            VStack(alignment: .leading, spacing: spacing) {
+                HStack(alignment: .bottom, spacing: spacing) {
+                    Text("Not connected").frame(width: cellWidth)
+                    Divider()
+                    Text("Connected").frame(width: cellWidth)
+                }.frame(height: cellHeight)
+                Divider().frame(width: (cellWidth + spacing) * 2)
+
+                sideBySide(
+                    intent: ConnectionSpec(location: .fastest, features: []),
+                    actual: .mock()
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .region(code: "US"), features: []),
+                    actual: .mock()
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .region(code: "US"), features: [.tor]),
+                    actual: .mock(feature: .tor)
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .exact(.free, logicalID: nil, number: 1, subregion: nil, regionCode: "US"), features: []),
+                    actual: .mock(serverName: "FREE #1")
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: nil, subregion: "Dallas", regionCode: "US"), features: [.p2p, .tor]),
+                    actual: .mock(feature: [.p2p, .tor])
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .exact(.paid, logicalID: nil, number: 1, subregion: "AR", regionCode: "US"), features: []),
+                    actual: .mock()
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .secureCore(.fastest), features: []),
+                    actual: .mock(country: "SE")
+                )
+                sideBySide(
+                    intent: ConnectionSpec(location: .secureCore(.hop(to: "JP", via: "CH")), features: []),
+                    actual: .mock()
+                )
+            }
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .preferredColorScheme(.dark)
+            .previewDisplayName("sideBySide")
+        }
     }
-}
 #endif

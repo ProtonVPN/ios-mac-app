@@ -158,13 +158,13 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: DefaultProfileTableViewCell.identifier) as? DefaultProfileTableViewCell,
-                let cellViewModel = viewModel?.defaultCellModel(for: indexPath.row) {
+               let cellViewModel = viewModel?.defaultCellModel(for: indexPath.row) {
                 cell.viewModel = cellViewModel
                 return cell
             }
         } else if indexPath.section == 1 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: ProfilesTableViewCell.identifier, for: indexPath) as? ProfilesTableViewCell,
-                let cellViewModel = viewModel?.cellModel(for: indexPath.row) {
+               let cellViewModel = viewModel?.cellModel(for: indexPath.row) {
                 cell.viewModel = cellViewModel
                 return cell
             }

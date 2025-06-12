@@ -128,7 +128,7 @@ class VpnManagerTests: BaseConnectionTestCase {
 
         await fulfillment(
             of: [expectations.wireguardTunnelStarted,
-            expectations.vpnManagerWireguardConnect], timeout: expectationTimeout
+                 expectations.vpnManagerWireguardConnect], timeout: expectationTimeout
         )
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
@@ -147,7 +147,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         await fulfillment(of: [expectations.wireguardOnDemandEnabled], timeout: expectationTimeout)
 
         #if os(iOS)
-        throw XCTSkip("IKE is not supported on iOS")
+            throw XCTSkip("IKE is not supported on iOS")
         #endif
 
         container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch

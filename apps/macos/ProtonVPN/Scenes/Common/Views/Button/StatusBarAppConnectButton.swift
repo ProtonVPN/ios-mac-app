@@ -32,19 +32,19 @@ class LargeDropdownButton: HoverDetectionButton {
             needsDisplay = true
         }
     }
-    
+
     var dropDownExpanded: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
         configureButton()
     }
-    
+
     private func configureButton() {
         wantsLayer = true
         isBordered = false
@@ -68,12 +68,12 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         } else {
             ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw/2, height: bounds.height)
         }
-        
+
         context.setLineWidth(lw)
-        
+
         let path = CGMutablePath()
         path.addRoundedRectangle(ib, cornerRadius: AppTheme.ButtonConstants.cornerRadius)
-        
+
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
@@ -137,7 +137,7 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         } else {
             ib = NSRect(x: bounds.origin.x + lw/2 + buttonMargin, y: bounds.origin.y, width: bounds.width - lw/2 - buttonMargin, height: bounds.height)
         }
-        
+
         context.setLineWidth(lw)
 
         let path = CGMutablePath()
@@ -150,10 +150,10 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
         arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah/2))
         arrow.addLine(to: CGPoint(x: midX, y: bounds.midY + ah/2))
         arrow.addLine(to: CGPoint(x: midX + ah, y: bounds.midY - ah/2))
-        
+
         context.addPath(path)
         context.drawPath(using: .fillStroke)
-        
+
         context.setLineWidth(1)
         context.setStrokeColor(.cgColor(.icon))
         context.addPath(arrow)

@@ -82,12 +82,12 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
-        
+
         store.send(.connection(.input(.onLaunch)))
         store.send(.observeConnectionState)
 
         @Shared(.connectionState) var connectionState: ConnectionState
-        
+
         $connectionState.withLock { $0 = .disconnected }
         snap(mainView, caseName: "1 Disconnected", trait: trait)
 

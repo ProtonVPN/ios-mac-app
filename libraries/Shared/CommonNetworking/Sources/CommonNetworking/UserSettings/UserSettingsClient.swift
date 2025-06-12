@@ -38,11 +38,11 @@ extension UserSettingsClient: DependencyKey {
     }()
 
     #if DEBUG
-    public static let testValue: UserSettingsClient = {
-        UserSettingsClient {
-            .init(code: 1000, userSettings: .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .disabled)))
-        }
-    }()
+        public static let testValue: UserSettingsClient = {
+            UserSettingsClient {
+                .init(code: 1000, userSettings: .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .disabled)))
+            }
+        }()
     #endif
 }
 

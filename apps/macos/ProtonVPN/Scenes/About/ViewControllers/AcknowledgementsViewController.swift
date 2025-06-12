@@ -51,10 +51,10 @@ class AcknowledgementsViewController: NSViewController {
             return ""
         }
         guard let path2 = Bundle.main.path(forResource: "Pods-ProtonVPN-mac-metadata", ofType: "plist"),
-            let metadata = NSDictionary(contentsOfFile: path2),
-            let libraries = metadata["specs"] as? [NSDictionary]
+              let metadata = NSDictionary(contentsOfFile: path2),
+              let libraries = metadata["specs"] as? [NSDictionary]
         else {
-           return htmlTemplate
+            return htmlTemplate
         }
         
         let htmlBody = libraries.map {

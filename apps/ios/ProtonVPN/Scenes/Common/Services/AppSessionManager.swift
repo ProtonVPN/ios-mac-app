@@ -58,7 +58,7 @@ protocol AppSessionManager {
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
-    
+
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin() async throws
     func canPreviewApp() -> Bool
@@ -67,22 +67,22 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     typealias Factory = VpnApiServiceFactory &
-                        AppStateManagerFactory &
-                        VpnKeychainFactory &
-                        PropertiesManagerFactory &
-                        VpnGatewayFactory &
-                        CoreAlertServiceFactory &
-                        NavigationServiceFactory &
-                        NetworkingFactory &
-                        AppSessionRefreshTimerFactory &
-                        VpnAuthenticationFactory &
-                        PlanServiceFactory &
-                        ProfileManagerFactory &
-                        SearchStorageFactory &
-                        ReviewFactory &
-                        AuthKeychainHandleFactory &
-                        UnauthKeychainHandleFactory &
-                        UpdateCheckerFactory
+        AppStateManagerFactory &
+        VpnKeychainFactory &
+        PropertiesManagerFactory &
+        VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        NavigationServiceFactory &
+        NetworkingFactory &
+        AppSessionRefreshTimerFactory &
+        VpnAuthenticationFactory &
+        PlanServiceFactory &
+        ProfileManagerFactory &
+        SearchStorageFactory &
+        ReviewFactory &
+        AuthKeychainHandleFactory &
+        UnauthKeychainHandleFactory &
+        UpdateCheckerFactory
 
     private let factory: Factory
 
@@ -280,7 +280,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 lastKnownLocation: propertiesManager.userLocation,
                 serversAccordingToTier: shouldRefreshServersAccordingToTier
             )
-            
+
             let credentials = properties.vpnCredentials
             vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
             review.update(plan: credentials.planName)
@@ -369,7 +369,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
 
         guard let activeUsername = await appStateManager.stateThreadSafe.descriptor?.username,
-                let vpnCredentials = try? vpnKeychain.fetch() else {
+              let vpnCredentials = try? vpnKeychain.fetch() else {
             throw CommonVpnError.fetchSession // Error
         }
 
@@ -487,11 +487,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     // End of the logout logic
 
     // MARK: -
-    
+
     // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
     private func setAndNotify(for state: SessionStatus, reason: String?) {
         guard !loggedIn else { return }
-        
+
         sessionStatus = state
         if state == .established {
             loggedIn = true
@@ -502,7 +502,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             logOutCleanup()
             DispatchQueue.main.async { AppEvent.sessionManagerSessionChanged.post(reason) }
         }
-        
+
         refreshTimer.startTimers()
     }
 

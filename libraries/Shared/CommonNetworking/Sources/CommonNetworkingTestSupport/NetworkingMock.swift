@@ -19,258 +19,258 @@
 // This is a test-only module, but mocks are still wrapped in `#if DEBUG` because `LegacyCommon` imports this module in
 // due to previous linking issues.
 #if DEBUG
-import Foundation
+    import Foundation
 
-import ProtonCoreAuthentication
-import ProtonCoreEnvironment
-import ProtonCoreFoundations
-import ProtonCoreNetworking
-import ProtonCoreServices
+    import ProtonCoreAuthentication
+    import ProtonCoreEnvironment
+    import ProtonCoreFoundations
+    import ProtonCoreNetworking
+    import ProtonCoreServices
 
-@testable import CommonNetworking
-import Domain
-import VPNShared
+    @testable import CommonNetworking
+    import Domain
+    import VPNShared
 
-import IssueReporting
+    import IssueReporting
 
-// Ensure mock network requests are quick for fast unit/integration tests
-private let maxMockRequestTime: TimeInterval = 0.1
+    // Ensure mock network requests are quick for fast unit/integration tests
+    private let maxMockRequestTime: TimeInterval = 0.1
 
-public final class NetworkingMock {
-    public weak var delegate: NetworkingMockDelegate?
+    public final class NetworkingMock {
+        public weak var delegate: NetworkingMockDelegate?
 
-    var apiURLString = ""
+        var apiURLString = ""
 
-    public var apiService: PMAPIService {
-        TrustKitWrapper.setUp()
-        let tk = TrustKitWrapper.current
+        public var apiService: PMAPIService {
+            TrustKitWrapper.setUp()
+            let tk = TrustKitWrapper.current
 
-        PMAPIService.trustKit = tk
-        PMAPIService.noTrustKit = (tk == nil)
+            PMAPIService.trustKit = tk
+            PMAPIService.noTrustKit = (tk == nil)
 
-        return PMAPIService.createAPIService(
-            doh: DoHVPN.mock,
-            sessionUID: "UID",
-            challengeParametersProvider: ChallengeParametersProvider.empty
-        )
-    }
-
-    public var requestCallback: ((URLRequest) -> Result<Data, Error>)?
-
-    public init() {}
-
-    func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
-        if let requestCallback {
-            completion(requestCallback(route))
-        } else if let delegate = delegate {
-            completion(delegate.handleMockNetworkingRequest(route))
-        } else {
-            completion(.success(try! JSONEncoder().encode(["key": "value"])))
-        }
-    }
-
-    func request(_ route: Request, completion: @escaping (Result<Data, Error>) -> Void) {
-        var urlRequest = Foundation.URLRequest(url: URL(string: "\(apiURLString)\(route.path)")!)
-        urlRequest.httpMethod = route.method.rawValue
-
-        for (header, value) in route.header {
-            urlRequest.setValue(value as? String, forHTTPHeaderField: header)
+            return PMAPIService.createAPIService(
+                doh: DoHVPN.mock,
+                sessionUID: "UID",
+                challengeParametersProvider: ChallengeParametersProvider.empty
+            )
         }
 
-        if let parameters = route.parameters {
-            do {
-                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
-            } catch {
-                completion(.failure(error))
+        public var requestCallback: ((URLRequest) -> Result<Data, Error>)?
+
+        public init() {}
+
+        func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
+            if let requestCallback {
+                completion(requestCallback(route))
+            } else if let delegate = delegate {
+                completion(delegate.handleMockNetworkingRequest(route))
+            } else {
+                completion(.success(try! JSONEncoder().encode(["key": "value"])))
             }
         }
 
-        request(urlRequest, completion: completion)
-    }
-}
+        func request(_ route: Request, completion: @escaping (Result<Data, Error>) -> Void) {
+            var urlRequest = Foundation.URLRequest(url: URL(string: "\(apiURLString)\(route.path)")!)
+            urlRequest.httpMethod = route.method.rawValue
 
-extension NetworkingMock: Networking {
-    public func perform(request route: Request) async throws -> JSONDictionary {
-        try await withCheckedThrowingContinuation { continuation in
+            for (header, value) in route.header {
+                urlRequest.setValue(value as? String, forHTTPHeaderField: header)
+            }
+
+            if let parameters = route.parameters {
+                do {
+                    urlRequest.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+
+            request(urlRequest, completion: completion)
+        }
+    }
+
+    extension NetworkingMock: Networking {
+        public func perform(request route: Request) async throws -> JSONDictionary {
+            try await withCheckedThrowingContinuation { continuation in
+                request(route) { (result: Result<Data, Error>) in
+                    switch result {
+                    case let .success(data):
+                        guard let dict = data.jsonDictionary else {
+                            continuation.resume(throwing: POSIXError(.EBADMSG))
+                            return
+                        }
+                        continuation.resume(returning: dict)
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+
+        public func perform<R>(request route: Request) async throws -> R where R : Decodable {
+            try await withCheckedThrowingContinuation { continuation in
+                request(route) { (result: Result<Data, Error>) in
+                    switch result {
+                    case let .success(data):
+                        do {
+                            let decoder = JSONDecoder()
+                            decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                            let obj = try decoder.decode(R.self, from: data)
+                            continuation.resume(returning: obj)
+                        } catch {
+                            continuation.resume(throwing: error)
+                        }
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        }
+
+        public func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
+            let start = Date()
+            request(route) { (result: Result<Data, Error>) in
+                let elapsedTime = Date().timeIntervalSince(start)
+                if elapsedTime > maxMockRequestTime {
+                    let elapsedMillis = (elapsedTime * 1000).rounded()
+                    log.warning("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
+                    // VPNAPPL-2129: There is no reason for a fully mocked request to take even a fraction of this time
+                    // Re-enable this assertion once we find out the root cause of long/blocked mock requests.
+                    // XCTFail("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
+                }
+                switch result {
+                case let .success(data):
+                    guard let dict = data.jsonDictionary else {
+                        completion(.failure(POSIXError(.EBADMSG)))
+                        return
+                    }
+
+                    completion(.success(dict))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
+
+        public func request(
+            _ route: ConditionalRequest,
+            completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
+        ) {
             request(route) { (result: Result<Data, Error>) in
                 switch result {
                 case let .success(data):
                     guard let dict = data.jsonDictionary else {
-                        continuation.resume(throwing: POSIXError(.EBADMSG))
+                        completion(.failure(POSIXError(.EBADMSG)))
                         return
                     }
-                    continuation.resume(returning: dict)
+
+                    completion(.success(.modified(at: "", value: dict)))
                 case let .failure(error):
-                    continuation.resume(throwing: error)
+                    completion(.failure(error))
                 }
             }
         }
-    }
-    
-    public func perform<R>(request route: Request) async throws -> R where R : Decodable {
-        try await withCheckedThrowingContinuation { continuation in
+
+        func request(_ route: Request, completion: @escaping (Result<(), Error>) -> Void) {
+            request(route) { (result: Result<Data, Error>) in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
+
+        public func request(_ route: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
+            request(route) { (result: Result<Data, Error>) in
+                switch result {
+                case let .success(data):
+                    guard let str = String(data: data, encoding: .utf8) else {
+                        completion(.failure(POSIXError(.EBADMSG)))
+                        return
+                    }
+                    completion(.success(str))
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+        }
+
+        public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
             request(route) { (result: Result<Data, Error>) in
                 switch result {
                 case let .success(data):
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .decapitaliseFirstLetter
-                        let obj = try decoder.decode(R.self, from: data)
-                        continuation.resume(returning: obj)
+                        let obj = try decoder.decode(T.self, from: data)
+                        completion(.success(obj))
                     } catch {
-                        continuation.resume(throwing: error)
+                        completion(.failure(error))
                     }
                 case let .failure(error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
-    
-    public func request(_ route: Request, completion: @escaping (Result<JSONDictionary, Error>) -> Void) {
-        let start = Date()
-        request(route) { (result: Result<Data, Error>) in
-            let elapsedTime = Date().timeIntervalSince(start)
-            if elapsedTime > maxMockRequestTime {
-                let elapsedMillis = (elapsedTime * 1000).rounded()
-                log.warning("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
-                // VPNAPPL-2129: There is no reason for a fully mocked request to take even a fraction of this time
-                // Re-enable this assertion once we find out the root cause of long/blocked mock requests.
-                // XCTFail("Mock network request on \(route) exceeded maximum allowed time: \(elapsedMillis)ms")
-            }
-            switch result {
-            case let .success(data):
-                guard let dict = data.jsonDictionary else {
-                    completion(.failure(POSIXError(.EBADMSG)))
-                    return
-                }
-
-                completion(.success(dict))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func request(
-        _ route: ConditionalRequest,
-        completion: @escaping (Result<IfModifiedSinceResponse<JSONDictionary>, Error>) -> Void
-    ) {
-        request(route) { (result: Result<Data, Error>) in
-            switch result {
-            case let .success(data):
-                guard let dict = data.jsonDictionary else {
-                    completion(.failure(POSIXError(.EBADMSG)))
-                    return
-                }
-
-                completion(.success(.modified(at: "", value: dict)))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    func request(_ route: Request, completion: @escaping (Result<(), Error>) -> Void) {
-        request(route) { (result: Result<Data, Error>) in
-            switch result {
-            case .success:
-                completion(.success(()))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func request(_ route: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
-        request(route) { (result: Result<Data, Error>) in
-            switch result {
-            case let .success(data):
-                guard let str = String(data: data, encoding: .utf8) else {
-                    completion(.failure(POSIXError(.EBADMSG)))
-                    return
-                }
-                completion(.success(str))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-
-    public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        request(route) { (result: Result<Data, Error>) in
-            switch result {
-            case let .success(data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
-                    let obj = try decoder.decode(T.self, from: data)
-                    completion(.success(obj))
-                } catch {
                     completion(.failure(error))
                 }
-            case let .failure(error):
-                completion(.failure(error))
+            }
+        }
+
+        // the files argument is ignored for now...
+        public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+            request(route, completion: completion)
+        }
+    }
+
+    extension NetworkingMock: APIServiceDelegate {
+        public var additionalHeaders: [String: String]? {
+            return nil
+        }
+
+        public var locale: String {
+            return NSLocale.current.language.languageCode?.identifier ?? "en_US"
+        }
+
+        public var appVersion: String {
+            return "UNIT TESTS APP VERSION"
+        }
+
+        public var userAgent: String? {
+            return "UNIT TESTS USER AGENT"
+        }
+
+        public func onUpdate(serverTime: Int64) {}
+
+        public func isReachable() -> Bool {
+            return true
+        }
+
+        public func onDohTroubleshot() {}
+    }
+
+    public protocol NetworkingMockDelegate: AnyObject {
+        func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error>
+    }
+
+    extension JSONEncoder.KeyEncodingStrategy {
+        public static let capitalizeFirstLetter = Self.custom { path in
+            let original: String = path.last!.stringValue
+            let capitalized = original.prefix(1).uppercased() + original.dropFirst()
+            return JSONKey(stringValue: capitalized) ?? path.last!
+        }
+
+        private struct JSONKey: CodingKey {
+            var stringValue: String
+            var intValue: Int?
+
+            init?(stringValue: String) {
+                self.stringValue = stringValue
+                self.intValue = nil
+            }
+
+            init?(intValue: Int) {
+                self.stringValue = "\(intValue)"
+                self.intValue = intValue
             }
         }
     }
-
-    // the files argument is ignored for now...
-    public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        request(route, completion: completion)
-    }
-}
-
-extension NetworkingMock: APIServiceDelegate {
-    public var additionalHeaders: [String: String]? {
-        return nil
-    }
-
-    public var locale: String {
-        return NSLocale.current.language.languageCode?.identifier ?? "en_US"
-    }
-
-    public var appVersion: String {
-        return "UNIT TESTS APP VERSION"
-    }
-
-    public var userAgent: String? {
-        return "UNIT TESTS USER AGENT"
-    }
-
-    public func onUpdate(serverTime: Int64) {}
-
-    public func isReachable() -> Bool {
-        return true
-    }
-
-    public func onDohTroubleshot() {}
-}
-
-public protocol NetworkingMockDelegate: AnyObject {
-    func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error>
-}
-
-extension JSONEncoder.KeyEncodingStrategy {
-    public static let capitalizeFirstLetter = Self.custom { path in
-        let original: String = path.last!.stringValue
-        let capitalized = original.prefix(1).uppercased() + original.dropFirst()
-        return JSONKey(stringValue: capitalized) ?? path.last!
-    }
-
-    private struct JSONKey: CodingKey {
-        var stringValue: String
-        var intValue: Int?
-
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-            self.intValue = nil
-        }
-
-        init?(intValue: Int) {
-            self.stringValue = "\(intValue)"
-            self.intValue = intValue
-        }
-    }
-}
 #endif

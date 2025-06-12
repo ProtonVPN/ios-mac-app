@@ -95,7 +95,7 @@ extension CreateNewProfileViewModel {
             return defaultServerDescriptor(image: IconProvider.arrowsSwapRight, name: Localizable.random)
         }
     }
-    
+
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         server.isSecureCore
             ? serverDescriptorForSecureCore(

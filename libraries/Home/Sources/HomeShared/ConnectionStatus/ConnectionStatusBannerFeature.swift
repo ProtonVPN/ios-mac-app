@@ -23,7 +23,7 @@ import Domain
 @Reducer
 public struct ConnectionStatusBannerFeature {
     public typealias ActionSender = (Action) -> Void
-    
+
     public enum UpsellMode {
         case netshield
         case serverChange

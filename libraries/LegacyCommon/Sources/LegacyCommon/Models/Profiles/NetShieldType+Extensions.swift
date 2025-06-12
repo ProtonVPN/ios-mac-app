@@ -43,7 +43,7 @@ extension NetShieldType {
         case .level2: return IconProvider.shieldFilled
         }
     }
-    
+
     public var lowestTier: Int {
         switch self {
         case .off:
@@ -52,11 +52,11 @@ extension NetShieldType {
             return .paidTier
         }
     }
-    
+
     public func isUserTierTooLow(_ userTier: Int) -> Bool {
         return userTier < self.lowestTier
     }
-    
+
     public var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
         switch self {
         case .off:

@@ -85,9 +85,9 @@ extension SVGNode {
             code + "x",
             Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
-            .lazy
-            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
-            .first
+        .lazy
+        .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+        .first
     }
 
     func mainlandNode(code: String) -> SVGNode? {
@@ -96,9 +96,9 @@ extension SVGNode {
             code,
             Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
-            .lazy
-            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
-            .first
+        .lazy
+        .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+        .first
     }
 
     func fill(highlighted: Bool) {

@@ -26,7 +26,7 @@ fileprivate let configuringAccess = Localizable.loginFetchVpnData
 
 class CreatingAccountRobot: CoreElements {
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func creatingAccountScreenIsShown() -> OnboardingRobot {

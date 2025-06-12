@@ -48,12 +48,12 @@ extension VPNShared.VPNKeysGenerator: @retroactive DependencyKey {
     public static let testValue: VPNShared.VPNKeysGenerator = commonImplementation
     public static let liveValue: VPNShared.VPNKeysGenerator = {
         #if os(macOS)
-        return commonImplementation
+            return commonImplementation
         #else
-        return .init {
-            let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
-            return VpnKeys(fromConnectionPackageKeys: keys)
-        }
+            return .init {
+                let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
+                return VpnKeys(fromConnectionPackageKeys: keys)
+            }
         #endif
     }()
 }

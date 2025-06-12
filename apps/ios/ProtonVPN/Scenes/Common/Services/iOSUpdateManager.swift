@@ -172,7 +172,7 @@ final class iOSUpdateManager: UpdateChecker {
             return false
         }
     }
-    
+
     func startUpdate() {
         guard let infoPlist = Bundle.main.infoDictionary, let identifier = infoPlist["AppStoreID"] as? String else {
             return

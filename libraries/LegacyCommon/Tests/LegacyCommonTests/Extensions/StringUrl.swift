@@ -29,7 +29,7 @@ class StringUrl: XCTestCase {
         XCTAssert("http://\(domain)".domainWithoutPathAndProtocol.elementsEqual(domain))
         XCTAssert("https://\(domain)".domainWithoutPathAndProtocol.elementsEqual(domain))
     }
-    
+
     func testRemovesPath() throws {
         let domain = "www.domain.com"
         XCTAssert("https://\(domain)/".domainWithoutPathAndProtocol.elementsEqual(domain))

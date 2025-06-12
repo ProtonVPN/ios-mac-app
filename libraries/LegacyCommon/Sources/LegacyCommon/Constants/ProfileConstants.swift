@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 import Dependencies
@@ -77,11 +77,11 @@ public enum ProfileConstants {
         )
     }
 
-#if canImport(UIKit)
-    public typealias ProfileColors = [UIColor]
-#elseif canImport(AppKit)
-    public typealias ProfileColors = [NSColor]
-#endif
+    #if canImport(UIKit)
+        public typealias ProfileColors = [UIColor]
+    #elseif canImport(AppKit)
+        public typealias ProfileColors = [NSColor]
+    #endif
 
     public static let profileColors: ProfileColors = [
         ColorProvider.PurpleBase,

@@ -143,7 +143,7 @@ extension NetworkInterface {
 fileprivate extension Range {
     func isSuperSet(of other: Range<Bound>) -> Bool {
         self.lowerBound <= other.lowerBound &&
-        other.upperBound <= self.upperBound
+            other.upperBound <= self.upperBound
     }
 }
 

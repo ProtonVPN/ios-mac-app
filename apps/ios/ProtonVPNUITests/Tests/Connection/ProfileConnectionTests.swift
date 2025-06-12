@@ -79,7 +79,7 @@ class ProfileConnectionTests: ConnectionTestsBase {
         homeRobot
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
-        }
+    }
 
     func testLogoutWhileConnectedToVPNServer() async throws {
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
@@ -94,7 +94,7 @@ class ProfileConnectionTests: ConnectionTestsBase {
             .logOut()
             .verify.logOutSuccessfully()
     }
-    
+
     func testCancelLogoutWhileConnectedToVpn() {
         login(as: UserType.Plus.credentials)
             .quickConnectViaQCButton()

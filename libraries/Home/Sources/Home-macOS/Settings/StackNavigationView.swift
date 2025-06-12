@@ -68,7 +68,7 @@ struct StackNavigationView<RootContent>: View where RootContent: View {
                 rootView()
             } else {
                 currentSubview
-                .transition(.move(edge: .trailing))
+                    .transition(.move(edge: .trailing))
             }
             Spacer()
         }

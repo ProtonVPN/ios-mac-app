@@ -122,7 +122,7 @@ public struct HomeMapFeature {
                 return nil
             }
         }
-        
+
         var coordinates: CLLocationCoordinate2D? {
             switch self {
             case let .connectedCoordinates(coordinates, _):

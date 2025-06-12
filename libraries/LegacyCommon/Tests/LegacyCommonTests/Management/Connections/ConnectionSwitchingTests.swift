@@ -36,9 +36,9 @@ import VPNSharedTesting
 
 final class ConnectionSwitchingTests: BaseConnectionTestCase {
     override func setUpWithError() throws {
-#if os(macOS)
-        throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
-#endif
+        #if os(macOS)
+            throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
+        #endif
         try super.setUpWithError()
     }
 
@@ -284,10 +284,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         didRequestCertRefresh = { _ in
-#if os(macOS)
-            // MasOS should connect with IKE
-            XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
-#endif
+            #if os(macOS)
+                // MasOS should connect with IKE
+                XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
+            #endif
         }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
@@ -299,15 +299,15 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssert(container.appStateManager.state.isConnected)
 
         let platformManager: NEVPNManagerMock?
-#if os(iOS)
-        // wireguard was made unavailable above. protocol should fallback to wireguard TLS
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-        platformManager = currentManager
-#elseif os(macOS)
-        // on macos, protocol should fallback to IKEv2
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
-        platformManager = container.neVpnManager
-#endif
+        #if os(iOS)
+            // wireguard was made unavailable above. protocol should fallback to wireguard TLS
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+            platformManager = currentManager
+        #elseif os(macOS)
+            // on macos, protocol should fallback to IKEv2
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
+            platformManager = container.neVpnManager
+        #endif
 
         // server2 has a lower score, so it should connect instead of server1
         XCTAssertNotNil(platformManager?.protocolConfiguration?.serverAddress)
@@ -319,13 +319,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         didRequestCertRefresh = { _ in }
 
-#if os(iOS)
-        // on iOS, force TLS to be unavailable to force it to fallback to TCP
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
-#elseif os(macOS)
-        // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
-        container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
-#endif
+        #if os(iOS)
+            // on iOS, force TLS to be unavailable to force it to fallback to TCP
+            container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
+        #elseif os(macOS)
+            // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
+            container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
+        #endif
 
         statusChanged = { status in
             currentStatus = status
@@ -361,13 +361,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         connectionExpectations = [expectations.reconnection, expectations.reconnectionAppStateChange]
         await fulfillment(of: connectionExpectations, timeout: expectationTimeout)
 
-#if os(iOS)
-        // on ios, protocol should fallback to WireGuard TCP
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
-#elseif os(macOS)
-        // on macos, protocol should fallback to WireGuard TLS
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-#endif
+        #if os(iOS)
+            // on ios, protocol should fallback to WireGuard TCP
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
+        #elseif os(macOS)
+            // on macos, protocol should fallback to WireGuard TLS
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+        #endif
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
@@ -468,7 +468,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
 
             let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
-                    .unavailable
+                .unavailable
             }
 
             let unavailableProtocols: [VpnProtocol] = [
@@ -678,7 +678,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                            "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map { $0.description })")
                     return
                 }
 
@@ -703,7 +703,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -711,7 +711,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -880,7 +880,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                            "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map { $0.description })")
                     return
                 }
 
@@ -905,7 +905,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -913,7 +913,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -1049,7 +1049,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -1057,7 +1057,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map { $0.description })")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -1138,7 +1138,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                     $0.serverChangeAuthorizer.registerServerChange(connectedAt: date
                         .addingTimeInterval(TimeInterval(
                             -(connectionsToAdd - i - 1) *
-                             serverChangeStorage
+                                serverChangeStorage
                                 .config
                                 .changeServerShortDelayInSeconds
                         ))

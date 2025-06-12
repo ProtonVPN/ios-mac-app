@@ -20,12 +20,12 @@ import Foundation
 import struct Domain.TunnelFeatures
 
 extension TunnelFeatures {
-#if !os(tvOS)
-    public static let mock = TunnelFeatures(
-        killSwitch: false,
-        excludeLocalNetworks: false
-    )
-#else
-    public static let mock = TunnelFeatures()
-#endif
+    #if !os(tvOS)
+        public static let mock = TunnelFeatures(
+            killSwitch: false,
+            excludeLocalNetworks: false
+        )
+    #else
+        public static let mock = TunnelFeatures()
+    #endif
 }

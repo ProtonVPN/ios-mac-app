@@ -68,10 +68,10 @@ extension VPNConnectionFeatures {
 extension TunnelFeatures {
     @usableFromInline
     static let unimplementedFeatures: TunnelFeatures = {
-#if !os(tvOS)
-        .init(killSwitch: false, excludeLocalNetworks: false)
-#else
-        .init()
-#endif
+        #if !os(tvOS)
+            .init(killSwitch: false, excludeLocalNetworks: false)
+        #else
+            .init()
+        #endif
     }()
 }

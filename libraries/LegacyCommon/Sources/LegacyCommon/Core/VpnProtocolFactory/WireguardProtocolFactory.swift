@@ -35,7 +35,7 @@ open class WireguardProtocolFactory {
                   propertiesManager: factory.makePropertiesManager(),
                   vpnManagerFactory: factory)
     }
-    
+
     public init(bundleId: String,
                 appGroup: String,
                 propertiesManager: PropertiesManagerProtocol,
@@ -45,7 +45,7 @@ open class WireguardProtocolFactory {
         self.propertiesManager = propertiesManager
         self.vpnManagerFactory = vpnManagerFactory
     }
-        
+
     open func logs(completion: @escaping (String?) -> Void) {
         guard let fileUrl = logFile() else {
             completion(nil)
@@ -78,7 +78,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
         return protocolConfiguration
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
         if requirement == .status, let vpnManager = vpnManager {
             completion(vpnManager, nil)
@@ -91,7 +91,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             }
         }
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
         if requirement == .status, let vpnManager = vpnManager {
             return vpnManager

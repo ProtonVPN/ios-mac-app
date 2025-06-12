@@ -24,7 +24,7 @@ extension NETunnelProviderProtocol {
             return nil
         }
         #if os(macOS)
-        appUid = getuid()
+            appUid = getuid()
         #endif
 
         let endpoints = tunnelConfiguration.peers.compactMap { $0.endpoint }
@@ -38,36 +38,36 @@ extension NETunnelProviderProtocol {
     }
 
     #if os(macOS)
-    func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
-        if let data = Keychain.loadWgConfig() {
-            log.info("Loading config directly from keychain")
-            return tunnelConfigurationFromData(data, called: name)
-        }
-        if let passwordReference = passwordReference,
-           let data = Keychain.openReference(called: passwordReference) {
-            log.info("Loading config from keychain by reference")
-            return tunnelConfigurationFromData(data, called: name)
-        }
-        return nil
-    }
-
-    func tunnelConfigurationFromData(_ data: Data,
-                                     called name: String?) -> TunnelConfiguration? {
-        guard let storedConfig = storedWireguardConfigurationFromData(data) else {
-            log.info("Trying old WireGuard configuration format.")
-            return tunnelConfigFromOldData(data, called: name)
+        func asTunnelConfiguration(called name: String? = nil) -> TunnelConfiguration? {
+            if let data = Keychain.loadWgConfig() {
+                log.info("Loading config directly from keychain")
+                return tunnelConfigurationFromData(data, called: name)
+            }
+            if let passwordReference = passwordReference,
+               let data = Keychain.openReference(called: passwordReference) {
+                log.info("Loading config from keychain by reference")
+                return tunnelConfigurationFromData(data, called: name)
+            }
+            return nil
         }
 
-        let wgConfig = storedConfig.asWireguardConfiguration()
-        return try? TunnelConfiguration(fromWgQuickConfig: wgConfig, called: name)
-    }
+        func tunnelConfigurationFromData(_ data: Data,
+                                         called name: String?) -> TunnelConfiguration? {
+            guard let storedConfig = storedWireguardConfigurationFromData(data) else {
+                log.info("Trying old WireGuard configuration format.")
+                return tunnelConfigFromOldData(data, called: name)
+            }
+
+            let wgConfig = storedConfig.asWireguardConfiguration()
+            return try? TunnelConfiguration(fromWgQuickConfig: wgConfig, called: name)
+        }
     #endif
 
     func keychainConfigData() -> Data? {
         log.info("Loading config from keychain by reference")
-        
+
         guard let passwordReference = passwordReference,
-           let data = Keychain.openReference(called: passwordReference) else {
+              let data = Keychain.openReference(called: passwordReference) else {
             return nil
         }
 
@@ -102,7 +102,7 @@ extension NETunnelProviderProtocol {
     func tunnelConfigFromOldData(_ data: Data,
                                  called name: String?) -> TunnelConfiguration? {
         guard let config = String(data: data, encoding: .utf8),
-            config.starts(with: "[Interface]") else {
+              config.starts(with: "[Interface]") else {
             log.info("Stored WireGuard config is corrupted or of unknown format.")
             return nil
         }

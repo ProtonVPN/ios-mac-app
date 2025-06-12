@@ -28,19 +28,19 @@ import Strings
 import Ergonomics
 
 #if canImport(UIKit)
-import class UIKit.UIApplication
+    import class UIKit.UIApplication
 #elseif canImport(AppKit)
-import class AppKit.NSApplication
+    import class AppKit.NSApplication
 #endif
 
 let didBecomeActiveNotification: NSNotification.Name = {
-#if canImport(UIKit)
-    return UIApplication.didBecomeActiveNotification
-#elseif canImport(AppKit)
-    return NSApplication.didBecomeActiveNotification
-#else
-    fatalError("Unsupported platform")
-#endif
+    #if canImport(UIKit)
+        return UIApplication.didBecomeActiveNotification
+    #elseif canImport(AppKit)
+        return NSApplication.didBecomeActiveNotification
+    #else
+        fatalError("Unsupported platform")
+    #endif
 }()
 
 @available(iOS 16, *)
@@ -372,8 +372,8 @@ extension LocalAgentError {
             return .reconnect(.withNewCertificate)
 
         case .certificateNotProvided,
-                .userTorrentNotAllowed,
-                .guestSession:
+             .userTorrentNotAllowed,
+             .guestSession:
             log.warning("Unexpected error reported by local agent", category: .localAgent, metadata: ["error": "\(self)"])
             return .none
 
@@ -385,15 +385,15 @@ extension LocalAgentError {
             return .disconnect(.withNewKeys)
 
         case .maxSessionsUnknown,
-                .maxSessionsFree,
-                .maxSessionsBasic,
-                .maxSessionsPlus,
-                .maxSessionsVisionary,
-                .maxSessionsPro,
-                .serverError,
-                .policyViolationLowPlan,
-                .policyViolationDelinquent,
-                .userBadBehavior:
+             .maxSessionsFree,
+             .maxSessionsBasic,
+             .maxSessionsPlus,
+             .maxSessionsVisionary,
+             .maxSessionsPro,
+             .serverError,
+             .policyViolationLowPlan,
+             .policyViolationDelinquent,
+             .userBadBehavior:
             // The error shown on disconnection is customised through its implementation of AlertConvertibleError
             // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.immediately)

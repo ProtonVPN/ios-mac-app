@@ -39,15 +39,15 @@ final class CountryItemCellView: NSView {
     @IBOutlet private weak var separatorView: NSView!
     @IBOutlet private weak var upgradeBtn: UpgradeButton!
     @IBOutlet private weak var maintenanceBtn: NSButton!
-    
+
     private var viewModel: CountryItemViewModel!
     private var isHovered = false
-    
+
     var disabled: Bool = false
-        
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         expandButton.wantsLayer = true
         expandButton.layer?.cornerRadius = 16
         expandButton.layer?.borderWidth = 2
@@ -95,7 +95,7 @@ final class CountryItemCellView: NSView {
         }
         addCursorRect(frame, cursor: .pointingHand)
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         expandButton.isEnabled = !disabled
         expandButton.isHovered = false
@@ -107,14 +107,14 @@ final class CountryItemCellView: NSView {
 
     func updateView(withModel viewModel: CountryItemViewModel) {
         self.viewModel = viewModel
-        
+
         [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn].forEach {
             $0?.alphaValue = viewModel.alphaForMainElements
         }
-    
+
         separatorView.isHidden = !viewModel.displaySeparator
         secureIV.isHidden = !viewModel.secureCoreEnabled
-        
+
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         countryLbl.stringValue = viewModel.countryName
         if !viewModel.countryCode.isEmpty {
@@ -143,24 +143,24 @@ final class CountryItemCellView: NSView {
     }
 
     // MARK: - Actions
-    
+
     @IBAction private func didTapExpandBtn(_ sender: Any) {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         setupAccessibilityCustomActions()
     }
-    
+
     @IBAction private func didTapUpgradeBtn(_ sender: Any) {
         viewModel.upgradeAction()
     }
-    
+
     @IBAction func didTapConnectBtn(_ sender: Any) {
         viewModel.connectAction()
     }
-    
+
     // MARK: - Private
-    
+
     private func configureFeatures() {
         if viewModel.showFeatureIcons {
             torIV.isHidden = !viewModel.isTorAvailable || viewModel.isConnected
@@ -172,7 +172,7 @@ final class CountryItemCellView: NSView {
             }
         }
     }
-    
+
     // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {

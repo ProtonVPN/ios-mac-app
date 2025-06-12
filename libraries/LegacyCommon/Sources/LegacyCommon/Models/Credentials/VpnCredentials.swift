@@ -45,19 +45,19 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Plan title: \(planTitle)\n" +
-        "Plan name: \(planName)\n" +
-        "Max connect: \(maxConnect)\n" +
-        "Max tier: \(maxTier)\n" +
-        "Services: \(services ?? -1)\n" +
-        "Group ID: \(groupId)\n" +
-        "Name: \(name)\n" +
-        "Password: \(password)\n" +
-        "Delinquent: \(delinquent)\n" +
-        "Credit: \(credit) (in \(currency))" +
-        "Has Payment Method: \(hasPaymentMethod)\n" +
-        "Subscribed: \(String(describing: subscribed))" +
-        "BusinessEvents: \(businessEvents)"
+            "Plan title: \(planTitle)\n" +
+            "Plan name: \(planName)\n" +
+            "Max connect: \(maxConnect)\n" +
+            "Max tier: \(maxTier)\n" +
+            "Services: \(services ?? -1)\n" +
+            "Group ID: \(groupId)\n" +
+            "Name: \(name)\n" +
+            "Password: \(password)\n" +
+            "Delinquent: \(delinquent)\n" +
+            "Credit: \(credit) (in \(currency))" +
+            "Has Payment Method: \(hasPaymentMethod)\n" +
+            "Subscribed: \(String(describing: subscribed))" +
+            "BusinessEvents: \(businessEvents)"
     }
 
     required public init(from decoder: Decoder) throws {
@@ -113,7 +113,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.businessEvents = businessEvents
         super.init()
     }
-    
+
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
@@ -156,9 +156,9 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "HasPaymentMethod": hasPaymentMethod,
             "Subscribed": subscribed ?? 0,
         ] as [String: Any])
-        .mapValues({ $0 as AnyObject })
+            .mapValues({ $0 as AnyObject })
     }
-    
+
     // MARK: - NSCoding
 
     private struct CoderKey {
@@ -179,7 +179,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         static let subscribed = "subscribed"
         static let businessEvents = "businessEvents"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         guard let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,

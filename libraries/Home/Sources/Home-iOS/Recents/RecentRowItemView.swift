@@ -102,17 +102,17 @@ extension RecentConnection {
 }
 
 #if DEBUG
-@available(iOS 17, *)
-#Preview(traits: .sizeThatFitsLayout) {
-    let last = RecentConnection.sampleData.last!
-    return VStack(spacing: 0) {
-        ForEach(RecentConnection.sampleData) { item in
-            RecentRowItemView(item: item,
-                              isConnected: .random(),
-                              sendAction: { _ in () })
+    @available(iOS 17, *)
+    #Preview(traits: .sizeThatFitsLayout) {
+        let last = RecentConnection.sampleData.last!
+        return VStack(spacing: 0) {
+            ForEach(RecentConnection.sampleData) { item in
+                RecentRowItemView(item: item,
+                                  isConnected: .random(),
+                                  sendAction: { _ in () })
+            }
         }
+        .padding()
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 #endif

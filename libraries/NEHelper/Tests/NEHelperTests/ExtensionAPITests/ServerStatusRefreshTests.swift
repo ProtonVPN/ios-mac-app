@@ -72,14 +72,14 @@ class ServerStatusRefreshTests: ExtensionAPIServiceTestCase {
             endpointHit: XCTestExpectation(description: "API returned no change in server"),
             callbackInvoked: XCTestExpectation(description: "ServerStatusRefreshManager invoked callback")
         )
-        
+
         let originalServer = ServerStatusRequest.Logical(id: "logical-original-id",
                                                          status: 0,
                                                          servers: [.mock(id: "original-serverip-id", status: 1)])
         Self.currentLogicalId = originalServer.id
         Self.currentServerIpId = originalServer.servers.first!.id
         manager.updateConnectedIds(logicalId: Self.currentLogicalId, serverId: Self.currentServerIpId)
-        
+
         serverStatusCallback = mockEndpoint(ServerStatusRequest.self,
                                             result: .success([\.original: originalServer]),
                                             expectationToFulfill: expectations.endpointHit)

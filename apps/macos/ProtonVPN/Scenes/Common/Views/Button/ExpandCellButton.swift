@@ -29,12 +29,12 @@ class ExpandCellButton: HoverDetectionButton {
         super.awakeFromNib()
         configureButton()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()
     }
-        
+
     private func configureButton() {
         wantsLayer = true
         contentTintColor = self.color(.icon)

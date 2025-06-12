@@ -48,12 +48,12 @@ struct PurchaseOptionsView: View {
                 if subscription.subscriptionPeriod.unit == .year {
                     VStack {
                         headlineText("\(product.displayPrice)")
-                        + bodyText(" /year")
+                            + bodyText(" /year")
                         bodyText(pricePerMonth(product))
                     }
                 } else if subscription.subscriptionPeriod.unit == .month {
                     headlineText("\(product.displayPrice)")
-                    + bodyText(" /month")
+                        + bodyText(" /month")
                 } else {
                     headlineText("\(product.displayPrice)")
                 }
@@ -113,11 +113,11 @@ struct PurchaseOptionsView: View {
             VStack(alignment: .trailing) {
                 if planDuration.months == 12 {
                     headlineText(planPriceString)
-                    + bodyText(" /year")
+                        + bodyText(" /year")
                     bodyText("\(pricePerMonthString) /month")
                 } else if planDuration == .oneMonth {
                     headlineText(planPriceString)
-                    + bodyText(" /month")
+                        + bodyText(" /month")
                 } else {
                     headlineText(planPriceString)
                 }

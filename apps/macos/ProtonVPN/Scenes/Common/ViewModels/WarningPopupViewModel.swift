@@ -36,7 +36,7 @@ class WarningPopupViewModel {
     let confirmTitle: String
     let onCancel: (() -> Void)?
     let cancelTitle: String
-    
+
     init(image: NSImage? = AppTheme.Icon.vpnMainTransparent,
          title: String,
          description: String,
@@ -56,7 +56,7 @@ class WarningPopupViewModel {
         self.linkDescription = linkDescription
         self.url = url
     }
-    
+
     convenience init(image: NSImage? = AppTheme.Icon.vpnMainTransparent, title: String, description: String, onConfirm: @escaping () -> Void) {
         self.init(image: image, title: title, description: description, linkDescription: nil, url: nil, onConfirm: onConfirm, onCancel: nil)
     }

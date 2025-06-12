@@ -109,12 +109,12 @@ struct ConnectionDetailsView: View {
         @ScaledMetric var infoIconSpacing: CGFloat = .themeSpacing4
 
         private var standardTypeSize: Bool { dynamicTypeSize <= .xxxLarge }
-        
+
         enum Accessory {
             case none
             case info
         }
-        
+
         enum ContentType {
             case text(String)
             case percentage(Int)
@@ -128,20 +128,20 @@ struct ConnectionDetailsView: View {
                 }
             }
         }
-        
+
         init(title: String, contentType: ContentType, accessory: Accessory = .none) {
             self.title = title
             self.accessory = accessory
             self.content = contentType
         }
-        
+
         var body: some View {
             rowView
                 .padding(.vertical, .themeSpacing12)
                 .padding(.horizontal, .themeSpacing16)
                 .accessibilityElement(children: .combine)
         }
-        
+
         @ViewBuilder
         private var rowView: some View {
             if standardTypeSize {
@@ -157,12 +157,12 @@ struct ConnectionDetailsView: View {
                 }
             }
         }
-        
+
         private var titleView: some View {
             HStack(spacing: infoIconSpacing) {
                 Text(title)
                     .themeFont(.body1())
-                
+
                 if case .info = accessory {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
@@ -170,7 +170,7 @@ struct ConnectionDetailsView: View {
             .accessibilityLabel(title)
             .foregroundColor(Color(.text, .weak))
         }
-        
+
         private var valueView: some View {
             HStack(spacing: .themeSpacing8) {
                 if case let .percentage(percent) = content {
@@ -201,7 +201,7 @@ struct ConnectionDetailsView_Previews: PreviewProvider {
                                                                serverLoad: 23,
                                                                protocolName: "WireGuard"),
                                            reducer: { ConnectionDetailsFeature() }))
-        .previewLayout(.sizeThatFits)
-        .preferredColorScheme(.dark)
+            .previewLayout(.sizeThatFits)
+            .preferredColorScheme(.dark)
     }
 }

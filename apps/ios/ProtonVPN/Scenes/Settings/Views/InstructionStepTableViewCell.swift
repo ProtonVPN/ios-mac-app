@@ -25,10 +25,10 @@ import UIKit
 class InstructionStepTableViewCell: UITableViewCell {
     @IBOutlet weak var stepView: InstructionStepView!
     @IBOutlet weak var label: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         label.textColor = .normalTextColor()
     }

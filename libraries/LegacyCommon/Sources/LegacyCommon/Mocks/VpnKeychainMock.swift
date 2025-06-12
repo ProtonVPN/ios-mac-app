@@ -20,132 +20,132 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import Ergonomics
-import VPNCrypto
+    import Foundation
+    import Ergonomics
+    import VPNCrypto
 
-public class VpnKeychainMock: VpnKeychainProtocol {
-    public var didStoreCredentials: ((VpnCredentials) -> Void)?
+    public class VpnKeychainMock: VpnKeychainProtocol {
+        public var didStoreCredentials: ((VpnCredentials) -> Void)?
     
-    public enum KeychainMockError: Error {
-        case fetchError
-        case getCertificateError
-    }
-    
-    public var throwsOnFetch: Bool = false
-    
-    public static var vpnCredentialsChanged = Notification.Name("vpnCredentialsChanged")
-    public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
-    public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
-    
-    public var credentials: VpnCredentials?
-    
-    public init(planName: String = "free", maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
-    }
-    
-    public func fetch() throws -> VpnCredentials {
-        if throwsOnFetch {
-            throw KeychainMockError.fetchError
+        public enum KeychainMockError: Error {
+            case fetchError
+            case getCertificateError
         }
-
-        guard let credentials = credentials else {
-            throw KeychainMockError.fetchError
-        }
-
-        return credentials
-    }
-
-    public func fetchCached() throws -> CachedVpnCredentials {
-        try CachedVpnCredentials(credentials: fetch())
-    }
     
-    public func fetchOpenVpnPassword() throws -> Data {
-        return Data()
-    }
-
-    public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
-        store(vpnCredentials: vpnCredentials)
-    }
-
-    func store(vpnCredentials: VpnCredentials) {
-        let newCredentials = vpnCredentials
-        let oldCredentials = credentials
-
-        if let oldCredentials = oldCredentials {
-            if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
-                let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
-                NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
+        public var throwsOnFetch: Bool = false
+    
+        public static var vpnCredentialsChanged = Notification.Name("vpnCredentialsChanged")
+        public static var vpnPlanChanged = Notification.Name("vpnPlanChanged")
+        public static var vpnUserDelinquent = Notification.Name("vpnUserDelinquent")
+    
+        public var credentials: VpnCredentials?
+    
+        public init(planName: String = "free", maxTier: Int = 0) {
+            credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        }
+    
+        public func fetch() throws -> VpnCredentials {
+            if throwsOnFetch {
+                throw KeychainMockError.fetchError
             }
-            if oldCredentials.planName != newCredentials.planName {
-                let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
-                NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
+
+            guard let credentials = credentials else {
+                throw KeychainMockError.fetchError
             }
+
+            return credentials
         }
 
-        credentials = newCredentials
-
-        if oldCredentials != newCredentials {
-            NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
+        public func fetchCached() throws -> CachedVpnCredentials {
+            try CachedVpnCredentials(credentials: fetch())
+        }
+    
+        public func fetchOpenVpnPassword() throws -> Data {
+            return Data()
         }
 
-        didStoreCredentials?(newCredentials)
-    }
-    
-    public func getServerCertificate() throws -> SecCertificate {
-        throw KeychainMockError.getCertificateError
-    }
-    
-    public func storeServerCertificate() throws {}
+        public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
+            store(vpnCredentials: vpnCredentials)
+        }
 
-    public func clear() {
-        credentials = nil
-    }
-    
-    public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
-        credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
-    }
-    
-    public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
-        return VpnCredentials(
-            status: 0,
-            planTitle: planName,
-            maxConnect: 1,
-            maxTier: maxTier,
-            services: 0,
-            groupId: "grid1",
-            name: "username",
-            password: "",
-            delinquent: 0,
-            credit: 0,
-            currency: "",
-            hasPaymentMethod: false,
-            planName: planName,
-            subscribed: 0,
-            businessEvents: false
-        )
-    }
-    
-    public func hasOldVpnPassword() -> Bool {
-        return false
-    }
-    
-    public func clearOldVpnPassword() throws {}
-    
-    public func store(wireguardConfiguration: Data) throws -> Data {
-        return Data()
-    }
-    
-    public func fetchWireguardConfigurationReference() throws -> Data {
-        return Data()
-    }
-    
-    public func fetchWireguardConfiguration() throws -> String? {
-        return nil
-    }
+        func store(vpnCredentials: VpnCredentials) {
+            let newCredentials = vpnCredentials
+            let oldCredentials = credentials
 
-    public func fetchWidgetPublicKey() throws -> CryptoService.Key {
-        throw "Key not found" as GenericError
+            if let oldCredentials = oldCredentials {
+                if !oldCredentials.isDelinquent, newCredentials.isDelinquent {
+                    let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+                    NotificationCenter.default.post(name: Self.vpnUserDelinquent, object: downgradeInfo)
+                }
+                if oldCredentials.planName != newCredentials.planName {
+                    let downgradeInfo: VpnDowngradeInfo = (oldCredentials, newCredentials)
+                    NotificationCenter.default.post(name: Self.vpnPlanChanged, object: downgradeInfo)
+                }
+            }
+
+            credentials = newCredentials
+
+            if oldCredentials != newCredentials {
+                NotificationCenter.default.post(name: Self.vpnCredentialsChanged, object: newCredentials)
+            }
+
+            didStoreCredentials?(newCredentials)
+        }
+    
+        public func getServerCertificate() throws -> SecCertificate {
+            throw KeychainMockError.getCertificateError
+        }
+    
+        public func storeServerCertificate() throws {}
+
+        public func clear() {
+            credentials = nil
+        }
+    
+        public func setVpnCredentials(with planName: String, maxTier: Int = 0) {
+            credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+        }
+    
+        public static func vpnCredentials(planName: String, maxTier: Int) -> VpnCredentials {
+            return VpnCredentials(
+                status: 0,
+                planTitle: planName,
+                maxConnect: 1,
+                maxTier: maxTier,
+                services: 0,
+                groupId: "grid1",
+                name: "username",
+                password: "",
+                delinquent: 0,
+                credit: 0,
+                currency: "",
+                hasPaymentMethod: false,
+                planName: planName,
+                subscribed: 0,
+                businessEvents: false
+            )
+        }
+    
+        public func hasOldVpnPassword() -> Bool {
+            return false
+        }
+    
+        public func clearOldVpnPassword() throws {}
+    
+        public func store(wireguardConfiguration: Data) throws -> Data {
+            return Data()
+        }
+    
+        public func fetchWireguardConfigurationReference() throws -> Data {
+            return Data()
+        }
+    
+        public func fetchWireguardConfiguration() throws -> String? {
+            return nil
+        }
+
+        public func fetchWidgetPublicKey() throws -> CryptoService.Key {
+            throw "Key not found" as GenericError
+        }
     }
-}
 #endif

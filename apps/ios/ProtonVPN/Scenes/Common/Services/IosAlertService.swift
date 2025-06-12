@@ -273,9 +273,9 @@ extension IosAlertService: CoreAlertService {
 
         default:
             #if DEBUG
-            fatalError("Alert type handling not implemented: \(String(describing: alert))")
+                fatalError("Alert type handling not implemented: \(String(describing: alert))")
             #else
-            showDefaultSystemAlert(alert)
+                showDefaultSystemAlert(alert)
             #endif
         }
     }
@@ -297,11 +297,11 @@ extension IosAlertService: CoreAlertService {
             if let server = server {
                 viewModel = .subscriptionDowngradedReconnecting(numberOfCountries: planService.countriesCount,
                                                                 numberOfDevices: DomainConstants.maxDeviceCount,
-                                                              fromServer: server.from,
-                                                              toServer: server.to)
+                                                                fromServer: server.from,
+                                                                toServer: server.to)
             } else {
                 viewModel = .subscriptionDowngraded(numberOfCountries: planService.countriesCount,
-                                                  numberOfDevices: DomainConstants.maxDeviceCount)
+                                                    numberOfDevices: DomainConstants.maxDeviceCount)
             }
         case let alert as MaxSessionsAlert:
             if alert.accountTier.isFreeTier {

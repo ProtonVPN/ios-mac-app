@@ -32,11 +32,11 @@ extension NSMutableAttributedString {
                            lineSpacing: CGFloat? = nil,
                            lineBreakMode: NSLineBreakMode? = nil) {
         let range = (self.string as NSString).range(of: self.string)
-        
+
         self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
         self.addAttribute(NSAttributedString.Key.font, value: font, range: range)
         self.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
-        
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
         if let lineBreakMode = lineBreakMode {

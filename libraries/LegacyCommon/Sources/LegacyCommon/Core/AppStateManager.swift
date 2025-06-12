@@ -21,7 +21,7 @@
 
 import Foundation
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 import Reachability
@@ -253,24 +253,24 @@ public class AppStateManagerImplementation: AppStateManager {
         
         if reachability.connection == .unavailable {
             #if os(macOS)
-            // we want to show the alert if app was not launched at login, or if it was, then after a small delay
-            if AppStartup.isLaunchedAtLogin {
-                let timeAmount: TimeInterval = 10
-                if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
-                    // App has been launched at login within the last `timeAmount` seconds.
-                    let retryWorkItem = DispatchWorkItem { [weak self] in
-                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                // we want to show the alert if app was not launched at login, or if it was, then after a small delay
+                if AppStartup.isLaunchedAtLogin {
+                    let timeAmount: TimeInterval = 10
+                    if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
+                        // App has been launched at login within the last `timeAmount` seconds.
+                        let retryWorkItem = DispatchWorkItem { [weak self] in
+                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                        }
+                        reachability.whenReachable = { [weak self, retryWorkItem] _ in
+                            // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
+                            retryWorkItem.cancel()
+                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
+                        return
                     }
-                    reachability.whenReachable = { [weak self, retryWorkItem] _ in
-                        // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
-                        retryWorkItem.cancel()
-                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
-                    return
                 }
-            }
-            reachability.whenReachable = nil // cleanup
+                reachability.whenReachable = nil // cleanup
             #endif
             // let's finally show the alert if:
             //     - !os(macOS)
@@ -329,7 +329,7 @@ public class AppStateManagerImplementation: AppStateManager {
         propertiesManager.intentionallyDisconnected = true
 
         #if os(macOS)
-        self.propertiesManager.connectedServerNameDoNotUse = nil
+            self.propertiesManager.connectedServerNameDoNotUse = nil
         #endif
 
         vpnManager.disconnect(completion: completion)
@@ -490,7 +490,7 @@ public class AppStateManagerImplementation: AppStateManager {
             propertiesManager.intentionallyDisconnected = false
 
             #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
+                propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
             #endif
 
             serviceChecker?.stop()
@@ -581,8 +581,8 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func maxSessionsReached(accountTier: Int) {
         #if canImport(AppKit)
-        let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
-        NotificationCenter.default.post(notification)
+            let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
+            NotificationCenter.default.post(notification)
         #endif
         let alert = MaxSessionsAlert(accountTier: accountTier)
         self.alertService?.push(alert: alert)

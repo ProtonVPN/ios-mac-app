@@ -100,22 +100,22 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     private static func disableAutoFillPasswords() {
         #if targetEnvironment(simulator)
-        guard #available(iOS 17.3, *), isAutoFillPasswordsEnabled else {
-            return
-        }
+            guard #available(iOS 17.3, *), isAutoFillPasswordsEnabled else {
+                return
+            }
 
-        let settingsApp = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+            let settingsApp = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
 
-        launchSettingsApp(settingsApp: settingsApp)
+            launchSettingsApp(settingsApp: settingsApp)
 
-        defer {
-            settingsApp.terminate()
-        }
+            defer {
+                settingsApp.terminate()
+            }
 
-        navigateToAutoFillSettings(settingsApp: settingsApp)
-        toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
+            navigateToAutoFillSettings(settingsApp: settingsApp)
+            toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
 
-        isAutoFillPasswordsEnabled = false
+            isAutoFillPasswordsEnabled = false
         #endif
     }
 

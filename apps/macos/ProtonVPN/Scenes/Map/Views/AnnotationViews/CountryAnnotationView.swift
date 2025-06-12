@@ -144,9 +144,9 @@ class MapAnnotationView: MKAnnotationView {
         trackingAreas.forEach { removeTrackingArea($0) }
         let trackingArea = NSTrackingArea(rect: !hovered ? triangleFrame : bounds,
                                           options: [
-                                            NSTrackingArea.Options.mouseEnteredAndExited,
-                                            NSTrackingArea.Options.mouseMoved,
-                                            NSTrackingArea.Options.activeInKeyWindow
+                                              NSTrackingArea.Options.mouseEnteredAndExited,
+                                              NSTrackingArea.Options.mouseMoved,
+                                              NSTrackingArea.Options.activeInKeyWindow
                                           ],
                                           owner: self, userInfo: nil)
         addTrackingArea(trackingArea)

@@ -82,7 +82,7 @@ class HoverDetectionButton: NSButton {
         super.viewWillDraw()
         layer?.masksToBounds = false
     }
-    
+
     override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
     }

@@ -34,15 +34,15 @@ public struct Announcement: Codable {
 
     public let offer: Offer?
     public let reference: String?
-    
+
     // Is set from the app, NOT api
     public var isRead: Bool? = false
-    
+
     // Wrapper param that returns false in case isRead is nil
     public var wasRead: Bool {
         return isRead == true
     }
-    
+
     mutating func setAsRead(_ read: Bool) {
         isRead = read
     }

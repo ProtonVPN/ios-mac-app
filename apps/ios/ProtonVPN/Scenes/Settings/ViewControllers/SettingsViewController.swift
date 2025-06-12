@@ -52,7 +52,7 @@ final class SettingsViewController: UIViewController {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -63,7 +63,7 @@ final class SettingsViewController: UIViewController {
         }
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -76,43 +76,43 @@ final class SettingsViewController: UIViewController {
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         setupTableView()
         tableView.reloadData()
 
         /// This is required by QR Login. One of the views in the QR Login flow hides the navigation bar and we need to make sure it is visible when we pop back to the root view controller.
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+
     private func setupView() {
         navigationItem.title = Localizable.settings
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func setupTableView() {
         guard let viewModel = viewModel else { return }
-        
+
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
-        
+
         tableView.separatorColor = .normalSeparatorColor()
         tableView.separatorInset = .zero
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        
+
         tableView.tableFooterView = viewModel.viewForFooter()
         tableView.contentInset.bottom = UIConstants.cellHeight
     }
-    
+
     private func pushViewController(_ viewController: UIViewController) {
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
+
     private func setupConnectionBar() {
         if let connectionBarViewController = connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)

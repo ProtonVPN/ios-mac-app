@@ -392,7 +392,7 @@ public struct PlutoniumView: View {
             Text(Localizable.plutoniumImportAppsSubtitle1)
                 .themeFont(.footnote(emphasised: false))
                 .foregroundColor(Color(.text, .hint))
-            + Text(Localizable.plutoniumImportAppsSubtitle2)
+                + Text(Localizable.plutoniumImportAppsSubtitle2)
                 .themeFont(.footnote(emphasised: false))
                 .foregroundColor(Color(.text, [.interactive, .hint]))
         }

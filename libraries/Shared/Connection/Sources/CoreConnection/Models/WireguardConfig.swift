@@ -134,18 +134,18 @@ extension StoredWireguardConfig {
     /// that the `wireguard-go` backend understands.
     public func asWireguardConfiguration() -> String {
         return """
-            [Interface]
-            \(attribute: "PrivateKey = ", optional: clientPrivateKey)
-            Address = \(wireguardConfig.address)
+        [Interface]
+        \(attribute: "PrivateKey = ", optional: clientPrivateKey)
+        Address = \(wireguardConfig.address)
 
-            DNS = \(wireguardConfig.dnsServers.joined(separator: ","))
+        DNS = \(wireguardConfig.dnsServers.joined(separator: ","))
 
-            [Peer]
-            \(attribute: "PublicKey = ", optional: serverPublicKey)
-            AllowedIPs = \(wireguardConfig.allowedIPs)
-            Endpoint = \(entryServerAddress):\(ports.first!)
-            \(attribute: "PersistentKeepalive = ", optional: wireguardConfig.persistentKeepalive)
-            """
+        [Peer]
+        \(attribute: "PublicKey = ", optional: serverPublicKey)
+        AllowedIPs = \(wireguardConfig.allowedIPs)
+        Endpoint = \(entryServerAddress):\(ports.first!)
+        \(attribute: "PersistentKeepalive = ", optional: wireguardConfig.persistentKeepalive)
+        """
     }
 }
 

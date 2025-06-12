@@ -35,7 +35,7 @@ struct UpdateAvailableView: View {
     var updatevView: some View {
         VStack(spacing: 0) {
             #if os(iOS)
-            Color.clear.frame(maxWidth: .infinity, maxHeight: 1) // Prevents UpdateAvailableView's background bleeding on NavigationBar
+                Color.clear.frame(maxWidth: .infinity, maxHeight: 1) // Prevents UpdateAvailableView's background bleeding on NavigationBar
             #endif
 
             HStack {
@@ -60,7 +60,7 @@ struct UpdateAvailableView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 24)
             #if os(iOS)
-            .background(colors.backgroundWeak)
+                .background(colors.backgroundWeak)
             #endif
         }
     }

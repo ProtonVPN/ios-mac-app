@@ -13,7 +13,7 @@ import UITestsHelpers
 
 class LoginTests: ProtonVPNUITests {
     private let loginRobot = LoginRobot()
-    
+
     private lazy var twopassusercredentials = getCredentials(from: "twopassusercredentials")
 
     override func setUp() {
@@ -23,7 +23,7 @@ class LoginTests: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     @MainActor
     func testLoginWithIncorrectCredentials() {
         let username = twopassusercredentials[0].username
@@ -34,18 +34,18 @@ class LoginTests: ProtonVPNUITests {
             .signIn(robot: LoginRobot.self)
             .verify.incorrectCredentialsErrorDialog()
     }
-    
+
     @MainActor
     func testLoginWithSpecialChars() {
         let username = "ąčęėįš"
         let password = "ąčęėįš"
-        
+
         loginRobot
             .enterIncorrectCredentials(username, password)
             .signIn(robot: LoginRobot.self)
             .verify.specialCharErrorDialog()
     }
-    
+
     @MainActor
     func testLoginAsSubuserWithNoConnectionsAssigned() {
         let subusercredentials = getCredentials(from: "subusercredentials")
@@ -56,7 +56,7 @@ class LoginTests: ProtonVPNUITests {
             .verify.assignVPNConnectionErrorIsShown()
             .verify.loginScreenIsShown()
     }
-    
+
     @MainActor
     func testLoginWithTwoPassUser() {
         loginRobot
@@ -66,7 +66,7 @@ class LoginTests: ProtonVPNUITests {
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twopassusercredentials[0])
     }
-    
+
     @MainActor
     func testLoginAsTwoFa() async {
         let twofausercredentials = getCredentials(from: "twofausercredentials")
@@ -80,7 +80,7 @@ class LoginTests: ProtonVPNUITests {
             .goToSettingsTab()
             .verify.correctUserIsLogedIn(twofausercredentials[0])
     }
-    
+
     @MainActor
     func testLoginWithTwoPassAnd2FAUser() async {
         let twopasstwofausercredentials = getCredentials(from: "twopasstwofausercredentials")

@@ -18,17 +18,17 @@
 
 import Foundation
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 import VPNAppCore
 
 public class FreeConnectionsAlert: SystemAlert {
     #if canImport(UIKit)
-    public typealias FreeCountriesArray = [(String, UIImage?)]
+        public typealias FreeCountriesArray = [(String, UIImage?)]
     #elseif canImport(AppKit)
-    public typealias FreeCountriesArray = [(String, NSImage?)]
+        public typealias FreeCountriesArray = [(String, NSImage?)]
     #endif
 
     public var title: String?

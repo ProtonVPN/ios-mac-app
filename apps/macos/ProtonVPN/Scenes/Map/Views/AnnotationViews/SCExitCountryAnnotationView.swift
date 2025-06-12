@@ -40,7 +40,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         fatalError("Unsupported initializer \(#function)")
     }
-    
+
     init(viewModel: SCExitCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
 
@@ -58,7 +58,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             self.setupAnnotationView()
             self.needsDisplay = true
         }
-        
+
         setupAnnotationView()
     }
 
@@ -91,23 +91,23 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     }
 
     // swiftlint:enable function_body_length operator_usage_whitespace
-    
+
     override func hitTest(_ point: NSPoint) -> NSView? {
         return hitTestForState(point, hovered: hovered)
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     override func mouseMoved(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     override func mouseUp(with event: NSEvent) {
         guard hovered else { return }
         let pointInView = convert(event.locationInWindow, from: nil)
@@ -119,18 +119,18 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             }
         }
     }
-    
+
     override func mouseExited(with event: NSEvent) {
         if hovered {
             viewModel.uiStateUpdate(.idle)
         }
     }
-    
+
     override func resetCursorRects() {
         guard hovered else { return }
         addCursorRect(CGRect(origin: buttonFrame.origin, size: CGSize(width: buttonFrame.width, height: buttonFrame.height - Self.textLineHeight)), cursor: .pointingHand)
     }
-    
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
 
@@ -138,14 +138,14 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     // MARK: - Private functions
 
     private func setupAnnotationView() {
         setSelection()
         setupFrame()
     }
-    
+
     private func setSelection() {
         if viewModel.state == .idle {
             setSelected(false, animated: false)
@@ -153,7 +153,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             setSelected(true, animated: true)
         }
     }
-    
+
     private func setupFrame() {
         let height: CGFloat
         let hovered: Bool

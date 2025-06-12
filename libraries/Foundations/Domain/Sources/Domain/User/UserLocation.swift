@@ -37,14 +37,14 @@ public struct UserLocation: Codable, Equatable {
 }
 
 #if DEBUG
-extension UserLocation {
-    public static let poland = UserLocation(ip: "1.2.3.4", country: "PL", isp: "Play")
+    extension UserLocation {
+        public static let poland = UserLocation(ip: "1.2.3.4", country: "PL", isp: "Play")
 
-    public static let samples: [UserLocation] = [
-        .poland,
-        .init(ip: "5.6.7.8", country: "US", isp: "AT&T"),
-        .init(ip: "192.168.0.1", country: "FR", isp: "Orange"),
-        .init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"),
-    ]
-}
+        public static let samples: [UserLocation] = [
+            .poland,
+            .init(ip: "5.6.7.8", country: "US", isp: "AT&T"),
+            .init(ip: "192.168.0.1", country: "FR", isp: "Orange"),
+            .init(ip: "127.0.0.1", country: "CH", isp: "Swisscom"),
+        ]
+    }
 #endif

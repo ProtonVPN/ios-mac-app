@@ -133,7 +133,7 @@ public struct SharedPropertiesFeature {
                     return .send(.userLocation(.fetchUserLocation))
                 }
                 return .none
-                
+
             case .newAnnouncementBanner:
                 return .run { send in
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
@@ -146,13 +146,13 @@ public struct SharedPropertiesFeature {
 }
 
 #if DEBUG
-import Combine
+    import Combine
 
-extension LocationClient {
-    public static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
-        Timer.publish(every: interval, on: .main, in: .default)
-            .autoconnect()
-            .map { _ in UserLocation.samples.randomElement()! }
+    extension LocationClient {
+        public static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
+            Timer.publish(every: interval, on: .main, in: .default)
+                .autoconnect()
+                .map { _ in UserLocation.samples.randomElement()! }
+        }
     }
-}
 #endif

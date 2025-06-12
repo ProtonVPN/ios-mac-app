@@ -57,7 +57,7 @@ final class ConnectionSettingsViewModel {
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
@@ -90,7 +90,7 @@ final class ConnectionSettingsViewModel {
 
     var reloadNeeded: (() -> Void)?
     var protocolPendingChanged: ((Bool) -> Void)?
-    
+
     init(factory: Factory) {
         self.factory = factory
         self.sysexPending = true
@@ -108,7 +108,7 @@ final class ConnectionSettingsViewModel {
 
         checkSysexOrResetProtocol(selectedProtocol)
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -161,12 +161,12 @@ final class ConnectionSettingsViewModel {
             propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
         }
     }
-    
+
     // MARK: - Current Index
-    
+
     var autoConnectProfileIndex: Int {
         guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
-        
+
         guard let profileId = autoConnect.profileId else { return 1 }
         let index = availableProfiles.firstIndex {
             $0.id == profileId
@@ -177,13 +177,13 @@ final class ConnectionSettingsViewModel {
         guard listIndex < autoConnectItemCount else { return 1 }
         return listIndex
     }
-    
+
     var quickConnectProfileIndex: Int {
         guard let profileId = quickConnect else { return 0 }
         let index = profileManager.allProfiles.firstIndex {
             $0.id == profileId
         }
-        
+
         guard let profileIndex = index, profileIndex < quickConnectItemCount else { return 0 }
         return profileIndex
     }
@@ -201,26 +201,26 @@ final class ConnectionSettingsViewModel {
     }
 
     // MARK: - Item counts
-    
+
     var autoConnectItemCount: Int {
         return availableProfiles.count + 1 // Add one to account for the 'disabled' option
     }
-    
+
     var quickConnectItemCount: Int {
         return availableProfiles.count
     }
-    
+
     var protocolItemCount: Int {
         return availableConnectionProtocols.count
     }
-        
+
     // MARK: - Setters
-    
+
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
             throw ConnectionSettingsError.autoConnectRange
         }
-        
+
         if index > 0 {
             let selectedProfile = availableProfiles[index - 1]
             autoConnect = (enabled: true, profileId: selectedProfile.id)
@@ -230,12 +230,12 @@ final class ConnectionSettingsViewModel {
             log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "nil"])
         }
     }
-    
+
     func setQuickConnect(_ index: Int) throws {
         guard index < quickConnectItemCount else {
             throw ConnectionSettingsError.quickConnectRange
         }
-        
+
         let selectedProfile = profileManager.allProfiles[index]
         quickConnect = selectedProfile.id
         log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
@@ -310,7 +310,7 @@ final class ConnectionSettingsViewModel {
             }))
         }
     }
-        
+
     @objc private func settingsChanged() {
         reloadNeeded?()
     }
@@ -318,7 +318,7 @@ final class ConnectionSettingsViewModel {
     @objc private func tourCancelled() {
         reloadNeeded?()
     }
-    
+
     func confirmEnableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
         switch vpnGateway.connection {
         case .connected, .connecting:
@@ -400,7 +400,7 @@ final class ConnectionSettingsViewModel {
             }
         }
     }
-    
+
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
         vpnStateConfiguration.getInfo { [weak self] info in
@@ -429,7 +429,7 @@ final class ConnectionSettingsViewModel {
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
-        
+
         if propertiesManager.killSwitch {
             let alert = AllowLANConnectionsAlert(connected: isConnected) {
                 self.featurePropertyProvider.setValue(newValue)
@@ -442,17 +442,17 @@ final class ConnectionSettingsViewModel {
             } cancelHandler: {
                 completion(false)
             }
-            
+
             self.alertService.push(alert: alert)
             return
         }
-        
+
         guard isConnected else {
             self.featurePropertyProvider.setValue(newValue)
             completion(true)
             return
         }
-        
+
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
             self.featurePropertyProvider.setValue(newValue)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
@@ -472,13 +472,13 @@ final class ConnectionSettingsViewModel {
     func showVPNAcceleratorUpsell() {
         alertService.push(alert: VPNAcceleratorUpsellAlert())
     }
-    
+
     func showPlutoniumUpsell() {
         alertService.push(alert: PlutoniumUpsellAlert())
     }
 
     // MARK: - Item
-    
+
     func autoConnectItem(for index: Int) -> NSAttributedString {
         if index > 0 {
             return profileString(for: index - 1)
@@ -490,15 +490,15 @@ final class ConnectionSettingsViewModel {
 
     // Don't show quick connect customisation if user is not authorized to use profiles
     var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
-    
+
     func quickConnectItem(for index: Int) -> NSAttributedString {
         return profileString(for: index)
     }
-        
+
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
         return vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
     }
-    
+
     // MARK: - Values
 
     private func attributedAttachment(style: AppTheme.Style, width: CGFloat = 12) -> NSAttributedString {
@@ -511,7 +511,7 @@ final class ConnectionSettingsViewModel {
         attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
     }
-    
+
     private func concatenated(imageString: NSAttributedString, with text: String, enabled: Bool) -> NSAttributedString {
         let style: AppTheme.Style = enabled ? .dropdown : [.transparent, .disabled]
         let nameAttributedString = ("  " + text).styled(style, font: .themeFont(.heading4))

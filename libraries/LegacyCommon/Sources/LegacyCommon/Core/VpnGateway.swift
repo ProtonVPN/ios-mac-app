@@ -36,7 +36,7 @@ public enum ConnectionStatus {
     case connecting
     case connected
     case disconnecting
-    
+
     static func forAppState(_ appState: AppState) -> ConnectionStatus {
         switch appState {
         case .disconnected, .aborted, .error:
@@ -61,7 +61,7 @@ public enum ResolutionUnavailableReason: Equatable {
 public protocol VpnGatewayProtocol: AnyObject {
     var connection: ConnectionStatus { get }
     var lastConnectionRequest: ConnectionRequest? { get }
-    
+
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)
     func autoConnect()
@@ -97,11 +97,11 @@ public class VpnGateway: VpnGatewayProtocol {
     private let vpnKeychain: VpnKeychainProtocol
     private let authKeychain: AuthKeychainHandle
     private let availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory
-    
+
     private let propertiesManager: PropertiesManagerProtocol
 
     private let siriHelper: SiriHelperProtocol?
-    
+
     private var tier: Int {
         return (try? userTier()) ?? .freeTier
     }
@@ -117,21 +117,21 @@ public class VpnGateway: VpnGatewayProtocol {
 
         return .vpnProtocol(propertiesManager.vpnProtocol)
     }
-    
+
     private var connectionPreparer: VpnConnectionPreparer?
-    
+
     public weak var alertService: CoreAlertService? {
         didSet {
             serverTierChecker.alertService = alertService
         }
     }
-    
+
     public var connection: ConnectionStatus
-    
+
     public var lastConnectionRequest: ConnectionRequest? {
         return propertiesManager.lastConnectionRequest
     }
-    
+
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private var netShieldType: NetShieldType {
         return netShieldPropertyProvider.netShieldType
@@ -229,16 +229,16 @@ public class VpnGateway: VpnGatewayProtocol {
         AppEvent.userDelinquent.subscribe(self, selector: #selector(userBecameDelinquent))
         AppEvent.needsReconnect.subscribe(self, selector: #selector(reconnectOnNotification))
     }
-    
+
     public func userTier() throws -> Int {
         return try vpnKeychain.fetchCached().maxTier
     }
-    
+
     public func changeActiveServerType(_ serverType: ServerType) {
         guard serverTypeToggle != serverType else { return }
-        
+
         propertiesManager.secureCoreToggle = serverType == .secureCore
-        
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
@@ -247,7 +247,7 @@ public class VpnGateway: VpnGatewayProtocol {
             AppEvent.activeServerTypeChanged.post(self.connection)
         }
     }
-    
+
     public func autoConnect() {
         appStateManager.isOnDemandEnabled { [weak self] enabled in
             guard let self = self, !enabled else {
@@ -270,11 +270,11 @@ public class VpnGateway: VpnGatewayProtocol {
             self.connectTo(profile: profile)
         }
     }
-    
+
     public func quickConnect(trigger: UserInitiatedVPNChange.VPNTrigger) {
         connect(with: quickConnectConnectionRequest(trigger: trigger))
     }
-    
+
     public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
         let defaultQCConnectionRequest = ConnectionRequest(
             serverType: serverTypeToggle,
@@ -305,7 +305,7 @@ public class VpnGateway: VpnGatewayProtocol {
             trigger: trigger
         )
     }
-    
+
     public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
         let connectionType: ConnectionRequestType = switch serverGroup {
         case let .country(code):
@@ -322,14 +322,14 @@ public class VpnGateway: VpnGatewayProtocol {
 
         connect(with: connectionRequest)
     }
-    
+
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .server)
-        
+
         connect(with: connectionRequest)
     }
-    
+
     public func connectTo(profile: Profile) {
         if !profile.isDefaultProfile {
             let updatedProfile = profile.withUpdatedConnectionDate()
@@ -339,11 +339,11 @@ public class VpnGateway: VpnGatewayProtocol {
         let connectionRequest = profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType, withDefaultSafeMode: safeMode, trigger: .profile)
         connect(with: connectionRequest)
     }
-    
+
     public func retryConnection() {
         connect(with: lastConnectionRequest)
     }
-    
+
     public func reconnect(with netShieldType: NetShieldType) {
         connect(with: lastConnectionRequest?.withChanged(netShieldType: netShieldType))
     }
@@ -355,7 +355,7 @@ public class VpnGateway: VpnGatewayProtocol {
     public func reconnect(with safeMode: Bool) {
         connect(with: lastConnectionRequest?.withChanged(safeMode: safeMode))
     }
-    
+
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
         disconnect {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(DomainConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
@@ -413,7 +413,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
-        
+
         guard let request else {
             gatherParametersAndConnect(
                 requestId: UUID(),
@@ -453,7 +453,7 @@ public class VpnGateway: VpnGatewayProtocol {
         case .success:
             break
         }
-        
+
         gatherParametersAndConnect(
             requestId: requestWithUpdatedServerType.id,
             with: `protocol`,
@@ -464,42 +464,42 @@ public class VpnGateway: VpnGatewayProtocol {
             intent: requestWithUpdatedServerType.connectionType
         )
     }
-    
+
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         do {
             let currentUserTier = try self.userTier() // accessing from the keychain for each server is very expensive
-            
+
             let selector = VpnServerSelector(serverType: connectionRequest.serverType,
                                              userTier: currentUserTier,
                                              connectionProtocol: connectionRequest.connectionProtocol,
                                              smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                              appStateGetter: { [unowned self] in
-                self.appStateManager.state
-            })
+                                                 self.appStateManager.state
+                                             })
             selector.changeActiveServerType = { [unowned self] serverType in
                 self.changeActiveServerType(serverType)
             }
             selector.notifyResolutionUnavailable = { [unowned self] forSpecificCountry, type, reason in
                 self.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             }
-            
+
             let selected = selector.selectServer(connectionRequest: connectionRequest)
             log.debug("Server selected: \(selected?.logDescription ?? "-")", category: .connectionConnect)
             return selected
-            
+
         } catch {
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
             return nil
         }
     }
-    
+
     public func stopConnecting(userInitiated: Bool) {
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
         log.info("Connecting cancelled, userInitiated: \(userInitiated)", category: .connectionConnect)
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()
     }
-    
+
     public func disconnect() {
         if shouldUseNewConnectionFeature {
             @Dependency(\.disconnectVPN) var disconnectVPN
@@ -515,7 +515,7 @@ public class VpnGateway: VpnGatewayProtocol {
             disconnect {}
         }
     }
-    
+
     public func disconnect(completion: @escaping () -> Void) {
         withEscapedDependencies { dependencies in
             siriHelper?.donateDisconnect()
@@ -577,7 +577,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     // MARK: - Private functions
-    
+
     private func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
         log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)"])
         stopConnecting(userInitiated: false)
@@ -703,7 +703,7 @@ public class VpnGateway: VpnGatewayProtocol {
             )
         }
     }
-    
+
     @objc private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
@@ -738,9 +738,9 @@ fileprivate extension VpnGateway {
         }
 
         guard newTier < oldTier else { return }
-        
+
         var reconnectInfo: ReconnectInfo?
-        
+
         if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > newTier {
             reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
         }
@@ -749,7 +749,7 @@ fileprivate extension VpnGateway {
 
         alertService?.push(alert: alert)
     }
-    
+
     @objc func userBecameDelinquent(_ notification: Notification) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
 
@@ -764,9 +764,9 @@ fileprivate extension VpnGateway {
             Task { [oldServer] in
                 do {
                     let credentials = try await self.vpnApiService.clientCredentials()
-                    
+
                     self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-                    
+
                     let reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: oldServer)
                     let alert = UserBecameDelinquentAlert(reconnectInfo: reconnectInfo)
                     self.alertService?.push(alert: alert)
@@ -776,7 +776,7 @@ fileprivate extension VpnGateway {
             }
         }
     }
-    
+
     private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> ReconnectInfo? {
         guard let previousServer = oldServer else { return nil }
 
@@ -788,9 +788,9 @@ fileprivate extension VpnGateway {
                                          connectionProtocol: propertiesManager.connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
-            self.appStateManager.state
-        })
-        
+                                             self.appStateManager.state
+                                         })
+
         let request = ConnectionRequest(
             serverType: serverTypeToggle,
             connectionType: .fastest,
@@ -801,7 +801,7 @@ fileprivate extension VpnGateway {
             profileId: nil,
             profileName: nil,
             trigger: nil)
-        
+
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
         self.gatherParametersAndConnect(

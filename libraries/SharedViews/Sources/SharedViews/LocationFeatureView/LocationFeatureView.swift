@@ -65,29 +65,29 @@ public struct LocationFeatureView: View {
 }
 
 #if DEBUG
-#Preview {
-    VStack(alignment: .leading) {
-        LocationFeatureView(model: .init(
-            flag: .country(code: "US"),
-            header: .init(title: "Czechia", showConnectedPin: false),
-            subheader: .textual(
-                .init(location: "Prague #34", showTor: true, showP2P: true)
-            )
-        ))
+    #Preview {
+        VStack(alignment: .leading) {
+            LocationFeatureView(model: .init(
+                flag: .country(code: "US"),
+                header: .init(title: "Czechia", showConnectedPin: false),
+                subheader: .textual(
+                    .init(location: "Prague #34", showTor: true, showP2P: true)
+                )
+            ))
 
-        LocationFeatureView(model: .init(
-            flag: .fastest,
-            header: .init(title: "Fastest", showConnectedPin: false),
-            subheader: .none
-        ))
+            LocationFeatureView(model: .init(
+                flag: .fastest,
+                header: .init(title: "Fastest", showConnectedPin: false),
+                subheader: .none
+            ))
 
-        LocationFeatureView(model: .init(
-            flag: .stacked(bottom: .country(code: "PL"), top: .country(code: "JP")),
-            header: .init(title: "Poland", showConnectedPin: false),
-            subheader: .textual(.init(location: "via Japan", showTor: false, showP2P: true))
-        ))
+            LocationFeatureView(model: .init(
+                flag: .stacked(bottom: .country(code: "PL"), top: .country(code: "JP")),
+                header: .init(title: "Poland", showConnectedPin: false),
+                subheader: .textual(.init(location: "via Japan", showTor: false, showP2P: true))
+            ))
+        }
+        .padding()
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 #endif

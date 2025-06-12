@@ -55,8 +55,8 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         UserInitiatedVPNChange.VPNTrigger?
     ) async throws -> Void = {
         spec,
-        specifiedProtocol,
-        trigger in
+            specifiedProtocol,
+            trigger in
         // First, let's try to resolve the server we want to connect to.
         // This way we can avoid disconnecting if we are already connected and can't resolve the target server
         @Dependency(\.serverSelector) var serverSelector

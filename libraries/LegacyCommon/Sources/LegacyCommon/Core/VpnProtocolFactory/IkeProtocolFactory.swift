@@ -47,8 +47,8 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         config.deadPeerDetectionRate = .high
         
         #if os(OSX)
-        config.authenticationMethod = .certificate
-        config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
+            config.authenticationMethod = .certificate
+            config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
         #endif
         
         config.disableMOBIKE = false

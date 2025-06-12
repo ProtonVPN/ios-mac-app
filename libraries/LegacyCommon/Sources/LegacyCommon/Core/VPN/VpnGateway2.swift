@@ -62,7 +62,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
     }
-    
+
     public func connect(withIntent intent: ConnectionSpec) async throws {
         let wireguardConfig = self.propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(
@@ -81,8 +81,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
             smartProtocolConfig: smartProtocolConfig,
             wireguardConfig: wireguardConfig)
         let connectionProtocol: ConnectionProtocol = propertiesManager.smartProtocol
-        ? .smartProtocol
-        : .vpnProtocol(propertiesManager.vpnProtocol)
+            ? .smartProtocol
+            : .vpnProtocol(propertiesManager.vpnProtocol)
 
         let server = try selectServer(intent: intent, connectionProtocol: connectionProtocol)
 
@@ -145,8 +145,8 @@ public class VpnGateway2: VpnGatewayProtocol2 {
                                          connectionProtocol: connectionProtocol,
                                          smartProtocolConfig: propertiesManager.smartProtocolConfig,
                                          appStateGetter: { [unowned self] in
-            self.appStateManager.state
-        })
+                                             self.appStateManager.state
+                                         })
         selector.changeActiveServerType = { _ in }
         selector.notifyResolutionUnavailable = { forSpecificCountry, type, reason in
             notifyResolutionUnavailableCalled = (forSpecificCountry, type, reason)

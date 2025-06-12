@@ -18,11 +18,11 @@ struct WGConstants {
 
     static var appGroupId: String {
         #if os(iOS)
-        return DomainConstants.AppGroups.main
+            return DomainConstants.AppGroups.main
         #elseif os(macOS)
-        return "Not used on mac"
+            return "Not used on mac"
         #else
-        #error("Unimplemented")
+            #error("Unimplemented")
         #endif
     }
 }

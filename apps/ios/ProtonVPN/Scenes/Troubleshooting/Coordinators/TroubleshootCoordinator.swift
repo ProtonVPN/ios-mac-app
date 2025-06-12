@@ -38,13 +38,13 @@ protocol TroubleshootCoordinator: Coordinator {}
 class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
     typealias Factory = WindowServiceFactory & TroubleshootViewModelFactory
     private let factory: Factory
-    
+
     private lazy var windowService: WindowService = factory.makeWindowService()
-    
+
     public init(_ factory: Factory) {
         self.factory = factory
     }
-    
+
     func start() {
         let troubleshootViewModel: TroubleshootViewModel = factory.makeTroubleshootViewModel()
         troubleshootViewModel.cancelled = {

@@ -28,7 +28,7 @@ class HelpPopoverBackgroundView: NSView {
         guard let superview = superview else {
             return
         }
-        
+
         superview.wantsLayer = true
         DarkAppearance {
             superview.layer?.backgroundColor = .cgColor(.background, .weak)

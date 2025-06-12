@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-import AppKit
+    import AppKit
 
-// Removes focus ring from input fields
-extension NSTextField {
-    override open var focusRingType: NSFocusRingType {
-        get { .none }
-        set {}
+    // Removes focus ring from input fields
+    extension NSTextField {
+        override open var focusRingType: NSFocusRingType {
+            get { .none }
+            set {}
+        }
     }
-}
 
 #endif

@@ -21,13 +21,13 @@ import ConnectionDetailsShared
 public typealias ConnectionScreenFeature = ConnectionDetailsShared.ConnectionScreenFeature
 
 #if canImport(ConnectionDetails_macOS)
-import ConnectionDetails_macOS
+    import ConnectionDetails_macOS
 
 #endif
 
 #if canImport(ConnectionDetails_iOS)
-import ConnectionDetails_iOS
+    import ConnectionDetails_iOS
 
-public typealias ConnectionScreenView = ConnectionDetails_iOS.ConnectionScreenView
+    public typealias ConnectionScreenView = ConnectionDetails_iOS.ConnectionScreenView
 
 #endif

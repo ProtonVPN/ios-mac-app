@@ -46,7 +46,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
             self = .unspecified
         }
     }
-    
+
     public var description: String {
         switch self {
         case .standard:
@@ -78,22 +78,22 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
             return "Unspecified"
         }
     }
-    
+
     // MARK: - NSCoding
 
     private enum CoderKey: String, CodingKey {
         case serverType = "serverType"
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.serverType.rawValue) as! Data
         self.init(rawValue: Int(data[0]))
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     // MARK: - Codable
 
     public init(from decoder: Decoder) throws {
@@ -101,7 +101,7 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
         let rawValue = try container.decode(Int.self, forKey: .serverType)
         self.init(rawValue: rawValue)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoderKey.self)
         try container.encode(self.rawValue, forKey: .serverType)

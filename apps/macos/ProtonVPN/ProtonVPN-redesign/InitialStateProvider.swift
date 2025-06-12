@@ -18,30 +18,30 @@
 
 #if REDESIGN
 
-import ComposableArchitecture
+    import ComposableArchitecture
 
-struct InitialStateProvider {
-    public let initialState: SidebarReducer.State
-}
-
-extension InitialStateProvider: DependencyKey {
-    static let liveValue = InitialStateProvider(
-        initialState: .init(home: .init(connections: [.pinnedConnection,
-                                                      .previousConnection,
-                                                      .connectionSecureCoreFastest,
-                                                      .connectionRegion,
-                                                      .connectionSecureCore],
-                                        connectionStatus: .init(protectionState: .unprotected(country: "PL", ip: "192.168.1.0")),
-                                        vpnConnectionStatus: .disconnected),
-                            connectionDetailsVisible: true)
-    )
-}
-
-extension DependencyValues {
-    var initialStateProvider: InitialStateProvider {
-        get { self[InitialStateProvider.self] }
-        set { self[InitialStateProvider.self] = newValue }
+    struct InitialStateProvider {
+        public let initialState: SidebarReducer.State
     }
-}
+
+    extension InitialStateProvider: DependencyKey {
+        static let liveValue = InitialStateProvider(
+            initialState: .init(home: .init(connections: [.pinnedConnection,
+                                                          .previousConnection,
+                                                          .connectionSecureCoreFastest,
+                                                          .connectionRegion,
+                                                          .connectionSecureCore],
+                                            connectionStatus: .init(protectionState: .unprotected(country: "PL", ip: "192.168.1.0")),
+                                            vpnConnectionStatus: .disconnected),
+                                connectionDetailsVisible: true)
+        )
+    }
+
+    extension DependencyValues {
+        var initialStateProvider: InitialStateProvider {
+            get { self[InitialStateProvider.self] }
+            set { self[InitialStateProvider.self] = newValue }
+        }
+    }
 
 #endif

@@ -89,7 +89,7 @@ class MapViewModelTests: XCTestCase {
             safeModePropertyProvider: SafeModePropertyProviderMock()
         )
     }
-    
+
     func testSecureCoreAnnotationLocations() throws {
         let mapViewModel = withDependencies {
             $0.serverRepository = repository
@@ -106,12 +106,12 @@ class MapViewModelTests: XCTestCase {
             viewModel.setStateOf(type: .secureCore)
             return viewModel
         }
-        
+
         let annotations = mapViewModel.annotations
         let secureCoreAnnotations = annotations.filter { (annotation) -> Bool in
             return annotation is SecureCoreEntryCountryModel
         }
-        
+
         XCTAssertEqual(secureCoreAnnotations.count, 3)
 
         let switzerland = try XCTUnwrap(secureCoreAnnotations.first { $0.countryCode == "CH" })

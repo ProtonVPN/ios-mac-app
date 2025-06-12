@@ -18,52 +18,52 @@
 
 #if REDESIGN
 
-import SwiftUI
-import Theme
+    import SwiftUI
+    import Theme
 
-struct SideBarItemView: View {
-    let category: SideBarTab
-    @Binding var selectedTab: SideBarTab
+    struct SideBarItemView: View {
+        let category: SideBarTab
+        @Binding var selectedTab: SideBarTab
 
-    var body: some View {
-        Button {
-            selectedTab = category
-        } label: {
-            HStack(spacing: 0) {
-                Label {
-                    Text(category.title)
-                } icon: {
-                    category.image
-                        .resizable()
-                        .frame(maxWidth: 16, maxHeight: 16)
-                        .tint(Color(.text))
+        var body: some View {
+            Button {
+                selectedTab = category
+            } label: {
+                HStack(spacing: 0) {
+                    Label {
+                        Text(category.title)
+                    } icon: {
+                        category.image
+                            .resizable()
+                            .frame(maxWidth: 16, maxHeight: 16)
+                            .tint(Color(.text))
+                    }
+                    Spacer()
                 }
-                Spacer()
             }
+            .frame(minWidth: 160)
+            .buttonStyle(SideBarButtonStyle(isActive: selectedTab == category))
+            .accessibilityAddTraits(.isLink)
+            .accessibilityHint(category.accessibilityIdentifier)
+            .accessibilityIdentifier(category.accessibilityIdentifier)
         }
-        .frame(minWidth: 160)
-        .buttonStyle(SideBarButtonStyle(isActive: selectedTab == category))
-        .accessibilityAddTraits(.isLink)
-        .accessibilityHint(category.accessibilityIdentifier)
-        .accessibilityIdentifier(category.accessibilityIdentifier)
     }
-}
 
-struct SideBarItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack(spacing: 0) {
-            SideBarItemView(category: .home,
-                            selectedTab: .init(get: { .home },
-                                               set: { _ in }))
-            SideBarItemView(category: .countries,
-                            selectedTab: .init(get: { .home },
-                                               set: { _ in }))
-            SideBarItemView(category: .settings,
-                            selectedTab: .init(get: { .home },
-                                               set: { _ in }))
+    struct SideBarItemView_Previews: PreviewProvider {
+        static var previews: some View {
+            VStack(spacing: 0) {
+                SideBarItemView(category: .home,
+                                selectedTab: .init(get: { .home },
+                                                   set: { _ in }))
+                SideBarItemView(category: .countries,
+                                selectedTab: .init(get: { .home },
+                                                   set: { _ in }))
+                SideBarItemView(category: .settings,
+                                selectedTab: .init(get: { .home },
+                                                   set: { _ in }))
+            }
+            .previewLayout(.fixed(width: 200, height: 32 * 3))
         }
-        .previewLayout(.fixed(width: 200, height: 32 * 3))
     }
-}
 
 #endif

@@ -77,12 +77,12 @@ struct RecentConnectionActionsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-#if os(iOS)
-            if UIDevice.current.userInterfaceIdiom == .phone {
-                Color(.background)
-                    .frame(height: 20)
-            }
-#endif
+            #if os(iOS)
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    Color(.background)
+                        .frame(height: 20)
+                }
+            #endif
             List {
                 recentListItem
                 buttonListItem(model: isPinned ? unpinModel : pinModel)

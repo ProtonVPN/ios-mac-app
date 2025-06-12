@@ -33,11 +33,11 @@ public struct LocationFeatureSubheader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
+        #if canImport(Cocoa)
             .font(.body())
-#elseif canImport(UIKit)
+        #elseif canImport(UIKit)
             .font(.body2(emphasised: false))
-#endif
+        #endif
     }
 
     @ViewBuilder private var content: some View {

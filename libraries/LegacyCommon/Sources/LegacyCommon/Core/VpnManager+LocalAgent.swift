@@ -132,9 +132,9 @@ extension VpnManager {
                     // Don't disconnect the VPN on iOS if the app is in the background - our app could be getting
                     // "pre-warmed," and we may not have the necessary privileges to successfully execute a cert refresh.
                     #if os(iOS)
-                    guard self?.disconnectOnCertRefreshError == true else {
-                        return
-                    }
+                        guard self?.disconnectOnCertRefreshError == true else {
+                            return
+                        }
                     #endif
 
                     self?.disconnect { [weak self] in

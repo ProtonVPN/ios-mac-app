@@ -23,25 +23,25 @@ import SwiftUI
 import ProtonCoreUIFoundations
 
 #if os(macOS)
-import AppKit
+    import AppKit
 
-public typealias Image = NSImage
+    public typealias Image = NSImage
 
-public extension Image {
-    var swiftUIImage: SwiftUI.Image {
-        SwiftUI.Image(nsImage: self)
+    public extension Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(nsImage: self)
+        }
     }
-}
 #else
-import UIKit
+    import UIKit
 
-public typealias Image = UIImage
+    public typealias Image = UIImage
 
-public extension Image {
-    var swiftUIImage: SwiftUI.Image {
-        SwiftUI.Image(uiImage: self)
+    public extension Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(uiImage: self)
+        }
     }
-}
 #endif
 
 public enum Feature: Hashable, Identifiable {

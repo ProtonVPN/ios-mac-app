@@ -103,8 +103,8 @@ class ServiceChecker {
         let host = CFHostCreateWithName(nil, "dmca-protection.protonvpn.com" as CFString).takeRetainedValue()
 
         guard CFHostStartInfoResolution(host, .addresses, nil),
-          let addresses = CFHostGetAddressing(host, nil)?.takeUnretainedValue() as? NSArray,
-          let address = (addresses.firstObject as? NSData) as? Data else {
+              let addresses = CFHostGetAddressing(host, nil)?.takeUnretainedValue() as? NSArray,
+              let address = (addresses.firstObject as? NSData) as? Data else {
             return
         }
 

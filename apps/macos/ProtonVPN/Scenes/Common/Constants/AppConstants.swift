@@ -25,14 +25,14 @@ import VPNShared
 
 class AppConstants {
     static let bundleId = "ch.protonvpn.mac"
-    
+
     struct Windows {
         static let loginWidth: CGFloat = 340
         static let loginHeight: CGFloat = 600
         static let sidebarWidth = loginWidth
         static let minimumSidebarHeight: CGFloat = 600
     }
-    
+
     struct UserDefaults {
         static let launchedBefore = "LaunchedBefore"
         static let rememberLogin = "RememberLogin"
@@ -49,13 +49,13 @@ class AppConstants {
         static let warnedTrialExpired = "WarnedTrialExpired"
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
-    
+
     struct FilePaths {
         static let sandbox = ("~/Library/Containers/ch.protonvpn.mac/Data/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
         static let starterSandbox = ("~/Library/Containers/ch.protonvpn.ProtonVPNStarter/" as NSString).expandingTildeInPath
         static let userDefaults = ("~/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
     }
-    
+
     struct Filenames {
         static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
@@ -71,7 +71,7 @@ class AppConstants {
         static let recentlyActiveThreshold: TimeInterval = .minutes(10)
 
         static let maintenanceMessageTimeThreshold: TimeInterval = .hours(12)
-        
+
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = .hours(3)
         static let serverLoadsRefresh: TimeInterval = .minutes(15)

@@ -42,13 +42,13 @@ public struct ServerManager: DependencyKey {
             let maxTierToPurge: Int = freeServersOnly ? .freeTier : .internalTier
             let newServerIDs = Set(servers.map(\.id))
 
-#if DEBUG
-            // Somewhat expensive O(n) sanity check
-            let containsFreeServersOnly = servers.allSatisfy { $0.logical.tier == 0 }
-            if containsFreeServersOnly != freeServersOnly {
-                log.warning("\(containsFreeServersOnly) != \(freeServersOnly)")
-            }
-#endif
+            #if DEBUG
+                // Somewhat expensive O(n) sanity check
+                let containsFreeServersOnly = servers.allSatisfy { $0.logical.tier == 0 }
+                if containsFreeServersOnly != freeServersOnly {
+                    log.warning("\(containsFreeServersOnly) != \(freeServersOnly)")
+                }
+            #endif
 
             let deletedServerCount = repository.delete(serversWithIDsNotIn: newServerIDs, maxTier: maxTierToPurge)
             log.info("Purged stale servers", category: .persistence, metadata: [
@@ -83,11 +83,11 @@ extension ServerManager {
 }
 
 #if DEBUG
-extension ServerManager {
-    public static var noOp: ServerManager {
-        ServerManager { _, _, _ in () }
+    extension ServerManager {
+        public static var noOp: ServerManager {
+            ServerManager { _, _, _ in () }
+        }
     }
-}
 #endif
 
 extension DependencyValues {

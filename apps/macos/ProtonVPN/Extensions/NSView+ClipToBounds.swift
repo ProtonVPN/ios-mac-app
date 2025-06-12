@@ -20,8 +20,8 @@ import Cocoa
 
 extension NSView {
     func clipToBounds() {
-#if compiler(>=5.9)
-        clipsToBounds = true
-#endif
+        #if compiler(>=5.9)
+            clipsToBounds = true
+        #endif
     }
 }

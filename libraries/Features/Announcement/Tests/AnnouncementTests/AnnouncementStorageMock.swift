@@ -26,11 +26,11 @@ import Domain
 
 public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     public var announcementStorage: AnnouncementStorage
-    
+
     public init(_ announcementStorage: AnnouncementStorage) {
         self.announcementStorage = announcementStorage
     }
-    
+
     public func makeAnnouncementStorage() -> AnnouncementStorage {
         return self.announcementStorage
     }

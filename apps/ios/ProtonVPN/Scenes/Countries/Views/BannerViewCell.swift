@@ -27,7 +27,7 @@ class BannerViewCell: UITableViewCell {
     @IBOutlet weak var leftImageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var rightChevron: UIImageView!
-    
+
     var viewModel: BannerViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
@@ -35,7 +35,7 @@ class BannerViewCell: UITableViewCell {
             label.text = viewModel.text
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = .backgroundColor()
@@ -48,7 +48,7 @@ class BannerViewCell: UITableViewCell {
         roundedBackgroundView.backgroundColor = .secondaryBackgroundColor()
         roundedBackgroundView.layer.cornerRadius = 12
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none

@@ -39,7 +39,7 @@ public protocol PropertiesManagerFactory {
 
 public protocol PropertiesManagerProtocol: AnyObject {
     var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
-    
+
     func getAutoConnect(for username: String) -> (enabled: Bool, profileId: String?)
     func setAutoConnect(for username: String, enabled: Bool, profileId: String?)
 
@@ -70,7 +70,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     func getTelemetryCrashReports() -> Bool
     func setTelemetryUsageData(enabled: Bool)
     func setTelemetryCrashReports(enabled: Bool)
-    
+
     // Distinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
     var userLocation: UserLocation? { get set }
@@ -85,16 +85,16 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var trialWelcomed: Bool { get set }
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
-    
+
     var vpnProtocol: VpnProtocol { get set }
 
     var featureFlags: FeatureFlags { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
-    
+
     // Development properties
     var apiEndpoint: String? { get set }
-    
+
     var lastAppVersion: String { get set }
 
     var humanValidationFailed: Bool { get set }
@@ -118,8 +118,8 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var didShowDeprecationWarningForOSVersion: String? { get set }
 
     #if os(macOS)
-    var forceExtensionUpgrade: Bool { get set }
-    var connectedServerNameDoNotUse: String? { get set }
+        var forceExtensionUpgrade: Bool { get set }
+        var connectedServerNameDoNotUse: String? { get set }
     #endif
 
     var atlasSecret: String? { get set }
@@ -127,7 +127,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var featureFlagOverrides: [String: Bool]? { get set }
 
     func logoutCleanup()
-    
+
     func getValue(forKey: String) -> Bool
     func setValue(_ value: Bool, forKey: String)
 
@@ -195,18 +195,18 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case currentSubscription = "currentSubscription"
         case defaultPlanDetails = "defaultPlanDetails"
         case isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        
+
         // Trial
         case trialWelcomed = "TrialWelcomed"
         case warnedTrialExpiring = "WarnedTrialExpiring"
         case warnedTrialExpired = "WarnedTrialExpired"
-        
+
         // OpenVPN
         case openVpnConfig = "OpenVpnConfig"
         case vpnProtocol = "VpnProtocol"
-        
+
         case apiEndpoint = "ApiEndpoint"
-        
+
         // Migration
         case lastAppVersion = "LastAppVersion"
 
@@ -218,7 +218,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
         // Kill Switch
         case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
-        
+
         // Features
         case featureFlags = "FeatureFlags"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
@@ -240,8 +240,8 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case telemetryCrashReports = "TelemetryCrashReports"
 
         #if os(macOS)
-        case forceExtensionUpgrade = "ForceExtensionUpgrade"
-        case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
+            case forceExtensionUpgrade = "ForceExtensionUpgrade"
+            case connectedServerNameDoNotUse = "ConnectedServerNameDoNotUse"
         #endif
 
         case didShowDeprecationWarningForOSVersion = "DidShowDeprecationWarningForOSVersion"
@@ -308,7 +308,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         storage.setUserValue(String(enabled), forKey: Keys.telemetryUsageData.rawValue)
         AppEvent.telemetryUsageData.post(enabled)
     }
-    
+
     public func getTelemetryCrashReports() -> Bool {
         let crashReportsDefault = { [weak self] in
             guard let userAccountCreationDate = self?.userAccountCreationDate else { return false }
@@ -376,7 +376,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     }
 
     @StringProperty(.lastBugReportEmail) public var reportBugEmail: String?
-    
+
     /// Distinguishes if kill switch should be disabled
     @BoolProperty(.intentionallyDisconnected) public var intentionallyDisconnected: Bool
 
@@ -397,28 +397,28 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @InitializedProperty(.serverChangeConfig) public var serverChangeConfig: ServerChangeConfig
 
     #if os(macOS)
-    @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
+        @BoolProperty(.forceExtensionUpgrade) public var forceExtensionUpgrade: Bool
 
-    /// The name of the currently connected server. This is used by command line scripts. Don't use this in code.
-    ///
-    /// - Important: Really, don't use this. Anywhere.
-    @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
+        /// The name of the currently connected server. This is used by command line scripts. Don't use this in code.
+        ///
+        /// - Important: Really, don't use this. Anywhere.
+        @StringProperty(.connectedServerNameDoNotUse) public var connectedServerNameDoNotUse: String?
     #endif
 
     @InitializedProperty(.vpnProtocol, notifyChangesWith: .vpnProtocol)
     public var vpnProtocol: VpnProtocol
-    
+
     @StringProperty(.lastAppVersion) private var _lastAppVersion: String?
     public var lastAppVersion: String {
         get { _lastAppVersion ?? "0.0.0" }
         set { _lastAppVersion = newValue }
     }
-    
+
     @DateProperty(.userAccountCreationDate) public var userAccountCreationDate
 
     @InitializedProperty(.featureFlags, notifyChangesWith: .featureFlags)
     public var featureFlags: FeatureFlags
-    
+
     public var maintenanceServerRefreshIntereval: Int {
         get {
             if storage.contains(Keys.maintenanceServerRefreshIntereval.rawValue) {
@@ -482,7 +482,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
             Keys.showWhatsNewModal.rawValue: true
         ])
     }
-    
+
     public func logoutCleanup() {
         hasConnected = false
         $secureCoreToggle.withLock { $0 = false }
@@ -500,11 +500,11 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         userInfo = nil
         userSettings = nil
     }
-    
+
     public func getValue(forKey key: String) -> Bool {
         return defaults.bool(forKey: key)
     }
-    
+
     public func setValue(_ value: Bool, forKey key: String) {
         storage.setValue(value, forKey: key)
     }
@@ -516,7 +516,7 @@ public enum PropertiesManagerDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue: PropertiesManagerProtocol = liveValue
+        public static var testValue: PropertiesManagerProtocol = liveValue
     #endif
 }
 

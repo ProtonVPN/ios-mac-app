@@ -76,17 +76,17 @@ struct Provider: TimelineProvider {
 
         guard credentials?.userId != nil else {
             return ConnectWidgetEntry(date: .now,
-                                       connectionSpec: nil,
-                                       protectionState: .signedOut,
-                                       recentServers: [])
+                                      connectionSpec: nil,
+                                      protectionState: .signedOut,
+                                      recentServers: [])
         }
 
         let recents = recentConnectionList()
 
         return ConnectWidgetEntry(date: .now,
-                                   connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
-                                   protectionState: vpnConnectionStatus.protectionState,
-                                   recentServers: recents
+                                  connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
+                                  protectionState: vpnConnectionStatus.protectionState,
+                                  recentServers: recents
         )
     }
 }

@@ -36,7 +36,7 @@ protocol CountriesServersHeaderViewModelProtocol: AnyObject {
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
-    
+
     init(
         _ sectionHeader: String,
         totalCountries: Int?,
@@ -73,7 +73,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
 class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
-    
+
     init(
         _ sectionHeader: String,
         totalServers: Int,

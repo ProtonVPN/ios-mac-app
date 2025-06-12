@@ -24,7 +24,7 @@ public extension Optional where Wrapped: Any {
         guard let value = self else {
             return "null"
         }
-        
+
         switch value {
         case let dataValue as Data:
             return String(data: dataValue, encoding: .utf8) ?? "-"

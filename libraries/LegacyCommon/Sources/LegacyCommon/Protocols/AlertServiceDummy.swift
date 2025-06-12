@@ -26,9 +26,9 @@ import VPNAppCore
 public class CoreAlertServiceDummy: CoreAlertService {
     public var alerts = [SystemAlert]()
     public var alertAdded: ( (SystemAlert) -> Void )?
-    
+
     public init() {}
-    
+
     public func push(alert: SystemAlert) {
         executeOnUIThread {
             self.alerts.append(alert)

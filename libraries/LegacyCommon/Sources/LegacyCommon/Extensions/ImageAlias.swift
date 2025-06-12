@@ -17,11 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 
-public typealias Image = UIImage
+    public typealias Image = UIImage
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 
-public typealias Image = NSImage
+    public typealias Image = NSImage
 #endif

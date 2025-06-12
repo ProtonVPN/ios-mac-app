@@ -48,7 +48,7 @@ extension String {
                             numberFont: UIFont,
                             withTextColor textColor: UIColor,
                             textFont: UIFont
-                            ) -> NSAttributedString {
+    ) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
         
         let range = (self as NSString).range(of: self)

@@ -65,11 +65,11 @@ struct ConnectionPreferenceView: View {
 }
 
 #if DEBUG
-#Preview {
-    VStack(alignment: .leading, spacing: 0) {
-        DividedForEach(ConnectionPreferenceModel.staticPreferenceModels) { model in
-            ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
+    #Preview {
+        VStack(alignment: .leading, spacing: 0) {
+            DividedForEach(ConnectionPreferenceModel.staticPreferenceModels) { model in
+                ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
+            }
         }
     }
-}
 #endif

@@ -38,7 +38,7 @@ extension DependencyContainer: AnnouncementButtonViewModelFactory {
 final class AnnouncementButtonViewModel {
     // Must be pre-set in AppDelegate!
     static var shared: AnnouncementButtonViewModel!
-    
+
     typealias Factory = PropertiesManagerFactory & AnnouncementsViewModelFactory
     private let factory: Factory
 
@@ -46,12 +46,12 @@ final class AnnouncementButtonViewModel {
     @Dependency(\.announcementManager) var announcementManager
     // The announcementsViewModel property can't be lazy because we depend on the behaviour in its init method.
     private let announcementsViewModel: AnnouncementsViewModel
-    
+
     init(factory: Factory) {
         self.factory = factory
         announcementsViewModel = factory.makeAnnouncementsViewModel()
     }
-    
+
     // MARK: Main part
 
     var iconUrl: URL? {
@@ -60,14 +60,14 @@ final class AnnouncementButtonViewModel {
         }
         return nil
     }
-    
+
     var showAnnouncements: Bool {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return announcementManager.shouldShowAnnouncementsIcon()
     }
-    
+
     var hasUnreadAnnouncements: Bool {
         announcementManager.hasUnreadAnnouncements
     }

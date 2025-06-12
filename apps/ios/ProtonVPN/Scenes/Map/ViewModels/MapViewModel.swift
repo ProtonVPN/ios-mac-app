@@ -278,7 +278,7 @@ class MapViewModel: SecureCoreToggleHandler {
         if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),
-                let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {
+               let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {
                 activeConnection = ConnectionViewModel(.connected, between: entryCountry, and: exitCountry)
                 if exitCountry.viewState == .selected {
                     entryCountry.highlight(true)

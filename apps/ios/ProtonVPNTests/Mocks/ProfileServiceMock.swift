@@ -27,15 +27,15 @@ import LegacyCommon
 
 class ProfileServiceMock: ProfileService {
     var dataSet: SelectionDataSet?
-    
+
     func makeProfilesViewController() -> ProfilesViewController {
         return ProfilesViewController()
     }
-    
+
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         return nil
     }
-    
+
     func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {
         self.dataSet = dataSet
         return SelectionViewController()

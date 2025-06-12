@@ -22,11 +22,11 @@ import UIKit
 
 final class ServerViewModelMock: ServerViewModel {
     var isRedesign: Bool = false
-    
+
     var isPartnerServer: Bool
 
     var textColor: UIColor
-    
+
     let description: String
 
     let isSmartAvailable: Bool = false
@@ -70,7 +70,7 @@ final class ServerViewModelMock: ServerViewModel {
     let translatedCity: String?
 
     func connectAction() {}
-    
+
     func partnersIcon(completion: @escaping (UIImage?) -> Void) {}
 
     func cancelPartnersIconRequests() {}

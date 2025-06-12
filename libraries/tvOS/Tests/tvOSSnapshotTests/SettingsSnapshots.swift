@@ -58,8 +58,8 @@ final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
         let appView = NavigationStack {
             AppView(store: store)
         }
-            .frame(.rect(width: 1920, height: 1080))
-            .background(Color(.background, .strong))
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
 
         snap(appView, caseName: "1 List", trait: trait)
         store.send(.main(.settings(.showDrillDown(.contactUs))))

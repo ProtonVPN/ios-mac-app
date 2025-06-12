@@ -30,18 +30,18 @@ public typealias PlanOption = ModalsServices.PlanOption
 public typealias PlanDuration = ModalsServices.PlanDuration
 
 #if canImport(Modals_macOS)
-import Modals_macOS
+    import Modals_macOS
 
-public typealias ModalsFactory = Modals_macOS.ModalsFactory
+    public typealias ModalsFactory = Modals_macOS.ModalsFactory
 
 #endif
 
 #if canImport(Modals_iOS)
-import Modals_iOS
+    import Modals_iOS
 
-public typealias ModalsFactory = Modals_iOS.ModalsFactory
-public typealias PlansClient = Modals_iOS.PlansClient
-public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController
-public typealias WhatsNewView = Modals_iOS.WhatsNewView
+    public typealias ModalsFactory = Modals_iOS.ModalsFactory
+    public typealias PlansClient = Modals_iOS.PlansClient
+    public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController
+    public typealias WhatsNewView = Modals_iOS.WhatsNewView
 
 #endif

@@ -611,11 +611,11 @@ class CountriesSectionViewModel {
         return groups
             .enumerated()
             .map { index, group -> CellModel in
-                    .country(countryViewModel(
-                        group: group,
-                        displaySeparator: index != 0,
-                        showCountryConnectButton: showConnectButton
-                    ))
+                .country(countryViewModel(
+                    group: group,
+                    displaySeparator: index != 0,
+                    showCountryConnectButton: showConnectButton
+                ))
             }
     }
 

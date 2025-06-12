@@ -107,7 +107,7 @@ public class RefreshManager {
     /// - Note: Call this function on `workQueue`.
     internal func startTimer(firstRunAfter: TimeInterval? = nil) {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
         let firstRunAt = firstRunAfter != nil
@@ -125,7 +125,7 @@ public class RefreshManager {
     /// - Note: Call this function on `workQueue`.
     internal func stopTimer() {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
         self.timer = nil

@@ -24,7 +24,7 @@ public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
     public static let allCases: [ServerFeature] = [.secureCore, .tor, .p2p, .streaming, .ipv6, .restricted]
 
     public let rawValue: Int
-    
+
     public static let secureCore = ServerFeature(bitPosition: 0) // 1
     public static let tor = ServerFeature(bitPosition: 1) // 2
     public static let p2p = ServerFeature(bitPosition: 2) // 4

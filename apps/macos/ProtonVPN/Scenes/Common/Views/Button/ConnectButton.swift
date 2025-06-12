@@ -32,31 +32,31 @@ class ConnectButton: ResizingTextButton {
             needsDisplay = true
         }
     }
-    
+
     var isConnected: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var upgradeRequired: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var nameForAccessibility: String? {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureButton()
         setAccessibilityRole(.button)
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()

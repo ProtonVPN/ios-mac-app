@@ -140,8 +140,8 @@ class ProfilesViewModel {
     
     func deleteProfile(for index: Int) {
         if let profile = profileManager?.customProfiles[index],
-            let profileManager = profileManager {
-                profileManager.deleteProfile(profile)
+           let profileManager = profileManager {
+            profileManager.deleteProfile(profile)
         }
     }
     

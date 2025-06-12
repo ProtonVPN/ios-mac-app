@@ -31,16 +31,16 @@ final class FeaturesOverlayViewController: OverlayViewController {
     @IBOutlet private weak var dismissButton: HoverDetectionButton!
 
     private let viewModel: FeaturesOverlayViewModelProtocol
-    
+
     init(viewModel: FeaturesOverlayViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         featuresTitleTF.attributedStringValue = viewModel.title.styled(.hint, font: .themeFont(.small), alignment: .natural)
@@ -73,9 +73,9 @@ final class FeaturesOverlayViewController: OverlayViewController {
         let titleTextField = NSTextField(labelWithAttributedString: attributedString)
         featuresStackView.addArrangedSubview(titleTextField)
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func didTapDismissBtn(_ sender: Any) {
         dismiss(self)
     }

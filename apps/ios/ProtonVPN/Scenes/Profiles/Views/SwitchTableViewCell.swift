@@ -35,7 +35,7 @@ final class SwitchTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         self.isSelected = false
 
         backgroundColor = .secondaryBackgroundColor()

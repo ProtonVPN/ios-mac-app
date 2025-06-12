@@ -38,7 +38,7 @@ extension NETunnelProviderProtocol {
     public var connectedLogicalId: String? {
         get {
             providerConfiguration?[.connectedLogicalIdKey] as? String ??
-            providerConfiguration?["PVPNServerID"] as? String // old name for the key
+                providerConfiguration?["PVPNServerID"] as? String // old name for the key
         }
         set {
             ensureProviderConfig()

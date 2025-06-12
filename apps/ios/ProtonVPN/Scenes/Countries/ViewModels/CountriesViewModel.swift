@@ -77,7 +77,7 @@ protocol CountriesVMDelegate: AnyObject {
 
 class CountriesViewModel: SecureCoreToggleHandler {
     private var tableData = [Section]()
-    
+
     // MARK: vars and init
 
     private enum ModelState {
@@ -102,14 +102,14 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
     }
-    
+
     private var userTier: Int = .freeTier
     private var state: ModelState = .standard([])
-    
+
     var activeView: ServerType {
         return state.serverType
     }
-    
+
     var secureCoreOn: Bool {
         return state.serverType == .secureCore
     }
@@ -129,7 +129,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & NATTypePropertyProviderFactory
         & SafeModePropertyProviderFactory
     private let factory: Factory
-    
+
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     internal lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
@@ -150,12 +150,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol
     lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
-    
+
     init(factory: Factory, vpnGateway: VpnGatewayProtocol, countryService: CountryService) {
         self.factory = factory
         self.vpnGateway = vpnGateway
         self.countryService = countryService
-        
+
         refreshTier()
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
         fillTableData()
@@ -190,11 +190,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
     }
-    
+
     var enableViewToggle: Bool {
         return vpnGateway.connection != .connecting
     }
-    
+
     func headerHeight(for section: Int) -> CGFloat {
         if numberOfSections() < 2 {
             return 0
@@ -202,15 +202,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
     }
-    
+
     func numberOfSections() -> Int {
         return tableData.count
     }
-    
+
     func numberOfRows(in section: Int) -> Int {
         return content(for: section).count
     }
-    
+
     func titleFor(section: Int) -> String? {
         guard numberOfRows(in: section) != 0 else {
             return nil
@@ -236,7 +236,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
     }
-    
+
     func cellModel(for rowIndex: Int, in sectionIndex: Int) -> RowViewModel {
         guard let section = section(sectionIndex) else {
             fatalError("Wrong row requested: (\(rowIndex):\(sectionIndex)")
@@ -265,11 +265,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
             isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
         )
     }
-    
+
     func countryViewController(viewModel: CountryItemViewModel) -> CountryViewController? {
         return countryService.makeCountryViewController(country: viewModel)
     }
-    
+
     // MARK: - Private functions
 
     private func refreshTier() {
@@ -297,7 +297,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
         return tableData[index]
     }
-    
+
     private func addObservers() {
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
 
@@ -308,10 +308,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
         ]
 
         reloadEvents.subscribe(self, selector: #selector(reloadContent))
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
     }
-    
+
     internal func setStateOf(type: ServerType) {
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
@@ -321,7 +321,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             self.state = .secureCore(groups)
         }
     }
-    
+
     @objc private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
         reloadContent()
@@ -394,10 +394,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))
-        
+
         // 'fastest' is visible for old design free users, also in the redesign, visible for all tiers.
         let firstRows = (isRedesign || userTier == 0) ? [fastest] : []
-        
+
         switch userTier {
         case 0: // Free
             let rowsFree = firstRows

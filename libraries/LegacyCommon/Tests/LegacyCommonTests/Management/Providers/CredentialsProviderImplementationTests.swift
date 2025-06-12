@@ -29,7 +29,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
             ("free", .freeTier),
             ("plus", .paidTier)
         ]
-        
+
         for (plan, tier) in testPairs {
             let keychain = VpnKeychainMock(planName: plan, maxTier: tier)
 
@@ -41,7 +41,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
             XCTAssertEqual(provider.planName, plan)
         }
     }
-    
+
     func testReturnsFreeTierIfNoneIsAvilable() throws {
         let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true

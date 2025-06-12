@@ -40,8 +40,8 @@ public struct ServerChangeAuthorizer {
 
 extension DependencyValues {
     public var serverChangeAuthorizer: ServerChangeAuthorizer {
-      get { self[ServerChangeAuthorizer.self] }
-      set { self[ServerChangeAuthorizer.self] = newValue }
+        get { self[ServerChangeAuthorizer.self] }
+        set { self[ServerChangeAuthorizer.self] = newValue }
     }
 }
 

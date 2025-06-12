@@ -26,7 +26,7 @@ class TransparentBackedScroller: NSScroller {
     override static var isCompatibleWithOverlayScrollers: Bool {
         return true
     }
-    
+
     override func drawKnobSlot(in slotRect: NSRect, highlight flag: Bool) {
         NSColor.clear.set()
         slotRect.fill()

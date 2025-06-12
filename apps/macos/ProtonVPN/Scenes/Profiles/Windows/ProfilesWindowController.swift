@@ -28,20 +28,20 @@ class ProfilesWindowController: WindowController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: ProfilesContainerViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
-         monitorsKeyEvents = true
+        monitorsKeyEvents = true
     }
 
     private func setupWindow() {
         guard let window = window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.profilesOverview
         window.titlebarAppearsTransparent = true

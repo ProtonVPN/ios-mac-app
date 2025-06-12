@@ -29,19 +29,19 @@ class LoadCircle: NSView {
             needsDisplay = true
         }
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let load = load else {
             return
         }
-        
+
         // inner circle
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
         context.setStrokeColor(.cgColor(.icon, .hint))
         context.drawPath(using: .stroke)
-        
+
         // outer circle segment
         let ocb = CGRect(x: 1, y: 1, width: bounds.width - 2, height: bounds.height - 2)
         let startAngle: CGFloat = .pi / 2

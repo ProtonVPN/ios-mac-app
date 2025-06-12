@@ -48,7 +48,7 @@ final class TodayViewModel {
     private let secureDeepLinkGenerator = SecureDeepLinkGenerator()
 
     weak var delegate: TodayViewModelDelegate?
-    
+
     init(vpnStateConfiguration: VpnStateConfiguration) {
         self.vpnStateConfiguration = vpnStateConfiguration
 
@@ -57,7 +57,7 @@ final class TodayViewModel {
         reachability?.whenUnreachable = { [weak self] _ in self?.delegate?.didChangeState(state: .unreachable) }
         try? reachability?.startNotifier()
     }
-    
+
     func update(completion: (() -> Void)? = nil) {
         connectionChanged(completion: completion)
     }
@@ -94,13 +94,13 @@ final class TodayViewModel {
             self?.delegate?.didRequestUrl(url: url)
         }
     }
-    
+
     deinit {
         reachability?.stopNotifier()        
     }
-    
+
     // MARK: - Utils
-    
+
     @objc private func connectionChanged(completion: (() -> Void)? = nil) {
         if let reachability = reachability, reachability.connection == .unavailable {
             delegate?.didChangeState(state: .unreachable)

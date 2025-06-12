@@ -31,10 +31,10 @@ final class ContactFormTests: XCTestCase {
     func testFormAcceptsDataFromUser() async throws {
         // Short String
         let shortStringField = InputField(label: "Short string field",
-                                     submitLabel: "Don't care",
-                                     type: .textSingleLine,
-                                     isMandatory: true,
-                                     placeholder: nil)
+                                          submitLabel: "Don't care",
+                                          type: .textSingleLine,
+                                          isMandatory: true,
+                                          placeholder: nil)
         let shortStringFormField = FormInputField(inputField: shortStringField)
 
         // Long String
@@ -47,10 +47,10 @@ final class ContactFormTests: XCTestCase {
 
         // Boolean
         let boolField = InputField(label: "Boolean field",
-                                         submitLabel: "Boolean value",
-                                         type: .switch,
-                                         isMandatory: true,
-                                         placeholder: nil)
+                                   submitLabel: "Boolean value",
+                                   type: .switch,
+                                   isMandatory: true,
+                                   placeholder: nil)
         let boolFormField = FormInputField(inputField: longStringField)
 
         let store = TestStore(

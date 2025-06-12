@@ -89,12 +89,12 @@ final class AppDelegate: UIResponder {
 extension AppDelegate: UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
-        #if targetEnvironment(simulator)
-        // Force log out if running UI tests
-        if ProcessInfo.processInfo.arguments.contains("UITests") {
-            appSessionManager.logOut(force: false, reason: "UI tests")
-        }
-        #endif
+            #if targetEnvironment(simulator)
+                // Force log out if running UI tests
+                if ProcessInfo.processInfo.arguments.contains("UITests") {
+                    appSessionManager.logOut(force: false, reason: "UI tests")
+                }
+            #endif
         #endif
 
         // Clear out any overrides that may have been present in previous builds
@@ -161,7 +161,7 @@ extension AppDelegate: UIApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
     }
 
@@ -209,9 +209,9 @@ extension AppDelegate: UIApplicationDelegate {
 
         let algorithm = CryptoConstants.widgetChallengeAlgorithm
         guard let s = queryItems.first(where: { $0.name == "s" })?.value?.data(using: .utf8),
-           let a = queryItems.first(where: { $0.name == "a" })?.value,
-               a == algorithm.stringValue,
-           let signature = Data(base64Encoded: s) else {
+              let a = queryItems.first(where: { $0.name == "a" })?.value,
+              a == algorithm.stringValue,
+              let signature = Data(base64Encoded: s) else {
             return false
         }
 
@@ -398,7 +398,7 @@ extension AppDelegate {
                 }
 
                 Task { [self] in
-                     do {
+                    do {
                         try await FeatureFlagsRepository.shared.fetchFlags()
                         self.registerForPushNotificationsIfNeeded()
                     } catch {

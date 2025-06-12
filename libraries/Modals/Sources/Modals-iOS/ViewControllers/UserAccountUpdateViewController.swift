@@ -98,11 +98,11 @@ class UserAccountUpdateViewController: UIViewController {
         feature2Lbl.font = .systemFont(ofSize: 15, weight: .regular)
         feature3Lbl.font = .systemFont(ofSize: 15, weight: .regular)
 
-         if let image = viewModel.image {
-             imageView.image = image
-         } else {
-             imageView.isHidden = true
-         }
+        if let image = viewModel.image {
+            imageView.image = image
+        } else {
+            imageView.isHidden = true
+        }
 
         checkmarks.forEach {
             $0.image = viewModel.checkmark

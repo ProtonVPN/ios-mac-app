@@ -42,12 +42,12 @@ public class ReportsApiService {
         self.init(networking: factory.makeNetworking(),
                   authKeychain: factory.makeAuthKeychainHandle())
     }
-    
+
     public init(networking: Networking, authKeychain: AuthKeychainHandle) {
         self.networking = networking
         self.authKeychain = authKeychain
     }
-    
+
     public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
         let files = bug.files.reachable()
             .enumerated()
@@ -65,7 +65,7 @@ public class ReportsApiService {
             }
         }
     }
-    
+
     public func dynamicBugReportConfig(completion: @escaping (Result<BugReportModel, Error>) -> Void) {
         networking.request(DynamicBugReportConfigRequest(), completion: completion)
     }

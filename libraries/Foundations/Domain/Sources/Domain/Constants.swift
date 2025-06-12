@@ -22,9 +22,9 @@ import IssueReporting
 public enum DomainConstants {
     public enum AppGroups {
         #if os(iOS) || os(tvOS)
-        public static let main = "group.ch.protonmail.vpn"
+            public static let main = "group.ch.protonmail.vpn"
         #elseif os(macOS)
-        public static let main = "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)group.ch.protonvpn.mac"
+            public static let main = "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)group.ch.protonvpn.mac"
         #endif
     }
 

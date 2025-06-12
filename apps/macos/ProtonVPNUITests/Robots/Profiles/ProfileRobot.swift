@@ -32,12 +32,12 @@ class ProfileRobot: CoreElements {
         button(createProfileButton).tap()
         return CreateProfileRobot()
     }
-     
+
     func manageProfiles() -> ManageProfilesRobot {
         button(manageProfileButton).tap()
         return ManageProfilesRobot()
     }
-     
+
     let verify = Verify()
 
     class Verify: CoreElements {
@@ -47,7 +47,7 @@ class ProfileRobot: CoreElements {
             table().onChild(cell(randomButton)).waitUntilExists().checkExists()
             return ProfileRobot()
         }
-         
+
         func checkButtonsExist() -> ProfileRobot {
             button(profilesButton).waitUntilExists(time: 5).checkExists()
             button(profilesButton).checkEnabled()

@@ -24,9 +24,9 @@ extension ConnectionDetailsMessage: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         let description = "ConnectionDetailsMessage(exitIp: \(exitIp), deviceIp: \(deviceIp), deviceCountry: \(deviceCountry))"
         #if DEBUG
-        return description
+            return description
         #else
-        return description.maskIPs
+            return description.maskIPs
         #endif
     }
 }

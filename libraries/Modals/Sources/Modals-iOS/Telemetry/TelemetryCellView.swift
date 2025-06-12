@@ -53,11 +53,11 @@ struct TelemetryCellView_Previews: PreviewProvider {
         TelemetryCellView(title: Localizable.onboardingUsageStatsTitle,
                           description: Localizable.onboardingUsageStatsDescription,
                           isOn: .init(get: {
-            isOn
-        }, set: { newValue in
-            isOn = newValue
-        }))
-        .previewLayout(.sizeThatFits)
-        .background(Color(.background))
+                              isOn
+                          }, set: { newValue in
+                              isOn = newValue
+                          }))
+                          .previewLayout(.sizeThatFits)
+                          .background(Color(.background))
     }
 }

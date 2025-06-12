@@ -59,7 +59,7 @@ final class CountryItemViewModel {
     var isStreamingAvailable: Bool {
         !propertiesManager.secureCoreToggle && propertiesManager.streamingServices[countryCode] != nil
     }
-    
+
     let isTierTooLow: Bool
     let isServerUnderMaintenance: Bool
     private(set) var isOpened: Bool
@@ -85,7 +85,7 @@ final class CountryItemViewModel {
             return name
         }
     }
-    
+
     var alphaForMainElements: CGFloat {
         return underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
     }
@@ -95,14 +95,14 @@ final class CountryItemViewModel {
         if underMaintenance { return "\(countryName). \(Localizable.onMaintenance)" }
         return countryName
     }
-    
+
     var isConnected: Bool {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
             && connectedServer.kind == serversGroup.kind
     }
-    
+
     let displaySeparator: Bool
 
     init(
@@ -132,7 +132,7 @@ final class CountryItemViewModel {
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons
     }
-    
+
     func connectAction() {
         if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.country))
@@ -145,11 +145,11 @@ final class CountryItemViewModel {
             vpnGateway.connectTo(serverGroup: serversGroup.kind, ofType: serverType, trigger: .country)
         }
     }
-    
+
     func upgradeAction() {
         countriesSectionViewModel?.displayCountryUpsell(countryCode: countryCode)
     }
-    
+
     func changeCellState() {
         countriesSectionViewModel?.toggleCountryCell(for: self)
         isOpened = !isOpened

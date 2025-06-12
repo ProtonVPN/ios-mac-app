@@ -24,21 +24,21 @@ import Cocoa
 
 class CustomOverlayView: NSView {
     var clicked: (() -> Void)?
-    
+
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         layer = CALayer()
         layer?.backgroundColor = NSColor.clear.cgColor
         wantsLayer = true
     }
-    
+
     override func mouseDown(with event: NSEvent) {
         super.mouseDown(with: event)
         if let clicked = clicked {
             clicked()
         }
     }
-    
+
     override func scrollWheel(with event: NSEvent) {
         super.scrollWheel(with: event)
         if let clicked = clicked {

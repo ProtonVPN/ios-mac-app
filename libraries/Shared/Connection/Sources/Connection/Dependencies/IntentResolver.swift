@@ -69,11 +69,11 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
         @Dependency(\.serverChangeAuthorizer) var changeAuthorizer
 
         switch intent.spec.location {
-            // Free users can always connect to the fastest server.
+        // Free users can always connect to the fastest server.
         case .fastest:
             return
 
-            // Free users can choose a random server a fixed number of times in a given interval.
+        // Free users can choose a random server a fixed number of times in a given interval.
         case .random:
             switch changeAuthorizer.serverChangeAvailability() {
             case .available:
@@ -86,7 +86,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
             log.assertionFailure("Free user requested connection to gateway", category: .connection)
             throw .specificCountryUnavailable(countryCode: name)
 
-            // Free users aren't allowed to choose an exact server.
+        // Free users aren't allowed to choose an exact server.
         case let .region(code), let .exact(_, _, _, _, code):
             throw .specificCountryUnavailable(countryCode: code)
 

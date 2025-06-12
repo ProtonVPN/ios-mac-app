@@ -41,9 +41,9 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
                              y: bounds.height - Self.triangleSize.height - Self.circleDiameter)
         return CGRect(origin: origin, size: Self.triangleSize)
     }
-    
+
     private var containerView: NSView?
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }
@@ -51,7 +51,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         fatalError("Unsupported initializer \(#function)")
     }
-    
+
     init(viewModel: SCEntryCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
 
@@ -69,14 +69,14 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
             self.setupAnnotationView()
             self.needsDisplay = true
         }
-        
+
         setupAnnotationView()
     }
 
     override func setFrameOrigin(_ newOrigin: NSPoint) {
         super.setFrameOrigin(newOrigin - NSPoint(x: 0, y: Self.circleDiameter / 2))
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
@@ -87,14 +87,14 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
     }
 
     // MARK: - Private functions
-    
+
     private func setupAnnotationView() {
         setSelection()
         setupFrame()
         recycleContainerView()
         setupContainerComponents()
     }
-    
+
     private func setSelection() {
         if viewModel.state == .idle {
             setSelected(false, animated: false)
@@ -102,7 +102,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
             setSelected(true, animated: true)
         }
     }
-    
+
     private func setupFrame() {
         let height: CGFloat
         let hovered: Bool
@@ -124,37 +124,37 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
         if let containerView = containerView {
             containerView.removeFromSuperview()
         }
-        
+
         containerView = NSView(frame: NSRect(origin: NSPoint(x: 0, y: 0), size: frame.size))
         addSubview(containerView!)
     }
-    
+
     private func setupContainerComponents() {
         positionCircleButton()
     }
-    
+
     private func positionCircleButton() {
         guard let containerView = containerView else {
             return
         }
-        
+
         let origin = NSPoint(x: (frame.size.width - Self.circleDiameter) / CGFloat(2), y: 0)
         let size = NSSize(width: Self.circleDiameter, height: Self.circleDiameter)
-        
+
         let circleState: SCCoreCircleButton.ButtonState = if viewModel.isConnected || hovered {
             .active
         } else {
             .idle
         }
-        
+
         let circleButton = SCCoreCircleButton(frame: NSRect(origin: origin, size: size),
                                               state: circleState)
         circleButton.target = self
         circleButton.action = #selector(circleButtonAction)
-        
+
         containerView.addSubview(circleButton)
     }
-    
+
     @objc private func circleButtonAction() {
         viewModel.toggleState()
     }

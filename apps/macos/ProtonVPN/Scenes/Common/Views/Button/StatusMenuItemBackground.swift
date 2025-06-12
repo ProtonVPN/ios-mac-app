@@ -27,11 +27,11 @@ import Ergonomics
 class StatusMenuItemBackground: HoverDetectionButtonAdvanced {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
         wantsLayer = true
         layer?.cornerRadius = 4
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
 

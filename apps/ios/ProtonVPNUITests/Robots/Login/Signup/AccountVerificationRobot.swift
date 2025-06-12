@@ -18,14 +18,14 @@ class AccountVerificationRobot: CoreElements {
         textField(accountVerificationTextField).tap().typeText(code)
         return self
     }
-    
+
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()
         return T()
     }
 
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func accountVerificationScreenIsShown() -> AccountVerificationRobot {

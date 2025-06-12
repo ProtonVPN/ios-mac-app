@@ -52,35 +52,35 @@ enum SmartProtocolProtocol {
 
     var priority: Int {
         #if os(iOS)
-        switch self {
-        case .wireguardUdp:
-            return 0
-        case .openVpnUdp:
-            return 1
-        case .openVpnTcp:
-            return 2
-        case .wireguardTls:
-            return 3
-        case .wireguardTcp:
-            return 4
-        case .ikev2:
-            return 5
-        }
+            switch self {
+            case .wireguardUdp:
+                return 0
+            case .openVpnUdp:
+                return 1
+            case .openVpnTcp:
+                return 2
+            case .wireguardTls:
+                return 3
+            case .wireguardTcp:
+                return 4
+            case .ikev2:
+                return 5
+            }
         #else
-        switch self {
-        case .wireguardUdp:
-            return 0
-        case .ikev2:
-            return 1
-        case .openVpnUdp:
-            return 2
-        case .openVpnTcp:
-            return 3
-        case .wireguardTls:
-            return 4
-        case .wireguardTcp:
-            return 5
-        }
+            switch self {
+            case .wireguardUdp:
+                return 0
+            case .ikev2:
+                return 1
+            case .openVpnUdp:
+                return 2
+            case .openVpnTcp:
+                return 3
+            case .wireguardTls:
+                return 4
+            case .wireguardTcp:
+                return 5
+            }
         #endif
     }
 }

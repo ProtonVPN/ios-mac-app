@@ -41,11 +41,11 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     }
 
     #if os(macOS)
-    /// Set of protocols that are deprecated on macOS
-    public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
+        /// Set of protocols that are deprecated on macOS
+        public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
     #else
-    /// Set of protocols that are deprecated on iOS and tvOS
-    public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
+        /// Set of protocols that are deprecated on iOS and tvOS
+        public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
     #endif
 
     public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
@@ -96,11 +96,11 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
 // MARK: - Default values
 
 extension VpnProtocol {
-#if os(iOS)
-    public static let defaultValue: Self = .openVpn(.udp)
-#else
-    public static let defaultValue: Self = .ike
-#endif
+    #if os(iOS)
+        public static let defaultValue: Self = .openVpn(.udp)
+    #else
+        public static let defaultValue: Self = .ike
+    #endif
 
     private static var uiOrder: [VpnProtocol: Int] = [
         .wireGuard(.udp): 1,

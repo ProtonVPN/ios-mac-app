@@ -34,19 +34,19 @@ public class ServerIp: NSObject, NSCoding, Codable {
     public let label: String?
     public let x25519PublicKey: String?
     public let protocolEntries: PerProtocolEntries?
-    
+
     override public var description: String {
         let entryOverrides = protocolEntries?.description.prepending(", with overrides for:\n") ?? "\n"
 
         return "ID      = \(id)\n" +
-                "EntryIP = \(entryIp ?? "(nil)")\(entryOverrides)" +
-                "ExitIP  = \(exitIp)\n" +
-                "Domain  = \(domain)\n" +
-                "Status  = \(status)\n" +
-                "Label = \(label ?? "")\n" +
-                "X25519PublicKey = \(x25519PublicKey ?? "")\n"
+            "EntryIP = \(entryIp ?? "(nil)")\(entryOverrides)" +
+            "ExitIP  = \(exitIp)\n" +
+            "Domain  = \(domain)\n" +
+            "Status  = \(status)\n" +
+            "Label = \(label ?? "")\n" +
+            "X25519PublicKey = \(x25519PublicKey ?? "")\n"
     }
-    
+
     public init(id: String,
                 entryIp: String?,
                 exitIp: String,
@@ -65,7 +65,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.protocolEntries = protocolEntries
         super.init()
     }
-    
+
     public init(dic: JSONDictionary) throws {
         self.id = try dic.stringOrThrow(key: "ID")
         self.exitIp = try dic.stringOrThrow(key: "ExitIP")
@@ -85,7 +85,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
 
         return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
-    
+
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }
@@ -135,7 +135,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
 
         return result
     }
-    
+
     // MARK: - NSCoding
 
     private enum CodingKeys: String, CodingKey {
@@ -148,13 +148,13 @@ public class ServerIp: NSObject, NSCoding, Codable {
         case x25519PublicKey = "x25519PublicKey"
         case protocolEntries = "entryPerProtocol"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         guard let id = aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as? String,
-            let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
-            let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
-            let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
-                return nil
+              let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
+              let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
+              let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
+            return nil
         }
         let status = aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue)
         let label = aDecoder.decodeObject(forKey: CodingKeys.label.rawValue) as? String
@@ -170,17 +170,17 @@ public class ServerIp: NSObject, NSCoding, Codable {
                   x25519PublicKey: x25519PublicKey,
                   protocolEntries: protocolEntries)
     }
-    
+
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     public var underMaintenance: Bool {
         return status == 0
     }
 
     // MARK: - Static functions
-    
+
     // swiftlint:disable:next nsobject_prefer_isequal
     public static func == (lhs: ServerIp, rhs: ServerIp) -> Bool {
         return lhs.domain == rhs.domain

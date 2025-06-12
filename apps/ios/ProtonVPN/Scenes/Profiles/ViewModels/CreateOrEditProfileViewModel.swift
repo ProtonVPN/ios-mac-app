@@ -416,8 +416,8 @@ class CreateOrEditProfileViewModel: NSObject {
             // so we do it here, only for the selected object.
             if let serverInfo = selectedObject as? ServerInfo,
                let vpnServer = serverRepository.getFirstServer(
-                    filteredBy: [.logicalID(serverInfo.logical.id)],
-                    orderedBy: .fastest) {
+                   filteredBy: [.logicalID(serverInfo.logical.id)],
+                   orderedBy: .fastest) {
                 let serverModel = ServerModel(server: vpnServer)
                 self.selectedServerOffering = ServerOffering.custom(ServerWrapper(server: serverModel))
             }

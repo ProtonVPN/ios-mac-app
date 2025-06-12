@@ -39,20 +39,20 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
 
     override func setUpWithError() throws {
         #if os(macOS)
-        throw XCTSkip("Tunnel provider client message are skipped on macOS, since there is no cert refresh provider.")
+            throw XCTSkip("Tunnel provider client message are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try super.setUpWithError()
+            try super.setUpWithError()
 
-        container.vpnAuthenticationStorage.keys = VpnKeys.mock()
-        container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in
-            self.fulfillExpectationCategory(self.storeKeys)
-        }
+            container.vpnAuthenticationStorage.keys = VpnKeys.mock()
+            container.vpnAuthenticationStorage.keysStored = { [unowned self] _ in
+                self.fulfillExpectationCategory(self.storeKeys)
+            }
 
-        didPushNewSessionSelector = { [unowned self] selector in
-            XCTAssertEqual(selector, "SELECTOR")
+            didPushNewSessionSelector = { [unowned self] selector in
+                XCTAssertEqual(selector, "SELECTOR")
 
-            self.fulfillExpectationCategory(self.pushSelector)
-        }
+                self.fulfillExpectationCategory(self.pushSelector)
+            }
         #endif
     }
 

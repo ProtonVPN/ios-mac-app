@@ -50,11 +50,11 @@ public struct PrivateKey: Equatable, Sendable, Codable, CustomStringConvertible,
     }
 
     public var description: String {
-    #if DEBUG
-        return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
-    #else
-        return "PrivateKey(<redacted>)"
-    #endif
+        #if DEBUG
+            return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+        #else
+            return "PrivateKey(<redacted>)"
+        #endif
     }
 
     public var debugDescription: String { description }

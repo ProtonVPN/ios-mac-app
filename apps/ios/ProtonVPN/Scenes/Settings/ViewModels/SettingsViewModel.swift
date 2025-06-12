@@ -45,24 +45,24 @@ import Strings
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory &
-    AppSessionManagerFactory &
-    VpnGatewayFactory &
-    CoreAlertServiceFactory &
-    SettingsServiceFactory &
-    VpnKeychainFactory &
-    ConnectionStatusServiceFactory &
-    NetShieldPropertyProviderFactory &
-    VpnManagerFactory &
-    VpnStateConfigurationFactory &
-    PlanServiceFactory &
-    PropertiesManagerFactory &
-    AppInfoFactory &
-    ProfileManagerFactory &
-    NATTypePropertyProviderFactory &
-    SafeModePropertyProviderFactory &
-    PaymentsApiServiceFactory &
-    AuthKeychainHandleFactory &
-    NetworkingFactory
+        AppSessionManagerFactory &
+        VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        SettingsServiceFactory &
+        VpnKeychainFactory &
+        ConnectionStatusServiceFactory &
+        NetShieldPropertyProviderFactory &
+        VpnManagerFactory &
+        VpnStateConfigurationFactory &
+        PlanServiceFactory &
+        PropertiesManagerFactory &
+        AppInfoFactory &
+        ProfileManagerFactory &
+        NATTypePropertyProviderFactory &
+        SafeModePropertyProviderFactory &
+        PaymentsApiServiceFactory &
+        AuthKeychainHandleFactory &
+        NetworkingFactory
 
     private let factory: Factory
 
@@ -238,9 +238,9 @@ final class SettingsViewModel {
         let qrLoginFeatureDisabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.easyDeviceMigrationDisabled)
         let isDeviceSecured: Bool = {
             #if targetEnvironment(simulator)
-            return true
+                return true
             #else
-            return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
+                return LAContext().canEvaluatePolicy(.deviceOwnerAuthentication, error: nil)
             #endif
         }()
 
@@ -475,7 +475,7 @@ final class SettingsViewModel {
                     attributedString: Localizable.nonStandardPortsExplanation.attributed(
                         withColor: UIColor.weakTextColor(),
                         fontSize: 13))
-                .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
+                    .add(link: Localizable.nonStandardPortsExplanationLink, withUrl: VPNLink.safeMode.urlString)
             )
         ]
     }
@@ -669,9 +669,9 @@ final class SettingsViewModel {
 
             let qrCodeInstructionsView = ScanQRCodeInstructionsView(
                 viewModel: .init(dependencies:
-                        .init(passphrase: passphrase,
-                              userEmail: email,
-                              apiService: apiService)))
+                    .init(passphrase: passphrase,
+                          userEmail: email,
+                          apiService: apiService)))
             let hostingController = ShowingNavigationBarUIHostingController(
                 rootView: AnyView(qrCodeInstructionsView)
             )

@@ -38,7 +38,7 @@ extension NSAttributedString {
         }
         return imageAttachment(image: image, size: size)
     }
-    
+
     static func imageAttachment(image: UIImage, baselineOffset: CGFloat? = nil, size: CGSize? = nil) -> NSAttributedString {
         let attachment = NSTextAttachment()
         if let size = size {

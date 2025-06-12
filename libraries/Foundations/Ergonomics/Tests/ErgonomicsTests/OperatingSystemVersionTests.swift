@@ -85,7 +85,7 @@ final class OperatingSystemVersionTests: XCTestCase {
 extension OperatingSystemVersion: Equatable {
     public static func == (lhs: OperatingSystemVersion, rhs: OperatingSystemVersion) -> Bool {
         lhs.majorVersion == rhs.majorVersion &&
-        lhs.minorVersion == rhs.minorVersion &&
-        lhs.patchVersion == rhs.patchVersion
+            lhs.minorVersion == rhs.minorVersion &&
+            lhs.patchVersion == rhs.patchVersion
     }
 }

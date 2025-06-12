@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else {
             return
         }
-        
+
         if ProcessInfo.processInfo.arguments.contains("UITests") {
             windowScene.windows.forEach { $0.layer.speed = 100 }
         }

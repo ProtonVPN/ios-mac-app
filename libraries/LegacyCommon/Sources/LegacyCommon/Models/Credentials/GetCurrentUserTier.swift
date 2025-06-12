@@ -20,10 +20,10 @@ import Foundation
 import Dependencies
 
 extension DependencyValues {
-  var getCurrentUserTier: @Sendable () throws -> Int {
-    get { self[GetCurrentUserTierKey.self] }
-    set { self[GetCurrentUserTierKey.self] = newValue }
-  }
+    var getCurrentUserTier: @Sendable () throws -> Int {
+        get { self[GetCurrentUserTierKey.self] }
+        set { self[GetCurrentUserTierKey.self] = newValue }
+    }
 }
 
 private enum GetCurrentUserTierKey: DependencyKey {

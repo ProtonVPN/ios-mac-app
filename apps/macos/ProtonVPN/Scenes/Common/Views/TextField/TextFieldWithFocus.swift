@@ -24,12 +24,12 @@ import Cocoa
 
 class TextFieldWithFocus: NSTextField {
     weak var focusDelegate: TextFieldFocusDelegate?
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupTransparency()
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupTransparency()
@@ -39,7 +39,7 @@ class TextFieldWithFocus: NSTextField {
         focusDelegate?.willReceiveFocus(self)
         super.mouseDown(with: event)
     }
-    
+
     override func becomeFirstResponder() -> Bool {
         if let focusDelegate = focusDelegate {
             guard focusDelegate.shouldBecomeFirstResponder else {
@@ -57,7 +57,7 @@ class TextFieldWithFocus: NSTextField {
         }
         return super.resignFirstResponder()
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard event.type == NSEvent.EventType.keyDown else {
@@ -95,7 +95,7 @@ class TextFieldWithFocus: NSTextField {
     }
 
     // swiftlint:enable cyclomatic_complexity
-    
+
     // MARK: - Private functions
 
     private func setupTransparency() {

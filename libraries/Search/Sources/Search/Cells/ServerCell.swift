@@ -128,7 +128,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             entryFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
             entryFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
             entryFlagIcon.layer.masksToBounds = viewModel.isRedesign
-            
+
             exitFlagIcon.image = viewModel.countryFlag
             exitFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
             exitFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32

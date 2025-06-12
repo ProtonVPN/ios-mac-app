@@ -208,15 +208,15 @@ extension LocalAgentError: AlertConvertibleError {
     public var alert: Alert {
         switch self {
         case .restrictedServer,
-                .certificateExpired,
-                .certificateRevoked:
+             .certificateExpired,
+             .certificateRevoked:
             break
         case .maxSessionsUnknown,
-                .maxSessionsFree,
-                .maxSessionsBasic,
-                .maxSessionsPlus,
-                .maxSessionsVisionary,
-                .maxSessionsPro:
+             .maxSessionsFree,
+             .maxSessionsBasic,
+             .maxSessionsPlus,
+             .maxSessionsVisionary,
+             .maxSessionsPro:
             let message = Localizable.maximumDeviceReachedDescription
             let title = Localizable.maximumDeviceTitle
             return .init(title: title, message: message)
@@ -243,10 +243,10 @@ extension LocalAgentError: AlertConvertibleError {
         case .guestSession:
             break // Possible disconnection error, but no specific message to the user
         case .badCertificateSignature,
-                .certificateNotProvided,
-                .serverSessionDoesNotMatch,
-                .systemError,
-                .unknown:
+             .certificateNotProvided,
+             .serverSessionDoesNotMatch,
+             .systemError,
+             .unknown:
             break
         }
         return .connectionFailedAlert

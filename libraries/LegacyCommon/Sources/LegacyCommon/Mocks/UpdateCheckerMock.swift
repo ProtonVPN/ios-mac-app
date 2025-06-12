@@ -19,18 +19,18 @@
 import Foundation
 
 #if DEBUG
-public struct UpdateCheckerMock: UpdateChecker {
-    public func startUpdate() {}
-    
-    public func isUpdateAvailable() async -> Bool {
-        return false
-    }
+    public struct UpdateCheckerMock: UpdateChecker {
+        public func startUpdate() {}
 
-    /// Check if the latest app supports the current running OS version.
-    public func minimumVersionRequiredByNextUpdate() async -> OperatingSystemVersion {
-        return ProcessInfo.processInfo.operatingSystemVersion
-    }
+        public func isUpdateAvailable() async -> Bool {
+            return false
+        }
 
-    public init() {}
-}
+        /// Check if the latest app supports the current running OS version.
+        public func minimumVersionRequiredByNextUpdate() async -> OperatingSystemVersion {
+            return ProcessInfo.processInfo.operatingSystemVersion
+        }
+
+        public init() {}
+    }
 #endif

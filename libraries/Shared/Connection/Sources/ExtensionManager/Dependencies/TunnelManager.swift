@@ -38,17 +38,17 @@ protocol TunnelManager {
 
 @available(iOS 16, *)
 enum TunnelManagerKey: DependencyKey {
-#if targetEnvironment(simulator)
-    static let liveValue: TunnelManager = {
-        let mockSession = VPNSessionMock(status: .disconnected)
-        mockSession.messageHandler = MessageHandler.full
-        let manager = MockTunnelManager(connection: mockSession)
-        manager.shouldGenerateKeysIfMissing = true
-        return manager
-    }()
-#else
-    static let liveValue: TunnelManager = PacketTunnelManager()
-#endif
+    #if targetEnvironment(simulator)
+        static let liveValue: TunnelManager = {
+            let mockSession = VPNSessionMock(status: .disconnected)
+            mockSession.messageHandler = MessageHandler.full
+            let manager = MockTunnelManager(connection: mockSession)
+            manager.shouldGenerateKeysIfMissing = true
+            return manager
+        }()
+    #else
+        static let liveValue: TunnelManager = PacketTunnelManager()
+    #endif
 }
 
 final class PacketTunnelManager: TunnelManager {

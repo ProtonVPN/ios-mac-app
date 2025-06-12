@@ -47,7 +47,7 @@ class ConnectionStatusRobot: CoreElements {
                 .checkHasLabel(name)
             return HomeRobot()
         }
-        
+
         @discardableResult
         func connectedToASecureCoreServer(_ secureCoreServerName: String) -> ConnectionStatusRobot {
             button(secureCoreServerName)
@@ -56,7 +56,7 @@ class ConnectionStatusRobot: CoreElements {
             button(disconnectButtonId).waitUntilExists().checkExists()
             return ConnectionStatusRobot()
         }
-        
+
         @discardableResult
         func connectionStatusNotConnected() -> HomeRobot {
             staticText(connectionStatusUnprotected)
@@ -82,7 +82,7 @@ class ConnectionStatusRobot: CoreElements {
             }
             return HomeRobot()
         }
-        
+
         @discardableResult
         func connectionStatusConnected<T: CoreElements>(robot _: T.Type = HomeRobot.self) -> T {
             button(disconnectButtonId)
@@ -93,7 +93,7 @@ class ConnectionStatusRobot: CoreElements {
                 .checkExists(message: "\(connectionStatusProtected) is not visible in 60 seconds")
             return T()
         }
-        
+
         @discardableResult
         func protocolNameIsCorrect(_ expectedProtocol: ConnectionProtocol) -> ConnectionStatusRobot {
             if case .Smart = expectedProtocol {
@@ -103,7 +103,7 @@ class ConnectionStatusRobot: CoreElements {
             }
             return ConnectionStatusRobot()
         }
-        
+
         func upsellModalIsShown() -> ConnectionStatusRobot {
             button(getPlusButton).waitUntilExists().checkExists()
             button(notNowbutton).tap()

@@ -37,14 +37,14 @@ import Domain
 
 final class SettingsAccountViewModel {
     typealias Factory = AppSessionManagerFactory &
-                        AppStateManagerFactory &
-                        CoreAlertServiceFactory &
-                        NetworkingFactory &
-                        PlanServiceFactory &
-                        PropertiesManagerFactory &
-                        VpnKeychainFactory &
-                        AuthKeychainHandleFactory &
-                        NavigationServiceFactory
+        AppStateManagerFactory &
+        CoreAlertServiceFactory &
+        NetworkingFactory &
+        PlanServiceFactory &
+        PropertiesManagerFactory &
+        VpnKeychainFactory &
+        AuthKeychainHandleFactory &
+        NavigationServiceFactory
 
     private let factory: Factory
     

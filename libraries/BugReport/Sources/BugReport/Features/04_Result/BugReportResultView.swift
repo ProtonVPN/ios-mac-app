@@ -32,7 +32,7 @@ public struct BugReportResultView: View {
         WithPerceptionTracking {
             makeBody()
             #if os(iOS)
-            .navigationBarBackButtonHidden(true)
+                .navigationBarBackButtonHidden(true)
             #endif
         }
     }
@@ -109,11 +109,11 @@ struct BugReportResultView_Previews: PreviewProvider {
         return Group {
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
                                              reducer: { BugReportResultFeature() }))
-            .previewDisplayName("Success")
+                .previewDisplayName("Success")
 
             BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: "Just an error"),
                                              reducer: { BugReportResultFeature() }))
-            .previewDisplayName("Error")
+                .previewDisplayName("Error")
         }
     }
 }

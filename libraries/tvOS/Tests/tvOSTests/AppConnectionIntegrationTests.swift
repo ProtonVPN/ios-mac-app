@@ -18,77 +18,77 @@
 
 #if targetEnvironment(simulator)
 
-import XCTest
-import ComposableArchitecture
-@testable import tvOS
-@testable import CommonNetworking
-@testable import Connection
-@testable import LocalAgent
-@testable import ExtensionManager
-@testable import CoreConnection
-import ConnectionTestSupport
-import Domain
-import VPNSharedTesting
+    import XCTest
+    import ComposableArchitecture
+    @testable import tvOS
+    @testable import CommonNetworking
+    @testable import Connection
+    @testable import LocalAgent
+    @testable import ExtensionManager
+    @testable import CoreConnection
+    import ConnectionTestSupport
+    import Domain
+    import VPNSharedTesting
 
-final class AppConnectionIntegrationTests: XCTestCase {
-    @MainActor
-    func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async throws {
-        let clock = TestClock()
-        let mockVPNSession = VPNSessionMock(status: .connected)
-        let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
+    final class AppConnectionIntegrationTests: XCTestCase {
+        @MainActor
+        func testWaitsUntilTunnelDisconnectedBeforeSigningOut() async throws {
+            let clock = TestClock()
+            let mockVPNSession = VPNSessionMock(status: .connected)
+            let tunnelConfigurationCleared = XCTestExpectation(description: "Saved WG config should be removed from the keychain")
 
-        let state = AppFeature.State(
-            main: .init(
-                currentTab: .settings,
-                settings: .init(
-                    userDisplayName: Shared<String?>(value: ""),
-                    userTier: Shared<Int?>(value: 1),
-                    mainBackground: .init(value: .clear),
-                    destination: nil,
-                    alert: SettingsFeature.signOutAlert,
-                    isLoading: false
+            let state = AppFeature.State(
+                main: .init(
+                    currentTab: .settings,
+                    settings: .init(
+                        userDisplayName: Shared<String?>(value: ""),
+                        userTier: Shared<Int?>(value: 1),
+                        mainBackground: .init(value: .clear),
+                        destination: nil,
+                        alert: SettingsFeature.signOutAlert,
+                        isLoading: false
+                    ),
+                    connection: .connected,
+                    userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
                 ),
-                connection: .connected,
-                userLocation: Shared<UserLocation?>(value: UserLocation(ip: "", country: "", isp: ""))
-            ),
-            networking: .authenticated(.auth(uid: "sessionID"))
-        )
-
-        let store = TestStore(initialState: state) {
-            AppFeature()._printChanges()
-        } withDependencies: {
-            $0.continuousClock = clock
-            $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
-            $0.localAgent = LocalAgentMock(state: .connected)
-            $0.networking = VPNNetworkingMock()
-            $0.authKeychain = MockAuthKeychain()
-            $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
-            $0.tunnelKeychain = TunnelKeychain(
-                storeWireguardConfig: { _ in Data() },
-                clear: { tunnelConfigurationCleared.fulfill() }
+                networking: .authenticated(.auth(uid: "sessionID"))
             )
-            $0.connectionIntentStorage = .init(
-                getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
-                set: { _ in }
-            )
+
+            let store = TestStore(initialState: state) {
+                AppFeature()._printChanges()
+            } withDependencies: {
+                $0.continuousClock = clock
+                $0.tunnelManager = MockTunnelManager(connection: mockVPNSession)
+                $0.localAgent = LocalAgentMock(state: .connected)
+                $0.networking = VPNNetworkingMock()
+                $0.authKeychain = MockAuthKeychain()
+                $0.vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+                $0.tunnelKeychain = TunnelKeychain(
+                    storeWireguardConfig: { _ in Data() },
+                    clear: { tunnelConfigurationCleared.fulfill() }
+                )
+                $0.connectionIntentStorage = .init(
+                    getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
+                    set: { _ in }
+                )
+            }
+
+            store.exhaustivity = .off
+            await store.send(.main(.connection(.input(.onLaunch))))
+            await store.send(\.main.settings.alert.presented.signOut) {
+                $0.shouldSignOutAfterDisconnecting = true
+            }
+
+            await store.receive(\.main.connection.input.disconnect)
+
+            await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
+
+            await store.receive(\.main.connection.delegate.stateChanged.disconnected) {
+                $0.shouldSignOutAfterDisconnecting = false
+            }
+            await store.receive(\.signOut)
+
+            await fulfillment(of: [tunnelConfigurationCleared])
         }
-
-        store.exhaustivity = .off
-        await store.send(.main(.connection(.input(.onLaunch))))
-        await store.send(\.main.settings.alert.presented.signOut) {
-            $0.shouldSignOutAfterDisconnecting = true
-        }
-
-        await store.receive(\.main.connection.input.disconnect)
-
-        await clock.advance(by: .seconds(1)) // Wait until disconnect is finished
-
-        await store.receive(\.main.connection.delegate.stateChanged.disconnected) {
-            $0.shouldSignOutAfterDisconnecting = false
-        }
-        await store.receive(\.signOut)
-
-        await fulfillment(of: [tunnelConfigurationCleared])
     }
-}
 #endif

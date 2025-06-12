@@ -23,9 +23,9 @@
 import Foundation
 import ProtonCoreUIFoundations
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 import Strings
 import Domain

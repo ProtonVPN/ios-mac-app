@@ -32,13 +32,13 @@ import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 
 typealias PropertiesToOverride = NetworkingDelegateFactory &
-                                CoreAlertServiceFactory &
-                                WireguardProtocolFactoryCreator &
-                                VpnCredentialsConfiguratorFactoryCreator &
-                                VpnAuthenticationFactory &
-                                LogContentProviderFactory &
-                                UpdateCheckerFactory &
-                                VpnConnectionInterceptDelegate
+    CoreAlertServiceFactory &
+    WireguardProtocolFactoryCreator &
+    VpnCredentialsConfiguratorFactoryCreator &
+    VpnAuthenticationFactory &
+    LogContentProviderFactory &
+    UpdateCheckerFactory &
+    VpnConnectionInterceptDelegate
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -144,9 +144,9 @@ open class Container: PropertiesToOverride {
     // MARK: - Configs to override
 
     #if os(macOS)
-    open var modelId: String? {
-        shouldHaveOverridden()
-    }
+        open var modelId: String? {
+            shouldHaveOverridden()
+        }
     #endif
 
     open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
@@ -239,9 +239,9 @@ extension Container: ProfileManagerFactory {
 extension Container: AppInfoFactory {
     public func makeAppInfo(context: AppContext) -> AppInfo {
         #if os(macOS)
-        return AppInfoImplementation(context: context, modelName: modelId)
+            return AppInfoImplementation(context: context, modelName: modelId)
         #else
-        return AppInfoImplementation(context: context)
+            return AppInfoImplementation(context: context)
         #endif
     }
 }

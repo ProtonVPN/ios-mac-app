@@ -22,7 +22,7 @@ extension CABasicAnimation {
         animation.autoreverses = true
         animation.repeatCount = Float.infinity
         animation.timingFunction = CAMediaTimingFunction.init(name: .easeInEaseOut)
-        
+
         layer.add(animation, forKey: "pulse")
     }
 }

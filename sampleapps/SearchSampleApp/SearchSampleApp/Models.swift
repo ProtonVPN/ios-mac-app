@@ -22,7 +22,7 @@ import UIKit
 
 final class CityItemViewModel: CityViewModel {
     let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
-    
+
     let cityName: String
 
     let translatedCityName: String? = nil
@@ -52,7 +52,7 @@ final class CityItemViewModel: CityViewModel {
 
 final class CountryItemViewModel: CountryViewModel {
     var isRedesign: Bool = false
-    
+
     var showCountryConnectButton: Bool = false
 
     var showFeatureIcons: Bool = false
@@ -110,7 +110,7 @@ final class CountryItemViewModel: CountryViewModel {
 
 final class ServerItemViewModel: ServerViewModel {
     var isRedesign: Bool = false
-    
+
     var isPartnerServer: Bool = false
 
     var isTorAvailable: Bool = false

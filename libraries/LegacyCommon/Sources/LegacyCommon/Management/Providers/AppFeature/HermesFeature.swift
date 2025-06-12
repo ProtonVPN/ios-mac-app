@@ -58,6 +58,6 @@ extension HermesFeature: DefaultableFeature {
 
 extension HermesFeature: StorableFeature {
     public static let storageKey: String = "HermesFeatureEnabled"
-    
+
     public static let event: Domain.AppEvent? = .hermes
 }

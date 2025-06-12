@@ -25,10 +25,10 @@ import UIKit
 /// Used to more reliably track alert controllers being dismissed
 class TrackedAlertController: UIAlertController {
     var dismissCompletion: (() -> Void)?
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         dismissCompletion?()
     }
 }

@@ -130,12 +130,12 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
 
         keychain = MockAuthKeychain()
         try! keychain.store(AuthCredentials(username: "johnny",
-                                                  accessToken: "12345",
-                                                  refreshToken: "54321",
-                                                  sessionId: "15213",
-                                                  userId: "bravo",
-                                                  scopes: [],
-                                                  mailboxPassword: ""))
+                                            accessToken: "12345",
+                                            refreshToken: "54321",
+                                            sessionId: "15213",
+                                            userId: "bravo",
+                                            scopes: [],
+                                            mailboxPassword: ""))
         timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(timerFactory: timerFactory,
@@ -210,9 +210,9 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
 
     /// Convenience function for mock API error cases
     func mockEndpoint<M: MockableRequest>(_ cls: M.Type,
-                                                  apiFailure: MockAPIEndpointError,
-                                                  responseHeaders: [APIHeader: String] = [:],
-                                                  expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
+                                          apiFailure: MockAPIEndpointError,
+                                          responseHeaders: [APIHeader: String] = [:],
+                                          expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
         mockEndpoint(cls,
                      result: .failure(apiFailure),
                      responseHeaders: responseHeaders,
@@ -264,7 +264,7 @@ extension ServerStatusRequest.Response: MockableAPIResponse {
         let code = fakeData[\.code] as? Int ?? 1000
         let original = fakeData[\.original] as? ServerStatusRequest.Logical ?? ServerStatusRequest.Logical(id: "logical-id", status: 1, servers: [.mock(id: "server-ip-id", status: 1)])
         let alternatives = fakeData[\.alternatives] as? [ServerStatusRequest.Logical] ?? [ServerStatusRequest.Logical(id: "other-logical-id", status: 1, servers: [.mock(id: "other-server-id", status: 1)])]
-        
+
         self.init(code: code, original: original, alternatives: alternatives)
     }
 }

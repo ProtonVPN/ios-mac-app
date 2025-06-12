@@ -54,21 +54,21 @@ struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInforma
     let features: [[FeatureCellViewModel]]
 
     // MARK: - ServersFeaturesInformationViewModel
-    
+
     let headerHeight: CGFloat = 52
-    
+
     var totalFeatures: Int {
         return features.count
     }
-    
+
     func featuresCount(for section: Int) -> Int {
         return features[section].count
     }
-    
+
     func getFeatureViewModel(indexPath: IndexPath) -> FeatureCellViewModel {
         return features[indexPath.section][indexPath.row]
     }
-    
+
     func titleFor(_ section: Int) -> String? {
         guard showTitles else { return nil }
 

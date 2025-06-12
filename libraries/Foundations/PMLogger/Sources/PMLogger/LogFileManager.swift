@@ -30,18 +30,18 @@ public protocol LogFileManager {
 
 public class LogFileManagerImplementation: LogFileManager {
     public static let logDirLaunchArgument = "-LogDirectory"
-    
+
     public init() {}
-    
+
     /// Returns full log files URL given its name
     public func getFileUrl(named filename: String) -> URL {
         let arguments = ProcessInfo.processInfo.arguments
         let logDirectory: URL = if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
-           case let next = arguments.index(after: index),
-           next < arguments.count,
-           case let dir = arguments[next],
-           FileManager.default.fileExists(atPath: dir),
-           let url = URL(string: dir) {
+                                   case let next = arguments.index(after: index),
+                                   next < arguments.count,
+                                   case let dir = arguments[next],
+                                   FileManager.default.fileExists(atPath: dir),
+                                   let url = URL(string: dir) {
             url
         } else {
             FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
@@ -50,7 +50,7 @@ public class LogFileManagerImplementation: LogFileManager {
 
         return logDirectory.appendingPathComponent(filename, isDirectory: false)
     }
-    
+
     /// Dumps given string into a log file.
     /// Will overwrite the file if it's present.
     public func dump(logs: String, toFile filename: String) {

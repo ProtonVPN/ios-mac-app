@@ -25,11 +25,11 @@ struct MultiLineTextInputView: View {
     @Environment(\.colors) var colors: Colors
 
     #if os(iOS)
-    var titleFontSize = 13.0
-    var userFontSize = 17.0
+        var titleFontSize = 13.0
+        var userFontSize = 17.0
     #else
-    var titleFontSize = 14.0
-    var userFontSize = 14.0
+        var titleFontSize = 14.0
+        var userFontSize = 14.0
     #endif
 
     var body: some View {
@@ -57,128 +57,128 @@ struct MultiLineTextInputView: View {
 }
 
 #if os(iOS)
-import UIKit
+    import UIKit
 
-struct TextView: UIViewRepresentable {
-    @Binding var text: String
+    struct TextView: UIViewRepresentable {
+        @Binding var text: String
 
-    var fontSize: CGFloat
+        var fontSize: CGFloat
 
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.backgroundColor = .clear
-        textView.font = .systemFont(ofSize: fontSize)
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.delegate = context.coordinator
-        return textView
-    }
-
-    func updateUIView(_ textView: UITextView, context: Context) {
-        textView.text = text
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator($text)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var text: Binding<String>
-
-        init(_ text: Binding<String>) {
-            self.text = text
+        func makeUIView(context: Context) -> UITextView {
+            let textView = UITextView()
+            textView.backgroundColor = .clear
+            textView.font = .systemFont(ofSize: fontSize)
+            textView.textContainerInset = .zero
+            textView.textContainer.lineFragmentPadding = 0
+            textView.delegate = context.coordinator
+            return textView
         }
 
-        func textViewDidChange(_ textView: UITextView) {
-            self.text.wrappedValue = textView.text
+        func updateUIView(_ textView: UITextView, context: Context) {
+            textView.text = text
+        }
+
+        func makeCoordinator() -> Coordinator {
+            Coordinator($text)
+        }
+
+        class Coordinator: NSObject, UITextViewDelegate {
+            var text: Binding<String>
+
+            init(_ text: Binding<String>) {
+                self.text = text
+            }
+
+            func textViewDidChange(_ textView: UITextView) {
+                self.text.wrappedValue = textView.text
+            }
         }
     }
-}
 
 #elseif os(macOS)
-import AppKit
+    import AppKit
 
-struct TextView: NSViewRepresentable {
-    @Binding var text: String
+    struct TextView: NSViewRepresentable {
+        @Binding var text: String
 
-    var fontSize: CGFloat
-    @Environment(\.colors) var colors: Colors
+        var fontSize: CGFloat
+        @Environment(\.colors) var colors: Colors
 
-    func makeNSView(context: Context) -> NSScrollView {
-        let scrollView = NSTextView.scrollableTextView()
-        guard let textView = scrollView.documentView as? NSTextView else {
+        func makeNSView(context: Context) -> NSScrollView {
+            let scrollView = NSTextView.scrollableTextView()
+            guard let textView = scrollView.documentView as? NSTextView else {
+                return scrollView
+            }
+
+            textView.backgroundColor = .clear
+            textView.drawsBackground = false
+            textView.isEditable = true
+            textView.isRichText = false
+            textView.font = font
+            textView.textColor = textColor
+            textView.textContainerInset = NSSize(width: -5, height: 0) // -5 is magic number that aligns input text with placeholder
+            textView.delegate = context.coordinator
+
             return scrollView
         }
 
-        textView.backgroundColor = .clear
-        textView.drawsBackground = false
-        textView.isEditable = true
-        textView.isRichText = false
-        textView.font = font
-        textView.textColor = textColor
-        textView.textContainerInset = NSSize(width: -5, height: 0) // -5 is magic number that aligns input text with placeholder
-        textView.delegate = context.coordinator
+        func updateNSView(_ containerView: NSScrollView, context: Context) {
+            guard let textView = containerView.documentView as? NSTextView else {
+                return
+            }
+            let length = text.count
+            let value = NSMutableAttributedString(string: text)
+            value.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: length))
+            value.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: length))
 
-        return scrollView
-    }
-
-    func updateNSView(_ containerView: NSScrollView, context: Context) {
-        guard let textView = containerView.documentView as? NSTextView else {
-            return
-        }
-        let length = text.count
-        let value = NSMutableAttributedString(string: text)
-        value.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: length))
-        value.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: length))
-
-        textView.textStorage?.setAttributedString(value)
-        if !context.coordinator.selectedRanges.isEmpty {
-            textView.selectedRanges = context.coordinator.selectedRanges
-        }
-    }
-
-    private var textColor: NSColor {
-        return NSColor(colors.textPrimary)
-    }
-
-    private var font: NSFont {
-        return NSFont.systemFont(ofSize: fontSize)
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator($text)
-    }
-
-    class Coordinator: NSObject, NSTextViewDelegate {
-        var text: Binding<String>
-        var selectedRanges: [NSValue] = []
-
-        init(_ text: Binding<String>) {
-            self.text = text
+            textView.textStorage?.setAttributedString(value)
+            if !context.coordinator.selectedRanges.isEmpty {
+                textView.selectedRanges = context.coordinator.selectedRanges
+            }
         }
 
-        func textDidBeginEditing(_ notification: Notification) {
-            guard let textView = notification.object as? NSTextView else { return }
-
-            self.text.wrappedValue = textView.string
-            self.selectedRanges = textView.selectedRanges
+        private var textColor: NSColor {
+            return NSColor(colors.textPrimary)
         }
 
-        func textDidChange(_ notification: Notification) {
-            guard let textView = notification.object as? NSTextView else { return }
-
-            self.text.wrappedValue = textView.string
-            self.selectedRanges = textView.selectedRanges
+        private var font: NSFont {
+            return NSFont.systemFont(ofSize: fontSize)
         }
 
-        func textDidEndEditing(_ notification: Notification) {
-            guard let textView = notification.object as? NSTextView else { return }
+        func makeCoordinator() -> Coordinator {
+            Coordinator($text)
+        }
 
-            self.text.wrappedValue = textView.string
-            self.selectedRanges = textView.selectedRanges
+        class Coordinator: NSObject, NSTextViewDelegate {
+            var text: Binding<String>
+            var selectedRanges: [NSValue] = []
+
+            init(_ text: Binding<String>) {
+                self.text = text
+            }
+
+            func textDidBeginEditing(_ notification: Notification) {
+                guard let textView = notification.object as? NSTextView else { return }
+
+                self.text.wrappedValue = textView.string
+                self.selectedRanges = textView.selectedRanges
+            }
+
+            func textDidChange(_ notification: Notification) {
+                guard let textView = notification.object as? NSTextView else { return }
+
+                self.text.wrappedValue = textView.string
+                self.selectedRanges = textView.selectedRanges
+            }
+
+            func textDidEndEditing(_ notification: Notification) {
+                guard let textView = notification.object as? NSTextView else { return }
+
+                self.text.wrappedValue = textView.string
+                self.selectedRanges = textView.selectedRanges
+            }
         }
     }
-}
 #endif
 
 // MARK: - Preview

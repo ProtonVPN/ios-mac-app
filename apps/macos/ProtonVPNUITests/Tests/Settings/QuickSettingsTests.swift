@@ -21,7 +21,7 @@ import XCTest
 
 class QuickSettingsTests: ProtonVPNUITests {
     private let quickSettingsRobot = QuickSettingsRobot()
-        
+
     func testOpenQuickSettingsDropdown() {
         logoutIfNeeded()
         loginAsPlusUser()

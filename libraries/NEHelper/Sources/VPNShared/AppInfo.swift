@@ -18,7 +18,7 @@
 
 import Foundation
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #endif
 
 import Dependencies
@@ -129,9 +129,9 @@ public class AppInfoImplementation: AppInfo {
             self.modelName = modelName
         } else {
             #if canImport(UIKit)
-            self.modelName = UIDevice.current.modelName
+                self.modelName = UIDevice.current.modelName
             #elseif os(macOS)
-            self.modelName = Host.current().localizedName ?? nil
+                self.modelName = Host.current().localizedName ?? nil
             #endif
         }
 

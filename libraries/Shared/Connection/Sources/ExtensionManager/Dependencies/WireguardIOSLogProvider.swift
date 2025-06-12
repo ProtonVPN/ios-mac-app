@@ -22,45 +22,45 @@ import ExtensionIPC
 import PMLogger
 
 #if os(iOS)
-public struct WireguardIOSLogProvider {
-    public let logContentForAppGroup: (_ appGroup: String) -> LogContent
-}
-
-extension WireguardIOSLogProvider: DependencyKey {
-    public static let liveValue: WireguardIOSLogProvider = .init(
-        logContentForAppGroup: { appGroup in
-            return WireguardIOSLogContent(appGroup: appGroup)
-        }
-    )
-}
-
-extension DependencyValues {
-    public var wireguardIOSLogProvider: WireguardIOSLogProvider {
-        get { self[WireguardIOSLogProvider.self] }
-        set { self[WireguardIOSLogProvider.self] = newValue }
-    }
-}
-
-private struct WireguardIOSLogContent: LogContent {
-    // Name of the log file from WireGuard NE.
-    private static let wireguardLogFile = "WireGuard.log"
-    private let appGroup: String
-
-    fileprivate init(appGroup: String) {
-        self.appGroup = appGroup
+    public struct WireguardIOSLogProvider {
+        public let logContentForAppGroup: (_ appGroup: String) -> LogContent
     }
 
-    func loadContent(callback: @escaping (String) -> Void) {
-        @Dependency(\.tunnelMessageSender) var messageSender
-        Task(priority: .userInitiated) {
-            // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
-            _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
+    extension WireguardIOSLogProvider: DependencyKey {
+        public static let liveValue: WireguardIOSLogProvider = .init(
+            logContentForAppGroup: { appGroup in
+                return WireguardIOSLogContent(appGroup: appGroup)
+            }
+        )
+    }
 
-            let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-            let contents = try? String(contentsOf: folder.appendingPathComponent(Self.wireguardLogFile))
-
-            callback(contents ?? "")
+    extension DependencyValues {
+        public var wireguardIOSLogProvider: WireguardIOSLogProvider {
+            get { self[WireguardIOSLogProvider.self] }
+            set { self[WireguardIOSLogProvider.self] = newValue }
         }
     }
-}
+
+    private struct WireguardIOSLogContent: LogContent {
+        // Name of the log file from WireGuard NE.
+        private static let wireguardLogFile = "WireGuard.log"
+        private let appGroup: String
+
+        fileprivate init(appGroup: String) {
+            self.appGroup = appGroup
+        }
+
+        func loadContent(callback: @escaping (String) -> Void) {
+            @Dependency(\.tunnelMessageSender) var messageSender
+            Task(priority: .userInitiated) {
+                // We don't care if flush succeeded or not. In case NE is not up and runnning it means latest logs were already saved to file.
+                _ = try? await messageSender.send(WireguardProviderRequest.flushLogsToFile)
+
+                let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
+                let contents = try? String(contentsOf: folder.appendingPathComponent(Self.wireguardLogFile))
+
+                callback(contents ?? "")
+            }
+        }
+    }
 #endif

@@ -31,11 +31,11 @@ class AbstractProfileViewModel {
     let lowestServerTier: Int
     let userTier: Int
     let underMaintenance: Bool
-    
+
     init(profile: Profile, userTier: Int) {
         self.profile = profile
         self.userTier = userTier
-        
+
         switch profile.serverOffering {
         case let .custom(serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier
@@ -47,7 +47,7 @@ class AbstractProfileViewModel {
                 self.underMaintenance = false
                 break
             }
-            
+
             var minTier = Int.internalTier
             var allServersUnderMaintenance = true
             let filters: [VPNServerFilter] = [
@@ -72,7 +72,7 @@ class AbstractProfileViewModel {
     }
 
     var canUseProfile: Bool { authorizer.canUseProfile(ofTier: lowestServerTier) }
-    
+
     var alphaOfMainElements: CGFloat {
         return canUseProfile ? 1.0 : 0.5
     }

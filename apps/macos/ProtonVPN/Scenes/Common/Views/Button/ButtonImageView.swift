@@ -24,7 +24,7 @@ import Cocoa
 
 class ButtonImageView: NSImageView {
     var imageClicked: (() -> Void)?
-    
+
     override func mouseUp(with event: NSEvent) {
         imageClicked?()
     }

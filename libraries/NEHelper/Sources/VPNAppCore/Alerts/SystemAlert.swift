@@ -19,13 +19,13 @@
 import Foundation
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(Cocoa)
-import Cocoa
+    import Cocoa
 #endif
 
 #if canImport(SystemExtensions)
-import SystemExtensions
+    import SystemExtensions
 #endif
 
 import Dependencies
@@ -95,20 +95,20 @@ public struct ReconnectInfo {
         public let name: String
 
         #if canImport(UIKit)
-        public let image: UIImage
+            public let image: UIImage
 
-        public init(name: String, image: UIImage) {
-            self.name = name
-            self.image = image
-        }
+            public init(name: String, image: UIImage) {
+                self.name = name
+                self.image = image
+            }
 
         #elseif canImport(Cocoa)
-        public let image: NSImage
+            public let image: NSImage
 
-        public init(name: String, image: NSImage) {
-            self.name = name
-            self.image = image
-        }
+            public init(name: String, image: NSImage) {
+                self.name = name
+                self.image = image
+            }
         #endif
     }
 
@@ -393,9 +393,9 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
     public let linkText: String = Localizable.alertProtocolDeprecatedLinkText
 
     #if os(iOS) || os(tvOS)
-    public var message: String? = Localizable.alertProtocolDeprecatedBodyIos
+        public var message: String? = Localizable.alertProtocolDeprecatedBodyIos
     #elseif os(macOS)
-    public var message: String? = Localizable.alertProtocolDeprecatedBodyMacos
+        public var message: String? = Localizable.alertProtocolDeprecatedBodyMacos
     #endif
 
     public let confirmTitle: String = Localizable.alertProtocolDeprecatedEnableSmart
@@ -415,15 +415,15 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
             handler: enableSmartProtocolHandler
         ))
         #if os(iOS)
-        // On MacOS, a hyperlink is placed in the alert body instead
-        actions.append(AlertAction(
-            title: Localizable.alertProtocolDeprecatedLearnMore,
-            style: .secondary,
-            handler: {
-                @Dependency(\.linkOpener) var linkOpener
-                linkOpener.open(.protocolDeprecations)
-            }
-        ))
+            // On MacOS, a hyperlink is placed in the alert body instead
+            actions.append(AlertAction(
+                title: Localizable.alertProtocolDeprecatedLearnMore,
+                style: .secondary,
+                handler: {
+                    @Dependency(\.linkOpener) var linkOpener
+                    linkOpener.open(.protocolDeprecations)
+                }
+            ))
         #endif
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedClose,
@@ -830,15 +830,15 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
         let platform: String
 
         #if os(iOS)
-        platform = "iOS"
+            platform = "iOS"
         #elseif os(macOS)
-        platform = "macOS"
+            platform = "macOS"
         #elseif os(tvOS)
-        platform = "tvOS"
+            platform = "tvOS"
         #elseif os(visionOS)
-        platform = "visionOS"
+            platform = "visionOS"
         #else
-        platform = "Unrecognized"
+            platform = "Unrecognized"
         #endif
 
         self.title = Localizable.operatingSystemOutOfDateAlertTitle
@@ -874,56 +874,56 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
 }
 
 #if canImport(SystemExtensions)
-public final class SysexEnabledAlert: SystemAlert {
-    public var title: String? = Localizable.sysexEnabledTitle
-    public var message: String? = Localizable.sysexEnabledDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+    public final class SysexEnabledAlert: SystemAlert {
+        public var title: String? = Localizable.sysexEnabledTitle
+        public var message: String? = Localizable.sysexEnabledDescription
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
 
-    public init() {}
-}
-
-public final class SysexInstallingErrorAlert: SystemAlert {
-    public var title: String? = Localizable.sysexCannotEnable
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init?(error: Error) {
-        guard let sysexError = error as? OSSystemExtensionError else {
-            return nil
-        }
-
-        let subcase: String = switch sysexError.code {
-        case .unsupportedParentBundleLocation:
-            Localizable.sysexErrorDescriptionSubcaseBadLocation
-        case .forbiddenBySystemPolicy:
-            Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
-        case .authorizationRequired:
-            Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
-        default:
-            Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
-        }
-
-        self.message = Localizable.sysexErrorDescription(subcase)
-
-        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+        public init() {}
     }
-}
 
-public final class SystemExtensionTourAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    public var cancelHandler: () -> Void
+    public final class SysexInstallingErrorAlert: SystemAlert {
+        public var title: String? = Localizable.sysexCannotEnable
+        public var message: String?
+        public var actions = [AlertAction]()
+        public let isError: Bool = true
+        public var dismiss: (() -> Void)?
 
-    public init(cancelHandler: @escaping() -> Void) {
-        self.cancelHandler = cancelHandler
-        self.dismiss = cancelHandler
+        public init?(error: Error) {
+            guard let sysexError = error as? OSSystemExtensionError else {
+                return nil
+            }
+
+            let subcase: String = switch sysexError.code {
+            case .unsupportedParentBundleLocation:
+                Localizable.sysexErrorDescriptionSubcaseBadLocation
+            case .forbiddenBySystemPolicy:
+                Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
+            case .authorizationRequired:
+                Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
+            default:
+                Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
+            }
+
+            self.message = Localizable.sysexErrorDescription(subcase)
+
+            actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+        }
     }
-}
+
+    public final class SystemExtensionTourAlert: SystemAlert {
+        public var title: String?
+        public var message: String?
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
+        public var cancelHandler: () -> Void
+
+        public init(cancelHandler: @escaping() -> Void) {
+            self.cancelHandler = cancelHandler
+            self.dismiss = cancelHandler
+        }
+    }
 #endif

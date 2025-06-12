@@ -21,55 +21,55 @@
 //
 
 #if false
-import XCTest
-import LegacyCommon
+    import XCTest
+    import LegacyCommon
 
-@testable import ProtonVPN
+    @testable import ProtonVPN
 
-class UpdateFileSelectorImplementationTests: XCTestCase {
-    func testDefaultFile() throws {
-        let propertyManager = PropertiesManagerMock()
-        let factory = UpdateFileSelectorImplementationFactory(propertiesManager: propertyManager)
-        let selector = UpdateFileSelectorImplementation(factory)
-        
-        // test on current system
-        var version = "2"
-        if #available(OSX 10.15, *) {
+    class UpdateFileSelectorImplementationTests: XCTestCase {
+        func testDefaultFile() throws {
+            let propertyManager = PropertiesManagerMock()
+            let factory = UpdateFileSelectorImplementationFactory(propertiesManager: propertyManager)
+            let selector = UpdateFileSelectorImplementation(factory)
+
+            // test on current system
+            var version = "2"
+            if #available(OSX 10.15, *) {
+                version = "3"
+            }
+            propertyManager.earlyAccess = false
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
+
+            propertyManager.earlyAccess = true
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
+
+            // Force macos 10.15+ file
+            selector.forceNECapableOS = true
             version = "3"
+            propertyManager.earlyAccess = false
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
+            propertyManager.earlyAccess = true
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
+
+            // Force older file
+            selector.forceNECapableOS = false
+            version = "2"
+            propertyManager.earlyAccess = false
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
+            propertyManager.earlyAccess = true
+            XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
         }
-        propertyManager.earlyAccess = false
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
+    }
 
-        propertyManager.earlyAccess = true
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
-        
-        // Force macos 10.15+ file
-        selector.forceNECapableOS = true
-        version = "3"
-        propertyManager.earlyAccess = false
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
-        propertyManager.earlyAccess = true
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
-        
-        // Force older file
-        selector.forceNECapableOS = false
-        version = "2"
-        propertyManager.earlyAccess = false
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-update\(version).xml")
-        propertyManager.earlyAccess = true
-        XCTAssert(selector.updateFileUrl == "https://protonvpn.com/download/macos-early-access-update\(version).xml")
-    }
-}
+    fileprivate class UpdateFileSelectorImplementationFactory: PropertiesManagerFactory {
+        var propertiesManager: PropertiesManagerProtocol
 
-fileprivate class UpdateFileSelectorImplementationFactory: PropertiesManagerFactory {
-    var propertiesManager: PropertiesManagerProtocol
-    
-    init(propertiesManager: PropertiesManagerProtocol) {
-        self.propertiesManager = propertiesManager
+        init(propertiesManager: PropertiesManagerProtocol) {
+            self.propertiesManager = propertiesManager
+        }
+
+        func makePropertiesManager() -> PropertiesManagerProtocol {
+            return propertiesManager
+        }
     }
-    
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
-    }
-}
 #endif

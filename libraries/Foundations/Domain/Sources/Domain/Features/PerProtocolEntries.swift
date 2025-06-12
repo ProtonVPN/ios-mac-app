@@ -97,7 +97,7 @@ extension PerProtocolEntries {
         // overridden IP address.
         return ip
     }
-    
+
     public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
         self[vpnProtocol]??.ports
     }

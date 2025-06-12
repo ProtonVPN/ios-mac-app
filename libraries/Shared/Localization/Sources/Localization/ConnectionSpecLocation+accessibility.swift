@@ -55,9 +55,9 @@ public extension ConnectionSpec.Location {
             return Localizable.homeRecentsRandomServerTitle
 
         case let .region(code),
-                let .exact(_, _, _, _, code),
-                let .secureCore(.fastestHop(code)),
-                let .secureCore(.hop(code, _)):
+             let .exact(_, _, _, _, code),
+             let .secureCore(.fastestHop(code)),
+             let .secureCore(.hop(code, _)):
             return regionName(locale: locale, code: code)
 
         case let .gateway(name):

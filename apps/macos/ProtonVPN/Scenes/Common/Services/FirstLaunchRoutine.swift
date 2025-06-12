@@ -27,7 +27,7 @@ import VPNShared
 
 class AppLaunchRoutine {
     static var launchedBefore = true
-    
+
     static func execute(propertiesManager: PropertiesManagerProtocol) {
         @Dependency(\.defaultsProvider) var provider
         let defaults = provider.getDefaults()

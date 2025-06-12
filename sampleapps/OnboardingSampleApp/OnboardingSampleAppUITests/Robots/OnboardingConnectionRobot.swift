@@ -39,17 +39,17 @@ class OnboardingConnectionRobot {
         self.app = app
         self.verify = Verify(app: app)
     }
-    
+
     func connectNow() -> OnboardingConnectionRobot {
         app.buttons[connectNowButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     func nextStepA() -> OnboardingPaymentRobot {
         app.buttons[continueButton].tap()
         return OnboardingPaymentRobot(app: app)
     }
-    
+
     func nextStepB() -> OnboardingMainRobot {
         app.buttons[continueButton].tap()
         return OnboardingMainRobot(app: app)
@@ -59,7 +59,7 @@ class OnboardingConnectionRobot {
         app.buttons[nextButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     class Verify {
         let app: XCUIApplication
 
@@ -75,7 +75,7 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
             return OnboardingConnectionRobot(app: app)
         }
-        
+
         func connectionScreenIsShown() -> OnboardingConnectionRobot {
             XCTAssert(app.staticTexts[connectionTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[connectionDescription].exists)

@@ -31,7 +31,7 @@ class InteractiveActionButton: HoverDetectionButton {
             setAttributedTitle()
         }
     }
-    
+
     override var title: String {
         didSet {
             setAttributedTitle()
@@ -40,14 +40,14 @@ class InteractiveActionButton: HoverDetectionButton {
 
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
 
         layer?.backgroundColor = .clear
 
         setAttributedTitle()
     }
-    
+
     private func setAttributedTitle() {
         let hover: AppTheme.Style = isHovered ? .hovered : []
         attributedTitle = title.styled([.interactive, .hint] + hover, font: .themeFont(fontSize), alignment: alignment)

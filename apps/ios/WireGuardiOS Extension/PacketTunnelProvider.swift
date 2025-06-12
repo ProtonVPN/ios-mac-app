@@ -114,9 +114,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
 
         dataTaskFactory = !sendThroughTunnel ?
-                URLSession.shared :
-                ConnectionTunnelDataTaskFactory(provider: self,
-                                                timerFactory: timerFactory)
+            URLSession.shared :
+            ConnectionTunnelDataTaskFactory(provider: self,
+                                            timerFactory: timerFactory)
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
@@ -131,7 +131,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         }
 
         #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
+            self.startTestingConnectivity()
         #endif
 
         guard let connectedLogicalId, let connectedIpId else {
@@ -283,7 +283,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         setDataTaskFactoryAccordingToKillSwitchSettings()
 
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
         let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"
@@ -334,7 +334,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
         #if CHECK_CONNECTIVITY
-        self.stopTestingConnectivity()
+            self.stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.stop { [unowned self] in
@@ -435,7 +435,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("sleep()")
 
         #if CHECK_CONNECTIVITY
-        self.stopTestingConnectivity()
+            self.stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.suspend {
@@ -449,7 +449,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("wake()")
 
         #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
+            self.startTestingConnectivity()
         #endif
 
         certificateRefreshManager.resume {}
@@ -484,54 +484,54 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
     // MARK: - Connection tests
 
-#if CHECK_CONNECTIVITY
-    // Enable this in build settings if you want to debug connectivitiy issues.
-    // It will ping API as well as 3rd party ip check site to check if we have the internet and are still connected to the proper server.
-    // Please make sure this is NEVER enabled on Release builds!
+    #if CHECK_CONNECTIVITY
+        // Enable this in build settings if you want to debug connectivitiy issues.
+        // It will ping API as well as 3rd party ip check site to check if we have the internet and are still connected to the proper server.
+        // Please make sure this is NEVER enabled on Release builds!
 
-    private var connectivityTimer: Timer?
-    private var lastConnectivityCheck: Date = Date()
+        private var connectivityTimer: Timer?
+        private var lastConnectivityCheck: Date = Date()
 
-    private func startTestingConnectivity() {
-        DispatchQueue.main.async {
-            self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+        private func startTestingConnectivity() {
+            DispatchQueue.main.async {
+                self.connectivityTimer?.invalidate()
+                self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            }
         }
-    }
 
-    private func stopTestingConnectivity() {
-        DispatchQueue.main.async {
-            self.connectivityTimer?.invalidate()
-            self.connectivityTimer = nil
+        private func stopTestingConnectivity() {
+            DispatchQueue.main.async {
+                self.connectivityTimer?.invalidate()
+                self.connectivityTimer = nil
+            }
         }
-    }
 
-    @objc private func checkConnectivity() {
-        let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
-        if timeDiff > 60 * 3 {
-            log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
-        } else {
-            log.info("Last connectivity check time diff: \(timeDiff)")
+        @objc private func checkConnectivity() {
+            let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
+            if timeDiff > 60 * 3 {
+                log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
+            } else {
+                log.info("Last connectivity check time diff: \(timeDiff)")
+            }
+            check(url: "https://api64.ipify.org/")
+            lastConnectivityCheck = Date()
         }
-        check(url: "https://api64.ipify.org/")
-        lastConnectivityCheck = Date()
-    }
 
-    private func check(url urlString: String) {
-        guard let url = URL(string: urlString), let host = url.host else {
-            log.error("Can't get API endpoint hostname.", category: .api)
-            return
+        private func check(url urlString: String) {
+            guard let url = URL(string: urlString), let host = url.host else {
+                log.error("Can't get API endpoint hostname.", category: .api)
+                return
+            }
+            let urlRequest = URLRequest(url: url)
+
+            let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+                let responseData = data != nil ? String(data: data!, encoding: .utf8) : "nil"
+                log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data": "\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
+            }
+            task.resume()
         }
-        let urlRequest = URLRequest(url: url)
 
-        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            let responseData = data != nil ? String(data: data!, encoding: .utf8) : "nil"
-            log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data": "\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
-        }
-        task.resume()
-    }
-
-#endif
+    #endif
 }
 
 extension PacketTunnelProvider: ServerStatusRefreshDelegate {

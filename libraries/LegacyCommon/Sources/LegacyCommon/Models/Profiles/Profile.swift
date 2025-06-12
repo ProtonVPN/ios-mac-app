@@ -37,7 +37,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public let name: String
     public let connectionProtocol: ConnectionProtocol
     public let lastConnectedDate: Date?
-    
+
     override public var description: String {
         return
             "ID: \(id)\n" +
@@ -50,7 +50,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             "Protocol: \(connectionProtocol)\n" +
             "Last connected date: \(lastConnectedDate?.description ?? "None")"
     }
-    
+
     public var logDescription: String {
         return
             "ID: \(id) " +
@@ -80,7 +80,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: connectionProtocol, netShieldType: netShield, natType: natType, safeMode: safeMode, profileId: id, profileName: name, trigger: trigger)
         }
     }
-    
+
     public init(
         id: String,
         accessTier: Int,
@@ -102,7 +102,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         self.connectionProtocol = connectionProtocol
         self.lastConnectedDate = lastConnectedDate
     }
-    
+
     public convenience init(
         accessTier: Int,
         profileIcon: ProfileIcon,
@@ -136,7 +136,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         static let connectionProtocol = "connectionProtocol"
         static let lastConnectedDate = "lastConnectedDate"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         let id = aDecoder.decodeObject(forKey: CoderKey.id) as! String
         let accessTier = aDecoder.decodeInteger(forKey: CoderKey.accessTier)
@@ -185,7 +185,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public func encode(with aCoder: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
         Profile(
             id: id,

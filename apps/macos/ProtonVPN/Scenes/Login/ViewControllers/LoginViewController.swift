@@ -44,16 +44,16 @@ final class LoginViewController: NSViewController {
         case password
         case passwordSecure
     }
-    
+
     fileprivate enum Switch: Int {
         case startOnBoot
     }
-    
+
     fileprivate enum SigninVariant {
         case protonSignin
         case ssoSignin
     }
-    
+
     // MARK: - Onboarding view
 
     @IBOutlet private weak var onboardingView: NSView!
@@ -76,23 +76,23 @@ final class LoginViewController: NSViewController {
     }()
 
     #if DEBUG
-    private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
-        let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
-            guard let `self` = self else { return }
+        private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
+            let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
+                guard let `self` = self else { return }
 
-            _ = self.environmentSelectionView.resignFirstResponder()
-            self.environmentSelectionView.removeFromSuperview()
+                _ = self.environmentSelectionView.resignFirstResponder()
+                self.environmentSelectionView.removeFromSuperview()
 
-            self.onboardingView.becomeFirstResponder()
+                self.onboardingView.becomeFirstResponder()
 
-            self.presentOnboardingScreen(withErrorDescription: nil)
-        }
+                self.presentOnboardingScreen(withErrorDescription: nil)
+            }
 
-        let hostingView = NSHostingView(rootView: environmentsView)
-        hostingView.translatesAutoresizingMaskIntoConstraints = false
+            let hostingView = NSHostingView(rootView: environmentsView)
+            hostingView.translatesAutoresizingMaskIntoConstraints = false
 
-        return hostingView
-    }()
+            return hostingView
+        }()
     #endif
 
     @IBOutlet private weak var logoImage: NSImageView!
@@ -113,27 +113,27 @@ final class LoginViewController: NSViewController {
         view.bottomAnchor.constraint(lessThanOrEqualTo: loginButton.topAnchor).isActive = true
         return view
     }()
-    
+
     @IBOutlet private weak var usernameTextField: TextFieldWithFocus!
     @IBOutlet private weak var usernameHorizontalLine: NSBox!
-    
+
     @IBOutlet private weak var passwordTextField: TextFieldWithFocus!
     @IBOutlet private weak var passwordSecureTextField: SecureTextFieldWithFocus!
     @IBOutlet private weak var passwordRevealButton: NSButton!
     @IBOutlet private weak var passwordHorizontalLine: NSBox!
-    
+
     @IBOutlet private weak var startOnBootLabel: PVPNTextField!
     @IBOutlet private weak var startOnBootButton: SwitchButton!
-    
+
     @IBOutlet private weak var loginButton: LoginButton!
     @IBOutlet private weak var loginButtonToSSOButtonVerticalOffset: NSLayoutConstraint!
     @IBOutlet private weak var signInWithSSO: InteractiveActionButton!
     @IBOutlet weak var createAccountButton: InteractiveActionButton!
     @IBOutlet weak var needHelpButton: InteractiveActionButton!
 
-#if REDESIGN
-    var coordinator: LoginViewControllerRepresentable.Coordinator?
-#endif
+    #if REDESIGN
+        var coordinator: LoginViewControllerRepresentable.Coordinator?
+    #endif
 
     // MARK: - Loading view
 
@@ -152,13 +152,13 @@ final class LoginViewController: NSViewController {
     }()
 
     @IBOutlet private weak var reachabilityCheckIndicator: NSProgressIndicator!
-    
+
     private var helpPopover: NSPopover?
-    
+
     fileprivate var viewModel: LoginViewModel!
     fileprivate var secureTextEntry = true
     fileprivate var signInVariant: SigninVariant = .protonSignin
-    
+
     fileprivate var passwordEntry: String {
         return secureTextEntry ? passwordSecureTextField.stringValue : passwordTextField.stringValue
     }
@@ -169,22 +169,22 @@ final class LoginViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
 
-#if REDESIGN
-    required init(viewModel: LoginViewModel, coordinator: LoginViewControllerRepresentable.Coordinator? = nil) {
-        self.coordinator = coordinator
-        super.init(nibName: NSNib.Name("Login"), bundle: nil)
-        self.viewModel = viewModel
-    }
-#else
-    required init(viewModel: LoginViewModel) {
-        super.init(nibName: NSNib.Name("Login"), bundle: nil)
-        self.viewModel = viewModel
-    }
-#endif
+    #if REDESIGN
+        required init(viewModel: LoginViewModel, coordinator: LoginViewControllerRepresentable.Coordinator? = nil) {
+            self.coordinator = coordinator
+            super.init(nibName: NSNib.Name("Login"), bundle: nil)
+            self.viewModel = viewModel
+        }
+    #else
+        required init(viewModel: LoginViewModel) {
+            super.init(nibName: NSNib.Name("Login"), bundle: nil)
+            self.viewModel = viewModel
+        }
+    #endif
     deinit {
         loadingView.animate(false)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -196,13 +196,13 @@ final class LoginViewController: NSViewController {
 
         viewModel.updateAvailableDomains()
     }
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
-        
+
         viewModel.logInAppeared()
     }
-    
+
     // MARK: - Private functions
 
     private func setupLoadingView() {
@@ -214,7 +214,7 @@ final class LoginViewController: NSViewController {
         twoFactorView.isHidden = true
         twoFactorView.delegate = self
     }
-    
+
     private func setupOnboardingView() {
         onboardingView.isHidden = true
         logoImage.isHidden = true
@@ -224,19 +224,19 @@ final class LoginViewController: NSViewController {
         setupSwitchSection()
         setupFooterSection()
     }
-    
+
     private func setupUsernameSection() {
         usernameTextField.style(placeholder: Localizable.username)
         usernameTextField.usesSingleLineMode = true
         usernameTextField.tag = TextField.username.rawValue
         usernameTextField.delegate = self
         usernameTextField.focusDelegate = self
-        
+
         usernameTextField.setAccessibilityIdentifier("UsernameTextField")
 
         usernameHorizontalLine.fillColor = .color(.border, .weak)
     }
-    
+
     private func setupPasswordSection() {
         passwordSecureTextField.style(placeholder: Localizable.password)
         passwordSecureTextField.usesSingleLineMode = true
@@ -251,7 +251,7 @@ final class LoginViewController: NSViewController {
         passwordTextField.tag = TextField.password.rawValue
         passwordTextField.delegate = self
         passwordTextField.focusDelegate = self
-        
+
         passwordSecureTextField.setAccessibilityIdentifier("PasswordTextField")
 
         passwordRevealButton.setButtonType(.toggle)
@@ -263,14 +263,14 @@ final class LoginViewController: NSViewController {
         passwordRevealButton.target = self
         passwordRevealButton.action = #selector(togglePasswordField)
         passwordRevealButton.setAccessibilityLabel(Localizable.show)
-        
+
         passwordHorizontalLine.fillColor = .color(.border, .weak)
     }
-    
+
     private func setupSwitchSection() {
         startOnBootLabel.attributedStringValue = Localizable.startOnBoot.styled(alignment: .left)
         startOnBootButton.setAccessibilityLabel(Localizable.startOnBoot)
-        
+
         startOnBootButton.drawsUnderOverlay = true
         DarkAppearance {
             startOnBootButton.maskColor = .cgColor(.background)
@@ -279,12 +279,12 @@ final class LoginViewController: NSViewController {
         startOnBootButton.setState(viewModel.startOnBoot ? .on : .off)
         startOnBootButton.delegate = self
     }
-    
+
     private func setupFooterSection() {
         loginButton.isEnabled = false
         loginButton.target = self
         loginButton.action = #selector(loginButtonAction)
-        
+
         signInWithSSO.isHidden = false
         loginButtonToSSOButtonVerticalOffset.isActive = true
         signInWithSSO.title = LUITranslation.sign_in_with_sso_button.l10n
@@ -294,14 +294,14 @@ final class LoginViewController: NSViewController {
         createAccountButton.title = Localizable.createAccount
         createAccountButton.target = self
         createAccountButton.action = #selector(createAccountButtonAction)
-        
+
         needHelpButton.title = Localizable.needHelp
         needHelpButton.target = self
         needHelpButton.action = #selector(needHelpButtonAction)
-        
+
         loginButton.setAccessibilityIdentifier("LoginButton")
     }
-    
+
     private func setupCallbacks() {
         viewModel.logInInProgress = { [weak self] in self?.presentLoadingScreen() }
         viewModel.logInFailure = { [weak self] errorMessage, errorCode in self?.handleLoginFailure(errorMessage, errorCode) }
@@ -320,7 +320,7 @@ final class LoginViewController: NSViewController {
             }
         }
     }
-    
+
     private func attemptLogin() {
         switch signInVariant {
         case .protonSignin:
@@ -330,23 +330,23 @@ final class LoginViewController: NSViewController {
         }
     }
 
-#if DEBUG
-    private func presentEnvironmentSelectionScreen() {
-        onboardingView.isHidden = true
-        logoImage.isHidden = true
-        twoFactorView.isHidden = true
-        environmentSelectionView.isHidden = false
-        loadingView.animate(false)
+    #if DEBUG
+        private func presentEnvironmentSelectionScreen() {
+            onboardingView.isHidden = true
+            logoImage.isHidden = true
+            twoFactorView.isHidden = true
+            environmentSelectionView.isHidden = false
+            loadingView.animate(false)
 
-        view.addSubview(environmentSelectionView)
-        environmentSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        environmentSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        environmentSelectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        environmentSelectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            view.addSubview(environmentSelectionView)
+            environmentSelectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            environmentSelectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            environmentSelectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            environmentSelectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
-        _ = environmentSelectionView.becomeFirstResponder()
-    }
-#endif
+            _ = environmentSelectionView.becomeFirstResponder()
+        }
+    #endif
 
     private func presentTwoFactorScreen(withErrorDescription description: String?) {
         twoFactorView.warningMessage = description
@@ -359,12 +359,12 @@ final class LoginViewController: NSViewController {
 
         loadingView.animate(false)
     }
-    
+
     private func showSSOWebView(request: URLRequest) {
         guard let authURL = request.url else { return }
         startWebAuthenticationSession(authURL)
     }
-    
+
     private func presentLoadingScreen() {
         warningView.isHidden = true
         warningView.showSupport = false
@@ -375,7 +375,7 @@ final class LoginViewController: NSViewController {
         loadingView.isHidden = false
         loadingView.animate(true)
     }
-    
+
     private func handleLoginFailure(_ errorMessage: String?, _ errorCode: Int? = nil) {
         if viewModel.isTwoFactorStep {
             presentTwoFactorScreen(withErrorDescription: errorMessage)
@@ -383,22 +383,22 @@ final class LoginViewController: NSViewController {
             signInWithSSOButtonAction()
             presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)
         } else {
-        #if DEBUG
-            guard let errorMessage, !CommandLine.arguments.contains("-SkipEnvironmentSelection") else {
-                // If we're on DEBUG or STAGING, present environment selection screen before proceeding to login.
-                presentEnvironmentSelectionScreen()
-                return
-            }
-        #endif
+            #if DEBUG
+                guard let errorMessage, !CommandLine.arguments.contains("-SkipEnvironmentSelection") else {
+                    // If we're on DEBUG or STAGING, present environment selection screen before proceeding to login.
+                    presentEnvironmentSelectionScreen()
+                    return
+                }
+            #endif
             presentOnboardingScreen(withErrorDescription: errorMessage)
         }
     }
-    
+
     private func handleLoginFailureWithSupport(_ errorMessage: String?) {
         handleLoginFailure(errorMessage)
         warningView.showSupport = true
     }
-    
+
     private func presentOnboardingScreen(withErrorDescription description: String?, warningType: WarningType = .error) {
         warningView.setMessage(description, warningType: warningType)
 
@@ -406,35 +406,35 @@ final class LoginViewController: NSViewController {
         twoFactorView.isHidden = true
         loadingView.isHidden = true
 
-    #if DEBUG
-        // This occludes the username text field, which upsets UI tests. Since we don't need it anymore, remove it from
-        // the current view.
-        environmentSelectionView.removeFromSuperview()
-    #endif
+        #if DEBUG
+            // This occludes the username text field, which upsets UI tests. Since we don't need it anymore, remove it from
+            // the current view.
+            environmentSelectionView.removeFromSuperview()
+        #endif
 
         _ = usernameTextField.becomeFirstResponder()
 
         logoImage.isHidden = false
         loadingView.animate(false)
     }
-    
+
     @objc private func togglePasswordField() {
         if secureTextEntry {
             passwordTextField.stringValue = passwordSecureTextField.stringValue
         } else {
             passwordSecureTextField.stringValue = passwordTextField.stringValue
         }
-        
+
         secureTextEntry = !secureTextEntry
         passwordTextField.isHidden = secureTextEntry
         passwordSecureTextField.isHidden = !secureTextEntry
         passwordRevealButton.setAccessibilityValue(secureTextEntry ? Localizable.hide : Localizable.show)
     }
-    
+
     @objc private func loginButtonAction() {
         attemptLogin()
     }
-    
+
     @objc private func signInWithSSOButtonAction() {
         switch signInVariant {
         case .protonSignin:
@@ -463,14 +463,14 @@ final class LoginViewController: NSViewController {
         warningView.isHidden = true
         enableLoginButtonBasedOnTextFieldsState()
     }
-    
+
     @objc private func createAccountButtonAction() {
         viewModel.createAccountAction()
     }
-    
+
     @objc private func needHelpButtonAction() {
         guard helpPopover == nil else { return }
-        
+
         helpPopover = NSPopover()
         helpPopover!.contentViewController = HelpPopoverViewController(viewModel: viewModel.helpPopoverViewModel)
         helpPopover!.appearance = NSAppearance(named: .darkAqua)
@@ -535,7 +535,7 @@ extension LoginViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         enableLoginButtonBasedOnTextFieldsState()
     }
-    
+
     fileprivate func enableLoginButtonBasedOnTextFieldsState() {
         switch signInVariant {
         case .protonSignin:
@@ -544,7 +544,7 @@ extension LoginViewController: NSTextFieldDelegate {
             loginButton.isEnabled = !usernameTextField.stringValue.isEmpty
         }
     }
-    
+
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if commandSelector == #selector(NSResponder.insertNewline(_:)), loginButton.isEnabled {
             attemptLogin()

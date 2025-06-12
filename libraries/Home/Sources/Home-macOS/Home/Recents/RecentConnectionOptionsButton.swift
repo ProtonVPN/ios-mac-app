@@ -85,8 +85,8 @@ private extension RecentConnectionOptionsButton {
             switch role {
             case let .pin(isPinned):
                 return (isPinned
-                        ? IconProvider.pinSlashFilled
-                        : IconProvider.pinFilled)
+                    ? IconProvider.pinSlashFilled
+                    : IconProvider.pinFilled)
             case .remove:
                 return IconProvider.trashCross
             }
@@ -96,8 +96,8 @@ private extension RecentConnectionOptionsButton {
             switch role {
             case let .pin(isPinned):
                 return Text(isPinned
-                            ? Localizable.actionHomeUnpin
-                            : Localizable.actionHomePin)
+                    ? Localizable.actionHomeUnpin
+                    : Localizable.actionHomePin)
             case .remove:
                 return Text(Localizable.actionRemove)
             }

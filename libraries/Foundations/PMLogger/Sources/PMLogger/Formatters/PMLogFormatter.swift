@@ -29,10 +29,10 @@ extension PMLogFormatter {
     public func extract(metadata: [String: String]) -> (String, String, [String: String]) { // swiftlint:disable:this large_tuple
         let category = metadata[Logging.Logger.MetaKey.category.rawValue] != nil ? "\(metadata[Logging.Logger.MetaKey.category.rawValue]!)" : ""
         let event = metadata[Logging.Logger.MetaKey.event.rawValue] != nil ? ":\(metadata[Logging.Logger.MetaKey.event.rawValue]!)" : ""
-        
+
         let keysToRemove = [Logging.Logger.MetaKey.category.rawValue, Logging.Logger.MetaKey.event.rawValue]
         let metaClean = metadata.filter { key, value in !keysToRemove.contains(key) }
-        
+
         return (category, event, metaClean)
     }
 }

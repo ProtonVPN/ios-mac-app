@@ -75,10 +75,10 @@ public struct ServerGroupInfo {
 extension ServerGroupInfo: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.kind == rhs.kind &&
-        lhs.featureIntersection == rhs.featureIntersection &&
-        lhs.featureUnion == rhs.featureUnion &&
-        lhs.serverCount == rhs.serverCount &&
-        lhs.protocolSupport == rhs.protocolSupport
+            lhs.featureIntersection == rhs.featureIntersection &&
+            lhs.featureUnion == rhs.featureUnion &&
+            lhs.serverCount == rhs.serverCount &&
+            lhs.protocolSupport == rhs.protocolSupport
     }
 }
 

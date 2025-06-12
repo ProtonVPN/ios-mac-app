@@ -120,7 +120,7 @@ class DefaultProfileViewModel {
     var isConnecting: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connecting else { return false }
-            
+
             return vpnGateway.lastConnectionRequest == profile.connectionRequest(
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
@@ -128,11 +128,11 @@ class DefaultProfileViewModel {
                 trigger: .profile
             )
         }
-        
+
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
-        
+
         return connectionSpec == ConnectionSpec(
             connectionRequest: profile.connectionRequest(
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,

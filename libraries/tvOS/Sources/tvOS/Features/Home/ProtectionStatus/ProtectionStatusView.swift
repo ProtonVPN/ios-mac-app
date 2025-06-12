@@ -101,13 +101,13 @@ struct ProtectionStatusView: View {
             ProgressView()
         }
     }
-    
+
     @ViewBuilder
     private var locationText: Text? {
         if let location = displayedLocation {
             Text(verbatim: LocalizationUtility.default.countryName(forCode: location.country) ?? "")
-            +
-            Text(verbatim: " • \(location.ip)")
+                +
+                Text(verbatim: " • \(location.ip)")
                 .foregroundStyle(Color(.text, .weak))
         }
     }

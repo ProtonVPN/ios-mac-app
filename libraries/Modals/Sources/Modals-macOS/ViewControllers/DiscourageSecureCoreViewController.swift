@@ -70,7 +70,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
         learnMoreButton.attributedTitle = NSAttributedString(string: feature.learnMore,
                                                              attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
                                                                           .font: NSFont.systemFont(ofSize: 12)])
-   }
+    }
 
     override public func viewWillAppear() {
         super.viewWillAppear()

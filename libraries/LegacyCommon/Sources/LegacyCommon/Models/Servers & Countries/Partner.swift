@@ -30,7 +30,7 @@ public struct Partner: Codable {
         self.iconURL = iconURL
         self.logicalIDs = logicalIDs
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decode(String.self, forKey: .name)
@@ -44,6 +44,6 @@ public struct Partner: Codable {
 extension Partner: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.name == rhs.name &&
-        lhs.description == rhs.description
+            lhs.description == rhs.description
     }
 }

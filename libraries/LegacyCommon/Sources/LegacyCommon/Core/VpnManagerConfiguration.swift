@@ -69,7 +69,7 @@ public struct VpnManagerConfiguration: Identifiable {
     public let natType: NATType
     public let safeMode: Bool?
     public let intent: ConnectionRequestType?
-    
+
     public init(
         id: UUID,
         hostname: String,
@@ -131,13 +131,13 @@ public class VpnManagerConfigurationPreparer {
                   alertService: factory.makeCoreAlertService(),
                   propertiesManager: factory.makePropertiesManager())
     }
-    
+
     public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.propertiesManager = propertiesManager
     }
-    
+
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {
         guard let entryServer = connectionConfig.serverIp.entryIp(using: connectionConfig.vpnProtocol) else {
             log.error("No entry IP is available for \(connectionConfig.vpnProtocol.localizedDescription).")
@@ -147,12 +147,12 @@ public class VpnManagerConfigurationPreparer {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
-            
+
             let exitServer = connectionConfig.serverIp.exitIp
 
             @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
             let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
-            
+
             return VpnManagerConfiguration(
                 id: connectionConfig.id,
                 hostname: connectionConfig.serverIp.domain,
@@ -180,16 +180,16 @@ public class VpnManagerConfigurationPreparer {
             return nil
         }
     }
-    
+
     // MARK: - Private
-    
+
     private func extraConfiguration(with connectionConfig: ConnectionConfiguration) -> String {
         #if os(iOS)
-        var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
+            var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
         #else
-        var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
+            var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
-        
+
         if propertiesManager.featureFlags.netShield {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
@@ -199,7 +199,7 @@ public class VpnManagerConfigurationPreparer {
             // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated
             extraConfiguration += [.vpnAccelerator]
         }
-        
+
         if let label = connectionConfig.serverIp.label, !label.isEmpty {
             extraConfiguration += [.label(label)]
         }
@@ -211,7 +211,7 @@ public class VpnManagerConfigurationPreparer {
         if propertiesManager.featureFlags.safeMode, let safeMode = connectionConfig.safeMode {
             extraConfiguration += [.safeMode(safeMode)]
         }
-        
+
         return extraConfiguration.reduce("") {
             $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.usernameSuffix
         }

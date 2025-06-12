@@ -12,7 +12,7 @@ public struct ExtensionInfo: Codable {
     let version: String
     let build: String
     let bundleId: String
-    
+
     static var current: Self {
         return Self(version: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "0",
                     build: Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0",

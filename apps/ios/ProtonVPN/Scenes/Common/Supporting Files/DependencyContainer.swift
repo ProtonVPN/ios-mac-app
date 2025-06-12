@@ -35,7 +35,7 @@ import Domain
 
 final class DependencyContainer: Container {
     public static var shared: DependencyContainer = DependencyContainer()
-    
+
     // Singletons
     private lazy var navigationService = NavigationService(self)
     private lazy var wireguardFactory = WireguardProtocolFactory(self, config: config)
@@ -74,9 +74,9 @@ final class DependencyContainer: Container {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
         #if TLS_PIN_DISABLE
-        let pin = false
+            let pin = false
         #else
-        let pin = true
+            let pin = true
         #endif
 
         super.init(

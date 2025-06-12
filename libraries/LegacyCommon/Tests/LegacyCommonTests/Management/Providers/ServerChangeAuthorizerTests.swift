@@ -118,28 +118,28 @@ public class ServerChangeAuthorizerTests: XCTestCase {
     }
 
     func testAlwaysReturnsAvailableForPaidUsers() {
-            let sut = ServerChangeAuthorizerImplementation()
-            let start = Date()
-            let delayExpiryDate = start.addingTimeInterval(5)
+        let sut = ServerChangeAuthorizerImplementation()
+        let start = Date()
+        let delayExpiryDate = start.addingTimeInterval(5)
 
-            let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
-            let config: ServerChangeConfig = .init(
-                changeServerAttemptLimit: 3,
-                changeServerShortDelayInSeconds: 5,
-                changeServerLongDelayInSeconds: 10
+        let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
+        let config: ServerChangeConfig = .init(
+            changeServerAttemptLimit: 3,
+            changeServerShortDelayInSeconds: 5,
+            changeServerLongDelayInSeconds: 10
+        )
+
+        withDependencies {
+            $0.date = .constant(start)
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
+            $0.serverChangeStorage = .init(
+                getConfig: { config },
+                getConnectionStack: { connectionStack }
             )
-
-            withDependencies {
-                $0.date = .constant(start)
-                $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-                $0.featureFlagProvider = .constant(flags: .allDisabled)
-                $0.serverChangeStorage = .init(
-                    getConfig: { config },
-                    getConnectionStack: { connectionStack }
-                )
-            } operation: {
-                XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
-            }
+        } operation: {
+            XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
+        }
 
         withDependencies {
             $0.date = .constant(start)

@@ -287,7 +287,7 @@ class MainRobot: CoreElements {
             if let expectedValue = value {
                 // validate headerLabel has exact value
                 XCTAssertTrue(actualHeaderLabelValue.contains(expectedValue),
-                               "headerLabel textfield does not contain expected value: \(expectedValue), actual value: \(actualHeaderLabelValue)")
+                              "headerLabel textfield does not contain expected value: \(expectedValue), actual value: \(actualHeaderLabelValue)")
             } else {
                 // validate headerLabel is not empty
                 XCTAssertTrue(!actualHeaderLabelValue.isEmpty, "headerLabel textfield shold not be empty")

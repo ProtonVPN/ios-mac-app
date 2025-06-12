@@ -41,22 +41,22 @@ class OnboardingPaymentRobot {
         app.buttons[getPlusButton].tap()
         return OnboardingPaymentRobot(app: app)
     }
-    
+
     func useFreePlanA() -> OnboardingMainRobot {
         app.buttons[useFreePlanButton].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     func useFreePlanB() -> OnboardingConnectionRobot {
         app.buttons[useFreePlanButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     func plusPlanIsPurchased() -> OnboardingMainRobot {
         app.buttons[plusPurchased].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     func connectToAPlusServer() -> OnboardingMainRobot {
         app.buttons[connectButton].tap()
         return OnboardingMainRobot(app: app)
@@ -66,7 +66,7 @@ class OnboardingPaymentRobot {
         app.buttons[skipButton].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     class Verify {
         let app: XCUIApplication
 
@@ -82,7 +82,7 @@ class OnboardingPaymentRobot {
             XCTAssertTrue(app.buttons[closeButton].isEnabled)
             return OnboardingPaymentRobot(app: app)
         }
-        
+
         @discardableResult
         func congratulationsScreenIsShown() -> OnboardingPaymentRobot {
             XCTAssert(app.staticTexts[congratulationsTitle].waitForExistence(timeout: 5))

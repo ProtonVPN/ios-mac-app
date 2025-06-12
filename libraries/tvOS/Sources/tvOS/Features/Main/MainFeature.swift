@@ -62,7 +62,7 @@ struct MainFeature {
         case connectDisconnectingIfNecessary(String)
 
         case errorOccurred(Error)
-        
+
         case connectionStateUpdated(ConnectionState)
         case observeConnectionState
     }

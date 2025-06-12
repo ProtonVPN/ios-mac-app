@@ -39,7 +39,7 @@ class AccountRobot: CoreElements {
         button(upgradeSubscriptionButton).tap()
         return SubscriptionsRobot()
     }
-    
+
     func deleteAccount() -> AccountRobot {
         button(deleteAccountText).tap()
         return AccountRobot()
@@ -52,7 +52,7 @@ class AccountRobot: CoreElements {
     }
 
     let verify = Verify()
-    
+
     class Verify: CoreElements {
         @discardableResult
         func deleteAccountScreen() -> AccountRobot {
@@ -60,7 +60,7 @@ class AccountRobot: CoreElements {
             button(deleteButton).waitUntilExists(time: 12).checkExists()
             return AccountRobot()
         }
-        
+
         @discardableResult
         func userIsLoggedOut() -> AccountRobot {
             staticText(selectedEnvHeader).waitUntilExists(time: 5).checkExists()

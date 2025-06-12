@@ -105,7 +105,7 @@ class MapSectionViewModel {
         }
 
         if state.isConnected,
-            let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
+           let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)
         }
         

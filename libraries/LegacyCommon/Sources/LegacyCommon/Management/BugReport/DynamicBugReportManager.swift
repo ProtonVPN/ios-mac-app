@@ -23,7 +23,7 @@ import VPNShared
 import VPNAppCore
 
 #if os(iOS) || os(tvOS)
-import UIKit
+    import UIKit
 #endif
 
 public protocol DynamicBugReportManagerFactory {
@@ -44,9 +44,9 @@ public class DynamicBugReportManager {
     public var prefilledUsername: String {
         return AuthKeychain.default.username ?? ""
     }
-    
+
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
-    
+
     private var api: ReportsApiService
     private var storage: DynamicBugReportStorage
     private var alertService: CoreAlertService
@@ -76,7 +76,7 @@ public class DynamicBugReportManager {
             logContentProvider: factory.makeLogContentProvider()
         )
     }
-    
+
     public init(
         api: ReportsApiService,
         storage: DynamicBugReportStorage,
@@ -95,17 +95,17 @@ public class DynamicBugReportManager {
         self.vpnKeychain = vpnKeychain
         self.logContentProvider = logContentProvider
         self.logSources = logSources
-        
+
         model = storage.fetch() ?? getDefaultConfig()
         setupRefresh()
     }
-    
+
     // Refresh config on every app start and then once a day
     private func setupRefresh() {
         loadConfig()
         timer = Timer(fire: Date().addingTimeInterval(.days(1)), interval: .days(1), repeats: true, block: { _ in self.loadConfig() })
     }
-    
+
     private func loadConfig() {
         api.dynamicBugReportConfig { result in
             switch result {
@@ -113,14 +113,14 @@ public class DynamicBugReportManager {
                 self.model = config
                 self.storage.store(config)
                 log.debug("Dynamic bug report config downloaded and saved", category: .app)
-                
+
             case let .failure(error):
                 log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
                 // Ignoring this error as we have default config
             }
         }
     }
-    
+
     private func getDefaultConfig() -> BugReportModel {
         let bundle = Bundle.legacyCommonEvilDoNotUseThis
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
@@ -132,22 +132,22 @@ public class DynamicBugReportManager {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
             return try decoder.decode(BugReportModel.self, from: data)
-            
+
         } catch {
             return BugReportModel()
         }
     }
-    
+
     private func fillReportBug(withData data: BugReportResult) -> ReportBug {
         #if os(iOS)
-        let os = "iOS"
-        let osVersion = UIDevice.current.systemVersion
+            let os = "iOS"
+            let osVersion = UIDevice.current.systemVersion
         #elseif os(tvOS)
-        let os = "tvOS"
-        let osVersion = UIDevice.current.systemVersion
+            let os = "tvOS"
+            let osVersion = UIDevice.current.systemVersion
         #elseif os(macOS)
-        let os = "MacOS"
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
+            let os = "MacOS"
+            let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
         #endif
 
         let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
@@ -170,7 +170,7 @@ public class DynamicBugReportManager {
 
         return report
     }
-    
+
     // BugReportDelegate
     public var updateAvailabilityChanged: ((Bool) -> Void)?
 }
@@ -207,11 +207,11 @@ extension DynamicBugReportManager: BugReportDelegate {
             }
         }
     }
-    
+
     public func finished() {
         closeBugReportHandler?()
     }
-    
+
     public func troubleshootingRequired() {
         alertService.push(alert: ConnectionTroubleshootingAlert())
     }
@@ -219,7 +219,7 @@ extension DynamicBugReportManager: BugReportDelegate {
     public func updateApp() {
         return updateChecker.startUpdate()
     }
-    
+
     public func checkUpdateAvailability() {
         Task.detached {
             let available = await self.updateChecker.isUpdateAvailable()

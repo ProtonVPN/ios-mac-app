@@ -64,7 +64,7 @@ final class TroubleshootingRowItem: NSTableRowView {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 

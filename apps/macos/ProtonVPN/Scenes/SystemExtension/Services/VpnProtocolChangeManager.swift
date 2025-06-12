@@ -50,7 +50,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         & VpnGatewayFactory
         & SystemExtensionManagerFactory
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -70,7 +70,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     init(factory: Factory) {
         self.factory = factory
     }
-    
+
     func change(
         toProtocol vpnProtocol: VpnProtocol,
         userInitiated: Bool,
@@ -112,7 +112,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             completion(.failure(ReconnectOnSettingsChangeAlert.userCancelled))
         }))
     }
-    
+
     private func set(
         vpnProtocol: VpnProtocol,
         userInitiated: Bool,

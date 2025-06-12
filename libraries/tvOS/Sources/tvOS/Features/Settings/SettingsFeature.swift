@@ -49,7 +49,7 @@ struct SettingsFeature {
 
         @CasePathable
         enum Alert {
-          case signOut
+            case signOut
         }
 
         enum DrillDown {

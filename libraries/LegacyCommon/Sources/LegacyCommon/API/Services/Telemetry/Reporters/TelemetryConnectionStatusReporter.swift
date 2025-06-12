@@ -51,7 +51,7 @@ class TelemetryConnectionStatusReporter {
     var previousConnectionIntent: ServerConnectionIntent?
 
     var userInitiatedVPNChange: UserInitiatedVPNChange?
-    
+
     private lazy var previousConnectionConfiguration: ConnectionConfiguration? = {
         appStateManager.activeConnection()
     }()

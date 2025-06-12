@@ -25,7 +25,7 @@ private struct BlurView: View {
             LinearGradient(colors: [.red, .blue],
                            startPoint: .top,
                            endPoint: .bottom)
-            .ignoresSafeArea()
+                .ignoresSafeArea()
             VStack {
                 MaterialsSetView()
                 Spacer()
@@ -39,7 +39,7 @@ private struct MaterialsSetView: View {
     var body: some View {
         HStack {
             #if !os(tvOS)
-            MaterialView(title: "bar", material: .bar)
+                MaterialView(title: "bar", material: .bar)
             #endif
             MaterialView(title: "ultra\nThin", material: .ultraThinMaterial)
             MaterialView(title: "thin", material: .translucentLight)

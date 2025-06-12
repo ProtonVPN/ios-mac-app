@@ -28,13 +28,13 @@ extension DoHVPN {
     convenience init(alternativeRouting: Bool, customHost: String?) {
         let apiHost: String = ObfuscatedConstants.apiHost
         let humanVerificationV3Host = ObfuscatedConstants.humanVerificationV3Host
-#if DEBUG
-        let customHost = Bundle.dynamicDomain
-        let atlasSecret: String? = Bundle.atlasSecret
-#else
-        let customHost: String? = nil
-        let atlasSecret: String? = nil
-#endif
+        #if DEBUG
+            let customHost = Bundle.dynamicDomain
+            let atlasSecret: String? = Bundle.atlasSecret
+        #else
+            let customHost: String? = nil
+            let atlasSecret: String? = nil
+        #endif
 
         self.init(
             apiHost: apiHost,

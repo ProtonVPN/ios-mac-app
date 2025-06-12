@@ -26,7 +26,7 @@ import Ergonomics
 import Domain
 
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 public protocol AuthKeychainHandle {
@@ -71,7 +71,7 @@ public struct AuthKeychainHandleDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue = liveValue
+        public static var testValue = liveValue
     #endif
 }
 
@@ -128,7 +128,7 @@ extension AuthKeychain: AuthKeychainHandle {
             self._userId.unsafeUpdateNoSync { $0 = credentials?.userId }
         }
     }
-    
+
     private var defaultStorageKey: String {
         storageKey(forContext: context) ?? StorageKey.authCredentials
     }
@@ -178,9 +178,9 @@ extension AuthKeychain: AuthKeychainHandle {
                 guard let authCredentials = unarchivedObject as? AuthCredentials else {
                     throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
                 }
-                    try? store(authCredentials, forContext: context) // store in JSON
-                    log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
-                    return authCredentials
+                try? store(authCredentials, forContext: context) // store in JSON
+                log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
+                return authCredentials
 
             } catch let unarchivingError {
                 throw KeychainError.migration(.unarchivingFailure(unarchivingError))
@@ -215,14 +215,14 @@ extension AuthKeychain: AuthKeychainHandle {
                         throw error3
                     }
                 #else
-                log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error2)"])
+                    log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error2)"])
                     throw error2
                 #endif
             }
         }
-#if canImport(WidgetKit)
-        WidgetCenter.shared.reloadAllTimelines()
-#endif
+        #if canImport(WidgetKit)
+            WidgetCenter.shared.reloadAllTimelines()
+        #endif
     }
 
     public func clear() {

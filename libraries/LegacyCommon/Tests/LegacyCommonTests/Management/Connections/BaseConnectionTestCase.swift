@@ -417,7 +417,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             container.vpnGateway.disconnect()
         })
         awaitExpectations()
-        
+
         expectationsToFulfill = [:]
         currentSubcaseDescription = nil
     }

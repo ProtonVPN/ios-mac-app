@@ -26,19 +26,19 @@ import VPNAppCore
 import Ergonomics
 
 #if canImport(UIKit)
-import class UIKit.UIApplication
+    import class UIKit.UIApplication
 #elseif canImport(AppKit)
-import class AppKit.NSApplication
+    import class AppKit.NSApplication
 #endif
 
 let didBecomeActiveNotification: NSNotification.Name = {
-#if canImport(UIKit)
-    return UIApplication.didBecomeActiveNotification
-#elseif canImport(AppKit)
-    return NSApplication.didBecomeActiveNotification
-#else
-    fatalError("Unsupported platform")
-#endif
+    #if canImport(UIKit)
+        return UIApplication.didBecomeActiveNotification
+    #elseif canImport(AppKit)
+        return NSApplication.didBecomeActiveNotification
+    #else
+        fatalError("Unsupported platform")
+    #endif
 }()
 
 @Reducer

@@ -79,13 +79,13 @@ extension ConnectionAuthorizer: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: ConnectionAuthorizer = liveValue
+        public static var testValue: ConnectionAuthorizer = liveValue
     #endif
 }
 
 extension DependencyValues {
     public var connectionAuthorizer: ConnectionAuthorizer {
-      get { self[ConnectionAuthorizer.self] }
-      set { self[ConnectionAuthorizer.self] = newValue }
+        get { self[ConnectionAuthorizer.self] }
+        set { self[ConnectionAuthorizer.self] = newValue }
     }
 }

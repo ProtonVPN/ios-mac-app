@@ -29,7 +29,7 @@ extension Date {
         dateFormatter.timeStyle = .none
         return dateFormatter
     }
-    
+
     public var formattedShortDate: String {
         shortDateFormatter.string(from: self)
     }

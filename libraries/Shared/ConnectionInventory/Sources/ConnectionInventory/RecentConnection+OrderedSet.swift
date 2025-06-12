@@ -29,7 +29,7 @@ extension OrderedSet<RecentConnection> {
     func index(for spec: ConnectionSpec) -> Self.Index? {
         firstIndex { recent in
             recent.connection.location == spec.location
-            && recent.connection.features == spec.features
+                && recent.connection.features == spec.features
         }
     }
 

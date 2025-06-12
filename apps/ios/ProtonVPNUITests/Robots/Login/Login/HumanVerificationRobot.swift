@@ -26,13 +26,13 @@ fileprivate let retryButton = Localizable.retry
 
 class HumanVerificationRobot: CoreElements {
     public let verify = Verify()
-    
+
     @discardableResult
     func verifyCaptcha() -> HumanVerificationRobot {
         button(captchaNextButton).tap()
         return HumanVerificationRobot()
     }
-    
+
     class Verify: CoreElements {
         @discardableResult
         func captchaScreenIsShown() -> HumanVerificationRobot {
@@ -45,7 +45,7 @@ class HumanVerificationRobot: CoreElements {
                 .checkEnabled()
             return HumanVerificationRobot()
         }
-        
+
         @discardableResult
         func captchaScreenIsNotShown() -> HumanVerificationRobot {
             button(resetPuzzleButton).checkDoesNotExist()

@@ -59,7 +59,7 @@ extension UserAccountUpdateViewModel {
     public var options: [String]? {
         switch self {
         case let .subscriptionDowngradedReconnecting(numberOfCountries, numberOfDevices, _, _),
-                let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
+             let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
             return [Localizable.subscriptionUpgradeOption1(numberOfCountries),
                     Localizable.subscriptionUpgradeOption2(numberOfDevices),
                     Localizable.subscriptionUpgradeOption3]

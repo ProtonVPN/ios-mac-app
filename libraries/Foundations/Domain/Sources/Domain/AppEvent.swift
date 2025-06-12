@@ -119,22 +119,22 @@ public enum AppEvent: String {
     // MARK: Platform-Specific
 
     #if os(macOS)
-    /// The `earlyAccess` value changed. This happens when a user wants to use the beta version of the app.
-    case earlyAccess
-    /// The user bailed out of the system extension tour early.
-    case systemExtensionTourCancelled
-    /// The user successfully installed all of the system extensions.
-    case systemExtensionsAllInstalled
-    /// A user has elected to clear all application data. (This happens by default on iOS when removing the app.)
-    case clearingApplicationData
+        /// The `earlyAccess` value changed. This happens when a user wants to use the beta version of the app.
+        case earlyAccess
+        /// The user bailed out of the system extension tour early.
+        case systemExtensionTourCancelled
+        /// The user successfully installed all of the system extensions.
+        case systemExtensionsAllInstalled
+        /// A user has elected to clear all application data. (This happens by default on iOS when removing the app.)
+        case clearingApplicationData
     #elseif os(iOS)
-    /// The user dismissed the welcome screen.
-    case userDismissedWelcomeScreen
+        /// The user dismissed the welcome screen.
+        case userDismissedWelcomeScreen
     #endif
 
     #if DEBUG
-    /// Used for unit and integration testing.
-    case testEvent
+        /// Used for unit and integration testing.
+        case testEvent
     #endif
 
     private static let notificationSuffix: String = "VPNAppNotification"

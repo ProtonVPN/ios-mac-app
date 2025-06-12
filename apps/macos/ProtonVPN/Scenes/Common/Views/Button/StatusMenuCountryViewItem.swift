@@ -26,15 +26,15 @@ class StatusMenuCountryViewItem: NSCollectionViewItem {
     @IBOutlet weak var countryFlag: NSImageView!
     @IBOutlet weak var countryCodeLabel: NSTextField!
     @IBOutlet weak var button: StatusMenuItemBackground!
-    
+
     var viewModel: StatusMenuCountryItemViewModel?
-    
+
     func update(viewModel: StatusMenuCountryItemViewModel) {
         self.viewModel = viewModel
         countryFlag.image = viewModel.flag
         countryCodeLabel.attributedStringValue = viewModel.description
     }
-    
+
     @IBAction func selected(_ sender: Any) {
         if let viewModel = viewModel {
             viewModel.connect()

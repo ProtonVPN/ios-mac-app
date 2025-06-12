@@ -123,7 +123,7 @@ public final class CoreNetworking: Networking {
         @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
         #if DEBUG
-        log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
+            log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
         #endif
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
@@ -321,18 +321,18 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var appVersion: String {
-#if DEBUG
-        // App version is suffixed with `-dev` to enforce API rigour and prevent the use
-        // of deprecated functionality, ensuring errors are raised in such cases.
-        return appInfo.appVersion + "-dev"
-#else
-        // Help the backend figure out whether we're distributing through a TestFlight build.
-        if Bundle.isTestflight {
-            return appInfo.appVersion + "-beta"
-        } else {
-            return appInfo.appVersion
-        }
-#endif
+        #if DEBUG
+            // App version is suffixed with `-dev` to enforce API rigour and prevent the use
+            // of deprecated functionality, ensuring errors are raised in such cases.
+            return appInfo.appVersion + "-dev"
+        #else
+            // Help the backend figure out whether we're distributing through a TestFlight build.
+            if Bundle.isTestflight {
+                return appInfo.appVersion + "-beta"
+            } else {
+                return appInfo.appVersion
+            }
+        #endif
     }
 
     public var userAgent: String? {

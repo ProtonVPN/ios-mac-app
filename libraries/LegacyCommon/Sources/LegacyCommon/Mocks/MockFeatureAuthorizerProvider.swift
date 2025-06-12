@@ -17,94 +17,94 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import Dependencies
-import IssueReporting
+    import Foundation
+    import Dependencies
+    import IssueReporting
 
-public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
-    var featureAuthorizationMap: [String: FeatureAuthorizationResult] = [:]
+    public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
+        var featureAuthorizationMap: [String: FeatureAuthorizationResult] = [:]
 
-    func registerAuthorization<T: AppFeature>(
-        for feature: T.Type,
-        to value: FeatureAuthorizationResult
-    ) {
-        let key = Self.key(for: feature)
-        featureAuthorizationMap[key] = value
-    }
+        func registerAuthorization<T: AppFeature>(
+            for feature: T.Type,
+            to value: FeatureAuthorizationResult
+        ) {
+            let key = Self.key(for: feature)
+            featureAuthorizationMap[key] = value
+        }
 
-    func registerAuthorization<T: ModularAppFeature>(
-        forSubFeature subFeature: T,
-        to value: FeatureAuthorizationResult
-    ) {
-        let key = Self.key(for: subFeature)
-        featureAuthorizationMap[key] = value
-    }
+        func registerAuthorization<T: ModularAppFeature>(
+            forSubFeature subFeature: T,
+            to value: FeatureAuthorizationResult
+        ) {
+            let key = Self.key(for: subFeature)
+            featureAuthorizationMap[key] = value
+        }
 
-    public func authorizer<T: AppFeature>(
-        for feature: T.Type
-    ) -> () -> FeatureAuthorizationResult {
-        let key = Self.key(for: feature)
-        return {
-            guard let authorization = self.featureAuthorizationMap[key] else {
-                reportIssue("Authorization requested for `\(feature)`, but no value was registered under key `\(key)`")
-                return .failure(.requiresUpgrade)
+        public func authorizer<T: AppFeature>(
+            for feature: T.Type
+        ) -> () -> FeatureAuthorizationResult {
+            let key = Self.key(for: feature)
+            return {
+                guard let authorization = self.featureAuthorizationMap[key] else {
+                    reportIssue("Authorization requested for `\(feature)`, but no value was registered under key `\(key)`")
+                    return .failure(.requiresUpgrade)
+                }
+                return authorization
             }
-            return authorization
+        }
+
+        public func authorizer<T: ModularAppFeature>(
+            forSubFeatureOf feature: T.Type
+        ) -> (T) -> FeatureAuthorizationResult {
+            return { subFeature in
+                let key = Self.key(for: subFeature)
+                guard let authorization = self.featureAuthorizationMap[key] else {
+                    reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
+                    return .failure(.requiresUpgrade)
+                }
+                return authorization
+            }
+        }
+
+        public func authorizer<T: ModularAppFeature>(
+            for feature: T.Type
+        ) -> Authorizer<T> {
+            return Authorizer(canUse: { subFeature in
+                let key = Self.key(for: subFeature)
+                guard let authorization = self.featureAuthorizationMap[key] else {
+                    reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
+                    return .failure(.requiresUpgrade)
+                }
+                return authorization
+            })
+        }
+
+        private static func key<T: AppFeature>(for feature: T.Type) -> String {
+            "\(feature)"
+        }
+
+        private static func key<T: ModularAppFeature>(for subFeature: T) -> String {
+            "\(T.self).\(subFeature)"
         }
     }
 
-    public func authorizer<T: ModularAppFeature>(
-        forSubFeatureOf feature: T.Type
-    ) -> (T) -> FeatureAuthorizationResult {
-        return { subFeature in
-            let key = Self.key(for: subFeature)
-            guard let authorization = self.featureAuthorizationMap[key] else {
-                reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
-                return .failure(.requiresUpgrade)
-            }
-            return authorization
+    public struct ConstantFeatureAuthorizerProvider: FeatureAuthorizerProvider {
+        let result: FeatureAuthorizationResult
+
+        public init(result: FeatureAuthorizationResult) {
+            self.result = result
+        }
+
+        public func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult {
+            return { result }
+        }
+
+        public func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult {
+            return { _ in result }
+        }
+
+        public func authorizer<T: ModularAppFeature>(for feature: T.Type) -> Authorizer<T> {
+            return .init(canUse: { _ in result })
         }
     }
-
-    public func authorizer<T: ModularAppFeature>(
-        for feature: T.Type
-    ) -> Authorizer<T> {
-        return Authorizer(canUse: { subFeature in
-            let key = Self.key(for: subFeature)
-            guard let authorization = self.featureAuthorizationMap[key] else {
-                reportIssue("Authorization requested for `\(subFeature)`, but no value was registered under key `\(key)`")
-                return .failure(.requiresUpgrade)
-            }
-            return authorization
-        })
-    }
-
-    private static func key<T: AppFeature>(for feature: T.Type) -> String {
-        "\(feature)"
-    }
-
-    private static func key<T: ModularAppFeature>(for subFeature: T) -> String {
-        "\(T.self).\(subFeature)"
-    }
-}
-
-public struct ConstantFeatureAuthorizerProvider: FeatureAuthorizerProvider {
-    let result: FeatureAuthorizationResult
-
-    public init(result: FeatureAuthorizationResult) {
-        self.result = result
-    }
-
-    public func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult {
-        return { result }
-    }
-
-    public func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult {
-        return { _ in result }
-    }
-
-    public func authorizer<T: ModularAppFeature>(for feature: T.Type) -> Authorizer<T> {
-        return .init(canUse: { _ in result })
-    }
-}
 #endif

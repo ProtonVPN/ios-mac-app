@@ -28,10 +28,10 @@ class ProviderMessageTests: XCTestCase {
         let messages: [WireguardProviderRequest.Response] = [
             .ok(data: "This is a test message".data(using: .utf8)),
             .ok(data: ("This is a rather long message that will go on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on.")
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on.")
                 .data(using: .utf8)),
             .ok(data: Data(repeating: 0, count: 4096)),
             .ok(data: nil),

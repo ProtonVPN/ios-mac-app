@@ -37,7 +37,7 @@ extension ServerRepository {
               server: { _, _ in nil },
               groups: { _, _ in .recommendedCountries + .someCountries })
     }
-    
+
     public static func emptyWithUpsert() -> Self {
         .init(serverCount: { 0 }, 
               upsertServers: { _ in },

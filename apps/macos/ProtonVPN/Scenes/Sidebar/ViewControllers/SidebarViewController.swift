@@ -346,8 +346,8 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     
     private func resizeOverlayWindow() {
         guard let overlayWindowController = overlayWindowController,
-            let window = view.window,
-            let contentView = window.contentView else { return }
+              let window = view.window,
+              let contentView = window.contentView else { return }
         
         let windowRect = window.frame
         let contentRect = contentView.frame

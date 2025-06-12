@@ -106,7 +106,7 @@ public class TelemetryEventNotifier {
 
     private func reachabilityChanged(_ notification: Notification) {
         guard notification.name == .reachabilityChanged,
-            let reachability = notification.object as? Reachability else {
+              let reachability = notification.object as? Reachability else {
             return
         }
         let networkType: ConnectionDimensions.NetworkType = switch reachability.connection {

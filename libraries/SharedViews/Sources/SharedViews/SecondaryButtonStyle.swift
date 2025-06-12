@@ -17,19 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if !os(macOS)
-import SwiftUI
-import Theme
+    import SwiftUI
+    import Theme
 
-public struct SecondaryButtonStyle: ButtonStyle {
-    public init() {}
+    public struct SecondaryButtonStyle: ButtonStyle {
+        public init() {}
 
-    public func makeBody(configuration: Configuration) -> some View {
-        configuration
-            .label
-            .foregroundColor(Color(.text, .interactive))
-            .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
-            .font(.body2())
-            .padding(.vertical, .themeSpacing8)
+        public func makeBody(configuration: Configuration) -> some View {
+            configuration
+                .label
+                .foregroundColor(Color(.text, .interactive))
+                .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
+                .font(.body2())
+                .padding(.vertical, .themeSpacing8)
+        }
     }
-}
 #endif

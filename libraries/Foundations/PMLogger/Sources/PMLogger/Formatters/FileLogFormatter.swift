@@ -26,7 +26,7 @@ public class FileLogFormatter: PMLogFormatter {
     public init() {
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     }
-    
+
     public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
         let dateTime = dateFormatter.string(from: date)
         let (category, event, meta) = extract(metadata: metadata)

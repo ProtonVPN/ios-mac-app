@@ -25,10 +25,10 @@ import Cocoa
 class VerticalScrollView: NSScrollView {
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         hasHorizontalScroller = false
     }
-    
+
     override func scrollWheel(with event: NSEvent) {
         super.scrollWheel(with: event)
         if event.deltaY != 0 {

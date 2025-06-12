@@ -30,7 +30,7 @@ extension UIElement {
         )
         return self
     }
-    
+
     @discardableResult
     public func checkDoesNotExist(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         shouldWaitForExistance = false

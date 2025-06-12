@@ -40,19 +40,19 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 
 class HelpMenuViewModel {
     typealias Factory = VpnManagerFactory
-                        & NavigationServiceFactory
-                        & VpnKeychainFactory
-                        & CoreAlertServiceFactory
-                        & SystemExtensionManagerFactory
-                        & PropertiesManagerFactory
-                        & LogFileManagerFactory
-                        & LogContentProviderFactory
-                        & AuthKeychainHandleFactory
-                        & AppInfoFactory
-                        & WindowServiceFactory
-                        & VpnAuthenticationStorageFactory
+        & NavigationServiceFactory
+        & VpnKeychainFactory
+        & CoreAlertServiceFactory
+        & SystemExtensionManagerFactory
+        & PropertiesManagerFactory
+        & LogFileManagerFactory
+        & LogContentProviderFactory
+        & AuthKeychainHandleFactory
+        & AppInfoFactory
+        & WindowServiceFactory
+        & VpnAuthenticationStorageFactory
     private var factory: Factory
-    
+
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -72,12 +72,12 @@ class HelpMenuViewModel {
     func logDebugInfoString() {
         log.info("Build info: \(factory.makeAppInfo().debugInfoString)")
     }
-    
+
     func openLogsFolderAction() {
         logDebugInfoString()
         navService.openLogsFolder()
     }
-    
+
     func openWGVpnLogsFolderAction() {
         // Save log to file
         logContentProvider.getLogData(for: .wireguard).loadContent { logContent in
@@ -89,7 +89,7 @@ class HelpMenuViewModel {
     func systemExtensionTutorialAction() {
         windowService.openSystemExtensionGuideWindow(cancelledHandler: {})
     }
-    
+
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
             self.vpnManager.disconnect { [self] in
@@ -97,7 +97,7 @@ class HelpMenuViewModel {
             }
         })
     }
-    
+
     func openReportBug() {
         logDebugInfoString()
         navService.showReportBug()

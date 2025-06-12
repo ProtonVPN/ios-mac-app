@@ -37,11 +37,11 @@ extension CredentialsProvider: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
+        public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
 
-    static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
-        CredentialsProvider(getCredentials: { credentials })
-    }
+        static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
+            CredentialsProvider(getCredentials: { credentials })
+        }
     #endif
 }
 

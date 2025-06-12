@@ -55,7 +55,7 @@ extension ImagePrefetcher: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue: ImagePrefetcher = Self()
+        public static var testValue: ImagePrefetcher = Self()
     #endif
 }
 

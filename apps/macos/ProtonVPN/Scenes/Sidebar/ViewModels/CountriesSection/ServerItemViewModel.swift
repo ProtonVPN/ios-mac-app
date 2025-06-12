@@ -47,19 +47,19 @@ class ServerItemViewModel: ServerItemViewModelCore {
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
     }
-    
+
     var serverName: String {
         guard isSecureCoreEnabled else {
             return serverModel.logical.name
         }
         return Localizable.via + " " + serverModel.logical.entryCountry
     }
-    
+
     var cityName: String {
         if underMaintenance { return Localizable.maintenance }
         return serverModel.logical.city ?? ""
     }
-    
+
     var accessibilityLabel: String {
         if isUsersTierTooLow { return "\(Localizable.server ): \(serverName). \(Localizable.updateRequired)" }
         if underMaintenance { return "\(Localizable.server ): \(serverName). \(Localizable.onMaintenance)" }
@@ -70,16 +70,16 @@ class ServerItemViewModel: ServerItemViewModelCore {
         if isP2PAvailable { features.append(Localizable.p2pTitle) }
         if isSmartAvailable { features.append(Localizable.smartRoutingTitle) }
         if isStreamingAvailable { features.append(Localizable.streamingTitle) }
-        
+
         let description = "\(Localizable.server ): \(serverName), \(cityName). \(Localizable.serverLoad) \(load)%"
 
         if features.isEmpty { return description }
-            
+
         return "\(description)." + features.reduce(Localizable.featuresTitle + ": ", { result, feature in
             return result + feature + "."
         })
     }
-    
+
     var entryCountry: String? {
         guard isSecureCoreEnabled else { return nil }
         guard case let .secureCore(entryCountryCode) = serverModel.logical.kind else {
@@ -88,7 +88,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         }
         return entryCountryCode
     }
-    
+
     var isConnected: Bool {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isUsersTierTooLow
@@ -107,7 +107,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
                    appStateManager: appStateManager,
                    propertiesManager: propertiesManager)
     }
-    
+
     func upgradeAction() {
         if let legacyServerModel {
             countriesSectionViewModel.displayUpgradeMessage(legacyServerModel)

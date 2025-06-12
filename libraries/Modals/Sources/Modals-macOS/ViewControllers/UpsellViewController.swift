@@ -125,7 +125,7 @@ public final class UpsellViewController: NSViewController {
         if let timeInterval = modalType
             .changeDate?
             .timeIntervalSince(Date()),
-           timeInterval > 0 {
+            timeInterval > 0 {
             DispatchQueue.main.asyncAfter(deadline: .now() + timeInterval) { [weak self] in
                 self?.setupText()
             }

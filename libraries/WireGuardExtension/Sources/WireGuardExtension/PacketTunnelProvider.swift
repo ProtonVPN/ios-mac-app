@@ -37,11 +37,11 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     private static var atlasSecret: String {
         #if DEBUG
-        @Dependency(\.storage) var storage
-        let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
-        return secret
+            @Dependency(\.storage) var storage
+            let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
+            return secret
         #else
-        return ""
+            return ""
         #endif
     }
 
@@ -49,7 +49,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         AppContext.default = .wireGuardExtension
         self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
         self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
-        
+
         self.timerFactory = TimerFactoryImplementation()
 
         let keychainHandle = AuthKeychain.default
@@ -67,7 +67,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
             vpnAuthenticationStorage: self.vpnAuthenticationStorage,
             keychain: keychainHandle
         )
-        
+
         super.init()
 
         self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
@@ -90,7 +90,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
         let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"

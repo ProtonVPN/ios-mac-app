@@ -89,34 +89,34 @@ final class WindowServiceImplementation: WindowService {
     }
     
     func setupAppearance() {
-#if !REDESIGN
-        window.tintColor = .brandColor()
+        #if !REDESIGN
+            window.tintColor = .brandColor()
         
-        UINavigationBar.appearance().barTintColor = .backgroundColor()
-        UINavigationBar.appearance().tintColor = .normalTextColor()
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
-        UINavigationBar.appearance().isTranslucent = false
+            UINavigationBar.appearance().barTintColor = .backgroundColor()
+            UINavigationBar.appearance().tintColor = .normalTextColor()
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
+            UINavigationBar.appearance().isTranslucent = false
         
-        UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
-        UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
-        UITabBar.appearance().tintColor = .iconAccent()
-        UITabBar.appearance().unselectedItemTintColor = .iconWeak()
-        UITabBar.appearance().isTranslucent = false
+            UITabBar.appearance().backgroundColor = .secondaryBackgroundColor()
+            UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
+            UITabBar.appearance().tintColor = .iconAccent()
+            UITabBar.appearance().unselectedItemTintColor = .iconWeak()
+            UITabBar.appearance().isTranslucent = false
 
-        UISwitch.appearance().onTintColor = .brandColor()
+            UISwitch.appearance().onTintColor = .brandColor()
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.textAccent()], for: .selected)
+            UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.secondaryBackgroundColor()
-        UIPageControl.appearance().currentPageIndicatorTintColor = .brandColor()
+            UIPageControl.appearance().pageIndicatorTintColor = UIColor.secondaryBackgroundColor()
+            UIPageControl.appearance().currentPageIndicatorTintColor = .brandColor()
         
-        GSMessage.successBackgroundColor = UIColor.brandColor()
-        GSMessage.warningBackgroundColor = UIColor.notificationWarningColor()
-        GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()        
+            GSMessage.successBackgroundColor = UIColor.brandColor()
+            GSMessage.warningBackgroundColor = UIColor.notificationWarningColor()
+            GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()        
         
-        UITableView.appearance().sectionHeaderTopPadding = 0.0
-#endif
+            UITableView.appearance().sectionHeaderTopPadding = 0.0
+        #endif
     }
     
     // MARK: - Presentation

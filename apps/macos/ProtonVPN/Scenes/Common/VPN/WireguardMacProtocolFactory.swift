@@ -12,11 +12,11 @@ import LegacyCommon
 // Overridden to make use of XPC connection, available only on macOS.
 class WireguardMacProtocolFactory: WireguardProtocolFactory {
     public typealias Factory = PropertiesManagerFactory &
-                                XPCConnectionsRepositoryFactory &
-                                NETunnelProviderManagerWrapperFactory
-    
+        XPCConnectionsRepositoryFactory &
+        NETunnelProviderManagerWrapperFactory
+
     private let xpcConnectionsRepository: XPCConnectionsRepository
-    
+
     public init(bundleId: String,
                 appGroup: String,
                 factory: Factory) {
@@ -26,7 +26,7 @@ class WireguardMacProtocolFactory: WireguardProtocolFactory {
                    propertiesManager: factory.makePropertiesManager(),
                    vpnManagerFactory: factory)
     }
-    
+
     override public func logs(completion: @escaping (String?) -> Void) {
         xpcConnectionsRepository.getXpcConnection(for: SystemExtensionType.wireGuard.machServiceName).getLogs { logsData in
             guard let data = logsData, let logs = String(data: data, encoding: .utf8) else {

@@ -50,7 +50,7 @@ class ButtonMask: NSView {
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         drawMask(context: context)
-        
+
         if drawBorder {
             drawBorder(context: context)
         }

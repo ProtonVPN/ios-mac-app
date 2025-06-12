@@ -50,9 +50,9 @@ protocol WindowService: WindowControllerDelegate {
     func closeIfPresent<T: NSWindowController>(windowController: T.Type)
     
     func showLogin(viewModel: LoginViewModel)
-#if !REDESIGN
-    func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol)
-#endif
+    #if !REDESIGN
+        func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol)
+    #endif
     
     func openAbout(factory: AboutViewController.Factory)
     func openAcknowledgements()
@@ -156,43 +156,43 @@ class WindowServiceImplementation: WindowService {
         mainWindowController = windowController
     }
 
-#if !REDESIGN
-    func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
-        NSApp.setActivationPolicy(.regular)
+    #if !REDESIGN
+        func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+            NSApp.setActivationPolicy(.regular)
         
-        if let windowController = mainWindowController {
-            windowController.close()
+            if let windowController = mainWindowController {
+                windowController.close()
+            }
+        
+            let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
+            let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("Sidebar")) as! SidebarViewController
+            viewController.appStateManager = appStateManager
+            viewController.vpnGateway = vpnGateway
+            viewController.navService = navService
+            viewController.factory = factory
+        
+            let windowController = SidebarWindowController(viewController: viewController)
+            windowController.delegate = self
+            windowController.showWindow(self)
+            windowController.window?.makeMain()
+        
+            mainWindowController = windowController
+            showInitialModals()
         }
-        
-        let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
-        let viewController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("Sidebar")) as! SidebarViewController
-        viewController.appStateManager = appStateManager
-        viewController.vpnGateway = vpnGateway
-        viewController.navService = navService
-        viewController.factory = factory
-        
-        let windowController = SidebarWindowController(viewController: viewController)
-        windowController.delegate = self
-        windowController.showWindow(self)
-        windowController.window?.makeMain()
-        
-        mainWindowController = windowController
-        showInitialModals()
-    }
 
-    func showInitialModals() {
-        // TODO: VPNAPPL-2831 actually make sure we don't show what's new after a specified deadline
-        propertiesManager.showWhatsNewModal = false
+        func showInitialModals() {
+            // TODO: VPNAPPL-2831 actually make sure we don't show what's new after a specified deadline
+            propertiesManager.showWhatsNewModal = false
 
-        guard propertiesManager.showWhatsNewModal else {
-            return
+            guard propertiesManager.showWhatsNewModal else {
+                return
+            }
+            propertiesManager.showWhatsNewModal = false
+
+            presentKeyModal(viewController: ModalsFactory.whatsNewViewController())
         }
-        propertiesManager.showWhatsNewModal = false
 
-        presentKeyModal(viewController: ModalsFactory.whatsNewViewController())
-    }
-
-#endif
+    #endif
     
     func openAbout(factory: AboutViewController.Factory) {
         let controller = AboutViewController()

@@ -805,11 +805,11 @@ public final class VpnManager: VpnManagerProtocol {
     /// - note: This does nothing on MacOS, since we rely on the host app to manage certificates.
     private func setRemoteAuthenticationEndpoint(provider: ProviderMessageSender?) {
         #if os(iOS)
-        guard let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient else {
-            log.error("Failed to set connection provider", category: .connection, metadata: ["authenticationManagerType": "\(type(of: vpnAuthentication))"])
-            return
-        }
-        remoteVpnAuthentication.setConnectionProvider(provider: provider)
+            guard let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient else {
+                log.error("Failed to set connection provider", category: .connection, metadata: ["authenticationManagerType": "\(type(of: vpnAuthentication))"])
+                return
+            }
+            remoteVpnAuthentication.setConnectionProvider(provider: provider)
         #endif
     }
 
@@ -910,22 +910,22 @@ public final class VpnManager: VpnManagerProtocol {
         }
     }
 
-#if os(macOS)
-    private func updatePlutoniumStateIfNeeded() async throws {
-        @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
-        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-        guard FeatureFlagsRepository.shared
-            .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
-            try await plutoniumManager.stop()
-            return
-        }
+    #if os(macOS)
+        private func updatePlutoniumStateIfNeeded() async throws {
+            @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
+            @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+            guard FeatureFlagsRepository.shared
+                .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
+                try await plutoniumManager.stop()
+                return
+            }
 
-        switch self.state {
-        case .connected:
-            try await plutoniumManager.start()
-        default:
-            try await plutoniumManager.stop()
+            switch self.state {
+            case .connected:
+                try await plutoniumManager.start()
+            default:
+                try await plutoniumManager.stop()
+            }
         }
-    }
-#endif
+    #endif
 }

@@ -151,7 +151,7 @@ public struct SettingsView: View {
         }
     }
 
-// MARK: Section Views
+    // MARK: Section Views
 
     private var accountSection: some View {
         section(named: Localizable.settingsSectionTitleAccount) {

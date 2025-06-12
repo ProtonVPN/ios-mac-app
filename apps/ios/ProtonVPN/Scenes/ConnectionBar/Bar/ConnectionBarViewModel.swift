@@ -30,13 +30,13 @@ import Domain
 
 final class ConnectionBarViewModel {
     private let appStateManager: AppStateManager
-    
+
     private var timer = Timer()
     private var connectedDate = Date()
-    
+
     var onAppDisplayStateChanged: ((AppDisplayState) -> Void)?
     var updateConnected: (() -> Void)?
-    
+
     init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
 
@@ -78,7 +78,7 @@ final class ConnectionBarViewModel {
         dispatchAssert(condition: .onQueue(.main))
         updateState(with: appStateManager.state)
     }
-    
+
     @objc private func updateState(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
@@ -103,7 +103,7 @@ final class ConnectionBarViewModel {
             self.timer.invalidate()
         }
     }
-    
+
     private func runTimer() {
         timer = Timer(fireAt: Date(), interval: 1, target: self, selector: (#selector(self.timerFired)), userInfo: nil, repeats: true)
         RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
@@ -114,14 +114,14 @@ final class ConnectionBarViewModel {
             self?.updateConnected?()
         }
     }
-    
+
     func timeString() -> String {
         let time: TimeInterval = if case AppState.connected = appStateManager.state {
             Date().timeIntervalSince(connectedDate)
         } else {
             0
         }
-        
+
         return time.asColonSeparatedString
     }
 }

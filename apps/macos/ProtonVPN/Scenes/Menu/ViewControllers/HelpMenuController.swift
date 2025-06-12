@@ -34,38 +34,38 @@ class HelpMenuController: NSObject {
     @IBOutlet weak var helpItem: NSMenuItem!
     @IBOutlet weak var systemExtensionTutorialItem: NSMenuItem!
     @IBOutlet weak var clearApplicationDataItem: NSMenuItem!
-    
+
     private var viewModel: HelpMenuViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupPersistentView()
     }
-    
+
     func update(with viewModel: HelpMenuViewModel) {
         self.viewModel = viewModel
     }
-    
+
     // MARK: - Private
 
     private func setupPersistentView() {
         helpMenu.title = Localizable.help
-        
+
         reportAnIssueItem.title = Localizable.reportAnIssue
         reportAnIssueItem.isEnabled = true
         reportAnIssueItem.target = self
         reportAnIssueItem.action = #selector(reportAnIssueItemAction)
-        
+
         logsItem.title = Localizable.viewLogs
         logsItem.isEnabled = true
         logsItem.target = self
         logsItem.action = #selector(logsAction)
-        
+
         logsWGItem.title = Localizable.wireguardLogs
         logsWGItem.isEnabled = true
         logsWGItem.target = self
         logsWGItem.action = #selector(openWGLogsAction)
-        
+
         clearApplicationDataItem.title = Localizable.clearApplicationData
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self

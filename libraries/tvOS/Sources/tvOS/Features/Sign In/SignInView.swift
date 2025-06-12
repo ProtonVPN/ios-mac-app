@@ -84,7 +84,7 @@ struct StepView: View {
                 .clipShape(Circle())
             Text(title)
                 .font(.title3) +
-            Text(accent)
+                Text(accent)
                 .font(.title3)
                 .bold()
                 .foregroundStyle(Color(.text, .interactive))

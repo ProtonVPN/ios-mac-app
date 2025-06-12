@@ -20,7 +20,7 @@ class SettingsTests: ProtonVPNUITests {
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()
     }
-    
+
     func testKillSwitchAndLANConnectionOnOff() {
         homeRobot
             .goToSettingsTab()
@@ -29,7 +29,7 @@ class SettingsTests: ProtonVPNUITests {
             .turnLanConnectionOn()
             .verify.lanConnectionIsEnabled()
     }
-    
+
     func testSmartProtocolOffAndOn() {
         homeRobot
             .goToSettingsTab()
