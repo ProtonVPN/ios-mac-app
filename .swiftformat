@@ -17,4 +17,4 @@
 --complexattrs prev-line
 
 # excludes
---exclude external,Build
+--exclude external,Build,libraries/Foundations/Strings/Sources/Strings/Strings.swift,**/Assets.swift,**/.build
