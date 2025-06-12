@@ -62,7 +62,7 @@ class VpnConnectionPreparer {
             return
         }
 
-        selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
+        selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { vpnProtocol, ports in
             let entryIp = serverIp.entryIp(using: vpnProtocol) ?? serverIp.entryIp
             log.info(
                 "Connecting with \(vpnProtocol) to \(server.name) via \(String(describing: entryIp)):\(ports)",
@@ -140,7 +140,7 @@ class VpnConnectionPreparer {
                 smartProtocolConfig: smartProtocolConfig,
                 wireguardConfig: wireguardConfig
             )
-            smartProtocol?.determineBestProtocol(server: serverIp) { (vpnProtocol, ports) in
+            smartProtocol?.determineBestProtocol(server: serverIp) { vpnProtocol, ports in
                 completion(vpnProtocol, ports)
             }
 

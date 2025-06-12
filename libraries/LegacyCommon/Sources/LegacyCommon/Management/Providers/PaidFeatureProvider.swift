@@ -72,7 +72,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     /// Deletes any previous value found to prevent it from acting as a new default value for all users
     private func fetchAndDeleteStoredLegacyValue<T: ProvidableFeature>(
         for feature: T.Type,
-        using conversion: ((T.LegacyStorageType) -> T)
+        using conversion: (T.LegacyStorageType) -> T
     ) -> T? {
         // Check if there is a decodable value stored for the global setting
         do {

@@ -61,7 +61,7 @@ public struct ReconnectCountdown: View {
     }
 
     var ratioWaited: Double {
-        (displayTimeRemaining) / totalDuration
+        displayTimeRemaining / totalDuration
     }
 
     var ratioWaitedInDegrees: Double {

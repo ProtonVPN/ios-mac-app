@@ -43,7 +43,7 @@ class StreamOptionCVItem: NSCollectionViewItem {
             guard let url = viewModel.url else { return }
             
             serviceIV.sd_cancelCurrentImageLoad()
-            serviceIV.sd_setImage(with: url) { [weak self] (_, _, _, _) in
+            serviceIV.sd_setImage(with: url) { [weak self] _, _, _, _ in
                 self?.serviceIV.isHidden = false
                 self?.serviceLbl.isHidden = true
             }

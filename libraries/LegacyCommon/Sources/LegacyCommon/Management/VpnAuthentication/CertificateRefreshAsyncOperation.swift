@@ -50,7 +50,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         self.completion = completion
     }
 
-    private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
+    private func finish(_ result: Result<VpnAuthenticationData, Error>) {
         completion?(result)
         finish()
     }

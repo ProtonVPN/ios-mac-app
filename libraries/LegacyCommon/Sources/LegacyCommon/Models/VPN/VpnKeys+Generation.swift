@@ -24,14 +24,14 @@ import VPNShared
 extension PublicKey {
     init(keyPair: Ed25519KeyPair) {
         var error: NSError?
-        self.init(rawRepresentation: ([UInt8])(keyPair.publicKeyBytes()!),
+        self.init(rawRepresentation: [UInt8](keyPair.publicKeyBytes()!),
                   derRepresentation: keyPair.publicKeyPKIXPem(&error))
     }
 }
 
 extension PrivateKey {
     init(keyPair: Ed25519KeyPair) {
-        self.init(rawRepresentation: ([UInt8])(keyPair.privateKeyBytes()!),
+        self.init(rawRepresentation: [UInt8](keyPair.privateKeyBytes()!),
                   derRepresentation: keyPair.privateKeyPKIXPem(),
                   base64X25519Representation: keyPair.toX25519Base64())
     }

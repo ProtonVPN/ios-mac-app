@@ -189,7 +189,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let action = UIContextualAction(style: .destructive, title: Localizable.delete) { [weak self] ( _, _, completionHandler) in
+        let action = UIContextualAction(style: .destructive, title: Localizable.delete) { [weak self] _, _, completionHandler in
             guard let self else {
                 completionHandler(false)
                 return

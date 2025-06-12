@@ -40,9 +40,9 @@ class ElectronViewContainer: UIView {
             return // animation already running
         }
         
-        let electronPoint1 = CGPoint(x: (self.frame.width * 0.124), y: (self.frame.height * 0.337))
-        let electronPoint2 = CGPoint(x: (self.frame.width * 0.615), y: (self.frame.height * 0.891))
-        let electronPoint3 = CGPoint(x: (self.frame.width * 0.881), y: (self.frame.height * 0.109))
+        let electronPoint1 = CGPoint(x: self.frame.width * 0.124, y: self.frame.height * 0.337)
+        let electronPoint2 = CGPoint(x: self.frame.width * 0.615, y: self.frame.height * 0.891)
+        let electronPoint3 = CGPoint(x: self.frame.width * 0.881, y: self.frame.height * 0.109)
         let electronWidth1: CGFloat = frame.width * 0.4
         let electronWidth2: CGFloat = frame.width * 0.15
         let electronWidth3: CGFloat = frame.width * 0.25

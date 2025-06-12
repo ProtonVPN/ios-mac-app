@@ -42,7 +42,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .onHover {
                 isHovered = $0
                 #if canImport(Cocoa)
-                    if ($0) {
+                    if $0 {
                         NSCursor.pointingHand.push()
                     } else {
                         NSCursor.pop()

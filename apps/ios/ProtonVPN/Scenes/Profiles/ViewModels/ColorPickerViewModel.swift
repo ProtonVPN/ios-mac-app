@@ -109,7 +109,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
             return
         }
         
-        if let index = colors.enumerated().first(where: { (index, color) -> Bool in
+        if let index = colors.enumerated().first(where: { index, color -> Bool in
             color.hexRepresentation == newColor.hexRepresentation
         })?.offset {
             selectedColorIndex = index

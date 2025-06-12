@@ -1038,7 +1038,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             certRefreshRequest: XCTestExpectation(description: "Cert refresh request")
         )
 
-        certRefreshCallback = { (_, _) in
+        certRefreshCallback = { _, _ in
             XCTFail("Shouldn't try to refresh before refresh is requested")
         }
 
@@ -1054,7 +1054,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         wait(for: [expectations.managerStarted, expectations.managerSuspended, expectations.managerResumed], timeout: expectationTimeout, enforceOrder: true)
 
-        certRefreshCallback = { (_, _) in
+        certRefreshCallback = { _, _ in
             expectations.certRefreshRequest.fulfill()
         }
 

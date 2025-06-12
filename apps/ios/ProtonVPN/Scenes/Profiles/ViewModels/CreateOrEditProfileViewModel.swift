@@ -237,7 +237,7 @@ class CreateOrEditProfileViewModel: NSObject {
             title: Localizable.featureSecureCore,
             state: { [unowned self] in .available(enabled: self.state == .secureCore, interactive: true) },
             upsell: { [weak self] in self?.alertService.push(alert: SecureCoreUpsellAlert()) },
-            handler: { [weak self] (_, callback) in
+            handler: { [weak self] _, callback in
                 self?.toggleState(completion: { [weak self] on in
                     callback(on)
                     self?.contentChanged?()
@@ -285,7 +285,7 @@ class CreateOrEditProfileViewModel: NSObject {
             upsell: {
                 // No Upsell: free users cannot be shown this UI since only paid users are allowed to create or edit profiles
             },
-            handler: { [weak self] (_, callback) in
+            handler: { [weak self] _, callback in
                 self?.toggleDefault()
                 callback(self?.isDefaultProfile == true)
             }
@@ -535,7 +535,7 @@ extension CreateOrEditProfileViewModel {
     }
 
     private func orderedTiers() -> [Int] {
-        [Int.freeTier, Int.paidTier, Int.internalTier].sorted(by: { (tier1, tier2) -> Bool in
+        [Int.freeTier, Int.paidTier, Int.internalTier].sorted(by: { tier1, tier2 -> Bool in
             if userTier >= tier1 && userTier >= tier2 ||
                 userTier < tier1 && userTier < tier2 { // sort within available then non-available groups
                 return tier1 > tier2

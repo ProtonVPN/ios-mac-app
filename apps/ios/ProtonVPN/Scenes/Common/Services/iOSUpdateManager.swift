@@ -86,7 +86,7 @@ final class iOSUpdateManager: UpdateChecker {
             delegateQueue: OperationQueue.main
         )
 
-        let task = session.dataTask(with: updateURL) { (data, response, error) in
+        let task = session.dataTask(with: updateURL) { data, response, error in
             let result: Result<[String: Any], Error>
             defer {
                 executeOnUIThread {

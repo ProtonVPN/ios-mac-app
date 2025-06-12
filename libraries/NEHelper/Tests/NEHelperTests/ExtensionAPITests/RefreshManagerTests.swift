@@ -78,7 +78,7 @@ private class TestRefreshManager: RefreshManager {
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 
-    var workCallback: (() -> Void)
+    var workCallback: () -> Void
 
     override func work() {
         workCallback()

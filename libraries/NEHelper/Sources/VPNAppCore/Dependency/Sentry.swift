@@ -24,7 +24,7 @@ public final class SentryHelper {
             return
         }
 
-        SentrySDK.start { (options) in
+        SentrySDK.start { options in
             options.dsn = dsn
             options.debug = false
             options.enableAutoSessionTracking = false

@@ -228,7 +228,7 @@ class CountryItemViewModel {
     private lazy var plusServerViewModels: [ServerItemViewModel] = serverViewModels(for: servers.filter(\.logical.tier.isPaidTier))
 
     private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
-        return servers.map { (serverInfo) -> ServerItemViewModel in
+        return servers.map { serverInfo -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
                 return ServerItemViewModel(
@@ -264,7 +264,7 @@ class CountryItemViewModel {
             serverTypes.append((tier: 2, viewModels: plusServerViewModels))
         }
 
-        serverTypes.sort(by: { (serverGroup1, serverGroup2) -> Bool in
+        serverTypes.sort(by: { serverGroup1, serverGroup2 -> Bool in
             if userTier >= serverGroup1.tier && userTier >= serverGroup2.tier ||
                 userTier < serverGroup1.tier && userTier < serverGroup2.tier { // sort within available then non-available groups
                 return serverGroup1.tier > serverGroup2.tier

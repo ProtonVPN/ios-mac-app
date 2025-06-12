@@ -285,10 +285,10 @@ class MapSectionViewModel {
     }
     
     private func standardConnections() -> [ConnectionViewModel] {
-        return annotations.filter({ (annotation) -> Bool in
+        return annotations.filter({ annotation -> Bool in
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
             return annotation.isConnected
-        }).map({ (annotation) -> ConnectionViewModel in
+        }).map({ annotation -> ConnectionViewModel in
             return ConnectionViewModel(.connected, fromHomeTo: annotation)
         })
     }

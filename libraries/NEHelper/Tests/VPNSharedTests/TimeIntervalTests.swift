@@ -44,9 +44,9 @@ class TimeIntervalTests: XCTestCase {
     func testTruncatesUntilMinimumUnit() {
         XCTAssertEqual(TimeInterval(minutes: 12, seconds: 34).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "12:34")
         XCTAssertEqual(TimeInterval(minutes: 12, seconds: 34).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:12:34")
-        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:00:01")
-        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "00:01")
-        XCTAssertEqual((TimeInterval(1)).asColonSeparatedString(maxUnit: .day, minUnit: .second), "01")
+        XCTAssertEqual(TimeInterval(1).asColonSeparatedString(maxUnit: .day, minUnit: .hour), "00:00:01")
+        XCTAssertEqual(TimeInterval(1).asColonSeparatedString(maxUnit: .day, minUnit: .minute), "00:01")
+        XCTAssertEqual(TimeInterval(1).asColonSeparatedString(maxUnit: .day, minUnit: .second), "01")
     }
 
     func testFirstUnit() {

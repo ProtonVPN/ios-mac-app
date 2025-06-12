@@ -120,7 +120,7 @@ extension ServerRepository {
                         if case .gateway = $0.kind { return true }
                         return false
                     }, by: \.kind)
-                        .compactMap { (key, values) in
+                        .compactMap { key, values in
                             guard let first = values.first else { return nil }
                             return .init(
                                 kind: key,

@@ -198,7 +198,7 @@ class MapViewModel: SecureCoreToggleHandler {
             connectionStatusService: connectionStatusService
         )
 
-        if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
+        if let oldAnnotationViewModel = countryExitAnnotations.first(where: { oldAnnotationViewModel -> Bool in
             return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode
         }) {
             annotationViewModel.viewState = oldAnnotationViewModel.viewState
@@ -240,7 +240,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 location: LocationUtility.coordinate(forCountry: server.logical.entryCountryCode),
                 vpnGateway: vpnGateway
             )
-            if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
+            if let oldEntry = entryCountries.first(where: { element -> Bool in return entryCountry == element }) {
                 entryCountry = oldEntry
             }
             entryCountry.addExitCountryCode(server.logical.exitCountryCode)
@@ -277,8 +277,8 @@ class MapViewModel: SecureCoreToggleHandler {
     @objc private func connectionChanged() {
         if let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             // draw connection line
-            if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),
-               let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {
+            if let entryCountry = secureCoreEntryAnnotations.first(where: { element -> Bool in element.countryCode == activeServer.entryCountryCode }),
+               let exitCountry = countryExitAnnotations.first(where: { element -> Bool in element.countryCode == activeServer.exitCountryCode }) {
                 activeConnection = ConnectionViewModel(.connected, between: entryCountry, and: exitCountry)
                 if exitCountry.viewState == .selected {
                     entryCountry.highlight(true)

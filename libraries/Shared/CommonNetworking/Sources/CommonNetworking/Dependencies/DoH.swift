@@ -68,7 +68,7 @@ public class DoHVPN: DoH, ServerConfig {
         return "http://protonstatus.com"
     }
 
-    public let isAppStateNotificationConnected: ((Notification) -> Bool)
+    public let isAppStateNotificationConnected: (Notification) -> Bool
 
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {

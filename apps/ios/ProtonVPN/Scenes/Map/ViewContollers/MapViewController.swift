@@ -169,7 +169,7 @@ final class MapViewController: UIViewController {
             }
         }
         
-        viewModel?.connections.forEach({ (connection) in
+        viewModel?.connections.forEach({ connection in
             let connectionView = ConnectionView(frame: CGRect.zero, viewModel: connection)
             mapView.addSubview(connectionView)
             positionConnectionInMap(connectionView)
@@ -238,7 +238,7 @@ final class MapViewController: UIViewController {
             } else {
                 return nil
             }
-        }.sorted { (view1, view2) -> Bool in
+        }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
         }
         
@@ -248,7 +248,7 @@ final class MapViewController: UIViewController {
             } else {
                 return nil
             }
-        }.sorted { (view1, view2) -> Bool in
+        }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
         }
         
@@ -258,7 +258,7 @@ final class MapViewController: UIViewController {
             } else {
                 return nil
             }
-        }.sorted { (view1, view2) -> Bool in
+        }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
         }
         
@@ -268,7 +268,7 @@ final class MapViewController: UIViewController {
             } else {
                 return nil
             }
-        }.sorted { (view1, view2) -> Bool in
+        }.sorted { view1, view2 -> Bool in
             return view1.frame.origin.y < view2.frame.origin.y
         }
         

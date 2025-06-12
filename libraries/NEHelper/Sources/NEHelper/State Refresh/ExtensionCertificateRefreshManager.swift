@@ -22,7 +22,7 @@ public enum CertificateRefreshError: Error {
     case internalError(message: String)
 }
 
-public typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) -> Void)
+public typealias CertificateRefreshCompletion = (Result<(), CertificateRefreshError>) -> Void
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.

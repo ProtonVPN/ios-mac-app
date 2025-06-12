@@ -29,7 +29,7 @@ import TimerMock
 /// This object is used in network extensions for things like refreshing the connection's certificate
 /// and checking the maintenance status of servers.
 class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
-    typealias MockEndpointBlock = ((URLRequest, @escaping MockDataTask.CompletionCallback) -> ())
+    typealias MockEndpointBlock = (URLRequest, @escaping MockDataTask.CompletionCallback) -> ()
 
     let expectationTimeout: TimeInterval = 10
 

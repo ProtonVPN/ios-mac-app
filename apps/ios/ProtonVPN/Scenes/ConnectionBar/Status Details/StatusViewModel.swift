@@ -500,7 +500,7 @@ class StatusViewModel {
             upsell: {
                 // No Upsell: This UI is shown only for paid users when NetShieldStats feature flag is off
             },
-            handler: { (toggleOn, _) in
+            handler: { toggleOn, _ in
                 self.changeNetShield(to: toggleOn ? self.netShieldPropertyProvider.lastActiveNetShieldType : .off) { _ in }
             }
         ))

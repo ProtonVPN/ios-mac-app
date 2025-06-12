@@ -41,8 +41,8 @@ class VpnServerSelector {
     public var changeActiveServerType: ((_ serverType: ServerType) -> Void)?
     public var getCurrentAppState: AppStateGetter
     public var notifyResolutionUnavailable: ResolutionNotification?
-    typealias AppStateGetter = (() -> AppState)
-    typealias ResolutionNotification = ((_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void)
+    typealias AppStateGetter = () -> AppState
+    typealias ResolutionNotification = (_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void
 
     // Settings for selection
     private var serverTypeToggle: ServerType

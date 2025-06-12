@@ -230,7 +230,7 @@ struct AppFeature {
         @Dependency(\.dohConfiguration) var doh
         PMLog.setExternalLoggerHost(doh.defaultHost)
 
-        ProtonCoreLog.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .trace:
                 log.debug("\(message)", category: .core)

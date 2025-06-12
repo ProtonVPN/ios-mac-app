@@ -53,7 +53,7 @@ class IosUiAlertService: UIAlertService {
     }
     
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        return !currentAlerts.contains(where: { (currentAlert) -> Bool in
+        return !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }

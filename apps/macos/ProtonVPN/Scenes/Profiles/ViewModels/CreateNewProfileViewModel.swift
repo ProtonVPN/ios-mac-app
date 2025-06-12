@@ -164,7 +164,7 @@ class CreateNewProfileViewModel {
             handler: { [weak self] in self?.update(countryIndex: nil) }
         )] +
             // Countries by index in their grouping
-            state.serverGroups.enumerated().map { (index, grouping) in
+            state.serverGroups.enumerated().map { index, grouping in
                 PopUpButtonItemViewModel(
                     title: countryDescriptor(for: grouping),
                     checked: state.countryIndex == index,

@@ -62,7 +62,7 @@ extension iOSNetworkingDelegate {
         set { humanVerify?.paymentDelegateForLoginAndSignup = newValue }
     }
 
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping (HumanVerifyFinishReason) -> Void) {
         humanVerify?.onHumanVerify(parameters: parameters, currentURL: currentURL, completion: completion)
     }
 

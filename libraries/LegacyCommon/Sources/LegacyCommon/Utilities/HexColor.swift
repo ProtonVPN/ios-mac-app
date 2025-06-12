@@ -80,7 +80,7 @@ private func convert2Hex( _ red: CGFloat, _ green: CGFloat, _ blue: CGFloat, _ a
     let red = Int((red * 255.0).rounded())
     let green = Int((green * 255.0).rounded())
     let blue = Int((blue * 255.0).rounded())
-    let hex = (red << 16) | (green << 8) | (blue)
+    let hex = (red << 16) | (green << 8) | blue
     return hex
 }
 

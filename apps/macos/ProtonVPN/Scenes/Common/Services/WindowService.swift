@@ -326,7 +326,7 @@ class WindowServiceImplementation: WindowService {
     }
     
     private func closeKeyModalDuplicates(of viewController: NSViewController, in parent: NSViewController) {
-        parent.presentedViewControllers?.forEach { (presented) in
+        parent.presentedViewControllers?.forEach { presented in
             if presented == viewController {
                 parent.dismiss(presented)
             }

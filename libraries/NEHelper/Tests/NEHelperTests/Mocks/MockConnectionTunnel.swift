@@ -34,7 +34,7 @@ struct MockDataTaskFactory: DataTaskFactory {
 }
 
 struct MockDataTask: DataTaskProtocol {
-    typealias CompletionCallback = ((Data?, URLResponse?, Error?) -> Void)
+    typealias CompletionCallback = (Data?, URLResponse?, Error?) -> Void
 
     let request: URLRequest
     let dataTaskFactory: MockDataTaskFactory
@@ -137,9 +137,9 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 }
 
 class MockConnectionTunnelFactory: ConnectionTunnelFactory {
-    typealias StateObservingCallback = ((MockConnectionTunnel) -> ())
-    typealias DataReadCallback = ((MockConnectionTunnel) throws -> (Data))
-    typealias DataWriteCallback = ((MockConnectionTunnel, Data) throws -> (Void))
+    typealias StateObservingCallback = (MockConnectionTunnel) -> ()
+    typealias DataReadCallback = (MockConnectionTunnel) throws -> (Data)
+    typealias DataWriteCallback = (MockConnectionTunnel, Data) throws -> (Void)
 
     let stateObservingCallback: StateObservingCallback
     let dataReadCallback: DataReadCallback

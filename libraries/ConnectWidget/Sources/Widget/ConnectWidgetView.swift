@@ -54,7 +54,7 @@ public struct ConnectWidgetView : View {
                     ServerInfoView(entry: entry)
                     VStack(spacing: .themeSpacing16) {
                         ButtonsView(entry: entry)
-                        if (widgetFamily == .systemLarge) {
+                        if widgetFamily == .systemLarge {
                             RecentsView(entry: entry, geometry: geometry)
                         }
                     }

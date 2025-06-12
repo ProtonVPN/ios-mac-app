@@ -27,7 +27,7 @@ public struct WidgetSettingsView: View {
     public init() {}
 
     public var body: some View {
-        ScrollView() {
+        ScrollView {
             VStack(alignment: .leading, spacing: .themeSpacing24) {
                 LottieView(animation: .widgetAdoption)
                     .playing(loopMode: .loop)

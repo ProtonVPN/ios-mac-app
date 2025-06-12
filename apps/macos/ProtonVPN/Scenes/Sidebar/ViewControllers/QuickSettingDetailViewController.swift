@@ -148,7 +148,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     func reloadOptions() {
         var needsUpgrade = false
-        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { (index, presenter) in
+        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { index, presenter in
             let thisNeedsUpgrade = presenter.requiresUpdate || presenter.requiresBusinessUpdate
             defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
 

@@ -31,51 +31,51 @@ class SemanticVersionTests: XCTestCase {
     }
     
     func testEquality() throws {
-        XCTAssertTrue(try SemanticVersion("1.2.3") > (SemanticVersion("1.2.2")))
-        XCTAssertTrue(try SemanticVersion("1.2.3") < (SemanticVersion("2.0.0")))
-        XCTAssertTrue(try SemanticVersion("1.2.3") == (SemanticVersion("1.2.3")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") > SemanticVersion("1.2.2"))
+        XCTAssertTrue(try SemanticVersion("1.2.3") < SemanticVersion("2.0.0"))
+        XCTAssertTrue(try SemanticVersion("1.2.3") == SemanticVersion("1.2.3"))
     }
     
     func testPreRelease() throws {
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (SemanticVersion("1.2.2-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (SemanticVersion("2.0.0-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") == (SemanticVersion("1.2.3-beta")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > SemanticVersion("1.2.2-beta"))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < SemanticVersion("2.0.0-beta"))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") == SemanticVersion("1.2.3-beta"))
         
-        XCTAssertTrue(try SemanticVersion("1.2.3") > (SemanticVersion("1.2.3-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (SemanticVersion("1.2.3")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (SemanticVersion("1.2.3-alpha")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") > SemanticVersion("1.2.3-beta"))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < SemanticVersion("1.2.3"))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > SemanticVersion("1.2.3-alpha"))
         
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha") < (SemanticVersion("1.0.0-alpha.1")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.1") < (SemanticVersion("1.0.0-alpha.beta")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.beta") < (SemanticVersion("1.0.0-beta")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-beta") < (SemanticVersion("1.0.0-beta.2")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha") < SemanticVersion("1.0.0-alpha.1"))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.1") < SemanticVersion("1.0.0-alpha.beta"))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.beta") < SemanticVersion("1.0.0-beta"))
+        XCTAssertTrue(try SemanticVersion("1.0.0-beta") < SemanticVersion("1.0.0-beta.2"))
 //        XCTAssertTrue(try SemanticVersion("1.0.0-beta.2") < (try SemanticVersion("1.0.0-beta.11"))) // Doesn't work
-        XCTAssertTrue(try SemanticVersion("1.0.0-beta.11") < (SemanticVersion("1.0.0-rc.1")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-rc.1") < (SemanticVersion("1.0.0")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-beta.11") < SemanticVersion("1.0.0-rc.1"))
+        XCTAssertTrue(try SemanticVersion("1.0.0-rc.1") < SemanticVersion("1.0.0"))
     }
     
     // MARK: - Comparing strings directly
     
     func testStringVersionComparison() throws {
-        XCTAssertEqual(("1.0.0".compareVersion(to: "1.0.0")), .orderedSame)
-        XCTAssertEqual(("1.1.0".compareVersion(to: "1.1.0")), .orderedSame)
-        XCTAssertEqual(("1.2.1".compareVersion(to: "1.2.1")), .orderedSame)
+        XCTAssertEqual("1.0.0".compareVersion(to: "1.0.0"), .orderedSame)
+        XCTAssertEqual("1.1.0".compareVersion(to: "1.1.0"), .orderedSame)
+        XCTAssertEqual("1.2.1".compareVersion(to: "1.2.1"), .orderedSame)
         
-        XCTAssertEqual(("1.0.0".compareVersion(to: "1.0.1")), .orderedAscending)
-        XCTAssertEqual(("1.0.0".compareVersion(to: "1.1.0")), .orderedAscending)
-        XCTAssertEqual(("1.2.1".compareVersion(to: "2.2.1")), .orderedAscending)
-        XCTAssertEqual(("1.99.99".compareVersion(to: "2.0.0")), .orderedAscending)
-        XCTAssertEqual(("1.9.0".compareVersion(to: "1.10.0")), .orderedAscending)
+        XCTAssertEqual("1.0.0".compareVersion(to: "1.0.1"), .orderedAscending)
+        XCTAssertEqual("1.0.0".compareVersion(to: "1.1.0"), .orderedAscending)
+        XCTAssertEqual("1.2.1".compareVersion(to: "2.2.1"), .orderedAscending)
+        XCTAssertEqual("1.99.99".compareVersion(to: "2.0.0"), .orderedAscending)
+        XCTAssertEqual("1.9.0".compareVersion(to: "1.10.0"), .orderedAscending)
         
-        XCTAssertEqual(("1.0.1".compareVersion(to: "1.0.0")), .orderedDescending)
-        XCTAssertEqual(("1.1.0".compareVersion(to: "1.0.0")), .orderedDescending)
-        XCTAssertEqual(("1.0.0".compareVersion(to: "0.1.0")), .orderedDescending)
-        XCTAssertEqual(("2.0.0".compareVersion(to: "1.9.9")), .orderedDescending)
+        XCTAssertEqual("1.0.1".compareVersion(to: "1.0.0"), .orderedDescending)
+        XCTAssertEqual("1.1.0".compareVersion(to: "1.0.0"), .orderedDescending)
+        XCTAssertEqual("1.0.0".compareVersion(to: "0.1.0"), .orderedDescending)
+        XCTAssertEqual("2.0.0".compareVersion(to: "1.9.9"), .orderedDescending)
     }
     
     func testWrongVersionsComparisons() throws {
-        XCTAssertEqual(("1.0.0".compareVersion(to: "1.0")), .orderedDescending)
-        XCTAssertEqual(("1.0".compareVersion(to: "1.0.0")), .orderedAscending)
-        XCTAssertEqual(("1.0.0".compareVersion(to: "1.0.x")), .orderedSame)
+        XCTAssertEqual("1.0.0".compareVersion(to: "1.0"), .orderedDescending)
+        XCTAssertEqual("1.0".compareVersion(to: "1.0.0"), .orderedAscending)
+        XCTAssertEqual("1.0.0".compareVersion(to: "1.0.x"), .orderedSame)
     }
 }

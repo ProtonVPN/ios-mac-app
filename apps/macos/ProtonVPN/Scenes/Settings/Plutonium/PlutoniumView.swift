@@ -376,7 +376,7 @@ public struct PlutoniumView: View {
         .background(Color(.background, (operation == .remove && dragOver) ? [.transparent, .hovered] : [.transparent]))
         .clipRectangle(cornerRadius: .radius8)
         .themeBorder(style: [],
-                     dashed: (operation == .remove && dragOver),
+                     dashed: operation == .remove && dragOver,
                      lineWidth: (operation == .remove && dragOver) ? 2 : 0,
                      cornerRadius: .radius8)
     }

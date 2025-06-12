@@ -31,7 +31,7 @@ extension PublicKey {
             throw GoLibsCryptoError.missingData(nil)
         }
         self.init(
-            rawRepresentation: ([UInt8])(publicKeyBytes),
+            rawRepresentation: [UInt8](publicKeyBytes),
             derRepresentation: derRepresentation
         )
     }
@@ -43,7 +43,7 @@ extension PrivateKey {
             throw GoLibsCryptoError.missingData(nil)
         }
         self.init(
-            rawRepresentation: ([UInt8])(privateKeyBytes),
+            rawRepresentation: [UInt8](privateKeyBytes),
             derRepresentation: keyPair.privateKeyPKIXPem(),
             base64X25519Representation: keyPair.toX25519Base64()
         )

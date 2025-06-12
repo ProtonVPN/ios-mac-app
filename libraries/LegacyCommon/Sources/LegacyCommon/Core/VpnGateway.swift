@@ -519,7 +519,7 @@ public class VpnGateway: VpnGatewayProtocol {
     public func disconnect(completion: @escaping () -> Void) {
         withEscapedDependencies { dependencies in
             siriHelper?.donateDisconnect()
-            appStateManager.disconnect() { [weak self] in
+            appStateManager.disconnect { [weak self] in
                 // Don't yield dependencies for this completion until it's necessary (e.g. tests start to fail)
                 completion()
 

@@ -108,7 +108,7 @@ class MapViewModelTests: XCTestCase {
         }
 
         let annotations = mapViewModel.annotations
-        let secureCoreAnnotations = annotations.filter { (annotation) -> Bool in
+        let secureCoreAnnotations = annotations.filter { annotation -> Bool in
             return annotation is SecureCoreEntryCountryModel
         }
 

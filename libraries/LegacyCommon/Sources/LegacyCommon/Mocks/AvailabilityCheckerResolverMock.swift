@@ -54,7 +54,7 @@
     }
 
     public class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
-        public typealias AvailabilityCallback = ((ServerIp) -> SmartProtocolAvailabilityCheckerResult)
+        public typealias AvailabilityCallback = (ServerIp) -> SmartProtocolAvailabilityCheckerResult
         public var availabilityCallback: AvailabilityCallback?
         public var pingCallback: ((ServerIp, Int) -> Bool)?
 

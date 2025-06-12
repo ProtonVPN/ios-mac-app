@@ -397,7 +397,7 @@ extension AppDelegate {
     private func setupCoreIntegration() {
         ColorProvider.brand = .vpn
 
-        ProtonCoreLog.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .info, .trace, .warn:
                 log.debug("\(message)", category: .core)

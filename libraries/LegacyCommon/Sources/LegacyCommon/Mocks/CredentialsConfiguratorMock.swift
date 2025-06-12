@@ -24,7 +24,7 @@
     import VPNShared
 
     public class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
-        public typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> Void)
+        public typealias VpnCredentialsConfiguratorMockCallback = (VpnManagerConfiguration, NEVPNProtocol) -> Void
 
         public let vpnProtocol: VpnProtocol
         public var didConfigure: VpnCredentialsConfiguratorMockCallback?

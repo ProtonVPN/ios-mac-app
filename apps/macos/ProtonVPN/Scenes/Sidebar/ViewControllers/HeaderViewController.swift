@@ -242,7 +242,7 @@ final class HeaderViewController: NSViewController {
         }
 
         let downloader = SDWebImageDownloader()
-        downloader.downloadImage(with: iconUrl) { [weak self] (image, _, _, _) in
+        downloader.downloadImage(with: iconUrl) { [weak self] image, _, _, _ in
             if let icon = image {
                 SDImageCache.shared.store(icon, forKey: iconUrl.absoluteString, completion: nil)
                 setup(icon)

@@ -34,9 +34,9 @@ import Ergonomics
 import VPNShared // AuthKeychain
 import VPNAppCore // UnauthKeychain
 
-public typealias SuccessCallback = (() -> Void)
+public typealias SuccessCallback = () -> Void
 public typealias SuccessConfirmationCallback = (@escaping SuccessCallback) -> Void
-public typealias GenericCallback<T> = ((T) -> Void)
+public typealias GenericCallback<T> = (T) -> Void
 public typealias ErrorCallback = GenericCallback<Error>
 
 public protocol Networking: APIServiceDelegate {
@@ -167,7 +167,7 @@ public final class CoreNetworking: Networking {
                            authRetry: route.authRetry,
                            customAuthCredential: route.authCredential,
                            nonDefaultTimeout: nil,
-                           retryPolicy: route.retryPolicy) { (task, result) in
+                           retryPolicy: route.retryPolicy) { task, result in
             switch result {
             case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])

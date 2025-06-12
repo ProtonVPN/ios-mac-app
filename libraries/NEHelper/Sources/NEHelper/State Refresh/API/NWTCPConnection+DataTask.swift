@@ -267,7 +267,7 @@ class NWTCPDataTask: DataTaskProtocol {
     /// The object that lets us create background timers.
     private let timerFactory: TimerFactory
     /// The completion handler for data returned by the HTTP request.
-    private let completionHandler: ((Data?, HTTPURLResponse?, Error?) -> Void)
+    private let completionHandler: (Data?, HTTPURLResponse?, Error?) -> Void
     /// The cookies to send to the server as part of the HTTP request.
     private let cookiesToSend: [HTTPCookie]
     /// The request timeout interval.

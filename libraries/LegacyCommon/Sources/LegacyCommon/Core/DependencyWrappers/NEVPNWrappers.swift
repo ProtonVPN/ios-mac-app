@@ -56,7 +56,7 @@ public protocol NETunnelProviderManagerWrapperFactory {
 
 extension NETunnelProviderManagerWrapperFactory {
     func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
-        loadManagersFromPreferences { (managers, error) in
+        loadManagersFromPreferences { managers, error in
             if let error {
                 completionHandler(nil, error)
                 return
@@ -66,7 +66,7 @@ extension NETunnelProviderManagerWrapperFactory {
                 return
             }
 
-            let vpnManager = managers.first(where: { (manager) -> Bool in
+            let vpnManager = managers.first(where: { manager -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
             }) ?? self.makeNewManager()
 
@@ -76,7 +76,7 @@ extension NETunnelProviderManagerWrapperFactory {
 
     func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String) async throws -> NETunnelProviderManagerWrapper {
         let managers = try await loadManagersFromPreferences()
-        return managers.first(where: { (manager) -> Bool in
+        return managers.first(where: { manager -> Bool in
             return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
         }) ?? self.makeNewManager()
     }

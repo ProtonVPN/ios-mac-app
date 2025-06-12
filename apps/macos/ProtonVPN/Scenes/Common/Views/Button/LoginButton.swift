@@ -52,7 +52,7 @@ class LoginButton: HoverDetectionButton {
             layer?.borderColor = self.cgColor(.border)
             layer?.backgroundColor = self.cgColor(.background)
         }
-        attributedTitle = self.style((displayTitle ?? Localizable.login), font: .themeFont(.heading4))
+        attributedTitle = self.style(displayTitle ?? Localizable.login, font: .themeFont(.heading4))
     }
 }
 

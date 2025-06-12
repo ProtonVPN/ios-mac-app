@@ -248,7 +248,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         }
     }
 
-    typealias Subcase = (description: String, closure: (() -> Void), expectations: [ExpectationCategory])
+    typealias Subcase = (description: String, closure: () -> Void, expectations: [ExpectationCategory])
 
     /// To help manage your expectations. ;)
     static let expectationManagementQueue = DispatchQueue(label: "queue for thread-safe access to expectation data structures")

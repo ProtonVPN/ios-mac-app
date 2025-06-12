@@ -39,7 +39,7 @@ final class NetShieldSelectionViewModel {
 
     private var selectedFeature: NetShieldType
 
-    let onSelect: ((NetShieldType, @escaping (Bool) -> Void) -> Void)
+    let onSelect: (NetShieldType, @escaping (Bool) -> Void) -> Void
 
     var onDataChange: (() -> Void)?
 

@@ -105,7 +105,7 @@ final class ConnectionBarViewModel {
     }
 
     private func runTimer() {
-        timer = Timer(fireAt: Date(), interval: 1, target: self, selector: (#selector(self.timerFired)), userInfo: nil, repeats: true)
+        timer = Timer(fireAt: Date(), interval: 1, target: self, selector: #selector(self.timerFired), userInfo: nil, repeats: true)
         RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
     }
 

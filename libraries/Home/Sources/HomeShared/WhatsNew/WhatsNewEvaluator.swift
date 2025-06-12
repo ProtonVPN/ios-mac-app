@@ -55,7 +55,7 @@ extension WhatsNew {
                 return versions.contains(evaluatorClient.bundleShortVersionString())
             case let .osVersion(version):
                 let compareResult = evaluatorClient.systemOSVersion().compare(version, options: .numeric)
-                return (compareResult == .orderedSame || compareResult == .orderedDescending)
+                return compareResult == .orderedSame || compareResult == .orderedDescending
             }
         }
 

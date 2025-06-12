@@ -164,7 +164,7 @@ extension VpnState: Equatable {
         case let (.disconnecting(descriptorLhs), .disconnecting(descriptorRhs)):
             return descriptorLhs == descriptorRhs
         case let (.error(errorLhs), .error(errorRhs)):
-            return (errorLhs as NSError).isEqual((errorRhs as NSError))
+            return (errorLhs as NSError).isEqual(errorRhs as NSError)
         default:
             return false
         }

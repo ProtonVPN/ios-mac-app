@@ -44,7 +44,7 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 // swiftlint:enable type_name
 
 extension macOSNetworkingDelegate {
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping (HumanVerifyFinishReason) -> Void) {
         // report human verification as closed by the user
         // should result in the request failing with error
         completion(.verification(header: [:], verificationCodeBlock: nil))

@@ -161,7 +161,7 @@ class MapView: NSView {
             }
             
             let pointFromCenter: CGPoint = if let point {
-                CGPoint(x: (point.x - frame.width / 2), y: (point.y - frame.height / 2))
+                CGPoint(x: point.x - frame.width / 2, y: point.y - frame.height / 2)
             } else {
                 CGPoint(x: 0, y: 0)
             }

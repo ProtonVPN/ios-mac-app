@@ -41,7 +41,7 @@ struct CountryListFeature {
                     .kind(.country)
                 ])
                 .enumerated()
-                .compactMap { (index, group) in
+                .compactMap { index, group in
                     return group.item(index: index, section: 1)
                 }
 

@@ -32,7 +32,7 @@ enum TunnelConfigurationOperation {
 }
 
 struct ManagerConfigurator: Sendable {
-    typealias ConfigurationHandler = (@Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void)
+    typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
     private var configure: ConfigurationHandler
 

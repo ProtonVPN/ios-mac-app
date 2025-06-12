@@ -84,7 +84,7 @@ class ServiceChecker {
         urlRequest.cachePolicy = .reloadIgnoringCacheData
         urlRequest.timeoutInterval = refreshInterval
 
-        networking.request(urlRequest) { [weak self] (result: Result<(String), Error>) in
+        networking.request(urlRequest) { [weak self] (result: Result<String, Error>) in
             switch result {
             case let .success(text):
                 if text.starts(with: "<!--P2P_WARNING-->") {

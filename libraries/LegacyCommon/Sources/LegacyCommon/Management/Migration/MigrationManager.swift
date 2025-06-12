@@ -22,11 +22,11 @@
 
 import Foundation
 
-public typealias OptionalErrorBlock = ((Error?) -> Void)
+public typealias OptionalErrorBlock = (Error?) -> Void
 
 /// The MigrationBlock contains the previous version of the App from which we updated and a completion block for asynchronous migration process
 
-public typealias MigrationBlock = (( _ version: String, _ completion: @escaping OptionalErrorBlock) -> Void)
+public typealias MigrationBlock = ( _ version: String, _ completion: @escaping OptionalErrorBlock) -> Void
 
 public protocol MigrationManagerProtocol {
     init( _ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String )

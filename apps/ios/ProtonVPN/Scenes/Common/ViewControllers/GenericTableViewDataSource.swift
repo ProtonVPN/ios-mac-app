@@ -36,15 +36,15 @@ enum TableViewCellModel {
     case imageSubtitleImage(title: String, subtitle: String, leadingImage: UIImage, trailingImage: UIImage, handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
-    case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
+    case staticPushKeyValue(key: String, value: String, handler: () -> Void)
     /// `upsell` is executed when the cell accessory is tapped while in the `PaidFeatureDisplayState.upsell` state
     case upsellableToggle(
         title: String,
         state: () -> PaidFeatureDisplayState,
-        upsell: (() -> Void),
+        upsell: () -> Void,
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
     )
-    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
+    case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void )
     case buttonWithLoadingIndicator(title: String,
                                     accessibilityIdentifier: String?,
                                     color: UIColor,

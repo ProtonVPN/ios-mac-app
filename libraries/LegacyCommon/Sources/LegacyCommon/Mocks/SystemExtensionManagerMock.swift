@@ -55,7 +55,7 @@
                 info == extensionInfo && info.bundleId == extensionInfo.bundleId
             }
 
-            if let pending = pendingRequests.first(where: { (_, info) in matchesExtensionInfo(info) }) {
+            if let pending = pendingRequests.first(where: { _, info in matchesExtensionInfo(info) }) {
                 guard request.shouldExtension(pending.1, beReplacedBy: extensionInfo) else {
                     request.request(request.request, didFailWithError: OSSystemExtensionError(.requestCanceled))
                     requestFinished?(request)
@@ -63,7 +63,7 @@
                 }
 
                 pending.0.request(pending.0.request, didFailWithError: OSSystemExtensionError(.requestSuperseded))
-                pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == pending.0.uuid }
+                pendingRequests.removeAll { pendingRequest, _ in pendingRequest.uuid == pending.0.uuid }
             }
 
             pendingRequests.append((request, extensionInfo))
@@ -71,7 +71,7 @@
 
             if let installed = installedExtensions.first(where: { $0.bundleId == extensionInfo.bundleId }) {
                 guard request.shouldExtension(installed, beReplacedBy: extensionInfo) else {
-                    pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == request.uuid }
+                    pendingRequests.removeAll { pendingRequest, _ in pendingRequest.uuid == request.uuid }
                     request.request(request.request, didFailWithError: OSSystemExtensionError(.requestCanceled))
                     requestFinished?(request)
                     return
@@ -80,7 +80,7 @@
                 installedExtensions.removeAll { $0.bundleId == extensionInfo.bundleId }
                 installedExtensions.append(extensionInfo)
 
-                pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == request.uuid }
+                pendingRequests.removeAll { pendingRequest, _ in pendingRequest.uuid == request.uuid }
                 request.request(request.request, didFinishWithResult: .completed)
                 requestFinished?(request)
                 return
@@ -92,7 +92,7 @@
 
         public func approve(request: SystemExtensionRequest) {
             var info: ExtensionInfo?
-            pendingRequests.removeAll { (pendingRequest, pendingInfo) in
+            pendingRequests.removeAll { pendingRequest, pendingInfo in
                 guard pendingRequest.uuid == request.uuid else {
                     return false
                 }
@@ -112,7 +112,7 @@
         }
 
         public func fail(request: SystemExtensionRequest, withError error: Error) {
-            pendingRequests.removeAll { (pendingRequest, _) in pendingRequest.uuid == request.uuid }
+            pendingRequests.removeAll { pendingRequest, _ in pendingRequest.uuid == request.uuid }
             request.request(request.request, didFailWithError: error)
             requestFinished?(request)
         }

@@ -116,7 +116,7 @@ public struct ServerSelector: Sendable {
 }
 
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { (spec, userTier, acceptableProtocols) throws(ServerSelectionError) -> Server in
+    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(ServerSelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
         let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil

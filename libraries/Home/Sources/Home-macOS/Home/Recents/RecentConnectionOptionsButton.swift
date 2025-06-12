@@ -84,9 +84,9 @@ private extension RecentConnectionOptionsButton {
         var image: Image {
             switch role {
             case let .pin(isPinned):
-                return (isPinned
+                return isPinned
                     ? IconProvider.pinSlashFilled
-                    : IconProvider.pinFilled)
+                    : IconProvider.pinFilled
             case .remove:
                 return IconProvider.trashCross
             }

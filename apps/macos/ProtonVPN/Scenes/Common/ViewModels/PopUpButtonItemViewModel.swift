@@ -20,7 +20,7 @@ import Foundation
 import AppKit
 
 class PopUpButtonItemViewModel {
-    typealias Handler = (() -> Void)
+    typealias Handler = () -> Void
 
     let title: NSAttributedString
     var checked: Bool

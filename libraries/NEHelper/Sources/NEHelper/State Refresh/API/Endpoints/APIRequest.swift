@@ -119,7 +119,7 @@ extension HTTPURLResponse {
         if #available(iOSApplicationExtension 13.0, *) {
             return value(forHTTPHeaderField: header.rawValue)
         } else {
-            let kvPair = self.allHeaderFields.first { (key, _) in
+            let kvPair = self.allHeaderFields.first { key, _ in
                 (key as? String)?.lowercased() == header.rawValue.lowercased()
             }
             guard let kvPair else {

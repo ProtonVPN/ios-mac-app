@@ -130,7 +130,7 @@ class MapAnnotationView: MKAnnotationView {
         }
 
         tag = hoveredTag.rawValue
-        parentView.sortSubviews({ (view1, view2, _) -> ComparisonResult in
+        parentView.sortSubviews({ view1, view2, _ -> ComparisonResult in
             if view1.tag > view2.tag {
                 return .orderedDescending
             } else if view1.tag < view2.tag {

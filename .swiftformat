@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantParens
 --disable redundantPattern
 --disable redundantRawValues
 --disable redundantReturn

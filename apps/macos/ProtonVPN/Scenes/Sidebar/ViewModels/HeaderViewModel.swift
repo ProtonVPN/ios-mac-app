@@ -275,7 +275,7 @@ final class HeaderViewModel {
         statistics?.stopGathering()
         statistics = nil
 
-        statistics = NetworkStatistics(with: 1.0) { [weak self] (bitrate) in
+        statistics = NetworkStatistics(with: 1.0) { [weak self] bitrate in
             guard let self else {
                 return
             }

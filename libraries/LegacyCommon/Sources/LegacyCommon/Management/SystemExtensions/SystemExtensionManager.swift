@@ -72,7 +72,7 @@
         private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
         private func reduce(installationResults: InstallationState, didRequireUserApproval: Bool) -> SystemExtensionResult {
-            return installationResults.reduce(into: .success(.alreadyThere)) { (accumulator, sysexInstallationResult) in
+            return installationResults.reduce(into: .success(.alreadyThere)) { accumulator, sysexInstallationResult in
                 if case .failure = accumulator { return }
                 let (type, installationResult) = sysexInstallationResult
                 switch installationResult {
@@ -276,7 +276,7 @@
     /// generated uniquely for every request in the `SystemExtensionManager`, so we know the state of each
     /// installation request individually.
     public class SystemExtensionRequest: NSObject {
-        typealias StateChangeCallback = ((State) -> Void)
+        typealias StateChangeCallback = (State) -> Void
 
         let action: Action
         let request: OSSystemExtensionRequest

@@ -311,7 +311,7 @@ final class SettingsViewModel {
                     title: Localizable.netshieldTitle,
                     state: { .upsell },
                     upsell: { [weak self] in self?.alertService.push(alert: NetShieldUpsellAlert()) },
-                    handler: { (_, _) in }
+                    handler: { _, _ in }
                 ),
                 .tooltip(text: Localizable.netshieldTitleTooltip)
             ]
@@ -326,7 +326,7 @@ final class SettingsViewModel {
                 title: Localizable.vpnAcceleratorTitle,
                 state: { [unowned self] in self.displayState(for: VPNAccelerator.self) },
                 upsell: { [weak self] in self?.alertService.push(alert: VPNAcceleratorUpsellAlert()) },
-                handler: { (toggleOn, callback) in
+                handler: { toggleOn, callback in
                     self.getFeatureChangeAvailability(for: .agent(.vpnAccelerator(toggleOn))) { featureChangeAvailability in
                         let acceleratorValue = toggleOn ? VPNAccelerator.on : VPNAccelerator.off
                         switch featureChangeAvailability {
@@ -391,7 +391,7 @@ final class SettingsViewModel {
                 title: Localizable.moderateNatTitle,
                 state: { [unowned self] in self.moderateNATState },
                 upsell: { [weak self] in self?.alertService.push(alert: ModerateNATUpsellAlert()) },
-                handler: { [weak self] (toggleOn, callback) in
+                handler: { [weak self] toggleOn, callback in
                     let natType = toggleOn ? NATType.moderateNAT : NATType.strictNAT
 
                     self?.getFeatureChangeAvailability(for: .agent(.moderateNAT(natType))) { [weak self] featureChangeAvailability in
@@ -446,7 +446,7 @@ final class SettingsViewModel {
                 title: Localizable.nonStandardPortsTitle,
                 state: { [unowned self] in self.safeModeState },
                 upsell: { [weak self] in self?.alertService.push(alert: SafeModeUpsellAlert()) },
-                handler: { [unowned self] (toggleOn, callback) in
+                handler: { [unowned self] toggleOn, callback in
                     let currentSafeMode = self.safeModePropertyProvider.safeMode ?? true
                     let newSafeMode = !currentSafeMode
 
@@ -486,7 +486,7 @@ final class SettingsViewModel {
                 title: Localizable.troubleshootItemAltTitle,
                 state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
                 upsell: {}, // No Upsell: Alternative Routing is a free feature
-                handler: { [unowned self] (toggleOn, callback) in
+                handler: { [unowned self] toggleOn, callback in
                     self.propertiesManager.alternativeRouting.toggle()
                     callback(self.propertiesManager.alternativeRouting)
                 }
@@ -525,7 +525,7 @@ final class SettingsViewModel {
     }
 
     private func switchLANCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        return { (toggleOn, callback) in
+        return { toggleOn, callback in
             let isActive = self.isActive()
             let excludeLAN = self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self)
 
@@ -564,7 +564,7 @@ final class SettingsViewModel {
     }
 
     private func ksSwitchCallback() -> ((Bool, @escaping (Bool) -> Void) -> Void) {
-        return { (toggleOn, callback) in
+        return { toggleOn, callback in
             let isActive = self.isActive()
 
             var alert: SystemAlert
