@@ -27,7 +27,7 @@ extension Array {
 }
 
 public extension Array {
-    func uniques<T: Hashable>(by keyPath: KeyPath<Element, T>) -> [Element] {
+    func uniques(by keyPath: KeyPath<Element, some Hashable>) -> [Element] {
         return reduce([]) { result, element in
             let alreadyExists = (result.contains(where: { $0[keyPath: keyPath] == element[keyPath: keyPath] }))
             return alreadyExists ? result : result + [element]

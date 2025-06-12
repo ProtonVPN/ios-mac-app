@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable opaqueGenericParameters
 --disable preferCountWhere
 --disable preferForLoop
 --disable preferKeyPath

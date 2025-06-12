@@ -46,8 +46,8 @@ protocol WindowServiceFactory {
 protocol WindowService: WindowControllerDelegate {
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController)
     
-    func showIfPresent<T: NSWindowController>(windowController: T.Type) -> Bool
-    func closeIfPresent<T: NSWindowController>(windowController: T.Type)
+    func showIfPresent(windowController: (some NSWindowController).Type) -> Bool
+    func closeIfPresent(windowController: (some NSWindowController).Type)
     
     func showLogin(viewModel: LoginViewModel)
     #if !REDESIGN

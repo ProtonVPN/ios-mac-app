@@ -56,7 +56,7 @@ struct FailureMetrics: Codable {
 struct LokiCodable: Codable {
     private let value: Any
 
-    init<T: Codable>(_ value: T) {
+    init(_ value: some Codable) {
         self.value = value
     }
 

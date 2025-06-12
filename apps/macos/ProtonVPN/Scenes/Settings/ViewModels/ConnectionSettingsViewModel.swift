@@ -188,7 +188,7 @@ final class ConnectionSettingsViewModel {
         return profileIndex
     }
 
-    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:

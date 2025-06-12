@@ -150,7 +150,7 @@ extension StoredWireguardConfig {
 }
 
 private extension DefaultStringInterpolation {
-    mutating func appendInterpolation<T>(attribute: String, optional: T?) {
+    mutating func appendInterpolation(attribute: String, optional: (some Any)?) {
         guard let optional else {
             return
         }

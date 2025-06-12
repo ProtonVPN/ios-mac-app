@@ -36,7 +36,7 @@ public class MemoryStorage: Storage {
         return value
     }
 
-    public func set<T: Encodable>(_ value: T?, forKey key: String) throws {
+    public func set(_ value: (some Encodable)?, forKey key: String) throws {
         guard let value else {
             storage[key] = nil
             return

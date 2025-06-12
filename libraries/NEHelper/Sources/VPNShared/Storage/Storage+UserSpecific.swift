@@ -41,7 +41,7 @@ extension Storage {
     }
 
     @discardableResult
-    public func setForUser<T: Encodable>(_ value: T, forKey key: String) throws -> Bool {
+    public func setForUser(_ value: some Encodable, forKey key: String) throws -> Bool {
         guard let username else { return false }
 
         try set(value, forKey: key + username)

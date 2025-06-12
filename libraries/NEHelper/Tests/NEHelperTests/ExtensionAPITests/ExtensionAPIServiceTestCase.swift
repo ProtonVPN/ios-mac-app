@@ -209,10 +209,10 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
     }
 
     /// Convenience function for mock API error cases
-    func mockEndpoint<M: MockableRequest>(_ cls: M.Type,
-                                          apiFailure: MockAPIEndpointError,
-                                          responseHeaders: [APIHeader: String] = [:],
-                                          expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
+    func mockEndpoint(_ cls: (some MockableRequest).Type,
+                      apiFailure: MockAPIEndpointError,
+                      responseHeaders: [APIHeader: String] = [:],
+                      expectationToFulfill: XCTestExpectation) -> MockEndpointBlock {
         mockEndpoint(cls,
                      result: .failure(apiFailure),
                      responseHeaders: responseHeaders,

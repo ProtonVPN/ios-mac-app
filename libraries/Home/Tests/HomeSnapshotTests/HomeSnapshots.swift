@@ -91,9 +91,9 @@
             }
         }
 
-        private func assertSnapshot<Value, Format>(
+        private func assertSnapshot<Value>(
             of value: @autoclosure () throws -> Value,
-            as snapshotting: Snapshotting<Value, Format>,
+            as snapshotting: Snapshotting<Value, some Any>,
             named name: String? = nil,
             record recording: Bool? = nil,
             timeout: TimeInterval = 5,

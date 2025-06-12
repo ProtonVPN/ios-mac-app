@@ -24,24 +24,24 @@
     public class MockFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         var featureAuthorizationMap: [String: FeatureAuthorizationResult] = [:]
 
-        func registerAuthorization<T: AppFeature>(
-            for feature: T.Type,
+        func registerAuthorization(
+            for feature: (some AppFeature).Type,
             to value: FeatureAuthorizationResult
         ) {
             let key = Self.key(for: feature)
             featureAuthorizationMap[key] = value
         }
 
-        func registerAuthorization<T: ModularAppFeature>(
-            forSubFeature subFeature: T,
+        func registerAuthorization(
+            forSubFeature subFeature: some ModularAppFeature,
             to value: FeatureAuthorizationResult
         ) {
             let key = Self.key(for: subFeature)
             featureAuthorizationMap[key] = value
         }
 
-        public func authorizer<T: AppFeature>(
-            for feature: T.Type
+        public func authorizer(
+            for feature: (some AppFeature).Type
         ) -> () -> FeatureAuthorizationResult {
             let key = Self.key(for: feature)
             return {
@@ -79,7 +79,7 @@
             })
         }
 
-        private static func key<T: AppFeature>(for feature: T.Type) -> String {
+        private static func key(for feature: (some AppFeature).Type) -> String {
             "\(feature)"
         }
 
@@ -95,7 +95,7 @@
             self.result = result
         }
 
-        public func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult {
+        public func authorizer(for feature: (some AppFeature).Type) -> () -> FeatureAuthorizationResult {
             return { result }
         }
 

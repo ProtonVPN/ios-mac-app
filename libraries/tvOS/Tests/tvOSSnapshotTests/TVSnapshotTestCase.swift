@@ -26,8 +26,8 @@ class TVSnapshotTestCase: XCTestCase {
     static let precision: Float = 0.99
     static let perceptualPrecision: Float = 0.98
 
-    func snap<T: View>(
-        _ view: @autoclosure () throws -> T,
+    func snap(
+        _ view: @autoclosure () throws -> some View,
         caseName: String,
         trait: UIUserInterfaceStyle,
         record recording: Bool? = nil,

@@ -41,7 +41,7 @@ public struct Credentials: Decodable {
 }
 
 extension Array<Credentials> {
-    subscript<K: RawRepresentable<Int>>(_ key: K) -> Element {
+    subscript(_ key: some RawRepresentable<Int>) -> Element {
         self[key.rawValue]
     }
 }

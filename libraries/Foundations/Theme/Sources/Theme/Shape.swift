@@ -28,10 +28,10 @@
         ///   - lineWidth: The width of the stroke that outlines this shape.
         ///   - fillContent: The style options that determine how the fill renders.
         /// - Returns: A stroked and filled shape.
-        public func style<S: ShapeStyle, F: ShapeStyle>(
-            withStroke strokeContent: S,
+        public func style(
+            withStroke strokeContent: some ShapeStyle,
             lineWidth: CGFloat = 1,
-            fill fillContent: F
+            fill fillContent: some ShapeStyle
         ) -> some View {
             stroke(strokeContent, lineWidth: lineWidth).background(fill(fillContent))
         }

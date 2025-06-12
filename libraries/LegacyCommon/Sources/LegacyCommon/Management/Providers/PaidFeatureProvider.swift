@@ -22,7 +22,7 @@ import Ergonomics
 
 public protocol AppFeaturePropertyProvider {
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T
-    func setValue<T: ProvidableFeature>(_ value: T)
+    func setValue(_ value: some ProvidableFeature)
 }
 
 public struct AppFeaturePropertyProviderKey: DependencyKey {
@@ -59,7 +59,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
         )
     }
 
-    private func authorization<T: AppFeature>(for feature: T.Type) -> FeatureAuthorizationResult {
+    private func authorization(for feature: (some AppFeature).Type) -> FeatureAuthorizationResult {
         let authorizer = authorizerProvider.authorizer(for: feature)
         return authorizer()
     }
@@ -171,7 +171,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 
         public init() {}
 
-        private func featureKey<T: ProvidableFeature>(for feature: T.Type) -> String {
+        private func featureKey(for feature: (some ProvidableFeature).Type) -> String {
             return "\(feature)"
         }
 

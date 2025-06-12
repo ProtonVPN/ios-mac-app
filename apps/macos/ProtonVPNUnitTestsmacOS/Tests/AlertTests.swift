@@ -111,11 +111,11 @@ fileprivate class WindowServiceMock: WindowService {
 
     func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
 
-    func showIfPresent<T: NSWindowController>(windowController: T.Type) -> Bool {
+    func showIfPresent(windowController: (some NSWindowController).Type) -> Bool {
         return false
     }
 
-    func closeIfPresent<T: NSWindowController>(windowController: T.Type) {}
+    func closeIfPresent(windowController: (some NSWindowController).Type) {}
     func showLogin(viewModel: LoginViewModel) {}
     func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
     func showTour() {}

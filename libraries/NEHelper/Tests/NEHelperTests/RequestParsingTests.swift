@@ -218,7 +218,7 @@ class RequestParsingTests: XCTestCase {
                                                                             redirectURI: "example.org")))
     }
 
-    func checkKeysArePascalCasedForRequest<R: APIRequest>(_ request: R) {
+    func checkKeysArePascalCasedForRequest(_ request: some APIRequest) {
         guard let body = request.body else {
             XCTFail("Request \(request) should have a body")
             return
