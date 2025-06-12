@@ -99,7 +99,6 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         let server = TestData.createMockServer(withID: "US1", name: "abcd", countryCode: "US") // "'Merica"
         repository.upsert(servers: [server])
 
-
         let scenarios: [(String, VPNServer?, String)] = [
             ("U", nil, "Partial country codes should not be matched"),
             ("US", server, "Full country codes should be matched"),

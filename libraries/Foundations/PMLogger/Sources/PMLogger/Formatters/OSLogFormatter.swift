@@ -22,8 +22,7 @@ import Logging
 public class OSLogFormatter: PMLogFormatter {
     private let jsonEncoder = JSONEncoder()
 
-    public init() {
-    }
+    public init() {}
 
     public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
         let (category, event, meta) = extract(metadata: metadata)

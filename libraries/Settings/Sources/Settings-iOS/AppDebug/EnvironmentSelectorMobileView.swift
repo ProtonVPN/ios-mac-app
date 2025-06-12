@@ -164,8 +164,7 @@ public struct EnvironmentSelectorMobileView: View {
 
     @ViewBuilder
     var bottomButtonsSection: some View {
-        Section {
-        } header: {
+        Section {} header: {
             Text("Apply changes").font(.headline)
         } footer: {
             VStack {

@@ -55,8 +55,7 @@ public class LocaleResolverMock: LocaleResolver {
         self.currentLocale = currentLocale
     }
 
-    public init() {
-    }
+    public init() {}
 }
 
 public struct LocaleWrapperMock: LocaleWrapper {

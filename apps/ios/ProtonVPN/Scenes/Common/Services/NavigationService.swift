@@ -422,7 +422,7 @@ extension NavigationService: SettingsService {
         let manager = factory.makeDynamicBugReportManager()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
             manager.closeBugReportHandler = {
-                self.windowService.dismissModal { }
+                self.windowService.dismissModal {}
             }
             windowService.present(modal: viewController)
             return

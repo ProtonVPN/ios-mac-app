@@ -45,8 +45,7 @@ struct MockDataTask: DataTaskProtocol {
     }
 }
 
-protocol MockConnectionWriteDelegate {
-}
+protocol MockConnectionWriteDelegate {}
 
 class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
     let hostname: String
@@ -106,7 +105,6 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
             return nil
         }
 
-
         guard let dataReadCallback = factory?.dataReadCallback else {
             XCTFail("No dataReadCallback was set")
             return nil
@@ -149,8 +147,7 @@ class MockConnectionTunnelFactory: ConnectionTunnelFactory {
 
     init(stateObservingCallback: @escaping StateObservingCallback,
          dataReadCallback: @escaping DataReadCallback,
-         dataWriteCallback: @escaping DataWriteCallback)
-    {
+         dataWriteCallback: @escaping DataWriteCallback) {
         self.stateObservingCallback = stateObservingCallback
         self.dataReadCallback = dataReadCallback
         self.dataWriteCallback = dataWriteCallback

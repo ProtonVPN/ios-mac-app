@@ -37,7 +37,7 @@ class MockAgentConnection: LocalAgentConnection {
         currentState = .disconnected
     }
 
-    func setConnectivity(_: Bool) { }
-    func setFeatures(_: LocalAgentFeatures?) { }
-    func sendGetStatus(_: Bool) { }
+    func setConnectivity(_: Bool) {}
+    func setFeatures(_: LocalAgentFeatures?) {}
+    func sendGetStatus(_: Bool) {}
 }

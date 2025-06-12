@@ -148,19 +148,15 @@ extension ViewController: SearchCoordinatorDelegate {
         navigationController?.present(upsellViewController, animated: true, completion: nil)
     }
 
-    func userDidSelectCountry(model: CountryViewModel) {
-    }
+    func userDidSelectCountry(model: CountryViewModel) {}
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func upsellDidDisappear(upsell: UpsellViewController?) {
-    }
+    func upsellDidDisappear(upsell: UpsellViewController?) {}
 
-    func userDidTapNext(upsell: UpsellViewController) {
-    }
+    func userDidTapNext(upsell: UpsellViewController) {}
 
-    func userDidDismissUpsell(upsell: UpsellViewController?) {
-    }
+    func userDidDismissUpsell(upsell: UpsellViewController?) {}
 
     func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
         return true

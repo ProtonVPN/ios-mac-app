@@ -217,7 +217,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             DispatchQueue.main.async {
                 AppEvent.credentialsChanged.post()
             }
-        } catch { }
+        } catch {}
     }
     
     // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be

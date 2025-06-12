@@ -158,8 +158,7 @@ public protocol ObservationHandle {
     func invalidate()
 }
 
-extension NSKeyValueObservation: ObservationHandle {
-}
+extension NSKeyValueObservation: ObservationHandle {}
 
 // MARK: Cookie storage
 
@@ -169,8 +168,7 @@ public protocol CookieStorageProtocol {
     func cookies(for: URL) -> [HTTPCookie]?
 }
 
-extension HTTPCookieStorage: CookieStorageProtocol {
-}
+extension HTTPCookieStorage: CookieStorageProtocol {}
 
 // MARK: DataTask protocols
 
@@ -179,8 +177,7 @@ public protocol DataTaskProtocol {
     func resume()
 }
 
-extension URLSessionDataTask: DataTaskProtocol {
-}
+extension URLSessionDataTask: DataTaskProtocol {}
 
 /// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
 public protocol DataTaskFactory {

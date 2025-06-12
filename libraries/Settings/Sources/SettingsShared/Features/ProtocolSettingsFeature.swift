@@ -28,7 +28,6 @@ public struct ProtocolSettingsFeature: Reducer {
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
 
-
     public struct State: Equatable {
         public var `protocol`: ConnectionProtocol
         public var vpnConnectionStatus: VPNConnectionStatus

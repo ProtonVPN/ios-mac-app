@@ -89,7 +89,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: {})
             $0.vpnAuthenticationStorage = mockStorage
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -229,7 +229,7 @@ final class ConnectionFeatureTests: XCTestCase {
             $0.date = .constant(now)
             $0.continuousClock = mockClock
             $0.tunnelManager = mockManager
-            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: { })
+            $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: {})
             $0.vpnAuthenticationStorage = mockStorage
             $0.localAgent = mockAgent
             $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -431,7 +431,6 @@ final class ConnectionFeatureTests: XCTestCase {
         let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
         let mockManager = MockTunnelManager(connection: mockVPNSession)
         let mockAgent = LocalAgentMock(state: .disconnected)
-
 
         let store = TestStore(initialState: .initialState) {
             ConnectionFeature()

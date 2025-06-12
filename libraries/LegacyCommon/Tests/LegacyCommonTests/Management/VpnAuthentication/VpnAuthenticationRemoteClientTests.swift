@@ -182,7 +182,6 @@ class VPNAuthenticationRemoteClientTests: XCTestCase {
         let sut = VpnAuthenticationRemoteClient(authenticationStorage: authStorage)
         sut.setConnectionProvider(provider: tunnelMock)
 
-
         let expectations = (
             certRefresh: oneTimeExpectation(description: "Certificate should be refreshed"),
             certLoad: oneTimeExpectation(description: "Certificate should be successfully loaded after it's refreshed")

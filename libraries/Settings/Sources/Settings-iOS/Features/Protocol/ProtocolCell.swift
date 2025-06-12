@@ -155,7 +155,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [.new, .recommended],
                 description: "Auto-selects the best protocol for your connection.",
                 connectionProtocol: .smartProtocol,
-                onTap: { },
+                onTap: {},
                 isSelected: false
             )
             ProtocolCell(
@@ -163,7 +163,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [.new],
                 description: "Totally a great protocol, and definitely not unsecure or anything.",
                 connectionProtocol: .vpnProtocol(.ike),
-                onTap: { },
+                onTap: {},
                 isSelected: true
             )
             ProtocolCell(
@@ -171,7 +171,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [],
                 description: "Boring protocol with no tags.",
                 connectionProtocol: .vpnProtocol(.openVpn(.udp)),
-                onTap: { },
+                onTap: {},
                 isSelected: true
             )
         }

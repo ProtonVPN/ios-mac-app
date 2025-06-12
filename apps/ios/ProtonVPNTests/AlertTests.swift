@@ -109,11 +109,9 @@ fileprivate class WindowServiceMock: WindowService {
         displayCount += 1
     }
     
-    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {
-    }
+    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {}
     
-    func popStackToRoot() {
-    }
+    func popStackToRoot() {}
 
     var topmostPresentedViewController: UIViewController?
 }

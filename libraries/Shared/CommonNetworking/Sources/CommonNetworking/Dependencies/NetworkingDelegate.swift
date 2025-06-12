@@ -40,14 +40,14 @@ public protocol NetworkingFactory {
 final class CoreNetworkingDelegateMock: NetworkingDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { .init { $0.finish() } }
 
-    func set(apiService: APIService) { }
-    func onLogout() { }
+    func set(apiService: APIService) {}
+    func onLogout() {}
 
-    func onForceUpgrade(message: String) { }
+    func onForceUpgrade(message: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) { }
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) {}
     func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? { nil }
     func getSupportURL() -> URL { URL(string: "")! }
 }

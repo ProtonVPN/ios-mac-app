@@ -40,7 +40,7 @@ public final class ProfileStorage {
     }
 
     private static let storageVersion = StorageVersion.v2
-    private static let versionKey     = "profileCacheVersion"
+    private static let versionKey = "profileCacheVersion"
 
     private let authKeychain: AuthKeychainHandle
 

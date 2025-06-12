@@ -31,11 +31,9 @@ protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
 }
 
 final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
-    func onTlsSessionEnded() {
-    }
+    func onTlsSessionEnded() {}
 
-    func onTlsSessionStarted() {
-    }
+    func onTlsSessionStarted() {}
 
     weak var delegate: LocalAgentNativeClientImplementationDelegate?
 

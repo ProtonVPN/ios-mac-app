@@ -62,7 +62,7 @@ final class RefreshManagerTests: XCTestCase {
         manager.workCallback = {
             expectationWorkDone.fulfill()
         }
-        manager.resume { }
+        manager.resume {}
 
         // Now work should be done right after resume, as the time has passed, so we wait shorter than the interval
         wait(for: [expectationWorkDone], timeout: waitIntervalBase / 10)

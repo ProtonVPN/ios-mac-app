@@ -49,7 +49,7 @@ public struct SettingsClient: TestDependencyKey, Sendable {
         isActive: { false },
         featureChangeAvailability: { _ in .immediate },
         protocolChangeAvailability: { _ in .immediate },
-        disconnect: { },
+        disconnect: {},
         reconnect: { _ in },
         update: { _ in }
     )

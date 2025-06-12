@@ -76,7 +76,7 @@ public struct PlutoniumFeature {
 
         var validationError: ValidationError?
 
-        public init() { }
+        public init() {}
     }
 
     @CasePathable
@@ -88,7 +88,7 @@ public struct PlutoniumFeature {
         case onAppear // discover apps
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

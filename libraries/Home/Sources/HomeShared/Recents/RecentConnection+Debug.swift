@@ -144,4 +144,3 @@ public extension RecentConnection {
         )
     }
 }
-

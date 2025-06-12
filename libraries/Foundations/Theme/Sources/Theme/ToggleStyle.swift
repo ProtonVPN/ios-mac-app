@@ -25,7 +25,7 @@ extension ToggleStyle where Self == ChecklistToggleStyle {
 
 @available(tvOS 16.0, *)
 public struct ChecklistToggleStyle: ToggleStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         return HStack {

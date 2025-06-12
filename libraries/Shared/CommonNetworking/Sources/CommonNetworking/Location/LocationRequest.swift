@@ -32,6 +32,5 @@ final public class LocationRequest: Request {
         .userInitiated
     }
 
-    public init() {
-    }
+    public init() {}
 }

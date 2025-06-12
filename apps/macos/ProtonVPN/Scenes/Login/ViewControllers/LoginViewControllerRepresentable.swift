@@ -38,8 +38,7 @@ struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
         return LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
     }
 
-    func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {
-    }
+    func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(store: store)

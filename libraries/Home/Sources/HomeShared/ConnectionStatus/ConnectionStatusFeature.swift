@@ -64,7 +64,7 @@ public struct ConnectionStatusFeature {
         case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
     }
 
-    public init() { }
+    public init() {}
 
     private static let maskTickTimerDuration: Duration = .milliseconds(50)
     private static let statusDebounceIntervalInMilliseconds: Int = 50

@@ -35,7 +35,6 @@ import Theme
 
 import VPNAppCore
 
-
 public enum ProfileConstants {
     public static let fastestId = "st_f"
     public static let randomId = "st_r"

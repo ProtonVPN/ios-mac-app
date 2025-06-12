@@ -27,7 +27,7 @@ public protocol BugReportCreator {
 }
 
 public final class MacOSBugReportCreator: BugReportCreator {
-    public init() { }
+    public init() {}
 
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> NSViewController {
         CurrentEnv.bugReportDelegate = delegate

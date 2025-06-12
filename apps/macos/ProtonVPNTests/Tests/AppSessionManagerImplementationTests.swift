@@ -509,7 +509,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         return credentials
     }
 
-    func clear() { }
+    func clear() {}
 }
 
 fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {

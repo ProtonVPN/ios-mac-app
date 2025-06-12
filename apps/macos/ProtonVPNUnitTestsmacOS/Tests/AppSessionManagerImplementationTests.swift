@@ -420,9 +420,9 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
+    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws {}
     func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
-    func clear() { }
+    func clear() {}
 }
 
 fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
@@ -448,4 +448,4 @@ fileprivate extension SystemAlert {
     }
 }
 
-fileprivate class NavigationServiceMock: NavigationService { }
+fileprivate class NavigationServiceMock: NavigationService {}

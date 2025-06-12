@@ -26,7 +26,7 @@ import Domain
 public struct DisconnectFromVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
 
-    public init() { }
+    public init() {}
 
     public func perform() async throws -> some IntentResult {
         return .result()
@@ -56,7 +56,7 @@ public struct LoginIntent: AppIntent {
     public static var title: LocalizedStringResource = "Login"
     public static let openAppWhenRun = true
 
-    public init() { }
+    public init() {}
 
     public func perform() async throws -> some IntentResult {
         return .result()

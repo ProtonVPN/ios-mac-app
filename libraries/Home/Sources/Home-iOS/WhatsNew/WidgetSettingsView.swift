@@ -24,7 +24,7 @@ import Strings
 public struct WidgetSettingsView: View {
     private static let lottieAnimationViewHeight: CGFloat = 192.0
 
-    public init() { }
+    public init() {}
 
     public var body: some View {
         ScrollView() {

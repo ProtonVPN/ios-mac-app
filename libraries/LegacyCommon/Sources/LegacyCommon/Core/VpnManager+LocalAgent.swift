@@ -161,7 +161,7 @@ extension VpnManager {
     }
 
     func disconnectWithAlert(alert: SystemAlert) {
-        disconnect { }
+        disconnect {}
         alertService?.push(alert: alert)
     }
 
@@ -266,7 +266,7 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Key used multiple times, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
-            disconnect { }
+            disconnect {}
             guard let credentials = vpnKeychain.fetchCached() else {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
@@ -277,7 +277,7 @@ extension VpnManager: LocalAgentDelegate {
             disconnectWithAlert(alert: VpnServerErrorAlert())
         case .guestSession:
             log.error("Internal status that should never be seen, check the app implementation", category: .localAgent, event: .error)
-            disconnect { }
+            disconnect {}
         case .policyViolationDelinquent:
             log.error("Disconnecting because of unpaid invoices", category: .localAgent, event: .error)
             disconnectWithAlert(alert: DelinquentUserAlert())
@@ -287,7 +287,7 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Received torrent not allowed error from LocalAgent (doing nothing for now, ServiceChecker will handle it)")
         case .userBadBehavior:
             log.error("Local agent reporting bad behavior, kicking client", category: .localAgent, event: .error)
-            disconnect { }
+            disconnect {}
         case .restrictedServer:
             log.error("Local agent reported restricted server error, waiting for the local agent to recover", category: .localAgent, event: .error)
         case .serverSessionDoesNotMatch:

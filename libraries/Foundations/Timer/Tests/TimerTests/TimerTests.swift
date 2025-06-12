@@ -139,8 +139,7 @@ final class TimerTests: XCTestCase {
 
     func testNextTimeIsSet() throws {
         let nextRun = Date().addingTimeInterval(100.0)
-        timer = factory.scheduledTimer(runAt: nextRun, repeating: 1, queue: DispatchQueue.global()) {
-        }
+        timer = factory.scheduledTimer(runAt: nextRun, repeating: 1, queue: DispatchQueue.global()) {}
         XCTAssertNotNil(timer?.nextTime, "Next run time should be set")
         XCTAssertEqual(timer?.nextTime, nextRun)
         timer = nil

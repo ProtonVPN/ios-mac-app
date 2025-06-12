@@ -73,8 +73,7 @@ public class LocalAgentConnectionMock: LocalAgentConnectionWrapper {
         }
     }
 
-    public func sendGetStatus(_: Bool) {
-    }
+    public func sendGetStatus(_: Bool) {}
 }
 
 public class LocalAgentConnectionMockFactory: LocalAgentConnectionFactory {

@@ -169,7 +169,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
     public var featureValueMap: [String: Any] = [:]
 
-    public init() { }
+    public init() {}
 
     private func featureKey<T: ProvidableFeature>(for feature: T.Type) -> String {
         return "\(feature)"

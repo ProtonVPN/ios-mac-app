@@ -117,7 +117,7 @@ struct DefaultConnectionSheet: View {
             .connectionSecureCoreFastest
         ]
         let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
-        VStack { } // Any old view that we can hook the sheet onto
+        VStack {} // Any old view that we can hook the sheet onto
             .sheet(isPresented: .constant(true)) {
                 DefaultConnectionSheet(store: previewStore)
                     .presentationDragIndicator(.visible)

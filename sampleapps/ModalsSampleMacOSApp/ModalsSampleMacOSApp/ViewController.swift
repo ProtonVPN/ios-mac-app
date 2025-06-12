@@ -78,7 +78,7 @@ extension ViewController: NSTableViewDelegate {
         let viewController: NSViewController
         switch modal.type {
         case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(modalType: type, upgradeAction: { }, continueAction: { })
+            viewController = ModalsFactory.upsellViewController(modalType: type, upgradeAction: {}, continueAction: {})
         case .discourageSecureCore:
             viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
         case .freeConnections(let countries):

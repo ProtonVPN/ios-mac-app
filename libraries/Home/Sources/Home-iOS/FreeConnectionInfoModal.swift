@@ -97,7 +97,7 @@ struct FreeConnectionInfoModal: View {
     }
 }
 
-fileprivate struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey { }
+fileprivate struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 // MARK: - View Helpers
 

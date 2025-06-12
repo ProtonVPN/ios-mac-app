@@ -40,7 +40,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     @Dependency(\.certificateRefreshClient) var refreshClient
     @Dependency(\.date) var date
 
-    public init() { }
+    public init() {}
 
     @CasePathable
     @dynamicMemberLookup

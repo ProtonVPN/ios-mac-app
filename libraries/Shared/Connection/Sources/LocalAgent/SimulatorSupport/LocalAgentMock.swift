@@ -119,7 +119,7 @@ final class LocalAgentMock: LocalAgent {
         streamTuple?.continuation.yield(.stats(message))
     }
 
-    func set(features: LocalAgentFeatures) { }
+    func set(features: LocalAgentFeatures) {}
 }
 
 enum NetShieldStatsBehaviour {

@@ -53,7 +53,7 @@ public class FullNetworkingMockDelegate: NetworkingMockDelegate {
 
     public var didHitRoute: ((MockEndpoint) -> Void)?
 
-    public init() { }
+    public init() {}
 
     public func handleMockNetworkingRequest(_ request: URLRequest) -> Result<Data, Error> {
         do {

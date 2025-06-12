@@ -66,4 +66,3 @@ final class ForegroundTimerTests: XCTestCase {
         XCTAssert(timer.isValid, "Timer should still be valid after consecutive suspends and resumes.")
     }
 }
-

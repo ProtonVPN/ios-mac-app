@@ -54,7 +54,7 @@ enum PaymentsError: Error, CustomStringConvertible {
     }
 }
 
-extension ProcessCompletionResult: @unchecked Sendable { }
+extension ProcessCompletionResult: @unchecked Sendable {}
 
 struct PaymentsClient: Sendable, DependencyKey {
     let startObserving: @Sendable () async -> AsyncStream<ProcessCompletionResult>
@@ -157,7 +157,7 @@ final class StoreKitDelegate: StoreKitManagerDelegate {
 final class TransientTokenStorage: PaymentTokenStorage {
     private var token: PaymentToken?
 
-    init() { }
+    init() {}
 
     func add(_ token: PaymentToken) {
         self.token = token

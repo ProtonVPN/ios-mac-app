@@ -61,7 +61,6 @@ extension DatabaseConfiguration {
     }
 }
 
-
 extension DatabaseConfigurationKey: DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live
 }

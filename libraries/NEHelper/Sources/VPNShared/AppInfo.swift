@@ -25,7 +25,6 @@ import Dependencies
 import Domain
 import Ergonomics
 
-
 public protocol AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo
 }

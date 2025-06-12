@@ -277,7 +277,7 @@ final class SettingsViewModel {
         cells.append(.upsellableToggle(
             title: Localizable.alwaysOnVpn,
             state: { .available(enabled: true, interactive: false) },
-            upsell: { }, // Always on VPN is always in the enabled and non-interactive state
+            upsell: {}, // Always on VPN is always in the enabled and non-interactive state
             handler: nil
         ))
         cells.append(.tooltip(text: Localizable.alwaysOnVpnTooltipIos))
@@ -487,7 +487,7 @@ final class SettingsViewModel {
             .upsellableToggle(
                 title: Localizable.troubleshootItemAltTitle,
                 state: { [unowned self] in .available(enabled: self.propertiesManager.alternativeRouting, interactive: true) },
-                upsell: { }, // No Upsell: Alternative Routing is a free feature
+                upsell: {}, // No Upsell: Alternative Routing is a free feature
                 handler: { [unowned self] (toggleOn, callback) in
                     self.propertiesManager.alternativeRouting.toggle()
                     callback(self.propertiesManager.alternativeRouting)

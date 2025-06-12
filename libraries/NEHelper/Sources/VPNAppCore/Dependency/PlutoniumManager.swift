@@ -24,17 +24,17 @@ import ComposableArchitecture
 
 public struct PlutoniumManager: DependencyKey, TestDependencyKey {
     public var start: () async throws -> Void
-    public var stop:  () async throws -> Void
+    public var stop: () async throws -> Void
 
     private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
     private static let descriptionText = "ProtonVPN Plutonium"
 
     private init(
         start: @escaping () async throws -> Void,
-        stop:  @escaping () async throws -> Void
+        stop: @escaping () async throws -> Void
     ) {
         self.start = start
-        self.stop  = stop
+        self.stop = stop
     }
 
     public static let liveValue = PlutoniumManager(
@@ -53,8 +53,8 @@ public struct PlutoniumManager: DependencyKey, TestDependencyKey {
     )
 
     public static let testValue = PlutoniumManager(
-        start: { },
-        stop: { }
+        start: {},
+        stop: {}
     )
 
     private static func makeOrGetManager() async throws -> NETransparentProxyManager {

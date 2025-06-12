@@ -62,8 +62,7 @@ class QuickSettingButton: NSButton {
         }
     }
     
-    override func mouseDown(with event: NSEvent) {
-    }
+    override func mouseDown(with event: NSEvent) {}
     
     override func mouseUp(with event: NSEvent) {
         callback?(self)

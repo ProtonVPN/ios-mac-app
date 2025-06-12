@@ -49,7 +49,7 @@ final class ProfilesTableViewCell: UITableViewCell {
             }
             
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            profileName.attributedText = viewModel.description  // e.g. Country >> Server
+            profileName.attributedText = viewModel.description // e.g. Country >> Server
             connectionDescription.attributedText = viewModel.name
             
             [profileImage, labelsStackView].forEach { view in

@@ -49,7 +49,7 @@ public struct ConnectionStatusBannerFeature {
         case upsellTap
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

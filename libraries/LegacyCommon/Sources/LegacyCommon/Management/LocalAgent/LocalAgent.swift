@@ -67,8 +67,7 @@ public protocol LocalAgentConnectionWrapper {
     func sendGetStatus(_: Bool)
 }
 
-extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {
-}
+extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {}
 
 public protocol LocalAgentConnectionFactoryCreator {
     func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory
@@ -120,7 +119,7 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
         return result
     }
 
-    public init() { }
+    public init() {}
 }
 
 final class LocalAgentImplementation: LocalAgent {

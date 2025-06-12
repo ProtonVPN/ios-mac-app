@@ -53,7 +53,7 @@ extension TypedNotification {
     static var dataKey: String { "ch.protonvpn.notificationcenter.notificationdata" }
 }
 
-protocol EmptyTypedNotification: TypedNotification<Void> { }
+protocol EmptyTypedNotification: TypedNotification<Void> {}
 extension EmptyTypedNotification {
     var data: Void { return }
 }

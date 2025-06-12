@@ -708,8 +708,7 @@ public class DateProperty {
     }
 }
 
-extension ConnectionSpec: @retroactive DefaultableProperty {
-}
+extension ConnectionSpec: @retroactive DefaultableProperty {}
 
 extension SettingsStorageKey: @retroactive DependencyKey {
     public static let liveValue: SettingsStorage = .init(

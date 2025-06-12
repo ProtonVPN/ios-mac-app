@@ -130,8 +130,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         return false
     }
     
-    public func clearOldVpnPassword() throws {
-    }
+    public func clearOldVpnPassword() throws {}
     
     public func store(wireguardConfiguration: Data) throws -> Data {
         return Data()

@@ -186,7 +186,7 @@ public final class CannotAccessVpnCredentialsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class P2pBlockedAlert: SystemAlert {
@@ -244,7 +244,7 @@ public final class DelinquentUserAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class VpnStuckAlert: SystemAlert {
@@ -428,7 +428,7 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedClose,
             style: .cancel,
-            handler: { }
+            handler: {}
         ))
     }
 }
@@ -624,7 +624,7 @@ public final class VpnServerOnMaintenanceAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class ReconnectOnNetshieldChangeAlert: SystemAlert {
@@ -661,7 +661,7 @@ public final class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class UserPlanDowngradedAlert: UserAccountUpdateAlert {
@@ -711,7 +711,7 @@ public final class VpnServerErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class VpnServerSubscriptionErrorAlert: SystemAlert {
@@ -721,7 +721,7 @@ public final class VpnServerSubscriptionErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class DiscourageSecureCoreAlert: SystemAlert {
@@ -738,7 +738,7 @@ public final class DiscourageSecureCoreAlert: SystemAlert {
 
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class SubuserWithoutConnectionsAlert: SystemAlert {
@@ -790,8 +790,7 @@ public final class ProtonUnreachableAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() {
-    }
+    public init() {}
 }
 
 public final class ConnectingWithBadLANAlert: SystemAlert {
@@ -882,7 +881,7 @@ public final class SysexEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class SysexInstallingErrorAlert: SystemAlert {

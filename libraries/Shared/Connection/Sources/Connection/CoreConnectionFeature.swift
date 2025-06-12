@@ -42,7 +42,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
-    public init() { }
+    public init() {}
 
     /// In an effort to prevent duplicating state, we don't hold any state besides child feature state.
     /// There exists a `CoreConnectionState` enum which consolidates this information into a single piece of state,

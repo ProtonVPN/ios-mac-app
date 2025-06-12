@@ -38,7 +38,7 @@ public enum KillSwitchState: LocalizedStringConvertible {
 public struct KillSwitchSettingsFeature: Reducer {
     public typealias State = KillSwitchState
 
-    public init() { }
+    public init() {}
 
     public enum Action: Equatable {
         case set(value: KillSwitchState)

@@ -575,7 +575,7 @@ class StatusViewModel {
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,
                 leadingImage: Asset.netshieldSmall.image,
                 trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: { }
+                handler: {}
             )
         }
 

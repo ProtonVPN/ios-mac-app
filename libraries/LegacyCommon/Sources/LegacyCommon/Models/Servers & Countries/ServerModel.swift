@@ -177,7 +177,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         entryCountryCode = try dic.stringOrThrow(key: "EntryCountry") // "EntryCountry": "ES"
         exitCountryCode = try dic.stringOrThrow(key: "ExitCountry") // "ExitCountry": "ES" //this replace old countryCode
         tier = try dic.intOrThrow(key: "Tier") // "Tier": 2
-        score = try dic.doubleOrThrow(key: "Score")  // "Score": 1
+        score = try dic.doubleOrThrow(key: "Score") // "Score": 1
         status = try dic.intOrThrow(key: "Status") // "Status": 1,
         self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
         city = dic.string("City") // "City": "Zurich"

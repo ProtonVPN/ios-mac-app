@@ -138,7 +138,7 @@ extension NSScreen {
             isNotch = false
         }
 
-        let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ??  24
+        let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ?? 24
         let appTitleBarHeight: CGFloat = 28
         let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
         let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32

@@ -29,7 +29,6 @@ public struct SettingsDimensions: Encodable {
     let firstHermesAddressFamily: HermesAddressFamily
     let isSystemHermesEnabled: SystemHermesEnabled
 
-
     init(defaultConnectionType: DefaultConnectionType,
          appIcon: AppIcon,
          userTier: UserTier,

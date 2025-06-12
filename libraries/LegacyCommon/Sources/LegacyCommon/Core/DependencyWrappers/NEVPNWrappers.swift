@@ -44,11 +44,9 @@ public protocol NEVPNManagerWrapperFactory {
     func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper
 }
 
-public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {
-}
+public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {}
 
-extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
-}
+extension NETunnelProviderManager: NETunnelProviderManagerWrapper {}
 
 public protocol NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper
@@ -178,5 +176,4 @@ extension NETunnelProviderSessionWrapper {
     }
 }
 
-extension NETunnelProviderSession: NETunnelProviderSessionWrapper {
-}
+extension NETunnelProviderSession: NETunnelProviderSessionWrapper {}

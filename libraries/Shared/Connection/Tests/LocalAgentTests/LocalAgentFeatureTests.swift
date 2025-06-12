@@ -160,7 +160,6 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.send(.didBecomeActive)
         // We are still connecting, so stats should not be requested
 
-
         // Let's pretend we finished connecting
         localAgent.simulate(event: .state(.connected))
         await store.receive(\.event.state.connected) {
@@ -170,7 +169,6 @@ final class LocalAgentFeatureTests: XCTestCase {
         await store.send(.didBecomeActive)
         XCTAssertEqual(localAgent.netShieldType, .off)
         // We're connected, but NetShield is disabled, so we shouldn't request stats yet
-
 
         // Now, we're simulating that the Go library has set NetShield level correctly and received confirmation from the server
         localAgent.simulate(event: .features(featuresWithNetShieldStatsEnabled))

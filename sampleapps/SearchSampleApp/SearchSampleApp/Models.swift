@@ -41,8 +41,7 @@ final class CityItemViewModel: CityViewModel {
 
     let connectButtonColor: UIColor = .darkGray
 
-    func connectAction() {
-    }
+    func connectAction() {}
 
     init(cityName: String, countryName: String, countryFlag: UIImage?) {
         self.cityName = cityName
@@ -86,8 +85,7 @@ final class CountryItemViewModel: CountryViewModel {
 
     let cities: [CityViewModel]
 
-    func connectAction() {
-    }
+    func connectAction() {}
 
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
         description = country
@@ -127,7 +125,7 @@ final class ServerItemViewModel: ServerViewModel {
         completion(nil)
     }
 
-    func cancelPartnersIconRequests() { }
+    func cancelPartnersIconRequests() {}
 
     let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
 
@@ -173,8 +171,7 @@ final class ServerItemViewModel: ServerViewModel {
 
     let translatedCity: String? = nil
 
-    func connectAction() {
-    }
+    func connectAction() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil) {
         description = server

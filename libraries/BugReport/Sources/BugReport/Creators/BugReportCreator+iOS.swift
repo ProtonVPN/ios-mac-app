@@ -27,7 +27,7 @@ public protocol BugReportCreator {
 }
 
 public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:this type_name
-    public init() { }
+    public init() {}
 
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors) -> UIViewController? {
         CurrentEnv.bugReportDelegate = delegate

@@ -118,7 +118,7 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
             .padding()
         VStack {
             DividedForEach([], showDividerUnderLastElement: true) { item in
-                HStack { }
+                HStack {}
             }
         }
     }

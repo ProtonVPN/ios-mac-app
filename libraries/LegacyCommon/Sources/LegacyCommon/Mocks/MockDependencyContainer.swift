@@ -179,7 +179,7 @@ open class MockDependencyContainer {
     public init() {}
 }
 
-extension MockDependencyContainer: AppSessionRefreshTimerDelegate { }
+extension MockDependencyContainer: AppSessionRefreshTimerDelegate {}
 
 /// This exists so that MockDependencyContainer won't create reference cycles by passing `self` as an
 /// argument to dependency initializers.

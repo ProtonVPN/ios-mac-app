@@ -31,8 +31,7 @@ public protocol LogFileManager {
 public class LogFileManagerImplementation: LogFileManager {
     public static let logDirLaunchArgument = "-LogDirectory"
     
-    public init() {
-    }
+    public init() {}
     
     /// Returns full log files URL given its name
     public func getFileUrl(named filename: String) -> URL {

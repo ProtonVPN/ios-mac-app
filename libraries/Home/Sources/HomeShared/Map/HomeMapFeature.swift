@@ -47,7 +47,7 @@ public struct HomeMapFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userCountry) public var userCountry: String?
 
-        public init() { }
+        public init() {}
     }
 
     public enum MapState: Equatable {

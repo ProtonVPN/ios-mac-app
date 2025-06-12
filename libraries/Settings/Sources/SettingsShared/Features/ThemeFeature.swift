@@ -37,7 +37,7 @@ extension ColorScheme: @retroactive LocalizedStringConvertible {
 public struct ThemeSettingsFeature: Reducer {
     public typealias State = ColorScheme
 
-    public init() { }
+    public init() {}
 
     public enum Action: Equatable {
         case set(colorScheme: State)

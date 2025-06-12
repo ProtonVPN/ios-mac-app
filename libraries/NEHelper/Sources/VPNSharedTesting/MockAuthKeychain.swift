@@ -24,7 +24,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
     public var username: String?
     public var userId: String?
 
-    public func saveToCache(_ credentials: VPNShared.AuthCredentials?) { }
+    public func saveToCache(_ credentials: VPNShared.AuthCredentials?) {}
 
     let defaultContext: AppContext
 

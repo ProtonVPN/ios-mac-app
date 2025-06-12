@@ -38,7 +38,6 @@ extension SharedKey where Self == AppStorageKey<TimeInterval> {
     }
 }
 
-
 public extension SharedKey where Self == InMemoryKey<UserLocation?> {
     static var userLocation: Self {
         .inMemory("userLocation")

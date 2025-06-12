@@ -128,7 +128,7 @@ final class ContactFormTests: XCTestCase {
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
                     throw errorThrown
                 }
-                $0.finishBugReport = { }
+                $0.finishBugReport = {}
             }
         )
 

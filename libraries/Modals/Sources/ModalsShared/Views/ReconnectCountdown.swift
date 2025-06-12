@@ -146,7 +146,6 @@ public struct ReconnectCountdown: View {
     }
 }
 
-
 extension TimeInterval {
     var components: (hours: Int, minutes: Int, seconds: Int) {
         let hours = Int(self) / (60 * 60)

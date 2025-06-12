@@ -35,7 +35,7 @@ struct SettingsCell: View {
         icon: Image,
         content: Content,
         accessory: Accessory,
-        onTap: @escaping () -> Void = { }
+        onTap: @escaping () -> Void = {}
     ) {
         self.icon = icon
         self.content = content
@@ -47,7 +47,7 @@ struct SettingsCell: View {
         icon: Theme.ImageAsset,
         content: Content,
         accessory: Accessory,
-        onTap: @escaping () -> Void = { }
+        onTap: @escaping () -> Void = {}
     ) {
         self.init(icon: icon.swiftUIImage, content: content, accessory: accessory, onTap: onTap)
     }

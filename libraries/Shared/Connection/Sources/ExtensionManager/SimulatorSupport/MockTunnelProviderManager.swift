@@ -76,7 +76,7 @@ final class MockTunnelProviderManager: TunnelProviderManager {
         saveToPreferencesBlock?()
     }
 
-    func removeFromPreferences() async throws { }
+    func removeFromPreferences() async throws {}
 
     var session: VPNSession
 

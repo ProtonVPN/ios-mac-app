@@ -31,4 +31,3 @@ import ConnectionDetails_iOS
 public typealias ConnectionScreenView = ConnectionDetails_iOS.ConnectionScreenView
 
 #endif
-

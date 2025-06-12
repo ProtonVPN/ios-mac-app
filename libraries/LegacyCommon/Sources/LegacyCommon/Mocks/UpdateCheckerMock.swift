@@ -20,8 +20,7 @@ import Foundation
 
 #if DEBUG
 public struct UpdateCheckerMock: UpdateChecker {
-    public func startUpdate() {
-    }
+    public func startUpdate() {}
     
     public func isUpdateAvailable() async -> Bool {
         return false

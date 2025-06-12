@@ -314,7 +314,7 @@ private extension ConnectionSpec {
 }
 
 private extension VPNConnectionStatus {
-    static var  connected: Self {
+    static var connected: Self {
         .connected(.dibba, nil)
     }
 

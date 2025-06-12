@@ -25,7 +25,7 @@ import ConnectionInventory
 public struct DefaultConnectionFeature {
     public typealias ActionSender = (Action) -> Void
 
-    public init() { }
+    public init() {}
 
     @ObservableState
     public struct State: Equatable {
@@ -37,7 +37,7 @@ public struct DefaultConnectionFeature {
             return resolver.preferenceModels(recents: recents)
         }
 
-        public init() { }
+        public init() {}
     }
 
     @CasePathable

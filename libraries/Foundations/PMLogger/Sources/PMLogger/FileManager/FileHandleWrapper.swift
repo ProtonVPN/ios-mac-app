@@ -27,5 +27,4 @@ public protocol FileHandleWrapper {
     func close() throws
 }
 
-extension FileHandle: FileHandleWrapper {
-}
+extension FileHandle: FileHandleWrapper {}

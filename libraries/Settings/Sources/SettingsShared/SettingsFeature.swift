@@ -21,7 +21,7 @@ import Foundation
 import ComposableArchitecture
 
 public struct SettingsFeature: Reducer {
-    public init() { }
+    public init() {}
 
     public enum Destination: Equatable {
         case netShield

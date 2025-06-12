@@ -31,7 +31,7 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     public var cert: VpnCertificate?
     public var features: VPNConnectionFeatures?
     
-    public init() { }
+    public init() {}
 
     public func deleteKeys() {
         keys = nil

@@ -57,7 +57,7 @@ public final class NetworkingMock {
 
     public var requestCallback: ((URLRequest) -> Result<Data, Error>)?
 
-    public init() { }
+    public init() {}
 
     func request(_ route: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
         if let requestCallback {
@@ -238,14 +238,13 @@ extension NetworkingMock: APIServiceDelegate {
         return "UNIT TESTS USER AGENT"
     }
 
-    public func onUpdate(serverTime: Int64) {
-    }
+    public func onUpdate(serverTime: Int64) {}
 
     public func isReachable() -> Bool {
         return true
     }
 
-    public func onDohTroubleshot() { }
+    public func onDohTroubleshot() {}
 }
 
 public protocol NetworkingMockDelegate: AnyObject {

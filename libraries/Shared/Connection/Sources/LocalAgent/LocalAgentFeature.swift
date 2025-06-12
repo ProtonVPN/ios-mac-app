@@ -51,7 +51,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
     @Dependency(\.localAgent) var localAgent
     @Dependency(\.localAgentConfiguration) var configuration
 
-    public init() { }
+    public init() {}
 
     @CasePathable
     @dynamicMemberLookup

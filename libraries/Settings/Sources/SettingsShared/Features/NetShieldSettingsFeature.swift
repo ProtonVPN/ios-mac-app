@@ -38,7 +38,7 @@ public enum NetShieldState: LocalizedStringConvertible {
 public struct NetShieldSettingsFeature: Reducer {
     public typealias State = NetShieldState
 
-    public init() { }
+    public init() {}
 
     public enum Action: Equatable {
         case set(value: State)

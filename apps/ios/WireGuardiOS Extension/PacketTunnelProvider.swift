@@ -124,10 +124,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             log.debug("Connection restarted with another server. Will regenerate certificate.")
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { result in
                 log.info("New certificate (after reconnection) result: \(result)", category: .userCert)
-                self.certificateRefreshManager.start { }
+                self.certificateRefreshManager.start {}
             }
         } else { // New connection
-            certificateRefreshManager.start { }
+            certificateRefreshManager.start {}
         }
 
         #if CHECK_CONNECTIVITY
@@ -452,7 +452,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         self.startTestingConnectivity()
         #endif
 
-        certificateRefreshManager.resume { }
+        certificateRefreshManager.resume {}
     }
 
     // MARK: - Logs

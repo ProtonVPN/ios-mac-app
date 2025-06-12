@@ -61,7 +61,7 @@ public class VpnManagerMock: VpnManagerProtocol {
     
     public func refreshState() {}
 
-    public func appBackgroundStateDidChange(isBackground: Bool) { }
+    public func appBackgroundStateDidChange(isBackground: Bool) {}
         
     public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
         completionHandler?(removeConfigurationError)
@@ -78,20 +78,16 @@ public class VpnManagerMock: VpnManagerProtocol {
     }
     
     public func refreshManagers() {}
-    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) { }
+    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {}
     public var prepareManagersTask: Task<(), Never>?
 
-    public func set(vpnAccelerator: Bool) {
-    }
+    public func set(vpnAccelerator: Bool) {}
 
-    public func set(netShieldType: NetShieldType) {
-    }
+    public func set(netShieldType: NetShieldType) {}
 
-    public func set(natType: NATType) {
-    }
+    public func set(natType: NATType) {}
 
-    public func set(safeMode: Bool) {
-    }
+    public func set(safeMode: Bool) {}
 
     public private(set) var isLocalAgentConnected: Bool?
     public var localAgentStateChanged: ((Bool?) -> Void)?

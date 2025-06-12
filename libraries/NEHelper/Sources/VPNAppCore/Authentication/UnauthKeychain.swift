@@ -40,7 +40,7 @@ public final class UnauthKeychain: UnauthKeychainHandle {
 
     public static let `default` = UnauthKeychain()
 
-    private init() { }
+    private init() {}
 
     public func fetch() -> AuthCredential? {
         do {

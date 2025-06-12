@@ -43,5 +43,5 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
 
     public var values: Values { Values() }
 
-    public struct Values: Encodable { }
+    public struct Values: Encodable {}
 }

@@ -38,8 +38,7 @@ struct PrimaryButtonStyle: ButtonStyle {
 
 struct PrimaryButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        Button {
-        } label: {
+        Button {} label: {
             Text("Preview button")
         }
         .buttonStyle(PrimaryButtonStyle())

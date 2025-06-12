@@ -71,7 +71,6 @@ struct RecentConnectionOptionsButton: View {
     }
 }
 
-
 private extension RecentConnectionOptionsButton {
     struct OptionButton: View {
         enum Role {

@@ -40,7 +40,6 @@ struct RecentsButtonStyle: ButtonStyle {
     }
 }
 
-
 struct RecentConnectButtonStyle: ButtonStyle {
     @Binding var isHovered: Bool
 

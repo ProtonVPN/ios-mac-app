@@ -86,7 +86,7 @@ class VpnServerSelectorTests: XCTestCase {
         smartProtocolConfig: SmartProtocolConfig,
         appStateGetter: @escaping () -> AppState,
         changeActiveServerType: @escaping (ServerType) -> Void = { _ in },
-        notifyResolutionUnavailable: @escaping (Bool, ServerType, ResolutionUnavailableReason) -> Void = { _, _, _  in }
+        notifyResolutionUnavailable: @escaping (Bool, ServerType, ResolutionUnavailableReason) -> Void = { _, _, _ in }
     ) -> ServerModel? {
         return withDependencies {
             $0.serverRepository = repository

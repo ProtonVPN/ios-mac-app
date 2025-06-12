@@ -20,8 +20,7 @@ import Foundation
 import PMLogger
 
 class FileManagerMock: FileManagerWrapper {
-    init() {
-    }
+    init() {}
 
     @ThrowingFuncStub(FileManagerMock.createDirectory) var createDirectoryStub
     func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws {

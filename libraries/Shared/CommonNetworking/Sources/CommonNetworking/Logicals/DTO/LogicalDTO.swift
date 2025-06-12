@@ -37,7 +37,6 @@ struct LogicalDTO: Codable {
     public let translatedCity: String?
     public let gatewayName: String?
 
-
     /// We must provide CodingKeys to decode ID, since `JSONDecoder.decapitalisingFirstLetter` does not modify keys
     /// that have a capital prefix length longer than 1 character.
     public enum CodingKeys: String, CodingKey {

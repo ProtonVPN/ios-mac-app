@@ -348,7 +348,7 @@ extension CoreNetworking: APIServiceDelegate {
         return true
     }
 
-    public func onDohTroubleshot() { }
+    public func onDohTroubleshot() {}
 }
 
 // MARK: AuthDelegate
@@ -440,7 +440,7 @@ extension CoreNetworking: AuthDelegate {
         }
     }
 
-    public func onForceUpgrade() { }
+    public func onForceUpgrade() {}
 }
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {

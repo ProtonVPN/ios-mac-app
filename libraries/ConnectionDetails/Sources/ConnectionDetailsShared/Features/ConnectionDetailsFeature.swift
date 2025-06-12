@@ -58,14 +58,11 @@ public struct ConnectionDetailsFeature {
     }
 
     @CasePathable
-    public enum Action: Equatable {
-    }
+    public enum Action: Equatable {}
 
-    public init() {
-    }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         EmptyReducer()
     }
 }
-

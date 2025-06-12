@@ -56,7 +56,7 @@ struct WelcomeInfoFeature {
         }
     }
 
-    enum Action { }
+    enum Action {}
 
     var body: some Reducer<State, Action> {
         EmptyReducer()

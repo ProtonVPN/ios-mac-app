@@ -31,7 +31,7 @@ extension TunnelMessageSender {
     public static func sender(
         forRequest request: WireguardProviderRequest,
         withResponse response: WireguardProviderRequest.Response,
-        andOperation operation: @escaping () -> Void = { }
+        andOperation operation: @escaping () -> Void = {}
     ) -> TunnelMessageSender {
         return .init(send: { outgoingRequest in
             guard outgoingRequest == request else {

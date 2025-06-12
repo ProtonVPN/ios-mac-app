@@ -104,7 +104,7 @@ class HelpMenuViewModel {
     }
 
     private func clearAllDataAndTerminate() {
-        self.vpnManager.disconnect { }
+        self.vpnManager.disconnect {}
 
         AppEvent.clearingApplicationData.post()
 

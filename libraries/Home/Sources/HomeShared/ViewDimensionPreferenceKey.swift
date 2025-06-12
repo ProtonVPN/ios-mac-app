@@ -18,7 +18,7 @@
 
 import SwiftUI
 
-public protocol ViewDimensionPreferenceKey: PreferenceKey { }
+public protocol ViewDimensionPreferenceKey: PreferenceKey {}
 
 extension ViewDimensionPreferenceKey {
     public static var defaultValue: CGFloat { .zero }

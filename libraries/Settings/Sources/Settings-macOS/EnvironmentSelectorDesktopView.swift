@@ -180,7 +180,6 @@ public struct EnvironmentSelectorDesktopView: View {
     }
 }
 
-
 private struct EnvironmentSelectorButtonStyle: ButtonStyle {
     static let active = Self(isActive: true)
     static let inActive = Self(isActive: false)

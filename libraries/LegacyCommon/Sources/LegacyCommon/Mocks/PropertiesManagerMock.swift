@@ -226,7 +226,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         reportBugEmail = nil
     }
     
-    public func logCurrentState() {
-    }
+    public func logCurrentState() {}
 }
 #endif

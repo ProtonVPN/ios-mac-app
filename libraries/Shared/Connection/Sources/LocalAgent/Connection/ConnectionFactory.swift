@@ -102,7 +102,6 @@ extension ConnectionFactory {
     )
 }
 
-
 extension LocalAgentFeatures {
     enum Keys: String {
         case vpnAccelerator = "split-tcp"

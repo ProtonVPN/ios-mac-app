@@ -62,8 +62,7 @@ class AppSessionManagerMock: AppSessionManager {
         callbackLogOut?()
     }
 
-    func finishLogin(authCredentials: AuthCredentials) async throws {
-    }
+    func finishLogin(authCredentials: AuthCredentials) async throws {}
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         callbackAttemptDataRefreshWithoutLogin?({ completion(.success) }, { error in completion(.failure(error)) })
@@ -89,9 +88,7 @@ class AppSessionManagerMock: AppSessionManager {
         return callbackCanPreviewApp?() ?? true
     }
 
-    func refreshVpnAuthCertificate() async throws {
-    }
+    func refreshVpnAuthCertificate() async throws {}
 
-    func refreshUserInfo() {
-    }
+    func refreshUserInfo() {}
 }

@@ -34,7 +34,7 @@ import Ergonomics
 public struct ExtensionFeature: Reducer, Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
 
-    public init() { }
+    public init() {}
 
     private enum CancelID {
         case tunnelStart

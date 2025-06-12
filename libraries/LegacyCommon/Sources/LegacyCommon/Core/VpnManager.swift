@@ -761,7 +761,6 @@ public final class VpnManager: VpnManagerProtocol {
         }
 #endif
 
-
         switch self.state {
         case .connecting:
             if !self.connectAllowed {
@@ -921,8 +920,7 @@ public final class VpnManager: VpnManagerProtocol {
             return
         }
 
-        switch self.state
-        {
+        switch self.state {
         case .connected:
             try await plutoniumManager.start()
         default:

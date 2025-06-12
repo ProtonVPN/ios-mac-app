@@ -39,7 +39,7 @@ final class SearchModuleStorage: SearchStorage {
     @Dependency(\.storage) var storage
     private let key = "RECENT_SEARCHES"
 
-    init() { }
+    init() {}
 
     func clear() {
         storage.removeObject(forKey: key)

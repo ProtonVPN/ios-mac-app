@@ -87,7 +87,7 @@ public class TimerFactoryImplementation: TimerFactory {
         queue.asyncAfter(deadline: .now() + interval, execute: closure)
     }
 
-    public init() { }
+    public init() {}
 }
 
 public class BackgroundTimerImplementation: BackgroundTimer {

@@ -33,7 +33,7 @@ public struct KeychainDebugFeature {
         package var content: Content
     }
 
-    package init() { }
+    package init() {}
 
     public enum Action {
         case loadKeychainData

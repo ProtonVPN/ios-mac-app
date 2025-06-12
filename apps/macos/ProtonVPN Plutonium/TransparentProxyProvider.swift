@@ -24,5 +24,5 @@ final class TransparentProxyProvider: PlutoniumTransparentProxyProvider {
     // we define the transparent proxy here as a subclass of PlutoniumTransparentProxyProvider
 }
 #else
-final class TransparentProxyProvider: NETransparentProxyProvider { }
+final class TransparentProxyProvider: NETransparentProxyProvider {}
 #endif

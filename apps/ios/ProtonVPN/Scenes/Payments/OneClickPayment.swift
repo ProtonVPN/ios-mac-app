@@ -166,7 +166,6 @@ final class OneClickPayment {
         completionHandler()
     }
 
-
     @MainActor
     func validate(selectedPlan: PlanOption) async {
         guard selectedPlan.purchaseType == .iap else {

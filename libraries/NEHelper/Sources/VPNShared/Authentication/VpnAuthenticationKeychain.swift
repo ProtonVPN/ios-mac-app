@@ -150,4 +150,3 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
         try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
     }
 }
-

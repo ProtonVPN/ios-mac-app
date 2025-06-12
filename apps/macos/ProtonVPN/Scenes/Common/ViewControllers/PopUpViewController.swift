@@ -108,7 +108,6 @@ class PopUpViewController: NSViewController {
         }
         popUpDescriptionTextView.delegate = viewModel
 
-
         popUpDescriptionTextView.textStorage?.setAttributedString(attributedDescription)
     }
     

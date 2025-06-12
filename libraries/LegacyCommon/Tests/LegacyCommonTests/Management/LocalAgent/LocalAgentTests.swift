@@ -89,7 +89,7 @@ final class LocalAgentTests: XCTestCase {
         netShieldPropertyProvider.netShieldType = .level2
         XCTAssertFalse(localAgent.isMonitoringFeatureStatistics, "Should not monitor stats when FF is false")
 
-        timerFactory.timerWasAdded = { }
+        timerFactory.timerWasAdded = {}
         propertiesManager.setNetShieldStats(to: true)
         XCTAssertTrue(localAgent.isMonitoringFeatureStatistics, "Should monitor stats when FF is true and level is 2")
 

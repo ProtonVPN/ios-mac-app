@@ -57,7 +57,7 @@ public struct PrivateKey: Equatable, Sendable, Codable, CustomStringConvertible,
     #endif
     }
 
-    public var debugDescription: String  { description }
+    public var debugDescription: String { description }
 }
 
 /// Ed25519 key pair

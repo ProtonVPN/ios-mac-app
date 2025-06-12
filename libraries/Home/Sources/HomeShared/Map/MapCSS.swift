@@ -156,7 +156,6 @@ enum MapCSS {
      * .eaeu - for members of Eurasian Economic Union
      */
 
-
     /*
      * Additional style rules
      *

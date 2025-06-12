@@ -102,7 +102,7 @@ public class CryptoService {
         return false
     }
 
-    public init() { }
+    public init() {}
 }
 
 private extension NSError {

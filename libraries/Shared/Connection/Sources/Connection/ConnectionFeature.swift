@@ -33,7 +33,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
 
-    public init() { }
+    public init() {}
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?

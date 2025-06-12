@@ -23,5 +23,4 @@ import os.log
 }
 
 /// Provider -> App IPC
-@objc protocol AppCommunication {
-}
+@objc protocol AppCommunication {}

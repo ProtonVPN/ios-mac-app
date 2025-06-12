@@ -103,7 +103,6 @@ final class UpsellFeatureTests: XCTestCase {
         let initialState = UpsellFeature.State.loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
         let networking = VPNNetworkingMock(userTierResult: .success(2))
 
-
         let store = TestStore(initialState: initialState) {
             UpsellFeature()
         } withDependencies: {

@@ -50,8 +50,7 @@ public class SiriHelper: SiriHelperProtocol {
     public static var quickConnectIntent: INIntent?
     public static var disconnectIntent: INIntent?
 
-    public init() {
-    }
+    public init() {}
 
     public func donateQuickConnect() {
         #if os(iOS)

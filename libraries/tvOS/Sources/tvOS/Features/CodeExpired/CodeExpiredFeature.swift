@@ -21,7 +21,7 @@ import ComposableArchitecture
 @Reducer
 struct CodeExpiredFeature {
     @ObservableState
-    struct State: Equatable { }
+    struct State: Equatable {}
 
     enum Action {
         case generateNewCode

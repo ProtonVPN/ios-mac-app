@@ -119,8 +119,8 @@ final class SettingsAccountViewModel {
     }
     
     final class ButtonWithLoadingIndicatorControllerImplementation: ButtonWithLoadingIndicatorController {
-        var startLoading: () -> Void = { }
-        var stopLoading: () -> Void = { }
+        var startLoading: () -> Void = {}
+        var stopLoading: () -> Void = {}
         var handler: () -> Void
         init(handler: @escaping () -> Void) {
             self.handler = handler

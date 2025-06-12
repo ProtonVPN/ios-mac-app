@@ -36,9 +36,9 @@ open class UpsellAlert: SystemAlert {
         return nil
     }
 
-    open func continueAction() { }
+    open func continueAction() {}
 
-    public init() { }
+    public init() {}
 }
 
 public enum UpsellModalSource {

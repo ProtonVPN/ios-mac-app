@@ -245,8 +245,7 @@ private struct ButtonsView : View {
     @Environment(\.widgetFamily) var widgetFamily
     let entry: ConnectWidgetEntry
 
-    var body: some View
-    {
+    var body: some View {
         switch entry.protectionState {
         case .protected:
             Button(intent: DisconnectFromVPNIntent()) {

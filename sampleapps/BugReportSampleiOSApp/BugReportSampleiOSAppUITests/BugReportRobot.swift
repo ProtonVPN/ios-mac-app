@@ -54,7 +54,6 @@ fileprivate let tryAgainButton = "Try again"
 fileprivate let troubleshootgButton = "Troubleshoot"
 fileprivate let statusLabel = "Troubleshooting"
 
-
 class BugReportRobot {
     func openBugReport() -> BugReportRobot {
         app.buttons[showBugReportButton].tap()

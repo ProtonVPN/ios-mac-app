@@ -52,7 +52,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let item = collectionView.dequeueReusableCell(withReuseIdentifier: ColorPickerItem.identifier, for: indexPath)  as? ColorPickerItem {
+        if let item = collectionView.dequeueReusableCell(withReuseIdentifier: ColorPickerItem.identifier, for: indexPath) as? ColorPickerItem {
             item.color = colorAt(index: indexPath.row)
             return item
         }

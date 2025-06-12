@@ -54,8 +54,7 @@ extension RecentConnection: Identifiable {
     }
 }
 
-extension RecentConnection: Codable {
-}
+extension RecentConnection: Codable {}
 
 extension RecentConnection {
     public static var sampleData: [RecentConnection] {

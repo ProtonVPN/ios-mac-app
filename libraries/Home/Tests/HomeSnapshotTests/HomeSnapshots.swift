@@ -126,7 +126,6 @@ struct SwiftTestingTests {
     }
 }
 
-
 infix operator |=|
 
 public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {

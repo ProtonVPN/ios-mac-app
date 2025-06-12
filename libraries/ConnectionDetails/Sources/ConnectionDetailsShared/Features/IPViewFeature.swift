@@ -42,7 +42,7 @@ public struct IPViewFeature {
         @SharedReader(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.connectionState) private var connectionState: ConnectionState
 
-        public init() { }
+        public init() {}
 
         public var buttonIsVisible: Bool { userIP != nil }
     }
@@ -51,8 +51,7 @@ public struct IPViewFeature {
         case changeIPVisibility
     }
 
-    public init() {
-    }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

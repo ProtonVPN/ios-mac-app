@@ -356,7 +356,6 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             wait(for: expectationsToAwait, timeout: expectationTimeout)
         })
 
-
         Self.expectationManagementQueue.sync {
             expectationsToFulfill = [:]
             expectationsToAwait = []

@@ -28,7 +28,7 @@ import VPNShared
 import VPNSharedTesting
 
 public final class VpnAuthenticationMock: VpnAuthentication {
-    public init() { }
+    public init() {}
 
     public var loadResult: Result<VpnAuthenticationData, Error> = .success(.mock)
     public var refreshResult: Result<VpnAuthenticationData, Error> = .success(.mock)

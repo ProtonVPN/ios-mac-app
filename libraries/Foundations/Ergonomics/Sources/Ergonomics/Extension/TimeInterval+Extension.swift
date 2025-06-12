@@ -100,7 +100,6 @@ public extension TimeInterval {
         }
     }
 
-
     func asColonSeparatedString(maxUnit: Self.Unit, minUnit: Self.Unit) -> String {
         components(largestUnit: maxUnit, smallestUnit: minUnit)
             .map { String(format: "%02i", $0) }

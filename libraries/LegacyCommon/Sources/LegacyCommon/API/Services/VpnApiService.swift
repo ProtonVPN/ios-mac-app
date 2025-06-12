@@ -229,7 +229,7 @@ public class VpnApiService {
         networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
-                guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
+                guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json) else {
                     let error = ParseError.serverParse
                     log.error("'Server' field not present in server info request's response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))

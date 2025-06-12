@@ -33,7 +33,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
     override func setUpWithError() throws {
         try super.setUpWithError()
         container = ConnectingOverlayViewModelMockFactory(vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
-        viewModel = ConnectingOverlayViewModel(factory: container, cancellation: { })
+        viewModel = ConnectingOverlayViewModel(factory: container, cancellation: {})
     }
 
     override func tearDownWithError() throws {

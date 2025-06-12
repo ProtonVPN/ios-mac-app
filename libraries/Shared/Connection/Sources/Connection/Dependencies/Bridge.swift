@@ -58,9 +58,9 @@ extension ConnectionBridge: DependencyKey {
             let (stream, continuation) = AsyncStream<VPNConnectionStatus>.makeStream()
             statusContinuation = continuation
             return stream
-        } push: { intent  in
+        } push: { intent in
             intentContinuation?.yield(intent)
-        } pushStatus: { status  in
+        } pushStatus: { status in
             statusContinuation?.yield(status)
         }
     }()

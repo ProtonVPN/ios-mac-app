@@ -70,7 +70,7 @@ final class CountriesViewModelTests: XCTestCase {
                 groups: { _, _ in self.serverGroups },
                 getMetadata: { _ in nil },
                 setMetadata: { _, _ in },
-                closeConnection: { }
+                closeConnection: {}
             )
         } operation: {
             operation()
@@ -194,8 +194,8 @@ struct AnnouncementManagerMock: AnnouncementManager {
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement] { [] }
     func fetchCurrentOfferBannerFromStorage() -> Announcement? { nil }
     func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
-    func markAsRead(announcement: Announcement) { }
-    func markAsRead(notificationID: String) { }
+    func markAsRead(announcement: Announcement) {}
+    func markAsRead(notificationID: String) {}
     func shouldShowAnnouncementsIcon() -> Bool { false }
 }
 

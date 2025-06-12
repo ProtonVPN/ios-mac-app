@@ -45,7 +45,7 @@ public struct ChangeServerFeature {
         case changeServerButtonTapped
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         EmptyReducer()

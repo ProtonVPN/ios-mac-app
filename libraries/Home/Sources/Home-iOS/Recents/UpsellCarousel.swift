@@ -146,7 +146,7 @@ fileprivate struct BannerModel {
     }
 }
 
-fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey { }
+fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey {}
 
 #Preview {
     UpsellCarousel { _ in }

@@ -29,5 +29,5 @@ protocol TextFieldFocusDelegate: AnyObject {
 }
 
 extension TextFieldFocusDelegate {
-    func didLoseFocus(_ textField: NSTextField) { }
+    func didLoseFocus(_ textField: NSTextField) {}
 }

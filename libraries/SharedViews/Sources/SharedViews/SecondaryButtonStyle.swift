@@ -21,7 +21,7 @@ import SwiftUI
 import Theme
 
 public struct SecondaryButtonStyle: ButtonStyle {
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration

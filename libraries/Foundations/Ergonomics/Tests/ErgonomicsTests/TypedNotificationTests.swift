@@ -43,7 +43,7 @@ final class TypedNotificationTests: XCTestCase {
     }
 
     /// Used to verify that notifications are handled according to the object field
-    private class TestObject { }
+    private class TestObject {}
 
     /// Used to verify and demo retain cycle behaviour
     class TestViewModel: Identifiable {

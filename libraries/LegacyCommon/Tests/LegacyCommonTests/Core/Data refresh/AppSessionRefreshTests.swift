@@ -253,5 +253,4 @@ extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory,
     }
 }
 
-extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {
-}
+extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {}

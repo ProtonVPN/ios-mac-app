@@ -91,7 +91,7 @@ final class NetShieldSelectionViewModel {
                 subtitle: Localizable.netshieldBusinessUpsellSubtitle,
                 leadingImage: Asset.netshieldSmall.image,
                 trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: { }
+                handler: {}
             )
         } else {
             upsellCell = TableViewCellModel.imageSubtitle(

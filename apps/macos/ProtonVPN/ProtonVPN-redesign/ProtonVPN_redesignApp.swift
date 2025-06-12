@@ -142,18 +142,13 @@ extension Scene {
                     appDelegate.navigationService.showReportBug()
                 }
 
-                Button("View Logs") {
-                }
-                Button("OpenVPN Logs") {
-                }
-                Button("WireGuard Logs") {
-                }
-                Button("Clear Application Data") {
-                }
-                Button("System Extension Tutorial") {
-                }
+                Button("View Logs") {}
+                Button("OpenVPN Logs") {}
+                Button("WireGuard Logs") {}
+                Button("Clear Application Data") {}
+                Button("System Extension Tutorial") {}
             }
-            CommandGroup(replacing: .newItem, addition: { }) // block user from opening multiple windows
+            CommandGroup(replacing: .newItem, addition: {}) // block user from opening multiple windows
             CommandMenu("Custom Menu") {
                 Button("Say Hello") {
                     log.debug("Hello")

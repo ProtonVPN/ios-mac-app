@@ -236,8 +236,7 @@ extension CertificateRefreshRequest.Response: MockableAPIResponse {
     }
 }
 
-extension CertificateRefreshRequest: MockableRequest {
-}
+extension CertificateRefreshRequest: MockableRequest {}
 
 extension TokenRefreshRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<Self>: Any]) {
@@ -247,8 +246,7 @@ extension TokenRefreshRequest.Response: MockableAPIResponse {
     }
 }
 
-extension TokenRefreshRequest: MockableRequest {
-}
+extension TokenRefreshRequest: MockableRequest {}
 
 extension SessionAuthRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<Self>: Any]) {
@@ -257,11 +255,9 @@ extension SessionAuthRequest.Response: MockableAPIResponse {
     }
 }
 
-extension SessionAuthRequest: MockableRequest {
-}
+extension SessionAuthRequest: MockableRequest {}
 
-extension ServerStatusRequest: MockableRequest {
-}
+extension ServerStatusRequest: MockableRequest {}
 
 extension ServerStatusRequest.Response: MockableAPIResponse {
     init(fakeData: [PartialKeyPath<ServerStatusRequest.Response>: Any]) {

@@ -121,7 +121,7 @@ fileprivate class WindowServiceMock: WindowService {
     func showTour() {}
     func openAbout(factory: AboutViewController.Factory) {}
     func openAcknowledgements() {}
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }
+    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) {}
     func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
     
@@ -137,20 +137,15 @@ fileprivate class WindowServiceMock: WindowService {
         return false
     }
     
-    func closeActiveWindows(except: [NSWindowController.Type]) {
-    }
+    func closeActiveWindows(except: [NSWindowController.Type]) {}
 
-    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
-    }
+    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {}
     
-    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
-    }
+    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {}
 
-    func windowCloseRequested(_ sender: WindowController) {
-    }
+    func windowCloseRequested(_ sender: WindowController) {}
 
-    func windowWillClose(_ sender: WindowController) {
-    }
+    func windowWillClose(_ sender: WindowController) {}
 }
 
 fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
@@ -233,7 +228,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     var sessionChanged: Notification.Name = Notification.Name("AppSessionManagerSessionChanged")
     
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
-    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) { }
+    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logOut(force: Bool, reason: String?) {}
     func logOut() {}
@@ -241,11 +236,11 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
 }
 
 fileprivate class NotificationManagerMock: NotificationManagerProtocol {
-    func displayServerGoingOnMaintenance() { }
+    func displayServerGoingOnMaintenance() {}
 }
 
 class PlanServiceMock: PlanService {
     var countriesCount: Int = 59
 
-    func updateCountriesCount() { }
+    func updateCountriesCount() {}
 }

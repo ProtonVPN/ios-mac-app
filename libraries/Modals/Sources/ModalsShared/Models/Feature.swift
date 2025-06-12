@@ -85,7 +85,7 @@ public enum Feature: Hashable, Identifiable {
     case toggle(id: ToggleID, title: String, subtitle: String, state: Bool)
 }
 
-extension Feature: Equatable { }
+extension Feature: Equatable {}
 
 extension Feature {
     // swiftlint:disable:next cyclomatic_complexity

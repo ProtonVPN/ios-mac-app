@@ -37,17 +37,17 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
         self.continuation = continuation
     }
 
-    func set(apiService: APIService) { }
+    func set(apiService: APIService) {}
 
     func onLogout() {
         continuation.yield(false)
     }
 
-    func onForceUpgrade(message: String) { }
+    func onForceUpgrade(message: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) { }
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) {}
     func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? { nil }
     func getSupportURL() -> URL { URL(string: "")! }
 }

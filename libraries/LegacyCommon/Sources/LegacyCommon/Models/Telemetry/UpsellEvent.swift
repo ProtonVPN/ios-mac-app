@@ -38,8 +38,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         case success = "upsell_success"
     }
 
-    public struct Values: Encodable {
-    }
+    public struct Values: Encodable {}
 
     public var values: Values {
         return Values()

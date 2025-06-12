@@ -84,7 +84,7 @@ final class MockTunnelManager: TunnelManager {
         return AsyncStream(statusChangedNotifications)
     }
 
-    func removeManagers() async throws { }
+    func removeManagers() async throws {}
 
     private func generateKeysIfNecessary() throws {
         @Dependency(\.vpnAuthenticationStorage) var keychain

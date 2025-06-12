@@ -77,7 +77,7 @@ class PlutoniumWindowController: WindowController {
                     vpnGateway.retryConnection()
                 }
             },
-            cancelHandler: { }
+            cancelHandler: {}
         ))
     }
 }

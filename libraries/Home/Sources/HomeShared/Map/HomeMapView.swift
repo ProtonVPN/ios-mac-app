@@ -70,7 +70,7 @@ public struct HomeMapView: View {
               let node = SVGView.mapSVG.mainlandNode(code: code) else {
             return wholeMapScale()
         }
-        let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the horizontal padding
+        let scaleX = (availableWidth - 40) / node.bounds().width // 40 is the horizontal padding
         let scaleY = (availableHeight - 150) / node.bounds().height // 150 is the vertical padding. We need it for connection status and netshield stats
 
         return min(min(scaleX, scaleY), 4) // max scale, useful for small countries

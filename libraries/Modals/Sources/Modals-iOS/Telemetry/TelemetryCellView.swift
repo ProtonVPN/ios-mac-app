@@ -40,7 +40,7 @@ struct TelemetryCellView: View {
             }
             .layoutPriority(1) // This VStack should take as much space as it can
 
-            Toggle(isOn: $isOn, label: { })
+            Toggle(isOn: $isOn, label: {})
                 .toggleStyle(SwitchToggleStyle(tint: Color(.icon, .interactive)))
         }
         .padding()

@@ -75,7 +75,7 @@ public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebu
     #endif
     }
 
-    public var debugDescription: String  { description }
+    public var debugDescription: String { description }
 }
 
 /**

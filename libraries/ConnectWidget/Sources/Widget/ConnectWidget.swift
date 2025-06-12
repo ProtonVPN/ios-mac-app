@@ -24,7 +24,7 @@ import Strings
 public struct ConnectWidget: Widget {
     static let kind: String = "ConnectWidget"
 
-    public init() { }
+    public init() {}
 
     public var body: some WidgetConfiguration {
         StaticConfiguration(kind: Self.kind, provider: Provider()) { entry in

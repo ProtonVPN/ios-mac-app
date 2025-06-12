@@ -447,7 +447,7 @@ extension IosAlertService: CoreAlertService {
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }
         announcement.cancelled = { [weak self] in
-            self?.windowService.dismissModal { }
+            self?.windowService.dismissModal {}
         }
         announcement.urlRequested = { url in
             @Dependency(\.linkOpener) var linkOpener

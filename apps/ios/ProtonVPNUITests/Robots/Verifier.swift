@@ -20,7 +20,7 @@ import Foundation
 import XCTest
 import fusion
 
-protocol Verifier { }
+protocol Verifier {}
 
 extension CoreElements: Verifier {
     @discardableResult

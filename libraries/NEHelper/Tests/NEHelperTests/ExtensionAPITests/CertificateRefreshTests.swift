@@ -151,7 +151,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             self.timerFactory.runRepeatingTimers()
         }
 
-        manager.start { }
+        manager.start {}
 
         wait(for: [expectationForFirstCertRefresh,
                    expectationForRetryCertRefresh,
@@ -202,7 +202,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             self.timerFactory.runRepeatingTimers()
         }
 
-        manager.start { }
+        manager.start {}
 
         // Manager should try the first cert refresh, and get a 422 as a response.
         wait(for: [expectations.firstCertRefresh], timeout: expectationTimeout)
@@ -435,7 +435,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             callback(request, completionHandler)
         }
 
-        manager.start { }
+        manager.start {}
 
         var incr = 0
         let incrQueue = DispatchQueue(label: "incr")
@@ -563,7 +563,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
 
             // start the first request.
-            manager.start { }
+            manager.start {}
 
             wait(for: [expectations.certRefresh503RetryAfter, expectations.certRefresh503ScheduledWork], timeout: expectationTimeout)
             guard let scheduledWork = timerFactory.scheduledWork.first else {
@@ -730,7 +730,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expectations.certRefreshReschedule.fulfill()
         }
 
-        manager.start { }
+        manager.start {}
 
         wait(for: [expectations.certRefreshRequest, expectations.certRefreshReschedule], timeout: expectationTimeout)
 
@@ -760,7 +760,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expectations.certRefreshReschedule.fulfill()
         }
 
-        manager.start { }
+        manager.start {}
         manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { result in
             guard case let .failure(error) = result else {
                 XCTFail("Expected cancelled error but got success")
@@ -931,7 +931,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                                             apiFailure: .sessionExpired,
                                             expectationToFulfill: expectations.authTokenRefresh)
 
-        manager.start { }
+        manager.start {}
 
         manager.checkRefreshCertificateNow(features: nil) { result in
             defer { expectations.sessionExpiredResult[0].fulfill() }

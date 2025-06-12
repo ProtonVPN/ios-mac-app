@@ -47,8 +47,8 @@ struct ModalButtonsView: View {
 struct ModalButtons_Previews: PreviewProvider {
     static var previews: some View {
         ModalButtonsView(modalModel: ModalType.safeMode.modalModel(),
-                         primaryAction: { },
-                         dismissAction: { })
+                         primaryAction: {},
+                         dismissAction: {})
             .previewDisplayName("ModalButtons")
     }
 }

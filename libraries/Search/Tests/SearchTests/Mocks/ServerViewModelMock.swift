@@ -69,13 +69,11 @@ final class ServerViewModelMock: ServerViewModel {
 
     let translatedCity: String?
 
-    func connectAction() {
-    }
+    func connectAction() {}
     
-    func partnersIcon(completion: @escaping (UIImage?) -> Void) { }
+    func partnersIcon(completion: @escaping (UIImage?) -> Void) {}
 
-    func cancelPartnersIconRequests() { }
-
+    func cancelPartnersIconRequests() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil, isPartnerServer: Bool = false) {
         description = server

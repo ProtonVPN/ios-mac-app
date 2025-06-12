@@ -22,7 +22,7 @@ import Theme
 public struct PrimaryButtonStyle: ButtonStyle {
     @State var isHovered = false
 
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration
@@ -66,8 +66,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
 
 struct PrimaryButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        Button {
-        } label: {
+        Button {} label: {
             Text("Preview button")
         }
         .buttonStyle(PrimaryButtonStyle())

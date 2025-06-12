@@ -34,7 +34,7 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
     override init(rootView: WhatsNewView) {
         super.init(rootView: rootView)
         self.rootView.dismiss = dismiss
-        title =  "Proton VPN"
+        title = "Proton VPN"
         view.window?.titlebarAppearsTransparent = true
         view.wantsLayer = true
         DarkAppearance {
@@ -50,7 +50,7 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
 // This view exceptionally contains string literals because it is not used anywhere,
 // and may be redesigned soon.
 struct WhatsNewView: View {
-    public var dismiss: () -> Void = { }
+    public var dismiss: () -> Void = {}
 
     var body: some View {
         VStack(spacing: .themeSpacing32) {

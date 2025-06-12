@@ -84,4 +84,3 @@ struct UserDefaultsStorage: Storage {
         provider.getDefaults().removeObject(forKey: key)
     }
 }
-
