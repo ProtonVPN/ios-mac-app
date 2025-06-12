@@ -582,10 +582,18 @@ public final class VpnManager: VpnManagerProtocol {
                 if let originalIntent {
                     tokens[requestId] = notificationCenter.addObserver(
                         for: .NEVPNStatusDidChange,
-                        object: nil,
+                        object: vpnManager.vpnConnection, // subscribe only to events regarding the current connection
                         handler: { [weak self] notification in
-                            guard let connection = notification.object as? NEVPNConnectionWrapper,
-                                  connection.status != .connecting else {
+                            guard let connection = notification.object as? NEVPNConnectionWrapper else {
+                                log.assertionFailure("Connection object missing from notification", category: .connection)
+                                return
+                            }
+                            log.debug("Server change observer received status", category: .connection, metadata: [
+                                "requestId": "\(requestId)",
+                                "connection": "\(connection)",
+                                "status": "\(connection.status)"
+                            ])
+                            guard connection.status != .connecting else {
                                 return
                             }
 
