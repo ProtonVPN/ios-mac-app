@@ -1,6 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantBackticks
 --disable redundantBreak
 --disable redundantClosure
 --disable redundantExtensionACL

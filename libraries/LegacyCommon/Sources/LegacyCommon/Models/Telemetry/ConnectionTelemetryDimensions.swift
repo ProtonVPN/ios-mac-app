@@ -47,7 +47,7 @@ public struct ConnectionDimensions: Encodable {
          serverFeatures: ServerFeature,
          vpnCountry: String,
          userCountry: String,
-         `protocol`: VpnProtocol,
+         protocol: VpnProtocol,
          server: String,
          port: String,
          isp: String,
@@ -60,7 +60,7 @@ public struct ConnectionDimensions: Encodable {
         self.serverFeatures = serverFeatures
         self.vpnCountry = vpnCountry
         self.userCountry = userCountry
-        self.`protocol` = `protocol`
+        self.protocol = `protocol`
         self.server = server
         self.port = port
         self.isp = isp
@@ -78,7 +78,7 @@ public struct ConnectionDimensions: Encodable {
         try container.encode(serverFeatures, forKey: .serverFeatures)
         try container.encode(vpnCountry, forKey: .vpnCountry)
         try container.encode(userCountry, forKey: .userCountry)
-        try container.encode(protocolString(`protocol`), forKey: .`protocol`)
+        try container.encode(protocolString(`protocol`), forKey: .protocol)
         try container.encode(server, forKey: .server)
         try container.encode(port, forKey: .port)
         try container.encode(isp, forKey: .isp)

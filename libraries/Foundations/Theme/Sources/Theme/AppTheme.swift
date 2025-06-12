@@ -41,8 +41,8 @@ public enum AppTheme {
         // Modifiers
         public static let normal = Self(bitPosition: 0)
         public static let hint = Self(bitPosition: 1)
-        public static let `weak` = Self(bitPosition: 2)
-        public static let `strong` = Self(bitPosition: 3)
+        public static let weak = Self(bitPosition: 2)
+        public static let strong = Self(bitPosition: 3)
         public static let inverted = Self(bitPosition: 4)
         public static let disabled = Self(bitPosition: 5)
         public static let transparent = Self(bitPosition: 6)

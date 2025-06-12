@@ -196,7 +196,7 @@ public enum UserInitiatedVPNChange {
         case widget
         case auto
         case newConnection = "new_connection"
-        case `exit`
+        case exit
         case signout
     }
 

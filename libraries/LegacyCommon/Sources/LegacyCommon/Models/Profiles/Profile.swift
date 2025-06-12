@@ -214,7 +214,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    public func withProtocol(_ `protocol`: ConnectionProtocol) -> Profile {
+    public func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
