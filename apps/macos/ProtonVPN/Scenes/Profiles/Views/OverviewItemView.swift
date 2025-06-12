@@ -129,7 +129,7 @@ class OverviewItemView: NSTableRowView {
     }
 
     private func setupAvailability() {
-        [profileImage, profileCircle, profileNameField, connectionDescriptionField].forEach { view in
+        for view in [profileImage, profileCircle, profileNameField, connectionDescriptionField] {
             view?.alphaValue = viewModel.alphaOfMainElements
         }
     }

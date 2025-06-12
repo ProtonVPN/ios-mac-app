@@ -114,7 +114,7 @@
         public func uninstallAll(userInitiated: Bool, timeout: DispatchTime? = nil) -> DispatchTimeoutResult {
             let group = DispatchGroup()
 
-            SystemExtensionType.allCases.forEach { type in
+            for type in SystemExtensionType.allCases {
                 group.enter()
                 request(.uninstall(type: type, manager: self) { stateChange in
                     switch stateChange {
@@ -149,7 +149,7 @@
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
 
-            SystemExtensionType.allCases.forEach { type in
+            for type in SystemExtensionType.allCases {
                 finishedInstalling.enter()
                 installStatesKnown.enter()
 

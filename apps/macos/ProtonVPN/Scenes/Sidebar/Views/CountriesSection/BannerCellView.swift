@@ -50,9 +50,9 @@ final class BannerCellView: NSView {
         rightChevron.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.colored(.weak)
 
         DarkAppearance {
-            [separatorViewTop, separatorViewBottom].forEach {
-                $0.wantsLayer = true
-                $0.layer?.backgroundColor = .cgColor(.border, .weak)
+            for item in [separatorViewTop, separatorViewBottom] {
+                item?.wantsLayer = true
+                item?.layer?.backgroundColor = .cgColor(.border, .weak)
             }
         }
     }

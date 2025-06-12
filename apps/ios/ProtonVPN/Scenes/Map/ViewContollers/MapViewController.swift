@@ -144,7 +144,7 @@ final class MapViewController: UIViewController {
     private func addAnnotations() {
         guard let annotations = viewModel?.annotations else { return }
         
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             let countryAnnotation = CountryAnnotation(frame: CGRect.zero, viewModel: annotation)
             mapView.addSubview(countryAnnotation)
             positionAnnotationInMap(countryAnnotation)
@@ -155,7 +155,7 @@ final class MapViewController: UIViewController {
     }
     
     private func removeAnnotations() {
-        mapView.subviews.forEach { (subview) in
+        for subview in mapView.subviews {
             if let annotationView = subview as? AnnotationView {
                 annotationView.removeFromSuperview()
             }
@@ -163,7 +163,7 @@ final class MapViewController: UIViewController {
     }
     
     private func setConnection() {
-        mapView.subviews.forEach { (subview) in
+        for subview in mapView.subviews {
             if let connectionView = subview as? ConnectionView {
                 connectionView.removeFromSuperview()
             }
@@ -220,7 +220,7 @@ final class MapViewController: UIViewController {
     }
     
     private func resizeAnnotations() {
-        mapView.subviews.forEach { (subview) in
+        for subview in mapView.subviews {
             if let countryAnnotation = subview as? AnnotationView {
                 countryAnnotation.transform = countryAnnotation.transform.scaledBy(x: lastZoom, y: lastZoom)
                 countryAnnotation.transform = countryAnnotation.transform.scaledBy(x: 1 / scrollView.zoomScale, y: 1 / scrollView.zoomScale)
@@ -272,25 +272,25 @@ final class MapViewController: UIViewController {
             return view1.frame.origin.y < view2.frame.origin.y
         }
         
-        mapView.subviews.forEach { (subview) in
+        for subview in mapView.subviews {
             if let connectionView = subview as? ConnectionView {
                 mapView.bringSubviewToFront(connectionView)
             }
         }
         
-        unavailableAnnotations.forEach { (view) in
+        for view in unavailableAnnotations {
             mapView.bringSubviewToFront(view)
         }
         
-        unselectedAnnotations.forEach { (view) in
+        for view in unselectedAnnotations {
             mapView.bringSubviewToFront(view)
         }
         
-        connectedAnnotations.forEach { (view) in
+        for view in connectedAnnotations {
             mapView.bringSubviewToFront(view)
         }
         
-        selectedAnnotations.forEach { (view) in
+        for view in selectedAnnotations {
             mapView.bringSubviewToFront(view)
         }
     }

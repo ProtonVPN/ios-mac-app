@@ -122,11 +122,11 @@ final class UpdateManager: NSObject {
 
         propertiesManager.rememberLoginAfterUpdate = false
 
-        NSApp.windows.forEach { (window) in
+        for window in NSApp.windows {
             if window.title == "Software Update" {
                 window.makeKeyAndOrderFront(self)
                 window.level = .floating
-                return
+                continue
             }
         }
 

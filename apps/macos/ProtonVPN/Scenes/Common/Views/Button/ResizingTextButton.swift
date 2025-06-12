@@ -24,7 +24,7 @@ import Cocoa
 
 class ResizingTextButton: HoverDetectionButton {
     override func updateTrackingAreas() {
-        trackingAreas.forEach { (area) in
+        for area in trackingAreas {
             removeTrackingArea(area)
         }
         if !isEnabled { return }

@@ -125,8 +125,8 @@ extension LocalAgentFeatures {
 
     static func from(featureSet features: Set<ConnectionFeatureChange.AgentFeature>) -> LocalAgentFeatures? {
         let featuresObject = LocalAgentFeatures()
-        features.forEach {
-            featuresObject?.set(feature: $0)
+        for item in features {
+            featuresObject?.set(feature: item)
         }
         return featuresObject
     }

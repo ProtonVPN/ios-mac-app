@@ -31,11 +31,11 @@ final class PlaceholderView: UIView {
 
     var onlyCountries: Bool = false {
         didSet {
-            itemViews.forEach {
+            for itemView in itemViews {
                 if onlyCountries {
-                    $0.isHidden = $0.item != PlaceholderItem.countries
+                    itemView.isHidden = itemView.item != PlaceholderItem.countries
                 } else {
-                    $0.isHidden = false
+                    itemView.isHidden = false
                 }
             }
         }
@@ -65,8 +65,8 @@ final class PlaceholderView: UIView {
             return view
         }
 
-        items.forEach {
-            itemsStackView.addArrangedSubview($0)
+        for item in items {
+            itemsStackView.addArrangedSubview(item)
         }
     }
 }

@@ -122,7 +122,7 @@
             }
 
             let nAttempts = 10
-            (1...nAttempts).forEach { attempt in
+            for attempt in (1...nAttempts) {
                 var cancelResult: SystemExtensionResult?
                 let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 
@@ -134,7 +134,7 @@
 
                 guard case .success(.alreadyThere) = cancelResult else {
                     XCTFail("Expected second request to be cancelled, but got \(String(describing: cancelResult)) instead")
-                    return
+                    continue
                 }
             }
 
@@ -219,8 +219,8 @@
 
             wait(for: requestPending, timeout: expectationTimeout)
 
-            initialRequests.forEach {
-                sysextManager.fail(request: $0, withError: OSSystemExtensionError(.unsupportedParentBundleLocation))
+            for initialRequest in initialRequests {
+                sysextManager.fail(request: initialRequest, withError: OSSystemExtensionError(.unsupportedParentBundleLocation))
             }
 
             wait(for: [installFinished], timeout: expectationTimeout)

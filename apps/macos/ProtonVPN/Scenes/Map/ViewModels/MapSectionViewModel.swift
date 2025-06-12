@@ -109,7 +109,7 @@ class MapSectionViewModel {
             setView(serverType)
         }
         
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             annotation.appStateChanged(to: state)
         }
         
@@ -205,25 +205,25 @@ class MapSectionViewModel {
     }
     
     private func secureCoreEntrySelectionChange(_ selection: SCEntryCountrySelection) {
-        annotations.forEach({ (annotation) in
+        for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
                 if annotation.countryCode != selection.countryCode {
                     annotation.secureCoreSelected(selection)
                 }
             }
-        })
+        }
         
         updateConnections()
     }
     
     private func secureCoreExitSelectionChange(_ selection: SCExitCountrySelection) {
-        annotations.forEach({ (annotation) in
+        for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
                 if annotation.countryCode != selection.countryCode {
                     annotation.countrySelected(selection)
                 }
             }
-        })
+        }
         
         updateConnections()
     }
@@ -298,7 +298,7 @@ class MapSectionViewModel {
         var secureCores = [SCEntryCountryAnnotationViewModel]()
         var selectedAnnotation: CountryAnnotationViewModel?
         var connectedAnnotation: CountryAnnotationViewModel?
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             if let entryAnnotation = annotation as? SCEntryCountryAnnotationViewModel {
                 secureCores.append(entryAnnotation)
                 if entryAnnotation.state == .hovered {
@@ -318,35 +318,35 @@ class MapSectionViewModel {
         
         if let connectedAnnotation = connectedAnnotation {
             if let exitAnnotation = connectedAnnotation as? SCExitCountryAnnotationViewModel {
-                annotations.forEach({ (annotation) in
+                for annotation in annotations {
                     if let annotation = annotation as? SCEntryCountryAnnotationViewModel,
                        annotation.isConnected {
                         connections.append(ConnectionViewModel(.connected, between: exitAnnotation, and: annotation))
                         connections.append(ConnectionViewModel(.connected, fromHomeTo: annotation))
                     }
-                })
+                }
             }
         }
         if let selectedAnnotation = selectedAnnotation {
             if let entryAnnotation = selectedAnnotation as? SCEntryCountryAnnotationViewModel {
                 connections.append(ConnectionViewModel(.proposed, fromHomeTo: entryAnnotation))
                 
-                entryAnnotation.exitCountryCodes.forEach({ (code) in
-                    annotations.forEach({ (annotation) in
+                for code in entryAnnotation.exitCountryCodes {
+                    for annotation in annotations {
                         if let serverAnnotation = annotation as? SCExitCountryAnnotationViewModel,
                            serverAnnotation.matches(code) {
                             connections.append(ConnectionViewModel(.proposed, between: entryAnnotation, and: annotation))
                         }
-                    })
-                })
+                    }
+                }
             } else if let exitAnnotation = selectedAnnotation as? SCExitCountryAnnotationViewModel {
-                annotations.forEach({ (annotation) in
+                for annotation in annotations {
                     if let annotation = annotation as? SCEntryCountryAnnotationViewModel,
                        annotation.exitCountryCodes.contains(exitAnnotation.countryCode) {
                         connections.append(ConnectionViewModel(.proposed, between: exitAnnotation, and: annotation))
                         connections.append(ConnectionViewModel(.proposed, fromHomeTo: annotation))
                     }
-                })
+                }
             }
         }
         

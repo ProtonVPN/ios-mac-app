@@ -111,7 +111,7 @@ class ProfileItemView: NSView {
     }
     
     private func setupAvailability() {
-        [profileImage, profileCircle, profileName, secondaryDescription].forEach { view in
+        for view in [profileImage, profileCircle, profileName, secondaryDescription] {
             view?.alphaValue = viewModel.alphaOfMainElements
         }
         connectButton.upgradeRequired = !viewModel.canUseProfile

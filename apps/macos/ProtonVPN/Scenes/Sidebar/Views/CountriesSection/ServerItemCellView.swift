@@ -88,10 +88,10 @@ final class ServerItemCellView: NSView {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        featuresStackView.subviews.forEach {
-            ($0 as? NSButton)?.sd_cancelCurrentImageLoad()
-            ($0 as? NSImageView)?.sd_cancelCurrentImageLoad()
-            $0.removeFromSuperview()
+        for subview in featuresStackView.subviews {
+            (subview as? NSButton)?.sd_cancelCurrentImageLoad()
+            (subview as? NSImageView)?.sd_cancelCurrentImageLoad()
+            subview.removeFromSuperview()
         }
     }
 
@@ -164,12 +164,12 @@ final class ServerItemCellView: NSView {
 
         addFeatures()
 
-        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl].forEach {
-            $0?.alphaValue = viewModel.alphaOfMainElements
+        for item in [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl] {
+            item?.alphaValue = viewModel.alphaOfMainElements
         }
 
-        featuresStackView.views.forEach {
-            $0.alphaValue = viewModel.alphaOfMainElements
+        for view in featuresStackView.views {
+            view.alphaValue = viewModel.alphaOfMainElements
         }
 
         if let code = viewModel.entryCountry {

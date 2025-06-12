@@ -43,7 +43,7 @@ final class DateFormatterTests: XCTestCase {
     }
 
     func testReturnsStringWithCorrectFormat() throws {
-        cases.forEach { testCase in
+        for testCase in cases {
             let date = Date(timeIntervalSince1970: testCase.timestamp)
             let formattedString = DateFormatter.imf.string(from: date)
             XCTAssertEqual(formattedString, testCase.imfString, testCase.description)

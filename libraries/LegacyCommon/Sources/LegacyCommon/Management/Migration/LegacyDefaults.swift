@@ -30,7 +30,7 @@ public enum LegacyDefaultsMigration {
         private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
             if !specifiedDefaults.bool(forKey: Self.migrationKey) {
                 // Move any compatible data from old defaults to the new one
-                standardDefaults.dictionaryRepresentation().forEach { (key, value) in
+                for (key, value) in standardDefaults.dictionaryRepresentation() {
                     specifiedDefaults.set(value, forKey: key)
                 }
 
@@ -46,7 +46,7 @@ public enum LegacyDefaultsMigration {
             "servers" // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
             // In the future, we may choose to migrate Profiles too.
         ] // hardcoded in case the keys are changed in the future
-        keysForDataToRemove.forEach { key in
+        for key in keysForDataToRemove {
             if userDefaults.data(forKey: key) != nil {
                 log.debug("Removing value for key \(key)", category: .persistence)
                 userDefaults.removeObject(forKey: key)

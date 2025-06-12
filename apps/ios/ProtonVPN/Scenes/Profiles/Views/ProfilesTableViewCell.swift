@@ -52,7 +52,7 @@ final class ProfilesTableViewCell: UITableViewCell {
             profileName.attributedText = viewModel.description // e.g. Country >> Server
             connectionDescription.attributedText = viewModel.name
             
-            [profileImage, labelsStackView].forEach { view in
+            for view in [profileImage, labelsStackView] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
             

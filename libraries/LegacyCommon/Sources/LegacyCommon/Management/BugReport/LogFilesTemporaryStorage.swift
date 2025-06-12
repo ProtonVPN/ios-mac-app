@@ -42,7 +42,7 @@ class LogFilesTemporaryStorage {
         let dispatchGroup = DispatchGroup()
         let queue = DispatchQueue(label: "ch.protonvpn.prepare-logs", qos: .userInitiated) // For writing to array without race conditions
 
-        logSources.forEach { source in
+        for source in logSources {
             dispatchGroup.enter()
 
             let contentProvider = self.logContentProvider.getLogData(for: source)
@@ -86,7 +86,7 @@ class LogFilesTemporaryStorage {
 
     /// Deletes temp log files after upload is done
     public func deleteTempLogs() {
-        savedFiles.forEach { file in
+        for file in savedFiles {
             try? self.fileManager.removeItem(at: file)
         }
         savedFiles.removeAll()

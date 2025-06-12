@@ -72,7 +72,7 @@ class VpnServerSelectorTests: XCTestCase {
     }
 
     func testServersUnchangedByRoundTrip() throws {
-        servers.values.forEach { server in
+        for server in servers.values {
             let serverFromDB = repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
             XCTAssertEqual(serverFromDB, server)
         }

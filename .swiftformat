@@ -1,7 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable preferCountWhere
---disable preferForLoop
 --disable preferKeyPath
 --disable redundantBackticks
 --disable redundantBreak

@@ -120,11 +120,11 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     @objc func mapTapped() {
-        countryExitAnnotations.forEach { (annotation) in
+        for annotation in countryExitAnnotations {
             annotation.deselect()
         }
         
-        secureCoreEntryAnnotations.forEach { (annotation) in
+        for annotation in secureCoreEntryAnnotations {
             annotation.highlight(false)
         }
         
@@ -205,19 +205,19 @@ class MapViewModel: SecureCoreToggleHandler {
         }
 
         annotationViewModel.countryTapped = { [unowned self] tappedAnnotationViewModel in
-            self.countryExitAnnotations.forEach({ (annotation) in
+            for annotation in self.countryExitAnnotations {
                 if annotation !== tappedAnnotationViewModel {
                     annotation.deselect()
                 }
-            })
+            }
 
-            self.secureCoreEntryAnnotations.forEach({ (annotation) in
+            for annotation in self.secureCoreEntryAnnotations {
                 if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
                     annotation.highlight(true)
                 } else {
                     annotation.highlight(false)
                 }
-            })
+            }
 
             self.reorderAnnotations?()
         }
@@ -233,7 +233,7 @@ class MapViewModel: SecureCoreToggleHandler {
 
         @Dependency(\.serverRepository) var repository
         let secureCoreServers = repository.getServers(filteredBy: [isSecureCore, isCountry], orderedBy: .none)
-        secureCoreServers.forEach { server in
+        for server in secureCoreServers {
             var entryCountry = SecureCoreEntryCountryModel(
                 appStateManager: appStateManager,
                 countryCode: server.logical.entryCountryCode,
@@ -288,7 +288,7 @@ class MapViewModel: SecureCoreToggleHandler {
             }
         } else {
             activeConnection = nil
-            secureCoreEntryAnnotations.forEach { (annotation) in
+            for annotation in secureCoreEntryAnnotations {
                 annotation.highlight(false)
             }
         }

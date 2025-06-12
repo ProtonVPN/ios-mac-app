@@ -540,7 +540,7 @@ class StatusViewModel {
             self.alertService.push(alert: NetShieldUpsellAlert())
         }))
 
-        [NetShieldType.level1, NetShieldType.level2].forEach { type in
+        for type in [NetShieldType.level1, NetShieldType.level2] {
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
                 guard let self, self.userIsEligibleForNetshield else { return }
                 self.alertService.push(alert: NetShieldUpsellAlert())

@@ -274,7 +274,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
     
     @objc private func countriesScrolled() {
-        countryCollection.visibleItems().forEach { item in
+        for item in countryCollection.visibleItems() {
             if let countryItem = item as? StatusMenuCountryViewItem {
                 countryItem.button.updateTrackingAreas()
             }

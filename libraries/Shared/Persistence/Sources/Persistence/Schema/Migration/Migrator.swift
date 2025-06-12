@@ -41,7 +41,7 @@ struct Migrator {
         #endif
 
         // Register migrations in the order of their declaration
-        SchemaVersion.all.forEach { version in
+        for version in SchemaVersion.all {
             migrator.registerMigration(version.identifier, migrate: version.migrationBlock)
         }
 

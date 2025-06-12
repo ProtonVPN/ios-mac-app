@@ -118,7 +118,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
             loadLbl.text = "\(viewModel.load)%"
             loadColorView.backgroundColor = viewModel.loadColor
-            [serverNameLabel, cityNameLabel, secureView].forEach { view in
+            for view in [serverNameLabel, cityNameLabel, secureView] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
 

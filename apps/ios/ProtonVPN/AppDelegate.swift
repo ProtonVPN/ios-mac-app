@@ -454,8 +454,8 @@ extension AppDelegate {
                     return .success(())
                 }
 
-                NotificationType.allAccountRecoveryTypes.forEach {
-                    pushNotificationService.registerHandler(vpnHandler, forType: $0)
+                for accountRecoveryType in NotificationType.allAccountRecoveryTypes {
+                    pushNotificationService.registerHandler(vpnHandler, forType: accountRecoveryType)
                 }
             }
         }

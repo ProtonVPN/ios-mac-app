@@ -91,8 +91,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         DarkAppearance {
             let graphic = viewModel.graphic(with: graphicContainer.bounds)
             if !graphicContainer.subviews.contains(graphic) {
-                graphicContainer.subviews.forEach {
-                    $0.removeFromSuperview()
+                for subview in graphicContainer.subviews {
+                    subview.removeFromSuperview()
                 }
                 graphicContainer.addSubview(graphic)
             }

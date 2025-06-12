@@ -77,7 +77,7 @@ class IosUiAlertService: UIAlertService {
     
     private func displayTrackedAlert(alert: SystemAlert) {
         let alertController = TrackedAlertController(title: alert.title, message: alert.message, preferredStyle: .alert)
-        alert.actions.forEach { action in
+        for action in alert.actions {
             alertController.addAction(UIAlertAction(title: action.title, style: action.style.alertButtonStyle, handler: { _ in
                 action.handler?()
             }))

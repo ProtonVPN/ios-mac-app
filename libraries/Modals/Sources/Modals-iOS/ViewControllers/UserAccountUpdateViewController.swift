@@ -104,9 +104,9 @@ class UserAccountUpdateViewController: UIViewController {
             imageView.isHidden = true
         }
 
-        checkmarks.forEach {
-            $0.image = viewModel.checkmark
-            $0.tintColor = .color(.background, .interactive)
+        for item in checkmarks {
+            item.image = viewModel.checkmark
+            item.tintColor = .color(.background, .interactive)
         }
 
         setupFeatures()
@@ -118,8 +118,8 @@ class UserAccountUpdateViewController: UIViewController {
 
     private func setupFeatures() {
         guard let options = viewModel.options, !options.isEmpty else {
-            [feature1View, feature2View, feature3View, featuresTitleLbl].forEach {
-                $0?.isHidden = true
+            for item in [feature1View, feature2View, feature3View, featuresTitleLbl] {
+                item?.isHidden = true
             }
             return
         }

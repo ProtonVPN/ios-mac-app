@@ -112,7 +112,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
     override func mouseUp(with event: NSEvent) {
         guard hovered else { return }
         let pointInView = convert(event.locationInWindow, from: nil)
-        viewModel.servers.enumerated().forEach { index, _ in
+        for (index, _) in viewModel.servers.enumerated() {
             let itemFrame = CGRect(x: buttonFrame.origin.x, y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
                                    width: buttonFrame.size.width, height: Self.textLineHeight)
             if itemFrame.contains(pointInView) {

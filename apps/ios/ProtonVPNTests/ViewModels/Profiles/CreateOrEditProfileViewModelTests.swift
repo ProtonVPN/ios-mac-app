@@ -206,8 +206,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             Localizable.server
         }
 
-        viewModel.tableViewData.forEach { section in
-            section.cells.forEach { cell in
+        for section in viewModel.tableViewData {
+            for cell in section.cells {
                 switch cell {
                 case .pushKeyValueAttributed(key: let key, value: _, handler: let handler):
                     if key == tableViewCellTitle {

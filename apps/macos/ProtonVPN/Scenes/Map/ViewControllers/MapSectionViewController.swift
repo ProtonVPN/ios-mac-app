@@ -111,7 +111,7 @@ class MapSectionViewController: NSViewController {
     }
     
     private func addAnnotations(_ annotations: [CountryAnnotationViewModel]) {
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             // MARK: - Standard country
 
             if let annotation = annotation as? StandardCountryAnnotationViewModel {

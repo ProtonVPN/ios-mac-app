@@ -45,7 +45,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
     }
 
     private func evaluate(scenarios: [(String, VPNServer?, String)]) {
-        scenarios.forEach { (query, expectedResult, reason) in
+        for (query, expectedResult, reason) in scenarios {
             let result = getServerMatching(query: query)
             XCTAssertEqual(result, expectedResult, reason)
         }

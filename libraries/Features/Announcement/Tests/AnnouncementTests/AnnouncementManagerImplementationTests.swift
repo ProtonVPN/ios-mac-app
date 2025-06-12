@@ -109,8 +109,8 @@ class AnnouncementManagerImplementationTests: XCTestCase {
     func testDistinguishesWhenUnreadAnnsArePresent() {
         XCTAssert(manager.hasUnreadAnnouncements)
         let announcements = manager.fetchCurrentAnnouncementsFromStorage()
-        announcements.forEach {
-            manager.markAsRead(announcement: $0)
+        for item in announcements {
+            manager.markAsRead(announcement: item)
         }
         XCTAssertFalse(manager.hasUnreadAnnouncements)
     }

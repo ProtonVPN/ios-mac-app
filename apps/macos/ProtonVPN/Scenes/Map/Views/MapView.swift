@@ -237,7 +237,7 @@ class MapView: NSView {
     }
     
     func removeAnnotations(_ annotations: [CountryAnnotationViewModel]) {
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             for (index, annotationView) in annotationViews.enumerated() {
                 if let annotationView = annotationView as? CountryAnnotationView, let annotation = annotation as? StandardCountryAnnotationViewModel, annotation === annotationView.viewModel {
                     annotationView.removeFromSuperview()
@@ -257,7 +257,7 @@ class MapView: NSView {
     }
     
     private func repositionAnnotations() {
-        annotationViews.forEach { (annotationView) in
+        for annotationView in annotationViews {
             repositionAnnotation(annotationView)
         }
     }
@@ -293,7 +293,7 @@ class MapView: NSView {
             return
         }
         
-        connections.forEach { (connection) in
+        for connection in connections {
             switch connection.state {
             case .connected:
                 path = connectedPath

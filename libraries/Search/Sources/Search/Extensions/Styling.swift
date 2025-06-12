@@ -102,8 +102,8 @@ let highlightMatches = { (label: UILabel, string: String?, searchText: String?) 
         NSAttributedString.Key.foregroundColor: colors.weakText
     ])
 
-    string.findStartingRanges(of: searchText).forEach {
-        text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
+    for findStartingRange in string.findStartingRanges(of: searchText) {
+        text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: findStartingRange)
     }
 
     label.attributedText = text

@@ -89,8 +89,8 @@ final class CountryItemCellView: NSView {
         }
         connectButton.isHidden = isConnectButtonHidden(mouseHover: true)
         if !connectButton.isHidden {
-            [torIV, p2pIV, smartIV].forEach {
-                $0.isHidden = true
+            for item in [torIV, p2pIV, smartIV] {
+                item?.isHidden = true
             }
         }
         addCursorRect(frame, cursor: .pointingHand)
@@ -108,8 +108,8 @@ final class CountryItemCellView: NSView {
     func updateView(withModel viewModel: CountryItemViewModel) {
         self.viewModel = viewModel
 
-        [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn].forEach {
-            $0?.alphaValue = viewModel.alphaForMainElements
+        for item in [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn] {
+            item?.alphaValue = viewModel.alphaForMainElements
         }
 
         separatorView.isHidden = !viewModel.displaySeparator
@@ -167,8 +167,8 @@ final class CountryItemCellView: NSView {
             p2pIV.isHidden = !viewModel.isP2PAvailable || viewModel.isConnected
             smartIV.isHidden = !viewModel.isSmartAvailable || viewModel.isConnected
         } else {
-            [torIV, p2pIV, smartIV].forEach {
-                $0.isHidden = true
+            for item in [torIV, p2pIV, smartIV] {
+                item?.isHidden = true
             }
         }
     }

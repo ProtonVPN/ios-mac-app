@@ -108,7 +108,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
     }
     
     private func setupAvailability() {
-        [profileImage, profileCircle, label, secondaryLabel].forEach { view in
+        for view in [profileImage, profileCircle, label, secondaryLabel] {
             view?.alphaValue = viewModel?.alphaOfMainElements ?? 1
         }
     }

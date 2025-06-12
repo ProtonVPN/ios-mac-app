@@ -78,7 +78,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
             flagIcon.tintColor = .white
-            [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
+            for view in [flagIcon, countryName, torIV, p2pIV, smartIV] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
             flagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
