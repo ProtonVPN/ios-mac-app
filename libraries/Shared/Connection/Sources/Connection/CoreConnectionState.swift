@@ -55,7 +55,7 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
             assert(localAgentState.is(\.disconnected))
             self = .starting
 
-        case (.connected(let tunnelConnectionInfo), .connected(let connectionDetails)):
+        case let (.connected(tunnelConnectionInfo), .connected(connectionDetails)):
             self = .connected(tunnelConnectionInfo, tunnelConnectionInfo.connectionDate, connectionDetails)
 
         case (.connected, .disconnecting):
@@ -67,7 +67,7 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
         case (.connected(let tunnelInfo), .disconnected(nil)):
             self = .connecting(tunnelInfo)
 
-        case (.connected(let tunnelInfo), .connecting):
+        case let (.connected(tunnelInfo), .connecting):
             self = .connecting(tunnelInfo)
 
         case (.disconnecting, .disconnected):
@@ -84,15 +84,15 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
             // an error occurring.
             self = .disconnecting
 
-        case (.disconnected(let possibleTunnelError), .connecting),
-            (.disconnected(let possibleTunnelError), .connected):
+        case let (.disconnected(possibleTunnelError), .connecting),
+            let (.disconnected(possibleTunnelError), .connected):
             // Same as the above case, the user may have initiated a disconnection while the app was in the background
             self = .disconnected(possibleTunnelError.map { .tunnel($0) })
 
-        case (.disconnected(.none), .disconnected(.some(let agentError))):
+        case let (.disconnected(.none), .disconnected(.some(agentError))):
             self = .disconnected(.agent(agentError))
 
-        case (.disconnected(let possibleTunnelError), .disconnecting(_)):
+        case let (.disconnected(possibleTunnelError), .disconnecting(_)):
             // While not necessarily an error state, this is unusual because local agent disconnection should be instant.
             // Let's report state as disconnected because local agent connection can just be recreated instantly.
             // This scenario is usually due to the tunnel crashing or being stopped by the system or as a result of
@@ -104,12 +104,12 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
             let connectionError = certAuthError.map { ConnectionError.certAuth($0) }
             self = .disconnected(connectionError)
 
-        case (.disconnected(.some(let tunnelError)), .disconnected(.some(_))):
+        case let (.disconnected(.some(tunnelError)), .disconnected(.some(_))):
             // However unlikely (if even possible due to how actions/events are synchronised by reducers) it might be
             // possible to simultaneously encounter a tunnel and local agent error, the former should take precedence
             self = .disconnected(.tunnel(tunnelError))
 
-        case (.disconnected(.some(let tunnelError)), .disconnected(.none)):
+        case let (.disconnected(.some(tunnelError)), .disconnected(.none)):
             self = .disconnected(.tunnel(tunnelError))
         }
     }

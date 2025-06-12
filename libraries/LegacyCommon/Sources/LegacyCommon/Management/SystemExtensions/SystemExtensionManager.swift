@@ -80,7 +80,7 @@ public class SystemExtensionManager: NSObject {
                 break
             case .succeeded:
                 accumulator = .success(didRequireUserApproval ? .installed : .upgraded)
-            case .failed(let error):
+            case let .failed(error):
                 accumulator = .failure(.installationError(internalError: error))
             default:
                 log.assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
@@ -252,10 +252,10 @@ public class SystemExtensionManager: NSObject {
             log.debug("Finished installation with result: \(result)", category: .sysex)
 
             switch result {
-            case .success(let success):
+            case let .success(success):
                 SentryHelper.shared?.log(message: "Sysex installation succeeded.", extra: ["success": success])
-            case .failure(let failure):
-                if case .installationError(let internalError) = failure {
+            case let .failure(failure):
+                if case let .installationError(internalError) = failure {
                     SentryHelper.shared?.log(error: internalError)
                 }
             }

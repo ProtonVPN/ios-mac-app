@@ -54,7 +54,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
         guard let viewModel = viewModel else { return }
         
         switch viewModel.icon {
-        case .image(let image):
+        case let .image(image):
             profileImage.image = image.colored()
         case .bolt:
             profileImage.image = IconProvider.bolt.colored()
@@ -64,7 +64,7 @@ class StatusMenuProfileViewItem: NSTableRowView {
             profileImage.image = IconProvider.arrowsSwapRight.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
-        case .circle(let color):
+        case let .circle(color):
             profileCircle.profileColor = NSColor(rgbHex: color)
             profileImage.isHidden = true
             profileCircle.isHidden = false

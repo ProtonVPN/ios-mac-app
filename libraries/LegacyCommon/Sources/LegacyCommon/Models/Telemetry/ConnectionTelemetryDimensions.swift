@@ -88,14 +88,14 @@ public struct ConnectionDimensions: Encodable {
         switch `protocol` {
         case .ike:
             return "ikev2"
-        case .openVpn(let openVpnTransport):
+        case let .openVpn(openVpnTransport):
             switch openVpnTransport {
             case .tcp:
                 return "openvpn_tcp"
             case .udp:
                 return "openvpn_udp"
             }
-        case .wireGuard(let wireGuardTransport):
+        case let .wireGuard(wireGuardTransport):
             switch wireGuardTransport {
             case .tcp:
                 return "wireguard_tcp"

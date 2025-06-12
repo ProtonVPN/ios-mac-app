@@ -130,7 +130,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                         )
                         completion?(true)
 
-                    case .success(.notModified(let lastModified)):
+                    case let .success(.notModified(lastModified)):
                         log.debug("Servers not modified", category: .api, metadata: ["LastModified": "\(optional: lastModified)"])
                         completion?(true)
 

@@ -44,7 +44,7 @@ public enum PlutoniumFeatureToggle: Codable, Equatable {
 
     public var mode: Mode {
         switch self {
-        case .disabled(let mode), .enabled(let mode):
+        case let .disabled(mode), let .enabled(mode):
             return mode
         }
     }

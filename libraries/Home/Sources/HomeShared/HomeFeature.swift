@@ -183,7 +183,7 @@ public struct HomeFeature {
                     }
                 )
                 .cancellable(id: CancelID.connectionState)
-            case .recents(.delegate(.connect(let spec, let pinned))):
+            case let .recents(.delegate(.connect(spec, pinned))):
                 return .send(.connect(spec, pinned ? .pin : .recent))
             case .recents:
                 return .none
@@ -223,9 +223,9 @@ public struct HomeFeature {
                 return .none
             case .helpButtonPressed:
                 return .none
-            case .connectionCard(.delegate(let action)):
+            case let .connectionCard(.delegate(action)):
                 switch action {
-                case .connect(let spec):
+                case let .connect(spec):
                     return .send(.connect(spec, .connectionCard))
                 case .disconnect:
                     return .merge(
@@ -259,7 +259,7 @@ public struct HomeFeature {
                 }
             case .connectionCard:
                 return .none
-            case .destination(.presented(.changeServer(let buttonAction))):
+            case let .destination(.presented(.changeServer(buttonAction))):
                 state.destination = nil
                 switch buttonAction {
                 case .upgradeButtonTapped:
@@ -288,19 +288,19 @@ public struct HomeFeature {
                 return .none
             case .freeConnectionsInfo(_):
                 return .none
-            case .connection(.core(.localAgent(.event(.stats(let message))))):
+            case let .connection(.core(.localAgent(.event(.stats(message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
-            case .connection(.delegate(.connectionFailed(let error))):
+            case let .connection(.delegate(.connectionFailed(error))):
                 return .run { _ in await alertService.feed(error) }
-            case .whatsNewChecker(.show(let items)):
+            case let .whatsNewChecker(.show(items)):
                 state.destination = .whatsNew(.init(item: items[0]))
                 return .none
             case .whatsNewChecker(_), .whatsNewPresenter(_):
                 return .none
-            case .incomingAlert(let alert):
+            case let .incomingAlert(alert):
                 pushAlert(DomainErrorAlert(alert: alert))
                 return .none
-            case .connection(.delegate(.stateChanged(let connectionState))):
+            case let .connection(.delegate(.stateChanged(connectionState))):
                 log.debug("Connection layer state update \(connectionState)")
                 let status = connectionState.status
                 return .concatenate(
@@ -312,7 +312,7 @@ public struct HomeFeature {
                     let alert: SystemAlert = switch resolutionError {
                     case .secureCoreUnavailable:
                         SecureCoreUpsellAlert()
-                    case .specificCountryUnavailable(let countryCode):
+                    case let .specificCountryUnavailable(countryCode):
                         CountryUpsellAlert(countryCode: countryCode)
                     case let .serverChangeUnavailable(until, duration, exhaustedSkips):
                         ConnectionCooldownAlert(until: until, duration: duration, longSkip: exhaustedSkips) {
@@ -361,16 +361,16 @@ extension ConnectionState {
         case .disconnected:
             return .disconnected
 
-        case .connecting(.unresolved(let intent)):
+        case let .connecting(.unresolved(intent)):
             return .connecting(intent.spec, intent.server)
 
-        case .connecting(.resolved(let intent, let server)):
+        case let .connecting(.resolved(intent, server)):
             return .connecting(intent.spec, server)
 
-        case .disconnecting(let intent, let server):
+        case let .disconnecting(intent, server):
             return .disconnecting(intent.spec, VPNConnectionActual(server: server, intent: intent, connectedDate: nil))
 
-        case .connected(let intent, let server, let date, _):
+        case let .connected(intent, server, date, _):
             let resolvedConnection = VPNConnectionActual(server: server, intent: intent, connectedDate: date)
             return .connected(intent.spec, resolvedConnection)
         }

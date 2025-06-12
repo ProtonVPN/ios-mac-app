@@ -76,11 +76,11 @@ extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         let modal = modals[row]
         let viewController: NSViewController = switch modal.type {
-        case .upsell(let type):
+        case let .upsell(type):
             ModalsFactory.upsellViewController(modalType: type, upgradeAction: {}, continueAction: {})
         case .discourageSecureCore:
             ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
-        case .freeConnections(let countries):
+        case let .freeConnections(countries):
             ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
                 debugPrint(".freeConnections pressed")
             })

@@ -28,7 +28,7 @@ extension PurchaseResult: CasePathable {
             AnyCasePath(
                 embed: { PurchaseResult.purchasedPlan(accountPlan: $0) },
                 extract: {
-                    if case .purchasedPlan(let plan) = $0 { return plan }
+                    if case let .purchasedPlan(plan) = $0 { return plan }
                     return nil
                 }
             )
@@ -45,7 +45,7 @@ extension PurchaseResult: CasePathable {
             AnyCasePath(
                 embed: { PurchaseResult.planPurchaseProcessingInProgress(processingPlan: $0) },
                 extract: {
-                    if case .planPurchaseProcessingInProgress(let plan) = $0 { return plan }
+                    if case let .planPurchaseProcessingInProgress(plan) = $0 { return plan }
                     return nil
                 }
             )
@@ -55,7 +55,7 @@ extension PurchaseResult: CasePathable {
             AnyCasePath(
                 embed: { PurchaseResult.purchaseError(error: $0.0, processingPlan: $0.1) },
                 extract: {
-                    if case .purchaseError(let error, let plan) = $0 { return (error, plan) }
+                    if case let .purchaseError(error, plan) = $0 { return (error, plan) }
                     return nil
                 }
             )
@@ -65,7 +65,7 @@ extension PurchaseResult: CasePathable {
             AnyCasePath(
                 embed: { PurchaseResult.apiMightBeBlocked(message: $0.0, originalError: $0.1, processingPlan: $0.2) },
                 extract: {
-                    if case .apiMightBeBlocked(let message, let error, let plan) = $0 { return (message, error, plan) }
+                    if case let .apiMightBeBlocked(message, error, plan) = $0 { return (message, error, plan) }
                     return nil
                 }
             )

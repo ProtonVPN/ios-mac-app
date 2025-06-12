@@ -38,9 +38,9 @@ class FeatureRowView: NSView {
         didSet {
             titleLbl.attributedStringValue = viewModel.title.styled(.normal, font: .themeFont(.small))
             switch viewModel.icon {
-            case .url(let url):
+            case let .url(url):
                 iconIV.sd_setImage(with: url)
-            case .image(let image):
+            case let .image(image):
                 iconIV.image = image
             }
 

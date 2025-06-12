@@ -41,7 +41,7 @@ public enum RequestCondition {
 
     var additionalHeaders: [String: Any] {
         switch self {
-        case .ifModifiedSince(let date):
+        case let .ifModifiedSince(date):
             return ["If-Modified-Since": date]
         }
     }

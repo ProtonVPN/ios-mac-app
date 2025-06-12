@@ -106,10 +106,10 @@ public struct SharedPropertiesFeature {
                     longLivingAnnouncementBannerEffect
                 )
 
-            case .userLocation(.delegate(.userLocationChanged(let location))):
+            case let .userLocation(.delegate(.userLocationChanged(location))):
                 return .send(.refreshServerLoads(location))
 
-            case .refreshServerLoads(let location):
+            case let .refreshServerLoads(location):
                 return .run { send in
                     let loads = try await logicalsClient.fetchLoads(location: location)
                     log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
@@ -121,11 +121,11 @@ public struct SharedPropertiesFeature {
             case .userLocation(_):
                 return .none
 
-            case .newConnectionStatus(let newValue):
+            case let .newConnectionStatus(newValue):
                 state.$vpnConnectionStatus.withLock { $0 = newValue }
                 return .none
 
-            case .newConnectionState(let newValue):
+            case let .newConnectionState(newValue):
                 state.$connectionState.withLock { $0 = newValue }
                 if newValue.is(\.disconnected) {
                     // User location will be fetched if it hasn't already been done recently

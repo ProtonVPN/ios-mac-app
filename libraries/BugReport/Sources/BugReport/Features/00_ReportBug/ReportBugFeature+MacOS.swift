@@ -53,7 +53,7 @@ struct ReportBugFeatureMacOS: Reducer {
                     return nil
                 }
                 switch route {
-                case .quickFixes(let state):
+                case let .quickFixes(state):
                     return state
                 case .contactForm(_):
                     return nil
@@ -78,7 +78,7 @@ struct ReportBugFeatureMacOS: Reducer {
                 switch route {
                 case .quickFixes(_):
                     return nil
-                case .contactForm(let state):
+                case let .contactForm(state):
                     return state
                 }
             } set {
@@ -153,7 +153,7 @@ struct ReportBugFeatureMacOS: Reducer {
                 }
                 return .none
 
-            case .step4(let subAction):
+            case let .step4(subAction):
                 // "Redirect" action according to the path of the user towards the
                 // contact form.
                 let newAction = state.step3aState != nil

@@ -41,7 +41,7 @@ public func executeOnUIThread<T>(
 ) {
     Task { @MainActor in
         do {
-            success(try await closure())
+            try await success(closure())
         } catch {
             failure(error)
         }

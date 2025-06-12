@@ -53,10 +53,10 @@ extension CreateNewProfileViewModel {
         let countryString: String
 
         switch group.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             imageAttributedString = AppTheme.Icon.flag(countryCode: countryCode)?.asAttachment(size: .profileIconSize) ?? NSAttributedString(string: "")
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
-        case .gateway(let name):
+        case let .gateway(name):
             imageAttributedString = IconProvider.servers.asAttachment(style: .normal, size: .profileIconSize)
             countryString = "  " + name
         }
@@ -87,7 +87,7 @@ extension CreateNewProfileViewModel {
 
     internal func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             return serverDescriptor(for: serverWrapper.server)
         case .fastest:
             return defaultServerDescriptor(image: IconProvider.bolt, name: Localizable.fastest)

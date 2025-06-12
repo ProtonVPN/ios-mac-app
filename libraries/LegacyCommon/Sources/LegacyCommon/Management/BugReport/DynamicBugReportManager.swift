@@ -109,12 +109,12 @@ public class DynamicBugReportManager {
     private func loadConfig() {
         api.dynamicBugReportConfig { result in
             switch result {
-            case .success(let config):
+            case let .success(config):
                 self.model = config
                 self.storage.store(config)
                 log.debug("Dynamic bug report config downloaded and saved", category: .app)
                 
-            case .failure(let error):
+            case let .failure(error):
                 log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
                 // Ignoring this error as we have default config
             }
@@ -202,7 +202,7 @@ extension DynamicBugReportManager: BugReportDelegate {
                 self.prefilledEmail = report.email
                 result(.success(()))
 
-            case .failure(let error):
+            case let .failure(error):
                 result(.failure(error))
             }
         }

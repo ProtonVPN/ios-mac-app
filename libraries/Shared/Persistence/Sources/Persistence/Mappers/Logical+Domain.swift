@@ -118,14 +118,14 @@ extension ContinuousServerProperties {
 
 extension Domain.Logical.Kind {
     public var entryCountryCode: String? {
-        if case .secureCore(let entryCountryCode) = self {
+        if case let .secureCore(entryCountryCode) = self {
             return entryCountryCode
         }
         return nil
     }
 
     public var gatewayName: String? {
-        if case .gateway(let name) = self {
+        if case let .gateway(name) = self {
             return name
         }
         return nil

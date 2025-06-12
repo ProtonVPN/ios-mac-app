@@ -251,19 +251,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 errorNotifier.notify(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
                 completionHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
-            case .dnsResolution(let dnsErrors):
+            case let .dnsResolution(dnsErrors):
                 let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorNotifier.notify(PacketTunnelProviderError.dnsResolutionFailure)
                 completionHandler(PacketTunnelProviderError.dnsResolutionFailure)
 
-            case .setNetworkSettings(let error):
+            case let .setNetworkSettings(error):
                 wg_log(.error, message: "Starting tunnel failed with setTunnelNetworkSettings returning \(error.localizedDescription)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotSetNetworkSettings)
                 completionHandler(PacketTunnelProviderError.couldNotSetNetworkSettings)
 
-            case .startWireGuardBackend(let errorCode):
+            case let .startWireGuardBackend(errorCode):
                 wg_log(.error, message: "Starting tunnel failed with wgTurnOn returning \(errorCode)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotStartBackend)
                 completionHandler(PacketTunnelProviderError.couldNotStartBackend)
@@ -387,23 +387,23 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     completionHandler?(.error(message: String(describing: error)))
                 }
             }
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             wg_log(.info, message: "Handle message: refreshCertificate")
             certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     switch error {
                     case .sessionExpiredOrMissing:
                         completionHandler?(.errorSessionExpired)
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
-                    case .tooManyCertRequests(let retryAfter):
+                    case let .tooManyCertRequests(retryAfter):
                         if let retryAfter = retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {

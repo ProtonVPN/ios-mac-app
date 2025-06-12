@@ -121,9 +121,9 @@ struct ConnectionDetailsView: View {
 
             var accessibilityValue: String {
                 switch self {
-                case .text(let string):
+                case let .text(string):
                     return string
-                case .percentage(let value):
+                case let .percentage(value):
                     return String(value) + "%"
                 }
             }
@@ -178,9 +178,9 @@ struct ConnectionDetailsView: View {
                 }
 
                 switch content {
-                case .text(let string):
+                case let .text(string):
                     Text(string).themeFont(.body1())
-                case .percentage(let percentage):
+                case let .percentage(percentage):
                     Text(percentage, format: .percent).themeFont(.body1())
                 }
             }

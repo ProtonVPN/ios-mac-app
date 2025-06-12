@@ -138,7 +138,7 @@ extension ServerRepository {
                         )
                     } // We group gateways by gateway name.
                     .sorted {
-                        if case (.gateway(let name1), .gateway(let name2)) = ($0.kind, $1.kind) {
+                        if case let (.gateway(name1), .gateway(name2)) = ($0.kind, $1.kind) {
                             return name1 < name2
                         }
                         return false

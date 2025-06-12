@@ -54,17 +54,17 @@ private enum Section {
 
     var title: String {
         switch self {
-        case .gateways(let title, _, _): return title
-        case .countries(let title, _, _, _): return title
-        case .profiles(let title, _): return title
+        case let .gateways(title, _, _): return title
+        case let .countries(title, _, _, _): return title
+        case let .profiles(title, _): return title
         }
     }
 
     var rows: [Row] {
         switch self {
-        case .gateways(_, let rows, _): return rows
-        case .countries(_, let rows, _, _): return rows
-        case .profiles(_, let rows): return rows
+        case let .gateways(_, rows, _): return rows
+        case let .countries(_, rows, _, _): return rows
+        case let .profiles(_, rows): return rows
         }
     }
 }
@@ -86,9 +86,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         var currentContent: [ServerGroupInfo] {
             switch self {
-            case .standard(let content):
+            case let .standard(content):
                 return content
-            case .secureCore(let content):
+            case let .secureCore(content):
                 return content
             }
         }
@@ -177,7 +177,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private var freeCountries: [(String, UIImage?)] {
         return state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
             switch serverGroup.kind {
-            case .country(let code):
+            case let .country(code):
                 guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
@@ -274,7 +274,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     private func refreshTier() {
         do {
-            if (try keychain.fetchCached()).isDelinquent {
+            if try (keychain.fetchCached()).isDelinquent {
                 userTier = .freeTier
                 return
             }

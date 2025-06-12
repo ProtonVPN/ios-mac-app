@@ -79,11 +79,11 @@ public struct KeychainDebugFeature {
                     return await send(.loadKeychainDataFinished(.success(.init(keys: keys, certificate: certificate))))
                 }
 
-            case .loadKeychainDataFinished(.success(let data)):
+            case let .loadKeychainDataFinished(.success(data)):
                 state.content = .loaded(data)
                 return .none
 
-            case .loadKeychainDataFinished(.failure(let error)):
+            case let .loadKeychainDataFinished(.failure(error)):
                 state.content = .failed("\(error)")
                 return .none
 

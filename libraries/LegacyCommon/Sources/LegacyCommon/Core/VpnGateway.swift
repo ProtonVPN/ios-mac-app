@@ -308,9 +308,9 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType serverType: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
         let connectionType: ConnectionRequestType = switch serverGroup {
-        case .country(let code):
+        case let .country(code):
             .country(code, .fastest)
-        case .gateway(let name):
+        case let .gateway(name):
             .gateway(name: name)
         }
         let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
@@ -435,7 +435,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         @Dependency(\.connectionAuthorizer) var authorizer
         switch authorizer.authorize(request: requestWithUpdatedServerType) {
-        case .failure(.specificCountryUnavailable(let countryCode)):
+        case let .failure(.specificCountryUnavailable(countryCode)):
             alertService?.push(alert: CountryUpsellAlert(countryCode: countryCode))
             log.info("User is not authorized to connect to specific countries (\(countryCode))")
             return
@@ -558,7 +558,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.propertiesManager.streamingResourcesUrl = services.resourceBaseURL
             }
 
-            if case .modified(let modifiedAt, let servers, let isFreeTier) = properties.serverInfo {
+            if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
                 assert(isFreeTier == refreshFreeTierInfo)
                 @Dependency(\.serverManager) var serverManager
                 serverManager.update(
@@ -673,7 +673,7 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         group.wait()
 
-        guard case .intercept(let parameters) = result else {
+        guard case let .intercept(parameters) = result else {
             return false
         }
 

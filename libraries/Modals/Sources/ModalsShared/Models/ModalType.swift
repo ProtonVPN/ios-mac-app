@@ -222,7 +222,7 @@ private extension ModalType {
             return legacy ? Localizable.modalsUpsellNetShieldTitle : Localizable.modalsNewUpsellNetshieldTitle
         case .secureCore:
             return legacy ? Localizable.modalsUpsellSecureCoreTitle : Localizable.modalsNewUpsellSecureCoreTitle
-        case .allCountries(let numberOfServers, let numberOfCountries):
+        case let .allCountries(numberOfServers, numberOfCountries):
             return legacy ?
                 Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries) :
                 Localizable.modalsNewUpsellAllCountriesTitle
@@ -281,7 +281,7 @@ private extension ModalType {
             return .init(
                 text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellSecureCoreSubtitle,
                 boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold])
-        case .allCountries(let numberOfServers, let numberOfCountries):
+        case let .allCountries(numberOfServers, numberOfCountries):
             let text = legacy ?
                 Localizable.modalsUpsellFeaturesSubtitle :
                 Localizable.modalsNewUpsellAllCountriesSubtitle(numberOfServers, numberOfCountries)

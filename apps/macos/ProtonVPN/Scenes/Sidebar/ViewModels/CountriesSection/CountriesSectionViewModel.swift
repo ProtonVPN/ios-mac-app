@@ -111,7 +111,7 @@ class CountriesSectionViewModel {
     private var freeCountries: [(String, NSImage?)] {
         return serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
-            case .country(let countryCode):
+            case let .country(countryCode):
                 guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
@@ -242,7 +242,7 @@ class CountriesSectionViewModel {
 
     func toggleCountryCell(for countryViewModel: CountryItemViewModel) {
         guard let index = data.firstIndex(where: {
-            if case .country(let countryVM) = $0, countryVM.id == countryViewModel.id { return true }
+            if case let .country(countryVM) = $0, countryVM.id == countryViewModel.id { return true }
             return false
         }) else {
             log.error("Cannot toggle country cell - failed to find index for country: \(countryViewModel.id)")
@@ -365,9 +365,9 @@ class CountriesSectionViewModel {
     private func reloadData(_ servers: [ServerModel]) {
         let indexes: [Int] = data.enumerated().compactMap { offset, data in
             switch data {
-            case .country(let countryVM):
+            case let .country(countryVM):
                 return servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
-            case .server(let serverVM):
+            case let .server(serverVM):
                 return servers.first(where: { $0.id == serverVM.serverModel.logical.id }) != nil ? offset : nil
             default:
                 return nil
@@ -404,7 +404,7 @@ class CountriesSectionViewModel {
     private func removeServers(_ index: Int) -> Int {
         let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
-            if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
+            if case let .header(vm) = $0, vm is CountryHeaderViewModel { return true }
             return false
         }) ?? data.count
 
@@ -443,7 +443,7 @@ class CountriesSectionViewModel {
 
     private var supportedProtocols: [VpnProtocol] {
         switch currentConnectionProtocol {
-        case .vpnProtocol(let vpnProtocol):
+        case let .vpnProtocol(vpnProtocol):
             return [vpnProtocol]
         case .smartProtocol:
             return propertiesManager.smartProtocolConfig.supportedProtocols
@@ -716,18 +716,18 @@ extension ServerGroupInfo {
 extension ServerGroupInfo.Kind {
     var cacheID: String {
         switch self {
-        case .country(let code):
+        case let .country(code):
             return code
-        case .gateway(let name):
+        case let .gateway(name):
             return "gateway-\(name)"
         }
     }
 
     var filter: VPNServerFilter {
         switch self {
-        case .country(let code):
+        case let .country(code):
             return .kind(.country(code: code))
-        case .gateway(let name):
+        case let .gateway(name):
             return .kind(.gateway(name: name))
         }
     }

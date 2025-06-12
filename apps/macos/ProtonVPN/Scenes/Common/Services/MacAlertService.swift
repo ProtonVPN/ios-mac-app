@@ -420,9 +420,9 @@ extension MacAlertService: CoreAlertService {
             return
         }
         let vc: NSViewController = switch panelMode {
-        case .legacy(let legacyPanel):
+        case let .legacy(legacyPanel):
             AnnouncementDetailViewController(legacyPanel)
-        case .image(let imagePanel):
+        case let .image(imagePanel):
             AnnouncementImageViewController(
                 data: imagePanel,
                 offerReference: alert.offerReference

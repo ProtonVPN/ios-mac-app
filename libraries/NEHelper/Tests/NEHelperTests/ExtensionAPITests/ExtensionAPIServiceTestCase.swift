@@ -166,7 +166,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
             }
 
             switch result {
-            case .success(let responseData):
+            case let .success(responseData):
                 let response = HTTPURLResponse(url: request.url!,
                                                statusCode: 200,
                                                httpVersion: nil,
@@ -180,7 +180,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
                     completionHandler(data, response, nil)
                     expectationToFulfill.fulfill()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 if let mockAPIError = error as? MockAPIEndpointError {
                     let response = HTTPURLResponse(url: request.url!,
                                                    statusCode: mockAPIError.httpError.rawValue,

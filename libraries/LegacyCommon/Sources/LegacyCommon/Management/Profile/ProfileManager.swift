@@ -121,7 +121,7 @@ public final class ProfileManager {
     public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, netShield: netShield, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break
@@ -132,7 +132,7 @@ public final class ProfileManager {
     public func createProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(profile, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break
@@ -143,7 +143,7 @@ public final class ProfileManager {
     @discardableResult public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break

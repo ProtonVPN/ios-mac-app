@@ -99,7 +99,7 @@ extension ManagerConfigurator {
 
         var configData = Data([UInt8(version.rawValue)])
         do {
-            configData.append(try encoder.encode(storedConfig))
+            try configData.append(encoder.encode(storedConfig))
         } catch {
             throw WireguardConfiguratorError.configurationEncodingError(error)
         }
@@ -121,7 +121,7 @@ extension ManagerConfigurator {
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
 
                 switch operation {
-                case .connection(let connectionIntent):
+                case let .connection(connectionIntent):
                     manager.vpnProtocolConfiguration = try configuration(with: connectionIntent)
                     manager.localizedDescription = configurationTitle(for: connectionIntent)
                     manager.isOnDemandEnabled = true

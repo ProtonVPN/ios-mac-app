@@ -82,7 +82,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     
     var entryCountry: String? {
         guard isSecureCoreEnabled else { return nil }
-        guard case .secureCore(let entryCountryCode) = serverModel.logical.kind else {
+        guard case let .secureCore(entryCountryCode) = serverModel.logical.kind else {
             assertionFailure("Expected a secure core server, but kind is \(serverModel.logical.kind)")
             return nil
         }

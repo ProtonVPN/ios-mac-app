@@ -77,7 +77,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
 
     var isConnecting: Bool {
-        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case let ConnectionRequestType.country(activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false

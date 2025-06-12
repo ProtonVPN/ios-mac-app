@@ -21,7 +21,7 @@ extension Optional<String> {
         switch self {
         case .none:
             return []
-        case .some(let wrapped):
+        case let .some(wrapped):
             return wrapped.splitToArray(separator: separator, trimmingCharacters: trimmingCharacters)
         }
     }

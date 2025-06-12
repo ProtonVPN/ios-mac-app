@@ -53,7 +53,7 @@ public struct ForkSessionRequest: Request {
 
     public var parameters: [String: Any]? {
         switch useCase {
-        case .getSelector(let clientId, let independent):
+        case let .getSelector(clientId, independent):
             return [
                 "ChildClientID": clientId,
                 "Independent": independent ? 1 : 0,

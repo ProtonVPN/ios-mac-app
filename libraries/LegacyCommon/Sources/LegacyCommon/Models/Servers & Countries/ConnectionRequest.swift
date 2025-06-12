@@ -34,7 +34,7 @@ extension ConnectionProtocol: @retroactive CustomStringConvertible {
         switch self {
         case .smartProtocol:
             return false
-        case .vpnProtocol(let vpnProtocol):
+        case let .vpnProtocol(vpnProtocol):
             return vpnProtocol.isDeprecated
         }
     }
@@ -254,7 +254,7 @@ extension CountryConnectionRequestType: Codable {
             try container.encode(0, forKey: .rawValue)
         case .random:
             try container.encode(1, forKey: .rawValue)
-        case .server(let server):
+        case let .server(server):
             try container.encode(2, forKey: .rawValue)
             try container.encode(server, forKey: .associatedValue)
         }
@@ -276,7 +276,7 @@ extension ConnectionRequestType: Equatable {
             return true
         case (.random, .random):
             return true
-        case (.country(let code1, let countryRequestType1), .country(let code2, let countryRequestType2)):
+        case let (.country(code1, countryRequestType1), .country(code2, countryRequestType2)):
             return code1 == code2 && countryRequestType1 == countryRequestType2
         default:
             return false
@@ -291,7 +291,7 @@ extension CountryConnectionRequestType: Equatable {
             return true
         case (.random, .random):
             return true
-        case (.server(let server1), .server(let server2)):
+        case let (.server(server1), .server(server2)):
             return server1 == server2
         default:
             return false

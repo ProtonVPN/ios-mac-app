@@ -64,10 +64,10 @@ public struct VpnCertificate: Sendable, Equatable {
 
 public extension VpnCertificate {
     init(dict: JSONDictionary) throws {
-        self.init(
-            certificate: try dict.stringOrThrow(key: "Certificate"),
-            validUntil: try dict.unixTimestampOrThrow(key: "ExpirationTime"),
-            refreshTime: try dict.unixTimestampOrThrow(key: "RefreshTime")
+        try self.init(
+            certificate: dict.stringOrThrow(key: "Certificate"),
+            validUntil: dict.unixTimestampOrThrow(key: "ExpirationTime"),
+            refreshTime: dict.unixTimestampOrThrow(key: "RefreshTime")
         )
     }
 }
@@ -75,10 +75,10 @@ public extension VpnCertificate {
 extension VpnCertificate: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.init(
-            certificate: try container.decode(String.self, forKey: .certificate),
-            validUntil: try container.decode(Date.self, forKey: .validUntil),
-            refreshTime: try container.decode(Date.self, forKey: .refreshTime)
+        try self.init(
+            certificate: container.decode(String.self, forKey: .certificate),
+            validUntil: container.decode(Date.self, forKey: .validUntil),
+            refreshTime: container.decode(Date.self, forKey: .refreshTime)
         )
     }
 

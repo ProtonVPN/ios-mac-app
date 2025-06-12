@@ -89,15 +89,15 @@ public enum VpnState {
             return base + "Invalid"
         case .disconnected:
             return base + "Disconnected"
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             return base + "Connecting to: \(descriptor)"
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             return base + "Connected to: \(descriptor)"
-        case .reasserting(let descriptor):
+        case let .reasserting(descriptor):
             return base + "Reasserting connection to: \(descriptor)"
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             return base + "Disconnecting from: \(descriptor)"
-        case .error(let error):
+        case let .error(error):
             return base + "Error: \(error.localizedDescription)"
         }
     }
@@ -109,15 +109,15 @@ public enum VpnState {
             return base + "Invalid"
         case .disconnected:
             return base + "Disconnected"
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             return base + "Connecting to: \(descriptor.address)"
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             return base + "Connected to: \(descriptor.address)"
-        case .reasserting(let descriptor):
+        case let .reasserting(descriptor):
             return base + "Reasserting connection to: \(descriptor.address)"
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             return base + "Disconnecting from: \(descriptor.address)"
-        case .error(let error):
+        case let .error(error):
             return base + "Error: \(error.localizedDescription)"
         }
     }
@@ -155,15 +155,15 @@ extension VpnState: Equatable {
             return true
         case (.disconnected, .disconnected):
             return true
-        case (.connecting(let descriptorLhs), .connecting(let descriptorRhs)):
+        case let (.connecting(descriptorLhs), .connecting(descriptorRhs)):
             return descriptorLhs == descriptorRhs
-        case (.connected(let descriptorLhs), .connected(let descriptorRhs)):
+        case let (.connected(descriptorLhs), .connected(descriptorRhs)):
             return descriptorLhs == descriptorRhs
-        case (.reasserting(let descriptorLhs), .reasserting(let descriptorRhs)):
+        case let (.reasserting(descriptorLhs), .reasserting(descriptorRhs)):
             return descriptorLhs == descriptorRhs
-        case (.disconnecting(let descriptorLhs), .disconnecting(let descriptorRhs)):
+        case let (.disconnecting(descriptorLhs), .disconnecting(descriptorRhs)):
             return descriptorLhs == descriptorRhs
-        case (.error(let errorLhs), .error(let errorRhs)):
+        case let (.error(errorLhs), .error(errorRhs)):
             return (errorLhs as NSError).isEqual((errorRhs as NSError))
         default:
             return false

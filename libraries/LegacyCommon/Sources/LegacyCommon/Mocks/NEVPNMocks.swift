@@ -268,13 +268,13 @@ public class WireguardProviderMessageSenderMock: ProviderMessageSender {
         }
 
         switch response {
-        case .success(let wireguardResponse):
+        case let .success(wireguardResponse):
             guard let genericResponse = wireguardResponse as? R.Response else {
                 log.assertionFailure("This shouldn't be possible because `message` is a `WireguardProviderRequest`")
                 return
             }
             completion?(.success(genericResponse))
-        case .failure(let providerError):
+        case let .failure(providerError):
             completion?(.failure(providerError))
         }
     }

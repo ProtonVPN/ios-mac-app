@@ -37,11 +37,11 @@ class AbstractProfileViewModel {
         self.userTier = userTier
         
         switch profile.serverOffering {
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier
             self.underMaintenance = serverWrapper.server.underMaintenance
 
-        case .fastest(let countryCode), .random(let countryCode):
+        case let .fastest(countryCode), let .random(countryCode):
             if countryCode == nil {
                 self.lowestServerTier = 0
                 self.underMaintenance = false

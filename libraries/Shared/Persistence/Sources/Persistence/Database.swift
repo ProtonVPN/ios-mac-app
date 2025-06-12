@@ -54,7 +54,7 @@ public enum DatabaseType: CustomStringConvertible {
             return "inMemory"
         case .ephemeral:
             return "ephemeral"
-        case .physical(let filePath):
+        case let .physical(filePath):
             return "physical(\(filePath.redactingUsername)"
         }
     }
@@ -66,13 +66,13 @@ extension DatabaseWriter {
         case .inMemory:
             return try DatabaseQueue(named: "global", configuration: configuration)
 
-        case .ephemeral(let path):
+        case let .ephemeral(path):
             if let path {
                 return try DatabaseQueue.inMemoryCopy(fromPath: path, configuration: configuration)
             }
             return try DatabaseQueue(configuration: configuration)
 
-        case .physical(let path):
+        case let .physical(path):
             let writer = try DatabaseQueue(path: path, configuration: configuration)
 
             // Check if database contains unknown migrations from the future

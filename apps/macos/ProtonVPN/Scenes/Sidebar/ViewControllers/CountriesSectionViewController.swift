@@ -404,7 +404,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return 32
         case .banner:
             return 100
-        case .offerBanner(let model):
+        case let .offerBanner(model):
             return model.showCountdown ? 128 : 113
         default:
             return 40
@@ -418,30 +418,30 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         }
         
         switch cellWrapper {
-        case .country(let model):
+        case let .country(model):
             let cell = tableView.makeView(withIdentifier: Cell.country.identifier, owner: self) as! CountryItemCellView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             return cell
-        case .server(let model):
+        case let .server(model):
             let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.delegate = self
             return cell
-        case .header(let model):
+        case let .header(model):
             let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
             cell.configure(with: model)
             return cell
-        case .profile(let profileModel):
+        case let .profile(profileModel):
             let cell = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
             cell.updateView(withModel: profileModel, hideSeparator: true)
             return cell
-        case .banner(let viewModel):
+        case let .banner(viewModel):
             let cell = tableView.makeView(withIdentifier: Cell.banner.identifier, owner: nil) as! BannerCellView
             cell.updateView(withModel: viewModel)
             return cell
-        case .offerBanner(let viewModel):
+        case let .offerBanner(viewModel):
             let cell = tableView.makeView(withIdentifier: Cell.offerBanner.identifier, owner: nil) as! OfferBannerView
             cell.updateView(withModel: viewModel)
             return cell

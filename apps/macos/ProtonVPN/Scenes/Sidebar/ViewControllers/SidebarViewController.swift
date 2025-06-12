@@ -438,7 +438,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + delta, execute: fadeOutOverlayTask!)
-        case .aborted(let userInitiated):
+        case let .aborted(userInitiated):
             if userInitiated {
                 DispatchQueue.main.async {
                     self.loading(show: false)

@@ -47,7 +47,7 @@ public enum Flag: Equatable {
         case .gateway:
             return "Gateway"
 
-        case .country(let code):
+        case let .country(code):
             return code
         }
     }

@@ -83,9 +83,9 @@ internal struct ConnectToVPNIntent: AppIntent {
         // Wait until the connection state either goes into .connected or .disconnecting.
         try? await $connectionState.when(willMatch: { state in
             switch state {
-            case .connected(let intent, _, _, _):
+            case let .connected(intent, _, _, _):
                 return intent.spec == spec
-            case .disconnecting(let intent, _):
+            case let .disconnecting(intent, _):
                 return intent.spec == spec
             default:
                 return false
@@ -125,7 +125,7 @@ internal struct ConnectToVPNIntent: AppIntent {
         case .mostRecent:
             let recents = recentsStorage.readFromStorage()
             return recents.elements.first?.connection ?? .defaultFastest
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }

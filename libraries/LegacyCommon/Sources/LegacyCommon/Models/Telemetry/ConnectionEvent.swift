@@ -28,9 +28,9 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
 
     public var values: Values {
         switch event {
-        case .vpnConnection(let timeToConnection):
+        case let .vpnConnection(timeToConnection):
             return .init(timeToConnection: timeToConnection)
-        case .vpnDisconnection(let sessionLength):
+        case let .vpnDisconnection(sessionLength):
             return .init(sessionLength: sessionLength)
         }
     }

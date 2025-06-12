@@ -57,7 +57,7 @@ extension CertificateRefreshClient {
             case .ok:
                 return .ok
 
-            case .error(let message):
+            case let .error(message):
                 return .ipcError(message: message)
 
             case .errorSessionExpired:
@@ -66,7 +66,7 @@ extension CertificateRefreshClient {
             case .errorNeedKeyRegeneration:
                 return .requiresNewKeys
 
-            case .errorTooManyCertRequests(let retryAfter):
+            case let .errorTooManyCertRequests(retryAfter):
                 return .tooManyCertRequests(retryAfter: retryAfter)
             }
         },

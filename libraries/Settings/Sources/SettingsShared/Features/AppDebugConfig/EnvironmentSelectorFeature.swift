@@ -170,9 +170,9 @@ public struct DebugConfigurationFeature {
                 state.destination = .userDefaults(.init(alert: nil, content: .none))
             case .keychainTapped:
                 state.destination = .keychain(.init(alert: nil, content: .none))
-            case .atlasSecretResponseReceived(let result):
+            case let .atlasSecretResponseReceived(result):
                 switch result {
-                case .success(let data):
+                case let .success(data):
                     state.fetchingAtlasSecret = false
 
                     guard let string = String(data: data, encoding: .utf8),
@@ -186,7 +186,7 @@ public struct DebugConfigurationFeature {
                         state.atlasSecretFetchURLString = state.atlasSecret
                     }
                     state.atlasSecret = string
-                case .failure(let error):
+                case let .failure(error):
                     state.atlasSecretFetchErrorDescription = String(describing: error)
                 }
             case .fetchAtlasSecretButtonTapped:
@@ -264,14 +264,14 @@ public struct DebugConfigurationFeature {
                         """
                     )
                 })
-            case .overridesRemoved(let indexSet):
+            case let .overridesRemoved(indexSet):
                 state.overrides.remove(atOffsets: indexSet)
 
                 // recompute the indices so that the text fields have the correct labels
                 for index in 0..<state.overrides.count {
                     state.overrides[index].index = index
                 }
-            case .toggle(let id):
+            case let .toggle(id):
                 guard let index = state.overrides.firstIndex(where: { $0.id == id }) else { break }
                 state.overrides[index].value = !state.overrides[index].value
             case .binding(\.overrides):

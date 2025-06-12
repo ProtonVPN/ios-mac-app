@@ -108,8 +108,8 @@ struct SwiftTestingTests {
             snapshotDirectory = "\(projectDir)/libraries/Home/Tests/HomeSnapshotTests/__Snapshots__/HomeSnapshots"
         }
 
-        let failure = verifySnapshot(
-            of: try value(),
+        let failure = try verifySnapshot(
+            of: value(),
             as: snapshotting,
             named: name,
             record: recording,

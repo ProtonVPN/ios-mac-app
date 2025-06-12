@@ -28,7 +28,7 @@ struct PlutoniumInclusionHelper {
     init() throws {
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
 
-        guard case .enabled(let mode) = feature else {
+        guard case let .enabled(mode) = feature else {
             log.warning("Plutonium disabled. Should not reach here.")
             throw PlutoniumError.featureDisabled
         }

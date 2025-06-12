@@ -37,15 +37,15 @@ public enum AppState {
             return base + "Disconnected"
         case .preparingConnection:
             return base + "Preparing connection"
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             return base + "Connecting to: \(descriptor.description)"
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             return base + "Connected to: \(descriptor.description)"
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             return base + "Disconnecting from: \(descriptor.description)"
-        case .aborted(let userInitiated):
+        case let .aborted(userInitiated):
             return base + "Aborted, user initiated: \(userInitiated)"
-        case .error(let error):
+        case let .error(error):
             return base + "Error: \(error.localizedDescription)"
         }
     }
@@ -88,7 +88,7 @@ public enum AppState {
     
     public var descriptor: ServerDescriptor? {
         switch self {
-        case .connecting(let desc), .connected(let desc), .disconnecting(let desc):
+        case let .connecting(desc), let .connected(desc), let .disconnecting(desc):
             return desc
         default:
             return nil

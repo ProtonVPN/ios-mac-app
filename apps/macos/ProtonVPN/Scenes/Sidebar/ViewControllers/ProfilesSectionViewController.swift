@@ -102,11 +102,11 @@ extension ProfileSectionViewController: NSTableViewDelegate {
         let cellModel = viewModel.cellModel(forRow: row)
         
         switch cellModel {
-        case .profile(let profileModel):
+        case let .profile(profileModel):
             let item = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
             item.updateView(withModel: profileModel)
             return item
-        case .footer(let footerModel):
+        case let .footer(footerModel):
             let item = tableView.makeView(withIdentifier: Cell.footer.identifier, owner: nil) as! FooterItemView
             item.updateView(withModel: footerModel)
             return item

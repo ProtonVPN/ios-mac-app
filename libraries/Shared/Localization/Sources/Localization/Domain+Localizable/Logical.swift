@@ -22,7 +22,7 @@ import Strings
 
 extension Logical {
     public var entryCountry: String {
-        guard case .secureCore(let entryCountryCode) = kind else { return "" }
+        guard case let .secureCore(entryCountryCode) = kind else { return "" }
         return LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
 

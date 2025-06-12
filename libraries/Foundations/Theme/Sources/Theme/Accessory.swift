@@ -64,7 +64,7 @@ public struct Accessory: View {
                 return IconProvider.chevronRight
             case .externalLink:
                 return IconProvider.arrowOutSquare
-            case .checkmark(let isActive):
+            case let .checkmark(isActive):
                 return isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
             case .none:
                 return nil
@@ -73,7 +73,7 @@ public struct Accessory: View {
 
         var color: Color? {
             switch self {
-            case .checkmark(let isActive):
+            case let .checkmark(isActive):
                 return .init(.icon, isActive ? [.interactive, .active] : .weak)
             default:
                 return .init(.icon, .weak)

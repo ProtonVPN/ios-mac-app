@@ -726,7 +726,7 @@ final class SettingsViewModel {
             switch newProtocol {
             case .smartProtocol:
                 self.propertiesManager.smartProtocol = true
-            case .vpnProtocol(let vpnProtocol):
+            case let .vpnProtocol(vpnProtocol):
                 self.propertiesManager.smartProtocol = false
                 self.propertiesManager.vpnProtocol = vpnProtocol
             }
@@ -889,13 +889,13 @@ final class SettingsViewModel {
             }
         } else {
             switch agentFeatureChange {
-            case .netShield(let value):
+            case let .netShield(value):
                 vpnManager.set(netShieldType: value)
 
-            case .vpnAccelerator(let value):
+            case let .vpnAccelerator(value):
                 vpnManager.set(vpnAccelerator: value)
 
-            case .moderateNAT(let value):
+            case let .moderateNAT(value):
                 vpnManager.set(natType: value)
             }
         }
@@ -905,7 +905,7 @@ final class SettingsViewModel {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
         if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            if case .connectionProtocol(let connectionProtocol) = tunnelFeatureChange {
+            if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
                 propertiesManager.connectionProtocol = connectionProtocol
             }
             Task {
@@ -923,7 +923,7 @@ final class SettingsViewModel {
             case .killSwitch:
                 vpnGateway.retryConnection()
 
-            case .connectionProtocol(let value):
+            case let .connectionProtocol(value):
                 vpnGateway.reconnect(with: value)
             }
         }

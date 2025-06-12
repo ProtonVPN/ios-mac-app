@@ -145,7 +145,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                 self?.propertiesManager.vpnProtocol = vpnProtocol
                 performSwitchAction()
                 completion(.success)
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
                           category: .connectionConnect)
 

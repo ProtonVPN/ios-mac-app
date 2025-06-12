@@ -46,7 +46,7 @@ extension SmartPortSelectorBridge: @retroactive DependencyKey {
                     continuation.resume(returning: result)
                 }
 
-            case .vpnProtocol(let vpnProtocol):
+            case let .vpnProtocol(vpnProtocol):
                 let smartPortSelector = SmartPortSelectorImplementation(
                     wireguardUdpChecker: resolver.availabilityChecker(for: .wireGuard(.udp)),
                     wireguardTcpChecker: resolver.availabilityChecker(for: .wireGuard(.tcp))

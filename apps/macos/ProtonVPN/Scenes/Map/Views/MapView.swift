@@ -304,7 +304,7 @@ class MapView: NSView {
             switch connection.connection.origin {
             case .home:
                 path.move(to: CGPoint(x: frame.origin.x + frame.width / 2, y: frame.origin.y + frame.height - homeDistanceFromTop))
-            case .server(let origin):
+            case let .server(origin):
                 path.move(to: translateCoordinateToMap(origin.coordinate))
             }
             

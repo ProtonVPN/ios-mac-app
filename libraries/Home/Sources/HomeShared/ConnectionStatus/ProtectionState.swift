@@ -49,7 +49,7 @@ public enum ProtectionState: Equatable {
 
     public var netShieldModel: NetShieldModel? {
         switch self {
-        case .protected(let netShield), .protectedSecureCore(let netShield):
+        case let .protected(netShield), let .protectedSecureCore(netShield):
             return netShield
         case .unprotected, .protecting, .resolving:
             return nil
@@ -62,7 +62,7 @@ extension VPNConnectionStatus {
         switch self {
         case .disconnected:
             return .unprotected
-        case .connected(let spec, _):
+        case let .connected(spec, _):
             if case .secureCore = spec.location {
                 return .protectedSecureCore(netShield: netShieldModel?.copy(enabled: true))
             }

@@ -182,7 +182,7 @@ class MapViewModel: SecureCoreToggleHandler {
         isMapConnectionDisabled: Bool,
         userTier: Int
     ) -> CountryAnnotationViewModel? {
-        guard case .country(let countryCode) = countryGroup.kind else {
+        guard case let .country(countryCode) = countryGroup.kind else {
             assertionFailure("We should have filtered out gateways, but we found a: \(countryGroup.kind)")
             return nil
         }

@@ -78,10 +78,10 @@ class SimulatorHelper {
     var disconnect: @Sendable () -> Void {
         return {
             switch self.status {
-            case .connected(let specs, _):
+            case let .connected(specs, _):
                 self.switchToDisconnected(specs)
 
-            case .connecting(let specs, _):
+            case let .connecting(specs, _):
                 self.switchToDisconnected(specs, delay: 0)
 
             default:

@@ -83,10 +83,10 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         switch self {
         case .ike:
             try container.encode(0, forKey: .rawValue)
-        case .openVpn(let transportProtocol):
+        case let .openVpn(transportProtocol):
             try container.encode(1, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
-        case .wireGuard(let transportProtocol):
+        case let .wireGuard(transportProtocol):
             try container.encode(2, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
         }
@@ -123,9 +123,9 @@ extension VpnProtocol {
         switch self {
         case .ike:
             return "IKEv2"
-        case .openVpn(let transport):
+        case let .openVpn(transport):
             return "OpenVPN" + transport.rawValue.uppercased()
-        case .wireGuard(let transport):
+        case let .wireGuard(transport):
             return "WireGuard" + transport.rawValue.uppercased()
         }
     }

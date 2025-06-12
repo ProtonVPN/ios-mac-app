@@ -62,11 +62,11 @@ extension OverviewItemViewModel {
         }
         
         let description: NSAttributedString = switch profile.serverOffering {
-        case .fastest(let cCode):
+        case let .fastest(cCode):
             defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
-        case .random(let cCode):
+        case let .random(cCode):
             defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
-        case .custom(let sWrapper):
+        case let .custom(sWrapper):
             customServerDescriptor(forModel: sWrapper.server)
         }
         return description

@@ -83,8 +83,8 @@ struct SessionNetworkingFeature: Reducer {
                     await send(.sessionFetched(Result { try await networking.acquireSessionIfNeeded() }))
                 }
 
-            case .sessionFetched(.success(.sessionAlreadyPresent(let credentials))),
-                    .sessionFetched(.success(.sessionFetchedAndAvailable(let credentials))):
+            case let .sessionFetched(.success(.sessionAlreadyPresent(credentials))),
+                    let .sessionFetched(.success(.sessionFetchedAndAvailable(credentials))):
                 // Credentials already stored in keychain by Networking implementation in CommonNetworking
                 let session: CommonNetworking.Session = credentials.isForUnauthenticatedSession
                     ? .unauth(uid: credentials.sessionID)
@@ -106,7 +106,7 @@ struct SessionNetworkingFeature: Reducer {
                 state = .unauthenticated(.sessionUnavailable)
                 return .none
 
-            case .sessionFetched(.failure(let error)):
+            case let .sessionFetched(.failure(error)):
                 state = .unauthenticated(.network(internalError: error))
                 return .none
 
@@ -114,7 +114,7 @@ struct SessionNetworkingFeature: Reducer {
                 state = .unauthenticated(nil)
                 return .send(.startLogout)
 
-            case .forkedSessionAuthenticated(.success(let credentials)):
+            case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it
                 let session = Session.auth(uid: credentials.sessionId)
                 try? authKeychain.store(credentials)
@@ -133,7 +133,7 @@ struct SessionNetworkingFeature: Reducer {
                     await alertService.feed(error)
                 }
 
-            case .userTierRetrieved(let tier, let session):
+            case let .userTierRetrieved(tier, session):
                     state = .authenticated(session)
                     networking.setSession(session)
                     unauthKeychain.clear()

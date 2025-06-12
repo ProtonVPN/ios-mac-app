@@ -390,7 +390,7 @@ extension AppDelegate {
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { [unowned apiService, unowned self] result in
             switch result {
-            case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
+            case let .success(.sessionAlreadyPresent(authCredential)), let .success(.sessionFetchedAndAvailable(authCredential)):
                 FeatureFlagsRepository.shared.setApiService(apiService)
 
                 if !authCredential.userID.isEmpty {
@@ -416,7 +416,7 @@ extension AppDelegate {
                 } else {
                     disableExternalLogging()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
             default:
                 break

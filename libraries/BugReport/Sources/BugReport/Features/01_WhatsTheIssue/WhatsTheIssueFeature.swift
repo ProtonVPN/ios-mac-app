@@ -60,7 +60,7 @@ struct WhatsTheIssueFeature: Reducer {
         BindingReducer()
         Reduce { state, action in
             switch action {
-            case .categorySelected(let category):
+            case let .categorySelected(category):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
                     state.route = .quickFixes(QuickFixesFeature.State(category: category))
                 } else {

@@ -484,9 +484,9 @@ public class AppStateManagerImplementation: AppStateManager {
             } else {
                 state = .disconnected
             }
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             state = .connecting(descriptor)
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             propertiesManager.intentionallyDisconnected = false
 
             #if os(macOS)
@@ -502,7 +502,7 @@ public class AppStateManagerImplementation: AppStateManager {
             cancelTimeout()
         case .reasserting:
             return // usually this step is quick
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             if attemptingConnection { // needs to disconnect before attempting to connect
                 if case AppState.connecting = state {
                     stopAttemptingConnection()
@@ -512,7 +512,7 @@ public class AppStateManagerImplementation: AppStateManager {
             } else {
                 state = .disconnecting(descriptor)
             }
-        case .error(let error):
+        case let .error(error):
             state = .error(error)
         }
         

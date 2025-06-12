@@ -36,7 +36,7 @@ public struct LoginFeature: Reducer {
             switch action {
             case .loginButtonPressed:
                 return .none
-            case .showError(let initialError):
+            case let .showError(initialError):
                 state.initialError = initialError
                 return .none
             }

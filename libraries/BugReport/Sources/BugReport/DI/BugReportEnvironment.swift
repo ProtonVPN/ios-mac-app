@@ -58,7 +58,7 @@ private enum SendBugReportKey: DependencyKey {
                 switch $0 {
                 case .success:
                     continuation.resume(with: .success(true))
-                case .failure(let error):
+                case let .failure(error):
                     continuation.resume(throwing: error)
                 }
             })

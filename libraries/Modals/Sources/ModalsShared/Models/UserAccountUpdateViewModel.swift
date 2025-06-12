@@ -58,8 +58,8 @@ extension UserAccountUpdateViewModel {
 
     public var options: [String]? {
         switch self {
-        case .subscriptionDowngradedReconnecting(let numberOfCountries, let numberOfDevices, _, _),
-                .subscriptionDowngraded(let numberOfCountries, let numberOfDevices):
+        case let .subscriptionDowngradedReconnecting(numberOfCountries, numberOfDevices, _, _),
+                let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
             return [Localizable.subscriptionUpgradeOption1(numberOfCountries),
                     Localizable.subscriptionUpgradeOption2(numberOfDevices),
                     Localizable.subscriptionUpgradeOption3]
@@ -89,7 +89,7 @@ extension UserAccountUpdateViewModel {
             return Localizable.delinquentReconnectionDescription
         case .pendingInvoices:
             return Localizable.delinquentDescription
-        case .reachedDevicePlanLimit(let planName, let numberOfDevices):
+        case let .reachedDevicePlanLimit(planName, numberOfDevices):
             return Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
         case .reachedDeviceLimit:
             return Localizable.maximumDeviceLimit
@@ -113,9 +113,9 @@ extension UserAccountUpdateViewModel {
 
     public var fromServer: (String, Image)? {
         switch self {
-        case .pendingInvoicesReconnecting(let fromServer, _):
+        case let .pendingInvoicesReconnecting(fromServer, _):
             return fromServer
-        case .subscriptionDowngradedReconnecting(_, _, let fromServer, _):
+        case let .subscriptionDowngradedReconnecting(_, _, fromServer, _):
             return fromServer
         default:
             return nil
@@ -124,9 +124,9 @@ extension UserAccountUpdateViewModel {
 
     public var toServer: (String, Image)? {
         switch self {
-        case .pendingInvoicesReconnecting(_, let toServer):
+        case let .pendingInvoicesReconnecting(_, toServer):
             return toServer
-        case .subscriptionDowngradedReconnecting(_, _, _, let toServer):
+        case let .subscriptionDowngradedReconnecting(_, _, _, toServer):
             return toServer
         default:
             return nil

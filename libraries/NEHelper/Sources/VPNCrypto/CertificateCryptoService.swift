@@ -112,7 +112,7 @@ enum CertificateServiceImplementation {
                 return "Failed to parse certificate - is it a valid DER-encoded X.509 certificate?"
             case .keyExtraction:
                 return "Failed to copy public key - possible encoding issue or unsupported algorithm"
-            case .keyExport(let internalError):
+            case let .keyExport(internalError):
                 return "Failed to export public key with internal error: \(String(describing: internalError))"
             }
         }

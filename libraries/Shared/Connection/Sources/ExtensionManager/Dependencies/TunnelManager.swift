@@ -140,7 +140,7 @@ final class PacketTunnelManager: TunnelManager {
     var connectedServer: LogicalServerInfo {
         get async throws {
             let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentLogicalAndServerId)
-            guard case .ok(let data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
+            guard case let .ok(data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
                 log.error("Error decoding getCurrentLogicalAndServerId response", category: .connection)
                 throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
             }

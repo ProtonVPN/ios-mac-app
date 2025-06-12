@@ -97,7 +97,7 @@ public final class ExtensionAPIService {
 
         request(authRequest) { [weak self] result in
             switch result {
-            case .success(let refreshTokenResponse):
+            case let .success(refreshTokenResponse):
                 // This endpoint only gives us a refresh token with a limited lifetime - immediately turn around and
                 // send another request for a new access + refresh token, and store those credentials with the UID we
                 // get from this response if the second request succeeds.
@@ -116,11 +116,11 @@ public final class ExtensionAPIService {
                         self?.sessionExpired = false
                         self?.usingMainAppSessionUntilForkReceived = false
                         completionHandler(.success(()))
-                    case .failure(let error):
+                    case let .failure(error):
                         completionHandler(.failure(error))
                     }
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self?.handleRequestError(error: error, retryBlock: {
                     self?.startSession(withSelector: selector,
                                        sessionCookie: sessionCookie,
@@ -518,10 +518,10 @@ public final class ExtensionAPIService {
         }
         request(serverStatusRequest, headers: headers) { [weak self] result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 completionHandler(.success(response))
 
-            case .failure(let error):
+            case let .failure(error):
                 self?.handleRequestError(error: error,
                                          handleTokenRefresh: refreshApiTokenIfNeeded,
                                          usingCredentialsFrom: credentialContext,
@@ -573,9 +573,9 @@ public final class ExtensionAPIService {
         request(certificateRequest, headers: [(.authorization, "Bearer \(authCredentials.accessToken)"),
                                               (.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
-            case .success(let certificate):
+            case let .success(certificate):
                 completionHandler(.success(certificate))
-            case .failure(let error):
+            case let .failure(error):
                 var refreshApiTokenIfNeeded = refreshApiTokenIfNeeded
                 if credentialContext == .mainApp, self?.userInitiatedRequestHasNotYetBeenMade == false {
                     // If the app has already checked in with the extension, and we're using its credentials,
@@ -633,7 +633,7 @@ public final class ExtensionAPIService {
         }
         request(tokenRequest, headers: [(.sessionId, authCredentials.sessionId)]) { [weak self] result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 let updatedCreds = authCredentials.updatedWithAccessToken(response: response)
                 do {
                     try self?.keychain.store(updatedCreds, forContext: context)
@@ -641,7 +641,7 @@ public final class ExtensionAPIService {
                 } catch {
                     completionHandler(.failure(error))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 self?.handleRequestError(error: error,
                                          usingCredentialsFrom: context,
                                          asPartOf: operation,
@@ -676,13 +676,13 @@ enum ExtensionAPIServiceError: Error, CustomStringConvertible {
             return "API HTTP request error: \(requestErrorString ?? "(unknown)"))"
         case .noData:
             return "No data received"
-        case .parseError(let error):
+        case let .parseError(error):
             var parseErrorString: String?
             if let error = error {
                 parseErrorString = String(describing: error)
             }
             return "Parse error: \(parseErrorString ?? "(unknown)")"
-        case .networkError(let error):
+        case let .networkError(error):
             return "Network error: \(error)"
         }
     }

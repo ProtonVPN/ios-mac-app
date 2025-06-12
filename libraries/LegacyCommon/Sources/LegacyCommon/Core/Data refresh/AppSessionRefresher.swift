@@ -55,7 +55,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
             // startup we always do a full refresh.
             let n = 10
-            let shouldPerformFullRefresh = (await successfulConsecutiveSessionRefreshes.value % n) == 0
+            let shouldPerformFullRefresh = await (successfulConsecutiveSessionRefreshes.value % n) == 0
             return !shouldPerformFullRefresh
         }
     }

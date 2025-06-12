@@ -54,7 +54,7 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     }
 
     public var underlyingError: (any Error)? {
-        if case .wrapped(let error) = self {
+        if case let .wrapped(error) = self {
             return error.wrapped
         }
         return nil

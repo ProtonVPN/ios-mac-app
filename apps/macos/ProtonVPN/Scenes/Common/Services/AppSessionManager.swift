@@ -175,7 +175,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
+        if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
             assert(isFreeTierRequest == isFreeTier)
             self.serverManager.update(

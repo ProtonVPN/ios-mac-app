@@ -45,7 +45,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
         let portSelectionResult = try await portSelector.select(intent.server.endpoint, specifiedProtocol)
         try Task.checkCancellation()
 
-        guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
+        guard case let .wireGuard(transport) = portSelectionResult.chosenProtocol else {
             throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
         }
 
@@ -82,12 +82,12 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
                 throw .serverChangeUnavailable(until: date, duration: duration, exhaustedSkips: exhaustedSkips)
             }
 
-        case .gateway(let name):
+        case let .gateway(name):
             log.assertionFailure("Free user requested connection to gateway", category: .connection)
             throw .specificCountryUnavailable(countryCode: name)
 
             // Free users aren't allowed to choose an exact server.
-        case .region(let code), .exact(_, _, _, _, let code):
+        case let .region(code), let .exact(_, _, _, _, code):
             throw .specificCountryUnavailable(countryCode: code)
 
         case .secureCore:

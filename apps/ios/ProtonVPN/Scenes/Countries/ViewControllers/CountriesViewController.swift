@@ -203,28 +203,28 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {
-        case .serverGroup(let viewModel):
+        case let .serverGroup(viewModel):
             guard let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
                 return UITableViewCell()
             }
             countryCell.viewModel = viewModel
             return countryCell
 
-        case .profile(let viewModel):
+        case let .profile(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DefaultProfileTableViewCell.identifier) as? DefaultProfileTableViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = viewModel
             return cell
 
-        case .banner(let viewModel):
+        case let .banner(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerViewCell.identifier) as? BannerViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = viewModel
             return cell
 
-        case .offerBanner(let viewModel):
+        case let .offerBanner(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferBannerViewCell.identifier) as? OfferBannerViewCell else {
                 return UITableViewCell()
             }
@@ -236,17 +236,17 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {
-        case .serverGroup(let viewModel):
+        case let .serverGroup(viewModel):
             showCountry(cellModel: viewModel)
 
         case .profile:
             // Default profile cell used atm intercepts clicks and handles them inside `DefaultProfileViewModel`.
             break
 
-        case .banner(let viewModel):
+        case let .banner(viewModel):
             viewModel.action()
 
-        case .offerBanner(let viewModel):
+        case let .offerBanner(viewModel):
             @Dependency(\.sessionService) var sessionService
             Task {
                 await viewModel.action(sessionService)

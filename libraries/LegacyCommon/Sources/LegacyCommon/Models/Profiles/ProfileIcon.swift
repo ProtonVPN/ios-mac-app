@@ -43,9 +43,9 @@ public enum ProfileIcon: Codable {
             return "Image - bolt"
         case .arrowsSwapRight:
             return "Image - arrowsSwapRight"
-        case .image(let name):
+        case let .image(name):
             return "Image - \(name)"
-        case .circle(let color):
+        case let .circle(color):
             return "Color - \(String(format: "%02X", color))"
         }
     }

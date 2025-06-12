@@ -210,17 +210,17 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
                 wg_log(.error, staticMessage: "Starting tunnel failed: could not determine file descriptor")
                 errorHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
-            case .dnsResolution(let dnsErrors):
+            case let .dnsResolution(dnsErrors):
                 let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorHandler(PacketTunnelProviderError.dnsResolutionFailure)
 
-            case .setNetworkSettings(let error):
+            case let .setNetworkSettings(error):
                 wg_log(.error, message: "Starting tunnel failed with setTunnelNetworkSettings returning \(error.localizedDescription)")
                 errorHandler(PacketTunnelProviderError.couldNotSetNetworkSettings)
 
-            case .startWireGuardBackend(let errorCode):
+            case let .startWireGuardBackend(errorCode):
                 wg_log(.error, message: "Starting tunnel failed with wgTurnOn returning \(errorCode)")
                 errorHandler(PacketTunnelProviderError.couldNotStartBackend)
 
@@ -329,22 +329,22 @@ private extension WireGuardPacketTunnelProvider {
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     completionHandler?(.error(message: String(describing: error)))
                 }
             }
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     switch error {
                     case .sessionExpiredOrMissing:
                         completionHandler?(.errorSessionExpired)
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
-                    case .tooManyCertRequests(let retryAfter):
+                    case let .tooManyCertRequests(retryAfter):
                         if let retryAfter = retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {

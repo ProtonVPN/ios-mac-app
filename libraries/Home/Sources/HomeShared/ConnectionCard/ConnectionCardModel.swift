@@ -29,7 +29,7 @@ package struct ConnectionCardModel {
         switch vpnConnectionStatus {
         case .disconnected, .disconnecting:
             return Localizable.connectionCardAccessibilityLastConnectedTo(countryName)
-        case .connected(_, let actual):
+        case let .connected(_, actual):
             if let parameters = actual?.accessibilityParameters {
                 return Localizable.connectionCardAccessibilityBrowsingFromFullDetails(
                     parameters.browsingFrom,

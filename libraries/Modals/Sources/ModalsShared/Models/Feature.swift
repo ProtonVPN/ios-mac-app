@@ -93,7 +93,7 @@ extension Feature {
         switch self {
         case .streaming:
             return Localizable.modalsUpsellAllCountriesFeatureStreaming
-        case .multipleDevices(let numberOfDevices):
+        case let .multipleDevices(numberOfDevices):
             return Localizable.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
         case .blockAds:
             return Localizable.modalsUpsellNetShieldAds
@@ -135,7 +135,7 @@ extension Feature {
             return Localizable.upsellCountriesHigherSpeeds
         case .geoblockedContent:
             return Localizable.upsellCountriesGeoblockedContent
-        case .multipleCountries(let countries):
+        case let .multipleCountries(countries):
             return Localizable.upsellCountriesConnectTo(countries)
         case .moneyGuarantee:
             return Localizable.upsellCountriesMoneyBack
@@ -143,7 +143,7 @@ extension Feature {
             return Localizable.welcomeScreenFeatureServersCountries(servers, countries)
         case .welcomeAdvancedFeatures:
             return Localizable.welcomeUpgradeAdvancedFeatures
-        case .welcomeDevices(let devices):
+        case let .welcomeDevices(devices):
             return Localizable.welcomeScreenFeatureDevices(devices)
         case .banner:
             return nil

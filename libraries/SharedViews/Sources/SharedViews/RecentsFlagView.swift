@@ -44,17 +44,17 @@ public struct FlagView: View {
 
     public var body: some View {
         switch flagComposition {
-        case .standard(let flag):
+        case let .standard(flag):
             SimpleFlagView(regionCode: flag.imageName, flagSize: flagSize)
 
-        case .withCurve(let flag):
+        case let .withCurve(flag):
             SecureCoreFlagView(
                 regionCode: flag.imageName,
                 viaRegionCode: nil,
                 flagSize: flagSize
             )
 
-        case .stacked(let bottom, let top):
+        case let .stacked(bottom, top):
             SecureCoreFlagView(
                 regionCode: top.imageName,
                 viaRegionCode: bottom.imageName,
@@ -104,7 +104,7 @@ extension ConnectionSpec.Location {
         case .gateway:
             return .standard(.gateway)
 
-        case .region(let regionCode), .exact(_, _, _, _, let regionCode):
+        case let .region(regionCode), let .exact(_, _, _, _, regionCode):
             return .standard(.country(code: regionCode))
 
         case .secureCore(.fastest):
@@ -113,10 +113,10 @@ extension ConnectionSpec.Location {
         case .secureCore(.random):
             return .withCurve(.random)
 
-        case .secureCore(.fastestHop(let regionCode)):
+        case let .secureCore(.fastestHop(regionCode)):
             return .withCurve(.country(code: regionCode))
 
-        case .secureCore(.hop(let toRegionCode, let viaRegionCode)):
+        case let .secureCore(.hop(toRegionCode, viaRegionCode)):
             return .stacked(bottom: .country(code: viaRegionCode), top: .country(code: toRegionCode))
         }
     }

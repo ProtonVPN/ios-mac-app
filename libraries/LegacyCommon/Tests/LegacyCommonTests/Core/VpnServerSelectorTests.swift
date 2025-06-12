@@ -176,7 +176,7 @@ class VpnServerSelectorTests: XCTestCase {
         let currentUserTier = 3
         let type = ServerType.unspecified
 
-        let specifiedServer = ServerModel(server: try XCTUnwrap(servers["DE2"]))
+        let specifiedServer = try ServerModel(server: XCTUnwrap(servers["DE2"]))
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(specifiedServer)), connectionProtocol: connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, profileName: nil, trigger: nil)
 
         let server = selectServer(

@@ -236,7 +236,7 @@ final class SettingsAccountViewModel {
                 switch result {
                 case .success:
                     self?.handleAccountDeletionSuccess()
-                case .failure(let error):
+                case let .failure(error):
                     self?.handleAccountDeletionFailure(error)
                 }
             })

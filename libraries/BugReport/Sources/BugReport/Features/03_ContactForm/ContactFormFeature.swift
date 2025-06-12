@@ -163,11 +163,11 @@ struct ContactFormFeature: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .fieldStringValueChanged(let field, let newValue):
+            case let .fieldStringValueChanged(field, newValue):
                 state.fields[id: field.id]?.stringValue = newValue
                 return .none
 
-            case .fieldBoolValueChanged(let field, let newValue):
+            case let .fieldBoolValueChanged(field, newValue):
                 state.fields[id: field.id]?.boolValue = newValue
                 return .none
 
@@ -181,7 +181,7 @@ struct ContactFormFeature: Reducer {
                     }))
                 }
 
-            case .sendResponseReceived(let response):
+            case let .sendResponseReceived(response):
                 state.isSending = false
                 state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil )
                 return .none
@@ -211,7 +211,7 @@ struct ContactFormFeature: Reducer {
 
 fileprivate extension TaskResult<Bool> {
     var errorOrNil: Error? {
-        if case TaskResult.failure(let error) = self {
+        if case let TaskResult.failure(error) = self {
             return error
         }
         return nil

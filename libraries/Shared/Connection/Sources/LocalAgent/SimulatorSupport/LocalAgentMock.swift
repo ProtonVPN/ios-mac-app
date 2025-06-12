@@ -91,11 +91,11 @@ final class LocalAgentMock: LocalAgent {
     func simulate(event: LocalAgentEvent) {
         // Special handling of events
         switch event {
-        case .state(let state):
+        case let .state(state):
             self.state = state
             // assigning to state already yields the value - no need to yield here
 
-        case .features(let features):
+        case let .features(features):
             self.netShieldType = features.netshield
             streamTuple?.continuation.yield(event)
 
@@ -135,7 +135,7 @@ enum NetShieldStatsBehaviour {
                 trackersBlocked: .random(in: 0...100),
                 bytesSaved: .random(in: 0...100)
             )
-        case .constant(let value):
+        case let .constant(value):
             return value
         }
     }

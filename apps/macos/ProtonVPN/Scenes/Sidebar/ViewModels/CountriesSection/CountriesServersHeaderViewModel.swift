@@ -90,7 +90,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             return
         }
 
-        guard case .country(let code) = kind,
+        guard case let .country(code) = kind,
               !propertiesManager.secureCoreToggle,
               tier.isPaidTier,
               let streamServicesDict = propertiesManager.streamingServices[code],

@@ -106,7 +106,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ cellVM: CellModel, isHeaderWithTitle title: String) {
-        guard case .header(let headerVM) = cellVM else {
+        guard case let .header(headerVM) = cellVM else {
             XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
             return
         }
@@ -114,7 +114,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ cellVM: CellModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case .country(let groupVM) = cellVM else {
+        guard case let .country(groupVM) = cellVM else {
             XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
             return
         }

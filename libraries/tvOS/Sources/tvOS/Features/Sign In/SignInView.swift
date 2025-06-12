@@ -42,7 +42,7 @@ struct SignInView: View {
                 StepView(title: "When asked for your verification code, enter (retrieving...)",
                          accent: nil,
                          stepNumber: 3)
-            case .waitingForAuthentication(let code, _):
+            case let .waitingForAuthentication(code, _):
                 StepView(title: "When asked for your verification code, enter",
                          accent: "\(code.userFacingUserCode)",
                          stepNumber: 3)

@@ -40,7 +40,7 @@ struct SidebarReducer: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .home(.connect(let specs)):
+            case let .home(.connect(specs)):
                 return .run { _ in
                     @Dependency(\.connectToVPN) var connectToVPN
                     try? await connectToVPN(specs)

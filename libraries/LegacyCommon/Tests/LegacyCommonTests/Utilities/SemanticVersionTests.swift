@@ -31,27 +31,27 @@ class SemanticVersionTests: XCTestCase {
     }
     
     func testEquality() throws {
-        XCTAssertTrue(try SemanticVersion("1.2.3") > (try SemanticVersion("1.2.2")))
-        XCTAssertTrue(try SemanticVersion("1.2.3") < (try SemanticVersion("2.0.0")))
-        XCTAssertTrue(try SemanticVersion("1.2.3") == (try SemanticVersion("1.2.3")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") > (SemanticVersion("1.2.2")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") < (SemanticVersion("2.0.0")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") == (SemanticVersion("1.2.3")))
     }
     
     func testPreRelease() throws {
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (try SemanticVersion("1.2.2-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (try SemanticVersion("2.0.0-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") == (try SemanticVersion("1.2.3-beta")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (SemanticVersion("1.2.2-beta")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (SemanticVersion("2.0.0-beta")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") == (SemanticVersion("1.2.3-beta")))
         
-        XCTAssertTrue(try SemanticVersion("1.2.3") > (try SemanticVersion("1.2.3-beta")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (try SemanticVersion("1.2.3")))
-        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (try SemanticVersion("1.2.3-alpha")))
+        XCTAssertTrue(try SemanticVersion("1.2.3") > (SemanticVersion("1.2.3-beta")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") < (SemanticVersion("1.2.3")))
+        XCTAssertTrue(try SemanticVersion("1.2.3-beta") > (SemanticVersion("1.2.3-alpha")))
         
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha") < (try SemanticVersion("1.0.0-alpha.1")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.1") < (try SemanticVersion("1.0.0-alpha.beta")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.beta") < (try SemanticVersion("1.0.0-beta")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-beta") < (try SemanticVersion("1.0.0-beta.2")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha") < (SemanticVersion("1.0.0-alpha.1")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.1") < (SemanticVersion("1.0.0-alpha.beta")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-alpha.beta") < (SemanticVersion("1.0.0-beta")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-beta") < (SemanticVersion("1.0.0-beta.2")))
 //        XCTAssertTrue(try SemanticVersion("1.0.0-beta.2") < (try SemanticVersion("1.0.0-beta.11"))) // Doesn't work
-        XCTAssertTrue(try SemanticVersion("1.0.0-beta.11") < (try SemanticVersion("1.0.0-rc.1")))
-        XCTAssertTrue(try SemanticVersion("1.0.0-rc.1") < (try SemanticVersion("1.0.0")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-beta.11") < (SemanticVersion("1.0.0-rc.1")))
+        XCTAssertTrue(try SemanticVersion("1.0.0-rc.1") < (SemanticVersion("1.0.0")))
     }
     
     // MARK: - Comparing strings directly

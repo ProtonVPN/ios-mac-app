@@ -63,7 +63,7 @@ enum DefaultConnectionResolverImplementation {
             }
             return mostRecent.connection
 
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }

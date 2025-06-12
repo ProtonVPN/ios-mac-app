@@ -114,11 +114,11 @@ extension LocalAgentFeatures {
 
     func set(feature: ConnectionFeatureChange.AgentFeature) {
         switch feature {
-        case .moderateNAT(let value):
+        case let .moderateNAT(value):
             setBool(Keys.natType.rawValue, value: value.flag)
-        case .netShield(let netShieldType):
+        case let .netShield(netShieldType):
             setInt(Keys.netShield.rawValue, value: Int64(netShieldType.rawValue))
-        case .vpnAccelerator(let value):
+        case let .vpnAccelerator(value):
             setBool(Keys.vpnAccelerator.rawValue, value: value)
         }
     }
@@ -163,7 +163,7 @@ extension LAConnectionCreationError: ProtonVPNError {
         switch self {
         case .connectionObjectMissing:
             return "LACO"
-        case .goTLSError(let goTLSError, _):
+        case let .goTLSError(goTLSError, _):
             return goTLSError.charCode
         case .unknownError:
             return "LACU"
@@ -172,10 +172,10 @@ extension LAConnectionCreationError: ProtonVPNError {
 
     public var underlyingError: (any Error)? {
         switch self {
-        case .goTLSError(_, let underlyingError):
+        case let .goTLSError(_, underlyingError):
             return underlyingError
 
-        case .unknownError(let error):
+        case let .unknownError(error):
             return error
 
         case .connectionObjectMissing:

@@ -784,7 +784,7 @@ final class ConnectionFeatureTests: XCTestCase {
         strict: Bool = true
     ) -> (ConnectionFeature.Action) -> Bool {
         return { action in
-            guard case .delegate(.stateChanged(let state)) = action else {
+            guard case let .delegate(.stateChanged(state)) = action else {
                 return false
             }
             if state.is(expectedState) {

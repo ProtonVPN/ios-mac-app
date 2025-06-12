@@ -95,7 +95,7 @@ public struct ProtocolSettingsFeature: Reducer {
             }
             return .none
 
-        case .reconnectionAlert(.presented(.reconnectWith(let `protocol`))):
+        case let .reconnectionAlert(.presented(.reconnectWith(`protocol`))):
             // This may require a blocking interface to at least disconnecting (maybe also connecting)
             return .run { send in
                 // let status = await connectionStatus()

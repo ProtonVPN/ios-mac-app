@@ -31,7 +31,7 @@ struct UserDefaultsClient: DependencyKey, Sendable {
                 .sorted { $0.key < $1.key }
         },
         reset: {
-            try getUserDefaults().removePersistentDomain(forName: try getSuiteName())
+            try getUserDefaults().removePersistentDomain(forName: getSuiteName())
         }
     )
 

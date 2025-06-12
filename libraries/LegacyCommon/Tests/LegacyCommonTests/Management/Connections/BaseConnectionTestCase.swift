@@ -175,7 +175,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         }
 
         switch providerRequest {
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             guard !mockProviderState.needNewSession else {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
             }
@@ -242,7 +242,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
                 return "certificate refresh"
             case .alertDisplayed:
                 return "alert displayed"
-            case .custom(let name):
+            case let .custom(name):
                 return name
             }
         }

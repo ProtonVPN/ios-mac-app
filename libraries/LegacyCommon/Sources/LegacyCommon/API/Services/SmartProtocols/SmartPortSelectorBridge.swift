@@ -31,7 +31,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
         switch vpnProtocol {
-        case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
+        case let .wireGuard(transportProtocol): // Ping all the ports to determine which are available
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
                 let ports = portOverrides ?? wireguardTcpChecker.defaultPorts

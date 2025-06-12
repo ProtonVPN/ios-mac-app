@@ -123,9 +123,9 @@ extension ServerGroupInfo.Kind {
     /// Convert Kind of server group into a filter for repository
     public var serverTypeFilter: VPNServerFilter.ServerTypeFilter {
         switch self {
-        case .country(let code):
+        case let .country(code):
             return .country(code: code)
-        case .gateway(let name):
+        case let .gateway(name):
             return .gateway(name: name)
         }
     }
@@ -142,27 +142,27 @@ public enum VPNServerGroupOrder {
 extension VPNServerFilter: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .logicalID(let logicalID):
+        case let .logicalID(logicalID):
             return "|logical=\(logicalID)"
-        case .entryCountryCode(let code):
+        case let .entryCountryCode(code):
             return "|entry=\(code)"
-        case .exitCountryCode(let code):
+        case let .exitCountryCode(code):
             return "|exit=\(code)"
-        case .tier(let tierFilter):
+        case let .tier(tierFilter):
             return tierFilter.description
-        case .features(let featureFilter):
+        case let .features(featureFilter):
             return featureFilter.description
         case .isNotUnderMaintenance:
             return "|notMaintenance"
-        case .supports(let vpnProtocols):
+        case let .supports(vpnProtocols):
             return "|protocols:[\(vpnProtocols)]"
-        case .kind(let serverKind):
+        case let .kind(serverKind):
             return serverKind.description
-        case .city(let city):
+        case let .city(city):
             return "|city=\(city)"
-        case .name(let name):
+        case let .name(name):
             return "|name=\(name)"
-        case .matches(let match):
+        case let .matches(match):
             return "|search=\(match)"
         }
     }
@@ -171,9 +171,9 @@ extension VPNServerFilter: CustomStringConvertible {
 extension VPNServerFilter.ServerTierFilter: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .max(let tier):
+        case let .max(tier):
             return "|maxTier=\(tier)"
-        case .exact(let tier):
+        case let .exact(tier):
             return "|tier=\(tier)"
         }
     }
@@ -188,12 +188,12 @@ extension VPNServerFilter.ServerFeatureFilter: CustomStringConvertible {
 extension VPNServerFilter.ServerTypeFilter: CustomStringConvertible {
     public var description: String {
         switch self {
-        case .country(let countryCode):
+        case let .country(countryCode):
             guard let countryCode else {
                 return "|countries"
             }
             return "|country=\(countryCode)"
-        case .gateway(let gatewayName):
+        case let .gateway(gatewayName):
             guard let gatewayName else {
                 return "|gateways"
             }

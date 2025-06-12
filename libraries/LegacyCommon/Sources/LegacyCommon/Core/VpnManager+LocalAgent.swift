@@ -69,7 +69,7 @@ extension VpnManager {
         // load last authentication data (that should be available)
         vpnAuthentication.loadAuthenticationData { [weak self] result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Failed to initialize local agent because of missing authentication data",
                           category: .localAgent, event: .error, metadata: ["error": .string(.init(describing: error))])
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {
@@ -79,7 +79,7 @@ extension VpnManager {
                 switch remoteClientError {
                 case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                case .tooManyCertRequests(let retryAfter):
+                case let .tooManyCertRequests(retryAfter):
                     self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case let .success(data):
@@ -119,7 +119,7 @@ extension VpnManager {
                     switch remoteClientError {
                     case .needNewKeys:
                         self?.reconnectWithNewKeyAndCertificate()
-                    case .tooManyCertRequests(let retryAfter):
+                    case let .tooManyCertRequests(retryAfter):
                         self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                     }
                     return
@@ -338,7 +338,7 @@ extension VpnManager: LocalAgentDelegate {
         // If features are different from the ones we have in current certificate, refresh it
         vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Failed to refresh certificate in local agent after receiving features",
                           category: .localAgent, event: .error,
                           metadata: ["error": .string(.init(describing: error))])
@@ -351,7 +351,7 @@ extension VpnManager: LocalAgentDelegate {
                 switch remoteClientError {
                 case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                case .tooManyCertRequests(let retryAfter):
+                case let .tooManyCertRequests(retryAfter):
                     self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case .success:

@@ -315,7 +315,7 @@ class ConnectingOverlayViewModel {
                 return // prevents misleading UI updates
             }
             
-            if case AppState.aborted(let userInitiated) = state, !userInitiated {
+            if case let AppState.aborted(userInitiated) = state, !userInitiated {
                 self?.timedOut = true
             }
             

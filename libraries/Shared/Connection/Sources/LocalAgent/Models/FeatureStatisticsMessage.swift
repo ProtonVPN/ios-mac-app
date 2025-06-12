@@ -39,11 +39,11 @@ extension FeatureStatisticsMessage {
             throw LocalAgentMessageDecodingError.missingRequiredValue(key: statsKey)
         }
 
-        self.init(netShield: .init(
+        try self.init(netShield: .init(
             malwareBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsMalwareKey),
             adsBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsAdsKey),
             trackersBlocked: netShieldDictionary.int(forKey: localAgentConsts.statsTrackerKey),
-            bytesSaved: try netShieldDictionary.intOrThrow(forKey: localAgentConsts.statsSavedBytesKey)
+            bytesSaved: netShieldDictionary.intOrThrow(forKey: localAgentConsts.statsSavedBytesKey)
         ))
     }
 }

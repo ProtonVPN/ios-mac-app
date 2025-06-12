@@ -48,7 +48,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         let legacyServer = Server(logical: legacyLogical, endpoint: legacyEndpoint)
         let legacyFeatures = lastWGConfig.ports
 
-        guard case .wireGuard(let transport) = lastWGConfig.vpnProtocol else {
+        guard case let .wireGuard(transport) = lastWGConfig.vpnProtocol else {
             throw LegacyIntentRetrievalFailure.unexpectedProtocol(lastWGConfig.vpnProtocol)
         }
         // TunnelFeatures are not currently used by a consumer of `getConnectionIntent`

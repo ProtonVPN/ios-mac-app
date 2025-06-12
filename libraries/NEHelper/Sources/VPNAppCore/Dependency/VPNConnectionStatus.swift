@@ -42,7 +42,7 @@ public enum VPNConnectionStatus: Equatable, Codable {
     case disconnecting(ConnectionSpec, VPNConnectionActual?)
 
     public var server: Server? {
-        if case .connecting(_, let server) = self {
+        if case let .connecting(_, server) = self {
             return server
         }
         return actual?.server
@@ -52,9 +52,9 @@ public enum VPNConnectionStatus: Equatable, Codable {
         switch self {
         case .disconnected:
             return nil
-        case .connected(_, let vpnConnectionActual),
-                .resolving(_, let vpnConnectionActual),
-                .disconnecting(_, let vpnConnectionActual):
+        case let .connected(_, vpnConnectionActual),
+                let .resolving(_, vpnConnectionActual),
+                let .disconnecting(_, vpnConnectionActual):
             return vpnConnectionActual
         case .connecting:
             return nil
@@ -65,10 +65,10 @@ public enum VPNConnectionStatus: Equatable, Codable {
         switch self {
         case .disconnected, .resolving(.none, _):
             return nil
-        case .connected(let spec, _),
-                .connecting(let spec, _),
-                .resolving(.some(let spec), _),
-                .disconnecting(let spec, _):
+        case let .connected(spec, _),
+                let .connecting(spec, _),
+                let .resolving(.some(spec), _),
+                let .disconnecting(spec, _):
             return spec
         }
     }

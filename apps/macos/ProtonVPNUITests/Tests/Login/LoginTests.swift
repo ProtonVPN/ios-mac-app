@@ -94,9 +94,9 @@ class LoginTests: ProtonVPNUITests {
             
         loginRobot
             .loginUser(credentials: twofausercredentials[0])
-        twoFaRobot
+        await twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: await GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
+            .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFASecurityKey))
         
         waitForLoaderDisappear()
         
@@ -110,9 +110,9 @@ class LoginTests: ProtonVPNUITests {
             
         loginRobot
             .loginUser(credentials: twopasstwofausercredentials[0])
-        twoFaRobot
+        await twoFaRobot
             .verify.twoFaAuthenticationIsShown()
-            .fillTwoFACode(code: await GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
+            .fillTwoFACode(code: GenerateTwoFaCode.generateCodeFor2FAUser(ObfuscatedConstants.twoFAandTwoPassSecurityKey))
         
         waitForLoaderDisappear()
         

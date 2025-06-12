@@ -134,7 +134,7 @@ public struct ConnectionStatusFeature {
                 }
                 return .merge(effects)
 
-            case .newConnectionStatus(let status):
+            case let .newConnectionStatus(status):
                 let code = state.userCountry
                 let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
@@ -143,7 +143,7 @@ public struct ConnectionStatusFeature {
                 let protectionState = status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
                 return .send(.newProtectionState(protectionState))
 
-            case .newProtectionState(let protectionState):
+            case let .newProtectionState(protectionState):
                 // let's check that we're not already masking location twice with same data
                 // THIS is a workaround... proper solution should make sure we're no receiving twice the same action
                 // with same data ?!
@@ -165,13 +165,13 @@ public struct ConnectionStatusFeature {
                     return .cancel(id: IDs.maskLocationTimer)
                 }
 
-            case .newNetShieldStats(let netShieldModel):
+            case let .newNetShieldStats(netShieldModel):
                 withOptionalAnimation {
                     state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
                 }
                 return .none
 
-            case .stickToTop(let stickToTop):
+            case let .stickToTop(stickToTop):
                 return .none // Revisit sticking to top when possible to fix this issue VPNAPPL-2539
                 guard state.stickToTop != stickToTop else { return .none }
                 state.stickToTop = stickToTop

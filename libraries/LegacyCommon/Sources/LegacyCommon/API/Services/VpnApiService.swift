@@ -88,8 +88,8 @@ public class VpnApiService {
         let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
         let asyncCredentials = try await clientCredentials()
 
-        return await VpnProperties(
-            serverInfo: try serverInfo(
+        return try await VpnProperties(
+            serverInfo: serverInfo(
                 ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: asyncLocation?.country,
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
@@ -110,8 +110,8 @@ public class VpnApiService {
             return nil
         }
 
-        return await (
-            serverInfo: try serverInfo(
+        return try await (
+            serverInfo: serverInfo(
                 ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: location?.country,
                 freeTier: freeTier
@@ -191,11 +191,11 @@ public class VpnApiService {
             defer { completion(result) }
 
             switch response {
-            case .success(.notModified(let lastModified)):
+            case let .success(.notModified(lastModified)):
                 log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(optional: lastModified)"])
                 result = .success(.notModified(since: lastModified))
 
-            case .success(.modified(let lastModified, let json)):
+            case let .success(.modified(lastModified, json)):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
                     log.error("'Servers' field not present in server info request's response", category: .api, event: .response)
                     let error = ParseError.serverParse
@@ -206,7 +206,7 @@ public class VpnApiService {
                 var serverModels: [ServerModel] = []
                 for json in serversJson {
                     do {
-                        serverModels.append(try ServerModel(dic: json))
+                        try serverModels.append(ServerModel(dic: json))
                     } catch {
                         log.error("Failed to parse server info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
                     }

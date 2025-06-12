@@ -93,9 +93,9 @@ extension OnboardingModuleService: OnboardingService {
             self.postOnboardingAction()
         } onFeatureUpdate: { feature in
             switch feature {
-            case .toggle(.statistics, _, _, let state):
+            case let .toggle(.statistics, _, _, state):
                 self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
-            case .toggle(.crashes, _, _, let state):
+            case let .toggle(.crashes, _, _, state):
                 self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")

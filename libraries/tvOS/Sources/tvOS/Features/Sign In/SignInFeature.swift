@@ -61,7 +61,7 @@ struct SignInFeature {
                 return .run { send in await send(.codeFetchingFinished(Result { try await networkClient.fetchSignInCode() })) }
 
             case .pollServer:
-                guard case .waitingForAuthentication(let code, let remainingAttempts) = state.authentication else {
+                guard case let .waitingForAuthentication(code, remainingAttempts) = state.authentication else {
                     return .cancel(id: CancelID.timer)
                 }
                 if remainingAttempts <= 0 {
@@ -74,7 +74,7 @@ struct SignInFeature {
                 state.authentication = .waitingForAuthentication(code: code, remainingAttempts: remainingAttempts - 1)
                 return .run { send in await send(.authenticationFinished(Result { try await networkClient.forkedSession(code.selector) })) }
 
-            case .codeFetchingFinished(.success(let response)):
+            case let .codeFetchingFinished(.success(response)):
                 state.authentication = .waitingForAuthentication(code: response, remainingAttempts: pollConfiguration.failAfterAttempts)
                 return .run { send in
                     try await clock.sleep(for: pollConfiguration.delayBeforePollingStarts)
@@ -83,12 +83,12 @@ struct SignInFeature {
                 }
                 .cancellable(id: CancelID.timer, cancelInFlight: true)
 
-            case .codeFetchingFinished(.failure(let error)):
+            case let .codeFetchingFinished(.failure(error)):
                 // Parent feature should pop this view and show an error alert.
                 log.error("Failed to fetch sign-in code \(error)")
                 return .none
 
-            case .authenticationFinished(.success(.authenticated(let response))):
+            case let .authenticationFinished(.success(.authenticated(response))):
                 let credentials = AuthCredentials(from: response)
                 return .send(.signInFinished(.success(credentials)))
 

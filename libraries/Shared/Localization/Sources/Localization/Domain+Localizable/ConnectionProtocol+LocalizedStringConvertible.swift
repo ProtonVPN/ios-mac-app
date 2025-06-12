@@ -37,7 +37,7 @@ extension VpnProtocol: LocalizedStringConvertible {
         switch self {
         case .ike:
             string = Localizable.ikev2
-        case .openVpn(let transportProtocol):
+        case let .openVpn(transportProtocol):
             string = Localizable.openvpn
             switch transportProtocol {
             case .tcp:
@@ -45,7 +45,7 @@ extension VpnProtocol: LocalizedStringConvertible {
             case .udp:
                 string += " (\(Localizable.udp))"
             }
-        case .wireGuard(let transportProtocol):
+        case let .wireGuard(transportProtocol):
             string = Localizable.wireguard
             switch transportProtocol {
             case .udp:

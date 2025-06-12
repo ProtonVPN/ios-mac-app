@@ -73,7 +73,7 @@ extension ConnectTableViewCellMode {
 
     var image: UIImage? {
         switch self {
-        case .connect(let image):
+        case let .connect(image):
             return image
         case .upgrade:
             return nil
@@ -84,7 +84,7 @@ extension ConnectTableViewCellMode {
         switch self {
         case .connect:
             return nil
-        case .upgrade(let text):
+        case let .upgrade(text):
             let attributes: [NSAttributedString.Key: UIFont] = [.font: .systemFont(ofSize: 13)]
             return NSAttributedString(string: text, attributes: attributes)
         }

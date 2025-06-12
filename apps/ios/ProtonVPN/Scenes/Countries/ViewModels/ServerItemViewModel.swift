@@ -66,8 +66,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             if let activeConnection = vpnGateway.lastConnectionRequest,
                vpnGateway.connection == .connecting,
-               case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
-               case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
+               case let ConnectionRequestType.country(_, countryRequestType) = activeConnection.connectionType,
+               case let CountryConnectionRequestType.server(activeServer) = countryRequestType,
                activeServer.id == serverModel.logical.id {
                 return true
             }

@@ -67,19 +67,19 @@ struct UpsellFeature {
                     await send(.finishedLoadingProducts(Result { try await client.getOptions() }))
                 }
 
-            case .finishedLoadingProducts(.success(let planOptions)):
+            case let .finishedLoadingProducts(.success(planOptions)):
                 let sortedPlanOptions = planOptions
                     .sorted(by: { $0.planOption.duration.months > $1.planOption.duration.months })
                 state = .loaded(planOptions: sortedPlanOptions, purchaseInProgress: false)
                 return .none
 
-            case .finishedLoadingProducts(.failure(let error)):
+            case let .finishedLoadingProducts(.failure(error)):
                 log.error("Failed to load products with error: \(error)")
                 return .run { send in
                     await alertService.feed(error)
                 }
 
-            case .event(let result):
+            case let .event(result):
                 log.info("Finished processing payment with result: \(result)")
 
                 // Purchase results processed here are not user initiated,
@@ -96,18 +96,18 @@ struct UpsellFeature {
                     setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
                     return .none
 
-                case .failure(let error):
+                case let .failure(error):
                     setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
                     return .run { _ in await alertService.feed(error) }
                 }
 
-            case .attemptPurchase(let option):
+            case let .attemptPurchase(option):
                 setPurchaseInProgress(true, state: &state)
                 return .run { send in
-                    await send(.finishedPurchasing(await client.attemptPurchase(option)))
+                    await send(.finishedPurchasing(client.attemptPurchase(option)))
                 }
 
-            case .finishedPurchasing(.purchasedPlan(let plan)):
+            case let .finishedPurchasing(.purchasedPlan(plan)):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
 
@@ -116,16 +116,16 @@ struct UpsellFeature {
                 setPurchaseInProgress(false, state: &state)
                 return .none
 
-            case .finishedPurchasing(.planPurchaseProcessingInProgress(let plan)):
+            case let .finishedPurchasing(.planPurchaseProcessingInProgress(plan)):
                 log.debug("Purchasing \(plan.protonName)", category: .iap)
                 return .none
 
-            case .finishedPurchasing(.purchaseError(let error, _)):
+            case let .finishedPurchasing(.purchaseError(error, _)):
                 log.error("Purchase failed: \(error)")
                 setPurchaseInProgress(false, state: &state)
                 return .run { _ in await alertService.feed(error) }
 
-            case .finishedPurchasing(.apiMightBeBlocked(let message, let originalError, _)):
+            case let .finishedPurchasing(.apiMightBeBlocked(message, originalError, _)):
                 log.error("Purchase failed: \(message)")
                 setPurchaseInProgress(false, state: &state)
                 return .run { _ in await alertService.feed(originalError) }
@@ -138,11 +138,11 @@ struct UpsellFeature {
                 log.assertionFailure("Unsupported result: \(PurchaseResult.toppedUpCredits)")
                 return .none
 
-            case .finishedPurchasing(.planAlreadyPurchased(let error)):
+            case let .finishedPurchasing(.planAlreadyPurchased(error)):
                 log.error("Plan already purchased", category: .iap, metadata: ["error": "\(error)"])
                 return .none
 
-            case .pollTierUpdate(let remainingAttempts):
+            case let .pollTierUpdate(remainingAttempts):
                 guard remainingAttempts > 0 else {
                     // Purchase went through, but tier has not been updated on BE in sufficient time
                     setPurchaseInProgress(false, state: &state)
@@ -157,11 +157,11 @@ struct UpsellFeature {
                     ))
                 }
 
-            case .finishedPollingTierUpdate(let result):
-                if case .success(let tier) = result.tierResult, tier > 0 {
+            case let .finishedPollingTierUpdate(result):
+                if case let .success(tier) = result.tierResult, tier > 0 {
                     log.info("Upsell complete. Tier: \(tier)")
                     return .send(.upsold(tier: tier))
-                } else if case .failure(let error) = result.tierResult {
+                } else if case let .failure(error) = result.tierResult {
                     log.error("Failed to fetch tier information with error: \(error)")
                 }
                 return .run { send in
@@ -180,7 +180,7 @@ struct UpsellFeature {
 
     /// After we've loaded products, this function toggles the `purchaseInProgress` flag with some extra assertions
     private func setPurchaseInProgress(_ purchaseInProgress: Bool, state: inout State, shouldAssertLoading: Bool = true) {
-        guard case .loaded(let planOptions, let currentPurchaseInProgress) = state else {
+        guard case let .loaded(planOptions, currentPurchaseInProgress) = state else {
             assertionFailure("Cannot toggle purchase in progress while still loading")
             return
         }
@@ -212,10 +212,10 @@ extension ProcessCompletionResult {
                 .finished(.withPurchaseAlreadyProcessed):
             return .success(true)
 
-        case .errored(let error):
+        case let .errored(error):
             return .failure(error)
 
-        case .erroredWithUnspecifiedError(let error):
+        case let .erroredWithUnspecifiedError(error):
             return .failure(error)
 
         case .finished(.withoutIAP),

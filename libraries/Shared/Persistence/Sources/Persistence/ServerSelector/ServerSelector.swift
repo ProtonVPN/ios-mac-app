@@ -178,11 +178,11 @@ extension Array<ServerInfo> {
 extension VPNServerFilter {
     func allows(_ info: ServerInfo) -> Bool {
         switch self {
-        case .features(let filter):
+        case let .features(filter):
             let hasAllRequiredFeatures = info.logical.feature.intersection(filter.required) == filter.required
             let hasNoExcludedFeatures = info.logical.feature.intersection(filter.excluded).isEmpty
             return hasAllRequiredFeatures && hasNoExcludedFeatures
-        case .supports(let vpnProtocol):
+        case let .supports(vpnProtocol):
             return info.protocolSupport.contains(vpnProtocol)
         case .isNotUnderMaintenance:
             return !info.logical.isUnderMaintenance
@@ -254,22 +254,22 @@ extension ConnectionSpec {
         case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
             return []
 
-        case .region(let code):
+        case let .region(code):
             return [.exitCountryCode(code)]
 
-        case .gateway(let name):
+        case let .gateway(name):
             return [.kind(.gateway(name: name))]
 
-        case .exact(_, let logicalID, let number, let subRegion, let region):
+        case let .exact(_, logicalID, number, subRegion, region):
             return logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),
                 subRegion.map(VPNServerFilter.city)
             ].compactMap { $0 }
 
-        case .secureCore(.fastestHop(let to)):
+        case let .secureCore(.fastestHop(to)):
             return [.exitCountryCode(to)]
 
-        case .secureCore(.hop(let to, let via)):
+        case let .secureCore(.hop(to, via)):
             return [.exitCountryCode(to), .entryCountryCode(via)]
         }
     }

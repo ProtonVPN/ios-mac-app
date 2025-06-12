@@ -130,7 +130,7 @@ enum MessageHandler {
         case .getCurrentLogicalAndServerId:
             return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             @Dependency(\.date) var date
             @Dependency(\.vpnAuthenticationStorage) var keychain
             let tomorrow = date.now.addingTimeInterval(.days(1))

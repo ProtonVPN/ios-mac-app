@@ -29,7 +29,7 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
         var configData = Data([UInt8(version.rawValue)])
         do {
             let encoder = JSONEncoder()
-            configData.append(try encoder.encode(storedConfig))
+            try configData.append(encoder.encode(storedConfig))
         } catch {
             log.assertionFailure("Couldn't encode wireguard config: \(error)")
             completionHandler(protocolConfig)

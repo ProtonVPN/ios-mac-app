@@ -67,7 +67,7 @@ extension VpnKeychainProtocol {
         do {
             return try credentialsProvider()
         } catch {
-            if let keychainError = error as? KeychainError, case .credentialsMissing(let key) = keychainError {
+            if let keychainError = error as? KeychainError, case let .credentialsMissing(key) = keychainError {
                 log.debug("Credentials missing from vpn keychain", metadata: ["storageKey": "\(key)"])
                 return nil
             }

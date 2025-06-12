@@ -49,10 +49,10 @@ struct UserDefaultsDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let entries):
+        case let .loaded(entries):
             defaultsList(entries: entries)
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")
@@ -77,16 +77,16 @@ struct UserDefaultsDebugView: View {
 
     private func textValue(forEntry entry: UserDefaultsEntry) -> String {
         switch entry.value {
-        case .bool(let boolValue):
+        case let .bool(boolValue):
             return String(boolValue)
 
-        case .data(let data):
+        case let .data(data):
             return "Data(\(data.count) bytes)"
 
-        case .int(let intValue):
+        case let .int(intValue):
             return String(intValue)
 
-        case .string(let string), .utf8(let string), .unknown(let string):
+        case let .string(string), let .utf8(string), let .unknown(string):
             return string.count > 80 ? string.prefix(80) + "..." : string
         }
     }

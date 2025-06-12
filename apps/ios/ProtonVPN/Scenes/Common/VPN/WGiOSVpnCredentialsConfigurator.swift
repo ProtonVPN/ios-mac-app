@@ -29,7 +29,7 @@ final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
 
         do {
             var configData = Data([UInt8(version.rawValue)])
-            configData.append(try encoder.encode(storedConfig))
+            try configData.append(encoder.encode(storedConfig))
 
             protocolConfig.passwordReference = try vpnKeychain
                 .store(wireguardConfiguration: configData)

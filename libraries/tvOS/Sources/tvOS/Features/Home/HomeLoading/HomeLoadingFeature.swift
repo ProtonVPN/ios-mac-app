@@ -48,7 +48,7 @@ struct HomeLoadingFeature {
             case .startLoading:
                 state = .loading
                 return .none
-            case .finishedLoading(let result):
+            case let .finishedLoading(result):
                 switch result {
                 case .success:
                     state = .loaded(.init())

@@ -104,7 +104,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
-            case .setFeatures(let featureSet):
+            case let .setFeatures(featureSet):
                 guard case .connected = state else {
                     log.error("Feature changes will not be applied since we are not in connected state", category: .connection, metadata: ["state": "\(state)"])
                     return .none
@@ -116,7 +116,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 localAgent.set(features: features)
                 return .none
 
-            case .connect(let server, let authenticationData, let features):
+            case let .connect(server, authenticationData, features):
                 let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
                 do throws(LAConnectionCreationError) {
                     // Not a blocking call. Creates the connection to the Local Agent server
@@ -132,7 +132,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     return .send(.delegate(.connectionFailed(error)))
                 }
 
-            case .disconnect(let error):
+            case let .disconnect(error):
                 guard state.shouldTransitionToDisconnecting else { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
@@ -201,7 +201,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
                 return .none
 
-            case .event(.connectionDetails(let connectionDetails)):
+            case let .event(.connectionDetails(connectionDetails)):
                 switch state {
                 case .connecting:
                     state = .connecting(connectionDetails)
@@ -212,14 +212,14 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 }
                 return .none
 
-            case .event(.error(let error)):
+            case let .event(.error(error)):
                 return .send(.delegate(.errorReceived(error)))
 
-            case .event(.features(let features)):
+            case let .event(.features(features)):
                 log.info("Features received: \(features)", category: .localAgent)
                 return .none
 
-            case .event(.stats(let stats)):
+            case let .event(.stats(stats)):
                 log.debug("Feature statistics received: \(stats)", category: .localAgent)
                 return .none
 
@@ -309,7 +309,7 @@ extension LocalAgentConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case .failedToEstablishConnection(let connectionCreationError):
+        case let .failedToEstablishConnection(connectionCreationError):
             return connectionCreationError.charCode
         case .agentError:
             return "AGNT"
@@ -320,9 +320,9 @@ extension LocalAgentConnectionError: ProtonVPNError {
 
     public var underlyingError: Error? {
         switch self {
-        case .failedToEstablishConnection(let connectionError):
+        case let .failedToEstablishConnection(connectionError):
             return connectionError
-        case .agentError(let agentError):
+        case let .agentError(agentError):
             return agentError
         default:
             return nil

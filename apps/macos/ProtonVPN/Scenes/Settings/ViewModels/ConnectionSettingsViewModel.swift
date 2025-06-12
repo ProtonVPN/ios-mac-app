@@ -271,7 +271,7 @@ final class ConnectionSettingsViewModel {
         switch connectionProtocol {
         case .smartProtocol:
             self.confirmEnableSmartProtocol(completion)
-        case .vpnProtocol(let transportProtocol):
+        case let .vpnProtocol(transportProtocol):
             let changeCompletionHandler: (Result<(), Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
@@ -395,7 +395,7 @@ final class ConnectionSettingsViewModel {
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
             self.sysexPending = false
-            if case .failure(let error) = result {
+            if case let .failure(error) = result {
                 self.selectedProtocol = .vpnProtocol(.ike)
             }
         }

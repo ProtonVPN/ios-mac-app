@@ -62,7 +62,7 @@ public struct ConnectionInfoBuilder {
             return nil
         case .exact:
             return server.logical.name
-        case .secureCore(let secureCoreSpec):
+        case let .secureCore(secureCoreSpec):
             switch secureCoreSpec {
             case .fastest, .random:
                 return LocalizationUtility.default.countryName(forCode: server.logical.exitCountryCode)
@@ -71,7 +71,7 @@ public struct ConnectionInfoBuilder {
                     return nil
                 }
                 return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: entryCode) ?? "")
-            case .hop(_, let via):
+            case let .hop(_, via):
                 return Localizable.secureCoreViaCountry(LocalizationUtility.default.countryName(forCode: via) ?? "")
             }
         }

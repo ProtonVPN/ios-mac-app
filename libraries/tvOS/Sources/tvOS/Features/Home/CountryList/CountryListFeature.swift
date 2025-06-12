@@ -71,7 +71,7 @@ struct CountryListFeature {
 
 private extension ServerGroupInfo {
     func item(index: Int, section: Int) -> CountryListItem? {
-        guard case .country(let code) = kind else { return nil }
+        guard case let .country(code) = kind else { return nil }
         let row = Int(floor(Double(index) / Double(CountryListView.columnCount)))
         return CountryListItem(section: section, row: row, code: code)
     }

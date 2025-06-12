@@ -79,7 +79,7 @@ final class SwitchTableViewCell: UITableViewCell {
             switchControl.isHidden = true
             upsellImageView.isHidden = false
 
-        case .available(let isOn, let isInterative):
+        case let .available(isOn, isInterative):
             switchControl.isHidden = false
             upsellImageView.isHidden = true
 

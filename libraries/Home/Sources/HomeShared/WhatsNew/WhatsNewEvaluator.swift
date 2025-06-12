@@ -49,11 +49,11 @@ extension WhatsNew {
 
         private static func isSatisfied(_ rule: Rule) -> Bool {
             switch rule {
-            case .timeWindow(let startDate, let endDate):
+            case let .timeWindow(startDate, endDate):
                 return (startDate...endDate).contains(now)
-            case .appVersions(let versions):
+            case let .appVersions(versions):
                 return versions.contains(evaluatorClient.bundleShortVersionString())
-            case .osVersion(let version):
+            case let .osVersion(version):
                 let compareResult = evaluatorClient.systemOSVersion().compare(version, options: .numeric)
                 return (compareResult == .orderedSame || compareResult == .orderedDescending)
             }

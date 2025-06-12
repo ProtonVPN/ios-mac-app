@@ -73,15 +73,15 @@ extension ConnectionError: ProtonVPNError {
 
     public var errorDescription: String? {
         switch self {
-        case .unexpectedProtocol(let vpnProtocol):
+        case let .unexpectedProtocol(vpnProtocol):
             return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
-        case .certAuth(let certAuthError):
+        case let .certAuth(certAuthError):
             return certAuthError.errorDescription
-        case .tunnel(let tunnelError):
+        case let .tunnel(tunnelError):
             return tunnelError.errorDescription
-        case .agent(let agentError):
+        case let .agent(agentError):
             return agentError.errorDescription
-        case .preparation(let preparationError):
+        case let .preparation(preparationError):
             return preparationError.errorDescription
         case .intentMissing:
             return includeCode(inside: Localizable.connectionErrorIntentMissing)
@@ -94,13 +94,13 @@ extension ConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case .unexpectedProtocol(let vpnProtocol):
+        case let .unexpectedProtocol(vpnProtocol):
             switch vpnProtocol {
             case .ike:
                 return "UXIK"
-            case .openVpn(let transport):
+            case let .openVpn(transport):
                 return transport == .tcp ? "UXOT" : "UXOU"
-            case .wireGuard(let transport):
+            case let .wireGuard(transport):
                 switch transport {
                 case .udp:
                     return "UXWU"
@@ -116,13 +116,13 @@ extension ConnectionError: ProtonVPNError {
             return "TUNN"
         case .agent:
             return "AGNT"
-        case .preparation(let preparationError):
+        case let .preparation(preparationError):
             return preparationError.charCode
         case .intentMissing:
             return "ITNT"
         case .serverMissing:
             return "SVRM"
-        case .timeout(let stage):
+        case let .timeout(stage):
             switch stage {
             case .tunnelStartingAndConnecting:
                 return "TOTS"
@@ -136,13 +136,13 @@ extension ConnectionError: ProtonVPNError {
 
     public var underlyingError: Error? {
         switch self {
-        case .tunnel(let tunnelError):
+        case let .tunnel(tunnelError):
             return tunnelError
-        case .certAuth(let certAuthError):
+        case let .certAuth(certAuthError):
             return certAuthError
-        case .agent(let agentError):
+        case let .agent(agentError):
             return agentError
-        case .preparation(let preparationError):
+        case let .preparation(preparationError):
             return preparationError.underlyingError
         default:
             return nil
@@ -161,11 +161,11 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .tunnel:
             break
-        case .agent(let agentError):
+        case let .agent(agentError):
             return agentError.alert
         case .preparation(.featureNotReady):
             break
-        case .preparation(.wrapped(let wrappedError)):
+        case let .preparation(.wrapped(wrappedError)):
             return wrappedError.alert
         case .serverMissing:
             break
@@ -190,7 +190,7 @@ extension LocalAgentConnectionError: AlertConvertibleError {
         switch self {
         case .failedToEstablishConnection:
             break
-        case .agentError(let agentError):
+        case let .agentError(agentError):
             return agentError.alert
         case .serverCertificateError:
             break

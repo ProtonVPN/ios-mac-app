@@ -117,7 +117,7 @@ struct ProtectionStatusView: View {
         let ip: String?
 
         switch store.connectionState {
-        case .connected(_, let server, _, let connectionDetails):
+        case let .connected(_, server, _, connectionDetails):
             country = server.logical.exitCountryCode
             ip = connectionDetails.map { String(describing: $0.exitIp) } ?? server.endpoint.exitIp
         default:

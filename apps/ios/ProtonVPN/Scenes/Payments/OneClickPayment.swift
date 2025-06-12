@@ -45,7 +45,7 @@ final class OneClickPayment {
                 return "Account upgrade is currently unavailable on this device."
             case .isTestFlight:
                 return "Account upgrade is not available on TestFlight."
-            case .iapDisabled(localizedReason: let reason):
+            case let .iapDisabled(localizedReason: reason):
                 return reason ?? "In-App purchases are temporarily unavailable on this device."
             }
         }
@@ -82,7 +82,7 @@ final class OneClickPayment {
         planService: PlanService,
         payments: Payments
     ) throws {
-        guard case .right(let plansDataSource) = payments.planService else {
+        guard case let .right(plansDataSource) = payments.planService else {
             throw UnavailableError.featureFlagDisabled
         }
 
@@ -180,16 +180,16 @@ final class OneClickPayment {
     private func buyPlanResultHandler(_ result: PurchaseResult) async {
         // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
         switch result {
-        case .planAlreadyPurchased(let error):
+        case let .planAlreadyPurchased(error):
             log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
-        case .purchasedPlan(let plan):
+        case let .purchasedPlan(plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
-        case .planPurchaseProcessingInProgress(let plan):
+        case let .planPurchaseProcessingInProgress(plan):
             log.debug("Purchasing \(plan.protonName)", category: .iap)
         // a purchaseError, we don't dismiss the flow so user can retry (user can manually dismiss the flow)
         case let .purchaseError(error, _):
@@ -281,7 +281,7 @@ enum OneClickPurchaseError: Error, LocalizedError {
         switch self {
         case .defaultPlanNotFound:
             return "Default plan not found"
-        case .planNotFound(let planName):
+        case let .planNotFound(planName):
             return "StoreKitManager plan (\(planName)) not found"
         case .unfinishedPurchaseInQueue:
             return "StoreKitManager is not ready to purchase"

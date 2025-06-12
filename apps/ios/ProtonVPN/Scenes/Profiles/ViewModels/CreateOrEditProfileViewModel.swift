@@ -100,7 +100,7 @@ class CreateOrEditProfileViewModel: NSObject {
         self.propertiesManager = propertiesManager
         self.selectedProtocol = propertiesManager.connectionProtocol
 
-        if case .circle(let color) = profile?.profileIcon {
+        if case let .circle(color) = profile?.profileIcon {
             self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
         } else {
             self.colorPickerViewModel = ColorPickerViewModel()
@@ -175,13 +175,13 @@ class CreateOrEditProfileViewModel: NSObject {
         let grouping = serverGroups
 
         let accessTier: Int = switch serverOffering {
-        case .fastest(let countryCode):
+        case let .fastest(countryCode):
             grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
-        case .random(let countryCode):
+        case let .random(countryCode):
             grouping.first(where: { $0.serverOfferingID == countryCode })?.minTier ?? 1
 
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             serverWrapper.server.tier
         }
 
@@ -315,7 +315,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private func prefillInfo(for profile: Profile) {
-        guard profile.profileType == .user, case ProfileIcon.circle(let color) = profile.profileIcon else {
+        guard profile.profileType == .user, case let ProfileIcon.circle(color) = profile.profileIcon else {
             return
         }
         
@@ -325,9 +325,9 @@ class CreateOrEditProfileViewModel: NSObject {
         
         selectedCountryGroup = serverGroups.first(where: {
             switch $0.kind {
-            case .country(let countryCode):
+            case let .country(countryCode):
                 return countryCode == profile.serverOffering.countryCode
-            case .gateway(let name):
+            case let .gateway(name):
                 return name == profile.serverOffering.countryCode
             }
         })
@@ -384,7 +384,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return defaultServerDescriptor(forIndex: 0)
         case .random:
             return defaultServerDescriptor(forIndex: 1)
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             return serverDescriptor(for: serverWrapper.server)
         }
     }

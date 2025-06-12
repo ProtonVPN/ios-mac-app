@@ -34,7 +34,7 @@ struct SettingsDrillDownView: View {
         switch store.state {
         case .eula:
             EULAView()
-        case .dynamic(let destination):
+        case let .dynamic(destination):
             DynamicDrillDownView(model: destination.model)
                 .focusable()
         }

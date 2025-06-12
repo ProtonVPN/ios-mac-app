@@ -166,7 +166,7 @@ class HelpMenuViewModel {
 
     private func nukeServerDatabase() {
         @Dependency(\.databaseConfiguration) var config
-        guard case .physical(let path) = config.databaseType else {
+        guard case let .physical(path) = config.databaseType else {
             assertionFailure("We should be using a persistence database in the app target")
             return
         }

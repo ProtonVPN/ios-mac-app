@@ -189,7 +189,7 @@ class MapSectionViewModel {
         let isNotSecureCore = VPNServerFilter.features(.standard)
         let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
         return countryGroups.compactMap { group in
-            guard case .country(let code) = group.kind else {
+            guard case let .country(code) = group.kind else {
                 assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")
                 return nil
             }

@@ -66,7 +66,7 @@ struct Provider: TimelineProvider {
         case .mostRecent:
             let recents = recentsStorage.readFromStorage()
             return recents.elements.first?.connection ?? .defaultFastest
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }

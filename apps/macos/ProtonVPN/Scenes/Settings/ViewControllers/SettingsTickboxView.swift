@@ -157,7 +157,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
             switchButton?.isHidden = true
             onOffLabel?.isHidden = true
 
-        case .available(let isOn, let isInteractive):
+        case let .available(isOn, isInteractive):
             upsellImageView?.isHidden = true
             switchButton?.isHidden = false
             switchButton?.enabled = isInteractive

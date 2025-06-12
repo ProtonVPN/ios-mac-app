@@ -64,11 +64,11 @@ extension VPNConnectionStatusKey: @retroactive DependencyKey {
         let appStateManager = Container.sharedContainer.makeAppStateManager()
         let propertyManager = Container.sharedContainer.makePropertiesManager()
 
-        return appStateManager.displayState.vpnConnectionStatus(
+        return await appStateManager.displayState.vpnConnectionStatus(
             appStateManager.activeConnection(),
             lastPreparedServer: propertyManager.lastPreparedServer,
             intent: propertyManager.lastConnectionIntent,
-            connectedDate: await Container.sharedContainer.makeVpnManager().connectedDate()
+            connectedDate: Container.sharedContainer.makeVpnManager().connectedDate()
         )
     }
 }

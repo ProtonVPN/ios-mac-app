@@ -66,7 +66,7 @@ class VpnServerSelector {
 
     private var supportedProtocols: ProtocolSupport {
         switch connectionProtocol {
-        case .vpnProtocol(let vpnProtocol):
+        case let .vpnProtocol(vpnProtocol):
             return vpnProtocol.protocolSupport
         case .smartProtocol:
             return smartProtocolConfig.supportedProtocols
@@ -157,13 +157,13 @@ class VpnServerSelector {
 extension ConnectionRequest {
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
-        case .country(let countryCode, .fastest), .country(let countryCode, .random):
+        case let .country(countryCode, .fastest), let .country(countryCode, .random):
             return [.kind(.country(code: countryCode))] // inherently excludes gateways
 
-        case .gateway(let name):
+        case let .gateway(name):
             return [.kind(.gateway(name: name))]
 
-        case .country(_, .server(let model)):
+        case let .country(_, .server(model)):
             if serverType == .secureCore {
                 // We don’t need to find the exact server. Instead, we should focus on finding the best one based on the entryCountryCode and exitCountryCode.
                 return [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
@@ -171,7 +171,7 @@ extension ConnectionRequest {
                 return [.logicalID(model.id)]
             }
 
-        case .city(let countryCode, let city):
+        case let .city(countryCode, city):
             return [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
@@ -182,7 +182,7 @@ extension ConnectionRequest {
 
     var ordering: VPNServerOrder {
         switch connectionType {
-        case .country(_, let requestType):
+        case let .country(_, requestType):
             switch requestType {
             case .fastest:
                 return .fastest

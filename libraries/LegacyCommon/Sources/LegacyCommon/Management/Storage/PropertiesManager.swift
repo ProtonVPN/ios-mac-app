@@ -144,7 +144,7 @@ extension PropertiesManagerProtocol {
             switch newValue {
             case .smartProtocol:
                 smartProtocol = true
-            case .vpnProtocol(let newVpnProtocol):
+            case let .vpnProtocol(newVpnProtocol):
                 smartProtocol = false
                 vpnProtocol = newVpnProtocol
             }
@@ -160,7 +160,7 @@ extension PropertiesManagerProtocol {
         case .smartProtocol:
             return ProtocolSupport(vpnProtocols: smartProtocolConfig.supportedProtocols)
 
-        case .vpnProtocol(let vpnProtocol):
+        case let .vpnProtocol(vpnProtocol):
             return vpnProtocol.protocolSupport
         }
     }

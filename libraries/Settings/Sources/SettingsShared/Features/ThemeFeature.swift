@@ -45,7 +45,7 @@ public struct ThemeSettingsFeature: Reducer {
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
-        case .set(let colorScheme):
+        case let .set(colorScheme):
             state = colorScheme
             return .none
         }

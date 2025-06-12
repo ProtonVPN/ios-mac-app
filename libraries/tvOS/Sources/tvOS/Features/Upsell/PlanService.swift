@@ -57,7 +57,7 @@ struct PaymentsFFDisabledError: Swift.Error {
 extension Payments {
     var plansDataSource: PlansDataSourceProtocol {
         get throws(PaymentsFFDisabledError) {
-            guard case .right(let plansDataSource) = planService else {
+            guard case let .right(plansDataSource) = planService else {
                 throw PaymentsFFDisabledError()
             }
             return plansDataSource

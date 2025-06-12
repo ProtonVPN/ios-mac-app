@@ -216,11 +216,11 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         let der = keys.publicKey.derRepresentation
         apiService.refreshCertificate(publicKey: der, asPartOf: operation) { [weak self] result in
             switch result {
-            case .success(let cert):
+            case let .success(cert):
                 let certAndFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
                 self?.vpnAuthenticationStorage.store(certAndFeatures)
                 completion(.success(()))
-            case .failure(let error):
+            case let .failure(error):
                 guard let certError = error as? CertificateRefreshError else {
                     completion(.failure(.internalError(message: String(describing: error))))
                     return

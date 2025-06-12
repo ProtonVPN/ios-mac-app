@@ -328,7 +328,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
             []
         }
 
-        let feature = ServerFeature(rawValue: try container.decode(Int.self, forKey: CodingKeys.feature))
+        let feature = try ServerFeature(rawValue: container.decode(Int.self, forKey: CodingKeys.feature))
 
         let location: ServerLocation = if let decodedLocation = try? container.decode(ServerLocation.self, forKey: CodingKeys.location) {
             decodedLocation
@@ -339,22 +339,22 @@ public class ServerModel: NSObject, NSCoding, Codable {
             ServerLocation(lat: 0, long: 0)
         }
 
-        self.init(id: try container.decode(String.self, forKey: CodingKeys.id),
-                  name: try container.decode(String.self, forKey: CodingKeys.name),
-                  domain: try container.decode(String.self, forKey: CodingKeys.domain),
-                  load: try container.decode(Int.self, forKey: CodingKeys.load),
-                  entryCountryCode: try container.decode(String.self, forKey: CodingKeys.entryCountryCode),
-                  exitCountryCode: try container.decode(String.self, forKey: CodingKeys.exitCountryCode),
-                  tier: try container.decode(Int.self, forKey: CodingKeys.tier),
+        try self.init(id: container.decode(String.self, forKey: CodingKeys.id),
+                  name: container.decode(String.self, forKey: CodingKeys.name),
+                  domain: container.decode(String.self, forKey: CodingKeys.domain),
+                  load: container.decode(Int.self, forKey: CodingKeys.load),
+                  entryCountryCode: container.decode(String.self, forKey: CodingKeys.entryCountryCode),
+                  exitCountryCode: container.decode(String.self, forKey: CodingKeys.exitCountryCode),
+                  tier: container.decode(Int.self, forKey: CodingKeys.tier),
                   feature: feature,
-                  city: try container.decodeIfPresent(String.self, forKey: CodingKeys.city),
+                  city: container.decodeIfPresent(String.self, forKey: CodingKeys.city),
                   ips: ips,
-                  score: try container.decode(Double.self, forKey: CodingKeys.score),
-                  status: try container.decode(Int.self, forKey: CodingKeys.status),
+                  score: container.decode(Double.self, forKey: CodingKeys.score),
+                  status: container.decode(Int.self, forKey: CodingKeys.status),
                   location: location,
-                  hostCountry: try container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
-                  translatedCity: try container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
-                  gatewayName: try container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
+                  hostCountry: container.decodeIfPresent(String.self, forKey: CodingKeys.hostCountry),
+                  translatedCity: container.decodeIfPresent(String.self, forKey: CodingKeys.translatedCity),
+                  gatewayName: container.decodeIfPresent(String.self, forKey: CodingKeys.gatewayName)
         )
     }
     

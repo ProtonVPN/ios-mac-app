@@ -90,7 +90,7 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .stopObservingStateChanges:
                 return .cancel(id: CancelID.observation)
 
-            case .connect(let intent):
+            case let .connect(intent):
                 let logicalServerInfo = LogicalServerInfo(logicalServer: intent.server)
                 state = .preparingConnection(logicalServerInfo)
                 return .run { send in
@@ -106,7 +106,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case .connectionFinished(.success(let connectionInfo)):
+            case let .connectionFinished(.success(connectionInfo)):
                 // Tunnel has started, and responded with information about what logical and server it has connected to
                 state = .connected(connectionInfo)
                 return .none
@@ -139,9 +139,9 @@ public struct ExtensionFeature: Reducer, Sendable {
 
                 return .run { send in
                     @Dependency(\.date) var date
-                    let result = await Result { TunnelConnectionResponse(
-                        logicalInfo: try await tunnelManager.connectedServer,
-                        connectionDate: try await tunnelManager.session.connectedDate ?? date.now
+                    let result = await Result { try await TunnelConnectionResponse(
+                        logicalInfo: tunnelManager.connectedServer,
+                        connectionDate: tunnelManager.session.connectedDate ?? date.now
                     )}
                     return await send(.connectionFinished(result))
                 }
@@ -166,7 +166,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // We don't need to model a reasserting status. Our tunnel should only briefly enter this state
                 return .none
 
-            case .disconnect(let error):
+            case let .disconnect(error):
                 if case .preparingConnection = state {
                     // The tunnel has not yet been started, so we can transition straight into `.disconnected`.
                     state = .disconnected(error)
@@ -184,16 +184,16 @@ public struct ExtensionFeature: Reducer, Sendable {
                     }
                 )
 
-            case .tunnelStartRequestFinished(.failure(let error)):
+            case let .tunnelStartRequestFinished(.failure(error)):
                 // Start request failed, so there's no need to disconnect
                 state = .disconnected(.tunnelStartFailed(error))
                 return logLastDisconnectEffect
 
-            case .connectionFinished(.failure(let error)):
+            case let .connectionFinished(.failure(error)):
                 log.error("Tunnel failed to connect", category: .connection, metadata: ["error": "\(error)"])
                 return .send(.disconnect(.unknownServer))
 
-            case .tunnelStatusChanged(let unknownFutureStatus):
+            case let .tunnelStatusChanged(unknownFutureStatus):
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])
                 assertionFailure("Unknown tunnel status \(unknownFutureStatus)")
                 return .none
@@ -274,7 +274,7 @@ extension TunnelConnectionError: ProtonVPNError {
 
     public var underlyingError: Error? {
         switch self {
-        case .tunnelStartFailed(let error):
+        case let .tunnelStartFailed(error):
             return error
         default:
             return nil

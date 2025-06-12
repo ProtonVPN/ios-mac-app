@@ -64,14 +64,14 @@ public struct HomeMapFeature {
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
-            case .connected(_, let actual):
+            case let .connected(_, actual):
                 if let actual {
                     self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {
                     self = .disconnected
                 }
 
-            case .connecting(_, .some(let server)):
+            case let .connecting(_, .some(server)):
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
             case .connecting(_, nil):
@@ -80,7 +80,7 @@ public struct HomeMapFeature {
                 log.assertionFailure("Cannot show connecting coordinates: server is nil")
                 self = .disconnected
 
-            case .resolving(_, let actual):
+            case let .resolving(_, actual):
                 if let actual {
                     self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {
@@ -114,9 +114,9 @@ public struct HomeMapFeature {
 
         var code: String? {
             switch self {
-            case .connectedCoordinates(_, let code):
+            case let .connectedCoordinates(_, code):
                 return code
-            case .connectingCoordinates(_, let code):
+            case let .connectingCoordinates(_, code):
                 return code
             case .disconnected:
                 return nil
@@ -125,9 +125,9 @@ public struct HomeMapFeature {
         
         var coordinates: CLLocationCoordinate2D? {
             switch self {
-            case .connectedCoordinates(let coordinates, _):
+            case let .connectedCoordinates(coordinates, _):
                 return coordinates
-            case .connectingCoordinates(let coordinates, _):
+            case let .connectingCoordinates(coordinates, _):
                 return coordinates
             case .disconnected:
                 return nil
@@ -165,7 +165,7 @@ public struct HomeMapFeature {
                 }
                 .cancellable(id: CancelId.connectionState)
 
-            case .connectionStateUpdated(let connectionStatus):
+            case let .connectionStateUpdated(connectionStatus):
                 let mapState = MapState(connectionStatus)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
@@ -185,7 +185,7 @@ public struct HomeMapFeature {
                         )
                 }
 
-            case .newMapState(let mapState):
+            case let .newMapState(mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
                 SVGView.updateWith(code: state.highlightedCountryCode, highlighted: false)
@@ -194,7 +194,7 @@ public struct HomeMapFeature {
 
                 return .none
 
-            case .newPinOffset(let offset):
+            case let .newPinOffset(offset):
                 state.pinOffset = offset
                 return .none
             }
@@ -209,19 +209,19 @@ extension ConnectionSpec {
             break
         case .fastest:
             break
-        case .region(code: let code):
+        case let .region(code: code):
             return code
         case .gateway(_):
             return nil
-        case .exact(_, _, _, _, let regionCode):
+        case let .exact(_, _, _, _, regionCode):
             return regionCode
-        case .secureCore(let spec):
+        case let .secureCore(spec):
             switch spec {
             case .fastest, .random:
                 break
-            case .fastestHop(let to):
+            case let .fastestHop(to):
                 return to
-            case .hop(let to, _):
+            case let .hop(to, _):
                 return to
             }
         }

@@ -121,7 +121,7 @@ class CountryItemViewModel {
 
     private var isConnecting: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-            if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+            if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case let ConnectionRequestType.country(activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
                 // If a connect button is ever added to gateway groups, this check will also need to verify that the last
                 // connection request was specifically a gateway connection request
                 return true
@@ -144,7 +144,7 @@ class CountryItemViewModel {
 
     var countryCode: String {
         switch serversGroup.kind {
-        case .country(let code):
+        case let .country(code):
             return code
         case .gateway:
             return ""
@@ -153,7 +153,7 @@ class CountryItemViewModel {
 
     var countryName: String {
         switch serversGroup.kind {
-        case .country(let code):
+        case let .country(code):
             return LocalizationUtility.default.countryName(forCode: code) ?? ""
         case .gateway:
             return ""
@@ -162,9 +162,9 @@ class CountryItemViewModel {
 
     var description: String {
         switch serversGroup.kind {
-        case .country(let code):
+        case let .country(code):
             return LocalizationUtility.default.countryName(forCode: code) ?? Localizable.unavailable
-        case .gateway(let name):
+        case let .gateway(name):
             return name
         }
     }
@@ -282,7 +282,7 @@ class CountryItemViewModel {
 
     // This could be optimised using a city grouping in `Persistence.ServerRepository`
     private lazy var cityItemViewModels: [CityViewModel] = {
-        guard case .country(let code) = serversGroup.kind else {
+        guard case let .country(code) = serversGroup.kind else {
             return []
         }
 
@@ -439,7 +439,7 @@ extension CountryItemViewModel: CountryViewModel {
 
     var flag: UIImage? {
         switch serversGroup.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             return UIImage.flag(countryCode: countryCode)
         case .gateway:
             return Theme.Asset.Flags.gateway.image
@@ -468,9 +468,9 @@ extension CountryItemViewModel: CountryViewModel {
 fileprivate extension ServerGroupInfo {
     func matchesLogical(_ logical: Logical) -> Bool {
         switch self.kind {
-        case .gateway(let name):
+        case let .gateway(name):
             return logical.kind == .gateway(name: name)
-        case .country(let code) where code == logical.exitCountryCode:
+        case let .country(code) where code == logical.exitCountryCode:
             if self.featureIntersection == .secureCore {
                 guard case .secureCore = logical.kind else {
                     return false

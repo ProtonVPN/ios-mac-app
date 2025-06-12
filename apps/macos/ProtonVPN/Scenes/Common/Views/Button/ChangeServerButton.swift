@@ -53,7 +53,7 @@ class ChangeServerView: NSView {
             hourglassImageView.isHidden = true
             timerLabel.attributedStringValue = .init()
 
-        case .unavailable(let duration):
+        case let .unavailable(duration):
             button.attributedTitle = .init()
             changeServerLabel.attributedStringValue = Localizable.changeServer
                 .styled(.weak, font: .themeFont(.heading4))

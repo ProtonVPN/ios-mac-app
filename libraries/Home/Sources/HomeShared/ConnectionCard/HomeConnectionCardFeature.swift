@@ -59,9 +59,9 @@ public struct HomeConnectionCardFeature {
                     recents: recents,
                     secureCore: secureCoreToggle
                 )
-            case .connected(let connectionSpec, _),
-                    .connecting(let connectionSpec, _),
-                    .resolving(.some(let connectionSpec), _):
+            case let .connected(connectionSpec, _),
+                    let .connecting(connectionSpec, _),
+                    let .resolving(.some(connectionSpec), _):
                 return connectionSpec
             }
         }

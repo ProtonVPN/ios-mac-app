@@ -85,7 +85,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
             switch result {
             case .success:
                 log.info("Refreshed certificate", category: .userCert)
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Failed to refresh certificate: \(error)", category: .userCert)
             }
             executeOnUIThread { completion(result) }
@@ -110,7 +110,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
 
         connectionProvider.send(WireguardProviderRequest.refreshCertificate(features: features)) { [weak self] result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 switch response {
                 case .ok:
                     // Extension has updated the certificate and placed it in the keychain. Let's fetch it on our end.
@@ -128,7 +128,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                     completionHandler(.success(VpnAuthenticationData(clientKey: keys.privateKey,
                                                                      clientCertificate: certificate.certificate)))
                     return
-                case .error(let message):
+                case let .error(message):
                     completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
                 case .errorSessionExpired:
                     self?.handleSessionExpired(features: features,
@@ -138,14 +138,14 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                     self?.authenticationStorage.deleteKeys()
                     self?.authenticationStorage.deleteCertificate()
                     completionHandler(.failure(AuthenticationRemoteClientError.needNewKeys))
-                case .errorTooManyCertRequests(let retryAfter):
+                case let .errorTooManyCertRequests(retryAfter):
                     if let retryAfter = retryAfter {
                         completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: TimeInterval(retryAfter))))
                     } else {
                         completionHandler(.failure(AuthenticationRemoteClientError.tooManyCertRequests(retryAfter: nil)))
                     }
                 }
-            case .failure(let error):
+            case let .failure(error):
                 completionHandler(.failure(error))
             }
         }
@@ -204,11 +204,11 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
 
         connectionProvider?.send(request, completion: { result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 switch response {
                 case .ok:
                     completionHandler(.success(()))
-                case .error(let message):
+                case let .error(message):
                     completionHandler(.failure(ProviderMessageError.remoteError(message: message)))
                 case .errorTooManyCertRequests:
                     log.assertionFailure("Received \(response) after trying to renew session?")
@@ -219,7 +219,7 @@ public final class VpnAuthenticationRemoteClient: VpnAuthentication {
                     log.assertionFailure("Received \(response) after trying to renew session?")
                     completionHandler(.failure(CommonVpnError.userCredentialsExpired))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 completionHandler(.failure(error))
             }
         })

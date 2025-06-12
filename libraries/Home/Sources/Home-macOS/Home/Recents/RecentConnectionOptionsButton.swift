@@ -83,7 +83,7 @@ private extension RecentConnectionOptionsButton {
 
         var image: Image {
             switch role {
-            case .pin(let isPinned):
+            case let .pin(isPinned):
                 return (isPinned
                         ? IconProvider.pinSlashFilled
                         : IconProvider.pinFilled)
@@ -94,7 +94,7 @@ private extension RecentConnectionOptionsButton {
 
         var text: Text {
             switch role {
-            case .pin(let isPinned):
+            case let .pin(isPinned):
                 return Text(isPinned
                             ? Localizable.actionHomeUnpin
                             : Localizable.actionHomePin)

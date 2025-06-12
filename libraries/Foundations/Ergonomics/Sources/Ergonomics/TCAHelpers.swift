@@ -31,7 +31,7 @@ public extension Effect {
             priority: priority,
             operation: { send in
                 for await value in stream() {
-                    await send(try toAction(value))
+                    try await send(toAction(value))
                 }
             },
             catch: handler

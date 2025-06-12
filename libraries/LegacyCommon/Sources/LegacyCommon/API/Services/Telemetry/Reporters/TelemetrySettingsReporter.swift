@@ -96,16 +96,16 @@ final class TelemetrySettingsReporter {
     }
 
     private func sendHeartbeat() async throws {
-        let dimensions = SettingsDimensions(
+        let dimensions = await SettingsDimensions(
             defaultConnectionType: defaultConnectionType(),
             appIcon: .default,
             userTier: userTier(),
-            widgetCount: await widgetCount(),
-            firstWidgetSize: await firstWidgetSize(),
+            widgetCount: widgetCount(),
+            firstWidgetSize: firstWidgetSize(),
             isIPv6Enabled: .false,
-            hermesCount: await hermesCount(),
-            firstHermesAddressFamily: await firstHermesAddressFamily(),
-            isSystemHermesEnabled: await isSystemHermesEnabled()
+            hermesCount: hermesCount(),
+            firstHermesAddressFamily: firstHermesAddressFamily(),
+            isSystemHermesEnabled: isSystemHermesEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 

@@ -85,7 +85,7 @@ final class StatusMenuViewModel {
     private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case .unavailable(let until, _, _) = lastState, until.isFuture {
+        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
             // Don't re-calculate server change availability if we know we don't need to
             // (if we are already in time-out, this won't change unless we upgrade)
             return lastState
@@ -336,7 +336,7 @@ final class StatusMenuViewModel {
     }
 
     private func sessionChanged(data: SessionChanged.T) {
-        if case .established(let vpnGateway) = data {
+        if case let .established(vpnGateway) = data {
             if !isSessionEstablished {
                 log.error("Expected session to be established when receiving gateway")
             }

@@ -57,7 +57,7 @@ extension SettingsClient: @retroactive DependencyKey {
             case .connecting(.unresolved):
                 return .withReconnect
 
-            case .connected(_, let server, _, _), .connecting(.resolved(_, let server)):
+            case let .connected(_, server, _, _), let .connecting(.resolved(_, server)):
                 @Dependency(\.propertiesManager) var properties
                 let supportedProtocols = properties.smartProtocolConfig.supportedProtocols
                 let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))

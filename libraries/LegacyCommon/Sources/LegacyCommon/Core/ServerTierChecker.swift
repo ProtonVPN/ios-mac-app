@@ -60,7 +60,7 @@ class ServerTierChecker {
                 self?.alertService?.push(alert: MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
-            case .locationNotFound(let profileName):
+            case let .locationNotFound(profileName):
                 self?.alertService?.push(alert: LocationNotAvailableAlert(profileName: profileName))
             }
         }

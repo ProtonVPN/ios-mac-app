@@ -37,9 +37,9 @@ final class InformationTableViewCell: UITableViewCell {
     var viewModel: ViewModel! {
         didSet {
             switch viewModel.icon {
-            case .image(let image):
+            case let .image(image):
                 icon.image = image
-            case .url(let url):
+            case let .url(url):
                 if let url {
                     icon.af.setImage(withURL: url)
                 }

@@ -74,7 +74,7 @@ public final class ProfileUtility {
     
     static func profile(withServer server: ServerModel, in profiles: [Profile]) -> Profile? {
         for existingProfile in profiles {
-            if case ServerOffering.custom(let sw) = existingProfile.serverOffering, sw.server == server {
+            if case let ServerOffering.custom(sw) = existingProfile.serverOffering, sw.server == server {
                 return existingProfile
             }
         }

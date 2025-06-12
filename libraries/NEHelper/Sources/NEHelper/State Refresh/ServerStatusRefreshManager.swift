@@ -63,7 +63,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
                                        refreshApiTokenIfNeeded: true) { [unowned self] result in
             workQueue.async { [unowned self] in
                 switch result {
-                case .success(let response):
+                case let .success(response):
                     // We could have disconnected since making the API request, so check if we're stopped.
                     guard case .running = state else {
                         log.info("Not reconnecting - refresh manager was already stopped", category: .connection)
@@ -85,7 +85,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
                         log.info("Server ID \(currentServerId) in logical \(currentLogicalId) has disappeared. Will reconnect to logical.", category: .connection)
                         self.delegate?.reconnect(toAnyOf: [response.original])
                     }
-                case .failure(let error):
+                case let .failure(error):
                     log.error("Couldn't refresh server state: \(error)", category: .connection)
                 }
             }

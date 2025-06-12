@@ -145,7 +145,7 @@ public enum LegacyServerLoader {
         var serverModels: [ServerModel] = []
         for json in serversJson {
             do {
-                serverModels.append(try ServerModel(dic: json))
+                try serverModels.append(ServerModel(dic: json))
             } catch {
                 let error = ParseError.serverParse
                 log.error("Failed to parse serves in mock with \(error)", category: .app)

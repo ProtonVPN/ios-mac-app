@@ -46,13 +46,13 @@ struct UserDefaultsDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let entries):
+        case let .loaded(entries):
             VStack {
                 Text("\(entries.count) Key-value pairs")
                 Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
             }
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")

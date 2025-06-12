@@ -33,7 +33,7 @@ class LogSelectionViewModelTests: XCTestCase {
         
         let cell = viewModel.tableViewData.first?.cells.first
         switch cell {
-        case .pushStandard(let title, let handler):
+        case let .pushStandard(title, handler):
             XCTAssertEqual(title, LogSource.app.title)
             handler()
             XCTAssertEqual(openedTitle, LogSource.app.title)

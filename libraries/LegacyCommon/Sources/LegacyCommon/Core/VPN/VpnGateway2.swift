@@ -222,13 +222,13 @@ fileprivate extension ConnectionSpec {
         case .random:
             return .random
 
-        case .region(let code):
+        case let .region(code):
             return .country(code, .fastest)
 
-        case .gateway(let name):
+        case let .gateway(name):
             return .gateway(name: name)
 
-        case .exact(_, _, let number, let subregion, let regionCode):
+        case let .exact(_, _, number, subregion, regionCode):
             if let number {
                 @Dependency(\.serverRepository) var serverRepository
                 let name = "\(regionCode)#\(number)"
@@ -244,15 +244,15 @@ fileprivate extension ConnectionSpec {
                 return .country(regionCode, .fastest)
             }
 
-        case .secureCore(let secureCoreSpecs):
+        case let .secureCore(secureCoreSpecs):
             switch secureCoreSpecs {
             case .fastest:
                 return .fastest
             case .random:
                 return .random
-            case .fastestHop(to: let to):
+            case let .fastestHop(to: to):
                 return .country(to, .fastest)
-            case .hop(let to, let via):
+            case let .hop(to, via):
                 @Dependency(\.serverRepository) var serverRepository
                 if let server = serverRepository.getFirstServer(filteredBy: [.entryCountryCode(via), .exitCountryCode(to)], orderedBy: .none) {
                     return .country(to, .server(.init(server: server)))

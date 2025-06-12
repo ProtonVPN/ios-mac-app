@@ -46,8 +46,8 @@ class TVSnapshotTestCase: XCTestCase {
             snapshotDirectory = "\(projectDir)/libraries/tvOS/Tests/tvOSSnapshotTests/__Snapshots__/\(suite)"
         }
 
-        let failure = verifySnapshot(
-            of: try view(),
+        let failure = try verifySnapshot(
+            of: view(),
             as: .image(
                 precision: Self.precision,
                 perceptualPrecision: Self.perceptualPrecision,

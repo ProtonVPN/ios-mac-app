@@ -44,7 +44,7 @@ struct KeychainDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let data):
+        case let .loaded(data):
             Form {
                 Section("VPN Authentication Keychain") {
                     vpnKeysCell(keys: data.keys)
@@ -55,7 +55,7 @@ struct KeychainDebugView: View {
                 .styled(.hint)
                 .padding(.all)
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")

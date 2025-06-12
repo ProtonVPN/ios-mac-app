@@ -41,7 +41,7 @@ struct PlanOptionView: View {
         switch state {
         case .loading:
             PlanOptionLoadingView()
-        case .loaded(let planOption, let isSelected, let discount):
+        case let .loaded(planOption, isSelected, discount):
             PlanOptionLoadedView(
                 planOption: planOption,
                 discount: discount,

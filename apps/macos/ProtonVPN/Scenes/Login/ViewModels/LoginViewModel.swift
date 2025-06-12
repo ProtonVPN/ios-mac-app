@@ -222,9 +222,9 @@ final class LoginViewModel {
             case let .ssoChallenge(ssoResponse):
                 Task {
                     switch await loginService.getSSORequest(challenge: ssoResponse) {
-                    case (let request?, _):
+                    case let (request?, _):
                         ssoChallengeReceived?(request)
-                    case (_, let error?):
+                    case let (_, error?):
                         handleError(error: LoginViewModelError(localizedDescription: error))
                     default:
                         break

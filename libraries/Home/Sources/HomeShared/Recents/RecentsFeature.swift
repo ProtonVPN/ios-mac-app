@@ -99,7 +99,7 @@ public struct RecentsFeature {
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
-            case .upsellTapped(let type):
+            case let .upsellTapped(type):
                 switch type {
                 case .worldwideCover:
                     pushAlert(AllCountriesUpsellAlert())
@@ -123,7 +123,7 @@ public struct RecentsFeature {
 
                 return .none
 
-            case .newConnectionStatus(let connectionStatus):
+            case let .newConnectionStatus(connectionStatus):
                 guard case .connected = connectionStatus else { return .none }
                 guard let spec = connectionStatus.spec else {
                     log.info("Unable to generate spec for connection status: \(connectionStatus)")
@@ -131,7 +131,7 @@ public struct RecentsFeature {
                 }
                 return .send(.connectionEstablished(spec))
 
-            case .connectionEstablished(let spec):
+            case let .connectionEstablished(spec):
                 withAnimation {
                     state.$recents.withLock { $0.updateList(with: spec) }
                 }

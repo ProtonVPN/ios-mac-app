@@ -27,24 +27,24 @@ extension VPNServerFilter {
         overrides: TableAlias
     ) -> SQLExpression {
         switch self {
-        case .logicalID(let id):
+        case let .logicalID(id):
             return logical[Logical.Columns.id] == id
 
-        case .entryCountryCode(let code):
+        case let .entryCountryCode(code):
             return logical[Logical.Columns.entryCountryCode] == code
 
-        case .exitCountryCode(let code):
+        case let .exitCountryCode(code):
             return logical[Logical.Columns.exitCountryCode] == code
 
-        case .tier(let tierFilter):
+        case let .tier(tierFilter):
             switch tierFilter {
-            case .max(let tier):
+            case let .max(tier):
                 return logical[Logical.Columns.tier] <= tier
-            case .exact(let tier):
+            case let .exact(tier):
                 return logical[Logical.Columns.tier] == tier
             }
 
-        case .features(let features):
+        case let .features(features):
             let supportedFeatures = logical[Logical.Columns.feature]
             // We must compare against required features rather than > 0 since it's possible that features.required == 0
             let hasAllRequiredFeatures = (supportedFeatures & features.required.rawValue) == features.required.rawValue
@@ -54,24 +54,24 @@ extension VPNServerFilter {
         case .isNotUnderMaintenance:
             return status[LogicalStatus.Columns.status] != 0
 
-        case .supports(let protocolMask):
+        case let .supports(protocolMask):
             return overrides[EndpointOverrides.Columns.endpointId] == nil
                 || overrides[EndpointOverrides.Columns.protocolMask] & protocolMask.rawValue > 0
 
-        case .kind(.gateway(let name)):
+        case let .kind(.gateway(name)):
             guard let name else {
                 return logical[Logical.Columns.gatewayName] != nil
             }
             return logical[Logical.Columns.gatewayName] == name
 
-        case .kind(.country(let countryCode)):
+        case let .kind(.country(countryCode)):
             let isStandard: SQLExpression = logical[Logical.Columns.gatewayName] == nil
             guard let countryCode else {
                 return isStandard
             }
             return isStandard && logical[Logical.Columns.exitCountryCode] == countryCode
 
-        case .matches(let query):
+        case let .matches(query):
             // VPNAPPL-2097 - Improve performance by matching prefixes instead of substrings, if possible
             let substringPattern = "%\(query)%" // use for filtering against columns containing diacritics
             let normalizedSubstringPattern = "%\(query.normalized)%" // filter against diacritic stripped columns
@@ -85,10 +85,10 @@ extension VPNServerFilter {
                 || localizedCountryName(logical[Logical.Columns.entryCountryCode]).like(normalizedSubstringPattern)
                 || logical[Logical.Columns.name].like(prefixPattern)
 
-        case .city(let name):
+        case let .city(name):
             return logical[Logical.Columns.city] == name
 
-        case .name(let name):
+        case let .name(name):
             return logical[Logical.Columns.name] == name
         }
     }

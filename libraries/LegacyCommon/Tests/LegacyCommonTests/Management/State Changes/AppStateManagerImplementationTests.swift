@@ -174,7 +174,7 @@ class AppStateManagerImplementationTests: XCTestCase {
         appStateManager.cancelConnectionAttempt()
 
         let state = self.appStateManager.state
-        if case AppState.aborted(let userInitiated) = state {
+        if case let AppState.aborted(userInitiated) = state {
             XCTAssert(userInitiated)
         } else { XCTFail("Wrong state") }
         XCTAssertFalse(state.isConnected)

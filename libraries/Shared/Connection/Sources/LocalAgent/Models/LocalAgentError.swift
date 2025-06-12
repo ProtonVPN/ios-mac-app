@@ -159,9 +159,9 @@ public enum LocalAgentError: ProtonVPNError {
 
     public var underlyingError: Error? {
         switch self {
-        case .systemError(let error):
+        case let .systemError(error):
             return error
-        case .unknown(let code):
+        case let .unknown(code):
             return NSError(domain: Self.errorDomain, code: code)
         default:
             return nil

@@ -438,10 +438,10 @@ extension IosAlertService: CoreAlertService {
         }
         let announcement: AnnouncementViewController
         switch panelMode {
-        case .legacy(let legacyPanel):
+        case let .legacy(legacyPanel):
             announcement = AnnouncementDetailViewController(legacyPanel)
             announcement.modalPresentationStyle = .fullScreen
-        case .image(let imagePanel):
+        case let .image(imagePanel):
             announcement = AnnouncementImageViewController(data: imagePanel, offerReference: alert.offerReference)
             announcement.modalPresentationStyle = UIDevice.current.isIpad ? .pageSheet : .overFullScreen
         }

@@ -20,10 +20,10 @@ import Domain
 
 extension Domain.UserLocation {
     public init(dic: JSONDictionary) throws {
-        self.init(
-            ip: try dic[throwing: "IP"],
-            country: try dic[throwing: "Country"],
-            isp: try dic[throwing: "ISP"]
+        try self.init(
+            ip: dic[throwing: "IP"],
+            country: dic[throwing: "Country"],
+            isp: dic[throwing: "ISP"]
         )
     }
 }

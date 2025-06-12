@@ -120,7 +120,7 @@ class StatusViewModel {
     private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case .unavailable(let until, _, _) = lastState, until.isFuture {
+        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
             // Don't re-calculate server change availability if we know we don't need to
             // (if we are already in time-out, this won't change unless we upgrade)
             return lastState
@@ -328,7 +328,7 @@ class StatusViewModel {
                 color: .normalTextColor(),
                 handler: { [weak self] in self?.changeServer() }
             )
-        case .unavailable(let duration):
+        case let .unavailable(duration):
             let serverChangeString = Localizable.changeServer
                 .attributed(withColor: .normalTextColor(), font: .systemFont(ofSize: 15))
             return TableViewCellModel.attributedKeyValue(
@@ -476,7 +476,7 @@ class StatusViewModel {
 
     @MainActor
     private func updateConnectionDate() async {
-        self.connectedDate = (await appStateManager.connectedDate()) ?? Date()
+        self.connectedDate = await (appStateManager.connectedDate()) ?? Date()
         self.updateTimeCell()
     }
 

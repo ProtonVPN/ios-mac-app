@@ -228,7 +228,7 @@ class CreateNewProfileViewModel {
         // List all available servers
         result += currentGroupServers.map { server in
             var checked = false
-            if case .custom(let selectedServerWrapper) = state.serverOffering {
+            if case let .custom(selectedServerWrapper) = state.serverOffering {
                 checked = selectedServerWrapper.server.id == server.logical.id
             }
 
@@ -422,7 +422,7 @@ class CreateNewProfileViewModel {
     }
 
     private func prefillInfo(for profile: Profile) {
-        guard profile.profileType == .user, case ProfileIcon.circle(let color) = profile.profileIcon else {
+        guard profile.profileType == .user, case let ProfileIcon.circle(color) = profile.profileIcon else {
             return
         }
 
@@ -435,9 +435,9 @@ class CreateNewProfileViewModel {
         if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
-                case .country(let countryCode):
+                case let .country(countryCode):
                     return countryCode == profile.serverOffering.countryCode
-                case .gateway(let name):
+                case let .gateway(name):
                     return name == profile.serverOffering.countryCode
                 }
             }
@@ -498,7 +498,7 @@ class CreateNewProfileViewModel {
         let accessTier: Int = switch serverOffering {
         case .fastest, .random:
             selectedGroup.minTier
-        case .custom(let wrapper):
+        case let .custom(wrapper):
             wrapper.server.tier
         }
 

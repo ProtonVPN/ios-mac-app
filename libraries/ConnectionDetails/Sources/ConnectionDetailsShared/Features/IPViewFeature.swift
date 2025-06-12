@@ -27,7 +27,7 @@ public struct IPViewFeature {
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {
-            guard case .connected(_, let server, _, let connectionDetailsMessage) = connectionState else {
+            guard case let .connected(_, server, _, connectionDetailsMessage) = connectionState else {
                 return nil
             }
             if let connectionDetailsIP = connectionDetailsMessage?.exitIp {

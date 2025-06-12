@@ -89,7 +89,7 @@ final class ConnectionBarViewModel {
 
     private func updateState(with state: AppState) {
         Task {
-            self.connectedDate = (await appStateManager.connectedDate()) ?? Date()
+            self.connectedDate = await (appStateManager.connectedDate()) ?? Date()
         }
 
         switch state {

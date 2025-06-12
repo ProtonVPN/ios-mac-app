@@ -48,7 +48,7 @@ public struct DefaultConnectionFeature {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .preferenceSelected(let preference):
+            case let .preferenceSelected(preference):
                 state.$defaultConnectionPreference.withLock { $0 = preference }
                 return .run { _ in
                     @Dependency(\.defaultConnectionStorage) var storage

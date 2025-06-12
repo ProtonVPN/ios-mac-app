@@ -1,8 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable hoistAwait
---disable hoistPatternLet
---disable hoistTry
 --disable indent
 --disable initCoderUnavailable
 --disable leadingDelimiters

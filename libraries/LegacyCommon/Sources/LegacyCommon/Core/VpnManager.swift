@@ -517,7 +517,7 @@ public final class VpnManager: VpnManagerProtocol {
         }
         configuration.includeAllNetworks = propertiesManager.killSwitch
 
-        if case .wireGuard(let type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
+        if case let .wireGuard(type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
             (configuration as? NETunnelProviderProtocol)?.wgProtocol = type.rawValue
         }
 
@@ -772,7 +772,7 @@ public final class VpnManager: VpnManagerProtocol {
             if let currentVpnProtocol = self.currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
                 self.propertiesManager.hasConnected = true
             }
-        case .error(let error):
+        case let .error(error):
             if case CommonVpnError.tlsServerVerification = error {
                 self.disconnect {}
                 SentryHelper.shared?.log(error: error)

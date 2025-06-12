@@ -161,13 +161,13 @@ final class ProfileItemViewModel {
         self.propertiesManager = propertiesManager
 
         switch profile.serverOffering {
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier // add unit tests
             self.underMaintenance = serverWrapper.server.underMaintenance
 
-        case .fastest(let countryCode): fallthrough
+        case let .fastest(countryCode): fallthrough
 
-        case .random(let countryCode):
+        case let .random(countryCode):
             guard let code = countryCode else {
                 self.lowestServerTier = 0
                 self.underMaintenance = false
@@ -297,11 +297,11 @@ final class ProfileItemViewModel {
         }
 
         switch profile.serverOffering {
-        case .fastest(let cCode):
+        case let .fastest(cCode):
             return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
-        case .random(let cCode):
+        case let .random(cCode):
             return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
-        case .custom(let sWrapper):
+        case let .custom(sWrapper):
             return customServerDescriptor(forModel: sWrapper.server)
         }
     }

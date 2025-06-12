@@ -160,7 +160,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ rowVM: RowViewModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case .serverGroup(let viewModel) = rowVM else {
+        guard case let .serverGroup(viewModel) = rowVM else {
             XCTFail("Expected row view model to be a server group, but found: \(rowVM)")
             return
         }

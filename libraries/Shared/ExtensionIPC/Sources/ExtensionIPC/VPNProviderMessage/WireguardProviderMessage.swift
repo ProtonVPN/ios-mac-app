@@ -71,7 +71,7 @@ public enum WireguardProviderRequest: ProviderRequest {
             return datagram(.flushLogsToFile)
         case let .setApiSelector(selector, sessionCookie):
             return encodeApiSelector(selector: selector, sessionCookie: sessionCookie)
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             let encoder = JSONEncoder()
             var featuresData: Data?
             if let features = features, let encodedFeatures = try? encoder.encode(features) {
@@ -165,13 +165,13 @@ public enum WireguardProviderRequest: ProviderRequest {
 
         public var asData: Data {
             switch self {
-            case .ok(let data):
+            case let .ok(data):
                 return datagram(.ok) + (data ?? Data())
             case .errorSessionExpired:
                 return datagram(.sessionExpired)
             case .errorNeedKeyRegeneration:
                 return datagram(.needKeyRegen)
-            case .errorTooManyCertRequests(let retryAfter):
+            case let .errorTooManyCertRequests(retryAfter):
                 var data = datagram(.tooManyCertRequests)
                 if let retryAfter = retryAfter {
                     let intData = withUnsafeBytes(of: retryAfter) { bufPtr -> Data? in
@@ -181,7 +181,7 @@ public enum WireguardProviderRequest: ProviderRequest {
                     data += intData ?? Data()
                 }
                 return data
-            case .error(let message):
+            case let .error(message):
                 return datagram(.unrecoverableError) + (message.data(using: .utf8) ?? Data())
             }
         }
@@ -291,7 +291,7 @@ extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringCo
             return "getRuntimeTunnelConfiguration"
         case .setApiSelector:
             return "setApiSelector"
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             return "refreshCertificate(features: \(String(describing: features))"
         case .restartRefreshes:
             return "restartRefreshes"

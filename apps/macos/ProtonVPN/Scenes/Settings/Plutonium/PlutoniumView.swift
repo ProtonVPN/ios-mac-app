@@ -167,7 +167,7 @@ public struct PlutoniumView: View {
     }
 
     private var appsHeaderTitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExclusionListApps
@@ -177,7 +177,7 @@ public struct PlutoniumView: View {
     }
 
     private var appsHeaderSubtitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExcludeModeApps
@@ -187,7 +187,7 @@ public struct PlutoniumView: View {
     }
 
     private var ipsHeaderTitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExcludeModeIps

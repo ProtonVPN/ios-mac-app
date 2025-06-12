@@ -29,9 +29,9 @@ extension ConnectionSpec {
             location = connectionRequest.serverType == .secureCore ? .secureCore(.fastest) : .fastest
         case .random:
             location = connectionRequest.serverType == .secureCore ? .secureCore(.random) : .random
-        case .gateway(let name):
+        case let .gateway(name):
             location = .gateway(name: name)
-        case .country(let country, let type):
+        case let .country(country, type):
             switch type {
             case .fastest:
                 if connectionRequest.serverType == .secureCore {
@@ -41,7 +41,7 @@ extension ConnectionSpec {
                 }
             case .random:
                 location = .region(code: country)
-            case .server(let serverModel):
+            case let .server(serverModel):
                 if serverModel.feature.contains(.streaming) {
                     features.insert(.streaming)
                 }
@@ -63,7 +63,7 @@ extension ConnectionSpec {
                     )
                 }
             }
-        case .city(let country, let city):
+        case let .city(country, city):
             location = .exact(.paid, logicalID: nil, number: nil, subregion: city, regionCode: country)
         }
         self = .init(location: location, features: features, profileId: connectionRequest.profileId)

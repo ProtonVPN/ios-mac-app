@@ -45,10 +45,10 @@ extension CreateOrEditProfileViewModel {
         let countryString: String
 
         switch group.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             imageAttributedString = embeddedCountryFlag(countryCode: countryCode)
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
-        case .gateway(let name):
+        case let .gateway(name):
             imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
         }

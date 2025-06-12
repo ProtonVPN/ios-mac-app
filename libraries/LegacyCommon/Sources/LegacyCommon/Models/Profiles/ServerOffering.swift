@@ -63,22 +63,22 @@ public enum ServerOffering: Equatable, Codable {
     
     public var description: String {
         switch self {
-        case .fastest(let cCode):
+        case let .fastest(cCode):
             return "Fastest server - \(String(describing: cCode))"
-        case .random(let cCode):
+        case let .random(cCode):
             return "Random server - \(String(describing: cCode))"
-        case .custom(let sModel):
+        case let .custom(sModel):
             return "Custom server - \(String(describing: sModel))"
         }
     }
     
     public var countryCode: String? {
         switch self {
-        case .fastest(let cCode):
+        case let .fastest(cCode):
             return cCode
-        case .random(let cCode):
+        case let .random(cCode):
             return cCode
-        case .custom(let sModel):
+        case let .custom(sModel):
             return sModel.server.countryCode
         }
     }
@@ -112,11 +112,11 @@ public enum ServerOffering: Equatable, Codable {
 
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
         var equal: Bool = false
-        if case ServerOffering.fastest(let lcc) = lhs, case ServerOffering.fastest(let rcc) = rhs {
+        if case let ServerOffering.fastest(lcc) = lhs, case let ServerOffering.fastest(rcc) = rhs {
             equal = lcc == rcc
-        } else if case ServerOffering.random(let lcc) = lhs, case ServerOffering.random(let rcc) = rhs {
+        } else if case let ServerOffering.random(lcc) = lhs, case let ServerOffering.random(rcc) = rhs {
             equal = lcc == rcc
-        } else if case ServerOffering.custom(let lsw) = lhs, case ServerOffering.custom(let rsw) = rhs {
+        } else if case let ServerOffering.custom(lsw) = lhs, case let ServerOffering.custom(rsw) = rhs {
             equal = lsw.server.id == rsw.server.id
         }
         return equal
@@ -129,7 +129,7 @@ extension ServerOffering {
                          withCountryGroup grouping: ServerGroupInfo?,
                          smartProtocolConfig: SmartProtocolConfig) -> Bool {
         switch self {
-        case .fastest(let countryCode), .random(let countryCode):
+        case let .fastest(countryCode), let .random(countryCode):
             guard let grouping else {
                 return true
             }
@@ -141,7 +141,7 @@ extension ServerOffering {
 
             return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
 
-        case .custom(let wrapper):
+        case let .custom(wrapper):
             return wrapper.server.supports(connectionProtocol: connectionProtocol,
                                            smartProtocolConfig: smartProtocolConfig)
         }
@@ -151,9 +151,9 @@ extension ServerOffering {
 extension ServerGroupInfo {
     public var serverOfferingID: String {
         switch kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             return countryCode
-        case .gateway(let name):
+        case let .gateway(name):
             return "gateway-\(name)"
         }
     }

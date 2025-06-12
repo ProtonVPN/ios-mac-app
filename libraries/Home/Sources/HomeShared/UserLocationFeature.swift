@@ -134,7 +134,7 @@ public struct UserLocationFeature {
                     await send(.userLocationFetchFinished(result))
                 }.cancellable(id: CancelID.userLocation, cancelInFlight: true)
 
-            case .userLocationFetchFinished(.success(let location)):
+            case let .userLocationFetchFinished(.success(location)):
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
 
@@ -149,7 +149,7 @@ public struct UserLocationFeature {
                 state.$lastLocationRetrieval.withLock { $0 = date.now }
                 return .send(.delegate(.userLocationChanged(location)))
 
-            case .userLocationFetchFinished(.failure(let error)):
+            case let .userLocationFetchFinished(.failure(error)):
                 log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
                 return .none
 

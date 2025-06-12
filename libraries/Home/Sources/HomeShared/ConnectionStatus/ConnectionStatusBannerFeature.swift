@@ -61,7 +61,7 @@ public struct ConnectionStatusBannerFeature {
                 switch authorizer.serverChangeAvailability() {
                 case .available:
                     state.upsellMode = .netshield
-                case .unavailable(let until, _, _):
+                case let .unavailable(until, _, _):
                     state.upsellMode = .serverChange
                     // Change server block will eventually disappear, so let's wait for the timeout and check again
                     return .run { send in

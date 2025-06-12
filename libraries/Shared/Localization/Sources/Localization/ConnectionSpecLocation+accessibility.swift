@@ -54,13 +54,13 @@ public extension ConnectionSpec.Location {
         case .random, .secureCore(.random):
             return Localizable.homeRecentsRandomServerTitle
 
-        case .region(let code),
-                .exact(_, _, _, _, let code),
-                .secureCore(.fastestHop(let code)),
-                .secureCore(.hop(let code, _)):
+        case let .region(code),
+                let .exact(_, _, _, _, code),
+                let .secureCore(.fastestHop(code)),
+                let .secureCore(.hop(code, _)):
             return regionName(locale: locale, code: code)
 
-        case .gateway(let name):
+        case let .gateway(name):
             return name
         }
     }
@@ -84,7 +84,7 @@ public extension ConnectionSpec.Location {
             return text
         case .secureCore(.fastest), .secureCore(.fastestHop), .secureCore(.random):
             return Localizable.viaSecureCore
-        case .secureCore(.hop(_, let via)):
+        case let .secureCore(.hop(_, via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
         case .gateway:
             // Similarly to fastest/random/region, we're not specifying an exact server. Leave subtext blank.

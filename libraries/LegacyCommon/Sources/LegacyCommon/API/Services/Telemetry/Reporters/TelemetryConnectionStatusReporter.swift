@@ -122,14 +122,14 @@ class TelemetryConnectionStatusReporter {
         var eventType: ConnectionEvent.Event?
         var connection: ServerConnectionIntent?
         switch connectionState {
-        case .connected(let connectionIntent,_, let connectedDate, _):
+        case let .connected(connectionIntent,_, connectedDate, _):
             connection = connectionIntent
             timer.updateConnectionStarted(connectedDate)
             timer.markFinishedConnecting()
             eventType = try connectionEventType(state: connectionState)
-        case .connecting(let intent):
+        case let .connecting(intent):
             switch intent {
-            case .resolved(let resolvedConnectionIntent, _):
+            case let .resolved(resolvedConnectionIntent, _):
                 connection = resolvedConnectionIntent
             case .unresolved:
                 timer.markConnectionStopped()
@@ -140,7 +140,7 @@ class TelemetryConnectionStatusReporter {
             connection = previousConnectionIntent
             timer.markConnectionStopped()
             eventType = try connectionEventType(state: connectionState)
-        case .disconnecting(let connectionIntent, _):
+        case let .disconnecting(connectionIntent, _):
             previousConnectionIntent = connectionIntent
             // Ignoring the `disconnecting` status
             return
@@ -282,14 +282,14 @@ class TelemetryConnectionStatusReporter {
             return .vpnConnection(timeToConnection: timeInterval)
         case .disconnected:
             if previousConnectionStatus == .connected {
-                return .vpnDisconnection(sessionLength: try timer.connectionDuration)
+                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
             } else if previousConnectionStatus == .connecting {
-                return .vpnConnection(timeToConnection: try timer.timeConnecting)
+                return try .vpnConnection(timeToConnection: timer.timeConnecting)
             }
             throw Error(localizedDescription: "Ignoring disconnected event, was previously disconnected")
         case .connecting:
             if previousConnectionStatus == .connected {
-                return .vpnDisconnection(sessionLength: try timer.connectionDuration)
+                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
             }
             throw Error(localizedDescription: "Ignoring connecting event, wasn't connected before")
         case .disconnecting:
@@ -306,9 +306,9 @@ class TelemetryConnectionStatusReporter {
         case .disconnected:
             switch previousConnectionState {
             case .connected:
-                return .vpnDisconnection(sessionLength: try timer.connectionDuration)
+                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
             case .connecting:
-                return .vpnConnection(timeToConnection: try timer.timeConnecting)
+                return try .vpnConnection(timeToConnection: timer.timeConnecting)
             case .disconnected:
                 log.debug("Ignoring disconnected event, was previously disconnected.")
                 return nil
@@ -318,7 +318,7 @@ class TelemetryConnectionStatusReporter {
             }
         case .connecting:
             if case .connected = previousConnectionState {
-                return .vpnDisconnection(sessionLength: try timer.connectionDuration)
+                return try .vpnDisconnection(sessionLength: timer.connectionDuration)
             }
             return nil
         case .disconnecting, .resolving:
@@ -416,9 +416,9 @@ class TelemetryConnectionStatusReporter {
             return newConnection()
         }
         switch userInitiatedVPNChange {
-        case .connect(let trigger):
+        case let .connect(trigger):
             return trigger ?? newConnection()
-        case .disconnect(let trigger):
+        case let .disconnect(trigger):
             return trigger
         case .abort:
             return .auto

@@ -58,7 +58,7 @@ extension Announcement {
 
 extension Announcement {
     var fullScreenImage: FullScreenImage? {
-        guard case .image(let panel) = offer?.panel?.panelMode() else {
+        guard case let .image(panel) = offer?.panel?.panelMode() else {
             return nil
         }
         return panel.fullScreenImage

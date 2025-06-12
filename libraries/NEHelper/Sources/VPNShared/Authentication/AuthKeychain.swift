@@ -143,7 +143,7 @@ extension AuthKeychain: AuthKeychainHandle {
             let credentials: AuthCredentials = try fetch(forContext: context)
             return credentials
         } catch {
-            if let keychainError = error as? KeychainError, case .credentialsMissing(let key) = keychainError {
+            if let keychainError = error as? KeychainError, case let .credentialsMissing(key) = keychainError {
                 log.debug("Credentials missing from auth keychain", metadata: ["storageKey": "\(key)"])
                 return nil
             }

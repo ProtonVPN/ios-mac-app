@@ -68,7 +68,7 @@ final class CountryItemViewModel {
 
     var countryCode: String {
         switch serversGroup.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             return countryCode
         case .gateway:
             return ""
@@ -79,9 +79,9 @@ final class CountryItemViewModel {
 
     var countryName: String {
         switch serversGroup.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             return LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
-        case .gateway(let name):
+        case let .gateway(name):
             return name
         }
     }

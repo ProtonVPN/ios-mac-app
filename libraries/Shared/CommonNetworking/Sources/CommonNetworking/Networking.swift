@@ -59,10 +59,10 @@ public enum Session: Equatable {
 
     public var uid: String {
         switch self {
-        case .auth(let uid):
+        case let .auth(uid):
             return uid
 
-        case .unauth(let uid):
+        case let .unauth(uid):
             return uid
         }
     }
@@ -72,11 +72,11 @@ public enum Session: Equatable {
 
 public final class CoreNetworking: Networking {
     public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
-        (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
+        try await (apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
 
     public func perform(request route: Request) async throws -> JSONDictionary {
-        ((try await apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
+        try await ((apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
     public private(set) var apiService: PMAPIService
@@ -169,10 +169,10 @@ public final class CoreNetworking: Networking {
                            nonDefaultTimeout: nil,
                            retryPolicy: route.retryPolicy) { (task, result) in
             switch result {
-            case .success(let data):
+            case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.success(data))
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error))
             }
@@ -205,7 +205,7 @@ public final class CoreNetworking: Networking {
             let statusCode = httpResponse?.statusCode
             let lastModified = httpResponse?.headers["Last-Modified"]
             switch result {
-            case .success(let data):
+            case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: [
                     "url": "\(url)",
                     "method": "\(route.method.rawValue.uppercased())",
@@ -213,7 +213,7 @@ public final class CoreNetworking: Networking {
                 ])
                 completion(.success(.modified(at: lastModified, value: data)))
 
-            case .failure(let error):
+            case let .failure(error):
                 if case HttpStatusCode.notModified.rawValue = statusCode {
                     log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
                         "error": "\(error)",

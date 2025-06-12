@@ -27,11 +27,11 @@ public typealias ContinuousServerPropertiesDictionary = [String: ContinuousServe
 
 extension ContinuousServerProperties {
     public init(dic: JSONDictionary) throws {
-        self.init(
-            serverId: try dic.stringOrThrow(key: "ID"), // "ID": "ABC",
-            load: try dic.intOrThrow(key: "Load"), // "Load": "15"
-            score: try dic.doubleOrThrow(key: "Score"), // "Score": "1.4454542"
-            status: try dic.intOrThrow(key: "Status") // "Status": 1
+        try self.init(
+            serverId: dic.stringOrThrow(key: "ID"), // "ID": "ABC",
+            load: dic.intOrThrow(key: "Load"), // "Load": "15"
+            score: dic.doubleOrThrow(key: "Score"), // "Score": "1.4454542"
+            status: dic.intOrThrow(key: "Status") // "Status": 1
         )
     }
 

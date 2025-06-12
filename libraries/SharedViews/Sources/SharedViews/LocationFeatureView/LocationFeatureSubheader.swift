@@ -42,7 +42,7 @@ public struct LocationFeatureSubheader: View {
 
     @ViewBuilder private var content: some View {
         switch model {
-        case .textual(let textModel):
+        case let .textual(textModel):
             [Text(textModel.location)]
                 .appending(torText, if: textModel.showTor)
                 .appending(p2pText, if: textModel.showP2P)

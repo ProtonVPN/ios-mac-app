@@ -152,7 +152,7 @@ final class CoreLoginService {
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp()
             loginInterface = makeLoginInterface()
-        case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
+        case let .loginStateChanged(.dataIsAvailable(loginData)), let .signupStateChanged(.dataIsAvailable(loginData)):
             log.debug("Login or signup process in progress", category: .app)
             // Update the session id in the networking stack after login
             let uid = loginData.getCredential.UID

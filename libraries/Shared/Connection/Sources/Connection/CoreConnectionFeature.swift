@@ -155,7 +155,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .cancel(id: CancelID.connectionTimeout)
             )
 
-        case .connect(let intent):
+        case let .connect(intent):
             if !CoreConnectionState(connectionFeatureState: state).is(\.disconnected) {
                 // This could happen if the tunnel is started externally during the connection preparation phase.
                 // Check the README under ExtensionManagerFeature for more information about how the tunnel can be
@@ -179,7 +179,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 }.cancellable(id: CancelID.connectionTimeout, cancelInFlight: true)
             )
 
-        case .disconnect(.connectionFailure(let error)):
+        case let .disconnect(.connectionFailure(error)):
             // Disconnection initiated due to an error
             return .merge(
                 .send(.delegate(.error(error))),
@@ -197,7 +197,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.tunnel(.disconnect(nil)))
             )
 
-        case .tunnel(.connectionFinished(.success(let tunnelResponse))):
+        case let .tunnel(.connectionFinished(.success(tunnelResponse))):
             // The network extension has been configured and launched (possibly during a previous run of the app).
             // It has replied with the id of the logical and endpoint that it believes it is connected to, and we have
             // confirmed that a server with such ids exists in our server database.
@@ -218,8 +218,8 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // Let's dive into the keychain and see if there's a valid certificate we can use to connect to the local agent server with.
             return .send(.certAuth(.loadAuthenticationData))
 
-        case .certAuth(.loadingFinished(.success(let authData))):
-            guard case .connected(let tunnelConnectionInfo) = state.tunnel else {
+        case let .certAuth(.loadingFinished(.success(authData))):
+            guard case let .connected(tunnelConnectionInfo) = state.tunnel else {
                 log.error("Finished loading auth data but tunnel is not connected")
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
@@ -247,7 +247,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // The tunnel has been established, we know what server to connect to, and we have a valid certificate
             return .send(.localAgent(.connect(server.endpoint, data, features)))
 
-        case .certAuth(.loadingFinished(.failure(let error))):
+        case let .certAuth(.loadingFinished(.failure(error))):
             log.error("Failed to load authentication data: \(error)")
             // We encountered an unrecoverable failure to load, fetch or refresh a certificate. Disconnect with the error
             return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
@@ -269,7 +269,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // This could be due to keychain problems or tunnel configuration errors
             return .cancel(id: CancelID.connectionTimeout)
 
-        case .localAgent(.delegate(.connectionFailed(let error))):
+        case let .localAgent(.delegate(.connectionFailed(error))):
             // An error occurred while creating the local agent connection
             // This is likely due to a problem with our keys/certificate. Let's disconnect
             let connectionError = ConnectionError.agent(.failedToEstablishConnection(error))
@@ -288,10 +288,10 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             // Local agent connection has been created, and we received a response from the server
             return .cancel(id: CancelID.connectionTimeout)
 
-        case .localAgent(.delegate(.errorReceived(let error))):
+        case let .localAgent(.delegate(.errorReceived(error))):
             // We've received a local agent error
             @Dependency(\.date) var date
-            if case .reconnect(.withNewCertificate) = error.resolutionStrategy, case .loaded(let data) = state.certAuth, date.now < data.certificate.validUntil {
+            if case .reconnect(.withNewCertificate) = error.resolutionStrategy, case let .loaded(data) = state.certAuth, date.now < data.certificate.validUntil {
                 // LA seems to sometimes return a certExpired error when connecting to restricted servers, even when
                 // our certificate is still valid. If our loaded certificate is still valid, let's ignore this error
                 log.info(
@@ -389,15 +389,15 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
-        if case .disconnected(let tunnelError) = state.tunnel, let tunnelError {
+        if case let .disconnected(tunnelError) = state.tunnel, let tunnelError {
             log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
             state.tunnel = .disconnected(nil)
         }
-        if case .failed(let certAuthError) = state.certAuth {
+        if case let .failed(certAuthError) = state.certAuth {
             log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
             state.certAuth = .idle
         }
-        if case .disconnected(let agentError) = state.localAgent, let agentError {
+        if case let .disconnected(agentError) = state.localAgent, let agentError {
             log.info("Resetting local agent connection error from previous connection attempt: \(agentError)")
             state.localAgent = .disconnected(nil)
         }
