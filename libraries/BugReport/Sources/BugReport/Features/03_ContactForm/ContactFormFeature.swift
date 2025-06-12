@@ -49,7 +49,7 @@ struct ContactFormFeature: Reducer {
         var canBeSent: Bool {
             // Make sure that none of the mandatory fields contains empty value or unchecked switch
             // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
-            !fields.filter({ $0.inputField.isMandatory ?? true }).contains(where: {
+            !fields.filter { $0.inputField.isMandatory ?? true }.contains(where: {
                 switch $0.inputField.type {
                 case .textSingleLine, .textMultiLine:
                     $0.stringValue.isEmpty
@@ -136,7 +136,7 @@ struct ContactFormFeature: Reducer {
             let email = find(emailFieldName)?.stringValue ?? ""
             let username = find(usernameFieldName)?.stringValue ?? ""
             let logs = find(logsFieldName)?.boolValue ?? false
-            let text = fields.filter({ ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }).reduce("") { prev, field in
+            let text = fields.filter { ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }.reduce("") { prev, field in
                 let headerSeparator: String = prev.isEmpty ? " " : "\n"
                 switch field.inputField.type {
                 case .textSingleLine, .textMultiLine:

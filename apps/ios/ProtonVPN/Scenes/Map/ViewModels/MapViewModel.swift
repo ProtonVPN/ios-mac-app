@@ -248,9 +248,9 @@ class MapViewModel: SecureCoreToggleHandler {
         }
 
         let entriesArray = [SecureCoreEntryCountryModel](entryCountries)
-        secureCoreConnections = entriesArray.enumerated().map({ (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
+        secureCoreConnections = entriesArray.enumerated().map { (offset: Int, element: SecureCoreEntryCountryModel) -> ConnectionViewModel in
             return ConnectionViewModel(.connected, between: element, and: entriesArray[(offset + 1) % entriesArray.count])
-        })
+        }
 
         return entryCountries
     }

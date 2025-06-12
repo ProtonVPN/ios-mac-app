@@ -50,6 +50,6 @@ extension Effect {
         on scheduler: AnySchedulerOf<UIScheduler> = .shared,
         reinjecting transform: @escaping (Output) -> Action
     ) -> Self {
-        self.publisher { publisher.receive(on: scheduler).compactMap({ $0 }).map(transform) }
+        self.publisher { publisher.receive(on: scheduler).compactMap { $0 }.map(transform) }
     }
 }

@@ -169,12 +169,12 @@ final class MapViewController: UIViewController {
             }
         }
         
-        viewModel?.connections.forEach({ connection in
+        viewModel?.connections.forEach { connection in
             let connectionView = ConnectionView(frame: CGRect.zero, viewModel: connection)
             mapView.addSubview(connectionView)
             positionConnectionInMap(connectionView)
             connectionView.transform = connectionView.transform.scaledBy(x: 1 / scrollView.zoomScale, y: 1)
-        })
+        }
         
         reorderAnnotations()
     }

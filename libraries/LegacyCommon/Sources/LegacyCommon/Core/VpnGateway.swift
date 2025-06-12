@@ -358,10 +358,10 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
         disconnect {
-            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(DomainConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(DomainConstants.protocolChangeDelay)) { // Delay enhances reconnection success rate
                 let connectionRequest = self.lastConnectionRequest?.withChanged(connectionProtocol: connectionProtocol)
                 self.connect(with: connectionRequest)
-            })
+            }
         }
     }
 

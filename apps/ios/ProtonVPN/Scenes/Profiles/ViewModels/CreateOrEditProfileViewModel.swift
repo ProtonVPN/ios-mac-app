@@ -471,9 +471,9 @@ class CreateOrEditProfileViewModel: NSObject {
 
 extension CreateOrEditProfileViewModel {
     private var countrySelectionDataSet: SelectionDataSet {
-        let rows: [SelectionRow] = serverGroups.map({ countryGroup in
+        let rows: [SelectionRow] = serverGroups.map { countryGroup in
             SelectionRow(title: countryDescriptor(for: countryGroup), object: countryGroup)
-        })
+        }
                 
         let sections: [SelectionSection] = if rows.contains(where: { ($0.object as! ServerGroupInfo).minTier > userTier }) {
             [
@@ -518,7 +518,7 @@ extension CreateOrEditProfileViewModel {
         guard let countryGroup = selectedCountryGroup else {
             return nil
         }
-        let selected = [selectedProtocol.vpnProtocol].compactMap({ $0 })
+        let selected = [selectedProtocol.vpnProtocol].compactMap { $0 }
         let supportedProtocols = selected.isEmpty
             ? propertiesManager.smartProtocolConfig.supportedProtocols
             : selected

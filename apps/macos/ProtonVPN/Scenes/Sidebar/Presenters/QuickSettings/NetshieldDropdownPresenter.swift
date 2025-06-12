@@ -89,7 +89,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
 
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
+        [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map { self.createNetshieldOption(level: $0) }
     }
 
     override func viewDidLoad() {

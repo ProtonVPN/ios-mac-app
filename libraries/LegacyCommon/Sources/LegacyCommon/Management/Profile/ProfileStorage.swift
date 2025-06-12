@@ -135,10 +135,10 @@ public final class ProfileStorage {
     }
 
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {
-        profiles.filter({ $0.profileType != .system })
+        profiles.filter { $0.profileType != .system }
     }
 
     private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
-        !profiles.filter({ $0.profileType == .system }).isEmpty
+        !profiles.filter { $0.profileType == .system }.isEmpty
     }
 }

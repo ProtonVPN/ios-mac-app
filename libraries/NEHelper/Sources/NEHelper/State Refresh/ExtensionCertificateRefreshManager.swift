@@ -144,7 +144,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
             // If we're starting a new session, we need to get a new certificate to avoid getting a 409 Key Conflict error.
             self?.checkRefreshCertificateNow(features: features, forceRefreshDueToExpiredSession: true, completion: { result in
-                completionHandler(result.mapError({ $0 }))
+                completionHandler(result.mapError { $0 })
             })
         }
     }

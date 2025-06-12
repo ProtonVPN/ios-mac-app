@@ -394,19 +394,19 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         let mapContainerWidth: CGFloat = savedMapWidth > expandButtonWidth ? savedMapWidth : 600
         if expandButton.expandState == .compact {
             if var frame = view.window?.frame {
-                NSAnimationContext.runAnimationGroup({ context in
+                NSAnimationContext.runAnimationGroup { context in
                     context.duration = 0.4
                     frame.size.width = sidebarWidth + mapContainerWidth
                     self.view.window?.animator().setFrame(frame, display: true)
-                })
+                }
             }
         } else {
             if var frame = view.window?.frame {
-                NSAnimationContext.runAnimationGroup({ context in
+                NSAnimationContext.runAnimationGroup { context in
                     context.duration = 0.4
                     frame.size.width = sidebarWidth
                     self.view.window?.animator().setFrame(frame, display: true)
-                })
+                }
             }
         }
     }

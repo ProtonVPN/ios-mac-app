@@ -254,13 +254,13 @@ private extension HTTPCookie {
     var asDict: JSONDictionary? {
         guard let properties else { return nil }
 
-        let dict: JSONDictionary = properties.reduce(into: [:], { partialResult, kvPair in
+        let dict: JSONDictionary = properties.reduce(into: [:]) { partialResult, kvPair in
             if kvPair.key.hasDateRepresentation, let date = kvPair.value as? Date {
                 partialResult[kvPair.key.rawValue] = Int(date.timeIntervalSince1970) as AnyObject
             } else {
                 partialResult[kvPair.key.rawValue] = kvPair.value as AnyObject
             }
-        })
+        }
 
         return dict
     }

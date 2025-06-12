@@ -70,7 +70,7 @@ class VpnServerSelector {
             vpnProtocol.protocolSupport
         case .smartProtocol:
             smartProtocolConfig.supportedProtocols
-                .reduce(.zero, { $0.union($1.protocolSupport) })
+                .reduce(.zero) { $0.union($1.protocolSupport) }
         }
     }
 

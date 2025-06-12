@@ -285,12 +285,12 @@ class MapSectionViewModel {
     }
     
     private func standardConnections() -> [ConnectionViewModel] {
-        annotations.filter({ annotation -> Bool in
+        annotations.filter { annotation -> Bool in
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
             return annotation.isConnected
-        }).map({ annotation -> ConnectionViewModel in
+        }.map { annotation -> ConnectionViewModel in
             return ConnectionViewModel(.connected, fromHomeTo: annotation)
-        })
+        }
     }
     
     // swiftlint:disable cyclomatic_complexity

@@ -134,10 +134,10 @@ public struct DebugConfigurationFeature {
             overrides = settings.featureFlagOverrides
                 .sorted(by: { $0.key < $1.key })
                 .enumerated()
-                .reduce(into: Array(), { partialResult, element in
+                .reduce(into: Array()) { partialResult, element in
                     let (index, item) = element
                     partialResult.append(.init(index: index, name: item.key, value: item.value))
-                }) + [.empty(index: settings.featureFlagOverrides.count)]
+                } + [.empty(index: settings.featureFlagOverrides.count)]
         }
     }
 
@@ -237,10 +237,10 @@ public struct DebugConfigurationFeature {
                                 apiEndpoint: state.newApiEndpointURLString,
                                 atlasSecret: state.atlasSecret,
                                 atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                featureFlagOverrides: state.overrides.reduce(into: [:], { partialResult, item in
+                                featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
                                     guard !item.name.isEmpty else { return }
                                     partialResult[item.name] = item.value
-                                })
+                                }
                             ))
                         }
                     },

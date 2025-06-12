@@ -156,7 +156,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "HasPaymentMethod": hasPaymentMethod,
             "Subscribed": subscribed ?? 0,
         ] as [String: Any])
-            .mapValues({ $0 as AnyObject })
+            .mapValues { $0 as AnyObject }
     }
 
     // MARK: - NSCoding

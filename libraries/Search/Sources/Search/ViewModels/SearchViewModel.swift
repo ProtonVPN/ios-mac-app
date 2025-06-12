@@ -90,7 +90,7 @@ final class SearchViewModel {
         }
 
         var results: [SearchResult] = []
-        let countries = data.filter({ filter($0.description) })
+        let countries = data.filter { filter($0.description) }
 
         switch mode {
         case let .standard(userTier):
@@ -98,13 +98,13 @@ final class SearchViewModel {
                 results.append(SearchResult.countries(countries: countries))
             }
 
-            let cities = data.flatMap({ $0.getCities() }).filter({ filter($0.cityName) || filter($0.translatedCityName) || filter($0.countryName) }).sorted(by: { $0.cityName < $1.cityName })
+            let cities = data.flatMap { $0.getCities() }.filter { filter($0.cityName) || filter($0.translatedCityName) || filter($0.countryName) }.sorted(by: { $0.cityName < $1.cityName })
             if !cities.isEmpty {
                 results.append(SearchResult.cities(cities: cities))
             }
 
             for tier in ServerTier.sorted(by: userTier) {
-                let tierServers = data.flatMap({ $0.getServers()[tier]?.filter({ filter($0.description) }) ?? [] })
+                let tierServers = data.flatMap { $0.getServers()[tier]?.filter { filter($0.description) } ?? [] }
                 if !tierServers.isEmpty {
                     results.append(SearchResult.servers(tier: tier, servers: tierServers))
                 }
@@ -115,7 +115,7 @@ final class SearchViewModel {
             }
 
         case .secureCore:
-            let servers = countries.flatMap({ $0.getServers().flatMap(\.1) })
+            let servers = countries.flatMap { $0.getServers().flatMap(\.1) }
             if !servers.isEmpty {
                 results.append(SearchResult.secureCoreCountries(servers: servers))
             }

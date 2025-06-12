@@ -75,9 +75,9 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
         if features.isEmpty { return description }
 
-        return "\(description)." + features.reduce(Localizable.featuresTitle + ": ", { result, feature in
+        return "\(description)." + features.reduce(Localizable.featuresTitle + ": ") { result, feature in
             result + feature + "."
-        })
+        }
     }
 
     var entryCountry: String? {

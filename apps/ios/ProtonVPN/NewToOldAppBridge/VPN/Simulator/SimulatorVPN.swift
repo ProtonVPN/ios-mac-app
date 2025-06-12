@@ -68,9 +68,9 @@
             queue.async {
                 self.status = .connecting(specs, nil)
             }
-            queue.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            queue.asyncAfter(deadline: .now() + .seconds(2)) {
                 self.status = self.targetStatus!
-            })
+            }
         }
 
         // MARK: - Connect
@@ -95,10 +95,10 @@
             queue.async {
                 self.status = .disconnecting(specs, specs.actualConnection)
             }
-            queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
+            queue.asyncAfter(deadline: .now() + .seconds(delay)) {
                 self.status = self.targetStatus!
                 completed?()
-            })
+            }
         }
 
         public static var serverChangeAuthorizer: ServerChangeAuthorizer = // Basic implementation for simulator support, change it according to your needs.

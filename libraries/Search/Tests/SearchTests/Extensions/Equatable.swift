@@ -43,13 +43,13 @@ extension SearchResult: Equatable {
         case (SearchResult.upsell, SearchResult.upsell):
             true
         case let (SearchResult.countries(countries: ldata), SearchResult.countries(countries: rdata)):
-            ldata.map({ $0 as! CountryViewModelMock }) == rdata.map({ $0 as! CountryViewModelMock })
+            ldata.map { $0 as! CountryViewModelMock } == rdata.map { $0 as! CountryViewModelMock }
         case let (SearchResult.servers(tier: ltier, servers: ldata), SearchResult.servers(tier: rtier, servers: rdata)):
-            ltier == rtier && ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
+            ltier == rtier && ldata.map { $0 as! ServerViewModelMock } == rdata.map { $0 as! ServerViewModelMock }
         case let (SearchResult.secureCoreCountries(servers: ldata), SearchResult.secureCoreCountries(servers: rdata)):
-            ldata.map({ $0 as! ServerViewModelMock }) == rdata.map({ $0 as! ServerViewModelMock })
+            ldata.map { $0 as! ServerViewModelMock } == rdata.map { $0 as! ServerViewModelMock }
         case let (SearchResult.cities(cities: ldata), SearchResult.cities(cities: rdata)):
-            ldata.map({ $0 as! CityViewModelMock }) == rdata.map({ $0 as! CityViewModelMock })
+            ldata.map { $0 as! CityViewModelMock } == rdata.map { $0 as! CityViewModelMock }
         default:
             false
         }

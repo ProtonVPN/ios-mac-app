@@ -217,7 +217,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         let certDict: [String: Any] = ["Certificate": "abcd1234",
                                        "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
                                        "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
-        return try! VpnCertificate(dict: certDict.mapValues({ $0 as AnyObject }))
+        return try! VpnCertificate(dict: certDict.mapValues { $0 as AnyObject })
     }
 }
 

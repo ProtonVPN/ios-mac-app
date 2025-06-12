@@ -451,7 +451,7 @@ class CountriesSectionViewModel {
 
     private var supportedProtocolsFilter: VPNServerFilter {
         let requiredProtocolSupport: ProtocolSupport = supportedProtocols
-            .reduce(.zero, { $0.union($1.protocolSupport) })
+            .reduce(.zero) { $0.union($1.protocolSupport) }
         return .supports(protocol: requiredProtocolSupport)
     }
 

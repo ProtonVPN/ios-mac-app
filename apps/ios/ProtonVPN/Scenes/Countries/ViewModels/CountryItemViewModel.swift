@@ -282,7 +282,7 @@ class CountryItemViewModel {
             return []
         }
 
-        let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
+        let servers = serverViewModels.flatMap { $1 }.filter { !$0.city.isEmpty }
         let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map {
             let translatedCityName = $0.value.compactMap(\.translatedCity).first

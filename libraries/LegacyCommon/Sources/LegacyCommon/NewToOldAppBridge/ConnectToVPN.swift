@@ -67,7 +67,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
             vpnProtocol.protocolSupport
         case .smartProtocol:
             propertiesManager.smartProtocolConfig.supportedProtocols
-                .reduce(.zero, { $0.union($1.protocolSupport) })
+                .reduce(.zero) { $0.union($1.protocolSupport) }
         }
 
         @SharedReader(.userTier) var userTier: Int?

@@ -485,9 +485,9 @@ extension CountriesViewModel {
     var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         case let .secureCore(data):
-            data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         }
     }
 }
