@@ -244,7 +244,7 @@ final class OneClickPayment {
             inAppPurchasePlans.append((.twoYearsWebPlan, nil))
         }
 
-        return inAppPurchasePlans.map { $0.planOption }
+        return inAppPurchasePlans.map(\.planOption)
     }
 
     func buyPlan(planOption: PlanOption) async -> PurchaseResult {

@@ -109,7 +109,7 @@ extension TunnelConfiguration {
             }
         }
 
-        let peerPublicKeysArray = peerConfigurations.map { $0.publicKey }
+        let peerPublicKeysArray = peerConfigurations.map(\.publicKey)
         let peerPublicKeysSet = Set<WireGuardKit.PublicKey>(peerPublicKeysArray)
         if peerPublicKeysArray.count != peerPublicKeysSet.count {
             throw ParseError.multiplePeersWithSamePublicKey
@@ -129,11 +129,11 @@ extension TunnelConfiguration {
             output.append("ListenPort = \(listenPort)\n")
         }
         if !interface.addresses.isEmpty {
-            let addressString = interface.addresses.map { $0.stringRepresentation }.joined(separator: ", ")
+            let addressString = interface.addresses.map(\.stringRepresentation).joined(separator: ", ")
             output.append("Address = \(addressString)\n")
         }
         if !interface.dns.isEmpty || !interface.dnsSearch.isEmpty {
-            var dnsLine = interface.dns.map { $0.stringRepresentation }
+            var dnsLine = interface.dns.map(\.stringRepresentation)
             dnsLine.append(contentsOf: interface.dnsSearch)
             let dnsString = dnsLine.joined(separator: ", ")
             output.append("DNS = \(dnsString)\n")
@@ -149,7 +149,7 @@ extension TunnelConfiguration {
                 output.append("PresharedKey = \(preSharedKey)\n")
             }
             if !peer.allowedIPs.isEmpty {
-                let allowedIPsString = peer.allowedIPs.map { $0.stringRepresentation }.joined(separator: ", ")
+                let allowedIPsString = peer.allowedIPs.map(\.stringRepresentation).joined(separator: ", ")
                 output.append("AllowedIPs = \(allowedIPsString)\n")
             }
             if let endpoint = peer.endpoint {

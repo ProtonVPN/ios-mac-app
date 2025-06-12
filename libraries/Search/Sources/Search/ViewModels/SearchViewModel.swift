@@ -85,7 +85,7 @@ final class SearchViewModel {
             }
 
             // any of the words in the text match the search text
-            let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map({ $0.normalized })
+            let normalizedParts = name.components(separatedBy: CharacterSet.whitespaces).map(\.normalized)
             return normalizedParts.contains(where: { $0.starts(with: normalizedSearchText) })
         }
 
@@ -115,7 +115,7 @@ final class SearchViewModel {
             }
 
         case .secureCore:
-            let servers = countries.flatMap({ $0.getServers().flatMap { $0.1 } })
+            let servers = countries.flatMap({ $0.getServers().flatMap(\.1) })
             if !servers.isEmpty {
                 results.append(SearchResult.secureCoreCountries(servers: servers))
             }

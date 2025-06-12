@@ -211,7 +211,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
                 errorHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
             case let .dnsResolution(dnsErrors):
-                let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
+                let hostnamesWithDnsResolutionFailure = dnsErrors.map(\.address)
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorHandler(PacketTunnelProviderError.dnsResolutionFailure)

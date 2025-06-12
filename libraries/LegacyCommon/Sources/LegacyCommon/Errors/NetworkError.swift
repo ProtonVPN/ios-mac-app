@@ -114,7 +114,7 @@ extension Error {
         // ProtonMailAPIService aggressively wraps network errors as `potentiallyBlocked` errors
         if nsError.code == NetworkErrorCode.potentiallyBlocked {
             // Retry the request if the underlying error is retriable
-            return nsError.underlyingErrors.contains(where: { $0.shouldRetry })
+            return nsError.underlyingErrors.contains(where: \.shouldRetry)
         }
 
         return false

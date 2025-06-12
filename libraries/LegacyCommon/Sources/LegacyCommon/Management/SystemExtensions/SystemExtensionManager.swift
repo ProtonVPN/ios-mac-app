@@ -208,7 +208,7 @@
             }
 
             guard propertiesManager.connectionProtocol.requiresSystemExtension ||
-                profileManager.customProfiles.contains(where: { $0.connectionProtocol.requiresSystemExtension }) else {
+                profileManager.customProfiles.contains(where: \.connectionProtocol.requiresSystemExtension) else {
                 log.debug("Aborted sysex installation because it is not required by profiles and settings", category: .sysex)
                 return
             }

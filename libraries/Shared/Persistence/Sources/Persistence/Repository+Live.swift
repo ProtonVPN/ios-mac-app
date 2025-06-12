@@ -115,7 +115,7 @@ extension ServerRepository {
                 return executor.read(dbWriter: dbWriter) { db in
                     let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
-                    let groups = try GroupInfoResult.fetchAll(db, request).map { $0.domainModel }
+                    let groups = try GroupInfoResult.fetchAll(db, request).map(\.domainModel)
                     return Dictionary(grouping: groups.filter {
                         if case .gateway = $0.kind { return true }
                         return false

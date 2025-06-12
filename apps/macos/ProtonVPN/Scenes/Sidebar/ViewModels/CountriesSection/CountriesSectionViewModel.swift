@@ -680,7 +680,7 @@ class CountriesSectionViewModel {
     }
 
     private func gatewaysSection(for groups: [ServerGroupInfo]) -> ServerSection? {
-        let gateways = groups.filter { $0.isGateway }
+        let gateways = groups.filter(\.isGateway)
         if gateways.isEmpty { return nil }
 
         return ServerSection(

@@ -172,7 +172,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             orderedBy: .nameAscending
         )
 
-        let ikeServerIDs = ikeResults.map { $0.logical.id }
+        let ikeServerIDs = ikeResults.map(\.logical.id)
 
         XCTAssertTrue(ikeResults.allSatisfy { $0.protocolSupport.contains(.ikev2) })
         XCTAssertEqual(ikeServerIDs, ["DE1"])
@@ -182,7 +182,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             orderedBy: .nameAscending
         )
 
-        let stealthServerIDs = stealthResults.map { $0.logical.id }
+        let stealthServerIDs = stealthResults.map(\.logical.id)
 
         XCTAssertTrue(stealthResults.allSatisfy { $0.protocolSupport.contains(.wireGuardTLS) })
         XCTAssertEqual(stealthServerIDs, ["DE2"])
@@ -192,7 +192,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             orderedBy: .nameAscending
         )
 
-        let ikeOrStealthIDs = Set(ikeOrStealthResults.map { $0.logical.id })
+        let ikeOrStealthIDs = Set(ikeOrStealthResults.map(\.logical.id))
 
         XCTAssertTrue(ikeOrStealthResults.allSatisfy { !$0.protocolSupport.isDisjoint(with: [.ikev2, .wireGuardTLS]) })
         XCTAssertEqual(ikeOrStealthIDs, Set(arrayLiteral: "DE1", "DE2"))
@@ -205,7 +205,7 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
             orderedBy: .nameAscending
         )
 
-        let serverNames = results.map { $0.logical.name }
+        let serverNames = results.map(\.logical.name)
 
         // Naive string comparison would result in DE#10 < DE#9
         XCTAssertEqual(serverNames, ["DE#9", "DE#10"])

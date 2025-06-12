@@ -108,11 +108,11 @@
 
                 if let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems,
                    queryItems.contains(where: { $0.name == "Tier" && $0.value == "0" }) {
-                    serverList = serverList.filter { $0.isFree }
+                    serverList = serverList.filter(\.isFree)
                 }
 
                 // for fetching server list
-                let servers = serverList.map { $0.asDict }
+                let servers = serverList.map(\.asDict)
                 let data = try JSONSerialization.data(withJSONObject: [
                     "LogicalServers": servers
                 ])
@@ -137,7 +137,7 @@
                     return .failure(POSIXError(.EINVAL))
                 }
 
-                let servers = self.apiServerLoads.map { $0.asDict }
+                let servers = self.apiServerLoads.map(\.asDict)
                 let data = try JSONSerialization.data(withJSONObject: [
                     "LogicalServers": servers
                 ])

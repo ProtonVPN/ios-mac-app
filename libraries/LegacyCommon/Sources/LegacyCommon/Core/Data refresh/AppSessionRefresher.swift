@@ -129,7 +129,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         vpnApiService.loads(lastKnownIp: lastKnownIp) { result in
             switch result {
             case let .success(properties):
-                let loads = properties.map { $0.value }
+                let loads = properties.map(\.value)
                 @Dependency(\.serverRepository) var serverRepository
                 serverRepository.upsert(loads: loads)
             case let .failure(error):

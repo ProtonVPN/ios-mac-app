@@ -40,7 +40,7 @@ extension LogicalsClient: DependencyKey {
                     lastModified: nil
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
-                return response.logicalServers.map { $0.vpnServer }
+                return response.logicalServers.map(\.vpnServer)
             },
             fetchLoads: { location in
                 let truncatedIP = location.flatMap { TruncatedIp(ip: $0.ip) }

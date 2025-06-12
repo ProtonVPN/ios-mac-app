@@ -240,7 +240,7 @@ public struct HomeFeature {
                             serverRepository.getServers(
                                 filteredBy: [.tier(.exact(tier: .freeTier))],
                                 orderedBy: .nameAscending
-                            ).map { $0.logical.exitCountryCode }
+                            ).map(\.logical.exitCountryCode)
                         ))
 
                         state.destination = .freeConnectionsInfo(.init(countryCodes: freeCountries))

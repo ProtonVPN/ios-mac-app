@@ -31,7 +31,7 @@ extension NETunnelProviderProtocol {
             appUid = getuid()
         #endif
 
-        let endpoints = tunnelConfiguration.peers.compactMap { $0.endpoint }
+        let endpoints = tunnelConfiguration.peers.compactMap(\.endpoint)
         if endpoints.count == 1 {
             serverAddress = endpoints[0].stringRepresentation
         } else if endpoints.isEmpty {

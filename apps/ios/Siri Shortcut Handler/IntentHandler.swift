@@ -59,7 +59,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     /// There is also a personal VPN section that is managed not by `NETunnelProviderManager`,
     /// but by `NEVPNManager` which is used by IKEv2, so we add this as well.
     private func getVpnStatus() async -> NEVPNStatus? {
-        var statuses = await (try? NETunnelProviderManager.loadAllFromPreferences().map { $0.connection.status }) ?? []
+        var statuses = await (try? NETunnelProviderManager.loadAllFromPreferences().map(\.connection.status)) ?? []
 
         // Add "personal" VPN status to the mix (IKEv2)
         let personal = NEVPNManager.shared()

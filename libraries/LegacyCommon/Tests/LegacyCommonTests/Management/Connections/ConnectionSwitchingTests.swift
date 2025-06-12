@@ -678,7 +678,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                        "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map(\.description))")
                     return
                 }
 
@@ -703,7 +703,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -711,7 +711,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -880,7 +880,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                        "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map(\.description))")
                     return
                 }
 
@@ -905,7 +905,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -913,7 +913,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -1049,7 +1049,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -1057,7 +1057,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                        "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()

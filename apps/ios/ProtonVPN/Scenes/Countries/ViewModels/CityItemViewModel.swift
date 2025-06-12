@@ -49,11 +49,11 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var isUsersTierTooLow: Bool {
-        return servers.allSatisfy({ $0.isUsersTierTooLow })
+        return servers.allSatisfy(\.isUsersTierTooLow)
     }
 
     var underMaintenance: Bool {
-        return servers.allSatisfy({ $0.underMaintenance })
+        return servers.allSatisfy(\.underMaintenance)
     }
 
     var connectIcon: UIImage? {
@@ -71,11 +71,11 @@ final class CityItemViewModel: CityViewModel {
     }
 
     var isConnected: Bool {
-        return servers.contains(where: { $0.isConnected })
+        return servers.contains(where: \.isConnected)
     }
 
     var isConnecting: Bool {
-        return servers.contains(where: { $0.isConnecting })
+        return servers.contains(where: \.isConnecting)
     }
 
     var isCurrentlyConnected: Bool {

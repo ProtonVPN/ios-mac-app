@@ -44,7 +44,7 @@ final class AnnouncementRequest {
 
     private var supportedImageFormats: String {
         supportedFormats
-            .map { $0.rawValue }
+            .map(\.rawValue)
             .joined(separator: ",")
     }
 

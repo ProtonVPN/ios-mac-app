@@ -224,11 +224,11 @@ class CountryItemViewModel {
     }
 
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
-        return serverViewModels(for: servers.filter { $0.logical.tier.isFreeTier })
+        return serverViewModels(for: servers.filter(\.logical.tier.isFreeTier))
     }()
 
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
-        return serverViewModels(for: servers.filter { $0.logical.tier.isPaidTier })
+        return serverViewModels(for: servers.filter(\.logical.tier.isPaidTier))
     }()
 
     private func serverViewModels(for servers: [ServerInfo]) -> [ServerItemViewModel] {
@@ -289,7 +289,7 @@ class CountryItemViewModel {
         let servers = serverViewModels.flatMap({ $1 }).filter({ !$0.city.isEmpty })
         let groups = Dictionary(grouping: servers, by: { $0.city })
         return groups.map {
-            let translatedCityName = $0.value.compactMap({ $0.translatedCity }).first
+            let translatedCityName = $0.value.compactMap(\.translatedCity).first
             return CityItemViewModel(
                 cityName: $0.key,
                 translatedCityName: translatedCityName,

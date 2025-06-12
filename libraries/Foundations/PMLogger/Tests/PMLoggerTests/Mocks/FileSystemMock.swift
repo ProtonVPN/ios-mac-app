@@ -54,7 +54,7 @@ class FileSystemMock {
         fileManager.contentsOfDirectoryStub.addToBody { _, folderUrl, keys, mask in
             return self.handlerMockFactory.files.filter { element in
                 return element.key.path.hasPrefix(folderUrl.path)
-            }.map { $0.key }
+            }.map(\.key)
         }
         fileManager.attributesOfItemStub.addToBody { _, path in
             return [FileAttributeKey.creationDate: self.handlerMockFactory.creationDate(for: URL(string: path)!) as Any]

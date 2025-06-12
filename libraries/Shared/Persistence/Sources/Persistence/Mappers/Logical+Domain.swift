@@ -72,7 +72,7 @@ extension VPNServer {
     }
 
     var overrideRecords: [Persistence.EndpointOverrides] {
-        return endpoints.compactMap { $0.overrideInfo }
+        return endpoints.compactMap(\.overrideInfo)
     }
 }
 

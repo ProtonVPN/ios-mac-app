@@ -203,7 +203,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "Status": status,
             "Features": feature.rawValue,
             "Location": location.asDict,
-            "Servers": ips.map { $0.asDict },
+            "Servers": ips.map(\.asDict),
         ]
 
         if let city {

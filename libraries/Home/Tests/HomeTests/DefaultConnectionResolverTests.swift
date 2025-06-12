@@ -67,7 +67,7 @@ final class DefaultConnectionResolverTests: XCTestCase {
             Sut.preferenceModels(for: recents)
         }
 
-        let preferenceModelSpecs = preferenceModels.map { $0.preference }
+        let preferenceModelSpecs = preferenceModels.map(\.preference)
         XCTAssertEqual(preferenceModelSpecs, [.recent(.fastestSecureCore), .recent(.poland)])
     }
 }

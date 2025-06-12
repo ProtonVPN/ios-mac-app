@@ -44,7 +44,7 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(deletedServerCount, 1)
 
         let remainingServers = repository.getServers(filteredBy: [], orderedBy: .nameAscending)
-        let remainingServerIDs = remainingServers.map { $0.logical.id }
+        let remainingServerIDs = remainingServers.map(\.logical.id)
 
         // stale1 should be deleted since it matches the tier criteria and its ID is not in the list
         XCTAssertEqual(remainingServerIDs, ["free1", "paid1", "stale2"])

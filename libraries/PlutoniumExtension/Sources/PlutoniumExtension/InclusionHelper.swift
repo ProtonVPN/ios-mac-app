@@ -36,13 +36,13 @@ struct PlutoniumInclusionHelper {
         case .exclusion:
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
-            appIDs = Set(exclusionActivated.apps.map { $0.bundleIdentifier })
+            appIDs = Set(exclusionActivated.apps.map(\.bundleIdentifier))
             ipSet = Set(exclusionActivated.ips)
             shouldInclude = false
         case .inclusion:
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
-            appIDs = Set(inclusionActivated.apps.map { $0.bundleIdentifier })
+            appIDs = Set(inclusionActivated.apps.map(\.bundleIdentifier))
             ipSet = Set(inclusionActivated.ips)
             shouldInclude = true
         }

@@ -99,7 +99,7 @@ public enum ServersListUtils {
      */
     public static func getAvailableExitCountriesCodes() async throws -> [String] {
         let availableServers = try await getAvailableServers()
-        let exitCountries = Set(availableServers.compactMap { $0.exitCountry })
+        let exitCountries = Set(availableServers.compactMap(\.exitCountry))
         return Array(exitCountries)
     }
     
@@ -111,7 +111,7 @@ public enum ServersListUtils {
      */
     public static func getAvailableCities() async throws -> [String] {
         let availableServers = try await getAvailableServers()
-        let cities = Set(availableServers.compactMap { $0.city })
+        let cities = Set(availableServers.compactMap(\.city))
         return Array(cities)
     }
     
@@ -169,7 +169,7 @@ public enum ServersListUtils {
     public static func getEntryCountries(for exitCountryCode: String) async throws -> [String] {
         let allServerswithExistCountry = try await fetchLogicals()
             .filter { $0.exitCountry == exitCountryCode }
-        let entryCountriesCodes = Set(allServerswithExistCountry.filter { $0.entryCountry != exitCountryCode }.compactMap { $0.entryCountry })
+        let entryCountriesCodes = Set(allServerswithExistCountry.filter { $0.entryCountry != exitCountryCode }.compactMap(\.entryCountry))
         let translatedEntryCountries: [String] = entryCountriesCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
         return translatedEntryCountries
     }
@@ -183,7 +183,7 @@ public enum ServersListUtils {
     public static func getSecureCoreCountriesCodes() async throws -> [String] {
         let logicals = try await fetchLogicals()
         let availableCountries = try await getAvailableExitCountriesCodes()
-        let serversWithEntryCountry = Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map { $0.exitCountry }))
+        let serversWithEntryCountry = Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map(\.exitCountry)))
         return serversWithEntryCountry
     }
     
