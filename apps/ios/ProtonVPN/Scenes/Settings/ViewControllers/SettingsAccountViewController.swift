@@ -30,9 +30,9 @@ final class SettingsAccountViewController: UIViewController {
 
     init(viewModel: SettingsAccountViewModel, connectionBar: ConnectionBarViewController) {
         self.viewModel = viewModel
-        tableView = UITableView()
-        genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
-        connectionBarContainerView = UIView()
+        self.tableView = UITableView()
+        self.genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
+        self.connectionBarContainerView = UIView()
         self.connectionBar = connectionBar
         super.init(nibName: nil, bundle: nil)
 

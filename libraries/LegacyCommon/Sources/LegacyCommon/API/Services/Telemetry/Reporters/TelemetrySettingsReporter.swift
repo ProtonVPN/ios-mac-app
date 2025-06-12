@@ -46,10 +46,10 @@ final class TelemetrySettingsReporter {
     // MARK: - Initialization
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
-        vpnKeychain = factory.makeVpnKeychain()
+        self.vpnKeychain = factory.makeVpnKeychain()
 
         self.telemetryEventScheduler = telemetryEventScheduler
-        timerFactory = factory.makeTimerFactory()
+        self.timerFactory = factory.makeTimerFactory()
     }
 
     // MARK: - Public Interface

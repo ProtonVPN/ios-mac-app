@@ -77,13 +77,13 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         VpnKeychainFactory
 
     public init(factory: Factory) {
-        vpnApiService = factory.makeVpnApiService()
-        vpnKeychain = factory.makeVpnKeychain()
-        propertiesManager = factory.makePropertiesManager()
-        alertService = factory.makeCoreAlertService()
-        updateChecker = factory.makeUpdateChecker()
+        self.vpnApiService = factory.makeVpnApiService()
+        self.vpnKeychain = factory.makeVpnKeychain()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.alertService = factory.makeCoreAlertService()
+        self.updateChecker = factory.makeUpdateChecker()
 
-        observation = notificationCenter.addObserver(
+        self.observation = notificationCenter.addObserver(
             for: AppEvent.planChanged.name,
             object: nil,
             handler: { [weak self] in

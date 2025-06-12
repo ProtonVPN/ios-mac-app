@@ -34,7 +34,7 @@ final class LocalAgentImplementation: LocalAgent {
         log.info("LocalAgentImplementation init")
 
         @Dependency(\.localAgentClientFactory) var clientFactory
-        client = clientFactory.createLocalAgentClient()
+        self.client = clientFactory.createLocalAgentClient()
         client.delegate = self
     }
 

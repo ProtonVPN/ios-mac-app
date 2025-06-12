@@ -207,7 +207,7 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
 
     public init(provider: ConnectionTunnelFactory, timerFactory: TimerFactory, connectionTimeoutInterval: TimeInterval = 10) {
         self.provider = provider
-        timeoutInterval = connectionTimeoutInterval
+        self.timeoutInterval = connectionTimeoutInterval
         self.timerFactory = timerFactory
     }
 
@@ -310,7 +310,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
         let host = request.url?.host ?? "unknown-host"
         let path = request.url?.path ?? "/"
-        queue = DispatchQueue(label: "ch.protonvpn.tunneled-request:\(host)\(path):\(taskId)")
+        self.queue = DispatchQueue(label: "ch.protonvpn.tunneled-request:\(host)\(path):\(taskId)")
     }
 
     deinit {

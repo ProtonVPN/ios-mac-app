@@ -67,13 +67,13 @@ open class ReportBugViewModel {
         let username = authKeychain.username ?? ""
 
         do {
-            planTitle = try vpnKeychain.fetchCached().planTitle
+            self.planTitle = try vpnKeychain.fetchCached().planTitle
         } catch {
             log.error("\(error)", category: .ui)
         }
 
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
+        self.bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
     }
 
     public func set(description: String) {

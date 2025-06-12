@@ -33,7 +33,7 @@ class XPCBaseService: NSObject {
 
     init(withExtension machServiceName: String, logger: @escaping (String) -> Void) {
         self.machServiceName = machServiceName
-        log = logger
+        self.log = logger
     }
 
     func startListener() {

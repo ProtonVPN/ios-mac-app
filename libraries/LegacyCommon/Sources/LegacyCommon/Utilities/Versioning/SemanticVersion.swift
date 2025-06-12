@@ -42,14 +42,14 @@ public struct SemanticVersion: CustomStringConvertible, Comparable {
     }
 
     public init(_ version: String) throws {
-        description = version
-        metadataComponents = version.components(separatedBy: "+")
-        releaseComponents = metadataComponents[0].components(separatedBy: "-")
+        self.description = version
+        self.metadataComponents = version.components(separatedBy: "+")
+        self.releaseComponents = metadataComponents[0].components(separatedBy: "-")
         let versionStringComponents = releaseComponents[0].components(separatedBy: ".")
         guard versionStringComponents.count == 3 else {
             throw SemanticVersionError.wrongVersionComponentsCount
         }
-        versionComponents = versionStringComponents.map { Int($0) ?? 0 }
+        self.versionComponents = versionStringComponents.map { Int($0) ?? 0 }
     }
 
     enum SemanticVersionError: Error {

@@ -112,9 +112,9 @@ class CountryAnnotationViewModel: CustomStyleContext {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
         if userTier.isFreeTier {
-            available = false
+            self.available = false
         } else {
-            available = minTier <= userTier
+            self.available = minTier <= userTier
         }
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
@@ -122,7 +122,7 @@ class CountryAnnotationViewModel: CustomStyleContext {
     init(appStateManager: AppStateManager, countryCode: String, coordinate: CLLocationCoordinate2D) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
-        available = true
+        self.available = true
         self.coordinate = MapCoordinateTranslator.mapImageCoordinate(from: coordinate)
     }
 
@@ -296,7 +296,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
 
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
-        country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+        self.country = LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
         super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
     }
 

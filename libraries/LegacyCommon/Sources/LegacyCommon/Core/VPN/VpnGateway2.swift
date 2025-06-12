@@ -54,13 +54,13 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         SiriHelperFactory
 
     init(_ factory: Factory) {
-        appStateManager = factory.makeAppStateManager()
-        propertiesManager = factory.makePropertiesManager()
-        serverTierChecker = factory.makeServerTierChecker()
-        availabilityCheckerResolverFactory = factory
-        netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-        natTypePropertyProvider = factory.makeNATTypePropertyProvider()
-        safeModePropertyProvider = factory.makeSafeModePropertyProvider()
+        self.appStateManager = factory.makeAppStateManager()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.serverTierChecker = factory.makeServerTierChecker()
+        self.availabilityCheckerResolverFactory = factory
+        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+        self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
+        self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
     }
 
     public func connect(withIntent intent: ConnectionSpec) async throws {

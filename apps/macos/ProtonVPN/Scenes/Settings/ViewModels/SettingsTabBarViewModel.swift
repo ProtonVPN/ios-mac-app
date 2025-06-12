@@ -39,7 +39,7 @@ class SettingsTabBarViewModel {
     }
 
     init(initialTab: SettingsTab) {
-        activeTab = initialTab
+        self.activeTab = initialTab
     }
 
     func generalAction() {

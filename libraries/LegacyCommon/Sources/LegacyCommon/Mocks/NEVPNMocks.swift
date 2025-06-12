@@ -61,8 +61,8 @@
         }()
 
         public init() {
-            isEnabled = false
-            isOnDemandEnabled = false
+            self.isEnabled = false
+            self.isOnDemandEnabled = false
         }
 
         public func setSavedConfiguration(_ prefs: SavedPreferences) {
@@ -92,10 +92,10 @@
 
     extension NEVPNManagerMock.SavedPreferences {
         public init(_ manager: NEVPNManagerWrapper) {
-            isOnDemandEnabled = manager.isOnDemandEnabled
-            isEnabled = manager.isEnabled
-            onDemandRules = manager.onDemandRules
-            protocolConfiguration = manager.protocolConfiguration
+            self.isOnDemandEnabled = manager.isOnDemandEnabled
+            self.isEnabled = manager.isEnabled
+            self.onDemandRules = manager.onDemandRules
+            self.protocolConfiguration = manager.protocolConfiguration
         }
     }
 
@@ -127,7 +127,7 @@
         public weak var factory: NETunnelProviderManagerFactoryMock?
 
         public init(factory: NETunnelProviderManagerFactoryMock?) {
-            uuid = UUID()
+            self.uuid = UUID()
             self.factory = factory
         }
 
@@ -175,8 +175,8 @@
 
         public init(vpnManager: NEVPNManagerWrapper) {
             self.vpnManager = vpnManager
-            status = .invalid
-            connectedDate = nil
+            self.status = .invalid
+            self.connectedDate = nil
         }
 
         public func startVPNTunnel() throws {

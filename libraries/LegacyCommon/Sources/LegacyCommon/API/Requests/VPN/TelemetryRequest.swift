@@ -27,7 +27,7 @@ final class TelemetryRequest: Request {
     let isBusiness: Bool
 
     init(_ event: [String: Any], isBusiness: Bool) {
-        parameters = event
+        self.parameters = event
         self.isBusiness = isBusiness
     }
 

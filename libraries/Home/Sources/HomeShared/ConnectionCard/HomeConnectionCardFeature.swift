@@ -77,7 +77,7 @@ public struct HomeConnectionCardFeature {
 
         public init() {
             @Dependency(\.serverChangeAuthorizer) var authorizer
-            serverChangeAvailability = authorizer.serverChangeAvailability()
+            self.serverChangeAvailability = authorizer.serverChangeAvailability()
         }
     }
 

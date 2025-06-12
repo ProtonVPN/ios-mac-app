@@ -33,7 +33,7 @@ class ShadowView: NSView {
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
 
-        gradientHeight = bounds.height
+        self.gradientHeight = bounds.height
     }
 
     override func draw(_ dirtyRect: NSRect) {

@@ -50,7 +50,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         self.title = title
 
         if let buttonType {
-            didTapInfoBtn = { [weak countriesViewModel] in
+            self.didTapInfoBtn = { [weak countriesViewModel] in
                 switch buttonType {
                 case .premium:
                     countriesViewModel?.displayPremiumServices?()
@@ -82,9 +82,9 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         propertiesManager: PropertiesManagerProtocol,
         countriesViewModel: CountriesSectionViewModel
     ) {
-        title = sectionHeader + " (\(totalServers))"
+        self.title = sectionHeader + " (\(totalServers))"
         guard tier.isPaidTier else {
-            didTapInfoBtn = { [weak countriesViewModel] in
+            self.didTapInfoBtn = { [weak countriesViewModel] in
                 countriesViewModel?.displayFreeServices()
             }
             return
@@ -99,7 +99,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             return
         }
 
-        didTapInfoBtn = { [weak countriesViewModel] in
+        self.didTapInfoBtn = { [weak countriesViewModel] in
             let countryName = LocalizationUtility().countryName(forCode: code) ?? ""
             countriesViewModel?.displayStreamingServices?(countryName, streamServices, propertiesManager)
         }

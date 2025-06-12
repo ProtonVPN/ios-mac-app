@@ -41,7 +41,7 @@
         public var credentials: VpnCredentials?
 
         public init(planName: String = "free", maxTier: Int = 0) {
-            credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
+            self.credentials = VpnKeychainMock.vpnCredentials(planName: planName, maxTier: maxTier)
         }
 
         public func fetch() throws -> VpnCredentials {

@@ -52,7 +52,7 @@
             state: LocalAgentState,
             connectionErrorToThrow: LAConnectionCreationError? = nil
         ) {
-            streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
+            self.streamTuple = AsyncStream<LocalAgentEvent>.makeStream()
 
             self.state = state
             self.connectionErrorToThrow = connectionErrorToThrow

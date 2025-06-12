@@ -111,7 +111,7 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     init(buttonSize: CGSize, hoveredTag: ForegroundOrder, styleDelegate: CustomStyleContext, reuseIdentifier: String?) {
-        buttonFrame = CGRect(origin: .zero, size: buttonSize)
+        self.buttonFrame = CGRect(origin: .zero, size: buttonSize)
         self.hoveredTag = hoveredTag
         self.styleDelegate = styleDelegate
 

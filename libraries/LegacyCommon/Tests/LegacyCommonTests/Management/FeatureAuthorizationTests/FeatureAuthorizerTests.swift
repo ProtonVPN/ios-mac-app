@@ -167,7 +167,7 @@ struct TestFeatureImplementation {
 
     init() {
         @Dependency(\.featureAuthorizerProvider) var authorizationProvider
-        canUseB2B = authorizationProvider.authorizer(for: TestB2BFeature.self)
-        netShieldAuthorizer = authorizationProvider.authorizer(for: TestNetShieldType.self)
+        self.canUseB2B = authorizationProvider.authorizer(for: TestB2BFeature.self)
+        self.netShieldAuthorizer = authorizationProvider.authorizer(for: TestNetShieldType.self)
     }
 }

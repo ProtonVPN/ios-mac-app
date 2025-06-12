@@ -51,7 +51,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     public required init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String) {
         self.propertiesManager = propertiesManager
         // swiftlint:disable force_try
-        currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
+        self.currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
         // swiftlint:enable force_try
         super.init()
     }

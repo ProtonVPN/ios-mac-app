@@ -104,7 +104,7 @@
             }
 
             init(whatsTheIssueState: WhatsTheIssueFeature.State) {
-                step1State = whatsTheIssueState
+                self.step1State = whatsTheIssueState
             }
         }
 

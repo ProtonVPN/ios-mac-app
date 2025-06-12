@@ -44,7 +44,7 @@ class TelemetryEventScheduler {
     init(factory: Factory, isBusiness: Bool) async {
         self.factory = factory
         self.isBusiness = isBusiness
-        buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
+        self.buffer = await TelemetryBuffer(retrievingFromStorage: true, bufferType: isBusiness ? .businessEvents : .telemetryEvents)
     }
 
     private var telemetryUsageData: Bool {

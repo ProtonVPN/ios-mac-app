@@ -47,10 +47,10 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     override public init() {
         AppContext.default = .wireGuardExtension
-        vpnAuthenticationStorage = VpnAuthenticationKeychain()
-        appInfo = AppInfoImplementation(context: .wireGuardExtension)
+        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
+        self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
 
-        timerFactory = TimerFactoryImplementation()
+        self.timerFactory = TimerFactoryImplementation()
 
         let keychainHandle = AuthKeychain.default
 
@@ -61,7 +61,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
             atlasSecret: Self.atlasSecret
         )
 
-        certificateRefreshManager = ExtensionCertificateRefreshManager(
+        self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory,
             vpnAuthenticationStorage: vpnAuthenticationStorage,
@@ -70,7 +70,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
         super.init()
 
-        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
+        self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
         apiService.delegate = self
         setupLogging()
     }

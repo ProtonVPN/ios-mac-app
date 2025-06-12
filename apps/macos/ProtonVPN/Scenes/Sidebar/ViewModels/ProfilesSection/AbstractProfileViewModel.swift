@@ -38,13 +38,13 @@ class AbstractProfileViewModel {
 
         switch profile.serverOffering {
         case let .custom(serverWrapper):
-            lowestServerTier = serverWrapper.server.tier
-            underMaintenance = serverWrapper.server.underMaintenance
+            self.lowestServerTier = serverWrapper.server.tier
+            self.underMaintenance = serverWrapper.server.underMaintenance
 
         case let .fastest(countryCode), let .random(countryCode):
             if countryCode == nil {
-                lowestServerTier = 0
-                underMaintenance = false
+                self.lowestServerTier = 0
+                self.underMaintenance = false
                 break
             }
 
@@ -66,8 +66,8 @@ class AbstractProfileViewModel {
                     allServersUnderMaintenance = false
                 }
             }
-            lowestServerTier = minTier
-            underMaintenance = allServersUnderMaintenance
+            self.lowestServerTier = minTier
+            self.underMaintenance = allServersUnderMaintenance
         }
     }
 

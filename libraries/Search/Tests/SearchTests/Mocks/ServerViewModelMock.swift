@@ -76,13 +76,13 @@ final class ServerViewModelMock: ServerViewModel {
     func cancelPartnersIconRequests() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil, isPartnerServer: Bool = false) {
-        description = server
+        self.description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow
         self.entryCountryName = entryCountryName
         self.translatedCity = translatedCity
-        textColor = .white
+        self.textColor = .white
         self.isPartnerServer = isPartnerServer
     }
 }

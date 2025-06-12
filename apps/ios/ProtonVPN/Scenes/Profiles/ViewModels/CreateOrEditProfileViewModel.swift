@@ -89,39 +89,39 @@ class CreateOrEditProfileViewModel: NSObject {
 
     init(username: String?, for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.username = username
-        editedProfile = profile
+        self.editedProfile = profile
         self.profileService = profileService
-        protocolService = protocolSelectionService
+        self.protocolService = protocolSelectionService
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
         self.propertiesManager = propertiesManager
-        selectedProtocol = propertiesManager.connectionProtocol
+        self.selectedProtocol = propertiesManager.connectionProtocol
 
         if case let .circle(color) = profile?.profileIcon {
-            colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
+            self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
         } else {
-            colorPickerViewModel = ColorPickerViewModel()
+            self.colorPickerViewModel = ColorPickerViewModel()
         }
 
         if let profile,
            let username,
            let quickConnectProfileId = propertiesManager.getQuickConnect(for: username),
            let quickConnectProfile = profileManager.profile(withId: quickConnectProfileId) {
-            isDefaultProfile = profile == quickConnectProfile
+            self.isDefaultProfile = profile == quickConnectProfile
         }
 
         if let vpnCredentials = try? vpnKeychain.fetchCached() {
-            userTier = vpnCredentials.maxTier
+            self.userTier = vpnCredentials.maxTier
         }
 
         super.init()
 
         if let profile = editedProfile {
             prefillInfo(for: profile)
-            saveButtonEnabled = false
+            self.saveButtonEnabled = false
         }
     }
 

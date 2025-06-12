@@ -127,13 +127,13 @@ public final class CoreNetworking: Networking {
         #endif
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
-            apiService = PMAPIService.createAPIService(
+            self.apiService = PMAPIService.createAPIService(
                 doh: doh,
                 sessionUID: sessionUID,
                 challengeParametersProvider: challengeParametersProvider
             )
         } else {
-            apiService = PMAPIService.createAPIServiceWithoutSession(
+            self.apiService = PMAPIService.createAPIServiceWithoutSession(
                 doh: doh,
                 challengeParametersProvider: challengeParametersProvider
             )

@@ -93,9 +93,9 @@ final class ConnectionSettingsViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        sysexPending = true
-        selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
-        selectedProtocol = propertiesManager.connectionProtocol
+        self.sysexPending = true
+        self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
+        self.selectedProtocol = propertiesManager.connectionProtocol
 
         let settingsChangedEvents: [AppEvent] = [
             .vpnProtocol,

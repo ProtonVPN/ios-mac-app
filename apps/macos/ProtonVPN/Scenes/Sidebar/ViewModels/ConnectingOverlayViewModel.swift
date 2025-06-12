@@ -82,10 +82,10 @@ class ConnectingOverlayViewModel {
 
     init(factory: Factory, cancellation: @escaping () -> Void) {
         self.factory = factory
-        appState = factory.makeAppStateManager().state
+        self.appState = factory.makeAppStateManager().state
         self.cancellation = cancellation
 
-        loadingView = LoadingAnimationView(frame: CGRect.zero)
+        self.loadingView = LoadingAnimationView(frame: CGRect.zero)
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged(_:)))
     }

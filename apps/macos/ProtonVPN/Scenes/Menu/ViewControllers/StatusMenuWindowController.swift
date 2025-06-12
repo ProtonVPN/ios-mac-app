@@ -63,7 +63,7 @@ final class StatusMenuWindowController: WindowController {
     }
 
     override init(window: NSWindow?) {
-        iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
+        self.iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
 
         super.init(window: window)
 

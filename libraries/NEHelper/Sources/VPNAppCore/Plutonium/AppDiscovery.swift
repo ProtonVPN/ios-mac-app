@@ -46,7 +46,7 @@
         public init?(url: URL) {
             guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
             self.bundleIdentifier = bundleIdentifier
-            title = url.deletingPathExtension().lastPathComponent
+            self.title = url.deletingPathExtension().lastPathComponent
         }
 
         public static func == (lhs: Self, rhs: Self) -> Bool {

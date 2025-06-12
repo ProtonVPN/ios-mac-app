@@ -26,7 +26,7 @@ public struct ItemProvider: @unchecked Sendable {
     private var _provider: NSItemProvider
 
     public init(provider: NSItemProvider) {
-        _provider = provider
+        self._provider = provider
     }
 }
 

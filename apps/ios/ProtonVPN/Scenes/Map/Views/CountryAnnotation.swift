@@ -77,12 +77,12 @@ class CountryAnnotation: AnnotationView {
 
     init(frame: CGRect, viewModel: AnnotationViewModel) {
         self.viewModel = viewModel
-        flagView = UIImageView(image: viewModel.flag)
-        flagBoarderView = UIButton(type: .custom)
-        flagOverlayView = UIView()
-        iconView = UIImageView(image: nil)
-        countryLabel = UILabel(frame: CGRect.zero)
-        flagContainerView = UIView()
+        self.flagView = UIImageView(image: viewModel.flag)
+        self.flagBoarderView = UIButton(type: .custom)
+        self.flagOverlayView = UIView()
+        self.iconView = UIImageView(image: nil)
+        self.countryLabel = UILabel(frame: CGRect.zero)
+        self.flagContainerView = UIView()
 
         super.init(frame: frame)
 

@@ -96,10 +96,10 @@ class SwitchButton: NSView, CAAnimationDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        buttonWidth = Int(super.frame.width)
-        buttonHeight = Int(super.frame.height)
-        knobPadding = 4
-        knobSize = buttonHeight - 2 * knobPadding
+        self.buttonWidth = Int(super.frame.width)
+        self.buttonHeight = Int(super.frame.height)
+        self.knobPadding = 4
+        self.knobSize = buttonHeight - 2 * knobPadding
 
         initialSetup()
     }

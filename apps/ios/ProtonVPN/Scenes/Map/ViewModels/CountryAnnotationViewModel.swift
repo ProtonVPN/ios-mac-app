@@ -174,10 +174,10 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         self.serverType = serverType
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
-        requiresUpgrade = !enabled
+        self.requiresUpgrade = !enabled
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        coordinate = LocationUtility.coordinate(forCountry: countryCode)
+        self.coordinate = LocationUtility.coordinate(forCountry: countryCode)
 
         startObserving()
     }

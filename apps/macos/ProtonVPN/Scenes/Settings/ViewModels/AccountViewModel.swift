@@ -50,9 +50,9 @@ final class AccountViewModel {
         self.propertiesManager = propertiesManager
         self.authKeychain = authKeychain
 
-        username = Localizable.unavailable
-        planTitle = nil
-        maxTier = .freeTier
+        self.username = Localizable.unavailable
+        self.planTitle = nil
+        self.maxTier = .freeTier
 
         reload()
     }

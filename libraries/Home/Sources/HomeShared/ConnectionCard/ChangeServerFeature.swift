@@ -30,11 +30,11 @@ public struct ChangeServerFeature {
         public init(serverChangeAvailability: ServerChangeAuthorizer.ServerChangeAvailability) {
             switch serverChangeAvailability {
             case .available:
-                dateFinished = .distantPast
-                totalDuration = 0
+                self.dateFinished = .distantPast
+                self.totalDuration = 0
             case let .unavailable(until, duration, _):
-                dateFinished = until
-                totalDuration = duration
+                self.dateFinished = until
+                self.totalDuration = duration
             }
         }
     }

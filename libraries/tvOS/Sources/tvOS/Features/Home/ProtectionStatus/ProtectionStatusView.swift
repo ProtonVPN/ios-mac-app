@@ -36,30 +36,30 @@ struct ProtectionStatusView: View {
         init(connectionState: Connection.ConnectionState) {
             switch connectionState {
             case .connected:
-                icon = IconProvider.lockFilled
-                title = "Protected"
-                foregroundColor = Asset.vpnGreen.swiftUIColor
-                buttonTitle = "Disconnect"
+                self.icon = IconProvider.lockFilled
+                self.title = "Protected"
+                self.foregroundColor = Asset.vpnGreen.swiftUIColor
+                self.buttonTitle = "Disconnect"
             case .connecting:
-                icon = nil
-                title = "Connecting"
-                foregroundColor = Color(.text)
-                buttonTitle = "Cancel"
+                self.icon = nil
+                self.title = "Connecting"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Cancel"
             case .disconnected:
-                icon = IconProvider.lockOpenFilled
-                title = "Unprotected"
-                foregroundColor = Color(.text, .danger)
-                buttonTitle = "Quick Connect"
+                self.icon = IconProvider.lockOpenFilled
+                self.title = "Unprotected"
+                self.foregroundColor = Color(.text, .danger)
+                self.buttonTitle = "Quick Connect"
             case .disconnecting:
-                icon = nil
-                title = "Disconnecting"
-                foregroundColor = Color(.text)
-                buttonTitle = "Quick Connect"
+                self.icon = nil
+                self.title = "Disconnecting"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Quick Connect"
             case .resolving:
-                icon = nil
-                title = "Loading"
-                foregroundColor = Color(.text)
-                buttonTitle = "Cancel"
+                self.icon = nil
+                self.title = "Loading"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Cancel"
             }
         }
     }

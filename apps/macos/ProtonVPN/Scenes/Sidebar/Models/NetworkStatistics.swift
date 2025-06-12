@@ -45,11 +45,11 @@ class NetworkStatistics {
 
     init(with timeInterval: TimeInterval, and updateHandler: @escaping (Bitrate) -> Void) {
         self.timeInterval = timeInterval
-        updateWithBitrate = updateHandler
+        self.updateWithBitrate = updateHandler
 
-        traffic = getTrafficStatistics()
+        self.traffic = getTrafficStatistics()
 
-        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateBitrate), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(updateBitrate), userInfo: nil, repeats: true)
         updateBitrate()
     }
 

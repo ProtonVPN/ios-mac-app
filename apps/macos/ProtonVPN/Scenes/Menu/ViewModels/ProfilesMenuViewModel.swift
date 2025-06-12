@@ -63,7 +63,7 @@ class ProfilesMenuViewModel {
         self.navService = navService
         self.alertService = alertService
 
-        notificationTokens = [
+        self.notificationTokens = [
             NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged),
             NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
             NotificationCenter.default.addObserver(for: AppEvent.featureFlags.name, object: nil, handler: featureFlagsChanged),

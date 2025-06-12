@@ -32,7 +32,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     private let vpnManager: NEVPNManagerWrapper
 
     public init(factory: Factory) {
-        vpnManager = factory.makeNEVPNManagerWrapper()
+        self.vpnManager = factory.makeNEVPNManagerWrapper()
     }
 
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {

@@ -313,8 +313,8 @@ class CreateNewProfileViewModel {
         let propertiesManager = factory.makePropertiesManager()
         self.propertiesManager = propertiesManager
 
-        state = ModelState.default // initialize all stored properties so we can use createStartingState
-        state = createStartingState()
+        self.state = ModelState.default // initialize all stored properties so we can use createStartingState
+        self.state = createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)

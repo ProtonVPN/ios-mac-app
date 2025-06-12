@@ -70,15 +70,15 @@ extension VPNConnectionFeatures: Codable {
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        netshield = try values.decode(NetShieldType.self, forKey: .netshield)
-        vpnAccelerator = try values.decode(Bool.self, forKey: .vpnAccelerator)
-        bouncing = try values.decodeIfPresent(String.self, forKey: .bouncing)
+        self.netshield = try values.decode(NetShieldType.self, forKey: .netshield)
+        self.vpnAccelerator = try values.decode(Bool.self, forKey: .vpnAccelerator)
+        self.bouncing = try values.decodeIfPresent(String.self, forKey: .bouncing)
         if let natTypeValue = try values.decodeIfPresent(NATType.self, forKey: .natType) {
-            natType = natTypeValue
+            self.natType = natTypeValue
         } else {
-            natType = .default
+            self.natType = .default
         }
-        safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
     }
 }
 

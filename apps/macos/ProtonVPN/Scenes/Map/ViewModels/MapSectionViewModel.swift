@@ -92,9 +92,9 @@ class MapSectionViewModel {
                                                name: viewToggle, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
 
-        activeView = propertiesManager.serverTypeToggle
-        annotations = annotations(forView: activeView)
-        connections = connections(forView: activeView)
+        self.activeView = propertiesManager.serverTypeToggle
+        self.annotations = annotations(forView: activeView)
+        self.connections = connections(forView: activeView)
     }
 
     // MARK: - Private functions

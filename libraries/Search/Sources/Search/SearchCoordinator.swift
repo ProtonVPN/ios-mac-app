@@ -36,8 +36,8 @@ public final class SearchCoordinator {
 
     public init(configuration: Configuration, storage: SearchStorage) {
         self.configuration = configuration
-        recentSearchesService = RecentSearchesService(storage: storage)
-        storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
+        self.recentSearchesService = RecentSearchesService(storage: storage)
+        self.storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
     }
 
     // MARK: Actions

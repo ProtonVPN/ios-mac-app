@@ -28,7 +28,7 @@ struct ModalFeaturesView: View {
     let featureItems: [FeatureItem]
 
     init(features: [Feature]) {
-        featureItems = features.map(FeatureItem.init(feature:))
+        self.featureItems = features.map(FeatureItem.init(feature:))
     }
 
     var body: some View {

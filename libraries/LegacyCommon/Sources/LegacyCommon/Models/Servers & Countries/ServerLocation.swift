@@ -38,8 +38,8 @@ public class ServerLocation: NSObject, NSCoding, Codable {
     }
 
     public init(dic: JSONDictionary) throws {
-        lat = try dic.doubleOrThrow(key: "Lat")
-        long = try dic.doubleOrThrow(key: "Long")
+        self.lat = try dic.doubleOrThrow(key: "Lat")
+        self.long = try dic.doubleOrThrow(key: "Long")
         super.init()
     }
 

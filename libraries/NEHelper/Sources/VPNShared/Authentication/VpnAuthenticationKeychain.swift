@@ -42,7 +42,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
 
     public init() {
         @Dependency(\.vpnAuthenticationStorageConfig) var accessGroup
-        appKeychain = KeychainActor(accessGroup: accessGroup)
+        self.appKeychain = KeychainActor(accessGroup: accessGroup)
     }
 
     public func deleteKeys() {

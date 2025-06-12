@@ -49,7 +49,7 @@ final class AnnouncementButtonViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        announcementsViewModel = factory.makeAnnouncementsViewModel()
+        self.announcementsViewModel = factory.makeAnnouncementsViewModel()
     }
 
     // MARK: Main part

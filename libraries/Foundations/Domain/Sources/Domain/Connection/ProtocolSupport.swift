@@ -40,7 +40,7 @@ public struct ProtocolSupport: OptionSet, Codable, CaseIterable, CustomStringCon
     }
 
     public init(vpnProtocols: [VpnProtocol]) {
-        rawValue = vpnProtocols.reduce(.zero) { result, nextValue in
+        self.rawValue = vpnProtocols.reduce(.zero) { result, nextValue in
             result + ProtocolSupport(bitPosition: nextValue.protocolSupportBitPosition)
         }.rawValue
     }

@@ -37,7 +37,7 @@ class OnboardingConnectionRobot {
 
     init(app: XCUIApplication) {
         self.app = app
-        verify = Verify(app: app)
+        self.verify = Verify(app: app)
     }
 
     func connectNow() -> OnboardingConnectionRobot {

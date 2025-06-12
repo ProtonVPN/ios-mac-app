@@ -473,7 +473,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     public init() {
         @Dependency(\.defaultsProvider) var defaultsProvider
-        defaults = defaultsProvider.getDefaults()
+        self.defaults = defaultsProvider.getDefaults()
 
         defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,

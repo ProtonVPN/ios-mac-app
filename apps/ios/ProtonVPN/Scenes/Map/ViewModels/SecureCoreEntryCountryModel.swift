@@ -92,7 +92,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     init(appStateManager: AppStateManager, countryCode: String, location: CLLocationCoordinate2D, vpnGateway: VpnGatewayProtocol) {
         self.appStateManager = appStateManager
         self.countryCode = countryCode
-        coordinate = location
+        self.coordinate = location
         self.vpnGateway = vpnGateway
     }
 

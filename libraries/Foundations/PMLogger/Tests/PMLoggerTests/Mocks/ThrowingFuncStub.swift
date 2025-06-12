@@ -31,15 +31,15 @@ public final class ThrowingFuncStub<Input, Output, A1, A2, A3, A4, A5, A6, A7, A
     public var wrappedValue: ThrowingStubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12>
 
     init(initialReturn: @escaping (Input) throws -> Output, function: String, line: UInt, file: String) {
-        wrappedValue = ThrowingStubbedFunction(initialReturn: .init(initialReturn), function: function, line: line, file: file)
+        self.wrappedValue = ThrowingStubbedFunction(initialReturn: .init(initialReturn), function: function, line: line, file: file)
     }
 
     init(initialReturn: InitialReturn<Input, Output>, function: String, line: UInt, file: String) {
-        wrappedValue = ThrowingStubbedFunction(initialReturn: initialReturn, function: function, line: line, file: file)
+        self.wrappedValue = ThrowingStubbedFunction(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
     init(function: String, line: UInt, file: String) where Output == Void {
-        wrappedValue = ThrowingStubbedFunction(initialReturn: .init { _ in }, function: function, line: line, file: file)
+        self.wrappedValue = ThrowingStubbedFunction(initialReturn: .init { _ in }, function: function, line: line, file: file)
     }
 }
 
@@ -67,7 +67,7 @@ public final class ThrowingStubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6
 
     init(initialReturn: InitialReturn<Input, Output>, function: String, line: UInt, file: String) {
         self.initialReturn = initialReturn
-        description = "\(function) at line \(line) of file \(file)"
+        self.description = "\(function) at line \(line) of file \(file)"
     }
 
     func replaceBody(_ newImplementation: @escaping (UInt, Input) throws -> Output) {
@@ -132,18 +132,18 @@ public struct CapturedArguments<Input, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, 
     private let argument12: A12
 
     private init(a1: A1, a2: A2, a3: A3, a4: A4, a5: A5, a6: A6, a7: A7, a8: A8, a9: A9, a10: A10, a11: A11, a12: A12) {
-        argument1 = a1
-        argument2 = a2
-        argument3 = a3
-        argument4 = a4
-        argument5 = a5
-        argument6 = a6
-        argument7 = a7
-        argument8 = a8
-        argument9 = a9
-        argument10 = a10
-        argument11 = a11
-        argument12 = a12
+        self.argument1 = a1
+        self.argument2 = a2
+        self.argument3 = a3
+        self.argument4 = a4
+        self.argument5 = a5
+        self.argument6 = a6
+        self.argument7 = a7
+        self.argument8 = a8
+        self.argument9 = a9
+        self.argument10 = a10
+        self.argument11 = a11
+        self.argument12 = a12
     }
 }
 
@@ -928,15 +928,15 @@ public final class FuncStub<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8, A9, A
     public var wrappedValue: StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12>
 
     init(initialReturn: @escaping (Input) throws -> Output, function: String, line: UInt, file: String) {
-        wrappedValue = StubbedFunction(initialReturn: .init(initialReturn), function: function, line: line, file: file)
+        self.wrappedValue = StubbedFunction(initialReturn: .init(initialReturn), function: function, line: line, file: file)
     }
 
     init(initialReturn: InitialReturn<Input, Output>, function: String, line: UInt, file: String) {
-        wrappedValue = StubbedFunction(initialReturn: initialReturn, function: function, line: line, file: file)
+        self.wrappedValue = StubbedFunction(initialReturn: initialReturn, function: function, line: line, file: file)
     }
 
     init(function: String, line: UInt, file: String) where Output == Void {
-        wrappedValue = StubbedFunction(initialReturn: .init { _ in }, function: function, line: line, file: file)
+        self.wrappedValue = StubbedFunction(initialReturn: .init { _ in }, function: function, line: line, file: file)
     }
 }
 
@@ -968,7 +968,7 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
 
     init(initialReturn: InitialReturn<Input, Output>, function: String, line: UInt, file: String) {
         self.initialReturn = initialReturn
-        description = "\(function) at line \(line) of file \(file)"
+        self.description = "\(function) at line \(line) of file \(file)"
     }
 
     func replaceBody(_ newImplementation: @escaping (UInt, Input) -> Output) {
@@ -1546,7 +1546,7 @@ public final class Atomic<A> {
     private let serialAccessQueue = DispatchQueue(label: "ch.proton.atomic_queue")
     private var internalValue: A
     public init(_ value: A) {
-        internalValue = value
+        self.internalValue = value
     }
 
     public var value: A { serialAccessQueue.sync { self.internalValue } }

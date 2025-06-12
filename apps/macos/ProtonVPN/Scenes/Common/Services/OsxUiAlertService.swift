@@ -40,7 +40,7 @@ class OsxUiAlertService: UIAlertService {
 
     public init(factory: Factory) {
         self.factory = factory
-        windowService = factory.makeWindowService()
+        self.windowService = factory.makeWindowService()
     }
 
     func displayAlert(_ alert: SystemAlert) {

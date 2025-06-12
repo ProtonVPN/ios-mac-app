@@ -69,7 +69,7 @@ struct DatabaseExtension {
         self.isPure = isPure
         self.implementationGenerator = implementationGenerator
 
-        placeholderFunction = DatabaseFunction(
+        self.placeholderFunction = DatabaseFunction(
             name,
             argumentCount: argumentCount,
             pure: isPure,

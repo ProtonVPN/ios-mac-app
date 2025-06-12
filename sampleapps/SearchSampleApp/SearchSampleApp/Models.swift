@@ -88,13 +88,13 @@ final class CountryItemViewModel: CountryViewModel {
     func connectAction() {}
 
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
-        description = country
+        self.description = country
         self.servers = servers
         self.isSecureCoreCountry = isSecureCoreCountry
 
         let servers = [ServerTier.free, ServerTier.plus].flatMap { servers[$0] ?? [] }
         let groups = Dictionary(grouping: servers, by: { $0.city })
-        cities = groups.map {
+        self.cities = groups.map {
             CityItemViewModel(cityName: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
         }.sorted(by: { $0.cityName < $1.cityName })
     }
@@ -174,16 +174,16 @@ final class ServerItemViewModel: ServerViewModel {
     func connectAction() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil) {
-        description = server
+        self.description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow
         self.entryCountryName = entryCountryName
 
         if entryCountryName != nil {
-            entryCountryFlag = UIImage(named: "it-plain")
+            self.entryCountryFlag = UIImage(named: "it-plain")
         } else {
-            entryCountryFlag = nil
+            self.entryCountryFlag = nil
         }
     }
 }

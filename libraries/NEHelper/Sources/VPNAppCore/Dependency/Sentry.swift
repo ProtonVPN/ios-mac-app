@@ -53,7 +53,7 @@ public final class SentryHelper {
     private let sentryEnabled: () -> Bool
 
     init(isEnabled: @escaping () -> Bool) {
-        sentryEnabled = isEnabled
+        self.sentryEnabled = isEnabled
     }
 
     public func log(error: Error) {

@@ -24,17 +24,17 @@ public struct ServerNameComponents {
         let nameArray = name.split(separator: "#")
         guard nameArray.count == 2 else {
             self.name = name
-            sequence = nil
+            self.sequence = nil
             return
         }
         let serverName = String(nameArray[0])
         // some of the server sequence numbers might have the trailing "-TOR" - we strip it
         guard let numberString = nameArray[1].split(separator: "-").first, let serverNumber = Int(String(numberString)) else {
             self.name = serverName
-            sequence = nil
+            self.sequence = nil
             return
         }
         self.name = serverName
-        sequence = serverNumber
+        self.sequence = serverNumber
     }
 }

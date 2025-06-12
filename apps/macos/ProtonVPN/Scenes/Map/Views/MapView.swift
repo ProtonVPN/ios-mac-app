@@ -81,12 +81,12 @@ class MapView: NSView {
         let mapImage = MapCoordinateTranslator.mapImage
 
         let mapImageSize = mapImage.representations[0].size
-        dimensions = CGSize(width: mapImageSize.width / imageScale, height: mapImageSize.height / imageScale)
-        initialDimensions = dimensions
+        self.dimensions = CGSize(width: mapImageSize.width / imageScale, height: mapImageSize.height / imageScale)
+        self.initialDimensions = dimensions
 
-        activeConnectionsLayer = CAShapeLayer()
+        self.activeConnectionsLayer = CAShapeLayer()
 
-        inactiveConnectionsLayer = CAShapeLayer()
+        self.inactiveConnectionsLayer = CAShapeLayer()
 
         super.init(coder: decoder)
 

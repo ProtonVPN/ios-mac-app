@@ -40,11 +40,11 @@ public struct SettingsView: View {
     }
 
     public init() {
-        store = .init(initialState: .init(destination: nil,
-                                          netShield: .off,
-                                          killSwitch: .off,
-                                          protocol: ProtocolSettingsFeature.State(),
-                                          theme: .auto)) {
+        self.store = .init(initialState: .init(destination: nil,
+                                               netShield: .off,
+                                               killSwitch: .off,
+                                               protocol: ProtocolSettingsFeature.State(),
+                                               theme: .auto)) {
             SettingsFeature()
         }
     }

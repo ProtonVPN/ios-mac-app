@@ -144,7 +144,7 @@ class StatusViewModel {
         Task {
             await updateConnectionDate()
         }
-        netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
+        self.netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
         startObserving()
         runTimer()
     }

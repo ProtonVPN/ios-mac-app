@@ -76,9 +76,9 @@ public struct ConnectionFlagInfoView: View {
             server: server,
             withServerNumber: withServerNumber
         )
-        textHeaderString = infoBuilder.textHeader
-        subheaderModel = infoBuilder.subheader
-        resolvedLocation = infoBuilder.resolvedLocation
+        self.textHeaderString = infoBuilder.textHeader
+        self.subheaderModel = infoBuilder.subheader
+        self.resolvedLocation = infoBuilder.resolvedLocation
     }
 
     public var body: some View {

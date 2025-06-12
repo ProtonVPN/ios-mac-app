@@ -54,7 +54,7 @@ final class SettingsContainerViewController: NSViewController {
     required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
-        accountViewController = AccountViewController(accountViewModel: accountViewModel)
+        self.accountViewController = AccountViewController(accountViewModel: accountViewModel)
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
 

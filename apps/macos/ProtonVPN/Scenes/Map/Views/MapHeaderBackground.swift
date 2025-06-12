@@ -46,7 +46,7 @@ class MapHeaderBackground: NSView {
     var clicked: (() -> Void)?
 
     required init?(coder decoder: NSCoder) {
-        width = upperBorderRadius * 2
+        self.width = upperBorderRadius * 2
         super.init(coder: decoder)
     }
 

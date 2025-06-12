@@ -37,7 +37,7 @@ public struct DateSequence: Sequence, IteratorProtocol {
     }
 
     public init(start: Date = .now, end: Date, step: TimeInterval) {
-        now = start
+        self.now = start
         self.end = end
         self.step = step
     }

@@ -22,7 +22,7 @@ public struct BugReportModel: Codable {
     let categories: [Category]
 
     public init() {
-        categories = []
+        self.categories = []
     }
 
     init(categories: [Category]) {

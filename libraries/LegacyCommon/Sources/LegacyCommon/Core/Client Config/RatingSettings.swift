@@ -27,10 +27,10 @@ public struct RatingSettings: Codable, Equatable, DefaultableProperty {
     public let daysFromFirstConnection: Int
 
     public init() {
-        eligiblePlans = ["vpnplus"]
-        successConnections = 3
-        daysLastReviewPassed = 100
-        daysConnected = 3
-        daysFromFirstConnection = 14
+        self.eligiblePlans = ["vpnplus"]
+        self.successConnections = 3
+        self.daysLastReviewPassed = 100
+        self.daysConnected = 3
+        self.daysFromFirstConnection = 14
     }
 }

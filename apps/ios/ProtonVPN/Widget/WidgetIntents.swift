@@ -47,7 +47,7 @@ struct ConnectToVPNIntent: AppIntent {
     @Parameter(title: "Recent Connection Index") var recentIndex: Int?
 
     init() {
-        recentIndex = nil
+        self.recentIndex = nil
     }
 
     init(recentIndex: Int) {

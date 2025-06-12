@@ -28,17 +28,17 @@ public struct FlagView: View {
     let flagSize: FlagSizes
 
     public init(flag: Flag, flagSize: FlagSizes) {
-        flagComposition = .standard(flag)
+        self.flagComposition = .standard(flag)
         self.flagSize = flagSize
     }
 
     public init(flag: FlagComposition, flagSize: FlagSizes) {
-        flagComposition = flag
+        self.flagComposition = flag
         self.flagSize = flagSize
     }
 
     public init(location: ConnectionSpec.Location, flagSize: FlagSizes) {
-        flagComposition = location.flagComposition
+        self.flagComposition = location.flagComposition
         self.flagSize = flagSize
     }
 

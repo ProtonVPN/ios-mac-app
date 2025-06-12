@@ -28,11 +28,11 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     private let continuation: AsyncStream<Bool>.Continuation
 
     init(alertingService: CoreAlertService) {
-        forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
+        self.forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
         self.alertingService = alertingService
 
         let (stream, continuation) = AsyncStream<Bool>.makeStream()
-        sessionAuthenticatedEvents = stream
+        self.sessionAuthenticatedEvents = stream
         self.continuation = continuation
     }
 

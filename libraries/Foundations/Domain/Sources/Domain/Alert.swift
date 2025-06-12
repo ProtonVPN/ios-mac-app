@@ -28,8 +28,8 @@ public struct Alert: Equatable, Sendable {
     public let message: LocalizedStringResource
 
     init() {
-        title = Self.titleFallback
-        message = Self.messageFallback
+        self.title = Self.titleFallback
+        self.message = Self.messageFallback
     }
 
     init(title: LocalizedStringResource = Self.titleFallback, message: LocalizedStringResource = Self.messageFallback) {
@@ -43,8 +43,8 @@ public struct Alert: Equatable, Sendable {
     }
 
     public init(localizedError: LocalizedError) {
-        title = localizedError.failureReason.map { LocalizedStringResource(stringLiteral: $0) } ?? Self.titleFallback
-        message = localizedError.errorDescription.map { LocalizedStringResource(stringLiteral: $0) } ?? Self.messageFallback
+        self.title = localizedError.failureReason.map { LocalizedStringResource(stringLiteral: $0) } ?? Self.titleFallback
+        self.message = localizedError.errorDescription.map { LocalizedStringResource(stringLiteral: $0) } ?? Self.messageFallback
     }
 
     public func callAsFunction() -> Self {

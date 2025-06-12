@@ -96,7 +96,7 @@ public class DynamicBugReportManager {
         self.logContentProvider = logContentProvider
         self.logSources = logSources
 
-        model = storage.fetch() ?? getDefaultConfig()
+        self.model = storage.fetch() ?? getDefaultConfig()
         setupRefresh()
     }
 

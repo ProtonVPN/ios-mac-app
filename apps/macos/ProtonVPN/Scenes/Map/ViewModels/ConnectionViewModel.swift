@@ -39,11 +39,11 @@ struct ConnectionViewModel {
 
     init(_ state: State, fromHomeTo node: CountryAnnotationViewModel) {
         self.state = state
-        connection = (.home, node)
+        self.connection = (.home, node)
     }
 
     init(_ state: State, between origin: CountryAnnotationViewModel, and destination: CountryAnnotationViewModel) {
         self.state = state
-        connection = (.server(origin), destination)
+        self.connection = (.server(origin), destination)
     }
 }

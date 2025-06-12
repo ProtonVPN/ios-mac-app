@@ -52,9 +52,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     override init() {
         AppContext.default = .wireGuardExtension
 
-        vpnAuthenticationStorage = VpnAuthenticationKeychain()
+        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
 
-        appInfo = AppInfoImplementation()
+        self.appInfo = AppInfoImplementation()
 
         let authKeychain = AuthKeychain.default
 
@@ -63,9 +63,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         setupLogging()
         wg_log(.info, message: "PacketTunnelProvider init (processID: \(ProcessInfo().processIdentifier))")
 
-        timerFactory = TimerFactoryImplementation()
+        self.timerFactory = TimerFactoryImplementation()
 
-        killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
+        self.killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
             wg_log(.info, message: "Kill Switch configuration changed.")
             setDataTaskFactoryAccordingToKillSwitchSettings()
         }
@@ -78,14 +78,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             atlasSecret: Bundle.atlasSecret ?? ""
         )
 
-        certificateRefreshManager = ExtensionCertificateRefreshManager(
+        self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory,
             vpnAuthenticationStorage: vpnAuthenticationStorage,
             keychain: authKeychain
         )
 
-        serverStatusRefreshManager = ServerStatusRefreshManager(
+        self.serverStatusRefreshManager = ServerStatusRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory
         )

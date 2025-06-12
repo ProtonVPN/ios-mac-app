@@ -212,10 +212,10 @@ public class VpnGateway: VpnGatewayProtocol {
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
         self.connectionIntercepts = connectionIntercepts
 
-        serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
+        self.serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
 
         let state = appStateManager.state
-        connection = ConnectionStatus.forAppState(state)
+        self.connection = ConnectionStatus.forAppState(state)
         /// Sometimes when launching the app, the `AppStateManager` will post `.AppStateManager.stateChange` notification
         /// before `VPNGateway` has a chance of registering for that notification. For this event we're posting it here.
         postConnectionInformation()

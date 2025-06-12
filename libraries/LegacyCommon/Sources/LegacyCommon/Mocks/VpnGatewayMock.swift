@@ -36,9 +36,9 @@
         public static var needsReconnectNotification: Notification.Name = .init("")
 
         public init(userTier: Int? = nil) {
-            connection = .disconnected
-            activeServerType = .unspecified
-            _userTier = userTier
+            self.connection = .disconnected
+            self.activeServerType = .unspecified
+            self._userTier = userTier
         }
 
         public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {

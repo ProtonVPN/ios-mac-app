@@ -164,15 +164,15 @@ class CountriesSectionViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        vpnGateway = factory.makeVpnGateway()
-        vpnKeychain = factory.makeVpnKeychain()
-        appStateManager = factory.makeAppStateManager()
-        alertService = factory.makeCoreAlertService()
-        propertiesManager = factory.makePropertiesManager()
-        secureCoreState = propertiesManager.secureCoreToggle
-        sysexManager = factory.makeSystemExtensionManager()
+        self.vpnGateway = factory.makeVpnGateway()
+        self.vpnKeychain = factory.makeVpnKeychain()
+        self.appStateManager = factory.makeAppStateManager()
+        self.alertService = factory.makeCoreAlertService()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.secureCoreState = propertiesManager.secureCoreToggle
+        self.sysexManager = factory.makeSystemExtensionManager()
         if case .connected = appStateManager.state {
-            connectedServer = appStateManager.activeConnection()?.server
+            self.connectedServer = appStateManager.activeConnection()?.server
         }
 
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))

@@ -240,7 +240,7 @@ public final class VpnManager: VpnManagerProtocol {
             readyGroup?.enter()
         }
 
-        ikeProtocolFactory = ikeFactory
+        self.ikeProtocolFactory = ikeFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
         self.appGroup = appGroup
         self.alertService = alertService
@@ -256,7 +256,7 @@ public final class VpnManager: VpnManagerProtocol {
         self.safeModePropertyProvider = safeModePropertyProvider
 
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-            prepareManagersTask = Task {
+            self.prepareManagersTask = Task {
                 await prepareManagers()
             }
         } else {

@@ -37,7 +37,7 @@ public struct HermesResolver: Hashable {
         guard HermesResolverLocationValidator.isValid(ipAddress) != nil else {
             throw .invalidIPAddress
         }
-        location = ipAddress
+        self.location = ipAddress
     }
 }
 
@@ -109,7 +109,7 @@ extension HermesResolver {
 #if DEBUG
     extension HermesResolver: ExpressibleByStringLiteral {
         public init(stringLiteral value: StringLiteralType) {
-            location = value
+            self.location = value
         }
     }
 

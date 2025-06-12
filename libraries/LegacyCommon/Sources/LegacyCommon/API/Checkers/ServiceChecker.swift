@@ -53,7 +53,7 @@ class ServiceChecker {
 
         checkServices()
 
-        timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
+        self.timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
     }
 

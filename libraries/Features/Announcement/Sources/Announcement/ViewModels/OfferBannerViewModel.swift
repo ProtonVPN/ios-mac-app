@@ -53,7 +53,7 @@ public struct OfferBannerViewModel {
         self.endTime = endTime
         self.showCountdown = showCountdown
         self.dismiss = dismiss
-        action = { _ in
+        self.action = { _ in
             @Dependency(\.sessionService) var sessionService
             let url = await sessionService.getUpgradePlanSession(url: buttonURL.absoluteString)
             @Dependency(\.linkOpener) var linkOpener

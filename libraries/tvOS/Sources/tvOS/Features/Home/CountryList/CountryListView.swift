@@ -38,7 +38,7 @@ struct CountryListView: View {
 
     init(store: StoreOf<CountryListFeature>, contentAllowedWidth: Double) {
         self.store = store
-        columns = Self.columns(availableWidth: contentAllowedWidth)
+        self.columns = Self.columns(availableWidth: contentAllowedWidth)
     }
 
     private static func columns(availableWidth: Double) -> [GridItem] {
@@ -111,7 +111,7 @@ struct CountryListView: View {
         init(section: Int, item: CountryListItem) {
             self.section = section
             self.item = item
-            row = item.row
+            self.row = item.row
         }
     }
 }

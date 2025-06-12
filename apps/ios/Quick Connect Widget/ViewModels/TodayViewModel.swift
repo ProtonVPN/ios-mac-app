@@ -52,7 +52,7 @@ final class TodayViewModel {
     init(vpnStateConfiguration: VpnStateConfiguration) {
         self.vpnStateConfiguration = vpnStateConfiguration
 
-        reachability = try? Reachability()
+        self.reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.delegate?.didChangeState(state: .unreachable) }
         try? reachability?.startNotifier()

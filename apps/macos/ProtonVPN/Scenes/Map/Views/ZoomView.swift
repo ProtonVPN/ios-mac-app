@@ -48,8 +48,8 @@ class ZoomView: NSView {
     }
 
     required init?(coder decoder: NSCoder) {
-        zoomInButton = ZoomButton(type: .in)
-        zoomOutButton = ZoomButton(type: .out)
+        self.zoomInButton = ZoomButton(type: .in)
+        self.zoomOutButton = ZoomButton(type: .out)
 
         super.init(coder: decoder)
 

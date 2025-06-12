@@ -41,7 +41,7 @@
         let appReducer: StoreOf<AppReducer>
 
         init() {
-            appReducer = .init(initialState: .loading, reducer: {
+            self.appReducer = .init(initialState: .loading, reducer: {
                 AppReducer()
                     .dependency(\.vpnConnectionStatusPublisher, VPNConnectionStatusPublisherKey.watchVPNConnectionStatusChanges)
                     ._printChanges()

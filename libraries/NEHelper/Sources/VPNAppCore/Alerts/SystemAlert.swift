@@ -72,8 +72,8 @@ public final class DomainErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(alert: Domain.Alert) {
-        title = String(localized: alert.title)
-        message = String(localized: alert.message)
+        self.title = String(localized: alert.title)
+        self.message = String(localized: alert.message)
     }
 }
 
@@ -175,7 +175,7 @@ public final class AppUpdateRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(_ error: Error) {
-        message = error.localizedDescription
+        self.message = error.localizedDescription
     }
 }
 
@@ -276,28 +276,28 @@ public final class MaintenanceAlert: SystemAlert {
     public let type: MaintenanceAlertType
 
     public init() {
-        title = Localizable.allServersInProfileUnderMaintenance
-        type = .alert
+        self.title = Localizable.allServersInProfileUnderMaintenance
+        self.type = .alert
     }
 
     public init(countryName: String) {
-        title = Localizable.countryServersUnderMaintenance(countryName)
-        type = .alert
+        self.title = Localizable.countryServersUnderMaintenance(countryName)
+        self.type = .alert
     }
 
     public init(cityName: String) {
-        title = Localizable.countryServersUnderMaintenance(cityName)
-        type = .alert
+        self.title = Localizable.countryServersUnderMaintenance(cityName)
+        self.type = .alert
     }
 
     /// If `forSpecificCountry` is set, switches between country and servers texts, if it's nil, uses one text
     public init(forSpecificCountry: Bool?) {
         if let forSpecificCountry {
-            title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
+            self.title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
         } else {
-            title = Localizable.serverUnderMaintenance
+            self.title = Localizable.serverUnderMaintenance
         }
-        type = .notification
+        self.type = .notification
     }
 
     public enum MaintenanceAlertType {
@@ -376,14 +376,14 @@ public final class LocationNotAvailableAlert: SystemAlert {
         actions.append(AlertAction(title: dismissText,
                                    style: .cancel,
                                    handler: cancelHandler ?? dismiss))
-        dismiss = cancelHandler
+        self.dismiss = cancelHandler
 
         if let profileName {
-            title = Localizable.locationNotAvailableForProfileTitle
-            message = Localizable.locationNotAvailableForProfileText(profileName)
+            self.title = Localizable.locationNotAvailableForProfileTitle
+            self.message = Localizable.locationNotAvailableForProfileText(profileName)
         } else {
-            title = Localizable.locationNotAvailableTitle
-            message = Localizable.locationNotAvailableText
+            self.title = Localizable.locationNotAvailableTitle
+            self.message = Localizable.locationNotAvailableText
         }
     }
 }
@@ -407,7 +407,7 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(enableSmartProtocolHandler: @escaping (() -> Void)) {
-        enableSmartProtocol = enableSmartProtocolHandler
+        self.enableSmartProtocol = enableSmartProtocolHandler
 
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedEnableSmart,
@@ -463,7 +463,7 @@ public final class ReconnectOnActionAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        title = actionTitle
+        self.title = actionTitle
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
@@ -586,9 +586,9 @@ public final class MITMAlert: SystemAlert {
     public init(messageType: MessageType = .api) {
         switch messageType {
         case .api:
-            message = Localizable.errorMitmDescription
+            self.message = Localizable.errorMitmDescription
         case .vpn:
-            message = Localizable.errorMitmVpnDescription
+            self.message = Localizable.errorMitmVpnDescription
         }
     }
 }
@@ -601,7 +601,7 @@ public final class UnreachableNetworkAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(error: Error, troubleshoot: @escaping () -> Void) {
-        message = error.localizedDescription
+        self.message = error.localizedDescription
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
         actions.append(AlertAction(title: Localizable.neTroubleshoot, style: .confirmative, handler: troubleshoot))
     }
@@ -635,7 +635,7 @@ public final class ReconnectOnNetshieldChangeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        message = isOn ? Localizable.netshieldAlertReconnectDescriptionOn : Localizable.netshieldAlertReconnectDescriptionOff
+        self.message = isOn ? Localizable.netshieldAlertReconnectDescriptionOn : Localizable.netshieldAlertReconnectDescriptionOff
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
@@ -679,7 +679,7 @@ public final class UserPlanDowngradedAlert: UserAccountUpdateAlert {
         actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = Localizable.subscriptionExpiredReconnectionDescription
+            self.message = Localizable.subscriptionExpiredReconnectionDescription
         }
     }
 }
@@ -699,7 +699,7 @@ public final class UserBecameDelinquentAlert: UserAccountUpdateAlert {
         actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = Localizable.delinquentReconnectionDescription
+            self.message = Localizable.delinquentReconnectionDescription
         }
     }
 }
@@ -764,7 +764,7 @@ public final class TooManyCertificateRequestsAlert: SystemAlert {
 
     public init(retryAfter: TimeInterval? = nil) {
         guard let retryAfter else {
-            message = Localizable.vpnauthTooManyCertsDescription
+            self.message = Localizable.vpnauthTooManyCertsDescription
             return
         }
 
@@ -779,7 +779,7 @@ public final class TooManyCertificateRequestsAlert: SystemAlert {
             minutesToWait += 1
         }
 
-        message = Localizable.vpnauthTooManyCertsRetryAfter(minutesToWait)
+        self.message = Localizable.vpnauthTooManyCertsRetryAfter(minutesToWait)
     }
 }
 
@@ -807,7 +807,7 @@ public final class ConnectingWithBadLANAlert: SystemAlert {
         killSwitchOnHandler: @escaping () -> Void,
         connectAnywayHandler: @escaping () -> Void
     ) {
-        message = Localizable.promptKillSwitchDueToBadInterfaceIpRange(
+        self.message = Localizable.promptKillSwitchDueToBadInterfaceIpRange(
             badInterfaceName ?? "Unknown Interface",
             badIpAndPrefix ?? "Unknown Subnet"
         )
@@ -841,9 +841,9 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
             platform = "Unrecognized"
         #endif
 
-        title = Localizable.operatingSystemOutOfDateAlertTitle
-        message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
-        actions = [
+        self.title = Localizable.operatingSystemOutOfDateAlertTitle
+        self.message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
+        self.actions = [
             .init(title: Localizable.gotIt, style: .confirmative, handler: nil),
         ]
     }
@@ -862,10 +862,10 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
     public init(accountTier: Int) {
         self.accountTier = accountTier
         if accountTier.isFreeTier {
-            message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus)
+            self.message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus)
                 + Localizable.maximumDevicePlanLimitPart2(DomainConstants.maxDeviceCount)
         } else {
-            message = Localizable.maximumDeviceReachedDescription
+            self.message = Localizable.maximumDeviceReachedDescription
         }
 
         actions.append(AlertAction(title: Localizable.upgrade, style: .confirmative, handler: nil))
@@ -907,7 +907,7 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
                 Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
             }
 
-            message = Localizable.sysexErrorDescription(subcase)
+            self.message = Localizable.sysexErrorDescription(subcase)
 
             actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
         }
@@ -923,7 +923,7 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
 
         public init(cancelHandler: @escaping () -> Void) {
             self.cancelHandler = cancelHandler
-            dismiss = cancelHandler
+            self.dismiss = cancelHandler
         }
     }
 #endif

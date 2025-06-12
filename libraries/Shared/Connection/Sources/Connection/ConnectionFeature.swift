@@ -51,7 +51,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             core: CoreConnectionFeature.State
         ) {
             self.currentIntent = currentIntent
-            reconnectionIntent = queuedIntent
+            self.reconnectionIntent = queuedIntent
             self.connectionState = connectionState
             self.shouldRegisterServerChangeOnConnection = shouldRegisterServerChangeOnConnection
             self.core = core

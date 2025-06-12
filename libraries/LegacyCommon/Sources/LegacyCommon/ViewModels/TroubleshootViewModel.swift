@@ -48,7 +48,7 @@ public final class TroubleshootViewModel {
     private let urlTwitter = "https://twitter.com/ProtonVPN"
 
     public init(propertiesManager: PropertiesManagerProtocol) {
-        items = [
+        self.items = [
             // Alternative routing
             AlternateRoutingTroubleshootItem(propertiesManager: propertiesManager),
 

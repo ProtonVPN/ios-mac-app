@@ -122,8 +122,8 @@ public class AppInfoImplementation: AppInfo {
         modelName: String? = nil
     ) {
         self.context = context
-        processName = processInfo.processName
-        osVersion = processInfo.operatingSystemVersion
+        self.processName = processInfo.processName
+        self.osVersion = processInfo.operatingSystemVersion
 
         if let modelName {
             self.modelName = modelName
@@ -138,13 +138,13 @@ public class AppInfoImplementation: AppInfo {
         guard let file = bundle.path(forResource: "Client", ofType: "plist"),
               let clientDict = NSDictionary(contentsOfFile: file) as? [String: Any],
               let infoDict = bundle.infoDictionary else {
-            clientInfoDictionary = [:]
-            bundleInfoDictionary = [:]
+            self.clientInfoDictionary = [:]
+            self.bundleInfoDictionary = [:]
             return
         }
 
-        clientInfoDictionary = clientDict
-        bundleInfoDictionary = infoDict
+        self.clientInfoDictionary = clientDict
+        self.bundleInfoDictionary = infoDict
     }
 }
 

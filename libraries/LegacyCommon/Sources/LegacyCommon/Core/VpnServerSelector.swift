@@ -57,9 +57,9 @@ class VpnServerSelector {
         smartProtocolConfig: SmartProtocolConfig,
         appStateGetter: @escaping AppStateGetter
     ) {
-        serverTypeToggle = serverType
+        self.serverTypeToggle = serverType
         self.userTier = userTier
-        getCurrentAppState = appStateGetter
+        self.getCurrentAppState = appStateGetter
         self.connectionProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
     }

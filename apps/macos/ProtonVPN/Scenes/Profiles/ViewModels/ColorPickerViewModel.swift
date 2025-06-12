@@ -47,8 +47,8 @@ class ColorPickerViewModel {
     }
 
     init() {
-        colors = ProfileConstants.profileColors
-        selectedColorIndex = colors.randomIndex
+        self.colors = ProfileConstants.profileColors
+        self.selectedColorIndex = colors.randomIndex
     }
 
     func selectRandom() {

@@ -37,7 +37,7 @@ struct ModalBodyView: View {
         onFeatureUpdate: ((Feature) -> Void)? = nil
     ) {
         self.modalType = modalType
-        modalModel = modalType.modalModel()
+        self.modalModel = modalType.modalModel()
         self.displayBodyFeatures = displayBodyFeatures
         self.imagePadding = imagePadding
         self.onFeatureUpdate = onFeatureUpdate

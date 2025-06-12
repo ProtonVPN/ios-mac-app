@@ -91,9 +91,9 @@ final class HermesSettingsViewAlert: SystemAlert {
         cancelHandler: HermesAlertActionHandler? = nil
     ) {
         assert(type != .reconnectNecessary, "prefer ReconnectOnActionAlert for this notification type")
-        title = type.title
-        message = type.message
-        actions = [
+        self.title = type.title
+        self.message = type.message
+        self.actions = [
             AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler),
             AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler),
         ]

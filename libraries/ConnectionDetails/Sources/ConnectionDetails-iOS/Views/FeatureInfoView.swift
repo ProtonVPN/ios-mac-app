@@ -80,35 +80,35 @@ extension FeatureInfoView {
     init(for feature: ConnectionSpec.Feature) {
         switch feature {
         case .tor:
-            icon = IconProvider.brandTor
-            title = Localizable.connectionDetailsFeatureTitleTor
-            text = Localizable.connectionDetailsFeatureDescriptionTor
+            self.icon = IconProvider.brandTor
+            self.title = Localizable.connectionDetailsFeatureTitleTor
+            self.text = Localizable.connectionDetailsFeatureDescriptionTor
 
         case .p2p:
-            icon = IconProvider.arrowRightArrowLeft
-            title = Localizable.connectionDetailsFeatureTitleP2p
-            text = Localizable.connectionDetailsFeatureDescriptionP2p
+            self.icon = IconProvider.arrowRightArrowLeft
+            self.title = Localizable.connectionDetailsFeatureTitleP2p
+            self.text = Localizable.connectionDetailsFeatureDescriptionP2p
 
         case let .smart(hostCountryCode, exitCountryCode):
             @Dependency(\.locale) var locale
             let hostCountry = locale.localizedString(forRegionCode: hostCountryCode) ?? hostCountryCode
             let exitCountry = locale.localizedString(forRegionCode: exitCountryCode) ?? exitCountryCode
 
-            icon = IconProvider.globe
-            title = Localizable.connectionDetailsFeatureTitleSmartRouting
-            text = Localizable.connectionDetailsFeatureDescriptionSmartRouting(hostCountry, exitCountry)
+            self.icon = IconProvider.globe
+            self.title = Localizable.connectionDetailsFeatureTitleSmartRouting
+            self.text = Localizable.connectionDetailsFeatureDescriptionSmartRouting(hostCountry, exitCountry)
 
         case .streaming:
-            icon = IconProvider.play
-            title = Localizable.connectionDetailsFeatureTitleStreaming
-            text = Localizable.connectionDetailsFeatureDescriptionStreaming
+            self.icon = IconProvider.play
+            self.title = Localizable.connectionDetailsFeatureTitleStreaming
+            self.text = Localizable.connectionDetailsFeatureDescriptionStreaming
         }
     }
 
     init(secureCore _: Bool) {
-        icon = IconProvider.lockLayers
-        title = Localizable.connectionDetailsFeatureTitleSecureCore
-        text = Localizable.connectionDetailsFeatureDescriptionSecureCore
+        self.icon = IconProvider.lockLayers
+        self.title = Localizable.connectionDetailsFeatureTitleSecureCore
+        self.text = Localizable.connectionDetailsFeatureDescriptionSecureCore
     }
 }
 

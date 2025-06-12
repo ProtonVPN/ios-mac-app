@@ -38,8 +38,8 @@ class StreamingServicesOverlayViewModel: StreamingServicesOverlayViewModelProtoc
     let propertiesManager: PropertiesManagerProtocol
 
     init(country: String, streamServices: [VpnStreamingOption], propertiesManager: PropertiesManagerProtocol) {
-        countryName = country
-        streamingServices = streamServices
+        self.countryName = country
+        self.streamingServices = streamServices
         self.propertiesManager = propertiesManager
     }
 

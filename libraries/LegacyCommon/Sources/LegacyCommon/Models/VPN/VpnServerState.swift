@@ -31,10 +31,10 @@ public struct VpnServerState {
     public let exitIP: String!
 
     init(dictionary: JSONDictionary) throws {
-        id = try dictionary.stringOrThrow(key: "ID")
-        domain = try dictionary.stringOrThrow(key: "Domain")
-        status = try dictionary.intOrThrow(key: "Status")
-        entryIP = try dictionary.stringOrThrow(key: "EntryIP")
-        exitIP = try dictionary.stringOrThrow(key: "ExitIP")
+        self.id = try dictionary.stringOrThrow(key: "ID")
+        self.domain = try dictionary.stringOrThrow(key: "Domain")
+        self.status = try dictionary.intOrThrow(key: "Status")
+        self.entryIP = try dictionary.stringOrThrow(key: "EntryIP")
+        self.exitIP = try dictionary.stringOrThrow(key: "ExitIP")
     }
 }

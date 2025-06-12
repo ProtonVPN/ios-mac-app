@@ -32,7 +32,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
     var credentialsWereCleared: (() -> Void)?
 
     public init(context: AppContext = .default) {
-        defaultContext = context
+        self.defaultContext = context
     }
 
     var credentials: [AppContext: AuthCredentials] = [:]

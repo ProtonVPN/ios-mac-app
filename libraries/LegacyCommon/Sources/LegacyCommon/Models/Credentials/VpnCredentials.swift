@@ -62,21 +62,21 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        status = try container.decode(Int.self, forKey: .status)
-        planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
-        planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
-        maxConnect = try container.decode(Int.self, forKey: .maxConnect)
-        maxTier = try container.decode(Int.self, forKey: .maxTier)
-        services = try container.decode(Int.self, forKey: .services)
-        groupId = try container.decode(String.self, forKey: .groupId)
-        name = try container.decode(String.self, forKey: .name)
-        password = try container.decode(String.self, forKey: .password)
-        delinquent = try container.decode(Int.self, forKey: .delinquent)
-        credit = try container.decode(Int.self, forKey: .credit)
-        currency = try container.decode(String.self, forKey: .currency)
-        hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
-        subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
-        businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
+        self.status = try container.decode(Int.self, forKey: .status)
+        self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
+        self.planName = (try? container.decodeIfPresent(String.self, forKey: .planName)) ?? "free"
+        self.maxConnect = try container.decode(Int.self, forKey: .maxConnect)
+        self.maxTier = try container.decode(Int.self, forKey: .maxTier)
+        self.services = try container.decode(Int.self, forKey: .services)
+        self.groupId = try container.decode(String.self, forKey: .groupId)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.password = try container.decode(String.self, forKey: .password)
+        self.delinquent = try container.decode(Int.self, forKey: .delinquent)
+        self.credit = try container.decode(Int.self, forKey: .credit)
+        self.currency = try container.decode(String.self, forKey: .currency)
+        self.hasPaymentMethod = try container.decode(Bool.self, forKey: .hasPaymentMethod)
+        self.subscribed = try container.decodeIfPresent(Int.self, forKey: .subscribed)
+        self.businessEvents = try container.decode(Bool.self, forKey: .businessEvents)
     }
 
     public init(
@@ -117,21 +117,21 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
-        planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
-        planName = vpnDic.string("PlanName") ?? "free"
-        status = try vpnDic.intOrThrow(key: "Status")
-        maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
-        services = try dic.intOrThrow(key: "Services")
-        groupId = try vpnDic.stringOrThrow(key: "GroupID")
-        name = try vpnDic.stringOrThrow(key: "Name")
-        password = try vpnDic.stringOrThrow(key: "Password")
-        delinquent = try dic.intOrThrow(key: "Delinquent")
-        credit = try dic.intOrThrow(key: "Credit")
-        currency = try dic.stringOrThrow(key: "Currency")
-        hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
-        subscribed = dic.int(key: "Subscribed")
-        businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
+        self.planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
+        self.planName = vpnDic.string("PlanName") ?? "free"
+        self.status = try vpnDic.intOrThrow(key: "Status")
+        self.maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
+        self.maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
+        self.services = try dic.intOrThrow(key: "Services")
+        self.groupId = try vpnDic.stringOrThrow(key: "GroupID")
+        self.name = try vpnDic.stringOrThrow(key: "Name")
+        self.password = try vpnDic.stringOrThrow(key: "Password")
+        self.delinquent = try dic.intOrThrow(key: "Delinquent")
+        self.credit = try dic.intOrThrow(key: "Credit")
+        self.currency = try dic.stringOrThrow(key: "Currency")
+        self.hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
+        self.subscribed = dic.int(key: "Subscribed")
+        self.businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
         super.init()
     }
 

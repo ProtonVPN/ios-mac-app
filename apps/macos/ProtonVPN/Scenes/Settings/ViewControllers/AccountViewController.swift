@@ -46,7 +46,7 @@ final class AccountViewController: NSViewController {
     }
 
     required init(accountViewModel: AccountViewModel) {
-        viewModel = accountViewModel
+        self.viewModel = accountViewModel
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
 
         viewModel.reloadNeeded = { [weak self] in

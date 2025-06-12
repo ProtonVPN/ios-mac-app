@@ -32,8 +32,8 @@ public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDict
     }
 
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        rawValue = .init(elements.map { ($0.0.apiDescription, $0.1) },
-                         uniquingKeysWith: { l, _ in l })
+        self.rawValue = .init(elements.map { ($0.0.apiDescription, $0.1) },
+                              uniquingKeysWith: { l, _ in l })
     }
 
     public subscript(_ vpnProtocol: VpnProtocol) -> Value? {
@@ -49,7 +49,7 @@ public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDict
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        rawValue = try container.decode([String: PerProtocolEntries.Value].self)
+        self.rawValue = try container.decode([String: PerProtocolEntries.Value].self)
     }
 
     public func encode(to encoder: Encoder) throws {

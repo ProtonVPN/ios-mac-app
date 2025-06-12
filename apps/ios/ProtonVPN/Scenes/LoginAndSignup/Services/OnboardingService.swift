@@ -57,10 +57,10 @@ final class OnboardingModuleService {
     weak var delegate: OnboardingServiceDelegate?
 
     init(factory: Factory) {
-        windowService = factory.makeWindowService()
-        planService = factory.makePlanService()
-        alertService = factory.makeCoreAlertService()
-        modalsFactory = ModalsFactory()
+        self.windowService = factory.makeWindowService()
+        self.planService = factory.makePlanService()
+        self.alertService = factory.makeCoreAlertService()
+        self.modalsFactory = ModalsFactory()
     }
 }
 

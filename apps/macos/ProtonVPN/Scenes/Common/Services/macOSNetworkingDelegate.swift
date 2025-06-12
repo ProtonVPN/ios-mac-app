@@ -29,7 +29,7 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
     init(alertService: CoreAlertService) {
         self.alertService = alertService
         let (stream, continuation) = AsyncStream<Bool>.makeStream()
-        sessionAuthenticatedEvents = stream
+        self.sessionAuthenticatedEvents = stream
         self.continuation = continuation
     }
 

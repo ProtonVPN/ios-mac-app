@@ -45,8 +45,8 @@ public struct ProtocolSettingsFeature: Reducer {
 
         public init() {
             self.protocol = .smartProtocol
-            vpnConnectionStatus = .disconnected
-            reconnectionAlert = nil
+            self.vpnConnectionStatus = .disconnected
+            self.reconnectionAlert = nil
         }
     }
 

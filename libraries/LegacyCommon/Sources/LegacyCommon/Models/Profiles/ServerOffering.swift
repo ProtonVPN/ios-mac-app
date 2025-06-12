@@ -43,7 +43,7 @@ public struct ServerWrapper: Codable {
     }
 
     public init(server: ServerModel) {
-        _server = server
+        self._server = server
     }
 
     static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {

@@ -123,9 +123,9 @@ final class CountryItemViewModel {
         self.vpnGateway = vpnGateway
         self.propertiesManager = propertiesManager
         self.countriesSectionViewModel = countriesSectionViewModel
-        isTierTooLow = userTier.isFreeTier // No countries are shown as available to free users
+        self.isTierTooLow = userTier.isFreeTier // No countries are shown as available to free users
         self.isOpened = isOpened
-        isServerUnderMaintenance = serversGroup.isUnderMaintenance
+        self.isServerUnderMaintenance = serversGroup.isUnderMaintenance
             || serversGroup.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
         self.displaySeparator = displaySeparator
         self.appStateManager = appStateManager

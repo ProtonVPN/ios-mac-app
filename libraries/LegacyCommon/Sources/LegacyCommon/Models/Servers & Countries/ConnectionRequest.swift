@@ -131,28 +131,28 @@ public struct ConnectionRequest: Identifiable {
 extension ConnectionRequest: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        serverType = try container.decode(ServerType.self, forKey: .serverType)
-        connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
-        netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
-        profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
-        profileName = try container.decodeIfPresent(String.self, forKey: .profileName)
+        self.serverType = try container.decode(ServerType.self, forKey: .serverType)
+        self.connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
+        self.netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
+        self.profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
+        self.profileName = try container.decodeIfPresent(String.self, forKey: .profileName)
 
         // compatibility with previous format
         if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
-            connectionProtocol = .vpnProtocol(vpnProtocol)
+            self.connectionProtocol = .vpnProtocol(vpnProtocol)
         } else {
-            connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
+            self.connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
         }
 
         // compatibility with previous format
         if let natTypeValue = try container.decodeIfPresent(NATType.self, forKey: .natType) {
-            natType = natTypeValue
+            self.natType = natTypeValue
         } else {
-            natType = .default
+            self.natType = .default
         }
 
-        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
-        trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
+        self.safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
     }
 }
 

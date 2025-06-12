@@ -37,7 +37,7 @@ final class URLSessionProtonReachabilityChecker: ProtonReachabilityChecker {
         configuration.timeoutIntervalForRequest = 3
         configuration.timeoutIntervalForResource = 3
 
-        session = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
+        self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
     }
 
     func check(completion: @escaping (Bool) -> Void) {

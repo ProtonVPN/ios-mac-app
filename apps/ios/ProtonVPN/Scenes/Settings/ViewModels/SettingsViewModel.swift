@@ -102,14 +102,14 @@ final class SettingsViewModel {
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
 
-        isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
+        self.isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
         }
 
         if isAccountRecoveryEnabled {
-            accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
+            self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
         }
         startObserving()
     }

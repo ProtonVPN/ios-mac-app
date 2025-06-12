@@ -1,5 +1,13 @@
 --disable extensionAccessControl
 --disable wrapMultilineStatementBraces
 
-# no need to fix external libs
---exclude external
+--enable isEmpty
+
+# format options
+
+--allman false
+--commas always
+--self init-only
+
+# excludes
+--exclude external,Build

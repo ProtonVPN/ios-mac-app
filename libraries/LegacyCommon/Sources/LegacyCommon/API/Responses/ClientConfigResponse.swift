@@ -55,9 +55,9 @@ struct ClientConfigResponse {
 
             init(from decoder: any Decoder) throws {
                 let container = try decoder.container(keyedBy: CodingKeys.self)
-                udp = try container.decodeIfPresent([Int].self, forKey: .udp) ?? []
-                tcp = try container.decodeIfPresent([Int].self, forKey: .tcp) ?? []
-                tls = try container.decodeIfPresent([Int].self, forKey: .tls) ?? []
+                self.udp = try container.decodeIfPresent([Int].self, forKey: .udp) ?? []
+                self.tcp = try container.decodeIfPresent([Int].self, forKey: .tcp) ?? []
+                self.tls = try container.decodeIfPresent([Int].self, forKey: .tls) ?? []
             }
         }
 
@@ -101,7 +101,7 @@ extension ClientConfigResponse: Decodable {
         // decoded directly from the parent object without a container. See `ServerChangeConfig` docs for more info
         let serverChangeConfig = (try? ServerChangeConfig(from: decoder)) ?? ServerChangeConfig()
 
-        clientConfig = ClientConfig(
+        self.clientConfig = ClientConfig(
             featureFlags: featureFlags,
             serverRefreshInterval: serverRefreshInterval,
             wireGuardConfig: wireguardConfig,

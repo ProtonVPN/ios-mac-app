@@ -32,7 +32,7 @@ final class NoResultsView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        contentView = loadFromNib(name: "NoResultsView")
+        self.contentView = loadFromNib(name: "NoResultsView")
 
         setupUI()
     }

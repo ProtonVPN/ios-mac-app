@@ -110,7 +110,7 @@ class MapViewModel: SecureCoreToggleHandler {
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
 
-        secureCoreConnections = []
+        self.secureCoreConnections = []
 
         setStateOf(type: propertiesManager.serverTypeToggle)
 

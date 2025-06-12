@@ -82,16 +82,16 @@ final class CoreLoginService {
     weak var delegate: LoginServiceDelegate?
 
     init(factory: Factory) {
-        doh = Dependency(\.dohConfiguration).wrappedValue
-        appSessionManager = factory.makeAppSessionManager()
-        appSessionRefresher = factory.makeAppSessionRefresher()
-        windowService = factory.makeWindowService()
-        alertService = factory.makeCoreAlertService()
-        networkingDelegate = factory.makeNetworkingDelegate()
-        propertiesManager = factory.makePropertiesManager()
-        networking = factory.makeNetworking()
-        settingsService = factory.makeSettingsService()
-        pushNotificationService = factory.makePushNotificationService()
+        self.doh = Dependency(\.dohConfiguration).wrappedValue
+        self.appSessionManager = factory.makeAppSessionManager()
+        self.appSessionRefresher = factory.makeAppSessionRefresher()
+        self.windowService = factory.makeWindowService()
+        self.alertService = factory.makeCoreAlertService()
+        self.networkingDelegate = factory.makeNetworkingDelegate()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.networking = factory.makeNetworking()
+        self.settingsService = factory.makeSettingsService()
+        self.pushNotificationService = factory.makePushNotificationService()
     }
 
     private func makeLoginInterface() -> LoginAndSignupInterface {

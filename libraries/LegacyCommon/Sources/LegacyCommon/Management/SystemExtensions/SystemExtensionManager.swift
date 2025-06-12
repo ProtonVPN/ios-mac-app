@@ -318,7 +318,7 @@
                       manager: SystemExtensionManager) {
             self.action = action
             self.request = request
-            stateChangeCallback = stateChange
+            self.stateChangeCallback = stateChange
             self.manager = manager
         }
 

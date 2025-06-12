@@ -36,6 +36,6 @@ struct ConnectionViewModel {
 
     init(_ state: State, between entry: AnnotationViewModel, and exit: AnnotationViewModel) {
         self.state = state
-        connection = (entry, exit)
+        self.connection = (entry, exit)
     }
 }

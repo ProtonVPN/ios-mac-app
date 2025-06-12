@@ -102,7 +102,7 @@ final class UpdateManager: NSObject {
 
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
 
-        updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
+        self.updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
     }
 
     @objc private func earlyAccessChanged(_ notification: NSNotification) {

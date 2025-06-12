@@ -30,7 +30,7 @@ public struct ActionLogger<Action>: Sendable {
     private let _logAction: @Sendable (_ receivedAction: Action) -> Void
 
     public init(logAction: @escaping @Sendable (_ receivedAction: Action) -> Void) {
-        _logAction = logAction
+        self._logAction = logAction
     }
 
     public func logAction(receivedAction: Action) {

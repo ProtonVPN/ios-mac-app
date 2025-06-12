@@ -132,7 +132,7 @@ struct ConnectionDetailsView: View {
         init(title: String, contentType: ContentType, accessory: Accessory = .none) {
             self.title = title
             self.accessory = accessory
-            content = contentType
+            self.content = contentType
         }
 
         var body: some View {

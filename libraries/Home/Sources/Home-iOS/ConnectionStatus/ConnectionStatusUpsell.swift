@@ -34,13 +34,13 @@ struct ConnectionStatusUpsell: View {
         init(mode: ConnectionStatusBannerFeature.UpsellMode) {
             switch mode {
             case .netshield:
-                title = Localizable.netshieldTitle
-                subtitle = Localizable.netshieldUpsellSubtitle
-                icon = HomeAsset.netshieldMobileSmall
+                self.title = Localizable.netshieldTitle
+                self.subtitle = Localizable.netshieldUpsellSubtitle
+                self.icon = HomeAsset.netshieldMobileSmall
             case .serverChange:
-                title = Localizable.wrongCountryBannerTitle
-                subtitle = Localizable.wrongCountryBannerSubtitle
-                icon = HomeAsset.wrongCountrySmall
+                self.title = Localizable.wrongCountryBannerTitle
+                self.subtitle = Localizable.wrongCountryBannerSubtitle
+                self.icon = HomeAsset.wrongCountrySmall
             }
         }
     }

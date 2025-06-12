@@ -33,29 +33,29 @@ extension ConnectionDetailsMessage {
     /// This wrapper struct makes sure that the IPs are valid before doing anything with them.
     init(details: LocalAgentConnectionDetails) {
         if !details.serverIpv4.isEmpty, let ipv4 = IPv4Address(details.serverIpv4) {
-            exitIp = ipv4
+            self.exitIp = ipv4
         } else if !details.serverIpv6.isEmpty, let ipv6 = IPv6Address(details.serverIpv6) {
-            exitIp = ipv6
+            self.exitIp = ipv6
         } else {
-            exitIp = nil
+            self.exitIp = nil
         }
 
         if !details.deviceCountry.isEmpty {
-            deviceCountry = details.deviceCountry
+            self.deviceCountry = details.deviceCountry
         } else {
-            deviceCountry = nil
+            self.deviceCountry = nil
         }
 
         if !details.deviceIp.isEmpty {
             if let ipv4 = IPv4Address(details.deviceIp) {
-                deviceIp = ipv4
+                self.deviceIp = ipv4
             } else if let ipv6 = IPv6Address(details.deviceIp) {
-                deviceIp = ipv6
+                self.deviceIp = ipv6
             } else {
-                deviceIp = nil
+                self.deviceIp = nil
             }
         } else {
-            deviceIp = nil
+            self.deviceIp = nil
         }
     }
 }

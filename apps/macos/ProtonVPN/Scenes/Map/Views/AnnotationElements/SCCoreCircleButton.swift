@@ -43,7 +43,7 @@ class SCCoreCircleButton: HoverDetectionButtonAdvanced {
     }
 
     required init(frame frameRect: NSRect, state: ButtonState) {
-        viewState = state
+        self.viewState = state
         super.init(frame: frameRect)
 
         isBordered = false

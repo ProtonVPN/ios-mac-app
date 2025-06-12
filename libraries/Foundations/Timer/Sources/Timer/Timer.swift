@@ -115,7 +115,7 @@ public class BackgroundTimerImplementation: BackgroundTimer {
          queue: DispatchQueue,
          _ closure: @escaping () -> Void) {
         self.closure = closure
-        timerSource = DispatchSource.makeTimerSource(queue: queue)
+        self.timerSource = DispatchSource.makeTimerSource(queue: queue)
 
         if let repeating {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow,
@@ -125,12 +125,12 @@ public class BackgroundTimerImplementation: BackgroundTimer {
             timerSource.schedule(deadline: .now() + nextRunTime.timeIntervalSinceNow)
         }
 
-        nextTime = nextRunTime
-        isValid = true
+        self.nextTime = nextRunTime
+        self.isValid = true
         timerSource.setEventHandler { [weak self] in
             guard let self else { return }
             if let repeating {
-                nextTime = currentDate().addingTimeInterval(repeating)
+                self.nextTime = currentDate().addingTimeInterval(repeating)
             }
             self.closure()
         }

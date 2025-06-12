@@ -28,13 +28,13 @@ class PVPNTextViewLink: NSTextView {
     var defaultStyle: NSMutableParagraphStyle
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
-        defaultStyle = NSMutableParagraphStyle()
+        self.defaultStyle = NSMutableParagraphStyle()
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        defaultStyle = NSMutableParagraphStyle()
+        self.defaultStyle = NSMutableParagraphStyle()
         super.init(coder: aDecoder)
         setup()
     }

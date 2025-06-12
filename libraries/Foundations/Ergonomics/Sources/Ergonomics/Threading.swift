@@ -76,15 +76,15 @@ public class ConcurrentReaders<T> {
         let label = "ch.protonvpn.rwsync.\(String(describing: T.self)).\(UUID().uuidString)"
         self.queue = queue ?? DispatchQueue(label: label, attributes: .concurrent)
 
-        sync = { [unowned self] in
+        self.sync = { [unowned self] in
             self.queue.sync(execute: $0)
         }
 
-        syncBarrier = { [unowned self] in
+        self.syncBarrier = { [unowned self] in
             self.queue.sync(flags: .barrier, execute: $0)
         }
 
-        asyncBarrier = { [unowned self] in
+        self.asyncBarrier = { [unowned self] in
             self.queue.async(flags: .barrier, execute: $0)
         }
     }
@@ -130,6 +130,6 @@ public class ConcurrentlyReadable<T> {
     }
 
     public init(wrappedValue: T, queue: DispatchQueue? = nil) {
-        _wrappedValue = ConcurrentReaders(wrappedValue, queue: queue)
+        self._wrappedValue = ConcurrentReaders(wrappedValue, queue: queue)
     }
 }

@@ -47,7 +47,7 @@ final class PlaceholderView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        contentView = loadFromNib(name: "PlaceholderView")
+        self.contentView = loadFromNib(name: "PlaceholderView")
 
         setupUI()
     }

@@ -50,7 +50,7 @@ class SecureCoreEntryAnnotation: AnnotationView {
     }
 
     init(frame: CGRect, scEntryCountryModel: SecureCoreEntryCountryModel) {
-        countryModel = scEntryCountryModel
+        self.countryModel = scEntryCountryModel
 
         super.init(frame: frame)
 

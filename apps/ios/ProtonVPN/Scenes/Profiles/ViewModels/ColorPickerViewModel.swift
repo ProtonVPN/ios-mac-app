@@ -92,7 +92,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
 
     init(with color: UIColor? = nil) {
-        colors = ProfileConstants.profileColors
+        self.colors = ProfileConstants.profileColors
 
         super.init()
 

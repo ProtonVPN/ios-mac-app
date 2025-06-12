@@ -88,7 +88,7 @@ final class PopUpViewModel: NSObject {
         self.alert = alert
         self.attributedDescription = attributedDescription
         self.inAppLinkManager = inAppLinkManager
-        joinedTitleAndMessage = alert.joinedTitleAndMessage
+        self.joinedTitleAndMessage = alert.joinedTitleAndMessage
     }
 
     func confirm() {

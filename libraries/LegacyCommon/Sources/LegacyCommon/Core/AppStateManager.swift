@@ -192,7 +192,7 @@ public class AppStateManagerImplementation: AppStateManager {
         self.safeModePropertyProvider = safeModePropertyProvider
 
         handleVpnStateChange(vpnManager.state)
-        reachability = try? Reachability()
+        self.reachability = try? Reachability()
         setupReachability()
         startObserving()
     }

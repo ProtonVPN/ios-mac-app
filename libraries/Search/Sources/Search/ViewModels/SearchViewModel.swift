@@ -50,7 +50,7 @@ final class SearchViewModel {
         self.constants = constants
 
         let recent = recentSearchesService.get()
-        status = recent.isEmpty ? .placeholder : .recentSearches(recent)
+        self.status = recent.isEmpty ? .placeholder : .recentSearches(recent)
     }
 
     // MARK: Actions

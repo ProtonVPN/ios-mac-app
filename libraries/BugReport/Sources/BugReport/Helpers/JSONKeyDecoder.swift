@@ -30,11 +30,11 @@ private struct JSONKey: CodingKey {
 
     init?(stringValue: String) {
         self.stringValue = stringValue
-        intValue = nil
+        self.intValue = nil
     }
 
     init?(intValue: Int) {
-        stringValue = "\(intValue)"
+        self.stringValue = "\(intValue)"
         self.intValue = intValue
     }
 }

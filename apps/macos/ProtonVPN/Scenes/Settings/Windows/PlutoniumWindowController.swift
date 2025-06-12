@@ -38,11 +38,11 @@ class PlutoniumWindowController: WindowController {
     }
 
     required init(factory: Factory) {
-        alertService = factory.makeCoreAlertService()
-        vpnGateway = factory.makeVpnGateway()
+        self.alertService = factory.makeCoreAlertService()
+        self.vpnGateway = factory.makeVpnGateway()
 
         let state = PlutoniumFeature.State()
-        store = StoreOf<PlutoniumFeature>(initialState: state) {
+        self.store = StoreOf<PlutoniumFeature>(initialState: state) {
             PlutoniumFeature()
         }
         let viewController: NSViewController = .plutonium(store: store)

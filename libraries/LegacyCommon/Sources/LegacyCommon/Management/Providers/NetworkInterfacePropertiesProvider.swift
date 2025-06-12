@@ -84,15 +84,15 @@ extension NetworkInterface {
 
     init(_ interface: ifaddrs) {
         if let nameCString = interface.ifa_name {
-            name = String(cString: nameCString)
+            self.name = String(cString: nameCString)
         } else {
-            name = nil
+            self.name = nil
         }
 
-        addr = Self.ip(interface.ifa_addr)
-        mask = Self.ip(interface.ifa_netmask)
-        dest = Self.ip(interface.ifa_dstaddr)
-        flags = Flags(rawValue: Int32(interface.ifa_flags))
+        self.addr = Self.ip(interface.ifa_addr)
+        self.mask = Self.ip(interface.ifa_netmask)
+        self.dest = Self.ip(interface.ifa_dstaddr)
+        self.flags = Flags(rawValue: Int32(interface.ifa_flags))
     }
 }
 

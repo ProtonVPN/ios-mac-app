@@ -25,7 +25,7 @@ final class RecentSearchesService {
 
     init(storage: SearchStorage) {
         self.storage = storage
-        data = storage.get()
+        self.data = storage.get()
     }
 
     func get() -> [String] {

@@ -48,8 +48,8 @@ class ProtonVpnMenuViewModel {
 
     init(factory: Factory) {
         self.factory = factory
-        appSessionManager = factory.makeAppSessionManager()
-        navService = factory.makeNavigationService()
+        self.appSessionManager = factory.makeAppSessionManager()
+        self.navService = factory.makeNavigationService()
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
 

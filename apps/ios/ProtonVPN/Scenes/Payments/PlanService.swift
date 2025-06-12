@@ -94,9 +94,9 @@ final class CorePlanService: PlanService {
         self.alertService = alertService
         self.authKeychain = authKeychain
 
-        tokenStorage = TokenStorage()
-        userCachedStatus = UserCachedStatus()
-        payments = Payments(
+        self.tokenStorage = TokenStorage()
+        self.userCachedStatus = UserCachedStatus()
+        self.payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,
             localStorage: userCachedStatus,

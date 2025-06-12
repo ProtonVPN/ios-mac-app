@@ -50,9 +50,9 @@ public final class AlternateRoutingTroubleshootItem: ActionableTroubleshootItem 
     init(propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
 
-        title = Localizable.troubleshootItemAltTitle
-        description = NSMutableAttributedString(string: Localizable.troubleshootItemAltDescription).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)
-        isOn = propertiesManager.alternativeRouting
+        self.title = Localizable.troubleshootItemAltTitle
+        self.description = NSMutableAttributedString(string: Localizable.troubleshootItemAltDescription).add(link: Localizable.troubleshootItemAltLink1, withUrl: VPNLink.alternativeRouting.urlString)
+        self.isOn = propertiesManager.alternativeRouting
     }
 
     public func set(isOn: Bool) {

@@ -37,11 +37,11 @@ final class VpnProtocolViewModel {
          supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
          displaySmartProtocol _: Bool = true,
          featureFlags: FeatureFlags) {
-        selectedProtocol = connectionProtocol
+        self.selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
 
         let wireguardTLSProtocols = [.tcp, .udp].map { ConnectionProtocol.vpnProtocol(.wireGuard($0)) }
-        availableProtocols = supportedProtocols
+        self.availableProtocols = supportedProtocols
             .removing(wireguardTLSProtocols, if: !featureFlags.wireGuardTls)
             .filter { !$0.isDeprecated }
     }
