@@ -26,7 +26,7 @@ import ComposableArchitecture
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
-    public override init() {
+    override public init() {
         super.init()
         setupLogs()
     }
@@ -41,7 +41,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }()
 
-    open override func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
         guard case .enabled = feature else {
             log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
@@ -61,12 +61,12 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }
 
-    open override func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+    override open func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         log.debug("Stopping proxy provider with reason: \(reason)")
         completionHandler()
     }
 
-    open override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
+    override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
 
         guard let inclusionHelper else {

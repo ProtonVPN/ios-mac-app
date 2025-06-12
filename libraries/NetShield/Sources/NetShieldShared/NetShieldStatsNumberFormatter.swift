@@ -20,7 +20,7 @@ import Foundation
 import Strings
 
 public class NetShieldStatsNumberFormatter: NumberFormatter {
-    public override init() {
+    override public init() {
         super.init()
         allowsFloats = true
         maximumFractionDigits = 1

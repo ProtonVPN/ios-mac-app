@@ -146,17 +146,17 @@ public class DoHVPN: DoH, ServerConfig {
         status = alternativeRouting ? .on : .off
     }
 
-    public override func getHumanVerificationV3Headers() -> [String: String] {
+    override public func getHumanVerificationV3Headers() -> [String: String] {
         super.getHumanVerificationV3Headers()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    public override func getAccountHeaders() -> [String : String] {
+    override public func getAccountHeaders() -> [String : String] {
         super.getAccountHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    public override func getCaptchaHeaders() -> [String : String] {
+    override public func getCaptchaHeaders() -> [String : String] {
         super.getCaptchaHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }

@@ -1,8 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable linebreakAtEndOfFile
---disable linebreaks
---disable modifierOrder
 --disable numberFormatting
 --disable opaqueGenericParameters
 --disable preferCountWhere

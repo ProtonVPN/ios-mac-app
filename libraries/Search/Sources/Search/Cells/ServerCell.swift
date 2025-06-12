@@ -190,7 +190,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         connectButton.addInteraction(UIPointerInteraction(delegate: self))
     }
 
-    public override func prepareForReuse() {
+    override public func prepareForReuse() {
         super.prepareForReuse()
         featuresStackView
             .subviews

@@ -32,12 +32,12 @@ final class ServerManagerTests: XCTestCase {
     private var deleteCallback: ((Set<String>, Int) -> Void)?
     private var metadataCallback: ((DatabaseMetadata.Key, String?) -> Void)?
 
-    class override func setUp() {
+    override class func setUp() {
         super.setUp()
         FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.timestampedLogicals, true)
     }
 
-    class override func tearDown() {
+    override class func tearDown() {
         super.tearDown()
         FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.timestampedLogicals)
     }

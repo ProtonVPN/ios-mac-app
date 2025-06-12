@@ -54,7 +54,7 @@ public enum NaturalEarthProjection {
     private static let rangeX = abs(-2.73539) + 2.73539
     private static let rangeY = abs(-1.42239) + 1.42239
 
-    static public func projection(from coordinates: CLLocationCoordinate2D, in space: CGSize) -> CGPoint {
+    public static func projection(from coordinates: CLLocationCoordinate2D, in space: CGSize) -> CGPoint {
         let pointX = x(lat: coordinates.latitude, long: coordinates.longitude)
         let pointY = y(lat: coordinates.latitude)
         let ratioX = space.width / rangeX

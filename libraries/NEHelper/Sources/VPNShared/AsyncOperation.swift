@@ -25,12 +25,12 @@ import Foundation
 open class AsyncOperation: Operation {
     private let lockQueue = DispatchQueue(label: "ch.protonvpn.asyncoperation", attributes: .concurrent)
 
-    public override var isAsynchronous: Bool {
+    override public var isAsynchronous: Bool {
         return true
     }
 
     private var _isExecuting: Bool = false
-    public override private(set) var isExecuting: Bool {
+    override public private(set) var isExecuting: Bool {
         get {
             return lockQueue.sync { () -> Bool in
                 return _isExecuting
@@ -46,7 +46,7 @@ open class AsyncOperation: Operation {
     }
 
     private var _isFinished: Bool = false
-    public override private(set) var isFinished: Bool {
+    override public private(set) var isFinished: Bool {
         get {
             return lockQueue.sync { () -> Bool in
                 return _isFinished
@@ -61,7 +61,7 @@ open class AsyncOperation: Operation {
         }
     }
 
-    public override func start() {
+    override public func start() {
         guard !isCancelled else {
             finish()
             return
@@ -72,7 +72,7 @@ open class AsyncOperation: Operation {
         main()
     }
 
-    open override func main() {
+    override open func main() {
         fatalError("Subclasses must implement `main` without overriding super.")
     }
 

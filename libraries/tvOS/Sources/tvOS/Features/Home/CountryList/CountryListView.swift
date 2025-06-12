@@ -30,9 +30,9 @@ struct CountryListView: View {
     @FocusState private var focusedIndex: ItemCoordinate?
 
     static let columnCount = 6
-    static private let gridItemWidth: Double = 210
-    static private let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
-    static private let gridItemHeight: Double = 315
+    private static let gridItemWidth: Double = 210
+    private static let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
+    private static let gridItemHeight: Double = 315
 
     let columns: [GridItem]
 

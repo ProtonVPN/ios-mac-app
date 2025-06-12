@@ -11,7 +11,7 @@ package final class Logger: @unchecked Sendable {
     }
 
     #if swift(>=5.10)
-        nonisolated(unsafe) package private(set) static var global: Logger?
+        package private(set) nonisolated(unsafe) static var global: Logger?
     #else
         package private(set) static var global: Logger?
     #endif
@@ -67,7 +67,7 @@ extension OSLog {
     #if swift(>=6.0)
         #warning("Reevaluate whether this concurrency decoration is necessary.")
     #elseif swift(>=5.10)
-        nonisolated(unsafe) package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+        package nonisolated(unsafe) static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
     #else
         package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
     #endif

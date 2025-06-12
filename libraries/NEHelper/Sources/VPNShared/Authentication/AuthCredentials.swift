@@ -109,7 +109,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
 
     // MARK: - Decodable
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cacheVersion = try container.decode(Int.self, forKey: .cacheVersion)
         self.username = try container.decode(String.self, forKey: .username)

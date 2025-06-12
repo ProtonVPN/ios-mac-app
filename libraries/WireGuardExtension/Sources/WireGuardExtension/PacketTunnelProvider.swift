@@ -45,7 +45,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         #endif
     }
 
-    public override init() {
+    override public init() {
         AppContext.default = .wireGuardExtension
         self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
         self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
@@ -85,7 +85,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }()
 
-    open override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
@@ -248,13 +248,13 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+    override open func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel with reason: \(reason)")
 
         completionHandler()
     }
 
-    open override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
+    override open func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         do {
             let message = try WireguardProviderRequest.decode(data: messageData)
 
@@ -267,7 +267,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func sleep(completionHandler: @escaping () -> Void) {
+    override open func sleep(completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Getting ready to sleep, stopping certificate manager...")
 
         certificateRefreshManager.stop {
@@ -276,7 +276,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func wake() {
+    override open func wake() {
         wg_log(.info, message: "Waking up, starting certificate refresh manager...")
 
         certificateRefreshManager.start {

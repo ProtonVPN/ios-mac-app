@@ -60,7 +60,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "BusinessEvents: \(businessEvents)"
     }
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.status = try container.decode(Int.self, forKey: .status)
         self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle

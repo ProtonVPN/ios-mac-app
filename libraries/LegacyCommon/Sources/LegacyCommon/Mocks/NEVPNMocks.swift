@@ -131,7 +131,7 @@
             self.factory = factory
         }
 
-        public override func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
+        override public func saveToPreferences(completionHandler: ((Error?) -> Void)?) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
                 let prefs = NEVPNManagerMock.SavedPreferences(self)
                 self.factory?.tunnelProvidersInPreferences[uuid] = self
@@ -140,7 +140,7 @@
             }
         }
 
-        public override func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
+        override public func loadFromPreferences(completionHandler: @escaping (Error?) -> Void) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
                 guard let prefs = self.factory?.tunnelProviderPreferencesData[self.uuid] else {
                     completionHandler(nil)
@@ -152,7 +152,7 @@
             }
         }
 
-        public override func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
+        override public func removeFromPreferences(completionHandler: ((Error?) -> Void)?) {
             NETunnelProviderManagerFactoryMock.queue.async { [unowned self] in
                 self.factory?.tunnelProvidersInPreferences[self.uuid] = nil
                 self.factory?.tunnelProviderPreferencesData[self.uuid] = nil
