@@ -48,7 +48,7 @@ extension CreateNewProfileViewModel {
 
     // MARK: - Country / Gateway
 
-    internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
+    func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString
         let countryString: String
 
@@ -85,7 +85,7 @@ extension CreateNewProfileViewModel {
 
     // MARK: - Server
 
-    internal func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
+    func serverDescriptor(for serverOffering: ServerOffering) -> NSAttributedString {
         switch serverOffering {
         case let .custom(serverWrapper):
             return serverDescriptor(for: serverWrapper.server)
@@ -96,7 +96,7 @@ extension CreateNewProfileViewModel {
         }
     }
 
-    internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
+    func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         server.isSecureCore
             ? serverDescriptorForSecureCore(
                 entryCountry: server.entryCountry,
@@ -109,7 +109,7 @@ extension CreateNewProfileViewModel {
             )
     }
 
-    internal func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
+    func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
         return server.logical.feature.contains(.secureCore)
             ? serverDescriptorForSecureCore(
                 entryCountry: server.logical.entryCountry,
@@ -168,7 +168,7 @@ extension CreateNewProfileViewModel {
         return NSAttributedString.concatenate(countryFlag, serverDescriptor)
     }
 
-    internal func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {
+    func defaultServerDescriptor(image: NSImage, name: String) -> NSAttributedString {
         let imageAttributedString = self.colorImage(image).asAttachment(size: .profileIconSize)
         let nameAttributedString = NSMutableAttributedString(
             string: "  " + name,

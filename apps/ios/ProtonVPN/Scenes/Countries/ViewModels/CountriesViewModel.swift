@@ -131,8 +131,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private let factory: Factory
 
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    internal lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    internal lazy var alertService: AlertService = factory.makeCoreAlertService()
+    lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -312,7 +312,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
     }
 
-    internal func setStateOf(type: ServerType) {
+    func setStateOf(type: ServerType) {
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
         case .standard, .p2p, .tor, .unspecified:

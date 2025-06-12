@@ -95,7 +95,7 @@ extension SecureCoreToggleHandler {
         alertService.push(alert: alert)
     }
 
-    internal func toggleState(toOn: Bool, completion: @escaping (Bool) -> Void) {
+    func toggleState(toOn: Bool, completion: @escaping (Bool) -> Void) {
         guard let (insufficientPlan, isNotConnectedToVPN) = checkPlanAndConnection() else {
             completionWrapper(succeeded: true, completion: completion)
             return

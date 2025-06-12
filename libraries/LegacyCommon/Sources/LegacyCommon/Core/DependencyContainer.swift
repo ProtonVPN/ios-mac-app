@@ -84,7 +84,7 @@ open class Container: PropertiesToOverride {
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain.default
     private lazy var profileManager = ProfileManager(self)
-    internal private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
+    private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain()
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)

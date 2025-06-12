@@ -26,7 +26,7 @@ import Connection
 import ComposableArchitecture
 import AsyncAlgorithms
 
-internal struct DisconnectFromVPNIntent: AppIntent {
+struct DisconnectFromVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Disconnect from VPN"
 
     static var openAppWhenRun = false
@@ -38,7 +38,7 @@ internal struct DisconnectFromVPNIntent: AppIntent {
     }
 }
 
-internal struct ConnectToVPNIntent: AppIntent {
+struct ConnectToVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Connect to VPN"
     static var openAppWhenRun = true
 
@@ -131,7 +131,7 @@ internal struct ConnectToVPNIntent: AppIntent {
     }
 }
 
-internal struct LoginIntent: AppIntent {
+struct LoginIntent: AppIntent {
     static var title: LocalizedStringResource = "Login"
     static let openAppWhenRun = true
 

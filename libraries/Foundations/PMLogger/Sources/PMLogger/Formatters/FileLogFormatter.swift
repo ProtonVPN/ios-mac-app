@@ -20,7 +20,7 @@ import Foundation
 import Logging
 
 public class FileLogFormatter: PMLogFormatter {
-    internal let dateFormatter = ISO8601DateFormatter()
+    let dateFormatter = ISO8601DateFormatter()
     private let jsonEncoder = JSONEncoder()
 
     public init() {

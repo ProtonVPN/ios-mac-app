@@ -81,7 +81,7 @@ class CountryItemViewModel {
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
-    internal let propertiesManager: PropertiesManagerProtocol
+    let propertiesManager: PropertiesManagerProtocol
 
     // MARK: Computed properties
 

@@ -80,7 +80,7 @@ private class TestRefreshManager: RefreshManager {
 
     var workCallback: (() -> Void)
 
-    override internal func work() {
+    override func work() {
         workCallback()
     }
 

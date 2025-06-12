@@ -40,7 +40,7 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Country / Gateway
 
-    internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
+    func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString
         let countryString: String
 
@@ -77,7 +77,7 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Server
 
-    internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
+    func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         return server.isSecureCore
             ? serverDescriptorForSecureCore(
                 entryCountry: server.entryCountry,
@@ -90,7 +90,7 @@ extension CreateOrEditProfileViewModel {
             )
     }
 
-    internal func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
+    func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
         return server.logical.feature.contains(.secureCore)
             ? serverDescriptorForSecureCore(
                 entryCountry: server.logical.entryCountry,
@@ -151,7 +151,7 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Pre-set
 
-    internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
+    func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
         let image: UIImage
         let name: String
 

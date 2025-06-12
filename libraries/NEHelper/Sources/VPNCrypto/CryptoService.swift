@@ -19,7 +19,7 @@
 import Foundation
 import Dependencies
 
-internal enum CryptoServiceEnvironment {
+enum CryptoServiceEnvironment {
     static var secKeyCopyData = SecKeyCopyExternalRepresentation
     static var secKeyCreateWithData = SecKeyCreateWithData
     static var secKeyCreateRandom = SecKeyCreateRandomKey

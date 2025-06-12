@@ -167,7 +167,7 @@ extension PropertiesManagerProtocol {
 }
 
 public final class PropertiesManager: PropertiesManagerProtocol {
-    internal enum Keys: String, CaseIterable {
+    enum Keys: String, CaseIterable {
         case isSubsequentLaunch = "isSubsequentLaunch"
         case autoConnect = "AutoConnect"
         case blockOneTimeAnnouncement = "BlockOneTimeAnnouncement"

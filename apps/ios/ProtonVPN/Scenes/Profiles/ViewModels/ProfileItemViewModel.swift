@@ -237,11 +237,11 @@ final class ProfileItemViewModel {
 
     // MARK: Descriptors
 
-    internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
+    func attributedName(forProfile profile: Profile) -> NSAttributedString {
         return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
 
-    internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
+    func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
             return systemProfileDescriptor(forProfile: profile)

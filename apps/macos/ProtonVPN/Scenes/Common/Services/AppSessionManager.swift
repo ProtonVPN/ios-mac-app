@@ -76,7 +76,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         UpdateCheckerFactory
     private let factory: Factory
 
-    internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     @MainActor var appState: AppState { appStateManager.state }
 
     private lazy var networking: Networking = factory.makeNetworking()

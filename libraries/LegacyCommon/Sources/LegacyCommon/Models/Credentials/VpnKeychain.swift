@@ -81,7 +81,7 @@ public protocol VpnKeychainFactory {
     func makeVpnKeychain() -> VpnKeychainProtocol
 }
 
-internal enum KeychainEnvironment {
+enum KeychainEnvironment {
     static var secItemAdd = SecItemAdd
     static var secItemDelete = SecItemDelete
     static var secItemCopyMatching = SecItemCopyMatching

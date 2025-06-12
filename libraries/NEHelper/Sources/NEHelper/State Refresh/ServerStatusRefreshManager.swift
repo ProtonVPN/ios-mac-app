@@ -52,7 +52,7 @@ public final class ServerStatusRefreshManager: RefreshManager {
         }
     }
 
-    override internal func work() {
+    override func work() {
         log.warning("ServerStatusRefreshManager")
         guard let currentLogicalId, let currentServerId else {
             log.info("No connected server id set; not refreshing server status.", category: .connection)

@@ -22,8 +22,8 @@ import Timer
 
 /// Parent class for managers that have to perform some tasks periodically.
 public class RefreshManager {
-    internal let workQueue: DispatchQueue
-    internal let timerFactory: TimerFactory
+    let workQueue: DispatchQueue
+    let timerFactory: TimerFactory
 
     public enum State {
         case running
@@ -93,7 +93,7 @@ public class RefreshManager {
     }
 
     /// - Invariant: Will be called on `workQueue`.
-    internal func work() {
+    func work() {
         fatalError("\(#function) should be overridden by child class")
     }
 
@@ -105,7 +105,7 @@ public class RefreshManager {
     /// Otherwise first run of `work` will be performed after this number of seconds or now if value is negative.
     ///
     /// - Note: Call this function on `workQueue`.
-    internal func startTimer(firstRunAfter: TimeInterval? = nil) {
+    func startTimer(firstRunAfter: TimeInterval? = nil) {
         #if DEBUG
             dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
@@ -123,7 +123,7 @@ public class RefreshManager {
 
     /// Stop the timer by deinit'ing it.
     /// - Note: Call this function on `workQueue`.
-    internal func stopTimer() {
+    func stopTimer() {
         #if DEBUG
             dispatchPrecondition(condition: .onQueue(workQueue))
         #endif

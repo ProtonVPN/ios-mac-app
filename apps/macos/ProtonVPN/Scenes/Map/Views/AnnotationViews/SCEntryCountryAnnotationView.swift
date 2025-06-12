@@ -30,7 +30,7 @@ class SCEntryCountryAnnotationView: MapAnnotationView {
 
     let viewModel: SCEntryCountryAnnotationViewModel
 
-    override internal class var textLineHeight: CGFloat { 30 }
+    override class var textLineHeight: CGFloat { 30 }
 
     var hovered: Bool {
         viewModel.state == .hovered

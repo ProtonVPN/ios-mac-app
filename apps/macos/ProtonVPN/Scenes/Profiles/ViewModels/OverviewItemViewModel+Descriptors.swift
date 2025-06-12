@@ -27,11 +27,11 @@ import Theme
 import Strings
 
 extension OverviewItemViewModel {
-    internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
+    func attributedName(forProfile profile: Profile) -> NSAttributedString {
         return profile.name.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
     
-    internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
+    func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
             return systemProfileDescriptor(forProfile: profile)

@@ -58,7 +58,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     /// What to do after switching protocols
-    internal enum ProtocolSwitchAction {
+    enum ProtocolSwitchAction {
         /// Reconnect to the current server with the new protocol.
         case reconnect
         /// Disconnect from the current server (can be due to unsupported protocol on server)

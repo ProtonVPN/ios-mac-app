@@ -154,7 +154,7 @@ public final class ExtensionAPIService {
     }
 
     /// Whether or not the current session is expired.
-    internal var sessionExpired = false
+    var sessionExpired = false
     private var userInitiatedRequestHasNotYetBeenMade = true
     private var usingMainAppSessionUntilForkReceived = false
     private var mainAppSessionHasExpired = false

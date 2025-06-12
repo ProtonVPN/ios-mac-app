@@ -14,44 +14,44 @@
 
 // Deprecated typealiases
 @available(*, deprecated, renamed: "ColorAsset.Color", message: "This typealias will be removed in SwiftGen 7.0")
-internal typealias AssetColorTypeAlias = ColorAsset.Color
+typealias AssetColorTypeAlias = ColorAsset.Color
 @available(*, deprecated, renamed: "ImageAsset.Image", message: "This typealias will be removed in SwiftGen 7.0")
-internal typealias AssetImageTypeAlias = ImageAsset.Image
+typealias AssetImageTypeAlias = ImageAsset.Image
 
 // swiftlint:disable superfluous_disable_command file_length implicit_return
 
 // MARK: - Asset Catalogs
 
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
-internal enum Asset {
-    internal static let fastest = ImageAsset(name: "Fastest")
-    internal static let closeNavBar = ImageAsset(name: "close-nav-bar")
-    internal static let connect = ImageAsset(name: "connect")
-    internal static let locked = ImageAsset(name: "locked")
-    internal static let launchScreenVPNBackground = ColorAsset(name: "LaunchScreenVPNBackground")
-    internal static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")
-    internal static let mainMap = ImageAsset(name: "main-map")
-    internal static let netshieldSmall = ImageAsset(name: "netshield-small")
-    internal static let quickConnectActiveButton = ImageAsset(name: "quick-connect-active-button")
-    internal static let quickConnectConnectingButton = ImageAsset(name: "quick-connect-connecting-button")
-    internal static let quickConnectInactiveButton = ImageAsset(name: "quick-connect-inactive-button")
+enum Asset {
+    static let fastest = ImageAsset(name: "Fastest")
+    static let closeNavBar = ImageAsset(name: "close-nav-bar")
+    static let connect = ImageAsset(name: "connect")
+    static let locked = ImageAsset(name: "locked")
+    static let launchScreenVPNBackground = ColorAsset(name: "LaunchScreenVPNBackground")
+    static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")
+    static let mainMap = ImageAsset(name: "main-map")
+    static let netshieldSmall = ImageAsset(name: "netshield-small")
+    static let quickConnectActiveButton = ImageAsset(name: "quick-connect-active-button")
+    static let quickConnectConnectingButton = ImageAsset(name: "quick-connect-connecting-button")
+    static let quickConnectInactiveButton = ImageAsset(name: "quick-connect-inactive-button")
 }
 
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
 
 // MARK: - Implementation Details
 
-internal final class ColorAsset {
-    internal fileprivate(set) var name: String
+final class ColorAsset {
+    fileprivate(set) var name: String
 
     #if os(macOS)
-        internal typealias Color = NSColor
+        typealias Color = NSColor
     #elseif os(iOS) || os(tvOS) || os(watchOS)
-        internal typealias Color = UIColor
+        typealias Color = UIColor
     #endif
 
     @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
-    internal private(set) lazy var color: Color = {
+    private(set) lazy var color: Color = {
         guard let color = Color(asset: self) else {
             fatalError("Unable to load color asset named \(name).")
         }
@@ -60,7 +60,7 @@ internal final class ColorAsset {
 
     #if os(iOS) || os(tvOS)
         @available(iOS 11.0, tvOS 11.0, *)
-        internal func color(compatibleWith traitCollection: UITraitCollection) -> Color {
+        func color(compatibleWith traitCollection: UITraitCollection) -> Color {
             let bundle = BundleToken.bundle
             guard let color = Color(named: name, in: bundle, compatibleWith: traitCollection) else {
                 fatalError("Unable to load color asset named \(name).")
@@ -71,7 +71,7 @@ internal final class ColorAsset {
 
     #if canImport(SwiftUI)
         @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-        internal private(set) lazy var swiftUIColor: SwiftUI.Color = SwiftUI.Color(asset: self)
+        private(set) lazy var swiftUIColor: SwiftUI.Color = SwiftUI.Color(asset: self)
     #endif
 
     fileprivate init(name: String) {
@@ -79,7 +79,7 @@ internal final class ColorAsset {
     }
 }
 
-internal extension ColorAsset.Color {
+extension ColorAsset.Color {
     @available(iOS 11.0, tvOS 11.0, watchOS 4.0, macOS 10.13, *)
     convenience init?(asset: ColorAsset) {
         let bundle = BundleToken.bundle
@@ -95,7 +95,7 @@ internal extension ColorAsset.Color {
 
 #if canImport(SwiftUI)
     @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    internal extension SwiftUI.Color {
+    extension SwiftUI.Color {
         init(asset: ColorAsset) {
             let bundle = BundleToken.bundle
             self.init(asset.name, bundle: bundle)
@@ -103,17 +103,17 @@ internal extension ColorAsset.Color {
     }
 #endif
 
-internal struct ImageAsset {
-    internal fileprivate(set) var name: String
+struct ImageAsset {
+    fileprivate(set) var name: String
 
     #if os(macOS)
-        internal typealias Image = NSImage
+        typealias Image = NSImage
     #elseif os(iOS) || os(tvOS) || os(watchOS)
-        internal typealias Image = UIImage
+        typealias Image = UIImage
     #endif
 
     @available(iOS 8.0, tvOS 9.0, watchOS 2.0, macOS 10.7, *)
-    internal var image: Image {
+    var image: Image {
         let bundle = BundleToken.bundle
         #if os(iOS) || os(tvOS)
             let image = Image(named: name, in: bundle, compatibleWith: nil)
@@ -131,7 +131,7 @@ internal struct ImageAsset {
 
     #if os(iOS) || os(tvOS)
         @available(iOS 8.0, tvOS 9.0, *)
-        internal func image(compatibleWith traitCollection: UITraitCollection) -> Image {
+        func image(compatibleWith traitCollection: UITraitCollection) -> Image {
             let bundle = BundleToken.bundle
             guard let result = Image(named: name, in: bundle, compatibleWith: traitCollection) else {
                 fatalError("Unable to load image asset named \(name).")
@@ -142,13 +142,13 @@ internal struct ImageAsset {
 
     #if canImport(SwiftUI)
         @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-        internal var swiftUIImage: SwiftUI.Image {
+        var swiftUIImage: SwiftUI.Image {
             SwiftUI.Image(asset: self)
         }
     #endif
 }
 
-internal extension ImageAsset.Image {
+extension ImageAsset.Image {
     @available(iOS 8.0, tvOS 9.0, watchOS 2.0, *)
     @available(macOS, deprecated,
                message: "This initializer is unsafe on macOS, please use the ImageAsset.image property")
@@ -166,7 +166,7 @@ internal extension ImageAsset.Image {
 
 #if canImport(SwiftUI)
     @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-    internal extension SwiftUI.Image {
+    extension SwiftUI.Image {
         init(asset: ImageAsset) {
             let bundle = BundleToken.bundle
             self.init(asset.name, bundle: bundle)

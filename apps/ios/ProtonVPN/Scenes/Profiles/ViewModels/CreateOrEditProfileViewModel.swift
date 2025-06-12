@@ -70,7 +70,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var selectedProtocol: ConnectionProtocol
     private var isDefaultProfile = false
     
-    internal var userTier: Int = 0 // used by class extension
+    var userTier: Int = 0 // used by class extension
 
     var saveButtonEnabled = false {
         didSet {

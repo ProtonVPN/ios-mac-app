@@ -77,12 +77,12 @@ public final class VpnManager: VpnManagerProtocol {
 
     private var quickReconnection = false
 
-    internal let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
+    let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
 
     private let ikeProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
 
-    internal let localAgentConnectionFactory: LocalAgentConnectionFactory
+    let localAgentConnectionFactory: LocalAgentConnectionFactory
 
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
 
@@ -107,7 +107,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private var connectAllowed = true
-    internal var disconnectOnCertRefreshError = true
+    var disconnectOnCertRefreshError = true
     private var disconnectCompletion: (() -> Void)?
 
     // Holds a request for connection/disconnection etc for after the VPN frameworks are loaded

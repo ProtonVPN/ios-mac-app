@@ -86,7 +86,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     private let factory: Factory
 
-    internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }

@@ -30,9 +30,9 @@ private let sqrt3 = sqrt(3)
 /// Common class used by all of the different map annotations.
 class MapAnnotationView: MKAnnotationView {
     private static let lineWidth = 1.0
-    internal class var textLineHeight: CGFloat { 40.0 }
+    class var textLineHeight: CGFloat { 40.0 }
 
-    internal static let triangleSize: CGSize = {
+    static let triangleSize: CGSize = {
         let sideLength: CGFloat = 19
         return CGSize(width: sideLength, height: sideLength * sqrt3 / 2)
     }()
@@ -66,7 +66,7 @@ class MapAnnotationView: MKAnnotationView {
         )
     }()
 
-    internal enum ForegroundOrder: Int {
+    enum ForegroundOrder: Int {
         case wayBack = -1
         case middle = 50
         case upFront = 100
@@ -77,10 +77,10 @@ class MapAnnotationView: MKAnnotationView {
 
     /// The total size of the button(s) above the triangle (can be multiple for
     /// secure core annotations).
-    internal let buttonFrame: CGRect
+    let buttonFrame: CGRect
 
     /// The rectangular frame around the triangle on the map.
-    internal var triangleFrame: CGRect {
+    var triangleFrame: CGRect {
         let origin = CGPoint(x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
                              y: bounds.height - Self.triangleSize.height)
         return CGRect(origin: origin, size: Self.triangleSize)
@@ -88,7 +88,7 @@ class MapAnnotationView: MKAnnotationView {
 
     /// The path drawn by the annotation, used to compute whether or not the cursor
     /// is hovering over a triangle or a button.
-    internal var path = CGMutablePath()
+    var path = CGMutablePath()
 
     /// A delegate for styling the annotation.
     private var styleDelegate: CustomStyleContext
@@ -118,7 +118,7 @@ class MapAnnotationView: MKAnnotationView {
         super.init(annotation: nil, reuseIdentifier: reuseIdentifier)
     }
 
-    internal func orderInForeground(hovered: Bool) {
+    func orderInForeground(hovered: Bool) {
         guard hovered else {
             // default view tag
             tag = ForegroundOrder.wayBack.rawValue
@@ -141,7 +141,7 @@ class MapAnnotationView: MKAnnotationView {
         }, context: nil)
     }
 
-    internal func addAnnotationTrackingAreas(hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
+    func addAnnotationTrackingAreas(hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
         trackingAreas.forEach { removeTrackingArea($0) }
         let trackingArea = NSTrackingArea(rect: !hovered ? triangleFrame : bounds,
                                           options: [
@@ -209,7 +209,7 @@ class MapAnnotationView: MKAnnotationView {
     }
 
     // swiftlint:disable function_body_length
-    internal func drawAnnotation(context: CGContext, text: [NSAttributedString], badgeImage: NSImage? = nil) {
+    func drawAnnotation(context: CGContext, text: [NSAttributedString], badgeImage: NSImage? = nil) {
         let lineWidth = Self.lineWidth
         let ct = Self.triangleCornerOffsets
 
@@ -297,7 +297,7 @@ class MapAnnotationView: MKAnnotationView {
 
     // swiftlint:enable function_body_length operator_usage_whitespace
 
-    internal func mouseInside(with event: NSEvent, hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
+    func mouseInside(with event: NSEvent, hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
         // hit test before hovering incase a view is obscuring this one already
         guard let hitView = window?.contentView?.hitTest(event.locationInWindow) else { return }
 
@@ -318,7 +318,7 @@ class MapAnnotationView: MKAnnotationView {
         }
     }
 
-    internal func hitTestForState(_ point: NSPoint, hovered: Bool) -> NSView? {
+    func hitTestForState(_ point: NSPoint, hovered: Bool) -> NSView? {
         let pointInView = point - frame.origin
         let hitTestRect = hovered ? bounds : triangleFrame
         return hitTestRect.contains(pointInView) ? self : nil

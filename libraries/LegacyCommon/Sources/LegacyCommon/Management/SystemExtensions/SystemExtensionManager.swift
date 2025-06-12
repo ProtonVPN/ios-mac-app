@@ -103,7 +103,7 @@
             self.factory = factory
         }
 
-        internal func request(_ request: SystemExtensionRequest) {
+        func request(_ request: SystemExtensionRequest) {
             log.info("Submitting request \(request.request.description) for \(request.request.identifier)")
 
             outstandingRequests.insert(request)
