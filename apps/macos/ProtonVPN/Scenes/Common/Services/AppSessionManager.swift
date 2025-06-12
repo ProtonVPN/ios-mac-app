@@ -369,7 +369,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             _ = sysexManager.uninstallAll(userInitiated: false)
         }
 
-        guard sessionStatus == .established && !appStateManager.state.isSafeToEnd && !propertiesManager.rememberLoginAfterUpdate else {
+        guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
             NSApp.reply(toApplicationShouldTerminate: true)
             return
         }

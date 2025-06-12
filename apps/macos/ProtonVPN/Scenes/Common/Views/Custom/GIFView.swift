@@ -123,13 +123,13 @@ class GIFView: NSView {
     }
 
     func animate(_ play: Bool) {
-        if !animating && play {
+        if !animating, play {
             animating = true
             timer = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { _ in
                 self.frameIndex = (self.frameIndex + 1) % self.frames.count
                 self.needsDisplay = true
             }
-        } else if animating && !play {
+        } else if animating, !play {
             animating = false
             timer?.invalidate()
             timer = nil

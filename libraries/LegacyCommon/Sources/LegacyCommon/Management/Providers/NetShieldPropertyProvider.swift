@@ -102,7 +102,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             netShieldType = .off
         }
         // On upgrade from the free plan, switch NetShield to the default value for the new tier
-        if tier > oldTier && oldTier.isFreeTier {
+        if tier > oldTier, oldTier.isFreeTier {
             netShieldType = .level2
         }
     }

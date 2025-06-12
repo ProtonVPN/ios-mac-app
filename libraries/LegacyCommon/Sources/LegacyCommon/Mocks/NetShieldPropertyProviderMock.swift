@@ -37,7 +37,7 @@ public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
             netShieldType = .off
         }
         // Switch NetShield to level 1 on any upgrade from free plan
-        if tier > oldTier && oldTier.isFreeTier {
+        if tier > oldTier, oldTier.isFreeTier {
             netShieldType = .level1
         }
     }

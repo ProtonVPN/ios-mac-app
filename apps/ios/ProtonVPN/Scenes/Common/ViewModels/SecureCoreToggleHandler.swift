@@ -107,7 +107,7 @@ extension SecureCoreToggleHandler {
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
-        if propertiesManager.discourageSecureCore && toOn {
+        if propertiesManager.discourageSecureCore, toOn {
             showDiscourageSecureCoreAlert(isNotConnectedToVPN: isNotConnectedToVPN, completion: completion)
         } else if isNotConnectedToVPN {
             completionWrapper(succeeded: true, completion: completion)

@@ -199,7 +199,7 @@ class ConnectingOverlayViewModel {
     var buttons: [ButtonInfo] {
         var buttons = [ButtonInfo]()
         
-        if timedOut && isIkeWithKsEnabled {
+        if timedOut, isIkeWithKsEnabled {
             buttons.append(retryWithoutKSButton)
         } else if timedOut {
             buttons.append(retryButton)

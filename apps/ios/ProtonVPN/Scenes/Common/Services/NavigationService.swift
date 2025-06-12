@@ -195,7 +195,7 @@ final class NavigationService {
     }
     
     func switchTab(index: Int) {
-        guard index >= 0 && index < self.tabBarController?.viewControllers?.count ?? 0 else {
+        guard index >= 0, index < self.tabBarController?.viewControllers?.count ?? 0 else {
             return
         }
         self.tabBarController?.selectedIndex = index

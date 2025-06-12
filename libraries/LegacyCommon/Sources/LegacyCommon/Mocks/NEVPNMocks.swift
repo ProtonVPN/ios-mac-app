@@ -209,7 +209,7 @@ public class NEVPNConnectionMock: NEVPNConnectionWrapper {
 
     public func stopVPNTunnel() {
         let debounce = self.queue.sync { () -> Bool in
-            guard self.status != .disconnecting && self.status != .disconnected else {
+            guard self.status != .disconnecting, self.status != .disconnected else {
                 return true
             }
             return false

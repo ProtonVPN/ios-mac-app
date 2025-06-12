@@ -134,7 +134,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
         
-        if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
+        if let completionHandler = completionHandler, messageData.count == 1, messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
                 if let settings = settings {

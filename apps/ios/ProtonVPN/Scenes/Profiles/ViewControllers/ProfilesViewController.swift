@@ -217,7 +217,7 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     private func renderEditing(_ editing: Bool) {
-        if editing && !tableView.isEditing {
+        if editing, !tableView.isEditing {
             tableView.setEditing(true, animated: true)
             self.editButtonItem.title = Localizable.done
         } else {

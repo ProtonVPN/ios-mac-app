@@ -248,11 +248,11 @@ class StatusBarIconBlinker {
     
     public var isBlinking: Bool = false {
         didSet {
-            if isBlinking && timer == nil {
+            if isBlinking, timer == nil {
                 start()
                 return
             }
-            if !isBlinking && timer != nil {
+            if !isBlinking, timer != nil {
                 stop()
                 return
             }

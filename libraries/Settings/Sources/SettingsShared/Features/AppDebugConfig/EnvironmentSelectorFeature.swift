@@ -70,7 +70,7 @@ public struct DebugConfigurationFeature {
         }
 
         public var environmentsCaption: (AppTheme.Style, String) {
-            if atlasSecretFetchURLString.isEmpty && atlasSecret.isEmpty {
+            if atlasSecretFetchURLString.isEmpty, atlasSecret.isEmpty {
                 return (.warning, "Atlas secret not set and neither is fetch URL. Enter a URL and tap 'Fetch' to set.")
             }
 

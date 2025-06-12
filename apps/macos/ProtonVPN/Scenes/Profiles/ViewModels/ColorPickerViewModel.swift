@@ -62,7 +62,7 @@ class ColorPickerViewModel {
     }
     
     func select(index: Int) {
-        if index >= 0 && index < colorCount {
+        if index >= 0, index < colorCount {
             selectedColorIndex = index
         }
     }

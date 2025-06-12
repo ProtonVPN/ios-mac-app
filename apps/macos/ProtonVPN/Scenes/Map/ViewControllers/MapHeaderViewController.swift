@@ -57,7 +57,7 @@ class MapHeaderViewController: NSViewController {
     
     override func viewDidLayout() {
         super.viewDidLayout()
-        if backgroundView.frame.width < backgroundView.width && !view.isHidden {
+        if backgroundView.frame.width < backgroundView.width, !view.isHidden {
             backgroundView.isHidden = true
         } else if backgroundView.isHidden {
             backgroundView.isHidden = false

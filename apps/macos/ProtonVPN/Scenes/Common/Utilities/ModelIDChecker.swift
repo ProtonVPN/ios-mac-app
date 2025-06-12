@@ -78,7 +78,7 @@ private extension ModelIdChecker {
 
         // sysctlbyname returns -1 and sets errno = ENOMEM if the buffer was too small.
         // Try again w/ size that the kernel told us to use, assuming it's not too big.
-        if ret < 0 && errno == ENOMEM {
+        if ret < 0, errno == ENOMEM {
             errno = 0
 
             let newSize = sizePtr.pointee

@@ -528,7 +528,7 @@ final class StatusMenuViewModel {
 extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
 
     func unsecureWiFiDetected() {
-        guard unprotectedNetworkNotifications && !isConnecting && !isConnected else { return }
+        guard unprotectedNetworkNotifications, !isConnecting, !isConnected else { return }
         presentUnsecureWiFiWarning()
     }
 }

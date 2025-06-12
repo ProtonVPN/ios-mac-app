@@ -106,9 +106,9 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     }
     
     func highlight(_ highlight: Bool) {
-        if highlight && viewState == .idle {
+        if highlight, viewState == .idle {
             viewState = .selected
-        } else if !highlight && viewState == .selected {
+        } else if !highlight, viewState == .selected {
             viewState = .idle
         }
     }

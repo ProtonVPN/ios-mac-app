@@ -57,10 +57,10 @@ class MapSectionViewController: NSViewController {
     
     override func viewDidLayout() {
         super.viewDidLayout()
-        if view.frame.width < 600 && zoomView.orientation == .horizontal {
+        if view.frame.width < 600, zoomView.orientation == .horizontal {
             zoomView.orientation = .vertical
             logoImageView.isHidden = true
-        } else if view.frame.width >= 600 && zoomView.orientation == .vertical {
+        } else if view.frame.width >= 600, zoomView.orientation == .vertical {
             zoomView.orientation = .horizontal
             logoImageView.isHidden = false
         }

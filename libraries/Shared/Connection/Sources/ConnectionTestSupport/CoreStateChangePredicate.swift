@@ -38,7 +38,7 @@ public func stateChangePredicate<Action>(
         guard let (oldState, newState) = extract(action) else {
             return false
         }
-        if oldState.is(oldValue) && newState.is(newValue) {
+        if oldState.is(oldValue), newState.is(newValue) {
             return true
         }
         if strict {

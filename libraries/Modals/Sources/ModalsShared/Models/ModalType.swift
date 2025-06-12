@@ -239,7 +239,7 @@ private extension ModalType {
         case .profiles:
             return Localizable.upsellProfilesTitle
         case let .cantSkip(before, _, longSkip):
-            if before.timeIntervalSinceNow > 0 && longSkip { // hide the title after timer runs out
+            if before.timeIntervalSinceNow > 0, longSkip { // hide the title after timer runs out
                 return Localizable.upsellCustomizationTitle
             }
             return ""

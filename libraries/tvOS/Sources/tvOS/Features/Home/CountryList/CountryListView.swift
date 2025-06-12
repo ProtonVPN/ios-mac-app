@@ -95,7 +95,7 @@ struct CountryListView: View {
     /// sections are half transparent.
     private func opacity(forCoordinate coordinate: ItemCoordinate) -> Double {
         guard let focused = focusedIndex else {
-            if coordinate.section == 0 && coordinate.row == 0 {
+            if coordinate.section == 0, coordinate.row == 0 {
                 return 1 // by default highlight the recommended section
             }
             return Self.unfocusedOpacity

@@ -230,7 +230,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             }
             loginLabel.isHidden = true
 
-            if !viewModel.isConnecting && viewModel.serverType == .secureCore && viewModel.countryCount() == 0 {
+            if !viewModel.isConnecting, viewModel.serverType == .secureCore, viewModel.countryCount() == 0 {
                 upgradeView.isHidden = false
             } else {
                 upgradeView.isHidden = true

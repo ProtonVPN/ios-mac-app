@@ -100,7 +100,7 @@ extension SmartProtocolAvailabilityChecker {
                     defer { group.leave() }
 
                     let go = lockQueue.sync { () -> Bool in
-                        guard success && !portAlreadyFound else {
+                        guard success, !portAlreadyFound else {
                             return false
                         }
                         portAlreadyFound = true

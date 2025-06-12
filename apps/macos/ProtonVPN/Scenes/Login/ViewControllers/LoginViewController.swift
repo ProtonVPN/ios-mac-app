@@ -542,7 +542,7 @@ extension LoginViewController: NSTextFieldDelegate {
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
 
-        if commandSelector == #selector(NSResponder.insertNewline(_:)) && loginButton.isEnabled {
+        if commandSelector == #selector(NSResponder.insertNewline(_:)), loginButton.isEnabled {
             attemptLogin()
             return true
         }

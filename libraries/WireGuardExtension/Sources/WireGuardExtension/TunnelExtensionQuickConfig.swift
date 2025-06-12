@@ -84,7 +84,7 @@ extension TunnelConfiguration {
                             throw ParseError.peerHasUnrecognizedKey(keyWithCase)
                         }
                     }
-                } else if lowercasedLine != "[interface]" && lowercasedLine != "[peer]" {
+                } else if lowercasedLine != "[interface]", lowercasedLine != "[peer]" {
                     throw ParseError.invalidLine(line)
                 }
             }

@@ -1,7 +1,3 @@
---disable andOperator
---disable anyObjectProtocol
---disable applicationMain
---disable assertionFailures
 --disable blankLineAfterImports
 --disable blankLinesAroundMark
 --disable blankLinesAtEndOfScope

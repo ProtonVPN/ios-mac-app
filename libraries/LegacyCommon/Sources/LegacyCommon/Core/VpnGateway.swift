@@ -409,7 +409,7 @@ public class VpnGateway: VpnGatewayProtocol {
 
         let `protocol` = request?.connectionProtocol ?? globalConnectionProtocol
 
-        if `protocol`.isDeprecated && propertiesManager.featureFlags.enforceDeprecatedProtocols {
+        if `protocol`.isDeprecated, propertiesManager.featureFlags.enforceDeprecatedProtocols {
             showProtocolDeprecatedAlert(request: request)
             return
         }
@@ -733,7 +733,7 @@ fileprivate extension VpnGateway {
 
         // If user is upgrading from a free account, the server list needs to be updated to contain the paid servers.
         // CAREFUL: refresh server info's continuation is asynchronous here.
-        if oldTier.isFreeTier && newTier.isPaidTier {
+        if oldTier.isFreeTier, newTier.isPaidTier {
             vpnApiService.refreshServerInfo(freeTier: false) { [weak self] result in
                 self?.processServerInfoResult(result: result, refreshFreeTierInfo: false)
             }

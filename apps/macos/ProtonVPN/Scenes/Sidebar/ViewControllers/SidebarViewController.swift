@@ -192,12 +192,12 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         guard let window = view.window else { return }
         let width = window.frame.width
         
-        if !window.styleMask.contains(.fullScreen) && self.expandButton.expandState == .expanded && width > sidebarWidth + expandButtonWidth {
+        if !window.styleMask.contains(.fullScreen), self.expandButton.expandState == .expanded, width > sidebarWidth + expandButtonWidth {
             @Dependency(\.defaultsProvider) var provider
             provider.getDefaults().set(Int(width - sidebarWidth), forKey: AppConstants.UserDefaults.mapWidth)
         }
         
-        if width > sidebarWidth + expandButtonWidth && self.expandButton.expandState == .compact {
+        if width > sidebarWidth + expandButtonWidth, self.expandButton.expandState == .compact {
             self.expandButton.expandState = .expanded
             self.expandButtonLeading.constant = -expandButtonWidth
         }
@@ -278,7 +278,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                         
             overlayViewModel = factory.makeConnectingOverlayViewModel(cancellation: cancellation)
             
-            if window.isVisible && NSApp.occlusionState.contains(.visible) {
+            if window.isVisible, NSApp.occlusionState.contains(.visible) {
                 showLoadingOverlay(with: overlayViewModel!)
             }
         } else {

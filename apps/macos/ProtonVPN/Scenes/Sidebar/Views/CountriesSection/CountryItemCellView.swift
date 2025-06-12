@@ -136,7 +136,7 @@ final class CountryItemCellView: NSView {
 
     private func isConnectButtonHidden(mouseHover: Bool) -> Bool {
         // Hide if hidden or tier too low to connect
-        guard viewModel.showCountryConnectButton && !viewModel.isTierTooLow else { return true }
+        guard viewModel.showCountryConnectButton, !viewModel.isTierTooLow else { return true }
         // Show on mouse hover
         guard !mouseHover else { return false }
         // Show if connected to this country

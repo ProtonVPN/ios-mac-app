@@ -539,7 +539,7 @@ public final class VpnManager: VpnManagerProtocol {
         }
 
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
-        if configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+        if configuration.includeAllNetworks, configuration.isKind(of: NEVPNProtocolIKEv2.self) {
             self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
                 saveToPreferences()
             })

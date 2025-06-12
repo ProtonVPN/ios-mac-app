@@ -330,7 +330,7 @@ class CreateNewProfileViewModel {
     // MARK: Updating state
 
     private func update(type: ServerType) {
-        if type == .secureCore && !userTierSupportsSecureCore && !alreadyPresentedSecureCoreWarning {
+        if type == .secureCore, !userTierSupportsSecureCore, !alreadyPresentedSecureCoreWarning {
             secureCoreWarning?()
             alreadyPresentedSecureCoreWarning = true
         }
@@ -359,7 +359,7 @@ class CreateNewProfileViewModel {
         checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
         state = state.updating(connectionProtocol: connectionProtocol)
 
-        if connectionProtocol == .vpnProtocol(.ike) && userInitiated {
+        if connectionProtocol == .vpnProtocol(.ike), userInitiated {
             self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
                 guard let self = self else {
                     return
@@ -630,7 +630,7 @@ extension ModelState {
     }
 
     var selectedGroup: ServerGroupInfo? {
-        guard let countryIndex = countryIndex, countryIndex >= 0 && countryIndex < serverGroups.count else {
+        guard let countryIndex = countryIndex, countryIndex >= 0, countryIndex < serverGroups.count else {
             return nil
         }
         return serverGroups[countryIndex]

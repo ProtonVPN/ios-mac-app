@@ -118,7 +118,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
             : .horizontal
         
         // Put cancel button on the left
-        if buttonsStackView.orientation == .horizontal && buttons.count == 2 {
+        if buttonsStackView.orientation == .horizontal, buttons.count == 2 {
             buttons.reverse()
         }
         
@@ -156,7 +156,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     
     @IBAction private func buttonClicked(_ sender: NSButton) {
         let index = sender.tag
-        guard index >= 0 && index < clickHandlers.count else {
+        guard index >= 0, index < clickHandlers.count else {
             return
         }
         clickHandlers[index]()

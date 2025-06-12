@@ -108,7 +108,7 @@ extension Error {
             NetworkErrorCode.cannotParseResponse // Potentially returned when requests are interrupted by network interface changes
         ]
 
-        if nsError.domain == NSURLErrorDomain && retriableNSURLDomainErrorCodes.contains(nsError.code) {
+        if nsError.domain == NSURLErrorDomain, retriableNSURLDomainErrorCodes.contains(nsError.code) {
             return true
         }
 

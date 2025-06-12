@@ -17,7 +17,7 @@ extension Bundle {
         return value.map { domain in
             // If dynamic domain looks like a real URL, then leave it alone.
             // Otherwise, wrap it up in an https/api blanket.
-            if let url = URL(string: domain), url.scheme != nil && url.host() != nil {
+            if let url = URL(string: domain), url.scheme != nil, url.host() != nil {
                 return url.absoluteString
             }
             return "https://\(domain)/api"

@@ -428,7 +428,7 @@ class StatusViewModel {
 
         if showChangeServerBanner {
             rowsUpdated?([indexPath: changeCountryBannerCell])
-        } else if !showChangeServerBanner && shouldShowNetShieldV2 {
+        } else if !showChangeServerBanner, shouldShowNetShieldV2 {
             rowsUpdated?([indexPath: netShieldV2UpsellBannerCell])
         }
     }

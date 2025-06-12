@@ -138,7 +138,7 @@ public struct UserLocationFeature {
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
 
-                if userIP == state.userIP && lowercasedUserCountry == state.userCountry?.lowercased() {
+                if userIP == state.userIP, lowercasedUserCountry == state.userCountry?.lowercased() {
                     log.debug("User Location unchanged from last fetch", category: .api)
                     return .none
                 }

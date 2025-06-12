@@ -120,7 +120,7 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     }
     
     func select(color index: Int) {
-        if index >= 0 && index < colors.count {
+        if index >= 0, index < colors.count {
             selectedColorIndex = index
         }
     }

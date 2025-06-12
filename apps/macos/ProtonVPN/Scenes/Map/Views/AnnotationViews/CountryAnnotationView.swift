@@ -155,7 +155,7 @@ class MapAnnotationView: MKAnnotationView {
             if let window = self.window {
                 let mousePoint = window.mouseLocationOutsideOfEventStream
                 let pointInView = self.convert(mousePoint, from: nil)
-                if !self.bounds.contains(pointInView) && hovered {
+                if !self.bounds.contains(pointInView), hovered {
                     stateUpdateCallback(false)
                 }
             }
@@ -369,7 +369,7 @@ class CountryAnnotationView: MapAnnotationView {
         if hovered {
             let isPointing = NSCursor.current == NSCursor.pointingHand
             buttonText.append(isPointing ? viewModel.attributedHoverTitle : viewModel.attributedCountry)
-            if viewModel.shouldShowUpgradeBadge && !isPointing {
+            if viewModel.shouldShowUpgradeBadge, !isPointing {
                 badgeImage = Theme.Asset.vpnSubscriptionBadge.image
             }
         }

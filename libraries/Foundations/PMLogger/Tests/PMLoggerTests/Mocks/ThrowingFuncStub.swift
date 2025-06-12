@@ -97,7 +97,7 @@ public final class ThrowingStubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6
     }
 
     deinit {
-        if ensureWasCalled && callCounter == 0 {
+        if ensureWasCalled, callCounter == 0 {
             XCTFail("this method should be called but wasn't: \(description)")
         }
     }
@@ -1041,7 +1041,7 @@ public final class StubbedFunction<Input, Output, A1, A2, A3, A4, A5, A6, A7, A8
     }
 
     deinit {
-        if ensureWasCalled && callCounter == 0 {
+        if ensureWasCalled, callCounter == 0 {
             XCTFail("this method should be called but wasn't: \(description)")
         }
     }

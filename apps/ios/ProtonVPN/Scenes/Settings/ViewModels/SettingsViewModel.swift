@@ -224,7 +224,7 @@ final class SettingsViewModel {
         }
 
         var cells: [TableViewCellModel]
-        if isAccountRecoveryEnabled && shouldShowAccountRecovery {
+        if isAccountRecoveryEnabled, shouldShowAccountRecovery {
             let accountRecoveryCell = TableViewCellModel.pushKeyValue(key: AccountRecoveryModule.settingsItem, value: accountRecoveryStateText, icon: accountRecoveryImage) { [weak self] in
                 self?.pushAccountRecoveryViewController()
             }
@@ -243,7 +243,7 @@ final class SettingsViewModel {
             #endif
         }()
 
-        if !qrLoginFeatureDisabled && !qrLoginOptedOut && isDeviceSecured {
+        if !qrLoginFeatureDisabled, !qrLoginOptedOut, isDeviceSecured {
             let qrCodeSignInCell = TableViewCellModel.pushStandard(title: Localizable.settingsTitleQrCodeSignIn) { [weak self] in
                 self?.pushSignInToAnotherDeviceViewController()
             }

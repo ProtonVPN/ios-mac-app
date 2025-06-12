@@ -216,9 +216,9 @@ public struct HomeView: View {
     /// Update the Z-index of the connection status view. This allows us to enable the user interaction of upsell banners and netshields stats.
     private func updateConnectionStatusZIndex(_ scrollOffset: Double) {
         let swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
-        if scrollOffset < -swapThreshold && connectionStatusZIndex == .enabledConnectionStatus {
+        if scrollOffset < -swapThreshold, connectionStatusZIndex == .enabledConnectionStatus {
             connectionStatusZIndex = ZIndex.disabledConnectionStatus
-        } else if scrollOffset > -swapThreshold && connectionStatusZIndex == .disabledConnectionStatus {
+        } else if scrollOffset > -swapThreshold, connectionStatusZIndex == .disabledConnectionStatus {
             connectionStatusZIndex = ZIndex.enabledConnectionStatus
         }
     }

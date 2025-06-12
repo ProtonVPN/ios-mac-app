@@ -125,7 +125,7 @@ final class HeaderViewController: NSViewController {
     private func setupFlagView() {
         if viewModel.isConnected, let countryCode = viewModel.connectedCountryCode {
             flagView.backgroundImage = AppTheme.Icon.flag(countryCode: countryCode, style: .large)
-        } else if !viewModel.isConnected && flagView.backgroundImage != nil {
+        } else if !viewModel.isConnected, flagView.backgroundImage != nil {
             flagView.backgroundImage = nil
         }
     }

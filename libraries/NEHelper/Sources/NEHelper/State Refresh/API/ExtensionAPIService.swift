@@ -63,7 +63,7 @@ public final class ExtensionAPIService {
                             asPartOf operation: CertificateRefreshAsyncOperation,
                             completionHandler: @escaping (Result<VpnCertificate, Error>) -> Void) {
 
-        if operation.isUserInitiated && userInitiatedRequestHasNotYetBeenMade {
+        if operation.isUserInitiated, userInitiatedRequestHasNotYetBeenMade {
             userInitiatedRequestHasNotYetBeenMade = false
             mainAppSessionHasExpired = false // if the app is able to send a request, it is likely logged in
         }
@@ -575,7 +575,7 @@ public final class ExtensionAPIService {
                 completionHandler(.success(certificate))
             case .failure(let error):
                 var refreshApiTokenIfNeeded = refreshApiTokenIfNeeded
-                if credentialContext == .mainApp && self?.userInitiatedRequestHasNotYetBeenMade == false {
+                if credentialContext == .mainApp, self?.userInitiatedRequestHasNotYetBeenMade == false {
                     // If the app has already checked in with the extension, and we're using its credentials,
                     // we should avoid changing the main app's API credentials in the keychain.
                     refreshApiTokenIfNeeded = false

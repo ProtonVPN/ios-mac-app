@@ -127,7 +127,7 @@ extension TwoFactorView: NSTextFieldDelegate {
 
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if control == twoFactorTextField {
-            if commandSelector == #selector(NSResponder.insertNewline(_:)) && twoFactorButton.isEnabled {
+            if commandSelector == #selector(NSResponder.insertNewline(_:)), twoFactorButton.isEnabled {
                 twoFactorButtonAction()
                 return true
             }

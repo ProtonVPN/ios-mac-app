@@ -354,7 +354,7 @@ class MapSectionViewModel {
             }
         }
         
-        if connectedAnnotation == nil && selectedAnnotation == nil {
+        if connectedAnnotation == nil, selectedAnnotation == nil {
             for (index, element) in secureCores.enumerated() {
                 connections.append(ConnectionViewModel(.connected, between: element, and: secureCores[(index + 1) % secureCores.count]))
             }
