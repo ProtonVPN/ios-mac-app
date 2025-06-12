@@ -93,7 +93,7 @@ final class CountryItemViewModel: CountryViewModel {
         self.isSecureCoreCountry = isSecureCoreCountry
 
         let servers = [ServerTier.free, ServerTier.plus].flatMap({ servers[$0] ?? [] })
-        let groups = Dictionary.init(grouping: servers, by: { $0.city })
+        let groups = Dictionary(grouping: servers, by: { $0.city })
         self.cities = groups.map({
             CityItemViewModel(cityName: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
         }).sorted(by: { $0.cityName < $1.cityName })

@@ -194,7 +194,7 @@ struct ConnectionDetailsView: View {
 
 struct ConnectionDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsView(store: Store(initialState: .init(connectedSince: Date.init(timeIntervalSinceNow: -12345),
+        ConnectionDetailsView(store: Store(initialState: .init(connectedSince: Date(timeIntervalSinceNow: -12345),
                                                                country: "Lithuania",
                                                                city: "Siauliai",
                                                                server: "LT#5",

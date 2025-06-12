@@ -1,7 +1,5 @@
 --disable enumNamespaces
 --disable extensionAccessControl
---disable redundantGet
---disable redundantInit
 --disable redundantInternal
 --disable redundantLet
 --disable redundantLetError

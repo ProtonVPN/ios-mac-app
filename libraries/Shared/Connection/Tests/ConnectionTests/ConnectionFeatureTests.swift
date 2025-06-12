@@ -68,7 +68,7 @@
                 features: connectionFeatures
             )
 
-            let coreState = CoreConnectionFeature.State.init(
+            let coreState = CoreConnectionFeature.State(
                 tunnelState: .disconnecting(nil),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
@@ -208,7 +208,7 @@
             // Because of the initial value we observe in `ExtensionFeature.Action.startObservingStateChanges`, we can't fully
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
-            let coreState = CoreConnectionFeature.State.init(
+            let coreState = CoreConnectionFeature.State(
                 tunnelState: .connecting(initialServerInfo),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)

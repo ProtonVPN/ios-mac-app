@@ -26,21 +26,21 @@ import ComposableArchitecture
 // MARK: - Definitions
 
 extension WhatsNew.Item {
-    static let testingNoRuleItem: Self = Self.init(
+    static let testingNoRuleItem: Self = Self(
         id: "testingNoRuleItem",
         rules: [],
         presentationAmount: 0,
         delayBetweenPresentations: nil
     )
 
-    static let testingOneRuleItem: Self = Self.init(
+    static let testingOneRuleItem: Self = Self(
         id: "testingOneRuleItem",
         rules: [.appVersions(["6.0.0"])],
         presentationAmount: 1,
         delayBetweenPresentations: nil
     )
 
-    static let testingMultiRulesItem: Self = Self.init(
+    static let testingMultiRulesItem: Self = Self(
         id: "testingMultiRulesItem",
         rules: [
             .appVersions(["6.1.0", "6.0.0"]),
@@ -51,7 +51,7 @@ extension WhatsNew.Item {
         delayBetweenPresentations: nil
     )
 
-    static let testingDelayItem: Self = Self.init(
+    static let testingDelayItem: Self = Self(
         id: "testingDelayItem",
         rules: [
             .appVersions(["6.0.0"])

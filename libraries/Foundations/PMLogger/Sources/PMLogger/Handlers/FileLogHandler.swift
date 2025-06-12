@@ -43,7 +43,7 @@ public final class FileLogHandler: ParentLogHandler {
         return fileUrl.deletingLastPathComponent()
     }
     
-    private static let queue: DispatchQueue = DispatchQueue.init(label: "FileLogHandler", qos: .background)
+    private static let queue: DispatchQueue = DispatchQueue(label: "FileLogHandler", qos: .background)
     
     public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter(), fileManager: FileManagerWrapper = FileManager.default) {
         self.fileUrl = fileUrl

@@ -107,7 +107,7 @@ final class ProfilesTableViewCell: UITableViewCell {
             connectButton.backgroundColor = .clear
         } else {
             connectButton.setImage(viewModel.connectIcon, for: .normal)
-            connectButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+            connectButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             connectButton.setAttributedTitle(nil, for: .normal)
             connectButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
             connectButton.layer.cornerRadius = 20

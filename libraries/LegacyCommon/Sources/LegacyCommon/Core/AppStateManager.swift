@@ -66,7 +66,7 @@ public protocol AppStateManager {
 }
 
 public extension AppStateManager {
-    @MainActor var stateThreadSafe: AppState { get { self.state } }
+    @MainActor var stateThreadSafe: AppState { self.state }
 }
 
 public class AppStateManagerImplementation: AppStateManager {

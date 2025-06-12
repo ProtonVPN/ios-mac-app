@@ -22,7 +22,7 @@ import ProtonCoreNetworking
 
 public extension AuthCredentials {
     func toAuthCredential() -> AuthCredential {
-        .init(Credential.init(
+        .init(Credential(
             UID: sessionId,
             accessToken: accessToken,
             refreshToken: refreshToken,

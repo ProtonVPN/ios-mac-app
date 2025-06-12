@@ -29,7 +29,7 @@ extension UIButton {
         closeButton.setImage(closeImage, for: .normal)
         closeButton.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
         closeButton.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
-        closeButton.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 0, bottom: 12, right: 24)
+        closeButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 24)
         closeButton.tintColor = .normalTextColor()
         return closeButton
     }

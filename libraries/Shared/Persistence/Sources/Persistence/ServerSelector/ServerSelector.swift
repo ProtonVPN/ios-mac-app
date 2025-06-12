@@ -232,7 +232,7 @@ extension ConnectionSpec {
 
     private var requiredFeatureSet: ServerFeature {
         var requiredFeatures: [ServerFeature] = features
-            .compactMap { ServerFeature.init(connectionSpecFeature: $0) }
+            .compactMap { ServerFeature(connectionSpecFeature: $0) }
         if location.isSecureCore {
             requiredFeatures.append(.secureCore)
         }

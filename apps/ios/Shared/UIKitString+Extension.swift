@@ -56,8 +56,8 @@ extension String {
         newString.addAttribute(NSAttributedString.Key.font, value: textFont, range: range)
         newString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
         
-        let regex = try? NSRegularExpression(pattern: #"[\d\,\.\ ]+"#, options: NSRegularExpression.Options.init())
-        if let matches = regex?.matches(in: self, options: NSRegularExpression.MatchingOptions.init(), range: range) {
+        let regex = try? NSRegularExpression(pattern: #"[\d\,\.\ ]+"#, options: NSRegularExpression.Options())
+        if let matches = regex?.matches(in: self, options: NSRegularExpression.MatchingOptions(), range: range) {
             for match in matches {
                 let nsRange = match.range
                 newString.addAttribute(NSAttributedString.Key.foregroundColor, value: numberColor, range: nsRange)

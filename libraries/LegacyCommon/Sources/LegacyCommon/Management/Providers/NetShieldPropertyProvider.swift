@@ -116,7 +116,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return nil
         }
 
-        guard let type = NetShieldType.init(rawValue: intValue) else {
+        guard let type = NetShieldType(rawValue: intValue) else {
             log.error("Failed to retrieve stored NetShield level, \(intValue) is not a valid NetShield type", category: .settings)
             return nil
         }
