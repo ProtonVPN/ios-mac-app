@@ -95,6 +95,9 @@ extension AppDelegate: NSApplicationDelegate {
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()
 
+        // Keeping Plutonium FF disabled for not accidentally exposing the feature until ready for release.
+        FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.plutoniumMacOS, false)
+
         for (featureFlagOverride, value) in propertiesManager.featureFlagOverrides ?? [:] {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: featureFlagOverride) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
