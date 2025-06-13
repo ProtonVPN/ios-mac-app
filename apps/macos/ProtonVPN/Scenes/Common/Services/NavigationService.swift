@@ -181,8 +181,8 @@ class NavigationService {
         didHandleWake = true
         autoConnectIfEnabled()
         // Reset the flag after a short interval
-        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) { [weak self] in
-            self?.didHandleWake = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) {
+            self.didHandleWake = false
         }
     }
 

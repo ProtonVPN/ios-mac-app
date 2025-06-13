@@ -127,7 +127,7 @@ final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
     private static let refreshInterval: TimeInterval = 60.0
     private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
-    private static let statusRequestQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.netshield")
+    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.localAgent.monitorQueue")
 
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let propertiesManager: PropertiesManagerProtocol
@@ -137,7 +137,6 @@ final class LocalAgentImplementation: LocalAgent {
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
     private let networkMonitor = NWPathMonitor()
-    private let networkMonitorQueue = DispatchQueue(label: "ch.protonvpn.localagent.networkmonitor", qos: .userInitiated)
 
     private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?
@@ -169,7 +168,7 @@ final class LocalAgentImplementation: LocalAgent {
                 self?.agent?.setConnectivity(true)
             }
         }
-        networkMonitor.start(queue: networkMonitorQueue)
+        networkMonitor.start(queue: Self.monitorQueue)
 
         startObservingNetShieldCriteria()
     }
@@ -272,7 +271,7 @@ final class LocalAgentImplementation: LocalAgent {
             runAt: Date(),
             repeating: Self.refreshInterval,
             leeway: Self.refreshLeeway,
-            queue: Self.statusRequestQueue
+            queue: Self.monitorQueue
         ) { [weak self] in
             self?.requestStatus(withStats: true)
         }
