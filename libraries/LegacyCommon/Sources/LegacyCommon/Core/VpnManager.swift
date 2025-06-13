@@ -745,14 +745,16 @@ public final class VpnManager: VpnManagerProtocol {
         ])
 
 #if os(macOS)
-        Task {
-            do {
-                try await updatePlutoniumStateIfNeeded()
-            } catch {
-                log.error("Error while updating plutonium state: \(error.localizedDescription)")
+        // Prevents creating a plutonium tunnel config if the FF is disabled.
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+            Task {
+                do {
+                    try await updatePlutoniumStateIfNeeded()
+                } catch {
+                    log.error("Error while updating plutonium state: \(error.localizedDescription)")
+                }
             }
         }
-
 #endif
 
 
