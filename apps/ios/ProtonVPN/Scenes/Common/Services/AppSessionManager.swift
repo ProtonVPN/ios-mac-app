@@ -115,6 +115,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         planService.delegate = self
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
+        AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
     }
 
     // MARK: - Beginning of the login logic.
@@ -507,15 +508,52 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshTimer.startTimers()
     }
 
+    // MARK: Attempt to pass telemetry on web purchases
+
+    private var userEngagedWithWebUpsell: Bool = false
+    private var userEngagedWithWebUpsellDate: Date?
+    private static let webPaymentsThreshold: TimeInterval = .minutes(5)
+
+    @objc
+    private func userEngagedWithUpsell(_ notification: Notification) {
+        @Dependency(\.date.now) var now
+        // check if we have stale info
+        if let userEngagedWithWebUpsellDate {
+            if now.timeIntervalSince(userEngagedWithWebUpsellDate) > Self.webPaymentsThreshold {
+                self.userEngagedWithWebUpsell = false
+                self.userEngagedWithWebUpsellDate = nil
+            }
+        }
+        guard let upsellData = notification.object as? UpsellData else { return }
+        // ensure that this was web purchase attempt
+        guard upsellData.flowType == .external else { return }
+        userEngagedWithWebUpsell = true
+        userEngagedWithWebUpsellDate = now
+    }
+
     // MARK: User plan changed (before refreshing data)
 
     override func userPlanChanged(_ notification: Notification) {
+        @Dependency(\.date.now) var now
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
-           downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
+           downgradeInfo.from.maxTier < downgradeInfo.to.maxTier,
+           // we have web upsell engagement info
+           let userEngagedWithWebUpsellDate, userEngagedWithWebUpsell,
+           // it happened within a threshold
+           now.timeIntervalSince(userEngagedWithWebUpsellDate) < Self.webPaymentsThreshold {
+
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
-            AppEvent.userCompletedUpsellAlertJourney.post((modalSource, downgradeInfo.to.planName))
+            let upsellSuccessData = UpsellData(
+                modalSource: modalSource,
+                newPlanName: downgradeInfo.to.planName,
+                reference: "VPNINTROPRICE2024",
+                flowType: .external
+            )
+            AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)
+            self.userEngagedWithWebUpsell = false
+            self.userEngagedWithWebUpsellDate = nil
         }
 
         super.userPlanChanged(notification) // refreshes data
@@ -526,12 +564,18 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
 extension AppSessionManagerImplementation: PlanServiceDelegate {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async {
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async {
         guard authKeychain.username != nil else {
             return
         }
+        let upsellSuccessData = UpsellData(
+            modalSource: modalSource,
+            newPlanName: newPlanName,
+            reference: offerReference,
+            flowType: flowType
+        )
         // Note: Do not async this part, we don't want it to race with retrieving the new properties below.
-        AppEvent.userCompletedUpsellAlertJourney.post((modalSource, newPlanName))
+        AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)
         log.debug("Reloading data after plan purchase", category: .app)
         do {
             try await retrievePropertiesAndLogIn()

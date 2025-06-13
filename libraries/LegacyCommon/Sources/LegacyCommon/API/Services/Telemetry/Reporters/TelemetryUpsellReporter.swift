@@ -47,13 +47,12 @@ class TelemetryUpsellReporter {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
-    func upsellEvent(
-        _ event: UpsellEvent.Event,
-        modalSource _modalSource: UpsellModalSource?,
-        newPlanName: String?,
-        offerReference: String?,
-        vpnStatus: UpsellEvent.VPNStatus
-    ) async throws {
+    func upsellEvent(_ event: UpsellEvent.Event,
+                     modalSource _modalSource: UpsellModalSource?,
+                     newPlanName: String?,
+                     offerReference: String?,
+                     flowType: UpsellEvent.FlowType?,
+                     vpnStatus: UpsellEvent.VPNStatus) async throws {
         let modalSource: UpsellModalSource?
             // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
             = if event == .success {
@@ -89,7 +88,8 @@ class TelemetryUpsellReporter {
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),
                 upgradedUserPlan: newPlanName,
-                reference: offerReference
+                reference: offerReference,
+                flowType: flowType
             )
         )
         try await telemetryEventScheduler.report(event: event)
