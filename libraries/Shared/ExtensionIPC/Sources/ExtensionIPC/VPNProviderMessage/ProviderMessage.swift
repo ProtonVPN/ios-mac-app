@@ -46,7 +46,7 @@ extension ProviderMessageSender {
     }
 }
 
-public enum ProviderMessageError: Error {
+public enum ProviderMessageError: Error, Equatable {
     case noDataReceived
     case cancelled
     case decodingError

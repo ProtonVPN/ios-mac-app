@@ -22,6 +22,7 @@ import ComposableArchitecture
 import CoreConnection
 import CommonNetworking
 import enum ExtensionIPC.WireguardProviderRequest
+import enum ExtensionIPC.ProviderMessageError
 
 import Localization
 import Ergonomics
@@ -54,6 +55,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     @CasePathable
     public enum Action: Sendable {
         /// Delete keys (and certificate if it exists), then regenerate keys
+        case cancelRefreshes
         case regenerateKeys
         case purgeCertificate
         case clearEverything
@@ -78,6 +80,9 @@ public struct CertificateAuthenticationFeature: Reducer {
             }
 
             switch action {
+            case .cancelRefreshes:
+                return .cancel(id: CancelID.certificateRefreshAndRetries)
+
             case .regenerateKeys:
                 authenticationStorage.deleteKeys() // also deletes any existing certificates
                 _ = authenticationStorage.getKeys() // generates new keys
@@ -166,7 +171,10 @@ public struct CertificateAuthenticationFeature: Reducer {
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
                     let refreshResult = await Result { try await refreshClient.refreshCertificate(features) }
-                    if Task.isCancelled { return }
+                    if Task.isCancelled {
+                        log.debug("Certificate refresh cancelled", category: .userCert)
+                        return await send(.refreshFinished(.failure(ProviderMessageError.cancelled)))
+                    }
                     return await send(.refreshFinished(refreshResult))
                 }.cancellable(id: CancelID.certificateRefreshAndRetries, cancelInFlight: true)
 
@@ -206,6 +214,10 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return finishWithError(&state, .wontRefresh(.keysMissing))
 
             case .refreshFinished(.failure(let error)), .selectorPushingFinished(.failure(let error)):
+                if case .cancelled = error as? ProviderMessageError {
+                    state = .idle
+                    return .none
+                }
                 return finishWithError(&state, .unexpected(error))
 
             case .loadingFinished:

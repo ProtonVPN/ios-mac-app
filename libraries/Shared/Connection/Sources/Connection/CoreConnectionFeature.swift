@@ -343,8 +343,15 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     /// This prevents us from raising unnecessary certificate authentication errors after disconnecting.
     /// While this could be a separate action on the child feature, it would require extra assertions in exhaustive
     /// tests.
-    private let certificateRefreshCancellation: Effect<Action>
-        = .cancel(id: CertificateAuthenticationFeature.CancelID.certificateRefreshAndRetries)
+    ///
+    /// I've defined the effect here, since it is sent in more than one scenario, and so that we can avoid duplicating
+    /// the explanation.
+    ///
+    /// Note: We can't avoid sending a whole action by using a `.cancel` effect, such as:
+    /// `.cancel(CertificateAuthenticationFeature.CancelID.certificateRefreshAndRetries)`
+    /// because when doing so, the `.run` tasks are no longer cancelled - it seems that `.cancel` effects only cancel
+    /// tasks started by the feature in which they are processed, and do not affect tasks spawned by child reducers
+    private let certificateRefreshCancellation: Effect<Action> = .send(.certAuth(.cancelRefreshes))
 
     private func effectToResolve(error: LocalAgentError) -> Effect<Action> {
         switch error.resolutionStrategy {

@@ -129,6 +129,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         // Disconnection
 
         await store.send(.disconnect(.userIntent))
+        await store.receive(\.certAuth.cancelRefreshes)
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnecting(nil)
         }
@@ -198,8 +199,12 @@ final class CoreConnectionFeatureTests: XCTestCase {
                 try await clock.sleep(for: .seconds(45))
 
                 // After 45 seconds, the connection attempt should have been aborted, and therefore this task should have been cancelled.
-                XCTAssertTrue(Task.isCancelled, "Certificate refresh task should been cancelled")
-                throw ProviderMessageError.cancelled
+                if Task.isCancelled {
+                    throw ProviderMessageError.cancelled
+                } else {
+                    XCTFail("Expected task to have been cancelled")
+                    return .ok(data: nil)
+                }
             }
         }
 
@@ -244,6 +249,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.timeout)
         await store.receive(\.disconnect.connectionFailure.timeout.refreshingCertificate) // Should cancel the cert-refresh effect
         await store.receive(\.delegate.error.timeout.refreshingCertificate)
+        await store.receive(\.certAuth.cancelRefreshes)
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
@@ -378,6 +384,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         // Now, because the network extension was unexpectly stopped, we should abort the connection process with an error
         await store.receive(\.disconnect.connectionFailure.tunnel.tunnelAborted)
         await store.receive(\.delegate.error.tunnel.tunnelAborted)
+        await store.receive(\.certAuth.cancelRefreshes)
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect)
 
@@ -577,6 +584,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
 
         await store.receive(\.disconnect.connectionFailure.certAuth.unexpected)
         await store.receive(\.delegate.error.certAuth.unexpected)
+        await store.receive(\.certAuth.cancelRefreshes)
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
             $0.tunnel = .disconnecting(nil)
@@ -688,6 +696,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         }
         await store.receive(\.disconnect)
         await store.receive(\.delegate.error.agent.failedToEstablishConnection)
+        await store.receive(\.certAuth.cancelRefreshes)
 
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
@@ -1075,6 +1084,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.timeout)
         await store.receive(\.disconnect.connectionFailure.timeout.connectingToLocalAgentServer)
         await store.receive(\.delegate.error.timeout.connectingToLocalAgentServer)
+        await store.receive(\.certAuth.cancelRefreshes)
         await store.receive(\.localAgent.disconnect) {
             $0.localAgent = .disconnecting(nil)
         }
@@ -1251,6 +1261,7 @@ final class CoreConnectionFeatureTests: XCTestCase {
         await store.receive(\.timeout)
         await store.receive(\.disconnect.connectionFailure.timeout.tunnelStartingAndConnecting)
         await store.receive(\.delegate.error.timeout.tunnelStartingAndConnecting)
+        await store.receive(\.certAuth.cancelRefreshes)
 
         await store.receive(\.localAgent.disconnect)
         await store.receive(\.tunnel.disconnect) {
