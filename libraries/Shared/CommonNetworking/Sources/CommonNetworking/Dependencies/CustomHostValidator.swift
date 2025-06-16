@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 /// Used to ensure the app is only used with appropriate API hosts in production
 public enum ReleaseHostValidator {
-    public static func validate(customHost: String) throws (CustomHostValidator.ValidationFailure) {
+    public static func validate(customHost: String) throws(CustomHostValidator.ValidationFailure) {
         let controlledDomains = ["proton.black"]
         // Only allow custom hosts using a domain we control.
         guard let url = URL(string: customHost) else {
@@ -50,11 +50,11 @@ public struct CustomHostValidator {
         public var description: String {
             switch self {
             case .invalidURL:
-                return "Invalid URL"
+                "Invalid URL"
             case .invalidHost:
-                return "Invalid Host"
+                "Invalid Host"
             case .uncontrolledDomain:
-                return "Uncontrolled Domain"
+                "Uncontrolled Domain"
             }
         }
     }
@@ -69,8 +69,8 @@ extension CustomHostValidator: TestDependencyKey {
     public static let testValue: CustomHostValidator = .release
 }
 
-extension DependencyValues {
-    public var customHostValidator: CustomHostValidator {
+public extension DependencyValues {
+    var customHostValidator: CustomHostValidator {
         get { self[CustomHostValidator.self] }
         set { self[CustomHostValidator.self] = newValue }
     }

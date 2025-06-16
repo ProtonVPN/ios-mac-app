@@ -21,8 +21,8 @@ import Foundation
 
 import CommonNetworking
 import CoreConnection
-import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 
 import protocol Domain.ProtonVPNError
 import struct Domain.Server

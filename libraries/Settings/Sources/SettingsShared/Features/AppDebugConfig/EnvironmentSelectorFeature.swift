@@ -326,10 +326,10 @@ extension DebugConfigurationFeature {
     }
 }
 
-extension DebugConfigurationFeature.Destination.State: Equatable { }
+extension DebugConfigurationFeature.Destination.State: Equatable {}
 
-extension DebugConfigurationFeature.State {
-    public enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
+public extension DebugConfigurationFeature.State {
+    enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
         case protonBTI
         case protonBlack
 
@@ -338,18 +338,18 @@ extension DebugConfigurationFeature.State {
         package var url: String {
             switch self {
             case .protonBTI:
-                return ObfuscatedConstants.btiAPIHost
+                ObfuscatedConstants.btiAPIHost
             case .protonBlack:
-                return ObfuscatedConstants.blackAPIHost
+                ObfuscatedConstants.blackAPIHost
             }
         }
 
         package var label: String {
             switch self {
             case .protonBTI:
-                return "BTI"
+                "BTI"
             case .protonBlack:
-                return "Black"
+                "Black"
             }
         }
     }

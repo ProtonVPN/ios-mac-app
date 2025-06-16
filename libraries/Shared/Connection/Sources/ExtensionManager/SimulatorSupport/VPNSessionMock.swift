@@ -17,136 +17,136 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if targetEnvironment(simulator)
-import Foundation
-import enum NetworkExtension.NEVPNStatus
-import Dependencies
-import IssueReporting
-import ExtensionIPC
-import let CoreConnection.log
-import struct CoreConnection.LogicalServerInfo
-import VPNShared
+    import let CoreConnection.log
+    import struct CoreConnection.LogicalServerInfo
+    import Dependencies
+    import ExtensionIPC
+    import Foundation
+    import IssueReporting
+    import enum NetworkExtension.NEVPNStatus
+    import VPNShared
 
-@available(iOS 16, *)
-final class VPNSessionMock: VPNSession {
-    var connectedDate: Date?
-    var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
-    var status: NEVPNStatus {
-        didSet {
-            NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
-        }
-    }
-
-    /// Time taken to enter the `.connecting` state. If `nil`, the transition should be performed manually
-    var startupDuration: Duration? = .seconds(0)
-    /// Time taken to enter the `.connected` state. If `nil`, the transition needs to be performed manually
-    var connectionDuration: Duration? = .seconds(1)
-    var connectionTask: Task<Void, Error>?
-    /// Time taken to enter the `.disconnected` state. If `nil`, the transition needs to be performed manually
-    var disconnectionDuration: Duration? = .seconds(1)
-    var disconnectionTask: Task<Void, Error>?
-    var lastDisconnectError: Error?
-    var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response)?
-    var internalMessageSender: (Data) async throws -> Data?
-
-    init(
-        status: NEVPNStatus,
-        connectedDate: Date? = nil,
-        lastDisconnectError: Error? = nil
-    ) {
-        log.info("VPNSessionMock init")
-        self.status = status
-        self.connectedDate = connectedDate
-        self.lastDisconnectError = lastDisconnectError
-        self.internalMessageSender = { _ in
-            reportIssue("Unimplemented internal message sender")
-            return nil
-        }
-    }
-
-    func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
-
-    func startTunnel() throws {
-        guard let startupDuration else { return }
-        let shouldTransitionToConnectingImmediately = startupDuration == .zero
-        if shouldTransitionToConnectingImmediately {
-            self.status = .connecting
+    @available(iOS 16, *)
+    final class VPNSessionMock: VPNSession {
+        var connectedDate: Date?
+        var connectedServer: LogicalServerInfo = .init(logicalID: "", serverID: "")
+        var status: NEVPNStatus {
+            didSet {
+                NotificationCenter.default.post(name: Notification.Name.NEVPNStatusDidChange, object: self)
+            }
         }
 
-        guard let connectionDuration else { return }
-        connectionTask = Task {
-            @Dependency(\.continuousClock) var clock
-            if !shouldTransitionToConnectingImmediately {
-                try await clock.sleep(for: startupDuration)
-                if Task.isCancelled { return }
-                self.status = .connecting
+        /// Time taken to enter the `.connecting` state. If `nil`, the transition should be performed manually
+        var startupDuration: Duration? = .seconds(0)
+        /// Time taken to enter the `.connected` state. If `nil`, the transition needs to be performed manually
+        var connectionDuration: Duration? = .seconds(1)
+        var connectionTask: Task<Void, Error>?
+        /// Time taken to enter the `.disconnected` state. If `nil`, the transition needs to be performed manually
+        var disconnectionDuration: Duration? = .seconds(1)
+        var disconnectionTask: Task<Void, Error>?
+        var lastDisconnectError: Error?
+        var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response)?
+        var internalMessageSender: (Data) async throws -> Data?
+
+        init(
+            status: NEVPNStatus,
+            connectedDate: Date? = nil,
+            lastDisconnectError: Error? = nil
+        ) {
+            log.info("VPNSessionMock init")
+            self.status = status
+            self.connectedDate = connectedDate
+            self.lastDisconnectError = lastDisconnectError
+            self.internalMessageSender = { _ in
+                reportIssue("Unimplemented internal message sender")
+                return nil
+            }
+        }
+
+        func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
+
+        func startTunnel() throws {
+            guard let startupDuration else { return }
+            let shouldTransitionToConnectingImmediately = startupDuration == .zero
+            if shouldTransitionToConnectingImmediately {
+                status = .connecting
             }
 
-            try await clock.sleep(for: connectionDuration)
-            if Task.isCancelled { return }
+            guard let connectionDuration else { return }
+            connectionTask = Task {
+                @Dependency(\.continuousClock) var clock
+                if !shouldTransitionToConnectingImmediately {
+                    try await clock.sleep(for: startupDuration)
+                    if Task.isCancelled { return }
+                    self.status = .connecting
+                }
 
-            @Dependency(\.date) var date
-            connectedDate = date.now
-            self.status = .connected
+                try await clock.sleep(for: connectionDuration)
+                if Task.isCancelled { return }
+
+                @Dependency(\.date) var date
+                connectedDate = date.now
+                self.status = .connected
+            }
+        }
+
+        func stopTunnel() {
+            guard let disconnectionDuration else { return }
+            connectionTask?.cancel()
+            if status == .disconnected {
+                return
+            }
+            disconnectionTask = Task {
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: disconnectionDuration)
+                status = .disconnected
+            }
+        }
+
+        // MARK: ProviderMessageSender conformance
+
+        func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
+            guard let messageHandler else {
+                reportIssue("Unimplemented message handler")
+                return .error(message: "unimplemented message handler")
+            }
+            return try await messageHandler(self, message)
+        }
+
+        func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
+            try await internalMessageSender(messageData)
         }
     }
 
-    func stopTunnel() {
-        guard let disconnectionDuration else { return }
-        connectionTask?.cancel()
-        if status == .disconnected {
-            return
+    @available(iOS 16, *)
+    enum MessageHandler {
+        static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
+            let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))
+            return try WireguardProviderRequest.Response.decode(data: data)
         }
-        disconnectionTask = Task {
-            @Dependency(\.continuousClock) var clock
-            try await clock.sleep(for: disconnectionDuration)
-            status = .disconnected
-        }
-    }
 
-    // MARK: ProviderMessageSender conformance
+        static let full: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
+            switch message {
+            case .getCurrentLogicalAndServerId:
+                return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
 
-    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
-        guard let messageHandler else {
-            reportIssue("Unimplemented message handler")
-            return .error(message: "unimplemented message handler")
-        }
-        return try await messageHandler(self, message)
-    }
+            case let .refreshCertificate(features):
+                @Dependency(\.date) var date
+                @Dependency(\.vpnAuthenticationStorage) var keychain
+                let tomorrow = date.now.addingTimeInterval(.days(1))
+                let cert = VpnCertificate(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow)
+                let certWithFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
+                keychain.store(certWithFeatures)
 
-    func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
-        try await internalMessageSender(messageData)
-    }
-}
+                return .ok(data: nil)
 
-@available(iOS 16, *)
-enum MessageHandler {
-    static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
-        let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))
-        return try WireguardProviderRequest.Response.decode(data: data)
-    }
+            case .setApiSelector:
+                return .ok(data: nil)
 
-    static let full: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
-        switch message {
-        case .getCurrentLogicalAndServerId:
-            return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)
-
-        case let .refreshCertificate(features):
-            @Dependency(\.date) var date
-            @Dependency(\.vpnAuthenticationStorage) var keychain
-            let tomorrow = date.now.addingTimeInterval(.days(1))
-            let cert = VpnCertificate(certificate: "abcd", validUntil: tomorrow, refreshTime: tomorrow)
-            let certWithFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
-            keychain.store(certWithFeatures)
-
-            return .ok(data: nil)
-
-        case .setApiSelector:
-            return .ok(data: nil)
-
-        default:
-            reportIssue("Unimplemented message handler for \(message)")
-            return .error(message: "")
+            default:
+                reportIssue("Unimplemented message handler for \(message)")
+                return .error(message: "")
+            }
         }
     }
-}
 #endif
