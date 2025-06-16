@@ -96,15 +96,19 @@ public struct AppsProvider {
 extension AppsProvider: DependencyKey {
     public static let liveValue: AppsProvider = .init(enumerateAppsFolder: FileManager.default.enumerateAppsFolder)
 
-    public static var testValue: AppsProvider = .init {
-        [.init(bundleIdentifier: "test_bundle_id", title: "Huzza!")]
-    }
+    public static var testValue: AppsProvider = .init { [.huzza] }
 }
 
 extension DependencyValues {
     public var appsProvider: AppsProvider {
         get { self[AppsProvider.self] }
         set { self[AppsProvider.self] = newValue }
+    }
+}
+
+extension PlutoniumApp {
+    static var huzza: PlutoniumApp {
+        .init(bundleIdentifier: "test_bundle_id", title: "Huzza!")
     }
 }
 

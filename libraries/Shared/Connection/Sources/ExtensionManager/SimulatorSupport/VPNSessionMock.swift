@@ -45,7 +45,8 @@ final class VPNSessionMock: VPNSession {
     var disconnectionDuration: Duration? = .seconds(1)
     var disconnectionTask: Task<Void, Error>?
     var lastDisconnectError: Error?
-    var messageHandler: ((VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response)?
+    var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response)?
+    var internalMessageSender: (Data) async throws -> Data?
 
     init(
         status: NEVPNStatus,
@@ -56,6 +57,10 @@ final class VPNSessionMock: VPNSession {
         self.status = status
         self.connectedDate = connectedDate
         self.lastDisconnectError = lastDisconnectError
+        self.internalMessageSender = { _ in
+            reportIssue("Unimplemented internal message sender")
+            return nil
+        }
     }
 
     func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
@@ -105,13 +110,22 @@ final class VPNSessionMock: VPNSession {
             reportIssue("Unimplemented message handler")
             return .error(message: "unimplemented message handler")
         }
-        return messageHandler(self, message)
+        return try await messageHandler(self, message)
+    }
+
+    func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
+        try await internalMessageSender(messageData)
     }
 }
 
 @available(iOS 16, *)
 enum MessageHandler {
-    static let full: (VPNSessionMock, WireguardProviderRequest) -> WireguardProviderRequest.Response = { session, message in
+    static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
+        let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))
+        return try WireguardProviderRequest.Response.decode(data: data)
+    }
+
+    static let full: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
         switch message {
         case .getCurrentLogicalAndServerId:
             return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)

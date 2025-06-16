@@ -28,43 +28,28 @@ import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
 
 extension NETunnelProviderSession: VPNSession {
+    
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
-
-    private func send(_ messageData: Data) async throws -> Data {
-        // From documentation: "If this method can’t start sending the message it throws an error. If an error occurs
-        // while sending the message or returning the result, `nil` should be sent to the response handler as
-        // notification." If we encounter an xpc error, try sleeping for a second and then trying again - the extension
-        // could still be launching, or we could be coming out of sleep. If we retry enough times and still get
-        // nowhere, return an error.
-        for _ in 0..<Self.maxRetries {
-            let data: Data? = try await withCheckedThrowingContinuation { continuation in
-                do {
-                    try sendProviderMessage(messageData) { optionalData in
-                        continuation.resume(returning: optionalData)
-                    }
-                } catch {
-                    continuation.resume(throwing: error)
-                }
-            }
-            try Task.checkCancellation()
-
-            if let data {
-                return data
-            }
-
-            try await Task.sleep(for: Self.retryInterval)
-        }
-
-        throw ProviderMessageError.noDataReceived
-    }
 
     public func send(
         _ message: WireguardProviderRequest
     ) async throws -> WireguardProviderRequest.Response {
-        log.debug("Sending provider message: \(message)", category: .ipc)
-        let data = try await send(message.asData)
+        let data = try await send(message, withRetries: Self.maxRetries, retryInterval: Self.retryInterval)
         return try WireguardProviderRequest.Response.decode(data: data)
+    }
+
+    public func _sendProviderMessage(_ messageData: Data) async throws -> Data? {
+        try await withCheckedThrowingContinuation { continuation in
+            do {
+                // Here is the place where we make the call to the real NetworkExtension API
+                try sendProviderMessage(messageData) { optionalData in
+                    continuation.resume(returning: optionalData)
+                }
+            } catch {
+                continuation.resume(throwing: error)
+            }
+        }
     }
 
     public func startTunnel() throws {

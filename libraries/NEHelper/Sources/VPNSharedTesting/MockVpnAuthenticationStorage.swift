@@ -86,3 +86,10 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
 
     public var delegate: VpnAuthenticationStorageDelegate?
 }
+
+extension MockVpnAuthenticationStorage {
+    public func with(keys: VpnKeys) -> Self {
+        store(keys: keys)
+        return self
+    }
+}

@@ -143,8 +143,9 @@ final class CoreLoginService {
         // so we only renew it in some cases
         switch result {
         case .dismissed:
-            log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
+            windowService.dismissModal(nil)
             loginInterface = makeLoginInterface()
+            show(initialError: nil, withOverlayViewController: nil)
         case .loginStateChanged(.loginFinished):
             delegate?.userDidLogIn()
             loginInterface = makeLoginInterface()

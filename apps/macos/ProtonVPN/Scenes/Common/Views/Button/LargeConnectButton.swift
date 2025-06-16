@@ -44,9 +44,11 @@ class LargeConnectButton: HoverDetectionButton {
         super.viewWillDraw()
         
         wantsLayer = true
+        layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
+            layer?.borderColor = self.cgColor(.border)
         }
         
         let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
@@ -67,8 +69,7 @@ extension LargeConnectButton: CustomStyleContext {
         case .text:
             return .normal
         case .border:
-            let val: AppTheme.Style = !isConnected || isHovered ? .transparent : .normal
-            return val
+            return isHovered ? AppTheme.Style.transparent : .normal
         default:
             break
         }

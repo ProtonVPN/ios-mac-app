@@ -66,12 +66,19 @@ class PlutoniumWindowController: WindowController {
     }
 
     override func windowWillClose(_ notification: Notification) {
-        if store.requiresReconnection {
-            alertService.push(alert: ReconnectOnActionAlert(
-                actionTitle: Localizable.hermesApplyChangesWindowTitle,
-                confirmHandler: { [weak self] in self?.vpnGateway.retryConnection() },
-                cancelHandler: { }
-            ))
+        guard vpnGateway.connection != .disconnected,
+              store.requiresReconnection else {
+            return
         }
+        alertService.push(alert: ReconnectOnActionAlert(
+            actionTitle: Localizable.changeSettings,
+            confirmHandler: { [weak self] in
+                guard let self else { return }
+                if vpnGateway.connection != .disconnected {
+                    vpnGateway.retryConnection()
+                }
+            },
+            cancelHandler: { }
+        ))
     }
 }
