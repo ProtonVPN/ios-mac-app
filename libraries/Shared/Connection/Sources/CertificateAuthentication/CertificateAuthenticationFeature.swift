@@ -22,6 +22,7 @@ import ComposableArchitecture
 import CoreConnection
 import CommonNetworking
 import enum ExtensionIPC.WireguardProviderRequest
+import enum ExtensionIPC.ProviderMessageError
 
 import Localization
 import Ergonomics
@@ -54,6 +55,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     @CasePathable
     public enum Action: Sendable {
         /// Delete keys (and certificate if it exists), then regenerate keys
+        case cancelRefreshes
         case regenerateKeys
         case purgeCertificate
         case clearEverything
@@ -66,6 +68,10 @@ public struct CertificateAuthenticationFeature: Reducer {
         case loadingFinished(Result<FullAuthenticationData, Error>)
     }
 
+    package enum CancelID {
+        case certificateRefreshAndRetries
+    }
+
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             let finishWithError: (inout State, CertificateAuthenticationError) -> Effect<Action> = { state, error in
@@ -74,6 +80,9 @@ public struct CertificateAuthenticationFeature: Reducer {
             }
 
             switch action {
+            case .cancelRefreshes:
+                return .cancel(id: CancelID.certificateRefreshAndRetries)
+
             case .regenerateKeys:
                 authenticationStorage.deleteKeys() // also deletes any existing certificates
                 _ = authenticationStorage.getKeys() // generates new keys
@@ -162,8 +171,12 @@ public struct CertificateAuthenticationFeature: Reducer {
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
                     let refreshResult = await Result { try await refreshClient.refreshCertificate(features) }
+                    if Task.isCancelled {
+                        log.debug("Certificate refresh cancelled", category: .userCert)
+                        return await send(.refreshFinished(.failure(ProviderMessageError.cancelled)))
+                    }
                     return await send(.refreshFinished(refreshResult))
-                }
+                }.cancellable(id: CancelID.certificateRefreshAndRetries, cancelInFlight: true)
 
             case .refreshFinished(.success(.ok)):
                 state = .loading(shouldRefreshIfNecessary: false)
@@ -171,12 +184,14 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .refreshFinished(.success(.sessionMissingOrExpired)):
                 return .run { send in
-                    await send(.selectorPushingFinished(Result {
+                    let result = await Result {
                         try await refreshClient.pushSelector()
                         // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
                         return true
-                    }))
-                }
+                    }
+                    if Task.isCancelled { return }
+                    await send(.selectorPushingFinished(result))
+                }.cancellable(id: CancelID.certificateRefreshAndRetries)
 
             case .selectorPushingFinished(.success):
                 // Extension now has a session. Let's try again
@@ -199,6 +214,10 @@ public struct CertificateAuthenticationFeature: Reducer {
                 return finishWithError(&state, .wontRefresh(.keysMissing))
 
             case .refreshFinished(.failure(let error)), .selectorPushingFinished(.failure(let error)):
+                if case .cancelled = error as? ProviderMessageError {
+                    state = .idle
+                    return .none
+                }
                 return finishWithError(&state, .unexpected(error))
 
             case .loadingFinished:
