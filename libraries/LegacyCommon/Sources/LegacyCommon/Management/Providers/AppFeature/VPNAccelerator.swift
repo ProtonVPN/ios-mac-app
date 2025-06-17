@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 /// Also known as `split-tcp`.
 public enum VPNAccelerator: String, Codable, ToggleableFeature {
@@ -28,8 +28,8 @@ public enum VPNAccelerator: String, Codable, ToggleableFeature {
 extension VPNAccelerator: PaidAppFeature {
     public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.vpnAccelerator
 
-    public static func minTier(featureFlags: FeatureFlags) -> Int {
-        return .paidTier
+    public static func minTier(featureFlags _: FeatureFlags) -> Int {
+        .paidTier
     }
 }
 
@@ -37,16 +37,16 @@ extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature
     public static let event: AppEvent? = .vpnAccelerator
 
     public static func defaultValue(
-        onPlan plan: String,
-        userTier: Int,
-        featureFlags: FeatureFlags
+        onPlan _: String,
+        userTier _: Int,
+        featureFlags _: FeatureFlags
     ) -> VPNAccelerator {
         .on
     }
 
     public static let storageKey: String = "VpnAcceleratorEnabled"
 
-    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope

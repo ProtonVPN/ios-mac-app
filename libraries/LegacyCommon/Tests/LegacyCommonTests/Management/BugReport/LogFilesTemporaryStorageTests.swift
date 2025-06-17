@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import PMLogger
 @testable import LegacyCommon
+import PMLogger
+import XCTest
 
 class LogFilesTemporaryStorageTests: XCTestCase {
-
     func testSavesDataToFileAndDeletesTempFile() throws {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
@@ -50,7 +49,7 @@ class LogFilesTemporaryStorageTests: XCTestCase {
         let contentRequested = XCTestExpectation(description: "Content requested from LogContent")
         let contentSavedToFile = XCTestExpectation(description: "Content saved to temporary file")
 
-        let content = LogContentMock(handler: { callback in
+        let content = LogContentMock(handler: { _ in
             contentRequested.fulfill()
             // Do NOT call the callback
         })
@@ -69,11 +68,10 @@ class LogFilesTemporaryStorageTests: XCTestCase {
 }
 
 struct LogContentProviderMock: LogContentProvider {
-
     public var data: [LogSource: LogContent]
 
     func getLogData(for source: LogSource) -> LogContent {
-        return data[source]!
+        data[source]!
     }
 }
 

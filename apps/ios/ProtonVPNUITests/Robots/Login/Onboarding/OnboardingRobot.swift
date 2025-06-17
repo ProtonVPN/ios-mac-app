@@ -16,58 +16,56 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
 import fusion
 import Strings
-import Foundation
 
-fileprivate let upgradeButton = Localizable.upgrade
-fileprivate let getStartedButton = Localizable.modalsCommonGetStarted
-fileprivate let closeButton = Localizable.close
-fileprivate let continueButton = Localizable.continue
-fileprivate let welcomeTitle = Localizable.welcomeToProtonTitle
-fileprivate let welcomeSubtitle = Localizable.welcomeToProtonSubtitle
-fileprivate let welcomeRedesignedImageId = "bannerIcon"
-fileprivate let getStartedImageId = "getStarted"
-fileprivate let welcomeBannerTitle = Localizable.welcomeToProtonBannerTitle
-fileprivate let settingsTitleCensorship = Localizable.settingsTitleCensorship
+private let upgradeButton = Localizable.upgrade
+private let getStartedButton = Localizable.modalsCommonGetStarted
+private let closeButton = Localizable.close
+private let continueButton = Localizable.continue
+private let welcomeTitle = Localizable.welcomeToProtonTitle
+private let welcomeSubtitle = Localizable.welcomeToProtonSubtitle
+private let welcomeRedesignedImageId = "bannerIcon"
+private let getStartedImageId = "getStarted"
+private let welcomeBannerTitle = Localizable.welcomeToProtonBannerTitle
+private let settingsTitleCensorship = Localizable.settingsTitleCensorship
 
 class OnboardingRobot: CoreElements {
-    
     @discardableResult
     func tapGetStarted() -> SubscriptionModalRobot {
         button(getStartedButton).tap()
         return SubscriptionModalRobot()
     }
-    
+
     @discardableResult
     func tapContinueButton() -> OnboardingRobot {
         button(continueButton).tap()
         return self
     }
-    
+
     @discardableResult
     func skipUpgrade() -> OnboardingRobot {
         button(closeButton).tap()
         return self
     }
-    
+
     @discardableResult
     func tapUpgradePlan() -> SubscriptionModalRobot {
         button(upgradeButton).tap()
         return SubscriptionModalRobot()
     }
-    
+
     @discardableResult
     func startUsingApp() -> HomeRobot {
         button(upgradeButton).tap()
         skipUpgrade()
         return HomeRobot()
     }
-    
+
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func onboardingScreenStep1IsShown(time: TimeInterval = 120) -> OnboardingRobot {
             staticText(welcomeTitle).waitUntilExists(time: time).checkExists()

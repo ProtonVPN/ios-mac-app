@@ -20,13 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
 import Cocoa
 import LegacyCommon
-import Announcement
 
 final class AnnouncementFeatureView: NSView {
-    @IBOutlet private weak var iconImageView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField!
+    @IBOutlet private var iconImageView: NSImageView!
+    @IBOutlet private var titleLabel: NSTextField!
     @IBOutlet private var contentView: NSView!
 
     let model: OfferFeature
@@ -37,7 +37,8 @@ final class AnnouncementFeatureView: NSView {
         setup()
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

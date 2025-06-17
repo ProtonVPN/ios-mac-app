@@ -18,17 +18,17 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
     /// Accepts optional closure for filtering. If `nil` is given, return the same array unfiltered.
-    public func filter(_ isIncluded: ((Element) throws -> Bool)?) rethrows -> [Element] {
+    func filter(_ isIncluded: ((Element) throws -> Bool)?) rethrows -> [Element] {
         guard let isIncluded else { return self }
-        return try self.filter { try isIncluded($0) }
+        return try filter { try isIncluded($0) }
     }
 }
 
 public extension Array {
-    func uniques<T: Hashable>(by keyPath: KeyPath<Element, T>) -> [Element] {
-        return reduce([]) { result, element in
+    func uniques(by keyPath: KeyPath<Element, some Hashable>) -> [Element] {
+        reduce([]) { result, element in
             let alreadyExists = (result.contains(where: { $0[keyPath: keyPath] == element[keyPath: keyPath] }))
             return alreadyExists ? result : result + [element]
         }

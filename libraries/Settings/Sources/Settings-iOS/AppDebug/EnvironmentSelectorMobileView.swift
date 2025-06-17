@@ -39,8 +39,10 @@ public struct EnvironmentSelectorMobileView: View {
         } header: {
             Text("Selected Environment").font(.headline)
         } footer: {
-            sendActionButton(title: "Use and continue",
-                             action: .useAndContinueButtonTapped)
+            sendActionButton(
+                title: "Use and continue",
+                action: .useAndContinueButtonTapped
+            )
         }
     }
 
@@ -60,7 +62,6 @@ public struct EnvironmentSelectorMobileView: View {
 
     @ViewBuilder
     var changeEnvironmentSection: some View {
-
         Section {
             HStack {
                 TextField("Environment URL", text: $store.newApiEndpointURLString)
@@ -165,16 +166,18 @@ public struct EnvironmentSelectorMobileView: View {
 
     @ViewBuilder
     var bottomButtonsSection: some View {
-        Section {
-
-        } header: {
+        Section {} header: {
             Text("Apply changes").font(.headline)
         } footer: {
             VStack {
-                sendActionButton(title: "Change and kill the app",
-                                 action: .changeAndKillAppButtonTapped)
-                sendActionButton(title: "Reset to production and kill the app",
-                                 action: .resetAndKillAppButtonTapped)
+                sendActionButton(
+                    title: "Change and kill the app",
+                    action: .changeAndKillAppButtonTapped
+                )
+                sendActionButton(
+                    title: "Reset to production and kill the app",
+                    action: .resetAndKillAppButtonTapped
+                )
             }
         }
     }
@@ -200,7 +203,7 @@ public struct EnvironmentSelectorMobileView: View {
     }
 
     init(store: StoreOf<DebugConfigurationFeature>) {
-        self._store = .constant(store)
+        _store = .constant(store)
     }
 
     public init(continueHandler: @escaping () -> Void) {
@@ -227,7 +230,7 @@ private struct EnvironmentSelectorButtonStyle: ButtonStyle {
             .cornerRadius(.themeRadius8)
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
         style.insert(isActive ? [] : .weak)
         return Color(.background, style)
@@ -252,7 +255,7 @@ extension View {
     EnvironmentSelectorMobileView(store: Store(
         initialState: DebugConfigurationFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
-            atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
+            atlasSecret: String((0 ..< 32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
             overrides: [.empty()]
         ),

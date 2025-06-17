@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
 import Foundation
 import func GoLibs.LocalAgentConstants
 import class GoLibs.LocalAgentConsts
 import class GoLibs.LocalAgentStringToValueMap
-import CoreConnection
 
 /// Shared instance containing coding keys
 let localAgentConsts = {
@@ -56,9 +56,8 @@ enum LocalAgentMessageDecodingError: Error {
 
 extension LAConfiguration {
     static let hostname: String = "10.2.0.1:65432"
-    
-    static let rootCertificates: String = {
-        return "-----BEGIN CERTIFICATE-----\n" +
+
+    static let rootCertificates: String = "-----BEGIN CERTIFICATE-----\n" +
         "MIIFozCCA4ugAwIBAgIBATANBgkqhkiG9w0BAQ0FADBAMQswCQYDVQQGEwJDSDEV\n" +
         "MBMGA1UEChMMUHJvdG9uVlBOIEFHMRowGAYDVQQDExFQcm90b25WUE4gUm9vdCBD\n" +
         "QTAeFw0xNzAyMTUxNDM4MDBaFw0yNzAyMTUxNDM4MDBaMEAxCzAJBgNVBAYTAkNI\n" +
@@ -124,5 +123,4 @@ extension LAConfiguration {
         "2JLzyY8p48OKapR5GnedLTJXJVbdd9GUNzIzm4iVITDH3p/u1g69dITCNXTO9EO5\n" +
         "sGEYLNPbV49XBnVAm1tUWuoByZAjoWs=\n" +
         "-----END CERTIFICATE-----"
-    }()
 }

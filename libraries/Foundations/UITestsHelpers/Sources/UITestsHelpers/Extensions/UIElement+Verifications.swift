@@ -19,10 +19,9 @@
 @testable import fusion
 import XCTest
 
-extension UIElement {
-    
+public extension UIElement {
     @discardableResult
-    public func checkExists(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
+    func checkExists(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         XCTAssertTrue(
             uiElement()!.exists,
             message(),
@@ -31,9 +30,9 @@ extension UIElement {
         )
         return self
     }
-    
+
     @discardableResult
-    public func checkDoesNotExist(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
+    func checkDoesNotExist(message: @autoclosure () -> String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         shouldWaitForExistance = false
         XCTAssertFalse(
             uiElement()!.exists,
@@ -45,7 +44,7 @@ extension UIElement {
     }
 
     @discardableResult
-    public func checkContainsValue(_ value: String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
+    func checkContainsValue(_ value: String, file: StaticString = #filePath, line: UInt = #line) -> UIElement {
         guard let stringValue = uiElement()!.value as? String else {
             XCTFail("Element doesn't have text value.")
             return self

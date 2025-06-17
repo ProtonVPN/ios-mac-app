@@ -23,31 +23,31 @@ import Dependencies
 import LegacyCommon
 import VPNAppCore
 
-import Theme
-import Strings
-import Ergonomics
 import Domain
+import Ergonomics
+import Strings
+import Theme
 
 final class SubuserMacAlertViewController: NSViewController {
-    
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var titleView: NSTextField!
-    @IBOutlet private weak var description1Label: NSTextField!
-    @IBOutlet private weak var description2Label: NSTextField!
-        
-    @IBOutlet private weak var assignConnectionsButton: PrimaryActionButton!
-    @IBOutlet private weak var loginButton: CancellationButton!
-    
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var titleView: NSTextField!
+    @IBOutlet private var description1Label: NSTextField!
+    @IBOutlet private var description2Label: NSTextField!
+
+    @IBOutlet private var assignConnectionsButton: PrimaryActionButton!
+    @IBOutlet private var loginButton: CancellationButton!
+
     var role: UserRole = .noOrganization
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init() {
         super.init(nibName: NSNib.Name(String(describing: Self.self)), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTranslations()
@@ -55,12 +55,12 @@ final class SubuserMacAlertViewController: NSViewController {
         description1Label.setAccessibilityLabel("description1Label")
         description2Label.setAccessibilityLabel("description2Label")
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyModalAppearance(withTitle: Localizable.subuserAlertTitle)
     }
-    
+
     private func setupTranslations() {
         titleView.stringValue = Localizable.subuserAlertTitle
 
@@ -76,27 +76,29 @@ final class SubuserMacAlertViewController: NSViewController {
         }
         loginButton.title = Localizable.subuserAlertLoginButton
     }
-    
+
     private func setupViews() {
         imageView.image = Theme.Asset.icAlertProAccount.image
 
         assignConnectionsButton.actionType = .confirmative
         assignConnectionsButton.isEnabled = true
         loginButton.isEnabled = true
-        
+
         titleView.textColor = .color(.text)
         description1Label.textColor = .color(.text)
         description2Label.textColor = .color(.text, .weak)
     }
-    
+
     // MARK: - Actions
-    
-    @IBAction private func assignConnectionsTapped(_ sender: NSButton) {
+
+    @IBAction
+    private func assignConnectionsTapped(_: NSButton) {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
-    
-    @IBAction func loginTapped(_ sender: NSButton) {
+
+    @IBAction
+    func loginTapped(_: NSButton) {
         view.window?.close()
     }
 }

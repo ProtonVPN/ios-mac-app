@@ -22,22 +22,21 @@
 
 import Cocoa
 import LegacyCommon
-import Strings
 import ProtonCoreUIFoundations
+import Strings
 
 class OverviewItemView: NSTableRowView {
-    
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var profileCircle: ProfileCircle!
-    
-    @IBOutlet weak var profileNameField: NSTextField!
-    @IBOutlet weak var connectionDescriptionField: NSTextField!
-    @IBOutlet weak var actionButtonStackView: NSStackView!
-    @IBOutlet weak var connectButton: InteractiveActionButton!
-    @IBOutlet weak var editButton: InteractiveActionButton!
-    @IBOutlet weak var deleteButton: InteractiveActionButton!
-    @IBOutlet weak var rowSeparator: NSBox!
-    
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var profileCircle: ProfileCircle!
+
+    @IBOutlet var profileNameField: NSTextField!
+    @IBOutlet var connectionDescriptionField: NSTextField!
+    @IBOutlet var actionButtonStackView: NSStackView!
+    @IBOutlet var connectButton: InteractiveActionButton!
+    @IBOutlet var editButton: InteractiveActionButton!
+    @IBOutlet var deleteButton: InteractiveActionButton!
+    @IBOutlet var rowSeparator: NSBox!
+
     fileprivate var viewModel: OverviewItemViewModel!
 
     private lazy var accessibilityConnectAction: NSAccessibilityCustomAction = {
@@ -45,34 +44,30 @@ class OverviewItemView: NSTableRowView {
         return NSAccessibilityCustomAction(name: connectActionName, target: self, selector: #selector(connectButtonAction(_:)))
     }()
 
-    private lazy var accessibilityEditAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: Localizable.edit, target: self, selector: #selector(editButtonAction(_:)))
-    }()
+    private lazy var accessibilityEditAction: NSAccessibilityCustomAction = .init(name: Localizable.edit, target: self, selector: #selector(editButtonAction(_:)))
 
-    private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = {
-        NSAccessibilityCustomAction(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
-    }()
-    
+    private lazy var accessibilityDeleteAction: NSAccessibilityCustomAction = .init(name: Localizable.delete, target: self, selector: #selector(deleteButtonAction(_:)))
+
     func updateView(withModel viewModel: OverviewItemViewModel) {
         self.viewModel = viewModel
-        
+
         setupImage()
         setupLabels()
         setupButtons()
         setupAvailability()
         setupAccessibilityCustomActions()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         editButton.isHovered = false
         deleteButton.isHovered = false
     }
-    
+
     private func setupImage() {
         switch viewModel.icon {
-        case .image(let image):
+        case let .image(image):
             profileImage.image = image.colored()
         case .bolt:
             profileImage.image = IconProvider.bolt.colored()
@@ -82,13 +77,13 @@ class OverviewItemView: NSTableRowView {
             profileImage.image = IconProvider.arrowsSwapRight.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
-        case .circle(let color):
+        case let .circle(color):
             profileCircle.profileColor = NSColor(rgbHex: color)
             profileImage.isHidden = true
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupLabels() {
         profileNameField.attributedStringValue = viewModel.name
         connectionDescriptionField.attributedStringValue = viewModel.description
@@ -128,31 +123,34 @@ class OverviewItemView: NSTableRowView {
         deleteButton.target = action.target
         deleteButton.action = action.selector
     }
-    
+
     private func setupAvailability() {
-        [profileImage, profileCircle, profileNameField, connectionDescriptionField].forEach { view in
+        for view in [profileImage, profileCircle, profileNameField, connectionDescriptionField] {
             view?.alphaValue = viewModel.alphaOfMainElements
         }
     }
-    
-    @objc private func connectButtonAction(_ sender: Any) {
+
+    @objc
+    private func connectButtonAction(_: Any) {
         viewModel.connectAction {
             window?.close()
         }
     }
-    
-    @objc private func editButtonAction(_ sender: Any) {
+
+    @objc
+    private func editButtonAction(_: Any) {
         viewModel.editAction()
     }
-    
-    @objc private func deleteButtonAction(_ sender: Any) {
+
+    @objc
+    private func deleteButtonAction(_: Any) {
         viewModel.deleteAction()
     }
 
-// MARK: - Accessibility
+    // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
-        return viewModel.name.string
+        viewModel.name.string
     }
 
     private func setupAccessibilityCustomActions() {

@@ -19,8 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public final class LocalizationUtility {
     public static let `default` = LocalizationUtility()
@@ -35,7 +35,7 @@ public final class LocalizationUtility {
     }
 
     public func shortenIfNeeded(_ name: String) -> String {
-        return namesToShorten[name] ?? name
+        namesToShorten[name] ?? name
     }
 
     /// First, try to get the user's first preferred language, and return the country name for that language.
@@ -92,15 +92,14 @@ public final class LocalizationUtility {
             namesToShorten = [String: String]()
         }
     }
-
 }
 
 public struct CountryNameProvider {
     var localizedCountryName: (String) -> String?
 }
 
-extension CountryNameProvider {
-    public func countryName(forCode countryCode: String) -> String? {
+public extension CountryNameProvider {
+    func countryName(forCode countryCode: String) -> String? {
         localizedCountryName(countryCode)
     }
 }
@@ -115,12 +114,12 @@ extension CountryNameProvider: DependencyKey {
     public static var testValue: CountryNameProvider { .liveValue } // Use real implementation for tests by default
 
     public static func mock(codeToNameDictionary: [String: String]) -> CountryNameProvider {
-        return CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })
+        CountryNameProvider(localizedCountryName: { code in codeToNameDictionary[code] })
     }
 }
 
-extension DependencyValues {
-    public var countryNameProvider: CountryNameProvider {
+public extension DependencyValues {
+    var countryNameProvider: CountryNameProvider {
         get { self[CountryNameProvider.self] }
         set { self[CountryNameProvider.self] = newValue }
     }

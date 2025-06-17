@@ -21,7 +21,6 @@ import SwiftUI
 import Theme
 
 public struct NetShieldStatsView: View {
-
     @ObservedObject public var viewModel = NetShieldModel.zero(enabled: false)
 
     public var body: some View {
@@ -34,9 +33,8 @@ public struct NetShieldStatsView: View {
         .background(RoundedRectangle(cornerRadius: .themeRadius8)
             .fill(Color(.background, .weak)))
     }
-    public init() {
 
-    }
+    public init() {}
 }
 
 struct StatsView: View {
@@ -71,13 +69,17 @@ struct StatsView: View {
     }
 
     func valueForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .normal : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .normal : .hint
+        )
     }
 
     func titleForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .weak : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .weak : .hint
+        )
     }
 
     func backgroundColor() -> Color {

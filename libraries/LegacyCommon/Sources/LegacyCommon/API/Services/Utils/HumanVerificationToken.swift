@@ -26,24 +26,24 @@ public struct HumanVerificationToken {
     let type: TokenType
     let token: String
     let input: String? // Email, phone number or catcha token
-    
+
     public init(type: TokenType, token: String, input: String? = nil) {
         self.type = type
         self.token = token
         self.input = input
     }
-    
+
     var fullValue: String {
         switch type {
         case .email, .sms:
-            return "\(input ?? ""):\(token)"
+            "\(input ?? ""):\(token)"
         case .payment, .captcha:
-            return token
+            token
         case .invite:
-            return ""
+            ""
         }
     }
-    
+
     public enum TokenType: String, CaseIterable {
         case email
         case sms
@@ -51,7 +51,7 @@ public struct HumanVerificationToken {
         case payment
         case captcha
         //    case coupon // Since this isn't compatible with IAP, this option can be safely ignored
-        
+
         public static func type(fromString: String) -> TokenType? {
             for value in TokenType.allCases where value.rawValue == fromString {
                 return value

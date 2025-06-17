@@ -20,7 +20,6 @@ import Cocoa
 import Modals
 
 class ViewController: NSViewController {
-
     enum Modal {
         case upsell(ModalType)
         case discourageSecureCore
@@ -33,11 +32,15 @@ class ViewController: NSViewController {
         (.upsell(.welcomeUnlimited), "Welcome Unlimited"),
         (.upsell(.welcomeFallback), "Welcome Fallback"),
         (.whatsNew, "What's new"),
-        (.upsell(.allCountries(numberOfServers: 1300,
-                               numberOfCountries: 61)), "All countries"),
-        (.upsell(.country(countryFlag: NSImage(named: "flags_PL")!,
-                          numberOfDevices: 10,
-                          numberOfCountries: 61)), "Countries"),
+        (.upsell(.allCountries(
+            numberOfServers: 1300,
+            numberOfCountries: 61
+        )), "All countries"),
+        (.upsell(.country(
+            countryFlag: NSImage(named: "flags_PL")!,
+            numberOfDevices: 10,
+            numberOfCountries: 61
+        )), "Countries"),
         (.upsell(.secureCore), "Secure Core"),
         (.upsell(.netShield), "Net Shield"),
         (.upsell(.safeMode), "Safe Mode"),
@@ -49,12 +52,14 @@ class ViewController: NSViewController {
         (.upsell(.cantSkip(
             before: Date().addingTimeInterval(10),
             duration: 10,
-            longSkip: false)
+            longSkip: false
+        )
         ), "Server Roulette"),
         (.upsell(.cantSkip(
             before: Date().addingTimeInterval(10),
             duration: 10,
-            longSkip: true)
+            longSkip: true
+        )
         ), "Server Roulette (Too many skips)"),
         (.freeConnections([
             ("Japan", NSImage(named: "flags_JP")!),
@@ -65,7 +70,7 @@ class ViewController: NSViewController {
         ]), "Feee servers"),
     ]
 
-    @IBOutlet weak var tableView: NSTableView! {
+    @IBOutlet var tableView: NSTableView! {
         didSet {
             tableView.delegate = self
             tableView.dataSource = self
@@ -74,20 +79,19 @@ class ViewController: NSViewController {
 }
 
 extension ViewController: NSTableViewDelegate {
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
+    func tableView(_: NSTableView, shouldSelectRow row: Int) -> Bool {
         let modal = modals[row]
-        let viewController: NSViewController
-        switch modal.type {
-        case .upsell(let type):
-            viewController = ModalsFactory.upsellViewController(modalType: type, upgradeAction: { }, continueAction: { })
+        let viewController: NSViewController = switch modal.type {
+        case let .upsell(type):
+            ModalsFactory.upsellViewController(modalType: type, upgradeAction: {}, continueAction: {})
         case .discourageSecureCore:
-            viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
-        case .freeConnections(let countries):
-            viewController = ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
+            ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: nil, onActivate: nil, onCancel: nil, onLearnMore: nil)
+        case let .freeConnections(countries):
+            ModalsFactory.freeConnectionsViewController(countries: countries, upgradeAction: {
                 debugPrint(".freeConnections pressed")
             })
         case .whatsNew:
-            viewController = ModalsFactory.whatsNewViewController()
+            ModalsFactory.whatsNewViewController()
         }
 
         presentAsModalWindow(viewController)
@@ -96,17 +100,17 @@ extension ViewController: NSTableViewDelegate {
 }
 
 extension ViewController: NSTableViewDataSource {
-    func numberOfRows(in tableView: NSTableView) -> Int {
+    func numberOfRows(in _: NSTableView) -> Int {
         modals.count
     }
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let modal = modals[row]
 
         if let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ModalNameCellView"), owner: nil) as? NSTableCellView {
-              cell.textField?.stringValue = modal.title
-              return cell
-            }
+            cell.textField?.stringValue = modal.title
+            return cell
+        }
         return nil
     }
 }

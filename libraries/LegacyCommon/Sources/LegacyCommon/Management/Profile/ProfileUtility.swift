@@ -29,92 +29,98 @@ enum ProfileUtilityOperationOutcome {
     case nameInUse
 }
 
-public final class ProfileUtility {
-    
+public enum ProfileUtility {
     public static func index(for serverType: ServerType) -> Int {
         switch serverType {
         case .standard:
-            return 0
+            0
         case .secureCore:
-            return 1
+            1
         case .p2p:
-            return 2
+            2
         case .tor:
-            return 3
+            3
         case .unspecified:
-            return 4
+            4
         }
     }
-    
+
     public static func serverType(for index: Int) -> ServerType {
         switch index {
         case 0:
-            return .standard
+            .standard
         case 1:
-            return .secureCore
+            .secureCore
         case 2:
-            return .p2p
+            .p2p
         case 3:
-            return .tor
+            .tor
         default:
-            return .unspecified
+            .unspecified
         }
     }
-    
+
     static func profile(withName name: String, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.name == name }.first
+        profiles.filter { $0.name == name }.first
     }
-    
+
     static func profile(withId id: String, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.id == id }.first
+        profiles.filter { $0.id == id }.first
     }
-    
+
     static func existsProfile(withName name: String, in profiles: [Profile]) -> Bool {
-        return profile(withName: name, in: profiles) != nil
+        profile(withName: name, in: profiles) != nil
     }
-    
+
     static func profile(withServer server: ServerModel, in profiles: [Profile]) -> Profile? {
         for existingProfile in profiles {
-            if case ServerOffering.custom(let sw) = existingProfile.serverOffering, sw.server == server {
+            if case let ServerOffering.custom(sw) = existingProfile.serverOffering, sw.server == server {
                 return existingProfile
             }
         }
         return nil
     }
-    
+
     static func existsProfile(withServer server: ServerModel, in profiles: [Profile]) -> Bool {
-        return profile(withServer: server, in: profiles) != nil
+        profile(withServer: server, in: profiles) != nil
     }
-    
+
     static func profile(withConfiguration profile: Profile, in profiles: [Profile]) -> Profile? {
-        return profiles.filter { $0.serverType == profile.serverType && $0.serverOffering == profile.serverOffering }.first
+        profiles.filter { $0.serverType == profile.serverType && $0.serverOffering == profile.serverOffering }.first
     }
-    
+
     static func existsProfile(withConfiguration existingProfile: Profile, in profiles: [Profile]) -> Bool {
-        return profile(withConfiguration: existingProfile, in: profiles) != nil
+        profile(withConfiguration: existingProfile, in: profiles) != nil
     }
-    
-    static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
+
+    static func createProfile(with server: ServerModel, vpnProtocol: VpnProtocol, netShield _: NetShieldType?, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
         let accessTier = server.tier
         let serverType: ServerType = server.isSecureCore ? .secureCore : .standard
         let serverOffering: ServerOffering = .custom(ServerWrapper(server: server))
         let name = pickName(for: server, in: profiles)
-        
+
         let colors = ProfileConstants.profileColors
-        let color = colors[.random(in: 0..<colors.count)]
-        
-        let profile = Profile(accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
-        
+        let color = colors[.random(in: 0 ..< colors.count)]
+
+        let profile = Profile(
+            accessTier: accessTier,
+            profileIcon: .circle(color.hexRepresentation),
+            profileType: .user,
+            serverType: serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: .vpnProtocol(vpnProtocol)
+        )
+
         return .success(profiles + [profile])
     }
-    
+
     static func createProfile(_ profile: Profile, in profiles: [Profile], at index: Int? = nil) -> ProfileUtilityOperationOutcome {
         if existsProfile(withName: profile.name, in: profiles) {
             return .nameInUse
         }
-        
-        if let index = index, index >= 0, index <= profiles.count {
+
+        if let index, index >= 0, index <= profiles.count {
             var updatedProfiles = profiles
             updatedProfiles.insert(profile, at: index)
             return .success(updatedProfiles)
@@ -122,42 +128,43 @@ public final class ProfileUtility {
             return .success(profiles + [profile])
         }
     }
-    
+
     static func updateProfile(_ profile: Profile, in profiles: [Profile]) -> ProfileUtilityOperationOutcome {
         let index: Int
         var updatedProfiles: [Profile] = profiles
-        
+
         if let existingIndex = indexOfProfile(profile, in: profiles) {
             index = existingIndex
             updatedProfiles = delete(profile: profile, in: updatedProfiles)
         } else {
             index = profiles.count
         }
-        
+
         return createProfile(profile, in: updatedProfiles, at: index)
     }
-    
+
     static func delete(profile: Profile, in profiles: [Profile]) -> [Profile] {
-        return profiles.filter { $0.id != profile.id }
+        profiles.filter { $0.id != profile.id }
     }
-    
+
     // MARK: - Private static functions
+
     private static func indexOfProfile(_ profile: Profile, in profiles: [Profile]) -> Int? {
         for (index, element) in profiles.enumerated() where element.id == profile.id {
             return index
         }
         return nil
     }
-    
+
     private static func pickName(for server: ServerModel, in profiles: [Profile]) -> String {
         var name = server.name
         var counter = 1
-        
+
         while existsProfile(withName: name, in: profiles) {
             name = server.name + " (\(counter))"
             counter += 1
         }
-        
+
         return name
     }
 }

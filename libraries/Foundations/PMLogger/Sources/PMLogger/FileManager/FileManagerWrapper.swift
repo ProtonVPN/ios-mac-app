@@ -21,11 +21,11 @@ import os.log
 
 /// Wraps `FileManager` to show what methods we are using and make it possible to mock them in tests
 public protocol FileManagerWrapper {
-
     // Methods from FileManager
     func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws
     func fileExists(atPath path: String) -> Bool
-    @discardableResult func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey: Any]?) -> Bool
+    @discardableResult
+    func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey: Any]?) -> Bool
     func moveItem(at srcURL: URL, to dstURL: URL) throws
     func contentsOfDirectory(at url: URL, includingPropertiesForKeys keys: [URLResourceKey]?, options mask: FileManager.DirectoryEnumerationOptions) throws -> [URL]
     func attributesOfItem(atPath path: String) throws -> [FileAttributeKey: Any]
@@ -40,29 +40,33 @@ public protocol FileManagerWrapper {
     func creationDate(of url: URL) -> Date?
 }
 
-extension FileManagerWrapper {
-    public func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool {
+public extension FileManagerWrapper {
+    func fileCreationDateSort(lhs: URL, rhs: URL) -> Bool {
         creationDate(of: lhs)?.timeIntervalSince1970 ?? 0 < creationDate(of: rhs)?.timeIntervalSince1970 ?? 0
     }
 
-    public func creationDate(of url: URL) -> Date? {
+    func creationDate(of url: URL) -> Date? {
         let attributes: [FileAttributeKey: Any]
         do {
             attributes = try attributesOfItem(atPath: url.path)
         } catch {
-            os_log("Failed to get attributes of file at %{public}s with error %{public}s",
-                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
-                   type: OSLogType.error,
-                   url.path,
-                   error as CVarArg)
+            os_log(
+                "Failed to get attributes of file at %{public}s with error %{public}s",
+                log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                type: OSLogType.error,
+                url.path,
+                error as CVarArg
+            )
             return nil
         }
 
         guard let date = attributes[.creationDate] as? Date else {
-            os_log("Attributes of file at %{public}s do not contain creation date",
-                   log: OSLog(subsystem: "PMLogger", category: "FileManager"),
-                   type: OSLogType.error,
-                   url.path)
+            os_log(
+                "Attributes of file at %{public}s do not contain creation date",
+                log: OSLog(subsystem: "PMLogger", category: "FileManager"),
+                type: OSLogType.error,
+                url.path
+            )
             return nil
         }
         return date
@@ -71,6 +75,6 @@ extension FileManagerWrapper {
 
 extension FileManager: FileManagerWrapper {
     public func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper {
-        return try FileHandle(forWritingTo: url)
+        try FileHandle(forWritingTo: url)
     }
 }

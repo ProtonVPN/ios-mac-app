@@ -18,8 +18,8 @@
 
 import Foundation
 
-import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentConnectionDetails
+import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentStringToValueMap
 
 import let CoreConnection.log
@@ -40,13 +40,13 @@ final class LocalAgentClientImplementation: NSObject, LocalAgentClient {
         text.map { CoreConnection.log.info("\($0)", category: .localAgent, event: .log) }
     }
 
-    func onError(_ code: Int, description: String?) {
+    func onError(_ code: Int, description _: String?) {
         let error = LocalAgentError.from(code: code)
         delegate?.didReceive(event: .error(error))
     }
 
     func onState(_ state: String?) {
-        guard let state = state else {
+        guard let state else {
             CoreConnection.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }

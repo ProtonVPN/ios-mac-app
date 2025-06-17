@@ -23,22 +23,21 @@ import Dependencies
 import ProtonCoreFeatureFlags
 
 import Domain
+@testable import LegacyCommon
 import Persistence
 import PersistenceTestSupport
-@testable import LegacyCommon
 
 final class ServerManagerTests: XCTestCase {
-
     private var upsertCallback: (([VPNServer]) -> Void)?
     private var deleteCallback: ((Set<String>, Int) -> Void)?
     private var metadataCallback: ((DatabaseMetadata.Key, String?) -> Void)?
 
-    class override func setUp() {
+    override class func setUp() {
         super.setUp()
         FeatureFlagsRepository.shared.setFlagOverride(VPNFeatureFlagType.timestampedLogicals, true)
     }
 
-    class override func tearDown() {
+    override class func tearDown() {
         super.tearDown()
         FeatureFlagsRepository.shared.resetFlagOverride(VPNFeatureFlagType.timestampedLogicals)
     }
@@ -83,7 +82,7 @@ final class ServerManagerTests: XCTestCase {
     func testPurgesAllTiersWhenFetchingFullServerList() {
         let deleteInvoked = XCTestExpectation()
 
-        deleteCallback = { ids, maxTier in
+        deleteCallback = { _, maxTier in
             XCTAssertGreaterThanOrEqual(maxTier, .internalTier)
             deleteInvoked.fulfill()
         }
@@ -98,7 +97,7 @@ final class ServerManagerTests: XCTestCase {
         let metadataExpectation = XCTestExpectation(description: "Expected last modified metadata to be updated")
         metadataExpectation.expectedFulfillmentCount = 1
 
-        self.metadataCallback = { key, value in
+        metadataCallback = { key, value in
             XCTAssertEqual(key, .lastModifiedFree)
             XCTAssertEqual(value, lastModified)
             metadataExpectation.fulfill()
@@ -110,7 +109,7 @@ final class ServerManagerTests: XCTestCase {
     }
 
     func testDoesNotOverwriteLastModifiedValueWhenNil() {
-        self.metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
+        metadataCallback = { _, _ in XCTFail("Metadata should not be cleared when the new last modified value is nil") }
 
         performServerUpdate(servers: [], freeServersOnly: true, lastModifiedAt: nil)
     }

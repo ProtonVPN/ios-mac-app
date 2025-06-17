@@ -50,13 +50,17 @@ struct StatsView: View {
     }
 
     func valueForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .normal : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .normal : .hint
+        )
     }
 
     func titleForegroundColor() -> Color {
-        Color(.text,
-              model.isEnabled ? .weak : .hint)
+        Color(
+            .text,
+            model.isEnabled ? .weak : .hint
+        )
     }
 
     func backgroundColor() -> Color {
@@ -79,9 +83,11 @@ struct StatsView_Previews: PreviewProvider {
 
 private extension StatModel {
     static var random: StatModel {
-        .init(value: "\(Int.random(in: 1...1000))",
-              title: "Trackers\nstopped",
-              help: "",
-              isEnabled: .random())
+        .init(
+            value: "\(Int.random(in: 1 ... 1000))",
+            title: "Trackers\nstopped",
+            help: "",
+            isEnabled: .random()
+        )
     }
 }

@@ -26,20 +26,18 @@ import LegacyCommon
 @testable import ProtonVPN
 
 class ProfileServiceMock: ProfileService {
-    
     var dataSet: SelectionDataSet?
-    
+
     func makeProfilesViewController() -> ProfilesViewController {
-        return ProfilesViewController()
+        ProfilesViewController()
     }
-    
-    func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
-        return nil
+
+    func makeCreateProfileViewController(for _: Profile?) -> CreateProfileViewController? {
+        nil
     }
-    
-    func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {
+
+    func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected _: @escaping (Any) -> Void) -> SelectionViewController {
         self.dataSet = dataSet
         return SelectionViewController()
     }
-    
 }

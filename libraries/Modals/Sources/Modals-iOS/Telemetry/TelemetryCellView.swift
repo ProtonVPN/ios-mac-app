@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Strings
 import SwiftUI
 import Theme
-import Strings
 
 struct TelemetryCellView: View {
-
     let title: String
     let description: String
 
@@ -41,7 +40,7 @@ struct TelemetryCellView: View {
             }
             .layoutPriority(1) // This VStack should take as much space as it can
 
-            Toggle(isOn: $isOn, label: { })
+            Toggle(isOn: $isOn, label: {})
                 .toggleStyle(SwitchToggleStyle(tint: Color(.icon, .interactive)))
         }
         .padding()
@@ -51,13 +50,15 @@ struct TelemetryCellView: View {
 struct TelemetryCellView_Previews: PreviewProvider {
     static var isOn = true
     static var previews: some View {
-        TelemetryCellView(title: Localizable.onboardingUsageStatsTitle,
-                          description: Localizable.onboardingUsageStatsDescription,
-                          isOn: .init(get: {
-            isOn
-        }, set: { newValue in
-            isOn = newValue
-        }))
+        TelemetryCellView(
+            title: Localizable.onboardingUsageStatsTitle,
+            description: Localizable.onboardingUsageStatsDescription,
+            isOn: .init(get: {
+                isOn
+            }, set: { newValue in
+                isOn = newValue
+            })
+        )
         .previewLayout(.sizeThatFits)
         .background(Color(.background))
     }

@@ -23,10 +23,14 @@ extension LinearGradient {
         let startColor: Color
         switch protectionState {
         case .signedOut:
-            return .linearGradient(stops: [.init(color: Color(.loggedOutGradientStart), location: 0),
-                                           .init(color: Color(.loggedOutGradientStop), location: 0.7)],
-                                   startPoint: .topTrailing,
-                                   endPoint: .bottomLeading)
+            return .linearGradient(
+                stops: [
+                    .init(color: Color(.loggedOutGradientStart), location: 0),
+                    .init(color: Color(.loggedOutGradientStop), location: 0.7),
+                ],
+                startPoint: .topTrailing,
+                endPoint: .bottomLeading
+            )
         case .protected:
             startColor = Color(.icon, .vpnGreen)
         case .unprotected:
@@ -35,9 +39,13 @@ extension LinearGradient {
             startColor = .white
         }
 
-        return .linearGradient(stops: [.init(color: startColor.opacity(0.5), location: 0),
-                                       .init(color: .clear, location: 1)],
-                               startPoint: .top,
-                               endPoint: .center)
+        return .linearGradient(
+            stops: [
+                .init(color: startColor.opacity(0.5), location: 0),
+                .init(color: .clear, location: 1),
+            ],
+            startPoint: .top,
+            endPoint: .center
+        )
     }
 }

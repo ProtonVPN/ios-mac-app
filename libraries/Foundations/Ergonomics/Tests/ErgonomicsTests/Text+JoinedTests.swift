@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Ergonomics
 import SwiftUI
 import XCTest
-import Ergonomics
 
 final class TextJoiningTests: XCTestCase {
-
     func testJoiningEmptyArrayReturnsNil() {
         let textArrayWithNoElements: [Text] = []
         let joinedText = textArrayWithNoElements.joined(separator: Text("+"))
@@ -54,7 +53,7 @@ private struct MockText: Joinable, Equatable {
     }
 
     func joined(to other: MockText, with separator: MockText) -> MockText {
-        let joinedContents = self.content + separator.content + other.content
+        let joinedContents = content + separator.content + other.content
         return MockText(joinedContents)
     }
 }

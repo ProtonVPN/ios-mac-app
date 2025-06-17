@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import SwiftUI
-import ProtonCoreUIFoundations
-import Domain
 import Connection
+import Domain
+import ProtonCoreUIFoundations
+import SwiftUI
 
 @Reducer
 struct ProtectionStatusFeature {
@@ -49,20 +49,21 @@ struct ProtectionStatusFeature {
             case .userTappedButton:
                 switch state.connectionState {
                 case .connected:
-                    return .send(.delegate(.userClickedDisconnect))
+                    .send(.delegate(.userClickedDisconnect))
                 case .connecting:
-                    return .send(.delegate(.userClickedCancel))
+                    .send(.delegate(.userClickedCancel))
                 case .disconnected, .disconnecting, .resolving:
-                    return .send(.delegate(.userClickedConnect))
+                    .send(.delegate(.userClickedConnect))
                 }
 
             case .onAppear:
-                return .run { send in
+                .run { _ in
                     @Dependency(\.userLocationService) var userLocationService
                     try? await userLocationService.updateUserLocation()
                 }
+
             case .delegate:
-                return .none
+                .none
             }
         }
     }

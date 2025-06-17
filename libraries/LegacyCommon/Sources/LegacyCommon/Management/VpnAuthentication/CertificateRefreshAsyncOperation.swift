@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import CommonNetworking
-import VPNShared
+import Foundation
 import Logging
+import VPNShared
 
 // MacOS Certificate Refresh operation
 final class CertificateRefreshAsyncOperation: AsyncOperation {
@@ -40,7 +40,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let minNetworkErrorRetryDelay: UInt32 = 10
     private let networkErrorRetryDelayJitter: UInt32 = 5
     private var networkRetryDelay: UInt32 {
-        let jitter = UInt32.random(in: 0...networkErrorRetryDelayJitter)
+        let jitter = UInt32.random(in: 0 ... networkErrorRetryDelayJitter)
         return minNetworkErrorRetryDelay + jitter
     }
 
@@ -50,7 +50,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         self.completion = completion
     }
 
-    private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
+    private func finish(_ result: Result<VpnAuthenticationData, Error>) {
         completion?(result)
         finish()
     }
@@ -79,25 +79,28 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
     func handleError(_ error: Error) {
         guard !(error.shouldRetry && shouldRetryDueToNetworkIssue) else {
-            self.remainingNetworkErrorRetries -= 1
+            remainingNetworkErrorRetries -= 1
             let delay = networkRetryDelay
             log.info("Cert refresh failed due to network error \(error). Retrying in \(delay) seconds.", category: .userCert)
             sleep(delay)
-            self.main()
+            main()
             return
         }
 
         let nsError = error as NSError
         switch nsError.code {
-        case 2500 where !self.isConflictRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
-            log.error("Trying to recover by generating new keys and trying again",
-                      category: .userCert, event: .refreshError)
-            self.storage.deleteKeys()
-            self.storage.deleteCertificate()
-            self.isConflictRetry = true
-            self.main()
+        case 2500 where !isConflictRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
+            log.error(
+                "Trying to recover by generating new keys and trying again",
+                category: .userCert,
+                event: .refreshError
+            )
+            storage.deleteKeys()
+            storage.deleteCertificate()
+            isConflictRetry = true
+            main()
         default:
-            self.finish(.failure(error))
+            finish(.failure(error))
         }
     }
 
@@ -125,17 +128,17 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         // fetch new certificate from backend
         getCertificate(keys: keys) { [unowned self] result in
-            if self.isCancelled {
-                self.finish(.failure(CertificateRefreshError.canceled))
+            if isCancelled {
+                finish(.failure(CertificateRefreshError.canceled))
                 return
             }
 
             switch result {
             case let .failure(error):
-                self.handleError(error)
+                handleError(error)
             case let .success(certificate):
-                self.storage.store(certificate)
-                self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
+                storage.store(certificate)
+                finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
         }
     }

@@ -19,9 +19,7 @@
 import Foundation
 
 public extension Bundle {
-    
     static var legacyCommonEvilDoNotUseThis: Bundle {
-        return Bundle(for: VpnGateway.self) // Any class from LegacyCommon will do
+        Bundle(for: VpnGateway.self) // Any class from LegacyCommon will do
     }
-    
 }

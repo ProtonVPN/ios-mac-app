@@ -27,10 +27,10 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
     var loginError: Error?
 
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         defer { didAttemptLogin?() }
 
-        if let loginError = loginError {
+        if let loginError {
             completion(.failure(loginError))
             return
         }
@@ -63,7 +63,7 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
                             self.propertiesManager.streamingServices = services.streamingServices
                         }
                         @Dependency(\.serverManager) var serverManager
-                        if case .modified(let modifiedAt, let servers, let isFreeTier) = properties.serverInfo {
+                        if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
                             serverManager.update(
                                 servers: servers.map { VPNServer(legacyModel: $0) },
                                 freeServersOnly: isFreeTier,

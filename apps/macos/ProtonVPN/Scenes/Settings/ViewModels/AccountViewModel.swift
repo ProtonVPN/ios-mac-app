@@ -24,16 +24,15 @@ import Foundation
 
 import Dependencies
 
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Strings
 import Ergonomics
+import Strings
 
 final class AccountViewModel {
-
     private(set) var username: String
     private(set) var planTitle: String?
     private(set) var maxTier: Int
@@ -44,16 +43,18 @@ final class AccountViewModel {
 
     var reloadNeeded: (() -> Void)?
 
-    init(vpnKeychain: VpnKeychainProtocol,
-         propertiesManager: PropertiesManagerProtocol,
-         authKeychain: AuthKeychainHandle) {
+    init(
+        vpnKeychain: VpnKeychainProtocol,
+        propertiesManager: PropertiesManagerProtocol,
+        authKeychain: AuthKeychainHandle
+    ) {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
         self.authKeychain = authKeychain
 
-        username = Localizable.unavailable
-        planTitle = nil
-        maxTier = .freeTier
+        self.username = Localizable.unavailable
+        self.planTitle = nil
+        self.maxTier = .freeTier
 
         reload()
     }

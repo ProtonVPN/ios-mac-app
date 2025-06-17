@@ -26,51 +26,50 @@ import Strings
 import VPNAppCore
 
 class ExpandablePopupViewModel: NSObject {
-    
     private let alert: ExpandableSystemAlert
-    
-    init( _ alert: ExpandableSystemAlert ) {
+
+    init(_ alert: ExpandableSystemAlert) {
         self.alert = alert
         super.init()
     }
-    
+
     var dismissViewController: (() -> Void)?
 
     var title: String {
-        return alert.title ?? ""
+        alert.title ?? ""
     }
-    
+
     var hiddenInfo: String {
-        return alert.expandableInfo ?? ""
+        alert.expandableInfo ?? ""
     }
-    
+
     var message: String {
-        return alert.message ?? ""
+        alert.message ?? ""
     }
-    
+
     var extraInfo: String {
-        return alert.footInfo ?? ""
+        alert.footInfo ?? ""
     }
-    
+
     var actionButtonTitle: String {
-        return action(0)?.title ?? Localizable.ok
+        action(0)?.title ?? Localizable.ok
     }
-    
+
     func action() {
         onAction?()
         dismissViewController?()
     }
-    
+
     func close() {
         onAction?()
         dismissViewController?()
     }
 
     private var onAction: (() -> Void)? {
-        return action(0)?.handler
+        action(0)?.handler
     }
-    
+
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
-        return alert.actions[optional: index]
+        alert.actions[optional: index]
     }
 }

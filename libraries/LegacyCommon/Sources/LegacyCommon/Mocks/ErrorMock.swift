@@ -16,20 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Strings
-import ProtonCoreNetworking
 import CommonNetworking
+import Foundation
+import ProtonCoreNetworking
+import Strings
 
 #if DEBUG
 
-public extension ResponseError {
-    static let unknownError: Self = .init(
-        httpCode: HttpStatusCode.internalServerError.rawValue,
-        responseCode: ApiErrorCode.apiOffline,
-        userFacingMessage: Localizable.errorInternalError,
-        underlyingError: nil
-    )
-}
+    public extension ResponseError {
+        static let unknownError: Self = .init(
+            httpCode: HttpStatusCode.internalServerError.rawValue,
+            responseCode: ApiErrorCode.apiOffline,
+            userFacingMessage: Localizable.errorInternalError,
+            underlyingError: nil
+        )
+    }
 
 #endif

@@ -23,19 +23,18 @@
 import Cocoa
 
 class PVPNTextViewLink: NSTextView {
-
     var lineSpacing: CGFloat = 14
     var textViewFont = NSFont.themeFont()
     var defaultStyle: NSMutableParagraphStyle
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
-        defaultStyle = NSMutableParagraphStyle()
+        self.defaultStyle = NSMutableParagraphStyle()
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
 
     public required init?(coder aDecoder: NSCoder) {
-        defaultStyle = NSMutableParagraphStyle()
+        self.defaultStyle = NSMutableParagraphStyle()
         super.init(coder: aDecoder)
         setup()
     }
@@ -49,14 +48,14 @@ class PVPNTextViewLink: NSTextView {
         attributedOriginalText.addAttribute(NSAttributedString.Key.link, value: urlString, range: linkRange)
         attributedOriginalText.addAttribute(NSAttributedString.Key.paragraphStyle, value: defaultStyle, range: fullRange)
 
-        self.isAutomaticLinkDetectionEnabled = true
-        self.linkTextAttributes = [
+        isAutomaticLinkDetectionEnabled = true
+        linkTextAttributes = [
             NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint]),
             NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.cursor: NSCursor.pointingHand
+            NSAttributedString.Key.cursor: NSCursor.pointingHand,
         ]
 
-        self.textStorage?.setAttributedString(attributedOriginalText)
+        textStorage?.setAttributedString(attributedOriginalText)
     }
 
     // MARK: - Private
@@ -65,17 +64,18 @@ class PVPNTextViewLink: NSTextView {
         isEditable = false
         isSelectable = true
         isAutomaticLinkDetectionEnabled = true
-        
+
         guard let text = textStorage?.string, !text.isEmpty else { return }
-        let titleAttributes = [NSAttributedString.Key.font: self.textViewFont,
-                               NSAttributedString.Key.foregroundColor: self.textColor ?? .color(.text),
-                               NSAttributedString.Key.paragraphStyle: defaultStyle]
+        let titleAttributes = [
+            NSAttributedString.Key.font: textViewFont,
+            NSAttributedString.Key.foregroundColor: textColor ?? .color(.text),
+            NSAttributedString.Key.paragraphStyle: defaultStyle,
+        ]
 
         let titleString = NSAttributedString(string: text, attributes: titleAttributes)
         textStorage?.setAttributedString(titleString)
-        
-        defaultStyle.lineSpacing = self.lineSpacing / self.textViewFont.pointSize
+
+        defaultStyle.lineSpacing = lineSpacing / textViewFont.pointSize
         defaultStyle.alignment = .left
     }
-    
 }

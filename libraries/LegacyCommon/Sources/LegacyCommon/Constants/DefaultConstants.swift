@@ -20,6 +20,6 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-struct DefaultConstants {
+enum DefaultConstants {
     static let ikeV2Ports = [500]
 }

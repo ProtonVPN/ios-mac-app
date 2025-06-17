@@ -26,16 +26,15 @@ enum KeyCode: UInt16, CaseIterable {
         guard case .keyDown = event.type else {
             return false
         }
-        return Self.allCases.map(\.rawValue).contains(event.keyCode)
+        return allCases.map(\.rawValue).contains(event.keyCode)
     }
 }
 
 class OverlayViewController: NSViewController {
-
     var shouldDismissOnKeyDownEvent: Bool = true
 
     override var acceptsFirstResponder: Bool {
-        return true
+        true
     }
 
     override func viewDidAppear() {
@@ -51,5 +50,4 @@ class OverlayViewController: NSViewController {
             super.keyDown(with: event)
         }
     }
-
 }

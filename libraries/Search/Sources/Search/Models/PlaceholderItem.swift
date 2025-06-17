@@ -30,26 +30,26 @@ extension PlaceholderItem {
     var title: String {
         switch self {
         case .countries:
-            return Localizable.searchCountries
+            Localizable.searchCountries
         case .cities:
-            return Localizable.searchCities
+            Localizable.searchCities
         case .usRegions:
-            return Localizable.searchUsRegions
+            Localizable.searchUsRegions
         case .servers:
-            return Localizable.searchServers
+            Localizable.searchServers
         }
     }
 
     var subtitle: String {
         switch self {
         case .countries:
-            return Localizable.searchCountriesSample
+            Localizable.searchCountriesSample
         case .cities:
-            return Localizable.searchCitiesSample
+            Localizable.searchCitiesSample
         case .usRegions:
-            return Localizable.searchUsRegionsSample
+            Localizable.searchUsRegionsSample
         case .servers:
-            return Localizable.searchServersSample
+            Localizable.searchServersSample
         }
     }
 }

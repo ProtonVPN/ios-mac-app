@@ -21,15 +21,14 @@
 
 import Foundation
 import ProtonCoreAPIClient
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public protocol ReportBugViewModelFactory {
     func makeReportBugViewModel() -> ReportBugViewModel
 }
 
 open class ReportBugViewModel {
-
     private var bug: ReportBug
     private var sendingBug: Bool = false
     private let propertiesManager: PropertiesManagerProtocol
@@ -37,105 +36,107 @@ open class ReportBugViewModel {
     private let alertService: CoreAlertService
     private let logContentProvider: LogContentProvider
     private let logSources: [LogSource]
-    
+
     private var planTitle: String?
 
-    public typealias Factory = PropertiesManagerFactory &
-        ReportsApiServiceFactory &
+    public typealias Factory =
+        AuthKeychainHandleFactory &
         CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        LogContentProviderFactory &
-        AuthKeychainHandleFactory
+        LogContentProviderFactory & PropertiesManagerFactory &
+        ReportsApiServiceFactory &
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(os: config.os,
-                  osVersion: config.osVersion,
-                  propertiesManager: factory.makePropertiesManager(),
-                  reportsApiService: factory.makeReportsApiService(),
-                  alertService: factory.makeCoreAlertService(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  logContentProvider: factory.makeLogContentProvider(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            os: config.os,
+            osVersion: config.osVersion,
+            propertiesManager: factory.makePropertiesManager(),
+            reportsApiService: factory.makeReportsApiService(),
+            alertService: factory.makeCoreAlertService(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            logContentProvider: factory.makeLogContentProvider(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
-    
+
     public init(os: String, osVersion: String, propertiesManager: PropertiesManagerProtocol, reportsApiService: ReportsApiService, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, logContentProvider: LogContentProvider, logSources: [LogSource] = LogSource.allCases, authKeychain: AuthKeychainHandle) {
         self.propertiesManager = propertiesManager
         self.reportsApiService = reportsApiService
         self.alertService = alertService
         self.logContentProvider = logContentProvider
         self.logSources = logSources
-        
+
         let username = authKeychain.username ?? ""
 
         do {
-            planTitle = try vpnKeychain.fetchCached().planTitle
-        } catch let error {
+            self.planTitle = try vpnKeychain.fetchCached().planTitle
+        } catch {
             log.error("\(error)", category: .ui)
         }
-        
+
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-        bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
+        self.bug = ReportBug(os: os, osVersion: osVersion, client: "App", clientVersion: clientVersion, clientType: 2, title: "Report from \(os) app", description: "", username: username, email: propertiesManager.reportBugEmail ?? "", country: "", ISP: "", plan: planTitle ?? "")
     }
-    
+
     public func set(description: String) {
         bug.description = description
     }
-    
+
     public func set(email: String) {
         bug.email = email
     }
-    
+
     public func getEmail() -> String? {
-        return bug.email
+        bug.email
     }
-    
+
     public func set(country: String) {
         bug.country = country
     }
-    
+
     public func getCountry() -> String? {
-        return bug.country
+        bug.country
     }
-    
+
     public func set(isp: String) {
         bug.ISP = isp
     }
-    
+
     public func getISP() -> String? {
-        return bug.ISP
+        bug.ISP
     }
-    
+
     public func getUsername() -> String? {
-        return bug.username
+        bug.username
     }
-    
+
     public func getClientVersion() -> String? {
-        return bug.clientVersion
+        bug.clientVersion
     }
-    
+
     public func set(planTitle: String) {
         self.planTitle = planTitle
         bug.plan = planTitle
     }
-    
+
     public func getPlanTitle() -> String? {
-        return planTitle
+        planTitle
     }
-    
+
     public var isSendingPossible: Bool {
-        return bug.canBeSent
+        bug.canBeSent
     }
 
     public var logsEnabled: Bool = true
 
-    public func send(completion: @escaping (Result<(), Error>) -> Void) {
+    public func send(completion: @escaping (Result<Void, Error>) -> Void) {
         // Debounce multiple attempts to send a bug report (i.e., by mashing a button)
         guard !sendingBug else {
             return
         }
 
         guard logsEnabled else {
-            self.bug.files = []
+            bug.files = []
             send(report: bug, completion: completion)
             return
         }
@@ -150,7 +151,7 @@ open class ReportBugViewModel {
         }
     }
 
-    private func send(report: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
+    private func send(report: ReportBug, completion: @escaping (Result<Void, Error>) -> Void) {
         sendingBug = true
         reportsApiService.report(bug: report) { [weak self] result in
             switch result {
@@ -170,5 +171,4 @@ open class ReportBugViewModel {
             }
         }
     }
-    
 }

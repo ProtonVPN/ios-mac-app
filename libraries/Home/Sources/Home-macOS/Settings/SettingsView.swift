@@ -17,12 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import HomeShared
+import Strings
 import SwiftUI
 import Theme
-import Strings
 
 public struct SettingsView: View {
-
     @State private var currentSubview: AnyView?
     @State private var title = Localizable.settingsTab
     @State private var subviewTitle: String
@@ -38,7 +37,7 @@ public struct SettingsView: View {
             currentSubview = view
         }
         if view != nil {
-            self.subviewTitle = title
+            subviewTitle = title
         }
     }
 
@@ -48,14 +47,18 @@ public struct SettingsView: View {
                 Spacer()
                 // Below is just to showcase the navigation for settings page, don't mind the hardcoded strings.
                 Button {
-                    showSubview(view: AnyView(Text("Killswitch!")),
-                                title: "Killswitch")
+                    showSubview(
+                        view: AnyView(Text("Killswitch!")),
+                        title: "Killswitch"
+                    )
                 } label: {
                     Text("Killswitch")
                 }
                 Button {
-                    showSubview(view: AnyView(Text("Protocols!")),
-                                title: "Protocols")
+                    showSubview(
+                        view: AnyView(Text("Protocols!")),
+                        title: "Protocols"
+                    )
                 } label: {
                     Text("Protocols")
                 }

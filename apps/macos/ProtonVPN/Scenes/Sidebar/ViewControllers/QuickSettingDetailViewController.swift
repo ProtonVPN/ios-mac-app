@@ -45,20 +45,19 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
+    @IBOutlet var arrowIV: NSImageView!
+    @IBOutlet var arrowHorizontalConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var arrowIV: NSImageView!
-    @IBOutlet weak var arrowHorizontalConstraint: NSLayoutConstraint!
+    @IBOutlet var contentBox: NSBox!
 
-    @IBOutlet weak var contentBox: NSBox!
+    @IBOutlet var dropdownTitle: NSTextField!
+    @IBOutlet var dropdownDescription: NSTextField!
+    @IBOutlet var dropdownLearnMore: InteractiveActionButton!
+    @IBOutlet var dropdownUpgradeButton: PrimaryActionButton!
+    @IBOutlet var dropdownBusinessUpsell: NSImageView!
+    @IBOutlet var dropdownNote: NSTextField!
 
-    @IBOutlet weak var dropdownTitle: NSTextField!
-    @IBOutlet weak var dropdownDescription: NSTextField!
-    @IBOutlet weak var dropdownLearnMore: InteractiveActionButton!
-    @IBOutlet weak var dropdownUpgradeButton: PrimaryActionButton!
-    @IBOutlet weak var dropdownBusinessUpsell: NSImageView!
-    @IBOutlet weak var dropdownNote: NSTextField!
-
-    @IBOutlet weak var dropdownOptionsView: NSView!
+    @IBOutlet var dropdownOptionsView: NSView!
 
     @IBOutlet var noteTopConstraint: NSLayoutConstraint!
     @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!
@@ -85,11 +84,12 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         self.presenter.viewController = self
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setupNetShieldStatsContainer(presenter: NetshieldDropdownPresenter) {
+    func setupNetShieldStatsContainer(presenter _: NetshieldDropdownPresenter) {
         netShieldStatsView.translatesAutoresizingMaskIntoConstraints = false
         netShieldStatsContainer.addSubview(netShieldStatsView)
         netShieldStatsContainer.topAnchor.constraint(equalTo: netShieldStatsView.topAnchor).isActive = true
@@ -148,7 +148,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     func reloadOptions() {
         var needsUpgrade = false
-        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { (index, presenter) in
+        let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { _, presenter in
             let thisNeedsUpgrade = presenter.requiresUpdate || presenter.requiresBusinessUpdate
             defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
 
@@ -178,15 +178,15 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             return view!
         }
 
-        self.upgradeTopConstraint.isActive = needsUpgrade
-        self.upgradeBottomConstraint.isActive = needsUpgrade
+        upgradeTopConstraint.isActive = needsUpgrade
+        upgradeBottomConstraint.isActive = needsUpgrade
 
-        self.noteTopConstraint.isActive = self.dropdownNote.attributedStringValue.length > 0
+        noteTopConstraint.isActive = dropdownNote.attributedStringValue.length > 0
 
-        self.dropdownUpgradeButton.isHidden = !needsUpgrade
-        self.dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
-        self.dropdownOptionsView.fillVertically(withViews: views)
-        self.dropdownOptionsView.wantsLayer = true
-        self.dropdownOptionsView.layer?.masksToBounds = false
+        dropdownUpgradeButton.isHidden = !needsUpgrade
+        dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
+        dropdownOptionsView.fillVertically(withViews: views)
+        dropdownOptionsView.wantsLayer = true
+        dropdownOptionsView.layer?.masksToBounds = false
     }
 }

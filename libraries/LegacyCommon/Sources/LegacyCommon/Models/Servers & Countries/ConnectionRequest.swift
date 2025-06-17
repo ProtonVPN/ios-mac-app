@@ -24,19 +24,18 @@ import Foundation
 import Domain
 import Strings
 
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 extension ConnectionProtocol: @retroactive CustomStringConvertible {
-
     public static let deprecatedProtocols: [Self] = VpnProtocol.deprecatedProtocols.map(vpnProtocol)
 
     public var isDeprecated: Bool {
         switch self {
         case .smartProtocol:
-            return false
-        case .vpnProtocol(let vpnProtocol):
-            return vpnProtocol.isDeprecated
+            false
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.isDeprecated
         }
     }
 
@@ -44,21 +43,21 @@ extension ConnectionProtocol: @retroactive CustomStringConvertible {
     /// - Parameter wireguardTLS: Whether WireGuard TLS feature flag enabled. If false, the protocol list will not
     /// include WireGuard TCP and TLS.
     public static func availableProtocols(wireguardTLSEnabled: Bool) -> [Self] {
-        return allCases
+        allCases
             .removing([.vpnProtocol(.wireGuard(.tcp)), .vpnProtocol(.wireGuard(.tls))], if: !wireguardTLSEnabled)
             .removing(deprecatedProtocols)
     }
 
     public var description: String {
-        return localizedString
+        localizedString
     }
 
     public var localizedString: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedDescription
+            vpnProtocol.localizedDescription
         case .smartProtocol:
-            return Localizable.smartTitle
+            Localizable.smartTitle
         }
     }
 
@@ -96,23 +95,23 @@ public struct ConnectionRequest: Identifiable {
     }
 
     public func withChanged(serverType: ServerType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, safeMode: self.safeMode, profileId: self.profileId, profileName: self.profileName, trigger: self.trigger)
+        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
     }
 
     private enum Keys: CodingKey {
@@ -132,28 +131,28 @@ public struct ConnectionRequest: Identifiable {
 extension ConnectionRequest: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
-        serverType = try container.decode(ServerType.self, forKey: .serverType)
-        connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
-        netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
-        profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
-        profileName = try container.decodeIfPresent(String.self, forKey: .profileName)
+        self.serverType = try container.decode(ServerType.self, forKey: .serverType)
+        self.connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
+        self.netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
+        self.profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
+        self.profileName = try container.decodeIfPresent(String.self, forKey: .profileName)
 
         // compatibility with previous format
         if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
-            connectionProtocol = .vpnProtocol(vpnProtocol)
+            self.connectionProtocol = .vpnProtocol(vpnProtocol)
         } else {
-            connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
+            self.connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
         }
 
         // compatibility with previous format
         if let natTypeValue = try container.decodeIfPresent(NATType.self, forKey: .natType) {
-            natType = natTypeValue
+            self.natType = natTypeValue
         } else {
-            natType = .default
+            self.natType = .default
         }
 
-        safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
-        trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
+        self.safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
     }
 }
 
@@ -172,7 +171,6 @@ public enum CountryConnectionRequestType {
 }
 
 extension ConnectionRequestType: Codable {
-    
     private enum Key: CodingKey {
         case rawValue
         case countryCode
@@ -180,7 +178,7 @@ extension ConnectionRequestType: Codable {
         case city
         case gatewayName
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(Int.self, forKey: .rawValue)
@@ -204,7 +202,7 @@ extension ConnectionRequestType: Codable {
             throw CodingError.unknownValue
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
         switch self {
@@ -228,12 +226,11 @@ extension ConnectionRequestType: Codable {
 }
 
 extension CountryConnectionRequestType: Codable {
-    
     private enum Key: CodingKey {
         case rawValue
         case associatedValue
     }
-    
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Key.self)
         let rawValue = try container.decode(Int.self, forKey: .rawValue)
@@ -249,7 +246,7 @@ extension CountryConnectionRequestType: Codable {
             throw CodingError.unknownValue
         }
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
         switch self {
@@ -257,7 +254,7 @@ extension CountryConnectionRequestType: Codable {
             try container.encode(0, forKey: .rawValue)
         case .random:
             try container.encode(1, forKey: .rawValue)
-        case .server(let server):
+        case let .server(server):
             try container.encode(2, forKey: .rawValue)
             try container.encode(server, forKey: .associatedValue)
         }
@@ -267,40 +264,37 @@ extension CountryConnectionRequestType: Codable {
 // MARK: Equatable conformance
 
 extension ConnectionRequest: Equatable {
-    
     public static func == (lhs: ConnectionRequest, rhs: ConnectionRequest) -> Bool {
-        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
+        lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
     }
 }
 
 extension ConnectionRequestType: Equatable {
-    
     public static func == (lhs: ConnectionRequestType, rhs: ConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):
-            return true
+            true
         case (.random, .random):
-            return true
-        case (.country(let code1, let countryRequestType1), .country(let code2, let countryRequestType2)):
-            return code1 == code2 && countryRequestType1 == countryRequestType2
+            true
+        case let (.country(code1, countryRequestType1), .country(code2, countryRequestType2)):
+            code1 == code2 && countryRequestType1 == countryRequestType2
         default:
-            return false
+            false
         }
     }
 }
 
 extension CountryConnectionRequestType: Equatable {
-    
     public static func == (lhs: CountryConnectionRequestType, rhs: CountryConnectionRequestType) -> Bool {
         switch (lhs, rhs) {
         case (.fastest, .fastest):
-            return true
+            true
         case (.random, .random):
-            return true
-        case (.server(let server1), .server(let server2)):
-            return server1 == server2
+            true
+        case let (.server(server1), .server(server2)):
+            server1 == server2
         default:
-            return false
+            false
         }
     }
 }

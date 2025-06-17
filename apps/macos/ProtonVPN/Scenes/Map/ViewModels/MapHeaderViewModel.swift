@@ -24,42 +24,42 @@ import Cocoa
 
 import LegacyCommon
 
-import Theme
-import Strings
 import Domain
+import Strings
+import Theme
 
 class MapHeaderViewModel {
-    
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
-    
+
     var contentChanged: (() -> Void)?
-    
+
     init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager) {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
     }
-    
+
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
-    
+
     var description: NSAttributedString {
         let text = (isConnected ? Localizable.connected : Localizable.disconnected).uppercased()
         let style: AppTheme.Style = isConnected ? [.interactive, .hint] : .danger
         return text.styled(style, font: .themeFont(literalSize: 19, bold: true))
     }
-    
+
     var isSecureCore: Bool {
         if let server = appStateManager.activeConnection()?.server {
             return server.isSecureCore
         }
         return false
     }
-    
-    @objc private func vpnConnectionChanged() {
+
+    @objc
+    private func vpnConnectionChanged() {
         contentChanged?()
     }
 }

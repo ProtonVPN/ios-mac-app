@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 import Connection
-import VPNAppCore
 import Domain
+import VPNAppCore
 
 import Foundation
 
@@ -46,7 +46,7 @@ extension ConnectToVPNKey {
             log.error("No server found", metadata: ["intent": "\(intent)"])
             throw VpnGateway2.GatewayError.noServerFound // Not sure
 
-        } catch VpnGateway2.GatewayError.resolutionUnavailable(let forSpecificCountry, let type, let reason) {
+        } catch let VpnGateway2.GatewayError.resolutionUnavailable(forSpecificCountry, type, reason) {
             log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)", "intent": "\(intent)"])
 
 //            Code from serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
@@ -59,7 +59,7 @@ extension ConnectToVPNKey {
                 alert(MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 alert(ProtocolNotAvailableForServerAlert())
-            case .locationNotFound(let profileName):
+            case let .locationNotFound(profileName):
                 alert(LocationNotAvailableAlert(profileName: profileName))
             }
         } catch {

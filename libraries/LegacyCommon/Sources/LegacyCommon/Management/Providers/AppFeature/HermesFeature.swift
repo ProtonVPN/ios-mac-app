@@ -28,15 +28,15 @@ public enum HermesFeature {
 extension HermesFeature: Codable {}
 
 extension HermesFeature: PaidAppFeature {
-    public static func minTier(featureFlags: FeatureFlags) -> Int {
-        return .paidTier
+    public static func minTier(featureFlags _: FeatureFlags) -> Int {
+        .paidTier
     }
 }
 
 extension HermesFeature: ToggleableFeature {}
 
 extension HermesFeature: ModularAppFeature {
-    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
@@ -51,13 +51,13 @@ extension HermesFeature: ModularAppFeature {
 }
 
 extension HermesFeature: DefaultableFeature {
-    public static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> HermesFeature {
-        return .defaultValue
+    public static func defaultValue(onPlan _: String, userTier _: Int, featureFlags _: FeatureFlags) -> HermesFeature {
+        .defaultValue
     }
 }
 
 extension HermesFeature: StorableFeature {
     public static let storageKey: String = "HermesFeatureEnabled"
-    
+
     public static let event: Domain.AppEvent? = .hermes
 }

@@ -10,12 +10,11 @@
 import Foundation
 
 import Domain
-import VPNAppCore
-import Localization
 import LegacyCommon
+import Localization
+import VPNAppCore
 
 final class VpnProtocolViewModel {
-
     enum ProtocolChangeSelectionError: String, Error {
         case userCancelled = "The user cancelled the operation."
     }
@@ -33,11 +32,13 @@ final class VpnProtocolViewModel {
     private var smartProtocolConfig: SmartProtocolConfig
     private let availableProtocols: [ConnectionProtocol]
 
-    init(connectionProtocol: ConnectionProtocol,
-         smartProtocolConfig: SmartProtocolConfig,
-         supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
-         displaySmartProtocol: Bool = true,
-         featureFlags: FeatureFlags) {
+    init(
+        connectionProtocol: ConnectionProtocol,
+        smartProtocolConfig: SmartProtocolConfig,
+        supportedProtocols: [ConnectionProtocol] = ConnectionProtocol.allCases,
+        displaySmartProtocol _: Bool = true,
+        featureFlags: FeatureFlags
+    ) {
         self.selectedProtocol = connectionProtocol
         self.smartProtocolConfig = smartProtocolConfig
 
@@ -56,20 +57,22 @@ final class VpnProtocolViewModel {
             .sorted(by: ConnectionProtocol.uiSort)
             .map { item in
                 let handler = { [unowned self] in
-                    self.confirmNewConnectionProtocol(item)
+                    confirmNewConnectionProtocol(item)
                     return true
                 }
 
-                return .checkmarkStandard(title: item.localizedDescription,
-                                          checked: selectedProtocol == item,
-                                          handler: handler)
+                return .checkmarkStandard(
+                    title: item.localizedDescription,
+                    checked: selectedProtocol == item,
+                    handler: handler
+                )
             }
 
         return TableViewSection(title: "", showHeader: false, cells: cells)
     }
 
     private func confirmNewConnectionProtocol(_ connectionProtocol: ConnectionProtocol) {
-        guard let protocolChangeConfirmation = protocolChangeConfirmation else {
+        guard let protocolChangeConfirmation else {
             switchConnectionProtocol(to: connectionProtocol, reconnect: true)
             return
         }
@@ -87,9 +90,9 @@ final class VpnProtocolViewModel {
     }
 
     private func switchConnectionProtocol(to connectionProtocol: ConnectionProtocol, reconnect: Bool) {
-        self.selectedProtocol = connectionProtocol
-        self.protocolChanged?(connectionProtocol, reconnect)
-        self.contentChanged?()
-        self.selectionFinished?()
+        selectedProtocol = connectionProtocol
+        protocolChanged?(connectionProtocol, reconnect)
+        contentChanged?()
+        selectionFinished?()
     }
 }

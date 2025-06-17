@@ -19,7 +19,6 @@
 import Foundation
 
 public enum HttpStatusCode: Int { // http status codes returned by the api
-
     case notModified = 304
 
     case badRequest = 400

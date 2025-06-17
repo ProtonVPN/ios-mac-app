@@ -21,4 +21,4 @@ import Logging
 
 import PMLogger
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.Persistence.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.Persistence.logger")

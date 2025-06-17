@@ -19,9 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import CommonNetworking
+import Dependencies
+import Foundation
 import VPNAppCore
 
 class ServiceChecker {
@@ -53,7 +53,7 @@ class ServiceChecker {
 
         checkServices()
 
-        timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
+        self.timer = Timer(timeInterval: refreshInterval, target: self, selector: #selector(checkServices), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
     }
 
@@ -66,15 +66,16 @@ class ServiceChecker {
         timer = nil
     }
 
-    @objc private func checkServices() {
+    @objc
+    private func checkServices() {
         trafficCheckerQueue.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if !self.p2pShown {
-                self.p2pBlocked()
-                self.trafficForwarded()
+            if !p2pShown {
+                p2pBlocked()
+                trafficForwarded()
             }
         }
     }
@@ -84,7 +85,7 @@ class ServiceChecker {
         urlRequest.cachePolicy = .reloadIgnoringCacheData
         urlRequest.timeoutInterval = refreshInterval
 
-        networking.request(urlRequest) { [weak self] (result: Result<(String), Error>) in
+        networking.request(urlRequest) { [weak self] (result: Result<String, Error>) in
             switch result {
             case let .success(text):
                 if text.starts(with: "<!--P2P_WARNING-->") {
@@ -103,8 +104,8 @@ class ServiceChecker {
         let host = CFHostCreateWithName(nil, "dmca-protection.protonvpn.com" as CFString).takeRetainedValue()
 
         guard CFHostStartInfoResolution(host, .addresses, nil),
-          let addresses = CFHostGetAddressing(host, nil)?.takeUnretainedValue() as? NSArray,
-          let address = (addresses.firstObject as? NSData) as? Data else {
+              let addresses = CFHostGetAddressing(host, nil)?.takeUnretainedValue() as? NSArray,
+              let address = (addresses.firstObject as? NSData) as? Data else {
             return
         }
 
@@ -133,6 +134,6 @@ class ServiceChecker {
         }
 
         alertService.push(alert: P2pForwardedAlert())
-        self.p2pShown = true
+        p2pShown = true
     }
 }

@@ -78,50 +78,50 @@ public struct DividedForEach<Data: RandomAccessCollection, Content: View>: View 
 }
 
 #if DEBUG && compiler(>=6)
-@available(iOS 18, *)
-#Preview {
-    let elements = [
-        "globe",
-        "externaldrive.fill.badge.plus",
-        "speaker.zzz",
-        "exclamationmark.triangle"
-    ]
+    @available(iOS 18, *)
+    #Preview {
+        let elements = [
+            "globe",
+            "externaldrive.fill.badge.plus",
+            "speaker.zzz",
+            "exclamationmark.triangle",
+        ]
 
-    VStack(alignment: .leading) {
-        VStack {
-            DividedForEach(elements) { item in
-                HStack {
-                    Image(systemName: item)
-                    Text(item)
-                    Spacer()
+        VStack(alignment: .leading) {
+            VStack {
+                DividedForEach(elements) { item in
+                    HStack {
+                        Image(systemName: item)
+                        Text(item)
+                        Spacer()
+                    }
+                }
+            }
+
+            Spacer()
+
+            Text("With Divider Under Last Element:")
+                .padding()
+            VStack {
+                DividedForEach(elements, showDividerUnderLastElement: true) { item in
+                    HStack {
+                        Image(systemName: item)
+                        Text(item)
+                        Spacer()
+                    }
+                }
+            }
+
+            Spacer()
+
+            Text("Edge Case (empty)")
+                .padding()
+            VStack {
+                DividedForEach([], showDividerUnderLastElement: true) { _ in
+                    HStack {}
                 }
             }
         }
-
-        Spacer()
-
-        Text("With Divider Under Last Element:")
-            .padding()
-        VStack {
-            DividedForEach(elements, showDividerUnderLastElement: true) { item in
-                HStack {
-                    Image(systemName: item)
-                    Text(item)
-                    Spacer()
-                }
-            }
-        }
-
-        Spacer()
-
-        Text("Edge Case (empty)")
-            .padding()
-        VStack {
-            DividedForEach([], showDividerUnderLastElement: true) { item in
-                HStack { }
-            }
-        }
+        .padding()
     }
-    .padding()
-}
 #endif

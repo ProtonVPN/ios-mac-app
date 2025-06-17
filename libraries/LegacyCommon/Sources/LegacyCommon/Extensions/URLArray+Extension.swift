@@ -1,5 +1,5 @@
 //
-//  URL+Extension.swift
+//  URLArray+Extension.swift
 //  vpncore - Created on 2019-12-11.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,11 +22,9 @@
 
 import Foundation
 
-extension Array where Element == URL {
-    
+public extension [URL] {
     /// Only reachable URLs
-    public func reachable() -> Self {
-        return self.compactMap { (try? $0.checkPromisedItemIsReachable()) ?? false ? $0 : nil }
+    func reachable() -> Self {
+        compactMap { (try? $0.checkPromisedItemIsReachable()) ?? false ? $0 : nil }
     }
-    
 }

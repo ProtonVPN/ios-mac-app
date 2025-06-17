@@ -25,7 +25,7 @@ public struct ContinuousServerProperties: CustomStringConvertible {
     public let status: Int
 
     public var description: String {
-        return "ServerID: \(serverId)\n"
+        "ServerID: \(serverId)\n"
             + "Load: \(load)\n"
             + "Score: \(score)\n"
             + "Status: \(status)"

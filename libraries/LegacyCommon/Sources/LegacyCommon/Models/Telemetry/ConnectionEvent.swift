@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import DictionaryCoder
+import Foundation
 
 public struct ConnectionEvent: TelemetryEvent, Encodable {
     public typealias CodingKeys = TelemetryKeys
@@ -28,10 +28,10 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
 
     public var values: Values {
         switch event {
-        case .vpnConnection(let timeToConnection):
-            return .init(timeToConnection: timeToConnection)
-        case .vpnDisconnection(let sessionLength):
-            return .init(sessionLength: sessionLength)
+        case let .vpnConnection(timeToConnection):
+            .init(timeToConnection: timeToConnection)
+        case let .vpnDisconnection(sessionLength):
+            .init(sessionLength: sessionLength)
         }
     }
 
@@ -39,7 +39,7 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
         self.event = event
         self.dimensions = dimensions
     }
-    
+
     public enum Event: Encodable {
         case vpnConnection(timeToConnection: TimeInterval)
         case vpnDisconnection(sessionLength: TimeInterval)
@@ -47,9 +47,9 @@ public struct ConnectionEvent: TelemetryEvent, Encodable {
         var rawValue: String {
             switch self {
             case .vpnConnection:
-                return Self.CodingKeys.vpnConnection.rawValue
+                Self.CodingKeys.vpnConnection.rawValue
             case .vpnDisconnection:
-                return Self.CodingKeys.vpnDisconnection.rawValue
+                Self.CodingKeys.vpnDisconnection.rawValue
             }
         }
 

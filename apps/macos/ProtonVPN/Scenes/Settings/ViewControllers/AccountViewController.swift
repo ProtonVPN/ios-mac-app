@@ -21,42 +21,42 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
-import Theme
+import LegacyCommon
 import Strings
+import Theme
 
 final class AccountViewController: NSViewController {
+    @IBOutlet private var usernameLabel: PVPNTextField!
+    @IBOutlet private var usernameValue: PVPNTextField!
+    @IBOutlet private var usernameSeparator: NSBox!
 
-    @IBOutlet private weak var usernameLabel: PVPNTextField!
-    @IBOutlet private weak var usernameValue: PVPNTextField!
-    @IBOutlet private weak var usernameSeparator: NSBox!
-    
-    @IBOutlet private weak var accountPlanLabel: PVPNTextField!
-    @IBOutlet private weak var accountPlanValue: PVPNTextField!
-    @IBOutlet private weak var accountPlanSeparator: NSBox!
-    
-    @IBOutlet private weak var manageSubscriptionButton: InteractiveActionButton!
+    @IBOutlet private var accountPlanLabel: PVPNTextField!
+    @IBOutlet private var accountPlanValue: PVPNTextField!
+    @IBOutlet private var accountPlanSeparator: NSBox!
+
+    @IBOutlet private var manageSubscriptionButton: InteractiveActionButton!
     private var banner: BannerView?
-    
+
     private let viewModel: AccountViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(accountViewModel: AccountViewModel) {
-        viewModel = accountViewModel
+        self.viewModel = accountViewModel
         super.init(nibName: NSNib.Name("Account"), bundle: nil)
 
         viewModel.reloadNeeded = { [weak self] in
             self?.setupData()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         setupActions()
         setupData()
@@ -70,26 +70,30 @@ final class AccountViewController: NSViewController {
         setupStackView()
         setupFooterView()
     }
-    
+
     private func setupStackView() {
         usernameLabel.attributedStringValue = Localizable.username.styled(font: .themeFont(.heading4), alignment: .left)
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
         usernameSeparator.fillColor = .color(.border, .weak)
-        
+
         accountPlanLabel.attributedStringValue = Localizable.accountPlan.styled(font: .themeFont(.heading4), alignment: .left)
         accountPlanSeparator.fillColor = .color(.border, .weak)
-        
+
         if let planTitle = viewModel.planTitle {
-            accountPlanValue.attributedStringValue = planTitle.styled(AppTheme.Style(viewModel.maxTier),
-                                                                      font: .themeFont(.heading4),
-                                                                      alignment: .right)
+            accountPlanValue.attributedStringValue = planTitle.styled(
+                AppTheme.Style(viewModel.maxTier),
+                font: .themeFont(.heading4),
+                alignment: .right
+            )
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
-                                                                                    font: .themeFont(.heading4),
-                                                                                    alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(
+                .weak,
+                font: .themeFont(.heading4),
+                alignment: .right
+            )
         }
     }
-    
+
     private func setupFooterView() {
         manageSubscriptionButton.title = Localizable.manageSubscription
         manageSubscriptionButton.target = self
@@ -101,24 +105,28 @@ final class AccountViewController: NSViewController {
     private func setupActions() {
         manageSubscriptionButton.target = self
         manageSubscriptionButton.action = #selector(manageSubscriptionButtonAction)
-
     }
-    
+
     private func setupData() {
         usernameValue.attributedStringValue = viewModel.username.styled(.weak, font: .themeFont(.heading4), alignment: .right)
 
         if let planTitle = viewModel.planTitle {
-            accountPlanValue.attributedStringValue = planTitle.styled(AppTheme.Style(viewModel.maxTier),
-                                                                      font: .themeFont(.heading4),
-                                                                      alignment: .right)
+            accountPlanValue.attributedStringValue = planTitle.styled(
+                AppTheme.Style(viewModel.maxTier),
+                font: .themeFont(.heading4),
+                alignment: .right
+            )
         } else {
-            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(.weak, 
-                                                                                    font: .themeFont(.heading4),
-                                                                                    alignment: .right)
+            accountPlanValue.attributedStringValue = Localizable.unavailable.styled(
+                .weak,
+                font: .themeFont(.heading4),
+                alignment: .right
+            )
         }
     }
-    
-    @objc private func manageSubscriptionButtonAction() {
+
+    @objc
+    private func manageSubscriptionButtonAction() {
         viewModel.manageSubscriptionAction()
     }
 }

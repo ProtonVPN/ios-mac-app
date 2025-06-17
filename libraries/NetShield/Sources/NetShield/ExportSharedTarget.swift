@@ -23,15 +23,15 @@ public typealias NetShieldStatsNotification = NetShieldShared.NetShieldStatsNoti
 public typealias StatModel = NetShieldShared.StatModel
 
 #if canImport(NetShield_macOS)
-import NetShield_macOS
+    import NetShield_macOS
 
-public typealias NetShieldStatsView = NetShield_macOS.NetShieldStatsView
+    public typealias NetShieldStatsView = NetShield_macOS.NetShieldStatsView
 
 #endif
 
 #if canImport(NetShield_iOS)
-import NetShield_iOS
+    import NetShield_iOS
 
-public typealias NetShieldStatsView = NetShield_iOS.NetShieldStatsView
+    public typealias NetShieldStatsView = NetShield_iOS.NetShieldStatsView
 
 #endif

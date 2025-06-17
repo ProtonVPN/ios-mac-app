@@ -24,23 +24,23 @@ import CoreConnection
 import class GoLibs.LocalAgentFeatures
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 #if canImport(UIKit)
-import class UIKit.UIApplication
+    import class UIKit.UIApplication
 #elseif canImport(AppKit)
-import class AppKit.NSApplication
+    import class AppKit.NSApplication
 #endif
 
 let didBecomeActiveNotification: NSNotification.Name = {
-#if canImport(UIKit)
-    return UIApplication.didBecomeActiveNotification
-#elseif canImport(AppKit)
-    return NSApplication.didBecomeActiveNotification
-#else
-    fatalError("Unsupported platform")
-#endif
+    #if canImport(UIKit)
+        return UIApplication.didBecomeActiveNotification
+    #elseif canImport(AppKit)
+        return NSApplication.didBecomeActiveNotification
+    #else
+        fatalError("Unsupported platform")
+    #endif
 }()
 
 @available(iOS 16, *)
@@ -51,7 +51,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
     @Dependency(\.localAgent) var localAgent
     @Dependency(\.localAgentConfiguration) var configuration
 
-    public init() { }
+    public init() {}
 
     @CasePathable
     @dynamicMemberLookup
@@ -104,7 +104,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     .cancel(id: CancelIDs.netshieldStatsObservation)
                 )
 
-            case .setFeatures(let featureSet):
+            case let .setFeatures(featureSet):
                 guard case .connected = state else {
                     log.error("Feature changes will not be applied since we are not in connected state", category: .connection, metadata: ["state": "\(state)"])
                     return .none
@@ -116,7 +116,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 localAgent.set(features: features)
                 return .none
 
-            case .connect(let server, let authenticationData, let features):
+            case let .connect(server, authenticationData, features):
                 let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
                 do throws(LAConnectionCreationError) {
                     // Not a blocking call. Creates the connection to the Local Agent server
@@ -132,7 +132,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                     return .send(.delegate(.connectionFailed(error)))
                 }
 
-            case .disconnect(let error):
+            case let .disconnect(error):
                 guard state.shouldTransitionToDisconnecting else { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
@@ -201,7 +201,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 log.assertionFailure("LocalAgent entered invalid/unknown state")
                 return .none
 
-            case .event(.connectionDetails(let connectionDetails)):
+            case let .event(.connectionDetails(connectionDetails)):
                 switch state {
                 case .connecting:
                     state = .connecting(connectionDetails)
@@ -212,14 +212,14 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 }
                 return .none
 
-            case .event(.error(let error)):
+            case let .event(.error(error)):
                 return .send(.delegate(.errorReceived(error)))
 
-            case .event(.features(let features)):
+            case let .event(.features(features)):
                 log.info("Features received: \(features)", category: .localAgent)
                 return .none
 
-            case .event(.stats(let stats)):
+            case let .event(.stats(stats)):
                 log.debug("Feature statistics received: \(stats)", category: .localAgent)
                 return .none
 
@@ -253,11 +253,11 @@ public struct LocalAgentFeature: Reducer, Sendable {
     /// We can attempt to extract connection details from the previous state in order to not lose them
     /// when flipping between connecting/connected states.
     private func previousConnectionDetails(_ state: State) -> ConnectionDetailsMessage? {
-        return (state.connecting ?? state.connected) ?? nil
+        (state.connecting ?? state.connected) ?? nil
     }
 
     private var longLivingEventObservationEffect: Effect<Action> {
-        return .listen(
+        .listen(
             to: localAgent.createEventStream(),
             reinjecting: { Action.event($0) }
         ).cancellable(id: CancelIDs.eventObservation)
@@ -286,16 +286,16 @@ public enum LocalAgentConnectionError: Error, Equatable {
     public static func == (lhs: LocalAgentConnectionError, rhs: LocalAgentConnectionError) -> Bool {
         switch (lhs, rhs) {
         case (.failedToEstablishConnection, .failedToEstablishConnection):
-            return true
+            true
 
         case (.agentError, .agentError):
-            return true
+            true
 
         case (.serverCertificateError, .serverCertificateError):
-            return true
+            true
 
         default:
-            return false
+            false
         }
     }
 }
@@ -309,23 +309,23 @@ extension LocalAgentConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case .failedToEstablishConnection(let connectionCreationError):
-            return connectionCreationError.charCode
+        case let .failedToEstablishConnection(connectionCreationError):
+            connectionCreationError.charCode
         case .agentError:
-            return "AGNT"
+            "AGNT"
         case .serverCertificateError:
-            return "SCRT"
+            "SCRT"
         }
     }
 
     public var underlyingError: Error? {
         switch self {
-        case .failedToEstablishConnection(let connectionError):
-            return connectionError
-        case .agentError(let agentError):
-            return agentError
+        case let .failedToEstablishConnection(connectionError):
+            connectionError
+        case let .agentError(agentError):
+            agentError
         default:
-            return nil
+            nil
         }
     }
 }
@@ -355,11 +355,10 @@ package enum LocalAgentErrorResolutionStrategy {
     }
 }
 
-extension LocalAgentError {
-
+package extension LocalAgentError {
     /// Defines the appropriate way to handle each error.
     /// See documentation for each error case for context.
-    package var resolutionStrategy: LocalAgentErrorResolutionStrategy {
+    var resolutionStrategy: LocalAgentErrorResolutionStrategy {
         switch self {
         case .systemError:
             // Most likely we just failed to apply a feature/setting
@@ -373,8 +372,8 @@ extension LocalAgentError {
             return .reconnect(.withNewCertificate)
 
         case .certificateNotProvided,
-                .userTorrentNotAllowed,
-                .guestSession:
+             .userTorrentNotAllowed,
+             .guestSession:
             log.warning("Unexpected error reported by local agent", category: .localAgent, metadata: ["error": "\(self)"])
             return .none
 
@@ -386,15 +385,15 @@ extension LocalAgentError {
             return .disconnect(.withNewKeys)
 
         case .maxSessionsUnknown,
-                .maxSessionsFree,
-                .maxSessionsBasic,
-                .maxSessionsPlus,
-                .maxSessionsVisionary,
-                .maxSessionsPro,
-                .serverError,
-                .policyViolationLowPlan,
-                .policyViolationDelinquent,
-                .userBadBehavior:
+             .maxSessionsFree,
+             .maxSessionsBasic,
+             .maxSessionsPlus,
+             .maxSessionsVisionary,
+             .maxSessionsPro,
+             .serverError,
+             .policyViolationLowPlan,
+             .policyViolationDelinquent,
+             .userBadBehavior:
             // The error shown on disconnection is customised through its implementation of AlertConvertibleError
             // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.
             return .disconnect(.immediately)
@@ -409,9 +408,9 @@ private extension LocalAgentFeature.State {
     var shouldTransitionToDisconnecting: Bool {
         switch self {
         case .connecting, .connected:
-            return true
+            true
         case .disconnecting, .disconnected:
-            return false
+            false
         }
     }
 }
@@ -423,7 +422,7 @@ public extension Effect {
         operation: @escaping @Sendable @MainActor (_ send: Send<Action>) async throws -> Void,
         catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
     ) -> Self {
-        self.run(
+        run(
             operation: { send in
                 @Dependency(\.continuousClock) var clock
                 for await _ in clock.timer(interval: interval, tolerance: tolerance) {

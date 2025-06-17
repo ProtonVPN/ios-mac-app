@@ -1,5 +1,5 @@
 //
-//  AccountPlanProviderImplementationTests.swift
+//  CredentialsProviderImplementationTests.swift
 //  vpncore - Created on 2021-01-06.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,17 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 @testable import LegacyCommon
+import XCTest
 
 class CredentialsProviderImplementationTests: XCTestCase {
-
     func testReturnsTierSavedInKeychain() throws {
         let testPairs: [(String, Int)] = [
             ("free", .freeTier),
-            ("plus", .paidTier)
+            ("plus", .paidTier),
         ]
-        
+
         for (plan, tier) in testPairs {
             let keychain = VpnKeychainMock(planName: plan, maxTier: tier)
 
@@ -42,7 +41,7 @@ class CredentialsProviderImplementationTests: XCTestCase {
             XCTAssertEqual(provider.planName, plan)
         }
     }
-    
+
     func testReturnsFreeTierIfNoneIsAvilable() throws {
         let keychain = VpnKeychainMock(planName: "plus", maxTier: .internalTier)
         keychain.throwsOnFetch = true

@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -9,15 +9,17 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
-        .tvOS(.v17)
+        .tvOS(.v17),
     ],
     products: [
         .library(
             name: "Modals",
-            targets: ["Modals"]),
+            targets: ["Modals"]
+        ),
         .library(
             name: "ModalsServices",
-            targets: ["ModalsServices"])
+            targets: ["ModalsServices"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
@@ -31,14 +33,14 @@ let package = Package(
         .package(path: "../Foundations/Ergonomics"),
         .package(path: "../Foundations/Domain"),
         .package(path: "../SharedViews"),
-        .package(path: "../../external/protoncore")
+        .package(path: "../../external/protoncore"),
     ],
     targets: [
         .target(
             name: "Modals",
             dependencies: [
                 .target(name: "Modals-iOS", condition: .when(platforms: [.iOS])),
-                .target(name: "Modals-macOS", condition: .when(platforms: [.macOS]))
+                .target(name: "Modals-macOS", condition: .when(platforms: [.macOS])),
             ]
         ),
         .target(
@@ -51,7 +53,7 @@ let package = Package(
                 .product(name: "CombineSchedulers", package: "combine-schedulers"),
             ],
             resources: [
-                .process("Resources/Media.xcassets")
+                .process("Resources/Media.xcassets"),
             ]
         ),
         .target(
@@ -69,14 +71,14 @@ let package = Package(
             name: "Modals-iOS",
             dependencies: ["ModalsShared", "ModalsServices", "SharedViews"],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]
         ),
         .target(
             name: "Modals-macOS",
             dependencies: ["ModalsShared", "ModalsServices", "SharedViews", "Ergonomics"],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]
         ),
         .testTarget(
@@ -87,7 +89,7 @@ let package = Package(
                 "Theme",
                 .product(name: "Overture", package: "swift-overture"),
             ]
-        )
+        ),
     ]
 )
 

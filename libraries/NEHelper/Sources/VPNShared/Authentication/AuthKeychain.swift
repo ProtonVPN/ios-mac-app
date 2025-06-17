@@ -19,14 +19,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
+import Domain
+import Ergonomics
 import Foundation
 import KeychainAccess
-import Dependencies
-import Ergonomics
-import Domain
 
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
 public protocol AuthKeychainHandle {
@@ -71,12 +71,12 @@ public struct AuthKeychainHandleDependencyKey: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue = liveValue
+        public static var testValue = liveValue
     #endif
 }
 
-extension DependencyValues {
-    public var authKeychain: AuthKeychainHandle {
+public extension DependencyValues {
+    var authKeychain: AuthKeychainHandle {
         get { self[AuthKeychainHandleDependencyKey.self] }
         set { self[AuthKeychainHandleDependencyKey.self] = newValue }
     }
@@ -85,19 +85,21 @@ extension DependencyValues {
 public final class AuthKeychain {
     public static let clearNotification = Notification.Name("AuthKeychain.clear")
 
-    private struct StorageKey {
+    private enum StorageKey {
         static let authCredentials = "authCredentials"
 
         static let contextKeys: [AppContext: String] = [
             .mainApp: authCredentials,
-            .wireGuardExtension: "\(authCredentials)_\(AppContext.wireGuardExtension)"
+            .wireGuardExtension: "\(authCredentials)_\(AppContext.wireGuardExtension)",
         ]
     }
 
     public static let `default`: AuthKeychainHandle = AuthKeychain()
 
-    static let dispatchQueue = DispatchQueue(label: "ch.protonvpn.VPNShared.AuthKeychain",
-                                             attributes: .concurrent)
+    static let dispatchQueue = DispatchQueue(
+        label: "ch.protonvpn.VPNShared.AuthKeychain",
+        attributes: .concurrent
+    )
     @ConcurrentlyReadable(queue: AuthKeychain.dispatchQueue)
     public var username: String? = nil
 
@@ -115,6 +117,7 @@ public final class AuthKeychain {
     public static func clear() {
         `default`.clear()
     }
+
     private let keychain = KeychainActor()
 
     @Dependency(\.appContext) private var context
@@ -127,7 +130,7 @@ extension AuthKeychain: AuthKeychainHandle {
             self._userId.unsafeUpdateNoSync { $0 = credentials?.userId }
         }
     }
-    
+
     private var defaultStorageKey: String {
         storageKey(forContext: context) ?? StorageKey.authCredentials
     }
@@ -142,7 +145,7 @@ extension AuthKeychain: AuthKeychainHandle {
             let credentials: AuthCredentials = try fetch(forContext: context)
             return credentials
         } catch {
-            if let keychainError = error as? KeychainError, case .credentialsMissing(let key) = keychainError {
+            if let keychainError = error as? KeychainError, case let .credentialsMissing(key) = keychainError {
                 log.debug("Credentials missing from auth keychain", metadata: ["storageKey": "\(key)"])
                 return nil
             }
@@ -177,9 +180,9 @@ extension AuthKeychain: AuthKeychainHandle {
                 guard let authCredentials = unarchivedObject as? AuthCredentials else {
                     throw KeychainError.migration(.invalidObjectType(type(of: unarchivedObject)))
                 }
-                    try? store(authCredentials, forContext: context) // store in JSON
-                    log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
-                    return authCredentials
+                try? store(authCredentials, forContext: context) // store in JSON
+                log.info("AuthKeychain storage for \(key) migration successful!", category: .keychain)
+                return authCredentials
 
             } catch let unarchivingError {
                 throw KeychainError.migration(.unarchivingFailure(unarchivingError))
@@ -189,14 +192,14 @@ extension AuthKeychain: AuthKeychainHandle {
 
     public func store(_ credentials: AuthCredentials, forContext context: AppContext?) throws {
         var key = defaultStorageKey
-        if let context = context, let contextKey = storageKey(forContext: context) {
+        if let context, let contextKey = storageKey(forContext: context) {
             key = contextKey
         }
 
         do {
             let data = try JSONEncoder().encode(credentials)
             try keychain.set(data, key: key)
-        } catch let error {
+        } catch {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
@@ -214,18 +217,18 @@ extension AuthKeychain: AuthKeychainHandle {
                         throw error3
                     }
                 #else
-                log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error2)"])
+                    log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error2)"])
                     throw error2
                 #endif
             }
         }
-#if canImport(WidgetKit)
-        WidgetCenter.shared.reloadAllTimelines()
-#endif
+        #if canImport(WidgetKit)
+            WidgetCenter.shared.reloadAllTimelines()
+        #endif
     }
 
     public func clear() {
-        keychain.clear(contextValues: Array<String>(StorageKey.contextKeys.values))
+        keychain.clear(contextValues: [String](StorageKey.contextKeys.values))
         saveToCache(nil)
     }
 }

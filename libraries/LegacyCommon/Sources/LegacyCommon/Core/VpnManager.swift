@@ -28,14 +28,13 @@ import ProtonCoreFeatureFlags
 
 import ExtensionIPC
 import NetShield
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Domain
 import Ergonomics
 
 public protocol VpnManagerProtocol {
-
     var stateChanged: (() -> Void)? { get set }
     var state: VpnState { get }
     var localAgentStateChanged: ((Bool?) -> Void)? { get set }
@@ -61,7 +60,7 @@ public protocol VpnManagerProtocol {
 
     /// Task used to track when the managers are ready. Retrieve the value of the task to be sure
     /// the `VpnManager` is ready and has finished querying the device's VPN connection state.
-    var prepareManagersTask: Task<(), Never>? { get }
+    var prepareManagersTask: Task<Void, Never>? { get }
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
@@ -78,12 +77,12 @@ public final class VpnManager: VpnManagerProtocol {
 
     private var quickReconnection = false
 
-    internal let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
+    let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
 
     private let ikeProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
 
-    internal let localAgentConnectionFactory: LocalAgentConnectionFactory
+    let localAgentConnectionFactory: LocalAgentConnectionFactory
 
     private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
 
@@ -93,7 +92,7 @@ public final class VpnManager: VpnManagerProtocol {
     @Dependency(\.timerFactory) var timerFactory
 
     var currentVpnProtocolFactory: VpnProtocolFactory? {
-        guard let currentVpnProtocol = currentVpnProtocol else {
+        guard let currentVpnProtocol else {
             return nil
         }
 
@@ -108,7 +107,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private var connectAllowed = true
-    internal var disconnectOnCertRefreshError = true
+    var disconnectOnCertRefreshError = true
     private var disconnectCompletion: (() -> Void)?
 
     // Holds a request for connection/disconnection etc for after the VPN frameworks are loaded
@@ -116,16 +115,16 @@ public final class VpnManager: VpnManagerProtocol {
     private var hasConnected: Bool {
         switch currentVpnProtocol {
         case .ike:
-            return propertiesManager.hasConnected
+            propertiesManager.hasConnected
         default:
-            return true
+            true
         }
     }
 
     public private(set) var state: VpnState = .invalid
     public var readyGroup: DispatchGroup? = DispatchGroup()
 
-    public var prepareManagersTask: Task<(), Never>?
+    public var prepareManagersTask: Task<Void, Never>?
 
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
@@ -135,13 +134,14 @@ public final class VpnManager: VpnManagerProtocol {
             }
         }
     }
+
     public var stateChanged: (() -> Void)?
 
     private let localAgentIsConnectedQueue = DispatchQueue(label: "ch.protonvpn.local-agent.is-connected")
     private var _isLocalAgentConnectedNoSync: Bool?
     public internal(set) var isLocalAgentConnected: Bool? {
         get {
-            return localAgentIsConnectedQueue.sync {
+            localAgentIsConnectedQueue.sync {
                 _isLocalAgentConnectedNoSync
             }
         }
@@ -158,6 +158,7 @@ public final class VpnManager: VpnManagerProtocol {
             localAgentStateChanged?(isLocalAgentConnected)
         }
     }
+
     public var localAgentStateChanged: ((Bool?) -> Void)?
 
     /// App group is used to read errors from OpenVPN in user defaults
@@ -186,19 +187,19 @@ public final class VpnManager: VpnManagerProtocol {
     var notificationCenter: NotificationCenter = .default
     private var tokens: [UUID: NotificationToken] = [:]
 
-    public typealias Factory = IkeProtocolFactoryCreator
-        & WireguardProtocolFactoryCreator
-        & VpnAuthenticationFactory
-        & VpnAuthenticationStorageFactory
-        & VpnKeychainFactory
-        & PropertiesManagerFactory
-        & VpnStateConfigurationFactory
-        & CoreAlertServiceFactory
-        & VpnCredentialsConfiguratorFactoryCreator
+    public typealias Factory = CoreAlertServiceFactory
+        & IkeProtocolFactoryCreator
         & LocalAgentConnectionFactoryCreator
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
+        & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
+        & VpnAuthenticationFactory
+        & VpnAuthenticationStorageFactory
+        & VpnCredentialsConfiguratorFactoryCreator
+        & VpnKeychainFactory
+        & VpnStateConfigurationFactory
+        & WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory, config: Container.Config) {
         self.init(
@@ -255,7 +256,7 @@ public final class VpnManager: VpnManagerProtocol {
         self.safeModePropertyProvider = safeModePropertyProvider
 
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-            prepareManagersTask = Task {
+            self.prepareManagersTask = Task {
                 await prepareManagers()
             }
         } else {
@@ -271,13 +272,13 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             handler(false)
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { vpnManager, _ in
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 handler(false)
                 return
             }
@@ -308,11 +309,11 @@ public final class VpnManager: VpnManagerProtocol {
         executeDisconnectionRequestWhenReady { [weak self] in
             self?.connectAllowed = false
             self?.connectionQueue.async { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                self.startDisconnect(completion: completion)
+                startDisconnect(completion: completion)
             }
         }
     }
@@ -341,13 +342,13 @@ public final class VpnManager: VpnManagerProtocol {
 
     @available(*, deprecated, renamed: "connectedDate()")
     private func connectedDate(completion: @escaping (Date?) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             completion(nil)
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 completion(nil)
                 return
             }
@@ -357,13 +358,13 @@ public final class VpnManager: VpnManagerProtocol {
                 return
             }
 
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 completion(nil)
                 return
             }
 
             // Returns a date if currently connected
-            if case VpnState.connected(_) = self.state {
+            if case VpnState.connected = state {
                 completion(vpnManager.vpnConnection.connectedDate)
             } else {
                 completion(nil)
@@ -384,7 +385,7 @@ public final class VpnManager: VpnManagerProtocol {
         do {
             let vpnManager = try await currentVpnProtocolFactory.vpnProviderManager(for: .status)
             // Returns a date if currently connected
-            if case VpnState.connected(_) = self.state {
+            if case VpnState.connected = state {
                 return vpnManager.vpnConnection.connectedDate
             }
         } catch {
@@ -412,7 +413,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(vpnAccelerator: Bool) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change vpn accelerator via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -421,7 +422,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(netShieldType: NetShieldType) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change netshield via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -432,7 +433,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(natType: NATType) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change NAT type via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -443,7 +444,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     public func set(safeMode: Bool) {
-        guard let localAgent = localAgent else {
+        guard let localAgent else {
             log.error("Trying to change Safe Mode via local agent when local agent instance does not exist", category: .settings)
             return
         }
@@ -455,8 +456,11 @@ public final class VpnManager: VpnManagerProtocol {
     // MARK: - Private functions
 
     // MARK: - Connecting
-    private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
-                                   completion: @escaping () -> Void) {
+
+    private func prepareConnection(
+        forConfiguration configuration: VpnManagerConfiguration,
+        completion: @escaping () -> Void
+    ) {
         if state.volatileConnection {
             setState()
             return
@@ -464,27 +468,27 @@ public final class VpnManager: VpnManagerProtocol {
 
         disconnectLocalAgent()
 
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             return
         }
 
         log.info("Creating connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
-                self.setState(withError: error)
+            if let error {
+                setState(withError: error)
                 return
             }
 
-            guard let vpnManager = vpnManager else { return }
+            guard let vpnManager else { return }
 
             do {
                 let protocolConfiguration = try currentVpnProtocolFactory
                     .create(configuration)
-                let credentialsConfigurator = self.vpnCredentialsConfiguratorFactory
+                let credentialsConfigurator = vpnCredentialsConfiguratorFactory
                     .getCredentialsConfigurator(for: configuration.vpnProtocol)
 
                 credentialsConfigurator.prepareCredentials(for: protocolConfiguration, configuration: configuration) { protocolConfigurationWithCreds in
@@ -499,9 +503,11 @@ public final class VpnManager: VpnManagerProtocol {
         }
     }
 
-    private func configureConnection(forProtocol configuration: NEVPNProtocol,
-                                     vpnManager: NEVPNManagerWrapper,
-                                     completion: @escaping () -> Void) {
+    private func configureConnection(
+        forProtocol configuration: NEVPNProtocol,
+        vpnManager: NEVPNManagerWrapper,
+        completion: @escaping () -> Void
+    ) {
         guard connectAllowed else {
             return
         }
@@ -509,12 +515,13 @@ public final class VpnManager: VpnManagerProtocol {
         log.info("Configuring connection", category: .connectionConnect)
 
         // MARK: - KillSwitch configuration
+
         if #available(iOS 14.2, *) {
             configuration.excludeLocalNetworks = featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on
         }
         configuration.includeAllNetworks = propertiesManager.killSwitch
 
-        if case .wireGuard(let type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
+        if case let .wireGuard(type) = currentVpnProtocol, configuration is NETunnelProviderProtocol {
             (configuration as? NETunnelProviderProtocol)?.wgProtocol = type.rawValue
         }
 
@@ -525,12 +532,12 @@ public final class VpnManager: VpnManagerProtocol {
 
         let saveToPreferences = {
             vpnManager.saveToPreferences { [weak self] saveError in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                if let saveError = saveError {
-                    self.setState(withError: saveError)
+                if let saveError {
+                    setState(withError: saveError)
                     return
                 }
 
@@ -539,34 +546,32 @@ public final class VpnManager: VpnManagerProtocol {
         }
 
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
-        if configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
-            self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
+        if configuration.includeAllNetworks, configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+            removeConfiguration(wireguardProtocolFactory, completionHandler: { _ in
                 saveToPreferences()
             })
         } else {
             saveToPreferences()
         }
-
     }
 
     private func startConnection(requestId: UUID, originalIntent: ConnectionRequestType?, completion: @escaping () -> Void) {
-        guard connectAllowed, let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard connectAllowed, let currentVpnProtocolFactory else {
             return
         }
 
         log.info("Loading connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
-                self.setState(withError: error)
+            if let error {
+                setState(withError: error)
                 return
             }
-
-            guard let vpnManager = vpnManager else { return }
-            guard self.connectAllowed else { return }
+            guard let vpnManager else { return }
+            guard connectAllowed else { return }
 
             tokens.removeAll()
 
@@ -591,7 +596,7 @@ public final class VpnManager: VpnManagerProtocol {
                             log.debug("Server change observer received status", category: .connection, metadata: [
                                 "requestId": "\(requestId)",
                                 "connection": "\(connection)",
-                                "status": "\(connection.status)"
+                                "status": "\(connection.status)",
                             ])
                             guard connection.status != .connecting else {
                                 return
@@ -616,12 +621,13 @@ public final class VpnManager: VpnManagerProtocol {
                 try vpnManager.vpnConnection.startVPNTunnel()
                 completion()
             } catch {
-                self.setState(withError: error)
+                setState(withError: error)
             }
         }
     }
 
     // MARK: - Disconnecting
+
     private func startDisconnect(completion: @escaping (() -> Void)) {
         log.info("Closing VPN tunnel", category: .connectionDisconnect)
 
@@ -634,7 +640,7 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private func stopTunnelOrRunCompletion(vpnManager: NEVPNManagerWrapper) {
-        switch self.state {
+        switch state {
         case .disconnected, .error, .invalid:
             disconnectCompletion?() // ensures the completion handler is run already disconnected
             disconnectCompletion = nil
@@ -644,23 +650,24 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     // MARK: - Connect on demand
+
     private func setOnDemand(_ enabled: Bool, completion: @escaping (NEVPNManagerWrapper) -> Void) {
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+        guard let currentVpnProtocolFactory else {
             return
         }
 
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            if let error = error {
-                self.setState(withError: error)
+            if let error {
+                setState(withError: error)
                 return
             }
 
-            guard let vpnManager = vpnManager else {
-                self.setState(withError: CommonVpnError.vpnManagerUnavailable)
+            guard let vpnManager else {
+                setState(withError: CommonVpnError.vpnManagerUnavailable)
                 return
             }
 
@@ -669,12 +676,12 @@ public final class VpnManager: VpnManagerProtocol {
             log.info("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)", category: .connectionConnect)
 
             vpnManager.saveToPreferences { [weak self] error in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                if let error = error {
-                    self.setState(withError: error)
+                if let error {
+                    setState(withError: error)
                     return
                 }
 
@@ -684,12 +691,12 @@ public final class VpnManager: VpnManagerProtocol {
     }
 
     private func setState(withError error: Error? = nil) {
-        if let error = error {
+        if let error {
             log.error("VPN error: \(error)", category: .connection)
             state = .error(error)
             disconnectCompletion?()
             disconnectCompletion = nil
-            self.stateChanged?()
+            stateChanged?()
             return
         }
 
@@ -698,22 +705,22 @@ public final class VpnManager: VpnManagerProtocol {
         }
 
         vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
-            guard let self = self, !self.quickReconnection else {
+            guard let self, !self.quickReconnection else {
                 return
             }
 
             switch result {
             case let .failure(error):
-                self.setState(withError: error)
+                setState(withError: error)
             case let .success((vpnManager, newState)):
-                guard newState != self.state else {
+                guard newState != state else {
                     return
                 }
 
                 switch newState {
                 case .disconnecting:
-                    self.quickReconnection = true
-                    self.connectionQueue.asyncAfter(deadline: .now() + DomainConstants.UpdateTime.quickReconnectTime) {
+                    quickReconnection = true
+                    connectionQueue.asyncAfter(deadline: .now() + DomainConstants.UpdateTime.quickReconnectTime) {
                         let newState = self.vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
                         switch newState {
                         case .connecting:
@@ -726,7 +733,7 @@ public final class VpnManager: VpnManagerProtocol {
                     }
 
                 default:
-                    self.updateState(vpnManager)
+                    updateState(vpnManager)
                 }
             }
         }
@@ -734,66 +741,65 @@ public final class VpnManager: VpnManagerProtocol {
 
     private func updateState(_ vpnManager: NEVPNManagerWrapper) {
         quickReconnection = false
-        let oldState = self.state
+        let oldState = state
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != oldState else { return }
-        self.state = newState
-        log.info("VPN update state to \(self.state.logDescription)", category: .connection, event: .change, metadata: [
+        state = newState
+        log.info("VPN update state to \(state.logDescription)", category: .connection, event: .change, metadata: [
             "oldState": "\(oldState.logDescription)",
             "state": "\(newState.logDescription)",
-            "currentProtocol": "\(optional: currentVpnProtocol)"
+            "currentProtocol": "\(optional: currentVpnProtocol)",
         ])
 
-#if os(macOS)
-        // Prevents creating a plutonium tunnel config if the FF is disabled.
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
-            Task {
-                do {
-                    try await updatePlutoniumStateIfNeeded()
-                } catch {
-                    log.error("Error while updating plutonium state: \(error.localizedDescription)")
+        #if os(macOS)
+            // Prevents creating a plutonium tunnel config if the FF is disabled.
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+                Task {
+                    do {
+                        try await updatePlutoniumStateIfNeeded()
+                    } catch {
+                        log.error("Error while updating plutonium state: \(error.localizedDescription)")
+                    }
                 }
             }
-        }
-#endif
+        #endif
 
-
-        switch self.state {
+        switch state {
         case .connecting:
-            if !self.connectAllowed {
+            if !connectAllowed {
                 log.info("VPN connection not allowed, will disconnect now.", category: .connection)
-                self.disconnect {}
+                disconnect {}
                 return // prevent UI from updating with the connecting state
             }
 
-            if let currentVpnProtocol = self.currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
-                self.propertiesManager.hasConnected = true
+            if let currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
+                propertiesManager.hasConnected = true
             }
-        case .error(let error):
+        case let .error(error):
             if case CommonVpnError.tlsServerVerification = error {
-                self.disconnect {}
+                disconnect {}
                 SentryHelper.shared?.log(error: error)
-                self.alertService?.push(alert: MITMAlert(messageType: .vpn))
+                alertService?.push(alert: MITMAlert(messageType: .vpn))
                 break
             }
             if case CommonVpnError.tlsInitialisation = error {
-                self.disconnect {} // Prevent infinite connection loop
+                disconnect {} // Prevent infinite connection loop
                 break
             }
             fallthrough
         case .disconnected, .invalid:
-            self.disconnectCompletion?()
-            self.disconnectCompletion = nil
+            disconnectCompletion?()
+            disconnectCompletion = nil
             setRemoteAuthenticationEndpoint(provider: nil)
             disconnectLocalAgent()
         case .connected:
             setRemoteAuthenticationEndpoint(provider: vpnManager.vpnConnection as? ProviderMessageSender)
-            self.connectLocalAgent()
+            connectLocalAgent()
         default:
             break
         }
 
-        self.stateChanged?()
+        stateChanged?()
     }
 
     /// Point our `VpnAuthentication` instance to the NE provider, so that we can communicate with the extension to
@@ -802,11 +808,11 @@ public final class VpnManager: VpnManagerProtocol {
     /// - note: This does nothing on MacOS, since we rely on the host app to manage certificates.
     private func setRemoteAuthenticationEndpoint(provider: ProviderMessageSender?) {
         #if os(iOS)
-        guard let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient else {
-            log.error("Failed to set connection provider", category: .connection, metadata: ["authenticationManagerType": "\(type(of: vpnAuthentication))"])
-            return
-        }
-        remoteVpnAuthentication.setConnectionProvider(provider: provider)
+            guard let remoteVpnAuthentication = vpnAuthentication as? VpnAuthenticationRemoteClient else {
+                log.error("Failed to set connection provider", category: .connection, metadata: ["authenticationManagerType": "\(type(of: vpnAuthentication))"])
+                return
+            }
+            remoteVpnAuthentication.setConnectionProvider(provider: provider)
         #endif
     }
 
@@ -820,12 +826,12 @@ public final class VpnManager: VpnManagerProtocol {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
         vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.currentVpnProtocol = vpnProtocol
-            self.setState()
+            currentVpnProtocol = vpnProtocol
+            setState()
 
             notificationCenter.removeObserver(
                 self,
@@ -834,13 +840,13 @@ public final class VpnManager: VpnManagerProtocol {
             )
             notificationCenter.addObserver(
                 self,
-                selector: #selector(self.vpnStatusChanged),
+                selector: #selector(vpnStatusChanged),
                 name: NSNotification.Name.NEVPNStatusDidChange,
                 object: nil
             )
 
             if forSetup {
-                self.readyGroup?.leave()
+                readyGroup?.leave()
             }
         }
     }
@@ -853,8 +859,8 @@ public final class VpnManager: VpnManagerProtocol {
         log.info("Preparing managers for setup. \(defaulting) to IKEv2 if no provider available.")
         let vpnProtocol = await vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: defaultToIke)
 
-        self.currentVpnProtocol = vpnProtocol
-        self.setState()
+        currentVpnProtocol = vpnProtocol
+        setState()
 
         notificationCenter.removeObserver(
             self,
@@ -863,31 +869,32 @@ public final class VpnManager: VpnManagerProtocol {
         )
         notificationCenter.addObserver(
             self,
-            selector: #selector(self.vpnStatusChanged),
+            selector: #selector(vpnStatusChanged),
             name: NSNotification.Name.NEVPNStatusDidChange,
             object: nil
         )
     }
 
     public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
-        self.readyGroup?.notify(queue: queue) {
+        readyGroup?.notify(queue: queue) {
             completion()
             self.readyGroup = nil
         }
     }
 
-    @objc private func vpnStatusChanged() {
+    @objc
+    private func vpnStatusChanged() {
         setState()
     }
 
     private func removeConfiguration(_ protocolFactory: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
         protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
-            if let error = error {
+            if let error {
                 log.error("Error loading VPN Manager for removal: \(error)", category: .ui, metadata: ["factory": "\(protocolFactory)"])
                 completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }
-            guard let vpnManager = vpnManager else {
+            guard let vpnManager else {
                 completionHandler?(CommonVpnError.removeVpnProfileFailed)
                 return
             }
@@ -907,23 +914,22 @@ public final class VpnManager: VpnManagerProtocol {
         }
     }
 
-#if os(macOS)
-    private func updatePlutoniumStateIfNeeded() async throws {
-        @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
-        @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-        guard FeatureFlagsRepository.shared
-            .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
-            try await plutoniumManager.stop()
-            return
-        }
+    #if os(macOS)
+        private func updatePlutoniumStateIfNeeded() async throws {
+            @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
+            @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+            guard FeatureFlagsRepository.shared
+                .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
+                try await plutoniumManager.stop()
+                return
+            }
 
-        switch self.state
-        {
-        case .connected:
-            try await plutoniumManager.start()
-        default:
-            try await plutoniumManager.stop()
+            switch state {
+            case .connected:
+                try await plutoniumManager.start()
+            default:
+                try await plutoniumManager.stop()
+            }
         }
-    }
-#endif
+    #endif
 }

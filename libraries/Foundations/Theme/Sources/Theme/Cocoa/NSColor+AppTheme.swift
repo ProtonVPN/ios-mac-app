@@ -17,242 +17,242 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import SwiftUI
 import var ProtonCoreUIFoundations.ColorProvider
+import SwiftUI
 
 #if canImport(Cocoa)
-import Cocoa
+    import Cocoa
 
-private let CP = ColorProvider
+    private let CP = ColorProvider
 
-private extension AppTheme.Style {
-    static var signalStyles: Self {
-        return [.danger, .warning, .success, .info]
-    }
+    private extension AppTheme.Style {
+        static var signalStyles: Self {
+            [.danger, .warning, .success, .info]
+        }
 
-    var interactiveColor: NSColor {
-        assert(contains(.interactive))
-        if contains(.weak) {
-            if contains(.hovered) {
-                return CP.InteractionWeakHover
-            } else if contains(.active) {
-                return CP.InteractionWeakActive
-            } else if contains(.disabled) {
-                return CP.TextDisabled
+        var interactiveColor: NSColor {
+            assert(contains(.interactive))
+            if contains(.weak) {
+                if contains(.hovered) {
+                    return CP.InteractionWeakHover
+                } else if contains(.active) {
+                    return CP.InteractionWeakActive
+                } else if contains(.disabled) {
+                    return CP.TextDisabled
+                } else {
+                    return CP.InteractionWeak
+                }
+            } else if contains(.hint) {
+                if contains(.hovered) {
+                    return CP.LinkHover
+                } else if contains(.active) {
+                    return CP.LinkActive
+                } else {
+                    return CP.LinkNorm
+                }
             } else {
-                return CP.InteractionWeak
+                if contains(.hovered) {
+                    return CP.InteractionNormHover
+                } else if contains(.active) {
+                    return CP.InteractionNormActive
+                } else if contains(.strong) {
+                    return CP.Primary
+                } else {
+                    return CP.InteractionNorm
+                }
             }
-        } else if contains(.hint) {
-            if contains(.hovered) {
-                return CP.LinkHover
-            } else if contains(.active) {
-                return CP.LinkActive
-            } else {
-                return CP.LinkNorm
+        }
+
+        var signalColor: NSColor {
+            assert(!isDisjoint(with: .signalStyles))
+            if contains(.danger) {
+                if contains(.hovered) {
+                    return CP.SignalDangerHover
+                } else if contains(.active) {
+                    return CP.SignalDangerActive
+                } else {
+                    return CP.SignalDanger
+                }
+            } else if contains(.warning) {
+                if contains(.hovered) {
+                    return CP.SignalWarningHover
+                } else if contains(.active) {
+                    return CP.SignalWarningActive
+                } else {
+                    return CP.SignalWarning
+                }
+            } else if contains(.success) {
+                if contains(.hovered) {
+                    return CP.SignalSuccessHover
+                } else if contains(.active) {
+                    return CP.SignalSuccessActive
+                } else {
+                    return CP.SignalSuccess
+                }
+            } else if contains(.info) {
+                if contains(.hovered) {
+                    return CP.SignalInfoHover
+                } else if contains(.active) {
+                    return CP.SignalInfoActive
+                } else {
+                    return CP.SignalInfo
+                }
             }
-        } else {
-            if contains(.hovered) {
-                return CP.InteractionNormHover
-            } else if contains(.active) {
-                return CP.InteractionNormActive
+            log.assertionFailure("Signal color not handled")
+            return CP.TextNorm
+        }
+
+        var backgroundColor: NSColor {
+            if contains(.transparent) {
+                if contains(.hovered) {
+                    CP.InteractionDefaultHover
+                } else if contains(.active) {
+                    CP.InteractionDefaultActive
+                } else {
+                    CP.InteractionDefault
+                }
+            } else if contains(.inverted) {
+                CP.TextNorm
+            } else if contains(.hovered) {
+                CP.InteractionWeakHover
+            } else if contains(.weak) {
+                CP.BackgroundWeak
             } else if contains(.strong) {
-                return CP.Primary
+                CP.BackgroundStrong
             } else {
-                return CP.InteractionNorm
+                CP.BackgroundNorm
             }
         }
-    }
 
-    var signalColor: NSColor {
-        assert(!isDisjoint(with: .signalStyles))
-        if contains(.danger) {
+        var fieldColor: NSColor {
             if contains(.hovered) {
-                return CP.SignalDangerHover
-            } else if contains(.active) {
-                return CP.SignalDangerActive
+                CP.FieldHover
+            } else if contains(.disabled) {
+                CP.FieldDisabled
             } else {
-                return CP.SignalDanger
+                CP.FieldNorm
             }
-        } else if contains(.warning) {
-            if contains(.hovered) {
-                return CP.SignalWarningHover
-            } else if contains(.active) {
-                return CP.SignalWarningActive
+        }
+
+        var borderColor: NSColor {
+            if contains(.inverted) {
+                CP.TextNorm
+            } else if contains(.weak) {
+                CP.BorderWeak
             } else {
-                return CP.SignalWarning
+                CP.BorderNorm
             }
-        } else if contains(.success) {
-            if contains(.hovered) {
-                return CP.SignalSuccessHover
-            } else if contains(.active) {
-                return CP.SignalSuccessActive
+        }
+
+        var textColor: NSColor {
+            if contains(.primary) {
+                CP.White
+            } else if contains(.weak) {
+                CP.TextWeak
+            } else if contains(.hint) {
+                CP.TextHint
+            } else if contains(.disabled) {
+                CP.TextDisabled
+            } else if contains(.inverted) {
+                CP.TextInvert
             } else {
-                return CP.SignalSuccess
+                // workaround for a macos bug, where the pure white color in a dropdown text would appear grayed-out
+                if contains(.dropdown),
+                   CP.TextNorm.redComponent == 1,
+                   CP.TextNorm.blueComponent == 1,
+                   CP.TextNorm.greenComponent == 1 {
+                    .init(red: 255, green: 255, blue: 254)
+                } else {
+                    CP.TextNorm
+                }
             }
-        } else if contains(.info) {
-            if contains(.hovered) {
-                return CP.SignalInfoHover
-            } else if contains(.active) {
-                return CP.SignalInfoActive
+        }
+
+        var iconColor: NSColor {
+            textColor
+        }
+    }
+
+    public extension AppTheme.Context {
+        private func NSColor(style: AppTheme.Style) -> NSColor {
+            if style.contains(.interactive) {
+                return style.interactiveColor
+            } else if !style.isDisjoint(with: .signalStyles) {
+                return style.signalColor
+            }
+
+            switch self {
+            case .background:
+                return style.backgroundColor
+            case .field:
+                return style.fieldColor
+            case .border:
+                return style.borderColor
+            case .text:
+                return style.textColor
+            case .icon:
+                return style.iconColor
+            }
+        }
+
+        func color(style: AppTheme.Style) -> NSColor {
+            var color: NSColor
+
+            if self == .text {
+                let isDisabled = style.contains([.transparent, .disabled])
+
+                color = NSColor(style: style)
+
+                if isDisabled {
+                    color = color.withAlphaComponent(0.5)
+                }
             } else {
-                return CP.SignalInfo
+                color = NSColor(style: style)
             }
-        }
-        log.assertionFailure("Signal color not handled")
-        return CP.TextNorm
-    }
 
-    var backgroundColor: NSColor {
-        if contains(.transparent) {
-            if contains(.hovered) {
-                return CP.InteractionDefaultHover
-            } else if contains(.active) {
-                return CP.InteractionDefaultActive
-            } else {
-                return CP.InteractionDefault
-            }
-        } else if contains(.inverted) {
-            return CP.TextNorm
-        } else if contains(.hovered) {
-            return CP.InteractionWeakHover
-        } else if contains(.weak) {
-            return CP.BackgroundWeak
-        } else if contains(.strong) {
-            return CP.BackgroundStrong
-        } else {
-            return CP.BackgroundNorm
+            return color
         }
     }
 
-    var fieldColor: NSColor {
-        if contains(.hovered) {
-            return CP.FieldHover
-        } else if contains(.disabled) {
-            return CP.FieldDisabled
-        } else {
-            return CP.FieldNorm
+    public extension Color {
+        init(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) {
+            self.init(context.color(style: style))
         }
     }
 
-    var borderColor: NSColor {
-        if contains(.inverted) {
-            return CP.TextNorm
-        } else if contains(.weak) {
-            return CP.BorderWeak
-        } else {
-            return CP.BorderNorm
+    public extension NSColor {
+        static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> NSColor {
+            context.color(style: style)
         }
     }
 
-    var textColor: NSColor {
-        if contains(.primary) {
-            return CP.White
-        } else if contains(.weak) {
-            return CP.TextWeak
-        } else if contains(.hint) {
-            return CP.TextHint
-        } else if contains(.disabled) {
-            return CP.TextDisabled
-        } else if contains(.inverted) {
-            return CP.TextInvert
-        } else {
-            // workaround for a macos bug, where the pure white color in a dropdown text would appear grayed-out
-            if contains(.dropdown),
-               CP.TextNorm.redComponent == 1,
-               CP.TextNorm.blueComponent == 1,
-               CP.TextNorm.greenComponent == 1 {
-                return .init(red: 255, green: 255, blue: 254)
-            } else {
-                return CP.TextNorm
-            }
+    public extension CGColor {
+        static func cgColor(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> CGColor {
+            NSColor.color(context, style).cgColor
         }
     }
 
-    var iconColor: NSColor {
-        return textColor
-    }
-}
-
-public extension AppTheme.Context {
-    private func NSColor(style: AppTheme.Style) -> NSColor {
-        if style.contains(.interactive) {
-            return style.interactiveColor
-        } else if !style.isDisjoint(with: .signalStyles) {
-            return style.signalColor
+    public extension CustomStyleContext {
+        func color(_ context: AppTheme.Context) -> NSColor {
+            .color(context, customStyle(context: context))
         }
 
-        switch self {
-        case .background:
-            return style.backgroundColor
-        case .field:
-            return style.fieldColor
-        case .border:
-            return style.borderColor
-        case .text:
-            return style.textColor
-        case .icon:
-            return style.iconColor
+        func cgColor(_ context: AppTheme.Context) -> CGColor {
+            .cgColor(context, customStyle(context: context))
         }
     }
 
-    func color(style: AppTheme.Style) -> NSColor {
-        var color: NSColor
-
-        if self == .text {
-            let isDisabled = style.contains([.transparent, .disabled])
-
-            color = NSColor(style: style)
-
-            if isDisabled {
-                color = color.withAlphaComponent(0.5)
-            }
-        } else {
-            color = NSColor(style: style)
+    public extension Image {
+        func styled(_ style: AppTheme.Style = .normal) -> some View {
+            renderingMode(.template)
+                .foregroundColor(.init(.icon, style))
         }
-
-        return color
-    }
-}
-
-public extension Color {
-    init(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) {
-        self.init(context.color(style: style))
-    }
-}
-
-public extension NSColor {
-    static func color(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> NSColor {
-        return context.color(style: style)
-    }
-}
-
-public extension CGColor {
-    static func cgColor(_ context: AppTheme.Context, _ style: AppTheme.Style = .normal) -> CGColor {
-        return NSColor.color(context, style).cgColor
-    }
-}
-
-public extension CustomStyleContext {
-    func color(_ context: AppTheme.Context) -> NSColor {
-        return .color(context, self.customStyle(context: context))
     }
 
-    func cgColor(_ context: AppTheme.Context) -> CGColor {
-        return .cgColor(context, self.customStyle(context: context))
+    public extension Text {
+        func styled(_ style: AppTheme.Style = .normal) -> Text {
+            foregroundColor(.init(.text, style))
+        }
     }
-}
-
-public extension Image {
-    func styled(_ style: AppTheme.Style = .normal) -> some View {
-        renderingMode(.template)
-            .foregroundColor(.init(.icon, style))
-    }
-}
-
-public extension Text {
-    func styled(_ style: AppTheme.Style = .normal) -> Text {
-        foregroundColor(.init(.text, style))
-    }
-}
 
 #endif

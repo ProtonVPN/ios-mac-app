@@ -18,15 +18,15 @@
 
 import XCTest
 
-fileprivate let plusFeature = "TitleLabel"
-fileprivate let getPlusButton = "GetPlusButton"
-fileprivate let useFreePlanButton = "UseFreeButton"
-fileprivate let closeButton = "CloseButton"
-fileprivate let plusPurchased = "PlanPurchaseButton"
-fileprivate let congratulationsTitle = "CongratulationsTitle"
-fileprivate let congratulationsDescription = "SubtitleLabel"
-fileprivate let connectButton = "ConnectToPlusServerButton"
-fileprivate let skipButton = "SkipButton"
+private let plusFeature = "TitleLabel"
+private let getPlusButton = "GetPlusButton"
+private let useFreePlanButton = "UseFreeButton"
+private let closeButton = "CloseButton"
+private let plusPurchased = "PlanPurchaseButton"
+private let congratulationsTitle = "CongratulationsTitle"
+private let congratulationsDescription = "SubtitleLabel"
+private let connectButton = "ConnectToPlusServerButton"
+private let skipButton = "SkipButton"
 
 class OnboardingPaymentRobot {
     let app: XCUIApplication
@@ -41,22 +41,22 @@ class OnboardingPaymentRobot {
         app.buttons[getPlusButton].tap()
         return OnboardingPaymentRobot(app: app)
     }
-    
+
     func useFreePlanA() -> OnboardingMainRobot {
         app.buttons[useFreePlanButton].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     func useFreePlanB() -> OnboardingConnectionRobot {
         app.buttons[useFreePlanButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     func plusPlanIsPurchased() -> OnboardingMainRobot {
         app.buttons[plusPurchased].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     func connectToAPlusServer() -> OnboardingMainRobot {
         app.buttons[connectButton].tap()
         return OnboardingMainRobot(app: app)
@@ -66,7 +66,7 @@ class OnboardingPaymentRobot {
         app.buttons[skipButton].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     class Verify {
         let app: XCUIApplication
 
@@ -82,7 +82,7 @@ class OnboardingPaymentRobot {
             XCTAssertTrue(app.buttons[closeButton].isEnabled)
             return OnboardingPaymentRobot(app: app)
         }
-        
+
         @discardableResult
         func congratulationsScreenIsShown() -> OnboardingPaymentRobot {
             XCTAssert(app.staticTexts[congratulationsTitle].waitForExistence(timeout: 5))

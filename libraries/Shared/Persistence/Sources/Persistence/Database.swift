@@ -26,7 +26,6 @@ import GRDB
 /// ":memory:" will create two independent in-memory databases.
 /// [In-Memory Databases](https://www.sqlite.org/inmemorydb.html)
 public enum DatabaseType: CustomStringConvertible {
-
     /// Global in-memory database shared across all `DatabaseWriter` instances initialised with this type
     case inMemory
 
@@ -52,29 +51,28 @@ public enum DatabaseType: CustomStringConvertible {
     public var description: String {
         switch self {
         case .inMemory:
-            return "inMemory"
+            "inMemory"
         case .ephemeral:
-            return "ephemeral"
-        case .physical(let filePath):
-            return "physical(\(filePath.redactingUsername)"
+            "ephemeral"
+        case let .physical(filePath):
+            "physical(\(filePath.redactingUsername)"
         }
     }
 }
 
 extension DatabaseWriter {
-
     private static func createQueue(databaseType: DatabaseType, configuration: Configuration) throws -> DatabaseQueue {
         switch databaseType {
         case .inMemory:
             return try DatabaseQueue(named: "global", configuration: configuration)
 
-        case .ephemeral(let path):
+        case let .ephemeral(path):
             if let path {
                 return try DatabaseQueue.inMemoryCopy(fromPath: path, configuration: configuration)
             }
             return try DatabaseQueue(configuration: configuration)
 
-        case .physical(let path):
+        case let .physical(path):
             let writer = try DatabaseQueue(path: path, configuration: configuration)
 
             // Check if database contains unknown migrations from the future

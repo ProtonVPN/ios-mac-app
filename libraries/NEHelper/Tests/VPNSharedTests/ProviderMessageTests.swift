@@ -28,10 +28,10 @@ class ProviderMessageTests: XCTestCase {
         let messages: [WireguardProviderRequest.Response] = [
             .ok(data: "This is a test message".data(using: .utf8)),
             .ok(data: ("This is a rather long message that will go on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
-                      "and on and on and on and on and on and on and on and on and on and on and on and on and on.")
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on " +
+                    "and on and on and on and on and on and on and on and on and on and on and on and on and on.")
                 .data(using: .utf8)),
             .ok(data: Data(repeating: 0, count: 4096)),
             .ok(data: nil),
@@ -39,32 +39,39 @@ class ProviderMessageTests: XCTestCase {
             .errorTooManyCertRequests(retryAfter: 15213),
             .errorTooManyCertRequests(retryAfter: nil),
             .errorSessionExpired,
-            .errorNeedKeyRegeneration
+            .errorNeedKeyRegeneration,
         ]
 
         for message in messages {
-            XCTAssertEqual(try? WireguardProviderRequest.Response.decode(data: message.asData), message,
-                           "Expected \(message) to be equal after decoding")
+            XCTAssertEqual(
+                try? WireguardProviderRequest.Response.decode(data: message.asData),
+                message,
+                "Expected \(message) to be equal after decoding"
+            )
         }
     }
 
     func testProviderRequests() {
-        let cookie = HTTPCookie(properties: [.name: "testing",
-                                             .value: "12345",
-                                             .version: 2,
-                                             .domain: "piv.pivpiv.dk",
-                                             .path: "/",
-                                             .maximumAge: "420"])!
+        let cookie = HTTPCookie(properties: [
+            .name: "testing",
+            .value: "12345",
+            .version: 2,
+            .domain: "piv.pivpiv.dk",
+            .path: "/",
+            .maximumAge: "420",
+        ])!
 
         let messages: [WireguardProviderRequest] = [
             .getRuntimeTunnelConfiguration,
             .cancelRefreshes,
             .restartRefreshes,
-            .refreshCertificate(features: .init(netshield: .level1,
-                                                vpnAccelerator: true,
-                                                bouncing: "bouncing",
-                                                natType: .moderateNAT,
-                                                safeMode: true)),
+            .refreshCertificate(features: .init(
+                netshield: .level1,
+                vpnAccelerator: true,
+                bouncing: "bouncing",
+                natType: .moderateNAT,
+                safeMode: true
+            )),
             .refreshCertificate(features: nil),
             .flushLogsToFile,
             .setApiSelector("SELECTOR", withSessionCookie: cookie),
@@ -72,8 +79,11 @@ class ProviderMessageTests: XCTestCase {
         ]
 
         for message in messages {
-            XCTAssertEqual(try? WireguardProviderRequest.decode(data: message.asData), message,
-                           "Expected \(message) to be equal after decoding")
+            XCTAssertEqual(
+                try? WireguardProviderRequest.decode(data: message.asData),
+                message,
+                "Expected \(message) to be equal after decoding"
+            )
         }
     }
 }

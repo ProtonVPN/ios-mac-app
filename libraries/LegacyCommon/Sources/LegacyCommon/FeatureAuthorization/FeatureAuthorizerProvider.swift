@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import IssueReporting
 
 /// `FeatureAuthorizerProvider` exposes an interface for generating feature authorizers for features defined using the
@@ -25,9 +25,8 @@ import IssueReporting
 ///
 /// Check `FeatureAuthorizerProviderTests` for example usage.
 public protocol FeatureAuthorizerProvider {
-
     /// Returns an authorizer for the given feature
-    func authorizer<T: AppFeature>(for feature: T.Type) -> () -> FeatureAuthorizationResult
+    func authorizer(for feature: (some AppFeature).Type) -> () -> FeatureAuthorizationResult
 
     /// Returns a sub-feature authorizer for the given feature.
     func authorizer<T: ModularAppFeature>(forSubFeatureOf feature: T.Type) -> (T) -> FeatureAuthorizationResult
@@ -38,22 +37,22 @@ public protocol FeatureAuthorizerProvider {
 
 public typealias FeatureAuthorizationResult = Result<None, FeatureAuthorizationFailureReason>
 
-extension FeatureAuthorizationResult {
-    public static var success: FeatureAuthorizationResult {
+public extension FeatureAuthorizationResult {
+    static var success: FeatureAuthorizationResult {
         .success(nil)
     }
 
-    public var isAllowed: Bool {
+    var isAllowed: Bool {
         guard case .success = self else { return false }
         return true
     }
 
-    public var requiresUpgrade: Bool {
+    var requiresUpgrade: Bool {
         guard case .failure(.requiresUpgrade) = self else { return false }
         return true
     }
 
-    public var featureDisabled: Bool {
+    var featureDisabled: Bool {
         guard case .failure(.featureDisabled) = self else { return false }
         return true
     }
@@ -95,24 +94,24 @@ public protocol PaidAppFeature: AppFeature {
     static var excludedAccountPlans: [String]? { get }
 }
 
-extension PaidAppFeature {
-    public static var featureFlag: KeyPath<FeatureFlags, Bool>? {
+public extension PaidAppFeature {
+    static var featureFlag: KeyPath<FeatureFlags, Bool>? {
         nil
     }
 
-    public static func minTier(featureFlags: FeatureFlags) -> Int {
+    static func minTier(featureFlags _: FeatureFlags) -> Int {
         .paidTier
     }
 
-    public static var includedAccountPlans: [String]? {
+    static var includedAccountPlans: [String]? {
         nil
     }
 
-    public static var excludedAccountPlans: [String]? {
+    static var excludedAccountPlans: [String]? {
         nil
     }
 
-    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if let featureFlag {
             guard featureFlags[keyPath: featureFlag] else {
                 return .failure(.featureDisabled)
@@ -148,16 +147,16 @@ public enum FeatureAuthorizerKey: DependencyKey {
     public static var liveValue: FeatureAuthorizerProvider { LiveFeatureAuthorizerProvider() }
 
     #if DEBUG
-    public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
+        public static var testValue: FeatureAuthorizerProvider { MockFeatureAuthorizerProvider() }
 
-    public static func constant(_ result: FeatureAuthorizationResult) -> FeatureAuthorizerProvider {
-        return ConstantFeatureAuthorizerProvider(result: result)
-    }
+        public static func constant(_ result: FeatureAuthorizationResult) -> FeatureAuthorizerProvider {
+            ConstantFeatureAuthorizerProvider(result: result)
+        }
     #endif
 }
 
-extension DependencyValues {
-    public var featureAuthorizerProvider: FeatureAuthorizerProvider {
+public extension DependencyValues {
+    var featureAuthorizerProvider: FeatureAuthorizerProvider {
         get { self[FeatureAuthorizerKey.self] }
         set { self[FeatureAuthorizerKey.self] = newValue }
     }

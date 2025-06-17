@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
 import Domain
 import Ergonomics
+import Foundation
 
 @DependencyClient
 public struct LogicalsClient: Sendable {
@@ -40,7 +40,7 @@ extension LogicalsClient: DependencyKey {
                     lastModified: nil
                 )
                 let response: LogicalsResponse = try await networking.perform(request: request)
-                return response.logicalServers.map { $0.vpnServer }
+                return response.logicalServers.map(\.vpnServer)
             },
             fetchLoads: { location in
                 let truncatedIP = location.flatMap { TruncatedIp(ip: $0.ip) }
@@ -52,10 +52,10 @@ extension LogicalsClient: DependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var logicalsClient: LogicalsClient {
-      get { self[LogicalsClient.self] }
-      set { self[LogicalsClient.self] = newValue }
+public extension DependencyValues {
+    var logicalsClient: LogicalsClient {
+        get { self[LogicalsClient.self] }
+        set { self[LogicalsClient.self] = newValue }
     }
 }
 

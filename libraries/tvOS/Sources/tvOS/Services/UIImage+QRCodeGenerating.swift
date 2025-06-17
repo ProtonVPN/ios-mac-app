@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import CoreImage.CIFilterBuiltins
 import Theme
+import UIKit
 
 extension UIImage {
     static func generateQRCode(from string: String) -> UIImage {
-        let color0 = CIColor(red: 25.0/255.0, green: 25.0/255.0, blue: 31.0/255.0) // prevent color scheme from changing this color
+        let color0 = CIColor(red: 25.0 / 255.0, green: 25.0 / 255.0, blue: 31.0 / 255.0) // prevent color scheme from changing this color
         guard let qrCode = qrCode(string),
               let colored = colored(qrCode, color0: color0),
               let cgImage = CIContext().createCGImage(colored, from: colored.extent) else {

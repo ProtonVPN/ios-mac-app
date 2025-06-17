@@ -17,17 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
 import UITestsHelpers
+import XCTest
 
-fileprivate let showMapButton = "Show map"
-fileprivate let hideMapButton = "Hide map"
-fileprivate let statusDisconnected = "ConnectionStatus"
-fileprivate let connectImage = "ConnectImage"
+private let showMapButton = "Show map"
+private let hideMapButton = "Hide map"
+private let statusDisconnected = "ConnectionStatus"
+private let connectImage = "ConnectImage"
 
 class MapRobot: CoreElements {
-    
     func clickShowMap() -> MapRobot {
         if button(hideMapButton).waitUntilExists(time: 1).hittable() {
             return self
@@ -35,16 +34,15 @@ class MapRobot: CoreElements {
         button(showMapButton).tap()
         return self
     }
-    
+
     func clickHideMap() -> MapRobot {
         button(hideMapButton).tapInCenter()
         return self
     }
-    
-    let verify = Verify()
-    
-    class Verify: CoreElements {
 
+    let verify = Verify()
+
+    class Verify: CoreElements {
         @discardableResult
         func checkMapIsOpen() -> MapRobot {
             button(hideMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()
@@ -52,7 +50,7 @@ class MapRobot: CoreElements {
             image(connectImage).checkExists()
             return MapRobot()
         }
-        
+
         @discardableResult
         func checkMapIsHidden() -> MapRobot {
             button(showMapButton).waitUntilExists(time: WaitTimeout.short).checkExists()

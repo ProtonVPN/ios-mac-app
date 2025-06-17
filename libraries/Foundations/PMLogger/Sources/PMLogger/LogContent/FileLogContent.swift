@@ -20,7 +20,6 @@ import Foundation
 
 /// Reads and returns content of log file
 public class FileLogContent: LogContent {
-
     private let file: URL
 
     public init(file: URL) {
@@ -33,5 +32,4 @@ public class FileLogContent: LogContent {
             callback(contents ?? "")
         }
     }
-
 }

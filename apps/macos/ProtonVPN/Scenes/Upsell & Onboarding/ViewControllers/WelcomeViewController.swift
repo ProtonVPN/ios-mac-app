@@ -27,32 +27,32 @@ import Dependencies
 import LegacyCommon
 import VPNAppCore
 
-import Theme
 import Ergonomics
 import Strings
+import Theme
 
 class WelcomeViewController: NSViewController {
-
     fileprivate enum Switch: Int {
         case usageData
         case crashReports
     }
 
-    @IBOutlet weak var mapView: NSImageView!
-    @IBOutlet weak var titleLabel: NSTextField!
-    @IBOutlet weak var descriptionLabel: NSTextField!
-    @IBOutlet weak var noThanksButton: UpsellPrimaryActionButton!
-    @IBOutlet weak var usageStatisticsLabel: NSTextField!
-    @IBOutlet weak var crashReportsLabel: NSTextField!
-    @IBOutlet weak var usageStatisticsButton: SwitchButton!
-    @IBOutlet weak var crashReportsButton: SwitchButton!
-    @IBOutlet weak var telemetryStackView: NSStackView!
-    @IBOutlet weak var learnMore: InteractiveActionButton!
+    @IBOutlet var mapView: NSImageView!
+    @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var descriptionLabel: NSTextField!
+    @IBOutlet var noThanksButton: UpsellPrimaryActionButton!
+    @IBOutlet var usageStatisticsLabel: NSTextField!
+    @IBOutlet var crashReportsLabel: NSTextField!
+    @IBOutlet var usageStatisticsButton: SwitchButton!
+    @IBOutlet var crashReportsButton: SwitchButton!
+    @IBOutlet var telemetryStackView: NSStackView!
+    @IBOutlet var learnMore: InteractiveActionButton!
 
     let windowService: WindowService
     let telemetrySettings: TelemetrySettings
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -116,7 +116,8 @@ class WelcomeViewController: NSViewController {
         }
     }
 
-    @objc func learnMoreClicked() {
+    @objc
+    func learnMoreClicked() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.learnMoreTelemetry)
     }
@@ -126,12 +127,14 @@ class WelcomeViewController: NSViewController {
         view.window?.applyInfoAppearance()
     }
 
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction
+    func cancel(_: Any) {
         dismiss(nil)
     }
 }
+
 extension WelcomeViewController: SwitchButtonDelegate {
-    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+    func shouldToggle(_: NSButton, to _: ButtonState, completion: @escaping (Bool) -> Void) {
         completion(true)
     }
 

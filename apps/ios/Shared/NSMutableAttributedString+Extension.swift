@@ -26,27 +26,27 @@ import UIKit
 // MARK: - Text
 
 extension NSMutableAttributedString {
-    
-    func addTextAttributes(withColor color: UIColor,
-                           font: UIFont,
-                           alignment: NSTextAlignment = .left,
-                           lineSpacing: CGFloat? = nil,
-                           lineBreakMode: NSLineBreakMode? = nil) {
-        
-        let range = (self.string as NSString).range(of: self.string)
-        
-        self.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
-        self.addAttribute(NSAttributedString.Key.font, value: font, range: range)
-        self.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
-        
+    func addTextAttributes(
+        withColor color: UIColor,
+        font: UIFont,
+        alignment: NSTextAlignment = .left,
+        lineSpacing: CGFloat? = nil,
+        lineBreakMode: NSLineBreakMode? = nil
+    ) {
+        let range = (string as NSString).range(of: string)
+
+        addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+        addAttribute(NSAttributedString.Key.font, value: font, range: range)
+        addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
+
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
-        if let lineBreakMode = lineBreakMode {
+        if let lineBreakMode {
             paragraphStyle.lineBreakMode = lineBreakMode
         }
-        if let lineSpacing = lineSpacing {
+        if let lineSpacing {
             paragraphStyle.lineSpacing = lineSpacing
         }
-        self.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
+        addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
     }
 }

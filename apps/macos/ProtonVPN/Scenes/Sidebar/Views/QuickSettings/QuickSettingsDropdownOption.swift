@@ -21,37 +21,37 @@
 //
 
 import Cocoa
-import LegacyCommon
 import CommonNetworking
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class QuickSettingsDropdownOption: NSView {
-        
-    @IBOutlet weak var titleLabel: NSTextField!
-    @IBOutlet weak var containerView: NSView!
-    @IBOutlet weak var optionIconIV: NSImageView!
-    @IBOutlet weak var plusBox: NSBox!
-    @IBOutlet weak var plusText: NSTextField!
+    @IBOutlet var titleLabel: NSTextField!
+    @IBOutlet var containerView: NSView!
+    @IBOutlet var optionIconIV: NSImageView!
+    @IBOutlet var plusBox: NSBox!
+    @IBOutlet var plusText: NSTextField!
     @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
-    
+
     var action: SuccessCallback?
 
     private var state: State = .blocked(business: false)
     private var isHovered: Bool = false
 
-    @IBAction func didTapActionBtn(_ sender: Any) {
+    @IBAction
+    func didTapActionBtn(_: Any) {
         action?()
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         applyTrackingArea()
-        
+
         wantsLayer = true
         layer?.masksToBounds = false
-        
+
         containerView.wantsLayer = true
         containerView.layer?.masksToBounds = false
         containerView.layer?.borderWidth = 1
@@ -64,33 +64,33 @@ class QuickSettingsDropdownOption: NSView {
 
         optionIconIV.cell?.setAccessibilityElement(false)
     }
-    
+
     // MARK: - Styles
-    
+
     private enum State {
         case selected
         case unselected
         case blocked(business: Bool)
     }
-    
+
     func selectedStyle() {
         state = .selected
         containerView.shadow = nil
         applyState()
     }
-    
+
     func disabledStyle() {
         state = .unselected
         applyState()
     }
-    
+
     func blockedStyle(business: Bool) {
         state = .blocked(business: business)
         plusBox.isHidden = business
         plusAndTitleConstraint.isActive = true
         applyState()
     }
-    
+
     // MARK: - Private
 
     private func setBackground() {
@@ -103,34 +103,38 @@ class QuickSettingsDropdownOption: NSView {
     private func applyState() {
         setBackground()
         if let image = optionIconIV.image {
-            optionIconIV.image = self.colorImage(image)
+            optionIconIV.image = colorImage(image)
         }
-        titleLabel.attributedStringValue = self.style(titleLabel.stringValue, alignment: .left)
+        titleLabel.attributedStringValue = style(titleLabel.stringValue, alignment: .left)
     }
-    
+
     private func applyTrackingArea() {
-        let trackingArea = NSTrackingArea(rect: bounds, options: [
-                                        NSTrackingArea.Options.mouseEnteredAndExited,
-                                        NSTrackingArea.Options.mouseMoved,
-                                        NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [
+                NSTrackingArea.Options.mouseEnteredAndExited,
+                NSTrackingArea.Options.mouseMoved,
+                NSTrackingArea.Options.activeInKeyWindow,
+            ],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
     }
-    
+
     // MARK: - Mouse
 
     override func resetCursorRects() {
         addCursorRect(bounds, cursor: .pointingHand)
     }
 
-    override func mouseEntered(with event: NSEvent) {
-        self.isHovered = true
+    override func mouseEntered(with _: NSEvent) {
+        isHovered = true
         setBackground()
     }
-    
-    override func mouseExited(with event: NSEvent) {
-        self.isHovered = false
+
+    override func mouseExited(with _: NSEvent) {
+        isHovered = false
         setBackground()
     }
 
@@ -164,14 +168,14 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
 
         switch context {
         case .background:
-            switch self.state {
+            switch state {
             case .blocked:
                 return .transparent
             default:
                 return .transparent + (isHovered ? .hovered : [])
             }
         case .border:
-            switch self.state {
+            switch state {
             case .blocked:
                 return .transparent
             case .unselected:
@@ -180,7 +184,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
                 return [.interactive, .hint] + hover
             }
         case .text, .icon:
-            switch self.state {
+            switch state {
             case .blocked:
                 return [.interactive, .weak]
             case .unselected:

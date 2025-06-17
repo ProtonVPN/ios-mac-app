@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
 import ComposableArchitecture
+import Domain
 import Foundation
-import VPNAppCore
-import VPNShared
 import OrderedCollections
 import SwiftUI
+import VPNAppCore
+import VPNShared
 
 @Reducer
 public struct RecentsFeature {
@@ -30,13 +30,10 @@ public struct RecentsFeature {
 
     @ObservableState
     public struct State: Equatable {
-        @SharedReader(.vpnConnectionStatus)
-        public var vpnConnectionStatus: VPNConnectionStatus
+        @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
-        @SharedReader(.defaultConnectionPreference)
-        private var defaultConnectionPreference
-        @Shared(.recents)
-        fileprivate var recents: OrderedSet<RecentConnection>
+        @SharedReader(.defaultConnectionPreference) private var defaultConnectionPreference
+        @Shared(.recents) fileprivate var recents: OrderedSet<RecentConnection>
 
         /// List of recent connections, minus the default connection if its not pinned
         public var recentConnectionList: OrderedSet<RecentConnection> {
@@ -48,8 +45,7 @@ public struct RecentsFeature {
             )
         }
 
-        @SharedReader(.userTier)
-        public var userTier: Int?
+        @SharedReader(.userTier) public var userTier: Int?
 
         public init() {
             @Dependency(\.recentsStorage) var recentsStorage
@@ -99,7 +95,7 @@ public struct RecentsFeature {
                 }
                 .cancellable(id: CancelId.watchConnectionStatus)
 
-            case .upsellTapped(let type):
+            case let .upsellTapped(type):
                 switch type {
                 case .worldwideCover:
                     pushAlert(AllCountriesUpsellAlert())
@@ -123,7 +119,7 @@ public struct RecentsFeature {
 
                 return .none
 
-            case .newConnectionStatus(let connectionStatus):
+            case let .newConnectionStatus(connectionStatus):
                 guard case .connected = connectionStatus else { return .none }
                 guard let spec = connectionStatus.spec else {
                     log.info("Unable to generate spec for connection status: \(connectionStatus)")
@@ -131,7 +127,7 @@ public struct RecentsFeature {
                 }
                 return .send(.connectionEstablished(spec))
 
-            case .connectionEstablished(let spec):
+            case let .connectionEstablished(spec):
                 withAnimation {
                     state.$recents.withLock { $0.updateList(with: spec) }
                 }

@@ -16,20 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import BugReport
+import UIKit
 
 class ViewController: UIViewController {
-    
     @IBOutlet private var updateSwitch: UISwitch!
     @IBOutlet private var statusLabel: UILabel!
-    
+
     private var bugReportDelegate: MockBugReportDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+
         bugReportDelegate = MockBugReportDelegate(
             model: model,
             sendCallback: { form, result in
@@ -37,7 +36,7 @@ class ViewController: UIViewController {
                     self.statusLabel.text = "Sent"
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         if form.email == "success@email.com" {
-                            result(.success(Void()))
+                            result(.success(()))
                         } else {
                             result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just an error"])))
                         }
@@ -49,7 +48,7 @@ class ViewController: UIViewController {
                     self.statusLabel.text = "Finished"
                     self.dismiss(animated: true, completion: nil)
                 }
-                
+
             }, troubleshootingCallback: {
                 DispatchQueue.main.async {
                     print("troubleshootingCallback")
@@ -63,44 +62,45 @@ class ViewController: UIViewController {
                     self.updateSwitchChanged()
                     self.statusLabel.text = "Update"
                 }
-            })
+            }
+        )
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-    
-    @IBAction private func updateSwitchChanged() {
+
+    @IBAction
+    private func updateSwitchChanged() {
         bugReportDelegate?.updateAvailable = updateSwitch.isOn
     }
 
-    @IBAction private func openBugReport() {
+    @IBAction
+    private func openBugReport() {
         let bugReportCreator = iOSBugReportCreator()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: Colors.testColors) {
-            self.present(viewController, animated: true, completion: nil)
+            present(viewController, animated: true, completion: nil)
         }
     }
-    
+
     private var model: BugReportModel {
         let bundle = Bundle.main
         guard let testFile1 = bundle.url(forResource: "sample", withExtension: "json") else {
             return BugReportModel()
         }
-        
+
         let data = try! Data(contentsOf: testFile1)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         return try! decoder.decode(BugReportModel.self, from: data)
     }
-
 }
 
 class MockBugReportDelegate: BugReportDelegate {
-    
     var model: BugReportModel
     var prefilledEmail: String = ""
     var prefilledUsername: String = ""
-    
+
     public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?, updateAppCallback: (() -> Void)?) {
         self.model = model
         self.sendCallback = sendCallback
@@ -108,25 +108,25 @@ class MockBugReportDelegate: BugReportDelegate {
         self.troubleshootingCallback = troubleshootingCallback
         self.updateAppCallback = updateAppCallback
     }
-    
+
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
-    
+
     func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
         sendCallback?(form, result)
     }
-    
+
     var finishedCallback: (() -> Void)?
-    
+
     func finished() {
         finishedCallback?()
     }
-    
+
     var troubleshootingCallback: (() -> Void)?
-    
+
     func troubleshootingRequired() {
         troubleshootingCallback?()
     }
-    
+
     var updateAvailable: Bool = true {
         didSet {
             updateAvailabilityChanged?(updateAvailable)
@@ -134,14 +134,14 @@ class MockBugReportDelegate: BugReportDelegate {
     }
 
     var updateAppCallback: (() -> Void)?
-    
+
     func updateApp() {
         updateAppCallback?()
     }
-    
+
     func checkUpdateAvailability() {
         updateAvailabilityChanged?(updateAvailable)
     }
-    
+
     var updateAvailabilityChanged: ((Bool) -> Void)?
 }

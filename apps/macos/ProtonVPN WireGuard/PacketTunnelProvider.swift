@@ -21,23 +21,20 @@
 //
 
 import Foundation
+import NEHelper
 import NetworkExtension
 import os
-import WireGuardKit
 import PMLogger
-import NEHelper
+import WireGuardKit
 
 final class PacketTunnelProvider: NEPacketTunnelProvider {
-
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
-    private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(.info, message: message)
-        }
-    }()
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { _, message in
+        wg_log(.info, message: message)
+    }
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) { // swiftlint:disable:this cyclomatic_complexity function_body_length
         let activationAttemptId = options?["activationAttemptId"] as? String
@@ -46,14 +43,14 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         setupLogging()
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
 
-        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
-        
-        var socket: String = "udp"
+
+        var socket = "udp"
         if let socketTypeInput = tunnelProviderProtocol.providerConfiguration?["wg-protocol"] as? String {
             switch socketTypeInput {
             case "tcp": socket = "tcp"
@@ -61,7 +58,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             default: socket = "udp"
             }
         }
-        
+
         guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -71,12 +68,12 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
 
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socket) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
-                                
+
                 return
             }
 
@@ -86,19 +83,19 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
                 errorNotifier.notify(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
                 completionHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
-            case .dnsResolution(let dnsErrors):
-                let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
+            case let .dnsResolution(dnsErrors):
+                let hostnamesWithDnsResolutionFailure = dnsErrors.map(\.address)
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorNotifier.notify(PacketTunnelProviderError.dnsResolutionFailure)
                 completionHandler(PacketTunnelProviderError.dnsResolutionFailure)
 
-            case .setNetworkSettings(let error):
+            case let .setNetworkSettings(error):
                 wg_log(.error, message: "Starting tunnel failed with setTunnelNetworkSettings returning \(error.localizedDescription)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotSetNetworkSettings)
                 completionHandler(PacketTunnelProviderError.couldNotSetNetworkSettings)
 
-            case .startWireGuardBackend(let errorCode):
+            case let .startWireGuardBackend(errorCode):
                 wg_log(.error, message: "Starting tunnel failed with wgTurnOn returning \(errorCode)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotStartBackend)
                 completionHandler(PacketTunnelProviderError.couldNotStartBackend)
@@ -117,27 +114,27 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()
 
-            if let error = error {
+            if let error {
                 wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
             }
             completionHandler()
 
             #if os(macOS)
-            // HACK: This is a filthy hack to work around Apple bug 32073323 (dup'd by us as 47526107).
-            // Remove it when they finally fix this upstream and the fix has been rolled out to
-            // sufficient quantities of users.
-            exit(0)
+                // HACK: This is a filthy hack to work around Apple bug 32073323 (dup'd by us as 47526107).
+                // Remove it when they finally fix this upstream and the fix has been rolled out to
+                // sufficient quantities of users.
+                exit(0)
             #endif
         }
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
-        
-        if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
+
+        if let completionHandler, messageData.count == 1, messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
-                if let settings = settings {
+                if let settings {
                     data = settings.data(using: .utf8)!
                 }
                 completionHandler(data)
@@ -146,20 +143,19 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
             completionHandler?(nil)
         }
     }
-    
+
     private func setupLogging() {
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
     }
-    
 }
 
 extension WireGuardLogLevel {
     var osLogLevel: OSLogType {
         switch self {
         case .verbose:
-            return .debug
+            .debug
         case .error:
-            return .error
+            .error
         }
     }
 }

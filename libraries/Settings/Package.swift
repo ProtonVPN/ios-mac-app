@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,7 +7,7 @@ let package = Package(
     name: "Settings",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(name: "Settings", targets: ["Settings"]),
@@ -20,7 +20,7 @@ let package = Package(
         .package(path: "../Shared/CommonNetworking"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1"))
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
         .target(
@@ -47,12 +47,12 @@ let package = Package(
         ),
         .target(
             name: "Settings-iOS",
-            dependencies: ["SettingsShared", .product(name: "SwiftNavigation", package: "swift-navigation"),]
+            dependencies: ["SettingsShared", .product(name: "SwiftNavigation", package: "swift-navigation")]
         ),
         .target(
             name: "Settings-macOS",
             dependencies: ["SettingsShared"]
         ),
-        .testTarget(name: "SettingsTests", dependencies: ["Settings"])
+        .testTarget(name: "SettingsTests", dependencies: ["Settings"]),
     ]
 )

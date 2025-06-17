@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -57,7 +57,7 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "DependenciesMacros", package: "swift-dependencies"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
-                .product(name: "Sharing", package: "swift-sharing")
+                .product(name: "Sharing", package: "swift-sharing"),
             ]
         ),
         .target(
@@ -68,7 +68,7 @@ let package = Package(
                 "VPNShared",
                 .product(name: "Timer", package: "Timer"),
                 .product(name: "Logging", package: "swift-log"),
-                .core(module: "Utilities")
+                .core(module: "Utilities"),
             ]
         ),
         .target(
@@ -92,7 +92,7 @@ let package = Package(
             name: "VPNCrypto",
             dependencies: [
                 "Ergonomics",
-                .product(name: "Dependencies", package: "swift-dependencies")
+                .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
         .target(
@@ -101,12 +101,12 @@ let package = Package(
                 "VPNShared",
                 "VPNAppCore",
                 .core(module: "FeatureFlags"),
-                .product(name: "TimerMock", package: "Timer")
+                .product(name: "TimerMock", package: "Timer"),
             ]
         ),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
-        .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"])
+        .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),
     ]
 )
 

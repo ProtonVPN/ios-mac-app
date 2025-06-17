@@ -21,78 +21,77 @@
 
 import Foundation
 
-import Domain
-import VPNAppCore
-import Persistence
 import Dependencies
+import Domain
+import Persistence
+import VPNAppCore
 
 // This is needed to maintain compatibility with how profiles are stored on disk
 // whilst improving them with dynamic server models
 public struct ServerWrapper: Codable {
-    
     private var _server: ServerModel
     public var server: ServerModel {
         @Dependency(\.serverRepository) var serverRepository: ServerRepository
         if let vpnServer = serverRepository.getFirstServer(
             filteredBy: [.logicalID(_server.id)],
             orderedBy: .fastest
-        ){
+        ) {
             return ServerModel(server: vpnServer)
         } else {
             return _server
         }
     }
-    
+
     public init(server: ServerModel) {
-        _server = server
+        self._server = server
     }
-    
+
     static func == (lhs: ServerWrapper, rhs: ServerWrapper) -> Bool {
-        return lhs.server == rhs.server
+        lhs.server == rhs.server
     }
 }
 
 public enum ServerOffering: Equatable, Codable {
-    
     /** Country code or undefined */
     case fastest(String?)
-    
+
     /** Country code or undefined */
     case random(String?)
-    
+
     /** Specific server */
     case custom(ServerWrapper)
-    
+
     public var description: String {
         switch self {
-        case .fastest(let cCode):
-            return "Fastest server - \(String(describing: cCode))"
-        case .random(let cCode):
-            return "Random server - \(String(describing: cCode))"
-        case .custom(let sModel):
-            return "Custom server - \(String(describing: sModel))"
+        case let .fastest(cCode):
+            "Fastest server - \(String(describing: cCode))"
+        case let .random(cCode):
+            "Random server - \(String(describing: cCode))"
+        case let .custom(sModel):
+            "Custom server - \(String(describing: sModel))"
         }
     }
-    
+
     public var countryCode: String? {
         switch self {
-        case .fastest(let cCode):
-            return cCode
-        case .random(let cCode):
-            return cCode
-        case .custom(let sModel):
-            return sModel.server.countryCode
+        case let .fastest(cCode):
+            cCode
+        case let .random(cCode):
+            cCode
+        case let .custom(sModel):
+            sModel.server.countryCode
         }
     }
-    
+
     // MARK: - NSCoding
-    private struct CoderKey {
+
+    private enum CoderKey {
         static let serverOffering = "serverOffering"
         static let fastest = "fastest"
         static let random = "random"
         static let custom = "custom"
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.serverOffering) as! Data
         switch data[0] {
@@ -104,33 +103,35 @@ public enum ServerOffering: Equatable, Codable {
             self = .custom(ServerWrapper(server: aDecoder.decodeObject(forKey: CoderKey.custom) as! ServerModel))
         }
     }
-    
-    public func encode(with aCoder: NSCoder) {
+
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     // MARK: - Static functions
+
     public static func == (lhs: ServerOffering, rhs: ServerOffering) -> Bool {
-        var equal: Bool = false
-        if case ServerOffering.fastest(let lcc) = lhs, case ServerOffering.fastest(let rcc) = rhs {
+        var equal = false
+        if case let ServerOffering.fastest(lcc) = lhs, case let ServerOffering.fastest(rcc) = rhs {
             equal = lcc == rcc
-        } else if case ServerOffering.random(let lcc) = lhs, case ServerOffering.random(let rcc) = rhs {
+        } else if case let ServerOffering.random(lcc) = lhs, case let ServerOffering.random(rcc) = rhs {
             equal = lcc == rcc
-        } else if case ServerOffering.custom(let lsw) = lhs, case ServerOffering.custom(let rsw) = rhs {
+        } else if case let ServerOffering.custom(lsw) = lhs, case let ServerOffering.custom(rsw) = rhs {
             equal = lsw.server.id == rsw.server.id
         }
         return equal
     }
 }
 
-extension ServerOffering {
-
+public extension ServerOffering {
     /// Check if offering can find any actually available server/protocol
-    public func supports(connectionProtocol: ConnectionProtocol,
-                         withCountryGroup grouping: ServerGroupInfo?,
-                         smartProtocolConfig: SmartProtocolConfig) -> Bool {
+    func supports(
+        connectionProtocol: ConnectionProtocol,
+        withCountryGroup grouping: ServerGroupInfo?,
+        smartProtocolConfig: SmartProtocolConfig
+    ) -> Bool {
         switch self {
-        case .fastest(let countryCode), .random(let countryCode):
+        case let .fastest(countryCode), let .random(countryCode):
             guard let grouping else {
                 return true
             }
@@ -142,20 +143,22 @@ extension ServerOffering {
 
             return !grouping.protocolSupport.isDisjoint(with: ProtocolSupport(vpnProtocols: supportedProtocols))
 
-        case .custom(let wrapper):
-            return wrapper.server.supports(connectionProtocol: connectionProtocol,
-                                           smartProtocolConfig: smartProtocolConfig)
+        case let .custom(wrapper):
+            return wrapper.server.supports(
+                connectionProtocol: connectionProtocol,
+                smartProtocolConfig: smartProtocolConfig
+            )
         }
     }
 }
 
-extension ServerGroupInfo {
-    public var serverOfferingID: String {
+public extension ServerGroupInfo {
+    var serverOfferingID: String {
         switch kind {
-        case .country(let countryCode):
-            return countryCode
-        case .gateway(let name):
-            return "gateway-\(name)"
+        case let .country(countryCode):
+            countryCode
+        case let .gateway(name):
+            "gateway-\(name)"
         }
     }
 }

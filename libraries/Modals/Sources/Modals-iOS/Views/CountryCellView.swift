@@ -17,15 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import ModalsShared
+import UIKit
 
 class CountryCellView: UICollectionViewCell {
+    static var identifier: String { String(describing: self) }
 
-    static var identifier: String { return String(describing: self) }
-
-    @IBOutlet private weak var flagImageView: UIImageView!
-    @IBOutlet private weak var countryNameField: UILabel!
+    @IBOutlet private var flagImageView: UIImageView!
+    @IBOutlet private var countryNameField: UILabel!
 
     public func setCountry(_ country: String, image: Image?) {
         countryNameField.text = country
@@ -40,5 +39,4 @@ class CountryCellView: UICollectionViewCell {
         flagImageView.layer.cornerRadius = .themeRadius4
         flagImageView.layer.masksToBounds = true
     }
-
 }

@@ -30,31 +30,30 @@ enum SettingsTab: Int, CaseIterable {
 }
 
 class SettingsTabBarViewModel {
-    
     let tabChanged = Notification.Name("SettingsTabBarViewModelTabChanged") // two observers
-    
+
     var activeTab: SettingsTab {
         didSet {
             NotificationCenter.default.post(name: tabChanged, object: activeTab)
         }
     }
-    
+
     init(initialTab: SettingsTab) {
-        activeTab = initialTab
+        self.activeTab = initialTab
     }
-    
+
     func generalAction() {
         if activeTab != .general {
             activeTab = .general
         }
     }
-    
+
     func connectionAction() {
         if activeTab != .connection {
             activeTab = .connection
         }
     }
-    
+
     func accountAction() {
         if activeTab != .account {
             activeTab = .account

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import AppKit
+import SwiftUI
 
 protocol ExplicitlySizedView: View {
     static var viewSize: CGSize { get }
@@ -32,11 +32,12 @@ class ExplicitlySizedHostingController: NSViewController {
         self.hostingViewController = NSHostingController(rootView: rootView)
         self.viewSize = Content.viewSize
         super.init(nibName: nil, bundle: nil)
-        addChild(self.hostingViewController)
+        addChild(hostingViewController)
         view = hostingViewController.view
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }

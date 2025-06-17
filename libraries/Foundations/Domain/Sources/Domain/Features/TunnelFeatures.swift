@@ -19,19 +19,18 @@
 import Foundation
 
 public struct TunnelFeatures: Equatable, Sendable, Codable {
+    #if !os(tvOS)
+        public let killSwitch: Bool
+        public let excludeLocalNetworks: Bool
 
-#if !os(tvOS)
-    public let killSwitch: Bool
-    public let excludeLocalNetworks: Bool
-
-    public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
-        self.killSwitch = killSwitch
-        self.excludeLocalNetworks = excludeLocalNetworks
-    }
-#else
-    // For tvOS, these properties do not exist
-    public init() {
-        // No properties to initialize on tvOS
-    }
-#endif
+        public init(killSwitch: Bool, excludeLocalNetworks: Bool) {
+            self.killSwitch = killSwitch
+            self.excludeLocalNetworks = excludeLocalNetworks
+        }
+    #else
+        // For tvOS, these properties do not exist
+        public init() {
+            // No properties to initialize on tvOS
+        }
+    #endif
 }

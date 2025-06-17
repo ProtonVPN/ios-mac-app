@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import SVGView
 import ComposableArchitecture
-import Ergonomics
-import Domain
 import CoreLocation
+import Domain
+import Ergonomics
+import SVGView
+import SwiftUI
 
 public struct HomeMapView: View {
     let store: StoreOf<HomeMapFeature>
@@ -61,8 +61,10 @@ public struct HomeMapView: View {
         }
 
         let scale = mapScale()
-        return .init(width: (mapBounds.midX - node.bounds().midX) * scale,
-                     height: 40 + (mapBounds.midY - node.bounds().midY) * scale) // move the map 40 points down to avoid connection status and netshield stats
+        return .init(
+            width: (mapBounds.midX - node.bounds().midX) * scale,
+            height: 40 + (mapBounds.midY - node.bounds().midY) * scale
+        ) // move the map 40 points down to avoid connection status and netshield stats
     }
 
     private func mapScale() -> CGFloat {
@@ -70,7 +72,7 @@ public struct HomeMapView: View {
               let node = SVGView.mapSVG.mainlandNode(code: code) else {
             return wholeMapScale()
         }
-        let scaleX = (availableWidth - 40) / node.bounds().width  // 40 is the horizontal padding
+        let scaleX = (availableWidth - 40) / node.bounds().width // 40 is the horizontal padding
         let scaleY = (availableHeight - 150) / node.bounds().height // 150 is the vertical padding. We need it for connection status and netshield stats
 
         return min(min(scaleX, scaleY), 4) // max scale, useful for small countries

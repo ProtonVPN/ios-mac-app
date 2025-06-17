@@ -21,19 +21,18 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 class MapHeaderBackground: NSView {
-    
     private let upperBorderRadius: CGFloat = 140
     private let lowerBorderRadius: CGFloat = 75
     private let headerHeight: CGFloat = 55
-    
+
     private let outterCircleRadius: CGFloat = 20
     private let innerCircleRadius: CGFloat = 15
-    
+
     let width: CGFloat
 
     var isConnected: Bool? {
@@ -41,93 +40,93 @@ class MapHeaderBackground: NSView {
             needsDisplay = true
         }
     }
-    
+
     var path = CGMutablePath()
     var outter = CGMutablePath()
     var clicked: (() -> Void)?
 
     required init?(coder decoder: NSCoder) {
-        width = upperBorderRadius * 2
+        self.width = upperBorderRadius * 2
         super.init(coder: decoder)
     }
-    
+
     override func hitTest(_ point: NSPoint) -> NSView? {
         if path.contains(point) || outter.contains(point) {
-            return super.hitTest(point)
+            super.hitTest(point)
         } else {
-            return nil
+            nil
         }
     }
-    
+
     override func mouseUp(with event: NSEvent) {
         let pointInView = convert(event.locationInWindow, from: nil)
         if path.contains(pointInView) || outter.contains(pointInView) {
             clicked?()
         }
     }
-    
-    override func mouseDragged(with event: NSEvent) {
+
+    override func mouseDragged(with _: NSEvent) {
         // prevents dragging in obscured views (map view)
     }
-    
-    override func draw(_ dirtyRect: NSRect) {
+
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else {
             log.error("Unable to obtain context for drawing.", category: .ui)
             return
         }
-        
+
         let delta = upperBorderRadius - lowerBorderRadius
         path = CGMutablePath()
         let start = CGPoint(x: bounds.width / 2 - upperBorderRadius, y: bounds.maxY)
-        
+
         // Left part of the view
         path.move(to: start)
-        
+
         var controlPoint = CGPoint(x: bounds.width / 2 - lowerBorderRadius - delta * 0.75, y: bounds.maxY)
         var endPoint = CGPoint(x: bounds.width / 2 - lowerBorderRadius - delta * 0.5, y: bounds.maxY - headerHeight / 2)
-        
+
         path.addQuadCurve(to: endPoint, control: controlPoint)
-        
+
         controlPoint = CGPoint(x: bounds.width / 2 - lowerBorderRadius - delta * 0.25, y: bounds.maxY - headerHeight)
         endPoint = CGPoint(x: bounds.width / 2 - lowerBorderRadius, y: bounds.maxY - headerHeight)
-        
+
         path.addQuadCurve(to: endPoint, control: controlPoint)
-        
+
         // Right part of the view
         path.addLine(to: CGPoint(x: bounds.width / 2 + lowerBorderRadius, y: bounds.maxY - headerHeight))
-        
+
         controlPoint = CGPoint(x: bounds.width / 2 + lowerBorderRadius + delta * 0.25, y: bounds.maxY - headerHeight)
         endPoint = CGPoint(x: bounds.width / 2 + lowerBorderRadius + 0.5 * delta, y: bounds.maxY - headerHeight / 2)
-        
+
         path.addQuadCurve(to: endPoint, control: controlPoint)
-        
+
         controlPoint = CGPoint(x: bounds.width / 2 + lowerBorderRadius + delta * 0.75, y: bounds.maxY)
         endPoint = CGPoint(x: bounds.width / 2 + upperBorderRadius, y: bounds.maxY)
-        
+
         path.addQuadCurve(to: endPoint, control: controlPoint)
         path.addLine(to: start)
-        
+
         context.addPath(path)
-        context.setFillColor(self.cgColor(.background))
+        context.setFillColor(cgColor(.background))
         context.drawPath(using: .fill)
-        
+
         outter = CGMutablePath()
         var circleOrigin = CGPoint(x: bounds.width / 2 - outterCircleRadius, y: bounds.maxY - headerHeight - outterCircleRadius)
         var circleBounds = CGSize(width: 2 * outterCircleRadius, height: 2 * outterCircleRadius)
         var circleRect = CGRect(origin: circleOrigin, size: circleBounds)
         outter.addEllipse(in: circleRect)
-        
+
         context.addPath(outter)
         context.drawPath(using: .fill)
-        
+
         let inner = CGMutablePath()
         circleOrigin = CGPoint(x: bounds.width / 2 - innerCircleRadius, y: bounds.maxY - headerHeight - innerCircleRadius)
         circleBounds = CGSize(width: 2 * innerCircleRadius, height: 2 * innerCircleRadius)
         circleRect = CGRect(origin: circleOrigin, size: circleBounds)
         inner.addEllipse(in: circleRect)
-        
+
         context.addPath(inner)
-        context.setFillColor(self.cgColor(.icon))
+        context.setFillColor(cgColor(.icon))
         context.drawPath(using: .fill)
     }
 }

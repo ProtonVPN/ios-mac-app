@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import ProtonCoreUIFoundations
+import SwiftUI
 
 struct SettingsView: View {
     @Bindable var store: StoreOf<SettingsFeature>
@@ -55,16 +55,20 @@ struct SettingsView: View {
             }
         }
         .alert($store.scope(state: \.alert, action: \.alert))
-        .fullScreenCover(isPresented: .init(get: { store.isLoading }, set: { _ in }),
-                         onDismiss: { store.send(.showProgressView) },
-                         content: {
-            ProgressView("Signing out...")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .ignoresSafeArea()
-                .background(.ultraThinMaterial)
-        })
-        .navigationDestination(item: $store.scope(state: \.destination?.settingsDrillDown,
-                                                  action: \.destination.settingsDrillDown)) { store in
+        .fullScreenCover(
+            isPresented: .init(get: { store.isLoading }, set: { _ in }),
+            onDismiss: { store.send(.showProgressView) },
+            content: {
+                ProgressView("Signing out...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .ignoresSafeArea()
+                    .background(.ultraThinMaterial)
+            }
+        )
+        .navigationDestination(item: $store.scope(
+            state: \.destination?.settingsDrillDown,
+            action: \.destination.settingsDrillDown
+        )) { store in
             SettingsDrillDownView(store: store)
         }
     }

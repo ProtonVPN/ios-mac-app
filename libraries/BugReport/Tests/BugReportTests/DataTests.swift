@@ -16,25 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import BugReport
+import XCTest
 
 final class DataTests: XCTestCase {
-    
     func testJSONDecodes() throws {
         let bundle = Bundle.module
         guard let testFile1 = bundle.url(forResource: "example1", withExtension: "json") else {
             XCTFail("example1.json file not found")
             return
         }
-        
+
         let data = try! Data(contentsOf: testFile1)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         let model = try decoder.decode(BugReportModel.self, from: data)
-        
+
         XCTAssertEqual(model.categories.first?.label, "Browsing speed_")
         XCTAssertEqual(model.categories.first?.suggestions?.last?.text, "Try a different server. Servers in nearby countries often have faster connection speeds.")
     }
-    
 }

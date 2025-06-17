@@ -26,7 +26,6 @@ import VPNAppCore
 
 @Reducer
 public struct AnnouncementBannerFeature {
-
     @SharedReader(.announcementBanner) var announcementBanner: Announcement?
     @SharedReader(.userTier) private var userTier: Int?
 
@@ -82,7 +81,7 @@ public struct AnnouncementBannerFeature {
                         .map(Action.fetchCurrentOfferBannerFromStorage)
                 }
                 .cancellable(id: CancelID.announcementBanner)
-            case .fetchCurrentOfferBannerFromStorage(let announcement):
+            case let .fetchCurrentOfferBannerFromStorage(announcement):
                 if userTier?.isFreeTier ?? true,
                    let announcement,
                    let model = AnnouncementBannerFeature.State.Model(announcement: announcement) {
@@ -90,14 +89,14 @@ public struct AnnouncementBannerFeature {
                 }
                 return .none
             case .didTapDismiss:
-                guard case .banner(let model) = state else { return .none }
+                guard case let .banner(model) = state else { return .none }
 
                 @Dependency(\.announcementManager) var announcementManager
                 announcementManager.markAsRead(notificationID: model.notificationID)
                 state = .noBanner
                 return .none
             case .didTapBanner:
-                guard case .banner(let model) = state else { return .none }
+                guard case let .banner(model) = state else { return .none }
 
                 return .run { _ in
                     @Dependency(\.sessionService) var sessionService

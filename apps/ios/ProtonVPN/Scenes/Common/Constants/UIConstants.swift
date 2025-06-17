@@ -21,20 +21,21 @@
 //
 
 import GSMessages
-import UIKit
 import LegacyCommon
+import UIKit
 
 class UIConstants {
-    
     // MARK: - Cell constants
+
     static let connectionStatusCellHeight: CGFloat = 48
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
     static let separatorHeight: CGFloat = 8
     static let countriesHeaderHeight: CGFloat = 40
     static let connectionBarHeight: CGFloat = 44
-    
+
     // MARK: - Messages
+
     static let messageOptions: [GSMessageOption] = [
         .animations([.slide(.normal)]),
         .animationDuration(0.3),
@@ -50,6 +51,6 @@ class UIConstants {
         .textColor(.white),
         .textNumberOfLines(0),
     ]
-    
+
     static let maxProfileNameLength = 25
 }

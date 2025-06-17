@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Strings
+import UIKit
 
 protocol SearchViewControllerDelegate: AnyObject {
     func userDidSelectCountry(model: CountryViewModel)
@@ -26,15 +26,14 @@ protocol SearchViewControllerDelegate: AnyObject {
 }
 
 final class SearchViewController: UIViewController {
-
     // MARK: Outlets
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var noResultsView: NoResultsView!
-    @IBOutlet weak var noResultsBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var placeholderViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var placeholderView: PlaceholderView!
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var noResultsView: NoResultsView!
+    @IBOutlet var noResultsBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var placeholderViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var placeholderView: PlaceholderView!
 
     // MARK: Properties
 
@@ -93,7 +92,8 @@ final class SearchViewController: UIViewController {
         )
     }
 
-    @objc private func keyboardWillShow(notification: NSNotification) {
+    @objc
+    private func keyboardWillShow(notification: NSNotification) {
         guard viewIfLoaded?.window != nil else {
             return
         }
@@ -103,7 +103,8 @@ final class SearchViewController: UIViewController {
         }
     }
 
-    @objc private func keyboardWillHide(notification: NSNotification) {
+    @objc
+    private func keyboardWillHide(notification: NSNotification) {
         guard viewIfLoaded?.window != nil else {
             return
         }

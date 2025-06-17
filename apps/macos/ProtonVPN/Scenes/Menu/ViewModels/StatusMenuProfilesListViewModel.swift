@@ -20,25 +20,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import LegacyCommon
-import Domain
 
 class StatusMenuProfilesListViewModel {
-
     private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
-    
+
     var contentChanged: (() -> Void)?
-    
+
     var cellHeight: CGFloat {
-        return 44
+        44
     }
-    
+
     var cellCount: Int {
-        return profileManager.allProfiles.count
+        profileManager.allProfiles.count
     }
-    
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -46,23 +45,24 @@ class StatusMenuProfilesListViewModel {
             return .freeTier
         }
     }
-    
+
     init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     func cellModel(forIndex index: Int) -> StatusMenuProfileItemViewModel {
-        return StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
+        StatusMenuProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier)
     }
-    
-    @objc private func profilesChanged() {
+
+    @objc
+    private func profilesChanged() {
         contentChanged?()
     }
 }

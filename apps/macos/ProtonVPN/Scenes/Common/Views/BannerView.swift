@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Cocoa
 import Ergonomics
+import Foundation
 
 final class BannerView: NSView {
     private lazy var label: NSTextField = {
@@ -44,7 +44,8 @@ final class BannerView: NSView {
         label.stringValue = message
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -60,7 +61,7 @@ final class BannerView: NSView {
         addSubview(label)
         NSLayoutConstraint.activate([
             label.centerYAnchor.constraint(equalTo: centerYAnchor),
-            label.centerXAnchor.constraint(equalTo: centerXAnchor)
+            label.centerXAnchor.constraint(equalTo: centerXAnchor),
         ])
     }
 
@@ -70,13 +71,13 @@ final class BannerView: NSView {
         invalidateIntrinsicContentSize()
         NSLayoutConstraint.activate([
             label.widthAnchor.constraint(equalToConstant: labelSize.width + 2 * margin),
-            label.heightAnchor.constraint(equalToConstant: labelSize.height)
+            label.heightAnchor.constraint(equalToConstant: labelSize.height),
         ])
 
         parentView.addSubview(self)
         NSLayoutConstraint.activate([
             topAnchor.constraint(equalTo: parentView.topAnchor, constant: 2 * margin),
-            centerXAnchor.constraint(equalTo: parentView.centerXAnchor)
+            centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
         ])
 
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) { [weak self] in
@@ -89,6 +90,6 @@ final class BannerView: NSView {
     }
 
     override var intrinsicContentSize: NSSize {
-        return size ?? .zero
+        size ?? .zero
     }
 }

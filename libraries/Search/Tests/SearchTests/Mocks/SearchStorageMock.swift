@@ -27,7 +27,7 @@ final class SearchStorageMock: SearchStorage {
     }
 
     func get() -> [String] {
-        return data
+        data
     }
 
     func save(data: [String]) {

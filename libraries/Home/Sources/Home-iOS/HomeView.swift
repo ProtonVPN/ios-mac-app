@@ -23,15 +23,15 @@ import ComposableArchitecture
 import Dependencies
 
 import Announcement
+import ConnectionDetails
+import Domain
+import Ergonomics
 import HomeShared
+import Modals
+import SharedViews
 import Strings
 import Theme
-import Ergonomics
 import VPNAppCore
-import Modals
-import ConnectionDetails
-import SharedViews
-import Domain
 
 public struct HomeView: View {
     @ComposableArchitecture.Bindable var store: StoreOf<HomeFeature>
@@ -144,9 +144,11 @@ public struct HomeView: View {
                                 Spacer().frame(height: mapHeight) // Leave transparent space for the map
                                     .id(topID)
                                     .background(trackScrollPosition())
-                                LinearGradient(gradient: Gradient(colors: [.clear, Color(.background)]),
-                                               startPoint: .top,
-                                               endPoint: .bottom)
+                                LinearGradient(
+                                    gradient: Gradient(colors: [.clear, Color(.background)]),
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
                                 .frame(width: proxy.size.width, height: Self.bottomGradientHeight)
                             }
                             VStack(spacing: 0) {
@@ -216,9 +218,9 @@ public struct HomeView: View {
     /// Update the Z-index of the connection status view. This allows us to enable the user interaction of upsell banners and netshields stats.
     private func updateConnectionStatusZIndex(_ scrollOffset: Double) {
         let swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
-        if scrollOffset < -swapThreshold && connectionStatusZIndex == .enabledConnectionStatus {
+        if scrollOffset < -swapThreshold, connectionStatusZIndex == .enabledConnectionStatus {
             connectionStatusZIndex = ZIndex.disabledConnectionStatus
-        } else if scrollOffset > -swapThreshold && connectionStatusZIndex == .disabledConnectionStatus {
+        } else if scrollOffset > -swapThreshold, connectionStatusZIndex == .disabledConnectionStatus {
             connectionStatusZIndex = ZIndex.enabledConnectionStatus
         }
     }
@@ -232,7 +234,7 @@ public struct HomeView: View {
                 )
         }
         .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
-            self.connectionViewHeight = viewHeight
+            connectionViewHeight = viewHeight
         }
     }
 }
@@ -254,10 +256,10 @@ private struct ViewHeightPreferenceKey: PreferenceKey {
 }
 
 #if DEBUG && compiler(>=6)
-@available(iOS 18, *)
-#Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    HomeView(store: .init(initialState: .init(), reducer: {
-        HomeFeature()
-    }))
-}
+    @available(iOS 18, *)
+    #Preview(traits: .dependencies { $0.recentsStorage = .previewValue }) {
+        HomeView(store: .init(initialState: .init(), reducer: {
+            HomeFeature()
+        }))
+    }
 #endif

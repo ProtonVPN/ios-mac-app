@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import SwiftUI
+import UIKit
 
 public class TelemetrySettingsViewController: UIViewController {
     var telemetryView: TelemetryTogglesView
@@ -43,11 +43,12 @@ public class TelemetrySettingsViewController: UIViewController {
         self.title = title
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
 
         let hostingController = UIHostingController(rootView: telemetryView)
@@ -64,7 +65,7 @@ public class TelemetrySettingsViewController: UIViewController {
         NSLayoutConstraint.activate([
             hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
             hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             // No bottom constraint on purpose, we want the view to be pinned to the top of the available space
         ])
     }

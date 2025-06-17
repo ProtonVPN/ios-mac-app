@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import AppKit
+import Foundation
 import LegacyCommon
-import Theme
 import Strings
+import Theme
 
 protocol WarningViewDelegate: AnyObject {
     func keychainHelpAction()
@@ -32,10 +32,9 @@ enum WarningType {
 }
 
 class WarningView: NSStackView {
-
-    @IBOutlet private weak var warningLabel: PVPNTextField!
-    @IBOutlet private weak var warningIcon: NSImageView!
-    @IBOutlet private weak var helpLink: InteractiveActionButton!
+    @IBOutlet private var warningLabel: PVPNTextField!
+    @IBOutlet private var warningIcon: NSImageView!
+    @IBOutlet private var helpLink: InteractiveActionButton!
 
     weak var helpDelegate: WarningViewDelegate?
 
@@ -46,19 +45,18 @@ class WarningView: NSStackView {
     }
 
     func setMessage(_ message: String?, warningType: WarningType = .error) {
-        guard let message = message else {
+        guard let message else {
             isHidden = true
             return
         }
 
         isHidden = false
 
-        var style: AppTheme.Style
-        switch warningType {
+        var style: AppTheme.Style = switch warningType {
         case .error:
-            style = .danger
+            .danger
         case .info:
-            style = .active
+            .active
         }
 
         warningLabel.attributedStringValue = message.styled(style, font: .themeFont(.small), alignment: .natural)
@@ -77,7 +75,8 @@ class WarningView: NSStackView {
         warningIcon.image = AppTheme.Icon.exclamationCircleFilled
     }
 
-    @objc private func keychainHelpAction() {
+    @objc
+    private func keychainHelpAction() {
         helpDelegate?.keychainHelpAction()
     }
 }

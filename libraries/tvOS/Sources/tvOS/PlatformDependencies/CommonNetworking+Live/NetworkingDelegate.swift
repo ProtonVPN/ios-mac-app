@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import protocol ProtonCoreServices.APIService
-import protocol ProtonCoreServices.HumanVerifyResponseDelegate
-import protocol ProtonCoreServices.HumanVerifyPaymentDelegate
-import struct ProtonCoreNetworking.HumanVerifyParameters
+import Foundation
 import struct ProtonCoreNetworking.DeviceVerifyParameters
+import struct ProtonCoreNetworking.HumanVerifyParameters
+import protocol ProtonCoreServices.APIService
 import enum ProtonCoreServices.HumanVerifyFinishReason
+import protocol ProtonCoreServices.HumanVerifyPaymentDelegate
+import protocol ProtonCoreServices.HumanVerifyResponseDelegate
 
 import CommonNetworking
 
@@ -37,18 +37,18 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
         self.continuation = continuation
     }
 
-    func set(apiService: APIService) { }
+    func set(apiService _: APIService) {}
 
     func onLogout() {
         continuation.yield(false)
     }
 
-    func onForceUpgrade(message: String) { }
+    func onForceUpgrade(message _: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) { }
-    func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? { nil }
+    func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
+    func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
     func getSupportURL() -> URL { URL(string: "")! }
 }
 

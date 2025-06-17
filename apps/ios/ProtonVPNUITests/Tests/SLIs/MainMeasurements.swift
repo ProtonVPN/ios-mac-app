@@ -19,10 +19,10 @@
 import Foundation
 import fusion
 import ProtonCoreLog
-import ProtonCoreTestingToolkitUITestsCore
 import ProtonCoreTestingToolkitPerformance
-import XCTest
+import ProtonCoreTestingToolkitUITestsCore
 import UITestsHelpers
+import XCTest
 
 @MainActor
 class MainMeasurements: ProtonVPNUITests {
@@ -32,7 +32,7 @@ class MainMeasurements: ProtonVPNUITests {
 
     private let workflow = "main_measurements"
     private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
-    
+
     override class func setUp() {
         super.setUp()
 
@@ -43,7 +43,7 @@ class MainMeasurements: ProtonVPNUITests {
             .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
             .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
     }
-    
+
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
@@ -53,7 +53,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testLoginSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
@@ -70,7 +70,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testConnectionSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
@@ -93,7 +93,7 @@ class MainMeasurements: ProtonVPNUITests {
     }
 
     func testConnectionToSpecificServer() async throws {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())

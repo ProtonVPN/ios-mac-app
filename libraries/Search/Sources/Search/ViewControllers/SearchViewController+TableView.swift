@@ -34,14 +34,14 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.rowHeight = UITableView.automaticDimension
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch viewModel.status {
         case .noResults, .placeholder:
-            return 0
+            0
         case let .recentSearches(data):
-            return data.count
+            data.count
         case let .results(data):
-            return data[section].count
+            data[section].count
         }
     }
 
@@ -103,14 +103,14 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         switch viewModel.status {
         case .noResults, .placeholder:
-            return 0
+            0
         case .recentSearches:
-            return 1
+            1
         case let .results(data):
-            return data.count
+            data.count
         }
     }
 
@@ -152,7 +152,7 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch viewModel.status {
         case .noResults, .placeholder, .recentSearches:
             return UITableView.automaticDimension

@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
-import SwiftUI
+import Foundation
 import Strings
+import SwiftUI
 
 @Reducer
 struct ContactFormFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var fields: IdentifiedArrayOf<FormInputField>
@@ -44,18 +43,18 @@ struct ContactFormFeature: Reducer {
         // https://github.com/apple/swift/issues/66450
 
         var showLogsInfo: Bool {
-            return fields.last?.boolValue == false
+            fields.last?.boolValue == false
         }
 
         var canBeSent: Bool {
             // Make sure that none of the mandatory fields contains empty value or unchecked switch
             // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
-            return !fields.filter({ $0.inputField.isMandatory ?? true }).contains(where: {
+            !fields.filter { $0.inputField.isMandatory ?? true }.contains(where: {
                 switch $0.inputField.type {
                 case .textSingleLine, .textMultiLine:
-                    return $0.stringValue.isEmpty
+                    $0.stringValue.isEmpty
                 case .switch:
-                    return !$0.boolValue
+                    !$0.boolValue
                 }
             })
         }
@@ -103,15 +102,17 @@ struct ContactFormFeature: Reducer {
                     submitLabel: logsFieldName,
                     type: .switch,
                     isMandatory: false,
-                    placeholder: Localizable.br3LogsDescription),
-                boolValue: true)
+                    placeholder: Localizable.br3LogsDescription
+                ),
+                boolValue: true
+            )
             )
 
             self.fields = formFields
         }
 
         private static func categoryFormInputField(_ category: String?) -> FormInputField? {
-            guard let category = category else {
+            guard let category else {
                 return nil
             }
             let inputField = InputField(
@@ -131,13 +132,13 @@ struct ContactFormFeature: Reducer {
 
         func makeResult() -> BugReportResult {
             let find = { (submitLabel: String) -> FormInputField? in
-                return self.fields.first(where: { $0.inputField.submitLabel == submitLabel })
+                return fields.first(where: { $0.inputField.submitLabel == submitLabel })
             }
 
             let email = find(emailFieldName)?.stringValue ?? ""
             let username = find(usernameFieldName)?.stringValue ?? ""
             let logs = find(logsFieldName)?.boolValue ?? false
-            let text = fields.filter({ ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }).reduce("") { prev, field in
+            let text = fields.filter { ![emailFieldName, logsFieldName, usernameFieldName].contains($0.inputField.submitLabel) }.reduce("") { prev, field in
                 let headerSeparator: String = prev.isEmpty ? " " : "\n"
                 switch field.inputField.type {
                 case .textSingleLine, .textMultiLine:
@@ -149,7 +150,6 @@ struct ContactFormFeature: Reducer {
 
             return BugReportResult(email: email, username: username, text: text, logs: logs)
         }
-
     }
 
     enum Action: BindableAction, Equatable {
@@ -165,11 +165,11 @@ struct ContactFormFeature: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .fieldStringValueChanged(let field, let newValue):
+            case let .fieldStringValueChanged(field, newValue):
                 state.fields[id: field.id]?.stringValue = newValue
                 return .none
 
-            case .fieldBoolValueChanged(let field, let newValue):
+            case let .fieldBoolValueChanged(field, newValue):
                 state.fields[id: field.id]?.boolValue = newValue
                 return .none
 
@@ -183,9 +183,9 @@ struct ContactFormFeature: Reducer {
                     }))
                 }
 
-            case .sendResponseReceived(let response):
+            case let .sendResponseReceived(response):
                 state.isSending = false
-                state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil )
+                state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil)
                 return .none
 
             case .resultViewClosed:
@@ -201,21 +201,19 @@ struct ContactFormFeature: Reducer {
             case .resultViewAction:
                 return .none
 
-            case .binding(_):
+            case .binding:
                 // Everything's done in BindingReducer()
                 return .none
             }
         }
 
         .ifLet(\.resultState, action: /Action.resultViewAction, then: { BugReportResultFeature() })
-
     }
-
 }
 
-fileprivate extension TaskResult<Bool> {
+private extension TaskResult<Bool> {
     var errorOrNil: Error? {
-        if case TaskResult.failure(let error) = self {
+        if case let TaskResult.failure(error) = self {
             return error
         }
         return nil

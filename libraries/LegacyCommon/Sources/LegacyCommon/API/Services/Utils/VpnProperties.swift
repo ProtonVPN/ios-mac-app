@@ -20,12 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import ProtonCoreDataModel
-import Domain
 
 public struct VpnProperties {
-    
     public let serverInfo: ServerInfoResponse
     public let streamingResponse: VPNStreamingResponse?
     public let vpnCredentials: VpnCredentials

@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Domain
-import OrderedCollections
 import Dependencies
+import Domain
 import Ergonomics
+import Foundation
+import OrderedCollections
 
 #if canImport(WidgetKit)
-import WidgetKit
+    import WidgetKit
 #endif
 
-public final class RecentsStorageImplementation {
+public enum RecentsStorageImplementation {
     private static let storageKeyPrefix = "RecentConnections"
 
     struct Error: Swift.Error {
@@ -34,7 +34,7 @@ public final class RecentsStorageImplementation {
     }
 
     static func storageKey(_ userID: String) -> String {
-        Self.storageKeyPrefix + userID
+        storageKeyPrefix + userID
     }
 
     public static func saveToStorage(collection: OrderedSet<RecentConnection>) {
@@ -46,12 +46,14 @@ public final class RecentsStorageImplementation {
             @Dependency(\.storage) var storage
             try storage.set(collection, forKey: Self.storageKey(userID))
         } catch {
-            log.error("Failed to save recent connections to storage with error: \(error.localizedDescription)",
-                      category: .persistence)
+            log.error(
+                "Failed to save recent connections to storage with error: \(error.localizedDescription)",
+                category: .persistence
+            )
         }
-#if canImport(WidgetKit)
-        WidgetCenter.shared.reloadAllTimelines()
-#endif
+        #if canImport(WidgetKit)
+            WidgetCenter.shared.reloadAllTimelines()
+        #endif
     }
 
     public static func readFromStorage() -> OrderedSet<RecentConnection> {
@@ -63,8 +65,10 @@ public final class RecentsStorageImplementation {
             @Dependency(\.storage) var storage
             return try storage.get(OrderedSet<RecentConnection>.self, forKey: storageKey(userID)) ?? []
         } catch {
-            log.error("Failed to decode recent connections with error: \(error.localizedDescription)",
-                      category: .persistence)
+            log.error(
+                "Failed to decode recent connections with error: \(error.localizedDescription)",
+                category: .persistence
+            )
             return []
         }
     }

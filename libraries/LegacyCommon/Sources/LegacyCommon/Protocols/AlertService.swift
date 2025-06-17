@@ -26,9 +26,9 @@ import Dependencies
 import Persistence
 import VPNAppCore
 
-import Strings
-import Ergonomics
 import Domain
+import Ergonomics
+import Strings
 
 public protocol CoreAlertServiceFactory {
     func makeCoreAlertService() -> CoreAlertService
@@ -51,7 +51,7 @@ public protocol UIAlertService: AnyObject {
 // Add default value to `accessibilityIdentifier`
 extension UIAlertService {
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType) {
-        return displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: nil)
+        displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: nil)
     }
 }
 

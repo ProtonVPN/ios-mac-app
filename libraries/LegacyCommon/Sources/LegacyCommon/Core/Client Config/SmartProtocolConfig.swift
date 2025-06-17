@@ -75,25 +75,29 @@ public struct SmartProtocolConfig: Codable, Equatable, DefaultableProperty {
     }
 
     public init() {
-        self.init(openVPN: true,
-                  iKEv2: true,
-                  wireGuardUdp: true,
-                  wireGuardTcp: true,
-                  wireGuardTls: true)
+        self.init(
+            openVPN: true,
+            iKEv2: true,
+            wireGuardUdp: true,
+            wireGuardTcp: true,
+            wireGuardTls: true
+        )
     }
 
     public func configWithWireGuard(udpEnabled: Bool? = nil, tcpEnabled: Bool? = nil, tlsEnabled: Bool? = nil) -> SmartProtocolConfig {
-        return SmartProtocolConfig(openVPN: openVPN,
-                                   iKEv2: iKEv2,
-                                   wireGuardUdp: udpEnabled ?? wireGuardUdp,
-                                   wireGuardTcp: tcpEnabled ?? wireGuardTcp,
-                                   wireGuardTls: tlsEnabled ?? wireGuardTls)
+        SmartProtocolConfig(
+            openVPN: openVPN,
+            iKEv2: iKEv2,
+            wireGuardUdp: udpEnabled ?? wireGuardUdp,
+            wireGuardTcp: tcpEnabled ?? wireGuardTcp,
+            wireGuardTls: tlsEnabled ?? wireGuardTls
+        )
     }
 
     public static func == (lhs: SmartProtocolConfig, rhs: SmartProtocolConfig) -> Bool {
         lhs.openVPN == rhs.openVPN &&
-        lhs.iKEv2 == rhs.iKEv2 &&
-        lhs.wireGuardUdp == rhs.wireGuardUdp &&
-        lhs.wireGuardTls == rhs.wireGuardTls
+            lhs.iKEv2 == rhs.iKEv2 &&
+            lhs.wireGuardUdp == rhs.wireGuardUdp &&
+            lhs.wireGuardTls == rhs.wireGuardTls
     }
 }

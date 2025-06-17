@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-internal enum CryptoServiceEnvironment {
+enum CryptoServiceEnvironment {
     static var secKeyCopyData = SecKeyCopyExternalRepresentation
     static var secKeyCreateWithData = SecKeyCreateWithData
     static var secKeyCreateRandom = SecKeyCreateRandomKey
@@ -102,7 +102,7 @@ public class CryptoService {
         return false
     }
 
-    public init() { }
+    public init() {}
 }
 
 private extension NSError {
@@ -117,19 +117,19 @@ private extension NSError {
             domain: domain as String,
             code: code,
             userInfo: [
-                NSLocalizedDescriptionKey: description ?? ""
+                NSLocalizedDescriptionKey: description ?? "",
             ]
         )
     }
 }
 
-extension CryptoService.KeyClass {
-    public static let publicKey = Self(rawValue: kSecAttrKeyClassPublic as String)
-    public static let privateKey = Self(rawValue: kSecAttrKeyClassPrivate as String)
+public extension CryptoService.KeyClass {
+    static let publicKey = Self(rawValue: kSecAttrKeyClassPublic as String)
+    static let privateKey = Self(rawValue: kSecAttrKeyClassPrivate as String)
 }
 
-extension CryptoService.KeyType {
-    public static let rsa = Self(rawValue: kSecAttrKeyTypeRSA as String)
+public extension CryptoService.KeyType {
+    static let rsa = Self(rawValue: kSecAttrKeyTypeRSA as String)
 
     /**
      * According to Apples documentation:
@@ -140,19 +140,19 @@ extension CryptoService.KeyType {
      * `kSecAttrKeyTypeEC` is the legacy name for `kSecAttrKeyTypeECSECPrimeRandom`.
      *    New applications should not use it.
      */
-    public static let elliptic = Self(rawValue: kSecAttrKeyTypeECSECPrimeRandom as String)
+    static let elliptic = Self(rawValue: kSecAttrKeyTypeECSECPrimeRandom as String)
 
-    public var stringValue: String {
+    var stringValue: String {
         rawValue
     }
 }
 
-extension CryptoService.Algorithm {
+public extension CryptoService.Algorithm {
     /// "RSA signature with PKCS#1 padding, SHA-256 digest is generated from input data of any size."
     /// - Note: This algorithm generates the SHA-256 itself.
-    public static let rsaSignatureMessagePKCS1v15SHA256: Self = .init(rawValue: .rsaSignatureMessagePKCS1v15SHA256)
+    static let rsaSignatureMessagePKCS1v15SHA256: Self = .init(rawValue: .rsaSignatureMessagePKCS1v15SHA256)
 
-    public var stringValue: String {
+    var stringValue: String {
         rawValue.rawValue as String
     }
 }
@@ -187,7 +187,7 @@ public extension CryptoService.Key {
         let options: [String: Any] = [
             kSecAttrKeyType as String: keyType.rawValue,
             kSecAttrKeySizeInBits as String: keySize,
-            kSecAttrKeyClass as String: keyClass.rawValue
+            kSecAttrKeyClass as String: keyClass.rawValue,
         ]
 
         var cfError: Unmanaged<CFError>?
@@ -224,14 +224,14 @@ public extension CryptoService.Key {
 }
 
 extension CryptoService: DependencyKey {
-    public static let liveValue: CryptoService = CryptoService()
+    public static let liveValue: CryptoService = .init()
     #if DEBUG
-    public static var testValue: CryptoService = .liveValue
+        public static var testValue: CryptoService = .liveValue
     #endif
 }
 
-extension DependencyValues {
-    public var cryptoService: CryptoService {
+public extension DependencyValues {
+    var cryptoService: CryptoService {
         get { self[CryptoService.self] }
         set { self[CryptoService.self] = newValue }
     }

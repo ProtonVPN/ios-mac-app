@@ -1,5 +1,5 @@
 //
-//  WiFiSecurityObtainer.swift
+//  WiFiSecurityMonitor.swift
 //  ProtonVPN - Created on 07.05.20.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import CoreWLAN
-import Reachability
+import Foundation
 import LegacyCommon
+import Reachability
 
 protocol WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor
@@ -34,7 +34,6 @@ protocol WiFiSecurityMonitorDelegate: AnyObject {
 }
 
 public final class WiFiSecurityMonitor: CWNetworkProfile {
-
     /*
      kCWSecurityNone                 = 0,
      kCWSecurityWEP                  = 1,
@@ -51,7 +50,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      */
 
     private var reachability: Reachability?
-    private let wifiClient: CWWiFiClient = CWWiFiClient()
+    private let wifiClient: CWWiFiClient = .init()
 
     public private(set) var wifiName: String?
 
@@ -59,7 +58,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 
     func startMonitoring() {
         reachability = try? Reachability()
-        guard let reachability = reachability else { return }
+        guard let reachability else { return }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do {
             try reachability.startNotifier()
@@ -68,8 +67,8 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
         }
     }
 
-    @objc func reachabilityChanged(note: Notification) {
-        
+    @objc
+    func reachabilityChanged(note: Notification) {
         let reachability = note.object as! Reachability
         guard let interfaces = wifiClient.interfaces() else { return }
 
@@ -95,8 +94,9 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 }
 
 // MARK: WiFiSecurityMonitorFactory
+
 extension DependencyContainer: WiFiSecurityMonitorFactory {
     func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor {
-        return WiFiSecurityMonitor()
+        WiFiSecurityMonitor()
     }
 }

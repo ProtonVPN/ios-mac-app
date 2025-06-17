@@ -10,11 +10,11 @@ package final class Logger: @unchecked Sendable {
         case openFailure
     }
 
-#if swift(>=5.10)
-    nonisolated(unsafe) package private(set) static var global: Logger?
-#else
-    package private(set) static var global: Logger?
-#endif
+    #if swift(>=5.10)
+        package private(set) nonisolated(unsafe) static var global: Logger?
+    #else
+        package private(set) static var global: Logger?
+    #endif
 
     private static let lock = NSLock()
 
@@ -36,7 +36,7 @@ package final class Logger: @unchecked Sendable {
     }
 
     package func writeLog(to targetFile: String) -> Bool {
-        return write_log_to_file(targetFile, self.log) == 0
+        write_log_to_file(targetFile, log) == 0
     }
 
     package static func configureGlobal(tagged tag: String, withFilePath filePath: String?) {
@@ -44,7 +44,7 @@ package final class Logger: @unchecked Sendable {
             if Logger.global != nil {
                 return
             }
-            guard let filePath = filePath else {
+            guard let filePath else {
                 os_log("Unable to determine log destination path. Log will not be saved to file.", log: OSLog.default, type: .error)
                 return
             }
@@ -63,14 +63,14 @@ package final class Logger: @unchecked Sendable {
     }
 }
 
-extension OSLog {
-#if swift(>=6.0)
-    #warning("Reevaluate whether this concurrency decoration is necessary.")
-#elseif swift(>=5.10)
-    nonisolated(unsafe) package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
-#else
-    package static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
-#endif
+package extension OSLog {
+    #if swift(>=6.0)
+        #warning("Reevaluate whether this concurrency decoration is necessary.")
+    #elseif swift(>=5.10)
+        nonisolated(unsafe) static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+    #else
+        static let wg = OSLog(subsystem: "PROTON-WG", category: "WireGuard")
+    #endif
 }
 
 package func wg_log(_ type: OSLogType, staticMessage msg: StaticString) {
@@ -87,15 +87,15 @@ extension OSLogType {
     var stringValue: String {
         switch self {
         case .info:
-            return "Info"
+            "Info"
         case .debug:
-            return "Debug"
+            "Debug"
         case .error:
-            return "Error"
+            "Error"
         case .fault:
-            return "Fatal"
+            "Fatal"
         default:
-            return "Debug"
+            "Debug"
         }
     }
 }

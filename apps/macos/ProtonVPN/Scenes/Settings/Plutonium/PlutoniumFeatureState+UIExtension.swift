@@ -19,7 +19,6 @@
 import VPNAppCore
 
 extension PlutoniumFeature.State {
-
     var remainingApps: [PlutoniumApp] {
         discoveredApps.filter {
             !activatedApps.contains($0)
@@ -27,7 +26,7 @@ extension PlutoniumFeature.State {
     }
 
     var activatedApps: [PlutoniumApp] {
-        guard case .enabled(let mode) = feature else { return [] }
+        guard case let .enabled(mode) = feature else { return [] }
         switch mode {
         case .inclusion:
             return inclusionActivated.apps
@@ -37,7 +36,7 @@ extension PlutoniumFeature.State {
     }
 
     var activatedIPs: [String] {
-        guard case .enabled(let mode) = feature else { return [] }
+        guard case let .enabled(mode) = feature else { return [] }
         switch mode {
         case .inclusion:
             return inclusionActivated.ips

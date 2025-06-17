@@ -1,5 +1,5 @@
-import XCTest
 @testable import WireGuardExtension
+import XCTest
 
 final class WireGuardExtensionTests: XCTestCase {
     func testExample() throws {

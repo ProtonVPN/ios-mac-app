@@ -16,13 +16,13 @@
 
 import Foundation
 
-import Dependencies
 import ComposableArchitecture
 import ConcurrencyExtras
+import Dependencies
 
 import Domain
-import VPNAppCore
 import PMLogger
+import VPNAppCore
 
 private let appStateManager: AppStateManager = Container.sharedContainer.makeAppStateManager()
 
@@ -30,7 +30,7 @@ private let appStateManager: AppStateManager = Container.sharedContainer.makeApp
 @available(tvOS, unavailable)
 extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
     public static let displayStateStream: () -> AsyncStream<VPNConnectionStatus> = {
-        return NotificationCenter.default
+        NotificationCenter.default
             .notifications(named: AppEvent.appStateManagerStateChange.name)
             .map {
                 let appStateManager = Container.sharedContainer.makeAppStateManager()
@@ -39,19 +39,21 @@ extension VPNConnectionStatusPublisherKey: @retroactive DependencyKey {
                 let connectedDate = await Container.sharedContainer.makeVpnManager().connectedDate()
 
                 return ($0.object as! AppDisplayState)
-                    .vpnConnectionStatus(appStateManager.activeConnection(),
-                                         lastPreparedServer: propertyManager.lastPreparedServer,
-                                         intent: propertyManager.lastConnectionIntent,
-                                         connectedDate: connectedDate)
+                    .vpnConnectionStatus(
+                        appStateManager.activeConnection(),
+                        lastPreparedServer: propertyManager.lastPreparedServer,
+                        intent: propertyManager.lastConnectionIntent,
+                        connectedDate: connectedDate
+                    )
             }
             .eraseToStream()
     }
 
     public static let liveValue: () -> AsyncStream<VPNConnectionStatus> = {
         if #available(macOS 12, *) {
-            return displayStateStream()
+            displayStateStream()
         } else {
-            return .finished
+            .finished
         }
     }
 }
@@ -64,11 +66,11 @@ extension VPNConnectionStatusKey: @retroactive DependencyKey {
         let appStateManager = Container.sharedContainer.makeAppStateManager()
         let propertyManager = Container.sharedContainer.makePropertiesManager()
 
-        return appStateManager.displayState.vpnConnectionStatus(
+        return await appStateManager.displayState.vpnConnectionStatus(
             appStateManager.activeConnection(),
             lastPreparedServer: propertyManager.lastPreparedServer,
             intent: propertyManager.lastConnectionIntent,
-            connectedDate: await Container.sharedContainer.makeVpnManager().connectedDate()
+            connectedDate: Container.sharedContainer.makeVpnManager().connectedDate()
         )
     }
 }
@@ -76,7 +78,6 @@ extension VPNConnectionStatusKey: @retroactive DependencyKey {
 // MARK: - AppDisplayState -> VPNConnectionStatus
 
 extension AppDisplayState {
-
     func vpnConnectionStatus(
         _ connectionConfiguration: ConnectionConfiguration?,
         lastPreparedServer: ServerModel?,
@@ -86,9 +87,9 @@ extension AppDisplayState {
         let resolvedConnection = connectionConfiguration?.vpnConnectionActual(connectedDate: connectedDate)
         switch self {
         case .connected:
-#if targetEnvironment(simulator)
-            return .connected(intent, VPNConnectionActual.mock())
-#endif
+            #if targetEnvironment(simulator)
+                return .connected(intent, VPNConnectionActual.mock())
+            #endif
             return .connected(intent, resolvedConnection)
 
         case .connecting:
@@ -121,9 +122,9 @@ extension ConnectionConfiguration {
 
         return VPNConnectionActual(
             connectedDate: connectedDate,
-            vpnProtocol: self.vpnProtocol,
-            natType: self.natType,
-            safeMode: self.safeMode,
+            vpnProtocol: vpnProtocol,
+            natType: natType,
+            safeMode: safeMode,
             server: serverWithOnlyActiveEndpoint
         )
     }

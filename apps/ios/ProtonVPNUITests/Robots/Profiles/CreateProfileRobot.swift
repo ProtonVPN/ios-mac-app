@@ -6,28 +6,27 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import fusion
-import UITestsHelpers
 import Foundation
+import fusion
 import Strings
+import UITestsHelpers
 
-fileprivate let profileSameName = Localizable.profileNameNeedsToBeUnique
-fileprivate let profileNameField = Localizable.enterProfileName
-fileprivate let countryField = Localizable.selectCountry
-fileprivate let countryButton = Localizable.country
-fileprivate let countriesLabel = Localizable.countries
-fileprivate let serverField = Localizable.selectServer
-fileprivate let saveProfileButton = Localizable.save
-fileprivate let secureCoreToggle = Localizable.secureCore
-fileprivate let protocolCellId = Localizable.protocol
+private let profileSameName = Localizable.profileNameNeedsToBeUnique
+private let profileNameField = Localizable.enterProfileName
+private let countryField = Localizable.selectCountry
+private let countryButton = Localizable.country
+private let countriesLabel = Localizable.countries
+private let serverField = Localizable.selectServer
+private let saveProfileButton = Localizable.save
+private let secureCoreToggle = Localizable.secureCore
+private let protocolCellId = Localizable.protocol
 
 class CreateProfileRobot: CoreElements {
-
     let verify = Verify()
 
     @discardableResult
     func setProfileDetails(profile: String, country: String, server: String? = nil, secureCoreState: Bool = false) -> CreateProfileRobot {
-        return enterProfileName(profile)
+        enterProfileName(profile)
             .setSecureCoreToggle(state: secureCoreState)
             .chooseCountry(country)
             .chooseServer(server)
@@ -86,7 +85,7 @@ class CreateProfileRobot: CoreElements {
     private func chooseServer(_ serverName: String?) -> CreateProfileRobot {
         tapServerField()
         staticText(Localizable.server).checkExists()
-        if let serverName = serverName {
+        if let serverName {
             staticText()
                 .containsLabel(serverName)
                 .checkExists(message: "Server \(serverName) not found").tap()
@@ -121,7 +120,6 @@ class CreateProfileRobot: CoreElements {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func profileWithSameName() -> CreateProfileRobot {
             staticText(profileSameName).checkExists()

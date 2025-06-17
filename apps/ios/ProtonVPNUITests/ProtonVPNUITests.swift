@@ -29,12 +29,11 @@ import ProtonCoreLog
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsCore
 
-import UITestsHelpers
 import Ergonomics
 import PMLogger
+import UITestsHelpers
 
 class ProtonVPNUITests: ProtonCoreBaseTestCase {
-
     let homeRobot = HomeRobot()
     let settingsRobot = SettingsRobot()
 
@@ -56,7 +55,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
             "-AppleLocale en_US",
             "enforceUnauthSessionStrictVerificationOnBackend",
             LogFileManagerImplementation.logDirLaunchArgument,
-            logFileUrl.absoluteString
+            logFileUrl.absoluteString,
         ]
 
         if let dynamicDomain = Bundle.dynamicDomain {
@@ -101,22 +100,22 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     private static func disableAutoFillPasswords() {
         #if targetEnvironment(simulator)
-        guard #available(iOS 17.3, *), isAutoFillPasswordsEnabled else {
-            return
-        }
+            guard #available(iOS 17.3, *), isAutoFillPasswordsEnabled else {
+                return
+            }
 
-        let settingsApp = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+            let settingsApp = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
 
-        launchSettingsApp(settingsApp: settingsApp)
+            launchSettingsApp(settingsApp: settingsApp)
 
-        defer {
-            settingsApp.terminate()
-        }
+            defer {
+                settingsApp.terminate()
+            }
 
-        navigateToAutoFillSettings(settingsApp: settingsApp)
-        toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
+            navigateToAutoFillSettings(settingsApp: settingsApp)
+            toggleAutoFillSwitchIfNeeded(settingsApp: settingsApp)
 
-        isAutoFillPasswordsEnabled = false
+            isAutoFillPasswordsEnabled = false
         #endif
     }
 
@@ -175,7 +174,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
     }
 
     func getCredentials(from resource: String) -> [Credentials] {
-        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+        Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
 
     private func closeAndOpenTheApp() {
@@ -192,7 +191,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
 
     var doh: DoH {
         if let customDomain = dynamicDomain ?? Bundle.dynamicDomain, !customDomain.isEmpty {
-            return CustomServerConfigDoH(
+            CustomServerConfigDoH(
                 signupDomain: customDomain,
                 captchaHost: "https://api.\(customDomain)",
                 humanVerificationV3Host: "https://verify.\(customDomain)",
@@ -203,7 +202,7 @@ class ProtonVPNUITests: ProtonCoreBaseTestCase {
                 apnEnvironment: .development
             )
         } else {
-            return CustomServerConfigDoH(
+            CustomServerConfigDoH(
                 signupDomain: ObfuscatedConstants.blackSignupDomain,
                 captchaHost: ObfuscatedConstants.blackCaptchaHost,
                 humanVerificationV3Host: ObfuscatedConstants.blackHumanVerificationV3Host,

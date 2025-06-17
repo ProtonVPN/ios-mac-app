@@ -20,8 +20,7 @@ import Foundation
 import NetworkExtension
 
 @available(tvOS 17.0, *)
-extension NETunnelProviderProtocol {
-
+public extension NETunnelProviderProtocol {
     fileprivate enum CustomKeys: String, CaseIterable {
         case connectedLogicalIdKey = "PVPNLogicalID"
         case connectedServerIpIdKey = "PVPNServerIpID"
@@ -36,10 +35,10 @@ extension NETunnelProviderProtocol {
         providerConfiguration = [:]
     }
 
-    public var connectedLogicalId: String? {
+    var connectedLogicalId: String? {
         get {
             providerConfiguration?[.connectedLogicalIdKey] as? String ??
-            providerConfiguration?["PVPNServerID"] as? String // old name for the key
+                providerConfiguration?["PVPNServerID"] as? String // old name for the key
         }
         set {
             ensureProviderConfig()
@@ -47,7 +46,7 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    public var connectedServerIpId: String? {
+    var connectedServerIpId: String? {
         get {
             providerConfiguration?[.connectedServerIpIdKey] as? String
         }
@@ -57,7 +56,7 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    public var appUid: uid_t? {
+    var appUid: uid_t? {
         get {
             providerConfiguration?[.uidKey] as? uid_t
         }
@@ -67,7 +66,7 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    public var wgProtocol: String? {
+    var wgProtocol: String? {
         get {
             providerConfiguration?[.wgProtocolKey] as? String
         }
@@ -77,7 +76,7 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    public var unleashFeatureFlagShouldForceConflictRefresh: Bool {
+    var unleashFeatureFlagShouldForceConflictRefresh: Bool {
         get {
             (providerConfiguration?[.forceConflictRefreshKey] as? Bool) ?? false
         }
@@ -87,9 +86,9 @@ extension NETunnelProviderProtocol {
         }
     }
 
-    // MARK: - 
+    // MARK: -
 
-    public func backupCustomSettings() -> [String: Any] {
+    func backupCustomSettings() -> [String: Any] {
         ensureProviderConfig()
 
         var custom = [String: Any]()
@@ -101,7 +100,7 @@ extension NETunnelProviderProtocol {
         return custom
     }
 
-    public func restoreCustomSettingsFrom(backup: [String: Any]) {
+    func restoreCustomSettingsFrom(backup: [String: Any]) {
         ensureProviderConfig()
 
         for key in CustomKeys.allCases {
@@ -113,7 +112,7 @@ extension NETunnelProviderProtocol {
 }
 
 @available(tvOS 17.0, *)
-fileprivate extension Dictionary<String, Any> {
+private extension [String: Any] {
     subscript(_ customKey: NETunnelProviderProtocol.CustomKeys) -> Any? {
         get {
             self[customKey.rawValue]

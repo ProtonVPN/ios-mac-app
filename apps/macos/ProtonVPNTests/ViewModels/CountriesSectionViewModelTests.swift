@@ -22,11 +22,11 @@ import XCTest
 import Dependencies
 
 import Domain
-import Persistence
 import LegacyCommon
+import Persistence
 
-@testable import ProtonVPN
 @testable import Announcement
+@testable import ProtonVPN
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!
@@ -38,13 +38,13 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     var mockFactory: DependencyFactory {
-        return DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory(propertiesManager: mockPropertiesManager)
     }
 
     var serverGroups: [ServerGroupInfo]!
 
     func withMockedRepository<T>(_ operation: () -> T) -> T {
-        return withDependencies {
+        withDependencies {
             // Normally we would be able to omit all arguments except groups, but doing so triggers a linker bug with XCTDynamicOverlay.
             $0.serverRepository = .init(
                 serverCount: { 0 },
@@ -106,7 +106,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ cellVM: CellModel, isHeaderWithTitle title: String) {
-        guard case .header(let headerVM) = cellVM else {
+        guard case let .header(headerVM) = cellVM else {
             XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
             return
         }
@@ -114,7 +114,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ cellVM: CellModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case .country(let groupVM) = cellVM else {
+        guard case let .country(groupVM) = cellVM else {
             XCTFail("Expected row view model to be a server group, but found: \(cellVM)")
             return
         }
@@ -155,14 +155,13 @@ struct AnnouncementManagerMock: AnnouncementManager {
     var hasUnreadAnnouncements: Bool { false }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement] { [] }
     func fetchCurrentOfferBannerFromStorage() -> Announcement? { nil }
-    func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
-    func markAsRead(announcement: Announcement) { }
-    func markAsRead(notificationID: String) { }
+    func offerBannerViewModel(dismiss _: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
+    func markAsRead(announcement _: Announcement) {}
+    func markAsRead(notificationID _: String) {}
     func shouldShowAnnouncementsIcon() -> Bool { false }
 }
 
 enum MockServerGroup {
-
     static var dev: ServerGroupInfo {
         .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
     }
@@ -174,5 +173,4 @@ enum MockServerGroup {
     static var switzerland: ServerGroupInfo {
         .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
     }
-
 }

@@ -1,5 +1,5 @@
 //
-//  LocalAgentFeatures.swift
+//  LocalAgentFeatures+LocalAgent.swift
 //  vpncore - Created on 27.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -37,7 +37,7 @@ enum LocalAgentFeaturesKeys: String {
 
 extension LocalAgentFeatures {
     func hasKey(key: LocalAgentFeaturesKeys) -> Bool {
-        return hasKey(key.rawValue)
+        hasKey(key.rawValue)
     }
 
     func getInt(key: LocalAgentFeaturesKeys) -> Int? {
@@ -47,7 +47,7 @@ extension LocalAgentFeatures {
 
         return Int(getInt(key.rawValue))
     }
-    
+
     func getBool(key: LocalAgentFeaturesKeys) -> Bool? {
         guard hasKey(key: key) else {
             return nil
@@ -55,7 +55,7 @@ extension LocalAgentFeatures {
 
         return getBool(key.rawValue)
     }
-    
+
     func getString(key: LocalAgentFeaturesKeys) -> String? {
         guard hasKey(key: key) else {
             return nil
@@ -78,11 +78,10 @@ extension LocalAgentFeatures {
 }
 
 extension LocalAgentFeatures {
-    
     // MARK: Getters
-    
+
     var vpnAccelerator: Bool? {
-        return getBool(key: .vpnAccelerator)
+        getBool(key: .vpnAccelerator)
     }
 
     var netshield: NetShieldType? {
@@ -91,9 +90,9 @@ extension LocalAgentFeatures {
         }
         return NetShieldType(rawValue: value)
     }
-    
+
     var bouncing: String? {
-        return getString(key: .bouncing)
+        getString(key: .bouncing)
     }
 
     var natType: NATType? {
@@ -105,9 +104,9 @@ extension LocalAgentFeatures {
     }
 
     var safeMode: Bool? {
-        return getBool(key: .safeMode)
+        getBool(key: .safeMode)
     }
-    
+
     // MARK: - Setters
 
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
@@ -126,7 +125,7 @@ extension LocalAgentFeatures {
     }
 
     func with(bouncing: String?) -> LocalAgentFeatures {
-        if let bouncing = bouncing {
+        if let bouncing {
             set(.bouncing, value: bouncing)
         }
         return self
@@ -138,15 +137,14 @@ extension LocalAgentFeatures {
     }
 
     func with(safeMode: Bool?) -> LocalAgentFeatures {
-        if let safeMode = safeMode {
+        if let safeMode {
             set(.safeMode, value: safeMode)
         }
         return self
     }
 
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
-        return self
-            .with(netshield: configuration.features.netshield)
+        with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)
             .with(natType: configuration.features.natType)

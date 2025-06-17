@@ -1,5 +1,5 @@
 //
-//  SmartProtocolProtocol+Priority.swift
+//  SmartProtocol+Priority.swift
 //  ProtonVPN - Created on 2020-10-21.
 //
 //  Copyright (c) 2021 Proton Technologies AG
@@ -36,51 +36,51 @@ enum SmartProtocolProtocol {
     var vpnProtocol: VpnProtocol {
         switch self {
         case .ikev2:
-            return .ike
+            .ike
         case .openVpnUdp:
-            return .openVpn(.udp)
+            .openVpn(.udp)
         case .openVpnTcp:
-            return .openVpn(.tcp)
+            .openVpn(.tcp)
         case .wireguardUdp:
-            return .wireGuard(.udp)
+            .wireGuard(.udp)
         case .wireguardTcp:
-            return .wireGuard(.tcp)
+            .wireGuard(.tcp)
         case .wireguardTls:
-            return .wireGuard(.tls)
+            .wireGuard(.tls)
         }
     }
 
     var priority: Int {
         #if os(iOS)
-        switch self {
-        case .wireguardUdp:
-            return 0
-        case .openVpnUdp:
-            return 1
-        case .openVpnTcp:
-            return 2
-        case .wireguardTls:
-            return 3
-        case .wireguardTcp:
-            return 4
-        case .ikev2:
-            return 5
-        }
+            switch self {
+            case .wireguardUdp:
+                return 0
+            case .openVpnUdp:
+                return 1
+            case .openVpnTcp:
+                return 2
+            case .wireguardTls:
+                return 3
+            case .wireguardTcp:
+                return 4
+            case .ikev2:
+                return 5
+            }
         #else
-        switch self {
-        case .wireguardUdp:
-            return 0
-        case .ikev2:
-            return 1
-        case .openVpnUdp:
-            return 2
-        case .openVpnTcp:
-            return 3
-        case .wireguardTls:
-            return 4
-        case .wireguardTcp:
-            return 5
-        }
+            switch self {
+            case .wireguardUdp:
+                return 0
+            case .ikev2:
+                return 1
+            case .openVpnUdp:
+                return 2
+            case .openVpnTcp:
+                return 3
+            case .wireguardTls:
+                return 4
+            case .wireguardTcp:
+                return 5
+            }
         #endif
     }
 }

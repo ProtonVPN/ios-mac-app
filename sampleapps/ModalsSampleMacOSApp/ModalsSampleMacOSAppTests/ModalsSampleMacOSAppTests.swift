@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-@testable import ModalsSampleMacOSApp
 import Modals
+@testable import ModalsSampleMacOSApp
+import XCTest
 
 class ModalsSampleMacOSAppTests: XCTestCase {
-
     func testCreatingUpsellViewControllers() throws {
         XCTAssertNotNil(ModalsFactory.upsellViewController(modalType: .allCountries(numberOfServers: 23, numberOfCountries: 45), upgradeAction: nil, continueAction: nil))
         XCTAssertNotNil(ModalsFactory.upsellViewController(modalType: .moderateNAT, upgradeAction: nil, continueAction: nil))

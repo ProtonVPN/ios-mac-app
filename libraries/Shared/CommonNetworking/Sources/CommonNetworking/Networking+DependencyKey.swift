@@ -22,10 +22,10 @@ import Dependencies
 import Ergonomics
 import IssueReporting
 
-import ProtonCoreServices
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
+import ProtonCoreNetworking
+import ProtonCoreServices
 
 public protocol VPNNetworking {
     var userTier: Int { get async throws }
@@ -55,7 +55,7 @@ public struct CoreNetworkingWrapper: VPNNetworking {
             .cookies(for: apiUrl)?
             .first(where: { $0.name == CommonNetworking.Constants.sessionIDCookieName })
     }
-    
+
     public var apiService: APIService {
         wrapped.apiService
     }
@@ -104,30 +104,30 @@ public enum VPNNetworkingKey: TestDependencyKey {
 }
 
 #if os(tvOS)
-// iOS and macOS implementations live in LegacyCommon, since we don't want to create a duplicate CoreNetworking instance.
-extension VPNNetworkingKey: DependencyKey {
-    public static let liveValue: VPNNetworking = {
-        #if TLS_PIN_DISABLE
-        let pinAPIEndpoints = false
-        #else
-        let pinAPIEndpoints = true
-        #endif
+    // iOS and macOS implementations live in LegacyCommon, since we don't want to create a duplicate CoreNetworking instance.
+    extension VPNNetworkingKey: DependencyKey {
+        public static let liveValue: VPNNetworking = {
+            #if TLS_PIN_DISABLE
+                let pinAPIEndpoints = false
+            #else
+                let pinAPIEndpoints = true
+            #endif
 
-        let networking = CoreNetworking(
-            delegate: Dependency(\.networkingDelegate).wrappedValue,
-            appInfo: Dependency(\.appInfo).wrappedValue,
-            authKeychain: Dependency(\.authKeychain).wrappedValue,
-            unauthKeychain: Dependency(\.unauthKeychain).wrappedValue,
-            pinApiEndpoints: pinAPIEndpoints
-        )
+            let networking = CoreNetworking(
+                delegate: Dependency(\.networkingDelegate).wrappedValue,
+                appInfo: Dependency(\.appInfo).wrappedValue,
+                authKeychain: Dependency(\.authKeychain).wrappedValue,
+                unauthKeychain: Dependency(\.unauthKeychain).wrappedValue,
+                pinApiEndpoints: pinAPIEndpoints
+            )
 
-        return CoreNetworkingWrapper(wrapped: networking)
-    }()
-}
+            return CoreNetworkingWrapper(wrapped: networking)
+        }()
+    }
 #endif
 
-extension DependencyValues {
-    public var networking: VPNNetworking {
+public extension DependencyValues {
+    var networking: VPNNetworking {
         get { self[VPNNetworkingKey.self] }
         set { self[VPNNetworkingKey.self] = newValue }
     }
@@ -135,7 +135,7 @@ extension DependencyValues {
 
 final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate in legacy common, but we don't want to import that beast
     var path: String {
-        return "/vpn/v2"
+        "/vpn/v2"
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {
@@ -144,43 +144,41 @@ final class VPNClientCredentialsRequest: Request { // TODO: There's a duplicate 
 }
 
 #if DEBUG
-struct VPNNetworkingMock: VPNNetworking {
-    var userTierResult: Result<Int, Error>
+    struct VPNNetworkingMock: VPNNetworking {
+        var userTierResult: Result<Int, Error>
 
-    init(userTierResult: Result<Int, Error> = .failure("" as GenericError)) {
-        self.userTierResult = userTierResult
-    }
-
-    func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
-        throw "" as GenericError
-    }
-
-    var userTier: Int {
-        get async throws {
-            try userTierResult.get()
+        init(userTierResult: Result<Int, Error> = .failure("" as GenericError)) {
+            self.userTierResult = userTierResult
         }
-    }
 
-    var userDisplayName: String? {
-        get async throws {
+        func acquireSessionIfNeeded() async throws -> ProtonCoreServices.SessionAcquiringResult {
             throw "" as GenericError
         }
-    }
 
-    func setSession(_ session: Session) {
+        var userTier: Int {
+            get async throws {
+                try userTierResult.get()
+            }
+        }
 
-    }
+        var userDisplayName: String? {
+            get async throws {
+                throw "" as GenericError
+            }
+        }
 
-    func perform<T>(request: any ProtonCoreNetworking.Request) async throws -> T where T : Decodable {
-        throw "" as GenericError
-    }
+        func setSession(_: Session) {}
 
-    var sessionCookie: HTTPCookie? {
-        nil
-    }
+        func perform<T>(request _: any ProtonCoreNetworking.Request) async throws -> T where T: Decodable {
+            throw "" as GenericError
+        }
 
-    var apiService: APIService {
-        fatalError("Not implemented")
+        var sessionCookie: HTTPCookie? {
+            nil
+        }
+
+        var apiService: APIService {
+            fatalError("Not implemented")
+        }
     }
-}
 #endif

@@ -45,7 +45,6 @@ struct SingleLineTextInputView: View {
             .padding(.vertical, 6)
             .padding(.horizontal)
             .background(RoundedRectangle(cornerRadius: 8).foregroundColor(colors.backgroundWeak))
-
         }
         .padding(.horizontal)
     }
@@ -63,9 +62,11 @@ struct SingleLineTextInputView_Previews: PreviewProvider {
                 submitLabel: "",
                 type: .textSingleLine,
                 isMandatory: true,
-                placeholder: "User name (email address)"),
-            value: $text)
+                placeholder: "User name (email address)"
+            ),
+            value: $text
+        )
 
-            .preferredColorScheme(.dark)
+        .preferredColorScheme(.dark)
     }
 }

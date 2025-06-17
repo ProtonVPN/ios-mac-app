@@ -44,7 +44,7 @@ public struct DatabaseConfiguration {
         databaseType: DatabaseType,
         schemaVersion: SchemaVersion = .latest
     ) -> DatabaseConfiguration {
-        return DatabaseConfiguration(
+        DatabaseConfiguration(
             executor: TestDatabaseExecutor(),
             databaseType: databaseType,
             schemaVersion: schemaVersion
@@ -53,15 +53,14 @@ public struct DatabaseConfiguration {
 }
 
 public enum DatabaseConfigurationKey: TestDependencyKey {
-
     /// Configured with global/shared in-memory database
     public static var testValue: DatabaseConfiguration {
         .withTestExecutor(databaseType: .inMemory)
     }
 }
 
-extension DependencyValues {
-    public var databaseConfiguration: DatabaseConfiguration {
+public extension DependencyValues {
+    var databaseConfiguration: DatabaseConfiguration {
         get { self[DatabaseConfigurationKey.self] }
         set { self[DatabaseConfigurationKey.self] = newValue }
     }

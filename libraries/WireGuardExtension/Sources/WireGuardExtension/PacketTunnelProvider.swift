@@ -5,13 +5,13 @@ import NetworkExtension
 import WireGuardKit
 import WireGuardLogging
 
+import CoreConnection
 import Dependencies
+import Domain
 import enum ExtensionIPC.WireguardProviderRequest
-import VPNShared // vpnAuthenticationStorage Dependency
 import NEHelper
 import Timer
-import Domain
-import CoreConnection
+import VPNShared // vpnAuthenticationStorage Dependency
 
 open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     public var dataTaskFactory: DataTaskFactory!
@@ -28,7 +28,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     private var connectedIpId: String?
 
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
-        self.protocolConfiguration as? NETunnelProviderProtocol
+        protocolConfiguration as? NETunnelProviderProtocol
     }
 
     public var transport: WireGuardTransport? {
@@ -37,19 +37,19 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
 
     private static var atlasSecret: String {
         #if DEBUG
-        @Dependency(\.storage) var storage
-        let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
-        return secret
+            @Dependency(\.storage) var storage
+            let secret = storage.getValue(forKey: StorageKeys.atlasSecret) as? String ?? ""
+            return secret
         #else
-        return ""
+            return ""
         #endif
     }
 
-    public override init() {
+    override public init() {
         AppContext.default = .wireGuardExtension
         self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
         self.appInfo = AppInfoImplementation(context: .wireGuardExtension)
-        
+
         self.timerFactory = TimerFactoryImplementation()
 
         let keychainHandle = AuthKeychain.default
@@ -57,17 +57,17 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
             keychain: keychainHandle,
-            appInfo: self.appInfo,
+            appInfo: appInfo,
             atlasSecret: Self.atlasSecret
         )
 
         self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory,
-            vpnAuthenticationStorage: self.vpnAuthenticationStorage,
+            vpnAuthenticationStorage: vpnAuthenticationStorage,
             keychain: keychainHandle
         )
-        
+
         super.init()
 
         self.dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: self, timerFactory: timerFactory)
@@ -79,21 +79,19 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
-    private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(.info, message: message)
-        }
-    }()
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { _, message in
+        wg_log(.info, message: message)
+    }
 
-    open override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
-        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"
+        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
@@ -196,7 +194,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
@@ -210,17 +208,17 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
                 wg_log(.error, staticMessage: "Starting tunnel failed: could not determine file descriptor")
                 errorHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
-            case .dnsResolution(let dnsErrors):
-                let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
+            case let .dnsResolution(dnsErrors):
+                let hostnamesWithDnsResolutionFailure = dnsErrors.map(\.address)
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorHandler(PacketTunnelProviderError.dnsResolutionFailure)
 
-            case .setNetworkSettings(let error):
+            case let .setNetworkSettings(error):
                 wg_log(.error, message: "Starting tunnel failed with setTunnelNetworkSettings returning \(error.localizedDescription)")
                 errorHandler(PacketTunnelProviderError.couldNotSetNetworkSettings)
 
-            case .startWireGuardBackend(let errorCode):
+            case let .startWireGuardBackend(errorCode):
                 wg_log(.error, message: "Starting tunnel failed with wgTurnOn returning \(errorCode)")
                 errorHandler(PacketTunnelProviderError.couldNotStartBackend)
 
@@ -232,7 +230,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
-        if let newVpnCertificateFeatures = newVpnCertificateFeatures {
+        if let newVpnCertificateFeatures {
             wg_log(.debug, message: "Connection restarted with another server. Will regenerate certificate.")
 
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { [weak self] result in
@@ -248,13 +246,13 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+    override open func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel with reason: \(reason)")
 
         completionHandler()
     }
 
-    open override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
+    override open func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
         do {
             let message = try WireguardProviderRequest.decode(data: messageData)
 
@@ -267,7 +265,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func sleep(completionHandler: @escaping () -> Void) {
+    override open func sleep(completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Getting ready to sleep, stopping certificate manager...")
 
         certificateRefreshManager.stop {
@@ -276,7 +274,7 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
         }
     }
 
-    open override func wake() {
+    override open func wake() {
         wg_log(.info, message: "Waking up, starting certificate refresh manager...")
 
         certificateRefreshManager.start {
@@ -315,7 +313,7 @@ private extension WireGuardPacketTunnelProvider {
         switch message {
         case .getRuntimeTunnelConfiguration:
             adapter.getRuntimeConfiguration { settings in
-                if let settings = settings, let data = settings.data(using: .utf8) {
+                if let settings, let data = settings.data(using: .utf8) {
                     completionHandler?(.ok(data: data))
                 } else {
                     completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
@@ -329,23 +327,23 @@ private extension WireGuardPacketTunnelProvider {
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     completionHandler?(.error(message: String(describing: error)))
                 }
             }
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     switch error {
                     case .sessionExpiredOrMissing:
                         completionHandler?(.errorSessionExpired)
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
-                    case .tooManyCertRequests(let retryAfter):
-                        if let retryAfter = retryAfter {
+                    case let .tooManyCertRequests(retryAfter):
+                        if let retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: nil))
@@ -364,7 +362,7 @@ private extension WireGuardPacketTunnelProvider {
                 completionHandler?(.ok(data: nil))
             }
         case .getCurrentLogicalAndServerId:
-            let response = "\(self.connectedLogicalId ?? "");\(self.connectedIpId ?? "")"
+            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
             wg_log(.info, message: "Result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }

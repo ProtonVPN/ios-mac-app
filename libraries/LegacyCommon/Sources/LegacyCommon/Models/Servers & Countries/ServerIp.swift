@@ -22,39 +22,41 @@
 import Foundation
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public class ServerIp: NSObject, NSCoding, Codable {
     public let id: String // "ID": "l8vWAXHBQNSQjPrxAr-D_BCxj1X0nW70HQRmAa-rIvzmKUA=="
     public let entryIp: String? // "EntryIP": "95.215.61.163"
     public let exitIp: String // "ExitIP": "95.215.61.164"
-    public let domain: String  // "Domain": "es-04.protonvpn.com"
+    public let domain: String // "Domain": "es-04.protonvpn.com"
     public let status: Int // "Status": 1  (1 - OK, 0 - under maintenance)
     public let label: String?
     public let x25519PublicKey: String?
     public let protocolEntries: PerProtocolEntries?
-    
+
     override public var description: String {
         let entryOverrides = protocolEntries?.description.prepending(", with overrides for:\n") ?? "\n"
 
-        return  "ID      = \(id)\n" +
-                "EntryIP = \(entryIp ?? "(nil)")\(entryOverrides)" +
-                "ExitIP  = \(exitIp)\n" +
-                "Domain  = \(domain)\n" +
-                "Status  = \(status)\n" +
-                "Label = \(label ?? "")\n" +
-                "X25519PublicKey = \(x25519PublicKey ?? "")\n"
+        return "ID      = \(id)\n" +
+            "EntryIP = \(entryIp ?? "(nil)")\(entryOverrides)" +
+            "ExitIP  = \(exitIp)\n" +
+            "Domain  = \(domain)\n" +
+            "Status  = \(status)\n" +
+            "Label = \(label ?? "")\n" +
+            "X25519PublicKey = \(x25519PublicKey ?? "")\n"
     }
-    
-    public init(id: String,
-                entryIp: String?,
-                exitIp: String,
-                domain: String,
-                status: Int,
-                label: String? = nil,
-                x25519PublicKey: String? = nil,
-                protocolEntries: PerProtocolEntries? = nil) {
+
+    public init(
+        id: String,
+        entryIp: String?,
+        exitIp: String,
+        domain: String,
+        status: Int,
+        label: String? = nil,
+        x25519PublicKey: String? = nil,
+        protocolEntries: PerProtocolEntries? = nil
+    ) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
@@ -65,7 +67,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
         self.protocolEntries = protocolEntries
         super.init()
     }
-    
+
     public init(dic: JSONDictionary) throws {
         self.id = try dic.stringOrThrow(key: "ID")
         self.exitIp = try dic.stringOrThrow(key: "ExitIP")
@@ -85,7 +87,7 @@ public class ServerIp: NSObject, NSCoding, Codable {
 
         return protocolEntries.overrides(vpnProtocol: vpnProtocol, defaultIp: entryIp)
     }
-    
+
     public func supports(vpnProtocol: VpnProtocol) -> Bool {
         entryIp(using: vpnProtocol) != nil
     }
@@ -135,8 +137,9 @@ public class ServerIp: NSObject, NSCoding, Codable {
 
         return result
     }
-    
+
     // MARK: - NSCoding
+
     private enum CodingKeys: String, CodingKey {
         case id = "IDKey"
         case entryIp = "entryIpKey"
@@ -144,55 +147,57 @@ public class ServerIp: NSObject, NSCoding, Codable {
         case domain = "domainKey"
         case status = "statusKey"
         case label = "labelKey"
-        case x25519PublicKey = "x25519PublicKey"
+        case x25519PublicKey
         case protocolEntries = "entryPerProtocol"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         guard let id = aDecoder.decodeObject(forKey: CodingKeys.id.rawValue) as? String,
-            let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
-            let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
-            let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
-                return nil
+              let entryIp = aDecoder.decodeObject(forKey: CodingKeys.entryIp.rawValue) as? String,
+              let exitIp = aDecoder.decodeObject(forKey: CodingKeys.exitIp.rawValue) as? String,
+              let domain = aDecoder.decodeObject(forKey: CodingKeys.domain.rawValue) as? String else {
+            return nil
         }
         let status = aDecoder.decodeInteger(forKey: CodingKeys.status.rawValue)
         let label = aDecoder.decodeObject(forKey: CodingKeys.label.rawValue) as? String
         let x25519PublicKey = aDecoder.decodeObject(forKey: CodingKeys.x25519PublicKey.rawValue) as? String
         let protocolEntries = aDecoder.decodeObject(forKey: CodingKeys.protocolEntries.rawValue) as? PerProtocolEntries
 
-        self.init(id: id,
-                  entryIp: entryIp,
-                  exitIp: exitIp,
-                  domain: domain,
-                  status: status,
-                  label: label,
-                  x25519PublicKey: x25519PublicKey,
-                  protocolEntries: protocolEntries)
+        self.init(
+            id: id,
+            entryIp: entryIp,
+            exitIp: exitIp,
+            domain: domain,
+            status: status,
+            label: label,
+            x25519PublicKey: x25519PublicKey,
+            protocolEntries: protocolEntries
+        )
     }
-    
-    public func encode(with aCoder: NSCoder) {
+
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     public var underMaintenance: Bool {
-        return status == 0
+        status == 0
     }
 
     // MARK: - Static functions
-    
+
     // swiftlint:disable:next nsobject_prefer_isequal
     public static func == (lhs: ServerIp, rhs: ServerIp) -> Bool {
-        return lhs.domain == rhs.domain
+        lhs.domain == rhs.domain
     }
 }
 
-extension PerProtocolEntries {
+public extension PerProtocolEntries {
     // looks like:
     // "EntryPerProtocol": {
     //     "WireGuardTLS": {"IPv4": "5.6.7.8"},
     //     "OpenVPNTCP": {"Ports": [22, 23]}
     //  }
-    public init?(dic: JSONDictionary) {
+    init?(dic: JSONDictionary) {
         guard let entries = dic["EntryPerProtocol"] as? [String: JSONDictionary] else {
             return nil
         }
@@ -200,19 +205,19 @@ extension PerProtocolEntries {
         self = .init(rawValue: entries.mapValues(ServerProtocolEntry.init(dic:)))
     }
 
-    public var asDict: JSONDictionary {
+    var asDict: JSONDictionary {
         rawValue.reduce(into: [:]) { partialResult, keyPair in
             partialResult[keyPair.key] = keyPair.value?.asDict as? AnyObject
         }
     }
 }
 
-extension ServerProtocolEntry {
-    public init?(dic: JSONDictionary) {
+public extension ServerProtocolEntry {
+    init?(dic: JSONDictionary) {
         self.init(ipv4: dic.string("IPv4"), ports: dic.intArray(key: "Ports"))
     }
 
-    public var asDict: JSONDictionary {
+    var asDict: JSONDictionary {
         var result: JSONDictionary = [:]
         if let ipv4 {
             result["IPv4"] = ipv4 as AnyObject

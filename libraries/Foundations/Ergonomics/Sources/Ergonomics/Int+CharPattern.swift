@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-extension Int {
-    public init(charPattern: String) {
+public extension Int {
+    init(charPattern: String) {
         assert(charPattern.count == 4, "Char pattern must have exactly 4 characters")
         self = charPattern.withCString { int8Pointer in
             let int32Pointer = UnsafeRawPointer(int8Pointer).bindMemory(to: Int32.self, capacity: 1)

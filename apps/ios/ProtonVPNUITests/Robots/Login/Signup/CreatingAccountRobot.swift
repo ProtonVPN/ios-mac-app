@@ -19,17 +19,15 @@
 import fusion
 import Strings
 
-fileprivate let titleId = "CompleteViewController.completeTitleLabel"
-fileprivate let subtitle = "CompleteViewController.completeDescriptionLabel"
-fileprivate let creatingAccount = "Creating your account"
-fileprivate let configuringAccess = Localizable.loginFetchVpnData
+private let titleId = "CompleteViewController.completeTitleLabel"
+private let subtitle = "CompleteViewController.completeDescriptionLabel"
+private let creatingAccount = "Creating your account"
+private let configuringAccess = Localizable.loginFetchVpnData
 
 class CreatingAccountRobot: CoreElements {
-    
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func creatingAccountScreenIsShown() -> OnboardingRobot {
             staticText(titleId).waitUntilExists(time: 110).checkExists()

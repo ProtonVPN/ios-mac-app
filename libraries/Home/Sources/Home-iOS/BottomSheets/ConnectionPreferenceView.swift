@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import ConnectionInventory
 import Dependencies
-import Theme
-import SharedViews
 import Domain
 import Ergonomics
 import HomeShared
-import ConnectionInventory
+import SharedViews
+import SwiftUI
+import Theme
 
 struct ConnectionPreferenceView: View {
     @Dependency(\.locale) private var locale
@@ -65,11 +65,11 @@ struct ConnectionPreferenceView: View {
 }
 
 #if DEBUG
-#Preview {
-    VStack(alignment: .leading, spacing: 0) {
-        DividedForEach(ConnectionPreferenceModel.staticPreferenceModels) { model in
-            ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
+    #Preview {
+        VStack(alignment: .leading, spacing: 0) {
+            DividedForEach(ConnectionPreferenceModel.staticPreferenceModels) { model in
+                ConnectionPreferenceView(model: model, isSelected: false, sendAction: { _ in })
+            }
         }
     }
-}
 #endif

@@ -29,8 +29,8 @@ public enum NetShieldState: LocalizedStringConvertible {
 
     public var localizedDescription: String {
         switch self {
-        case .on: return Localizable.settingsNetshieldOn
-        case .off: return Localizable.settingsNetshieldOff
+        case .on: Localizable.settingsNetshieldOn
+        case .off: Localizable.settingsNetshieldOff
         }
     }
 }
@@ -38,7 +38,7 @@ public enum NetShieldState: LocalizedStringConvertible {
 public struct NetShieldSettingsFeature: Reducer {
     public typealias State = NetShieldState
 
-    public init() { }
+    public init() {}
 
     public enum Action: Equatable {
         case set(value: State)

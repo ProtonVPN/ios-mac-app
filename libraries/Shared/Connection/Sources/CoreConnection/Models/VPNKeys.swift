@@ -20,7 +20,6 @@ import Foundation
 
 /// Ed25519 package key
 public struct PublicKey: Equatable, Sendable, Codable {
-
     /// 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -51,14 +50,14 @@ public struct PrivateKey: Equatable, Sendable, Codable, CustomStringConvertible,
     }
 
     public var description: String {
-    #if DEBUG
-        return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
-    #else
-        return "PrivateKey(<redacted>)"
-    #endif
+        #if DEBUG
+            return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+        #else
+            return "PrivateKey(<redacted>)"
+        #endif
     }
 
-    public var debugDescription: String  { description }
+    public var debugDescription: String { description }
 }
 
 /// Ed25519 key pair

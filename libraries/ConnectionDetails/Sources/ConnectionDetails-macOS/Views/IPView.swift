@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ConnectionDetailsShared
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import ConnectionDetailsShared
-import ComposableArchitecture
-import Strings
-import ProtonCoreUIFoundations
 
 public struct IPView: View {
-
     let store: StoreOf<IPViewFeature>
 
     @ScaledMetric var buttonSize: CGFloat = 16
@@ -46,16 +45,15 @@ public struct IPView: View {
                         store.send(.changeIPVisibility)
                     }, label: {
                         (store.localIpHidden
-                         ? IconProvider.eye
-                         : IconProvider.eyeSlash)
-                        .resizable().frame(width: buttonSize, height: buttonSize)
-                        .foregroundColor(Color(.text, .weak))
+                            ? IconProvider.eye
+                            : IconProvider.eyeSlash)
+                            .resizable().frame(width: buttonSize, height: buttonSize)
+                            .foregroundColor(Color(.text, .weak))
                     })
                     .buttonStyle(PlainButtonStyle())
-
                 }
 
-                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable ))
+                Text(store.localIpHidden ? "***.***.***.***" : (store.userIP ?? Localizable.connectionDetailsIpviewIpUnavailable))
                     .foregroundColor(Color(.text, .normal))
             }
             .frame(maxWidth: .infinity) // Makes both sides equal width

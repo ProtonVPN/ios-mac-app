@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import Persistence
 
 // MARK: Live implementations of app dependencies
 
-extension DatabaseConfiguration {
-
+public extension DatabaseConfiguration {
     /// Database configuration suitable for both debug and release builds.
     ///  - Database file located in Application Support directory
     ///  - Errors during database operations after initialisation are caught
@@ -31,7 +30,7 @@ extension DatabaseConfiguration {
     ///
     ///  - Note: duplicates DatabaseConfiguration.live from LegacyCommon, with the omission
     ///     of logging and Sentry error reporting.
-    public static var live: DatabaseConfiguration {
+    static var live: DatabaseConfiguration {
         let directoryURLs = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)
         guard let directoryURL = directoryURLs.first else {
             fatalError("Failed to initialise app DB: cannot find URL for caches Directory")
@@ -61,7 +60,6 @@ extension DatabaseConfiguration {
         )
     }
 }
-
 
 extension DatabaseConfigurationKey: DependencyKey {
     public static let liveValue: DatabaseConfiguration = .live

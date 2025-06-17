@@ -25,9 +25,9 @@ import XCTest
 import Dependencies
 
 import Domain
+@testable import LegacyCommon
 import VPNShared
 import VPNSharedTesting
-@testable import LegacyCommon
 
 final class NetShieldPropertyProviderImplementationTests: XCTestCase {
     static let username = "user1"
@@ -45,7 +45,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             }
         }
     }
-    
+
     func testWhenNothingIsSetReturnsLevel2ForPaidUsers() throws {
         withProvider(netShieldType: nil, tier: .paidTier) {
             XCTAssertEqual($0.netShieldType, .level2)
@@ -57,13 +57,13 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             XCTAssertEqual($0.netShieldType, NetShieldType.off)
         }
     }
-    
+
     func testWhenUnavailableOptionIsSetReturnsDefault() throws {
         withProvider(netShieldType: .level2, tier: .freeTier) {
             XCTAssertEqual($0.netShieldType, NetShieldType.off)
         }
     }
-    
+
     func testSavesValueToStorage() {
         withProvider(netShieldType: nil, tier: .paidTier) { provider in
             var provider = provider
@@ -75,7 +75,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             }
         }
     }
-    
+
     func testFreeUserCantTurnNetShieldOn() throws {
         let levels: [NetShieldType] = [.level1, .level2]
         for level in levels {
@@ -85,7 +85,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             )
         }
     }
-    
+
     func testPaidUserCanTurnNetShieldOn() throws {
         XCTAssertEqual(getAuthorizer(tier: .paidTier).canUseAllSubFeatures, .success)
     }
@@ -117,7 +117,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             XCTAssertEqual($0.netShieldType, .level2)
         }
     }
-    
+
     // MARK: -
 
     private func withProvider(netShieldType: NetShieldType?, tier: Int?, flags: FeatureFlags = .allEnabled, closure: @escaping (NetShieldPropertyProvider) -> Void) {
@@ -144,7 +144,7 @@ final class NetShieldPropertyProviderImplementationTests: XCTestCase {
             $0.featureFlagProvider = .constant(flags: .allEnabled)
             $0.credentialsProvider = .constant(credentials: .tier(tier))
         } operation: {
-            return LiveFeatureAuthorizerProvider()
+            LiveFeatureAuthorizerProvider()
                 .authorizer(for: NetShieldType.self)
         }
     }

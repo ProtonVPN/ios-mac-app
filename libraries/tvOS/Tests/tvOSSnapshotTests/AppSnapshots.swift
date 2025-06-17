@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import SnapshotTesting
-import ComposableArchitecture
-@testable import tvOS
-import SwiftUI
 @testable import CommonNetworking
+import ComposableArchitecture
+import SnapshotTesting
+import SwiftUI
+@testable import tvOS
+import XCTest
 
 final class AppFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightApp() {
@@ -37,7 +37,8 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
     func upsell(trait: UIUserInterfaceStyle) {
         let store = Store(initialState: AppFeature.State(
             welcome: .init(destination: .upsell(.loading)),
-            networking: .authenticated(.auth(uid: "")))
+            networking: .authenticated(.auth(uid: ""))
+        )
         ) {
             AppFeature()
         } withDependencies: {
@@ -45,7 +46,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.continuousClock = TestClock()
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [ ] },
+                getOptions: { [] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
 
@@ -70,7 +71,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
                     duration: .oneYear, price: .init(amount: 12, currency: "USD", locale: .en_US)
                 ),
                 iap: .freePlan
-            )
+            ),
         ]))))
         snap(appView, caseName: "8 Upsell Loaded", trait: trait)
     }
@@ -85,7 +86,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.continuousClock = TestClock()
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
-                getOptions: { [ ] },
+                getOptions: { [] },
                 attemptPurchase: { _ in .purchaseCancelled }
             )
         }
@@ -108,6 +109,6 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
     }
 }
 
-fileprivate extension Locale {
+private extension Locale {
     static let en_US: Self = .init(identifier: "en_US")
 }

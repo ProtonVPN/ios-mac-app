@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -51,13 +51,13 @@ let package = Package(
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ]
         ),
-        .testTarget(name: "CommonNetworkingTests", dependencies: ["CommonNetworking"])
+        .testTarget(name: "CommonNetworkingTests", dependencies: ["CommonNetworking"]),
     ]
 )
 
 extension Range<PackageDescription.Version> {
     static func upTo(_ version: Version) -> Self {
-        "0.0.0"..<version
+        "0.0.0" ..< version
     }
 }
 

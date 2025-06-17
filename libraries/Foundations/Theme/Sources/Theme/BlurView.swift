@@ -22,9 +22,11 @@ import SwiftUI
 private struct BlurView: View {
     var body: some View {
         ZStack {
-            LinearGradient(colors: [.red, .blue],
-                           startPoint: .top,
-                           endPoint: .bottom)
+            LinearGradient(
+                colors: [.red, .blue],
+                startPoint: .top,
+                endPoint: .bottom
+            )
             .ignoresSafeArea()
             VStack {
                 MaterialsSetView()
@@ -39,7 +41,7 @@ private struct MaterialsSetView: View {
     var body: some View {
         HStack {
             #if !os(tvOS)
-            MaterialView(title: "bar", material: .bar)
+                MaterialView(title: "bar", material: .bar)
             #endif
             MaterialView(title: "ultra\nThin", material: .ultraThinMaterial)
             MaterialView(title: "thin", material: .translucentLight)
@@ -56,8 +58,10 @@ private struct MaterialView: View {
     var body: some View {
         Text(title)
             .padding(.init(top: 100, leading: 10, bottom: 100, trailing: 10))
-            .background(material,
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .background(
+                material,
+                in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            )
     }
 }
 

@@ -17,19 +17,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Strings
+import UIKit
 
 protocol RecentSearchesHeaderViewDelegate: AnyObject {
     func userDidRequestClear()
 }
 
 final class RecentSearchesHeaderView: UIView {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var clearButton: UIButton!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var clearButton: UIButton!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 
@@ -56,7 +55,8 @@ final class RecentSearchesHeaderView: UIView {
 
     // MARK: Actions
 
-    @objc private func clearPressed() {
+    @objc
+    private func clearPressed() {
         delegate?.userDidRequestClear()
     }
 }

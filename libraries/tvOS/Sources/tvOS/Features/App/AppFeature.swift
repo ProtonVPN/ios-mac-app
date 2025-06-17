@@ -18,15 +18,15 @@
 
 import Foundation
 
-import ComposableArchitecture
 import CommonNetworking
+import ComposableArchitecture
 import ModalsServices
 import ProtonCoreFeatureFlags
 
-import ProtonCoreLog
-import PMLogger
-import enum VPNShared.StorageKeys
 import struct Domain.Alert
+import PMLogger
+import ProtonCoreLog
+import enum VPNShared.StorageKeys
 
 /// Some business logic requires communication between reducers. This is facilitated by the parent feature, which
 /// listens to actions coming from one child, and sends the relevant action to the other child. This allows features to
@@ -118,7 +118,8 @@ struct AppFeature {
                         for await alert in await alertService.alerts() {
                             await send(.incomingAlert(alert))
                         }
-                    }]
+                    },
+                ]
                 if case .unauthenticated = state.networking {
                     effects.insert(.send(.networking(.startAcquiringSession)), at: 0)
                 }
@@ -143,7 +144,7 @@ struct AppFeature {
             case .main:
                 return .none
 
-            case .welcome(.destination(.presented(.signIn(.signInFinished(.success(let credentials)))))):
+            case let .welcome(.destination(.presented(.signIn(.signInFinished(.success(credentials)))))):
                 state.main.currentTab = .home
                 return .send(.networking(.forkedSessionAuthenticated(.success(credentials))))
 
@@ -157,23 +158,24 @@ struct AppFeature {
                 state.welcome = .init() // Reset welcome state
                 return .none
 
-            case .networking(.delegate(.tier(let tier))):
+            case let .networking(.delegate(.tier(tier))):
                 state.$userTier.withLock { $0 = tier }
                 return .none
 
-            case .networking(.delegate(.displayName(let name))):
+            case let .networking(.delegate(.displayName(name))):
                 state.$userDisplayName.withLock { $0 = name }
                 return .none
+
             case .networking:
                 return .none
 
-            case .incomingAlert(let alert):
+            case let .incomingAlert(alert):
                 state.alert = alert.alertState(from: Action.Alert.self)
                 return .none
 
-            case .alert(let action):
+            case let .alert(action):
                 switch action {
-                case .presented(let action):
+                case let .presented(action):
                     switch action {
                     case .signOut:
                         return .send(.signOut)
@@ -189,7 +191,7 @@ struct AppFeature {
             case .upsell(.finishedLoadingProducts(.failure)):
                 return .send(.signOut)
 
-            case .upsell(.upsold(let tier)):
+            case let .upsell(.upsold(tier)):
                 // We already have a session at this point. Updating tier will dimiss the upsell flow
                 state.$userTier.withLock { $0 = tier }
                 return .none
@@ -229,7 +231,7 @@ struct AppFeature {
         @Dependency(\.dohConfiguration) var doh
         PMLog.setExternalLoggerHost(doh.defaultHost)
 
-        ProtonCoreLog.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .trace:
                 log.debug("\(message)", category: .core)

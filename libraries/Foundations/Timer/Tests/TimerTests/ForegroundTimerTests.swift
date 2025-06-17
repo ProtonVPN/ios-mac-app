@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Timer
+import XCTest
 
 final class ForegroundTimerTests: XCTestCase {
-
     func testForegroundTimerFiresNormally() throws {
         let expectation = XCTestExpectation(description: "Foreground timer should fire when scheduled if it has not been suspended")
         expectation.expectedFulfillmentCount = 1
@@ -67,4 +66,3 @@ final class ForegroundTimerTests: XCTestCase {
         XCTAssert(timer.isValid, "Timer should still be valid after consecutive suspends and resumes.")
     }
 }
-

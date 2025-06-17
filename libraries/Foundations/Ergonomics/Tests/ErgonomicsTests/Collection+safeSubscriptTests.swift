@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Ergonomics
+import XCTest
 
 final class CollectionSafeSubscriptTests: XCTestCase {
-
     func testCollectionSafeSubscriptReturnsNilForNonExistingIndex() throws {
         let array = [100, 200, 300, 400, 500]
         XCTAssertEqual(array[safe: 10], nil)

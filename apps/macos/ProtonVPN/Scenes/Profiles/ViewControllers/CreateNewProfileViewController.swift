@@ -21,52 +21,52 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Ergonomics
-import Strings
 import Domain
+import Ergonomics
+import LegacyCommon
+import Strings
 
 final class CreateNewProfileViewController: NSViewController {
+    @IBOutlet private var profileSettingsLabel: PVPNTextField!
+    @IBOutlet private var nameLabel: PVPNTextField!
+    @IBOutlet private var nameTextField: TextFieldWithFocus!
+    @IBOutlet private var nameTextFieldHorizontalLine: NSBox!
+    @IBOutlet private var colorPickerLabel: PVPNTextField!
+    @IBOutlet private var colorPickerViewContainer: NSView!
 
-    @IBOutlet private weak var profileSettingsLabel: PVPNTextField!
-    @IBOutlet private weak var nameLabel: PVPNTextField!
-    @IBOutlet private weak var nameTextField: TextFieldWithFocus!
-    @IBOutlet private weak var nameTextFieldHorizontalLine: NSBox!
-    @IBOutlet private weak var colorPickerLabel: PVPNTextField!
-    @IBOutlet private weak var colorPickerViewContainer: NSView!
+    @IBOutlet private var connectionSettingsLabel: PVPNTextField!
+    @IBOutlet private var typeLabel: PVPNTextField!
+    @IBOutlet private var typeList: HoverDetectionPopUpButton!
+    @IBOutlet private var typeListHorizontalLine: NSBox!
+    @IBOutlet private var countryLabel: PVPNTextField!
+    @IBOutlet private var countryList: HoverDetectionPopUpButton!
+    @IBOutlet private var countryListHorizontalLine: NSBox!
+    @IBOutlet private var serverLabel: PVPNTextField!
+    @IBOutlet private var serverList: HoverDetectionPopUpButton!
+    @IBOutlet private var serverListHorizontalLine: NSBox!
+    @IBOutlet private var protocolLabel: PVPNTextField!
+    @IBOutlet private var protocolList: HoverDetectionPopUpButton!
+    @IBOutlet private var protocolListHorizontalLine: NSBox!
+    @IBOutlet private var protocolEnablementProgress: NSProgressIndicator!
 
-    @IBOutlet private weak var connectionSettingsLabel: PVPNTextField!
-    @IBOutlet private weak var typeLabel: PVPNTextField!
-    @IBOutlet private weak var typeList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var typeListHorizontalLine: NSBox!
-    @IBOutlet private weak var countryLabel: PVPNTextField!
-    @IBOutlet private weak var countryList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var countryListHorizontalLine: NSBox!
-    @IBOutlet private weak var serverLabel: PVPNTextField!
-    @IBOutlet private weak var serverList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var serverListHorizontalLine: NSBox!
-    @IBOutlet private weak var protocolLabel: PVPNTextField!
-    @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var protocolListHorizontalLine: NSBox!
-    @IBOutlet private weak var protocolEnablementProgress: NSProgressIndicator!
-
-    @IBOutlet private weak var warningLabel: PVPNTextField!
-    @IBOutlet private weak var warningLabelHorizontalLine: NSBox!
-    @IBOutlet private weak var footerView: NSView!
-    @IBOutlet private weak var saveButton: PrimaryActionButton!
-    @IBOutlet private weak var cancelButton: CancellationButton!
+    @IBOutlet private var warningLabel: PVPNTextField!
+    @IBOutlet private var warningLabelHorizontalLine: NSBox!
+    @IBOutlet private var footerView: NSView!
+    @IBOutlet private var saveButton: PrimaryActionButton!
+    @IBOutlet private var cancelButton: CancellationButton!
 
     fileprivate var viewModel: CreateNewProfileViewModel!
 
     private var colorPickerViewController: ColorPickerViewController!
 
     private var isSessionUnderway: Bool {
-        return !nameTextField.stringValue.isEmpty ||
+        !nameTextField.stringValue.isEmpty ||
             typeList.indexOfSelectedItem != 0 ||
             countryList.indexOfSelectedItem != 0
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -209,30 +209,38 @@ final class CreateNewProfileViewController: NSViewController {
         }
     }
 
-    @objc private func typeSelected() {
+    @objc
+    private func typeSelected() {
         typeList.selectedViewModel?.handler()
     }
 
-    @objc private func countrySelected() {
+    @objc
+    private func countrySelected() {
         countryList.selectedViewModel?.handler()
     }
 
-    @objc private func serverSelected() {
+    @objc
+    private func serverSelected() {
         serverList.selectedViewModel?.handler()
     }
 
-    @objc private func protocolSelected() {
+    @objc
+    private func protocolSelected() {
         protocolList.selectedViewModel?.handler()
     }
 
-    @objc private func tourCancelled() {
+    @objc
+    private func tourCancelled() {
         viewModel.sysexTourCancelled?()
     }
 
-    @objc private func cancelButtonAction() {
+    @objc
+    private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(title: Localizable.createNewProfile,
-                                                  description: Localizable.currentSelectionWillBeLost) { [weak self] in
+            let viewModel = WarningPopupViewModel(
+                title: Localizable.createNewProfile,
+                description: Localizable.currentSelectionWillBeLost
+            ) { [weak self] in
                 self?.viewModel.clearContent()
             }
             presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
@@ -241,7 +249,8 @@ final class CreateNewProfileViewController: NSViewController {
         viewModel.clearContent()
     }
 
-    @objc private func saveButtonAction() {
+    @objc
+    private func saveButtonAction() {
         viewModel.profileName = nameTextField.stringValue
         viewModel.save()
     }
@@ -304,7 +313,8 @@ final class CreateNewProfileViewController: NSViewController {
         }
     }
 
-    @objc private func clearContent() {
+    @objc
+    private func clearContent() {
         nameTextField.stringValue = ""
         warningLabel.isHidden = true
         warningLabelHorizontalLine.isHidden = true
@@ -316,17 +326,19 @@ final class CreateNewProfileViewController: NSViewController {
 }
 
 // MARK: - TextField highlight on focus
+
 extension CreateNewProfileViewController: TextFieldFocusDelegate {
     var shouldBecomeFirstResponder: Bool { true }
 
-    func willReceiveFocus(_ textField: NSTextField) {
+    func willReceiveFocus(_: NSTextField) {
         nameTextFieldHorizontalLine.fillColor = .color(.border, .interactive)
     }
 }
 
 // MARK: - TextField loss of highlight on loss of focus
+
 extension CreateNewProfileViewController: NSTextFieldDelegate {
-    func controlTextDidEndEditing(_ obj: Notification) {
+    func controlTextDidEndEditing(_: Notification) {
         nameTextFieldHorizontalLine.fillColor = viewModel.color(.border)
     }
 }

@@ -20,16 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
-import VPNShared
 import VPNAppCore
+import VPNShared
+import XCTest
 
-import Domain
 import Dependencies
+import Domain
 
 @testable import Announcement
-@testable import VPNSharedTesting
 @testable import LegacyCommon
+@testable import VPNSharedTesting
 
 class AnnouncementsViewModelTests: XCTestCase {
 //    private var manager: AnnouncementManager!
@@ -68,7 +68,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     }
 }
 
-fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
+private class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
     public let propertiesManager: PropertiesManagerProtocol
     public let coreAlertService: CoreAlertService
     public let appInfo: AppInfo
@@ -82,23 +82,23 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
     }
 
     func makeAnnouncementManager() -> AnnouncementManager {
-        return announcementManager
+        announcementManager
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
+        propertiesManager
     }
 
     func makeCoreAlertService() -> CoreAlertService {
-        return coreAlertService
+        coreAlertService
     }
 
     func makeAppInfo(context: AppContext) -> AppInfo {
-        return AppInfoImplementation(context: context)
+        AppInfoImplementation(context: context)
     }
 }
 
-fileprivate extension Announcement {
+private extension Announcement {
     static let mock: Self = .init(
         notificationID: "1",
         startTime: Date(),

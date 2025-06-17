@@ -16,18 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
-@testable import tvOS
 @testable import Connection
 @testable import ExtensionManager
+@testable import tvOS
+import XCTest
 
 import DomainTestSupport
 @testable import LocalAgent
 import PersistenceTestSupport
 
 final class MainFeatureTests: XCTestCase {
-
     @MainActor
     func testTabSelection() async {
         let store = TestStore(initialState: MainFeature.State()) {
@@ -84,7 +83,7 @@ final class MainFeatureTests: XCTestCase {
         // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
         // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
-            return MainFeature()
+            MainFeature()
         } withDependencies: {
             $0.serverIdentifier = .init(fullServerInfo: { _ in nil })
             $0.serverRepository = .notEmpty()

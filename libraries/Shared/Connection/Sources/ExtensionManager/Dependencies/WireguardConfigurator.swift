@@ -23,10 +23,10 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import enum Domain.VpnProtocol
-import enum Domain.VPNFeatureFlagType
-import enum Domain.WireGuardTransport
 import struct Domain.ServerConnectionIntent
+import enum Domain.VPNFeatureFlagType
+import enum Domain.VpnProtocol
+import enum Domain.WireGuardTransport
 import protocol Localization.LocalizedStringConvertible
 
 import CoreConnection
@@ -43,15 +43,14 @@ public enum ConnectionConfigurationKey: DependencyKey {
     public static var liveValue = ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: .init())
 }
 
-extension DependencyValues {
-    public var connectionConfiguration: ConnectionConfiguration {
+public extension DependencyValues {
+    var connectionConfiguration: ConnectionConfiguration {
         get { self[ConnectionConfigurationKey.self] }
         set { self[ConnectionConfigurationKey.self] = newValue }
     }
 }
 
 extension ManagerConfigurator {
-
     private static func configuration(with connectionIntent: ServerConnectionIntent) throws -> NETunnelProviderProtocol {
         @Dependency(\.bundleIDClient) var bundleIDClient
         let bundleID: String = bundleIDClient.bundleIdentifierForTarget()
@@ -75,10 +74,10 @@ extension ManagerConfigurator {
         @Dependency(\.date) var date
         protocolConfiguration.username = nil // Only required for IKEv2.
 
-#if os(iOS)
-        protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
-        protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
-#endif
+        #if os(iOS)
+            protocolConfiguration.includeAllNetworks = connectionIntent.tunnelSettings.features.killSwitch
+            protocolConfiguration.excludeLocalNetworks = connectionIntent.tunnelSettings.features.excludeLocalNetworks
+        #endif
 
         // Future: remove this flag and the plumbing that goes all the way to CertificateRefreshRequest.withPublicKey
         // in the NEHelper module and in `parameters` in the CertificateRequest struct in LegacyCommon. (VPNAPPL-2134)
@@ -100,7 +99,7 @@ extension ManagerConfigurator {
 
         var configData = Data([UInt8(version.rawValue)])
         do {
-            configData.append(try encoder.encode(storedConfig))
+            try configData.append(encoder.encode(storedConfig))
         } catch {
             throw WireguardConfiguratorError.configurationEncodingError(error)
         }
@@ -117,12 +116,12 @@ extension ManagerConfigurator {
     }
 
     static var wireGuardConfigurator: ManagerConfigurator {
-        return ManagerConfigurator(
+        ManagerConfigurator(
             configure: { manager, operation in
                 manager.onDemandRules = [NEOnDemandRuleConnect()]
 
                 switch operation {
-                case .connection(let connectionIntent):
+                case let .connection(connectionIntent):
                     manager.vpnProtocolConfiguration = try configuration(with: connectionIntent)
                     manager.localizedDescription = configurationTitle(for: connectionIntent)
                     manager.isOnDemandEnabled = true
@@ -137,14 +136,14 @@ extension ManagerConfigurator {
     }
 
     private static func configurationTitle(for intent: ServerConnectionIntent) -> String {
-#if DEBUG
-        let serverName = intent.server.logical.name
-        let transport = intent.tunnelSettings.transport
-        let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
-        return "\(serverName) - \(connectionProtocol)"
-#else
-        return "Proton VPN"
-#endif
+        #if DEBUG
+            let serverName = intent.server.logical.name
+            let transport = intent.tunnelSettings.transport
+            let connectionProtocol = VpnProtocol.wireGuard(transport).localizedDescription
+            return "\(serverName) - \(connectionProtocol)"
+        #else
+            return "Proton VPN"
+        #endif
     }
 }
 

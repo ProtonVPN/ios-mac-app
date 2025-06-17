@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class ClearCancellationButton: HoverDetectionButton {
     override var title: String {
@@ -30,16 +30,16 @@ class ClearCancellationButton: HoverDetectionButton {
             configureTitle()
         }
     }
-    
+
     var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.borderWidth = 2
         DarkAppearance {
@@ -47,11 +47,11 @@ class ClearCancellationButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
-    
+
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 }
 

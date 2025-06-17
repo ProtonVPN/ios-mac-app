@@ -20,21 +20,21 @@ import UIKit
 
 final class CityCell: UITableViewCell, ConnectTableViewCell {
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var countryLabel: UILabel!
-    @IBOutlet private weak var cityLabel: UILabel!
-    @IBOutlet private weak var flagImageView: UIImageView!
-    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var countryLabel: UILabel!
+    @IBOutlet private var cityLabel: UILabel!
+    @IBOutlet private var flagImageView: UIImageView!
+    @IBOutlet private var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var flagIconWidthConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 
@@ -86,13 +86,15 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func connectButtonTap(_ sender: Any) {
+    @IBAction
+    private func connectButtonTap(_: Any) {
         connect()
     }
 
     // MARK: Setup
 
-    @IBAction private func rowTapped(_ sender: Any, forEvent event: UIEvent) {
+    @IBAction
+    private func rowTapped(_: Any, forEvent _: UIEvent) {
         connect()
     }
 
@@ -110,7 +112,7 @@ final class CityCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension CityCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle? = nil
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

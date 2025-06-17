@@ -17,17 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 @testable import Search
+import UIKit
 
 final class ServerViewModelMock: ServerViewModel {
-    
     var isRedesign: Bool = false
-    
+
     var isPartnerServer: Bool
 
     var textColor: UIColor
-    
+
     let description: String
 
     let isSmartAvailable: Bool = false
@@ -41,7 +40,7 @@ final class ServerViewModelMock: ServerViewModel {
     let connectIcon: UIImage? = nil
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? "UPGRADE" : nil
+        isUsersTierTooLow ? "UPGRADE" : nil
     }
 
     var connectionChanged: (() -> Void)?
@@ -70,17 +69,14 @@ final class ServerViewModelMock: ServerViewModel {
 
     let translatedCity: String?
 
-    func connectAction() {
+    func connectAction() {}
 
-    }
-    
-    func partnersIcon(completion: @escaping (UIImage?) -> Void) { }
+    func partnersIcon(completion _: @escaping (UIImage?) -> Void) {}
 
-    func cancelPartnersIconRequests() { }
-
+    func cancelPartnersIconRequests() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil, translatedCity: String? = nil, isPartnerServer: Bool = false) {
-        description = server
+        self.description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow

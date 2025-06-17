@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,12 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
             name: "Home",
-            targets: ["Home"])
+            targets: ["Home"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
@@ -81,7 +82,7 @@ let package = Package(
             resources: [
                 .process("Resources/BlankMap-World.svg"),
                 .process("Resources/widget-ios-v4.json"),
-                .process("Resources/Assets.xcassets")
+                .process("Resources/Assets.xcassets"),
             ]
         ),
         .target(
@@ -93,7 +94,7 @@ let package = Package(
         .target(
             name: "Home-macOS",
             dependencies: [
-                "HomeShared"
+                "HomeShared",
             ],
             resources: []
         ),
@@ -111,7 +112,7 @@ let package = Package(
             dependencies: [
                 "Home",
                 "Home-iOS",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .testTarget(
@@ -123,6 +124,6 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
-        )
+        ),
     ]
 )

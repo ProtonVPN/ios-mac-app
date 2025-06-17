@@ -21,8 +21,8 @@ import Search
 import UIKit
 
 final class CityItemViewModel: CityViewModel {
-    let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
-    
+    let textColor: UIColor = .init(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
+
     let cityName: String
 
     let translatedCityName: String? = nil
@@ -41,9 +41,7 @@ final class CityItemViewModel: CityViewModel {
 
     let connectButtonColor: UIColor = .darkGray
 
-    func connectAction() {
-
-    }
+    func connectAction() {}
 
     init(cityName: String, countryName: String, countryFlag: UIImage?) {
         self.cityName = cityName
@@ -53,9 +51,8 @@ final class CityItemViewModel: CityViewModel {
 }
 
 final class CountryItemViewModel: CountryViewModel {
-    
     var isRedesign: Bool = false
-    
+
     var showCountryConnectButton: Bool = false
 
     var showFeatureIcons: Bool = false
@@ -88,35 +85,32 @@ final class CountryItemViewModel: CountryViewModel {
 
     let cities: [CityViewModel]
 
-    func connectAction() {
-
-    }
+    func connectAction() {}
 
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
-        description = country
+        self.description = country
         self.servers = servers
         self.isSecureCoreCountry = isSecureCoreCountry
 
-        let servers = [ServerTier.free, ServerTier.plus].flatMap({ servers[$0] ?? [] })
-        let groups = Dictionary.init(grouping: servers, by: { $0.city })
-        self.cities = groups.map({
+        let servers = [ServerTier.free, ServerTier.plus].flatMap { servers[$0] ?? [] }
+        let groups = Dictionary(grouping: servers, by: { $0.city })
+        self.cities = groups.map {
             CityItemViewModel(cityName: $0.key, countryName: country, countryFlag: UIImage(named: "ch-plain"))
-        }).sorted(by: { $0.cityName < $1.cityName })
+        }.sorted(by: { $0.cityName < $1.cityName })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
-        return servers
+        servers
     }
 
     func getCities() -> [CityViewModel] {
-        return cities
+        cities
     }
 }
 
 final class ServerItemViewModel: ServerViewModel {
-
     var isRedesign: Bool = false
-    
+
     var isPartnerServer: Bool = false
 
     var isTorAvailable: Bool = false
@@ -131,9 +125,9 @@ final class ServerItemViewModel: ServerViewModel {
         completion(nil)
     }
 
-    func cancelPartnersIconRequests() { }
+    func cancelPartnersIconRequests() {}
 
-    let textColor: UIColor = UIColor(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
+    let textColor: UIColor = .init(red: 138 / 255, green: 110 / 255, blue: 255 / 255, alpha: 1)
 
     let description: String
 
@@ -148,7 +142,7 @@ final class ServerItemViewModel: ServerViewModel {
     let connectIcon: UIImage? = UIImage(named: "ic-power-off")
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? "UPGRADE" : nil
+        isUsersTierTooLow ? "UPGRADE" : nil
     }
 
     var connectionChanged: (() -> Void)?
@@ -177,12 +171,10 @@ final class ServerItemViewModel: ServerViewModel {
 
     let translatedCity: String? = nil
 
-    func connectAction() {
-
-    }
+    func connectAction() {}
 
     init(server: String, city: String, countryName: String, isUsersTierTooLow: Bool = false, entryCountryName: String? = nil) {
-        description = server
+        self.description = server
         self.city = city
         self.countryName = countryName
         self.isUsersTierTooLow = isUsersTierTooLow

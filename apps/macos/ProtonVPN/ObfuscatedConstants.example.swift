@@ -35,7 +35,6 @@
 import Foundation
 
 class ObfuscatedConstants {
-    
     static let sentryDsnmacOS: String = ""
     static let sentryDsniOS: String = ""
 

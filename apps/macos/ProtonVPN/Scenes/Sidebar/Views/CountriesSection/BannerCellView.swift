@@ -1,5 +1,5 @@
 //
-//  CountryItemCellView.swift
+//  BannerCellView.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -26,14 +26,13 @@ import LegacyCommon
 import Theme
 
 final class BannerCellView: NSView {
-    
-    @IBOutlet private weak var leftImage: NSImageView!
-    @IBOutlet private weak var rightChevron: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var label: NSTextField!
-    @IBOutlet private weak var separatorViewTop: NSView!
-    @IBOutlet private weak var separatorViewBottom: NSView!
-    
+    @IBOutlet private var leftImage: NSImageView!
+    @IBOutlet private var rightChevron: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var label: NSTextField!
+    @IBOutlet private var separatorViewTop: NSView!
+    @IBOutlet private var separatorViewBottom: NSView!
+
     private var viewModel: BannerViewModel!
 
     override func awakeFromNib() {
@@ -51,9 +50,9 @@ final class BannerCellView: NSView {
         rightChevron.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)?.colored(.weak)
 
         DarkAppearance {
-            [separatorViewTop, separatorViewBottom].forEach {
-                $0.wantsLayer = true
-                $0.layer?.backgroundColor = .cgColor(.border, .weak)
+            for item in [separatorViewTop, separatorViewBottom] {
+                item?.wantsLayer = true
+                item?.layer?.backgroundColor = .cgColor(.border, .weak)
             }
         }
     }
@@ -69,11 +68,12 @@ final class BannerCellView: NSView {
     }
 
     // MARK: - Actions
-    
-    @IBAction private func didTap(_ sender: Any) {
+
+    @IBAction
+    private func didTap(_: Any) {
         viewModel.action()
     }
-    
+
     // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
@@ -81,11 +81,11 @@ final class BannerCellView: NSView {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return []
+        []
     }
 
     // MARK: - Mouse hovering
-   
+
     override func resetCursorRects() {
         addCursorRect(roundedBackgroundView.frame, cursor: .pointingHand)
     }

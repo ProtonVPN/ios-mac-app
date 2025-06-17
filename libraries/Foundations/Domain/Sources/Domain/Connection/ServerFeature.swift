@@ -24,7 +24,7 @@ public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
     public static let allCases: [ServerFeature] = [.secureCore, .tor, .p2p, .streaming, .ipv6, .restricted]
 
     public let rawValue: Int
-    
+
     public static let secureCore = ServerFeature(bitPosition: 0) // 1
     public static let tor = ServerFeature(bitPosition: 1) // 2
     public static let p2p = ServerFeature(bitPosition: 2) // 4
@@ -54,27 +54,26 @@ public struct ServerFeature: OptionSet, CaseIterable, Codable, Sendable {
 }
 
 extension ServerFeature: CustomStringConvertible {
-
     public var description: String {
-        return "\(elements().map(\.featureName))"
+        "\(elements().map(\.featureName))"
     }
 
     private var featureName: String {
         switch self {
         case .secureCore:
-            return "secureCore"
+            "secureCore"
         case .tor:
-            return "tor"
+            "tor"
         case .p2p:
-            return "p2p"
+            "p2p"
         case .streaming:
-            return "streaming"
+            "streaming"
         case .ipv6:
-            return "ipv6"
+            "ipv6"
         case .restricted:
-            return "restricted"
+            "restricted"
         default:
-            return ""
+            ""
         }
     }
 

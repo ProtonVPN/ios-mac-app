@@ -23,15 +23,14 @@
 import Cocoa
 
 class HoverDetectionButton: NSButton {
-    
     // Adds padding between text and button border
     @IBInspectable var horizontalPadding: CGFloat = 0
     @IBInspectable var verticalPadding: CGFloat = 0
 
     override var intrinsicContentSize: NSSize {
         var size = super.intrinsicContentSize
-        size.width += self.horizontalPadding
-        size.height += self.verticalPadding
+        size.width += horizontalPadding
+        size.height += verticalPadding
         return size
     }
 
@@ -51,38 +50,38 @@ class HoverDetectionButton: NSButton {
             }
         }
     }
-    
+
     var isHovered: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         layer?.masksToBounds = false
-        
+
         isBordered = false
         setButtonType(.momentaryChange)
-        
+
         addMouseTracking()
     }
-    
+
     private func addMouseTracking() {
         trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
     }
-    
+
     func trackingOptions() -> NSTrackingArea.Options {
-        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
+        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
-    
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
-        
+
         addMouseTracking()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         layer?.masksToBounds = false
@@ -94,13 +93,13 @@ class HoverDetectionButton: NSButton {
         }
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with _: NSEvent) {
         if isEnabled {
             isHovered = true
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         isHovered = false
     }
 

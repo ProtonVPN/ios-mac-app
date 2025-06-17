@@ -18,12 +18,12 @@
 
 import Foundation
 
+import ComposableArchitecture
 import Dependencies
 import Domain
+import NetShield
 import Strings
 import VPNAppCore
-import NetShield
-import ComposableArchitecture
 
 public enum ProtectionState: Equatable {
     case resolving // Transitionary state. Shown at app start while we figure out what state the tunnel is in.
@@ -35,24 +35,24 @@ public enum ProtectionState: Equatable {
     func copy(withNetShield netShield: NetShieldModel) -> ProtectionState {
         switch self {
         case .resolving:
-            return self
+            self
         case .protected:
-            return .protected(netShield: netShield.copy(enabled: true))
+            .protected(netShield: netShield.copy(enabled: true))
         case .protectedSecureCore:
-            return .protectedSecureCore(netShield: netShield.copy(enabled: true))
+            .protectedSecureCore(netShield: netShield.copy(enabled: true))
         case .unprotected:
-            return self
+            self
         case .protecting:
-            return self
+            self
         }
     }
 
     public var netShieldModel: NetShieldModel? {
         switch self {
-        case .protected(let netShield), .protectedSecureCore(let netShield):
-            return netShield
+        case let .protected(netShield), let .protectedSecureCore(netShield):
+            netShield
         case .unprotected, .protecting, .resolving:
-            return nil
+            nil
         }
     }
 }
@@ -62,7 +62,7 @@ extension VPNConnectionStatus {
         switch self {
         case .disconnected:
             return .unprotected
-        case .connected(let spec, _):
+        case let .connected(spec, _):
             if case .secureCore = spec.location {
                 return .protectedSecureCore(netShield: netShieldModel?.copy(enabled: true))
             }

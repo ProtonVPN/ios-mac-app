@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Testing
 @testable import Hermes
+import Testing
 
 @Test
 func edgeCasesValidation() {
@@ -67,7 +67,7 @@ func ipv6Validation() {
         "2001:db8::",
         "2001:0db8::1:0:0:1",
         "0:0:0:0:0:0:0:1",
-        "FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF"
+        "FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF:FFFF",
     ]
 
     for address in validIPv6Addresses {

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Strings
+import SwiftUI
 
 /// Toggle input styled for usage in bug report form.
 struct SwitchInputView: View {
@@ -34,7 +34,7 @@ struct SwitchInputView: View {
             }
             .padding()
             #if os(iOS)
-            .background(Rectangle().foregroundColor(colors.backgroundWeak))
+                .background(Rectangle().foregroundColor(colors.backgroundWeak))
             #endif
 
             if let placeholder = field.placeholder {
@@ -54,11 +54,13 @@ struct SwitchInputView_Previews: PreviewProvider {
 
     static var previews: some View {
         SwitchInputView(
-            field: InputField(label: Localizable.br3LogsField,
-                              submitLabel: "logs",
-                              type: .switch,
-                              isMandatory: false,
-                              placeholder: Localizable.br3LogsDescription),
+            field: InputField(
+                label: Localizable.br3LogsField,
+                submitLabel: "logs",
+                type: .switch,
+                isMandatory: false,
+                placeholder: Localizable.br3LogsDescription
+            ),
             value: $text
         )
         .preferredColorScheme(.dark)

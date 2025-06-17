@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import struct CoreConnection.LogicalServerInfo
+import Dependencies
 import struct Domain.Server
+import Foundation
 
 /// We need to fetch full server information to determine e.g. what country the extension is connected to.
 /// The server is identified by its logical and server IDs.
@@ -36,8 +36,8 @@ public struct ServerIdentifier: TestDependencyKey, Sendable {
     public static let testValue = ServerIdentifier(fullServerInfo: unimplemented(placeholder: nil))
 }
 
-extension DependencyValues {
-    public var serverIdentifier: ServerIdentifier {
+public extension DependencyValues {
+    var serverIdentifier: ServerIdentifier {
         get { self[ServerIdentifier.self] }
         set { self[ServerIdentifier.self] = newValue }
     }

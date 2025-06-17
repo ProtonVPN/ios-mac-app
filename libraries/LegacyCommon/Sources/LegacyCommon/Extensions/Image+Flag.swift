@@ -20,6 +20,6 @@ import ProtonCoreUIFoundations
 
 public extension Image {
     static func flag(countryCode: String) -> Image? {
-        return IconProvider.flag(forCountryCode: countryCode)
+        IconProvider.flag(forCountryCode: countryCode)
     }
 }

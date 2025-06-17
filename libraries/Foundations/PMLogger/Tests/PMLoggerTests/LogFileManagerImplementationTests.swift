@@ -1,5 +1,5 @@
 //
-//  PMLogtests.swift
+//  LogFileManagerImplementationTests.swift
 //  vpncore - Created on 2021-03-26.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,40 +20,37 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 @testable import PMLogger
+import XCTest
 
 class LogFileManagerImplementationTests: XCTestCase {
-
     func testLogsArePutInSubfolder() {
         let manager = LogFileManagerImplementation()
         let logUrl = manager.getFileUrl(named: "logfile.txt")
         let logFolder = logUrl.deletingLastPathComponent()
         XCTAssert(logFolder.lastPathComponent == "Logs")
     }
-    
+
     func testDumpWritesAndOverwritesFileContents() throws {
-        
         let filename = "testLog.txt"
         let log = "Very interesting and useful log entry"
         let log2 = "Not su useful log that should overwrite previous"
 
         let manager = LogFileManagerImplementation()
-        
+
         let logUrl = manager.getFileUrl(named: filename)
         if FileManager.default.fileExists(atPath: logUrl.path) {
             try FileManager.default.removeItem(at: logUrl)
         }
-        
+
         manager.dump(logs: log, toFile: filename)
         let fileContent = String(data: FileManager.default.contents(atPath: logUrl.path)!, encoding: .utf8)
         XCTAssertEqual(log, fileContent)
-        
+
         manager.dump(logs: log2, toFile: filename)
         let fileContent2 = String(data: FileManager.default.contents(atPath: logUrl.path)!, encoding: .utf8)
         XCTAssertEqual(log2, fileContent2)
-        
+
         try FileManager.default.removeItem(at: logUrl)
     }
-
 }

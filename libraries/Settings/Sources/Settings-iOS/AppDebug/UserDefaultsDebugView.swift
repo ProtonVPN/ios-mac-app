@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import SettingsShared
+import SwiftUI
 
 struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>
@@ -40,7 +40,8 @@ struct UserDefaultsDebugView: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch store.content {
         case .none:
             ProgressView()
@@ -49,10 +50,10 @@ struct UserDefaultsDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let entries):
+        case let .loaded(entries):
             defaultsList(entries: entries)
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")
@@ -77,17 +78,17 @@ struct UserDefaultsDebugView: View {
 
     private func textValue(forEntry entry: UserDefaultsEntry) -> String {
         switch entry.value {
-        case .bool(let boolValue):
-            return String(boolValue)
+        case let .bool(boolValue):
+            String(boolValue)
 
-        case .data(let data):
-            return "Data(\(data.count) bytes)"
+        case let .data(data):
+            "Data(\(data.count) bytes)"
 
-        case .int(let intValue):
-            return String(intValue)
+        case let .int(intValue):
+            String(intValue)
 
-        case .string(let string), .utf8(let string), .unknown(let string):
-            return string.count > 80 ? string.prefix(80) + "..." : string
+        case let .string(string), let .utf8(string), let .unknown(string):
+            string.count > 80 ? string.prefix(80) + "..." : string
         }
     }
 }

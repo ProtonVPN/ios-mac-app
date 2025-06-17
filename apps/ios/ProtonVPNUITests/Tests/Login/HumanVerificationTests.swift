@@ -17,14 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-import ProtonCoreTestingToolkitUITestsLogin
+import fusion
 import ProtonCoreHumanVerification
 import ProtonCoreQuarkCommands
-import fusion
+import ProtonCoreTestingToolkitUITestsLogin
+import XCTest
 
 class HumanVerificationTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     override func setUp() {
@@ -34,15 +33,14 @@ class HumanVerificationTests: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     func testLoginWithHumanVerification() throws {
-        
         let user = User(name: StringUtils.randomAlphanumericString(length: 5), password: "123")
         try quarkCommands.userCreate(user: user)
-        
+
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_DEV", value: "true")
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_RESPONSE", value: FingerprintResponse.captcha.rawValue)
-        
+
         loginRobot
             .enterCredentials(user)
             .signIn(robot: HumanVerificationRobot.self)
@@ -51,7 +49,7 @@ class HumanVerificationTests: ProtonVPNUITests {
             .verify.captchaScreenIsNotShown()
         homeRobot
             .verify.isLoggedIn()
-        
+
         try quarkCommands.systemEnvVariableAsJson(variable: "FINGERPRINT_RESPONSE", value: FingerprintResponse.ok.rawValue)
     }
 }

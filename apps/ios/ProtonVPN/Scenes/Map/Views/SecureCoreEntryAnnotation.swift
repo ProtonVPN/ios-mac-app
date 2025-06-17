@@ -20,40 +20,40 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 class SecureCoreEntryAnnotation: AnnotationView {
-
     let countryModel: SecureCoreEntryCountryModel
-    
+
     override var coordinate: CLLocationCoordinate2D {
-        return countryModel.coordinate
+        countryModel.coordinate
     }
 
     var maxHeight: CGFloat {
-        return 30
+        30
     }
-    
+
     var width: CGFloat {
-        return 30
+        30
     }
-    
+
     override var frame: CGRect {
         didSet {
             layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError()
     }
-    
+
     init(frame: CGRect, scEntryCountryModel: SecureCoreEntryCountryModel) {
         self.countryModel = scEntryCountryModel
-        
+
         super.init(frame: frame)
-        
+
         layer.cornerRadius = maxHeight * 0.5
         backgroundColor = .brandColor()
     }

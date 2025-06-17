@@ -20,15 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import ServiceManagement
-import LegacyCommon
 import Domain
+import Foundation
+import LegacyCommon
+import ServiceManagement
 
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.earlyAccess)
+            getValue(forKey: AppConstants.UserDefaults.earlyAccess)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
@@ -37,47 +37,47 @@ extension PropertiesManagerProtocol {
             }
         }
     }
-    
+
     var unprotectedNetworkNotifications: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
+            getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
     }
-    
+
     var rememberLoginAfterUpdate: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
+            getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
     }
-    
+
     var startMinimized: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.startMinimized)
+            getValue(forKey: AppConstants.UserDefaults.startMinimized)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.startMinimized)
         }
     }
-    
+
     var startOnBoot: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.startOnBoot)
+            getValue(forKey: AppConstants.UserDefaults.startOnBoot)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.startOnBoot)
-            self.setLoginItem(enabled: newValue)
+            setLoginItem(enabled: newValue)
         }
     }
-    
+
     var systemNotifications: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.systemNotifications)
+            getValue(forKey: AppConstants.UserDefaults.systemNotifications)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.systemNotifications)
@@ -86,19 +86,20 @@ extension PropertiesManagerProtocol {
 
     var uninstallSysexesOnTerminate: Bool {
         get {
-            return getValue(forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
+            getValue(forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
         }
         set {
             setValue(newValue, forKey: AppConstants.UserDefaults.uninstallSysexesOnTerminate)
         }
     }
-    
+
     func restoreStartOnBootStatus() {
-        let enabled = self.startOnBoot
-        self.setLoginItem(enabled: enabled)
+        let enabled = startOnBoot
+        setLoginItem(enabled: enabled)
     }
-    
+
     // MARK: - Private
+
     private func setLoginItem(enabled: Bool) {
         if #available(macOS 13.0, *) {
             if enabled {

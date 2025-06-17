@@ -18,9 +18,9 @@
 
 import SwiftUI
 
+import ProtonCoreUIFoundations
 import SettingsShared
 import Theme
-import ProtonCoreUIFoundations
 
 struct SettingsCell: View {
     private let icon: Image
@@ -35,7 +35,7 @@ struct SettingsCell: View {
         icon: Image,
         content: Content,
         accessory: Accessory,
-        onTap: @escaping () -> Void = { }
+        onTap: @escaping () -> Void = {}
     ) {
         self.icon = icon
         self.content = content
@@ -47,7 +47,7 @@ struct SettingsCell: View {
         icon: Theme.ImageAsset,
         content: Content,
         accessory: Accessory,
-        onTap: @escaping () -> Void = { }
+        onTap: @escaping () -> Void = {}
     ) {
         self.init(icon: icon.swiftUIImage, content: content, accessory: accessory, onTap: onTap)
     }
@@ -83,7 +83,7 @@ struct SettingsCell: View {
     private var contentView: some View {
         HStack(alignment: .center) {
             switch content {
-            case .standard(let title, let value):
+            case let .standard(title, value):
                 Text(title)
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
@@ -94,7 +94,7 @@ struct SettingsCell: View {
                         .foregroundColor(Color(.text, .weak))
                 }
 
-            case .multiline(let title, let subtitle):
+            case let .multiline(title, subtitle):
                 VStack(alignment: .leading, spacing: .themeSpacing4) {
                     Text(title)
                         .foregroundColor(Color(.text, .normal))
@@ -114,15 +114,14 @@ struct SettingsCell: View {
 
         var iconRadiusMultiplier: CGFloat {
             switch self {
-            case .standard: return 1.0
-            case .multiline: return 1.5
+            case .standard: 1.0
+            case .multiline: 1.5
             }
         }
     }
 }
 
 struct SettingsCell_Previews: PreviewProvider {
-
     static var previews: some View {
         List {
             Section {

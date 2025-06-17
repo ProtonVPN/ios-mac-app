@@ -17,11 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import ProtonCoreTelemetry
+import VPNShared
 
 open class TelemetrySettings {
-
     public typealias Factory = PropertiesManagerFactory & VpnKeychainFactory
     private let factory: Factory
 

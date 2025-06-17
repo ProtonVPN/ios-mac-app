@@ -20,12 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import LegacyCommon
 import NetworkExtension
-import VPNShared
 import ProtonCoreCryptoVPNPatchedGoImplementation
-import Domain
+import VPNShared
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
@@ -34,22 +34,26 @@ final class WidgetFactory {
 
     private let alertService = ExtensionAlertService()
     private let propertiesManager = PropertiesManager()
-    
+
     init() {
         injectDefaultCryptoImplementation()
         setUpNSCoding(withModuleName: "ProtonVPN")
     }
 
     func makeTodayViewModel() -> TodayViewModel {
-        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
-                                                           appGroup: appGroup,
-                                                           propertiesManager: propertiesManager,
-                                                           vpnManagerFactory: self)
+        let wireguardVpnFactory = WireguardProtocolFactory(
+            bundleId: wireguardVpnExtensionBundleIdentifier,
+            appGroup: appGroup,
+            propertiesManager: propertiesManager,
+            vpnManagerFactory: self
+        )
         let ikeVpnFactory = IkeProtocolFactory(factory: self)
-        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeVpnFactory,
-                                                                 wireguardProtocolFactory: wireguardVpnFactory,
-                                                                 propertiesManager: propertiesManager,
-                                                                 appGroup: appGroup)
+        let vpnStateConfiguration = VpnStateConfigurationManager(
+            ikeProtocolFactory: ikeVpnFactory,
+            wireguardProtocolFactory: wireguardVpnFactory,
+            propertiesManager: propertiesManager,
+            appGroup: appGroup
+        )
         let viewModel = TodayViewModel(vpnStateConfiguration: vpnStateConfiguration)
         alertService.delegate = viewModel
         return viewModel
@@ -72,7 +76,7 @@ extension WidgetFactory: NETunnelProviderManagerWrapperFactory {
             completionHandler(managers, error)
         }
     }
-    
+
     func loadManagersFromPreferences() async throws -> [NETunnelProviderManagerWrapper] {
         try await NETunnelProviderManager.loadAllFromPreferences()
     }

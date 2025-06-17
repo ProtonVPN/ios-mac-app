@@ -19,15 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public protocol Storage {
     // TODO: these should be moved elsewhere, Coding is not really the responsibility of storage
     // An additional benefit is that we would be able to drop generics from this interface which would allow us to use
     // the Protocol Witness pattern here, turning this into a struct could be nice for testability
     func get<T: Decodable>(_ type: T.Type, forKey key: String) throws -> T?
-    func set<T: Encodable>(_ value: T?, forKey key: String) throws
+    func set(_ value: (some Encodable)?, forKey key: String) throws
 
     func setValue(_ value: Any?, forKey key: String)
     func getValue(forKey key: String) -> Any?
@@ -53,22 +53,22 @@ public struct DefaultsProvider: TestDependencyKey {
 
     public static var testValue: DefaultsProvider {
         #if DEBUG
-        return DefaultsProvider(
-            getDefaults: { UserDefaults(suiteName: "ch.protonvpn.userdefaults.test")! }
-        )
+            return DefaultsProvider(
+                getDefaults: { UserDefaults(suiteName: "ch.protonvpn.userdefaults.test")! }
+            )
         #else
-        fatalError("No live value is set for defaults")
+            fatalError("No live value is set for defaults")
         #endif
     }
 }
 
-extension DependencyValues {
-    public var storage: Storage {
+public extension DependencyValues {
+    var storage: Storage {
         get { self[StorageKey.self] }
         set { self[StorageKey.self] = newValue }
     }
 
-    public var defaultsProvider: DefaultsProvider {
+    var defaultsProvider: DefaultsProvider {
         get { self[DefaultsProvider.self] }
         set { self[DefaultsProvider.self] = newValue }
     }

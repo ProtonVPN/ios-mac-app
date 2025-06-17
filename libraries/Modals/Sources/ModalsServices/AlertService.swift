@@ -24,11 +24,11 @@ import DependenciesMacros
 import IssueReporting
 import SwiftNavigation
 
-import Logging
-import protocol Foundation.LocalizedError
 import struct Domain.Alert
-import protocol Domain.ProtonVPNError
 import protocol Domain.AlertConvertibleError
+import protocol Domain.ProtonVPNError
+import protocol Foundation.LocalizedError
+import Logging
 import enum Strings.Localizable
 
 package let log = Logging.Logger(label: "ProtonVPN.Modals.Logger")
@@ -43,14 +43,14 @@ public struct AlertService: DependencyKey {
     public internal(set) var finish: @Sendable () async -> Void = unimplemented()
 }
 
-extension AlertService {
-    public static let live: AlertService = {
+public extension AlertService {
+    static let live: AlertService = {
         let subject = CurrentValueSubject<Alert?, Never>(nil)
 
         return AlertService {
             // We're using a CurrentValueSubject because it can retain the last alert that was forwarded
             // So we could add checks before forwarding the alert if we're feeding the same alert twice in a row for example
-            return subject.compactMap { $0 }.values.eraseToStream()
+            subject.compactMap { $0 }.values.eraseToStream()
         } feed: { error in
             if let protonVpnError = error as? ProtonVPNError {
                 log.error("Alerting user to error: \(protonVpnError.debugDescription)")
@@ -58,13 +58,12 @@ extension AlertService {
                 log.error("Alerting user to error: \(String(describing: error))")
             }
 
-            let alert: Alert
-            if let alertConvertibleError = error as? AlertConvertibleError {
-                alert = alertConvertibleError.alert
+            let alert: Alert = if let alertConvertibleError = error as? AlertConvertibleError {
+                alertConvertibleError.alert
             } else if let localizedError = error as? LocalizedError {
-                alert = Alert(localizedError: localizedError)
+                Alert(localizedError: localizedError)
             } else {
-                alert = Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
+                Alert(title: Localizable.genericErrorTitle, message: "\(error.localizedDescription)")
             }
             subject.send(alert)
         } finish: {
@@ -73,8 +72,8 @@ extension AlertService {
     }()
 }
 
-extension Alert {
-    public func alertState<Action>(from: Action.Type) -> AlertState<Action> {
+public extension Alert {
+    func alertState<Action>(from _: Action.Type) -> AlertState<Action> {
         let title = TextState(String(localized: title))
         let message = TextState(String(localized: message))
         return AlertState<Action>(title: title, message: message)
@@ -83,13 +82,13 @@ extension Alert {
 
 // MARK: - Dependency
 
-extension AlertService {
-    public static let liveValue: AlertService = .live
-    public static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
+public extension AlertService {
+    static let liveValue: AlertService = .live
+    static let testValue: AlertService = .live // live implementation is already generic enough and lightweight
 }
 
-extension DependencyValues {
-    public var alertService: AlertService {
+public extension DependencyValues {
+    var alertService: AlertService {
         get { self[AlertService.self] }
         set { self[AlertService.self] = newValue }
     }

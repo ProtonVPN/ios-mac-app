@@ -1,5 +1,5 @@
 //
-//  AnnouncementManagerTests.swift
+//  AnnouncementManagerImplementationTests.swift
 //  vpncore - Created on 2020-10-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,23 +20,22 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
+@testable import Announcement
 import Dependencies
 @testable import LegacyCommon
-@testable import Announcement
+import XCTest
 
 extension Offer {
-    static let empty: Offer = Offer(label: "", icon: "", panel: nil)
+    static let empty: Offer = .init(label: "", icon: "", panel: nil)
 }
 
 class AnnouncementManagerImplementationTests: XCTestCase {
-
     @Dependency(\.announcementStorage) var storage
     @Dependency(\.announcementManager) var manager
 
     override func setUp() {
         super.setUp()
-        
+
         storage.store([
             Announcement(
                 notificationID: "1-no-offer",
@@ -86,9 +85,9 @@ class AnnouncementManagerImplementationTests: XCTestCase {
                 offer: Offer.empty,
                 reference: nil
             ),
-        ])        
+        ])
     }
-    
+
     func testFetchesOnlyCurrentNotifications() {
         let filtered = manager.fetchCurrentAnnouncementsFromStorage()
         XCTAssert(filtered.containsAnnouncement(withId: "2-with-offer"))
@@ -98,7 +97,7 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-ended"))
         XCTAssertFalse(filtered.containsAnnouncement(withId: "3-future"))
     }
-    
+
     func testMarksAsRead() {
         let announcement = manager.fetchCurrentAnnouncementsFromStorage()[0]
         XCTAssertFalse(announcement.wasRead)
@@ -110,8 +109,8 @@ class AnnouncementManagerImplementationTests: XCTestCase {
     func testDistinguishesWhenUnreadAnnsArePresent() {
         XCTAssert(manager.hasUnreadAnnouncements)
         let announcements = manager.fetchCurrentAnnouncementsFromStorage()
-        announcements.forEach {
-            manager.markAsRead(announcement: $0)
+        for item in announcements {
+            manager.markAsRead(announcement: item)
         }
         XCTAssertFalse(manager.hasUnreadAnnouncements)
     }

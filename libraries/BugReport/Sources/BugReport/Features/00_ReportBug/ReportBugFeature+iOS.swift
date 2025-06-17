@@ -17,70 +17,67 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-import Foundation
-import ComposableArchitecture
-import SwiftUI
+    import ComposableArchitecture
+    import Foundation
+    import SwiftUI
 
-@Reducer
-struct ReportBugFeatureiOS: Reducer {
+    @Reducer
+    struct ReportBugFeatureiOS: Reducer {
+        @ObservableState
+        struct State: Equatable {
+            var whatsTheIssueState: WhatsTheIssueFeature.State
 
-    @ObservableState
-    struct State: Equatable {
-        var whatsTheIssueState: WhatsTheIssueFeature.State
-
-        init(whatsTheIssueState: WhatsTheIssueFeature.State) {
-            self.whatsTheIssueState = whatsTheIssueState
-        }
-    }
-
-    enum Action: Equatable {
-        case whatsTheIssueAction(WhatsTheIssueFeature.Action)
-    }
-
-    var body: some ReducerOf<Self> {
-        Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
-            WhatsTheIssueFeature()
-        }
-    }
-
-}
-
-public struct ReportBugView: View {
-
-    @Perception.Bindable var store: StoreOf<ReportBugFeatureiOS>
-
-    @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-    @Environment(\.colors) var colors: Colors
-
-    public var body: some View {
-        WithPerceptionTracking {
-            NavigationView {
-                WhatsTheIssueView(
-                    store: self.store.scope(
-                        state: \.whatsTheIssueState,
-                        action: \.whatsTheIssueAction
-                    )
-                )
+            init(whatsTheIssueState: WhatsTheIssueFeature.State) {
+                self.whatsTheIssueState = whatsTheIssueState
             }
-            .navigationViewStyle(.stack)
+        }
+
+        enum Action: Equatable {
+            case whatsTheIssueAction(WhatsTheIssueFeature.Action)
+        }
+
+        var body: some ReducerOf<Self> {
+            Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
+                WhatsTheIssueFeature()
+            }
         }
     }
-}
 
-struct ReportBugView_Previews: PreviewProvider {
-    private static let bugReport = MockBugReportDelegate(model: .mock)
+    public struct ReportBugView: View {
+        @Perception.Bindable var store: StoreOf<ReportBugFeatureiOS>
 
-    static var previews: some View {
-        CurrentEnv.bugReportDelegate = bugReport
-        CurrentEnv.updateViewModel.updateIsAvailable = true
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+        @Environment(\.colors) var colors: Colors
 
-        let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
-        let reducer = ReportBugFeatureiOS()
-
-        return Group {
-            ReportBugView(store: Store(initialState: state, reducer: { reducer }))
+        public var body: some View {
+            WithPerceptionTracking {
+                NavigationView {
+                    WhatsTheIssueView(
+                        store: store.scope(
+                            state: \.whatsTheIssueState,
+                            action: \.whatsTheIssueAction
+                        )
+                    )
+                }
+                .navigationViewStyle(.stack)
+            }
         }
     }
-}
+
+    struct ReportBugView_Previews: PreviewProvider {
+        private static let bugReport = MockBugReportDelegate(model: .mock)
+
+        static var previews: some View {
+            CurrentEnv.bugReportDelegate = bugReport
+            CurrentEnv.updateViewModel.updateIsAvailable = true
+
+            let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
+            let reducer = ReportBugFeatureiOS()
+
+            return Group {
+                ReportBugView(store: Store(initialState: state, reducer: { reducer }))
+            }
+        }
+    }
 
 #endif

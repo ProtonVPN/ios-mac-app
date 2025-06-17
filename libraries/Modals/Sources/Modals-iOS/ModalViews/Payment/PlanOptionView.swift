@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
-import ModalsShared
 import ModalsServices
+import ModalsShared
+import Strings
+import SwiftUI
 
 private enum Constants {
     static let planOptionViewRowHeight: CGFloat = 64
@@ -41,7 +41,7 @@ struct PlanOptionView: View {
         switch state {
         case .loading:
             PlanOptionLoadingView()
-        case .loaded(let planOption, let isSelected, let discount):
+        case let .loaded(planOption, isSelected, discount):
             PlanOptionLoadedView(
                 planOption: planOption,
                 discount: discount,
@@ -52,7 +52,6 @@ struct PlanOptionView: View {
 }
 
 private struct PlanOptionLoadedView: View {
-
     private enum AccessibilityIdentifier {
         static let planOptionDuration: String = "plan_option_duration"
         static let planOptionAmount: String = "plan_option_amount"
@@ -206,7 +205,7 @@ private extension DateComponents {
     // This property is a fallback in case where DateComponentsFormatter returns `nil`
     // Not ideal but should do the job
     var fallbackDuration: String {
-        var duration: String = ""
+        var duration = ""
         if let year, year != 0 {
             duration += Localizable.planDurationYear(year)
         }
@@ -248,7 +247,7 @@ private extension DateComponents {
 }
 
 #Preview("Loading") {
-    return PlanOptionView(state: .loading)
+    PlanOptionView(state: .loading)
 }
 
 #Preview("Annoying Duration") {

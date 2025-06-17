@@ -13,8 +13,8 @@ import UIKit
 import Dependencies
 
 import ProtonCoreDataModel
-import ProtonCoreLogin
 import ProtonCoreFeatureFlags
+import ProtonCoreLogin
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePayments
@@ -24,8 +24,8 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 
 import CommonNetworking
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Settings
 
@@ -57,14 +57,14 @@ protocol LoginService: AnyObject {
 final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
-        & WindowServiceFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
-        & PropertiesManagerFactory
         & NetworkingFactory
+        & PropertiesManagerFactory
+        & PushNotificationServiceFactory
         & SettingsServiceFactory
         & VpnApiServiceFactory
-        & PushNotificationServiceFactory
+        & WindowServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -83,27 +83,29 @@ final class CoreLoginService {
 
     init(factory: Factory) {
         self.doh = Dependency(\.dohConfiguration).wrappedValue
-        appSessionManager = factory.makeAppSessionManager()
-        appSessionRefresher = factory.makeAppSessionRefresher()
-        windowService = factory.makeWindowService()
-        alertService = factory.makeCoreAlertService()
-        networkingDelegate = factory.makeNetworkingDelegate()
-        propertiesManager = factory.makePropertiesManager()
-        networking = factory.makeNetworking()
-        settingsService = factory.makeSettingsService()
-        pushNotificationService = factory.makePushNotificationService()
+        self.appSessionManager = factory.makeAppSessionManager()
+        self.appSessionRefresher = factory.makeAppSessionRefresher()
+        self.windowService = factory.makeWindowService()
+        self.alertService = factory.makeCoreAlertService()
+        self.networkingDelegate = factory.makeNetworkingDelegate()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.networking = factory.makeNetworking()
+        self.settingsService = factory.makeSettingsService()
+        self.pushNotificationService = factory.makePushNotificationService()
     }
 
     private func makeLoginInterface() -> LoginAndSignupInterface {
         let signupParameters = SignupParameters(separateDomainsButton: true, passwordRestrictions: .default, summaryScreenVariant: .noSummaryScreen)
         let signupAvailability = SignupAvailability.available(parameters: signupParameters)
-        let login = LoginAndSignup.init(appName: "Proton VPN",
-                                        clientApp: .vpn,
-                                        apiService: networking.apiService,
-                                        minimumAccountType: AccountType.username,
-                                        isCloseButtonAvailable: false,
-                                        paymentsAvailability: PaymentsAvailability.notAvailable,
-                                        signupAvailability: signupAvailability)
+        let login = LoginAndSignup(
+            appName: "Proton VPN",
+            clientApp: .vpn,
+            apiService: networking.apiService,
+            minimumAccountType: AccountType.username,
+            isCloseButtonAvailable: false,
+            paymentsAvailability: PaymentsAvailability.notAvailable,
+            signupAvailability: signupAvailability
+        )
         return login
     }
 
@@ -125,7 +127,7 @@ final class CoreLoginService {
     }
 
     private func helpDecorator(input: [[HelpItem]]) -> [[HelpItem]] {
-        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] viewController in
+        let reportBugItem = HelpItem.custom(icon: IconProvider.bug, title: Localizable.reportBug, behaviour: { [weak self] _ in
             self?.settingsService.presentReportBug()
         })
         var result = input
@@ -152,7 +154,7 @@ final class CoreLoginService {
         case .signupStateChanged(.signupFinished):
             delegate?.userDidSignUp()
             loginInterface = makeLoginInterface()
-        case .loginStateChanged(.dataIsAvailable(let loginData)), .signupStateChanged(.dataIsAvailable(let loginData)):
+        case let .loginStateChanged(.dataIsAvailable(loginData)), let .signupStateChanged(.dataIsAvailable(loginData)):
             log.debug("Login or signup process in progress", category: .app)
             // Update the session id in the networking stack after login
             let uid = loginData.getCredential.UID
@@ -165,23 +167,27 @@ final class CoreLoginService {
 
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
         #if DEBUG
-        if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
-            LoginExternalAccountNotSupportedSetup.start()
-        }
+            if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
+                LoginExternalAccountNotSupportedSetup.start()
+            }
         #endif
-        
+
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
             self?.processLoginResult(result: result)
         }
-        let customization = LoginCustomizationOptions(username: nil,
-                                                      performBeforeFlow: finishFlow(),
-                                                      customErrorPresenter: self,
-                                                      initialError: initialError,
-                                                      helpDecorator: helpDecorator)
+        let customization = LoginCustomizationOptions(
+            username: nil,
+            performBeforeFlow: finishFlow(),
+            customErrorPresenter: self,
+            initialError: initialError,
+            helpDecorator: helpDecorator
+        )
         let variant: WelcomeScreenVariant = .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
-        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(variant: variant,
-                                                                                  customization: customization,
-                                                                                  updateBlock: loginResultCompletion)
+        let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
+            variant: variant,
+            customization: customization,
+            updateBlock: loginResultCompletion
+        )
         windowService.show(viewController: welcomeViewController)
         if initialError != nil {
             loginInterface.presentLoginFlow(over: welcomeViewController, customization: customization, updateBlock: loginResultCompletion)
@@ -208,15 +214,15 @@ final class CoreLoginService {
 }
 
 // MARK: LoginErrorPresenter
+
 extension CoreLoginService: LoginErrorPresenter {
-    func willPresentError(error: LoginError, from: UIViewController) -> Bool {
+    func willPresentError(error: LoginError, from _: UIViewController) -> Bool {
         switch error {
         case .generic(_, _, CommonVpnError.subuserWithoutSessions):
             let role = propertiesManager.userRole
             alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
             return true
         case let .generic(_, code: _, originalError: originalError):
-
             // show a custom alert with a way to show the troubleshooting screen
             // for networking and tls errors
             let error = convertError(from: originalError)
@@ -233,36 +239,36 @@ extension CoreLoginService: LoginErrorPresenter {
         }
     }
 
-    func willPresentError(error: SignupError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: SignupError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: AvailabilityError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: AvailabilityError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: SetUsernameError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: SetUsernameError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: CreateAddressError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: CreateAddressError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: CreateAddressKeysError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: CreateAddressKeysError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: StoreKitManagerErrors, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: StoreKitManagerErrors, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: ResponseError, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: ResponseError, from _: UIViewController) -> Bool {
+        false
     }
 
-    func willPresentError(error: Error, from: UIViewController) -> Bool {
-        return false
+    func willPresentError(error _: Error, from _: UIViewController) -> Bool {
+        false
     }
 }
 
@@ -294,21 +300,21 @@ extension CoreLoginService: LoginService {
     func showWelcome(initialError: String?, withOverlayViewController overlayViewController: UIViewController?) {
         DispatchQueue.main.async {
             #if DEBUG
-            self.showAppDebugConfiguration()
+                self.showAppDebugConfiguration()
             #else
-            self.show(initialError: initialError, withOverlayViewController: overlayViewController)
+                self.show(initialError: initialError, withOverlayViewController: overlayViewController)
             #endif
         }
     }
 
-#if DEBUG
-    private func showAppDebugConfiguration() {
-        let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
-            self?.show(initialError: nil, withOverlayViewController: nil)
-        }
+    #if DEBUG
+        private func showAppDebugConfiguration() {
+            let appDebugConfigurationView = EnvironmentSelectorMobileView { [weak self] in
+                self?.show(initialError: nil, withOverlayViewController: nil)
+            }
 
-        let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
-        windowService.show(viewController: environmentsViewController)
-    }
-#endif
+            let environmentsViewController = UIHostingController(rootView: appDebugConfigurationView)
+            windowService.show(viewController: environmentsViewController)
+        }
+    #endif
 }

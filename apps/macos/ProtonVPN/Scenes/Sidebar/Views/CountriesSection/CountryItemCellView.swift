@@ -21,34 +21,33 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
-import Strings
+import LegacyCommon
 import ProtonCoreUIFoundations
+import Strings
+import Theme
 
 final class CountryItemCellView: NSView {
-    
-    @IBOutlet private weak var flagIV: NSImageView!
-    @IBOutlet private weak var secureIV: NSImageView!
-    @IBOutlet private weak var countryLbl: NSTextField!
-    @IBOutlet private weak var expandButton: ExpandCellButton!
-    @IBOutlet private weak var connectButton: ConnectButton!
-    @IBOutlet private weak var smartIV: NSImageView!
-    @IBOutlet private weak var p2pIV: NSImageView!
-    @IBOutlet private weak var torIV: NSImageView!
-    @IBOutlet private weak var separatorView: NSView!
-    @IBOutlet private weak var upgradeBtn: UpgradeButton!
-    @IBOutlet private weak var maintenanceBtn: NSButton!
-    
+    @IBOutlet private var flagIV: NSImageView!
+    @IBOutlet private var secureIV: NSImageView!
+    @IBOutlet private var countryLbl: NSTextField!
+    @IBOutlet private var expandButton: ExpandCellButton!
+    @IBOutlet private var connectButton: ConnectButton!
+    @IBOutlet private var smartIV: NSImageView!
+    @IBOutlet private var p2pIV: NSImageView!
+    @IBOutlet private var torIV: NSImageView!
+    @IBOutlet private var separatorView: NSView!
+    @IBOutlet private var upgradeBtn: UpgradeButton!
+    @IBOutlet private var maintenanceBtn: NSButton!
+
     private var viewModel: CountryItemViewModel!
     private var isHovered = false
-    
+
     var disabled: Bool = false
-        
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         expandButton.wantsLayer = true
         expandButton.layer?.cornerRadius = 16
         expandButton.layer?.borderWidth = 2
@@ -59,8 +58,10 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.layer?.cornerRadius = 16
         maintenanceBtn.image = AppTheme.Icon.wrench
             .colored(.weak)
-            .resize(newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
-                    newHeight: Int(maintenanceBtn.bounds.height) - imageMargin)
+            .resize(
+                newWidth: Int(maintenanceBtn.bounds.width) - imageMargin,
+                newHeight: Int(maintenanceBtn.bounds.height) - imageMargin
+            )
         maintenanceBtn.layer?.borderColor = .cgColor(.icon, .weak)
         maintenanceBtn.layer?.backgroundColor = .clear
 
@@ -90,14 +91,14 @@ final class CountryItemCellView: NSView {
         }
         connectButton.isHidden = isConnectButtonHidden(mouseHover: true)
         if !connectButton.isHidden {
-            [torIV, p2pIV, smartIV].forEach {
-                $0.isHidden = true
+            for item in [torIV, p2pIV, smartIV] {
+                item?.isHidden = true
             }
         }
         addCursorRect(frame, cursor: .pointingHand)
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         expandButton.isEnabled = !disabled
         expandButton.isHovered = false
         upgradeBtn.isHovered = false
@@ -108,14 +109,14 @@ final class CountryItemCellView: NSView {
 
     func updateView(withModel viewModel: CountryItemViewModel) {
         self.viewModel = viewModel
-        
-        [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn].forEach {
-            $0?.alphaValue = viewModel.alphaForMainElements
+
+        for item in [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn] {
+            item?.alphaValue = viewModel.alphaForMainElements
         }
-    
+
         separatorView.isHidden = !viewModel.displaySeparator
         secureIV.isHidden = !viewModel.secureCoreEnabled
-        
+
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         countryLbl.stringValue = viewModel.countryName
         if !viewModel.countryCode.isEmpty {
@@ -136,7 +137,7 @@ final class CountryItemCellView: NSView {
 
     private func isConnectButtonHidden(mouseHover: Bool) -> Bool {
         // Hide if hidden or tier too low to connect
-        guard viewModel.showCountryConnectButton && !viewModel.isTierTooLow else { return true }
+        guard viewModel.showCountryConnectButton, !viewModel.isTierTooLow else { return true }
         // Show on mouse hover
         guard !mouseHover else { return false }
         // Show if connected to this country
@@ -144,36 +145,39 @@ final class CountryItemCellView: NSView {
     }
 
     // MARK: - Actions
-    
-    @IBAction private func didTapExpandBtn(_ sender: Any) {
+
+    @IBAction
+    private func didTapExpandBtn(_: Any) {
         if viewModel.isServerUnderMaintenance || viewModel.isTierTooLow { return }
         viewModel.changeCellState()
         expandButton.image = viewModel.isOpened ? AppTheme.Icon.chevronUp : AppTheme.Icon.chevronDown
         setupAccessibilityCustomActions()
     }
-    
-    @IBAction private func didTapUpgradeBtn(_ sender: Any) {
+
+    @IBAction
+    private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
-    
-    @IBAction func didTapConnectBtn(_ sender: Any) {
+
+    @IBAction
+    func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
-    
+
     // MARK: - Private
-    
+
     private func configureFeatures() {
         if viewModel.showFeatureIcons {
             torIV.isHidden = !viewModel.isTorAvailable || viewModel.isConnected
             p2pIV.isHidden = !viewModel.isP2PAvailable || viewModel.isConnected
             smartIV.isHidden = !viewModel.isSmartAvailable || viewModel.isConnected
         } else {
-            [torIV, p2pIV, smartIV].forEach {
-                $0.isHidden = true
+            for item in [torIV, p2pIV, smartIV] {
+                item?.isHidden = true
             }
         }
     }
-    
+
     // MARK: - Accessibility
 
     override func accessibilityLabel() -> String? {
@@ -199,6 +203,6 @@ final class CountryItemCellView: NSView {
     }
 
     override func accessibilityChildren() -> [Any]? {
-        return []
+        []
     }
 }

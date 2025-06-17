@@ -10,27 +10,26 @@ import fusion
 import Strings
 import UITestsHelpers
 
-fileprivate let tabHome = Localizable.home
-fileprivate let tabCountries = Localizable.countries
-fileprivate let tabProfiles = Localizable.profiles
-fileprivate let tabSettings = Localizable.settings
-fileprivate let quickConnectButtonId = "connect_button"
-fileprivate let quickDisconnectButtonId = "disconnect_button"
-fileprivate let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
-fileprivate let upgradeSubscriptionButton = Localizable.upsellPlansListValidateButton
-fileprivate let buttonOk = Localizable.ok
-fileprivate let buttonCancel = Localizable.cancel
-fileprivate let buttonAccount = Localizable.account
-fileprivate let showLoginButtonLabelText = Localizable.logIn
-fileprivate let showSignupButtonLabelText = "Create an account"
-fileprivate let upselModalId = "TitleLabel"
-fileprivate let connectionInfo = "connection_info"
-fileprivate let okButtonId = "OK"
+private let tabHome = Localizable.home
+private let tabCountries = Localizable.countries
+private let tabProfiles = Localizable.profiles
+private let tabSettings = Localizable.settings
+private let quickConnectButtonId = "connect_button"
+private let quickDisconnectButtonId = "disconnect_button"
+private let upgradeSubscriptionTitle = Localizable.modalsNewUpsellCountryTitle
+private let upgradeSubscriptionButton = Localizable.upsellPlansListValidateButton
+private let buttonOk = Localizable.ok
+private let buttonCancel = Localizable.cancel
+private let buttonAccount = Localizable.account
+private let showLoginButtonLabelText = Localizable.logIn
+private let showSignupButtonLabelText = "Create an account"
+private let upselModalId = "TitleLabel"
+private let connectionInfo = "connection_info"
+private let okButtonId = "OK"
 
 // HomeRobot class contains actions for Home view.
 
 class HomeRobot: ConnectionBaseRobot {
-
     let verify = Verify()
 
     @discardableResult
@@ -89,7 +88,7 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     public func isLoggedIn() -> Bool {
-        return button(tabSettings).waitUntilExists(time: 4).exists()
+        button(tabSettings).waitUntilExists(time: 4).exists()
     }
 
     public func openConnectionDetails() -> ConnectionDetailsRobot {
@@ -98,7 +97,6 @@ class HomeRobot: ConnectionBaseRobot {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func qcButtonConnected() -> HomeRobot {
             button(quickDisconnectButtonId).waitUntilExists().checkExists()

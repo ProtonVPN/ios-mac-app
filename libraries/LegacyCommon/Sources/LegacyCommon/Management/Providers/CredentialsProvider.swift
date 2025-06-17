@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public struct CredentialsProvider {
     private var getCredentials: () -> CachedVpnCredentials?
@@ -32,21 +32,21 @@ public struct CredentialsProvider {
 }
 
 extension CredentialsProvider: DependencyKey {
-    public static let liveValue: CredentialsProvider = CredentialsProvider(
+    public static let liveValue: CredentialsProvider = .init(
         getCredentials: VpnKeychain.instance.fetchCached
     )
 
     #if DEBUG
-    public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
+        public static var testValue: CredentialsProvider = .constant(credentials: .tier(.paidTier))
 
-    static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
-        CredentialsProvider(getCredentials: { credentials })
-    }
+        static func constant(credentials: CachedVpnCredentials?) -> CredentialsProvider {
+            CredentialsProvider(getCredentials: { credentials })
+        }
     #endif
 }
 
-extension DependencyValues {
-    public var credentialsProvider: CredentialsProvider {
+public extension DependencyValues {
+    var credentialsProvider: CredentialsProvider {
         get { self[CredentialsProvider.self] }
         set { self[CredentialsProvider.self] = newValue }
     }

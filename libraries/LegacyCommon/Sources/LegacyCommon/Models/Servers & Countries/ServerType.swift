@@ -24,7 +24,6 @@ import Foundation
 import Domain
 import Persistence
 import Strings
-import Persistence
 
 public enum ServerType: Int, Codable, CustomStringConvertible {
     case standard = 0
@@ -47,19 +46,19 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
             self = .unspecified
         }
     }
-    
+
     public var description: String {
         switch self {
         case .standard:
-            return "Standard"
+            "Standard"
         case .secureCore:
-            return "Secure Core"
+            "Secure Core"
         case .p2p:
-            return "P2P"
+            "P2P"
         case .tor:
-            return "Tor"
+            "Tor"
         case .unspecified:
-            return "Unspecified"
+            "Unspecified"
         }
     }
 
@@ -68,75 +67,76 @@ public enum ServerType: Int, Codable, CustomStringConvertible {
     public var localizedString: String {
         switch self {
         case .standard:
-            return Localizable.standard
+            Localizable.standard
         case .secureCore:
-            return Localizable.secureCore
+            Localizable.secureCore
         case .p2p:
-            return Localizable.p2p
+            Localizable.p2p
         case .tor:
-            return Localizable.tor
+            Localizable.tor
         case .unspecified:
-            return "Unspecified"
+            "Unspecified"
         }
     }
-    
+
     // MARK: - NSCoding
+
     private enum CoderKey: String, CodingKey {
-        case serverType = "serverType"
+        case serverType
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.serverType.rawValue) as! Data
         self.init(rawValue: Int(data[0]))
     }
-    
-    public func encode(with aCoder: NSCoder) {
+
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
+
     // MARK: - Codable
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CoderKey.self)
         let rawValue = try container.decode(Int.self, forKey: .serverType)
         self.init(rawValue: rawValue)
     }
-    
+
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CoderKey.self)
-        try container.encode(self.rawValue, forKey: .serverType)
+        try container.encode(rawValue, forKey: .serverType)
     }
 }
 
 public extension ServerType {
-
     /// Feature filter for searching the repository
     var serverTypeFilter: VPNServerFilter.ServerFeatureFilter {
         switch self {
         case .standard:
-            return .standard
+            .standard
         case .secureCore:
-            return .secureCore
+            .secureCore
         case .p2p:
-            return .standard(with: .p2p)
+            .standard(with: .p2p)
         case .tor:
-            return .standard(with: .tor)
+            .standard(with: .tor)
         case .unspecified:
-            return .standard
+            .standard
         }
     }
 
     var serverFilter: VPNServerFilter {
         switch self {
         case .secureCore:
-            return .features(.secureCore)
+            .features(.secureCore)
         case .tor:
-            return .features(.standard(with: .tor))
+            .features(.standard(with: .tor))
         case .standard:
-            return .features(.standard)
+            .features(.standard)
         case .p2p:
-            return .features(.standard(with: .p2p))
+            .features(.standard(with: .p2p))
         case .unspecified:
-            return .features(.init(required: .zero, excluded: .zero))
+            .features(.init(required: .zero, excluded: .zero))
         }
     }
 }

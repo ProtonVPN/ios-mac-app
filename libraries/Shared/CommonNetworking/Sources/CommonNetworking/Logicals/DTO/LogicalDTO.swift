@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 struct LogicalDTO: Codable {
     public let id: String
@@ -36,7 +36,6 @@ struct LogicalDTO: Codable {
     public let hostCountry: String?
     public let translatedCity: String?
     public let gatewayName: String?
-
 
     /// We must provide CodingKeys to decode ID, since `JSONDecoder.decapitalisingFirstLetter` does not modify keys
     /// that have a capital prefix length longer than 1 character.

@@ -27,9 +27,9 @@ import Dependencies
 
 import Domain
 import Ergonomics
+import LegacyCommon
 import Localization
 import Persistence
-import LegacyCommon
 import VPNAppCore
 
 // Refactor annotation O(n^2) grouping logic when number of secure core servers ever exceed this value
@@ -46,18 +46,19 @@ protocol MapSectionViewModelFactory {
 
 extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
-        return MapSectionViewModel(appStateManager: makeAppStateManager(),
-                                   propertiesManager: makePropertiesManager(),
-                                   vpnGateway: makeVpnGateway(),
-                                   navService: makeNavigationService(),
-                                   vpnKeychain: makeVpnKeychain(),
-                                   viewToggle: viewToggle,
-                                   alertService: makeCoreAlertService())
+        MapSectionViewModel(
+            appStateManager: makeAppStateManager(),
+            propertiesManager: makePropertiesManager(),
+            vpnGateway: makeVpnGateway(),
+            navService: makeNavigationService(),
+            vpnKeychain: makeVpnKeychain(),
+            viewToggle: viewToggle,
+            alertService: makeCoreAlertService()
+        )
     }
 }
 
 class MapSectionViewModel {
-    
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
@@ -67,19 +68,24 @@ class MapSectionViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let alertService: CoreAlertService
-    
+
     var contentChanged: ((AnnotationChange) -> Void)?
     var connectionsChanged: (([ConnectionViewModel]) -> Void)?
-    
+
     private var activeView: ServerType = .standard
-    
+
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
 
-    init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
-         vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
-         viewToggle: Notification.Name, alertService: CoreAlertService) {
-        
+    init(
+        appStateManager: AppStateManager,
+        propertiesManager: PropertiesManagerProtocol,
+        vpnGateway: VpnGatewayProtocol,
+        navService: NavigationService,
+        vpnKeychain: VpnKeychainProtocol,
+        viewToggle: Notification.Name,
+        alertService: CoreAlertService
+    ) {
         self.appStateManager = appStateManager
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -90,84 +96,90 @@ class MapSectionViewModel {
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
         AppEvent.vpnProtocol.subscribe(self, selector: #selector(resetCurrentState))
 
-        NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
-                                               name: viewToggle, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(viewToggled(_:)),
+            name: viewToggle,
+            object: nil
+        )
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState), name: ServerListUpdateNotification.name, object: nil)
 
-        activeView = propertiesManager.serverTypeToggle
-        annotations = annotations(forView: activeView)
-        connections = connections(forView: activeView)
+        self.activeView = propertiesManager.serverTypeToggle
+        self.annotations = annotations(forView: activeView)
+        self.connections = connections(forView: activeView)
     }
-    
+
     // MARK: - Private functions
-    @objc private func appStateChanged(_ notification: Notification) {
+
+    @objc
+    private func appStateChanged(_ notification: Notification) {
         guard let state = notification.object as? AppState else {
             return
         }
 
         if state.isConnected,
-            let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
+           let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)
         }
-        
-        annotations.forEach { (annotation) in
+
+        for annotation in annotations {
             annotation.appStateChanged(to: state)
         }
-        
+
         updateConnections()
     }
-    
-    @objc private func viewToggled(_ notification: Notification) {
+
+    @objc
+    private func viewToggled(_: Notification) {
         setView(propertiesManager.serverTypeToggle)
     }
-    
-    @objc private func resetCurrentState() {
+
+    @objc
+    private func resetCurrentState() {
         executeOnUIThread {
             self.setView(self.activeView)
             self.updateConnections()
         }
     }
-    
+
     private func updateConnections() {
         connections = connections(forView: activeView)
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.connectionsChanged?(self.connections)
+            connectionsChanged?(connections)
         }
     }
-    
+
     private func setView(_ newView: ServerType) {
         let oldAnnotations = annotations
         activeView = newView
         annotations = annotations(forView: activeView)
         let contentChange = AnnotationChange(oldAnnotations: oldAnnotations, newAnnotations: annotations)
-        
+
         connections = connections(forView: activeView)
-        
+
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.contentChanged?(contentChange)
+            contentChanged?(contentChange)
         }
-        
     }
-    
+
     private func annotations(forView viewType: ServerType) -> [CountryAnnotationViewModel] {
         do {
             let userTier = try vpnKeychain.fetchCached().maxTier
-            
-            let annotations: [CountryAnnotationViewModel]
-            switch viewType {
+
+            let annotations: [CountryAnnotationViewModel] = switch viewType {
             case .standard, .p2p, .tor, .unspecified:
-                annotations = standardAnnotations(userTier)
+                standardAnnotations(userTier)
             case .secureCore:
-                annotations = secureCoreAnnotations(userTier)
+                secureCoreAnnotations(userTier)
             }
             return annotations
         } catch {
@@ -175,25 +187,24 @@ class MapSectionViewModel {
             return []
         }
     }
-    
+
     private func connections(forView viewType: ServerType) -> [ConnectionViewModel] {
-        let connections: [ConnectionViewModel]
-        switch viewType {
+        let connections: [ConnectionViewModel] = switch viewType {
         case .standard, .p2p, .tor, .unspecified:
-            connections = standardConnections()
+            standardConnections()
         case .secureCore:
-            connections = secureCoreConnections()
+            secureCoreConnections()
         }
         return connections
     }
-    
+
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
         @Dependency(\.serverRepository) var repository
         let isCountry = VPNServerFilter.kind(.country)
         let isNotSecureCore = VPNServerFilter.features(.standard)
         let countryGroups = repository.getGroups(filteredBy: [isCountry, isNotSecureCore])
         return countryGroups.compactMap { group in
-            guard case .country(let code) = group.kind else {
+            guard case let .country(code) = group.kind else {
                 assertionFailure("Gateways should have been filtered out but we got: \(group.kind)")
                 return nil
             }
@@ -207,28 +218,28 @@ class MapSectionViewModel {
             )
         }
     }
-    
+
     private func secureCoreEntrySelectionChange(_ selection: SCEntryCountrySelection) {
-        annotations.forEach({ (annotation) in
+        for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
                 if annotation.countryCode != selection.countryCode {
                     annotation.secureCoreSelected(selection)
                 }
             }
-        })
-        
+        }
+
         updateConnections()
     }
-    
+
     private func secureCoreExitSelectionChange(_ selection: SCExitCountrySelection) {
-        annotations.forEach({ (annotation) in
+        for annotation in annotations {
             if let annotation = annotation as? SCEntryCountryAnnotationViewModel {
                 if annotation.countryCode != selection.countryCode {
                     annotation.countrySelected(selection)
                 }
             }
-        })
-        
+        }
+
         updateConnections()
     }
 
@@ -271,7 +282,7 @@ class MapSectionViewModel {
                 .filter { $0.logical.entryCountryCode == entryCode }
                 .map(\.logical.exitCountryCode)
         }
-        
+
         let entryCountryAnnotations: [CountryAnnotationViewModel] = entryToExitCountryCodeMap.map { entry, exits in
             let annotation = SCEntryCountryAnnotationViewModel(
                 appStateManager: appStateManager,
@@ -284,25 +295,25 @@ class MapSectionViewModel {
             }
             return annotation
         }
-        
+
         return entryCountryAnnotations + exitCountryAnnotations
     }
-    
+
     private func standardConnections() -> [ConnectionViewModel] {
-        return annotations.filter({ (annotation) -> Bool in
+        annotations.filter { annotation -> Bool in
             guard let annotation = annotation as? StandardCountryAnnotationViewModel else { return false }
             return annotation.isConnected
-        }).map({ (annotation) -> ConnectionViewModel in
+        }.map { annotation -> ConnectionViewModel in
             return ConnectionViewModel(.connected, fromHomeTo: annotation)
-        })
+        }
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     private func secureCoreConnections() -> [ConnectionViewModel] {
         var secureCores = [SCEntryCountryAnnotationViewModel]()
         var selectedAnnotation: CountryAnnotationViewModel?
         var connectedAnnotation: CountryAnnotationViewModel?
-        annotations.forEach { (annotation) in
+        for annotation in annotations {
             if let entryAnnotation = annotation as? SCEntryCountryAnnotationViewModel {
                 secureCores.append(entryAnnotation)
                 if entryAnnotation.state == .hovered {
@@ -317,51 +328,50 @@ class MapSectionViewModel {
                 }
             }
         }
-        
+
         var connections = [ConnectionViewModel]()
-        
-        if let connectedAnnotation = connectedAnnotation {
+
+        if let connectedAnnotation {
             if let exitAnnotation = connectedAnnotation as? SCExitCountryAnnotationViewModel {
-                annotations.forEach({ (annotation) in
+                for annotation in annotations {
                     if let annotation = annotation as? SCEntryCountryAnnotationViewModel,
                        annotation.isConnected {
                         connections.append(ConnectionViewModel(.connected, between: exitAnnotation, and: annotation))
                         connections.append(ConnectionViewModel(.connected, fromHomeTo: annotation))
                     }
-                })
+                }
             }
         }
-        if let selectedAnnotation = selectedAnnotation {
+        if let selectedAnnotation {
             if let entryAnnotation = selectedAnnotation as? SCEntryCountryAnnotationViewModel {
                 connections.append(ConnectionViewModel(.proposed, fromHomeTo: entryAnnotation))
-                
-                entryAnnotation.exitCountryCodes.forEach({ (code) in
-                    annotations.forEach({ (annotation) in
+
+                for code in entryAnnotation.exitCountryCodes {
+                    for annotation in annotations {
                         if let serverAnnotation = annotation as? SCExitCountryAnnotationViewModel,
                            serverAnnotation.matches(code) {
                             connections.append(ConnectionViewModel(.proposed, between: entryAnnotation, and: annotation))
                         }
-                    })
-                })
+                    }
+                }
             } else if let exitAnnotation = selectedAnnotation as? SCExitCountryAnnotationViewModel {
-                annotations.forEach({ (annotation) in
+                for annotation in annotations {
                     if let annotation = annotation as? SCEntryCountryAnnotationViewModel,
                        annotation.exitCountryCodes.contains(exitAnnotation.countryCode) {
                         connections.append(ConnectionViewModel(.proposed, between: exitAnnotation, and: annotation))
                         connections.append(ConnectionViewModel(.proposed, fromHomeTo: annotation))
                     }
-                })
+                }
             }
         }
-        
-        if connectedAnnotation == nil && selectedAnnotation == nil {
+
+        if connectedAnnotation == nil, selectedAnnotation == nil {
             for (index, element) in secureCores.enumerated() {
                 connections.append(ConnectionViewModel(.connected, between: element, and: secureCores[(index + 1) % secureCores.count]))
             }
         }
-        
+
         return connections
     }
     // swiftlint:enable cyclomatic_complexity
-    
 }

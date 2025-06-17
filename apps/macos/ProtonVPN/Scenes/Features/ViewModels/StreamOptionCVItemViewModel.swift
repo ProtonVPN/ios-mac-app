@@ -29,21 +29,20 @@ protocol StreamOptionCVItemViewModelProtocol {
 }
 
 class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
-    
     var serviceName: String { option.name }
-    
+
     var url: URL? {
         guard propertiesManager.featureFlags.streamingServicesLogos,
               let baseUrl = propertiesManager.streamingResourcesUrl else { return nil }
         let icon = option.icon
-        return URL(string: baseUrl + icon )
+        return URL(string: baseUrl + icon)
     }
-    
+
     private let option: VpnStreamingOption
     private let propertiesManager: PropertiesManagerProtocol
-    
+
     init(_ option: VpnStreamingOption, propertiesManager: PropertiesManagerProtocol) {
         self.option = option
         self.propertiesManager = propertiesManager
-    }    
+    }
 }

@@ -24,8 +24,8 @@ import Foundation
 
 import Dependencies
 
-import Persistence
 import CommonNetworking
+import Persistence
 import VPNAppCore
 
 import Domain
@@ -55,7 +55,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             // Add 1 to the value of `successfulConsecutiveSessionRefreshes` so that on
             // startup we always do a full refresh.
             let n = 10
-            let shouldPerformFullRefresh = (await successfulConsecutiveSessionRefreshes.value % n) == 0
+            let shouldPerformFullRefresh = await (successfulConsecutiveSessionRefreshes.value % n) == 0
             return !shouldPerformFullRefresh
         }
     }
@@ -70,20 +70,20 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     private var observation: NotificationToken?
 
-    public typealias Factory = VpnApiServiceFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        UpdateCheckerFactory
+        PropertiesManagerFactory &
+        UpdateCheckerFactory & VpnApiServiceFactory &
+        VpnKeychainFactory
 
     public init(factory: Factory) {
-        vpnApiService = factory.makeVpnApiService()
-        vpnKeychain = factory.makeVpnKeychain()
-        propertiesManager = factory.makePropertiesManager()
-        alertService = factory.makeCoreAlertService()
-        updateChecker = factory.makeUpdateChecker()
+        self.vpnApiService = factory.makeVpnApiService()
+        self.vpnKeychain = factory.makeVpnKeychain()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.alertService = factory.makeCoreAlertService()
+        self.updateChecker = factory.makeUpdateChecker()
 
-        observation = notificationCenter.addObserver(
+        self.observation = notificationCenter.addObserver(
             for: AppEvent.planChanged.name,
             object: nil,
             handler: { [weak self] in
@@ -92,7 +92,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         )
     }
 
-    @objc public func refreshData() {
+    @objc
+    public func refreshData() {
         attemptSilentLogIn { [weak self] result in
             switch result {
             case .success:
@@ -105,7 +106,6 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                         log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
                     }
                 }
-                break
             case let .failure(error):
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
@@ -122,14 +122,15 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshServerLoads() {
+    @objc
+    public func refreshServerLoads() {
         guard loggedIn else { return }
 
         let lastKnownIp = (propertiesManager.userLocation?.ip).flatMap { TruncatedIp(ip: $0) }
         vpnApiService.loads(lastKnownIp: lastKnownIp) { result in
             switch result {
             case let .success(properties):
-                let loads = properties.map { $0.value }
+                let loads = properties.map(\.value)
                 @Dependency(\.serverRepository) var serverRepository
                 serverRepository.upsert(loads: loads)
             case let .failure(error):
@@ -138,7 +139,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshAccount() {
+    @objc
+    public func refreshAccount() {
         Task { @MainActor in
             do {
                 let credentials = try await self.vpnApiService.clientCredentials()
@@ -149,7 +151,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
         }
     }
 
-    @objc public func refreshStreamingServices() {
+    @objc
+    public func refreshStreamingServices() {
         guard loggedIn else { return }
 
         Task { [weak self] in
@@ -199,21 +202,23 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     // MARK: - Override
 
-    open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    open func attemptSilentLogIn(completion _: @escaping (Result<Void, Error>) -> Void) {
         fatalError("This method should be overridden, but it is not")
     }
 }
 
-fileprivate extension WelcomeScreenAlert.Plan {
+private extension WelcomeScreenAlert.Plan {
     init?(info: VpnDowngradeInfo) {
         // Replace hardcoded string with a proper solution VPNAPPL-2142
         if info.to.planName == "bundle2022" {
             self = .unlimited
         } else if info.to.maxTier.isPaidTier {
             @Dependency(\.serverRepository) var repository
-            self = .plus(numberOfServers: repository.roundedServerCount,
-                         numberOfDevices: DomainConstants.maxDeviceCount,
-                         numberOfCountries: repository.countryCount())
+            self = .plus(
+                numberOfServers: repository.roundedServerCount,
+                numberOfDevices: DomainConstants.maxDeviceCount,
+                numberOfCountries: repository.countryCount()
+            )
         } else if info.to.maxTier > info.from.maxTier {
             self = .fallback
         } else {

@@ -23,19 +23,18 @@ import KeychainAccess
 /// of the async keychain changes that caused multiple fires in production. The class was left here as
 /// an easy way of resuming the work in the future.
 public class KeychainActor {
-
     private let keychain: KeychainAccess.Keychain
 
     public init(accessGroup: String) {
         self.keychain =
             .init(service: KeychainConstants.appKeychain, accessGroup: accessGroup)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
+                .accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public init() {
         self.keychain =
             .init(service: KeychainConstants.appKeychain)
-            .accessibility(.afterFirstUnlockThisDeviceOnly)
+                .accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public func getData(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws -> Data? {
@@ -51,9 +50,8 @@ public class KeychainActor {
             keychain[data: storageKey] = nil
         }
     }
-    
+
     public func remove(_ key: String, ignoringAttributeSynchronizable: Bool = true) throws {
         try keychain.remove(key, ignoringAttributeSynchronizable: ignoringAttributeSynchronizable)
     }
-
 }

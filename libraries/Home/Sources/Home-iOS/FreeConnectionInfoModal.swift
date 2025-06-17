@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import HomeShared
-import Strings
+import Localization
 import ProtonCoreUIFoundations
 import SharedViews
-import Localization
+import Strings
+import SwiftUI
 
 @available(iOS 16, *)
 @MainActor
@@ -44,7 +44,6 @@ struct FreeConnectionInfoModal: View {
                     IconProvider.cross
                         .foregroundColor(Color(.icon))
                 }
-
             }
             Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
                 .font(.themeFont(.body3(emphasised: false)))
@@ -85,8 +84,10 @@ struct FreeConnectionInfoModal: View {
         .padding(.bottom, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: FreeConnectionHeightPreferenceKey.self,
-                                       value: geometry.size.height)
+                Color.clear.preference(
+                    key: FreeConnectionHeightPreferenceKey.self,
+                    value: geometry.size.height
+                )
             }
         }
         .onPreferenceChange(FreeConnectionHeightPreferenceKey.self) { newHeight in
@@ -98,16 +99,16 @@ struct FreeConnectionInfoModal: View {
     }
 }
 
-fileprivate struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey { }
+private struct FreeConnectionHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 // MARK: - View Helpers
 
 @available(iOS 16, *)
-fileprivate struct WrappingHStack: Layout {
+private struct WrappingHStack: Layout {
     var horizontalSpacing: CGFloat = 10
     var verticalSpacing: CGFloat = 10
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache _: inout ()) -> CGSize {
         var width: CGFloat = 0
         var height: CGFloat = 0
         var lineWidth: CGFloat = 0
@@ -132,7 +133,7 @@ fileprivate struct WrappingHStack: Layout {
         return CGSize(width: width, height: height)
     }
 
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+    func placeSubviews(in bounds: CGRect, proposal _: ProposedViewSize, subviews: Subviews, cache _: inout ()) {
         var x: CGFloat = bounds.minX
         var y: CGFloat = bounds.minY
         var lineHeight: CGFloat = 0
@@ -157,7 +158,7 @@ fileprivate struct WrappingHStack: Layout {
     FreeConnectionInfoModal(
         store: .init(
             initialState: .init(
-                countryCodes: ["US","JP","PL","NL","RO"]
+                countryCodes: ["US", "JP", "PL", "NL", "RO"]
             )
         ) {
             FreeConnectionInfoFeature()

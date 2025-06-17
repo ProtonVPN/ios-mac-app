@@ -23,12 +23,10 @@ class XPCConnectionsRepositoryImplementation {
 }
 
 extension XPCConnectionsRepositoryImplementation: XPCConnectionsRepository {
-    
-    internal func getXpcConnection(for service: String) -> XPCServiceUser {
+    func getXpcConnection(for service: String) -> XPCServiceUser {
         if xpcConnections[service] == nil {
             xpcConnections[service] = XPCServiceUser(withExtension: service, logger: { log.info("\($0)", category: .sysex) })
         }
         return xpcConnections[service]!
     }
-    
 }

@@ -18,14 +18,13 @@
 
 import ComposableArchitecture
 import Domain
-import VPNAppCore
 import Foundation
 import Localization
 import Persistence
+import VPNAppCore
 
 @Reducer
 public struct ConnectionScreenFeature {
-
     @Dependency(\.dismiss) var dismiss
 
     @ObservableState
@@ -37,10 +36,12 @@ public struct ConnectionScreenFeature {
 
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
 
-        public init(ipViewState: IPViewFeature.State,
-                    connectionDetailsState: ConnectionDetailsFeature.State,
-                    isSecureCore: Bool,
-                    connectionFeatures: [ConnectionSpec.Feature]) {
+        public init(
+            ipViewState: IPViewFeature.State,
+            connectionDetailsState: ConnectionDetailsFeature.State,
+            isSecureCore: Bool,
+            connectionFeatures: [ConnectionSpec.Feature]
+        ) {
             self.ipViewState = ipViewState
             self.connectionDetailsState = connectionDetailsState
             self.isSecureCore = isSecureCore
@@ -68,7 +69,7 @@ public struct ConnectionScreenFeature {
 
 public extension VPNConnectionActual {
     func connectionScreenFeatureState() -> ConnectionScreenFeature.State {
-        return ConnectionScreenFeature.State(
+        ConnectionScreenFeature.State(
             ipViewState: .init(),
             connectionDetailsState: .init(actual: self),
             isSecureCore: server.logical.feature.contains(.secureCore),

@@ -35,17 +35,16 @@ public struct SettingsStorage: Sendable {
         public let atlasSecretFetchURLString: String
         public let featureFlagOverrides: [String: Bool]
 
-        @usableFromInline
-        static let empty: EnvironmentSettings = .init(apiEndpoint: "", atlasSecret: "", atlasSecretFetchURLString: "", featureFlagOverrides: [:])
+        @usableFromInline static let empty: EnvironmentSettings = .init(apiEndpoint: "", atlasSecret: "", atlasSecretFetchURLString: "", featureFlagOverrides: [:])
 
-        public init(apiEndpoint: String, atlasSecret: String, atlasSecretFetchURLString: String, featureFlagOverrides: [String : Bool]) {
+        public init(apiEndpoint: String, atlasSecret: String, atlasSecretFetchURLString: String, featureFlagOverrides: [String: Bool]) {
             self.apiEndpoint = apiEndpoint
             self.atlasSecret = atlasSecret
             self.atlasSecretFetchURLString = atlasSecretFetchURLString
             self.featureFlagOverrides = featureFlagOverrides
         }
     }
-    
+
     public var getEnvironment: @Sendable () -> EnvironmentSettings
     public var setEnvironment: @Sendable (EnvironmentSettings) throws -> Void
 
@@ -72,8 +71,8 @@ public enum SettingsStorageKey: TestDependencyKey {
     public static let testValue: SettingsStorage = .mock
 }
 
-extension DependencyValues {
-    public var settingsStorage: SettingsStorage {
+public extension DependencyValues {
+    var settingsStorage: SettingsStorage {
         get { self[SettingsStorageKey.self] }
         set { self[SettingsStorageKey.self] = newValue }
     }

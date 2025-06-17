@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@testable import Ergonomics
 import Foundation
 import XCTest
-@testable import Ergonomics
 
 private let timeout: TimeInterval = 1.0
 
-extension Array where Element == NotificationToken {
+extension [NotificationToken] {
     static func + (_ lhs: Self, _ rhs: NotificationToken) -> Self {
-        return lhs + [rhs]
+        lhs + [rhs]
     }
 
     static func += (_ lhs: inout Self, _ rhs: NotificationToken) {
@@ -33,18 +33,17 @@ extension Array where Element == NotificationToken {
 }
 
 final class TypedNotificationTests: XCTestCase {
-
     private struct TestNotification: TypedNotification {
-        static let name: Notification.Name = Notification.Name("TestNotificationName")
+        static let name: Notification.Name = .init("TestNotificationName")
         let data: String
     }
 
     private struct TestEmptyNotification: EmptyTypedNotification {
-        static let name: Notification.Name = Notification.Name("EmptyNotificationName")
+        static let name: Notification.Name = .init("EmptyNotificationName")
     }
 
     /// Used to verify that notifications are handled according to the object field
-    private class TestObject { }
+    private class TestObject {}
 
     /// Used to verify and demo retain cycle behaviour
     class TestViewModel: Identifiable {
@@ -72,7 +71,7 @@ final class TypedNotificationTests: XCTestCase {
         let notification = TestNotification(data: "Hello, World!")
 
         // Verify that the token is returned and immediately deallocated
-        _ = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { data in
+        _ = NotificationCenter.default.addObserver(for: TestNotification.self, object: self) { _ in
             XCTFail("Handler should not be invoked since token is immediately deallocated")
         }
 
@@ -224,14 +223,14 @@ final class TypedNotificationTests: XCTestCase {
                 userInfo: [TestNotification.dataKey: 123] // Provide Int instead of the expected String
             )
         }, issueMatcher: { issue in
-            return issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got 123"
+            issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got 123"
         })
 
         XCTExpectFailure("Post should fail with missing data", enabled: true, strict: true, failingBlock: {
             // post notification with missing data
             NotificationCenter.default.post(name: TestNotification.name, object: self, userInfo: [:])
         }, issueMatcher: { issue in
-            return issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got nil"
+            issue.compactDescription == "Expected object of type String stored under key: ch.protonvpn.notificationcenter.notificationdata, got nil"
         })
     }
 }

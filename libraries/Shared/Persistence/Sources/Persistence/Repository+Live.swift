@@ -24,9 +24,8 @@ import GRDB
 import Domain
 import Ergonomics
 
-extension ServerRepository {
-
-    public static var liveValue: ServerRepository {
+public extension ServerRepository {
+    static var liveValue: ServerRepository {
         @Dependency(\.databaseConfiguration) var config
 
         let dbWriter = DatabaseQueue.from(databaseConfiguration: config)
@@ -34,13 +33,13 @@ extension ServerRepository {
 
         return ServerRepository(
             serverCount: {
-                return executor.read(dbWriter: dbWriter) { db in
-                    return try Logical.fetchCount(db)
+                executor.read(dbWriter: dbWriter) { db in
+                    try Logical.fetchCount(db)
                 }
             },
             countryCount: {
                 executor.read(dbWriter: dbWriter) { db in
-                    return try Logical
+                    try Logical
                         .select(Logical.Columns.exitCountryCode).distinct()
                         .fetchCount(db)
                 }
@@ -60,7 +59,7 @@ extension ServerRepository {
                 }
             },
             server: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = ServerResult.request(filters: filters, order: order)
                     let result = try ServerResult.fetchOne(db, request)
 
@@ -81,7 +80,7 @@ extension ServerRepository {
                 }
             },
             servers: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = ServerInfoResult.request(filters: filters, order: order)
 
                     let results = try ServerInfoResult.fetchAll(db, request)
@@ -97,8 +96,8 @@ extension ServerRepository {
                 }
             },
             deleteServers: { ids, maxTier in
-                return executor.write(dbWriter: dbWriter) { db in
-                    return try Logical
+                executor.write(dbWriter: dbWriter) { db in
+                    try Logical
                         .filter(!ids.contains(Logical.Columns.id))
                         .filter(Logical.Columns.tier <= maxTier)
                         .deleteAll(db)
@@ -113,45 +112,45 @@ extension ServerRepository {
                 }
             },
             groups: { filters, order in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = GroupInfoResult.request(filters: filters, groupOrder: order)
 
-                    let groups = try GroupInfoResult.fetchAll(db, request).map { $0.domainModel }
+                    let groups = try GroupInfoResult.fetchAll(db, request).map(\.domainModel)
                     return Dictionary(grouping: groups.filter {
                         if case .gateway = $0.kind { return true }
                         return false
                     }, by: \.kind)
-                    .compactMap { (key, values) in
-                        guard let first = values.first else { return nil }
-                        return .init(
-                            kind: key,
-                            featureIntersection: first.featureIntersection,
-                            featureUnion: first.featureUnion,
-                            minTier: first.minTier,
-                            maxTier: first.maxTier,
-                            serverCount: values.count, // Passing correct serverCount in the group
-                            cityCount: 1,
-                            latitude: first.latitude,
-                            longitude: first.longitude,
-                            supportsSmartRouting: first.supportsSmartRouting,
-                            isUnderMaintenance: first.isUnderMaintenance,
-                            protocolSupport: first.protocolSupport
-                        )
-                    } // We group gateways by gateway name.
-                    .sorted {
-                        if case (.gateway(let name1), .gateway(let name2)) = ($0.kind, $1.kind) {
-                            return name1 < name2
-                        }
-                        return false
-                    } // Sorting gateways by gateway name.
-                    + groups.filter {
-                        if case .gateway = $0.kind { return false }
-                        return true
-                    } // Then adding all other kinds.
+                        .compactMap { key, values in
+                            guard let first = values.first else { return nil }
+                            return .init(
+                                kind: key,
+                                featureIntersection: first.featureIntersection,
+                                featureUnion: first.featureUnion,
+                                minTier: first.minTier,
+                                maxTier: first.maxTier,
+                                serverCount: values.count, // Passing correct serverCount in the group
+                                cityCount: 1,
+                                latitude: first.latitude,
+                                longitude: first.longitude,
+                                supportsSmartRouting: first.supportsSmartRouting,
+                                isUnderMaintenance: first.isUnderMaintenance,
+                                protocolSupport: first.protocolSupport
+                            )
+                        } // We group gateways by gateway name.
+                        .sorted {
+                            if case let (.gateway(name1), .gateway(name2)) = ($0.kind, $1.kind) {
+                                return name1 < name2
+                            }
+                            return false
+                        } // Sorting gateways by gateway name.
+                        + groups.filter {
+                            if case .gateway = $0.kind { return false }
+                            return true
+                        } // Then adding all other kinds.
                 }
             },
             getMetadata: { key in
-                return executor.read(dbWriter: dbWriter) { db in
+                executor.read(dbWriter: dbWriter) { db in
                     let request = DatabaseMetadata
                         .select(DatabaseMetadata.columns.value)
                         .filter(DatabaseMetadata.columns.key == key.rawValue)
@@ -160,7 +159,7 @@ extension ServerRepository {
                 }
             },
             setMetadata: { key, value in
-                return executor.write(dbWriter: dbWriter) { db in
+                executor.write(dbWriter: dbWriter) { db in
                     guard let value else {
                         try DatabaseMetadata
                             .filter(DatabaseMetadata.columns.key == key.rawValue)

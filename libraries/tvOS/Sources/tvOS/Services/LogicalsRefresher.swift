@@ -16,33 +16,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import ComposableArchitecture
 import Dependencies
 import Domain
 import Ergonomics
-import SwiftUI
-import ComposableArchitecture
+import Foundation
 import IssueReporting
+import SwiftUI
 
 public struct LogicalsRefresher {
     public var refreshLogicals: () async throws -> Void
     public var shouldRefreshLogicals: () -> Bool
 
-    public init(refreshLogicals: @escaping () async throws -> Void = unimplemented(),
-         shouldRefreshLogicals: @escaping () -> Bool = unimplemented()) {
+    public init(
+        refreshLogicals: @escaping () async throws -> Void = unimplemented(),
+        shouldRefreshLogicals: @escaping () -> Bool = unimplemented()
+    ) {
         self.refreshLogicals = refreshLogicals
         self.shouldRefreshLogicals = shouldRefreshLogicals
     }
 }
 
 public struct LogicalsRefresherProvider {
-
     @Shared(.lastLogicalsRefresh) private var lastLogicalsRefresh: TimeInterval = 0
     @Shared(.userLocation) var userLocation: UserLocation?
 
     var liveValue: LogicalsRefresher {
-        .init(refreshLogicals: refreshLogicals,
-              shouldRefreshLogicals: shouldRefreshLogicals)
+        .init(
+            refreshLogicals: refreshLogicals,
+            shouldRefreshLogicals: shouldRefreshLogicals
+        )
     }
 
     public func refreshLogicals() async throws {
@@ -78,9 +81,9 @@ extension LogicalsRefresher: DependencyKey {
     public static let liveValue: LogicalsRefresher = LogicalsRefresherProvider().liveValue
 }
 
-extension DependencyValues {
-    public var logicalsRefresher: LogicalsRefresher {
-      get { self[LogicalsRefresher.self] }
-      set { self[LogicalsRefresher.self] = newValue }
+public extension DependencyValues {
+    var logicalsRefresher: LogicalsRefresher {
+        get { self[LogicalsRefresher.self] }
+        set { self[LogicalsRefresher.self] = newValue }
     }
 }

@@ -18,16 +18,15 @@
 
 import Foundation
 
-import VPNAppCore
 import Persistence
+import VPNAppCore
 
-extension DatabaseConfiguration {
-
+public extension DatabaseConfiguration {
     /// Database configuration suitable for both debug and release builds.
     ///  - Database file located in Application Support directory
     ///  - Errors during database operations after initialisation are caught, logged, reported with sentry
     ///  - Operations resulting in an error fall back to returning default values
-    public static var live: DatabaseConfiguration {
+    static var live: DatabaseConfiguration {
         let directoryURLs = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         guard let directoryURL = directoryURLs.first else {
             fatalError("Failed to initialise app DB: cannot find URL for application support directory")

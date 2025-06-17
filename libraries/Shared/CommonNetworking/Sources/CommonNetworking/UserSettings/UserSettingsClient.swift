@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
 import Domain
+import Foundation
 
 @DependencyClient
 public struct UserSettingsClient: Sendable {
@@ -38,16 +38,14 @@ extension UserSettingsClient: DependencyKey {
     }()
 
     #if DEBUG
-    public static let testValue: UserSettingsClient = {
-        UserSettingsClient {
+        public static let testValue: UserSettingsClient = UserSettingsClient {
             .init(code: 1000, userSettings: .init(password: .init(mode: .singlePassword), twoFactor: .init(type: .disabled)))
         }
-    }()
     #endif
 }
 
-extension DependencyValues {
-    public var userSettingsClient: UserSettingsClient {
+public extension DependencyValues {
+    var userSettingsClient: UserSettingsClient {
         get { self[UserSettingsClient.self] }
         set { self[UserSettingsClient.self] = newValue }
     }

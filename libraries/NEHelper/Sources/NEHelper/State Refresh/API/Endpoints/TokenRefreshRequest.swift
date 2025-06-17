@@ -32,10 +32,12 @@ struct TokenRefreshRequest: APIRequest {
         let redirectURI: String
 
         public static func withRefreshToken(_ token: String) -> Self {
-            Self(responseType: "token",
-                 grantType: "refresh_token",
-                 refreshToken: token,
-                 redirectURI: "http://protonmail.ch")
+            Self(
+                responseType: "token",
+                grantType: "refresh_token",
+                refreshToken: token,
+                redirectURI: "http://protonmail.ch"
+            )
         }
     }
 
@@ -46,7 +48,7 @@ struct TokenRefreshRequest: APIRequest {
 
         /// Important! This is useful only right after the response was received
         var expirationDate: Date {
-            return Date(timeIntervalSinceNow: expiresIn)
+            Date(timeIntervalSinceNow: expiresIn)
         }
 
         enum CodingKeys: String, CodingKey {

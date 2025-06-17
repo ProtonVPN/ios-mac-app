@@ -36,7 +36,7 @@ struct SettingsDrillDownFeature {
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .onExitCommand:
                 $mainBackground.withLock { $0 = .clear }
@@ -54,11 +54,11 @@ enum DynamicDrillDownDestination: Equatable {
     var model: DynamicDrillDownModel {
         switch self {
         case .supportCenter:
-            return .supportCenter
+            .supportCenter
         case .contactUs:
-            return .contactUs
+            .contactUs
         case .privacyPolicy:
-            return .privacyPolicy
+            .privacyPolicy
         }
     }
 }
@@ -74,7 +74,7 @@ struct DynamicDrillDownModel {
         description: "Visit our online Support Center for troubleshooting tips, setup guides, and answers to FAQs.",
         url: nil, // "https://protonvpn.com/support-form?platform=appletv",
         displayURL: ""
-    ) //" protonvpn.com/support-form")
+    ) // " protonvpn.com/support-form")
 
     static let supportCenter = Self(
         title: "Support Center",

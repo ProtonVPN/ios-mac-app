@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import LegacyCommon
-import Foundation
 import Domain
+import Foundation
+import LegacyCommon
 
 protocol ProtonReachabilityCheckerFactory {
     func makeProtonReachabilityChecker() -> ProtonReachabilityChecker
@@ -37,7 +37,7 @@ final class URLSessionProtonReachabilityChecker: ProtonReachabilityChecker {
         configuration.timeoutIntervalForRequest = 3
         configuration.timeoutIntervalForResource = 3
 
-        session = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
+        self.session = URLSession(configuration: configuration, delegate: nil, delegateQueue: .main)
     }
 
     func check(completion: @escaping (Bool) -> Void) {

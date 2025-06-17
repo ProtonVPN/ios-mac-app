@@ -59,11 +59,11 @@ public struct UserDefaultsDebugFeature {
                     return await send(.loadDefaultsFinished(result))
                 }
 
-            case .loadDefaultsFinished(.success(let entries)):
+            case let .loadDefaultsFinished(.success(entries)):
                 state.content = .loaded(entries)
                 return .none
 
-            case .loadDefaultsFinished(.failure(let error)):
+            case let .loadDefaultsFinished(.failure(error)):
                 state.content = .failed("\(error)")
                 return .none
 
@@ -77,7 +77,7 @@ public struct UserDefaultsDebugFeature {
             case .resetDefaultsFinished(.success):
                 return .send(.loadDefaults)
 
-            case .resetDefaultsFinished(.failure(let error)):
+            case let .resetDefaultsFinished(.failure(error)):
                 state.content = .failed("\(error)")
                 return .none
 
@@ -113,9 +113,9 @@ public struct UserDefaultsDebugFeature {
     }
 }
 
-extension UserDefaultsDebugFeature.State {
+public extension UserDefaultsDebugFeature.State {
     @CasePathable
-    public enum Content: Equatable {
+    enum Content: Equatable {
         case none
         case loading
         case loaded([UserDefaultsEntry])

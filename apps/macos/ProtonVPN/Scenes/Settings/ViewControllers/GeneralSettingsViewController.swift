@@ -1,5 +1,5 @@
 //
-//  GeneralViewController.swift
+//  GeneralSettingsViewController.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
-import LegacyCommon
 import AppKit
+import Cocoa
 import Ergonomics
+import LegacyCommon
 import Strings
 
 public protocol ReloadableViewController: AnyObject {
@@ -31,51 +31,51 @@ public protocol ReloadableViewController: AnyObject {
 }
 
 final class GeneralSettingsViewController: NSViewController, ReloadableViewController {
-
-    @IBOutlet weak var startOnBootView: SettingsTickboxView!
-    @IBOutlet weak var startMinimizedView: SettingsTickboxView!
-    @IBOutlet weak var systemNotificationsView: SettingsTickboxView!
-    @IBOutlet weak var earlyAccessView: SettingsTickboxView!
-    @IBOutlet weak var unprotectedNetworkView: SettingsTickboxView!
+    @IBOutlet var startOnBootView: SettingsTickboxView!
+    @IBOutlet var startMinimizedView: SettingsTickboxView!
+    @IBOutlet var systemNotificationsView: SettingsTickboxView!
+    @IBOutlet var earlyAccessView: SettingsTickboxView!
+    @IBOutlet var unprotectedNetworkView: SettingsTickboxView!
 
     private var viewModel: GeneralSettingsViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: GeneralSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("GeneralSettings"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         reloadView()
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupStartOnBootItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startOnBoot, buttonState: viewModel.startOnBoot)
         startOnBootView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupStartMinimizedItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.startMinimized, buttonState: viewModel.startMinimized)
         startMinimizedView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupSystemNotificationsItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.systemNotifications, buttonState: viewModel.systemNotifications)
         systemNotificationsView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     private func setupEarlyAccessItem() {
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.earlyAccess, buttonState: viewModel.earlyAccess, toolTip: Localizable.earlyAccessTooltip)
         earlyAccessView.setupItem(model: viewModel, delegate: self)
@@ -85,9 +85,9 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
         let viewModel = SettingsTickboxView.ViewModel(labelText: Localizable.unprotectedNetwork, buttonState: viewModel.unprotectedNetworkNotifications, toolTip: Localizable.unprotectedNetworkTooltip)
         unprotectedNetworkView.setupItem(model: viewModel, delegate: self)
     }
-    
+
     // MARK: - ReloadableView
-    
+
     func reloadView() {
         setupView()
         setupStartOnBootItem()
@@ -99,8 +99,7 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
 }
 
 extension GeneralSettingsViewController: TickboxViewDelegate {
-
-    func upsellTapped(_ tickboxView: SettingsTickboxView) {
+    func upsellTapped(_: SettingsTickboxView) {
         // No upsellable features need to be handled in general settings
     }
 

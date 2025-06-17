@@ -20,19 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import UIKit
+import Combine
+import ComposableArchitecture
 import Dependencies
-import ProtonCoreUIFoundations
+import Domain
+import Foundation
 import LegacyCommon
 import Localization
+import Persistence
+import ProtonCoreUIFoundations
 import Strings
 import Theme
-import Persistence
+import UIKit
 import VPNAppCore
-import Domain
-import ComposableArchitecture
-import Combine
 
 import ProtonCoreFeatureFlags
 
@@ -55,59 +55,65 @@ final class ProfileItemViewModel {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     var isConnected: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connected, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         }
 
         guard case .connected = vpnConnectionStatus else {
             return false
         }
         return propertiesManager.lastConnectionIntent == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                         withDefaultNATType: natTypePropertyProvider.natType,
-                                                         withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                         trigger: .profile)
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         )
     }
 
     var isConnecting: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-
             guard vpnGateway.connection == .connecting, let activeConnectionRequest = vpnGateway.lastConnectionRequest else { return false }
 
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                                        withDefaultNATType: natTypePropertyProvider.natType,
-                                                                        withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                                        trigger: .profile)
+            return activeConnectionRequest == profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         }
 
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
         return connectionSpec == ConnectionSpec(
-            connectionRequest: profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType,
-                                                         withDefaultNATType: natTypePropertyProvider.natType,
-                                                         withDefaultSafeMode: safeModePropertyProvider.safeMode,
-                                                         trigger: .profile)
+            connectionRequest: profile.connectionRequest(
+                withDefaultNetshield: netShieldPropertyProvider.netShieldType,
+                withDefaultNATType: natTypePropertyProvider.natType,
+                withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                trigger: .profile
+            )
         )
     }
 
     private var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     private var canConnect: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
 
     private var isUsersTierTooLow: Bool {
-        return !authorizer.canUseProfile(ofTier: lowestServerTier)
+        !authorizer.canUseProfile(ofTier: lowestServerTier)
     }
 
     var connectionChanged: (() -> Void)?
@@ -116,38 +122,38 @@ final class ProfileItemViewModel {
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return IconProvider.lock
+            IconProvider.lock
         } else if underMaintenance {
-            return IconProvider.wrench
+            IconProvider.wrench
         } else if connectedUiState {
-            return connectedConnectIcon
+            connectedConnectIcon
         } else {
-            return IconProvider.powerOff
+            IconProvider.powerOff
         }
     }
 
     var imageInPlaceOfConnectIcon: UIImage? {
-        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
+        isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
 
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
 
     var name: NSAttributedString {
-        return attributedName(forProfile: profile)
+        attributedName(forProfile: profile)
     }
 
     var description: NSAttributedString {
-        return attributedDescription(forProfile: profile)
+        attributedDescription(forProfile: profile)
     }
 
     var connectButtonTitle: String {
-        return underMaintenance ? Localizable.maintenance : Localizable.connect
+        underMaintenance ? Localizable.maintenance : Localizable.connect
     }
 
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        isUsersTierTooLow ? 0.5 : 1.0
     }
 
     init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
@@ -163,12 +169,13 @@ final class ProfileItemViewModel {
         self.propertiesManager = propertiesManager
 
         switch profile.serverOffering {
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier // add unit tests
             self.underMaintenance = serverWrapper.server.underMaintenance
 
-        case .fastest(let countryCode): fallthrough
-        case .random(let countryCode):
+        case let .fastest(countryCode): fallthrough
+
+        case let .random(countryCode):
             guard let code = countryCode else {
                 self.lowestServerTier = 0
                 self.underMaintenance = false
@@ -237,23 +244,25 @@ final class ProfileItemViewModel {
     }
 
     // MARK: Descriptors
-    internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        return profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
+
+    func attributedName(forProfile profile: Profile) -> NSAttributedString {
+        profile.name.attributed(withColor: .normalTextColor(), fontSize: 11, alignment: .left)
     }
 
-    internal func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
+    func attributedDescription(forProfile profile: Profile) -> NSAttributedString {
         switch profile.profileType {
         case .system:
-            return systemProfileDescriptor(forProfile: profile)
+            systemProfileDescriptor(forProfile: profile)
         case .user:
-            return userProfileDescriptor(forProfile: profile)
+            userProfileDescriptor(forProfile: profile)
         }
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
-    fileprivate func startObserving() {
+    private func startObserving() {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
             return
@@ -267,8 +276,9 @@ final class ProfileItemViewModel {
             .store(in: &cancellables)
     }
 
-    @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged {
+    @objc
+    private func stateChanged() {
+        if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }
@@ -296,17 +306,17 @@ final class ProfileItemViewModel {
         }
 
         switch profile.serverOffering {
-        case .fastest(let cCode):
+        case let .fastest(cCode):
             return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.fastest)
-        case .random(let cCode):
+        case let .random(cCode):
             return defaultServerDescriptor(profile.serverType, forCountry: cCode, description: Localizable.random)
-        case .custom(let sWrapper):
+        case let .custom(sWrapper):
             return customServerDescriptor(forModel: sWrapper.server)
         }
     }
 
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
-        guard let countryCode = countryCode else {
+        guard let countryCode else {
             return description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
 

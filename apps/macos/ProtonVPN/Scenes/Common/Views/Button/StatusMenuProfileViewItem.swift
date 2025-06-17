@@ -1,5 +1,5 @@
 //
-//  StatusMenuProfileItem.swift
+//  StatusMenuProfileViewItem.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -25,36 +25,37 @@ import Ergonomics
 import ProtonCoreUIFoundations
 
 class StatusMenuProfileViewItem: NSTableRowView {
-    
-    @IBOutlet weak var profileCircle: ProfileCircle!
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var label: NSTextField!
-    @IBOutlet weak var secondaryLabel: NSTextField!
-    @IBOutlet weak var separator: NSBox!
-    @IBOutlet weak var button: StatusMenuSurfaceButton!
-    
+    @IBOutlet var profileCircle: ProfileCircle!
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var label: NSTextField!
+    @IBOutlet var secondaryLabel: NSTextField!
+    @IBOutlet var separator: NSBox!
+    @IBOutlet var button: StatusMenuSurfaceButton!
+
     private var viewModel: StatusMenuProfileItemViewModel?
-    
+
     func updateView(withModel viewModel: StatusMenuProfileItemViewModel) {
         self.viewModel = viewModel
-        
+
         setupIcon()
         setupLabels()
         setupSeparator()
         setupButton()
         setupAvailability()
     }
-    
-    @IBAction func selected(_ sender: Any) {
+
+    @IBAction
+    func selected(_: Any) {
         viewModel?.connectAction()
     }
-    
+
     // MARK: - Private
+
     private func setupIcon() {
-        guard let viewModel = viewModel else { return }
-        
+        guard let viewModel else { return }
+
         switch viewModel.icon {
-        case .image(let image):
+        case let .image(image):
             profileImage.image = image.colored()
         case .bolt:
             profileImage.image = IconProvider.bolt.colored()
@@ -64,35 +65,35 @@ class StatusMenuProfileViewItem: NSTableRowView {
             profileImage.image = IconProvider.arrowsSwapRight.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
-        case .circle(let color):
+        case let .circle(color):
             profileCircle.profileColor = NSColor(rgbHex: color)
             profileImage.isHidden = true
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupLabels() {
-        guard let viewModel = viewModel else { return }
-        
+        guard let viewModel else { return }
+
         label.attributedStringValue = viewModel.name
         secondaryLabel.attributedStringValue = viewModel.secondaryDescription
     }
-    
+
     private func setupSeparator() {
         separator.fillColor = .color(.border, .strong)
     }
-    
+
     private func setupButton() {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: centerXAnchor),
             button.centerYAnchor.constraint(equalTo: centerYAnchor),
             button.widthAnchor.constraint(equalTo: widthAnchor),
-            button.heightAnchor.constraint(equalTo: heightAnchor)
+            button.heightAnchor.constraint(equalTo: heightAnchor),
         ])
 
         button.stateChanged = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
@@ -103,12 +104,12 @@ class StatusMenuProfileViewItem: NSTableRowView {
                     self.button.layer?.backgroundColor = .cgColor(.background, [.transparent])
                 }
             }
-            self.button.needsDisplay = true
+            button.needsDisplay = true
         }
     }
-    
+
     private func setupAvailability() {
-        [profileImage, profileCircle, label, secondaryLabel].forEach { view in
+        for view in [profileImage, profileCircle, label, secondaryLabel] {
             view?.alphaValue = viewModel?.alphaOfMainElements ?? 1
         }
     }

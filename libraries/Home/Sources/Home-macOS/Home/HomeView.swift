@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import HomeShared
-import VPNShared
 import ComposableArchitecture
+import HomeShared
+import SwiftUI
 import Theme
+import VPNShared
 
 import Strings
 
 public struct HomeView: View {
-
     let store: StoreOf<HomeFeature>
 
     public init(store: StoreOf<HomeFeature>) {
@@ -54,18 +53,26 @@ public struct HomeView: View {
                 .layoutPriority(0.1) // works in tandem with the layoutPriority outside of this VStack to prevent the connection card from stretching
             }
             .background(Color(.background))
-            .themeFrame(minWidth: .mainContainerMinWidth,
-                        minHeight: .mainContainerMinHeight)
+            .themeFrame(
+                minWidth: .mainContainerMinWidth,
+                minHeight: .mainContainerMinHeight
+            )
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView(store: .init(initialState: .init(connections: .init(),
-                                                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                                                  vpnConnectionStatus: .connected(.init(location: .fastest,
-                                                                                        features: .init()), nil)),
-                              reducer: { HomeFeature() }))
+        HomeView(store: .init(
+            initialState: .init(
+                connections: .init(),
+                connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                vpnConnectionStatus: .connected(.init(
+                    location: .fastest,
+                    features: .init()
+                ), nil)
+            ),
+            reducer: { HomeFeature() }
+        ))
     }
 }

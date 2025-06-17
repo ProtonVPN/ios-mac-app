@@ -24,21 +24,20 @@ import Cocoa
 import LegacyCommon
 
 class ProfilesTabBarView: NSView {
-
     private let tabWidth: CGFloat = 200
     private let tabHeight: CGFloat = 40
-    
+
     var activeTab: ProfilesTab? {
         didSet {
             prepareTransformation()
             needsDisplay = true
         }
     }
-    
-    private var transform: NSAffineTransform = NSAffineTransform()
-    
+
+    private var transform: NSAffineTransform = .init()
+
     private func prepareTransformation() {
-        switch self.userInterfaceLayoutDirection {
+        switch userInterfaceLayoutDirection {
         case .leftToRight:
             transform = NSAffineTransform()
         case .rightToLeft:
@@ -49,65 +48,65 @@ class ProfilesTabBarView: NSView {
             transform = NSAffineTransform()
         }
     }
-    
+
     private func isFocused(tabIndex index: ProfilesTab) -> Bool {
-        return activeTab == index
+        activeTab == index
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
         guard let context = NSGraphicsContext.current?.cgContext, activeTab != nil else {
             return
         }
-        
+
         if bounds.width < 2.5 * tabWidth {
             log.error("Unable to draw tab bar under given constraints: \(bounds)", category: .ui)
             return
         }
-        
+
         transform.concat() // Transform for right-to-left languages (if needed)
-        
+
         let leftRect = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: tabWidth, height: tabHeight)
         let rightRect = NSRect(x: bounds.origin.x + tabWidth, y: bounds.origin.y, width: tabWidth, height: tabHeight)
-        
+
         drawLeftSection(context: context, rect: leftRect, focused: isFocused(tabIndex: .overview))
         drawRightSection(context: context, rect: rightRect, focused: isFocused(tabIndex: .createNewProfile))
     }
-    
+
     private func drawLeftSection(context: CGContext, rect: CGRect, focused: Bool) {
         var path = CGMutablePath()
-        
+
         path.move(to: CGPoint(x: rect.minX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX - 35, y: rect.maxY))
         path.addQuadCurve(to: CGPoint(x: rect.maxX, y: rect.maxY / 2), control: CGPoint(x: rect.maxX - 10, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        
+
         var color = getColor(forFocus: focused)
         context.setFillColor(color)
         context.addPath(path)
         context.drawPath(using: .fill)
-        
+
         if !focused {
             path = CGMutablePath()
-            
+
             path.move(to: CGPoint(x: rect.maxX, y: rect.maxY / 2))
             path.addQuadCurve(to: CGPoint(x: rect.maxX - 25, y: rect.minY), control: CGPoint(x: rect.maxX - 5, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY / 2))
-            
+
             color = getColor(forFocus: !focused)
             context.setFillColor(color)
             context.addPath(path)
             context.drawPath(using: .fill)
         }
     }
-    
+
     private func drawRightSection(context: CGContext, rect: CGRect, focused: Bool) {
         var path = CGMutablePath()
-        
+
         path.move(to: CGPoint(x: rect.maxX + 25, y: rect.minY))
         path.addQuadCurve(to: CGPoint(x: rect.maxX, y: rect.height / 2), control: CGPoint(x: rect.maxX + 5, y: rect.minY))
         path.addQuadCurve(to: CGPoint(x: rect.maxX - 35, y: rect.maxY), control: CGPoint(x: rect.maxX - 10, y: rect.maxY))
@@ -115,28 +114,29 @@ class ProfilesTabBarView: NSView {
         path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY / 2), control: CGPoint(x: rect.minX + 10, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
         path.addLine(to: CGPoint(x: rect.maxX + 25, y: rect.minY))
-        
+
         var color = getColor(forFocus: focused)
         context.setFillColor(color)
         context.addPath(path)
         context.drawPath(using: .fill)
-        
+
         if !focused {
             path = CGMutablePath()
-            
+
             path.move(to: CGPoint(x: rect.minX, y: rect.maxY / 2))
             path.addQuadCurve(to: CGPoint(x: rect.minX + 25, y: rect.minY), control: CGPoint(x: rect.minX + 5, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.minX, y: rect.minY / 2))
-            
+
             color = getColor(forFocus: !focused)
             context.setFillColor(color)
             context.addPath(path)
             context.drawPath(using: .fill)
         }
     }
-    
+
     // MARK: - Colors
+
     private func getColor(forFocus present: Bool) -> CGColor {
         TabBarButton.backgroundColor(forFocus: present)
     }

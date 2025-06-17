@@ -17,7 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 enum AutoConnectOptions: String {
-    case Disabled = "Disabled"
-    case Fastest = "Fastest"
-    case Random = "Random"
+    case Disabled
+    case Fastest
+    case Random
 }

@@ -20,12 +20,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Cocoa
 import LegacyCommon
-import AppKit
 
 extension NSAttributedString {
-    
     static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         strings.forEach { mutableAttributedString.append($0) }
@@ -33,12 +32,12 @@ extension NSAttributedString {
     }
 
     static func imageAttachment(image: NSImage?, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
-        guard var image = image else {
+        guard var image else {
             log.error("Could not obtain image for text attachment.", category: .ui)
             return nil
         }
 
-        if let color = color {
+        if let color {
             image = image.colored(color)
         }
 
@@ -50,17 +49,17 @@ extension NSAttributedString {
         attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
     }
-    
+
     static func imageAttachment(named name: String, width: Int? = nil, height: Int? = nil, colored color: NSColor? = nil) -> NSAttributedString? {
-        return NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
+        NSAttributedString.imageAttachment(image: NSImage(named: NSImage.Name(name.lowercased())), width: width, height: height, colored: color)
     }
-    
-    func applyStyle( for strings: [String], attrs: [NSAttributedString.Key: Any] ) -> NSAttributedString {
+
+    func applyStyle(for strings: [String], attrs: [NSAttributedString.Key: Any]) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         mutableAttributedString.append(self)
-        strings.forEach { str in
-            guard let range = self.string.range(of: str) else { return }
-            let nsRange = NSRange(range, in: self.string)
+        for str in strings {
+            guard let range = string.range(of: str) else { continue }
+            let nsRange = NSRange(range, in: string)
             mutableAttributedString.addAttributes(attrs, range: nsRange)
         }
         return mutableAttributedString

@@ -17,30 +17,32 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import NetworkExtension
+    import Foundation
+    import NetworkExtension
 
-import Domain
-import VPNShared
+    import Domain
+    import VPNShared
 
-public class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
-    public typealias VpnCredentialsConfiguratorMockCallback = ((VpnManagerConfiguration, NEVPNProtocol) -> Void)
+    public class VpnCredentialsConfiguratorMock: VpnCredentialsConfigurator {
+        public typealias VpnCredentialsConfiguratorMockCallback = (VpnManagerConfiguration, NEVPNProtocol) -> Void
 
-    public let vpnProtocol: VpnProtocol
-    public var didConfigure: VpnCredentialsConfiguratorMockCallback?
+        public let vpnProtocol: VpnProtocol
+        public var didConfigure: VpnCredentialsConfiguratorMockCallback?
 
-    public init(vpnProtocol: VpnProtocol, didConfigure: VpnCredentialsConfiguratorMockCallback?) {
-        self.vpnProtocol = vpnProtocol
-        self.didConfigure = didConfigure
+        public init(vpnProtocol: VpnProtocol, didConfigure: VpnCredentialsConfiguratorMockCallback?) {
+            self.vpnProtocol = vpnProtocol
+            self.didConfigure = didConfigure
+        }
+
+        public func prepareCredentials(
+            for protocolConfig: NEVPNProtocol,
+            configuration: VpnManagerConfiguration,
+            completionHandler: @escaping (NEVPNProtocol) -> Void
+        ) {
+            assert(vpnProtocol == configuration.vpnProtocol, "Vpn protocol in configuration did not match!")
+
+            didConfigure?(configuration, protocolConfig)
+            completionHandler(protocolConfig)
+        }
     }
-
-    public func prepareCredentials(for protocolConfig: NEVPNProtocol,
-                            configuration: VpnManagerConfiguration,
-                            completionHandler: @escaping (NEVPNProtocol) -> Void) {
-        assert(vpnProtocol == configuration.vpnProtocol, "Vpn protocol in configuration did not match!")
-
-        didConfigure?(configuration, protocolConfig)
-        completionHandler(protocolConfig)
-    }
-}
 #endif

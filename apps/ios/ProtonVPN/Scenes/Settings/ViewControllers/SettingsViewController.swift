@@ -1,5 +1,5 @@
 //
-//  StatusViewController.swift
+//  SettingsViewController.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,19 +22,18 @@
 
 import UIKit
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
-import Strings
 import Domain
+import Strings
 
 final class SettingsViewController: UIViewController {
-
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var connectionBarContainerView: UIView!
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var connectionBarContainerView: UIView!
 
     var connectionBarViewController: ConnectionBarViewController?
     var genericDataSource: GenericTableViewDataSource?
@@ -44,16 +43,16 @@ final class SettingsViewController: UIViewController {
                 pushViewController(viewController)
             }
             viewModel?.reloadNeeded = { [weak self] in
-                guard let self = self, self.isViewLoaded else {
+                guard let self, isViewLoaded else {
                     return
                 }
 
-                self.setupTableView()
-                self.tableView.reloadData()
+                setupTableView()
+                tableView.reloadData()
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -64,7 +63,7 @@ final class SettingsViewController: UIViewController {
         }
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,45 +76,45 @@ final class SettingsViewController: UIViewController {
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         setupTableView()
         tableView.reloadData()
 
         /// This is required by QR Login. One of the views in the QR Login flow hides the navigation bar and we need to make sure it is visible when we pop back to the root view controller.
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    
+
     private func setupView() {
         navigationItem.title = Localizable.settings
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func setupTableView() {
-        guard let viewModel = viewModel else { return }
-        
+        guard let viewModel else { return }
+
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
-        
+
         tableView.separatorColor = .normalSeparatorColor()
         tableView.separatorInset = .zero
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        
+
         tableView.tableFooterView = viewModel.viewForFooter()
         tableView.contentInset.bottom = UIConstants.cellHeight
     }
-    
+
     private func pushViewController(_ viewController: UIViewController) {
         navigationController?.pushViewController(viewController, animated: true)
     }
-    
+
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }

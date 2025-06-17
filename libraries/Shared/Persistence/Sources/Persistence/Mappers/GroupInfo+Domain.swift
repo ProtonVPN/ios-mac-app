@@ -22,7 +22,7 @@ import Domain
 
 extension GroupInfoResult {
     var domainModel: ServerGroupInfo {
-        return .init(
+        .init(
             kind: kind,
             featureIntersection: featureIntersection,
             featureUnion: featureUnion,
@@ -40,9 +40,9 @@ extension GroupInfoResult {
 
     private var kind: ServerGroupInfo.Kind {
         if let gatewayName {
-            return .gateway(name: gatewayName)
+            .gateway(name: gatewayName)
         } else {
-            return .country(code: exitCountryCode)
+            .country(code: exitCountryCode)
         }
     }
 }

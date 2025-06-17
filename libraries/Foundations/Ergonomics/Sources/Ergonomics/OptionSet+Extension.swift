@@ -18,12 +18,12 @@
 
 public extension OptionSet where RawValue == Int {
     init(bitPosition: Int) {
-        assert(0 <= bitPosition && bitPosition < Int.bitWidth)
+        assert(bitPosition >= 0 && bitPosition < Int.bitWidth)
         self = Self(rawValue: 1 << bitPosition)
     }
 
     static func + (left: Self, right: Self) -> Self {
-        return left.union(right)
+        left.union(right)
     }
 }
 
@@ -32,7 +32,7 @@ public extension OptionSet where RawValue: FixedWidthInteger {
         var remainingBits = rawValue
         var bitMask: RawValue = 1
         return AnySequence {
-            return AnyIterator {
+            AnyIterator {
                 while remainingBits != 0 {
                     defer { bitMask = bitMask &* 2 }
                     if remainingBits & bitMask != 0 {

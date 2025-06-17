@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 /// Used by `VpnAuthenticationStorage` to generate new keys. However, keys should not be generated inside extensions,
 /// only in the app targets. The real implementation also requires GoLibs, which are too heavy to pull into extension
@@ -36,8 +36,8 @@ public struct VPNKeysGenerator: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var vpnKeysGenerator: VPNKeysGenerator {
+public extension DependencyValues {
+    var vpnKeysGenerator: VPNKeysGenerator {
         get { self[VPNKeysGenerator.self] }
         set { self[VPNKeysGenerator.self] = newValue }
     }

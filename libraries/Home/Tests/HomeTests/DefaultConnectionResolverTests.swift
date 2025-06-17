@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import Collections
+@testable import ConnectionInventory
 import Dependencies
 @testable import Domain
+import Foundation
 @testable import HomeShared
-@testable import ConnectionInventory
+import XCTest
 
 final class DefaultConnectionResolverTests: XCTestCase {
     typealias Sut = DefaultConnectionResolverImplementation
@@ -67,15 +67,15 @@ final class DefaultConnectionResolverTests: XCTestCase {
             Sut.preferenceModels(for: recents)
         }
 
-        let preferenceModelSpecs = preferenceModels.map { $0.preference }
+        let preferenceModelSpecs = preferenceModels.map(\.preference)
         XCTAssertEqual(preferenceModelSpecs, [.recent(.fastestSecureCore), .recent(.poland)])
     }
 }
 
 extension Date {
-    static let referenceDate = Date(timeIntervalSince1970: 591742800)
-    static var earlier: Date { referenceDate.addingTimeInterval(-2443332) }
-    static var later: Date { referenceDate.addingTimeInterval(2443332) }
+    static let referenceDate = Date(timeIntervalSince1970: 591_742_800)
+    static var earlier: Date { referenceDate.addingTimeInterval(-2_443_332) }
+    static var later: Date { referenceDate.addingTimeInterval(2_443_332) }
 }
 
 extension ConnectionSpec {
@@ -85,7 +85,7 @@ extension ConnectionSpec {
     static let poland = ConnectionSpec(location: .region(code: "PL"), features: [])
 
     func recent(with date: Date, pinnedDate: Date? = nil) -> RecentConnection {
-        return RecentConnection(
+        RecentConnection(
             pinnedDate: pinnedDate,
             underMaintenance: false,
             connectionDate: date,

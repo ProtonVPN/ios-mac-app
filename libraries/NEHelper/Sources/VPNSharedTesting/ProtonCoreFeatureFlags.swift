@@ -16,32 +16,39 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import enum Domain.VPNFeatureFlagType
 import Foundation
 import ProtonCoreFeatureFlags
-import enum Domain.VPNFeatureFlagType
 
 public extension ProtonCoreFeatureFlags.FeatureFlag {
     static var sentry: Self {
         VPNFeatureFlagType.sentry.featureFlag
     }
+
     static var sentryExcludeMetadata: Self {
         VPNFeatureFlagType.sentryExcludeMetadata.featureFlag
     }
+
     static var certificateRefreshForceRenew: Self {
         VPNFeatureFlagType.certificateRefreshForceRenew.featureFlag
     }
+
     static var noDefaultToIke: Self {
         VPNFeatureFlagType.noDefaultToIke.featureFlag
     }
+
     static var removeConnectionDelay: Self {
         VPNFeatureFlagType.removeConnectionDelay.featureFlag
     }
+
     static var asyncVPNManager: Self {
         VPNFeatureFlagType.asyncVPNManager.featureFlag
     }
+
     static var redesignKillSwitch: Self {
         TestFeatureFlagType.redesigniOSKillSwitch.featureFlag
     }
+
     static var connectionKillSwitch: Self {
         TestFeatureFlagType.useConnectionFeatureKillSwitch.featureFlag
     }

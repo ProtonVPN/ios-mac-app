@@ -24,47 +24,46 @@ import Cocoa
 
 import Dependencies
 
-import VPNAppCore
-import Persistence
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import Persistence
+import VPNAppCore
 
-import Theme
+import Domain
 import Ergonomics
 import Strings
-import Domain
+import Theme
 
 class UserAccountUpdateViewController: NSViewController {
+    @IBOutlet var serversView: NSView!
+    @IBOutlet var imageView: NSImageView!
+    @IBOutlet var titleLbl: NSTextField!
+    @IBOutlet var descriptionLbl: NSTextField!
+    @IBOutlet var offsetView: NSView!
 
-    @IBOutlet weak var serversView: NSView!
-    @IBOutlet weak var imageView: NSImageView!
-    @IBOutlet weak var titleLbl: NSTextField!
-    @IBOutlet weak var descriptionLbl: NSTextField!
-    @IBOutlet weak var offsetView: NSView!
+    @IBOutlet var featuresTitleLbl: NSTextField!
 
-    @IBOutlet weak var featuresTitleLbl: NSTextField!
+    @IBOutlet var primaryActionBtn: NSButton!
+    @IBOutlet var secondActionBtn: NSButton!
 
-    @IBOutlet weak var primaryActionBtn: NSButton!
-    @IBOutlet weak var secondActionBtn: NSButton!
+    @IBOutlet var feature1View: NSView!
+    @IBOutlet var feature1Lbl: NSTextField!
 
-    @IBOutlet weak var feature1View: NSView!
-    @IBOutlet weak var feature1Lbl: NSTextField!
+    @IBOutlet var feature2View: NSView!
+    @IBOutlet var feature2Lbl: NSTextField!
 
-    @IBOutlet weak var feature2View: NSView!
-    @IBOutlet weak var feature2Lbl: NSTextField!
+    @IBOutlet var feature3View: NSView!
+    @IBOutlet var feature3Lbl: NSTextField!
 
-    @IBOutlet weak var feature3View: NSView!
-    @IBOutlet weak var feature3Lbl: NSTextField!
+    @IBOutlet var fromServerTitleLbl: NSTextField!
+    @IBOutlet var fromServerIV: NSImageView!
+    @IBOutlet var fromServerLbl: NSTextField!
 
-    @IBOutlet weak var fromServerTitleLbl: NSTextField!
-    @IBOutlet weak var fromServerIV: NSImageView!
-    @IBOutlet weak var fromServerLbl: NSTextField!
+    @IBOutlet var fromToArrow: NSImageView!
 
-    @IBOutlet weak var fromToArrow: NSImageView!
-
-    @IBOutlet weak var toServerTitleLbl: NSTextField!
-    @IBOutlet weak var toServerIV: NSImageView!
-    @IBOutlet weak var toServerLbl: NSTextField!
+    @IBOutlet var toServerTitleLbl: NSTextField!
+    @IBOutlet var toServerIV: NSImageView!
+    @IBOutlet var toServerLbl: NSTextField!
 
     private let alert: UserAccountUpdateAlert
 
@@ -75,7 +74,8 @@ class UserAccountUpdateViewController: NSViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -155,11 +155,13 @@ class UserAccountUpdateViewController: NSViewController {
         setServerHeader(reconnectInfo.toServer, Localizable.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
 
-    private func setServerHeader( _ server: ReconnectInfo.Server,
-                                  _ header: String,
-                                  _ flagIV: NSImageView,
-                                  _ serverName: NSTextField,
-                                  _ serverHeader: NSTextField ) {
+    private func setServerHeader(
+        _ server: ReconnectInfo.Server,
+        _ header: String,
+        _ flagIV: NSImageView,
+        _ serverName: NSTextField,
+        _ serverHeader: NSTextField
+    ) {
         serverName.stringValue = server.name
         flagIV.image = server.image
         serverHeader.stringValue = header
@@ -167,7 +169,8 @@ class UserAccountUpdateViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction func didTapPrimaryAction(_ sender: Any) {
+    @IBAction
+    func didTapPrimaryAction(_: Any) {
         alert.actions.first?.handler?()
 
         Task {
@@ -182,7 +185,8 @@ class UserAccountUpdateViewController: NSViewController {
         dismiss(nil)
     }
 
-    @IBAction func didTapSecondAction(_ sender: Any) {
+    @IBAction
+    func didTapSecondAction(_: Any) {
         alert.actions.last?.handler?()
         dismissCompletion?()
         dismiss(nil)

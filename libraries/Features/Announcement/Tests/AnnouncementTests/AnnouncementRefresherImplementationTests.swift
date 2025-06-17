@@ -20,18 +20,17 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
+@testable import Announcement
 import Dependencies
 import ProtonCoreNetworking
-@testable import Announcement
+import XCTest
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
-
     @Dependency(\.announcementStorage) var storage
 
     override class func tearDown() {
         AnnouncementClient.testValue = AnnouncementClient {
-            return .init(notifications: [])
+            .init(notifications: [])
         }
     }
 
@@ -45,10 +44,10 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
 
         let refresher = AnnouncementRefresherImplementation()
         refresher.tryRefreshing()
-        
+
         wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
-    
+
     func testDoNotRefreshTooOften() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 1
@@ -68,7 +67,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             refresher.tryRefreshing()
         }
     }
-    
+
     func testRefreshesAfterMinTimePassed() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 2
@@ -81,19 +80,19 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         let refresher = AnnouncementRefresherImplementation(refreshInterval: 0)
         refresher.tryRefreshing()
         refresher.tryRefreshing()
-        
+
         wait(for: [expectationApiWasCalled], timeout: 0.2)
     }
 
     func testSavesNewAnnouncementsToStorage() async {
         storage.store([
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
-            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)
+            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil),
         ])
 
         await withDependencies {
             $0.announcementClient = AnnouncementClient {
-                return .init(notifications: [
+                .init(notifications: [
                     Announcement(
                         notificationID: "newDefault",
                         startTime: Date(),
@@ -109,7 +108,7 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
                         type: Announcement.NotificationType.oneTime.rawValue,
                         offer: nil,
                         reference: nil
-                    )
+                    ),
                 ])
             }
         } operation: {
@@ -128,12 +127,13 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
             XCTAssert(storage.fetch().containsAnnouncement(withId: "newOneTime"))
         }
     }
-    
+
     func testDoesntSaveNewAnnouncementsToStorageOnError() {
-        let storage: AnnouncementStorageMock = AnnouncementStorageMock()
+        let storage = AnnouncementStorageMock()
         storage.store([
             Announcement(notificationID: "oldDefault", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil),
-            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil)]
+            Announcement(notificationID: "oldOneTime", startTime: Date(), endTime: Date(), type: Announcement.NotificationType.oneTime.rawValue, offer: nil, reference: nil),
+        ]
         )
 
         AnnouncementClient.testValue = AnnouncementClient {
@@ -145,12 +145,11 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
         XCTAssertEqual(storage.fetch().count, 2)
-        
+
         refresher.tryRefreshing()
 
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldDefault"))
         XCTAssert(storage.fetch().containsAnnouncement(withId: "oldOneTime"))
         XCTAssertEqual(storage.fetch().count, 2)
     }
-    
 }

@@ -22,12 +22,12 @@ import class GoLibs.LocalAgentStatusMessage
 @testable import LocalAgent
 
 class MockLocalAgentClient: NSObject, LocalAgentClient {
-    func log(_ text: String?) { }
-    func onError(_ code: Int, description: String?) { }
-    func onState(_ state: String?) { }
-    func onStatusUpdate(_ status: LocalAgentStatusMessage?) { }
-    func onTlsSessionEnded() { }
-    func onTlsSessionStarted() { }
+    func log(_: String?) {}
+    func onError(_: Int, description _: String?) {}
+    func onState(_: String?) {}
+    func onStatusUpdate(_: LocalAgentStatusMessage?) {}
+    func onTlsSessionEnded() {}
+    func onTlsSessionStarted() {}
 
     var didSetDelegate: ((LocalAgentClientDelegate?) -> Void)?
 

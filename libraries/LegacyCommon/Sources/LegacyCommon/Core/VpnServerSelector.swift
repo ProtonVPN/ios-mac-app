@@ -24,8 +24,8 @@ import Foundation
 
 import Dependencies
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 import Persistence
 import VPNAppCore
@@ -41,15 +41,15 @@ class VpnServerSelector {
     public var changeActiveServerType: ((_ serverType: ServerType) -> Void)?
     public var getCurrentAppState: AppStateGetter
     public var notifyResolutionUnavailable: ResolutionNotification?
-    typealias AppStateGetter = (() -> AppState)
-    typealias ResolutionNotification = ((_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void)
-    
+    typealias AppStateGetter = () -> AppState
+    typealias ResolutionNotification = (_ forSpecificCountry: Bool, _ type: ServerType, _ reason: ResolutionUnavailableReason) -> Void
+
     // Settings for selection
     private var serverTypeToggle: ServerType
     private var userTier: Int
     private var connectionProtocol: ConnectionProtocol
     private var smartProtocolConfig: SmartProtocolConfig
-    
+
     public init(
         serverType: ServerType,
         userTier: Int,
@@ -66,16 +66,16 @@ class VpnServerSelector {
 
     private var supportedProtocols: ProtocolSupport {
         switch connectionProtocol {
-        case .vpnProtocol(let vpnProtocol):
-            return vpnProtocol.protocolSupport
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.protocolSupport
         case .smartProtocol:
-            return smartProtocolConfig.supportedProtocols
-                .reduce(.zero, { $0.union($1.protocolSupport) })
+            smartProtocolConfig.supportedProtocols
+                .reduce(.zero) { $0.union($1.protocolSupport) }
         }
     }
 
     private var supportsCurrentProtocol: VPNServerFilter {
-        return .supports(protocol: supportedProtocols)
+        .supports(protocol: supportedProtocols)
     }
 
     /// Returns a server that best suits connection request
@@ -98,7 +98,7 @@ class VpnServerSelector {
             metadata: [
                 "connectionRequest": "\(connectionRequest)",
                 "filters": "\(filters)",
-                "order": "\(order)"
+                "order": "\(order)",
             ]
         )
 
@@ -152,58 +152,57 @@ class VpnServerSelector {
             return
         }
     }
-    
 }
 
 extension ConnectionRequest {
-
     var locationFilters: [VPNServerFilter] {
         switch connectionType {
-        case .country(let countryCode, .fastest), .country(let countryCode, .random):
-            return [.kind(.country(code: countryCode))] // inherently excludes gateways
+        case let .country(countryCode, .fastest), let .country(countryCode, .random):
+            [.kind(.country(code: countryCode))] // inherently excludes gateways
 
-        case .gateway(let name):
-            return [.kind(.gateway(name: name))]
+        case let .gateway(name):
+            [.kind(.gateway(name: name))]
 
-        case .country(_, .server(let model)):
+        case let .country(_, .server(model)):
             if serverType == .secureCore {
                 // We don’t need to find the exact server. Instead, we should focus on finding the best one based on the entryCountryCode and exitCountryCode.
-                return [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
+                [.entryCountryCode(model.entryCountryCode), .exitCountryCode(model.exitCountryCode)]
             } else {
-                return [.logicalID(model.id)]
+                [.logicalID(model.id)]
             }
-        case .city(let countryCode, let city):
-            return [.kind(.country(code: countryCode)), .city(city)]
+
+        case let .city(countryCode, city):
+            [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
             // Exclude gateways. We could also use the .kind(.country) filter for this purpose.
-            return [.features(.init(required: .zero, excluded: .restricted))]
+            [.features(.init(required: .zero, excluded: .restricted))]
         }
     }
 
     var ordering: VPNServerOrder {
         switch connectionType {
-        case .country(_, let requestType):
+        case let .country(_, requestType):
             switch requestType {
             case .fastest:
-                return .fastest
+                .fastest
             case .random:
-                return .random
+                .random
             case .server:
-                return .fastest
+                .fastest
             }
 
         case .gateway:
-            return .fastest
+            .fastest
 
-        case .city(_, _):
-            return .fastest
+        case .city:
+            .fastest
 
         case .fastest:
-            return .fastest
+            .fastest
 
         case .random:
-            return .random
+            .random
         }
     }
 }

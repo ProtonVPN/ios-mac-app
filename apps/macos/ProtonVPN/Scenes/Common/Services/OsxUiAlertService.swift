@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
 import LegacyCommon
-import AppKit
 import VPNAppCore
 
 protocol UIAlertServiceFactory {
@@ -30,42 +30,41 @@ protocol UIAlertServiceFactory {
 }
 
 class OsxUiAlertService: UIAlertService {
-    
-    typealias Factory = WindowServiceFactory & NavigationServiceFactory
-    
+    typealias Factory = NavigationServiceFactory & WindowServiceFactory
+
     private let factory: Factory
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-    
+
     private var windowService: WindowService
     private var currentAlerts = [SystemAlert]()
-    
+
     public init(factory: Factory) {
         self.factory = factory
-        windowService = factory.makeWindowService()
+        self.windowService = factory.makeWindowService()
     }
-    
+
     func displayAlert(_ alert: SystemAlert) {
         present(alert)
     }
-    
+
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
         present(alert, message: message)
     }
-    
-    func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
+
+    func displayNotificationStyleAlert(message _: String, type _: NotificationStyleAlertType, accessibilityIdentifier _: String?) {
         fatalError("Notification syle alerts unsupported on macOS")
     }
-    
-    private func present( _ alert: SystemAlert, message: NSAttributedString? = nil ) {
+
+    private func present(_ alert: SystemAlert, message: NSAttributedString? = nil) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
         }
-        
+
         currentAlerts.append(alert)
-        
+
         var modalVC: NSViewController!
-        
+
         switch alert {
         case let userAccountUpdateAlert as UserAccountUpdateAlert:
             let userUpdateVC = UserAccountUpdateViewController(alert: userAccountUpdateAlert)
@@ -77,41 +76,39 @@ class OsxUiAlertService: UIAlertService {
             alert.dismiss = { expandableViewModel.close() }
             modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
-            let popUp: PopUpViewModel
-            if let message = message {
-                popUp = PopUpViewModel(alert: alert, attributedDescription: message, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+            let popUp = if let message {
+                PopUpViewModel(alert: alert, attributedDescription: message, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
             } else {
-                popUp = PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+                PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
             }
             popUp.dismissCompletion = dismissCompletion(alert)
             alert.dismiss = { popUp.close() }
             modalVC = PopUpViewController(viewModel: popUp)
         }
-        
+
         windowService.presentKeyModal(viewController: modalVC)
     }
-    
+
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
-        return !currentAlerts.contains(where: { (currentAlert) -> Bool in
+        !currentAlerts.contains(where: { currentAlert -> Bool in
             return currentAlert.className == alert.className
         })
     }
-    
+
     private func updateOldAlert(with newAlert: SystemAlert) {
         let oldAlert = currentAlerts.first { alert -> Bool in
             return alert.className == newAlert.className
         }
-    
+
         // In particular this means the alert's completion handlers will be updated
         oldAlert?.actions = newAlert.actions
     }
-    
+
     private func dismissCompletion(_ alert: SystemAlert) -> (() -> Void) {
-        return { [weak self] in
+        { [weak self] in
             self?.currentAlerts.removeAll { currentAlert in
-                return currentAlert.className == alert.className
+                currentAlert.className == alert.className
             }
         }
     }
-    
 }

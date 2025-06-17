@@ -41,7 +41,7 @@ extension WhatsNew {
         /// - Parameter items: the items you want to evaluate.
         /// - Returns: the items that should be presented.
         static func evaluate(items: [Item]) -> [Item] {
-            return items.filter { item in
+            items.filter { item in
                 let data = evaluatorClient.itemPresentationData(for: item)
                 return item.rules.allSatisfy(isSatisfied(_:)) && shouldPresent(item: item, presentationData: data)
             }
@@ -49,13 +49,13 @@ extension WhatsNew {
 
         private static func isSatisfied(_ rule: Rule) -> Bool {
             switch rule {
-            case .timeWindow(let startDate, let endDate):
-                return (startDate...endDate).contains(now)
-            case .appVersions(let versions):
+            case let .timeWindow(startDate, endDate):
+                return (startDate ... endDate).contains(now)
+            case let .appVersions(versions):
                 return versions.contains(evaluatorClient.bundleShortVersionString())
-            case .osVersion(let version):
+            case let .osVersion(version):
                 let compareResult = evaluatorClient.systemOSVersion().compare(version, options: .numeric)
-                return (compareResult == .orderedSame || compareResult == .orderedDescending)
+                return compareResult == .orderedSame || compareResult == .orderedDescending
             }
         }
 
@@ -75,11 +75,10 @@ extension WhatsNew {
                 }
             }
             // Now let's make sure we account possible delays between presentations
-            let minNextPresentationDate: Date
-            if let components = item.delayBetweenPresentations, let lastPresentationDate = presentationData.lastPresentationDate {
-                minNextPresentationDate = Calendar.current.date(byAdding: components, to: lastPresentationDate) ?? now
+            let minNextPresentationDate: Date = if let components = item.delayBetweenPresentations, let lastPresentationDate = presentationData.lastPresentationDate {
+                Calendar.current.date(byAdding: components, to: lastPresentationDate) ?? now
             } else {
-                minNextPresentationDate = now
+                now
             }
             return now >= minNextPresentationDate
         }
@@ -111,22 +110,22 @@ extension WhatsNew {
 
 extension WhatsNewEvaluatorClient: DependencyKey {
     static let liveValue = WhatsNewEvaluatorClient {
-        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+        Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     } systemOSVersion: {
-        return UIDevice.current.systemVersion
+        UIDevice.current.systemVersion
     } itemPresentationData: { item in
         @Shared(.whatsNew) var whatsNewData
         return whatsNewData?.items[item.id]
     }
 
     static let testValue: WhatsNewEvaluatorClient = WhatsNewEvaluatorClient {
-        return "6.0.0"
+        "6.0.0"
     } systemOSVersion: {
-        return "18.0"
-    } itemPresentationData: { item in
-        let secondsInDay: TimeInterval = 24*60*60
+        "18.0"
+    } itemPresentationData: { _ in
+        let secondsInDay: TimeInterval = 24 * 60 * 60
         let yesterday = Date.now.addingTimeInterval(-secondsInDay)
-        let beforeYesterday = Date.now.addingTimeInterval(-2*secondsInDay)
+        let beforeYesterday = Date.now.addingTimeInterval(-2 * secondsInDay)
         return WhatsNew.PresentationDataItem(amount: 1, firstRegistrationDate: beforeYesterday, lastPresentationDate: yesterday)
     }
 }

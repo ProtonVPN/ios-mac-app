@@ -19,36 +19,38 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import ProtonCoreAPIClient
 import BugReport
 import CommonNetworking
+import Foundation
+import ProtonCoreAPIClient
 import VPNShared
 
 public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>
 
 public protocol ReportsApiServiceFactory {
-    func makeReportsApiService() -> ReportsApiService    
+    func makeReportsApiService() -> ReportsApiService
 }
 
 public class ReportsApiService {
     private let networking: Networking
     private let authKeychain: AuthKeychainHandle
 
-    public typealias Factory = NetworkingFactory &
-        AuthKeychainHandleFactory
+    public typealias Factory =
+        AuthKeychainHandleFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
-    
+
     public init(networking: Networking, authKeychain: AuthKeychainHandle) {
         self.networking = networking
         self.authKeychain = authKeychain
     }
-    
-    public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
+
+    public func report(bug: ReportBug, completion: @escaping (Result<Void, Error>) -> Void) {
         let files = bug.files.reachable()
             .enumerated()
             .reduce(into: [String: URL]()) { result, file in
@@ -65,7 +67,7 @@ public class ReportsApiService {
             }
         }
     }
-    
+
     public func dynamicBugReportConfig(completion: @escaping (Result<BugReportModel, Error>) -> Void) {
         networking.request(DynamicBugReportConfigRequest(), completion: completion)
     }

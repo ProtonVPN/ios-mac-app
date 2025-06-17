@@ -17,42 +17,39 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import HomeShared
-import SwiftUI
-import Strings
-import Theme
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 public extension View {
     func settingsTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.settingsTab)
-                } icon: {
-                    IconProvider.cogWheel
-                }
+        tabItem {
+            Label {
+                Text(Localizable.settingsTab)
+            } icon: {
+                IconProvider.cogWheel
             }
+        }
     }
 
     func countriesTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.countriesTab)
-                } icon: {
-                    IconProvider.earth
-                }
+        tabItem {
+            Label {
+                Text(Localizable.countriesTab)
+            } icon: {
+                IconProvider.earth
             }
+        }
     }
 
     func homeTabItem() -> some View {
-        return self
-            .tabItem {
-                Label {
-                    Text(Localizable.homeTab)
-                } icon: {
-                    IconProvider.houseFilled
-                }
+        tabItem {
+            Label {
+                Text(Localizable.homeTab)
+            } icon: {
+                IconProvider.houseFilled
             }
+        }
     }
 }

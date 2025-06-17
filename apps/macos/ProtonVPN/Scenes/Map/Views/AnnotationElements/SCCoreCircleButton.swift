@@ -24,53 +24,53 @@ import Cocoa
 import Theme
 
 class SCCoreCircleButton: HoverDetectionButtonAdvanced {
-    
     enum ButtonState {
         case idle
         case active
     }
-    
+
     private let viewState: ButtonState
-    
+
     override var isHighlighted: Bool {
         didSet {
             needsDisplay = true
         }
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(frame frameRect: NSRect, state: ButtonState) {
         self.viewState = state
         super.init(frame: frameRect)
-        
+
         isBordered = false
         setButtonType(.momentaryChange)
         imagePosition = .imageOnly
-        
+
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
-        
+
         needsDisplay = true
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
-        context.setStrokeColor(stateColor(for: self.color(.icon)))
-        context.setFillColor(stateColor(for: self.color(.background)))
-        
+        context.setStrokeColor(stateColor(for: color(.icon)))
+        context.setFillColor(stateColor(for: color(.background)))
+
         let lineWidth: CGFloat = 2.0
         let innerFrame = CGRect(x: lineWidth / 2, y: lineWidth / 2, width: bounds.width - lineWidth, height: bounds.height - lineWidth)
         context.setLineWidth(lineWidth)
         context.addEllipse(in: innerFrame)
-        
+
         context.drawPath(using: .fillStroke)
     }
-    
+
     private func stateColor(for color: NSColor) -> CGColor {
         guard isHighlighted else {
             return color.cgColor

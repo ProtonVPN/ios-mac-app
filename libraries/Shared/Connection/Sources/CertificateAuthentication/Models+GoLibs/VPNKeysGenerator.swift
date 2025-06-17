@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
-import func GoLibs.Ed25519NewKeyPair
 import CoreConnection
+import Dependencies
+import Foundation
+import func GoLibs.Ed25519NewKeyPair
 
 // This should supercede our old VPNShared.VPNKeysGenerator
 public struct VPNKeysGenerator: DependencyKey {
     var generateKeys: @Sendable () throws -> VPNKeys
 
     public static var liveValue: VPNKeysGenerator {
-        return .init(generateKeys: {
+        .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)
             if let error {

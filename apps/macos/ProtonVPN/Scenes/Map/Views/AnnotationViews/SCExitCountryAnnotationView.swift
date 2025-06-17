@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import MapKit
 import LegacyCommon
+import MapKit
 
 class SCExitCountryAnnotationView: MapAnnotationView {
     let viewModel: SCExitCountryAnnotationViewModel
@@ -33,32 +33,37 @@ class SCExitCountryAnnotationView: MapAnnotationView {
 
     override class var textLineHeight: CGFloat { 30 }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer \(#function)")
     }
 
-    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Unsupported initializer \(#function)")
     }
-    
+
     init(viewModel: SCExitCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
 
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth,
-                                      height: Self.textLineHeight * CGFloat(viewModel.servers.count + 1)),
-                   hoveredTag: .upFront,
-                   styleDelegate: viewModel,
-                   reuseIdentifier: reuseIdentifier)
+        super.init(
+            buttonSize: CGSize(
+                width: viewModel.buttonWidth,
+                height: Self.textLineHeight * CGFloat(viewModel.servers.count + 1)
+            ),
+            hoveredTag: .upFront,
+            styleDelegate: viewModel,
+            reuseIdentifier: reuseIdentifier
+        )
 
         viewModel.viewStateChange = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.setupAnnotationView()
-            self.needsDisplay = true
+            setupAnnotationView()
+            needsDisplay = true
         }
-        
+
         setupAnnotationView()
     }
 
@@ -69,14 +74,17 @@ class SCExitCountryAnnotationView: MapAnnotationView {
         var text: [NSAttributedString] = []
         if hovered {
             // server titles
-            guard let window = window else { return }
+            guard let window else { return }
             let mousePoint = window.mouseLocationOutsideOfEventStream
-            let pointInView = self.convert(mousePoint, from: nil)
+            let pointInView = convert(mousePoint, from: nil)
 
-            for index in 0..<viewModel.servers.count {
-                let itemFrame = CGRect(x: buttonFrame.origin.x,
-                                       y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
-                                       width: buttonFrame.size.width, height: Self.textLineHeight)
+            for index in 0 ..< viewModel.servers.count {
+                let itemFrame = CGRect(
+                    x: buttonFrame.origin.x,
+                    y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
+                    width: buttonFrame.size.width,
+                    height: Self.textLineHeight
+                )
 
                 let inFrame = itemFrame.contains(pointInView)
                 let textLine = inFrame ? viewModel.attributedConnectTitle(for: index) : viewModel.attributedServer(for: index)
@@ -89,47 +97,52 @@ class SCExitCountryAnnotationView: MapAnnotationView {
 
         super.drawAnnotation(context: context, text: text)
     }
+
     // swiftlint:enable function_body_length operator_usage_whitespace
-    
+
     override func hitTest(_ point: NSPoint) -> NSView? {
-        return hitTestForState(point, hovered: hovered)
+        hitTestForState(point, hovered: hovered)
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     override func mouseMoved(with event: NSEvent) {
         mouseInside(with: event, hovered: hovered, stateUpdateCallback: { (hovered: Bool) in
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     override func mouseUp(with event: NSEvent) {
         guard hovered else { return }
         let pointInView = convert(event.locationInWindow, from: nil)
-        viewModel.servers.enumerated().forEach { index, _ in
-            let itemFrame = CGRect(x: buttonFrame.origin.x, y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
-                                   width: buttonFrame.size.width, height: Self.textLineHeight)
+        for (index, _) in viewModel.servers.enumerated() {
+            let itemFrame = CGRect(
+                x: buttonFrame.origin.x,
+                y: buttonFrame.origin.y + Self.textLineHeight * CGFloat(index),
+                width: buttonFrame.size.width,
+                height: Self.textLineHeight
+            )
             if itemFrame.contains(pointInView) {
                 viewModel.serverConnectAction(forRow: index)
             }
         }
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         if hovered {
             viewModel.uiStateUpdate(.idle)
         }
     }
-    
+
     override func resetCursorRects() {
         guard hovered else { return }
         addCursorRect(CGRect(origin: buttonFrame.origin, size: CGSize(width: buttonFrame.width, height: buttonFrame.height - Self.textLineHeight)), cursor: .pointingHand)
     }
-    
+
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
 
@@ -137,13 +150,14 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             self.viewModel.uiStateUpdate(hovered ? .hovered : .idle)
         })
     }
-    
+
     // MARK: - Private functions
+
     private func setupAnnotationView() {
         setSelection()
         setupFrame()
     }
-    
+
     private func setSelection() {
         if viewModel.state == .idle {
             setSelected(false, animated: false)
@@ -151,7 +165,7 @@ class SCExitCountryAnnotationView: MapAnnotationView {
             setSelected(true, animated: true)
         }
     }
-    
+
     private func setupFrame() {
         let height: CGFloat
         let hovered: Bool

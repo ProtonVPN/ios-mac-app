@@ -22,14 +22,14 @@
 
 import AppKit
 
-import VPNShared
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
+import VPNShared
 
 import Domain
 import Logging
-import Theme
 import Strings
+import Theme
 
 protocol OverlayViewModelDelegate: AnyObject {
     func stateChanged()
@@ -41,67 +41,66 @@ protocol ConnectingOverlayViewModelFactory {
 
 extension DependencyContainer: ConnectingOverlayViewModelFactory {
     func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void) -> ConnectingOverlayViewModel {
-        return ConnectingOverlayViewModel(factory: self, cancellation: cancellation)
+        ConnectingOverlayViewModel(factory: self, cancellation: cancellation)
     }
 }
 
 class ConnectingOverlayViewModel {
-    
     typealias Factory = AppStateManagerFactory
         & PropertiesManagerFactory
         & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
     private let factory: Factory
-    
+
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
-    
+
     private let cancellation: () -> Void
-    
+
     private let loadingView: LoadingAnimationView
-        
+
     private(set) var appState: AppState
-    
+
     var timedOut = false
-    
+
     private var isIkeWithKsEnabled: Bool {
-        return propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
+        propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
     }
-    
+
     private var isReconnecting: Bool {
         switch appState {
         case .preparingConnection, .connecting:
-            return !propertiesManager.intentionallyDisconnected
+            !propertiesManager.intentionallyDisconnected
         default:
-            return false
+            false
         }
     }
-    
+
     weak var delegate: OverlayViewModelDelegate?
-    
+
     init(factory: Factory, cancellation: @escaping () -> Void) {
         self.factory = factory
         self.appState = factory.makeAppStateManager().state
         self.cancellation = cancellation
-        
-        loadingView = LoadingAnimationView(frame: CGRect.zero)
+
+        self.loadingView = LoadingAnimationView(frame: CGRect.zero)
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged(_:)))
     }
-    
+
     deinit {
         loadingView.animate(false)
     }
-    
+
     // MARK: - Strings
-    
+
     var hidePhase: Bool {
         if timedOut {
             return true
         }
-        
+
         switch appState {
         case .error, .disconnected, .aborted:
             return true
@@ -109,26 +108,26 @@ class ConnectingOverlayViewModel {
             return false
         }
     }
-    
+
     var firstString: NSAttributedString {
         switch appState {
         case .connected:
-            return Localizable.successfullyConnected.styled(font: .themeFont(.small))
+            Localizable.successfullyConnected.styled(font: .themeFont(.small))
         default:
-            return (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
+            (isReconnecting ? Localizable.notConnected : Localizable.initializingConnection).styled(font: .themeFont(.small))
         }
     }
-    
+
     var secondString: NSAttributedString {
-        return timedOut
+        timedOut
             ? timedOutSecondString
             : defaultSecondString
     }
-    
+
     private var defaultSecondString: NSAttributedString {
         var boldString: String
         var string: String
-        
+
         if let server = appStateManager.activeConnection()?.server {
             boldString = (server.country + " " + server.name)
             boldString = boldString.preg_replace_none_regex(" ", replaceto: "\u{a0}")
@@ -136,7 +135,7 @@ class ConnectingOverlayViewModel {
         } else {
             boldString = ""
         }
-        
+
         switch appState {
         case .preparingConnection where !isReconnecting:
             string = Localizable.preparingConnection
@@ -152,33 +151,33 @@ class ConnectingOverlayViewModel {
                 string = Localizable.connectingTo(boldString)
             }
         }
-        
+
         let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
         }
-        
+
         return attributedString
     }
-    
+
     private var timedOutSecondString: NSAttributedString {
         if !isIkeWithKsEnabled {
             let boldString = Localizable.connectionTimedOutBold
             let string = Localizable.connectionTimedOut
             let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
-            
+
             if let stringRange = string.range(of: boldString) {
                 let range = NSRange(stringRange, in: string)
                 attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.heading2, bold: true), range: range)
             }
             return attributedString
         }
-        
+
         let boldString = Localizable.connectionTimedOutBold
         let description = "\n\n" + Localizable.timeoutKsIkeDescritpion
         let string = Localizable.connectionTimedOut + description
-                
+
         let attributedString = NSMutableAttributedString(attributedString: string.styled(font: .themeFont(.heading2)))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
@@ -188,59 +187,59 @@ class ConnectingOverlayViewModel {
             let range = NSRange(descriptionRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.themeFont(.small), range: range)
         }
-        
+
         return attributedString
     }
-    
+
     // MARK: - Buttons
-    
+
     typealias ButtonInfo = (String, ConnectingOverlayButton.Style, () -> Void)
-    
+
     var buttons: [ButtonInfo] {
         var buttons = [ButtonInfo]()
-        
-        if timedOut && isIkeWithKsEnabled {
+
+        if timedOut, isIkeWithKsEnabled {
             buttons.append(retryWithoutKSButton)
         } else if timedOut {
             buttons.append(retryButton)
         }
-        
+
         switch appState {
         case .connected:
             buttons.append(doneButton)
-            
-        default:                        
+
+        default:
             buttons.append(cancelButton)
         }
-        
+
         return buttons
     }
-    
+
     private var cancelButton: ButtonInfo {
-        return (Localizable.cancel, .normal, { self.cancelConnecting() })
+        (Localizable.cancel, .normal, { self.cancelConnecting() })
     }
-    
+
     private var doneButton: ButtonInfo {
-        return (Localizable.done, .normal, { self.cancelConnecting() })
+        (Localizable.done, .normal, { self.cancelConnecting() })
     }
-    
+
     private var retryButton: ButtonInfo {
-        return (Localizable.tryAgain, .normal, {
+        (Localizable.tryAgain, .normal, {
             log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
-    
+
     private var retryWithoutKSButton: ButtonInfo {
-        return (Localizable.tryAgainWithoutKillswitch, .interactive, {
+        (Localizable.tryAgainWithoutKillswitch, .interactive, {
             self.disableKillSwitch()
             log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
-    
+
     // MARK: - Graphic
-    
+
     func graphic(with frame: CGRect) -> NSView {
         if timedOut {
             let connectedView = NSImageView(frame: frame)
@@ -272,56 +271,57 @@ class ConnectingOverlayViewModel {
             return loadingView
         }
     }
-    
+
     // MARK: - Actions
-    
+
     private func cancelConnecting() {
         NotificationCenter.default.removeObserver(self)
         DispatchQueue.main.async { [weak self] in
             self?.cancellation()
         }
-        if case AppState.connected(_) = appState {
+        if case AppState.connected = appState {
             return
         } else {
             appStateManager.cancelConnectionAttempt()
         }
     }
-    
+
     private func disableKillSwitch() {
-        self.propertiesManager.killSwitch = false
+        propertiesManager.killSwitch = false
     }
-    
+
     private func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
         timedOut = false
-        if let vpnProtocol = vpnProtocol {
+        if let vpnProtocol {
             vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
         } else {
             vpnGateway.retryConnection()
         }
     }
-    
+
     // MARK: - Notification handlers
-    
-    @objc private func appStateChanged(_ notification: Notification) {
+
+    @objc
+    private func appStateChanged(_: Notification) {
         let state = appStateManager.state
 
-        let oldState = self.appState
-        if case AppState.connected(_) = oldState {
+        let oldState = appState
+        if case AppState.connected = oldState {
             // let overlay fade out
             return
         }
-        
+
         appStateManager.isOnDemandEnabled { [weak self] isOnDemandEnabled in
             if case AppState.disconnected = state, isOnDemandEnabled {
                 return // prevents misleading UI updates
             }
-            
-            if case AppState.aborted(let userInitiated) = state, !userInitiated {
+
+            if case let AppState.aborted(userInitiated) = state, !userInitiated {
                 self?.timedOut = true
             }
-            
+
             self?.appState = state
-            
+
             if let delegate = self?.delegate {
                 DispatchQueue.main.async {
                     delegate.stateChanged()

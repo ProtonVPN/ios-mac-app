@@ -23,18 +23,18 @@ import Foundation
 
 import Dependencies
 
-import ProtonCoreFeatureFlags
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreDataModel
+import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
 
 import CommonNetworking
 import Localization
 import Persistence
 import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -42,7 +42,7 @@ public protocol VpnApiServiceFactory {
 
 extension Container: VpnApiServiceFactory {
     public func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(self)
+        VpnApiService(self)
     }
 }
 
@@ -53,7 +53,7 @@ public enum ServerInfoResponse {
 
 public class VpnApiService {
     @Dependency(\.serverRepository) var serverRepository
-    public typealias Factory = NetworkingFactory & VpnKeychainFactory & CountryCodeProviderFactory & AuthKeychainHandleFactory
+    public typealias Factory = AuthKeychainHandleFactory & CountryCodeProviderFactory & NetworkingFactory & VpnKeychainFactory
 
     public typealias ServerInfoTuple = (
         serverInfo: ServerInfoResponse?,
@@ -74,23 +74,26 @@ public class VpnApiService {
     }
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  countryCodeProvider: factory.makeCountryCodeProvider(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            countryCodeProvider: factory.makeCountryCodeProvider(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
-    public func vpnProperties(isDisconnected: Bool,
-                              lastKnownLocation: UserLocation?,
-                              serversAccordingToTier: Bool) async throws -> VpnProperties {
-
+    public func vpnProperties(
+        isDisconnected: Bool,
+        lastKnownLocation: UserLocation?,
+        serversAccordingToTier: Bool
+    ) async throws -> VpnProperties {
         // Only retrieve IP address when not connected to VPN
         async let asyncLocation = (isDisconnected ? userLocation() : lastKnownLocation) ?? lastKnownLocation
         let clientConfig = try? await clientConfig(for: asyncLocation?.ip)
         let asyncCredentials = try await clientCredentials()
 
-        return await VpnProperties(
-            serverInfo: try serverInfo(
+        return try await VpnProperties(
+            serverInfo: serverInfo(
                 ip: (asyncLocation?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: asyncLocation?.country,
                 freeTier: asyncCredentials.maxTier.isFreeTier && serversAccordingToTier
@@ -111,8 +114,8 @@ public class VpnApiService {
             return nil
         }
 
-        return await (
-            serverInfo: try serverInfo(
+        return try await (
+            serverInfo: serverInfo(
                 ip: (location?.ip).flatMap { TruncatedIp(ip: $0) },
                 countryCode: location?.country,
                 freeTier: freeTier
@@ -129,7 +132,8 @@ public class VpnApiService {
         ifIpHasChangedFrom lastKnownIp: String? = nil,
         freeTier: Bool,
         completion: @escaping (Result<ServerInfoTuple?, Error>
-    ) -> Void) {
+        ) -> Void
+    ) {
         Task {
             do {
                 let prop = try await refreshServerInfo(ifIpHasChangedFrom: lastKnownIp, freeTier: freeTier)
@@ -192,11 +196,11 @@ public class VpnApiService {
             defer { completion(result) }
 
             switch response {
-            case .success(.notModified(let lastModified)):
+            case let .success(.notModified(lastModified)):
                 log.debug("Logicals unchanged since last request", metadata: ["lastModified": "\(optional: lastModified)"])
                 result = .success(.notModified(since: lastModified))
 
-            case .success(.modified(let lastModified, let json)):
+            case let .success(.modified(lastModified, json)):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
                     log.error("'Servers' field not present in server info request's response", category: .api, event: .response)
                     let error = ParseError.serverParse
@@ -207,7 +211,7 @@ public class VpnApiService {
                 var serverModels: [ServerModel] = []
                 for json in serversJson {
                     do {
-                        serverModels.append(try ServerModel(dic: json))
+                        try serverModels.append(ServerModel(dic: json))
                     } catch {
                         log.error("Failed to parse server info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
                     }
@@ -221,7 +225,7 @@ public class VpnApiService {
     }
 
     public func serverInfo(ip: TruncatedIp?, countryCode: String?, freeTier: Bool) async throws -> ServerInfoResponse {
-        return try await withCheckedThrowingContinuation { continuation in
+        try await withCheckedThrowingContinuation { continuation in
             serverInfo(ip: ip, countryCode: countryCode, freeTier: freeTier, completion: continuation.resume(with:))
         }
     }
@@ -230,7 +234,7 @@ public class VpnApiService {
         networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
-                guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
+                guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json) else {
                     let error = ParseError.serverParse
                     log.error("'Server' field not present in server info request's response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))
@@ -281,13 +285,14 @@ public class VpnApiService {
             case let .failure(error):
                 completion(.failure(error))
             }
-
         }
     }
 
     public func clientConfig(for shortenedIp: String?, completion: @escaping (Result<ClientConfig, Error>) -> Void) {
-        let request = VPNClientConfigRequest(isAuth: vpnKeychain.userIsLoggedIn,
-                                             ip: shortenedIp)
+        let request = VPNClientConfigRequest(
+            isAuth: vpnKeychain.userIsLoggedIn,
+            ip: shortenedIp
+        )
 
         networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
@@ -333,5 +338,4 @@ public class VpnApiService {
             Authenticator(api: networking.apiService).getAddresses(completion: continuation.resume(with:))
         }
     }
-
 }

@@ -20,16 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import Search
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
+import Search
+import UIKit
 
 final class CountryViewController: UIViewController {
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var connectionBarContainerView: UIView!
 
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var connectionBarContainerView: UIView!
-    
     var viewModel: CountryItemViewModel?
     var connectionBarViewController: ConnectionBarViewController?
 
@@ -44,22 +43,22 @@ final class CountryViewController: UIViewController {
         }
         setupTableView()
     }
-    
+
     private func setupView() {
         view.layer.backgroundColor = UIColor.secondaryBackgroundColor().cgColor
-        self.title = viewModel?.countryName
+        title = viewModel?.countryName
     }
-    
+
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
-    
+
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.separatorColor = UIColor.normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
@@ -68,21 +67,20 @@ final class CountryViewController: UIViewController {
     }
 
     private func displayStreamingServices() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         let services = viewModel.streamingServices
         let countryName = viewModel.countryName
-        let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager )
+        let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager)
         let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
         present(vc, animated: true, completion: nil)
     }
 }
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel?.sectionsCount() ?? 1
+    func numberOfSections(in _: UITableView) -> Int {
+        viewModel?.sectionsCount() ?? 1
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard viewModel?.showServerHeaders ?? false, let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
             return UIView()
@@ -100,15 +98,15 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return headerView
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UIConstants.countriesHeaderHeight
+
+    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
+        UIConstants.countriesHeaderHeight
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.serversCount(for: section) ?? 0
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel?.serversCount(for: section) ?? 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section), let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerCell.identifier) as? ServerCell else {
             return UITableViewCell()
@@ -118,13 +116,13 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
         serverCell.delegate = self
         return serverCell
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionCount = numberOfSections(in: tableView)
         if section == sectionCount - 1 {
             return 0.1
         }
-        
+
         return 0
     }
 }

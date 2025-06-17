@@ -20,21 +20,19 @@ import Foundation
 import os.log
 
 extension String {
-    
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex)
             let nsString = self as NSString
             let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range) }
-        } catch let error {
+        } catch {
             os_log("Invalid regex: %{public}s", log: OSLog(subsystem: "PMLogger", category: "LogFileManager"), type: OSLogType.error, error as CVarArg)
             return []
         }
     }
-    
+
     func hasMatches(for regex: String) -> Bool {
-        return !matches(for: regex).isEmpty
+        !matches(for: regex).isEmpty
     }
-    
 }

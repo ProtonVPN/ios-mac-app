@@ -16,23 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Modals
+import XCTest
 
 class SearchTests: ProtonVPNUITests {
-    
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let countryToSearchFor = "Japan"
     private let comparisonCountryName = "Netherlands"
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
     }
-    
+
     func testSearchCountry() {
         loginAsPlusUser()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
@@ -40,16 +39,16 @@ class SearchTests: ProtonVPNUITests {
             .clearSearch()
             .verify.checkCountryExists(comparisonCountryName)
     }
-    
+
     func testSearchFreeUser() {
         loginAsFreeUser()
-        
+
         countriesSelectionRobot
             .verify.checkUpgradeBannerVisible()
             .clickUpgradeBanner()
             .verify.checkModalAppear(type: ModalType.allCountries)
             .closeModal()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: countryToSearchFor)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)

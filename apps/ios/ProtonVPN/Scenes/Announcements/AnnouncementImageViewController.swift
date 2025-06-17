@@ -19,31 +19,31 @@
 import Foundation
 import UIKit
 
-import Dependencies
 import Alamofire
+import Dependencies
 
 import ProtonCoreUIFoundations
 
-import LegacyCommon
-import CommonNetworking
 import Announcement
+import CommonNetworking
 import Domain
+import LegacyCommon
 
 final class AnnouncementImageViewController: AnnouncementViewController {
-
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var actionButton: UIButton!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var imageViewHeight: NSLayoutConstraint!
-    @IBOutlet private weak var progressIndicator: UIActivityIndicatorView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var actionButton: UIButton!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet private var progressIndicator: UIActivityIndicatorView!
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?
 
     var didShowTheWholeModal = false
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -91,7 +91,7 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         imageView.accessibilityLabel = data.fullScreenImage.alternativeText
         imageView.isAccessibilityElement = true
 
-        imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
+        imageView.sd_setImage(with: imageURL) { [weak self] _, error, _, _ in
             guard error == nil else {
                 self?.cancelled?()
                 log.warning("Couldn't retrieve image from URL: \(imageURL)")
@@ -133,13 +133,14 @@ final class AnnouncementImageViewController: AnnouncementViewController {
 
     var getUpgradePlanSessionTask: Task<Void, Never>?
 
-    @IBAction private func actionButtonTapped(_ sender: Any) {
+    @IBAction
+    private func actionButtonTapped(_: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             cancelled?()
             return
         }
-        
+
         DispatchQueue.main.async { [offerReference] in
             AppEvent.userEngagedWithAnnouncement.post(offerReference)
         }
@@ -164,7 +165,8 @@ final class AnnouncementImageViewController: AnnouncementViewController {
         }
     }
 
-    @IBAction private func closeButtonTapped(_ sender: Any) {
+    @IBAction
+    private func closeButtonTapped(_: Any) {
         getUpgradePlanSessionTask?.cancel()
         cancelled?()
     }

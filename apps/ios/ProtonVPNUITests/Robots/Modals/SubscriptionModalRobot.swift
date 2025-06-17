@@ -16,19 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Strings
 import fusion
+import Strings
 
-fileprivate let upsellPlansListTitle = Localizable.upsellPlansListTitle
-fileprivate let upsellPlansListValidateButton = Localizable.upsellPlansListValidateButton
-fileprivate let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
+private let upsellPlansListTitle = Localizable.upsellPlansListTitle
+private let upsellPlansListValidateButton = Localizable.upsellPlansListValidateButton
+private let upsellPlansListSectionHeader = Localizable.upsellPlansListSectionHeader
 
 class SubscriptionModalRobot: ModalRobot {
-    
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func subscriptionModalIsShown() -> SubscriptionModalRobot {
             staticText(upsellPlansListTitle).checkExists()
@@ -36,18 +34,17 @@ class SubscriptionModalRobot: ModalRobot {
             staticText(upsellPlansListSectionHeader).checkExists()
             return SubscriptionModalRobot()
         }
-        
+
         @discardableResult
         public func verifyPlanOptions(planDuration: String, planAmount: String) -> SubscriptionModalRobot {
             staticText("plan_option_duration").firstMatch()
                 .checkExists(message: "Plan option element plan_option_duration not found")
                 .hasLabel(planDuration)
-            
+
             staticText("plan_option_amount").firstMatch()
                 .checkExists(message: "Plan option element plan_option_amount not found")
                 .hasLabel(planAmount)
             return SubscriptionModalRobot()
-            
         }
     }
 }

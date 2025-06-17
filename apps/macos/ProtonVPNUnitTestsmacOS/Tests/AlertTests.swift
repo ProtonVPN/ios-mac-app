@@ -20,21 +20,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 import LegacyCommon
-import VPNShared
 @testable import ProtonVPN
+import VPNShared
+import XCTest
 
-fileprivate let navigationService = NavigationService(DependencyContainer())
-fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
-fileprivate let sessionService = SessionServiceMock()
-fileprivate let telemetrySettings = TelemetrySettingsMock()
+private let navigationService = NavigationService(DependencyContainer())
+private let windowService = WindowServiceMock()
+private let uiAlertService = OsxUiAlertService(factory: OsxUiAlertServiceFactoryMock())
+private let sessionService = SessionServiceMock()
+private let telemetrySettings = TelemetrySettingsMock()
 
 class AlertTests: XCTestCase {
-
     let alertService = MacAlertService(factory: MacAlertServiceFactoryMock())
-    
+
     override func setUp() {
         super.setUp()
         windowService.displayCount = 0
@@ -42,30 +41,30 @@ class AlertTests: XCTestCase {
 
     func testSingleInstanceOfAlerts() {
         XCTAssert(windowService.displayCount == 0)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ApiError.unknownError))
         XCTAssert(windowService.displayCount == 2)
     }
-    
+
     func testUpdatingAlertCompletionHandlers() {
         XCTAssert(windowService.displayCount == 0)
-        
+
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
         let cancellationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
-        
+
         var confirmRan = false
         var cancelRan = false
         let confirmationHandler2 = {
@@ -74,22 +73,21 @@ class AlertTests: XCTestCase {
         let cancellationHandler2 = {
             cancelRan = true
         }
-        
+
         let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
-        
+
         alertService.push(alert: alert1)
         XCTAssert(windowService.displayCount == 1)
-        
+
         alertService.push(alert: alert2)
         XCTAssert(windowService.displayCount == 1)
-        
+
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
-        
+
         XCTAssert(confirmRan && cancelRan)
     }
-    
 }
 
 public class TelemetrySettingsFactoryMock: TelemetrySettings.Factory {
@@ -108,146 +106,141 @@ public class TelemetrySettingsMock: TelemetrySettings {
     }
 }
 
-fileprivate class WindowServiceMock: WindowService {
+private class WindowServiceMock: WindowService {
     var displayCount = 0
-    
-    func setStatusMenuWindowController(_ controller: StatusMenuWindowController) {}
-    
-    func showIfPresent<T: NSWindowController>(windowController: T.Type) -> Bool {
-        return false
+
+    func setStatusMenuWindowController(_: StatusMenuWindowController) {}
+
+    func showIfPresent(windowController _: (some NSWindowController).Type) -> Bool {
+        false
     }
-    
-    func closeIfPresent<T: NSWindowController>(windowController: T.Type) {}
-    func showLogin(viewModel: LoginViewModel) {}
-    func showSidebar(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {}
+
+    func closeIfPresent(windowController _: (some NSWindowController).Type) {}
+    func showLogin(viewModel _: LoginViewModel) {}
+    func showSidebar(appStateManager _: AppStateManager, vpnGateway _: VpnGatewayProtocol) {}
     func showTour() {}
-    func openAbout(factory: AboutViewController.Factory) {}
+    func openAbout(factory _: AboutViewController.Factory) {}
     func openAcknowledgements() {}
-    func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel, couponViewModel: CouponViewModel) { }
-    func openProfilesWindow(viewModel: ProfilesContainerViewModel) {}
-    func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {}
-    
+    func openSettingsWindow(viewModel _: SettingsContainerViewModel, tabBarViewModel _: SettingsTabBarViewModel, accountViewModel _: AccountViewModel, couponViewModel _: CouponViewModel) {}
+    func openProfilesWindow(viewModel _: ProfilesContainerViewModel) {}
+    func openReportBugWindow(viewModel _: ReportBugViewModel, alertService _: CoreAlertService) {}
+
     func bringWindowsToForeground() -> Bool {
-        return false
+        false
     }
-    
-    func presentKeyModal(viewController: NSViewController) {
+
+    func presentKeyModal(viewController _: NSViewController) {
         displayCount += 1
     }
-    
-    func isKeyModalPresent(viewController: NSViewController) -> Bool {
-        return false
-    }
-    
-    func closeActiveWindows(except: [NSWindowController.Type]) {
+
+    func isKeyModalPresent(viewController _: NSViewController) -> Bool {
+        false
     }
 
-    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
-    }
-    
-    func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
-    }
+    func closeActiveWindows(except _: [NSWindowController.Type]) {}
 
-    func windowCloseRequested(_ sender: WindowController) {
-    }
+    func openSystemExtensionGuideWindow(cancelledHandler _: @escaping () -> Void) {}
 
-    func windowWillClose(_ sender: WindowController) {
-    }
+    func openSubuserAlertWindow(alert _: SubuserWithoutConnectionsAlert) {}
+
+    func windowCloseRequested(_: WindowController) {}
+
+    func windowWillClose(_: WindowController) {}
 }
 
-fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
+private class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
     func makeNavigationService() -> NavigationService {
-        return navigationService
+        navigationService
     }
-    
+
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
 
     func makeSessionService() -> SessionService {
-        return sessionService
+        sessionService
     }
 }
 
-fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+private class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeVpnKeychain() -> LegacyCommon.VpnKeychainProtocol {
-        return VpnKeychainMock()
+        VpnKeychainMock()
     }
 
     func makeTelemetrySettings() -> LegacyCommon.TelemetrySettings {
-        return telemetrySettings
+        telemetrySettings
     }
 
     func makeNavigationService() -> ProtonVPN.NavigationService {
-        return navigationService
+        navigationService
     }
 
     func makeSessionService() -> SessionService {
-        return sessionService
+        sessionService
     }
 
     func makePlanService() -> PlanService {
-        return PlanServiceMock()
+        PlanServiceMock()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
+        PropertiesManagerMock()
     }
 
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 
     func makeAppSessionManager() -> AppSessionManager {
-        return AppSessionManagerMock()
+        AppSessionManagerMock()
     }
-    
+
     func makeUIAlertService() -> UIAlertService {
-        return uiAlertService
+        uiAlertService
     }
-    
+
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
-    
+
     func makeNotificationManager() -> NotificationManagerProtocol {
-        return NotificationManagerMock()
+        NotificationManagerMock()
     }
-    
+
     func makeUpdateManager() -> UpdateManager {
-        return UpdateManager(UpdateFileSelectorFactoryMock())
+        UpdateManager(UpdateFileSelectorFactoryMock())
     }
 }
 
-fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
+private class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory, PropertiesManagerFactory {
     func makeUpdateFileSelector() -> UpdateFileSelector {
-        return UpdateFileSelectorMock()
+        UpdateFileSelectorMock()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManagerMock()
+        PropertiesManagerMock()
     }
 }
 
-fileprivate class AppSessionManagerMock: AppSessionManager {
+private class AppSessionManagerMock: AppSessionManager {
     var sessionStatus: SessionStatus = .established
     var loggedIn: Bool = true
-    var sessionChanged: Notification.Name = Notification.Name("AppSessionManagerSessionChanged")
-    
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {}
-    func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) { }
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
-    func logOut(force: Bool, reason: String?) {}
+    var sessionChanged: Notification.Name = .init("AppSessionManagerSessionChanged")
+
+    func attemptSilentLogIn(completion _: @escaping (Result<Void, Error>) -> Void) {}
+    func finishLogin(authCredentials _: AuthCredentials, success _: @escaping () -> Void, failure _: @escaping (Error) -> Void) {}
+    func refreshVpnAuthCertificate(success _: @escaping () -> Void, failure _: @escaping (Error) -> Void) {}
+    func logOut(force _: Bool, reason _: String?) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
 }
 
-fileprivate class NotificationManagerMock: NotificationManagerProtocol {
-    func displayServerGoingOnMaintenance() { }
+private class NotificationManagerMock: NotificationManagerProtocol {
+    func displayServerGoingOnMaintenance() {}
 }
 
 class PlanServiceMock: PlanService {
     var countriesCount: Int = 59
 
-    func updateCountriesCount() { }
+    func updateCountriesCount() {}
 }

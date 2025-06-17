@@ -1,5 +1,5 @@
 //
-//  ConnectionTests.swift
+//  ProfileConnectionTests.swift
 //  ProtonVPNUITests
 //
 //  Created by Egle Predkelyte on 2021-08-10.
@@ -9,15 +9,13 @@
 import Foundation
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
+import Strings
 import UITestsHelpers
 import XCTest
-import Strings
 
 @MainActor
 class ProfileConnectionTests: ConnectionTestsBase {
-
     func testConnectAndDisconnectViaProfile() async throws {
-        
         let profileName = StringUtils.randomAlphanumericString()
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
@@ -42,7 +40,6 @@ class ProfileConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectAndDisconnectViaFastestAndRandomProfile() {
-        
         login(as: UserType.Plus.credentials)
             .goToProfilesTab()
             .connectToAFastestServer()
@@ -65,7 +62,6 @@ class ProfileConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectionWithDefaultAndSecureCoreProfile() async throws {
-        
         let profileName = StringUtils.randomAlphanumericString()
         let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)
         let serverVia: String = try await ServersListUtils.getEntryCountries(for: randomSecureCoreCountry.code).first ?? ""
@@ -83,10 +79,9 @@ class ProfileConnectionTests: ConnectionTestsBase {
         homeRobot
             .quickDisconnectViaQCButton()
             .verify.connectionStatusNotConnected()
-        }
+    }
 
     func testLogoutWhileConnectedToVPNServer() async throws {
-        
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
         login(as: UserType.Plus.credentials)
@@ -99,9 +94,8 @@ class ProfileConnectionTests: ConnectionTestsBase {
             .logOut()
             .verify.logOutSuccessfully()
     }
-    
-    func testCancelLogoutWhileConnectedToVpn() {
 
+    func testCancelLogoutWhileConnectedToVpn() {
         login(as: UserType.Plus.credentials)
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected()

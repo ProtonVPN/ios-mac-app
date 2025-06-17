@@ -24,17 +24,16 @@ import Foundation
 import MapKit
 
 struct ConnectionViewModel {
-    
     enum State {
         case connected
         case proposed
     }
-    
+
     enum Node {
         case home
         case server(CountryAnnotationViewModel)
     }
-    
+
     let state: State
     let connection: (origin: Node, destination: CountryAnnotationViewModel)
 
@@ -42,7 +41,7 @@ struct ConnectionViewModel {
         self.state = state
         self.connection = (.home, node)
     }
-    
+
     init(_ state: State, between origin: CountryAnnotationViewModel, and destination: CountryAnnotationViewModel) {
         self.state = state
         self.connection = (.server(origin), destination)

@@ -16,19 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Lottie
+import SwiftUI
 
 import Strings
 
 public struct WidgetSettingsView: View {
-
     private static let lottieAnimationViewHeight: CGFloat = 192.0
 
-    public init() { }
+    public init() {}
 
     public var body: some View {
-        ScrollView() {
+        ScrollView {
             VStack(alignment: .leading, spacing: .themeSpacing24) {
                 LottieView(animation: .widgetAdoption)
                     .playing(loopMode: .loop)

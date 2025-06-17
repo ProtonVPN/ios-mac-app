@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-import func GoLibs.Ed25519NewKeyPair
 import class GoLibs.Ed25519KeyPair
+import func GoLibs.Ed25519NewKeyPair
 
-import struct VPNShared.VPNKeysGenerator
-import struct VPNShared.VpnKeys
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+import struct VPNShared.VpnKeys
+import struct VPNShared.VPNKeysGenerator
 
 import CoreConnection
 
@@ -36,7 +36,7 @@ import CoreConnection
 
 extension VPNShared.VPNKeysGenerator: @retroactive DependencyKey {
     private static var commonImplementation: VPNShared.VPNKeysGenerator {
-        return .init(generateKeys: {
+        .init(generateKeys: {
             var error: NSError?
             let keyPair = Ed25519NewKeyPair(&error)!
             let privateKey = PrivateKey(keyPair: keyPair)
@@ -48,12 +48,12 @@ extension VPNShared.VPNKeysGenerator: @retroactive DependencyKey {
     public static let testValue: VPNShared.VPNKeysGenerator = commonImplementation
     public static let liveValue: VPNShared.VPNKeysGenerator = {
         #if os(macOS)
-        return commonImplementation
+            return commonImplementation
         #else
-        return .init {
-            let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
-            return VpnKeys(fromConnectionPackageKeys: keys)
-        }
+            return .init {
+                let keys = try VPNKeysGenerator.liveValue.generateKeys() // Leveraging this generator with better error handling
+                return VpnKeys(fromConnectionPackageKeys: keys)
+            }
         #endif
     }()
 }
@@ -78,7 +78,7 @@ extension VPNShared.PublicKey {
     init(keyPair: Ed25519KeyPair) {
         var error: NSError?
         self.init(
-            rawRepresentation: ([UInt8])(keyPair.publicKeyBytes()!),
+            rawRepresentation: [UInt8](keyPair.publicKeyBytes()!),
             derRepresentation: keyPair.publicKeyPKIXPem(&error)
         )
     }
@@ -87,7 +87,7 @@ extension VPNShared.PublicKey {
 extension VPNShared.PrivateKey {
     init(keyPair: Ed25519KeyPair) {
         self.init(
-            rawRepresentation: ([UInt8])(keyPair.privateKeyBytes()!),
+            rawRepresentation: [UInt8](keyPair.privateKeyBytes()!),
             derRepresentation: keyPair.privateKeyPKIXPem(),
             base64X25519Representation: keyPair.toX25519Base64()
         )

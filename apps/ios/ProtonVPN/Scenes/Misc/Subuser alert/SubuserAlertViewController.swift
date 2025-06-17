@@ -21,24 +21,23 @@ import UIKit
 
 import Dependencies
 
-import VPNAppCore
+import Domain
 import LegacyCommon
 import Theme
-import Domain
+import VPNAppCore
 
 import Strings
 
 class SubuserAlertViewController: UIViewController {
-    
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var description1Label: UILabel!
-    @IBOutlet private weak var description2Label: UILabel!
-    @IBOutlet private weak var assignConnectionsButton: ProtonButton!
-    @IBOutlet private weak var loginButton: ProtonButton!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var description1Label: UILabel!
+    @IBOutlet private var description2Label: UILabel!
+    @IBOutlet private var assignConnectionsButton: ProtonButton!
+    @IBOutlet private var loginButton: ProtonButton!
 
     var role: UserRole = .noOrganization
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTranslations()
@@ -46,7 +45,7 @@ class SubuserAlertViewController: UIViewController {
         description1Label.accessibilityIdentifier = "subuserAlertDescription1"
         description2Label.accessibilityIdentifier = "subuserAlertDescription2"
     }
-    
+
     private func setupTranslations() {
         titleLabel.text = Localizable.subuserAlertTitle
         if role == .organizationAdmin {
@@ -62,32 +61,34 @@ class SubuserAlertViewController: UIViewController {
 
         loginButton.setTitle(Localizable.subuserAlertLoginButton, for: .normal)
     }
-    
+
     private func setupViews() {
         view.backgroundColor = .backgroundColor()
 
         imageView.image = Theme.Asset.icAlertProAccount.image
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        
+
         description1Label.textColor = .normalTextColor()
         description1Label.font = UIFont.systemFont(ofSize: 16)
-        
+
         description2Label.textColor = .weakTextColor()
         description2Label.font = UIFont.systemFont(ofSize: 14)
-        
+
         assignConnectionsButton.customState = .primary
         loginButton.customState = .secondary
     }
-    
+
     // MARK: - Actions
-    
-    @IBAction private func assignConnectionsTapped() {
+
+    @IBAction
+    private func assignConnectionsTapped() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.assignVPNConnections)
     }
-    
-    @IBAction private func loginTapped() {
-        self.dismiss(animated: true, completion: {})
+
+    @IBAction
+    private func loginTapped() {
+        dismiss(animated: true, completion: {})
     }
 }

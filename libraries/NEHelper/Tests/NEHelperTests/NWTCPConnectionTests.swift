@@ -17,13 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
+@testable import NEHelper
 import NetworkExtension
 import Timer
 import TimerMock
-@testable import NEHelper
 @testable import VPNShared
 @testable import VPNSharedTesting
+import XCTest
 
 class NWTCPConnectionTests: XCTestCase {
     let networkQueue = DispatchQueue(label: "ch.protonvpn.fake-network-request")
@@ -46,9 +46,11 @@ class NWTCPConnectionTests: XCTestCase {
         }, dataWriteCallback: { tunnel, dataWritten in
             try self.dataWriteCallback(tunnel, dataWritten)
         })
-        dataTaskFactory = ConnectionTunnelDataTaskFactory(provider: connectionTunnelFactory,
-                                                          timerFactory: TimerFactoryImplementation(),
-                                                          connectionTimeoutInterval: 1)
+        dataTaskFactory = ConnectionTunnelDataTaskFactory(
+            provider: connectionTunnelFactory,
+            timerFactory: TimerFactoryImplementation(),
+            connectionTimeoutInterval: 1
+        )
     }
 
     func testBasicConnection() {
@@ -57,8 +59,10 @@ class NWTCPConnectionTests: XCTestCase {
         urlRequest.addValue("Bar", forHTTPHeaderField: "X-Other-Testing-Header")
         urlRequest.httpMethod = "GET"
 
-        let responseHeaders = ["X-Testing-Response-Header": "Fred",
-                               "X-Testing-Other-Response-Header": "Wilma"]
+        let responseHeaders = [
+            "X-Testing-Response-Header": "Fred",
+            "X-Testing-Other-Response-Header": "Wilma",
+        ]
         let responseBody = "A smooth sea never made a skilled sailor."
         let response = RequestParsingTests.makeResponse(headers: responseHeaders, body: responseBody)
 
@@ -99,12 +103,15 @@ class NWTCPConnectionTests: XCTestCase {
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 200, "Http response error code should be 200")
 
-            guard let data = data else {
+            guard let data else {
                 XCTFail("No response data received")
                 return
             }
-            XCTAssertEqual(responseBody.data(using: .utf8)!, data,
-                           "Response data should have been \(responseBody) but was actually \(String(data: data, encoding: .utf8) ?? "(encoding error)")")
+            XCTAssertEqual(
+                responseBody.data(using: .utf8)!,
+                data,
+                "Response data should have been \(responseBody) but was actually \(String(data: data, encoding: .utf8) ?? "(encoding error)")"
+            )
             dataTaskExpectation.fulfill()
         }
 
@@ -140,18 +147,22 @@ class NWTCPConnectionTests: XCTestCase {
 
         var numRequests = 0
 
-        let cookie1 = HTTPCookie(properties: [.name: "testing",
-                                              .value: "12345",
-                                              .version: 2,
-                                              .domain: apiUrl.host!,
-                                              .path: "/",
-                                              .maximumAge: "420"])!
-        let cookie2 = HTTPCookie(properties: [.name: "johnny",
-                                              .value: "appleseed",
-                                              .version: 2,
-                                              .domain: apiUrl.host!,
-                                              .path: "/",
-                                              .maximumAge: "\(60 * 60 * 4)"])!
+        let cookie1 = HTTPCookie(properties: [
+            .name: "testing",
+            .value: "12345",
+            .version: 2,
+            .domain: apiUrl.host!,
+            .path: "/",
+            .maximumAge: "420",
+        ])!
+        let cookie2 = HTTPCookie(properties: [
+            .name: "johnny",
+            .value: "appleseed",
+            .version: 2,
+            .domain: apiUrl.host!,
+            .path: "/",
+            .maximumAge: "\(60 * 60 * 4)",
+        ])!
         dataTaskFactory.cookieStorage.setCookies([cookie1, cookie2], for: apiUrl, mainDocumentURL: nil)
 
         stateObservingCallback = { tunnel in
@@ -181,14 +192,14 @@ class NWTCPConnectionTests: XCTestCase {
 
             if numRequests == 0 {
                 XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                          cookieLine.contains("testing=12345"))
+                    cookieLine.contains("testing=12345"))
                 expectations.firstRequest.fulfill()
             } else {
                 XCTAssertEqual(numRequests, 1, "Should only run two requests")
                 XCTAssert(cookieLine.contains("johnny=appleseed") &&
-                          cookieLine.contains("testing=12345") &&
-                          cookieLine.contains("Tag=vpn-a") &&
-                          cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
+                    cookieLine.contains("testing=12345") &&
+                    cookieLine.contains("Tag=vpn-a") &&
+                    cookieLine.contains("Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM"))
                 expectations.secondRequest.fulfill()
             }
 
@@ -206,7 +217,7 @@ class NWTCPConnectionTests: XCTestCase {
             return RequestParsingTests.actual400ErrorResponse
         }
 
-        let firstDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let firstDataTask = dataTaskFactory.dataTask(urlRequest) { _, response, error in
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
 
@@ -225,21 +236,21 @@ class NWTCPConnectionTests: XCTestCase {
 
         XCTAssert(cookies.contains(where: {
             $0.name == "Session-Id" &&
-            $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
-            $0.domain == ".proton.me" &&
-            $0.path == "/" &&
-            $0.isHTTPOnly &&
-            $0.isSecure
+                $0.value == "Yma8R9WZUcufgnz4wI1LIAAAAQM" &&
+                $0.domain == ".proton.me" &&
+                $0.path == "/" &&
+                $0.isHTTPOnly &&
+                $0.isSecure
         }), "Session-Id cookie not found or does not match expected values")
 
         XCTAssert(cookies.contains(where: {
             $0.name == "Tag" &&
-            $0.value == "vpn-a" &&
-            $0.path == "/" &&
-            $0.isSecure
+                $0.value == "vpn-a" &&
+                $0.path == "/" &&
+                $0.isSecure
         }), "Tag cookie not found or does not match expected values")
 
-        let secondDataTask = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+        let secondDataTask = dataTaskFactory.dataTask(urlRequest) { _, response, error in
             XCTAssertNil(error, "Unexpected response error")
             XCTAssertEqual((response as! HTTPURLResponse).statusCode, 400, "Http response error code should be 200")
 
@@ -265,7 +276,7 @@ class NWTCPConnectionTests: XCTestCase {
             }
         }
 
-        dataWriteCallback = { tunnel, requestData in
+        dataWriteCallback = { _, _ in
             XCTFail("Should not have tried to write before state was connected")
         }
 

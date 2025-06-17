@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CoreLocation
+import Foundation
 
 /// This is a struct version of `ServerModel` object from `LegacyCommon`.
 ///
@@ -36,7 +36,7 @@ public struct VPNServer: Codable, Equatable, Identifiable, Sendable {
     }
 
     public var supportedProtocols: ProtocolSupport {
-        return endpoints.reduce(.zero) { $0.union($1.supportedProtocols) }
+        endpoints.reduce(.zero) { $0.union($1.supportedProtocols) }
     }
 
     public var features: [ConnectionSpec.Feature] {

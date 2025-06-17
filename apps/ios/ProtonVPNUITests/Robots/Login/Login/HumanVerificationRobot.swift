@@ -16,26 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Strings
 import fusion
+import Strings
 
-fileprivate let captchaNextButton = Localizable.modalsCommonNext
-fileprivate let humanVerificationHeader = "Human Verification"
-fileprivate let resetPuzzleButton = "Reset puzzle piece"
-fileprivate let retryButton = Localizable.retry
+private let captchaNextButton = Localizable.modalsCommonNext
+private let humanVerificationHeader = "Human Verification"
+private let resetPuzzleButton = "Reset puzzle piece"
+private let retryButton = Localizable.retry
 
 class HumanVerificationRobot: CoreElements {
-    
     public let verify = Verify()
-    
+
     @discardableResult
     func verifyCaptcha() -> HumanVerificationRobot {
         button(captchaNextButton).tap()
         return HumanVerificationRobot()
     }
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func captchaScreenIsShown() -> HumanVerificationRobot {
             staticText(humanVerificationHeader).checkExists()
@@ -47,7 +45,7 @@ class HumanVerificationRobot: CoreElements {
                 .checkEnabled()
             return HumanVerificationRobot()
         }
-        
+
         @discardableResult
         func captchaScreenIsNotShown() -> HumanVerificationRobot {
             button(resetPuzzleButton).checkDoesNotExist()

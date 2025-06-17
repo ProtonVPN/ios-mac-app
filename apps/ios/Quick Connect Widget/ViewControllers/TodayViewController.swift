@@ -20,25 +20,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Reachability
-import UIKit
 import LegacyCommon
 import NotificationCenter
 import ProtonCoreUIFoundations
+import Reachability
 import Strings
+import UIKit
 
 final class TodayViewController: UIViewController {
-    @IBOutlet private weak var connectionLabel: UILabel!
-    @IBOutlet private weak var countryLabel: UILabel!
-    @IBOutlet private weak var ipLabel: UILabel!
-    @IBOutlet private weak var connectButton: ProtonButton!
-    @IBOutlet private weak var buttonContainerView: UIView!
+    @IBOutlet private var connectionLabel: UILabel!
+    @IBOutlet private var countryLabel: UILabel!
+    @IBOutlet private var ipLabel: UILabel!
+    @IBOutlet private var connectButton: ProtonButton!
+    @IBOutlet private var buttonContainerView: UIView!
 
     private let widgetFactory = WidgetFactory()
     private let viewModel: TodayViewModel
-    
+
     required init?(coder aDecoder: NSCoder) {
-        viewModel = widgetFactory.makeTodayViewModel()
+        self.viewModel = widgetFactory.makeTodayViewModel()
         super.init(coder: aDecoder)
         viewModel.delegate = self
     }
@@ -55,16 +55,17 @@ final class TodayViewController: UIViewController {
         ipLabel.backgroundColor = .clear
         buttonContainerView.backgroundColor = .clear
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.update()
     }
-    
-    @IBAction private func didTapConnectButton(_ sender: Any) {
+
+    @IBAction
+    private func didTapConnectButton(_: Any) {
         viewModel.connect()
     }
-    
+
     // MARK: - Util
 
     private func setConnectButtonTitle(_ title: String) {
@@ -73,11 +74,18 @@ final class TodayViewController: UIViewController {
             connectButton.layoutIfNeeded()
         }
     }
-    
-    private func updateUI(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
-                          ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
-                          connectionString: String = "", connectionLabelTint: UIColor = .normalTextColor(),
-                          iconTint: UIColor = .brandColor(), animate: Bool = false) {
+
+    private func updateUI(
+        _ buttonTitle: String = "",
+        buttonState _: ProtonButton.CustomState = .primary,
+        ipAddress: String? = nil,
+        country: String? = nil,
+        buttonHidden: Bool = false,
+        connectionString: String = "",
+        connectionLabelTint: UIColor = .normalTextColor(),
+        iconTint _: UIColor = .brandColor(),
+        animate _: Bool = false
+    ) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden
@@ -109,11 +117,10 @@ extension TodayViewController: TodayViewModelDelegate {
         case .blank:
             updateUI(buttonHidden: true, iconTint: .backgroundColor())
         case let .connected(server, entryCountry: entryCountry, country: country):
-            let connectionString: String
-            if let entryCountry = entryCountry {
-                 connectionString = "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
+            let connectionString: String = if let entryCountry {
+                "\(Localizable.connected) \(Localizable.via) \(entryCountry)"
             } else {
-                connectionString = Localizable.connected
+                Localizable.connected
             }
 
             updateUI(Localizable.disconnect, buttonState: .destructive, ipAddress: server, country: country, connectionString: connectionString)

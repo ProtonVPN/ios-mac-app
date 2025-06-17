@@ -45,33 +45,29 @@ extension ConnectionFeatureProvider: TestDependencyKey {
     public static let testValue: ConnectionFeatureProvider = .init()
 }
 
-extension DependencyValues {
-    public var connectionFeatureProvider: ConnectionFeatureProvider {
+public extension DependencyValues {
+    var connectionFeatureProvider: ConnectionFeatureProvider {
         get { self[ConnectionFeatureProvider.self] }
         set { self[ConnectionFeatureProvider.self] = newValue }
     }
 }
 
 extension VPNConnectionFeatures {
-    @usableFromInline
-    static let unimplementedFeatures: VPNConnectionFeatures = {
-        VPNConnectionFeatures(
-            netshield: .off,
-            vpnAccelerator: false,
-            bouncing: nil, // This is set to the target server's `label` property during connection
-            natType: .moderateNAT,
-            safeMode: false
-        )
-    }()
+    @usableFromInline static let unimplementedFeatures: VPNConnectionFeatures = .init(
+        netshield: .off,
+        vpnAccelerator: false,
+        bouncing: nil, // This is set to the target server's `label` property during connection
+        natType: .moderateNAT,
+        safeMode: false
+    )
 }
 
 extension TunnelFeatures {
-    @usableFromInline
-    static let unimplementedFeatures: TunnelFeatures = {
-#if !os(tvOS)
-        .init(killSwitch: false, excludeLocalNetworks: false)
-#else
-        .init()
-#endif
+    @usableFromInline static let unimplementedFeatures: TunnelFeatures = {
+        #if !os(tvOS)
+            .init(killSwitch: false, excludeLocalNetworks: false)
+        #else
+            .init()
+        #endif
     }()
 }

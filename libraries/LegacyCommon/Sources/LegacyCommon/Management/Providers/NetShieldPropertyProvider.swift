@@ -102,7 +102,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             netShieldType = .off
         }
         // On upgrade from the free plan, switch NetShield to the default value for the new tier
-        if tier > oldTier && oldTier.isFreeTier {
+        if tier > oldTier, oldTier.isFreeTier {
             netShieldType = .level2
         }
     }
@@ -116,7 +116,7 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
             return nil
         }
 
-        guard let type = NetShieldType.init(rawValue: intValue) else {
+        guard let type = NetShieldType(rawValue: intValue) else {
             log.error("Failed to retrieve stored NetShield level, \(intValue) is not a valid NetShield type", category: .settings)
             return nil
         }
@@ -155,12 +155,12 @@ extension NetShieldType: ModularAppFeature {
 }
 
 extension NetShieldType: PaidAppFeature {
-    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan _: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }
 
-        if Self.level1.isUserTierTooLow(userTier) {
+        if level1.isUserTierTooLow(userTier) {
             return .failure(.requiresUpgrade)
         }
 

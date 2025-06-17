@@ -20,14 +20,16 @@ public extension Int {
     var isPaidTier: Bool {
         !isFreeTier
     }
+
     var isFreeTier: Bool {
         self == Int.freeTier
     }
+
     static var freeTier: Int = VpnTiers.free
     static var paidTier: Int = VpnTiers.plus
     static var internalTier: Int = VpnTiers.internal // Dev-only
 
-    fileprivate struct VpnTiers {
+    fileprivate enum VpnTiers {
         static let free = 0
         // 1 was historically used for basic plans, which no longer exist
         static let plus = 2 // also visionary

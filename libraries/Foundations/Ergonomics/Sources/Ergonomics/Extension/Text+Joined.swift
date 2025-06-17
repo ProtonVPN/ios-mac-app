@@ -24,12 +24,12 @@ public protocol Joinable {
 
 extension Text: Joinable {
     public func joined(to other: Self, with separator: Self) -> Self {
-        return self + separator + other
+        self + separator + other
     }
 }
 
-extension Collection where Element: Joinable {
-    public func joined(separator: Self.Element) -> Self.Element? {
+public extension Collection where Element: Joinable {
+    func joined(separator: Self.Element) -> Self.Element? {
         guard let first else { return nil }
         return dropFirst().reduce(first) { $0.joined(to: $1, with: separator) }
     }

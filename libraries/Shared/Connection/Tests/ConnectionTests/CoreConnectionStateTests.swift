@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import Connection
-import ExtensionManager
 import CoreConnection
-import LocalAgent
 import Ergonomics
+import ExtensionManager
+import Foundation
+import LocalAgent
+import XCTest
 
 final class CoreConnectionStateTests: XCTestCase {
-
     func testLocalAgentErrorResolvesToError() async {
         let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(

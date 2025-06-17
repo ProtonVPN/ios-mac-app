@@ -20,17 +20,16 @@ import Foundation
 
 import Dependencies
 
-import VPNAppCore
-import Connection
 import CommonNetworking
+import Connection
+import VPNAppCore
 
-import Strings
-import Timer
 import Domain
 import Ergonomics
+import Strings
+import Timer
 
 public struct OfferBannerViewModel {
-
     static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
         formatter.dateTimeStyle = .named
@@ -44,12 +43,14 @@ public struct OfferBannerViewModel {
     public var action: @MainActor (SessionService) async -> Void
     public var dismiss: () -> Void
 
-    public init(imageURL: URL,
-                endTime: Date,
-                showCountdown: Bool,
-                buttonURL: URL,
-                offerReference: String?,
-                dismiss: @escaping () -> Void) {
+    public init(
+        imageURL: URL,
+        endTime: Date,
+        showCountdown: Bool,
+        buttonURL: URL,
+        offerReference: String?,
+        dismiss: @escaping () -> Void
+    ) {
         self.imageURL = imageURL
         self.endTime = endTime
         self.showCountdown = showCountdown
@@ -74,10 +75,12 @@ public struct OfferBannerViewModel {
     public func createTimer(updateTimeRemaining: @escaping () -> Void) -> BackgroundTimer {
         let timeLeft = endTime.timeIntervalSinceNow
         let repeating: Double? = timeLeft < 120 ? 1 : 60
-        return ForegroundTimerFactoryImplementation().scheduledTimer(runAt: Date(),
-                                                                     repeating: repeating,
-                                                                     leeway: nil,
-                                                                     queue: .main) {
+        return ForegroundTimerFactoryImplementation().scheduledTimer(
+            runAt: Date(),
+            repeating: repeating,
+            leeway: nil,
+            queue: .main
+        ) {
             updateTimeRemaining()
         }
     }

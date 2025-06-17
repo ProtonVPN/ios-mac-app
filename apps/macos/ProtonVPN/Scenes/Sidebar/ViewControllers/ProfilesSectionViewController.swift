@@ -24,8 +24,7 @@ import Cocoa
 import Ergonomics
 
 class ProfileSectionViewController: NSViewController {
-    
-    fileprivate struct CellIdentifier {
+    fileprivate enum CellIdentifier {
         static let profile = "Profile"
         static let footer = "Footer"
     }
@@ -34,38 +33,39 @@ class ProfileSectionViewController: NSViewController {
         case profile = "ProfileItemView"
         case footer = "FooterItemView"
 
-        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(self.rawValue) }
-        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil) }
+        var identifier: NSUserInterfaceItemIdentifier { NSUserInterfaceItemIdentifier(rawValue) }
+        var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
     }
-    
-    @IBOutlet weak var profileListTableView: NSTableView!
-    @IBOutlet weak var profileListScrollView: NSScrollView!
-    
+
+    @IBOutlet var profileListTableView: NSTableView!
+    @IBOutlet var profileListScrollView: NSScrollView!
+
     fileprivate let viewModel: ProfilesSectionViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: ProfilesSectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("ProfilesSection"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupTableView()
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupTableView() {
         profileListTableView.dataSource = self
         profileListTableView.delegate = self
@@ -73,43 +73,41 @@ class ProfileSectionViewController: NSViewController {
         profileListTableView.selectionHighlightStyle = .none
         profileListTableView.backgroundColor = .color(.background, .weak)
         Cell.allCases.forEach { profileListTableView.register($0.nib, forIdentifier: $0.identifier) }
-        
+
         profileListScrollView.backgroundColor = .color(.background, .weak)
-        
+
         viewModel.contentChanged = { [weak self] in self?.contentChanged() }
     }
-    
+
     private func contentChanged() {
-        let oldIndices = IndexSet(integersIn: 0..<profileListTableView.numberOfRows)
-        let newIndices = IndexSet(integersIn: 0..<viewModel.cellCount)
-        
+        let oldIndices = IndexSet(integersIn: 0 ..< profileListTableView.numberOfRows)
+        let newIndices = IndexSet(integersIn: 0 ..< viewModel.cellCount)
+
         profileListTableView.removeRows(at: oldIndices, withAnimation: [])
         profileListTableView.insertRows(at: newIndices, withAnimation: [])
     }
 }
 
 extension ProfileSectionViewController: NSTableViewDataSource {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+    func numberOfRows(in _: NSTableView) -> Int {
+        viewModel.cellCount
     }
 }
 
 extension ProfileSectionViewController: NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight(forRow: row)
+    func tableView(_: NSTableView, heightOfRow row: Int) -> CGFloat {
+        viewModel.cellHeight(forRow: row)
     }
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let cellModel = viewModel.cellModel(forRow: row)
-        
+
         switch cellModel {
-        case .profile(let profileModel):
+        case let .profile(profileModel):
             let item = tableView.makeView(withIdentifier: Cell.profile.identifier, owner: nil) as! ProfileItemView
             item.updateView(withModel: profileModel)
             return item
-        case .footer(let footerModel):
+        case let .footer(footerModel):
             let item = tableView.makeView(withIdentifier: Cell.footer.identifier, owner: nil) as! FooterItemView
             item.updateView(withModel: footerModel)
             return item

@@ -18,12 +18,11 @@
 
 import Foundation
 
-extension DateFormatter {
-
+public extension DateFormatter {
     /// IMF-fixdate formatter.
     ///
     /// [RFC-9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-date-time-formats)
-    public static let imf: DateFormatter = {
+    static let imf: DateFormatter = {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss 'GMT'"

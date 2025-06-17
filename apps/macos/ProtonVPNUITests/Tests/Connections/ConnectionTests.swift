@@ -17,23 +17,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import UITestsHelpers
+import XCTest
 
 class ConnectionTests: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     private let loginRobot = LoginRobot()
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let alertRobot = AlertRobot()
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
         loginAsPlusUser()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         if mainRobot.isConnected() {
@@ -42,86 +41,84 @@ class ConnectionTests: ProtonVPNUITests {
             mainRobot.cancelConnecting()
         }
     }
-    
+
     @MainActor
     func testConnectViaWireGuardUdp() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuardUDP)
     }
-    
+
     @MainActor
     func testConnectViaWireGuardTcp() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.WireGuardTCP)
     }
-    
+
     @MainActor
     func testConnectViaSmartProtocol() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.Smart)
     }
-    
+
     @MainActor
     func testConnectViaStealthProtocol() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.Stealth)
     }
-    
+
     @MainActor
     func testConnectViaIKEv2Protocol() {
         performProtocolConnectionTest(withProtocol: ConnectionProtocol.IKEv2)
     }
-    
+
     @MainActor
     func testConnectAndDisconnect() async throws {
         let unprotectedIpAddress = try await NetworkUtils.getIpAddress()
-        
+
         mainRobot
             .quickConnectToAServer()
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
-        
+
         sleep(2)
-        
+
         let protectedIpAddress = try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: unprotectedIpAddress)
-        
+
         mainRobot
             .disconnect()
             .verify
             .checkConnectionCardIsDisconnected()
-        
+
         try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: protectedIpAddress)
     }
-    
+
     @MainActor
     func testConnectAndCancel() async throws {
         let unprotectedIpAddress = try await NetworkUtils.getIpAddress()
-        
+
         mainRobot
             .verify.checkConnectionCardIsDisconnected()
             .quickConnectToAServer()
             .cancelConnecting()
             .verify.checkConnectionCardIsDisconnected()
-        
+
         try await mainRobot.verify.checkIpAddressUnchanged(previousIpAddress: unprotectedIpAddress)
     }
-    
+
     @MainActor
     func testConnectToSpecificCountry() async throws {
-        
         let (country, _) = try await ServersListUtils.getRandomCountry()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: country)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
             .verify.checkCountryExists(country)
             .connectToServer(server: country)
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-    
+
     @MainActor
     func testConnectToSpecificCity() async throws {
-        
         let (country, city, _) = try await ServersListUtils.getRandomServerInfo()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: city)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
@@ -129,17 +126,16 @@ class ConnectionTests: ProtonVPNUITests {
             .expandCountry(country: country)
             .verify.checkServerListContain(server: city)
             .connectToServer(server: city)
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-    
+
     @MainActor
     func testConnectToSpecificServer() async throws {
-        
         let (country, _, server) = try await ServersListUtils.getRandomServerInfo()
-        
+
         countriesSelectionRobot
             .searchForServer(serverName: server)
             .verify.checkAmountOfLocationsFound(expectedAmount: 1)
@@ -147,58 +143,55 @@ class ConnectionTests: ProtonVPNUITests {
             .expandCountry(country: country)
             .verify.checkServerListContain(server: server)
             .connectToServer(server: server)
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, to: country)
     }
-    
+
     @MainActor
     func testLocalNetworkIsReachableWhileConnected() async throws {
         let defaultGatewayAddress = try NetworkUtils.getDefaultGatewayAddress()
-        
+
         try await mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
             .verify.checkIfLocalNetworkingReachable(to: defaultGatewayAddress)
     }
-    
+
     @MainActor
     func testLogoutWhileConnectedContinue() {
-        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .logOut()
-        
+
         alertRobot
             .verify.checkLogoutWarningAlertAppear()
             .logoutWarningAlert.clickContinue()
-        
+
         loginRobot
             .verify.checkLoginScreenIsShown()
     }
-    
+
     @MainActor
     func testLogoutWhileConnectedCancel() {
-        
         mainRobot
             .quickConnectToAServer()
             .waitForConnected(with: ConnectionProtocol.Smart)
             .logOut()
-        
+
         alertRobot
             .verify.checkLogoutWarningAlertAppear()
             .logoutWarningAlert.clickCancel()
-        
+
         mainRobot
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
     }
-    
+
     @MainActor
     private func performProtocolConnectionTest(withProtocol connectionProtocol: ConnectionProtocol) {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()

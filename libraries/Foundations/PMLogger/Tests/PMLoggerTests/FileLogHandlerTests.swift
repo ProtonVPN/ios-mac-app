@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import PMLogger
+import XCTest
 
 class FileLogHandlerTests: XCTestCase {
-
-    private var folder: URL = URL(string: "/tmp")!
+    private var folder: URL = .init(string: "/tmp")!
     private var file: URL!
-    
+
     override func setUp() async throws {
         file = folder.appendingPathComponent("ProtonVPNtest.log", isDirectory: false)
     }
@@ -49,7 +48,7 @@ class FileLogHandlerTests: XCTestCase {
 
         wait(for: [expectationDelegate, expectationCreateFile], timeout: 3)
     }
-    
+
     func testRotatesFiles() {
         let expectationRotation = XCTestExpectation(description: "Files are rotated 2 times")
         expectationRotation.expectedFulfillmentCount = 2
@@ -70,20 +69,20 @@ class FileLogHandlerTests: XCTestCase {
         let handler = FileLogHandler(file, fileManager: fileSystem.fileManager)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 50
-        
+
         let delegate = LogDelegate()
         delegate.rotationCallback = {
             expectationRotation.fulfill()
         }
         handler.delegate = delegate
-        
+
         for i in 1 ... 7 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
-        
+
         wait(for: [expectationRotation, expectationNewFileCount, expectationMoveFileCount], timeout: 3)
     }
-    
+
     func testDeletesOldFiles() {
         let expectationFileCount = XCTestExpectation(description: "Max 2 files are present an the same time")
 
@@ -97,11 +96,11 @@ class FileLogHandlerTests: XCTestCase {
 
         let fileSystem = FileSystemMock()
         fileSystem.removeFileCallback = { expectationDeletion.fulfill() }
-        
+
         let handler = FileLogHandler(file, fileManager: fileSystem.fileManager)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 1
-        
+
         let delegate = LogDelegate()
         delegate.newFileCallback = {
             guard let files = try? fileSystem.fileManager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) else {
@@ -117,27 +116,24 @@ class FileLogHandlerTests: XCTestCase {
             expectationRotation.fulfill()
         }
         handler.delegate = delegate
-        
+
         for i in 1 ... 9 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
-        
+
         wait(for: [expectationFileCount, expectationRotation, expectationDeletion], timeout: 3)
     }
-
 }
 
 private class LogDelegate: FileLogHandlerDelegate {
-    
     var newFileCallback: (() -> Void)?
     var rotationCallback: (() -> Void)?
-    
+
     func didCreateNewLogFile() {
         newFileCallback?()
     }
-    
+
     func didRotateLogFile() {
         rotationCallback?()
     }
-    
 }

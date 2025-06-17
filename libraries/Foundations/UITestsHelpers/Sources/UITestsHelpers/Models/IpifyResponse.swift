@@ -20,8 +20,8 @@ import Foundation
 
 public struct IpifyResponse: Codable {
     let ip: String
-    
+
     enum CodingKeys: String, CodingKey {
-        case ip = "ip"
+        case ip
     }
 }

@@ -22,18 +22,17 @@ import XCTest
 import Dependencies
 
 import Domain
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
-
     func testDeleteStalePaidServers() throws {
         repository.upsert(
             servers: [
                 TestData.createMockServer(withID: "free1", tier: 0),
                 TestData.createMockServer(withID: "stale1", tier: 0),
                 TestData.createMockServer(withID: "paid1", tier: 1),
-                TestData.createMockServer(withID: "stale2", tier: 2)
+                TestData.createMockServer(withID: "stale2", tier: 2),
             ]
         )
 
@@ -45,7 +44,7 @@ final class ServerDeletionTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(deletedServerCount, 1)
 
         let remainingServers = repository.getServers(filteredBy: [], orderedBy: .nameAscending)
-        let remainingServerIDs = remainingServers.map { $0.logical.id }
+        let remainingServerIDs = remainingServers.map(\.logical.id)
 
         // stale1 should be deleted since it matches the tier criteria and its ID is not in the list
         XCTAssertEqual(remainingServerIDs, ["free1", "paid1", "stale2"])

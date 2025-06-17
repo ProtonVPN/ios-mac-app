@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
-import enum Theme.Asset
 import var ProtonCoreUIFoundations.IconProvider
+import Strings
+import SwiftUI
+import enum Theme.Asset
 
 public struct LocationFeatureSubheader: View {
     private let model: LocationFeatureSubheaderModel
@@ -33,16 +33,17 @@ public struct LocationFeatureSubheader: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(Color(.text, .weak))
-#if canImport(Cocoa)
+        #if canImport(Cocoa)
             .font(.body())
-#elseif canImport(UIKit)
+        #elseif canImport(UIKit)
             .font(.body2(emphasised: false))
-#endif
+        #endif
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch model {
-        case .textual(let textModel):
+        case let .textual(textModel):
             [Text(textModel.location)]
                 .appending(torText, if: textModel.showTor)
                 .appending(p2pText, if: textModel.showP2P)

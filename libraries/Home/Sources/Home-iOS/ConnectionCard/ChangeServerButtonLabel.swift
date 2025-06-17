@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ProtonCoreUIFoundations
 import ComposableArchitecture
-import HomeShared
-import Strings
 import Ergonomics
+import HomeShared
+import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
 
 struct ChangeServerButtonLabel: View {
     let sendAction: HomeConnectionCardFeature.ActionSender
@@ -35,7 +35,7 @@ struct ChangeServerButtonLabel: View {
     @Dependency(\.date) var date
 
     var body: some View {
-        TimelineView(.explicit(updateSchedule)) { timeline in
+        TimelineView(.explicit(updateSchedule)) { _ in
             Button {
                 sendAction(.delegate(.changeServerButtonTapped))
             } label: {
@@ -68,7 +68,6 @@ struct ChangeServerButtonLabel: View {
 }
 
 struct ChangeServerButtonStyle: ButtonStyle {
-
     let isActive: Bool
 
     func makeBody(configuration: Configuration) -> some View {
@@ -76,20 +75,26 @@ struct ChangeServerButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 48)
             .background(Color(.background, .weak).opacity(0.001)) // we need to give it a background in order for the button to be tappable on the whole view...
             .foregroundColor(isActive
-                        ? Color(.text)
-                        : Color(.text, .hint))
-            .themeBorder(style: .strong,
-                         cornerRadius: .radius8)
+                ? Color(.text)
+                : Color(.text, .hint))
+            .themeBorder(
+                style: .strong,
+                cornerRadius: .radius8
+            )
     }
 }
 
 @available(iOS 17, *)
 #Preview("Change Server Button Label", traits: .sizeThatFitsLayout) {
     VStack {
-        ChangeServerButtonLabel(sendAction: { _ in },
-                                changeServerAllowedDate: Date().addingTimeInterval(60 * 60))
-        ChangeServerButtonLabel(sendAction: { _ in },
-                                changeServerAllowedDate: Date().addingTimeInterval(-1))
+        ChangeServerButtonLabel(
+            sendAction: { _ in },
+            changeServerAllowedDate: Date().addingTimeInterval(60 * 60)
+        )
+        ChangeServerButtonLabel(
+            sendAction: { _ in },
+            changeServerAllowedDate: Date().addingTimeInterval(-1)
+        )
     }
     .padding()
     .preferredColorScheme(.dark)

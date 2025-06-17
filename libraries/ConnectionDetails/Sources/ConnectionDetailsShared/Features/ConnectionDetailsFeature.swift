@@ -17,14 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
-import VPNAppCore
 import Domain
+import Foundation
 import Localization
+import VPNAppCore
 
 @Reducer
 public struct ConnectionDetailsFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var connectedSince: Date
@@ -48,25 +47,23 @@ public struct ConnectionDetailsFeature {
         public init(actual: VPNConnectionActual) {
             let countryCode = actual.server.logical.exitCountryCode
             let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? countryCode
-            self = .init(connectedSince: actual.connectedDate ?? .now,
-                         country: country,
-                         city: actual.server.logical.city ?? "-",
-                         server: actual.server.logical.name,
-                         serverLoad: actual.server.logical.load,
-                         protocolName: actual.vpnProtocol.localizedDescription
+            self = .init(
+                connectedSince: actual.connectedDate ?? .now,
+                country: country,
+                city: actual.server.logical.city ?? "-",
+                server: actual.server.logical.name,
+                serverLoad: actual.server.logical.load,
+                protocolName: actual.vpnProtocol.localizedDescription
             )
         }
     }
 
     @CasePathable
-    public enum Action: Equatable {
-    }
+    public enum Action: Equatable {}
 
-    public init() {
-    }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         EmptyReducer()
     }
 }
-

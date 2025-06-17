@@ -16,21 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 import Strings
 
-extension Logical {
-    public var entryCountry: String {
-        guard case .secureCore(let entryCountryCode) = kind else { return "" }
+public extension Logical {
+    var entryCountry: String {
+        guard case let .secureCore(entryCountryCode) = kind else { return "" }
         return LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? ""
     }
 
-    public var exitCountry: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
+    var exitCountry: String {
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 
-    public var country: String {
-        return LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
+    var country: String {
+        LocalizationUtility.default.countryName(forCode: exitCountryCode) ?? ""
     }
 }

@@ -19,7 +19,6 @@
 import SwiftUI
 
 struct WelcomeButtonView: View {
-
     let title: LocalizedStringKey
     let action: () -> Void
 

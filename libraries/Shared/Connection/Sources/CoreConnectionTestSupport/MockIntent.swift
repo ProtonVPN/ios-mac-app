@@ -26,7 +26,7 @@ public extension ServerConnectionIntent {
         tunnelSettings: TunnelSettings = .mock,
         features: VPNConnectionFeatures = .mock
     ) -> ServerConnectionIntent {
-        return ServerConnectionIntent(
+        ServerConnectionIntent(
             spec: .init(location: location, features: []),
             server: server,
             tunnelSettings: tunnelSettings,

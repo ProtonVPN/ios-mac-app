@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Cocoa
+import Foundation
 
 // adapted from https://gist.github.com/berkcebi/e0f09d5ea3b95ad3230b0995435ec151
 extension NSProgressIndicator {

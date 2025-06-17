@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import VPNAppCore
-import Domain
 
 public protocol MaintenanceManagerHelperFactory {
     func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper
@@ -32,33 +32,34 @@ public protocol MaintenanceManagerHelperFactory {
 public class MaintenanceManagerHelper {
     private static let jitterPercentage = 10
     private static var randomJitterPercentage: Int {
-        .random(in: -jitterPercentage...jitterPercentage)
+        .random(in: -jitterPercentage ... jitterPercentage)
     }
 
-    public typealias Factory = MaintenanceManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
+    public typealias Factory = CoreAlertServiceFactory & MaintenanceManagerFactory & PropertiesManagerFactory & VpnGatewayFactory
     private let factory: Factory
-    
+
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateWay: VpnGatewayProtocol = factory.makeVpnGateway()
-    
+
     public init(factory: Factory) {
         self.factory = factory
 
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
     }
-    
-    @objc func featureFlagsChanged() {
+
+    @objc
+    func featureFlagsChanged() {
         startMaintenanceManager()
     }
-    
+
     public func startMaintenanceManager() {
         guard propertiesManager.featureFlags.serverRefresh else {
             maintenanceManager.stopObserving()
             return // Feature is disabled
         }
-        
+
         let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
         let jitter = (TimeInterval(Self.randomJitterPercentage) / 100) * time
         maintenanceManager.observeCurrentServerState(every: time + jitter, repeats: true, completion: { [weak self] isMaintenance in
@@ -73,5 +74,4 @@ public class MaintenanceManagerHelper {
             log.error("Checking for server maintenance failed", category: .app, metadata: ["error": "\(error)"])
         })
     }
-    
 }

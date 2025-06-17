@@ -21,7 +21,6 @@ import XCTest
 
 @MainActor
 class ProtocolsConnectionTests: ConnectionTestsBase {
-
     func testConnectViaWireGuardUDPProtocol() {
         testConnection(connectionProtocol: ConnectionProtocol.WireGuardUDP)
     }

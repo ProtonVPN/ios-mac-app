@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Domain
 import LegacyCommon
 import Theme
-import Domain
 
 final class NET2WarningPopupViewController: WarningPopupViewController {
     override func viewDidLoad() {
@@ -44,14 +44,16 @@ final class NET2WarningPopupViewController: WarningPopupViewController {
 extension WarningPopupViewModel {
     convenience init(alert: NEKSOnT2Alert) {
         let image = AppTheme.Icon.switchOff.resizeWhilePreservingRatio(newWidth: 50)
-        self.init(image: image,
-                  title: alert.title!,
-                  description: alert.message!,
-                  linkDescription: alert.link,
-                  url: VPNLink.t2ChipKnowledgeBase.urlString,
-                  onConfirm: alert.killSwitchOffAction.handler!,
-                  confirmTitle: alert.killSwitchOffAction.title,
-                  onCancel: alert.connectAnywayAction.handler!,
-                  cancelTitle: alert.connectAnywayAction.title)
+        self.init(
+            image: image,
+            title: alert.title!,
+            description: alert.message!,
+            linkDescription: alert.link,
+            url: VPNLink.t2ChipKnowledgeBase.urlString,
+            onConfirm: alert.killSwitchOffAction.handler!,
+            confirmTitle: alert.killSwitchOffAction.title,
+            onCancel: alert.connectAnywayAction.handler!,
+            cancelTitle: alert.connectAnywayAction.title
+        )
     }
 }

@@ -1,5 +1,5 @@
 //
-//  vpnAuthentication.swift
+//  VpnAuthentication.swift
 //  vpncore - Created on 06.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -75,7 +75,7 @@ public extension VpnAuthentication {
     func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
         refreshCertificates(features: nil, completion: completion)
     }
-    
+
     func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         loadAuthenticationData(features: nil, completion: completion)
     }

@@ -16,36 +16,36 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Dependencies
+import Domain
+@testable import LegacyCommon
 import VPNShared
 import VPNSharedTesting
-@testable import LegacyCommon
-import Domain
+import XCTest
 
-fileprivate enum TestFeature: String, ProvidableFeature {
+private enum TestFeature: String, ProvidableFeature {
     case on
     case off
     case freeDefault
     case paidDefault
 
-    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         if userTier == 0 {
             return .failure(.requiresUpgrade)
         }
         return .success
     }
 
-    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan _: String, userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .on, .paidDefault:
-            return .failure(.requiresUpgrade)
+            .failure(.requiresUpgrade)
         case .off, .freeDefault:
-            return .success
+            .success
         }
     }
 
-    static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> TestFeature {
+    static func defaultValue(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> TestFeature {
         if userTier == 0 {
             return .freeDefault
         }
@@ -59,7 +59,6 @@ fileprivate enum TestFeature: String, ProvidableFeature {
 }
 
 class AppFeaturePropertyProviderTests: XCTestCase {
-
     func testReturnsUserSpecificValueFromStorage() {
         withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))
@@ -171,10 +170,10 @@ class AppFeaturePropertyProviderTests: XCTestCase {
     }
 }
 
-fileprivate let encodedOn = { try! JSONEncoder().encode(TestFeature.on) }()
-fileprivate let encodedOff = { try! JSONEncoder().encode(TestFeature.off) }()
+private let encodedOn = try! JSONEncoder().encode(TestFeature.on)
+private let encodedOff = try! JSONEncoder().encode(TestFeature.off)
 
-fileprivate func mockKeychain(withUsername username: String) -> MockAuthKeychain {
+private func mockKeychain(withUsername username: String) -> MockAuthKeychain {
     let authKeychain = MockAuthKeychain()
     authKeychain.setMockUsername(username)
     return authKeychain

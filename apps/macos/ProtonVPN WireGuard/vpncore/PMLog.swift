@@ -10,38 +10,36 @@ import Foundation
 
 // Version used only in WireGuard extension
 public class PMLog {
-    
     public enum LogLevel {
         case fatal, error, warn, info, debug, trace
-        
+
         fileprivate var description: String {
             switch self {
             case .fatal:
-                return "FATAL"
+                "FATAL"
             case .error:
-                return "ERROR"
+                "ERROR"
             case .warn:
-                return "WARN"
+                "WARN"
             case .info:
-                return "INFO"
+                "INFO"
             case .debug:
-                return "DEBUG"
+                "DEBUG"
             case .trace:
-                return "TRACE"
+                "TRACE"
             }
         }
     }
-    
-    public static func D(_ message: String, level: LogLevel = .info, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+
+    public static func D(_ message: String, level _: LogLevel = .info, filename _: String = "ProtonVPN.log", file _: String = #file, function _: String = #function, line _: Int = #line, column _: Int = #column) {
         wg_log(.debug, message: message)
     }
-    
-    public static func ET(_ message: String, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+
+    public static func ET(_ message: String, level _: LogLevel = .error, file _: String = #file, function _: String = #function, line _: Int = #line, column _: Int = #column) {
         wg_log(.error, message: message)
     }
-    
-    public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+
+    public static func ET(_ error: Error, level _: LogLevel = .error, file _: String = #file, function _: String = #function, line _: Int = #line, column _: Int = #column) {
         wg_log(.error, message: error.localizedDescription)
     }
-    
 }

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Ergonomics
+import Foundation
 import SwiftUI
 
 public enum ColorScheme {
@@ -41,8 +41,8 @@ public enum AppTheme {
         // Modifiers
         public static let normal = Self(bitPosition: 0)
         public static let hint = Self(bitPosition: 1)
-        public static let `weak` = Self(bitPosition: 2)
-        public static let `strong` = Self(bitPosition: 3)
+        public static let weak = Self(bitPosition: 2)
+        public static let strong = Self(bitPosition: 3)
         public static let inverted = Self(bitPosition: 4)
         public static let disabled = Self(bitPosition: 5)
         public static let transparent = Self(bitPosition: 6)
@@ -139,22 +139,22 @@ public enum AppTheme {
         var width: CGFloat? {
             switch self {
             case .default:
-                return nil
+                nil
             case let .square(width):
-                return width
+                width
             case let .rect(width, _):
-                return width
+                width
             }
         }
 
         var height: CGFloat? {
             switch self {
             case .default:
-                return nil
+                nil
             case let .square(width):
-                return width
+                width
             case let .rect(_, height):
-                return height
+                height
             }
         }
     }
@@ -164,7 +164,7 @@ public enum AppTheme {
         case large
 
         public func imageName(countryCode: String) -> String {
-            countryCode.lowercased() + "-\(self.rawValue)"
+            countryCode.lowercased() + "-\(rawValue)"
         }
     }
 }

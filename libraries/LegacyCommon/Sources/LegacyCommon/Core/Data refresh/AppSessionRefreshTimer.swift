@@ -36,11 +36,11 @@ public protocol AppSessionRefreshTimerDelegate: AnyObject {
 }
 
 public extension AppSessionRefreshTimerDelegate {
-    func shouldRefreshFull() -> Bool { return true }
-    func shouldRefreshLoads() -> Bool { return true }
-    func shouldRefreshAccount() -> Bool { return true }
-    func shouldRefreshStreaming() -> Bool { return true }
-    func shouldRefreshPartners() -> Bool { return true }
+    func shouldRefreshFull() -> Bool { true }
+    func shouldRefreshLoads() -> Bool { true }
+    func shouldRefreshAccount() -> Bool { true }
+    func shouldRefreshStreaming() -> Bool { true }
+    func shouldRefreshPartners() -> Bool { true }
 }
 
 public protocol AppSessionRefreshTimer {
@@ -67,7 +67,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
 
     private let refreshIntervals: RefreshIntervals
 
-    public typealias Factory = AppSessionRefresherFactory & VpnKeychainFactory & TimerFactoryCreator
+    public typealias Factory = AppSessionRefresherFactory & TimerFactoryCreator & VpnKeychainFactory
     private let factory: Factory
     private let timerFactory: TimerFactory
 
@@ -75,9 +75,9 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
     private var timerLoadsRefresh: BackgroundTimer?
     private var timerAccountRefresh: BackgroundTimer?
     private var timerStreamingRefresh: BackgroundTimer?
-    
+
     private var appSessionRefresher: AppSessionRefresher {
-        return factory.makeAppSessionRefresher() // Do not retain it
+        factory.makeAppSessionRefresher() // Do not retain it
     }
 
     private weak var delegate: AppSessionRefreshTimerDelegate?
@@ -92,13 +92,13 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         self.refreshIntervals = refreshIntervals
         self.delegate = delegate
     }
-    
+
     public func startTimers() {
         let refreshes = [
             (\AppSessionRefreshTimerImplementation.timerAccountRefresh, refreshAccount, refreshIntervals.account),
             (\AppSessionRefreshTimerImplementation.timerFullRefresh, refreshFull, refreshIntervals.full),
             (\AppSessionRefreshTimerImplementation.timerLoadsRefresh, refreshLoads, refreshIntervals.loads),
-            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming)
+            (\AppSessionRefreshTimerImplementation.timerStreamingRefresh, refreshStreaming, refreshIntervals.streaming),
         ]
 
         for (timerPath, timerFunction, refreshInterval) in refreshes {
@@ -114,7 +114,7 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
             }
         }
     }
-    
+
     public func stopTimers() {
         timerFullRefresh?.invalidate()
         timerLoadsRefresh?.invalidate()
@@ -126,17 +126,17 @@ public class AppSessionRefreshTimerImplementation: AppSessionRefreshTimer {
         timerAccountRefresh = nil
         timerStreamingRefresh = nil
     }
-    
+
     private func refreshFull() {
         guard let delegate, delegate.shouldRefreshFull() else { return }
         appSessionRefresher.refreshData()
     }
-    
+
     private func refreshLoads() {
         guard let delegate, delegate.shouldRefreshLoads() else { return }
         appSessionRefresher.refreshServerLoads()
     }
-    
+
     private func refreshAccount() {
         guard let delegate, delegate.shouldRefreshAccount() else { return }
         appSessionRefresher.refreshAccount()

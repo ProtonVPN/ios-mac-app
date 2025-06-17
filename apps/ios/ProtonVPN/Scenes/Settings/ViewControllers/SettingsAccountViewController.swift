@@ -16,19 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import LegacyCommon
-import Strings
 import ProtonCoreFeatureFlags
+import Strings
+import UIKit
 
 final class SettingsAccountViewController: UIViewController {
-    
     private let viewModel: SettingsAccountViewModel
     private let tableView: UITableView
     private let genericDataSource: GenericTableViewDataSource
     private let connectionBarContainerView: UIView
     private let connectionBar: ConnectionBarViewController
-    
+
     init(viewModel: SettingsAccountViewModel, connectionBar: ConnectionBarViewController) {
         self.viewModel = viewModel
         self.tableView = UITableView()
@@ -36,34 +35,35 @@ final class SettingsAccountViewController: UIViewController {
         self.connectionBarContainerView = UIView()
         self.connectionBar = connectionBar
         super.init(nibName: nil, bundle: nil)
-        
+
         viewModel.viewControllerFetcher = { [weak self] in self }
         viewModel.pushHandler = { [weak self] viewController in
             self?.navigationController?.pushViewController(viewController, animated: true)
         }
         viewModel.reloadNeeded = { [weak self] in
-            guard let self = self, self.isViewLoaded else {
+            guard let self, isViewLoaded else {
                 return
             }
 
-            self.tableView.reloadData()
+            tableView.reloadData()
         }
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = Localizable.account
-        
+
         view.backgroundColor = .backgroundColor()
         tableView.separatorColor = .normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        
+
         view.addSubview(tableView)
         tableView.centerXInSuperview()
         if !FeatureFlagsRepository.isRedesigniOSEnabled {
@@ -75,7 +75,7 @@ final class SettingsAccountViewController: UIViewController {
 
                 connectionBarContainerView.widthAnchor.constraint(equalTo: view.widthAnchor),
                 connectionBarContainerView.topAnchor.constraint(equalTo: view.topAnchor),
-                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight)
+                connectionBarContainerView.heightAnchor.constraint(equalToConstant: UIConstants.connectionBarHeight),
             ])
 
             connectionBar.embed(in: self, with: connectionBarContainerView)
@@ -91,10 +91,9 @@ final class SettingsAccountViewController: UIViewController {
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)   
+        super.viewWillAppear(animated)
         tableView.reloadData()
     }
-    
 }

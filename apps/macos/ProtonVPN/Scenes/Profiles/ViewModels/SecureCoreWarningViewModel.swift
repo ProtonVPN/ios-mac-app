@@ -20,13 +20,12 @@ import Foundation
 
 import Dependencies
 
+import CommonNetworking
 import LegacyCommon
 import VPNAppCore
-import CommonNetworking
 
 final class SecureCoreWarningViewModel {
-    @Dependency(\.sessionService)
-    var sessionService: SessionService
+    @Dependency(\.sessionService) var sessionService: SessionService
     @Dependency(\.linkOpener) var linkOpener
 
     func upgradeButtonPressed() async {

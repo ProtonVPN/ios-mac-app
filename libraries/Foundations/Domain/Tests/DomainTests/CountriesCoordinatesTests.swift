@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Domain
+import XCTest
 
 final class CountriesCoordinatesTests: XCTestCase {
-
     func testCenterCoordinates() {
         XCTAssertEqual(CountriesCoordinates.centerCoordinates.count, 244)
         for country in CountriesCoordinates.centerCoordinates {

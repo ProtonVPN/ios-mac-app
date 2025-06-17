@@ -25,46 +25,50 @@ import LegacyCommon
 import Strings
 
 class HelpPopoverViewController: NSViewController {
-
     private let viewModel: HelpPopoverViewModel
-    
-    @IBOutlet private weak var resetButton: InteractiveActionButton!
-    @IBOutlet private weak var forgotButton: InteractiveActionButton!
-    @IBOutlet private weak var commonIssuesButton: InteractiveActionButton!
-    @IBOutlet private weak var reportBugButton: InteractiveActionButton!
-    
+
+    @IBOutlet private var resetButton: InteractiveActionButton!
+    @IBOutlet private var forgotButton: InteractiveActionButton!
+    @IBOutlet private var commonIssuesButton: InteractiveActionButton!
+    @IBOutlet private var reportBugButton: InteractiveActionButton!
+
     required init(viewModel: HelpPopoverViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(nibName: NSNib.Name("HelpPopover"), bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         resetButton.title = Localizable.resetPassword
         forgotButton.title = Localizable.forgotUsername
         commonIssuesButton.title = Localizable.commonIssues
         reportBugButton.title = Localizable.reportBug
     }
-    
-    @IBAction func resetAction(_ sender: Any) {
+
+    @IBAction
+    func resetAction(_: Any) {
         viewModel.resetAction()
     }
 
-    @IBAction func forgotAction(_ sender: Any) {
+    @IBAction
+    func forgotAction(_: Any) {
         viewModel.forgotAction()
     }
 
-    @IBAction func commonIssuesAction(_ sender: Any) {
+    @IBAction
+    func commonIssuesAction(_: Any) {
         viewModel.commonIssuesAction()
     }
 
-    @IBAction func reportBugAction(_ sender: Any) {
+    @IBAction
+    func reportBugAction(_: Any) {
         viewModel.reportBugAction()
     }
 }

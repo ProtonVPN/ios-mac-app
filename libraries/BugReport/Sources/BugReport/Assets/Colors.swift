@@ -20,7 +20,6 @@ import SwiftUI
 
 /// All the colors used through this module. Colors.testColors is for testing purposes only. Apps should provide their own set of colors.
 public struct Colors {
-
     public init(primary: Color, interactive: Color, interactiveSecondary: Color, interactiveActive: Color, interactiveDisabled: Color, textPrimary: Color, textSecondary: Color, textAccent: Color, background: Color, backgroundWeak: Color, backgroundStrong: Color?, backgroundUpdateButton: Color, separator: Color, qfIcon: Color, externalLinkIcon: Color) {
         self.primary = primary
         self.interactive = interactive
@@ -76,7 +75,6 @@ public struct Colors {
         qfIcon: Color(rgbValue: 0xFAC530),
         externalLinkIcon: Color(rgbValue: 0x999592)
     )
-
 }
 
 struct ColorsEnvironmentKey: EnvironmentKey {
@@ -90,11 +88,12 @@ extension EnvironmentValues {
     }
 }
 
-fileprivate extension Color {
+private extension Color {
     init(rgbValue: UInt) {
-        self.init(red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
-                  green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
-                  blue: CGFloat(rgbValue & 0x0000FF) / 255.0
+        self.init(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0
         )
     }
 }

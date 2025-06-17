@@ -35,37 +35,37 @@ public struct ForkSessionRequest: Request {
     }
 
     public var nonDefaultTimeout: TimeInterval? {
-        return timeout
+        timeout
     }
 
     public var path: String {
-        return "/auth/v4/sessions/forks"
+        "/auth/v4/sessions/forks"
     }
 
     public var method: HTTPMethod {
         switch useCase {
         case .getSelector:
-            return .post
+            .post
         case .getUserCode:
-            return .get
+            .get
         }
     }
 
     public var parameters: [String: Any]? {
         switch useCase {
-        case .getSelector(let clientId, let independent):
-            return [
+        case let .getSelector(clientId, independent):
+            [
                 "ChildClientID": clientId,
                 "Independent": independent ? 1 : 0,
             ]
         case .getUserCode:
-            return nil
+            nil
         }
     }
 
     #if canImport(Alamofire)
-    public var retryPolicy: ProtonRetryPolicy.RetryMode {
-        .background
-    }
+        public var retryPolicy: ProtonRetryPolicy.RetryMode {
+            .background
+        }
     #endif
 }

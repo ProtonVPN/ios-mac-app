@@ -21,14 +21,13 @@ import ComposableArchitecture
 import SwiftUI
 
 import Domain
+import Ergonomics
+import Localization
 import NetShield
 import VPNAppCore
-import Localization
-import Ergonomics
 
 @Reducer
 public struct ConnectionStatusFeature {
-
     @ObservableState
     public struct State: Equatable {
         @Shared(.protectionState) package var protectionState: ProtectionState
@@ -65,7 +64,7 @@ public struct ConnectionStatusFeature {
         case connectionStatusBanner(ConnectionStatusBannerFeature.Action)
     }
 
-    public init() { }
+    public init() {}
 
     private static let maskTickTimerDuration: Duration = .milliseconds(50)
     private static let statusDebounceIntervalInMilliseconds: Int = 50
@@ -90,7 +89,7 @@ public struct ConnectionStatusFeature {
             switch action {
             case .startLocationMasking:
                 return .run { send in
-                    for await _ in self.clock.timer(interval: Self.maskTickTimerDuration) {
+                    for await _ in clock.timer(interval: Self.maskTickTimerDuration) {
                         await send(.maskLocationTick)
                     }
                 }
@@ -120,7 +119,7 @@ public struct ConnectionStatusFeature {
                                 .receive(on: UIScheduler.shared)
                                 .map(Action.newConnectionStatus)
                         }.cancellable(id: IDs.watchConnectionStatus)
-                    )
+                    ),
                 ]
                 if !state.isUsingConnectionPackage {
                     effects.append(
@@ -135,7 +134,7 @@ public struct ConnectionStatusFeature {
                 }
                 return .merge(effects)
 
-            case .newConnectionStatus(let status):
+            case let .newConnectionStatus(status):
                 let code = state.userCountry
                 let country = LocalizationUtility.default.countryName(forCode: code ?? "") ?? ""
                 let userIP = state.userIP ?? ""
@@ -144,7 +143,7 @@ public struct ConnectionStatusFeature {
                 let protectionState = status.protectionState(country: country, ip: userIP, netShieldModel: netShieldModel)
                 return .send(.newProtectionState(protectionState))
 
-            case .newProtectionState(let protectionState):
+            case let .newProtectionState(protectionState):
                 // let's check that we're not already masking location twice with same data
                 // THIS is a workaround... proper solution should make sure we're no receiving twice the same action
                 // with same data ?!
@@ -166,13 +165,13 @@ public struct ConnectionStatusFeature {
                     return .cancel(id: IDs.maskLocationTimer)
                 }
 
-            case .newNetShieldStats(let netShieldModel):
+            case let .newNetShieldStats(netShieldModel):
                 withOptionalAnimation {
                     state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
                 }
                 return .none
 
-            case .stickToTop(let stickToTop):
+            case let .stickToTop(stickToTop):
                 return .none // Revisit sticking to top when possible to fix this issue VPNAPPL-2539
                 guard state.stickToTop != stickToTop else { return .none }
                 state.stickToTop = stickToTop
@@ -205,7 +204,7 @@ public struct ConnectionStatusFeature {
     }
 }
 
-fileprivate extension ProtectionState {
+private extension ProtectionState {
     var shouldAnimateChange: Bool {
         if case .protected = self {
             return true

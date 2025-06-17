@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Dependencies
 import ExtensionIPC
+import XCTest
 
 @testable import ExtensionManager
 
@@ -30,7 +30,8 @@ final class MessageSendingTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
+    @MainActor
+    func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -51,7 +52,7 @@ final class MessageSendingTests: XCTestCase {
             let task = Task { try await connection.send(.refreshCertificate(features: nil)) }
 
             var delays = 0
-            for _ in 1...4 {
+            for _ in 1 ... 4 {
                 // We've made our send instant, and the delay is 1 second between retries
                 await clock.advance(by: .seconds(1))
                 delays += 1
@@ -61,7 +62,7 @@ final class MessageSendingTests: XCTestCase {
             await fulfillment(of: [messageSent], timeout: 0)
 
             let result = await task.result
-            guard case .failure(let error) = result else {
+            guard case let .failure(error) = result else {
                 XCTFail("Expected task to fail, but got \(result)")
                 return
             }
@@ -73,7 +74,8 @@ final class MessageSendingTests: XCTestCase {
     }
 
     /// Verifies the implementation of `send(WireguardProviderMessage:)` is cancelled properly
-    @MainActor func testCancellingTaskPreventsRetries() async throws {
+    @MainActor
+    func testCancellingTaskPreventsRetries() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -117,7 +119,7 @@ final class MessageSendingTests: XCTestCase {
             await clock.advance(by: .seconds(1))
 
             let result = await task.result
-            guard case .failure(let error) = result else {
+            guard case let .failure(error) = result else {
                 XCTFail("Expected task to fail, but got \(result)")
                 return
             }

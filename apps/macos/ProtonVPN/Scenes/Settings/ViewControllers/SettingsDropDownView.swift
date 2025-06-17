@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Cocoa
 import AppKit
+import Cocoa
+import Foundation
 import Theme
 
 class SettingsDropDownView: NSView {
-
     struct ViewModel {
         let labelText: String
         let toolTip: String?
@@ -33,11 +32,11 @@ class SettingsDropDownView: NSView {
 
     private var model: ViewModel?
 
-    @IBOutlet private weak var label: PVPNTextField!
-    @IBOutlet private weak var separator: NSBox!
-    @IBOutlet private weak var infoIcon: NSImageView!
-    @IBOutlet private weak var popupButton: HoverDetectionPopUpButton!
-    @IBOutlet private weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet private var label: PVPNTextField!
+    @IBOutlet private var separator: NSBox!
+    @IBOutlet private var infoIcon: NSImageView!
+    @IBOutlet private var popupButton: HoverDetectionPopUpButton!
+    @IBOutlet private var progressIndicator: NSProgressIndicator!
 
     override func accessibilityRole() -> NSAccessibility.Role? {
         .popUpButton
@@ -79,7 +78,7 @@ class SettingsDropDownView: NSView {
         infoIcon.image = model.toolTip != nil ? SettingsTickboxView.infoIcon : nil
         infoIcon.toolTip = model.toolTip
         separator.fillColor = .color(.border, .weak)
-        
+
         popupButton.isBordered = false
         popupButton.target = target
         popupButton.action = action

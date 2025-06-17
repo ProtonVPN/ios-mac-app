@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import SnapshotTesting
 import ComposableArchitecture
-@testable import tvOS
-import SwiftUI
 @testable import Connection
 import Domain
+import DomainTestSupport
 import struct Ergonomics.GenericError
 @testable import ExtensionManager
 @testable import LocalAgent
 import PersistenceTestSupport
-import DomainTestSupport
+import SnapshotTesting
+import SwiftUI
+@testable import tvOS
+import XCTest
 
 final class MainFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightMainLoading() {
@@ -52,8 +52,10 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         } withDependencies: {
             $0.userLocationService = UserLocationServiceMock()
             $0.serverRepository = .empty()
-            $0.logicalsRefresher = .init(refreshLogicals: { throw "" as GenericError },
-                                         shouldRefreshLogicals: { true })
+            $0.logicalsRefresher = .init(
+                refreshLogicals: { throw "" as GenericError },
+                shouldRefreshLogicals: { true }
+            )
             $0.tunnelManager = MockTunnelManager()
             $0.localAgent = LocalAgentMock(state: .disconnected)
             $0.continuousClock = TestClock()
@@ -82,12 +84,12 @@ final class MainFeatureSnapshotTests: TVSnapshotTestCase {
         let mainView = MainView(store: store)
             .frame(.rect(width: 1920, height: 1080))
             .background(Color(.background, .strong))
-        
+
         store.send(.connection(.input(.onLaunch)))
         store.send(.observeConnectionState)
 
         @Shared(.connectionState) var connectionState: ConnectionState
-        
+
         $connectionState.withLock { $0 = .disconnected }
         snap(mainView, caseName: "1 Disconnected", trait: trait)
 

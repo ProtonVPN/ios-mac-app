@@ -25,91 +25,96 @@ import LegacyCommon
 import Strings
 
 class ProtonVpnMenuController: NSObject {
-    
-    @IBOutlet weak var aboutItem: NSMenuItem!
-    @IBOutlet weak var checkForUpdatesItem: NSMenuItem!
-    @IBOutlet weak var preferencesItem: NSMenuItem!
-    @IBOutlet weak var hideProtonItem: NSMenuItem!
-    @IBOutlet weak var hideOthersItem: NSMenuItem!
-    @IBOutlet weak var showAllItem: NSMenuItem!
-    @IBOutlet weak var logOutItem: NSMenuItem!
-    @IBOutlet weak var quitItem: NSMenuItem!
-    
+    @IBOutlet var aboutItem: NSMenuItem!
+    @IBOutlet var checkForUpdatesItem: NSMenuItem!
+    @IBOutlet var preferencesItem: NSMenuItem!
+    @IBOutlet var hideProtonItem: NSMenuItem!
+    @IBOutlet var hideOthersItem: NSMenuItem!
+    @IBOutlet var showAllItem: NSMenuItem!
+    @IBOutlet var logOutItem: NSMenuItem!
+    @IBOutlet var quitItem: NSMenuItem!
+
     private var viewModel: ProtonVpnMenuViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupPersistentView()
     }
-    
+
     func update(with viewModel: ProtonVpnMenuViewModel) {
         self.viewModel = viewModel
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
-    
+
     // MARK: - Private functions
+
     private func setupPersistentView() {
-        
         aboutItem.title = Localizable.menuAbout
         aboutItem.isEnabled = true
         aboutItem.target = self
         aboutItem.action = #selector(aboutItemAction)
-        
+
         checkForUpdatesItem.title = Localizable.menuCheckUpdates
         checkForUpdatesItem.isEnabled = true
         checkForUpdatesItem.target = self
         checkForUpdatesItem.action = #selector(checkForUpdatesAction)
-        
+
         preferencesItem.title = Localizable.menuPreferences
         preferencesItem.isEnabled = false
         preferencesItem.target = self
         preferencesItem.action = #selector(preferencesItemAction)
-        
+
         logOutItem.title = Localizable.menuLogout
         logOutItem.isEnabled = false
         logOutItem.target = self
         logOutItem.action = #selector(logOutItemAction)
-        
+
         showAllItem.title = Localizable.menuShowAll
         showAllItem.isEnabled = true
         showAllItem.target = self
         showAllItem.action = #selector(showAllItemAction)
-        
+
         quitItem.title = Localizable.menuQuit
         quitItem.isEnabled = true
         quitItem.target = self
         quitItem.action = #selector(quitItemAction)
-        
+
         hideProtonItem.title = Localizable.menuHideSelf
         hideOthersItem.title = Localizable.menuHideOthers
     }
-    
+
     private func setupEphemeralView() {
         preferencesItem.isEnabled = viewModel.isPreferencesEnabled
         logOutItem.isEnabled = viewModel.isLogOutEnabled
     }
-    
-    @objc private func aboutItemAction() {
+
+    @objc
+    private func aboutItemAction() {
         viewModel.openAboutAction()
     }
-    
-    @objc private func checkForUpdatesAction() {
+
+    @objc
+    private func checkForUpdatesAction() {
         viewModel.checkForUpdatesAction()
     }
-    
-    @objc private func preferencesItemAction() {
+
+    @objc
+    private func preferencesItemAction() {
         viewModel.openPreferencesAction()
     }
-    
-    @objc private func logOutItemAction() {
+
+    @objc
+    private func logOutItemAction() {
         viewModel.logOutAction()
     }
-    
-    @objc private func showAllItemAction() {
+
+    @objc
+    private func showAllItemAction() {
         viewModel.showAllAction()
     }
-    
-    @objc private func quitItemAction() {
+
+    @objc
+    private func quitItemAction() {
         viewModel.quitAction()
     }
 }

@@ -1,5 +1,5 @@
 //
-//  QuitActionButton.swift
+//  QuitApplicationButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,23 +22,22 @@
 
 import Cocoa
 import LegacyCommon
-import Theme
 import Strings
+import Theme
 
 class QuitApplicationButton: HoverDetectionButton {
- 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
         configureView()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         configureView()
     }
-    
+
     private func configureView() {
         let style: AppTheme.Style = isHovered ? [.danger, .hovered] : .weak
         let show = (" " + Localizable.quit).styled(style)

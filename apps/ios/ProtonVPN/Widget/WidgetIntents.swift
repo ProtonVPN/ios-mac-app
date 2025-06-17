@@ -16,40 +16,39 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-import Ergonomics
-import VPNAppCore
 import AppIntents
-import Domain
-import UIKit
-import Connection
-import ComposableArchitecture
 import AsyncAlgorithms
+import ComposableArchitecture
+import Connection
+import Dependencies
+import Domain
+import Ergonomics
+import UIKit
+import VPNAppCore
 
-internal struct DisconnectFromVPNIntent: AppIntent {
+struct DisconnectFromVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Disconnect from VPN"
 
     static var openAppWhenRun = false
 
     func perform() async throws -> some IntentResult {
-
         @Dependencies.Dependency(\.disconnectVPN) var disconnectVPN
         try? await disconnectVPN(.widget)
         return .result()
     }
 }
 
-internal struct ConnectToVPNIntent: AppIntent {
-
+struct ConnectToVPNIntent: AppIntent {
     static var title: LocalizedStringResource = "Connect to VPN"
     static var openAppWhenRun = true
 
     private static let timeOut = 20 // 20 Seconds
 
-    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+    @Parameter(title: "Recent Connection Index")
+    var recentIndex: Int?
 
     init() {
-        recentIndex = nil
+        self.recentIndex = nil
     }
 
     init(recentIndex: Int) {
@@ -85,12 +84,12 @@ internal struct ConnectToVPNIntent: AppIntent {
         // Wait until the connection state either goes into .connected or .disconnecting.
         try? await $connectionState.when(willMatch: { state in
             switch state {
-            case .connected(let intent, _, _, _):
-                return intent.spec == spec
-            case .disconnecting(let intent, _):
-                return intent.spec == spec
+            case let .connected(intent, _, _, _):
+                intent.spec == spec
+            case let .disconnecting(intent, _):
+                intent.spec == spec
             default:
-                return false
+                false
             }
         }, every: .milliseconds(20), deadline: .seconds(Self.timeOut), operation: { state in
             if case .connected = state {
@@ -110,7 +109,6 @@ internal struct ConnectToVPNIntent: AppIntent {
     @Dependencies.Dependency(\.defaultConnectionStorage) private var defaultConnectionStorage
 
     private func getRecentConnection(_ index: Int) -> ConnectionSpec? {
-
         @Dependencies.Dependency(\.connectionInventory) var connectionInventory
 
         return connectionInventory.recentConnectionList(
@@ -128,26 +126,26 @@ internal struct ConnectToVPNIntent: AppIntent {
         case .mostRecent:
             let recents = recentsStorage.readFromStorage()
             return recents.elements.first?.connection ?? .defaultFastest
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }
 }
 
-internal struct LoginIntent: AppIntent {
+struct LoginIntent: AppIntent {
     static var title: LocalizedStringResource = "Login"
     static let openAppWhenRun = true
 
     func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 
 // MARK: - Private helpers
 
-fileprivate struct SharedReaderTimeoutError: Error {}
+private struct SharedReaderTimeoutError: Error {}
 
-extension SharedReader {
+private extension SharedReader {
     /// Regularly checks when the underlying value satisfies the provided matching condition.
     /// When the value matches (i.e. the matcher returns true), the `operation` closure is executed once with the matched value, and the function returns.
     /// If the deadline passes, the function throws a timeout error.
@@ -157,7 +155,7 @@ extension SharedReader {
     ///   - clock: The clock on which we base time calculations.
     ///   - deadlineDuration: The deadline after which the check times out.
     ///   - operation: The operation to perform when a match occurs, receiving the matched value.
-    fileprivate func when<C: Clock>(
+    func when<C: Clock>(
         willMatch matcher: @escaping (Value) -> Bool,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),

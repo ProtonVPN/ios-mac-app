@@ -22,15 +22,14 @@ import ComposableArchitecture
 
 import ProtonCoreUIFoundations
 
-import Domain
-import Strings
 import ConnectionDetailsShared
+import Domain
 import Persistence
 import SharedViews
+import Strings
 import VPNAppCore
 
 public struct ConnectionScreenView: View {
-
     let store: StoreOf<ConnectionScreenFeature>
 
     private enum AccessibilityIdentifiers {
@@ -48,11 +47,13 @@ public struct ConnectionScreenView: View {
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
                 if let spec = store.vpnConnectionStatus.spec {
-                    ConnectionFlagInfoView(intent: spec,
-                                           isPinned: false,
-                                           server: store.vpnConnectionStatus.server,
-                                           isConnected: false,
-                                           images: .coreImages)
+                    ConnectionFlagInfoView(
+                        intent: spec,
+                        isPinned: false,
+                        server: store.vpnConnectionStatus.server,
+                        isConnected: false,
+                        images: .coreImages
+                    )
                     .accessibilityIdentifier(
                         AccessibilityIdentifiers.connectionScreenInfo
                     )
@@ -80,8 +81,10 @@ public struct ConnectionScreenView: View {
                     WithPerceptionTracking {
                         IPView(store: store.scope(state: \.ipViewState, action: \.ipViewAction))
 
-                        ConnectionDetailsView(store: store.scope(state: \.connectionDetailsState,
-                                                                 action: \.connectionDetailsAction))
+                        ConnectionDetailsView(store: store.scope(
+                            state: \.connectionDetailsState,
+                            action: \.connectionDetailsAction
+                        ))
 
                         if !store.connectionFeatures.isEmpty || store.isSecureCore {
                             Text(Localizable.connectionDetailsFeaturesTitle)
@@ -89,7 +92,7 @@ public struct ConnectionScreenView: View {
                                 .foregroundColor(Color(.text, .weak))
                                 .padding(.top, .themeSpacing24)
                                 .padding(.bottom, .themeSpacing8)
-                            
+
                             if store.isSecureCore {
                                 FeatureInfoView(secureCore: true)
                                     .padding(.bottom, .themeRadius8)
@@ -101,7 +104,6 @@ public struct ConnectionScreenView: View {
                             .padding(.bottom, .themeRadius8)
                         }
                     }
-
                 }
                 .padding(.horizontal, .themeSpacing16)
             }
@@ -114,34 +116,34 @@ public struct ConnectionScreenView: View {
 // MARK: - Previews
 
 #if DEBUG
-#Preview {
-    let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
-    let actual = VPNConnectionActual.mock(
-        connectedDate: .now,
-        serverModelId: "server-id",
-        serverExitIP: "102.107.197.6",
-        vpnProtocol: .wireGuard(.udp),
-        natType: .moderateNAT,
-        safeMode: false,
-        feature: .p2p,
-        serverName: "SER#123",
-        country: "US",
-        entryCountry: nil,
-        city: "City",
-        coordinates: .mockPoland()
-    )
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
-    $vpnConnectionStatus.withLock { $0 = .connected(spec, actual) }
+    #Preview {
+        let spec = ConnectionSpec(location: .secureCore(.hop(to: "US", via: "CH")), features: [])
+        let actual = VPNConnectionActual.mock(
+            connectedDate: .now,
+            serverModelId: "server-id",
+            serverExitIP: "102.107.197.6",
+            vpnProtocol: .wireGuard(.udp),
+            natType: .moderateNAT,
+            safeMode: false,
+            feature: .p2p,
+            serverName: "SER#123",
+            country: "US",
+            entryCountry: nil,
+            city: "City",
+            coordinates: .mockPoland()
+        )
+        @Shared(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
+        $vpnConnectionStatus.withLock { $0 = .connected(spec, actual) }
 
-    @Shared(.userIP) var userIP: String?
-    $userIP.withLock { $0 = "127.0.0.1" }
+        @Shared(.userIP) var userIP: String?
+        $userIP.withLock { $0 = "127.0.0.1" }
 
-    let store: StoreOf<ConnectionScreenFeature> = .init(
-        initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState(),
-        reducer: { ConnectionScreenFeature() }
-    )
-    return ConnectionScreenView(store: store)
-        .background(Color(.background, .strong))
-        .preferredColorScheme(.dark)
-}
+        let store: StoreOf<ConnectionScreenFeature> = .init(
+            initialState: vpnConnectionStatus.actual!.connectionScreenFeatureState(),
+            reducer: { ConnectionScreenFeature() }
+        )
+        return ConnectionScreenView(store: store)
+            .background(Color(.background, .strong))
+            .preferredColorScheme(.dark)
+    }
 #endif

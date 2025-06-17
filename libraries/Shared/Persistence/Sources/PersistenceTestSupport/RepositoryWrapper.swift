@@ -26,7 +26,6 @@ import Persistence
 /// Historically, a `MockServerRepository` partially implemented the set of features that the real thing provides, but
 /// it was dropped in favour of using a wrapper around the real implementation, which provides the necessary callbacks.
 public final class ServerRepositoryWrapper {
-
     public var didStoreServers: (([VPNServer]) -> Void)?
     public var didUpdateLoads: (([VPNServer]) -> Void)?
 
@@ -53,7 +52,7 @@ public final class ServerRepositoryWrapper {
     }
 
     public func deleteServers(withIDsNotIn ids: Set<String>, maxTier: Int) -> Int {
-        return repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
+        repository.delete(serversWithIDsNotIn: ids, maxTier: maxTier)
     }
 
     public func upsert(loads: [ContinuousServerProperties]) {
@@ -72,7 +71,7 @@ public final class ServerRepositoryWrapper {
     }
 }
 
-extension ServerRepository {
+public extension ServerRepository {
     /// Returns a `ServerRepository` which itself wraps a `ServerRepositoryWrapper`. This allows integration tests to
     /// use real SQL based repository functions, while exposing callbacks such as `didStoreServers`.
     ///
@@ -80,8 +79,8 @@ extension ServerRepository {
     /// such as whenever servers are inserted.
     ///
     /// Unit tests should instead construct a minimal mock repository.
-    public static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
-        return .init(
+    static func wrapped(wrappedWith wrapper: ServerRepositoryWrapper) -> Self {
+        .init(
             serverCount: { wrapper.serverCount },
             countryCount: { wrapper.countryCount },
             upsertServers: wrapper.upsert,

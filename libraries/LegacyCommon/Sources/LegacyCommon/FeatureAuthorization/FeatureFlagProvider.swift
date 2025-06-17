@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public struct FeatureFlagProvider: DependencyKey {
     var getFeatureFlags: () -> FeatureFlags
     var setFeatureFlags: (FeatureFlags) -> Void
 
-    public static var liveValue: FeatureFlagProvider = FeatureFlagProvider(
+    public static var liveValue: FeatureFlagProvider = .init(
         getFeatureFlags: {
             @Dependency(\.propertiesManager) var propertiesManager
             return propertiesManager.featureFlags
@@ -35,25 +35,25 @@ public struct FeatureFlagProvider: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
+        public static var testValue: FeatureFlagProvider = .constant(flags: .allEnabled)
 
-    public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
-        return FeatureFlagProvider(
-            getFeatureFlags: { flags },
-            setFeatureFlags: { _ in }
-        )
-    }
+        public static func constant(flags: FeatureFlags) -> FeatureFlagProvider {
+            FeatureFlagProvider(
+                getFeatureFlags: { flags },
+                setFeatureFlags: { _ in }
+            )
+        }
     #endif
 }
 
-extension FeatureFlagProvider {
-    public subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
+public extension FeatureFlagProvider {
+    subscript(_ keyPath: KeyPath<FeatureFlags, Bool>) -> Bool {
         getFeatureFlags()[keyPath: keyPath]
     }
 }
 
-extension DependencyValues {
-    public var featureFlagProvider: FeatureFlagProvider {
+public extension DependencyValues {
+    var featureFlagProvider: FeatureFlagProvider {
         get { self[FeatureFlagProvider.self] }
         set { self[FeatureFlagProvider.self] = newValue }
     }

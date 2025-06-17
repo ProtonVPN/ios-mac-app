@@ -19,16 +19,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworkingTestSupport
 @testable import LegacyCommon
-import XCTest
 import Localization
 import TimerMock
-import VPNSharedTesting
 import VPNAppCore
-import CommonNetworkingTestSupport
+import VPNSharedTesting
+import XCTest
 
 class StateAlertTests: XCTestCase {
-
     let vpnConfig = VpnManagerConfiguration(
         id: UUID(),
         hostname: "",
@@ -52,13 +51,13 @@ class StateAlertTests: XCTestCase {
     )
     let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
-    
+
     var vpnManager: VpnManagerMock!
     var alertService: CoreAlertServiceDummy!
     var timerFactory: TimerFactoryMock!
     var propertiesManager: PropertiesManagerProtocol!
     var appStateManager: AppStateManager!
-    
+
     override func setUp() {
         super.setUp()
         vpnManager = VpnManagerMock()
@@ -89,25 +88,25 @@ class StateAlertTests: XCTestCase {
 
     func testDisconnectingAlertFirtTimeConnecting() {
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.count == 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
-    
+
     func testDisconnectingAlertPreviouslyConnected() {
         vpnManager.state = .disconnecting(ServerDescriptor(username: "", address: ""))
-        
+
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.isEmpty)
 
-        let timeouts = (1...2).map { XCTestExpectation(description: "connection timeout \($0)") }
+        let timeouts = (1 ... 2).map { XCTestExpectation(description: "connection timeout \($0)") }
         timerFactory.runRepeatingTimers {
             timeouts[0].fulfill()
         }
@@ -122,39 +121,43 @@ class StateAlertTests: XCTestCase {
         XCTAssertEqual(alertService.alerts.count, 1)
         XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
-    
+
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
         appStateManager.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: .connectionConfig)
-        
+
         XCTAssertTrue(alertService.alerts.isEmpty)
     }
 }
 
 extension ConnectionConfiguration {
     static var connectionConfig: ConnectionConfiguration {
-        let server = ServerModel(id: "",
-                                 name: "",
-                                 domain: "",
-                                 load: 0,
-                                 entryCountryCode: "",
-                                 exitCountryCode: "",
-                                 tier: 1,
-                                 feature: .zero,
-                                 city: nil,
-                                 ips: [ServerIp](),
-                                 score: 0.0,
-                                 status: 0,
-                                 location: ServerLocation(lat: 0, long: 0),
-                                 hostCountry: nil,
-                                 translatedCity: nil,
-                                 gatewayName: nil)
-        let serverIp = ServerIp(id: "",
-                                entryIp: "",
-                                exitIp: "",
-                                domain: "",
-                                status: 0)
+        let server = ServerModel(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "",
+            exitCountryCode: "",
+            tier: 1,
+            feature: .zero,
+            city: nil,
+            ips: [ServerIp](),
+            score: 0.0,
+            status: 0,
+            location: ServerLocation(lat: 0, long: 0),
+            hostCountry: nil,
+            translatedCity: nil,
+            gatewayName: nil
+        )
+        let serverIp = ServerIp(
+            id: "",
+            entryIp: "",
+            exitIp: "",
+            domain: "",
+            status: 0
+        )
         return ConnectionConfiguration(
             id: UUID(),
             server: server,
@@ -169,27 +172,31 @@ extension ConnectionConfiguration {
     }
 
     static var connectionConfig2: ConnectionConfiguration {
-        let server = ServerModel(id: "",
-                                 name: "",
-                                 domain: "",
-                                 load: 0,
-                                 entryCountryCode: "CZ",
-                                 exitCountryCode: "PL",
-                                 tier: 1,
-                                 feature: .zero,
-                                 city: nil,
-                                 ips: [ServerIp](),
-                                 score: 0.0,
-                                 status: 0,
-                                 location: ServerLocation(lat: 0, long: 0),
-                                 hostCountry: nil,
-                                 translatedCity: nil,
-                                 gatewayName: nil)
-        let serverIp = ServerIp(id: "",
-                                entryIp: "",
-                                exitIp: "",
-                                domain: "",
-                                status: 0)
+        let server = ServerModel(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "CZ",
+            exitCountryCode: "PL",
+            tier: 1,
+            feature: .zero,
+            city: nil,
+            ips: [ServerIp](),
+            score: 0.0,
+            status: 0,
+            location: ServerLocation(lat: 0, long: 0),
+            hostCountry: nil,
+            translatedCity: nil,
+            gatewayName: nil
+        )
+        let serverIp = ServerIp(
+            id: "",
+            entryIp: "",
+            exitIp: "",
+            domain: "",
+            status: 0
+        )
         return ConnectionConfiguration(
             id: UUID(),
             server: server,

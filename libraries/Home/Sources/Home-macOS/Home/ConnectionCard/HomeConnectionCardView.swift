@@ -24,10 +24,10 @@ import Dependencies
 
 import Domain
 import HomeShared
-import Theme
-import Strings
-import VPNAppCore
 import SharedViews
+import Strings
+import Theme
+import VPNAppCore
 
 import ProtonCoreUIFoundations
 
@@ -42,8 +42,10 @@ struct HomeConnectionCardView: View {
 
     var accessibilityText: String {
         let countryName = item.connection.location.text(locale: locale)
-        return model.accessibilityText(for: vpnConnectionStatus,
-                                       countryName: countryName)
+        return model.accessibilityText(
+            for: vpnConnectionStatus,
+            countryName: countryName
+        )
     }
 
     var header: some View {
@@ -69,7 +71,7 @@ struct HomeConnectionCardView: View {
     var connectionLocation: some View {
         HStack(spacing: .themeSpacing12) {
             VStack(spacing: 0) {
-                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil, withDivider: false) // todo: fill in vpnConnectionActual
+                ConnectionFlagInfoView(intent: item.connection, vpnConnectionActual: nil, withDivider: false) // TODO: fill in vpnConnectionActual
                 Spacer().frame(maxHeight: .infinity)
             }
             Spacer(minLength: 0)
@@ -85,9 +87,9 @@ struct HomeConnectionCardView: View {
     var showConnectionDetailsEnabled: Bool {
         switch vpnConnectionStatus {
         case .connected:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 
@@ -123,8 +125,10 @@ struct HomeConnectionCardView: View {
         }
         .padding(.themeSpacing8)
         .background(Color(.background, .weak))
-        .themeBorder(style: [],
-                     cornerRadius: .radius12)
+        .themeBorder(
+            style: [],
+            cornerRadius: .radius12
+        )
     }
 
     public var body: some View {
@@ -153,6 +157,7 @@ struct ConnectionCard_Previews: PreviewProvider {
             sendAction: { _ = store.send($0) }
         )
     }
+
     static var previews: some View {
         let storeConnected: StoreOf<HomeFeature> = .init(initialState: .connected, reducer: { HomeFeature() })
         let storeConnecting: StoreOf<HomeFeature> = .init(initialState: .connecting, reducer: { HomeFeature() })
@@ -176,144 +181,176 @@ struct ConnectionCard_Previews: PreviewProvider {
 
 private extension HomeFeature.State {
     static var connected: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .chrząszczyrzewoszczyce
-            )
-        ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .chrząszczyrzewoszczyce
+                ),
+            ],
+            connectionStatus: .protected(),
+            vpnConnectionStatus: .connected
+        )
     }
 
     static var connecting: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .dibba
-            )
-        ],
-              connectionStatus: .protecting(),
-              vpnConnectionStatus: .connecting)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .dibba
+                ),
+            ],
+            connectionStatus: .protecting(),
+            vpnConnectionStatus: .connecting
+        )
     }
 
     static var disconnected: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .fastest
-            )
-        ],
-              connectionStatus: .unprotected(),
-              vpnConnectionStatus: .disconnected)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .fastest
+                ),
+            ],
+            connectionStatus: .unprotected(),
+            vpnConnectionStatus: .disconnected
+        )
     }
 
     static var loadingConnectionInfo: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .region
-            )
-        ],
-              connectionStatus: .protecting(),
-              vpnConnectionStatus: .loadingConnectionInfo)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .region
+                ),
+            ],
+            connectionStatus: .protecting(),
+            vpnConnectionStatus: .loadingConnectionInfo
+        )
     }
 
     static var secureCoreFastest: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .secureCoreFastest
-            )
-        ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .secureCoreFastest
+                ),
+            ],
+            connectionStatus: .protected(),
+            vpnConnectionStatus: .connected
+        )
     }
 
     static var secureCoreFastestHop: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .secureCoreFastestHop
-            )
-        ],
-              connectionStatus: .unprotected(),
-              vpnConnectionStatus: .disconnected)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .secureCoreFastestHop
+                ),
+            ],
+            connectionStatus: .unprotected(),
+            vpnConnectionStatus: .disconnected
+        )
     }
 
     static var secureCoreHopToVia: Self {
-        .init(connections: [
-            .init(
-                pinnedDate: nil,
-                underMaintenance: false,
-                connectionDate: Date(),
-                connection: .secureCoreHopToVia
-            )
-        ],
-              connectionStatus: .protected(),
-              vpnConnectionStatus: .connected)
+        .init(
+            connections: [
+                .init(
+                    pinnedDate: nil,
+                    underMaintenance: false,
+                    connectionDate: Date(),
+                    connection: .secureCoreHopToVia
+                ),
+            ],
+            connectionStatus: .protected(),
+            vpnConnectionStatus: .connected
+        )
     }
 }
 
 private extension ConnectionSpec {
     static var chrząszczyrzewoszczyce: Self {
-        .init(location: .exact(.paid,
-                               logicalID: nil,
-                               number: 42,
-                               subregion: "Chrząszczyrzewoszczyce",
-                               regionCode: "PL"),
-              features: [.p2p])
+        .init(
+            location: .exact(
+                .paid,
+                logicalID: nil,
+                number: 42,
+                subregion: "Chrząszczyrzewoszczyce",
+                regionCode: "PL"
+            ),
+            features: [.p2p]
+        )
     }
 
     static var dibba: Self {
-        .init(location: .exact(.paid,
-                               logicalID: nil,
-                               number: 42,
-                               subregion: "Dibba Al-Fujairah",
-                               regionCode: "AE"),
-              features: [.smart])
+        .init(
+            location: .exact(
+                .paid,
+                logicalID: nil,
+                number: 42,
+                subregion: "Dibba Al-Fujairah",
+                regionCode: "AE"
+            ),
+            features: [.smart]
+        )
     }
 
     static var region: Self {
-        .init(location: .region(code: "PL"),
-              features: [.streaming])
+        .init(
+            location: .region(code: "PL"),
+            features: [.streaming]
+        )
     }
 
     static var fastest: Self {
-        .init(location: .fastest,
-              features: [.tor])
+        .init(
+            location: .fastest,
+            features: [.tor]
+        )
     }
 
     static var secureCoreFastest: Self {
-        .init(location: .secureCore(.fastest),
-              features: [.partner(name: "DW")])
+        .init(
+            location: .secureCore(.fastest),
+            features: [.partner(name: "DW")]
+        )
     }
 
     static var secureCoreFastestHop: Self {
-        .init(location: .secureCore(.fastestHop(to: "PL")),
-              features: [])
+        .init(
+            location: .secureCore(.fastestHop(to: "PL")),
+            features: []
+        )
     }
 
     static var secureCoreHopToVia: Self {
-        .init(location: .secureCore(.hop(to: "AE", via: "PL")),
-              features: [])
+        .init(
+            location: .secureCore(.hop(to: "AE", via: "PL")),
+            features: []
+        )
     }
 }
 
 private extension VPNConnectionStatus {
-    static var  connected: Self {
+    static var connected: Self {
         .connected(.dibba, nil)
     }
 
@@ -334,9 +371,11 @@ private extension ConnectionStatusFeature.State {
     static func unprotected() -> Self {
         .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0"))
     }
+
     static func protecting() -> Self {
         .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0"))
     }
+
     static func protected() -> Self {
         .init(protectionState: .protected(netShield: .random))
     }

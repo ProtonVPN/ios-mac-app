@@ -21,8 +21,7 @@ import Foundation
 import ComposableArchitecture
 
 public struct SettingsFeature: Reducer {
-
-    public init() { }
+    public init() {}
 
     public enum Destination: Equatable {
         case netShield
@@ -94,10 +93,8 @@ public struct SettingsFeature: Reducer {
             case .killSwitchTapped: state.destination = .killSwitch
             case .protocolTapped: state.destination = .protocol
             case .themeTapped: state.destination = .theme
-
             case .dismissDestination:
                 state.destination = nil
-
             case .netShield, .killSwitch, .protocol, .theme:
                 break // Child actions have already been handled by the scoped child reducers
             }

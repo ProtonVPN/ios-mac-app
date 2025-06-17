@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 import SwiftUI
 
 @Reducer
 struct QuickFixesFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var category: Category
@@ -58,7 +57,7 @@ struct QuickFixesFeature: Reducer {
             case .contactFormAction:
                 return .none
 
-            case .binding(_):
+            case .binding:
                 // Everything's done in BindingReducer()
                 return .none
             }
@@ -67,5 +66,4 @@ struct QuickFixesFeature: Reducer {
             ContactFormFeature()
         }
     }
-
 }

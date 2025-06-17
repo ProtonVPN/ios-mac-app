@@ -42,7 +42,7 @@ public final class NoOpVpnManager: VpnManagerProtocol {
         isLocalAgentConnected: Bool? = nil,
         currentVpnProtocol: Domain.VpnProtocol? = nil,
         netShieldStats: NetShield.NetShieldModel = .zero(enabled: false),
-        prepareManagersTask: Task<(), Never>? = nil
+        prepareManagersTask: Task<Void, Never>? = nil
     ) {
         self.stateChanged = stateChanged
         self.state = state
@@ -53,53 +53,41 @@ public final class NoOpVpnManager: VpnManagerProtocol {
         self.prepareManagersTask = prepareManagersTask
     }
 
-    public func appBackgroundStateDidChange(isBackground: Bool) {
-    }
+    public func appBackgroundStateDidChange(isBackground _: Bool) {}
 
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
         handler(false)
     }
 
-    public func setOnDemand(_ enabled: Bool) {
-    }
+    public func setOnDemand(_: Bool) {}
 
-    public func disconnectAnyExistingConnectionAndPrepareToConnect(with configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
-    }
+    public func disconnectAnyExistingConnectionAndPrepareToConnect(with _: VpnManagerConfiguration, completion _: @escaping () -> Void) {}
 
-    public func disconnect(completion: @escaping () -> Void) {
-    }
+    public func disconnect(completion _: @escaping () -> Void) {}
 
     public func connectedDate() async -> Date? {
         .now
     }
 
-    public func refreshState() {
-    }
+    public func refreshState() {}
 
-    public func refreshManagers() {
-    }
+    public func refreshManagers() {}
 
-    public func refreshManagers() async {
-    }
+    public func refreshManagers() async {}
 
-    public func removeConfigurations(completionHandler: (((any Error)?) -> Void)?) {
-    }
+    public func removeConfigurations(completionHandler _: (((any Error)?) -> Void)?) {}
 
     public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
         queue.async(execute: completion)
     }
 
-    public var prepareManagersTask: Task<(), Never>?
+    public var prepareManagersTask: Task<Void, Never>?
 
-    public func set(vpnAccelerator: Bool) {
-    }
+    public func set(vpnAccelerator _: Bool) {}
 
-    public func set(netShieldType: Domain.NetShieldType) {
-    }
+    public func set(netShieldType _: Domain.NetShieldType) {}
 
-    public func set(natType: Domain.NATType) {
-    }
+    public func set(natType _: Domain.NATType) {}
 
-    public func set(safeMode: Bool) {
-    }
+    public func set(safeMode _: Bool) {}
 }

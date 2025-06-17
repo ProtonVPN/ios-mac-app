@@ -17,10 +17,10 @@ final class TokenStorage: PaymentTokenStorage {
     }
 
     func get() -> PaymentToken? {
-        return token
+        token
     }
 
     func clear() {
-        self.token = nil
+        token = nil
     }
 }

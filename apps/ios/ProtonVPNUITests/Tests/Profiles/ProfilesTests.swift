@@ -6,17 +6,16 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import XCTest
 import fusion
 import ProtonCoreTestingToolkitUITestsLogin
 import UITestsHelpers
+import XCTest
 
 class ProfilesTests: ProtonVPNUITests {
-    
     private let loginRobot = LoginRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
-    
+
     override func setUp() {
         super.setUp()
         setupProdEnvironment()
@@ -24,7 +23,7 @@ class ProfilesTests: ProtonVPNUITests {
             .showLogin()
             .verify.loginScreenIsShown()
     }
-    
+
     @MainActor
     func testCreateAndDeleteProfile() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
@@ -46,7 +45,7 @@ class ProfilesTests: ProtonVPNUITests {
             .deleteProfile(profileName)
             .verify.profileIsDeleted(profileName)
     }
-    
+
     @MainActor
     func testCreateProfileWithTheSameName() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
@@ -71,7 +70,7 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: CreateProfileRobot.self)
             .verify.profileWithSameName()
     }
-    
+
     @MainActor
     func testEditProfile() {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
@@ -99,14 +98,14 @@ class ProfilesTests: ProtonVPNUITests {
             .verify.profileIsEdited(profile: newProfileName)
             .deleteProfile(newProfileName)
     }
-    
+
     @MainActor
     func disabled_testMakeSecureCoreProfilePlusUser() async throws {
         let profileName = StringUtils.randomAlphanumericString(length: 10)
-        
+
         let randomSecureCoreCountry = try await ServersListUtils.getRandomCountry(secureCore: true)
         let serverVia = try await ServersListUtils.getEntryCountries(for: randomSecureCoreCountry.code).first ?? ""
-        
+
         loginAndOpenProfiles(as: UserType.Basic.credentials)
             .tapAddNewProfile()
             .verify.isOnProfilesEditScreen()
@@ -114,15 +113,14 @@ class ProfilesTests: ProtonVPNUITests {
             .saveProfile(robot: ProfileRobot.self)
             .verify.profileIsCreated(profile: profileName)
     }
-    
+
     @MainActor
     func testFreeUserCannotCreateProfile() {
-        
         loginAndOpenProfiles(as: UserType.Free.credentials)
             .tapAddNewProfile()
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
-    
+
     @MainActor
     func testRecommendedProfiles() {
         loginAndOpenProfiles(as: UserType.Free.credentials)
@@ -130,7 +128,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     private func loginAndOpenProfiles(as credentials: Credentials) -> ProfileRobot {
-        return loginRobot
+        loginRobot
             .enterCredentials(credentials)
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()

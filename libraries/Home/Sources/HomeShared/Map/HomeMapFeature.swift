@@ -17,17 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
-import Domain
-import VPNAppCore
-import SwiftUI
 import CoreLocation
+import Domain
 import Ergonomics
+import Foundation
 import SVGView
+import SwiftUI
+import VPNAppCore
 
 @Reducer
 public struct HomeMapFeature {
-
     private static let mapStateDebounceIntervalInMilliseconds: Int = 50
 
     @ObservableState
@@ -48,7 +47,7 @@ public struct HomeMapFeature {
         @SharedReader(.vpnConnectionStatus) public var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.userCountry) public var userCountry: String?
 
-        public init() { }
+        public init() {}
     }
 
     public enum MapState: Equatable {
@@ -60,17 +59,19 @@ public struct HomeMapFeature {
             switch connectionStatus {
             case .disconnected:
                 self = .disconnected
-            case .disconnecting(_, _):
+
+            case .disconnecting:
                 // VPNAPPL-2654: Discrepancy between connection state and what we're showing in the map
                 self = .disconnected
 
-            case .connected(_, let actual):
+            case let .connected(_, actual):
                 if let actual {
                     self = .connectedCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {
                     self = .disconnected
                 }
-            case .connecting(_, .some(let server)):
+
+            case let .connecting(_, .some(server)):
                 self = .connectingCoordinates(server.logical.coordinates, server.logical.exitCountryCode)
 
             case .connecting(_, nil):
@@ -79,7 +80,7 @@ public struct HomeMapFeature {
                 log.assertionFailure("Cannot show connecting coordinates: server is nil")
                 self = .disconnected
 
-            case .resolving(_, let actual):
+            case let .resolving(_, actual):
                 if let actual {
                     self = .connectingCoordinates(actual.server.logical.coordinates, actual.server.logical.exitCountryCode)
                 } else {
@@ -91,11 +92,11 @@ public struct HomeMapFeature {
         fileprivate var pinMode: MapPin.Mode {
             switch self {
             case .connectedCoordinates:
-                return .exitConnected
+                .exitConnected
             case .connectingCoordinates:
-                return .connecting
+                .connecting
             case .disconnected:
-                return .disconnected
+                .disconnected
             }
         }
 
@@ -104,8 +105,10 @@ public struct HomeMapFeature {
                   let coordinates = coordinates ?? CountriesCoordinates.countryCenterCoordinates(code.uppercased()) else {
                 return .zero
             }
-            let location = CLLocationCoordinate2D(latitude: coordinates.latitude,
-                                                  longitude: coordinates.longitude - 10) // -10 to account for the shifted map
+            let location = CLLocationCoordinate2D(
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude - 10
+            ) // -10 to account for the shifted map
             let projection = NaturalEarthProjection.projection(from: location, in: SVGView.mapBounds.size)
 
             return .init(width: projection.x, height: -projection.y)
@@ -113,23 +116,23 @@ public struct HomeMapFeature {
 
         var code: String? {
             switch self {
-            case .connectedCoordinates(_, let code):
-                return code
-            case .connectingCoordinates(_, let code):
-                return code
+            case let .connectedCoordinates(_, code):
+                code
+            case let .connectingCoordinates(_, code):
+                code
             case .disconnected:
-                return nil
+                nil
             }
         }
-        
+
         var coordinates: CLLocationCoordinate2D? {
             switch self {
-            case .connectedCoordinates(let coordinates, _):
-                return coordinates
-            case .connectingCoordinates(let coordinates, _):
-                return coordinates
+            case let .connectedCoordinates(coordinates, _):
+                coordinates
+            case let .connectingCoordinates(coordinates, _):
+                coordinates
             case .disconnected:
-                return nil
+                nil
             }
         }
     }
@@ -164,7 +167,7 @@ public struct HomeMapFeature {
                 }
                 .cancellable(id: CancelId.connectionState)
 
-            case .connectionStateUpdated(let connectionStatus):
+            case let .connectionStateUpdated(connectionStatus):
                 let mapState = MapState(connectionStatus)
                 let pinOffset = mapState.pinOffset(userCountry: state.userCountry)
                 let animation: Animation? = UIAccessibility.isReduceMotionEnabled ? nil : .default
@@ -184,7 +187,7 @@ public struct HomeMapFeature {
                         )
                 }
 
-            case .newMapState(let mapState):
+            case let .newMapState(mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
                 SVGView.updateWith(code: state.highlightedCountryCode, highlighted: false)
@@ -193,7 +196,7 @@ public struct HomeMapFeature {
 
                 return .none
 
-            case .newPinOffset(let offset):
+            case let .newPinOffset(offset):
                 state.pinOffset = offset
                 return .none
             }
@@ -208,19 +211,19 @@ extension ConnectionSpec {
             break
         case .fastest:
             break
-        case .region(code: let code):
+        case let .region(code: code):
             return code
-        case .gateway(_):
+        case .gateway:
             return nil
-        case .exact(_, _, _, _, let regionCode):
+        case let .exact(_, _, _, _, regionCode):
             return regionCode
-        case .secureCore(let spec):
+        case let .secureCore(spec):
             switch spec {
             case .fastest, .random:
                 break
-            case .fastestHop(let to):
+            case let .fastestHop(to):
                 return to
-            case .hop(let to, _):
+            case let .hop(to, _):
                 return to
             }
         }

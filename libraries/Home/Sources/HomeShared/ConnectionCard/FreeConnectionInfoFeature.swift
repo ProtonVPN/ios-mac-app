@@ -21,7 +21,6 @@ import Foundation
 
 @Reducer
 public struct FreeConnectionInfoFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var countryCodes: [String]
@@ -37,15 +36,15 @@ public struct FreeConnectionInfoFeature {
         case dismissButtonTapped
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .upgradeButtonTapped:
-                return .none
+                .none
             case .dismissButtonTapped:
-                return .none
+                .none
             }
         }
     }

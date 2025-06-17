@@ -24,7 +24,7 @@ public typealias ProtocolChangeAvailability = SettingsShared.ProtocolChangeAvail
 public typealias SettingsClient = SettingsShared.SettingsClient
 
 #if canImport(Settings_iOS)
-import Settings_iOS
+    import Settings_iOS
 
-public typealias EnvironmentSelectorMobileView = Settings_iOS.EnvironmentSelectorMobileView
+    public typealias EnvironmentSelectorMobileView = Settings_iOS.EnvironmentSelectorMobileView
 #endif

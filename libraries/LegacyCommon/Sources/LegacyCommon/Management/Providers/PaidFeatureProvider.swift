@@ -16,29 +16,29 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import Ergonomics
+import Foundation
 
 public protocol AppFeaturePropertyProvider {
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T
-    func setValue<T: ProvidableFeature>(_ value: T)
+    func setValue(_ value: some ProvidableFeature)
 }
 
 public struct AppFeaturePropertyProviderKey: DependencyKey {
     public static var liveValue: AppFeaturePropertyProvider { AppFeaturePropertyProviderImplementation() }
     #if DEBUG
-    public static var testValue: AppFeaturePropertyProvider {
-        let provider = MockFeaturePropertyProvider()
-        provider.setValue(VPNAccelerator.on)
-        provider.setValue(ExcludeLocalNetworks.on)
-        return provider
-    }
+        public static var testValue: AppFeaturePropertyProvider {
+            let provider = MockFeaturePropertyProvider()
+            provider.setValue(VPNAccelerator.on)
+            provider.setValue(ExcludeLocalNetworks.on)
+            return provider
+        }
     #endif
 }
 
-extension DependencyValues {
-    public var appFeaturePropertyProvider: AppFeaturePropertyProvider {
+public extension DependencyValues {
+    var appFeaturePropertyProvider: AppFeaturePropertyProvider {
         get { self[AppFeaturePropertyProviderKey.self] }
         set { self[AppFeaturePropertyProviderKey.self] = newValue }
     }
@@ -52,14 +52,14 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     @Dependency(\.storage) private var storage
 
     private func defaultValueForCurrentUser<T: ProvidableFeature>(for feature: T.Type) -> T {
-        return feature.defaultValue(
+        feature.defaultValue(
             onPlan: credentialsProvider.planName,
             userTier: credentialsProvider.tier,
             featureFlags: featureFlagProvider.getFeatureFlags()
         )
     }
 
-    private func authorization<T: AppFeature>(for feature: T.Type) -> FeatureAuthorizationResult {
+    private func authorization(for feature: (some AppFeature).Type) -> FeatureAuthorizationResult {
         let authorizer = authorizerProvider.authorizer(for: feature)
         return authorizer()
     }
@@ -72,7 +72,7 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
     /// Deletes any previous value found to prevent it from acting as a new default value for all users
     private func fetchAndDeleteStoredLegacyValue<T: ProvidableFeature>(
         for feature: T.Type,
-        using conversion: ((T.LegacyStorageType) -> T)
+        using conversion: (T.LegacyStorageType) -> T
     ) -> T? {
         // Check if there is a decodable value stored for the global setting
         do {
@@ -166,30 +166,30 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 }
 
 #if DEBUG
-public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
-    public var featureValueMap: [String: Any] = [:]
+    public class MockFeaturePropertyProvider: AppFeaturePropertyProvider {
+        public var featureValueMap: [String: Any] = [:]
 
-    public init() { }
+        public init() {}
 
-    private func featureKey<T: ProvidableFeature>(for feature: T.Type) -> String {
-        return "\(feature)"
-    }
-
-    public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
-        let key = featureKey(for: feature)
-        guard let storedValue = featureValueMap[key] else {
-            reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
-            return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+        private func featureKey(for feature: (some ProvidableFeature).Type) -> String {
+            "\(feature)"
         }
-        guard let value = storedValue as? T else {
-            reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
-            return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
-        }
-        return value
-    }
 
-    public func setValue<T: ProvidableFeature>(_ value: T) {
-        featureValueMap[featureKey(for: T.self)] = value
+        public func getValue<T: ProvidableFeature>(for feature: T.Type) -> T {
+            let key = featureKey(for: feature)
+            guard let storedValue = featureValueMap[key] else {
+                reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
+                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+            }
+            guard let value = storedValue as? T else {
+                reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
+                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+            }
+            return value
+        }
+
+        public func setValue<T: ProvidableFeature>(_ value: T) {
+            featureValueMap[featureKey(for: T.self)] = value
+        }
     }
-}
 #endif

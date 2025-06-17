@@ -90,7 +90,7 @@ class VpnManagerTests: BaseConnectionTestCase {
                 return
             }
 
-            guard let tunnelManager = tunnelManager else {
+            guard let tunnelManager else {
                 XCTFail("No tunnelManager created yet")
                 return
             }
@@ -127,8 +127,10 @@ class VpnManagerTests: BaseConnectionTestCase {
         }
 
         await fulfillment(
-            of: [expectations.wireguardTunnelStarted,
-            expectations.vpnManagerWireguardConnect], timeout: expectationTimeout
+            of: [
+                expectations.wireguardTunnelStarted,
+                expectations.vpnManagerWireguardConnect,
+            ], timeout: expectationTimeout
         )
 
         XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.udp))
@@ -147,7 +149,7 @@ class VpnManagerTests: BaseConnectionTestCase {
         await fulfillment(of: [expectations.wireguardOnDemandEnabled], timeout: expectationTimeout)
 
         #if os(iOS)
-        throw XCTSkip("IKE is not supported on iOS")
+            throw XCTSkip("IKE is not supported on iOS")
         #endif
 
         container.propertiesManager.killSwitch = !container.propertiesManager.killSwitch
@@ -216,7 +218,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             expectations.ikeTunnelStarted.fulfill()
         }
 
-        self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
+        container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: ikeConfig) {
             expectations.vpnManagerIkeConnect.fulfill()
         }
 

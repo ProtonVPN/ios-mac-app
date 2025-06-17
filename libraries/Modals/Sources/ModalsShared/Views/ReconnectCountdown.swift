@@ -23,7 +23,7 @@ import Theme
 public struct ReconnectCountdown: View {
     static let timerQuantum = 0.1
 
-    @State private var currentTime: Date = Date()
+    @State private var currentTime: Date = .init()
 
     /// The time when the timer should finish.
     let dateFinished: Date
@@ -51,6 +51,7 @@ public struct ReconnectCountdown: View {
 
         return amount / checkmarkAnimationDuration
     }
+
     var checkmarkStrokeRatioInDegrees: Double {
         checkmarkStrokeRatio * .degreesInACircle
     }
@@ -60,7 +61,7 @@ public struct ReconnectCountdown: View {
     }
 
     var ratioWaited: Double {
-        (displayTimeRemaining) / totalDuration
+        displayTimeRemaining / totalDuration
     }
 
     var ratioWaitedInDegrees: Double {
@@ -111,7 +112,7 @@ public struct ReconnectCountdown: View {
             .foregroundColor(Color(.text))
         }
     }
-    
+
     public init(dateFinished: Date, totalDuration: TimeInterval, checkmarkAnimationDuration: TimeInterval = 1) {
         self.dateFinished = dateFinished
         self.totalDuration = totalDuration
@@ -145,7 +146,6 @@ public struct ReconnectCountdown: View {
     }
 }
 
-
 extension TimeInterval {
     var components: (hours: Int, minutes: Int, seconds: Int) {
         let hours = Int(self) / (60 * 60)
@@ -172,17 +172,17 @@ extension TimeInterval {
     }
 }
 
-fileprivate extension Double {
+private extension Double {
     static let degreesInACircle: Self = 360
 }
 
-fileprivate extension CGPoint {
+private extension CGPoint {
     static func center(of size: CGSize) -> Self {
         .init(x: size.width / 2, y: size.height / 2)
     }
 }
 
-fileprivate extension CGSize {
+private extension CGSize {
     var minSquare: Self {
         .init(width: min(width, height), height: min(width, height))
     }
@@ -192,24 +192,28 @@ fileprivate extension CGSize {
     }
 }
 
-fileprivate extension StrokeStyle {
+private extension StrokeStyle {
     static let countdown: Self = .init(lineWidth: 10, lineCap: .square, lineJoin: .miter)
     static let checkmark: Self = .init(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
 }
 
 @available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("In Progress", traits: .sizeThatFitsLayout) {
-    ReconnectCountdown(dateFinished: Date().addingTimeInterval(15),
-                       totalDuration: 50)
+    ReconnectCountdown(
+        dateFinished: Date().addingTimeInterval(15),
+        totalDuration: 50
+    )
     .frame(width: 86, height: 86)
     .padding()
 }
 
 @available(iOS 17, macOS 14.0, tvOS 17, *)
 #Preview("Finished", traits: .sizeThatFitsLayout) {
-    ReconnectCountdown(dateFinished: Date(),
-                       totalDuration: 50,
-                       checkmarkAnimationDuration: 0)
+    ReconnectCountdown(
+        dateFinished: Date(),
+        totalDuration: 50,
+        checkmarkAnimationDuration: 0
+    )
     .frame(width: 86, height: 86)
     .padding()
 }

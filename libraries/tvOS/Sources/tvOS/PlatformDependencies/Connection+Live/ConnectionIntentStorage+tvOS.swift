@@ -19,7 +19,6 @@
 import Connection
 import Dependencies
 import Domain
-import Connection
 import VPNAppCore
 import VPNShared
 

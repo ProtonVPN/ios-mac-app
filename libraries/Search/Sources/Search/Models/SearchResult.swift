@@ -31,30 +31,30 @@ extension SearchResult {
     var title: String? {
         switch self {
         case let .countries(data):
-            return "\(Localizable.searchResultsCountries) (\(data.count))"
+            "\(Localizable.searchResultsCountries) (\(data.count))"
         case let .servers(tier: tier, servers: data):
-            return "\(tier.title) (\(data.count))"
+            "\(tier.title) (\(data.count))"
         case let .secureCoreCountries(data):
-            return "\(Localizable.searchSecureCoreCountries) (\(data.count))"
+            "\(Localizable.searchSecureCoreCountries) (\(data.count))"
         case let .cities(data):
-            return "\(Localizable.searchCities) (\(data.count))"
+            "\(Localizable.searchCities) (\(data.count))"
         case .upsell:
-            return nil
+            nil
         }
     }
 
     var count: Int {
         switch self {
         case let .countries(data):
-            return data.count
+            data.count
         case let .servers(tier: _, servers: data):
-            return data.count
+            data.count
         case let .secureCoreCountries(data):
-            return data.count
+            data.count
         case let .cities(data):
-            return data.count
+            data.count
         case .upsell:
-            return 1
+            1
         }
     }
 }

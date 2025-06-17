@@ -32,12 +32,12 @@ open class CaseIsolatedDatabaseTestCase: XCTestCase, CaseIsolatedDatabaseTestDri
     public static var internalRepository: ServerRepository!
     public static var internalRepositoryWrapper: ServerRepositoryWrapper!
 
-    open override class func setUp() {
+    override open class func setUp() {
         super.setUp()
         setUpRepository()
     }
 
-    open override func invokeTest() {
+    override open func invokeTest() {
         withDependencies {
             $0.serverRepository = repository
         } operation: {
@@ -54,7 +54,7 @@ open class TestIsolatedDatabaseTestCase: XCTestCase, TestIsolatedDatabaseTestDri
     public var internalRepositoryWrapper: ServerRepositoryWrapper?
     public var internalRepository: ServerRepository?
 
-    open override func invokeTest() {
+    override open func invokeTest() {
         try! setUpRepository()
         withDependencies {
             $0.serverRepository = repository

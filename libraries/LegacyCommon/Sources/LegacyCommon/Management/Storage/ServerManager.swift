@@ -25,7 +25,6 @@ import Domain
 import Persistence
 
 public struct ServerManager: DependencyKey {
-
     private var updateServers: @Sendable (
         _ servers: [VPNServer],
         _ freeServersOnly: Bool,
@@ -36,25 +35,25 @@ public struct ServerManager: DependencyKey {
         self.updateServers = updateServers
     }
 
-    public static let liveValue: ServerManager = ServerManager(
+    public static let liveValue: ServerManager = .init(
         updateServers: { servers, freeServersOnly, lastModified in
             @Dependency(\.serverRepository) var repository
             // If we're only fetching a subset of servers up to a certain tier, we must not purge stale servers above it
             let maxTierToPurge: Int = freeServersOnly ? .freeTier : .internalTier
             let newServerIDs = Set(servers.map(\.id))
 
-#if DEBUG
-            // Somewhat expensive O(n) sanity check
-            let containsFreeServersOnly = servers.allSatisfy { $0.logical.tier == 0 }
-            if containsFreeServersOnly != freeServersOnly {
-                log.warning("\(containsFreeServersOnly) != \(freeServersOnly)")
-            }
-#endif
+            #if DEBUG
+                // Somewhat expensive O(n) sanity check
+                let containsFreeServersOnly = servers.allSatisfy { $0.logical.tier == 0 }
+                if containsFreeServersOnly != freeServersOnly {
+                    log.warning("\(containsFreeServersOnly) != \(freeServersOnly)")
+                }
+            #endif
 
             let deletedServerCount = repository.delete(serversWithIDsNotIn: newServerIDs, maxTier: maxTierToPurge)
             log.info("Purged stale servers", category: .persistence, metadata: [
                 "deletedServerCount": "\(deletedServerCount)",
-                "maxTier": "\(maxTierToPurge))"
+                "maxTier": "\(maxTierToPurge))",
             ])
 
             repository.upsert(servers: servers)
@@ -77,22 +76,22 @@ public struct ServerManager: DependencyKey {
     public static let testValue = liveValue
 }
 
-extension ServerManager {
-    public func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
+public extension ServerManager {
+    func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         updateServers(servers, freeServersOnly, lastModifiedAt)
     }
 }
 
 #if DEBUG
-extension ServerManager {
-    public static var noOp: ServerManager {
-        ServerManager { _, _, _ in () }
+    public extension ServerManager {
+        static var noOp: ServerManager {
+            ServerManager { _, _, _ in () }
+        }
     }
-}
 #endif
 
-extension DependencyValues {
-    public var serverManager: ServerManager {
+public extension DependencyValues {
+    var serverManager: ServerManager {
         get { self[ServerManager.self] }
         set { self[ServerManager.self] = newValue }
     }

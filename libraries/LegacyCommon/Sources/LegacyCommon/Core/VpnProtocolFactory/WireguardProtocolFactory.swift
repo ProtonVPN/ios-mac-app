@@ -10,9 +10,9 @@ import Foundation
 import NetworkExtension
 import ProtonCoreFeatureFlags
 
+import Domain
 import ExtensionIPC
 import VPNShared
-import Domain
 
 public protocol WireguardProtocolFactoryCreator {
     func makeWireguardProtocolFactory() -> WireguardProtocolFactory
@@ -26,26 +26,30 @@ open class WireguardProtocolFactory {
 
     private var vpnManager: NETunnelProviderManagerWrapper?
 
-    public typealias Factory = PropertiesManagerFactory &
-        NETunnelProviderManagerWrapperFactory
+    public typealias Factory =
+        NETunnelProviderManagerWrapperFactory & PropertiesManagerFactory
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(bundleId: config.wireguardVpnExtensionBundleIdentifier,
-                  appGroup: config.appGroup,
-                  propertiesManager: factory.makePropertiesManager(),
-                  vpnManagerFactory: factory)
+        self.init(
+            bundleId: config.wireguardVpnExtensionBundleIdentifier,
+            appGroup: config.appGroup,
+            propertiesManager: factory.makePropertiesManager(),
+            vpnManagerFactory: factory
+        )
     }
-    
-    public init(bundleId: String,
-                appGroup: String,
-                propertiesManager: PropertiesManagerProtocol,
-                vpnManagerFactory: NETunnelProviderManagerWrapperFactory) {
+
+    public init(
+        bundleId: String,
+        appGroup: String,
+        propertiesManager: PropertiesManagerProtocol,
+        vpnManagerFactory: NETunnelProviderManagerWrapperFactory
+    ) {
         self.bundleId = bundleId
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
         self.vpnManagerFactory = vpnManagerFactory
     }
-        
+
     open func logs(completion: @escaping (String?) -> Void) {
         guard let fileUrl = logFile() else {
             completion(nil)
@@ -78,25 +82,25 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
         return protocolConfiguration
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManagerWrapper?, Error?) -> Void) {
-        if requirement == .status, let vpnManager = vpnManager {
+        if requirement == .status, let vpnManager {
             completion(vpnManager, nil)
         } else {
-            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId) { manager, error in
-                if let manager = manager {
+            vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId) { manager, error in
+                if let manager {
                     self.vpnManager = manager
                 }
                 completion(manager, error)
             }
         }
     }
-    
+
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement) async throws -> NEVPNManagerWrapper {
-        if requirement == .status, let vpnManager = vpnManager {
+        if requirement == .status, let vpnManager {
             return vpnManager
         } else {
-            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: self.bundleId)
+            let vpnManager = try await vpnManagerFactory.tunnelProviderManagerWrapper(forProviderBundleIdentifier: bundleId)
             self.vpnManager = vpnManager
             return vpnManager
         }
@@ -112,8 +116,8 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
     /// Tries to flush logs to a logfile. Call handler with true if flush succeeded or false otherwise.
     public func flushLogs(responseHandler: @escaping (_ success: Bool) -> Void) {
-        vpnProviderManager(for: .status) { manager, error in
-            guard let manager = manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
+        vpnProviderManager(for: .status) { manager, _ in
+            guard let manager, let connection = manager.vpnConnection as? NETunnelProviderSessionWrapper else {
                 responseHandler(false)
                 return
             }
@@ -129,13 +133,17 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 }
 
 public extension StoredWireguardConfig {
-    init(vpnManagerConfig: VpnManagerConfiguration,
-         wireguardConfig: WireguardConfig) {
-        self.init(wireguardConfig: wireguardConfig,
-                  clientPrivateKey: vpnManagerConfig.clientPrivateKey,
-                  serverPublicKey: vpnManagerConfig.serverPublicKey,
-                  entryServerAddress: vpnManagerConfig.entryServerAddress,
-                  ports: vpnManagerConfig.ports,
-                  timestamp: Date())
+    init(
+        vpnManagerConfig: VpnManagerConfiguration,
+        wireguardConfig: WireguardConfig
+    ) {
+        self.init(
+            wireguardConfig: wireguardConfig,
+            clientPrivateKey: vpnManagerConfig.clientPrivateKey,
+            serverPublicKey: vpnManagerConfig.serverPublicKey,
+            entryServerAddress: vpnManagerConfig.entryServerAddress,
+            ports: vpnManagerConfig.ports,
+            timestamp: Date()
+        )
     }
 }

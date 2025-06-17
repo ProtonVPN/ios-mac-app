@@ -25,7 +25,6 @@ import Foundation
 
 /// Service part working on Extension side of the connection.
 class XPCBaseService: NSObject {
-
     private let machServiceName: String
     let log: (String) -> Void
 
@@ -45,25 +44,24 @@ class XPCBaseService: NSObject {
         newListener.resume()
         listener = newListener
     }
-
 }
 
 extension XPCBaseService: ProviderCommunication {
-    func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
+    func getLogs(_: @escaping (Data?) -> Void) {
         log("This is just a placeholder! Add `getLogs` in each implementation.")
     }
 
-    func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
+    func setCredentials(username _: String, password _: String, completionHandler _: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setCredentials` in each implementation.")
     }
 
-    func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
+    func setConfigData(_: Data, completionHandler _: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setConfigData` in each implementation.")
     }
 }
 
 extension XPCBaseService: NSXPCListenerDelegate {
-    func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
+    func listener(_: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
         // Check the code signature of the remote endpoint to avoid tampering.
         let pid = newConnection.processIdentifier
         let auditToken = newConnection.auditToken
@@ -71,21 +69,21 @@ extension XPCBaseService: NSXPCListenerDelegate {
         do {
             let matches = try CodeSignatureComparitor.codeSignatureMatches(auditToken: auditToken)
             #if DEBUG
-            if !matches {
-                self.log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
-            }
+                if !matches {
+                    log("Code signature of pid \(pid) does not match. Proceeding anyway (debug build).")
+                }
             #else
-            guard matches else {
-                self.log("Refusing XPC connection with pid \(pid): code signature does not match")
-                return false
-            }
+                guard matches else {
+                    log("Refusing XPC connection with pid \(pid): code signature does not match")
+                    return false
+                }
             #endif
         } catch {
-            self.log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
+            log("Code signing error occurred while verifying pid \(pid): \(String(describing: error))")
 
             #if !DEBUG
-            self.log("Rejecting XPC connection.")
-            return false
+                log("Rejecting XPC connection.")
+                return false
             #endif
         }
 
@@ -106,9 +104,9 @@ extension XPCBaseService: NSXPCListenerDelegate {
             self.currentConnection = nil
         }
 
-        if self.currentConnection != nil {
-            self.currentConnection?.invalidate()
-            self.currentConnection = nil
+        if currentConnection != nil {
+            currentConnection?.invalidate()
+            currentConnection = nil
         }
 
         currentConnection = newConnection

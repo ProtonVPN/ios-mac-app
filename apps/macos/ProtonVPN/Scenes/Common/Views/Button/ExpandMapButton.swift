@@ -29,41 +29,40 @@ enum ExpandMapButtonState {
 }
 
 class ExpandMapButton: HoverDetectionButton {
-    
-    public var transform: NSAffineTransform = NSAffineTransform()
+    public var transform: NSAffineTransform = .init()
 
     var expandState: ExpandMapButtonState = .compact {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
         wantsLayer = true
         layer?.backgroundColor = .clear
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         transform.concat()
-        
+
         context.setStrokeColor(.cgColor(.border, .strong))
         context.setFillColor(.cgColor(.background, .weak))
-        
+
         context.setLineWidth(1.5)
         var halfArrowHeight = bounds.height / 6
         var halfArrowWidth = bounds.width / 12
         if expandState == .expanded {
             halfArrowHeight = -halfArrowHeight
             halfArrowWidth = -halfArrowWidth
-            
+
             context.addEllipse(in: bounds)
             context.addRect(CGRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width / 2, height: bounds.height))
             context.drawPath(using: .fill)
-            
+
             context.move(to: CGPoint(x: bounds.width * 0.45 - halfArrowWidth, y: bounds.height / 2 - halfArrowHeight))
             context.addLine(to: CGPoint(x: bounds.width * 0.45 + halfArrowWidth, y: bounds.height / 2))
             context.addLine(to: CGPoint(x: bounds.width * 0.45 - halfArrowWidth, y: bounds.height / 2 + halfArrowHeight))
@@ -71,12 +70,12 @@ class ExpandMapButton: HoverDetectionButton {
             context.addEllipse(in: bounds)
             context.addRect(CGRect(x: bounds.origin.x + bounds.width / 2, y: bounds.origin.y, width: bounds.width / 2, height: bounds.height))
             context.drawPath(using: .fill)
-            
+
             context.move(to: CGPoint(x: bounds.width * 0.55 - halfArrowWidth, y: bounds.height / 2 - halfArrowHeight))
             context.addLine(to: CGPoint(x: bounds.width * 0.55 + halfArrowWidth, y: bounds.height / 2))
             context.addLine(to: CGPoint(x: bounds.width * 0.55 - halfArrowWidth, y: bounds.height / 2 + halfArrowHeight))
         }
-        
+
         context.drawPath(using: .stroke)
     }
 }

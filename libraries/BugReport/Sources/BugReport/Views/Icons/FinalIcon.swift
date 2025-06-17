@@ -37,9 +37,9 @@ struct FinalIcon: View {
     var icon: Image {
         switch state {
         case .success:
-            return Image(Asset.icSuccess.name, bundle: .module)
+            Image(Asset.icSuccess.name, bundle: .module)
         case .failure:
-            return Image(Asset.icFailure.name, bundle: .module)
+            Image(Asset.icFailure.name, bundle: .module)
         }
     }
 }

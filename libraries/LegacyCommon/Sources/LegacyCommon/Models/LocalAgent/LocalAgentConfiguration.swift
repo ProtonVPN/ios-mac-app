@@ -43,18 +43,20 @@ extension LocalAgentConfiguration {
     }
 
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
-        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
+        guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
 
-        self.init(hostname: connectionConfiguration.serverIp.domain,
-                  netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
-                  bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType,
-                  safeMode: safeModePropertyProvider.safeMode)
+        self.init(
+            hostname: connectionConfiguration.serverIp.domain,
+            netshield: netShieldPropertyProvider.netShieldType,
+            vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
+            bouncing: connectionConfiguration.serverIp.label,
+            natType: natTypePropertyProvider.natType,
+            safeMode: safeModePropertyProvider.safeMode
+        )
     }
 }
 
@@ -62,17 +64,19 @@ extension LocalAgentConfiguration {
 
 extension VPNConnectionFeatures {
     init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
-        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
+        guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
         @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
 
-        self.init(netshield: netShieldPropertyProvider.netShieldType,
-                  vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
-                  bouncing: connectionConfiguration.serverIp.label,
-                  natType: natTypePropertyProvider.natType,
-                  safeMode: safeModePropertyProvider.safeMode)
+        self.init(
+            netshield: netShieldPropertyProvider.netShieldType,
+            vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
+            bouncing: connectionConfiguration.serverIp.label,
+            natType: natTypePropertyProvider.natType,
+            safeMode: safeModePropertyProvider.safeMode
+        )
     }
 }
 
@@ -80,14 +84,13 @@ extension VPNConnectionFeatures {
 
 private extension PropertiesManagerProtocol {
     func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
-        let configuration: ConnectionConfiguration?
-        switch vpnProtocol {
+        let configuration: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
-            configuration = self.lastIkeConnection
+            lastIkeConnection
         case .openVpn:
-            configuration = self.lastOpenVpnConnection
+            lastOpenVpnConnection
         case .wireGuard:
-            configuration = self.lastWireguardConnection
+            lastWireguardConnection
         }
         return configuration
     }

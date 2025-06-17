@@ -20,48 +20,46 @@ import Foundation
 import NetworkExtension
 
 extension NEProviderStopReason: @retroactive CustomStringConvertible {
-
     public var description: String {
         switch self {
         case .none:
-            return "none (\(self.rawValue))"
+            return "none (\(rawValue))"
         case .userInitiated:
-            return "userInitiated (\(self.rawValue))"
+            return "userInitiated (\(rawValue))"
         case .providerFailed:
-            return "providerFailed (\(self.rawValue))"
+            return "providerFailed (\(rawValue))"
         case .noNetworkAvailable:
-            return "noNetworkAvailable (\(self.rawValue))"
+            return "noNetworkAvailable (\(rawValue))"
         case .unrecoverableNetworkChange:
-            return "unrecoverableNetworkChange (\(self.rawValue))"
+            return "unrecoverableNetworkChange (\(rawValue))"
         case .providerDisabled:
-            return "providerDisabled (\(self.rawValue))"
+            return "providerDisabled (\(rawValue))"
         case .authenticationCanceled:
-            return "authenticationCanceled (\(self.rawValue))"
+            return "authenticationCanceled (\(rawValue))"
         case .configurationFailed:
-            return "configurationFailed (\(self.rawValue))"
+            return "configurationFailed (\(rawValue))"
         case .idleTimeout:
-            return "idleTimeout (\(self.rawValue))"
+            return "idleTimeout (\(rawValue))"
         case .configurationDisabled:
-            return "configurationDisabled (\(self.rawValue))"
+            return "configurationDisabled (\(rawValue))"
         case .configurationRemoved:
-            return "configurationRemoved (\(self.rawValue))"
+            return "configurationRemoved (\(rawValue))"
         case .superceded:
-            return "superceded (\(self.rawValue))"
+            return "superceded (\(rawValue))"
         case .userLogout:
-            return "userLogout (\(self.rawValue))"
+            return "userLogout (\(rawValue))"
         case .userSwitch:
-            return "userSwitch (\(self.rawValue))"
+            return "userSwitch (\(rawValue))"
         case .connectionFailed:
-            return "connectionFailed (\(self.rawValue))"
+            return "connectionFailed (\(rawValue))"
         case .sleep:
-            return "sleep (\(self.rawValue))"
+            return "sleep (\(rawValue))"
         case .appUpdate:
-            return "appUpdate (\(self.rawValue))"
+            return "appUpdate (\(rawValue))"
         case .internalError:
-            return "internalError (\(self.rawValue))"
+            return "internalError (\(rawValue))"
         @unknown default:
-            return "unknown (\(self.rawValue))"
+            return "unknown (\(rawValue))"
         }
     }
-
 }

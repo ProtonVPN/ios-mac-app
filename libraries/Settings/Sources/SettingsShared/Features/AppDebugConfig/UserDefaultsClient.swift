@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Foundation
 import Domain
+import Foundation
 
 struct UserDefaultsClient: DependencyKey, Sendable {
     var entries: @Sendable () async throws -> [UserDefaultsEntry]
@@ -31,7 +31,7 @@ struct UserDefaultsClient: DependencyKey, Sendable {
                 .sorted { $0.key < $1.key }
         },
         reset: {
-            try getUserDefaults().removePersistentDomain(forName: try getSuiteName())
+            try getUserDefaults().removePersistentDomain(forName: getSuiteName())
         }
     )
 
@@ -44,26 +44,26 @@ struct UserDefaultsClient: DependencyKey, Sendable {
     }
 
     static func getUserDefaults() throws -> UserDefaults {
-#if os(iOS)
-        let suiteName = try getSuiteName()
-        guard let defaults = UserDefaults(suiteName: suiteName) else {
-            throw UserDefaultsError.userDefaultsMissing(suiteName)
-        }
-        return defaults
-#elseif os(macOS)
-        return UserDefaults.standard
-#endif
+        #if os(iOS)
+            let suiteName = try getSuiteName()
+            guard let defaults = UserDefaults(suiteName: suiteName) else {
+                throw UserDefaultsError.userDefaultsMissing(suiteName)
+            }
+            return defaults
+        #elseif os(macOS)
+            return UserDefaults.standard
+        #endif
     }
 
     static func getSuiteName() throws -> String {
-#if os(iOS)
-        return DomainConstants.AppGroups.main
-#elseif os(macOS)
-        guard let suiteName = Bundle.main.bundleIdentifier else {
-            fatalError()
-        }
-        return suiteName
-#endif
+        #if os(iOS)
+            return DomainConstants.AppGroups.main
+        #elseif os(macOS)
+            guard let suiteName = Bundle.main.bundleIdentifier else {
+                fatalError()
+            }
+            return suiteName
+        #endif
     }
 
     enum UserDefaultsError: Error {
@@ -79,14 +79,14 @@ extension DependencyValues {
     }
 }
 
-extension UserDefaultsEntry {
-    public init(key: String, object: Any) {
+public extension UserDefaultsEntry {
+    init(key: String, object: Any) {
         self.init(key: key, value: Value(object))
     }
 }
 
-extension UserDefaultsEntry.Value {
-    public init(_ object: Any) {
+public extension UserDefaultsEntry.Value {
+    init(_ object: Any) {
         switch object {
         case let string as String:
             self = .string(string)

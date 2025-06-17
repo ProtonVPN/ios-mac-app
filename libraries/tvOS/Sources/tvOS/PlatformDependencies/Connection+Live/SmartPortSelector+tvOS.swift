@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Connection
 import Dependencies
 import Domain
-import Connection
 
 extension SmartPortSelectorBridge: @retroactive DependencyKey {
-    public static let liveValue: SmartPortSelectorBridge = SmartPortSelectorBridge(
-        select: { endpoint, connectionProtocol in
+    public static let liveValue: SmartPortSelectorBridge = .init(
+        select: { endpoint, _ in
             let defaultTVOSProtocol: VpnProtocol = .wireGuard(.udp)
             @Dependency(\.connectionConfiguration) var configuration
             let defaultPorts = configuration.wireguardConfig.defaultPorts(for: .udp)

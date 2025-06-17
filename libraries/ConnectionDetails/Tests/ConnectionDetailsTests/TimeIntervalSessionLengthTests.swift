@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import ConnectionDetails
+import XCTest
 
 final class TimeIntervalSessionLengthTests: XCTestCase {
-
     func testExample() throws {
         XCTAssertEqual(TimeInterval(-1).sessionLengthText, "1 sec")
         XCTAssertEqual(TimeInterval(-59).sessionLengthText, "59 sec")
@@ -41,5 +40,4 @@ final class TimeIntervalSessionLengthTests: XCTestCase {
         XCTAssertEqual(TimeInterval(-(TimeInterval.day * 2)).sessionLengthText, "2 days")
         XCTAssertEqual(TimeInterval(-(TimeInterval.day * 381 + TimeInterval.hour * 16)).sessionLengthText, "381 days 16 hr")
     }
-
 }

@@ -20,16 +20,15 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(Cocoa)
-import Cocoa
+    import Cocoa
 #endif
 
 public enum ProfileIcon: Codable {
-
     case bolt
     case arrowsSwapRight
-    case image(Image) //left for historical reasons, used for migration
+    case image(Image) // left for historical reasons, used for migration
     case circle(Int) // rgb color in hexadecimal
 
     enum CodingKeys: CodingKey {
@@ -41,23 +40,24 @@ public enum ProfileIcon: Codable {
     public var description: String {
         switch self {
         case .bolt:
-            return "Image - bolt"
+            "Image - bolt"
         case .arrowsSwapRight:
-            return "Image - arrowsSwapRight"
-        case .image(let name):
-            return "Image - \(name)"
-        case .circle(let color):
-            return "Color - \(String(format: "%02X", color))"
+            "Image - arrowsSwapRight"
+        case let .image(name):
+            "Image - \(name)"
+        case let .circle(color):
+            "Color - \(String(format: "%02X", color))"
         }
     }
-    
+
     // MARK: - NSCoding
-    private struct CoderKey {
+
+    private enum CoderKey {
         static let profileIcon = "profileIcon"
         static let image = "image"
         static let color = "color"
     }
-    
+
     public init(coder aDecoder: NSCoder) {
         let data = aDecoder.decodeObject(forKey: CoderKey.profileIcon) as! Data
         switch data[0] {
@@ -66,15 +66,15 @@ public enum ProfileIcon: Codable {
             self = .image(name)
         default:
             #if canImport(UIKit)
-            let color = aDecoder.decodeObject(forKey: CoderKey.color) as! UIColor
+                let color = aDecoder.decodeObject(forKey: CoderKey.color) as! UIColor
             #elseif canImport(Cocoa)
-            let color = aDecoder.decodeObject(forKey: CoderKey.color) as! NSColor
+                let color = aDecoder.decodeObject(forKey: CoderKey.color) as! NSColor
             #endif
             self = .circle(color.hexRepresentation)
         }
     }
-    
-    public func encode(with aCoder: NSCoder) {
+
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }

@@ -16,31 +16,40 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Persistence
 import Domain
+import Persistence
 
-extension ServerRepository {
-    public static func empty() -> Self {
-        .init(serverCount: { 0 },
-              server: { _, _ in nil },
-              groups: { _, _ in [] })
-    }
-    public static func notEmpty() -> Self {
-        .init(serverCount: { 1 },
-              server: { _, _ in .mock },
-              groups: { _, _ in [] })
+public extension ServerRepository {
+    static func empty() -> Self {
+        .init(
+            serverCount: { 0 },
+            server: { _, _ in nil },
+            groups: { _, _ in [] }
+        )
     }
 
-    public static func somePlusRecommendedCountries() -> Self {
-        .init(serverCount: { 0 },
-              server: { _, _ in nil },
-              groups: { _, _ in .recommendedCountries + .someCountries })
+    static func notEmpty() -> Self {
+        .init(
+            serverCount: { 1 },
+            server: { _, _ in .mock },
+            groups: { _, _ in [] }
+        )
     }
-    
-    public static func emptyWithUpsert() -> Self {
-        .init(serverCount: { 0 }, 
-              upsertServers: { _ in },
-              groups: { _, _ in [] })
+
+    static func somePlusRecommendedCountries() -> Self {
+        .init(
+            serverCount: { 0 },
+            server: { _, _ in nil },
+            groups: { _, _ in .recommendedCountries + .someCountries }
+        )
+    }
+
+    static func emptyWithUpsert() -> Self {
+        .init(
+            serverCount: { 0 },
+            upsertServers: { _ in },
+            groups: { _, _ in [] }
+        )
     }
 }
 
@@ -55,6 +64,7 @@ extension [ServerGroupInfo] {
         ["US", "UK", "CA", "FR", "DE"]
             .map { .country(code: $0) }
     }
+
     static var someCountries: Self {
         ["PL", "AR", "RO", "LT", "CZ"]
             .map { .country(code: $0) }
@@ -63,18 +73,20 @@ extension [ServerGroupInfo] {
 
 extension ServerGroupInfo {
     static func country(code: String) -> Self {
-        .init(kind: .country(code: code),
-              featureIntersection: .zero,
-              featureUnion: .zero,
-              minTier: 0,
-              maxTier: 0,
-              serverCount: 5,
-              cityCount: 0,
-              latitude: 0,
-              longitude: 0,
-              supportsSmartRouting: false,
-              isUnderMaintenance: false,
-              protocolSupport: .all)
+        .init(
+            kind: .country(code: code),
+            featureIntersection: .zero,
+            featureUnion: .zero,
+            minTier: 0,
+            maxTier: 0,
+            serverCount: 5,
+            cityCount: 0,
+            latitude: 0,
+            longitude: 0,
+            supportsSmartRouting: false,
+            isUnderMaintenance: false,
+            protocolSupport: .all
+        )
     }
 }
 

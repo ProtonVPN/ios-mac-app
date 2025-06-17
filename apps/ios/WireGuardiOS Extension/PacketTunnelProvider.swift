@@ -7,19 +7,19 @@
 //
 
 import Foundation
+import Logging
 import NetworkExtension
 import os
-import Logging
 
 import WireGuardKit
 
-import VPNShared
-import NEHelper
 import ExtensionIPC
+import NEHelper
+import VPNShared
 
 import Domain
-import Timer
 import Ergonomics
+import Timer
 
 class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
@@ -36,7 +36,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     private var connectedIpId: String?
 
     var tunnelProviderProtocol: NETunnelProviderProtocol? {
-        guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let tunnelProviderProtocol = protocolConfiguration as? NETunnelProviderProtocol else {
             return nil
         }
 
@@ -46,15 +46,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     public var dataTaskFactory: DataTaskFactory!
 
     public var transport: WireGuardTransport? {
-        return tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
+        tunnelProviderProtocol?.wgProtocol.map(WireGuardTransport.init(rawValue:)) ?? .udp
     }
 
     override init() {
         AppContext.default = .wireGuardExtension
 
-        vpnAuthenticationStorage = VpnAuthenticationKeychain()
+        self.vpnAuthenticationStorage = VpnAuthenticationKeychain()
 
-        appInfo = AppInfoImplementation()
+        self.appInfo = AppInfoImplementation()
 
         let authKeychain = AuthKeychain.default
 
@@ -65,11 +65,11 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
         self.timerFactory = TimerFactoryImplementation()
 
-        killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
+        self.killSwitchSettingObservation = observe(\.protocolConfiguration.includeAllNetworks) { [unowned self] _, _ in
             wg_log(.info, message: "Kill Switch configuration changed.")
-            self.setDataTaskFactoryAccordingToKillSwitchSettings()
+            setDataTaskFactoryAccordingToKillSwitchSettings()
         }
-        self.setDataTaskFactory(sendThroughTunnel: true)
+        setDataTaskFactory(sendThroughTunnel: true)
 
         let apiService = ExtensionAPIService(
             timerFactory: timerFactory,
@@ -78,14 +78,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             atlasSecret: Bundle.atlasSecret ?? ""
         )
 
-        certificateRefreshManager = ExtensionCertificateRefreshManager(
+        self.certificateRefreshManager = ExtensionCertificateRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory,
             vpnAuthenticationStorage: vpnAuthenticationStorage,
             keychain: authKeychain
         )
 
-        serverStatusRefreshManager = ServerStatusRefreshManager(
+        self.serverStatusRefreshManager = ServerStatusRefreshManager(
             apiService: apiService,
             timerFactory: timerFactory
         )
@@ -102,7 +102,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     /// if the user is using KillSwitch (i.e., `includeAllNetworks`). Ironically, the best thing for
     /// this is to *not* send API requests through the VPN if the user has opted for KillSwitch.
     private func setDataTaskFactoryAccordingToKillSwitchSettings() {
-        guard !self.protocolConfiguration.includeAllNetworks else {
+        guard !protocolConfiguration.includeAllNetworks else {
             setDataTaskFactory(sendThroughTunnel: false)
             return
         }
@@ -114,24 +114,26 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Routing API requests through \(sendThroughTunnel ? "tunnel" : "URLSession").")
 
         dataTaskFactory = !sendThroughTunnel ?
-                URLSession.shared :
-                ConnectionTunnelDataTaskFactory(provider: self,
-                                                timerFactory: timerFactory)
+            URLSession.shared :
+            ConnectionTunnelDataTaskFactory(
+                provider: self,
+                timerFactory: timerFactory
+            )
     }
 
     private func connectionEstablished(newVpnCertificateFeatures: VPNConnectionFeatures?) {
-        if let newVpnCertificateFeatures = newVpnCertificateFeatures {
+        if let newVpnCertificateFeatures {
             log.debug("Connection restarted with another server. Will regenerate certificate.")
             certificateRefreshManager.checkRefreshCertificateNow(features: newVpnCertificateFeatures, userInitiated: true) { result in
                 log.info("New certificate (after reconnection) result: \(result)", category: .userCert)
-                self.certificateRefreshManager.start { }
+                self.certificateRefreshManager.start {}
             }
         } else { // New connection
-            certificateRefreshManager.start { }
+            certificateRefreshManager.start {}
         }
 
         #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
+            startTestingConnectivity()
         #endif
 
         guard let connectedLogicalId, let connectedIpId else {
@@ -142,11 +144,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         wg_log(.info, message: "Starting server status refresh manager with logical \(connectedLogicalId) and server \(connectedIpId).")
     }
 
-    private lazy var adapter: WireGuardAdapter = {
-        return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(.info, message: message)
-        }
-    }()
+    private lazy var adapter: WireGuardAdapter = .init(with: self) { _, message in
+        wg_log(.info, message: message)
+    }
 
     func restartTunnel(with logical: ServerStatusRequest.Logical) {
         log.info("Restarting tunnel with new logical server: \(logical.id)", category: .connection)
@@ -172,8 +172,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             let errorNotifier = ErrorNotifier(activationAttemptId: nil)
 
             self.currentWireguardServer = currentWireguardServer
-                .withNewServerPublicKey(server.x25519PublicKey,
-                                        andEntryServerAddress: entryIp)
+                .withNewServerPublicKey(
+                    server.x25519PublicKey,
+                    andEntryServerAddress: entryIp
+                )
 
             self.connectedLogicalId = logical.id
             self.connectedIpId = server.id
@@ -183,7 +185,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
             let newVpnCertificateFeatures = currentFeatures?.copyWithChanged(bouncing: server.label)
 
             self.startTunnelWithStoredConfig(errorNotifier: errorNotifier, newVpnCertificateFeatures: newVpnCertificateFeatures) { error in
-                if let error = error {
+                if let error {
                     log.error("Error restarting tunnel \(error)", category: .connection)
                 }
 
@@ -232,12 +234,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         errorNotifier: ErrorNotifier,
         newVpnCertificateFeatures: VPNConnectionFeatures?,
         transport: WireGuardTransport?,
-        completionHandler: @escaping (Error?) -> Void) {
-
+        completionHandler: @escaping (Error?) -> Void
+    ) {
         let transport = transport ?? .udp
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: transport.rawValue) { adapterError in
-            guard let adapterError = adapterError else {
+            guard let adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
@@ -252,19 +254,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 errorNotifier.notify(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
                 completionHandler(PacketTunnelProviderError.couldNotDetermineFileDescriptor)
 
-            case .dnsResolution(let dnsErrors):
-                let hostnamesWithDnsResolutionFailure = dnsErrors.map { $0.address }
+            case let .dnsResolution(dnsErrors):
+                let hostnamesWithDnsResolutionFailure = dnsErrors.map(\.address)
                     .joined(separator: ", ")
                 wg_log(.error, message: "DNS resolution failed for the following hostnames: \(hostnamesWithDnsResolutionFailure)")
                 errorNotifier.notify(PacketTunnelProviderError.dnsResolutionFailure)
                 completionHandler(PacketTunnelProviderError.dnsResolutionFailure)
 
-            case .setNetworkSettings(let error):
+            case let .setNetworkSettings(error):
                 wg_log(.error, message: "Starting tunnel failed with setTunnelNetworkSettings returning \(error.localizedDescription)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotSetNetworkSettings)
                 completionHandler(PacketTunnelProviderError.couldNotSetNetworkSettings)
 
-            case .startWireGuardBackend(let errorCode):
+            case let .startWireGuardBackend(errorCode):
                 wg_log(.error, message: "Starting tunnel failed with wgTurnOn returning \(errorCode)")
                 errorNotifier.notify(PacketTunnelProviderError.couldNotStartBackend)
                 completionHandler(PacketTunnelProviderError.couldNotStartBackend)
@@ -284,10 +286,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         setDataTaskFactoryAccordingToKillSwitchSettings()
 
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
 
-        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)"} ?? "OS directly"
+        let activationSourceDetail = activationAttemptId.map { "app with activation attempt \($0)" } ?? "OS directly"
         wg_log(.info, message: "Starting tunnel from the \(activationSourceDetail)")
         flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
@@ -327,23 +329,25 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         connectedIpId = tunnelProviderProtocol?.connectedServerIpId
         ExtensionAPIService.forceEvictAnyPreviousSessionAssociatedKeysToAvoidConflictErrors = tunnelProviderProtocol?.unleashFeatureFlagShouldForceConflictRefresh ?? false
 
-        startTunnelWithStoredConfig(errorNotifier: errorNotifier,
-                                    newVpnCertificateFeatures: nil,
-                                    completionHandler: completionHandler)
+        startTunnelWithStoredConfig(
+            errorNotifier: errorNotifier,
+            newVpnCertificateFeatures: nil,
+            completionHandler: completionHandler
+        )
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
         #if CHECK_CONNECTIVITY
-        self.stopTestingConnectivity()
+            stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.stop { [unowned self] in
-            self.serverStatusRefreshManager.stop {
+            serverStatusRefreshManager.stop {
                 self.adapter.stop { error in
                     ErrorNotifier.removeLastErrorFile()
 
-                    if let error = error {
+                    if let error {
                         wg_log(.error, message: "Failed to stop WireGuard adapter: \(error.localizedDescription)")
                     }
                     self.flushLogsToFile()
@@ -367,13 +371,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
     }
 
     // swiftlint:disable:next cyclomatic_complexity function_body_length
-    func handleProviderMessage(_ message: WireguardProviderRequest,
-                               completionHandler: ((WireguardProviderRequest.Response) -> Void)?) {
+    func handleProviderMessage(
+        _ message: WireguardProviderRequest,
+        completionHandler: ((WireguardProviderRequest.Response) -> Void)?
+    ) {
         switch message {
         case .getRuntimeTunnelConfiguration:
             wg_log(.info, message: "Handle message: getRuntimeTunnelConfiguration")
             adapter.getRuntimeConfiguration { settings in
-                if let settings = settings, let data = settings.data(using: .utf8) {
+                if let settings, let data = settings.data(using: .utf8) {
                     completionHandler?(.ok(data: data))
                 }
                 completionHandler?(.error(message: "Could not retrieve tunnel configuration."))
@@ -388,24 +394,24 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     completionHandler?(.error(message: String(describing: error)))
                 }
             }
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             wg_log(.info, message: "Handle message: refreshCertificate")
             certificateRefreshManager.checkRefreshCertificateNow(features: features, userInitiated: true) { result in
                 switch result {
                 case .success:
                     completionHandler?(.ok(data: nil))
-                case .failure(let error):
+                case let .failure(error):
                     switch error {
                     case .sessionExpiredOrMissing:
                         completionHandler?(.errorSessionExpired)
                     case .needNewKeys:
                         completionHandler?(.errorNeedKeyRegeneration)
-                    case .tooManyCertRequests(let retryAfter):
-                        if let retryAfter = retryAfter {
+                    case let .tooManyCertRequests(retryAfter):
+                        if let retryAfter {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: Int(retryAfter)))
                         } else {
                             completionHandler?(.errorTooManyCertRequests(retryAfter: nil))
@@ -426,7 +432,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
                 completionHandler?(.ok(data: nil))
             }
         case .getCurrentLogicalAndServerId:
-            let response = "\(self.connectedLogicalId ?? "");\(self.connectedIpId ?? "")"
+            let response = "\(connectedLogicalId ?? "");\(connectedIpId ?? "")"
             wg_log(.info, message: "Handle message: getCurrentLogicalAndServerId (result: \(response))")
             completionHandler?(.ok(data: response.data(using: .utf8)))
         }
@@ -436,7 +442,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("sleep()")
 
         #if CHECK_CONNECTIVITY
-        self.stopTestingConnectivity()
+            stopTestingConnectivity()
         #endif
 
         certificateRefreshManager.suspend {
@@ -450,10 +456,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         log.info("wake()")
 
         #if CHECK_CONNECTIVITY
-        self.startTestingConnectivity()
+            startTestingConnectivity()
         #endif
 
-        certificateRefreshManager.resume { }
+        certificateRefreshManager.resume {}
     }
 
     // MARK: - Logs
@@ -466,7 +472,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
         if !Self.loggingSetupIsDone {
             Self.loggingSetupIsDone = true
             LoggingSystem.bootstrap { _ in
-                return WGLogHandler(formatter: WGLogFormatter())
+                WGLogHandler(formatter: WGLogFormatter())
             }
         }
         // WG logger
@@ -485,55 +491,55 @@ class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate 
 
     // MARK: - Connection tests
 
-#if CHECK_CONNECTIVITY
-    // Enable this in build settings if you want to debug connectivitiy issues.
-    // It will ping API as well as 3rd party ip check site to check if we have the internet and are still connected to the proper server.
-    // Please make sure this is NEVER enabled on Release builds!
+    #if CHECK_CONNECTIVITY
+        // Enable this in build settings if you want to debug connectivitiy issues.
+        // It will ping API as well as 3rd party ip check site to check if we have the internet and are still connected to the proper server.
+        // Please make sure this is NEVER enabled on Release builds!
 
-    private var connectivityTimer: Timer?
-    private var lastConnectivityCheck: Date = Date()
+        private var connectivityTimer: Timer?
+        private var lastConnectivityCheck: Date = .init()
 
-    private func startTestingConnectivity() {
-        DispatchQueue.main.async {
-            self.connectivityTimer?.invalidate()
-            self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+        private func startTestingConnectivity() {
+            DispatchQueue.main.async {
+                self.connectivityTimer?.invalidate()
+                self.connectivityTimer = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(self.checkConnectivity), userInfo: nil, repeats: true)
+            }
         }
-    }
 
-    private func stopTestingConnectivity() {
-        DispatchQueue.main.async {
-            self.connectivityTimer?.invalidate()
-            self.connectivityTimer = nil
+        private func stopTestingConnectivity() {
+            DispatchQueue.main.async {
+                self.connectivityTimer?.invalidate()
+                self.connectivityTimer = nil
+            }
         }
-    }
 
-    @objc private func checkConnectivity() {
-        let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
-        if timeDiff > 60 * 3 {
-            log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
-        } else {
-            log.info("Last connectivity check time diff: \(timeDiff)")
+        @objc
+        private func checkConnectivity() {
+            let timeDiff = -lastConnectivityCheck.timeIntervalSinceNow
+            if timeDiff > 60 * 3 {
+                log.error("Seems like phone was sleeping! Last connectivity check time diff: \(timeDiff)")
+            } else {
+                log.info("Last connectivity check time diff: \(timeDiff)")
+            }
+            check(url: "https://api64.ipify.org/")
+            lastConnectivityCheck = Date()
         }
-        check(url: "https://api64.ipify.org/")
-        lastConnectivityCheck = Date()
-    }
 
-    private func check(url urlString: String) {
-        guard let url = URL(string: urlString), let host = url.host else {
-            log.error("Can't get API endpoint hostname.", category: .api)
-            return
+        private func check(url urlString: String) {
+            guard let url = URL(string: urlString), let host = url.host else {
+                log.error("Can't get API endpoint hostname.", category: .api)
+                return
+            }
+            let urlRequest = URLRequest(url: url)
+
+            let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
+                let responseData = data != nil ? String(data: data!, encoding: .utf8) : "nil"
+                log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data": "\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
+            }
+            task.resume()
         }
-        let urlRequest = URLRequest(url: url)
 
-        let task = dataTaskFactory.dataTask(urlRequest) { data, response, error in
-            let responseData = data != nil ? String(data: data!, encoding: .utf8) : "nil"
-            log.debug("Host check finished", category: .net, metadata: ["host": "\(host)", "data": "\(String(describing: responseData))", "response": "\(String(describing: response))", "error": "\(String(describing: error))"])
-        }
-        task.resume()
-    }
-
-#endif
-
+    #endif
 }
 
 extension PacketTunnelProvider: ServerStatusRefreshDelegate {
@@ -542,7 +548,7 @@ extension PacketTunnelProvider: ServerStatusRefreshDelegate {
             log.error("Was told to reconnect, but alternatives were empty", category: .connection)
             return
         }
-        self.restartTunnel(with: newServer)
+        restartTunnel(with: newServer)
     }
 }
 
@@ -550,9 +556,9 @@ extension WireGuardLogLevel {
     var osLogLevel: OSLogType {
         switch self {
         case .verbose:
-            return .debug
+            .debug
         case .error:
-            return .error
+            .error
         }
     }
 }

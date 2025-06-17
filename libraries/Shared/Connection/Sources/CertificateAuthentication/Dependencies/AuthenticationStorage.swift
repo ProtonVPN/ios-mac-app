@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import CoreConnection
+import Dependencies
+import Foundation
 import protocol VPNShared.VpnAuthenticationStorageSync
 
-extension VpnAuthenticationStorageSync {
-    public func loadAuthenticationData() -> CertificateLoadingResult {
+public extension VpnAuthenticationStorageSync {
+    func loadAuthenticationData() -> CertificateLoadingResult {
         guard let keys = getStoredKeys() else {
             return .keysMissing
         }

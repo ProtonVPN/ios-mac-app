@@ -33,10 +33,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
     override func setUp() async throws {
         try await super.setUp()
 
-        self.manager = ExtensionCertificateRefreshManager(apiService: apiService,
-                                                          timerFactory: timerFactory,
-                                                          vpnAuthenticationStorage: authenticationStorage,
-                                                          keychain: keychain)
+        manager = ExtensionCertificateRefreshManager(
+            apiService: apiService,
+            timerFactory: timerFactory,
+            vpnAuthenticationStorage: authenticationStorage,
+            keychain: keychain
+        )
     }
 
     /// We have to use this because the VPNConnectionFeatures in the request parameters has a decode function that is
@@ -60,9 +62,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         let callback = mockEndpoint(
             CertificateRefreshRequest.self,
-            result: .success([\.certificate: testValues.cert,
-                              \.refreshTime: testValues.refreshTime,
-                              \.validUntil: testValues.validUntil]),
+            result: .success([
+                \.certificate: testValues.cert,
+                \.refreshTime: testValues.refreshTime,
+                \.validUntil: testValues.validUntil,
+            ]),
             expectationToFulfill: expectations.certRefresh
         )
 
@@ -88,14 +92,14 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         }
 
         manager.start {
-            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
+            self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { _ in
                 expectations.certResponse.fulfill()
             }
         }
 
         wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
 
-        guard let cert = self.authenticationStorage.getStoredCertificate() else {
+        guard let cert = authenticationStorage.getStoredCertificate() else {
             XCTFail("No certificate stored")
             return
         }
@@ -117,18 +121,22 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         certRefreshCallback = { request, completionHandler in
             if certRefreshRequests == 0 {
                 certRefreshRequests = 1
-                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
-                                                 result: .failure(MockAPIEndpointError.tokenExpired),
-                                                 expectationToFulfill: expectationForFirstCertRefresh)
+                let callback = self.mockEndpoint(
+                    CertificateRefreshRequest.self,
+                    result: .failure(MockAPIEndpointError.tokenExpired),
+                    expectationToFulfill: expectationForFirstCertRefresh
+                )
 
                 callback(request, completionHandler)
             } else {
                 XCTAssertEqual(certRefreshRequests, 1, "Should have only asked for cert refresh one other time")
                 certRefreshRequests += 1
 
-                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
-                                                 result: .success([:]),
-                                                 expectationToFulfill: expectationForRetryCertRefresh)
+                let callback = self.mockEndpoint(
+                    CertificateRefreshRequest.self,
+                    result: .success([:]),
+                    expectationToFulfill: expectationForRetryCertRefresh
+                )
                 callback(request, completionHandler)
             }
         }
@@ -141,9 +149,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 XCTFail("Should have only requested token refresh once")
                 tokenRefreshRequests += 1
             }
-            let callback = self.mockEndpoint(TokenRefreshRequest.self,
-                                             result: .success([:]),
-                                             expectationToFulfill: expectationForAuthTokenRefresh)
+            let callback = self.mockEndpoint(
+                TokenRefreshRequest.self,
+                result: .success([:]),
+                expectationToFulfill: expectationForAuthTokenRefresh
+            )
             callback(request, completionHandler)
         }
 
@@ -151,11 +161,13 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             self.timerFactory.runRepeatingTimers()
         }
 
-        manager.start { }
+        manager.start {}
 
-        wait(for: [expectationForFirstCertRefresh,
-                   expectationForRetryCertRefresh,
-                   expectationForAuthTokenRefresh], timeout: expectationTimeout)
+        wait(for: [
+            expectationForFirstCertRefresh,
+            expectationForRetryCertRefresh,
+            expectationForAuthTokenRefresh,
+        ], timeout: expectationTimeout)
     }
 
     /// An error 422 means that the API session (not the token) has expired. The network extension can do
@@ -183,26 +195,33 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             validUntil: Date().addingTimeInterval(20)
         )
 
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           result: .failure(MockAPIEndpointError.sessionExpired),
-                                           expectationToFulfill: expectations.firstCertRefresh)
+        certRefreshCallback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .failure(MockAPIEndpointError.sessionExpired),
+            expectationToFulfill: expectations.firstCertRefresh
+        )
 
-        tokenRefreshCallback = mockEndpoint(TokenRefreshRequest.self,
-                                            result: .success([
-                                                \.accessToken: testValues.accessToken,
-                                                \.refreshToken: testValues.refreshToken,
-                                                \.expiresIn: Double(testValues.expiresIn)]),
-                                            expectationToFulfill: expectations.tokenRefresh)
+        tokenRefreshCallback = mockEndpoint(
+            TokenRefreshRequest.self,
+            result: .success([
+                \.accessToken: testValues.accessToken,
+                \.refreshToken: testValues.refreshToken,
+                \.expiresIn: Double(testValues.expiresIn),
+            ]),
+            expectationToFulfill: expectations.tokenRefresh
+        )
 
-        sessionAuthCallback = mockEndpoint(SessionAuthRequest.self,
-                                           result: .success([:]),
-                                           expectationToFulfill: expectations.sessionAuth)
+        sessionAuthCallback = mockEndpoint(
+            SessionAuthRequest.self,
+            result: .success([:]),
+            expectationToFulfill: expectations.sessionAuth
+        )
 
         timerFactory.timerWasAdded = {
             self.timerFactory.runRepeatingTimers()
         }
 
-        manager.start { }
+        manager.start {}
 
         // Manager should try the first cert refresh, and get a 422 as a response.
         wait(for: [expectations.firstCertRefresh], timeout: expectationTimeout)
@@ -226,12 +245,15 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         wait(for: [expectations.secondCertRefresh], timeout: expectationTimeout)
 
         // Now change the cert refresh so that it returns a normal response.
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           result: .success([
-                                               \.certificate: testValues.cert,
-                                               \.refreshTime: testValues.refreshTime,
-                                               \.validUntil: testValues.validUntil]),
-                                           expectationToFulfill: expectations.thirdCertRefresh)
+        certRefreshCallback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .success([
+                \.certificate: testValues.cert,
+                \.refreshTime: testValues.refreshTime,
+                \.validUntil: testValues.validUntil,
+            ]),
+            expectationToFulfill: expectations.thirdCertRefresh
+        )
 
         manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
             defer { expectations.managerRestart.fulfill() }
@@ -241,25 +263,29 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.sessionAuth,
-                   expectations.tokenRefresh,
-                   expectations.managerRestart,
-                   expectations.thirdCertRefresh], timeout: expectationTimeout)
+        wait(for: [
+            expectations.sessionAuth,
+            expectations.tokenRefresh,
+            expectations.managerRestart,
+            expectations.thirdCertRefresh,
+        ], timeout: expectationTimeout)
     }
 
     /// If the certificate doesn't meet the refresh requirements (see `certificateDoesNeedRefreshing(features:)`),
     /// then the refresh manager should make no API calls. (Update this test if you are updating the
     /// aforementioned function.)
     func testRefreshingDoesNothingWhenRefreshConditionsAreNotMet() {
-        let features = VPNConnectionFeatures(netshield: .level1,
-                                             vpnAccelerator: true,
-                                             bouncing: "bouncing",
-                                             natType: .moderateNAT,
-                                             safeMode: true)
+        let features = VPNConnectionFeatures(
+            netshield: .level1,
+            vpnAccelerator: true,
+            bouncing: "bouncing",
+            natType: .moderateNAT,
+            safeMode: true
+        )
         let cert = VpnCertificate(fakeData: [
             \.certificate: "This is a certificate",
             \.refreshTime: Date().addingTimeInterval(60 * 60),
-            \.validUntil: Date().addingTimeInterval(2 * 60 * 60)
+            \.validUntil: Date().addingTimeInterval(2 * 60 * 60),
         ])
         authenticationStorage.features = features
         authenticationStorage.cert = cert
@@ -280,10 +306,14 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         // cert and features should remain unchanged
         XCTAssertEqual(cert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(cert.validUntil.formatted(),
-                       authenticationStorage.cert?.validUntil.formatted())
-        XCTAssertEqual(cert.refreshTime.formatted(),
-                       authenticationStorage.cert?.refreshTime.formatted())
+        XCTAssertEqual(
+            cert.validUntil.formatted(),
+            authenticationStorage.cert?.validUntil.formatted()
+        )
+        XCTAssertEqual(
+            cert.refreshTime.formatted(),
+            authenticationStorage.cert?.refreshTime.formatted()
+        )
         XCTAssert(features.equals(other: authenticationStorage.features, safeModeFeatureEnabled: true))
     }
 
@@ -302,28 +332,32 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             currentCert: VpnCertificate(fakeData: [
                 \.certificate: "This is a certificate",
                 \.refreshTime: Date().addingTimeInterval(60 * 60),
-                \.validUntil: Date().addingTimeInterval(2 * 60 * 60)
+                \.validUntil: Date().addingTimeInterval(2 * 60 * 60),
             ]),
             updatedCert: VpnCertificate(fakeData: [
                 \.certificate: "This is a new certificate",
                 \.refreshTime: Date().addingTimeInterval(20 * 60),
-                \.validUntil: Date().addingTimeInterval(1 * 60 * 60)
+                \.validUntil: Date().addingTimeInterval(1 * 60 * 60),
             ])
         )
 
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           result: .success([
-                                               \.certificate: testData.updatedCert.certificate,
-                                               \.refreshTime: testData.updatedCert.refreshTime,
-                                               \.validUntil: testData.updatedCert.validUntil
-                                           ]),
-                                           expectationToFulfill: expectations.certRefresh)
+        certRefreshCallback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .success([
+                \.certificate: testData.updatedCert.certificate,
+                \.refreshTime: testData.updatedCert.refreshTime,
+                \.validUntil: testData.updatedCert.validUntil,
+            ]),
+            expectationToFulfill: expectations.certRefresh
+        )
 
-        let newFeatures = VPNConnectionFeatures(netshield: .level1,
-                                                vpnAccelerator: true,
-                                                bouncing: "bouncing",
-                                                natType: .moderateNAT,
-                                                safeMode: true)
+        let newFeatures = VPNConnectionFeatures(
+            netshield: .level1,
+            vpnAccelerator: true,
+            bouncing: "bouncing",
+            natType: .moderateNAT,
+            safeMode: true
+        )
 
         authenticationStorage.cert = testData.currentCert
 
@@ -340,10 +374,14 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
 
         XCTAssertEqual(testData.updatedCert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(testData.updatedCert.validUntil.formatted(),
-                       authenticationStorage.cert?.validUntil.formatted())
-        XCTAssertEqual(testData.updatedCert.refreshTime.formatted(),
-                       authenticationStorage.cert?.refreshTime.formatted())
+        XCTAssertEqual(
+            testData.updatedCert.validUntil.formatted(),
+            authenticationStorage.cert?.validUntil.formatted()
+        )
+        XCTAssertEqual(
+            testData.updatedCert.refreshTime.formatted(),
+            authenticationStorage.cert?.refreshTime.formatted()
+        )
     }
 
     /// If the features haven't changed but the certificate needs refreshing, the cert should be refreshed.
@@ -357,20 +395,22 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expiredCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(-7 * 60),
                 \.refreshTime: Date().addingTimeInterval(-4 * 60),
-                \.certificate: "This is an expired certificate"
+                \.certificate: "This is an expired certificate",
             ]),
             updatedCert: VpnCertificate(fakeData: [:]) // just use default values, we don't care
         )
 
         authenticationStorage.cert = testData.expiredCert
 
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           result: .success([
-                                               \.certificate: testData.updatedCert.certificate,
-                                               \.refreshTime: testData.updatedCert.refreshTime,
-                                               \.validUntil: testData.updatedCert.validUntil
-                                           ]),
-                                           expectationToFulfill: expectations.certRefresh)
+        certRefreshCallback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .success([
+                \.certificate: testData.updatedCert.certificate,
+                \.refreshTime: testData.updatedCert.refreshTime,
+                \.validUntil: testData.updatedCert.validUntil,
+            ]),
+            expectationToFulfill: expectations.certRefresh
+        )
 
         manager.start {
             self.manager.checkRefreshCertificateNow(features: self.authenticationStorage.features!) { result in
@@ -385,15 +425,19 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         wait(for: [expectations.certRefresh, expectations.certResponse], timeout: expectationTimeout)
 
         XCTAssertEqual(testData.updatedCert.certificate, authenticationStorage.cert?.certificate)
-        XCTAssertEqual(testData.updatedCert.validUntil.formatted(),
-                       authenticationStorage.cert?.validUntil.formatted())
-        XCTAssertEqual(testData.updatedCert.refreshTime.formatted(),
-                       authenticationStorage.cert?.refreshTime.formatted())
+        XCTAssertEqual(
+            testData.updatedCert.validUntil.formatted(),
+            authenticationStorage.cert?.validUntil.formatted()
+        )
+        XCTAssertEqual(
+            testData.updatedCert.refreshTime.formatted(),
+            authenticationStorage.cert?.refreshTime.formatted()
+        )
     }
 
     func testMultipleRequestsShouldEnqueueProperly() {
         // How many "simultaneous" requests we should simulate being enqueued in the refresh manager
-        let requestIndices = 0..<10
+        let requestIndices = 0 ..< 10
 
         let expectations = (
             certRefresh: XCTestExpectation(description: "Wait for cert refresh request"),
@@ -406,36 +450,38 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expiredCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(-7 * 60),
                 \.refreshTime: Date().addingTimeInterval(-4 * 60),
-                \.certificate: "This is an expired certificate"
+                \.certificate: "This is an expired certificate",
             ]),
             updatedCert: VpnCertificate(fakeData: [
                 \.validUntil: Date().addingTimeInterval(7 * 60),
                 \.refreshTime: Date().addingTimeInterval(4 * 60),
-                \.certificate: "This is an updated certificate"
+                \.certificate: "This is an updated certificate",
             ])
         )
 
         // Set an expired certificate to force the manager to refresh.
         authenticationStorage.cert = testData.expiredCert
 
-        var already: Bool = false
+        var already = false
         certRefreshCallback = { request, completionHandler in
             XCTAssertFalse(already, "Should only need to send this request once")
             already = true
 
-            let callback = self.mockEndpoint(CertificateRefreshRequest.self,
-                                             result: .success([
-                                                 \.validUntil: testData.updatedCert.validUntil,
-                                                 \.refreshTime: testData.updatedCert.refreshTime,
-                                                 \.certificate: testData.updatedCert.certificate,
-                                             ]),
-                                             expectationToFulfill: expectations.certRefresh)
+            let callback = self.mockEndpoint(
+                CertificateRefreshRequest.self,
+                result: .success([
+                    \.validUntil: testData.updatedCert.validUntil,
+                    \.refreshTime: testData.updatedCert.refreshTime,
+                    \.certificate: testData.updatedCert.certificate,
+                ]),
+                expectationToFulfill: expectations.certRefresh
+            )
 
             sleep(1) // Give a little wait to let the requests pile up
             callback(request, completionHandler)
         }
 
-        manager.start { }
+        manager.start {}
 
         var incr = 0
         let incrQueue = DispatchQueue(label: "incr")
@@ -498,49 +544,69 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             certRefreshSuccessful: expect("successful cert refresh request")
         )
 
-        let certRefreshError503WithRetryAfter = mockEndpoint(CertificateRefreshRequest.self,
-                                                             apiFailure: .serviceUnavailable,
-                                                             responseHeaders: [.retryAfter: "30"],
-                                                             expectationToFulfill: expectations.certRefresh503RetryAfter)
+        let certRefreshError503WithRetryAfter = mockEndpoint(
+            CertificateRefreshRequest.self,
+            apiFailure: .serviceUnavailable,
+            responseHeaders: [.retryAfter: "30"],
+            expectationToFulfill: expectations.certRefresh503RetryAfter
+        )
 
-        let certRefreshError500WithRetryAfter = mockEndpoint(CertificateRefreshRequest.self,
-                                                             apiFailure: .internalError,
-                                                             responseHeaders: [.retryAfter: "60"],
-                                                             expectationToFulfill: expectations.certRefresh500RetryAfter)
+        let certRefreshError500WithRetryAfter = mockEndpoint(
+            CertificateRefreshRequest.self,
+            apiFailure: .internalError,
+            responseHeaders: [.retryAfter: "60"],
+            expectationToFulfill: expectations.certRefresh500RetryAfter
+        )
 
-        let certRefresh401ToForceTokenRefresh = mockEndpoint(CertificateRefreshRequest.self,
-                                                             apiFailure: .tokenExpired,
-                                                             expectationToFulfill: expectations.certRefresh401TokenRefresh)
+        let certRefresh401ToForceTokenRefresh = mockEndpoint(
+            CertificateRefreshRequest.self,
+            apiFailure: .tokenExpired,
+            expectationToFulfill: expectations.certRefresh401TokenRefresh
+        )
 
-        let tokenRefreshError429WithRetryAfter = mockEndpoint(TokenRefreshRequest.self,
-                                                              apiFailure: .tooManyRequests,
-                                                              responseHeaders: [.retryAfter: "90"],
-                                                              expectationToFulfill: expectations.tokenRefresh429RetryAfter)
+        let tokenRefreshError429WithRetryAfter = mockEndpoint(
+            TokenRefreshRequest.self,
+            apiFailure: .tooManyRequests,
+            responseHeaders: [.retryAfter: "90"],
+            expectationToFulfill: expectations.tokenRefresh429RetryAfter
+        )
 
-        let tokenRefreshWithError422 = mockEndpoint(TokenRefreshRequest.self,
-                                                    apiFailure: .sessionExpired,
-                                                    expectationToFulfill: expectations.tokenRefresh422SessionExpired)
+        let tokenRefreshWithError422 = mockEndpoint(
+            TokenRefreshRequest.self,
+            apiFailure: .sessionExpired,
+            expectationToFulfill: expectations.tokenRefresh422SessionExpired
+        )
 
-        let sessionAuthError503WithRetryAfter = mockEndpoint(SessionAuthRequest.self,
-                                                             apiFailure: .serviceUnavailable,
-                                                             responseHeaders: [.retryAfter: "120"],
-                                                             expectationToFulfill: expectations.sessionAuth503RetryAfter)
+        let sessionAuthError503WithRetryAfter = mockEndpoint(
+            SessionAuthRequest.self,
+            apiFailure: .serviceUnavailable,
+            responseHeaders: [.retryAfter: "120"],
+            expectationToFulfill: expectations.sessionAuth503RetryAfter
+        )
 
-        let successfulSessionAuth = mockEndpoint(SessionAuthRequest.self,
-                                                 result: .success([:]),
-                                                 expectationToFulfill: expectations.sessionAuthSuccessful)
+        let successfulSessionAuth = mockEndpoint(
+            SessionAuthRequest.self,
+            result: .success([:]),
+            expectationToFulfill: expectations.sessionAuthSuccessful
+        )
 
-        let successfulTokenRefresh = mockEndpoint(TokenRefreshRequest.self,
-                                                  result: .success([:]),
-                                                  expectationToFulfill: expectations.tokenRefreshSuccessful)
+        let successfulTokenRefresh = mockEndpoint(
+            TokenRefreshRequest.self,
+            result: .success([:]),
+            expectationToFulfill: expectations.tokenRefreshSuccessful
+        )
 
-        let certRefreshError503NoRetryAfter = mockEndpoint(CertificateRefreshRequest.self,
-                                                           apiFailure: .serviceUnavailable,
-                                                           expectationToFulfill: expectations.certRefresh503NoRetryAfter)
+        let certRefreshError503NoRetryAfter = mockEndpoint(
+            CertificateRefreshRequest.self,
+            apiFailure: .serviceUnavailable,
+            expectationToFulfill: expectations.certRefresh503NoRetryAfter
+        )
 
-        let successfulCertRefresh = mockEndpoint(CertificateRefreshRequest.self,
-                                                 result: .success([:]),
-                                                 expectationToFulfill: expectations.certRefreshSuccessful)
+        let successfulCertRefresh = mockEndpoint(
+            CertificateRefreshRequest.self,
+            result: .success([:]),
+            expectationToFulfill: expectations.certRefreshSuccessful
+        )
 
         // To make testing easier, set jitter to 0.
         let oldJitterRate = ExtensionAPIService.retryAfterJitterRate
@@ -563,7 +629,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
 
             // start the first request.
-            manager.start { }
+            manager.start {}
 
             wait(for: [expectations.certRefresh503RetryAfter, expectations.certRefresh503ScheduledWork], timeout: expectationTimeout)
             guard let scheduledWork = timerFactory.scheduledWork.first else {
@@ -646,7 +712,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             manager.newSession(withSelector: Self.sessionSelector, sessionCookie: Self.sessionCookie) { result in
                 if case let .failure(error) = result {
                     XCTFail("Should not return error here. This should be called with success when the " +
-                            "completion handler is rescheduled and returns successfully (got '\(error)')")
+                        "completion handler is rescheduled and returns successfully (got '\(error)')")
                 }
                 // note: this won't be fulfilled until three blocks down, when the cert retry succeeds
                 expectations.sessionAuthSuccessfulManagerRestart.fulfill()
@@ -677,16 +743,18 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
                 XCTFail("Shouldn't add any timers here")
             }
 
-            self.timerFactory.workWasScheduled = {
+            timerFactory.workWasScheduled = {
                 expectations.certRefresh503NoRetryScheduledWork.fulfill()
             }
 
             timerFactory.runAllScheduledWork()
 
-            wait(for: [expectations.sessionAuthSuccessful,
-                       expectations.tokenRefreshSuccessful,
-                       expectations.certRefresh503NoRetryAfter,
-                       expectations.certRefresh503NoRetryScheduledWork], timeout: expectationTimeout)
+            wait(for: [
+                expectations.sessionAuthSuccessful,
+                expectations.tokenRefreshSuccessful,
+                expectations.certRefresh503NoRetryAfter,
+                expectations.certRefresh503NoRetryScheduledWork,
+            ], timeout: expectationTimeout)
 
             guard let scheduledWork = timerFactory.scheduledWork.first else {
                 XCTFail("No scheduled work item found")
@@ -700,10 +768,12 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         do {
             certRefreshCallback = successfulCertRefresh
 
-            self.timerFactory.runAllScheduledWork()
+            timerFactory.runAllScheduledWork()
 
-            wait(for: [expectations.certRefreshSuccessful,
-                       expectations.sessionAuthSuccessfulManagerRestart], timeout: expectationTimeout)
+            wait(for: [
+                expectations.certRefreshSuccessful,
+                expectations.sessionAuthSuccessfulManagerRestart,
+            ], timeout: expectationTimeout)
         }
 
         ExtensionAPIService.retryAfterJitterRate = oldJitterRate
@@ -717,7 +787,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             certRefreshReschedule: XCTestExpectation(description: "Cert refresh request was rescheduled")
         )
 
-        certRefreshCallback = { request, completionHandler in
+        certRefreshCallback = { _, completionHandler in
             completionHandler(nil, nil, POSIXError(.ETIMEDOUT))
             expectations.certRefreshRequest.fulfill()
         }
@@ -730,7 +800,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expectations.certRefreshReschedule.fulfill()
         }
 
-        manager.start { }
+        manager.start {}
 
         wait(for: [expectations.certRefreshRequest, expectations.certRefreshReschedule], timeout: expectationTimeout)
 
@@ -751,7 +821,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             managerStop: XCTestExpectation(description: "Manager should stop")
         )
 
-        certRefreshCallback = { request, completionHandler in
+        certRefreshCallback = { _, completionHandler in
             completionHandler(nil, nil, POSIXError(.ETIMEDOUT))
             expectations.certRefreshRequest.fulfill()
         }
@@ -760,7 +830,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             expectations.certRefreshReschedule.fulfill()
         }
 
-        manager.start { }
+        manager.start {}
         manager.checkRefreshCertificateNow(features: authenticationStorage.features!) { result in
             guard case let .failure(error) = result else {
                 XCTFail("Expected cancelled error but got success")
@@ -806,13 +876,15 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         )
 
         keychain.credentials = [
-            .mainApp: .init(username: "me",
-                            accessToken: "access",
-                            refreshToken: "refresh",
-                            sessionId: "session",
-                            userId: "user",
-                            scopes: [],
-                            mailboxPassword: "")
+            .mainApp: .init(
+                username: "me",
+                accessToken: "access",
+                refreshToken: "refresh",
+                sessionId: "session",
+                userId: "user",
+                scopes: [],
+                mailboxPassword: ""
+            ),
         ]
 
         var numCertRequests = 0
@@ -826,15 +898,19 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             // the third request should respond with "invalid token" after the app has checked in with the extension.
             case 2:
                 let expectation = numCertRequests == 0 ? expectations.firstCertRefresh : expectations.thirdCertRefresh
-                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
-                                                 apiFailure: .tokenExpired,
-                                                 expectationToFulfill: expectation)
+                let callback = self.mockEndpoint(
+                    CertificateRefreshRequest.self,
+                    apiFailure: .tokenExpired,
+                    expectationToFulfill: expectation
+                )
                 callback(request, completionHandler)
             // the request after the first one, which should provide a valid access token.
             case 1:
-                let callback = self.mockEndpoint(CertificateRefreshRequest.self,
-                                                 result: .success([:]),
-                                                 expectationToFulfill: expectations.secondCertRefresh)
+                let callback = self.mockEndpoint(
+                    CertificateRefreshRequest.self,
+                    result: .success([:]),
+                    expectationToFulfill: expectations.secondCertRefresh
+                )
                 callback(request, completionHandler)
             default:
                 DispatchQueue.main.async {
@@ -844,12 +920,14 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             numCertRequests += 1
         }
 
-        tokenRefreshCallback = mockEndpoint(TokenRefreshRequest.self,
-                                            result: .success([
-                                                \.accessToken: testData.updatedAccessToken,
-                                                \.refreshToken: testData.updatedRefreshToken,
-                                            ]),
-                                            expectationToFulfill: expectations.tokenRefresh)
+        tokenRefreshCallback = mockEndpoint(
+            TokenRefreshRequest.self,
+            result: .success([
+                \.accessToken: testData.updatedAccessToken,
+                \.refreshToken: testData.updatedRefreshToken,
+            ]),
+            expectationToFulfill: expectations.tokenRefresh
+        )
 
         timerFactory.timerWasAdded = {
             self.timerFactory.runRepeatingTimers()
@@ -865,11 +943,13 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         // Sequence of operations: manager starts, then checks certificate, gets token refresh error,
         // tries to refresh token, succeeds & stores credentials, then asks successfully for second cert refresh.
-        wait(for: [expectations.managerStart,
-                   expectations.firstCertRefresh,
-                   expectations.tokenRefresh,
-                   expectations.credentialsStored,
-                   expectations.secondCertRefresh], timeout: 10)
+        wait(for: [
+            expectations.managerStart,
+            expectations.firstCertRefresh,
+            expectations.tokenRefresh,
+            expectations.credentialsStored,
+            expectations.secondCertRefresh,
+        ], timeout: 10)
 
         // The new credentials should be stored in the main app's keychain, not in the extension's
         XCTAssertEqual(keychain.credentials[.mainApp]?.accessToken, testData.updatedAccessToken)
@@ -911,27 +991,33 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         let expectations = (
             firstCertRefresh: XCTestExpectation(description: "first certificate refresh"),
             authTokenRefresh: XCTestExpectation(description: "first auth token refresh"),
-            sessionExpiredResult: (1...3).map { XCTestExpectation(description: "session expiry result #\($0)") }
+            sessionExpiredResult: (1 ... 3).map { XCTestExpectation(description: "session expiry result #\($0)") }
         )
 
         keychain.credentials = [
-            .mainApp: .init(username: "me",
-                            accessToken: "access",
-                            refreshToken: "refresh",
-                            sessionId: "session",
-                            userId: "user",
-                            scopes: [],
-                            mailboxPassword: "")
+            .mainApp: .init(
+                username: "me",
+                accessToken: "access",
+                refreshToken: "refresh",
+                sessionId: "session",
+                userId: "user",
+                scopes: [],
+                mailboxPassword: ""
+            ),
         ]
 
-        certRefreshCallback = mockEndpoint(CertificateRefreshRequest.self,
-                                           apiFailure: .tokenExpired,
-                                           expectationToFulfill: expectations.firstCertRefresh)
-        tokenRefreshCallback = mockEndpoint(TokenRefreshRequest.self,
-                                            apiFailure: .sessionExpired,
-                                            expectationToFulfill: expectations.authTokenRefresh)
+        certRefreshCallback = mockEndpoint(
+            CertificateRefreshRequest.self,
+            apiFailure: .tokenExpired,
+            expectationToFulfill: expectations.firstCertRefresh
+        )
+        tokenRefreshCallback = mockEndpoint(
+            TokenRefreshRequest.self,
+            apiFailure: .sessionExpired,
+            expectationToFulfill: expectations.authTokenRefresh
+        )
 
-        manager.start { }
+        manager.start {}
 
         manager.checkRefreshCertificateNow(features: nil) { result in
             defer { expectations.sessionExpiredResult[0].fulfill() }
@@ -944,9 +1030,11 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             }
         }
 
-        wait(for: [expectations.firstCertRefresh,
-                   expectations.authTokenRefresh,
-                   expectations.sessionExpiredResult[0]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.firstCertRefresh,
+            expectations.authTokenRefresh,
+            expectations.sessionExpiredResult[0],
+        ], timeout: expectationTimeout)
 
         // we shouldn't hit the API at all here
         certRefreshCallback = failCallback
@@ -989,13 +1077,13 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
         let expectationTimeout: TimeInterval = 5
 
         timerFactory.workWasScheduled = { [weak self] in
-            let second: Double = 1000000
+            let second: Double = 1_000_000
             usleep(UInt32(0.5 * second))
 
             self?.timerFactory.runAllScheduledWork()
         }
 
-        certRefreshCallback = { request, completion in
+        certRefreshCallback = { _, completion in
             willStop.wait()
 
             completion(nil, nil, POSIXError(.ETIMEDOUT))
@@ -1038,7 +1126,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             certRefreshRequest: XCTestExpectation(description: "Cert refresh request")
         )
 
-        certRefreshCallback = { (_, _) in
+        certRefreshCallback = { _, _ in
             XCTFail("Shouldn't try to refresh before refresh is requested")
         }
 
@@ -1054,7 +1142,7 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
 
         wait(for: [expectations.managerStarted, expectations.managerSuspended, expectations.managerResumed], timeout: expectationTimeout, enforceOrder: true)
 
-        certRefreshCallback = { (_, _) in
+        certRefreshCallback = { _, _ in
             expectations.certRefreshRequest.fulfill()
         }
 

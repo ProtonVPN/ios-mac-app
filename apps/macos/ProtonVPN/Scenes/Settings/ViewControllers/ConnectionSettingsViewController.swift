@@ -24,37 +24,37 @@ import Combine
 
 import Domain
 import Ergonomics
-import Strings
 import LegacyCommon
-import ProtonCoreFeatureFlags
 import NEHelper
+import ProtonCoreFeatureFlags
 import Sharing
+import Strings
 
 final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
-    
     fileprivate enum SwitchButtonOption: Int {
         case killSwitch
     }
 
-    @IBOutlet private weak var autoConnectView: SettingsDropDownView!
-    @IBOutlet private weak var quickConnectView: SettingsDropDownView!
-    @IBOutlet private weak var protocolView: SettingsDropDownView!
+    @IBOutlet private var autoConnectView: SettingsDropDownView!
+    @IBOutlet private var quickConnectView: SettingsDropDownView!
+    @IBOutlet private var protocolView: SettingsDropDownView!
 
-    @IBOutlet private weak var vpnAcceleratorView: SettingsTickboxView!
-    @IBOutlet private weak var plutoniumView: SettingsTickboxView!
-    @IBOutlet private weak var dnsLeakProtectionView: SettingsTickboxView!
-    @IBOutlet private weak var allowLANView: SettingsTickboxView!
+    @IBOutlet private var vpnAcceleratorView: SettingsTickboxView!
+    @IBOutlet private var plutoniumView: SettingsTickboxView!
+    @IBOutlet private var dnsLeakProtectionView: SettingsTickboxView!
+    @IBOutlet private var allowLANView: SettingsTickboxView!
     private var viewModel: ConnectionSettingsViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: ConnectionSettingsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("ConnectionSettings"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.reloadNeeded = { [weak self] in
@@ -69,17 +69,17 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
         reloadView()
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupAutoConnectItem() {
         let count = viewModel.autoConnectItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.autoConnectItem(for: index)
             return menuItem
@@ -89,10 +89,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         autoConnectView.setupItem(model: model, target: self, action: #selector(autoConnectItemSelected))
     }
-    
+
     private func setupQuickConnectItem() {
         let count = viewModel.quickConnectItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.quickConnectItem(for: index)
             return menuItem
@@ -103,10 +103,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         quickConnectView.setupItem(model: model, target: self, action: #selector(quickConnectItemSelected))
         quickConnectView.isHidden = !viewModel.shouldShowQuickConnect
     }
-    
+
     private func setupProtocolItem() {
         let count = viewModel.protocolItemCount
-        let menuItems: [NSMenuItem] = (0..<count).map { index in
+        let menuItems: [NSMenuItem] = (0 ..< count).map { index in
             let menuItem = NSMenuItem()
             menuItem.attributedTitle = viewModel.protocolString(for: viewModel.protocolItem(for: index) ?? .vpnProtocol(.ike))
             menuItem.isHidden = viewModel.protocolItem(for: index)?.isDeprecated == true
@@ -174,7 +174,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         )
         vpnAcceleratorView.setupItem(model: model, delegate: self)
     }
-    
+
     private func setupDnsLeakProtectionItem() {
         let model = SettingsTickboxView.ViewModel(labelText: Localizable.dnsLeakProtection, buttonState: true, buttonEnabled: false, toolTip: Localizable.dnsLeakProtectionTooltip)
         dnsLeakProtectionView.setupItem(model: model, delegate: self)
@@ -197,9 +197,9 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             protocolView.stopProgressIndicatorAnimation()
         }
     }
-    
+
     // MARK: - ReloadableViewController
-    
+
     func reloadView() {
         setupView()
         setupAutoConnectItem()
@@ -210,31 +210,34 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupDnsLeakProtectionItem()
         setupAllowLANItem()
     }
-    
+
     // MARK: - Actions
-    
-    @objc private func autoConnectItemSelected() {
+
+    @objc
+    private func autoConnectItemSelected() {
         do {
             try viewModel.setAutoConnect(autoConnectView.indexOfSelectedItem())
         } catch {
             setupAutoConnectItem()
         }
     }
-    
-    @objc private func quickConnectItemSelected() {
+
+    @objc
+    private func quickConnectItemSelected() {
         do {
             try viewModel.setQuickConnect(quickConnectView.indexOfSelectedItem())
         } catch {
             setupQuickConnectItem()
         }
     }
-    
-    @objc private func protocolItemSelected() {
+
+    @objc
+    private func protocolItemSelected() {
         guard let protocolItem = viewModel.protocolItem(for: protocolView.indexOfSelectedItem()) else {
             return
         }
 
-        viewModel.setProtocol(protocolItem) { [weak self] result in
+        viewModel.setProtocol(protocolItem) { [weak self] _ in
             executeOnUIThread {
                 self?.setupProtocolItem()
             }

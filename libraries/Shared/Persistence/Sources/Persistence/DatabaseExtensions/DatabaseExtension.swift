@@ -79,7 +79,6 @@ struct DatabaseExtension {
 }
 
 extension DatabaseExtension {
-
     /// Creates a `DatabaseFunction` instance, passing the real implementation that is created with the current
     /// `@Dependency` environment. This is the implementation that is executed by the database whenever this instance
     /// is used to  evaluate `SQLExpressions` using `callAsFunction`
@@ -92,11 +91,11 @@ extension DatabaseExtension {
     /// Use the `DatabaseFunction` created with a placeholder implementation to allow GRDB to evaluate SQL expressions
     /// involving this function, without invoking the precomputation in `implementationGenerator`.
     func callAsFunction(_ arguments: any SQLExpressible) -> SQLExpression {
-        return placeholderFunction.callAsFunction(arguments)
+        placeholderFunction.callAsFunction(arguments)
     }
 
     private static var placeholderImplementation: DatabaseExecutable {
-        return { _ in
+        { _ in
             throw DatabaseExtensionError.placeholderInvoked
         }
     }

@@ -33,7 +33,7 @@ struct ProtocolCell: View {
 
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
 
-    private var isStandardLayoutActive: Bool { dynamicTypeSize <= .xxxLarge}
+    private var isStandardLayoutActive: Bool { dynamicTypeSize <= .xxxLarge }
 
     var body: some View {
         cellContent
@@ -42,7 +42,8 @@ struct ProtocolCell: View {
             .onTapGesture { onTap() }
     }
 
-    @ViewBuilder var cellContent: some View {
+    @ViewBuilder
+    var cellContent: some View {
         if isStandardLayoutActive {
             HStack {
                 VStack(alignment: .leading, spacing: .themeSpacing6) {
@@ -76,7 +77,8 @@ struct ProtocolCell: View {
             .foregroundColor(.init(.text, .normal))
     }
 
-    @ViewBuilder private var tagView: some View {
+    @ViewBuilder
+    private var tagView: some View {
         HStack {
             ForEach(attributes) { attribute in
                 ProtocolTag(attribute: attribute)
@@ -104,27 +106,27 @@ enum ProtocolAttribute: Identifiable {
     var localizedTitle: String {
         switch self {
         case .new:
-            return Localizable.settingsProtocolTagNew
+            Localizable.settingsProtocolTagNew
         case .recommended:
-            return Localizable.settingsProtocolTagRecommended
+            Localizable.settingsProtocolTagRecommended
         }
     }
 
     var textColor: Color {
         switch self {
         case .new:
-            return tintColor
+            tintColor
         case .recommended:
-            return Color(.text, .normal)
+            Color(.text, .normal)
         }
     }
 
     var tintColor: Color {
         switch self {
         case .new:
-            return Color(.border, .warning)
+            Color(.border, .warning)
         case .recommended:
-            return Color(.border, .normal)
+            Color(.border, .normal)
         }
     }
 }
@@ -155,7 +157,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [.new, .recommended],
                 description: "Auto-selects the best protocol for your connection.",
                 connectionProtocol: .smartProtocol,
-                onTap: { },
+                onTap: {},
                 isSelected: false
             )
             ProtocolCell(
@@ -163,7 +165,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [.new],
                 description: "Totally a great protocol, and definitely not unsecure or anything.",
                 connectionProtocol: .vpnProtocol(.ike),
-                onTap: { },
+                onTap: {},
                 isSelected: true
             )
             ProtocolCell(
@@ -171,7 +173,7 @@ struct ProtocolCell_Previews: PreviewProvider {
                 attributes: [],
                 description: "Boring protocol with no tags.",
                 connectionProtocol: .vpnProtocol(.openVpn(.udp)),
-                onTap: { },
+                onTap: {},
                 isSelected: true
             )
         }

@@ -24,7 +24,6 @@ import Cocoa
 
 // Allows pass through of hit test when hit test fails on subviews
 class PassThroughView: NSView {
-    
     override func hitTest(_ point: NSPoint) -> NSView? {
         if let view = super.hitTest(point) {
             if view == self {
@@ -38,7 +37,6 @@ class PassThroughView: NSView {
 }
 
 class PassThroughImageView: NSImageView {
-    
     override func hitTest(_ point: NSPoint) -> NSView? {
         if let view = super.hitTest(point) {
             if view == self {
@@ -52,7 +50,6 @@ class PassThroughImageView: NSImageView {
 }
 
 class PassThroughTextField: NSTextField {
-    
     override func hitTest(_ point: NSPoint) -> NSView? {
         if let view = super.hitTest(point) {
             if view == self {

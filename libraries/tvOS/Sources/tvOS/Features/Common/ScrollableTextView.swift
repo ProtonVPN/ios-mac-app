@@ -30,11 +30,11 @@ struct ScrollableTextView: View {
     var chunks: [String] {
         let lines = text.components(separatedBy: "\n")
         let chunkCount = lines.count / linesPerChunk
-    
+
         return Range(0 ... chunkCount).map { chunkIndex in
             let startIndex = linesPerChunk * chunkIndex
             let endIndex = min(linesPerChunk * (chunkIndex + 1) - 1, lines.count - 1)
-            
+
             return lines[startIndex ... endIndex]
                 .joined(separator: "\n")
         }

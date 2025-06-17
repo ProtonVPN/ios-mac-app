@@ -90,7 +90,7 @@ class TelemetryEventScheduler {
     private func scheduleEvent(_ event: any TelemetryEvent) async throws {
         let bufferedEvent: TelemetryBuffer.BufferedEvent
         do {
-            bufferedEvent = .init(try encoder.encode(event), id: UUID())
+            bufferedEvent = try .init(encoder.encode(event), id: UUID())
             try await buffer.save(event: bufferedEvent)
         } catch {
             throw Error(localizedDescription: "Failed scheduling telemetry event: \(event), error: \(error)")

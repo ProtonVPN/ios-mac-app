@@ -27,8 +27,8 @@ public protocol ConditionalRequest: Request {
     var baseHeaders: [String: Any] { get }
 }
 
-extension ConditionalRequest {
-    public var header: [String: Any] {
+public extension ConditionalRequest {
+    var header: [String: Any] {
         guard let condition else {
             return baseHeaders
         }
@@ -41,8 +41,8 @@ public enum RequestCondition {
 
     var additionalHeaders: [String: Any] {
         switch self {
-        case .ifModifiedSince(let date):
-            return ["If-Modified-Since": date]
+        case let .ifModifiedSince(date):
+            ["If-Modified-Since": date]
         }
     }
 }

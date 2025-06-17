@@ -31,12 +31,12 @@ import ProtonCoreUtilities
 
 // Internal
 import Ergonomics
-import VPNShared // AuthKeychain
 import VPNAppCore // UnauthKeychain
+import VPNShared // AuthKeychain
 
-public typealias SuccessCallback = (() -> Void)
+public typealias SuccessCallback = () -> Void
 public typealias SuccessConfirmationCallback = (@escaping SuccessCallback) -> Void
-public typealias GenericCallback<T> = ((T) -> Void)
+public typealias GenericCallback<T> = (T) -> Void
 public typealias ErrorCallback = GenericCallback<Error>
 
 public protocol Networking: APIServiceDelegate {
@@ -59,24 +59,24 @@ public enum Session: Equatable {
 
     public var uid: String {
         switch self {
-        case .auth(let uid):
-            return uid
+        case let .auth(uid):
+            uid
 
-        case .unauth(let uid):
-            return uid
+        case let .unauth(uid):
+            uid
         }
     }
 }
 
 // MARK: CoreNetworking
-public final class CoreNetworking: Networking {
 
+public final class CoreNetworking: Networking {
     public func perform<R>(request route: Request) async throws -> R where R: APIDecodableResponse {
-        (try await apiService.perform(request: route) as (URLSessionDataTask?, R)).1
+        try await (apiService.perform(request: route) as (URLSessionDataTask?, R)).1
     }
 
     public func perform(request route: Request) async throws -> JSONDictionary {
-        ((try await apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
+        try await ((apiService.perform(request: route)) as (URLSessionDataTask?, JSONDictionary)).1
     }
 
     public private(set) var apiService: PMAPIService
@@ -85,9 +85,9 @@ public final class CoreNetworking: Networking {
     private let authKeychain: AuthKeychainHandle
     private let unauthKeychain: UnauthKeychainHandle
 
-    public typealias Factory = NetworkingDelegateFactory &
+    public typealias Factory =
         AppInfoFactory &
-        AuthKeychainHandleFactory &
+        AuthKeychainHandleFactory & NetworkingDelegateFactory &
         UnauthKeychainHandleFactory
 
     public convenience init(_ factory: Factory, pinApiEndpoints: Bool) {
@@ -123,17 +123,17 @@ public final class CoreNetworking: Networking {
         @Dependency(\.challengeParametersProvider) var challengeParametersProvider
 
         #if DEBUG
-        log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
+            log.info("-- host: \(doh.defaultHost), atlasSecret: \(optional: doh.atlasSecret)")
         #endif
 
         if let sessionUID = authKeychain.fetch()?.sessionId ?? unauthKeychain.fetch()?.sessionID {
-            apiService = PMAPIService.createAPIService(
+            self.apiService = PMAPIService.createAPIService(
                 doh: doh,
                 sessionUID: sessionUID,
                 challengeParametersProvider: challengeParametersProvider
             )
         } else {
-            apiService = PMAPIService.createAPIServiceWithoutSession(
+            self.apiService = PMAPIService.createAPIServiceWithoutSession(
                 doh: doh,
                 challengeParametersProvider: challengeParametersProvider
             )
@@ -159,20 +159,22 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.request(method: route.method,
-                           path: route.path,
-                           parameters: route.parameters,
-                           headers: route.header,
-                           authenticated: route.isAuth,
-                           authRetry: route.authRetry,
-                           customAuthCredential: route.authCredential,
-                           nonDefaultTimeout: nil,
-                           retryPolicy: route.retryPolicy) { (task, result) in
+        apiService.request(
+            method: route.method,
+            path: route.path,
+            parameters: route.parameters,
+            headers: route.header,
+            authenticated: route.isAuth,
+            authRetry: route.authRetry,
+            customAuthCredential: route.authCredential,
+            nonDefaultTimeout: nil,
+            retryPolicy: route.retryPolicy
+        ) { _, result in
             switch result {
-            case .success(let data):
+            case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.success(data))
-            case .failure(let error):
+            case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
                 completion(.failure(error))
             }
@@ -187,7 +189,7 @@ public final class CoreNetworking: Networking {
         log.debug("Request started", category: .net, metadata: [
             "url": "\(url)",
             "method": "\(route.method.rawValue.uppercased())",
-            "condition": "\(optional: route.condition)"
+            "condition": "\(optional: route.condition)",
         ])
 
         apiService.request(
@@ -205,21 +207,21 @@ public final class CoreNetworking: Networking {
             let statusCode = httpResponse?.statusCode
             let lastModified = httpResponse?.headers["Last-Modified"]
             switch result {
-            case .success(let data):
+            case let .success(data):
                 log.debug("Request finished OK", category: .net, metadata: [
                     "url": "\(url)",
                     "method": "\(route.method.rawValue.uppercased())",
-                    "Last-Modified": "\(lastModified ?? "nil")"
+                    "Last-Modified": "\(lastModified ?? "nil")",
                 ])
                 completion(.success(.modified(at: lastModified, value: data)))
 
-            case .failure(let error):
+            case let .failure(error):
                 if case HttpStatusCode.notModified.rawValue = statusCode {
                     log.debug("Request finished - not modified", category: .net, event: .response, metadata: [
                         "error": "\(error)",
                         "url": "\(url)",
                         "method": "\(route.method.rawValue.uppercased())",
-                        "Last-Modified": "\(optional: lastModified)"
+                        "Last-Modified": "\(optional: lastModified)",
                     ])
                     completion(.success(.notModified(since: lastModified)))
                     return
@@ -229,7 +231,7 @@ public final class CoreNetworking: Networking {
                     "error": "\(error)",
                     "url": "\(url)",
                     "method": "\(route.method.rawValue.uppercased())",
-                    "code": "\(statusCode ?? -1)"
+                    "code": "\(statusCode ?? -1)",
                 ])
                 completion(.failure(error))
             }
@@ -240,7 +242,7 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        apiService.perform(request: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+        apiService.perform(request: route) { (_: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
@@ -260,8 +262,8 @@ public final class CoreNetworking: Networking {
         let method = route.httpMethod?.uppercased() ?? "GET"
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
-        let task = URLSession.shared.dataTask(with: route) { data, response, error in
-            if let error = error {
+        let task = URLSession.shared.dataTask(with: route) { data, _, error in
+            if let error {
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(method)"])
                 completion(.failure(error))
                 return
@@ -269,7 +271,7 @@ public final class CoreNetworking: Networking {
 
             log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
-            if let data = data, let string = String(data: data, encoding: .utf8) {
+            if let data, let string = String(data: data, encoding: .utf8) {
                 completion(.success(string))
                 return
             }
@@ -283,10 +285,10 @@ public final class CoreNetworking: Networking {
         let url = fullUrl(route)
         log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
 
-        let progress: ProgressCompletion = { (progress: Progress) -> Void in
+        let progress: ProgressCompletion = { (progress: Progress) in
             log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
         }
-        apiService.performUpload(request: route, files: files, uploadProgress: progress) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+        apiService.performUpload(request: route, files: files, uploadProgress: progress) { (_: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
                 log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.rawValue.uppercased())"])
@@ -299,11 +301,12 @@ public final class CoreNetworking: Networking {
     }
 
     private func fullUrl(_ route: Request) -> String {
-        return "\(apiService.dohInterface.getCurrentlyUsedHostUrl())\(route.path)"
+        "\(apiService.dohInterface.getCurrentlyUsedHostUrl())\(route.path)"
     }
 }
 
 // MARK: APIServiceDelegate
+
 extension CoreNetworking: APIServiceDelegate {
     public var additionalHeaders: [String: String]? {
         @Dependency(\.dohConfiguration) var doh
@@ -320,22 +323,22 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public var appVersion: String {
-#if DEBUG
-        // App version is suffixed with `-dev` to enforce API rigour and prevent the use
-        // of deprecated functionality, ensuring errors are raised in such cases.
-        return appInfo.appVersion + "-dev"
-#else
-        // Help the backend figure out whether we're distributing through a TestFlight build.
-        if Bundle.isTestflight {
-            return appInfo.appVersion + "-beta"
-        } else {
-            return appInfo.appVersion
-        }
-#endif
+        #if DEBUG
+            // App version is suffixed with `-dev` to enforce API rigour and prevent the use
+            // of deprecated functionality, ensuring errors are raised in such cases.
+            return appInfo.appVersion + "-dev"
+        #else
+            // Help the backend figure out whether we're distributing through a TestFlight build.
+            if Bundle.isTestflight {
+                return appInfo.appVersion + "-beta"
+            } else {
+                return appInfo.appVersion
+            }
+        #endif
     }
 
     public var userAgent: String? {
-        return appInfo.userAgent
+        appInfo.userAgent
     }
 
     public func onUpdate(serverTime: Int64) {
@@ -344,13 +347,14 @@ extension CoreNetworking: APIServiceDelegate {
     }
 
     public func isReachable() -> Bool {
-        return true
+        true
     }
 
-    public func onDohTroubleshot() { }
+    public func onDohTroubleshot() {}
 }
 
 // MARK: AuthDelegate
+
 extension CoreNetworking: AuthDelegate {
     public var authSessionInvalidatedDelegateForLoginAndSignup: ProtonCoreServices.AuthSessionInvalidatedDelegate? {
         get { self }
@@ -377,7 +381,7 @@ extension CoreNetworking: AuthDelegate {
         }
     }
 
-    public func onAuthenticatedSessionInvalidated(sessionUID: String) {
+    public func onAuthenticatedSessionInvalidated(sessionUID _: String) {
         // invalidating authenticated session should clear the unauth session as well,
         // because we should fetch a new unauth session afterwards
         unauthKeychain.clear()
@@ -385,7 +389,7 @@ extension CoreNetworking: AuthDelegate {
         delegate.onLogout()
     }
 
-    public func onUnauthenticatedSessionInvalidated(sessionUID: String) {
+    public func onUnauthenticatedSessionInvalidated(sessionUID _: String) {
         unauthKeychain.clear()
     }
 
@@ -407,18 +411,18 @@ extension CoreNetworking: AuthDelegate {
         return .init(authCredential)
     }
 
-    public func authCredential(sessionUID: String) -> AuthCredential? {
+    public func authCredential(sessionUID _: String) -> AuthCredential? {
         if let authCredentials = authKeychain.fetch() {
             // the app stores credentials in an old format for compatibility reasons, conversion is needed
-            return ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
+            ProtonCoreNetworking.AuthCredential(Credential(authCredentials))
         } else if let unauthCredentials = unauthKeychain.fetch() {
-            return unauthCredentials
+            unauthCredentials
         } else {
-            return nil
+            nil
         }
     }
 
-    public func onLogout(sessionUID: String) {
+    public func onLogout(sessionUID _: String) {
         log.error("Logout from Core because of expired token", category: .app, event: .trigger)
         delegate.onLogout()
     }
@@ -427,12 +431,10 @@ extension CoreNetworking: AuthDelegate {
         do {
             if let authCredentials = authKeychain.fetch(),
                authCredentials.sessionId == sessionUID {
-
                 try authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
 
             } else if let unauthCredential = unauthKeychain.fetch(),
                       unauthCredential.sessionID == sessionUID {
-
                 unauthKeychain.store(AuthCredential(credential))
             }
         } catch {
@@ -440,11 +442,11 @@ extension CoreNetworking: AuthDelegate {
         }
     }
 
-    public func onForceUpgrade() { }
+    public func onForceUpgrade() {}
 }
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
-    public func sessionWasInvalidated(for sessionUID: String, isAuthenticatedSession: Bool) {
+    public func sessionWasInvalidated(for _: String, isAuthenticatedSession: Bool) {
         authKeychain.clear()
         if isAuthenticatedSession {
             delegate.onLogout()

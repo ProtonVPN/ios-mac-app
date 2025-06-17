@@ -31,7 +31,7 @@ public struct ServerNameComponents {
         // some of the server sequence numbers might have the trailing "-TOR" - we strip it
         guard let numberString = nameArray[1].split(separator: "-").first, let serverNumber = Int(String(numberString)) else {
             self.name = serverName
-            sequence = nil
+            self.sequence = nil
             return
         }
         self.name = serverName

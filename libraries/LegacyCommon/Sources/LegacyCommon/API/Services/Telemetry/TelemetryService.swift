@@ -21,13 +21,13 @@ import Foundation
 import Reachability
 
 import CommonNetworking
+import Connection
 import VPNAppCore
 import VPNShared
-import Connection
 
+import Domain
 import Ergonomics
 import Timer
-import Domain
 
 public protocol TelemetryServiceFactory {
     func makeTelemetryService() async -> TelemetryService
@@ -66,7 +66,7 @@ extension TelemetryService {
 /// Collects information about connection status updates and upsell.
 /// Triggers reporting of the events to Telemetry (if user opted in) and Business endpoint (if business flag is on).
 public class TelemetryServiceImplementation: TelemetryService {
-    public typealias Factory = NetworkingFactory & AppStateManagerFactory & PropertiesManagerFactory & VpnKeychainFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator
+    public typealias Factory = AppStateManagerFactory & NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory & TimerFactoryCreator & VpnKeychainFactory
 
     private let factory: Factory
 
@@ -90,8 +90,10 @@ public class TelemetryServiceImplementation: TelemetryService {
         self.telemetryEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: false)
         self.businessEventScheduler = await TelemetryEventScheduler(factory: factory, isBusiness: true)
 
-        self.telemetryUpsellReporter = await TelemetryUpsellReporter(factory: factory,
-                                                                     telemetryEventScheduler: telemetryEventScheduler)
+        self.telemetryUpsellReporter = await TelemetryUpsellReporter(
+            factory: factory,
+            telemetryEventScheduler: telemetryEventScheduler
+        )
         self.telemetryOnboardingReporter = await TelemetryOnboardingReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler)
         self.telemetryConnectionStatusReporter = await TelemetryConnectionStatusReporter(factory: factory, telemetryEventScheduler: telemetryEventScheduler, businessEventScheduler: businessEventScheduler)
         self.telemetrySettingsReporter = TelemetrySettingsReporter(
@@ -128,7 +130,8 @@ public class TelemetryServiceImplementation: TelemetryService {
             modalSource: _modalSource,
             newPlanName: newPlanName,
             offerReference: offerReference,
-            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off)
+            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off
+        )
     }
 
     public func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws {

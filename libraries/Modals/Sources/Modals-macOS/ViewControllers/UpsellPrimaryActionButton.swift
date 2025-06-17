@@ -17,11 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 final class UpsellPrimaryActionButton: HoverDetectionButton {
-
     override var title: String {
         didSet {
             configureTitle()
@@ -53,8 +52,12 @@ final class UpsellPrimaryActionButton: HoverDetectionButton {
     }
 
     private func configureTitle() {
-        attributedTitle = NSAttributedString(string: title,
-                                             attributes: [.foregroundColor: NSColor.color(.text),
-                                                .font: NSFont.systemFont(ofSize: fontSize)])
+        attributedTitle = NSAttributedString(
+            string: title,
+            attributes: [
+                .foregroundColor: NSColor.color(.text),
+                .font: NSFont.systemFont(ofSize: fontSize),
+            ]
+        )
     }
 }

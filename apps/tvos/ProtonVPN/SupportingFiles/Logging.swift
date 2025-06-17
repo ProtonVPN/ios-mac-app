@@ -20,4 +20,4 @@ import Foundation
 import Logging
 import PMLogger
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.logger")

@@ -7,32 +7,31 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
-fileprivate let headerTitle = Localizable.settingsTitle
-fileprivate let protocolButton = Localizable.protocol
-fileprivate let netshieldButton = Localizable.netshieldTitle
-fileprivate let killSwitchButton = Localizable.killSwitch
-fileprivate let allowLanConnectionsButton = Localizable.allowLanTitle
-fileprivate let moderateNatSwitch = Localizable.moderateNatTitle
-fileprivate let continueButton = Localizable.continue
-fileprivate let logOutButton = Localizable.logOut
-fileprivate let cancelButton = Localizable.cancel
-fileprivate let firstAppScreen = "SELECTED ENVIRONMENT"
+private let headerTitle = Localizable.settingsTitle
+private let protocolButton = Localizable.protocol
+private let netshieldButton = Localizable.netshieldTitle
+private let killSwitchButton = Localizable.killSwitch
+private let allowLanConnectionsButton = Localizable.allowLanTitle
+private let moderateNatSwitch = Localizable.moderateNatTitle
+private let continueButton = Localizable.continue
+private let logOutButton = Localizable.logOut
+private let cancelButton = Localizable.cancel
+private let firstAppScreen = "SELECTED ENVIRONMENT"
 
 class SettingsRobot: CoreElements {
-    
     let verify = Verify()
-    
+
     /// - Precondition: Protocol submenu of Settings menu
     @discardableResult
     func goToProtocolsList() -> ProtocolsListRobot {
         cell(protocolButton).firstMatch().tap()
         return ProtocolsListRobot()
     }
-    
+
     /// - Precondition: Netshield submenu of Settings menu
     @discardableResult
     func goToNetshieldList() -> SettingsRobot {
@@ -68,10 +67,10 @@ class SettingsRobot: CoreElements {
         }
         return SettingsRobot()
     }
-    
+
     @discardableResult
     func turnKillSwitchOn() -> SettingsRobot {
-        return killSwitchOn()
+        killSwitchOn()
             .tapContinueIfExist()
     }
 
@@ -88,21 +87,21 @@ class SettingsRobot: CoreElements {
 
     @discardableResult
     func turnLanConnectionOn() -> SettingsRobot {
-        return lanConnectionOn()
+        lanConnectionOn()
             .lanConnectionContinue()
     }
-    
+
     @discardableResult
     func logOut() -> SettingsRobot {
-        return clickLogOut().tapContinueIfExist()
+        clickLogOut().tapContinueIfExist()
     }
-    
+
     @discardableResult
     func cancelLogOut() -> HomeRobot {
-        return clickLogOut()
+        clickLogOut()
             .logOutCancel()
     }
-    
+
     /// - Precondition: Kill Switch is off
     @discardableResult
     private func killSwitchOn() -> SettingsRobot {
@@ -111,72 +110,71 @@ class SettingsRobot: CoreElements {
             .tap()
         return self
     }
-    
+
     /// - Precondition: Lan Connection is off
     @discardableResult
     private func lanConnectionOn() -> SettingsRobot {
         swittch(allowLanConnectionsButton).tap()
         return self
     }
-    
+
     @discardableResult
     private func lanConnectionContinue() -> SettingsRobot {
         button(continueButton).tap()
         return self
     }
-    
+
     @discardableResult
     private func clickLogOut() -> SettingsRobot {
         button(logOutButton).swipeUpUntilVisible().tap()
         return self
     }
-    
+
     @discardableResult
     private func logOutCancel() -> HomeRobot {
         button(cancelButton).tap()
         return HomeRobot()
     }
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func bugReportFormIsClosed() -> SettingsRobot {
             staticText(headerTitle).waitUntilExists().checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func ksIsEnabled() -> SettingsRobot {
             swittch(killSwitchButton).checkHasValue("1")
             swittch(allowLanConnectionsButton).checkHasValue("0")
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func lanConnectionIsEnabled() -> SettingsRobot {
             swittch(killSwitchButton).checkHasValue("0")
             swittch(allowLanConnectionsButton).checkHasValue("1")
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func logOutSuccessfully() -> SettingsRobot {
             staticText(firstAppScreen).waitUntilExists().checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func smartIsEnabled() -> SettingsRobot {
             staticText("Smart").checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func stealthIsEnabled() -> SettingsRobot {
             staticText("Stealth").checkExists()
             return SettingsRobot()
         }
-        
+
         @discardableResult
         func correctUserIsLoggedIn(_ userName: String, _ userPlan: String) -> SettingsRobot {
             staticText(userName)
@@ -190,7 +188,7 @@ class SettingsRobot: CoreElements {
 
         @discardableResult
         func correctUserIsLogedIn(_ user: Credentials) -> SettingsRobot {
-            return correctUserIsLoggedIn(user.username, user.plan)
+            correctUserIsLoggedIn(user.username, user.plan)
         }
     }
 }

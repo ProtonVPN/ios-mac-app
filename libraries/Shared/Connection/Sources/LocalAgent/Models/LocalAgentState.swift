@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CasePaths
-import GoLibs
 import let CoreConnection.log
+import Foundation
+import GoLibs
 
 @CasePathable
 public enum LocalAgentState: Sendable {
@@ -46,7 +46,6 @@ public enum LocalAgentState: Sendable {
 }
 
 extension LocalAgentState {
-
     // swiftlint:disable cyclomatic_complexity
     /// For more information, check [Shared VPN Libraries](https://github.com/ProtonVPN/go-vpn-lib/tree/master/localAgent)
     static func from(string: String) -> LocalAgentState {

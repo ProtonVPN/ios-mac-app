@@ -49,7 +49,7 @@ struct SettingsFeature {
 
         @CasePathable
         enum Alert {
-          case signOut
+            case signOut
         }
 
         enum DrillDown {
@@ -83,7 +83,7 @@ struct SettingsFeature {
                     state.$mainBackground.withLock { $0 = .settingsDrillDown }
                 }
                 return .none
-            case .showDrillDown(let type):
+            case let .showDrillDown(type):
                 switch type {
                 case .eula:
                     state.destination = .settingsDrillDown(.eula)

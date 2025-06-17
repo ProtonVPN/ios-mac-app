@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Strings
+import SwiftUI
 import Theme
 
 struct TelemetryTogglesView: View {
@@ -52,14 +52,15 @@ struct TelemetryTogglesView_Previews: PreviewProvider {
     @State static var usageStatisticsOn: Bool = true
     @State static var crashReportsOn: Bool = true
     static var previews: some View {
-        TelemetryTogglesView(usageStatisticsOn: $usageStatisticsOn,
-                             crashReportsOn: $crashReportsOn)
-            .previewLayout(.sizeThatFits)
+        TelemetryTogglesView(
+            usageStatisticsOn: $usageStatisticsOn,
+            crashReportsOn: $crashReportsOn
+        )
+        .previewLayout(.sizeThatFits)
     }
 }
 
 struct OnboardingFooter: View {
-
     private let urlUsageStatistics = URL(string: "https://protonvpn.com/support/share-usage-statistics")!
 
     var body: some View {

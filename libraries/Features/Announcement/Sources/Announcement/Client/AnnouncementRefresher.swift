@@ -27,11 +27,11 @@ import Sharing
 
 import ProtonCoreFeatureFlags
 
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
@@ -52,7 +52,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     @Dependency(\.announcementStorage) private var announcementStorage
 
     private let refreshInterval: TimeInterval
-    
+
     @Shared(.lastAnnouncementRefreshDate) public var lastRefreshDate
 
     public init(refreshInterval: TimeInterval = AnnouncementRefresherImplementation.defaultRefreshInterval) {
@@ -61,8 +61,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         AppEvent.featureFlags.subscribe(self, selector: #selector(featureFlagsChanged))
         AppEvent.urlActivationRefresh.subscribe(self, selector: #selector(tryRefreshing))
     }
-    
-    @objc public func tryRefreshing() {
+
+    @objc
+    public func tryRefreshing() {
         if let lastRefresh = lastRefreshDate,
            Date().timeIntervalSince(lastRefresh) < refreshInterval {
             return
@@ -95,7 +96,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             @Dependency(\.announcementClient) var announcementClient
 
             let announcements = try await announcementClient.fetchAnnouncements()
-            self.announcementStorage.store(announcements.notifications)
+            announcementStorage.store(announcements.notifications)
         } catch {
             log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
         }
@@ -107,8 +108,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         }
         announcementStorage.clear()
     }
-    
-    @objc func featureFlagsChanged(_ notification: NSNotification) {
+
+    @objc
+    func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? LegacyCommon.FeatureFlags else { return }
         if featureFlags.pollNotificationAPI {
             tryRefreshing()
@@ -116,5 +118,4 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             clear()
         }
     }
-    
 }

@@ -27,14 +27,13 @@ import VPNShared
 @testable import ProtonVPN
 
 class AppSessionManagerMock: AppSessionManager {
-    
     init(sessionStatus: SessionStatus, loggedIn: Bool, sessionChanged: Notification.Name, vpnGateway: VpnGatewayProtocol) {
         self.sessionStatus = sessionStatus
         self.loggedIn = loggedIn
         self.sessionChanged = sessionChanged
         self.vpnGateway = vpnGateway
     }
-    
+
     public var callbackLogIn: ((String, String, () -> Void, (Error) -> Void) -> Void)?
     public var callbackLogOut: (() -> Void)?
     public var callbackAttemptDataRefreshWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
@@ -43,59 +42,53 @@ class AppSessionManagerMock: AppSessionManager {
     public var callbackRefreshData: (() -> Void)?
     public var callbackRefreshServerLoads: (() -> Void)?
     public var callbackCanPreviewApp: (() -> Bool)?
-    
+
     // MARK: AppSessionManager implementation
-    
+
     var vpnGateway: VpnGatewayProtocol
-    
+
     var sessionStatus: SessionStatus
-    
+
     var loggedIn: Bool
-    
+
     var sessionChanged: Notification.Name
     let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
-    
+
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         callbackLogIn?(username, password, success, failure)
     }
-    
-    func logOut(force: Bool, reason: String?) {
+
+    func logOut(force _: Bool, reason _: String?) {
         callbackLogOut?()
     }
 
-    func finishLogin(authCredentials: AuthCredentials) async throws {
+    func finishLogin(authCredentials _: AuthCredentials) async throws {}
 
-    }
-    
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         callbackAttemptDataRefreshWithoutLogin?({ completion(.success) }, { error in completion(.failure(error)) })
     }
-    
+
     func loadDataWithoutFetching() -> Bool {
-        return callbackLadDataWithoutFetching?() ?? true
+        callbackLadDataWithoutFetching?() ?? true
     }
-    
+
     func loadDataWithoutLogin() async throws {
         callbackLoadDataWithoutLogin?()
     }
-    
+
     func refreshData() {
         callbackRefreshData?()
     }
-    
+
     func refreshServerLoads() {
         callbackRefreshServerLoads?()
     }
-    
+
     func canPreviewApp() -> Bool {
-        return callbackCanPreviewApp?() ?? true
+        callbackCanPreviewApp?() ?? true
     }
 
-    func refreshVpnAuthCertificate() async throws {
-        
-    }
+    func refreshVpnAuthCertificate() async throws {}
 
-    func refreshUserInfo() {
-        
-    }
+    func refreshUserInfo() {}
 }

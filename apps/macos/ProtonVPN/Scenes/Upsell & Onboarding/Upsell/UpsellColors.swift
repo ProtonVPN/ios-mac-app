@@ -32,15 +32,15 @@ struct UpsellColors: ModalsColors {
     public let success: NSColor
 
     public init() {
-        background = .color(.background)
-        text = .color(.text, .normal)
-        brand = .color(.icon, .interactive)
-        hoverBrand = .color(.icon, [.interactive, .hovered])
-        weakText = .color(.text, .weak)
-        linkNorm = .color(.text, [.interactive, .hint])
-        textHint = .color(.text, .hint)
-        backgroundHover = .color(.background, [.transparent, .hovered])
-        backgroundWeak = .color(.background, .weak)
-        success = .color(.icon, .success)
+        self.background = .color(.background)
+        self.text = .color(.text, .normal)
+        self.brand = .color(.icon, .interactive)
+        self.hoverBrand = .color(.icon, [.interactive, .hovered])
+        self.weakText = .color(.text, .weak)
+        self.linkNorm = .color(.text, [.interactive, .hint])
+        self.textHint = .color(.text, .hint)
+        self.backgroundHover = .color(.background, [.transparent, .hovered])
+        self.backgroundWeak = .color(.background, .weak)
+        self.success = .color(.icon, .success)
     }
 }

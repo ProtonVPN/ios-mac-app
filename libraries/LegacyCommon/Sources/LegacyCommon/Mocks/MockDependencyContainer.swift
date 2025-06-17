@@ -17,244 +17,244 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import NetworkExtension
+    import Foundation
+    import NetworkExtension
 
-import Dependencies
+    import Dependencies
 
-import Domain
-import Localization
-import Timer
-import TimerMock
-import CommonNetworking
-import CommonNetworkingTestSupport
-import VPNShared
-import VPNSharedTesting
+    import CommonNetworking
+    import CommonNetworkingTestSupport
+    import Domain
+    import Localization
+    import Timer
+    import TimerMock
+    import VPNShared
+    import VPNSharedTesting
 
-open class MockDependencyContainer {
+    open class MockDependencyContainer {
+        @Dependency(\.serverRepository) var serverRepository
+        public static let appGroup = "test"
+        public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
+        public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
 
-    @Dependency(\.serverRepository) var serverRepository
-    public static let appGroup = "test"
-    public static let wireguardProviderBundleId = "ch.protonvpn.test.wireguard"
-    public static let openvpnProviderBundleId = "ch.protonvpn.test.openvpn"
+        public lazy var neVpnManager = NEVPNManagerMock()
+        public lazy var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
 
-    public lazy var neVpnManager = NEVPNManagerMock()
-    public lazy var neTunnelProviderFactory = NETunnelProviderManagerFactoryMock()
+        public lazy var networkingDelegate = FullNetworkingMockDelegate()
 
-    public lazy var networkingDelegate = FullNetworkingMockDelegate()
+        public lazy var networking: NetworkingMock = {
+            let networking = NetworkingMock()
+            networking.delegate = networkingDelegate
+            return networking
+        }()
 
-    public lazy var networking: NetworkingMock = {
-        let networking = NetworkingMock()
-        networking.delegate = networkingDelegate
-        return networking
-    }()
+        public lazy var alertService = CoreAlertServiceDummy()
+        lazy var appSessionRefresher = withDependencies {
+            $0.serverRepository = self.serverRepository
+        } operation: {
+            AppSessionRefresherMock(factory: MockFactory(container: self))
+        }
 
-    public lazy var alertService = CoreAlertServiceDummy()
-    lazy var appSessionRefresher = { withDependencies {
-        $0.serverRepository = self.serverRepository
-    } operation: {
-        AppSessionRefresherMock(factory: MockFactory(container: self))
-    } }()
+        lazy var appSessionRefreshTimer = {
+            let result = AppSessionRefreshTimerImplementation(
+                factory: MockFactory(container: self),
+                refreshIntervals: (30, 30, 30, 30, 30),
+                delegate: self
+            )
+            return result
+        }()
 
-    lazy var appSessionRefreshTimer = {
-        let result = AppSessionRefreshTimerImplementation(
-            factory: MockFactory(container: self),
-            refreshIntervals: (30, 30, 30, 30, 30),
-            delegate: self
+        public lazy var timerFactory = TimerFactoryMock()
+        public lazy var propertiesManager = PropertiesManagerMock()
+        public lazy var vpnKeychain = VpnKeychainMock()
+        public lazy var dohVpn = DoHVPN.mock
+
+        public lazy var natProvider = NATTypePropertyProviderMock()
+        public lazy var netShieldProvider = NetShieldPropertyProviderMock()
+        public lazy var safeModeProvider = SafeModePropertyProviderMock()
+
+        public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
+        public lazy var wireguardFactory = WireguardProtocolFactory(
+            bundleId: Self.wireguardProviderBundleId,
+            appGroup: Self.appGroup,
+            propertiesManager: propertiesManager,
+            vpnManagerFactory: neTunnelProviderFactory
         )
-        return result
-    }()
-    public lazy var timerFactory = TimerFactoryMock()
-    public lazy var propertiesManager = PropertiesManagerMock()
-    public lazy var vpnKeychain = VpnKeychainMock()
-    public lazy var dohVpn = DoHVPN.mock
 
-    public lazy var natProvider = NATTypePropertyProviderMock()
-    public lazy var netShieldProvider = NetShieldPropertyProviderMock()
-    public lazy var safeModeProvider = SafeModePropertyProviderMock()
+        public lazy var vpnApiService = VpnApiService(
+            networking: networking,
+            vpnKeychain: vpnKeychain,
+            countryCodeProvider: CountryCodeProviderImplementation(),
+            authKeychain: authKeychain
+        )
 
-    public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
-    public lazy var wireguardFactory = WireguardProtocolFactory(
-        bundleId: Self.wireguardProviderBundleId,
-        appGroup: Self.appGroup,
-        propertiesManager: propertiesManager,
-        vpnManagerFactory: neTunnelProviderFactory
-    )
+        public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
 
-    public lazy var vpnApiService = VpnApiService(
-        networking: networking,
-        vpnKeychain: vpnKeychain,
-        countryCodeProvider: CountryCodeProviderImplementation(),
-        authKeychain: authKeychain
-    )
+        #if os(iOS)
+            public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
+                authenticationStorage: vpnAuthenticationStorage
+            )
+        #elseif os(macOS)
+            public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking, storage: vpnAuthenticationStorage)
+        #endif
 
-    public let vpnAuthenticationStorage = MockVpnAuthenticationStorage()
+        public lazy var stateConfiguration = VpnStateConfigurationManager(
+            ikeProtocolFactory: ikeFactory,
+            wireguardProtocolFactory: wireguardFactory,
+            propertiesManager: propertiesManager,
+            appGroup: Self.appGroup
+        )
 
-    #if os(iOS)
-    public lazy var vpnAuthentication = VpnAuthenticationRemoteClient(
-        authenticationStorage: vpnAuthenticationStorage
-    )
-    #elseif os(macOS)
-    public lazy var vpnAuthentication = VpnAuthenticationManager(networking: networking, storage: vpnAuthenticationStorage)
-    #endif
+        public let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
 
-    public lazy var stateConfiguration = VpnStateConfigurationManager(
-        ikeProtocolFactory: ikeFactory,
-        wireguardProtocolFactory: wireguardFactory,
-        propertiesManager: propertiesManager,
-        appGroup: Self.appGroup
-    )
+        public var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
 
-    public let localAgentConnectionFactory = LocalAgentConnectionMockFactory()
+        public lazy var vpnManager = VpnManager(
+            ikeFactory: ikeFactory,
+            wireguardProtocolFactory: wireguardFactory,
+            appGroup: Self.appGroup,
+            vpnAuthentication: vpnAuthentication,
+            vpnAuthenticationStorage: vpnAuthenticationStorage,
+            vpnKeychain: vpnKeychain,
+            propertiesManager: propertiesManager,
+            vpnStateConfiguration: stateConfiguration,
+            alertService: alertService,
+            vpnCredentialsConfiguratorFactory: MockFactory(container: self),
+            localAgentConnectionFactory: localAgentConnectionFactory,
+            natTypePropertyProvider: natProvider,
+            netShieldPropertyProvider: netShieldProvider,
+            safeModePropertyProvider: safeModeProvider
+        )
 
-    public var didConfigure: VpnCredentialsConfiguratorMock.VpnCredentialsConfiguratorMockCallback?
+        public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
+            vpnKeychain: vpnKeychain,
+            alertService: alertService,
+            propertiesManager: propertiesManager
+        )
 
-    public lazy var vpnManager = VpnManager(
-        ikeFactory: ikeFactory,
-        wireguardProtocolFactory: wireguardFactory,
-        appGroup: Self.appGroup,
-        vpnAuthentication: vpnAuthentication,
-        vpnAuthenticationStorage: vpnAuthenticationStorage,
-        vpnKeychain: vpnKeychain,
-        propertiesManager: propertiesManager,
-        vpnStateConfiguration: stateConfiguration,
-        alertService: alertService,
-        vpnCredentialsConfiguratorFactory: MockFactory(container: self),
-        localAgentConnectionFactory: localAgentConnectionFactory,
-        natTypePropertyProvider: natProvider,
-        netShieldPropertyProvider: netShieldProvider,
-        safeModePropertyProvider: safeModeProvider
-    )
+        public lazy var appStateManager = AppStateManagerImplementation(
+            vpnApiService: vpnApiService,
+            vpnManager: vpnManager,
+            networking: networking,
+            alertService: alertService,
+            timerFactory: timerFactory,
+            propertiesManager: propertiesManager,
+            vpnKeychain: vpnKeychain,
+            configurationPreparer: vpnManagerConfigurationPreparer,
+            vpnAuthentication: vpnAuthentication,
+            natTypePropertyProvider: natProvider,
+            netShieldPropertyProvider: netShieldProvider,
+            safeModePropertyProvider: safeModeProvider
+        )
 
-    public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
-        vpnKeychain: vpnKeychain,
-        alertService: alertService,
-        propertiesManager: propertiesManager
-    )
+        public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
 
-    public lazy var appStateManager = AppStateManagerImplementation(
-        vpnApiService: vpnApiService,
-        vpnManager: vpnManager,
-        networking: networking,
-        alertService: alertService,
-        timerFactory: timerFactory,
-        propertiesManager: propertiesManager,
-        vpnKeychain: vpnKeychain,
-        configurationPreparer: vpnManagerConfigurationPreparer,
-        vpnAuthentication: vpnAuthentication,
-        natTypePropertyProvider: natProvider,
-        netShieldPropertyProvider: netShieldProvider,
-        safeModePropertyProvider: safeModeProvider
-    )
+        public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
 
-    public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
+        public lazy var checkers = [
+            AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
+            AvailabilityCheckerMock(vpnProtocol: .openVpn(.tcp), availablePorts: [9000, 12345]),
+            AvailabilityCheckerMock(vpnProtocol: .openVpn(.udp), availablePorts: [9090, 8080, 9091, 8081]),
+            AvailabilityCheckerMock(vpnProtocol: .wireGuard(.udp), availablePorts: [15213, 15410, 15210]),
+            AvailabilityCheckerMock(vpnProtocol: .wireGuard(.tcp), availablePorts: [16001, 16002, 16003]),
+            AvailabilityCheckerMock(vpnProtocol: .wireGuard(.tls), availablePorts: [16101, 16102, 16103]),
+        ].reduce(into: [:]) { $0[$1.vpnProtocol] = $1 }
 
-    public lazy var profileManager = ProfileManager(propertiesManager: propertiesManager, profileStorage: ProfileStorage(authKeychain: authKeychain))
+        public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
 
-    public lazy var checkers = [
-        AvailabilityCheckerMock(vpnProtocol: .ike, availablePorts: [500]),
-        AvailabilityCheckerMock(vpnProtocol: .openVpn(.tcp), availablePorts: [9000, 12345]),
-        AvailabilityCheckerMock(vpnProtocol: .openVpn(.udp), availablePorts: [9090, 8080, 9091, 8081]),
-        AvailabilityCheckerMock(vpnProtocol: .wireGuard(.udp), availablePorts: [15213, 15410, 15210]),
-        AvailabilityCheckerMock(vpnProtocol: .wireGuard(.tcp), availablePorts: [16001, 16002, 16003]),
-        AvailabilityCheckerMock(vpnProtocol: .wireGuard(.tls), availablePorts: [16101, 16102, 16103])
-    ].reduce(into: [:], { $0[$1.vpnProtocol] = $1 })
+        public lazy var vpnGateway = withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
+            vpnApiService: vpnApiService,
+            appStateManager: appStateManager,
+            alertService: alertService,
+            vpnKeychain: vpnKeychain,
+            authKeychain: authKeychain,
+            netShieldPropertyProvider: netShieldProvider,
+            natTypePropertyProvider: natProvider,
+            safeModePropertyProvider: safeModeProvider,
+            propertiesManager: propertiesManager,
+            profileManager: profileManager,
+            availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
+        ) }
 
-    public lazy var availabilityCheckerResolverFactory = AvailabilityCheckerResolverFactoryMock(checkers: checkers)
-
-    public lazy var vpnGateway = { withDependencies { $0.serverRepository = self.serverRepository } operation: { VpnGateway(
-        vpnApiService: vpnApiService,
-        appStateManager: appStateManager,
-        alertService: alertService,
-        vpnKeychain: vpnKeychain,
-        authKeychain: authKeychain,
-        netShieldPropertyProvider: netShieldProvider,
-        natTypePropertyProvider: natProvider,
-        safeModePropertyProvider: safeModeProvider,
-        propertiesManager: propertiesManager,
-        profileManager: profileManager,
-        availabilityCheckerResolverFactory: availabilityCheckerResolverFactory
-    ) } }()
-
-    public init() {}
-}
-
-extension MockDependencyContainer: AppSessionRefreshTimerDelegate { }
-
-/// This exists so that MockDependencyContainer won't create reference cycles by passing `self` as an
-/// argument to dependency initializers.
-class MockFactory {
-    unowned var container: MockDependencyContainer
-
-    unowned var neVpnManager: NEVPNManagerWrapper {
-        container.neVpnManager
+        public init() {}
     }
 
-    init(container: MockDependencyContainer) {
-        self.container = container
-    }
-}
+    extension MockDependencyContainer: AppSessionRefreshTimerDelegate {}
 
-extension MockFactory: NEVPNManagerWrapperFactory {
-    func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
-        return neVpnManager
-    }
-}
+    /// This exists so that MockDependencyContainer won't create reference cycles by passing `self` as an
+    /// argument to dependency initializers.
+    class MockFactory {
+        unowned var container: MockDependencyContainer
 
-extension MockFactory: VpnCredentialsConfiguratorFactory {
-    func getCredentialsConfigurator(for `protocol`: VpnProtocol) -> VpnCredentialsConfigurator {
-        return VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
-            self?.container.didConfigure?(config, protocolConfig)
+        unowned var neVpnManager: NEVPNManagerWrapper {
+            container.neVpnManager
+        }
+
+        init(container: MockDependencyContainer) {
+            self.container = container
         }
     }
-}
 
-extension MockFactory: CountryCodeProviderFactory {
-    func makeCountryCodeProvider() -> CountryCodeProvider {
-        CountryCodeProviderImplementation()
+    extension MockFactory: NEVPNManagerWrapperFactory {
+        func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
+            neVpnManager
+        }
     }
-}
 
-// public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
-extension MockFactory: CoreAlertServiceFactory {
-    func makeCoreAlertService() -> CoreAlertService {
-        container.alertService
+    extension MockFactory: VpnCredentialsConfiguratorFactory {
+        func getCredentialsConfigurator(for protocol: VpnProtocol) -> VpnCredentialsConfigurator {
+            VpnCredentialsConfiguratorMock(vpnProtocol: `protocol`) { [weak self] config, protocolConfig in
+                self?.container.didConfigure?(config, protocolConfig)
+            }
+        }
     }
-}
 
-extension MockFactory: VpnApiServiceFactory {
-    func makeVpnApiService() -> VpnApiService {
-        container.vpnApiService
+    extension MockFactory: CountryCodeProviderFactory {
+        func makeCountryCodeProvider() -> CountryCodeProvider {
+            CountryCodeProviderImplementation()
+        }
     }
-}
 
-extension MockFactory: VpnKeychainFactory {
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        container.vpnKeychain
+    // public typealias Factory = VpnApiServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    extension MockFactory: CoreAlertServiceFactory {
+        func makeCoreAlertService() -> CoreAlertService {
+            container.alertService
+        }
     }
-}
 
-extension MockFactory: PropertiesManagerFactory {
-    func makePropertiesManager() -> PropertiesManagerProtocol {
-        container.propertiesManager
+    extension MockFactory: VpnApiServiceFactory {
+        func makeVpnApiService() -> VpnApiService {
+            container.vpnApiService
+        }
     }
-}
 
-extension MockFactory: TimerFactoryCreator {
-    func makeTimerFactory() -> TimerFactory {
-        container.timerFactory
+    extension MockFactory: VpnKeychainFactory {
+        func makeVpnKeychain() -> VpnKeychainProtocol {
+            container.vpnKeychain
+        }
     }
-}
 
-extension MockFactory: AppSessionRefresherFactory {
-    func makeAppSessionRefresher() -> AppSessionRefresher {
-        container.appSessionRefresher
+    extension MockFactory: PropertiesManagerFactory {
+        func makePropertiesManager() -> PropertiesManagerProtocol {
+            container.propertiesManager
+        }
     }
-}
 
-extension MockFactory: UpdateCheckerFactory {
-    func makeUpdateChecker() -> any UpdateChecker {
-        UpdateCheckerMock()
+    extension MockFactory: TimerFactoryCreator {
+        func makeTimerFactory() -> TimerFactory {
+            container.timerFactory
+        }
     }
-}
+
+    extension MockFactory: AppSessionRefresherFactory {
+        func makeAppSessionRefresher() -> AppSessionRefresher {
+            container.appSessionRefresher
+        }
+    }
+
+    extension MockFactory: UpdateCheckerFactory {
+        func makeUpdateChecker() -> any UpdateChecker {
+            UpdateCheckerMock()
+        }
+    }
 #endif

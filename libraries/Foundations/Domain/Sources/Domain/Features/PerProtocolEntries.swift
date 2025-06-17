@@ -25,19 +25,21 @@ import Foundation
 /// 2. If `e.ipv4` is not `nil`, `s` supports all protocols. Client must use `e.ipv4` when connecting with `p`.
 /// 3. If `e.ports` is non-empty, client must choose from these ports when connecting, instead of ports from config.
 public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDictionaryLiteral, Codable, Sendable {
-    public let rawValue: [String : Value]
+    public let rawValue: [String: Value]
 
-    public init(rawValue: [String : Value]) {
+    public init(rawValue: [String: Value]) {
         self.rawValue = rawValue
     }
 
     public init(dictionaryLiteral elements: (Key, Value)...) {
-        self.rawValue = .init(elements.map { ($0.0.apiDescription, $0.1) },
-                              uniquingKeysWith: { l, r in l })
+        self.rawValue = .init(
+            elements.map { ($0.0.apiDescription, $0.1) },
+            uniquingKeysWith: { l, _ in l }
+        )
     }
 
     public subscript(_ vpnProtocol: VpnProtocol) -> Value? {
-        self.rawValue[vpnProtocol.apiDescription]
+        rawValue[vpnProtocol.apiDescription]
     }
 
     public var isEmpty: Bool {
@@ -49,12 +51,12 @@ public struct PerProtocolEntries: Equatable, RawRepresentable, ExpressibleByDict
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        self.rawValue = try container.decode([String : PerProtocolEntries.Value].self)
+        self.rawValue = try container.decode([String: PerProtocolEntries.Value].self)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
-        try container.encode(self.rawValue)
+        try container.encode(rawValue)
     }
 }
 
@@ -67,11 +69,11 @@ extension PerProtocolEntries: CustomStringConvertible {
     }
 }
 
-extension PerProtocolEntries {
+public extension PerProtocolEntries {
     /// Determine the appropriate entry IP to use for the given `ServerIp` object and
     /// protocol, according to the `entryIp` and `rawValue` properties.
     /// - Warning: The `entryIp` property is nullable, be careful when changing this function.
-    public func overrides(vpnProtocol: VpnProtocol, defaultIp: String?) -> String? {
+    func overrides(vpnProtocol: VpnProtocol, defaultIp: String?) -> String? {
         // Check to see if the given server IP contains a per-protocol override.
         guard let override = self[vpnProtocol] else {
             // An override does not exist on the server IP for the current protocol.
@@ -97,8 +99,8 @@ extension PerProtocolEntries {
         // overridden IP address.
         return ip
     }
-    
-    public func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
+
+    func overridePorts(using vpnProtocol: VpnProtocol) -> [Int]? {
         self[vpnProtocol]??.ports
     }
 }

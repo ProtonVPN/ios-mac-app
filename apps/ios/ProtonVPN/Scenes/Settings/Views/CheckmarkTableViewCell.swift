@@ -10,9 +10,8 @@
 import UIKit
 
 class CheckmarkTableViewCell: UITableViewCell {
+    @IBOutlet var label: UILabel!
 
-    @IBOutlet weak var label: UILabel!
-    
     var completionHandler: (() -> Bool)?
 
     var isEnabled: Bool = true {
@@ -43,15 +42,14 @@ class CheckmarkTableViewCell: UITableViewCell {
 
         accessoryType = .none
     }
-    
+
     func select() {
         if completionHandler?() ?? true {
             accessoryType = .checkmark
         }
     }
-    
+
     func deselect() {
         accessoryType = .none
     }
-    
 }

@@ -19,10 +19,9 @@
 import Foundation
 import PMLogger
 
-/// For WireGuard on iOS, if the app is connected to WireGuard at the moment when we want to get the logs, we should first ask WG NE to flush the logs to a file. 
+/// For WireGuard on iOS, if the app is connected to WireGuard at the moment when we want to get the logs, we should first ask WG NE to flush the logs to a file.
 /// After that we can proceed as if it's a simple log file.
 class WGiOSLogContent: LogContent {
-
     private var fileLogContent: FileLogContent
     private var wireguardProtocolFactory: WireguardProtocolFactory
 
@@ -37,5 +36,4 @@ class WGiOSLogContent: LogContent {
             self.fileLogContent.loadContent(callback: callback)
         }
     }
-
 }

@@ -23,8 +23,7 @@
 import Foundation
 
 extension TimeInterval {
-    
     func asDate() -> Date {
-        return Date(timeIntervalSince1970: self)
+        Date(timeIntervalSince1970: self)
     }
 }

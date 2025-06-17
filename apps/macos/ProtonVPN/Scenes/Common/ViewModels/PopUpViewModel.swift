@@ -20,37 +20,40 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
 import LegacyCommon
-import AppKit
 import Strings
 import VPNAppCore
 
 final class PopUpViewModel: NSObject {
-
     let inAppLinkManager: InAppLinkManager?
 
     var title: String {
         // Don't show a title if the the description is using the alert's title
         if attributedDescription.string == alert.title {
-            return ""
+            ""
         } else {
-            return alert.title ?? ""
+            alert.title ?? ""
         }
     }
+
     var confirmButtonTitle: String {
-        return action(0)?.title ?? Localizable.ok
+        action(0)?.title ?? Localizable.ok
     }
+
     var confirmationType: PrimaryActionType {
-        return action(0)?.style ?? .confirmative
+        action(0)?.style ?? .confirmative
     }
+
     var cancelButtonTitle: String? {
-        return action(1)?.title
+        action(1)?.title
     }
+
     var cancelType: PrimaryActionType {
-        return action(1)?.style ?? .cancel
+        action(1)?.style ?? .cancel
     }
-    
+
     var attributedDescription: NSAttributedString
     var showIcon = true
     var updateInterface: (() -> Void)?
@@ -61,78 +64,77 @@ final class PopUpViewModel: NSObject {
 
     private var alert: SystemAlert
     private var onConfirm: (() -> Void)? {
-        return action(0)?.handler
+        action(0)?.handler
     }
+
     private var onCancel: (() -> Void)? {
-        return action(1)?.handler
+        action(1)?.handler
     }
 
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
-        let attributedDescription: NSAttributedString
-        if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
-            attributedDescription = [
+        let attributedDescription: NSAttributedString = if alert.joinedTitleAndMessage, let title = alert.title, let message = alert.message {
+            [
                 title.styled(.strong, font: .themeFont(.paragraph, bold: true), alignment: .natural),
                 .lineSeparator(count: 2),
-                message.styled(alignment: .natural)
+                message.styled(alignment: .natural),
             ].joined()
         } else {
-            attributedDescription = (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
+            (alert.message ?? alert.title ?? Localizable.errorInternalError).styled(alignment: .natural)
         }
         self.init(alert: alert, attributedDescription: attributedDescription, inAppLinkManager: inAppLinkManager)
     }
-    
+
     init(alert: SystemAlert, attributedDescription: NSAttributedString, inAppLinkManager: InAppLinkManager? = nil) {
         self.alert = alert
         self.attributedDescription = attributedDescription
         self.inAppLinkManager = inAppLinkManager
         self.joinedTitleAndMessage = alert.joinedTitleAndMessage
     }
-    
+
     func confirm() {
         onConfirm?()
     }
-    
+
     func cancel() {
         onCancel?()
     }
-    
+
     func close() {
         dismissViewController?()
     }
-    
+
     func cleanUp() {
         dismissCompletion?()
     }
-    
+
     private func action(_ index: Array<Any>.Index) -> AlertAction? {
-        return alert.actions[optional: index]
+        alert.actions[optional: index]
     }
 }
 
 extension PopUpViewModel: NSTextViewDelegate {
-    
-    func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
-        guard let link = link as? String, let inAppLinkManager = inAppLinkManager else { return true }
-        
+    func textView(_: NSTextView, clickedOnLink link: Any, at _: Int) -> Bool {
+        guard let link = link as? String, let inAppLinkManager else { return true }
+
         do {
             try inAppLinkManager.openLink(link)
             close()
         } catch {
             log.error("Failed to open internal link", category: .user, metadata: ["error": "\(error)"])
         }
-        
+
         return true
     }
 }
 
 // MARK: - Equatable
+
 extension PopUpViewModel {
-    
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PopUpViewModel else {
             return false
         }
-        
+
         return title == other.title && attributedDescription.string == other.attributedDescription.string
     }
 }

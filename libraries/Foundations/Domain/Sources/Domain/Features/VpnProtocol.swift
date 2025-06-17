@@ -17,16 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 public enum OpenVpnTransport: String, Codable, CaseIterable, Sendable {
-    case tcp = "tcp"
-    case udp = "udp"
+    case tcp
+    case udp
 
     public static let defaultValue: Self = .tcp
 }
 
 public enum WireGuardTransport: String, Codable, Equatable, CaseIterable, Sendable {
-    case udp = "udp"
-    case tcp = "tcp"
-    case tls = "tls"
+    case udp
+    case tcp
+    case tls
 
     public static let defaultValue: Self = .udp
 }
@@ -41,11 +41,11 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
     }
 
     #if os(macOS)
-    /// Set of protocols that are deprecated on macOS
-    public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
+        /// Set of protocols that are deprecated on macOS
+        public static let deprecatedProtocols: [VpnProtocol] = OpenVpnTransport.allCases.map(Self.openVpn)
     #else
-    /// Set of protocols that are deprecated on iOS and tvOS
-    public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
+        /// Set of protocols that are deprecated on iOS and tvOS
+        public static let deprecatedProtocols: [VpnProtocol] = [.ike] + OpenVpnTransport.allCases.map(Self.openVpn)
     #endif
 
     public var isDeprecated: Bool { Self.deprecatedProtocols.contains(self) }
@@ -83,10 +83,10 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
         switch self {
         case .ike:
             try container.encode(0, forKey: .rawValue)
-        case .openVpn(let transportProtocol):
+        case let .openVpn(transportProtocol):
             try container.encode(1, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
-        case .wireGuard(let transportProtocol):
+        case let .wireGuard(transportProtocol):
             try container.encode(2, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
         }
@@ -95,12 +95,12 @@ public enum VpnProtocol: Equatable, Hashable, CaseIterable, Sendable, Codable {
 
 // MARK: - Default values
 
-extension VpnProtocol {
-#if os(iOS)
-    public static let defaultValue: Self = .openVpn(.udp)
-#else
-    public static let defaultValue: Self = .ike
-#endif
+public extension VpnProtocol {
+    #if os(iOS)
+        static let defaultValue: Self = .openVpn(.udp)
+    #else
+        static let defaultValue: Self = .ike
+    #endif
 
     private static var uiOrder: [VpnProtocol: Int] = [
         .wireGuard(.udp): 1,
@@ -108,28 +108,29 @@ extension VpnProtocol {
         .openVpn(.udp): 3,
         .openVpn(.tcp): 4,
         .ike: 5,
-        .wireGuard(.tls): 6
+        .wireGuard(.tls): 6,
     ]
 
-    public static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
+    static func uiSort(lhs: VpnProtocol, rhs: VpnProtocol) -> Bool {
         uiOrder[lhs] ?? 0 < uiOrder[rhs] ?? 0
     }
 }
 
 // MARK: - API description
-extension VpnProtocol {
-    public var apiDescription: String {
+
+public extension VpnProtocol {
+    var apiDescription: String {
         switch self {
         case .ike:
-            return "IKEv2"
-        case .openVpn(let transport):
-            return "OpenVPN" + transport.rawValue.uppercased()
-        case .wireGuard(let transport):
-            return "WireGuard" + transport.rawValue.uppercased()
+            "IKEv2"
+        case let .openVpn(transport):
+            "OpenVPN" + transport.rawValue.uppercased()
+        case let .wireGuard(transport):
+            "WireGuard" + transport.rawValue.uppercased()
         }
     }
 
-    public init?(apiDescription: String) {
+    init?(apiDescription: String) {
         switch apiDescription {
         case "IKEv2":
             self = .ike

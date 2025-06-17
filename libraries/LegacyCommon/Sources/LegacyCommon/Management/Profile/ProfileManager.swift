@@ -27,10 +27,9 @@ import Domain
 import VPNShared
 
 public enum ProfileManagerOperationOutcome {
-    
     case success
     case nameInUse
-    
+
     init(outcome: ProfileUtilityOperationOutcome) {
         switch outcome {
         case .success:
@@ -58,15 +57,15 @@ public final class ProfileManager {
     private let profileStorage: ProfileStorage
 
     public var allProfiles: [Profile] {
-        return defaultProfiles + customProfiles
+        defaultProfiles + customProfiles
     }
 
-    public typealias Factory = PropertiesManagerFactory & ProfileStorageFactory
+    public typealias Factory = ProfileStorageFactory & PropertiesManagerFactory
 
     public convenience init(_ factory: Factory) {
         self.init(propertiesManager: factory.makePropertiesManager(), profileStorage: factory.makeProfileStorage())
     }
-    
+
     public init(propertiesManager: PropertiesManagerProtocol, profileStorage: ProfileStorage) {
         self.propertiesManager = propertiesManager
         self.profileStorage = profileStorage
@@ -76,13 +75,13 @@ public final class ProfileManager {
         // NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)), name: serverStorage.contentChanged, object: nil)
         refreshProfiles()
     }
-    
+
     public func refreshProfiles() {
         customProfiles = profileStorage.fetch()
     }
 
     public var username: String? {
-        return authKeychain.username
+        authKeychain.username
     }
 
     public var autoConnectProfile: Profile? {
@@ -105,67 +104,72 @@ public final class ProfileManager {
         }
         return profile(withId: profileID)
     }
+
     public func profile(withServer server: ServerModel) -> Profile? {
-        return ProfileUtility.profile(withServer: server, in: customProfiles)
+        ProfileUtility.profile(withServer: server, in: customProfiles)
     }
-    
+
     public func profile(withId id: String) -> Profile? {
-        return defaultProfiles.first { id == $0.id }
+        defaultProfiles.first { id == $0.id }
             ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }
-    
+
     public func existsProfile(withServer server: ServerModel) -> Bool {
-        return ProfileUtility.existsProfile(withServer: server, in: customProfiles)
+        ProfileUtility.existsProfile(withServer: server, in: customProfiles)
     }
-    
+
     public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, netShield: netShield, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break
         }
         return ProfileManagerOperationOutcome(outcome: result)
     }
-    
+
     public func createProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.createProfile(profile, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break
         }
         return ProfileManagerOperationOutcome(outcome: result)
     }
-    
-    @discardableResult public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+
+    @discardableResult
+    public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
-        case .success(let updatedProfiles):
+        case let .success(updatedProfiles):
             profileStorage.store(updatedProfiles)
         default:
             break
         }
         return ProfileManagerOperationOutcome(outcome: result)
     }
-    
+
     public func deleteProfile(_ profile: Profile) {
         let updatedProfiles = ProfileUtility.delete(profile: profile, in: customProfiles)
         customProfiles = updatedProfiles
         profileStorage.store(updatedProfiles)
     }
-    
+
     // MARK: - Private functions
-    @objc private func profilesChanged(_ notification: Notification) {
+
+    @objc
+    private func profilesChanged(_ notification: Notification) {
         if let newProfiles = notification.object as? [Profile] {
             customProfiles = newProfiles
             AppEvent.profileContentChanged.post(customProfiles)
         }
     }
-    
-    @objc private func serversChanged(_ notification: Notification) {
+
+    @objc
+    private func serversChanged(_ notification: Notification) {
         if let newServers = notification.object as? [ServerModel] {
             servers = newServers
             AppEvent.profileContentChanged.post(customProfiles)

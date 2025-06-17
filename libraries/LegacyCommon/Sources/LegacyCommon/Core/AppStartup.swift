@@ -17,39 +17,39 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
-import Foundation
+    import Foundation
 
-/// Collection of utilities to retrieve various informations about app startup.
-public enum AppStartup {
-    public private(set) static var isLaunchedAtLogin: Bool = false
+    /// Collection of utilities to retrieve various informations about app startup.
+    public enum AppStartup {
+        public private(set) static var isLaunchedAtLogin: Bool = false
 
-    /// The date at which the process was launched, either at user login or not.
-    public static var processStartDate: Date? {
-        let pid = ProcessInfo.processInfo.processIdentifier
-        var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, pid]
-        var proc: kinfo_proc = .init()
-        var size = MemoryLayout<kinfo_proc>.size
-        guard sysctl(&mib, UInt32(mib.count), &proc, &size, nil, 0) == 0 else {
-            return nil
+        /// The date at which the process was launched, either at user login or not.
+        public static var processStartDate: Date? {
+            let pid = ProcessInfo.processInfo.processIdentifier
+            var mib: [Int32] = [CTL_KERN, KERN_PROC, KERN_PROC_PID, pid]
+            var proc: kinfo_proc = .init()
+            var size = MemoryLayout<kinfo_proc>.size
+            guard sysctl(&mib, UInt32(mib.count), &proc, &size, nil, 0) == 0 else {
+                return nil
+            }
+            return Date(timeIntervalSince1970: TimeInterval(proc.kp_proc.p_starttime.tv_sec))
         }
-        return Date(timeIntervalSince1970: TimeInterval(proc.kp_proc.p_starttime.tv_sec))
+
+        /// Call this as soon as possible when app is launched in order set ``isLaunchedAtLogin``.
+        public static func processStartAppleEvent() {
+            isLaunchedAtLogin = NSAppleEventManager.shared().currentAppleEvent?.isOpenAppLoginItemLaunchEvent == true
+            log.info("App is launched at login: \(isLaunchedAtLogin)", category: .app)
+        }
     }
 
-    /// Call this as soon as possible when app is launched in order set ``isLaunchedAtLogin``.
-    public static func processStartAppleEvent() {
-        isLaunchedAtLogin = NSAppleEventManager.shared().currentAppleEvent?.isOpenAppLoginItemLaunchEvent == true
-        log.info("App is launched at login: \(isLaunchedAtLogin)", category: .app)
-    }
-}
+    extension NSAppleEventDescriptor {
+        var isOpenEvent: Bool {
+            eventClass == kCoreEventClass && eventID == kAEOpenApplication
+        }
 
-extension NSAppleEventDescriptor {
-    var isOpenEvent: Bool {
-        return eventClass == kCoreEventClass && eventID == kAEOpenApplication
+        var isOpenAppLoginItemLaunchEvent: Bool {
+            guard isOpenEvent else { return false }
+            return paramDescriptor(forKeyword: keyAEPropData)?.enumCodeValue == keyAELaunchedAsLogInItem
+        }
     }
-
-    var isOpenAppLoginItemLaunchEvent: Bool {
-        guard isOpenEvent else { return false }
-        return paramDescriptor(forKeyword: keyAEPropData)?.enumCodeValue == keyAELaunchedAsLogInItem
-    }
-}
 #endif

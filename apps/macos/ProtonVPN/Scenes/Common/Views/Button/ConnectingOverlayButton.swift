@@ -1,5 +1,5 @@
 //
-//  CancelConnectingButton.swift
+//  ConnectingOverlayButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,42 +21,42 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 class ConnectingOverlayButton: HoverDetectionButton {
     enum Style {
         case normal
         case interactive
     }
-    
+
     public var style: Style = .normal {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     override var title: String {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     // It differs from the one in HoverDetectionButton because this button is used in child window.
     override func trackingOptions() -> NSTrackingArea.Options {
-        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
+        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
     }
-    
+
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
-        
+
         updateTrackingAreas()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
@@ -65,7 +65,7 @@ class ConnectingOverlayButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
-        attributedTitle = self.style(title, font: .themeFont(.heading4))
+        attributedTitle = style(title, font: .themeFont(.heading4))
     }
 }
 

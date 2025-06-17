@@ -17,19 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG || canImport(XCTest)
-public struct GenericError: Error {
-    public let message: String
+    public struct GenericError: Error {
+        public let message: String
 
-    public init(message: String) {
-        self.message = message
+        public init(message: String) {
+            self.message = message
+        }
     }
-}
 
-extension GenericError: ExpressibleByStringLiteral {
-    public init(stringLiteral value: String) {
-        self = GenericError(message: value)
+    extension GenericError: ExpressibleByStringLiteral {
+        public init(stringLiteral value: String) {
+            self = GenericError(message: value)
+        }
     }
-}
 
-extension GenericError: ExpressibleByStringInterpolation {}
+    extension GenericError: ExpressibleByStringInterpolation {}
 #endif

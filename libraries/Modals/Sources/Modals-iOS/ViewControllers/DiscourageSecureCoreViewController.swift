@@ -16,23 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import ModalsShared
+import UIKit
 
 final class DiscourageSecureCoreViewController: UIViewController {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var dontShowAgainLabel: UILabel!
-    @IBOutlet private weak var dontShowAgainSwitch: UISwitch!
-    @IBOutlet private weak var featureView: UIView!
-    @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var activateButton: UIButton!
-    @IBOutlet private weak var cancelButton: UIButton!
-    @IBOutlet private weak var learnMoreButton: UIButton!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var featureArtImageView: UIImageView!
+    @IBOutlet private var dontShowAgainLabel: UILabel!
+    @IBOutlet private var dontShowAgainSwitch: UISwitch!
+    @IBOutlet private var featureView: UIView!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var activateButton: UIButton!
+    @IBOutlet private var cancelButton: UIButton!
+    @IBOutlet private var learnMoreButton: UIButton!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var featureArtImageView: UIImageView!
 
     private let feature = DiscourageSecureCoreFeature()
 
@@ -77,21 +76,25 @@ final class DiscourageSecureCoreViewController: UIViewController {
         cancelButton.setTitle(feature.cancel, for: .normal)
     }
 
-    @IBAction private func learnMoreButtonTapped(_ sender: UIButton) {
+    @IBAction
+    private func learnMoreButtonTapped(_: UIButton) {
         onLearnMore?()
     }
 
-    @IBAction private func dontShowAgainSwitchToggled(_ sender: UISwitch) {
+    @IBAction
+    private func dontShowAgainSwitchToggled(_ sender: UISwitch) {
         onDontShowAgain?(sender.isOn)
     }
 
-    @IBAction private func activateButtonTapped(_ sender: UIButton) {
+    @IBAction
+    private func activateButtonTapped(_: UIButton) {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.onActivate?()
         })
     }
 
-    @IBAction private func cancelButtonTapped(_ sender: UIButton) {
+    @IBAction
+    private func cancelButtonTapped(_: UIButton) {
         presentingViewController?.dismiss(animated: true, completion: { [weak self] in
             self?.onCancel?()
         })

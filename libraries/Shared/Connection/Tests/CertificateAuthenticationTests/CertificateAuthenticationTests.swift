@@ -16,23 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
+@testable import CertificateAuthentication
 import ComposableArchitecture
-import struct Domain.VPNConnectionFeatures
-import VPNShared
-import VPNSharedTesting
 @testable import CoreConnection
 import CoreConnectionTestSupport
-@testable import CertificateAuthentication
+import struct Domain.VPNConnectionFeatures
+import Foundation
+import VPNShared
+import VPNSharedTesting
+import XCTest
 
 final class CertificateAuthenticationTests: XCTestCase {
-
     /// If we don't have keys at the point where we are trying to load our certificate to connect to local agent, then
     /// the tunnel has already been started. If we generate keys at this point, then the certificate won't match the
     /// private key the tunnel was started/configured with. We should abort the connection and the keys will be
     /// generated on the next attempt.
-    @MainActor func testAbortsConnectionIfKeysAreMissing() async {
+    @MainActor
+    func testAbortsConnectionIfKeysAreMissing() async {
         let storageMock = MockVpnAuthenticationStorage()
         let now = Date()
 
@@ -60,7 +60,8 @@ final class CertificateAuthenticationTests: XCTestCase {
     }
 
     /// This asserts that we do unnecessarily push a session selector, or attempt to refresh the certificate
-    @MainActor func testLoadsExistingCertificateIfNotExpired() async {
+    @MainActor
+    func testLoadsExistingCertificateIfNotExpired() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -94,7 +95,8 @@ final class CertificateAuthenticationTests: XCTestCase {
     }
 
     /// This asserts that we refresh the certificate if our stored certificate is valid, but features have since changed
-    @MainActor func testRefreshesValidCertificateWithOldFeatures() async {
+    @MainActor
+    func testRefreshesValidCertificateWithOldFeatures() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -144,7 +146,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         await fulfillment(of: [certRefreshRequested], timeout: 0)
     }
 
-    @MainActor func testRefreshesMissingOrExpiredCertificateWithFeatures() async {
+    @MainActor
+    func testRefreshesMissingOrExpiredCertificateWithFeatures() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -194,7 +197,8 @@ final class CertificateAuthenticationTests: XCTestCase {
 
     /// Similar to `testRefreshesValidCertificateWithOldFeatures`. In this case, the certificate is comes from memory
     /// instead of being loaded from storage.
-    @MainActor func testRefreshesValidCachedCertificateWithOldFeatures() async {
+    @MainActor
+    func testRefreshesValidCachedCertificateWithOldFeatures() async {
         let now = Date()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
@@ -213,7 +217,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             certificate: mockCertificate,
             features: storedFeatures
         )
-        
+
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()
         } withDependencies: {
@@ -252,7 +256,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         await fulfillment(of: [certRefreshRequested], timeout: 0)
     }
 
-    @MainActor func testEntersFailedStateIfExtensionLiesAboutRefreshingCertificate() async {
+    @MainActor
+    func testEntersFailedStateIfExtensionLiesAboutRefreshingCertificate() async {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 
         let storageMock = MockVpnAuthenticationStorage()
@@ -285,7 +290,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadingFinished.failure)
     }
 
-    @MainActor func testPurgesKeysAndEntersFailedStateIfExtensionReportsRequiringKeyRegeneration() async {
+    @MainActor
+    func testPurgesKeysAndEntersFailedStateIfExtensionReportsRequiringKeyRegeneration() async {
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
 
         let storageMock = MockVpnAuthenticationStorage()

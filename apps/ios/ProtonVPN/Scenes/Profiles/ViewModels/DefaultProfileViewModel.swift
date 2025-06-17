@@ -1,5 +1,5 @@
 //
-//  OneLineViewModel.swift
+//  DefaultProfileViewModel.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,16 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Combine
+import ComposableArchitecture
 import Dependencies
-import ProtonCoreUIFoundations
+import Domain
 import LegacyCommon
-import VPNAppCore
+import ProtonCoreUIFoundations
 import Strings
 import Theme
-import ComposableArchitecture
-import Combine
-import Domain
+import UIKit
+import VPNAppCore
 
 import ProtonCoreFeatureFlags
 
@@ -50,51 +50,53 @@ class FastestConnectionViewModel: DefaultProfileViewModel {
 }
 
 class DefaultProfileViewModel {
-
     @Dependency(\.profileAuthorizer) var authorizer
-    fileprivate let alertService: AlertService
+    private let alertService: AlertService
 
-    fileprivate let serverOffering: ServerOffering
-    fileprivate let vpnGateway: VpnGatewayProtocol
-    fileprivate let propertiesManager: PropertiesManagerProtocol
-    fileprivate let connectionStatusService: ConnectionStatusService
-    fileprivate let netShieldPropertyProvider: NetShieldPropertyProvider
-    fileprivate let natTypePropertyProvider: NATTypePropertyProvider
-    fileprivate let safeModePropertyProvider: SafeModePropertyProvider
+    private let serverOffering: ServerOffering
+    private let vpnGateway: VpnGatewayProtocol
+    private let propertiesManager: PropertiesManagerProtocol
+    private let connectionStatusService: ConnectionStatusService
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let natTypePropertyProvider: NATTypePropertyProvider
+    private let safeModePropertyProvider: SafeModePropertyProvider
 
     private let defaultAccessTier: Int
 
-    fileprivate var profile: Profile {
+    private var profile: Profile {
         switch serverOffering {
         case .random:
-            return Profile(id: "st_r",
-                           accessTier: defaultAccessTier,
-                           profileIcon: .arrowsSwapRight,
-                           profileType: .system,
-                           serverType: propertiesManager.serverTypeToggle,
-                           serverOffering: serverOffering,
-                           name: Localizable.random,
-                           connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(
+                id: "st_r",
+                accessTier: defaultAccessTier,
+                profileIcon: .arrowsSwapRight,
+                profileType: .system,
+                serverType: propertiesManager.serverTypeToggle,
+                serverOffering: serverOffering,
+                name: Localizable.random,
+                connectionProtocol: propertiesManager.connectionProtocol
+            )
         default:
-            return Profile(id: "st_f",
-                           accessTier: defaultAccessTier,
-                           profileIcon: .bolt,
-                           profileType: .system,
-                           serverType: propertiesManager.serverTypeToggle,
-                           serverOffering: serverOffering,
-                           name: Localizable.fastest,
-                           connectionProtocol: propertiesManager.connectionProtocol)
+            Profile(
+                id: "st_f",
+                accessTier: defaultAccessTier,
+                profileIcon: .bolt,
+                profileType: .system,
+                serverType: propertiesManager.serverTypeToggle,
+                serverOffering: serverOffering,
+                name: Localizable.fastest,
+                connectionProtocol: propertiesManager.connectionProtocol
+            )
         }
     }
 
-    fileprivate let isRedesign: Bool
-    fileprivate let extraMargin: Bool
+    private let isRedesign: Bool
+    private let extraMargin: Bool
 
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     var isConnected: Bool {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-
             guard vpnGateway.connection == .connected else { return false }
 
             return vpnGateway.lastConnectionRequest == profile.connectionRequest(
@@ -120,10 +122,9 @@ class DefaultProfileViewModel {
     }
 
     var isConnecting: Bool {
-
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             guard vpnGateway.connection == .connecting else { return false }
-            
+
             return vpnGateway.lastConnectionRequest == profile.connectionRequest(
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
@@ -131,11 +132,11 @@ class DefaultProfileViewModel {
                 trigger: .profile
             )
         }
-        
+
         guard case let .connecting(connectionSpec, _) = vpnConnectionStatus else {
             return false
         }
-        
+
         return connectionSpec == ConnectionSpec(
             connectionRequest: profile.connectionRequest(
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
@@ -147,11 +148,11 @@ class DefaultProfileViewModel {
     }
 
     private var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     fileprivate var isUsersTierTooLow: Bool {
-        return !authorizer.canUseProfile(ofTier: defaultAccessTier)
+        !authorizer.canUseProfile(ofTier: defaultAccessTier)
     }
 
     var connectionChanged: (() -> Void)?
@@ -161,35 +162,35 @@ class DefaultProfileViewModel {
     var title: String {
         switch serverOffering {
         case .fastest:
-            return Localizable.fastestConnection
+            Localizable.fastestConnection
         case .random:
-            return Localizable.randomConnection
+            Localizable.randomConnection
         default:
-            return ""
+            ""
         }
     }
 
     var image: UIImage {
         switch serverOffering {
         case .fastest:
-            return isRedesign ? Asset.fastest.image : IconProvider.bolt
+            isRedesign ? Asset.fastest.image : IconProvider.bolt
         case .random:
-            return IconProvider.arrowsSwapRight
+            IconProvider.arrowsSwapRight
         default:
-            return UIImage()
+            UIImage()
         }
     }
 
     var imageInPlaceOfConnectIcon: UIImage? {
-        return isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
+        isUsersTierTooLow ? Theme.Asset.vpnSubscriptionBadge.image : nil
     }
 
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        isUsersTierTooLow ? 0.5 : 1.0
     }
 
     var connectButtonMargin: CGFloat {
-        return extraMargin ? 32 : 0
+        extraMargin ? 32 : 0
     }
 
     init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, extraMargin: Bool = false) {
@@ -236,9 +237,10 @@ class DefaultProfileViewModel {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
-    fileprivate func startObserving() {
+    private func startObserving() {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
             return
@@ -252,8 +254,9 @@ class DefaultProfileViewModel {
             .store(in: &cancellables)
     }
 
-    @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged {
+    @objc
+    private func stateChanged() {
+        if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }

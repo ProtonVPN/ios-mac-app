@@ -34,13 +34,13 @@ extension AppState {
     func asDisplayState() -> AppDisplayState {
         switch self {
         case .connected:
-            return .connected
+            .connected
         case .preparingConnection, .connecting:
-            return .connecting
+            .connecting
         case .disconnecting:
-            return .disconnecting
+            .disconnecting
         case .error, .disconnected, .aborted:
-            return .disconnected
+            .disconnected
         }
     }
 }

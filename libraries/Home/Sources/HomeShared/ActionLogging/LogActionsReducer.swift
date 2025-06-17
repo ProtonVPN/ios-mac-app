@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Connection
+import Foundation
 
 public extension Reducer {
     func logActions(_ logger: ActionLogger<Action>) -> LogActionReducer<Self> {
@@ -34,7 +34,7 @@ public struct ActionLogger<Action>: Sendable {
     }
 
     public func logAction(receivedAction: Action) {
-        self._logAction(receivedAction)
+        _logAction(receivedAction)
     }
 }
 
@@ -51,12 +51,12 @@ public struct LogActionReducer<Base: Reducer>: Reducer {
         into state: inout Base.State, action: Base.Action
     ) -> Effect<Base.Action> {
         logger.logAction(receivedAction: action)
-        return self.base.reduce(into: &state, action: action)
+        return base.reduce(into: &state, action: action)
     }
 }
 
-extension ActionLogger {
-    package static var connectionLogger: Self {
+package extension ActionLogger {
+    static var connectionLogger: Self {
         Self {
             log.debug("\(ConnectionFeature.self) received action: \($0)", category: .connection)
         }

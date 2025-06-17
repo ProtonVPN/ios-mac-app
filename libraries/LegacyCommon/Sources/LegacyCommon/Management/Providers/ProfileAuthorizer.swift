@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public struct ProfileAuthorizer {
     var shouldAllowProfiles: () -> Bool
@@ -45,8 +45,8 @@ extension ProfileAuthorizer: DependencyKey {
     }()
 }
 
-extension DependencyValues {
-    public var profileAuthorizer: ProfileAuthorizer {
+public extension DependencyValues {
+    var profileAuthorizer: ProfileAuthorizer {
         get { self[ProfileAuthorizer.self] }
         set { self[ProfileAuthorizer.self] = newValue }
     }

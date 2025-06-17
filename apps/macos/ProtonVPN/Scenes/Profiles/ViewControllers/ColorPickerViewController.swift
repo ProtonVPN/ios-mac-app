@@ -24,39 +24,39 @@ import Cocoa
 import Ergonomics
 
 class ColorPickerViewController: NSViewController {
-    
-    @IBOutlet weak var collectionView: NSCollectionView!
-    
+    @IBOutlet var collectionView: NSCollectionView!
+
     private let circleCellWidth: CGFloat = 20.0
     private let rows = 2
     private let columns = 5
-    
+
     var viewModel: ColorPickerViewModel!
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: ColorPickerViewModel) {
         super.init(nibName: NSNib.Name("ColorPicker"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupCollectionView()
     }
-    
-    override func mouseEntered(with event: NSEvent) {
+
+    override func mouseEntered(with _: NSEvent) {
         collectionView.addCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         collectionView.removeCursorRect(collectionView.bounds, cursor: .pointingHand)
     }
-    
+
     private func setupView() {
         let view = NSView()
         view.wantsLayer = true
@@ -65,15 +65,19 @@ class ColorPickerViewController: NSViewController {
         }
         collectionView.backgroundView = view
     }
-    
+
     private func setupCollectionView() {
         let gridLayout = NSCollectionViewGridLayout()
         gridLayout.maximumItemSize = NSSize(width: circleCellWidth, height: circleCellWidth)
         gridLayout.maximumNumberOfRows = rows
         gridLayout.maximumNumberOfColumns = columns
 
-        let trackingArea = NSTrackingArea(rect: collectionView.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
-                                          owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: collectionView.bounds,
+            options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow],
+            owner: self,
+            userInfo: nil
+        )
         collectionView.addTrackingArea(trackingArea)
         collectionView.collectionViewLayout = gridLayout
         collectionView.dataSource = self
@@ -83,22 +87,21 @@ class ColorPickerViewController: NSViewController {
         collectionView.allowsMultipleSelection = false
 
         setSelection()
-        
+
         viewModel.colorSelected = { [weak self] in self?.setSelection() }
     }
-    
+
     private func setSelection() {
         collectionView.selectionIndexPaths = [IndexPath(item: viewModel.selectedColorIndex, section: 0)]
     }
 }
 
 extension ColorPickerViewController: NSCollectionViewDataSource {
-    
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.colorCount
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
+        viewModel.colorCount
     }
-    
-    func collectionView(_ itemForRepresentedObjectAtcollectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
+
+    func collectionView(_: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
         let item = collectionView.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ColorPickerItem"), for: indexPath) as! ColorPickerItemView
         item.colorPickerCircle.color = viewModel.color(atIndex: indexPath.item)
         return item
@@ -106,8 +109,7 @@ extension ColorPickerViewController: NSCollectionViewDataSource {
 }
 
 extension ColorPickerViewController: NSCollectionViewDelegate {
-    
-    func collectionView(_ collectionView: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
+    func collectionView(_: NSCollectionView, didSelectItemsAt indexPaths: Set<IndexPath>) {
         if let index = indexPaths.first?.item {
             viewModel.selectedColorIndex = index
         }

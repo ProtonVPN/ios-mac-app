@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 import LegacyCommon
 import Persistence
 
@@ -31,34 +31,34 @@ class AbstractProfileViewModel {
     let lowestServerTier: Int
     let userTier: Int
     let underMaintenance: Bool
-    
+
     init(profile: Profile, userTier: Int) {
         self.profile = profile
         self.userTier = userTier
-        
+
         switch profile.serverOffering {
-        case .custom(let serverWrapper):
+        case let .custom(serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier
             self.underMaintenance = serverWrapper.server.underMaintenance
 
-        case .fastest(let countryCode), .random(let countryCode):
+        case let .fastest(countryCode), let .random(countryCode):
             if countryCode == nil {
                 self.lowestServerTier = 0
                 self.underMaintenance = false
                 break
             }
-            
+
             var minTier = Int.internalTier
             var allServersUnderMaintenance = true
             let filters: [VPNServerFilter] = [
                 .kind(.country(code: countryCode)),
-                .features(profile.serverType.serverTypeFilter)
+                .features(profile.serverType.serverTypeFilter),
             ]
 
             @Dependency(\.serverRepository) var repository
             let serversOfProfileTypeAndCountry = repository.getServers(filteredBy: filters, orderedBy: .none)
 
-            serversOfProfileTypeAndCountry.forEach { (server) in
+            for server in serversOfProfileTypeAndCountry {
                 if minTier > server.logical.tier {
                     minTier = server.logical.tier
                 }
@@ -72,9 +72,8 @@ class AbstractProfileViewModel {
     }
 
     var canUseProfile: Bool { authorizer.canUseProfile(ofTier: lowestServerTier) }
-    
+
     var alphaOfMainElements: CGFloat {
-        return canUseProfile ? 1.0 : 0.5
+        canUseProfile ? 1.0 : 0.5
     }
-    
 }

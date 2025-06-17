@@ -1,5 +1,5 @@
 //
-//  ServerViewCell.swift
+//  ServerCell.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -28,11 +28,11 @@ public protocol ServerCellDelegate: AnyObject {
 
 public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     static let featureViewTag = "Tag For Server Features Icons".hashValue
@@ -46,40 +46,40 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         var imageName: String {
             switch self {
             case .smart:
-                return "ic-globe"
+                "ic-globe"
             case .tor:
-                return "ic-brand-tor"
+                "ic-brand-tor"
             case .streaming:
-                return "ic-play"
+                "ic-play"
             case .p2p:
-                return "ic-arrows-switch"
+                "ic-arrows-switch"
             }
         }
     }
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var serverNameLabel: UILabel!
-    @IBOutlet private weak var cityNameLabel: UILabel!
-    @IBOutlet private weak var loadLbl: UILabel!
-    @IBOutlet private weak var loadColorView: UIView!
-    @IBOutlet private weak var loadContainingView: UIView!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var serverNameLabel: UILabel!
+    @IBOutlet private var cityNameLabel: UILabel!
+    @IBOutlet private var loadLbl: UILabel!
+    @IBOutlet private var loadColorView: UIView!
+    @IBOutlet private var loadContainingView: UIView!
 
     private var partnersImageViews: [UIImageView] = []
     private var streamingIV: UIImageView?
-    @IBOutlet private weak var featuresStackView: UIStackView!
+    @IBOutlet private var featuresStackView: UIStackView!
 
-    @IBOutlet private weak var secureView: UIView!
+    @IBOutlet private var secureView: UIView!
 
-    @IBOutlet private weak var countryNameLabel: UILabel!
-    @IBOutlet private weak var exitFlagIcon: UIImageView!
-    @IBOutlet private weak var entryFlagIcon: UIImageView!
+    @IBOutlet private var countryNameLabel: UILabel!
+    @IBOutlet private var exitFlagIcon: UIImageView!
+    @IBOutlet private var entryFlagIcon: UIImageView!
 
-    @IBOutlet weak var exitFlagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var exitFlagIconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet weak var entryFlagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var entryFlagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var exitFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var exitFlagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var entryFlagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var entryFlagIconWidthConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 
@@ -118,7 +118,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 
             loadLbl.text = "\(viewModel.load)%"
             loadColorView.backgroundColor = viewModel.loadColor
-            [serverNameLabel, cityNameLabel, secureView].forEach { view in
+            for view in [serverNameLabel, cityNameLabel, secureView] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
 
@@ -128,7 +128,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             entryFlagIcon.contentMode = viewModel.isRedesign ? .scaleAspectFill : .scaleToFill
             entryFlagIcon.layer.cornerRadius = viewModel.isRedesign ? 4 : 0
             entryFlagIcon.layer.masksToBounds = viewModel.isRedesign
-            
+
             exitFlagIcon.image = viewModel.countryFlag
             exitFlagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
             exitFlagIconWidthConstraint.constant = viewModel.isRedesign ? 30 : 32
@@ -169,16 +169,18 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
     }
 
     private func imageViewForFeature(feature: ServerFeature, iconSize: CGFloat? = 16) -> UIImageView {
-        let imageView = UIImageView(image: UIImage(named: feature.imageName,
-                                                   in: .module,
-                                                   with: nil))
+        let imageView = UIImageView(image: UIImage(
+            named: feature.imageName,
+            in: .module,
+            with: nil
+        ))
         imageView.tag = ServerCell.featureViewTag
         imageView.tintColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         if let iconSize {
             imageView.addConstraints([
                 imageView.widthAnchor.constraint(equalToConstant: iconSize),
-                imageView.heightAnchor.constraint(equalToConstant: iconSize)
+                imageView.heightAnchor.constraint(equalToConstant: iconSize),
             ])
         }
         return imageView
@@ -190,7 +192,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         connectButton.addInteraction(UIPointerInteraction(delegate: self))
     }
 
-    public override func prepareForReuse() {
+    override public func prepareForReuse() {
         super.prepareForReuse()
         featuresStackView
             .subviews
@@ -205,7 +207,8 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
         stateChanged()
     }
 
-    @IBAction private func rowTapped(_ button: UIButton, forEvent event: UIEvent) {
+    @IBAction
+    private func rowTapped(_ button: UIButton, forEvent event: UIEvent) {
         guard let touch = event.touches(for: button)?.first else {
             connect()
             return
@@ -233,7 +236,8 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
             .contains(touch.location(in: self)) ?? false
     }
 
-    @IBAction private func connectButtonTap(_ sender: Any) {
+    @IBAction
+    private func connectButtonTap(_: Any) {
         connect()
     }
 
@@ -253,7 +257,7 @@ public final class ServerCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension ServerCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle? = nil
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

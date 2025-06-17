@@ -36,7 +36,7 @@ public protocol NEVPNManagerWrapper: AnyObject {
 
 extension NEVPNManager: NEVPNManagerWrapper {
     public var vpnConnection: NEVPNConnectionWrapper {
-        self.connection
+        connection
     }
 }
 
@@ -44,11 +44,9 @@ public protocol NEVPNManagerWrapperFactory {
     func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper
 }
 
-public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {
-}
+public protocol NETunnelProviderManagerWrapper: NEVPNManagerWrapper {}
 
-extension NETunnelProviderManager: NETunnelProviderManagerWrapper {
-}
+extension NETunnelProviderManager: NETunnelProviderManagerWrapper {}
 
 public protocol NETunnelProviderManagerWrapperFactory {
     func makeNewManager() -> NETunnelProviderManagerWrapper
@@ -58,17 +56,17 @@ public protocol NETunnelProviderManagerWrapperFactory {
 
 extension NETunnelProviderManagerWrapperFactory {
     func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String, completionHandler: @escaping (NETunnelProviderManagerWrapper?, Error?) -> Void) {
-        loadManagersFromPreferences { (managers, error) in
-            if let error = error {
+        loadManagersFromPreferences { managers, error in
+            if let error {
                 completionHandler(nil, error)
                 return
             }
-            guard let managers = managers else {
+            guard let managers else {
                 completionHandler(nil, CommonVpnError.vpnManagerUnavailable)
                 return
             }
 
-            let vpnManager = managers.first(where: { (manager) -> Bool in
+            let vpnManager = managers.first(where: { manager -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
             }) ?? self.makeNewManager()
 
@@ -78,9 +76,9 @@ extension NETunnelProviderManagerWrapperFactory {
 
     func tunnelProviderManagerWrapper(forProviderBundleIdentifier bundleId: String) async throws -> NETunnelProviderManagerWrapper {
         let managers = try await loadManagersFromPreferences()
-        return managers.first(where: { (manager) -> Bool in
+        return managers.first(where: { manager -> Bool in
             return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-        }) ?? self.makeNewManager()
+        }) ?? makeNewManager()
     }
 }
 
@@ -111,7 +109,7 @@ public protocol NEVPNConnectionWrapper {
 
 extension NEVPNConnection: NEVPNConnectionWrapper {
     public var vpnManager: NEVPNManagerWrapper {
-        self.manager
+        manager
     }
 }
 
@@ -132,7 +130,7 @@ extension NETunnelProviderSessionWrapper {
                 category: .ipc,
                 metadata: [
                     "message": "\(message)",
-                    "request": "\(String(describing: message as? WireguardProviderRequest))"
+                    "request": "\(String(describing: message as? WireguardProviderRequest))",
                 ]
             )
             try sendProviderMessage(message.asData) { [weak self] maybeData in
@@ -178,5 +176,4 @@ extension NETunnelProviderSessionWrapper {
     }
 }
 
-extension NETunnelProviderSession: NETunnelProviderSessionWrapper {
-}
+extension NETunnelProviderSession: NETunnelProviderSessionWrapper {}

@@ -17,21 +17,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
-import UITestsHelpers
 import fusion
+import UITestsHelpers
+import XCTest
 
 class ProfileTests: ProtonVPNUITests {
-    
     private let loginRobot = LoginRobot()
     private let mainRobot = MainRobot()
     private let profilesRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
     private let manageProfilesRobot = ManageProfilesRobot()
     private let settingsRobot = SettingsRobot()
-    
+
     func testCreateEmptyProfile() {
-        
         let profileName = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
@@ -55,9 +53,8 @@ class ProfileTests: ProtonVPNUITests {
             .saveProfile()
             .verify.checkErrorMessageEnterName()
     }
-    
+
     func testCancelProfile() {
-        
         let country = "Austria"
 
         logoutIfNeeded()
@@ -73,9 +70,8 @@ class ProfileTests: ProtonVPNUITests {
             .continueProfileModal()
             .verify.checkProfileOverViewIsOpen()
     }
-    
+
     func testCreateProfileWithTheSameName() {
-        
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
 
@@ -94,9 +90,8 @@ class ProfileTests: ProtonVPNUITests {
             .saveProfile()
             .verify.checkErrorMessageSameNameExists()
     }
-    
+
     func testNewProfileAppearsInTheSettings() {
-        
         let name = StringUtils.randomAlphanumericString(length: 8)
         let country = "Austria"
         let qcFastest = "Fastest"
@@ -129,4 +124,4 @@ class ProfileTests: ProtonVPNUITests {
             .openProfiles()
             .verify.isShowingUpsellModal(ofType: .profiles)
     }
-}	
+}

@@ -18,8 +18,8 @@
 
 import Foundation
 import KeychainAccess
-import VPNCrypto
 import VPNAppCore
+import VPNCrypto
 
 struct SecureDeepLinkGeneratorError: Error {
     let localizedDescription: String
@@ -63,8 +63,8 @@ class SecureDeepLinkGenerator {
             kSecAttrCanSign as String: true,
             kSecPrivateKeyAttrs as String: [
                 kSecAttrIsPermanent as String: true,
-                kSecAttrApplicationTag as String: Env.privateDataKey.data(using: .utf8)!
-            ] as [String: Any]
+                kSecAttrApplicationTag as String: Env.privateDataKey.data(using: .utf8)!,
+            ] as [String: Any],
         ])
 
         guard let publicKey = key.publicKey else {
@@ -101,7 +101,7 @@ enum SecureDeepLinkGeneratorEnvironment {
     static let publicDataKey = "ch.proton.vpn.widget.public_key"
 
     static var appIdentifierPrefix: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
 
     static let widgetKeychain = Keychain(
@@ -115,7 +115,7 @@ enum SecureDeepLinkGeneratorEnvironment {
     )
 }
 
-fileprivate extension Keychain {
+private extension Keychain {
     typealias Key = CryptoService.Key
 
     func setKey(_ secKey: Key, _ key: String) throws {

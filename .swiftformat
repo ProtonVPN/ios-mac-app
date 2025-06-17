@@ -1,0 +1,19 @@
+--disable wrapMultilineStatementBraces
+
+--enable isEmpty
+
+# format options
+
+--allman false
+--commas always
+--self init-only
+--wraparguments before-first
+--wrapcollections before-first
+--funcattributes prev-line
+--typeattributes prev-line
+--storedvarattrs same-line
+--computedvarattrs prev-line
+--complexattrs prev-line
+
+# excludes
+--exclude external,Build,libraries/Foundations/Strings/Sources/Strings/Strings.swift,**/Assets.swift,**/.build

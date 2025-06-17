@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UITestsHelpers
 import Foundation
+import UITestsHelpers
 
 public enum BF22Users {
     case plusUser
     case cycle15User
     case cycle30User
     case freeUser
-    
+
     public var credentials: Credentials {
         let allCredentials = getCredentials(fromResource: "credentials_bf22")
         switch self {
@@ -38,9 +38,9 @@ public enum BF22Users {
             return allCredentials[3]
         }
     }
-    
+
     // Sample function to get credentials from a resource
     func getCredentials(fromResource resource: String) -> [Credentials] {
-        return Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
+        Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: resource, withExtension: "plist")!)
     }
 }

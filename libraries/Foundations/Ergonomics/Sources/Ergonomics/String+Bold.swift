@@ -17,47 +17,48 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(iOS)
-import UIKit
+    import UIKit
 
-public extension String {
-    func attributedString(size: CGFloat, color: UIColor, boldStrings: [String]) -> NSAttributedString {
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: size, weight: .regular),
-            .foregroundColor: color
-        ]
-        let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
-        for boldText in boldStrings {
-            let range = (self as NSString).range(of: boldText)
-            let attrsBold: [NSAttributedString.Key: Any] = [
-                .font : UIFont.systemFont(ofSize: size, weight: .bold)
+    public extension String {
+        func attributedString(size: CGFloat, color: UIColor, boldStrings: [String]) -> NSAttributedString {
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: size, weight: .regular),
+                .foregroundColor: color,
             ]
-            attributedText.addAttributes(attrsBold, range: range)
+            let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
+            for boldText in boldStrings {
+                let range = (self as NSString).range(of: boldText)
+                let attrsBold: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: size, weight: .bold),
+                ]
+                attributedText.addAttributes(attrsBold, range: range)
+            }
+            return attributedText
         }
-        return attributedText
     }
-}
+
 #elseif os(macOS)
-import AppKit
+    import AppKit
 
-public extension String {
-    func attributedString(size: CGFloat, color: NSColor, boldStrings: [String], alignment: NSTextAlignment = .natural) -> NSAttributedString {
-        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = alignment
+    public extension String {
+        func attributedString(size: CGFloat, color: NSColor, boldStrings: [String], alignment: NSTextAlignment = .natural) -> NSAttributedString {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = alignment
 
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: NSFont.systemFont(ofSize: size, weight: .regular),
-            .paragraphStyle : paragraphStyle,
-            .foregroundColor: color
-        ]
-        let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
-        for boldText in boldStrings {
-            let range = (self as NSString).range(of: boldText)
-            let attrsBold: [NSAttributedString.Key: Any] = [
-                .font : NSFont.systemFont(ofSize: size, weight: .bold)
+            let attrs: [NSAttributedString.Key: Any] = [
+                .font: NSFont.systemFont(ofSize: size, weight: .regular),
+                .paragraphStyle: paragraphStyle,
+                .foregroundColor: color,
             ]
-            attributedText.addAttributes(attrsBold, range: range)
+            let attributedText = NSMutableAttributedString(string: self, attributes: attrs)
+            for boldText in boldStrings {
+                let range = (self as NSString).range(of: boldText)
+                let attrsBold: [NSAttributedString.Key: Any] = [
+                    .font: NSFont.systemFont(ofSize: size, weight: .bold),
+                ]
+                attributedText.addAttributes(attrsBold, range: range)
+            }
+            return attributedText
         }
-        return attributedText
     }
-}
 #endif

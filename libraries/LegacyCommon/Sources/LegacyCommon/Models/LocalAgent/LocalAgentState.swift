@@ -39,19 +39,18 @@ enum LocalAgentState {
     var isTerminalErrorState: Bool {
         switch self {
         case .serverCertificateError:
-            return true
+            true
         case .clientCertificateExpired:
-            return true
+            true
         case .clientCertificateUnknownCA:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
 
 extension LocalAgentState {
-
     // swiftlint:disable cyclomatic_complexity
     static func from(string: String) -> LocalAgentState? {
         guard let consts = LocalAgentConstants() else {

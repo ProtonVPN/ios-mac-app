@@ -20,42 +20,42 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 import Dependencies
 
-import ProtonCoreLogin
-import ProtonCoreNetworking
 import ProtonCoreAuthentication
 import ProtonCoreFeatureFlags
-import ProtonCoreServices
+import ProtonCoreLogin
+import ProtonCoreNetworking
 import ProtonCoreObservability
+import ProtonCoreServices
 
 import CommonNetworking
 import LegacyCommon
 import VPNAppCore
 import VPNShared
 
-import Strings
 import Domain
+import Strings
 
 struct LoginViewModelError: Swift.Error {
     let localizedDescription: String
 }
 
 final class LoginViewModel {
-    typealias Factory = NavigationServiceFactory &
-                        PropertiesManagerFactory &
-                        AppSessionManagerFactory &
-                        CoreAlertServiceFactory &
-                        UpdateManagerFactory &
-                        ProtonReachabilityCheckerFactory &
-                        NetworkingFactory &
-                        SystemExtensionManagerFactory
+    typealias Factory =
+        AppSessionManagerFactory &
+        CoreAlertServiceFactory & NavigationServiceFactory &
+        NetworkingFactory &
+        PropertiesManagerFactory &
+        ProtonReachabilityCheckerFactory &
+        SystemExtensionManagerFactory &
+        UpdateManagerFactory
 
     private let factory: Factory
-    
+
     private lazy var apiService: APIService = factory.makeNetworking().apiService
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -63,10 +63,12 @@ final class LoginViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var protonReachabilityChecker: ProtonReachabilityChecker = factory.makeProtonReachabilityChecker()
-    private lazy var loginService: Login = LoginService(api: apiService,
-                                                        clientApp: .vpn,
-                                                        minimumAccountType: AccountType.username,
-                                                        ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme)
+    private lazy var loginService: Login = LoginService(
+        api: apiService,
+        clientApp: .vpn,
+        minimumAccountType: AccountType.username,
+        ssoCallbackScheme: AppConstants.DeepLinking.deepLinkScheme
+    )
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
 
     var logInInProgress: (() -> Void)?
@@ -79,19 +81,19 @@ final class LoginViewModel {
 
     private(set) var isTwoFactorStep: Bool = false
 
-    init (factory: Factory, initialError: String? = nil) {
+    init(factory: Factory, initialError: String? = nil) {
         self.factory = factory
         self.initialError = initialError
     }
-    
+
     var startOnBoot: Bool {
-        return propertiesManager.startOnBoot
+        propertiesManager.startOnBoot
     }
-    
+
     func startOnBoot(enabled: Bool) {
         propertiesManager.startOnBoot = enabled
     }
-    
+
     func logInSilently() {
         logInInProgress?()
         appSessionManager.attemptSilentLogIn { result in
@@ -107,7 +109,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     func logInAppeared() {
         guard initialError == nil else {
             logInFailure?(initialError, nil)
@@ -131,7 +133,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     func logIn(username: String, password: String) {
         logInInProgress?()
         loginService.login(
@@ -143,7 +145,7 @@ final class LoginViewModel {
             self?.handleLoginResult(result: result)
         }
     }
-    
+
     func logInWithSSO(username: String) {
         logInInProgress?()
         loginService.login(
@@ -155,7 +157,7 @@ final class LoginViewModel {
             self?.handleLoginResult(result: result)
         }
     }
-    
+
     func identifyAndProcessSSOResponseToken(from url: URL?, username: String) -> Bool {
         guard let token = getSSOTokenFromURL(url: url) else { return false }
         loginService.processResponseToken(idpEmail: username, responseToken: token) { [weak self] result in
@@ -163,29 +165,29 @@ final class LoginViewModel {
         }
         return true
     }
-    
+
     private func getSSOTokenFromURL(url: URL?) -> SSOResponseToken? {
         guard let url, url.path == "/sso/login" else { return nil }
-        
+
         var components = URLComponents()
         components.query = url.fragment
-        
+
         guard let items = components.queryItems,
               let token = (items.first { $0.name == "token" }?.value),
               let uid = (items.first { $0.name == "uid" }?.value) else {
             return nil
         }
-        
+
         return .init(token: token, uid: uid)
     }
-    
+
     func isProtonPage(url: URL?) -> Bool {
         guard let url else { return false }
         let hosts = [
             apiService.dohInterface.getAccountHost(),
             apiService.dohInterface.getCurrentlyUsedHostUrl(),
             apiService.dohInterface.getHumanVerificationV3Host(),
-            apiService.dohInterface.getCaptchaHostUrl()
+            apiService.dohInterface.getCaptchaHostUrl(),
         ]
         return hosts.contains(where: url.absoluteString.contains)
     }
@@ -222,9 +224,9 @@ final class LoginViewModel {
             case let .ssoChallenge(ssoResponse):
                 Task {
                     switch await loginService.getSSORequest(challenge: ssoResponse) {
-                    case (let request?, _):
+                    case let (request?, _):
                         ssoChallengeReceived?(request)
-                    case (_, let error?):
+                    case let (_, error?):
                         handleError(error: LoginViewModelError(localizedDescription: error))
                     default:
                         break
@@ -320,7 +322,7 @@ final class LoginViewModel {
             }
         }
     }
-    
+
     private func specialErrorCaseNotification(_ error: Error) {
         if (error as NSError).code == NetworkErrorCode.timedOut ||
             (error as NSError).code == ApiErrorCode.apiVersionBad ||
@@ -328,16 +330,16 @@ final class LoginViewModel {
             logInFailureWithSupport?(error.localizedDescription)
         }
     }
-    
+
     private func checkForUpdatesInBackground() {
         updateManager.checkForUpdates(appSessionManager, userInitiated: false)
     }
-    
+
     func keychainHelpAction() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.supportCommonIssues)
     }
-    
+
     func createAccountAction() {
         checkInProgress?(true)
 
@@ -354,6 +356,6 @@ final class LoginViewModel {
     }
 
     var helpPopoverViewModel: HelpPopoverViewModel {
-        return HelpPopoverViewModel(navigationService: navService)
+        HelpPopoverViewModel(navigationService: navService)
     }
 }

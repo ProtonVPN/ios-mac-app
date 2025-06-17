@@ -27,7 +27,6 @@ import DomainTestSupport
 @testable import ExtensionManager
 
 final class PacketTunnelManagerTests: XCTestCase {
-
     func testCreatesAndLoadsManagerWithNoExistingManagers() async throws {
         let existingManagersLoaded = XCTestExpectation(description: "Tunnel Manager should check if a provider manager already exists")
         let newManagerLoaded = XCTestExpectation(description: "Tunnel Manager must load any newly created manager")
@@ -46,7 +45,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                     return []
                 }
             )
-        } operation: { 
+        } operation: {
             try await PacketTunnelManager().status
         }
 
@@ -104,7 +103,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 removeAll: unimplemented(),
                 loadFromPreferences: { [providerManager] }
             )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
+            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
                 mockManager.isEnabled = true
                 managerConfigured.fulfill()
@@ -136,7 +135,7 @@ final class PacketTunnelManagerTests: XCTestCase {
                 removeAll: unimplemented(),
                 loadFromPreferences: { [providerManager] }
             )
-            $0.tunnelProviderConfigurator = .init(configure: { manager, operation in
+            $0.tunnelProviderConfigurator = .init(configure: { manager, _ in
                 let mockManager = try XCTUnwrap(manager as? MockTunnelProviderManager)
                 mockManager.isOnDemandEnabled = false
                 managerConfigured.fulfill()

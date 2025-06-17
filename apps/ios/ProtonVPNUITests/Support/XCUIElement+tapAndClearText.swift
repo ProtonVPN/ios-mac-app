@@ -19,26 +19,25 @@
 import XCTest
 
 extension XCUIElement {
-
     /**
      * Deletes text value from the text field.
      */
     @discardableResult
     func tapAndClearText() -> XCUIElement {
-        if let stringValue = self.value as? String {
+        if let stringValue = value as? String {
             // tap at the right corner of the input
-            let lowerRightCorner = self.coordinate(
+            let lowerRightCorner = coordinate(
                 withNormalizedOffset: CGVector(dx: 0.9, dy: 0.9)
             )
             lowerRightCorner.tap()
 
-            let delete: String = String(
+            let delete = String(
                 repeating: XCUIKeyboardKey.delete.rawValue,
                 count: stringValue.count
             )
-            self.typeText(delete)
+            typeText(delete)
         } else {
-            self.tap()
+            tap()
         }
         return self
     }

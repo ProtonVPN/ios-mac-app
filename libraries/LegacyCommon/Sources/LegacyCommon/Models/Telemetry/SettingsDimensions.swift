@@ -29,16 +29,17 @@ public struct SettingsDimensions: Encodable {
     let firstHermesAddressFamily: HermesAddressFamily
     let isSystemHermesEnabled: SystemHermesEnabled
 
-
-    init(defaultConnectionType: DefaultConnectionType,
-         appIcon: AppIcon,
-         userTier: UserTier,
-         widgetCount: WidgetCount?,
-         firstWidgetSize: WidgetSize?,
-         isIPv6Enabled: IsIPv6Enabled,
-         hermesCount: HermesCount,
-         firstHermesAddressFamily: HermesAddressFamily,
-         isSystemHermesEnabled: SystemHermesEnabled) {
+    init(
+        defaultConnectionType: DefaultConnectionType,
+        appIcon: AppIcon,
+        userTier: UserTier,
+        widgetCount: WidgetCount?,
+        firstWidgetSize: WidgetSize?,
+        isIPv6Enabled: IsIPv6Enabled,
+        hermesCount: HermesCount,
+        firstHermesAddressFamily: HermesAddressFamily,
+        isSystemHermesEnabled: SystemHermesEnabled
+    ) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
         self.userTier = userTier
@@ -111,7 +112,7 @@ public struct SettingsDimensions: Encodable {
                 self = .zero
             case 1:
                 self = .one
-            case 2...4:
+            case 2 ... 4:
                 self = .twoToFour
             default:
                 self = .greaterOrEqualFive

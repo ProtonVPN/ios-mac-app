@@ -19,22 +19,22 @@
 import Foundation
 import XCTest
 
-import Ergonomics
+import CoreConnectionTestSupport
 import Domain
 import DomainTestSupport
+import Ergonomics
 import VPNShared
 import VPNSharedTesting
-import CoreConnectionTestSupport
 
 import Dependencies
 
 @testable import ExtensionManager
 
 final class WireGuardConfiguratorTests: XCTestCase {
-
     /// The user's private key is required to complete tunnel configuration.
     /// Let's test that if keys aren't found in the keychain, they are generated.
-    @MainActor func testGeneratesKeysIfMissing() async throws {
+    @MainActor
+    func testGeneratesKeysIfMissing() async throws {
         let configurator = ManagerConfigurator.wireGuardConfigurator
         let session = VPNSessionMock(status: .disconnected, connectedDate: nil)
         var manager: TunnelProviderManager = MockTunnelProviderManager(session: session, isOnDemandEnabled: true, isEnabled: false)
@@ -53,7 +53,7 @@ final class WireGuardConfiguratorTests: XCTestCase {
             $0.date = .constant(.now)
             $0.bundleIDClient = .mock(bundleID: bundleID)
             $0.tunnelKeychain = .init(
-                storeWireguardConfig: { config in
+                storeWireguardConfig: { _ in
                     configStored.fulfill()
                     return Data()
                 },

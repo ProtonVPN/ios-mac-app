@@ -28,18 +28,18 @@ extension ServerTier {
     var title: String {
         switch self {
         case .plus:
-            return Localizable.plusServers
+            Localizable.plusServers
         case .free:
-            return Localizable.freeServers
+            Localizable.freeServers
         }
     }
 
     static func sorted(by userTier: UserTier) -> [ServerTier] {
         switch userTier {
         case .free:
-            return [.free, .plus]
+            [.free, .plus]
         case .plus:
-            return [.plus, .free]
+            [.plus, .free]
         }
     }
 }

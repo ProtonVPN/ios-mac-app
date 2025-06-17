@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,12 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
             name: "ConnectWidget",
-            targets: ["ConnectWidget"]),
+            targets: ["ConnectWidget"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
@@ -22,7 +23,7 @@ let package = Package(
         .package(path: "../NEHelper"),
         .package(path: "../SharedViews"),
         .package(path: "../Shared/ConnectionInventory"),
-        ],
+    ],
     targets: [
         .target(
             name: "ConnectWidget",
@@ -36,8 +37,9 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
             ],
             resources: [
-                .process("Resources")
-            ]),
+                .process("Resources"),
+            ]
+        ),
         .testTarget(
             name: "ConnectWidgetTests",
             dependencies: ["ConnectWidget"]

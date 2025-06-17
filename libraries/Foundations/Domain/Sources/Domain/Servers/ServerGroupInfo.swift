@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CoreLocation
+import Foundation
 
 public struct ServerGroupInfo {
-
     public let kind: Kind
     public let featureIntersection: ServerFeature // Features provided by all servers
     public let featureUnion: ServerFeature // All features provided by at least one server
@@ -69,27 +68,27 @@ public struct ServerGroupInfo {
     }
 
     public var location: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
 
 extension ServerGroupInfo: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.kind == rhs.kind &&
-        lhs.featureIntersection == rhs.featureIntersection &&
-        lhs.featureUnion == rhs.featureUnion &&
-        lhs.serverCount == rhs.serverCount &&
-        lhs.protocolSupport == rhs.protocolSupport
+            lhs.featureIntersection == rhs.featureIntersection &&
+            lhs.featureUnion == rhs.featureUnion &&
+            lhs.serverCount == rhs.serverCount &&
+            lhs.protocolSupport == rhs.protocolSupport
     }
 }
 
-extension ServerGroupInfo.Kind {
-    public var isGateway: Bool {
+public extension ServerGroupInfo.Kind {
+    var isGateway: Bool {
         switch self {
         case .country:
-            return false
+            false
         case .gateway:
-            return true
+            true
         }
     }
 }

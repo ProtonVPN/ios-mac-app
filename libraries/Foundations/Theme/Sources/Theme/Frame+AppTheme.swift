@@ -19,13 +19,17 @@
 import SwiftUI
 
 public extension View {
-    func themeFrame(minWidth: AppTheme.MacAppLayout? = nil,
-                    maxWidth: AppTheme.MacAppLayout? = nil,
-                    minHeight: AppTheme.MacAppLayout? = nil,
-                    maxHeight: AppTheme.MacAppLayout? = nil) -> some View {
-        frame(minWidth: minWidth?.rawValue,
-              maxWidth: maxWidth?.rawValue,
-              minHeight: minHeight?.rawValue,
-              maxHeight: maxHeight?.rawValue)
+    func themeFrame(
+        minWidth: AppTheme.MacAppLayout? = nil,
+        maxWidth: AppTheme.MacAppLayout? = nil,
+        minHeight: AppTheme.MacAppLayout? = nil,
+        maxHeight: AppTheme.MacAppLayout? = nil
+    ) -> some View {
+        frame(
+            minWidth: minWidth?.rawValue,
+            maxWidth: maxWidth?.rawValue,
+            minHeight: minHeight?.rawValue,
+            maxHeight: maxHeight?.rawValue
+        )
     }
 }

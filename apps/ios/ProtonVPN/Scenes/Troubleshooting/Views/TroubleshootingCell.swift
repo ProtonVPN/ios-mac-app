@@ -23,23 +23,22 @@
 import UIKit
 
 class TroubleshootingCell: UITableViewCell {
-    
     // Views
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UITextView!
-    
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UITextView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .backgroundColor()
         titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        
+
         descriptionLabel.isScrollEnabled = false // Enables auto-height
         descriptionLabel.isUserInteractionEnabled = true
         descriptionLabel.isEditable = false
         descriptionLabel.isSelectable = true
-        
+
         descriptionLabel.textContainer.lineFragmentPadding = 0
         descriptionLabel.backgroundColor = backgroundColor
         descriptionLabel.tintColor = .brandColor()
@@ -53,21 +52,21 @@ class TroubleshootingCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
     }
-    
+
     // MARK: - Public setters
-    
+
     var title: String? {
         get {
-            return titleLabel.text
+            titleLabel.text
         }
         set {
             titleLabel.text = newValue
         }
     }
-    
+
     var descriptionAttributed: NSAttributedString {
         get {
-            return descriptionLabel.attributedText
+            descriptionLabel.attributedText
         }
         set {
             let string = NSMutableAttributedString(attributedString: newValue)
@@ -76,5 +75,4 @@ class TroubleshootingCell: UITableViewCell {
             descriptionLabel.sizeToFit()
         }
     }
-    
 }

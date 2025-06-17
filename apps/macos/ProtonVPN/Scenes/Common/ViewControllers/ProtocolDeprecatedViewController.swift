@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Cocoa
+import Domain
+import Foundation
 import LegacyCommon
 import VPNAppCore
-import Domain
 
 final class ProtocolDeprecatedViewController: WarningPopupViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -40,7 +39,6 @@ final class ProtocolDeprecatedViewController: WarningPopupViewController {
     private func setupLink() {
         warningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
     }
-
 }
 
 extension WarningPopupViewModel {
@@ -56,7 +54,7 @@ extension WarningPopupViewModel {
             cancelTitle: alert.dismissTitle
         )
     }
-    
+
     convenience init(alert: IkeDeprecatedAlert) {
         self.init(
             title: alert.title!,

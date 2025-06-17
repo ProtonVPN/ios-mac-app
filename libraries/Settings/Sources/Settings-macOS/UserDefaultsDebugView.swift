@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import SettingsShared
+import SwiftUI
 
 struct UserDefaultsDebugView: View {
     @Binding public var store: StoreOf<UserDefaultsDebugFeature>
@@ -37,7 +37,8 @@ struct UserDefaultsDebugView: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch store.content {
         case .none:
             ProgressView()
@@ -46,13 +47,13 @@ struct UserDefaultsDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let entries):
+        case let .loaded(entries):
             VStack {
                 Text("\(entries.count) Key-value pairs")
                 Button("Reset User Defaults") { store.send(.resetDefaultsTapped) }
             }
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")

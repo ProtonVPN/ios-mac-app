@@ -23,28 +23,27 @@
 import Foundation
 
 struct InAppLinkManager {
-    
     enum InAppLinkError: Error {
         case incompatibleUrlScheme
         case unknownDestination
     }
-    
+
     private let scheme = "protonvpn://"
-    
+
     private let navigationService: NavigationService
-    
+
     init(navigationService: NavigationService) {
         self.navigationService = navigationService
     }
-    
+
     func openLink(_ link: String) throws {
         guard link.starts(with: scheme) else {
             throw InAppLinkError.incompatibleUrlScheme
         }
-        
+
         var destination = link
         destination.removeFirst(scheme.count)
-        
+
         switch destination {
         case "settings/connection":
             navigationService.openSettings(to: .connection)

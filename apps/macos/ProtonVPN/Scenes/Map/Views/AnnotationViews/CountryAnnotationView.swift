@@ -21,8 +21,8 @@
 //
 
 import Cocoa
-import MapKit
 import LegacyCommon
+import MapKit
 import Theme
 
 private let sqrt3 = sqrt(3)
@@ -30,9 +30,9 @@ private let sqrt3 = sqrt(3)
 /// Common class used by all of the different map annotations.
 class MapAnnotationView: MKAnnotationView {
     private static let lineWidth = 1.0
-    internal class var textLineHeight: CGFloat { 40.0 }
+    class var textLineHeight: CGFloat { 40.0 }
 
-    internal static let triangleSize: CGSize = {
+    static let triangleSize: CGSize = {
         let sideLength: CGFloat = 19
         return CGSize(width: sideLength, height: sideLength * sqrt3 / 2)
     }()
@@ -53,8 +53,13 @@ class MapAnnotationView: MKAnnotationView {
     /// omega is the offset in the circle where the multiples of theta align with the
     /// triangle's corners, in this case the "top" of the circle because the triangle
     /// is oriented upside-down.
-    private typealias CornerOffsets = (a: CGFloat, b: CGFloat, c: CGFloat,
-                                       theta: CGFloat, omega: CGFloat)
+    private typealias CornerOffsets = (
+        a: CGFloat,
+        b: CGFloat,
+        c: CGFloat,
+        theta: CGFloat,
+        omega: CGFloat
+    )
     private static let triangleCornerOffsets: CornerOffsets = {
         let cornerRadius = 1.9
         return (
@@ -66,28 +71,31 @@ class MapAnnotationView: MKAnnotationView {
         )
     }()
 
-    internal enum ForegroundOrder: Int {
+    enum ForegroundOrder: Int {
         case wayBack = -1
         case middle = 50
         case upFront = 100
     }
+
     /// What tag the object should take on for element ordering when hovered.
     private let hoveredTag: ForegroundOrder
 
     /// The total size of the button(s) above the triangle (can be multiple for
     /// secure core annotations).
-    internal let buttonFrame: CGRect
+    let buttonFrame: CGRect
 
     /// The rectangular frame around the triangle on the map.
-    internal var triangleFrame: CGRect {
-        let origin = CGPoint(x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
-                             y: bounds.height - Self.triangleSize.height)
+    var triangleFrame: CGRect {
+        let origin = CGPoint(
+            x: (buttonFrame.size.width - Self.triangleSize.width) / CGFloat(2),
+            y: bounds.height - Self.triangleSize.height
+        )
         return CGRect(origin: origin, size: Self.triangleSize)
     }
 
     /// The path drawn by the annotation, used to compute whether or not the cursor
     /// is hovering over a triangle or a button.
-    internal var path = CGMutablePath()
+    var path = CGMutablePath()
 
     /// A delegate for styling the annotation.
     private var styleDelegate: CustomStyleContext
@@ -100,11 +108,12 @@ class MapAnnotationView: MKAnnotationView {
         set { _tag = newValue }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
-    override required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    override required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Unsupported initializer")
     }
 
@@ -116,7 +125,7 @@ class MapAnnotationView: MKAnnotationView {
         super.init(annotation: nil, reuseIdentifier: reuseIdentifier)
     }
 
-    internal func orderInForeground(hovered: Bool) {
+    func orderInForeground(hovered: Bool) {
         guard hovered else {
             // default view tag
             tag = ForegroundOrder.wayBack.rawValue
@@ -128,7 +137,7 @@ class MapAnnotationView: MKAnnotationView {
         }
 
         tag = hoveredTag.rawValue
-        parentView.sortSubviews({ (view1, view2, _) -> ComparisonResult in
+        parentView.sortSubviews({ view1, view2, _ -> ComparisonResult in
             if view1.tag > view2.tag {
                 return .orderedDescending
             } else if view1.tag < view2.tag {
@@ -139,23 +148,26 @@ class MapAnnotationView: MKAnnotationView {
         }, context: nil)
     }
 
-    internal func addAnnotationTrackingAreas(hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
+    func addAnnotationTrackingAreas(hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
         trackingAreas.forEach { removeTrackingArea($0) }
-        let trackingArea = NSTrackingArea(rect: !hovered ? triangleFrame : bounds,
-                                          options: [
-                                            NSTrackingArea.Options.mouseEnteredAndExited,
-                                            NSTrackingArea.Options.mouseMoved,
-                                            NSTrackingArea.Options.activeInKeyWindow
-                                          ],
-                                          owner: self, userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: !hovered ? triangleFrame : bounds,
+            options: [
+                NSTrackingArea.Options.mouseEnteredAndExited,
+                NSTrackingArea.Options.mouseMoved,
+                NSTrackingArea.Options.activeInKeyWindow,
+            ],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            if let window = self.window {
+            guard let self else { return }
+            if let window {
                 let mousePoint = window.mouseLocationOutsideOfEventStream
-                let pointInView = self.convert(mousePoint, from: nil)
-                if !self.bounds.contains(pointInView) && hovered {
+                let pointInView = convert(mousePoint, from: nil)
+                if !bounds.contains(pointInView), hovered {
                     stateUpdateCallback(false)
                 }
             }
@@ -167,47 +179,57 @@ class MapAnnotationView: MKAnnotationView {
         let r = AppTheme.ButtonConstants.cornerRadius
         let lineWidth = Self.lineWidth
         // inner button frame
-        let ibf = CGRect(x: buttonFrame.origin.x + lineWidth/2,
-                         y: buttonFrame.origin.y + lineWidth,
-                         width: buttonFrame.size.width - lineWidth,
-                         height: buttonFrame.size.height)
+        let ibf = CGRect(
+            x: buttonFrame.origin.x + lineWidth / 2,
+            y: buttonFrame.origin.y + lineWidth,
+            width: buttonFrame.size.width - lineWidth,
+            height: buttonFrame.size.height
+        )
 
         // bottom-right border (triangle in the middle)
         path.addLine(to: CGPoint(x: ibf.maxX - r, y: ibf.maxY))
         // bottom-right corner
-        path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.maxY - r),
-                    radius: r,
-                    startAngle: .pi/2,
-                    endAngle: 0,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.maxX - r, y: ibf.maxY - r),
+            radius: r,
+            startAngle: .pi / 2,
+            endAngle: 0,
+            clockwise: true
+        )
         // right border
         path.addLine(to: CGPoint(x: ibf.maxX, y: ibf.minY + r))
         // top-right corner
-        path.addArc(center: CGPoint(x: ibf.maxX - r, y: ibf.minY + r),
-                    radius: r,
-                    startAngle: 0,
-                    endAngle: .pi*3/2,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.maxX - r, y: ibf.minY + r),
+            radius: r,
+            startAngle: 0,
+            endAngle: .pi * 3 / 2,
+            clockwise: true
+        )
         // top border
         path.addLine(to: CGPoint(x: ibf.minX + r, y: ibf.minY))
         // top-left corner
-        path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.minY + r),
-                    radius: r,
-                    startAngle: .pi*3/2,
-                    endAngle: .pi,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.minX + r, y: ibf.minY + r),
+            radius: r,
+            startAngle: .pi * 3 / 2,
+            endAngle: .pi,
+            clockwise: true
+        )
         // left border
         path.addLine(to: CGPoint(x: ibf.minX, y: ibf.maxY - r))
         // bottom-left corner
-        path.addArc(center: CGPoint(x: ibf.minX + r, y: ibf.maxY - r),
-                    radius: r,
-                    startAngle: .pi,
-                    endAngle: .pi/2,
-                    clockwise: true)
+        path.addArc(
+            center: CGPoint(x: ibf.minX + r, y: ibf.maxY - r),
+            radius: r,
+            startAngle: .pi,
+            endAngle: .pi / 2,
+            clockwise: true
+        )
     }
 
     // swiftlint:disable function_body_length
-    internal func drawAnnotation(context: CGContext, text: [NSAttributedString], badgeImage: NSImage? = nil) {
+    func drawAnnotation(context: CGContext, text: [NSAttributedString], badgeImage: NSImage? = nil) {
         let lineWidth = Self.lineWidth
         let ct = Self.triangleCornerOffsets
 
@@ -222,10 +244,10 @@ class MapAnnotationView: MKAnnotationView {
         // side so that the bottom of the rounded corner still rests exactly over
         // the country's coordinate on the map.
         let itf = (
-            x: tf.origin.x + lineWidth/2,
+            x: tf.origin.x + lineWidth / 2,
             y: tf.origin.y + ct.b,
             w: tf.width - lineWidth,
-            h: (tf.width - lineWidth) * sqrt3/2 - lineWidth
+            h: (tf.width - lineWidth) * sqrt3 / 2 - lineWidth
         )
 
         // To keep the bottom side of the hover button horizontal
@@ -233,38 +255,54 @@ class MapAnnotationView: MKAnnotationView {
 
         path = CGMutablePath()
         // left side (going from top-left corner to bottom corner)
-        path.move(to: CGPoint(x: itf.x + offset.x,
-                              y: itf.y + offset.y))
-        path.addLine(to: CGPoint(x: itf.x + (itf.w - ct.b) / 2,
-                                 y: itf.y + itf.h - (3 * ct.a) / 2))
+        path.move(to: CGPoint(
+            x: itf.x + offset.x,
+            y: itf.y + offset.y
+        ))
+        path.addLine(to: CGPoint(
+            x: itf.x + (itf.w - ct.b) / 2,
+            y: itf.y + itf.h - (3 * ct.a) / 2
+        ))
         // bottom corner
-        path.addArc(center: CGPoint(x: itf.x + (itf.w / 2),
-                                    y: itf.y + itf.h - (2 * ct.a)),
-                    radius: ct.a,
-                    startAngle: ct.omega - ct.theta,
-                    endAngle: ct.omega - (2 * ct.theta),
-                    clockwise: true)
-        path.addLine(to: CGPoint(x: itf.x + itf.w - offset.x,
-                                 y: itf.y + offset.y))
+        path.addArc(
+            center: CGPoint(
+                x: itf.x + (itf.w / 2),
+                y: itf.y + itf.h - (2 * ct.a)
+            ),
+            radius: ct.a,
+            startAngle: ct.omega - ct.theta,
+            endAngle: ct.omega - (2 * ct.theta),
+            clockwise: true
+        )
+        path.addLine(to: CGPoint(
+            x: itf.x + itf.w - offset.x,
+            y: itf.y + offset.y
+        ))
 
         if !text.isEmpty {
             drawButton()
         } else {
             // top-right corner
-            path.addArc(center: CGPoint(x: itf.x + itf.w - ct.b,
-                                        y: itf.y + ct.a),
-                        radius: ct.a,
-                        startAngle: ct.omega - (2 * ct.theta),
-                        endAngle: ct.omega,
-                        clockwise: true)
+            path.addArc(
+                center: CGPoint(
+                    x: itf.x + itf.w - ct.b,
+                    y: itf.y + ct.a
+                ),
+                radius: ct.a,
+                startAngle: ct.omega - (2 * ct.theta),
+                endAngle: ct.omega,
+                clockwise: true
+            )
             // top border
             path.addLine(to: CGPoint(x: itf.x + ct.b, y: itf.y))
             // top-left corner
-            path.addArc(center: CGPoint(x: itf.x + ct.b, y: itf.y + ct.a),
-                        radius: ct.a,
-                        startAngle: ct.omega,
-                        endAngle: ct.omega - ct.theta,
-                        clockwise: true)
+            path.addArc(
+                center: CGPoint(x: itf.x + ct.b, y: itf.y + ct.a),
+                radius: ct.a,
+                startAngle: ct.omega,
+                endAngle: ct.omega - ct.theta,
+                clockwise: true
+            )
         }
 
         // close shape (either top of triangle or last section of button)
@@ -276,7 +314,7 @@ class MapAnnotationView: MKAnnotationView {
         let shouldShowBadge = badgeImage != nil
         if shouldShowBadge {
             let badgeFrame = CGRect(
-                origin: CGPoint(x: 15, y: (buttonFrame.height - Self.badgeSize.height)/2),
+                origin: CGPoint(x: 15, y: (buttonFrame.height - Self.badgeSize.height) / 2),
                 size: Self.badgeSize
             )
             badgeImage?.draw(in: badgeFrame)
@@ -292,9 +330,10 @@ class MapAnnotationView: MKAnnotationView {
             textLine.draw(in: CGRect(x: textOffsetX, y: textY, width: textFrameWidth, height: textHeight))
         }
     }
+
     // swiftlint:enable function_body_length operator_usage_whitespace
 
-    internal func mouseInside(with event: NSEvent, hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
+    func mouseInside(with event: NSEvent, hovered: Bool, stateUpdateCallback: @escaping (Bool) -> Void) {
         // hit test before hovering incase a view is obscuring this one already
         guard let hitView = window?.contentView?.hitTest(event.locationInWindow) else { return }
 
@@ -315,7 +354,7 @@ class MapAnnotationView: MKAnnotationView {
         }
     }
 
-    internal func hitTestForState(_ point: NSPoint, hovered: Bool) -> NSView? {
+    func hitTestForState(_ point: NSPoint, hovered: Bool) -> NSView? {
         let pointInView = point - frame.origin
         let hitTestRect = hovered ? bounds : triangleFrame
         return hitTestRect.contains(pointInView) ? self : nil
@@ -335,28 +374,31 @@ class CountryAnnotationView: MapAnnotationView {
 
     init(viewModel: StandardCountryAnnotationViewModel, reuseIdentifier: String?) {
         self.viewModel = viewModel
-        super.init(buttonSize: CGSize(width: viewModel.buttonWidth, height: Self.textLineHeight),
-                   hoveredTag: .upFront,
-                   styleDelegate: viewModel,
-                   reuseIdentifier: reuseIdentifier)
+        super.init(
+            buttonSize: CGSize(width: viewModel.buttonWidth, height: Self.textLineHeight),
+            hoveredTag: .upFront,
+            styleDelegate: viewModel,
+            reuseIdentifier: reuseIdentifier
+        )
 
         viewModel.viewStateChange = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.setupAnnotationView()
-            self.needsDisplay = true
+            setupAnnotationView()
+            needsDisplay = true
         }
 
         setupAnnotationView()
     }
 
-    required init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    required init(annotation _: MKAnnotation?, reuseIdentifier _: String?) {
         fatalError("Initializer not supported: \(#function)")
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Initializer not supported: \(#function)")
     }
 
@@ -369,7 +411,7 @@ class CountryAnnotationView: MapAnnotationView {
         if hovered {
             let isPointing = NSCursor.current == NSCursor.pointingHand
             buttonText.append(isPointing ? viewModel.attributedHoverTitle : viewModel.attributedCountry)
-            if viewModel.shouldShowUpgradeBadge && !isPointing {
+            if viewModel.shouldShowUpgradeBadge, !isPointing {
                 badgeImage = Theme.Asset.vpnSubscriptionBadge.image
             }
         }
@@ -378,7 +420,7 @@ class CountryAnnotationView: MapAnnotationView {
     }
 
     override func hitTest(_ point: NSPoint) -> NSView? {
-        return hitTestForState(point, hovered: hovered)
+        hitTestForState(point, hovered: hovered)
     }
 
     override func mouseEntered(with event: NSEvent) {
@@ -401,7 +443,7 @@ class CountryAnnotationView: MapAnnotationView {
         }
     }
 
-    override func mouseExited(with event: NSEvent) {
+    override func mouseExited(with _: NSEvent) {
         viewModel.uiStateUpdate(.idle)
     }
 

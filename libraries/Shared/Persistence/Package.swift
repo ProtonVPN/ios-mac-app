@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,11 +8,11 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .tvOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(name: "Persistence", targets: ["Persistence"]),
-        .library(name: "PersistenceTestSupport", targets: ["PersistenceTestSupport"])
+        .library(name: "PersistenceTestSupport", targets: ["PersistenceTestSupport"]),
     ],
     dependencies: [
         .package(path: "../../Foundations/Domain"),
@@ -35,7 +35,7 @@ let package = Package(
                 "Localization",
                 .product(name: "Dependencies", package: "swift-dependencies"),
                 .product(name: "GRDB", package: "GRDB.swift"),
-                .product(name: "IssueReporting", package: "xctest-dynamic-overlay")
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
         ),
         .target(

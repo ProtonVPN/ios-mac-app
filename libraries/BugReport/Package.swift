@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,11 +8,13 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)],
+        .macOS(.v13),
+    ],
     products: [
         .library(
             name: "BugReport",
-            targets: ["BugReport"]),
+            targets: ["BugReport"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/Strings"),
@@ -20,7 +22,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", .upToNextMajor(from: "1.1.1")),
-        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1"))
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
     ],
     targets: [
         .target(
@@ -34,16 +36,17 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]
         ),
         .testTarget(
             name: "BugReportTests",
             dependencies: [
-                "BugReport"
+                "BugReport",
             ],
             resources: [
                 .process("example1.json"),
-            ]),
+            ]
+        ),
     ]
 )

@@ -12,8 +12,8 @@ import Foundation
 import Dependencies
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public enum VpnManagerClientConfiguration {
     case iOSClient
@@ -28,27 +28,26 @@ public enum VpnManagerClientConfiguration {
     var usernameSuffix: String {
         switch self {
         case .iOSClient:
-            return "pi"
+            "pi"
         case .macClient:
-            return "pm"
+            "pm"
         case .vpnAccelerator:
-            return "nst"
+            "nst"
         case .netShieldLevel1:
-            return "f1"
+            "f1"
         case .netShieldLevel2:
-            return "f2"
+            "f2"
         case let .label(label):
-            return "b:\(label)"
+            "b:\(label)"
         case .moderateNAT:
-            return "nr"
+            "nr"
         case let .safeMode(enabled):
-            return enabled ? "sm" : "nsm"
+            enabled ? "sm" : "nsm"
         }
     }
 }
 
 public struct VpnManagerConfiguration: Identifiable {
-    
     public static let configConcatChar: Character = "+"
 
     public let id: UUID
@@ -70,7 +69,7 @@ public struct VpnManagerConfiguration: Identifiable {
     public let natType: NATType
     public let safeMode: Bool?
     public let intent: ConnectionRequestType?
-    
+
     public init(
         id: UUID,
         hostname: String,
@@ -123,22 +122,24 @@ public class VpnManagerConfigurationPreparer {
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
 
-    public typealias Factory = VpnKeychainFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        PropertiesManagerFactory
+        PropertiesManagerFactory & VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(vpnKeychain: factory.makeVpnKeychain(),
-                  alertService: factory.makeCoreAlertService(),
-                  propertiesManager: factory.makePropertiesManager())
+        self.init(
+            vpnKeychain: factory.makeVpnKeychain(),
+            alertService: factory.makeCoreAlertService(),
+            propertiesManager: factory.makePropertiesManager()
+        )
     }
-    
+
     public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
         self.propertiesManager = propertiesManager
     }
-    
+
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, clientPrivateKey: PrivateKey?) -> VpnManagerConfiguration? {
         guard let entryServer = connectionConfig.serverIp.entryIp(using: connectionConfig.vpnProtocol) else {
             log.error("No entry IP is available for \(connectionConfig.vpnProtocol.localizedDescription).")
@@ -148,12 +149,12 @@ public class VpnManagerConfigurationPreparer {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
-            
+
             let exitServer = connectionConfig.serverIp.exitIp
 
             @Dependency(\.appFeaturePropertyProvider) var appFeaturePropertyProvider
             let vpnAcceleratorEnabled = appFeaturePropertyProvider.getValue(for: VPNAccelerator.self)
-            
+
             return VpnManagerConfiguration(
                 id: connectionConfig.id,
                 hostname: connectionConfig.serverIp.domain,
@@ -161,7 +162,7 @@ public class VpnManagerConfigurationPreparer {
                 ipId: connectionConfig.serverIp.id,
                 entryServerAddress: entryServer,
                 exitServerAddress: exitServer,
-                username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
+                username: vpnCredentials.name + extraConfiguration(with: connectionConfig),
                 password: vpnCredentials.password,
                 passwordReference: passwordRef,
                 clientPrivateKey: clientPrivateKey?.base64X25519Representation,
@@ -181,17 +182,16 @@ public class VpnManagerConfigurationPreparer {
             return nil
         }
     }
-    
+
     // MARK: - Private
-    
+
     private func extraConfiguration(with connectionConfig: ConnectionConfiguration) -> String {
-        
         #if os(iOS)
-        var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
+            var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
         #else
-        var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
+            var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
-        
+
         if propertiesManager.featureFlags.netShield {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
@@ -201,7 +201,7 @@ public class VpnManagerConfigurationPreparer {
             // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated
             extraConfiguration += [.vpnAccelerator]
         }
-        
+
         if let label = connectionConfig.serverIp.label, !label.isEmpty {
             extraConfiguration += [.label(label)]
         }
@@ -213,9 +213,9 @@ public class VpnManagerConfigurationPreparer {
         if propertiesManager.featureFlags.safeMode, let safeMode = connectionConfig.safeMode {
             extraConfiguration += [.safeMode(safeMode)]
         }
-        
+
         return extraConfiguration.reduce("") {
-            $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.usernameSuffix
+            $0 + "\(VpnManagerConfiguration.configConcatChar)" + $1.usernameSuffix
         }
     }
 }

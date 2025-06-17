@@ -24,48 +24,47 @@ import Domain
 import Strings
 import VPNShared
 
-extension NetShieldType {
-    
-    public var name: String {
+public extension NetShieldType {
+    var name: String {
         switch self {
         case .off:
-            return Localizable.netshieldOff
+            Localizable.netshieldOff
         case .level1:
-            return Localizable.netshieldLevel1
+            Localizable.netshieldLevel1
         case .level2:
-            return Localizable.netshieldLevel2
+            Localizable.netshieldLevel2
         }
     }
 
-    public var icon: Image {
+    var icon: Image {
         switch self {
-        case .off: return IconProvider.shield
-        case .level1: return IconProvider.shieldHalfFilled
-        case .level2: return IconProvider.shieldFilled
+        case .off: IconProvider.shield
+        case .level1: IconProvider.shieldHalfFilled
+        case .level2: IconProvider.shieldFilled
         }
     }
-    
-    public var lowestTier: Int {
+
+    var lowestTier: Int {
         switch self {
         case .off:
-            return .freeTier
+            .freeTier
         default:
-            return .paidTier
+            .paidTier
         }
     }
-    
-    public func isUserTierTooLow(_ userTier: Int) -> Bool {
-        return userTier < self.lowestTier
+
+    func isUserTierTooLow(_ userTier: Int) -> Bool {
+        userTier < lowestTier
     }
-    
-    public var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
+
+    var vpnManagerClientConfigurationFlags: [VpnManagerClientConfiguration] {
         switch self {
         case .off:
-            return []
+            []
         case .level1:
-            return [.netShieldLevel1]
+            [.netShieldLevel1]
         case .level2:
-            return [.netShieldLevel2]
+            [.netShieldLevel2]
         }
     }
 }

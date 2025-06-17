@@ -18,8 +18,8 @@
 
 import ComposableArchitecture
 import Connection
-import ProtonCoreFeatureFlags
 import Domain
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 extension DisconnectVPNKey: @retroactive DependencyKey {
@@ -48,14 +48,14 @@ extension DisconnectVPNKey: @retroactive DependencyKey {
     }
 
     /// Bridges new disconnection dependency with the legacy connection layer
-    public static let legacyDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { trigger in
+    public static let legacyDisconnect: @Sendable (UserInitiatedVPNChange.VPNTrigger) async throws -> Void = { _ in
         @Dependency(\.siriHelper) var siriHelper
         siriHelper().donateDisconnect()
 
         let gateway = Container.sharedContainer.makeVpnGateway2()
         try await gateway.disconnect()
 
-        // todo: old VpnGateway was reloading server info after disconnect. New one does not.
+        // TODO: old VpnGateway was reloading server info after disconnect. New one does not.
         // Decide where to put this functionality and implement it!
     }
 }

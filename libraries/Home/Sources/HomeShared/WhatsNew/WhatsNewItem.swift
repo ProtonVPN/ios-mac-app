@@ -40,7 +40,7 @@ public enum WhatsNew {
             self.delayBetweenPresentations = delayBetweenPresentations
         }
 
-        public static let widgetAdoption = Self.init(
+        public static let widgetAdoption = Self(
             id: "widgetAdoption",
             rules: [.osVersion("17.0")],
             delayBeforeFirstPresentation: .init(day: 2),
@@ -60,6 +60,6 @@ extension WhatsNew.Item: Equatable {}
 
 extension WhatsNew.Item: CaseIterable {
     public static var allCases: [WhatsNew.Item] {
-        return [.widgetAdoption]
+        [.widgetAdoption]
     }
 }

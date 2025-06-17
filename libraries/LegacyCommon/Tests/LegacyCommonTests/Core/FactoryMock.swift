@@ -20,23 +20,23 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-@testable import LegacyCommon
 import CommonNetworking
 import CommonNetworkingTestSupport
+import Foundation
+@testable import LegacyCommon
 
 final class FactoryMock: CoreAlertServiceFactory, PropertiesManagerFactory, NetworkingFactory {
     func makeNetworking() -> Networking {
-        return NetworkingMock()
+        NetworkingMock()
     }
 
     let propertiesManagerMock = PropertiesManagerMock()
 
     func makeCoreAlertService() -> CoreAlertService {
-        return CoreAlertServiceDummy()
+        CoreAlertServiceDummy()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManagerMock
+        propertiesManagerMock
     }
 }

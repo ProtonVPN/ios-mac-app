@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import ComposableArchitecture
 @testable import CommonNetworking
+import ComposableArchitecture
 import struct Ergonomics.GenericError
 @testable import tvOS
 import tvOSTestSupport
+import XCTest
 
 final class HomeLoadingFeatureTests: XCTestCase {
-
     @MainActor
     func testFinishedLoadingSuccess() async {
         let store = TestStore(initialState: HomeLoadingFeature.State.loading) {
@@ -32,7 +31,7 @@ final class HomeLoadingFeatureTests: XCTestCase {
         } withDependencies: {
             $0.serverRepository = .empty()
         }
-        await store.send(.finishedLoading(.success(Void()))) {
+        await store.send(.finishedLoading(.success(()))) {
             $0 = .loaded(.init())
         }
     }
@@ -63,7 +62,8 @@ final class HomeLoadingFeatureTests: XCTestCase {
             $0.serverRepository = .empty()
             $0.logicalsRefresher = LogicalsRefresher(
                 refreshLogicals: { throw "" as GenericError },
-                shouldRefreshLogicals: { true })
+                shouldRefreshLogicals: { true }
+            )
             $0.date = .constant(.distantFuture)
             $0.continuousClock = clock
             $0.logicalsClient.fetchLogicals = { _, _ in throw "" as GenericError }
@@ -86,7 +86,8 @@ final class HomeLoadingFeatureTests: XCTestCase {
             $0.serverRepository = .notEmpty()
             $0.logicalsRefresher = LogicalsRefresher(
                 refreshLogicals: {},
-                shouldRefreshLogicals: { false })
+                shouldRefreshLogicals: { false }
+            )
         }
         await store.send(.loadingViewOnAppear)
         await store.receive(\.finishedLoading) {

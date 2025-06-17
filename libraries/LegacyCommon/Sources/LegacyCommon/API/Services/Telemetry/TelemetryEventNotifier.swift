@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Combine
+import ComposableArchitecture
+import Connection
+import Domain
+import Foundation
+import ProtonCoreFeatureFlags
 import Reachability
 import VPNAppCore
-import Domain
-import Connection
-import ComposableArchitecture
-import ProtonCoreFeatureFlags
 
 public class TelemetryEventNotifier {
     typealias ModalSource = UpsellModalSource
@@ -37,7 +37,6 @@ public class TelemetryEventNotifier {
     }
 
     private func startObserving() {
-
         @SharedReader(.connectionState) var connectionState: ConnectionState
 
         NotificationCenter.default
@@ -107,17 +106,16 @@ public class TelemetryEventNotifier {
 
     private func reachabilityChanged(_ notification: Notification) {
         guard notification.name == .reachabilityChanged,
-            let reachability = notification.object as? Reachability else {
+              let reachability = notification.object as? Reachability else {
             return
         }
-        let networkType: ConnectionDimensions.NetworkType
-        switch reachability.connection {
+        let networkType: ConnectionDimensions.NetworkType = switch reachability.connection {
         case .unavailable, .none:
-            networkType = .other
+            .other
         case .wifi:
-            networkType = .wifi
+            .wifi
         case .cellular:
-            networkType = .mobile
+            .mobile
         }
         telemetryService?.reachabilityChanged(networkType)
     }

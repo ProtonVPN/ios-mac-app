@@ -23,7 +23,7 @@ public class BackgroundTimerMock: BackgroundTimer {
     let nextRunTime: Date
     let repeating: Double?
     let queue: DispatchQueue
-    let closure: (() -> Void)
+    let closure: () -> Void
 
     public var isValid: Bool = true
 
@@ -43,7 +43,7 @@ public class BackgroundTimerMock: BackgroundTimer {
 
 public final class TimerFactoryMock: TimerFactory {
     public var repeatingTimers: [BackgroundTimerMock] = []
-    public var scheduledWork: [(interval: DispatchTimeInterval, closure: (() -> Void))] = []
+    public var scheduledWork: [(interval: DispatchTimeInterval, closure: () -> Void)] = []
 
     public var timerWasAdded: (() -> Void)?
     public var workWasScheduled: (() -> Void)?
@@ -63,7 +63,7 @@ public final class TimerFactoryMock: TimerFactory {
             }
         }
 
-        guard let done = done else { return }
+        guard let done else { return }
 
         group.notify(queue: .main, execute: done)
     }
@@ -76,7 +76,7 @@ public final class TimerFactoryMock: TimerFactory {
         }
     }
 
-    public func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, leeway: DispatchTimeInterval?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimer {
+    public func scheduledTimer(runAt nextRunTime: Date, repeating: Double?, leeway _: DispatchTimeInterval?, queue: DispatchQueue, _ closure: @escaping (() -> Void)) -> BackgroundTimer {
         lastQueueWorkWasScheduledOn = queue
 
         let timer = BackgroundTimerMock(nextRunTime: nextRunTime, repeating: repeating, queue: queue, closure: closure)

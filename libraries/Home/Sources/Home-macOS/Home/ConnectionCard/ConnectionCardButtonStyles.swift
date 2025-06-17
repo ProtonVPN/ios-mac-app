@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 struct ConnectButtonStyle: ButtonStyle {
-
     @State var isHovered = false
     var isActive: Bool
 
@@ -36,7 +35,7 @@ struct ConnectButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
         style.insert(isHovered ? .hovered : [])
         style.insert(isActive ? [] : .weak)
@@ -45,7 +44,6 @@ struct ConnectButtonStyle: ButtonStyle {
 }
 
 struct ShowConnectionDetailsButtonStyle: ButtonStyle {
-
     @State var isHovered = false
     @State var enabled = true
 
@@ -59,7 +57,7 @@ struct ShowConnectionDetailsButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = []
         style.insert(isHovered && enabled ? .hovered : [.transparent])
         return Color(.background, style)
@@ -67,7 +65,6 @@ struct ShowConnectionDetailsButtonStyle: ButtonStyle {
 }
 
 struct HelpButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
     func makeBody(configuration: Configuration) -> some View {
@@ -81,7 +78,7 @@ struct HelpButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.transparent]
         style.insert(isHovered ? .hovered : [])
         return Color(.background, style)

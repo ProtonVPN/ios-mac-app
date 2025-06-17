@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
 
 import Ergonomics
 
@@ -34,9 +34,7 @@ final class iOSUpdateManager: UpdateChecker {
         return url
     }()
 
-    private lazy var currentVersion: String? = {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-    }()
+    private lazy var currentVersion: String? = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
 
     enum UpdateCheckCodingKeys: String, CodingKey {
         case results
@@ -63,13 +61,13 @@ final class iOSUpdateManager: UpdateChecker {
 
         var errorCode: Int {
             switch self {
-            case .missingPlistKeys: return 1000
-            case .noDataReturned: return 1001
-            case .noVersionFoundInJSON: return 1002
-            case .noMinimumOSVersionFoundInJSON: return 1003
-            case .noResultsFoundInJSON: return 1004
-            case .dataReturnedWasNotValidJSON: return 1005
-            case .unrecognizedMinimumOSVersion: return 1006
+            case .missingPlistKeys: 1000
+            case .noDataReturned: 1001
+            case .noVersionFoundInJSON: 1002
+            case .noMinimumOSVersionFoundInJSON: 1003
+            case .noResultsFoundInJSON: 1004
+            case .dataReturnedWasNotValidJSON: 1005
+            case .unrecognizedMinimumOSVersion: 1006
             }
         }
     }
@@ -88,7 +86,7 @@ final class iOSUpdateManager: UpdateChecker {
             delegateQueue: OperationQueue.main
         )
 
-        let task = session.dataTask(with: updateURL) { (data, response, error) in
+        let task = session.dataTask(with: updateURL) { data, _, error in
             let result: Result<[String: Any], Error>
             defer {
                 executeOnUIThread {
@@ -158,21 +156,28 @@ final class iOSUpdateManager: UpdateChecker {
 
         do {
             let appInfo = try await fetchInfoFromAppStore()
-            guard let currentVersion = currentVersion,
+            guard let currentVersion,
                   let appStoreVersion = appInfo[UpdateCheckCodingKeys.version.stringValue] as? String else {
                 throw UpdateCheckError.noVersionFoundInJSON
             }
 
-            log.debug("Checking if app update is available",
-                      category: .appUpdate, metadata: ["current": "\(currentVersion)", "appStore": "\(appStoreVersion)"])
+            log.debug(
+                "Checking if app update is available",
+                category: .appUpdate,
+                metadata: ["current": "\(currentVersion)", "appStore": "\(appStoreVersion)"]
+            )
             return appStoreVersion.compareVersion(to: currentVersion) == .orderedDescending
         } catch {
-            log.error("Error while checking for an update",
-                      category: .appUpdate, event: .error, metadata: ["error": "\(error)"])
+            log.error(
+                "Error while checking for an update",
+                category: .appUpdate,
+                event: .error,
+                metadata: ["error": "\(error)"]
+            )
             return false
         }
     }
-    
+
     func startUpdate() {
         guard let infoPlist = Bundle.main.infoDictionary, let identifier = infoPlist["AppStoreID"] as? String else {
             return

@@ -18,41 +18,41 @@
 
 #if FALSE
 
-import SwiftUI
-import WidgetKit
+    import SwiftUI
+    import WidgetKit
 
-/// This extension messes up with the actual value of the `widgetFamily`, resulting in always using the `defaultValue`.
-/// Only remove the compiler flag temporarily for testing purposes and never commit it to develop.
-/// This extension helps to create Previews of the widget in the correct size without providing the actual timelines.
-public extension PreviewTrait where T == Preview.ViewTraits {
+    /// This extension messes up with the actual value of the `widgetFamily`, resulting in always using the `defaultValue`.
+    /// Only remove the compiler flag temporarily for testing purposes and never commit it to develop.
+    /// This extension helps to create Previews of the widget in the correct size without providing the actual timelines.
+    public extension PreviewTrait where T == Preview.ViewTraits {
+        enum WidgetSize {
+            case small
+            case medium
+            case large
+        }
 
-    enum WidgetSize {
-        case small
-        case medium
-        case large
-    }
-
-    @MainActor static func widgetLayout(size: WidgetSize) -> PreviewTrait<T> {
-        switch size {
-        case .small:
-            return .fixedLayout(width: 158, height: 158)
-        case .medium:
-            return .fixedLayout(width: 338, height: 158)
-        case .large:
-            return .fixedLayout(width: 338, height: 354)
+        @MainActor
+        static func widgetLayout(size: WidgetSize) -> PreviewTrait<T> {
+            switch size {
+            case .small:
+                .fixedLayout(width: 158, height: 158)
+            case .medium:
+                .fixedLayout(width: 338, height: 158)
+            case .large:
+                .fixedLayout(width: 338, height: 354)
+            }
         }
     }
-}
 
-extension WidgetFamily: @retroactive EnvironmentKey {
-    public static var defaultValue: WidgetFamily = .systemMedium
-}
-
-public extension EnvironmentValues {
-    var widgetFamily: WidgetFamily {
-        get { self[WidgetFamily.self] }
-        set { self[WidgetFamily.self] = newValue }
+    extension WidgetFamily: @retroactive EnvironmentKey {
+        public static var defaultValue: WidgetFamily = .systemMedium
     }
-}
+
+    public extension EnvironmentValues {
+        var widgetFamily: WidgetFamily {
+            get { self[WidgetFamily.self] }
+            set { self[WidgetFamily.self] = newValue }
+        }
+    }
 
 #endif

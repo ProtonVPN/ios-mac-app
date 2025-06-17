@@ -20,17 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 class ProtonQCViewController: UIViewController {
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         tabBarItem = UITabBarItem(title: Localizable.quickConnect, image: nil, tag: 2)
         tabBarItem.accessibilityIdentifier = "Quick Connect"
     }
-
 }

@@ -16,24 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
-import Localization
 import HomeShared
+import Localization
 import NetShield
+import SwiftUI
 
 struct ConnectionStatusBanner: View {
-
     private enum AccessibilityIdentifiers {
         static let locationText: String = "location_text"
     }
-    
+
     let store: StoreOf<ConnectionStatusBannerFeature>
-    
+
     var body: some View {
         WithPerceptionTracking {
             switch store.protectionState {
-            case .protected(let netShield), .protectedSecureCore(let netShield):
+            case let .protected(netShield), let .protectedSecureCore(netShield):
                 if (store.userTier ?? .freeTier).isFreeTier {
                     ConnectionStatusUpsell(mode: store.upsellMode, sendAction: { _ = store.send($0) })
                 } else if store.netShieldLevel == .level2 {
@@ -68,9 +67,9 @@ struct ConnectionStatusBanner: View {
         return Text(displayCountry)
             .font(.themeFont(.body2()))
             .foregroundColor(Color(.text))
-        + Text(" • ")
+            + Text(" • ")
             .foregroundColor(Color(.text))
-        + Text(displayIP)
+            + Text(displayIP)
             .font(.themeFont(.body2()))
             .foregroundColor(Color(.text, .weak))
     }

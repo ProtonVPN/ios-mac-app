@@ -1,18 +1,17 @@
 //
-//  LoginExtAccountsTests.swift
+//  LoginExtAccountTests.swift
 //  ProtonVPNUITests
 //
 //  Created on 2021-09-01.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import XCTest
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreTestingToolkitUITestsCore
+import ProtonCoreTestingToolkitUITestsLogin
+import XCTest
 
 class LoginExtAccountTests: ProtonVPNUITests {
-
     let loginRobot = ProtonCoreTestingToolkitUITestsLogin.LoginRobot()
 
     override func setUp() {

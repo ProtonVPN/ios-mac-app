@@ -24,50 +24,49 @@ import Cocoa
 import LegacyCommon
 
 class ColorPickerCircle: NSView {
-    
     private let radiusIndentation: CGFloat = 3
     private let selectionBorderWidth: CGFloat = 3
     private let selectionBorderColor = NSColor.white.cgColor
-    
+
     var isSelected: Bool? {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var color: NSColor? {
         didSet {
             needsDisplay = true
         }
     }
-    
-    override func draw(_ dirtyRect: NSRect) {
+
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let color = color?.cgColor else {
             return
         }
-        
+
         if bounds.width <= 2 * radiusIndentation {
             log.error("Unable to draw color picker circle with given bounds.", category: .ui)
             return
         }
-        
+
         let drawingRect = bounds
         var radius: CGFloat
         var circleRect: NSRect
-        
+
         if isSelected ?? false {
             let delta: CGFloat = radiusIndentation - selectionBorderWidth
             radius = drawingRect.width / 2 - delta
             circleRect = NSRect(x: drawingRect.origin.x + delta, y: drawingRect.origin.y + delta, width: 2 * radius, height: 2 * radius)
-            
+
             context.addEllipse(in: circleRect)
             context.setFillColor(selectionBorderColor)
             context.drawPath(using: .fill)
         }
-        
+
         radius = drawingRect.width / 2 - radiusIndentation
         circleRect = NSRect(x: drawingRect.origin.x + radiusIndentation, y: drawingRect.origin.y + radiusIndentation, width: 2 * radius, height: 2 * radius)
-        
+
         context.addEllipse(in: circleRect)
         context.setFillColor(color)
         context.drawPath(using: .fill)

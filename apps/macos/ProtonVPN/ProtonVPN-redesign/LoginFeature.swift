@@ -18,30 +18,30 @@
 
 #if REDESIGN
 
-import Foundation
-import ComposableArchitecture
+    import ComposableArchitecture
+    import Foundation
 
-public struct LoginFeature: Reducer {
-    public struct State: Equatable {
-        var initialError: String?
-    }
+    public struct LoginFeature: Reducer {
+        public struct State: Equatable {
+            var initialError: String?
+        }
 
-    public enum Action: Equatable {
-        case showError(initialError: String?)
-        case loginButtonPressed(username: String, password: String)
-    }
+        public enum Action: Equatable {
+            case showError(initialError: String?)
+            case loginButtonPressed(username: String, password: String)
+        }
 
-    public var body: some ReducerOf<Self> {
-        Reduce { state, action in
-            switch action {
-            case .loginButtonPressed:
-                return .none
-            case .showError(let initialError):
-                state.initialError = initialError
-                return .none
+        public var body: some ReducerOf<Self> {
+            Reduce { state, action in
+                switch action {
+                case .loginButtonPressed:
+                    return .none
+                case let .showError(initialError):
+                    state.initialError = initialError
+                    return .none
+                }
             }
         }
     }
-}
 
 #endif

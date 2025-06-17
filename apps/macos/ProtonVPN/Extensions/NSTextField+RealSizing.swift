@@ -23,7 +23,7 @@
 import Cocoa
 
 extension NSTextField {
-    func realHeight( _ width: CGFloat ) -> CGFloat {
+    func realHeight(_ width: CGFloat) -> CGFloat {
         let sizeTF = NSTextField()
         sizeTF.maximumNumberOfLines = maximumNumberOfLines
         sizeTF.font = font

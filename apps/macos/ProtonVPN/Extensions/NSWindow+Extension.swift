@@ -24,7 +24,6 @@ import Cocoa
 import SwiftUI
 
 extension NSWindow {
-    
     func applyModalAppearance(withTitle modalTitle: String = "Proton VPN") {
         styleMask.remove(NSWindow.StyleMask.resizable)
         title = modalTitle
@@ -32,7 +31,7 @@ extension NSWindow {
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
-    
+
     func applyWarningAppearance(withTitle warningTitle: String) {
         styleMask.remove(NSWindow.StyleMask.resizable)
         styleMask.remove(NSWindow.StyleMask.closable)
@@ -41,7 +40,7 @@ extension NSWindow {
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
-    
+
     // For windows without any borders such as the welcome window
     func applyInfoAppearance() {
         styleMask = [.titled, .fullSizeContentView]
@@ -51,7 +50,7 @@ extension NSWindow {
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
     }
-    
+
     func applyLoginAppearance() {
         titlebarAppearsTransparent = true
         title = "Proton VPN"
@@ -64,7 +63,7 @@ extension NSWindow {
         title = "Proton VPN"
         appearance = NSAppearance(named: .darkAqua)
         backgroundColor = .color(.background, .weak)
-        
+
         minSize = NSSize(width: AppConstants.Windows.sidebarWidth, height: AppConstants.Windows.minimumSidebarHeight)
     }
 
@@ -93,8 +92,10 @@ extension NSWindow {
         }
         let freeHeight = max(0, visibleFrame.height - size.height)
         let freeWidth = max(0, visibleFrame.width - size.width)
-        setFrameOrigin(.init(x: freeWidth / 2,
-                             y: size.height + freeHeight / 2))
+        setFrameOrigin(.init(
+            x: freeWidth / 2,
+            y: size.height + freeHeight / 2
+        ))
     }
 }
 

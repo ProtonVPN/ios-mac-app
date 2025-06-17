@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Network
-import class GoLibs.LocalAgentConnectionDetails
 import CoreConnection
+import Foundation
+import class GoLibs.LocalAgentConnectionDetails
+import Network
 
 public struct ConnectionDetailsMessage: Sendable, Equatable {
     public let exitIp: IPAddress
@@ -27,14 +27,13 @@ public struct ConnectionDetailsMessage: Sendable, Equatable {
     public let deviceCountry: String?
 
     public static func == (lhs: ConnectionDetailsMessage, rhs: ConnectionDetailsMessage) -> Bool {
-        return lhs.deviceCountry == rhs.deviceCountry
+        lhs.deviceCountry == rhs.deviceCountry
             && lhs.exitIp.rawValue == rhs.exitIp.rawValue
             && lhs.deviceIp?.rawValue == rhs.deviceIp?.rawValue
     }
 }
 
 extension ConnectionDetailsMessage {
-
     /// `LocalAgentConnectionDetails` is received with the `StatusUpdate` LocalAgent message.
     ///
     /// None of the fields of `LocalAgentConnectionDetails` are optional, so an empty string indicates a missing field.

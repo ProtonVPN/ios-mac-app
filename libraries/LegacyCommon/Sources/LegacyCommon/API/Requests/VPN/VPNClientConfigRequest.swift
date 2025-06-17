@@ -23,16 +23,15 @@
 import ProtonCoreNetworking
 
 final class VPNClientConfigRequest: Request {
-
     let isAuth: Bool
     let ip: String?
 
     var path: String {
-        return "/vpn/v2/clientconfig"
+        "/vpn/v2/clientconfig"
     }
 
     var header: [String: Any] {
-        guard let ip = ip else {
+        guard let ip else {
             return [:]
         }
 

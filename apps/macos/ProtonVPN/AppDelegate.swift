@@ -20,75 +20,78 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
+
 // System frameworks
 import Cocoa
-import AppKit
 import ServiceManagement
 
 // Third-party dependencies
 import Dependencies
 import TrustKit
 
-// Core dependencies
-import ProtonCoreServices
-import ProtonCoreLog
-import ProtonCoreUIFoundations
+import ProtonCoreCryptoVPNPatchedGoImplementation
 import ProtonCoreEnvironment
 import ProtonCoreFeatureFlags
+import ProtonCoreLog
 import ProtonCoreObservability
 import ProtonCorePushNotifications
-import ProtonCoreCryptoVPNPatchedGoImplementation
+
+// Core dependencies
+import ProtonCoreServices
+import ProtonCoreUIFoundations
+
+import Announcement
+import Domain
+import Ergonomics
 
 // Local dependencies (Core first, then Shared, then Features, then Foundations)
 import LegacyCommon
+import Logging
+import PMLogger
+import Settings
+import Timer
 import VPNAppCore
 import VPNShared
-import Settings
-import Announcement
-import Logging
-import Domain
-import Ergonomics
-import PMLogger
-import Timer
 
 #if !REDESIGN
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+    let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
-class AppDelegate: NSObject {
-    @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
-    @IBOutlet weak var protonVpnMenu: ProtonVpnMenuController!
-    @IBOutlet weak var profilesMenu: ProfilesMenuController!
-    @IBOutlet weak var helpMenu: HelpMenuController!
-    @IBOutlet weak var statusMenu: StatusMenuWindowController!
-    let container = DependencyContainer()
-    lazy var navigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var appInfo: AppInfo = container.makeAppInfo()
-    private var appInactivityTimer: BackgroundTimer?
-    private lazy var pushNotificationService = PushNotificationService.shared
-    private var notificationManager: NotificationManagerProtocol!
-    private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
+    class AppDelegate: NSObject {
+        @Dependency(\.defaultsProvider) var provider
+        public private(set) static var wasRecentlyActive = false
+        @IBOutlet var protonVpnMenu: ProtonVpnMenuController!
+        @IBOutlet var profilesMenu: ProfilesMenuController!
+        @IBOutlet var helpMenu: HelpMenuController!
+        @IBOutlet var statusMenu: StatusMenuWindowController!
+        let container = DependencyContainer()
+        lazy var navigationService = container.makeNavigationService()
+        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        private var appInactivityTimer: BackgroundTimer?
+        private lazy var pushNotificationService = PushNotificationService.shared
+        private var notificationManager: NotificationManagerProtocol!
+        private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
 
-    private var tokens: [NotificationToken] = []
-}
+        private var tokens: [NotificationToken] = []
+    }
 #else
-class AppDelegate: NSObject {
-    @Dependency(\.defaultsProvider) var provider
-    public private(set) static var wasRecentlyActive = false
-    let container = DependencyContainer()
-    lazy var navigationService = container.makeNavigationService()
-    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
-    private lazy var appInfo: AppInfo = container.makeAppInfo()
-    private var appInactivityTimer: BackgroundTimer?
-    private lazy var pushNotificationService = PushNotificationService.shared
-    private var notificationManager: NotificationManagerProtocol!
-}
+    class AppDelegate: NSObject {
+        @Dependency(\.defaultsProvider) var provider
+        public private(set) static var wasRecentlyActive = false
+        let container = DependencyContainer()
+        lazy var navigationService = container.makeNavigationService()
+        private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+        private lazy var appInfo: AppInfo = container.makeAppInfo()
+        private var appInactivityTimer: BackgroundTimer?
+        private lazy var pushNotificationService = PushNotificationService.shared
+        private var notificationManager: NotificationManagerProtocol!
+    }
 #endif
 
 extension AppDelegate: NSApplicationDelegate {
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
 
@@ -115,7 +118,7 @@ extension AppDelegate: NSApplicationDelegate {
         // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
         signal(SIGPIPE, SIG_IGN)
 
-        self.checkMigration()
+        checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
@@ -133,13 +136,13 @@ extension AppDelegate: NSApplicationDelegate {
             }
 
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-#if !REDESIGN
-            self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-            self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-            self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-            self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-            self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-#endif
+            #if !REDESIGN
+                self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
+                self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
+                self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
+                self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
+                self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+            #endif
             self.notificationManager = self.container.makeNotificationManager()
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
             _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
@@ -173,7 +176,8 @@ extension AppDelegate: NSApplicationDelegate {
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
     }
 
-    @objc private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent replyEvent: NSAppleEventDescriptor) {
+    @objc
+    private func getUrl(_ event: NSAppleEventDescriptor, withReplyEvent _: NSAppleEventDescriptor) {
         guard let url = event.paramDescriptor(forKeyword: keyDirectObject)?.stringValue, url.starts(with: "protonvpn://refresh") else {
             log.debug("App activated with invalid url", category: .app)
             return
@@ -200,15 +204,15 @@ extension AppDelegate: NSApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
     }
 
-    func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
 
-    func applicationDidBecomeActive(_ notification: Notification) {
+    func applicationDidBecomeActive(_: Notification) {
         log.info("applicationDidBecomeActive", category: .os)
         updateRecentlyActive(true)
 
@@ -219,7 +223,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    func applicationDidResignActive(_ notification: Notification) {
+    func applicationDidResignActive(_: Notification) {
         log.info("applicationDidResignActive", category: .os)
 
         updateRecentlyActive(false)
@@ -245,7 +249,7 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+    func applicationShouldTerminate(_: NSApplication) -> NSApplication.TerminateReply {
         log.info("applicationShouldTerminate", category: .os)
         provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
@@ -321,13 +325,13 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     private func setupLogsForApp() {
-        let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        let logFile = container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
         let fileLogHandler = FileLogHandler(logFile)
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 
     private func isTelemetryAllowed() -> Bool {
@@ -336,8 +340,9 @@ extension AppDelegate: NSApplicationDelegate {
 }
 
 // MARK: - Migration
+
 extension AppDelegate {
-    fileprivate func checkMigration() {
+    private func checkMigration() {
         container.makeMigrationManager()
             .addCheck("1.7.1") { version, completion in
                 // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
@@ -364,7 +369,7 @@ extension AppDelegate {
     }
 
     private func reconnectWhenPossible() {
-        var appStateManager = self.container.makeAppStateManager()
+        var appStateManager = container.makeAppStateManager()
 
         appStateManager.onVpnStateChanged = { newState in
             if newState != .invalid {
@@ -396,7 +401,7 @@ extension AppDelegate {
     private func setupCoreIntegration() {
         ColorProvider.brand = .vpn
 
-        ProtonCoreLog.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .info, .trace, .warn:
                 log.debug("\(message)", category: .core)
@@ -408,7 +413,7 @@ extension AppDelegate {
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { [unowned apiService, unowned self] result in
             switch result {
-            case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
+            case let .success(.sessionAlreadyPresent(authCredential)), let .success(.sessionFetchedAndAvailable(authCredential)):
                 FeatureFlagsRepository.shared.setApiService(apiService)
                 if !authCredential.userID.isEmpty {
                     FeatureFlagsRepository.shared.setUserId(authCredential.userID)
@@ -418,14 +423,14 @@ extension AppDelegate {
                     try await FeatureFlagsRepository.shared.fetchFlags()
                 }
 
-                let isTelemetryEnabled = self.telemetrySettings.telemetryCrashReports
+                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
 
                 if isTelemetryEnabled {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
             default:
                 break

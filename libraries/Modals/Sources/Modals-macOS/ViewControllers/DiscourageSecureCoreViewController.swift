@@ -17,17 +17,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import ModalsShared
 import Ergonomics
+import ModalsShared
 
 final class DiscourageSecureCoreViewController: NSViewController {
-
-    @IBOutlet private weak var dontShowAgainLabel: NSTextField!
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var learnMoreButton: NSButton!
-    @IBOutlet private weak var descriptionLabel: NSTextField!
-    @IBOutlet private weak var activateButton: UpsellPrimaryActionButton!
+    @IBOutlet private var dontShowAgainLabel: NSTextField!
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var learnMoreButton: NSButton!
+    @IBOutlet private var descriptionLabel: NSTextField!
+    @IBOutlet private var activateButton: UpsellPrimaryActionButton!
 
     private let feature = DiscourageSecureCoreFeature()
 
@@ -36,7 +35,8 @@ final class DiscourageSecureCoreViewController: NSViewController {
     var onCancel: (() -> Void)?
     var onLearnMore: (() -> Void)?
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -68,25 +68,32 @@ final class DiscourageSecureCoreViewController: NSViewController {
         titleLabel.stringValue = feature.title
         descriptionLabel.stringValue = feature.subtitle
         imageView.image = feature.artImage
-        learnMoreButton.attributedTitle = NSAttributedString(string: feature.learnMore,
-                                                             attributes: [.foregroundColor: NSColor.color(.icon, .interactive),
-                                                                          .font: NSFont.systemFont(ofSize: 12)])
-   }
+        learnMoreButton.attributedTitle = NSAttributedString(
+            string: feature.learnMore,
+            attributes: [
+                .foregroundColor: NSColor.color(.icon, .interactive),
+                .font: NSFont.systemFont(ofSize: 12),
+            ]
+        )
+    }
 
     override public func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyUpsellModalAppearance()
     }
 
-    @IBAction private func learnMoreButtonTapped(_ sender: Any) {
+    @IBAction
+    private func learnMoreButtonTapped(_: Any) {
         onLearnMore?()
     }
 
-    @IBAction func dontShowAgainSwitchToggled(_ sender: NSButton) {
+    @IBAction
+    func dontShowAgainSwitchToggled(_ sender: NSButton) {
         onDontShowAgain?(sender.state == .on)
     }
 
-    @IBAction private func activateButtonTapped(_ sender: Any) {
+    @IBAction
+    private func activateButtonTapped(_: Any) {
         onActivate?()
         dismiss(nil)
     }

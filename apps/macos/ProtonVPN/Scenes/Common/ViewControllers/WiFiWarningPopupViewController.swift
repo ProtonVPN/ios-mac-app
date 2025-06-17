@@ -1,5 +1,5 @@
 //
-//  UnsecureWiFiPopupViewController.swift
+//  WiFiWarningPopupViewController.swift
 //  ProtonVPN - Created on 11.05.20.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,7 +24,6 @@ import Cocoa
 import LegacyCommon
 
 final class WiFiWarningPopupViewController: WarningPopupViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -41,5 +40,4 @@ final class WiFiWarningPopupViewController: WarningPopupViewController {
     private func setupLink() {
         warningDescription.hyperLink(originalText: viewModel.description, hyperLink: viewModel.linkDescription ?? "", urlString: viewModel.url ?? "")
     }
-
 }

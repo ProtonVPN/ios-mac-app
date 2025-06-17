@@ -41,7 +41,7 @@ public func executeOnUIThread<T>(
 ) {
     Task { @MainActor in
         do {
-            success(try await closure())
+            try await success(closure())
         } catch {
             failure(error)
         }
@@ -50,7 +50,7 @@ public func executeOnUIThread<T>(
 
 public func dispatchAssert(condition: DispatchPredicate) {
     #if DEBUG
-    dispatchPrecondition(condition: condition)
+        dispatchPrecondition(condition: condition)
     #endif
 }
 
@@ -98,11 +98,11 @@ public class ConcurrentReaders<T> {
     }
 
     public func updateAsync(_ closure: @escaping ((inout T) -> Void)) {
-        asyncBarrier { [unowned self] in closure(&self.value) }
+        asyncBarrier { [unowned self] in closure(&value) }
     }
 
     public func unsafeUpdateNoSync(_ closure: @escaping ((inout T) -> Void)) {
-        closure(&self.value)
+        closure(&value)
     }
 }
 

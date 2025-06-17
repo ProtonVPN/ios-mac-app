@@ -59,9 +59,11 @@ final class TelemetrySettingsReporter {
         checkAndSendHeartbeat()
 
         let nextRunTime = Date().addingTimeInterval(heartbeatInterval)
-        self.heartbeatTimer = timerFactory.scheduledTimer(runAt: nextRunTime,
-                                                          repeating: heartbeatInterval,
-                                                          queue: .main) { [weak self] in
+        heartbeatTimer = timerFactory.scheduledTimer(
+            runAt: nextRunTime,
+            repeating: heartbeatInterval,
+            queue: .main
+        ) { [weak self] in
             self?.checkAndSendHeartbeat()
         }
     }
@@ -78,7 +80,6 @@ final class TelemetrySettingsReporter {
     }
 
     private func checkAndSendHeartbeat() {
-
         @Dependency(\.defaultsProvider) var provider
         let now = Date()
         let lastHeartbeat = provider.getDefaults().userObject(forKey: lastHeartbeatKey) as? Date ?? Date.distantPast
@@ -97,17 +98,16 @@ final class TelemetrySettingsReporter {
     }
 
     private func sendHeartbeat() async throws {
-
-        let dimensions = SettingsDimensions(
+        let dimensions = await SettingsDimensions(
             defaultConnectionType: defaultConnectionType(),
             appIcon: .default,
             userTier: userTier(),
-            widgetCount: await widgetCount(),
-            firstWidgetSize: await firstWidgetSize(),
+            widgetCount: widgetCount(),
+            firstWidgetSize: firstWidgetSize(),
             isIPv6Enabled: .false,
-            hermesCount: await hermesCount(),
-            firstHermesAddressFamily: await firstHermesAddressFamily(),
-            isSystemHermesEnabled: await isSystemHermesEnabled()
+            hermesCount: hermesCount(),
+            firstHermesAddressFamily: firstHermesAddressFamily(),
+            isSystemHermesEnabled: isSystemHermesEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
@@ -149,7 +149,7 @@ final class TelemetrySettingsReporter {
     }
 
     private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
-        return .ipv4
+        .ipv4
     }
 
     private func isSystemHermesEnabled() async -> SettingsDimensions.SystemHermesEnabled {
@@ -167,7 +167,7 @@ final class TelemetrySettingsReporter {
                     return .zero
                 case 1:
                     return .one
-                case 2...4:
+                case 2 ... 4:
                     return .twoToFour
                 default:
                     return .greaterOrEqualFive

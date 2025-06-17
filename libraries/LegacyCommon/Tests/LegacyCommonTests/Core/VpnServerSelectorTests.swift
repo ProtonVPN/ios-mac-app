@@ -34,7 +34,7 @@ import Persistence
 class VpnServerSelectorTests: XCTestCase {
     let connectionProtocol: ConnectionProtocol = .vpnProtocol(.ike)
     let smartProtocolConfig = MockTestData().defaultClientConfig.smartProtocolConfig
-    let appStateGetter: (() -> AppState) = { return .disconnected }
+    let appStateGetter: (() -> AppState) = { .disconnected }
 
     static var repository: ServerRepository!
     static var mockServers: [String: VPNServer]!
@@ -57,7 +57,7 @@ class VpnServerSelectorTests: XCTestCase {
             makeMockServer(id: "CH0", countryCode: "CH", tier: 2, score: 1.5, status: 0),
             makeMockServer(id: "CH1", countryCode: "CH", tier: 2, score: 2, status: 0),
             makeMockServer(id: "PL0", countryCode: "PL", tier: 1, score: 7, protocols: .ikev2),
-            makeMockServer(id: "PL1", countryCode: "PL", tier: 2, score: 6, protocols: [.wireGuardTLS, .openVPNUDP])
+            makeMockServer(id: "PL1", countryCode: "PL", tier: 2, score: 6, protocols: [.wireGuardTLS, .openVPNUDP]),
         ]
 
         Self.mockServers = mockServers.reduce(into: [:]) { $0[$1.logical.id] = $1 }
@@ -72,7 +72,7 @@ class VpnServerSelectorTests: XCTestCase {
     }
 
     func testServersUnchangedByRoundTrip() throws {
-        servers.values.forEach { server in
+        for server in servers.values {
             let serverFromDB = repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
             XCTAssertEqual(serverFromDB, server)
         }
@@ -86,9 +86,9 @@ class VpnServerSelectorTests: XCTestCase {
         smartProtocolConfig: SmartProtocolConfig,
         appStateGetter: @escaping () -> AppState,
         changeActiveServerType: @escaping (ServerType) -> Void = { _ in },
-        notifyResolutionUnavailable: @escaping (Bool, ServerType, ResolutionUnavailableReason) -> Void = { _, _, _  in }
+        notifyResolutionUnavailable: @escaping (Bool, ServerType, ResolutionUnavailableReason) -> Void = { _, _, _ in }
     ) -> ServerModel? {
-        return withDependencies {
+        withDependencies {
             $0.serverRepository = repository
         } operation: {
             let selector = VpnServerSelector(
@@ -176,7 +176,7 @@ class VpnServerSelectorTests: XCTestCase {
         let currentUserTier = 3
         let type = ServerType.unspecified
 
-        let specifiedServer = ServerModel(server: try XCTUnwrap(servers["DE2"]))
+        let specifiedServer = try ServerModel(server: XCTUnwrap(servers["DE2"]))
         let connectionRequest = ConnectionRequest(serverType: .unspecified, connectionType: .country("DE", .server(specifiedServer)), connectionProtocol: connectionProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, profileName: nil, trigger: nil)
 
         let server = selectServer(
@@ -391,7 +391,7 @@ class VpnServerSelectorTests: XCTestCase {
                     label: "1",
                     x25519PublicKey: nil,
                     protocolEntries: mockProtocolEntries(supporting: protocols)
-                )
+                ),
             ]
         )
 

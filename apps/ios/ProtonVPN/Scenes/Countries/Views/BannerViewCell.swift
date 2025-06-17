@@ -1,5 +1,5 @@
 //
-//  OneLineTableViewCell.swift
+//  BannerViewCell.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,23 +23,22 @@
 import UIKit
 
 class BannerViewCell: UITableViewCell {
+    @IBOutlet var roundedBackgroundView: UIView!
+    @IBOutlet var leftImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var rightChevron: UIImageView!
 
-    @IBOutlet weak var roundedBackgroundView: UIView!
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var rightChevron: UIImageView!
-    
     var viewModel: BannerViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel else { return }
             leftImageView.image = viewModel.leftIcon.image
             label.text = viewModel.text
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .backgroundColor()
+        backgroundColor = .backgroundColor()
         label.textColor = .normalTextColor()
         label.font = .systemFont(ofSize: 13)
 
@@ -49,10 +48,9 @@ class BannerViewCell: UITableViewCell {
         roundedBackgroundView.backgroundColor = .secondaryBackgroundColor()
         roundedBackgroundView.layer.cornerRadius = 12
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectionStyle = .none
     }
-    
 }

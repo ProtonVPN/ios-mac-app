@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 struct UserDefaultsStorage: Storage {
     @Dependency(\.defaultsProvider) var provider
@@ -36,7 +36,7 @@ struct UserDefaultsStorage: Storage {
                 metadata: [
                     "error": "\(error)",
                     "key": "\(key)",
-                    "type": "\(type)"
+                    "type": "\(type)",
                     // Omit logging value we failed to decode in case it contains sensitive information
                 ]
             )
@@ -60,7 +60,7 @@ struct UserDefaultsStorage: Storage {
                 metadata: [
                     "error": "\(error)",
                     "key": "\(key)",
-                    "type": "\(T.self)"
+                    "type": "\(T.self)",
                     // Omit logging value we failed to encode in case it contains sensitive information
                 ]
             )
@@ -84,4 +84,3 @@ struct UserDefaultsStorage: Storage {
         provider.getDefaults().removeObject(forKey: key)
     }
 }
-

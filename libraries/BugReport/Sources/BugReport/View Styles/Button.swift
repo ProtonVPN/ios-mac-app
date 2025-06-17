@@ -31,9 +31,9 @@ struct PrimaryButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            #if os(macOS)
+        #if os(macOS)
             .font(.system(size: 16, weight: .bold, design: .default))
-            #endif
+        #endif
             .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
             .background(ZStack(alignment: .trailing) {
                 if isLoading {

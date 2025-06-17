@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct WelcomeInfoView: View {
-
     var store: StoreOf<WelcomeInfoFeature>
 
     var body: some View {
@@ -45,7 +44,7 @@ struct WelcomeInfoView: View {
                     Text(model.subtitle)
                         .font(.title3)
                         .foregroundStyle(Color(.text, .weak)) +
-                    Text(verbatim: model.displayURL ?? "")
+                        Text(verbatim: model.displayURL ?? "")
                         .font(.title3)
                         .bold()
                         .foregroundStyle(Color(.text, .interactive))
@@ -60,7 +59,6 @@ struct WelcomeInfoView: View {
 }
 
 struct UpsellAlternativeView: View {
-
     static let contentViewWidth: CGFloat = 928
 
     @Environment(\.dismiss) var dismiss

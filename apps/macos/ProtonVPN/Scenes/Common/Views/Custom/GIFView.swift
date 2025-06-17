@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Cocoa
 import Foundation
 import ImageIO
-import Cocoa
 
 class GIFView: NSView {
     let frames: [CGImage]
@@ -31,7 +31,8 @@ class GIFView: NSView {
     private var animating: Bool = false
     private var timer: Timer?
 
-    required init?(coder decoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Not implemented: \(#function)")
     }
 
@@ -105,7 +106,7 @@ class GIFView: NSView {
 
         let count = CGImageSourceGetCount(imageSource)
         var frames: [CGImage] = []
-        for index in 0..<count {
+        for index in 0 ..< count {
             guard let frame = CGImageSourceCreateImageAtIndex(imageSource, index, nil) else {
                 return nil
             }
@@ -123,13 +124,13 @@ class GIFView: NSView {
     }
 
     func animate(_ play: Bool) {
-        if !animating && play {
+        if !animating, play {
             animating = true
             timer = Timer.scheduledTimer(withTimeInterval: frameRate, repeats: true) { _ in
                 self.frameIndex = (self.frameIndex + 1) % self.frames.count
                 self.needsDisplay = true
             }
-        } else if animating && !play {
+        } else if animating, !play {
             animating = false
             timer?.invalidate()
             timer = nil

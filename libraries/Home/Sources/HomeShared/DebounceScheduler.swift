@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Combine
 import CombineSchedulers
+import Dependencies
 
-extension DependencyValues {
-    public var debounceScheduler: AnySchedulerOf<UIScheduler> {
+public extension DependencyValues {
+    var debounceScheduler: AnySchedulerOf<UIScheduler> {
         get { self[DebounceScheduler.self] }
         set { self[DebounceScheduler.self] = newValue }
     }
 
-    public enum DebounceScheduler: DependencyKey {
+    enum DebounceScheduler: DependencyKey {
         public static let liveValue = UIScheduler.shared.eraseToAnyScheduler()
         public static let testValue = UIScheduler.immediate.eraseToAnyScheduler()
     }

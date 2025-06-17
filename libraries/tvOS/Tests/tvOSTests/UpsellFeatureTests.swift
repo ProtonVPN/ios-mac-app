@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
+@testable import CommonNetworking
 import ComposableArchitecture
 import Ergonomics
+import Foundation
 @testable import tvOS
-@testable import CommonNetworking
+import XCTest
 
 final class UpsellFeatureTests: XCTestCase {
-
     let monthlyPlan = PlanIAPTuple(
         planOption: .init(duration: .oneMonth, price: .init(amount: 9.99, currency: "GBP")),
         iap: .freePlan
@@ -101,9 +100,8 @@ final class UpsellFeatureTests: XCTestCase {
     func testRespondsToBackgroundTransaction() async {
         let error = GenericError("Payment Failed")
         let clock = TestClock()
-        let initialState = UpsellFeature.State.loaded(planOptions: [self.monthlyPlan], purchaseInProgress: false)
+        let initialState = UpsellFeature.State.loaded(planOptions: [monthlyPlan], purchaseInProgress: false)
         let networking = VPNNetworkingMock(userTierResult: .success(2))
-
 
         let store = TestStore(initialState: initialState) {
             UpsellFeature()

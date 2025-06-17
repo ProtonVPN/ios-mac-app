@@ -25,34 +25,35 @@ import LegacyCommon
 import Strings
 
 class FooterItemView: NSView {
+    @IBOutlet var createNewProfileButton: PrimaryActionButton!
+    @IBOutlet var manageProfilesButton: InteractiveActionButton!
 
-    @IBOutlet weak var createNewProfileButton: PrimaryActionButton!
-    @IBOutlet weak var manageProfilesButton: InteractiveActionButton!
-    
     private var viewModel: ProfilesSectionViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         createNewProfileButton.title = Localizable.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction(_:))
-        
+
         manageProfilesButton.title = Localizable.manageProfiles
         manageProfilesButton.target = self
         manageProfilesButton.action = #selector(manageProfilesButtonAction(_:))
     }
-    
+
     func updateView(withModel viewModel: ProfilesSectionViewModel) {
         self.viewModel = viewModel
         manageProfilesButton.isHidden = !viewModel.canUseProfiles
     }
-    
-    @objc private func createNewProfileButtonAction(_ sender: NSButton) {
+
+    @objc
+    private func createNewProfileButtonAction(_: NSButton) {
         viewModel.createNewProfileAction()
     }
-    
-    @objc private func manageProfilesButtonAction(_ sender: NSButton) {
+
+    @objc
+    private func manageProfilesButtonAction(_: NSButton) {
         viewModel.manageProfilesAction()
     }
 }

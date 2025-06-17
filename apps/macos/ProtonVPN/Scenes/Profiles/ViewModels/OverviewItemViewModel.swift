@@ -24,9 +24,9 @@ import Cocoa
 
 import Dependencies
 
-import VPNAppCore
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
+import VPNAppCore
 
 import Ergonomics
 import Strings
@@ -36,38 +36,36 @@ protocol OverviewItemViewModelDelegate: AnyObject {
 }
 
 final class OverviewItemViewModel: AbstractProfileViewModel {
-
     private let editProfile: ((Profile) -> Void)?
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
 
-    @Dependency(\.sessionService)
-    private var sessionService
+    @Dependency(\.sessionService) private var sessionService
 
     weak var delegate: OverviewItemViewModelDelegate?
 
     var canConnect: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
 
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
 
     var name: NSAttributedString {
-        return attributedName(forProfile: profile)
+        attributedName(forProfile: profile)
     }
 
     var description: NSAttributedString {
-        return attributedDescription(forProfile: profile)
+        attributedDescription(forProfile: profile)
     }
 
     var isSystemProfile: Bool {
-        return profile.profileType == .system
+        profile.profileType == .system
     }
 
     var connectButtonTitle: String {
-        return formConnectButtonTitle()
+        formConnectButtonTitle()
     }
 
     init(profile: Profile, editProfile: ((Profile) -> Void)?, profileManager: ProfileManager, vpnGateway: VpnGatewayProtocol, userTier: Int) {
@@ -102,23 +100,23 @@ final class OverviewItemViewModel: AbstractProfileViewModel {
     }
 
     func deleteAction() {
-        guard let delegate = delegate else { return }
+        guard let delegate else { return }
 
         let warningViewModel = WarningPopupViewModel(title: Localizable.deleteProfileHeader, description: Localizable.deleteProfileWarning) { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            self.profileManager.deleteProfile(self.profile)
+            profileManager.deleteProfile(profile)
         }
         delegate.showDeleteWarning(warningViewModel)
     }
 
     private func formConnectButtonTitle() -> String {
         if underMaintenance {
-            return Localizable.maintenance
+            Localizable.maintenance
         } else {
-            return Localizable.connect
+            Localizable.connect
         }
     }
 }

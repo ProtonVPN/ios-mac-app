@@ -31,7 +31,6 @@ import Domain
 import Strings
 
 class CountryAnnotationViewModel: AnnotationViewModel {
-
     enum ViewState {
         case idle
         case selected
@@ -53,11 +52,11 @@ class CountryAnnotationViewModel: AnnotationViewModel {
 
     /// Under maintenance if all servers are
     var underMaintenance: Bool {
-        return groupInfo.isUnderMaintenance
+        groupInfo.isUnderMaintenance
     }
 
     var available: Bool {
-        return !requiresUpgrade && !underMaintenance
+        !requiresUpgrade && !underMaintenance
     }
 
     var viewState: AnnotationViewState = .idle {
@@ -78,82 +77,82 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
 
     var isConnecting: Bool {
-        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+        if let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case let ConnectionRequestType.country(activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
     }
 
     var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     var description: NSAttributedString {
-        return formDescription()
+        formDescription()
     }
 
     let minPinHeight: CGFloat = 44
     let maxPinHeight: CGFloat = 60
 
     var anchorPoint: CGPoint {
-        return CGPoint(x: 0.5, y: maxPinHeight / maxHeight)
+        CGPoint(x: 0.5, y: maxPinHeight / maxHeight)
     }
 
     var outlineColor: UIColor {
         if connectedUiState {
-            return .brandColor()
+            .brandColor()
         } else if requiresUpgrade || underMaintenance {
-            return .weakInteractionColor()
+            .weakInteractionColor()
         } else {
-            return .normalTextColor()
+            .normalTextColor()
         }
     }
 
     var labelColor: UIColor {
         if connectedUiState {
-            return UIColor.brandColor().withAlphaComponent(0.75)
+            UIColor.brandColor().withAlphaComponent(0.75)
         } else {
-            return UIColor.weakInteractionColor().withAlphaComponent(0.75)
+            UIColor.weakInteractionColor().withAlphaComponent(0.75)
         }
     }
 
     var flagOverlayColor: UIColor {
         if requiresUpgrade || underMaintenance || isConnected || isConnecting {
-            return UIColor.black.withAlphaComponent(0.75)
+            UIColor.black.withAlphaComponent(0.75)
         } else {
             switch viewState {
             case .idle:
-                return UIColor.clear
+                UIColor.clear
             case .selected:
-                return UIColor.black.withAlphaComponent(0.75)
+                UIColor.black.withAlphaComponent(0.75)
             }
         }
     }
 
     var connectIconTint: UIColor {
         if connectedUiState {
-            return .brandColor()
+            .brandColor()
         } else {
-            return .normalTextColor()
+            .normalTextColor()
         }
     }
 
     var connectIcon: UIImage? {
         if connectedUiState {
-            return Asset.connect.image.withRenderingMode(.alwaysTemplate)
+            Asset.connect.image.withRenderingMode(.alwaysTemplate)
         } else if requiresUpgrade {
             switch viewState {
             case .idle:
-                return nil
+                nil
             case .selected:
-                return Asset.locked.image
+                Asset.locked.image
             }
         } else {
             switch viewState {
             case .idle:
-                return nil
+                nil
             case .selected:
-                return Asset.connect.image.withRenderingMode(.alwaysTemplate)
+                Asset.connect.image.withRenderingMode(.alwaysTemplate)
             }
         }
     }
@@ -217,6 +216,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
 
     // MARK: - Private functions
+
     fileprivate func startObserving() {
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
     }
@@ -226,7 +226,8 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         return country.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
     }
 
-    @objc fileprivate func stateChanged() {
+    @objc
+    fileprivate func stateChanged() {
         if let connectionChanged = buttonStateChanged {
             DispatchQueue.main.async {
                 connectionChanged()

@@ -23,53 +23,52 @@
 import UIKit
 
 class ProtonButton: UIButton {
-    
     enum CustomState {
         case primary // e.g. connect
         case secondary
         case destructive // e.g. disconnect or cancel
         case disabled
     }
-    
+
     var customState: CustomState = .primary {
         didSet {
             update()
         }
     }
-    
+
     override var isEnabled: Bool {
         didSet {
             customState = isEnabled ? .primary : .disabled
         }
     }
-    
+
     var activityIndicator: UIActivityIndicatorView?
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+
         setUpView()
     }
-    
+
     init() {
         super.init(frame: .zero)
         setUpView()
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 8
     }
-    
+
     private func setUpView() {
         clipsToBounds = true
         tintColor = .normalTextColor()
-        
+
         setTitleColor(.normalTextColor(), for: .normal)
-        
+
         update()
     }
-    
+
     private func update() {
         switch customState {
         case .primary:
@@ -90,51 +89,50 @@ class ProtonButton: UIButton {
             setTitleColor(.normalTextColor(), for: .normal)
         }
     }
-    
+
     func showLoading() {
         if activityIndicator == nil {
             activityIndicator = createActivityIndicator()
         }
-        
+
         showSpinning()
     }
-    
+
     func hideLoading() {
         DispatchQueue.main.async { [weak self] in
             self?.activityIndicator?.stopAnimating()
         }
     }
-    
+
     private func createActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .normalTextColor()
         return activityIndicator
     }
-    
+
     private func showSpinning() {
-        guard let activityIndicator = activityIndicator else {
+        guard let activityIndicator else {
             return
         }
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(activityIndicator)
+        addSubview(activityIndicator)
         centerActivityIndicatorInButton()
         activityIndicator.startAnimating()
     }
-    
+
     private func centerActivityIndicatorInButton() {
         let xCenterConstraint = NSLayoutConstraint(item: self, attribute: .leading, relatedBy: .equal, toItem: activityIndicator, attribute: .leading, multiplier: 1, constant: -17)
-        self.addConstraint(xCenterConstraint)
-        
+        addConstraint(xCenterConstraint)
+
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
-        self.addConstraint(yCenterConstraint)
+        addConstraint(yCenterConstraint)
     }
-    
+
     // MARK: - Style
-    
+
     public func styleCenterMultiline() {
         titleLabel?.lineBreakMode = .byWordWrapping
         titleLabel?.textAlignment = .center
     }
-    
 }

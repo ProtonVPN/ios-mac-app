@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import CommonNetworking
+import Dependencies
+import Foundation
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 
 extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
@@ -29,16 +29,15 @@ extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
 }
 
 extension CustomHostValidator: @retroactive DependencyKey {
-
     /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
     /// Let's override it here when building for staging or debug.
     /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
     /// `debug` and `release` build configurations.
     public static let liveValue: CustomHostValidator = {
         #if DEBUG || STAGING
-        return CustomHostValidator.debug
+            return CustomHostValidator.debug
         #else
-        return CustomHostValidator.release
+            return CustomHostValidator.release
         #endif
     }()
 }

@@ -22,9 +22,9 @@ import class NetworkExtension.NETunnelProviderProtocol
 
 import Dependencies
 
-import struct Domain.ServerConnectionIntent
-import struct Domain.ConnectionSpec
 import let CoreConnection.log
+import struct Domain.ConnectionSpec
+import struct Domain.ServerConnectionIntent
 
 enum TunnelConfigurationOperation {
     case connection(ServerConnectionIntent)
@@ -32,7 +32,7 @@ enum TunnelConfigurationOperation {
 }
 
 struct ManagerConfigurator: Sendable {
-    typealias ConfigurationHandler = (@Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void)
+    typealias ConfigurationHandler = @Sendable (inout TunnelProviderManager, TunnelConfigurationOperation) async throws -> Void
 
     private var configure: ConfigurationHandler
 

@@ -29,12 +29,12 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
     }
 
     private let config: WireguardConfig
-    
+
     var defaultPorts: [Int] {
         switch transport {
-        case .udp: return config.defaultUdpPorts
-        case .tcp: return config.defaultTcpPorts
-        case .tls: return config.defaultTlsPorts
+        case .udp: config.defaultUdpPorts
+        case .tcp: config.defaultTcpPorts
+        case .tls: config.defaultTlsPorts
         }
     }
 
@@ -42,7 +42,7 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
         self.config = config
         self.transport = transport
     }
-    
+
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         let defaultPorts = config.defaultTcpPorts
 
@@ -58,8 +58,8 @@ class WireguardTCPAvailabilityChecker: SmartProtocolAvailabilityChecker {
             }
         }
     }
-    
-    func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
+
+    func ping(protocolName _: String, server _: ServerIp, port _: Int, timeout _: TimeInterval, completion: @escaping (Bool) -> Void) {
         completion(true) // FUTUREDO: Implement
     }
 }

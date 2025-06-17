@@ -19,17 +19,15 @@
 import fusion
 import ProtonCoreTestingToolkitUITestsPaymentsUI
 
-fileprivate let titleId = "PaymentsUIViewController.tableHeaderLabel"
-fileprivate let freePlanTitle = "Free.planNameLabel"
+private let titleId = "PaymentsUIViewController.tableHeaderLabel"
+private let freePlanTitle = "Free.planNameLabel"
 
 class PaymentsRobot: CoreElements {
-    
     let corePaymentUIRobot = PaymentsUIRobot()
-    
+
     public let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func subscriptionScreenIsShown() -> PaymentsRobot {
             staticText(titleId).waitUntilExists(time: 10).checkExists()

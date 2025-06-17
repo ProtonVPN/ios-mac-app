@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,7 +8,7 @@ let package = Package(
     defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
@@ -16,20 +16,20 @@ let package = Package(
             targets: ["LegacyCommon"]
         ),
         /*
-         Future: When SPM decides to be a mature software product, move the Mocks here.
-         macOS unit tests refused to link this target, even though every other target
-         was fine with it:
-        .library(
-            name: "LegacyCommonTestSupport",
-            targets: ["LegacyCommonTestSupport"]
-        ),
-         Notes:
-          - You may encounter additional problems linking TrustKit (Undefined symbols
-            ___llvm_profile_runtime)
-          - Moving @Dependency based mocks to a separate module means each of these dependencies
-            will have to be overridden in every test where its used (you cannot provide testValue
-            in a separate module)
-        */
+             Future: When SPM decides to be a mature software product, move the Mocks here.
+             macOS unit tests refused to link this target, even though every other target
+             was fine with it:
+            .library(
+                name: "LegacyCommonTestSupport",
+                targets: ["LegacyCommonTestSupport"]
+            ),
+             Notes:
+              - You may encounter additional problems linking TrustKit (Undefined symbols
+                ___llvm_profile_runtime)
+              - Moving @Dependency based mocks to a separate module means each of these dependencies
+                will have to be overridden in every test where its used (you cannot provide testValue
+                in a separate module)
+            */
     ],
     dependencies: [
         // External packages regularly upstreamed by our project (imported as submodules)
@@ -98,7 +98,7 @@ let package = Package(
                 "BugReport",
                 "ConnectionInventory",
 
-                // Todo: move these to LegacyCommonTestSupport, if we ever can
+                // TODO: move these to LegacyCommonTestSupport, if we ever can
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "TimerMock", package: "Timer"),
@@ -136,34 +136,34 @@ let package = Package(
                 .product(name: "SDWebImage", package: "SDWebImage"),
                 .product(name: "TrustKit", package: "TrustKit"),
                 .product(name: "DictionaryCoder", package: "DictionaryCoder"),
-                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
             ],
             plugins: [
-//                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
+                //                .plugin(name: "SwiftLintPlugin", package: "SwiftLint")
             ]
         ),
         /*
-        .target(
-            name: "LegacyCommonTestSupport",
-            dependencies: [
-                "LegacyCommon",
-                "Strings",
-                "Home",
-                .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
-                .product(name: "TimerMock", package: "Timer"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
-                .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "VPNSharedTesting", package: "NEHelper"),
-                .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
+            .target(
+                name: "LegacyCommonTestSupport",
+                dependencies: [
+                    "LegacyCommon",
+                    "Strings",
+                    "Home",
+                    .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),
+                    .product(name: "TimerMock", package: "Timer"),
+                    .product(name: "VPNAppCore", package: "NEHelper"),
+                    .product(name: "VPNShared", package: "NEHelper"),
+                    .product(name: "VPNSharedTesting", package: "NEHelper"),
+                    .product(name: "GoLibsCryptoVPNPatchedGo", package: "protoncore"),
 
-                .core(module: "Authentication"),
-                .core(module: "DataModel"),
-                .core(module: "Foundations"),
-                .core(module: "Networking"),
-                .core(module: "Services"),
-            ]
-        ),
-        */
+                    .core(module: "Authentication"),
+                    .core(module: "DataModel"),
+                    .core(module: "Foundations"),
+                    .core(module: "Networking"),
+                    .core(module: "Services"),
+                ]
+            ),
+            */
         .testTarget(
             name: "LegacyCommonTests",
             dependencies: [
@@ -190,7 +190,7 @@ let package = Package(
 
 extension Range<PackageDescription.Version> {
     static func upTo(_ version: Version) -> Self {
-        "0.0.0"..<version
+        "0.0.0" ..< version
     }
 }
 

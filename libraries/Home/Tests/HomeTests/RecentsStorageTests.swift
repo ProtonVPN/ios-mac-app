@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-@testable import HomeShared
 @testable import ConnectionInventory
-import Domain
 import Dependencies
+import Domain
+@testable import HomeShared
 import OrderedCollections
+import XCTest
 
 final class RecentsStorageTests: XCTestCase {
-
     func testPiningASpecMovesTheCorrespondingRecentToTheTopOfTheListsAndMarksItAsPinned() {
         let now = Date()
         var defaultFastest = RecentConnection(pinnedDate: nil, underMaintenance: false, connectionDate: now, connection: .defaultFastest)
@@ -72,23 +71,29 @@ final class RecentsStorageTests: XCTestCase {
         withDependencies {
             $0.date = .constant(now)
         } operation: {
-            let one = RecentConnection(pinnedDate: nil,
-                                       underMaintenance: false,
-                                       connectionDate: now,
-                                       connection: .init(location: .region(code: "1"), features: []))
-            let two = RecentConnection(pinnedDate: now + 1,
-                                       underMaintenance: false,
-                                       connectionDate: now,
-                                       connection: .init(location: .region(code: "2"), features: []))
+            let one = RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "1"), features: [])
+            )
+            let two = RecentConnection(
+                pinnedDate: now + 1,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "2"), features: [])
+            )
             var recents: OrderedSet<RecentConnection> = [one, two]
 
             XCTAssertEqual(recents.sanitized(), [two, one])
 
             let threeSpec = ConnectionSpec(location: .region(code: "3"), features: [])
-            var three = RecentConnection(pinnedDate: nil,
-                                         underMaintenance: false,
-                                         connectionDate: now,
-                                         connection: threeSpec)
+            var three = RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: threeSpec
+            )
             recents.updateList(with: threeSpec)
             recents.pin(recent: three, pinnedDate: now)
             three.pinnedDate = now
@@ -98,11 +103,13 @@ final class RecentsStorageTests: XCTestCase {
 
     func testInitializingRecentsListWithMoreThanAllowedNumberOfConnectionsTrimsTheRecentList() {
         let now = Date()
-        let array = (0...9).map { element in
-            RecentConnection(pinnedDate: nil,
-                             underMaintenance: false,
-                             connectionDate: now,
-                             connection: .init(location: .region(code: "\(element)"), features: []))
+        let array = (0 ... 9).map { element in
+            RecentConnection(
+                pinnedDate: nil,
+                underMaintenance: false,
+                connectionDate: now,
+                connection: .init(location: .region(code: "\(element)"), features: [])
+            )
         }
         XCTAssertEqual(array.count, 10)
         let recents = OrderedSet(array)

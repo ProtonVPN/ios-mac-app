@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ConnectionDetailsShared
+import Domain
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import ComposableArchitecture
-import Strings
-import ConnectionDetailsShared
-import ProtonCoreUIFoundations
-import Domain
 
 struct ConnectionDetailsView: View {
     let store: StoreOf<ConnectionDetailsFeature>
@@ -47,8 +47,10 @@ struct ConnectionDetailsView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         let connectedSince = store.connectedSince
                         TimelineView(PeriodicTimelineSchedule(from: connectedSince, by: 1)) { _ in
-                            Row(title: Localizable.connectionDetailsConnectedFor,
-                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText))
+                            Row(
+                                title: Localizable.connectionDetailsConnectedFor,
+                                contentType: .text(connectedSince.timeIntervalSinceNow.sessionLengthText)
+                            )
                             Divider().padding([.leading], .themeSpacing8)
                         }
                         Group {
@@ -95,7 +97,7 @@ struct ConnectionDetailsView: View {
     }
 
     private var shouldShowCityRow: Bool {
-        return store.city != "-" && !store.city.isEmpty
+        store.city != "-" && !store.city.isEmpty
     }
 
     @MainActor
@@ -109,60 +111,60 @@ struct ConnectionDetailsView: View {
         @ScaledMetric var infoIconSpacing: CGFloat = .themeSpacing4
 
         private var standardTypeSize: Bool { dynamicTypeSize <= .xxxLarge }
-        
+
         enum Accessory {
             case none
             case info
         }
-        
+
         enum ContentType {
             case text(String)
             case percentage(Int)
 
             var accessibilityValue: String {
                 switch self {
-                case .text(let string):
-                    return string
-                case .percentage(let value):
-                    return String(value) + "%"
+                case let .text(string):
+                    string
+                case let .percentage(value):
+                    String(value) + "%"
                 }
             }
         }
-        
+
         init(title: String, contentType: ContentType, accessory: Accessory = .none) {
             self.title = title
             self.accessory = accessory
             self.content = contentType
         }
-        
+
         var body: some View {
             rowView
                 .padding(.vertical, .themeSpacing12)
                 .padding(.horizontal, .themeSpacing16)
                 .accessibilityElement(children: .combine)
         }
-        
+
         @ViewBuilder
         private var rowView: some View {
             if standardTypeSize {
                 HStack(alignment: .top) {
-                    self.titleView
+                    titleView
                     Spacer()
-                    self.valueView
+                    valueView
                 }
             } else {
                 VStack(alignment: .leading) {
-                    self.titleView
-                    self.valueView
+                    titleView
+                    valueView
                 }
             }
         }
-        
+
         private var titleView: some View {
             HStack(spacing: infoIconSpacing) {
                 Text(title)
                     .themeFont(.body1())
-                
+
                 if case .info = accessory {
                     IconProvider.infoCircle.resizable().frame(width: infoIconSize, height: infoIconSize)
                 }
@@ -170,7 +172,7 @@ struct ConnectionDetailsView: View {
             .accessibilityLabel(title)
             .foregroundColor(Color(.text, .weak))
         }
-        
+
         private var valueView: some View {
             HStack(spacing: .themeSpacing8) {
                 if case let .percentage(percent) = content {
@@ -178,9 +180,9 @@ struct ConnectionDetailsView: View {
                 }
 
                 switch content {
-                case .text(let string):
+                case let .text(string):
                     Text(string).themeFont(.body1())
-                case .percentage(let percentage):
+                case let .percentage(percentage):
                     Text(percentage, format: .percent).themeFont(.body1())
                 }
             }
@@ -189,17 +191,22 @@ struct ConnectionDetailsView: View {
         }
     }
 }
+
 // MARK: - Previews
 
 struct ConnectionDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        ConnectionDetailsView(store: Store(initialState: .init(connectedSince: Date.init(timeIntervalSinceNow: -12345),
-                                                               country: "Lithuania",
-                                                               city: "Siauliai",
-                                                               server: "LT#5",
-                                                               serverLoad: 23,
-                                                               protocolName: "WireGuard"),
-                                           reducer: { ConnectionDetailsFeature() }))
+        ConnectionDetailsView(store: Store(
+            initialState: .init(
+                connectedSince: Date(timeIntervalSinceNow: -12345),
+                country: "Lithuania",
+                city: "Siauliai",
+                server: "LT#5",
+                serverLoad: 23,
+                protocolName: "WireGuard"
+            ),
+            reducer: { ConnectionDetailsFeature() }
+        ))
         .previewLayout(.sizeThatFits)
         .preferredColorScheme(.dark)
     }

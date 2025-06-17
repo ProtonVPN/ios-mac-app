@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import VPNShared
-import Ergonomics
 
 public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let defaultUdpPorts: [Int]
@@ -33,13 +33,15 @@ public struct WireguardConfig: Codable, Equatable, DefaultableProperty {
     public let dnsServers: [String]?
 
     public var address: String {
-        return "10.2.0.2/32"
+        "10.2.0.2/32"
     }
+
     public var allowedIPs: String {
-        return "0.0.0.0/0"
+        "0.0.0.0/0"
     }
+
     public var persistentKeepalive: Int? { // seconds
-        return 25
+        25
     }
 
     public init(
@@ -80,27 +82,31 @@ public struct StoredWireguardConfig: Codable {
 
     let timestamp: Date
 
-    public func withNewServerPublicKey(_ newServerPublicKey: String?,
-                                       andEntryServerAddress newEntryServerAddress: String) -> Self {
-        Self(wireguardConfig: wireguardConfig,
-             clientPrivateKey: clientPrivateKey,
-             serverPublicKey: newServerPublicKey,
-             entryServerAddress: newEntryServerAddress,
-             ports: ports,
-             // update the timestamp since the configuration has changed
-             timestamp: Date())
+    public func withNewServerPublicKey(
+        _ newServerPublicKey: String?,
+        andEntryServerAddress newEntryServerAddress: String
+    ) -> Self {
+        Self(
+            wireguardConfig: wireguardConfig,
+            clientPrivateKey: clientPrivateKey,
+            serverPublicKey: newServerPublicKey,
+            entryServerAddress: newEntryServerAddress,
+            ports: ports,
+            // update the timestamp since the configuration has changed
+            timestamp: Date()
+        )
     }
 }
 
 /// This is what gets stored in the keychain, to communicate the connection
 /// details with the WireGuard network extension.
-extension StoredWireguardConfig {
+public extension StoredWireguardConfig {
     /// `asWireguardConfiguration` translates this object into a text configuration file
     /// that the `wireguard-go` backend understands.
-    public func asWireguardConfiguration() -> String {
+    func asWireguardConfiguration() -> String {
         var output = "[Interface]\n"
 
-        if let clientPrivateKey = clientPrivateKey {
+        if let clientPrivateKey {
             output.append("PrivateKey = \(clientPrivateKey)\n")
         }
         output.append("Address = \(wireguardConfig.address)\n")
@@ -108,7 +114,7 @@ extension StoredWireguardConfig {
         output.append("DNS = \(wireguardConfig.dnsServers?.joined(separator: ",") ?? "10.2.0.1")\n")
 
         output.append("\n[Peer]\n")
-        if let serverPublicKey = serverPublicKey {
+        if let serverPublicKey {
             output.append("PublicKey = \(serverPublicKey)\n")
         }
         output.append("AllowedIPs = \(wireguardConfig.allowedIPs)\n")

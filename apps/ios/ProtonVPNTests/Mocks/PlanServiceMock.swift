@@ -32,41 +32,35 @@ class PlanServiceMock: PlanService {
     var iapStatus: IAPSupportStatus = .enabled
 
     var plansDataSource: PlansDataSourceProtocol?
-    
+
     var payments: ProtonCorePayments.Payments {
         fatalError("Should not invoke payments accessor")
     }
 
     weak var delegate: PlanServiceDelegate?
-    
+
     var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
-        return 63
+        63
     }
 
     var allowUpgrade: Bool {
-        return true
+        true
     }
 
-    func updateServicePlans() async throws {
+    func updateServicePlans() async throws {}
 
-    }
-    
-    func presentPlanSelection(modalSource: UpsellModalSource?) {
+    func presentPlanSelection(modalSource _: UpsellModalSource?) {
         callbackPresentPlanSelection?()
     }
-    
+
     func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()
     }
 
-    func clear() {
+    func clear() {}
 
-    }
-
-    func createPlusPlanUI(completion: @escaping () -> Void) {
-        
-    }
+    func createPlusPlanUI(completion _: @escaping () -> Void) {}
 }

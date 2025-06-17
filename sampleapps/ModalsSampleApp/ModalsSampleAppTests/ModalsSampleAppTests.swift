@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-@testable import ModalsSampleApp
 @testable import Modals
+@testable import ModalsSampleApp
+import XCTest
 
 final class ModalsSampleAppTests: XCTestCase {
     func testUpsellViewControllerCreation() throws {

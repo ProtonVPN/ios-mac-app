@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import AppIntents
+import Dependencies
 import Domain
 
 /// These intents are never actually used. They are only here in order to be able to invoke them from this package.
@@ -26,10 +26,10 @@ import Domain
 public struct DisconnectFromVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Disconnect from VPN"
 
-    public init() { }
+    public init() {}
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 
@@ -37,10 +37,11 @@ public struct ConnectToVPNIntent: AppIntent {
     public static var title: LocalizedStringResource = "Connect to VPN"
     public static var openAppWhenRun: Bool = true
 
-    @Parameter(title: "Recent Connection Index") var recentIndex: Int?
+    @Parameter(title: "Recent Connection Index")
+    var recentIndex: Int?
 
     public init() {
-        recentIndex = nil
+        self.recentIndex = nil
     }
 
     public init(recentIndex: Int) {
@@ -48,7 +49,7 @@ public struct ConnectToVPNIntent: AppIntent {
     }
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }
 
@@ -56,9 +57,9 @@ public struct LoginIntent: AppIntent {
     public static var title: LocalizedStringResource = "Login"
     public static let openAppWhenRun = true
 
-    public init() { }
+    public init() {}
 
     public func perform() async throws -> some IntentResult {
-        return .result()
+        .result()
     }
 }

@@ -31,21 +31,29 @@ struct SignInView: View {
                 .font(.title)
                 .bold()
 
-            StepView(title: "Using another device, go to",
-                     accent: "protonvpn.com/appletv",
-                     stepNumber: 1)
-            StepView(title: "Sign in to your account.",
-                     accent: nil,
-                     stepNumber: 2)
+            StepView(
+                title: "Using another device, go to",
+                accent: "protonvpn.com/appletv",
+                stepNumber: 1
+            )
+            StepView(
+                title: "Sign in to your account.",
+                accent: nil,
+                stepNumber: 2
+            )
             switch store.state.authentication {
             case .loadingSignInCode:
-                StepView(title: "When asked for your verification code, enter (retrieving...)",
-                         accent: nil,
-                         stepNumber: 3)
-            case .waitingForAuthentication(let code, _):
-                StepView(title: "When asked for your verification code, enter",
-                         accent: "\(code.userFacingUserCode)",
-                         stepNumber: 3)
+                StepView(
+                    title: "When asked for your verification code, enter (retrieving...)",
+                    accent: nil,
+                    stepNumber: 3
+                )
+            case let .waitingForAuthentication(code, _):
+                StepView(
+                    title: "When asked for your verification code, enter",
+                    accent: "\(code.userFacingUserCode)",
+                    stepNumber: 3
+                )
             }
         }
         .background(Image(.backgroundStage))
@@ -84,7 +92,7 @@ struct StepView: View {
                 .clipShape(Circle())
             Text(title)
                 .font(.title3) +
-            Text(accent)
+                Text(accent)
                 .font(.title3)
                 .bold()
                 .foregroundStyle(Color(.text, .interactive))

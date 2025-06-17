@@ -9,26 +9,24 @@
 import fusion
 import Strings
 
-fileprivate let accountVerificationTitle = "EmailVerificationViewController.emailVerificationTitleLabel"
-fileprivate let accountVerificationTextField = "EmailVerificationViewController.verificationCodeTextField.textField"
-fileprivate let nextButtonId = Localizable.modalsCommonNext
+private let accountVerificationTitle = "EmailVerificationViewController.emailVerificationTitleLabel"
+private let accountVerificationTextField = "EmailVerificationViewController.verificationCodeTextField.textField"
+private let nextButtonId = Localizable.modalsCommonNext
 
 class AccountVerificationRobot: CoreElements {
-
     func enterVerificationCode(_ code: String) -> AccountVerificationRobot {
         textField(accountVerificationTextField).tap().typeText(code)
         return self
     }
-    
+
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()
         return T()
     }
 
     public let verify = Verify()
-    
-    class Verify: CoreElements {
 
+    class Verify: CoreElements {
         @discardableResult
         func accountVerificationScreenIsShown() -> AccountVerificationRobot {
             staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()

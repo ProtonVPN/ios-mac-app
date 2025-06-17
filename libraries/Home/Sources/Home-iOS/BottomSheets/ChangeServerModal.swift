@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ModalsShared
-import Theme
 import ComposableArchitecture
 import HomeShared
-import VPNAppCore
+import ModalsShared
 import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
 
 struct ChangeServerModal: View {
     var store: StoreOf<ChangeServerFeature>
@@ -38,10 +38,12 @@ struct ChangeServerModal: View {
             let shortSkip = totalDuration <= 90
             /// TimelineView only works when I specify all 3 dates below,
             /// though we really only need one, the `dateFinished`
-            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { timeline in
+            TimelineView(.explicit([.now, dateFinished, dateFinished + 1])) { _ in
                 VStack(spacing: .themeSpacing12) {
-                    ReconnectCountdown(dateFinished: dateFinished,
-                                       totalDuration: totalDuration)
+                    ReconnectCountdown(
+                        dateFinished: dateFinished,
+                        totalDuration: totalDuration
+                    )
                     .padding(.top, .themeSpacing48)
                     .padding(.bottom, .themeSpacing16)
 
@@ -74,8 +76,10 @@ struct ChangeServerModal: View {
         .padding(.horizontal, .themeSpacing16)
         .overlay {
             GeometryReader { geometry in
-                Color.clear.preference(key: ChangeServerHeightPreferenceKey.self,
-                                       value: geometry.size.height)
+                Color.clear.preference(
+                    key: ChangeServerHeightPreferenceKey.self,
+                    value: geometry.size.height
+                )
             }
         }
         .onPreferenceChange(ChangeServerHeightPreferenceKey.self) { newHeight in
@@ -106,15 +110,17 @@ struct ChangeServerModal: View {
     }
 }
 
-fileprivate struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey { }
+private struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {}
 
 @available(iOS 17, *)
 #Preview("In Progress Short", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
-        availability = .unavailable(until: .now + 15,
-                                    duration: 15,
-                                    exhaustedSkips: false)
+        availability = .unavailable(
+            until: .now + 15,
+            duration: 15,
+            exhaustedSkips: false
+        )
         return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
             ChangeServerFeature()
         })
@@ -126,9 +132,11 @@ fileprivate struct ChangeServerHeightPreferenceKey: ViewDimensionPreferenceKey {
 #Preview("In Progress Long", traits: .sizeThatFitsLayout) {
     ZStack {
         let availability: ServerChangeAuthorizer.ServerChangeAvailability
-        availability = .unavailable(until: .now + 95,
-                                    duration: 95,
-                                    exhaustedSkips: false)
+        availability = .unavailable(
+            until: .now + 95,
+            duration: 95,
+            exhaustedSkips: false
+        )
         return ChangeServerModal(store: .init(initialState: .init(serverChangeAvailability: availability)) {
             ChangeServerFeature()
         })

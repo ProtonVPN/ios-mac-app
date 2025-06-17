@@ -26,14 +26,13 @@ import Localization
 import PersistenceTestSupport
 
 final class TextSearchTests: TestIsolatedDatabaseTestCase {
-
     let mockCountryNameProvider: CountryNameProvider = .mock(
         codeToNameDictionary: [
             "TR": "Türkiye", // extra diacritics for fun
             "LV": "Łotwa", // 'Ł' edge case (apparently is not a diacritic)
             "UK": "A Kingdom United", // ISO region API edge case (United Kingdom is represented under ISO code "GB")
             "US": "'Merica", // code and name with disjoint character sets: testMatchesFullCountryCode
-            "ZZ": "Zzz"
+            "ZZ": "Zzz",
         ]
     )
 
@@ -46,7 +45,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
     }
 
     private func evaluate(scenarios: [(String, VPNServer?, String)]) {
-        scenarios.forEach { (query, expectedResult, reason) in
+        for (query, expectedResult, reason) in scenarios {
             let result = getServerMatching(query: query)
             XCTAssertEqual(result, expectedResult, reason)
         }
@@ -71,7 +70,7 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
             // The following are not necessarily functional requirements, but help highlight unintentional changes
             ("king dom", nil, "Spaces should be evaluated when matching against country name"),
             (" ", server, "If the country name contains spaces, ' ' queries should match against it"),
-            ("", server, "Empty queries should match against everything")
+            ("", server, "Empty queries should match against everything"),
         ]
 
         evaluate(scenarios: scenarios)
@@ -100,11 +99,10 @@ final class TextSearchTests: TestIsolatedDatabaseTestCase {
         let server = TestData.createMockServer(withID: "US1", name: "abcd", countryCode: "US") // "'Merica"
         repository.upsert(servers: [server])
 
-
         let scenarios: [(String, VPNServer?, String)] = [
             ("U", nil, "Partial country codes should not be matched"),
             ("US", server, "Full country codes should be matched"),
-            ("uS", server, "Country code search should be case insensitive")
+            ("uS", server, "Country code search should be case insensitive"),
         ]
 
         evaluate(scenarios: scenarios)

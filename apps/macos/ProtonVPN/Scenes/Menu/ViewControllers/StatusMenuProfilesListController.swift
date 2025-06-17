@@ -24,47 +24,47 @@ import Cocoa
 import Ergonomics
 
 class StatusMenuProfilesListController: WindowController {
-
     fileprivate let statusMenuProfileItemIdentifier = "StatusMenuProfileItemCell"
-    
-    @IBOutlet weak var topView: NSView!
-    @IBOutlet weak var roundedView: NSView!
-    @IBOutlet weak var profileList: NSTableView!
-    
+
+    @IBOutlet var topView: NSView!
+    @IBOutlet var roundedView: NSView!
+    @IBOutlet var profileList: NSTableView!
+
     var viewModel: StatusMenuProfilesListViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     init(windowNibName nibName: NSNib.Name, viewModel: StatusMenuProfilesListViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(window: nil)
-        
+
         Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: nil)
-        
+
         setupWindow()
         setupProfilesList()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
-        guard let window = window else { return }
-        
+        guard let window else { return }
+
         window.styleMask = .borderless
         window.backgroundColor = NSColor.clear
         window.isOpaque = false
         window.hasShadow = false
-        
+
         window.ignoresMouseEvents = false
-        
+
         window.contentView?.wantsLayer = true
         window.contentView?.layer?.backgroundColor = .clear
         window.appearance = NSAppearance(named: .darkAqua)
-        
+
         topView.wantsLayer = true
-        
+
         roundedView.wantsLayer = true
         roundedView.layer?.cornerRadius = 8
         DarkAppearance {
@@ -72,7 +72,7 @@ class StatusMenuProfilesListController: WindowController {
             roundedView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupProfilesList() {
         profileList.dataSource = self
         profileList.delegate = self
@@ -86,18 +86,17 @@ class StatusMenuProfilesListController: WindowController {
 }
 
 extension StatusMenuProfilesListController: NSTableViewDelegate {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.cellCount
+    func numberOfRows(in _: NSTableView) -> Int {
+        viewModel.cellCount
     }
 }
 
 extension StatusMenuProfilesListController: NSTableViewDataSource {
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight
+    func tableView(_: NSTableView, heightOfRow _: Int) -> CGFloat {
+        viewModel.cellHeight
     }
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: statusMenuProfileItemIdentifier), owner: nil) as! StatusMenuProfileViewItem
 
         let cellViewModel = viewModel.cellModel(forIndex: row)

@@ -18,18 +18,18 @@
 
 import XCTest
 
-fileprivate let establishConnectionTitle = "OnboardingEstablishTitle"
-fileprivate let establishConnectionSubtitle = "OnboardingEstablishSubtitle"
-fileprivate let establishConnectionDescription = "OnboardingEstablishNote"
-fileprivate let connectNowButton = "Connect now"
-fileprivate let skipButton = "SkipButton"
-fileprivate let connectionTitle = "CongratulationsTitle"
-fileprivate let connectionDescription = "CongratulationsSubtitle"
-fileprivate let connectedTo = "ConnectedToLabel"
-fileprivate let continueButton = "DoneButton"
-fileprivate let getPlusButton = "GetPlusButton"
-fileprivate let slideFourTitle = "No logs and Swiss-based"
-fileprivate let nextButton = "Next"
+private let establishConnectionTitle = "OnboardingEstablishTitle"
+private let establishConnectionSubtitle = "OnboardingEstablishSubtitle"
+private let establishConnectionDescription = "OnboardingEstablishNote"
+private let connectNowButton = "Connect now"
+private let skipButton = "SkipButton"
+private let connectionTitle = "CongratulationsTitle"
+private let connectionDescription = "CongratulationsSubtitle"
+private let connectedTo = "ConnectedToLabel"
+private let continueButton = "DoneButton"
+private let getPlusButton = "GetPlusButton"
+private let slideFourTitle = "No logs and Swiss-based"
+private let nextButton = "Next"
 
 class OnboardingConnectionRobot {
     let app: XCUIApplication
@@ -39,17 +39,17 @@ class OnboardingConnectionRobot {
         self.app = app
         self.verify = Verify(app: app)
     }
-    
+
     func connectNow() -> OnboardingConnectionRobot {
         app.buttons[connectNowButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     func nextStepA() -> OnboardingPaymentRobot {
         app.buttons[continueButton].tap()
         return OnboardingPaymentRobot(app: app)
     }
-    
+
     func nextStepB() -> OnboardingMainRobot {
         app.buttons[continueButton].tap()
         return OnboardingMainRobot(app: app)
@@ -59,7 +59,7 @@ class OnboardingConnectionRobot {
         app.buttons[nextButton].tap()
         return OnboardingConnectionRobot(app: app)
     }
-    
+
     class Verify {
         let app: XCUIApplication
 
@@ -75,7 +75,7 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
             return OnboardingConnectionRobot(app: app)
         }
-        
+
         func connectionScreenIsShown() -> OnboardingConnectionRobot {
             XCTAssert(app.staticTexts[connectionTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[connectionDescription].exists)

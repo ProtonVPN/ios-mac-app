@@ -20,10 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
-import ProtonCoreDoh
+import Foundation
 import Logging
+import ProtonCoreDoh
 
 import Domain
 
@@ -57,18 +57,18 @@ public class DoHVPN: DoH, ServerConfig {
     }
 
     public var captchaHost: String {
-        return defaultHost
+        defaultHost
     }
 
     public var apiHost: String {
-        return customApiHost
+        customApiHost
     }
 
     public var statusHost: String {
-        return "http://protonstatus.com"
+        "http://protonstatus.com"
     }
 
-    public let isAppStateNotificationConnected: ((Notification) -> Bool)
+    public let isAppStateNotificationConnected: (Notification) -> Bool
 
     public var humanVerificationV3Host: String {
         if defaultHost == liveURL {
@@ -120,7 +120,7 @@ public class DoHVPN: DoH, ServerConfig {
     }
 
     public var isAtlasRequest: Bool {
-        return defaultHost != liveURL
+        defaultHost != liveURL
     }
 
     public init(
@@ -146,22 +146,23 @@ public class DoHVPN: DoH, ServerConfig {
         status = alternativeRouting ? .on : .off
     }
 
-    public override func getHumanVerificationV3Headers() -> [String: String] {
+    override public func getHumanVerificationV3Headers() -> [String: String] {
         super.getHumanVerificationV3Headers()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    public override func getAccountHeaders() -> [String : String] {
+    override public func getAccountHeaders() -> [String: String] {
         super.getAccountHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    public override func getCaptchaHeaders() -> [String : String] {
+    override public func getCaptchaHeaders() -> [String: String] {
         super.getCaptchaHeaders()
             .merging(atlasHeader, uniquingKeysWith: { _, rhs in rhs })
     }
 
-    @objc private func stateChanged(notification: Notification) {
+    @objc
+    private func stateChanged(notification: Notification) {
         isConnected = isAppStateNotificationConnected(notification)
     }
 
@@ -194,8 +195,8 @@ public enum DoHConfigurationKey: TestDependencyKey {
     public static var testValue: DoHVPN { .mock }
 }
 
-extension DependencyValues {
-    public var dohConfiguration: DoHVPN {
+public extension DependencyValues {
+    var dohConfiguration: DoHVPN {
         get { self[DoHConfigurationKey.self] }
         set { self[DoHConfigurationKey.self] = newValue }
     }

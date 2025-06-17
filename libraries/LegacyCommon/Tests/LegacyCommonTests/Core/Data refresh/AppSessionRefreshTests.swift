@@ -24,16 +24,16 @@ import Dependencies
 import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 
-@testable import LegacyCommon
+import CommonNetworkingTestSupport
 import Domain
+@testable import LegacyCommon
 import Localization
 import Persistence
 import PersistenceTestSupport
 import Timer
 import TimerMock
-import VPNSharedTesting
 import VPNAppCore
-import CommonNetworkingTestSupport
+import VPNSharedTesting
 
 class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     var alertService: CoreAlertServiceDummy!
@@ -70,7 +70,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
         } operation: {
-            return AppSessionRefresherMock(factory: self)
+            AppSessionRefresherMock(factory: self)
         }
         timerFactory = TimerFactoryMock()
         appSessionRefreshTimer = AppSessionRefreshTimerImplementation(
@@ -121,7 +121,7 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             $0.serverManager = .noOp
         } operation: {
             let expectations = (
-                updateServers: (1...2).map { XCTestExpectation(description: "update server list #\($0)") },
+                updateServers: (1 ... 2).map { XCTestExpectation(description: "update server list #\($0)") },
                 updateCredentials: XCTestExpectation(description: "update vpn credentials"),
                 displayAlert: XCTestExpectation(description: "Alert displayed for old app version")
             )
@@ -147,8 +147,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 expectations.displayAlert.fulfill()
             }
 
-            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "plus",
-                                                                               maxTier: .paidTier)
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
+                planName: "plus",
+                maxTier: .paidTier
+            )
 
             appSessionRefresher.loggedIn = true
             appSessionRefreshTimer.startTimers()
@@ -158,8 +160,10 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
                 .init(serverId: testData.server2.id, load: 20, score: 2.3456, status: 1),
                 .init(serverId: testData.server3.id, load: 30, score: 3.4567, status: 2),
             ]
-            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(planName: "visionary",
-                                                                               maxTier: .paidTier)
+            networkingDelegate.apiCredentials = VpnKeychainMock.vpnCredentials(
+                planName: "visionary",
+                maxTier: .paidTier
+            )
             timerFactory.runRepeatingTimers()
             wait(for: [expectations.updateServers[0], expectations.updateCredentials], timeout: 10)
             XCTAssertNotNil(vpnKeychain.credentials)
@@ -207,52 +211,50 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             // If you tried fixing this and failed, increase the counter :)
             // Failed attempts: 1
 
-    //        appSessionRefresher.didAttemptLogin = {
-    //            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
-    //        }
-    //        serverStorage.didUpdateServers = { _ in
-    //            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
-    //        }
-    //        vpnKeychain.didStoreCredentials = { _ in
-    //            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
-    //        }
-    //        appSessionRefreshTimer.start(now: true)
-    //        sleep(2) // give time to make sure API isn't being hit
-    //        appSessionRefreshTimer.stop()
+            //        appSessionRefresher.didAttemptLogin = {
+            //            XCTFail("Shouldn't call attemptSilentLogin in start(), timeout interval has not yet passed")
+            //        }
+            //        serverStorage.didUpdateServers = { _ in
+            //            XCTFail("Shouldn't call refreshLoads in start(), timeout interval has not yet passed")
+            //        }
+            //        vpnKeychain.didStoreCredentials = { _ in
+            //            XCTFail("Shouldn't call store(credentials:) in start(), timeout interval has not yet passed")
+            //        }
+            //        appSessionRefreshTimer.start(now: true)
+            //        sleep(2) // give time to make sure API isn't being hit
+            //        appSessionRefreshTimer.stop()
         }
     }
 }
 
 extension AppSessionRefreshTimerTests: VpnApiServiceFactory, VpnKeychainFactory, PropertiesManagerFactory, CoreAlertServiceFactory, AppSessionRefresherFactory, TimerFactoryCreator, UpdateCheckerFactory {
-
     func makeTimerFactory() -> TimerFactory {
-        return timerFactory
+        timerFactory
     }
 
     func makeCoreAlertService() -> CoreAlertService {
-        return alertService
+        alertService
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return propertiesManager
+        propertiesManager
     }
 
     func makeVpnApiService() -> VpnApiService {
-        return apiService
+        apiService
     }
 
     func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychain
+        vpnKeychain
     }
 
     func makeAppSessionRefresher() -> AppSessionRefresher {
-        return appSessionRefresher
+        appSessionRefresher
     }
 
     func makeUpdateChecker() -> any UpdateChecker {
-        return updateChecker
+        updateChecker
     }
 }
 
-extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {
-}
+extension AppSessionRefreshTimerTests: AppSessionRefreshTimerDelegate {}

@@ -16,24 +16,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
+import ExtensionIPC
 import Foundation
 import IssueReporting
-import ExtensionIPC
-import CoreConnection
 
-extension TunnelMessageSender {
-    public static let unimplemented: TunnelMessageSender = .init(send: { request in
+public extension TunnelMessageSender {
+    static let unimplemented: TunnelMessageSender = .init(send: { request in
         let requestErrorMessage = "Did not expect to send \(request) at this time"
         reportIssue(requestErrorMessage)
         return .error(message: requestErrorMessage)
     })
 
-    public static func sender(
+    static func sender(
         forRequest request: WireguardProviderRequest,
         withResponse response: WireguardProviderRequest.Response,
-        andOperation operation: @escaping () -> Void = { }
+        andOperation operation: @escaping () -> Void = {}
     ) -> TunnelMessageSender {
-        return .init(send: { outgoingRequest in
+        .init(send: { outgoingRequest in
             guard outgoingRequest == request else {
                 let requestErrorMessage = "Did not expect to send \(request) at this time"
                 reportIssue(requestErrorMessage)

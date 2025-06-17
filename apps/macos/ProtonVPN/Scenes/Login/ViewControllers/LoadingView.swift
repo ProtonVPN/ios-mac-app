@@ -21,8 +21,8 @@ import LegacyCommon
 import Strings
 
 class LoadingView: NSView {
-    @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
-    @IBOutlet private weak var loadingLabel: PVPNTextField! {
+    @IBOutlet private var loadingSymbol: LoadingAnimationView!
+    @IBOutlet private var loadingLabel: PVPNTextField! {
         didSet {
             let font = NSFont.themeFont(.heading3)
             loadingLabel.attributedStringValue = Localizable.loadingScreenSlogan.styled(font: font)

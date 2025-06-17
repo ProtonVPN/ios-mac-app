@@ -16,18 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Ergonomics
 import CommonNetworking
+import Ergonomics
+import Foundation
 import VPNAppCore
 
 class TelemetryUpsellReporter {
-
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
 
     private let factory: Factory
 
@@ -48,17 +47,19 @@ class TelemetryUpsellReporter {
         self.telemetryEventScheduler = telemetryEventScheduler
     }
 
-    func upsellEvent(_ event: UpsellEvent.Event,
-                     modalSource _modalSource: UpsellModalSource?,
-                     newPlanName: String?,
-                     offerReference: String?,
-                     vpnStatus: UpsellEvent.VPNStatus) async throws {
+    func upsellEvent(
+        _ event: UpsellEvent.Event,
+        modalSource _modalSource: UpsellModalSource?,
+        newPlanName: String?,
+        offerReference: String?,
+        vpnStatus: UpsellEvent.VPNStatus
+    ) async throws {
         let modalSource: UpsellModalSource?
-        // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
-        if event == .success {
-            modalSource = _modalSource ?? previousModalSource
+            // macOS and some iOS payments happen through the web, so on success collapse it with the previous value if it's missing.
+            = if event == .success {
+            _modalSource ?? previousModalSource
         } else {
-            modalSource = _modalSource
+            _modalSource
         }
 
         guard let modalSource else {
@@ -96,10 +97,10 @@ class TelemetryUpsellReporter {
 }
 
 #if DEBUG
-extension TelemetryUpsellReporter {
-    func setValueTimeout(_ timeout: TimeInterval?) {
-        _previousModalSource.timeout = timeout
-        _previousOfferReference.timeout = timeout
+    extension TelemetryUpsellReporter {
+        func setValueTimeout(_ timeout: TimeInterval?) {
+            _previousModalSource.timeout = timeout
+            _previousOfferReference.timeout = timeout
+        }
     }
-}
 #endif

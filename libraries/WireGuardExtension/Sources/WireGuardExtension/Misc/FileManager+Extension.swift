@@ -6,34 +6,33 @@ import os.log
 import WireGuardLogging
 
 extension FileManager {
-
     static var appGroupId: String {
-        return WGConstants.appGroupId
+        WGConstants.appGroupId
     }
 
     private static var sharedFolderURL: URL? {
         #if os(macOS)
-        return FileManager.default.temporaryDirectory
+            return FileManager.default.temporaryDirectory
 
         #else
-        guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: FileManager.appGroupId) else {
-            wg_log(.error, message: "Cannot obtain shared folder URL for appGroupId \(FileManager.appGroupId) ")
-            return nil
-        }
-        return sharedFolderURL
+            guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: FileManager.appGroupId) else {
+                wg_log(.error, message: "Cannot obtain shared folder URL for appGroupId \(FileManager.appGroupId) ")
+                return nil
+            }
+            return sharedFolderURL
         #endif
     }
 
     static var logFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("WireGuard.bin")
+        sharedFolderURL?.appendingPathComponent("WireGuard.bin")
     }
 
     static var logTextFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("WireGuard.log")
+        sharedFolderURL?.appendingPathComponent("WireGuard.log")
     }
 
     static var networkExtensionLastErrorFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("last-error.txt")
+        sharedFolderURL?.appendingPathComponent("last-error.txt")
     }
 
     static func deleteFile(at url: URL) -> Bool {

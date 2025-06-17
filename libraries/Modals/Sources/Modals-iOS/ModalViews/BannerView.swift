@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ModalsShared
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import Strings
-import ProtonCoreUIFoundations
-import ModalsShared
 
 struct BannerView: View {
     let useAlternateWording: Bool
@@ -61,9 +61,9 @@ struct BannerView: View {
 
     private var bannerTextContent: String {
         if useAlternateWording {
-            return Localizable.welcomeToProtonBannerSubtitleRedesign
+            Localizable.welcomeToProtonBannerSubtitleRedesign
         } else {
-            return Localizable.welcomeToProtonBannerSubtitle
+            Localizable.welcomeToProtonBannerSubtitle
         }
     }
 }

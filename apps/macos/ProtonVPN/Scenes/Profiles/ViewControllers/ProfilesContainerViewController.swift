@@ -26,64 +26,68 @@ import LegacyCommon
 import Strings
 
 final class ProfilesContainerViewController: NSViewController {
-    
     typealias Factory = CreateNewProfileViewModelFactory & ProfileManagerFactory
     private let factory: Factory
-    
-    @IBOutlet weak var profilesTabBarControllerViewContainer: NSView!
-    @IBOutlet weak var activeControllerViewContainer: NSView!
-    
+
+    @IBOutlet var profilesTabBarControllerViewContainer: NSView!
+    @IBOutlet var activeControllerViewContainer: NSView!
+
     private let tabChanged = Notification.Name("ProfilesSectionViewControllerTabChanged")
     private let editProfile = Notification.Name("ProfilesSectionViewControllerEditProfile")
     private let viewModel: ProfilesContainerViewModel
-    
+
     private var tabBarViewController: ProfilesTabBarViewController!
     private var activeController: NSViewController?
-    
+
     private lazy var overviewVC: OverviewViewController = { [unowned self] in
-        let viewModel = OverviewViewModel(vpnGateway: self.viewModel.vpnGateway, profileManager: factory.makeProfileManager())
-        self.setUpCallbacks(overview: viewModel)
+        let viewModel = OverviewViewModel(vpnGateway: viewModel.vpnGateway, profileManager: factory.makeProfileManager())
+        setUpCallbacks(overview: viewModel)
         let viewController = OverviewViewController(viewModel: viewModel)
         return viewController
     }()
-    
+
     private lazy var createNewProfileVC: CreateNewProfileViewController = { [unowned self] in
-        let viewModel = self.factory.makeCreateNewProfileViewModel(editProfile: self.editProfile)
-        self.startObserving(createNewProfile: viewModel)
+        let viewModel = factory.makeCreateNewProfileViewModel(editProfile: editProfile)
+        startObserving(createNewProfile: viewModel)
         let viewController = CreateNewProfileViewController(viewModel: viewModel)
         return viewController
     }()
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     init(factory: Factory, viewModel: ProfilesContainerViewModel) {
         self.factory = factory
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("ProfilesContainer"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupTabBarView()
         setupInitialView()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         view.window?.applyModalAppearance(withTitle: Localizable.profilesOverview)
     }
-    
+
     private func setupTabBarView() {
         tabBarViewController = ProfilesTabBarViewController(tabChangedExternally: tabChanged)
-        NotificationCenter.default.addObserver(self, selector: #selector(focusTab(_:)),
-                                               name: tabBarViewController.tabChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(focusTab(_:)),
+            name: tabBarViewController.tabChanged,
+            object: nil
+        )
         profilesTabBarControllerViewContainer.pin(viewController: tabBarViewController)
     }
-    
+
     private func setupInitialView() {
         switch viewModel.initialTab {
         case .overview:
@@ -93,9 +97,9 @@ final class ProfilesContainerViewController: NSViewController {
         }
         NotificationCenter.default.post(name: tabChanged, object: viewModel.initialTab)
     }
-    
+
     private func set(viewController: NSViewController) {
-        if let activeController = activeController {
+        if let activeController {
             activeControllerViewContainer.willRemoveSubview(activeController.view)
             activeController.view.removeFromSuperview()
             activeController.removeFromParent()
@@ -103,34 +107,40 @@ final class ProfilesContainerViewController: NSViewController {
         activeController = viewController
         activeControllerViewContainer.pin(viewController: activeController!)
     }
-    
+
     private func setUpCallbacks(overview viewModel: OverviewViewModel) {
         viewModel.createNewProfile = { [weak self] in self?.createNewProfile() }
         viewModel.editProfile = { [weak self] profile in self?.editProfile(profile) }
     }
-    
+
     private func startObserving(createNewProfile viewModel: CreateNewProfileViewModel) {
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionFinished),
-                                               name: viewModel.sessionFinished, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(sessionFinished),
+            name: viewModel.sessionFinished,
+            object: nil
+        )
     }
-    
+
     private func createNewProfile() {
         set(viewController: createNewProfileVC)
         NotificationCenter.default.post(name: tabChanged, object: ProfilesTab.createNewProfile)
     }
-    
+
     private func editProfile(_ profile: Profile) {
         set(viewController: createNewProfileVC)
         NotificationCenter.default.post(name: tabChanged, object: ProfilesTab.createNewProfile)
         NotificationCenter.default.post(name: editProfile, object: profile)
     }
-    
-    @objc private func sessionFinished() {
+
+    @objc
+    private func sessionFinished() {
         set(viewController: overviewVC)
         NotificationCenter.default.post(name: tabChanged, object: ProfilesTab.overview)
     }
-    
-    @objc private func focusTab(_ notification: Notification) {
+
+    @objc
+    private func focusTab(_ notification: Notification) {
         if let tab = notification.object as? ProfilesTab {
             switch tab {
             case .overview:

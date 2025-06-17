@@ -27,12 +27,12 @@ protocol TwoFactorDelegate: WarningViewDelegate {
 }
 
 final class TwoFactorView: NSView {
-    @IBOutlet private weak var twoFactorTextField: TextFieldWithFocus!
-    @IBOutlet private weak var twoFactorHorizontalLine: NSBox!
-    @IBOutlet private weak var twoFactorButton: LoginButton!
-    @IBOutlet private weak var twoFactorModeButton: InteractiveActionButton!
-    @IBOutlet private weak var twoFactorTitle: NSTextField!
-    @IBOutlet private weak var backButton: NSButton!
+    @IBOutlet private var twoFactorTextField: TextFieldWithFocus!
+    @IBOutlet private var twoFactorHorizontalLine: NSBox!
+    @IBOutlet private var twoFactorButton: LoginButton!
+    @IBOutlet private var twoFactorModeButton: InteractiveActionButton!
+    @IBOutlet private var twoFactorTitle: NSTextField!
+    @IBOutlet private var backButton: NSButton!
     private lazy var warningView: WarningView = {
         var nibObjects: NSArray?
         guard Bundle.main.loadNibNamed("WarningView", owner: nil, topLevelObjects: &nibObjects),
@@ -103,31 +103,33 @@ final class TwoFactorView: NSView {
         return twoFactorTextField.becomeFirstResponder()
     }
 
-    @objc func twoFactorButtonAction() {
+    @objc
+    func twoFactorButtonAction() {
         delegate?.twoFactorButtonAction(code: twoFactorTextField.stringValue)
     }
 
-    @objc func switchTwoFactorModeAction() {
+    @objc
+    func switchTwoFactorModeAction() {
         twoFactorModeButton.title = isRecoveryCodeMode ? Localizable.useTwoFactorCode : Localizable.useRecoveryCode
         twoFactorTextField.placeholderString = isRecoveryCodeMode ? Localizable.recoveryCode : Localizable.twoFactorCode
 
         isRecoveryCodeMode.toggle()
     }
 
-    @objc func backAction() {
+    @objc
+    func backAction() {
         delegate?.backAction()
     }
 }
 
 extension TwoFactorView: NSTextFieldDelegate {
-
-    func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_: Notification) {
         twoFactorButton.isEnabled = !twoFactorTextField.stringValue.isEmpty
     }
 
-    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+    func control(_ control: NSControl, textView _: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
         if control == twoFactorTextField {
-            if commandSelector == #selector(NSResponder.insertNewline(_:)) && twoFactorButton.isEnabled {
+            if commandSelector == #selector(NSResponder.insertNewline(_:)), twoFactorButton.isEnabled {
                 twoFactorButtonAction()
                 return true
             }

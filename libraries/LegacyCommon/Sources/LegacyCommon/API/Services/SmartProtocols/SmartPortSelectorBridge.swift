@@ -1,5 +1,5 @@
 //
-//  SmartPortSelector.swift
+//  SmartPortSelectorBridge.swift
 //  Core
 //
 //  Created by Jaroslav Oo on 2021-08-30.
@@ -21,8 +21,10 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
     private let wireguardUdpChecker: SmartProtocolAvailabilityChecker
     private let wireguardTcpChecker: SmartProtocolAvailabilityChecker
 
-    init(wireguardUdpChecker: SmartProtocolAvailabilityChecker,
-         wireguardTcpChecker: SmartProtocolAvailabilityChecker) {
+    init(
+        wireguardUdpChecker: SmartProtocolAvailabilityChecker,
+        wireguardTcpChecker: SmartProtocolAvailabilityChecker
+    ) {
         self.wireguardUdpChecker = wireguardUdpChecker
         self.wireguardTcpChecker = wireguardTcpChecker
     }
@@ -31,7 +33,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
         let portOverrides = serverIp.protocolEntries?.overridePorts(using: vpnProtocol)
 
         switch vpnProtocol {
-        case .wireGuard(let transportProtocol): // Ping all the ports to determine which are available
+        case let .wireGuard(transportProtocol): // Ping all the ports to determine which are available
             guard case .udp = transportProtocol else {
                 // FUTUREDO: Implement
                 let ports = portOverrides ?? wireguardTcpChecker.defaultPorts
@@ -67,7 +69,7 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
         case .ike: // Only port is used, so nothing to select
             let ports = portOverrides ?? DefaultConstants.ikeV2Ports
             completion(ports.shuffled())
-            
+
         case .openVpn:
             assertionFailure("OpenVPN has been deprecated")
             completion([])

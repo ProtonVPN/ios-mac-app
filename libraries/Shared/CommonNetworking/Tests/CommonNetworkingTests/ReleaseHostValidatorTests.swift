@@ -33,14 +33,14 @@ struct ReleaseHostValidatorTests {
     }
 
     @Test(arguments: [TestHost.withInvalidURL, .withInvalidHost, .withUncontrolledDomain])
-    func testValidatorThrowsErrorForProblematicURL(host: TestHost) {
+    func validatorThrowsErrorForProblematicURL(host: TestHost) {
         #expect(throws: host.expectedFailure) {
             try ReleaseHostValidator.validate(customHost: host.url)
         }
     }
 
     @Test
-    func testValidatorDoesNotThrowForControlledDomain() {
+    func validatorDoesNotThrowForControlledDomain() {
         #expect(throws: Never.self) {
             try ReleaseHostValidator.validate(customHost: "http://hello.proton.black/world")
         }

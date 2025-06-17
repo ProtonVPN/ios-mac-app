@@ -23,9 +23,9 @@ import Dependencies
 
 import Domain
 
+import class GoLibs.LocalAgentFeatures
 import protocol GoLibs.LocalAgentNativeClientProtocol
 import func GoLibs.LocalAgentNewAgentConnection
-import class GoLibs.LocalAgentFeatures
 
 import CoreConnection
 
@@ -102,7 +102,6 @@ extension ConnectionFactory {
     )
 }
 
-
 extension LocalAgentFeatures {
     enum Keys: String {
         case vpnAccelerator = "split-tcp"
@@ -111,24 +110,23 @@ extension LocalAgentFeatures {
         case natType = "randomized-nat"
         case bouncing
         case safeMode = "safe-mode"
-
     }
 
     func set(feature: ConnectionFeatureChange.AgentFeature) {
         switch feature {
-        case .moderateNAT(let value):
+        case let .moderateNAT(value):
             setBool(Keys.natType.rawValue, value: value.flag)
-        case .netShield(let netShieldType):
+        case let .netShield(netShieldType):
             setInt(Keys.netShield.rawValue, value: Int64(netShieldType.rawValue))
-        case .vpnAccelerator(let value):
+        case let .vpnAccelerator(value):
             setBool(Keys.vpnAccelerator.rawValue, value: value)
         }
     }
 
     static func from(featureSet features: Set<ConnectionFeatureChange.AgentFeature>) -> LocalAgentFeatures? {
         let featuresObject = LocalAgentFeatures()
-        features.forEach {
-            featuresObject?.set(feature: $0)
+        for item in features {
+            featuresObject?.set(feature: item)
         }
         return featuresObject
     }
@@ -164,24 +162,24 @@ extension LAConnectionCreationError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .connectionObjectMissing:
-            return "LACO"
-        case .goTLSError(let goTLSError, _):
-            return goTLSError.charCode
+            "LACO"
+        case let .goTLSError(goTLSError, _):
+            goTLSError.charCode
         case .unknownError:
-            return "LACU"
+            "LACU"
         }
     }
 
     public var underlyingError: (any Error)? {
         switch self {
-        case .goTLSError(_, let underlyingError):
-            return underlyingError
+        case let .goTLSError(_, underlyingError):
+            underlyingError
 
-        case .unknownError(let error):
-            return error
+        case let .unknownError(error):
+            error
 
         case .connectionObjectMissing:
-            return nil
+            nil
         }
     }
 }
@@ -215,7 +213,7 @@ extension GoTLSError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .privateKeyDoesNotMatchPublicKey:
-            return "GTNM"
+            "GTNM"
         }
     }
 }

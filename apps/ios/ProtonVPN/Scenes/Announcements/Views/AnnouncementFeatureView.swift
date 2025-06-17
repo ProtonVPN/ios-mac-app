@@ -25,14 +25,13 @@ import UIKit
 
 import AlamofireImage
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
 final class AnnouncementFeatureView: UIView {
-
-    @IBOutlet private weak var iconImageView: UIImageView!
+    @IBOutlet private var iconImageView: UIImageView!
     @IBOutlet private var contentView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     var model: OfferFeature? {
         didSet {

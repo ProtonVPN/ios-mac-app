@@ -18,49 +18,49 @@
 
 #if REDESIGN
 
-import Home
-import SwiftUI
-import Strings
-import Theme
-import ProtonCoreUIFoundations
+    import Home
+    import ProtonCoreUIFoundations
+    import Strings
+    import SwiftUI
+    import Theme
 
-enum SideBarTab: Hashable, CaseIterable {
-    case home
-    case countries
-    case settings
+    enum SideBarTab: Hashable, CaseIterable {
+        case home
+        case countries
+        case settings
 
-    var title: String {
-        switch self {
-        case .home:
-            return Localizable.homeTab
-        case .countries:
-            return Localizable.countriesTab
-        case .settings:
-            return Localizable.settingsTab
+        var title: String {
+            switch self {
+            case .home:
+                Localizable.homeTab
+            case .countries:
+                Localizable.countriesTab
+            case .settings:
+                Localizable.settingsTab
+            }
+        }
+
+        var accessibilityIdentifier: String {
+            switch self {
+            case .home:
+                "Home tab"
+            case .countries:
+                "Countries tab"
+            case .settings:
+                "Settings tab"
+            }
+        }
+
+        var image: SwiftUI.Image {
+            switch self {
+            case .home:
+                IconProvider.house
+            case .countries:
+                IconProvider.earth
+            case .settings:
+                IconProvider.cogWheel
+            }
         }
     }
-
-    var accessibilityIdentifier: String {
-        switch self {
-        case .home:
-            return "Home tab"
-        case .countries:
-            return "Countries tab"
-        case .settings:
-            return "Settings tab"
-        }
-    }
-
-    var image: SwiftUI.Image {
-        switch self {
-        case .home:
-            return IconProvider.house
-        case .countries:
-            return IconProvider.earth
-        case .settings:
-            return IconProvider.cogWheel
-        }
-    }
-}
 
 #endif

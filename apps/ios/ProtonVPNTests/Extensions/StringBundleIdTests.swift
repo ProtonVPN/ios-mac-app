@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import ProtonVPN
+import XCTest
 
 class StringBundleIdTests: XCTestCase {
-
     func testExample() throws {
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.widget".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn", "ch.protonmail.vpn.Siri-Shortcut-Handler".asMainAppBundleIdentifier)
@@ -32,5 +31,4 @@ class StringBundleIdTests: XCTestCase {
         XCTAssertEqual("ch.protonmail.vpn.debug", "ch.protonmail.vpn.debug.OpenVPN-Extension".asMainAppBundleIdentifier)
         XCTAssertEqual("ch.protonmail.vpn.debug", "ch.protonmail.vpn.debug.WireGuardiOS-Extension".asMainAppBundleIdentifier)
     }
-
 }

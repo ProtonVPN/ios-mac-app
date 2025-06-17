@@ -20,6 +20,7 @@ import XCTest
 
 import Dependencies
 
+import Announcement
 import CommonNetworking
 import CommonNetworkingTestSupport
 import Domain
@@ -27,27 +28,28 @@ import Ergonomics
 import LegacyCommon
 import Localization
 import Persistence
+import ProtonCoreNetworking
+@testable import ProtonVPN
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
-import ProtonCoreNetworking
-import Announcement
-@testable import ProtonVPN
 
-fileprivate let testData = MockTestData()
-fileprivate func mockAuthCredentials(username: String) -> AuthCredentials {
-    return AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
+private let testData = MockTestData()
+private func mockAuthCredentials(username: String) -> AuthCredentials {
+    AuthCredentials(username: username, accessToken: "", refreshToken: "", sessionId: "", userId: "", scopes: [], mailboxPassword: "")
 }
-fileprivate var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
 
-fileprivate let subuserWithoutSessionsResponseError = ResponseError(httpCode: HttpStatusCode.accessForbidden.rawValue,
-                                                                    responseCode: ApiErrorCode.subuserWithoutSessions,
-                                                                    userFacingMessage: nil,
-                                                                    underlyingError: nil)
+private var testAuthCredentials: AuthCredentials = mockAuthCredentials(username: "username")
+
+private let subuserWithoutSessionsResponseError = ResponseError(
+    httpCode: HttpStatusCode.accessForbidden.rawValue,
+    responseCode: ApiErrorCode.subuserWithoutSessions,
+    userFacingMessage: nil,
+    underlyingError: nil
+)
 
 // We would like to use `TestIsolatedDatabaseTestCase` here, but Xcode fails to link `PersistenceTestSupport` correctly
 final class AppSessionManagerImplementationTests: XCTestCase {
-
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
@@ -414,20 +416,19 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         during operation: () -> T
     ) -> T {
         let subscribeAndReturnToken = {
-            return NotificationCenter.default.addObserver(for: notification, object: object) { notification in
+            NotificationCenter.default.addObserver(for: notification, object: object) { notification in
                 XCTFail("Unexpected notification posted: \(notification)")
             }
         }
         return withExtendedLifetime(subscribeAndReturnToken()) { _ in
-            return operation()
+            operation()
         }
     }
 }
 
-fileprivate let propertiesManagerMock = PropertiesManagerMock()
+private let propertiesManagerMock = PropertiesManagerMock()
 
-fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
-
+private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
     private let vpnAPIService: VpnApiService
@@ -481,7 +482,6 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         self.appStateManager = appStateManager
         self.updateChecker = updateChecker
     }
-
 }
 
 class AuthKeychainHandleMock: AuthKeychainHandle {
@@ -491,26 +491,30 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
             userId = credentials?.userId
         }
     }
+
     var username: String?
     var userId: String?
 
     func saveToCache(_ credentials: VPNShared.AuthCredentials?) {
         self.credentials = credentials
     }
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: AppContext?) throws {
+
+    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?) throws {
         self.credentials = credentials
     }
-    func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
-    func fetch(forContext: AppContext?) throws -> AuthCredentials {
+
+    func fetch(forContext _: AppContext?) -> AuthCredentials? { credentials }
+    func fetch(forContext _: AppContext?) throws -> AuthCredentials {
         guard let credentials else {
             throw KeychainError.credentialsMissing("test-auth-keychain-storage-key")
         }
         return credentials
     }
-    func clear() { }
+
+    func clear() {}
 }
 
-fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
+private class AppSessionManagerAlertServiceMock: CoreAlertService {
     private var alertHandlers: [(alertType: SystemAlert.Type, handler: (SystemAlert) -> Void)] = []
 
     init() {}
@@ -527,7 +531,7 @@ fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
     }
 }
 
-fileprivate extension SystemAlert {
+private extension SystemAlert {
     func triggerHandler(forFirstActionOfType type: PrimaryActionType) {
         actions.first { $0.style == type }?.handler?()
     }

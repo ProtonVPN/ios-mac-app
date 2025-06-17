@@ -7,30 +7,31 @@
 //
 
 import Foundation
-import NetworkExtension
 import LegacyCommon
+import NetworkExtension
 
 final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
-    
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
-    
+
     init(propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
         self.propertiesManager = propertiesManager
         self.vpnKeychain = vpnKeychain
     }
-    
+
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
 
         let encoder = JSONEncoder()
         let version: StoredWireguardConfig.Version = .v1
-        let storedConfig = StoredWireguardConfig(vpnManagerConfig: configuration,
-                                                 wireguardConfig: propertiesManager.wireguardConfig)
+        let storedConfig = StoredWireguardConfig(
+            vpnManagerConfig: configuration,
+            wireguardConfig: propertiesManager.wireguardConfig
+        )
 
         do {
             var configData = Data([UInt8(version.rawValue)])
-            configData.append(try encoder.encode(storedConfig))
+            try configData.append(encoder.encode(storedConfig))
 
             protocolConfig.passwordReference = try vpnKeychain
                 .store(wireguardConfiguration: configData)
@@ -41,5 +42,4 @@ final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
 
         completionHandler(protocolConfig)
     }
-    
 }

@@ -20,20 +20,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import ProtonCoreUIFoundations
+import UIKit
 
 class ServersHeaderView: UITableViewHeaderFooterView {
-    @IBOutlet private weak var colorView: UIView!
-    @IBOutlet private weak var serversName: UILabel!
-    @IBOutlet private weak var infoBtn: UIButton!
-        
-    var callback: ( () -> Void )? {
+    @IBOutlet private var colorView: UIView!
+    @IBOutlet private var serversName: UILabel!
+    @IBOutlet private var infoBtn: UIButton!
+
+    var callback: (() -> Void)? {
         didSet {
             infoBtn.isHidden = callback == nil
         }
     }
-    
+
     func setName(name: String?) {
         guard let name else {
             serversName.isHidden = true
@@ -43,11 +43,11 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         serversName.isHidden = false
         serversName.text = name
     }
-    
+
     func setColor(color: UIColor) {
         colorView.backgroundColor = color
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         colorView.backgroundColor = .backgroundColor()
@@ -56,7 +56,8 @@ class ServersHeaderView: UITableViewHeaderFooterView {
         infoBtn.tintColor = .iconNorm()
     }
 
-    @IBAction private func didTapInfoBtn(_ sender: Any) {
+    @IBAction
+    private func didTapInfoBtn(_: Any) {
         callback?()
     }
 }

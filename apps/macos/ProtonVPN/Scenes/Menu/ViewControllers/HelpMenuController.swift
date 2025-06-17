@@ -23,49 +23,49 @@
 import Cocoa
 import Dependencies
 import LegacyCommon
-import VPNAppCore
 import Strings
+import VPNAppCore
 
 class HelpMenuController: NSObject {
-    
-    @IBOutlet weak var helpMenu: NSMenu!
-    @IBOutlet weak var reportAnIssueItem: NSMenuItem!
-    @IBOutlet weak var logsItem: NSMenuItem!
-    @IBOutlet weak var logsWGItem: NSMenuItem!
-    @IBOutlet weak var helpItem: NSMenuItem!
-    @IBOutlet weak var systemExtensionTutorialItem: NSMenuItem!
-    @IBOutlet weak var clearApplicationDataItem: NSMenuItem!
-    
+    @IBOutlet var helpMenu: NSMenu!
+    @IBOutlet var reportAnIssueItem: NSMenuItem!
+    @IBOutlet var logsItem: NSMenuItem!
+    @IBOutlet var logsWGItem: NSMenuItem!
+    @IBOutlet var helpItem: NSMenuItem!
+    @IBOutlet var systemExtensionTutorialItem: NSMenuItem!
+    @IBOutlet var clearApplicationDataItem: NSMenuItem!
+
     private var viewModel: HelpMenuViewModel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupPersistentView()
     }
-    
+
     func update(with viewModel: HelpMenuViewModel) {
         self.viewModel = viewModel
     }
-    
+
     // MARK: - Private
+
     private func setupPersistentView() {
         helpMenu.title = Localizable.help
-        
+
         reportAnIssueItem.title = Localizable.reportAnIssue
         reportAnIssueItem.isEnabled = true
         reportAnIssueItem.target = self
         reportAnIssueItem.action = #selector(reportAnIssueItemAction)
-        
+
         logsItem.title = Localizable.viewLogs
         logsItem.isEnabled = true
         logsItem.target = self
         logsItem.action = #selector(logsAction)
-        
+
         logsWGItem.title = Localizable.wireguardLogs
         logsWGItem.isEnabled = true
         logsWGItem.target = self
         logsWGItem.action = #selector(openWGLogsAction)
-        
+
         clearApplicationDataItem.title = Localizable.clearApplicationData
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self
@@ -81,28 +81,34 @@ class HelpMenuController: NSObject {
         helpItem.action = #selector(helpItemAction)
     }
 
-    @objc private func reportAnIssueItemAction() {
+    @objc
+    private func reportAnIssueItemAction() {
         viewModel.openReportBug()
     }
 
-    @objc private func logsAction() {
+    @objc
+    private func logsAction() {
         viewModel.openLogsFolderAction()
     }
 
-    @objc private func openWGLogsAction() {
+    @objc
+    private func openWGLogsAction() {
         viewModel.openWGVpnLogsFolderAction()
     }
 
-    @objc private func systemExtensionTutorialAction() {
+    @objc
+    private func systemExtensionTutorialAction() {
         viewModel.systemExtensionTutorialAction()
     }
 
-    @objc private func helpItemAction() {
+    @objc
+    private func helpItemAction() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.support)
     }
 
-    @objc private func clearApplicationDataItemAction() {
+    @objc
+    private func clearApplicationDataItemAction() {
         viewModel.selectClearApplicationData()
     }
 }

@@ -19,7 +19,6 @@
 import SwiftUI
 
 struct PlainPressedButtonStyle: ButtonStyle {
-
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label

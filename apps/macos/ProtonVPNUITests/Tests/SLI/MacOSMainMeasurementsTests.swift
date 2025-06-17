@@ -21,16 +21,15 @@ import ProtonCoreTestingToolkitPerformance
 import UITestsHelpers
 
 class MacOSMainMeasurementsTests: ProtonVPNUITests {
-    
     private let workflow = "main_measurements"
     private lazy var measurementContext = MeasurementContext(MeasurementConfig.self)
     private let countriesSelectionRobot = CountriesSectionRobot()
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
-    
+
     override class func setUp() {
         super.setUp()
-        
+
         MeasurementConfig
             .setBundle(Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!)
             .setProduct("VPN")
@@ -38,14 +37,13 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             .setLokiEndpoint(ProcessInfo.processInfo.environment["LOKI_ENDPOINT"] ?? "invalid")
             .setLokiCertificate(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK"] ?? "invalid")
             .setLokiCertificatePassphrase(ProcessInfo.processInfo.environment["LOKI_CERTIFICATE_IOS_SDK_PRIVATE_KEY"] ?? "invalid")
-
     }
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         if mainRobot.isConnected() {
@@ -54,33 +52,33 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             mainRobot.cancelConnecting()
         }
     }
-    
+
     @MainActor
     func testLoginSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
-        
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
+
         measurementProfile
             .addMeasurement(DurationMeasurement())
             .setServiceLevelIndicator("login")
-        
+
         loginRobot
             .enterCredentials(credentials: UserType.Plus.credentials)
             .signIn()
-        
+
         measurementProfile.measure {
             mainRobot
                 .verify.userLoggedIn()
         }
     }
-    
+
     @MainActor
     func testConnectionSLI() {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
             .setServiceLevelIndicator("quick_connect")
-        
+
         loginAsPlusUser()
 
         mainRobot
@@ -91,7 +89,7 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             mainRobot
                 .verify.checkDisconnectButtonAppears()
         }
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)
@@ -99,7 +97,7 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
 
     @MainActor
     func testConnectionToSpecificServer() async throws {
-        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: self.name)
+        let measurementProfile = measurementContext.setWorkflow(workflow, forTest: name)
 
         measurementProfile
             .addMeasurement(DurationMeasurement())
@@ -108,7 +106,7 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
         let randomServer = try await ServersListUtils.getRandomServerName()
 
         loginAsPlusUser()
-        
+
         mainRobot
             .verify.userLoggedIn()
 
@@ -123,7 +121,7 @@ class MacOSMainMeasurementsTests: ProtonVPNUITests {
             mainRobot
                 .verify.checkDisconnectButtonAppears()
         }
-        
+
         mainRobot
             .waitForConnected(with: ConnectionProtocol.Smart)
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart)

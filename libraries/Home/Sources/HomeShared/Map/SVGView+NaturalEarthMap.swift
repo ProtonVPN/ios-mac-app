@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import SVGView
 import SwiftUI
-import Domain
 
 extension SVGView {
-
     private static let xmlMap: XMLElement = {
         let url = Bundle.module.url(forResource: "BlankMap-World", withExtension: "svg")!
         let xml = DOMParser.parse(contentsOf: url)!
@@ -84,22 +83,22 @@ extension SVGNode {
         [
             code,
             code + "x",
-            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+            Self.alternativeCountryCodes[code], // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
-            .lazy
-            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
-            .first
+        .lazy
+        .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+        .first
     }
 
     func mainlandNode(code: String) -> SVGNode? {
         [
             code + "x", // add "x" for mainland only
             code,
-            Self.alternativeCountryCodes[code] // Try to find the node using alternative country codes if no node is found using the country codes above.
+            Self.alternativeCountryCodes[code], // Try to find the node using alternative country codes if no node is found using the country codes above.
         ]
-            .lazy
-            .compactMap { $0.flatMap { self.getNode(byId: $0) } }
-            .first
+        .lazy
+        .compactMap { $0.flatMap { self.getNode(byId: $0) } }
+        .first
     }
 
     func fill(highlighted: Bool) {

@@ -21,31 +21,29 @@ import Logging
 import os.log
 
 public final class OSLogHandler: ParentLogHandler {
-
-    override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) {
+    override public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source _: String, file: String, function: String, line: UInt) {
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
         os_log("%{public}s", log: OSLog(subsystem: "PROTON-APP", category: "\(metadata?[Logging.Logger.MetaKey.category.rawValue] ?? "")"), type: level.osLogType, text)
     }
-
 }
 
-extension Logging.Logger.Level {
-    public var osLogType: OSLogType {
+public extension Logging.Logger.Level {
+    var osLogType: OSLogType {
         switch self {
         case .trace:
-            return OSLogType.default
+            OSLogType.default
         case .debug:
-            return OSLogType.debug
+            OSLogType.debug
         case .info:
-            return OSLogType.info
+            OSLogType.info
         case .notice:
-            return OSLogType.info
+            OSLogType.info
         case .warning:
-            return OSLogType.error
+            OSLogType.error
         case .error:
-            return OSLogType.error
+            OSLogType.error
         case .critical:
-            return OSLogType.fault
+            OSLogType.fault
         }
     }
 }

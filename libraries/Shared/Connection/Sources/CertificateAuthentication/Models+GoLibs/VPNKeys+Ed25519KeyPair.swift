@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CoreConnection
 import Foundation
 import class GoLibs.Ed25519KeyPair
-import CoreConnection
 
-extension PublicKey {
-    package init(keyPair: Ed25519KeyPair) throws {
+package extension PublicKey {
+    init(keyPair: Ed25519KeyPair) throws {
         var error: NSError?
         let derRepresentation = keyPair.publicKeyPKIXPem(&error)
         if let error {
@@ -31,19 +31,19 @@ extension PublicKey {
             throw GoLibsCryptoError.missingData(nil)
         }
         self.init(
-            rawRepresentation: ([UInt8])(publicKeyBytes),
+            rawRepresentation: [UInt8](publicKeyBytes),
             derRepresentation: derRepresentation
         )
     }
 }
 
-extension PrivateKey {
-    package init(keyPair: Ed25519KeyPair) throws {
+package extension PrivateKey {
+    init(keyPair: Ed25519KeyPair) throws {
         guard let privateKeyBytes = keyPair.privateKeyBytes() else {
             throw GoLibsCryptoError.missingData(nil)
         }
         self.init(
-            rawRepresentation: ([UInt8])(privateKeyBytes),
+            rawRepresentation: [UInt8](privateKeyBytes),
             derRepresentation: keyPair.privateKeyPKIXPem(),
             base64X25519Representation: keyPair.toX25519Base64()
         )

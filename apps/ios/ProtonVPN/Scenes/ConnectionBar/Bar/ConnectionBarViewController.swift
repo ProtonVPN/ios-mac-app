@@ -19,34 +19,33 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 class ConnectionBarViewController: UIViewController {
-    
-    @IBOutlet weak var notConnectedLabel: UILabel!
-    @IBOutlet weak var connectedLabel: UILabel!
-    @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var arrowImage: UIImageView!
-    
+    @IBOutlet var notConnectedLabel: UILabel!
+    @IBOutlet var connectedLabel: UILabel!
+    @IBOutlet var timerLabel: UILabel!
+    @IBOutlet var arrowImage: UIImageView!
+
     var viewModel: ConnectionBarViewModel?
     var tap: UITapGestureRecognizer!
     var connectionStatusService: ConnectionStatusService!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.view.addGestureRecognizer(tap)
-        
+        view.addGestureRecognizer(tap)
+
         view.backgroundColor = .secondaryBackgroundColor()
         connectedLabel.textColor = .normalTextColor()
         timerLabel.textColor = .normalTextColor()
-        
+
         connectedLabel.text = Localizable.connected
-        
+
         arrowImage.image = IconProvider.chevronRight.imageFlippedForRightToLeftLayoutDirection()
         arrowImage.tintColor = .iconWeak()
 
@@ -67,7 +66,7 @@ class ConnectionBarViewController: UIViewController {
         viewModel?.updateDisplayStateFromUIThread()
         viewModel?.updateStateFromUIThread()
     }
-    
+
     func embed(in parentViewController: UIViewController, with containerView: UIView) {
         willMove(toParent: parentViewController)
         if let connectionBarView = view {
@@ -81,54 +80,55 @@ class ConnectionBarViewController: UIViewController {
     }
 
     private func setLoadingConnectionInfo() {
-        self.view.backgroundColor = .brandColor()
-        self.connectedLabel.isHidden = true
-        self.timerLabel.isHidden = true
-        self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = Localizable.loadingConnectionInfo
-        self.notConnectedLabel.textColor = .normalTextColor()
-        self.view.setNeedsDisplay()
+        view.backgroundColor = .brandColor()
+        connectedLabel.isHidden = true
+        timerLabel.isHidden = true
+        notConnectedLabel.isHidden = false
+        notConnectedLabel.text = Localizable.loadingConnectionInfo
+        notConnectedLabel.textColor = .normalTextColor()
+        view.setNeedsDisplay()
     }
-    
+
     private func setConnecting() {
-        self.view.backgroundColor = .secondaryBackgroundColor()
-        self.connectedLabel.isHidden = true
-        self.timerLabel.isHidden = true
-        self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = Localizable.connectingDotDotDot
-        self.notConnectedLabel.textColor = .notificationWarningColor()
-        self.view.setNeedsDisplay()
+        view.backgroundColor = .secondaryBackgroundColor()
+        connectedLabel.isHidden = true
+        timerLabel.isHidden = true
+        notConnectedLabel.isHidden = false
+        notConnectedLabel.text = Localizable.connectingDotDotDot
+        notConnectedLabel.textColor = .notificationWarningColor()
+        view.setNeedsDisplay()
     }
-    
+
     private func setConnected() {
-        self.view.backgroundColor = .brandColor()
-        self.connectedLabel.isHidden = false
-        self.timerLabel.isHidden = false
-        self.notConnectedLabel.isHidden = true
-        
-        self.view.setNeedsDisplay()
-        self.view.setNeedsLayout()
-        
+        view.backgroundColor = .brandColor()
+        connectedLabel.isHidden = false
+        timerLabel.isHidden = false
+        notConnectedLabel.isHidden = true
+
+        view.setNeedsDisplay()
+        view.setNeedsLayout()
+
         updateConnected()
     }
 
     private func updateConnected() {
         timerLabel.text = viewModel?.timeString()
     }
-    
+
     private func setDisconnected() {
-        self.view.backgroundColor = .secondaryBackgroundColor()
-        self.connectedLabel.isHidden = true
-        self.timerLabel.isHidden = true
-        self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = Localizable.notConnected
-        self.notConnectedLabel.textColor = .notificationErrorColor()
-        self.arrowImage.isHidden = false
-        
-        self.view.setNeedsDisplay()
+        view.backgroundColor = .secondaryBackgroundColor()
+        connectedLabel.isHidden = true
+        timerLabel.isHidden = true
+        notConnectedLabel.isHidden = false
+        notConnectedLabel.text = Localizable.notConnected
+        notConnectedLabel.textColor = .notificationErrorColor()
+        arrowImage.isHidden = false
+
+        view.setNeedsDisplay()
     }
-    
-    @objc private func handleTap() {
+
+    @objc
+    private func handleTap() {
         connectionStatusService.presentStatusViewController()
     }
 }

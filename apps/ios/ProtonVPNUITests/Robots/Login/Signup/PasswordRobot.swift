@@ -8,32 +8,30 @@
 
 import fusion
 
-fileprivate let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
-fileprivate let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"
-fileprivate let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswordTextField.textField"
-fileprivate let nextButtonId = "PasswordViewController.nextButton"
+private let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
+private let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"
+private let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswordTextField.textField"
+private let nextButtonId = "PasswordViewController.nextButton"
 
 class PasswordRobot: CoreElements {
-    
     public let verify = Verify()
-    
+
     func enterPassword(_ password1: String) -> PasswordRobot {
         secureTextField(passwordNameTextFieldId).typeText(password1)
         return PasswordRobot()
     }
-    
+
     func enterRepeatPassword(_ password2: String) -> PasswordRobot {
         secureTextField(repeatPasswordNameTextFieldId).tap().typeText(password2)
         return PasswordRobot()
     }
-    
+
     func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
         button(nextButtonId).tap()
         return T()
     }
-    
-    class Verify: CoreElements {
 
+    class Verify: CoreElements {
         @discardableResult
         func passwordScreenIsShown() -> PasswordRobot {
             staticText(accountVerificationTitle).waitUntilExists(time: 20).checkExists()

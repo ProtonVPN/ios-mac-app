@@ -27,43 +27,42 @@ import Dependencies
 
 import Domain
 import Ergonomics
-import Strings
-import NetShield
-import Modals
 import LegacyCommon
-import VPNShared
+import Modals
+import NetShield
+import Strings
 import VPNAppCore
+import VPNShared
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
-    
-    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory & VpnStateConfigurationFactory & CoreAlertServiceFactory & PropertiesManagerFactory
-    
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & NetShieldPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory & VpnStateConfigurationFactory
+
     private let factory: Factory
 
     lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
 
-    public private(set) lazy var isNetShieldStatsEnabled = { factory.makePropertiesManager().featureFlags.netShieldStats }()
+    public private(set) lazy var isNetShieldStatsEnabled = factory.makePropertiesManager().featureFlags.netShieldStats
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
-    
+
     override var title: String! {
-        return Localizable.netshieldTitle
+        Localizable.netshieldTitle
     }
-    
+
     override var learnLink: String {
-        return VPNLink.netshieldSupport.urlString
+        VPNLink.netshieldSupport.urlString
     }
 
     override var alert: UpsellAlert {
         NetShieldUpsellAlert()
     }
 
-    init( _ factory: Factory ) {
+    init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
-        netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
+        self.netShieldStats = vpnManager.netShieldStats // initial value before receiving a new value in a notification
 
         addNetShieldObservers()
     }
@@ -76,8 +75,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
             }
         })
 
-        notificationTokens.append(NotificationCenter.default.addObserver(for: AppEvent.netShield.name,
-                                                                         object: nil) { [weak self] _ in
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: AppEvent.netShield.name,
+            object: nil
+        ) { [weak self] _ in
             self?.contentChanged()
         })
     }
@@ -88,11 +89,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         netShieldStats = netShieldStats.copy(enabled: isActive)
         return netShieldStats
     }
-    
+
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
+        [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map { self.createNetshieldOption(level: $0) }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownUpgradeButton.isHidden = true
@@ -103,7 +104,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     private func contentChanged() {
         viewController?.updateNetshieldStats()
     }
-    
+
     // MARK: - Private
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {

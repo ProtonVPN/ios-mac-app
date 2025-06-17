@@ -16,45 +16,45 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import OrderedCollections
-import Domain
-import Dependencies
-import VPNAppCore
-import Foundation
 import Algorithms
+import Dependencies
+import Domain
+import Foundation
+import OrderedCollections
+import VPNAppCore
 
-extension OrderedSet<RecentConnection> {
-
+public extension OrderedSet<RecentConnection> {
     private static let maxConnections = 8
 
-    func index(for spec: ConnectionSpec) -> Self.Index? {
+    internal func index(for spec: ConnectionSpec) -> Self.Index? {
         firstIndex { recent in
             recent.connection.location == spec.location
-            && recent.connection.features == spec.features
+                && recent.connection.features == spec.features
         }
     }
 
-    func sanitized() -> OrderedSet<RecentConnection> {
-        OrderedSet(chunked { $0.pinned }
-            .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
-            .flatMap {
-                if $0.0 { // pinned
-                    $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
-                } else { // unpinned
-                    $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+    internal func sanitized() -> OrderedSet<RecentConnection> {
+        OrderedSet(
+            chunked { $0.pinned }
+                .sorted(by: { lhs, _ in lhs.0 }) // first should appear the pinned
+                .flatMap {
+                    if $0.0 { // pinned
+                        $0.1.sorted(using: KeyPathComparator(\.pinnedDate, order: .forward))
+                    } else { // unpinned
+                        $0.1.sorted(using: KeyPathComparator(\.connectionDate, order: .reverse))
+                    }
                 }
-            }
-            .prefix(Self.maxConnections)
+                .prefix(Self.maxConnections)
         )
     }
 
-    public var mostRecent: RecentConnection? {
+    var mostRecent: RecentConnection? {
         sorted(using: [
-            KeyPathComparator(\.connectionDate, order: .reverse)
+            KeyPathComparator(\.connectionDate, order: .reverse),
         ]).first
     }
 
-    public mutating func updateList(with spec: ConnectionSpec) {
+    mutating func updateList(with spec: ConnectionSpec) {
         var oldRecent: RecentConnection?
         if let index = index(for: spec) {
             oldRecent = remove(at: index)
@@ -72,11 +72,11 @@ extension OrderedSet<RecentConnection> {
         self = sanitized()
     }
 
-    public mutating func unpin(recent: RecentConnection) {
+    mutating func unpin(recent: RecentConnection) {
         updatePin(recent: recent, pinnedDate: nil)
     }
 
-    public mutating func pin(recent: RecentConnection, pinnedDate: Date) {
+    mutating func pin(recent: RecentConnection, pinnedDate: Date) {
         updatePin(recent: recent, pinnedDate: pinnedDate)
     }
 

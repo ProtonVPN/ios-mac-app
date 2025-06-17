@@ -17,12 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import HomeShared
 import Domain
-import SwiftUI
-import Strings
-import SharedViews
+import HomeShared
 import ProtonCoreUIFoundations
+import SharedViews
+import Strings
+import SwiftUI
 
 struct RecentRowItemView: View {
     static let itemCellHeight: CGFloat = .themeSpacing64
@@ -31,11 +31,9 @@ struct RecentRowItemView: View {
     let isConnected: Bool
     let sendAction: RecentsFeature.ActionSender
 
-    @ScaledMetric
-    private var iconSize: CGFloat = 16
+    @ScaledMetric private var iconSize: CGFloat = 16
 
-    @Dependency(\.locale)
-    private var locale
+    @Dependency(\.locale) private var locale
 
     private var leadingIcon: some View {
         item.icon
@@ -97,22 +95,24 @@ struct RecentRowItemView: View {
 
 extension RecentConnection {
     var icon: Image {
-        return pinned ? IconProvider.pinFilled : IconProvider.clockRotateLeft
+        pinned ? IconProvider.pinFilled : IconProvider.clockRotateLeft
     }
 }
 
 #if DEBUG
-@available(iOS 17, *)
-#Preview(traits: .sizeThatFitsLayout) {
-    let last = RecentConnection.sampleData.last!
-    return VStack(spacing: 0) {
-        ForEach(RecentConnection.sampleData) { item in
-            RecentRowItemView(item: item,
-                              isConnected: .random(),
-                              sendAction: { _ in () })
+    @available(iOS 17, *)
+    #Preview(traits: .sizeThatFitsLayout) {
+        let last = RecentConnection.sampleData.last!
+        return VStack(spacing: 0) {
+            ForEach(RecentConnection.sampleData) { item in
+                RecentRowItemView(
+                    item: item,
+                    isConnected: .random(),
+                    sendAction: { _ in () }
+                )
+            }
         }
+        .padding()
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 #endif

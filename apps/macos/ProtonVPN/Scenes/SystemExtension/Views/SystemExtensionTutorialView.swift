@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import SwiftUI
 import AVKit
+import SwiftUI
 
 import Dependencies
 
@@ -27,11 +27,10 @@ import ProtonCoreUIFoundations
 import LegacyCommon
 import VPNAppCore
 
-import Strings
 import Ergonomics
+import Strings
 
 struct SystemExtensionTutorialView: View {
-
     static let securityPreferencesUrlString = "x-apple.systempreferences:com.apple.preference.security"
     let videoTourModel = VideoTourModel(videoFile: .systemExtension)
 
@@ -77,7 +76,7 @@ struct SystemExtensionTutorialView: View {
     }
 
     var videoView: some View {
-        return VStack(alignment: .center, spacing: .themeSpacing32) {
+        VStack(alignment: .center, spacing: .themeSpacing32) {
             Text(Localizable.sysexSetUpProtonVpn)
                 .foregroundColor(.init(NSColor.color(.text)))
                 .font(.system(size: 22, weight: .bold))

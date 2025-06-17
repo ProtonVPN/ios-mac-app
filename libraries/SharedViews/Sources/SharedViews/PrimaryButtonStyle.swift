@@ -20,56 +20,53 @@ import SwiftUI
 import Theme
 
 public struct PrimaryButtonStyle: ButtonStyle {
-
     @State var isHovered = false
 
-    public init() { }
+    public init() {}
 
     public func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
             .foregroundColor(Color(.text, .primary))
-#if canImport(UIKit)
+        #if canImport(UIKit)
             .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
             .font(.body1())
-#elseif canImport(Cocoa)
+        #elseif canImport(Cocoa)
             .padding(.horizontal, .themeSpacing24)
             .padding(.vertical, .themeSpacing6)
             .font(.body(emphasised: true))
-#endif
+        #endif
             .padding(.vertical, .themeSpacing8)
             .background(backgroundColor(isPressed: configuration.isPressed))
             .clipRectangle(cornerRadius: .radius8)
             .onHover {
                 isHovered = $0
-#if canImport(Cocoa)
-                if ($0) {
-                    NSCursor.pointingHand.push()
-                } else {
-                    NSCursor.pop()
-                }
-#endif
+                #if canImport(Cocoa)
+                    if $0 {
+                        NSCursor.pointingHand.push()
+                    } else {
+                        NSCursor.pop()
+                    }
+                #endif
             }
     }
 
     func backgroundColor(isPressed: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
-#if canImport(Cocoa)
-        if isPressed {
-            style.insert(.active)
-        } else if isHovered {
-            style.insert(.hovered)
-        }
-#endif
+        #if canImport(Cocoa)
+            if isPressed {
+                style.insert(.active)
+            } else if isHovered {
+                style.insert(.hovered)
+            }
+        #endif
         return Color(.background, style)
     }
 }
 
 struct PrimaryButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        Button {
-
-        } label: {
+        Button {} label: {
             Text("Preview button")
         }
         .buttonStyle(PrimaryButtonStyle())

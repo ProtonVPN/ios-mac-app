@@ -38,7 +38,7 @@ struct ThemeSettingsView: View {
     let options = [
         OptionModel(colorScheme: .light, asset: Asset.themeLight),
         OptionModel(colorScheme: .dark, asset: Asset.themeDark),
-        OptionModel(colorScheme: .auto, asset: Asset.themeAuto)
+        OptionModel(colorScheme: .auto, asset: Asset.themeAuto),
     ]
 
     var body: some View {
@@ -65,7 +65,6 @@ struct ThemeSettingsView: View {
                     .themeFont(.body2())
                     .foregroundColor(Color(.text, .normal))
                 Accessory(style: .checkmark(isActive: currentValue.wrappedValue == model.colorScheme))
-
             }
         }.onTapGesture { currentValue.wrappedValue = model.colorScheme }
     }

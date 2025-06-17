@@ -24,6 +24,6 @@ import Foundation
 // This is an "exception", we don't want to keep this. VPNAPPL-2142
 public extension String {
     var isBusinessWithoutNetShield: Bool {
-        "vpnpro2023" == self
+        self == "vpnpro2023"
     }
 }

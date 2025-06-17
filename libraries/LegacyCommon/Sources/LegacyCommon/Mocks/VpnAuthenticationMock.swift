@@ -21,38 +21,38 @@
 //
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-import Domain
-import VPNShared
-import VPNSharedTesting
+    import Domain
+    import VPNShared
+    import VPNSharedTesting
 
-public final class VpnAuthenticationMock: VpnAuthentication {
-    public init() { }
+    public final class VpnAuthenticationMock: VpnAuthentication {
+        public init() {}
 
-    public var loadResult: Result<VpnAuthenticationData, Error> = .success(.mock)
-    public var refreshResult: Result<VpnAuthenticationData, Error> = .success(.mock)
+        public var loadResult: Result<VpnAuthenticationData, Error> = .success(.mock)
+        public var refreshResult: Result<VpnAuthenticationData, Error> = .success(.mock)
 
-    public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
-        completion(loadResult)
+        public func loadAuthenticationData(features _: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) {
+            completion(loadResult)
+        }
+
+        public func refreshCertificates(features _: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
+            completion(refreshResult)
+        }
+
+        public func clearEverything(completion: @escaping (() -> Void)) { completion() }
+
+        public func loadClientPrivateKey() -> PrivateKey {
+            VpnKeys.mock().privateKey
+        }
+
+        public var shouldIgnoreFeatureChanges: Bool { false }
     }
 
-    public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) {
-        completion(refreshResult)
+    fileprivate extension VpnAuthenticationData {
+        static var mock: VpnAuthenticationData {
+            VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
+        }
     }
-
-    public func clearEverything(completion: @escaping (() -> Void)) { completion() }
-    
-    public func loadClientPrivateKey() -> PrivateKey {
-        VpnKeys.mock().privateKey
-    }
-
-    public var shouldIgnoreFeatureChanges: Bool { false }
-}
-
-fileprivate extension VpnAuthenticationData {
-    static var mock: VpnAuthenticationData {
-        VpnAuthenticationData(clientKey: VpnKeys.mock().privateKey, clientCertificate: "")
-    }
-}
 #endif

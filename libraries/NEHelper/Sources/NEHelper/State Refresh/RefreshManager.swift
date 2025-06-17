@@ -17,13 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import Timer
+import VPNShared
 
 /// Parent class for managers that have to perform some tasks periodically.
 public class RefreshManager {
-    internal let workQueue: DispatchQueue
-    internal let timerFactory: TimerFactory
+    let workQueue: DispatchQueue
+    let timerFactory: TimerFactory
 
     public enum State {
         case running
@@ -84,16 +84,16 @@ public class RefreshManager {
                 completion()
                 return
             }
-            log.debug("Timer for \(self) resumed. Next run planned in \(self.nextRunTime?.timeIntervalSinceNow ?? self.timerRefreshInterval) seconds", category: .connection)
+            log.debug("Timer for \(self) resumed. Next run planned in \(nextRunTime?.timeIntervalSinceNow ?? timerRefreshInterval) seconds", category: .connection)
 
-            self.state = .running
-            self.startTimer(firstRunAfter: self.nextRunTime?.timeIntervalSinceNow)
+            state = .running
+            startTimer(firstRunAfter: nextRunTime?.timeIntervalSinceNow)
             completion()
         }
     }
 
     /// - Invariant: Will be called on `workQueue`.
-    internal func work() {
+    func work() {
         fatalError("\(#function) should be overridden by child class")
     }
 
@@ -105,29 +105,31 @@ public class RefreshManager {
     /// Otherwise first run of `work` will be performed after this number of seconds or now if value is negative.
     ///
     /// - Note: Call this function on `workQueue`.
-    internal func startTimer(firstRunAfter: TimeInterval? = nil) {
+    func startTimer(firstRunAfter: TimeInterval? = nil) {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
         let firstRunAt = firstRunAfter != nil
             ? Date().addingTimeInterval(min(firstRunAfter!, 0))
             : Date().addingTimeInterval(timerRefreshInterval)
 
-        timer = timerFactory.scheduledTimer(runAt: firstRunAt,
-                                            repeating: timerRefreshInterval,
-                                            queue: workQueue) { [weak self] in
+        timer = timerFactory.scheduledTimer(
+            runAt: firstRunAt,
+            repeating: timerRefreshInterval,
+            queue: workQueue
+        ) { [weak self] in
             self?.work()
         }
     }
 
     /// Stop the timer by deinit'ing it.
     /// - Note: Call this function on `workQueue`.
-    internal func stopTimer() {
+    func stopTimer() {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
-        self.timer = nil
+        timer = nil
     }
 }

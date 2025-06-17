@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
 import Domain
+import Foundation
 
 extension SharedKey where Self == AppStorageKey<String?> {
     static var userDisplayName: Self {
@@ -37,7 +37,6 @@ extension SharedKey where Self == AppStorageKey<TimeInterval> {
         .appStorage("lastLogicalsRefresh")
     }
 }
-
 
 public extension SharedKey where Self == InMemoryKey<UserLocation?> {
     static var userLocation: Self {

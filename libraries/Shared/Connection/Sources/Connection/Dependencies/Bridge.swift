@@ -37,8 +37,8 @@ public struct ConnectionBridge: Sendable {
     public internal(set) var pushStatus: @MainActor (_ status: VPNConnectionStatus) -> Void
 }
 
-extension DependencyValues {
-    public var connectionBridge: ConnectionBridge {
+public extension DependencyValues {
+    var connectionBridge: ConnectionBridge {
         get { self[ConnectionBridge.self] }
         set { self[ConnectionBridge.self] = newValue }
     }
@@ -58,9 +58,9 @@ extension ConnectionBridge: DependencyKey {
             let (stream, continuation) = AsyncStream<VPNConnectionStatus>.makeStream()
             statusContinuation = continuation
             return stream
-        } push: { intent  in
+        } push: { intent in
             intentContinuation?.yield(intent)
-        } pushStatus: { status  in
+        } pushStatus: { status in
             statusContinuation?.yield(status)
         }
     }()

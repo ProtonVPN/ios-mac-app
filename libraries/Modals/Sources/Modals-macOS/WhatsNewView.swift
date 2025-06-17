@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import Ergonomics
 import SharedViews
 import Strings
+import SwiftUI
 import Theme
-import Ergonomics
 
 final class WhatsNewViewController: NSHostingController<WhatsNewView> {
     required init?(coder: NSCoder) {
@@ -34,7 +34,7 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
     override init(rootView: WhatsNewView) {
         super.init(rootView: rootView)
         self.rootView.dismiss = dismiss
-        title =  "Proton VPN"
+        title = "Proton VPN"
         view.window?.titlebarAppearsTransparent = true
         view.wantsLayer = true
         DarkAppearance {
@@ -50,8 +50,7 @@ final class WhatsNewViewController: NSHostingController<WhatsNewView> {
 // This view exceptionally contains string literals because it is not used anywhere,
 // and may be redesigned soon.
 struct WhatsNewView: View {
-
-    public var dismiss: () -> Void = { }
+    public var dismiss: () -> Void = {}
 
     var body: some View {
         VStack(spacing: .themeSpacing32) {
@@ -82,14 +81,13 @@ struct WhatsNewView: View {
                     Text("""
                     To prevent server crowding and ensure that everyone has access to fast and secure browsing, we removed manual country selection and made major improvements to automatic server selection.
                     """)
-                        .themeFont(.body())
-                        .fixedSize(horizontal: false, vertical: true) // allow multiline
-                        .foregroundColor(Color(.text, .weak))
+                    .themeFont(.body())
+                    .fixedSize(horizontal: false, vertical: true) // allow multiline
+                    .foregroundColor(Color(.text, .weak))
                     Spacer(minLength: 0)
                 }
             }
             Button {
-                
                 dismiss()
             } label: {
                 Text(Localizable.gotIt)

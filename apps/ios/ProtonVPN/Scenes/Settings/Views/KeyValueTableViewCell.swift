@@ -23,23 +23,24 @@
 import UIKit
 
 class KeyValueTableViewCell: UITableViewCell {
-    @IBOutlet weak var keyLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
-    @IBOutlet weak var stackView: UIStackView!
-    
+    @IBOutlet var keyLabel: UILabel!
+    @IBOutlet var valueLabel: UILabel!
+    @IBOutlet var stackView: UIStackView!
+
     var completionHandler: (() -> Void)?
-    
+
     var viewModel: [String: String]? {
         didSet {
-            if let viewModel = viewModel {
+            if let viewModel {
                 keyLabel.text = viewModel.first?.key
                 valueLabel.text = viewModel.first?.value
             }
         }
     }
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         keyLabel.textColor = .weakTextColor()
         valueLabel.textColor = .normalTextColor()
@@ -47,14 +48,14 @@ class KeyValueTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
+
     func select() {
         completionHandler?()
     }
-    
+
     public func showDisclosure(_ show: Bool) {
         if show {
             accessoryType = .disclosureIndicator
@@ -64,5 +65,4 @@ class KeyValueTableViewCell: UITableViewCell {
             stackView.spacing = 0
         }
     }
-    
 }

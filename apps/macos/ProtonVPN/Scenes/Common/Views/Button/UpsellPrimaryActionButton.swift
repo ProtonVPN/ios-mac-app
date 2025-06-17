@@ -21,41 +21,40 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 import VPNAppCore
 
 class UpsellPrimaryActionButton: HoverDetectionButton {
-
     var actionType = PrimaryActionType.confirmative {
         didSet {
             configureButton()
         }
     }
-    
+
     override var title: String {
         didSet {
             configureTitle()
         }
     }
-    
+
     var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureButton()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()
     }
-    
+
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
@@ -63,9 +62,9 @@ class UpsellPrimaryActionButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
     }
-    
+
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 }
 

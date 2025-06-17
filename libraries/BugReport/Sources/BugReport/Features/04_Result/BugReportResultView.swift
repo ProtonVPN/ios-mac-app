@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
-import SwiftUI
+import Foundation
 import SwiftNavigation
+import SwiftUI
 
 import Strings
 
 public struct BugReportResultView: View {
-
     let store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
@@ -33,12 +32,13 @@ public struct BugReportResultView: View {
         WithPerceptionTracking {
             makeBody()
             #if os(iOS)
-            .navigationBarBackButtonHidden(true)
+                .navigationBarBackButtonHidden(true)
             #endif
         }
     }
 
-    @ViewBuilder func makeBody() -> some View {
+    @ViewBuilder
+    func makeBody() -> some View {
         if let error = store.error {
             errorBody(error: error)
         } else {
@@ -46,7 +46,8 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func successBody() -> some View {
+    @ViewBuilder
+    func successBody() -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
             VStack {
@@ -70,7 +71,8 @@ public struct BugReportResultView: View {
         }
     }
 
-    @ViewBuilder func errorBody(error: String) -> some View {
+    @ViewBuilder
+    func errorBody(error: String) -> some View {
         ZStack {
             colors.background.ignoresSafeArea()
 
@@ -98,25 +100,26 @@ public struct BugReportResultView: View {
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 32)
-
             }
         }
     }
-
 }
 
 // MARK: - Preview
 
 struct BugReportResultView_Previews: PreviewProvider {
     static var previews: some View {
-        return Group {
-
-            BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: nil),
-                                             reducer: { BugReportResultFeature() }))
+        Group {
+            BugReportResultView(store: Store(
+                initialState: BugReportResultFeature.State(error: nil),
+                reducer: { BugReportResultFeature() }
+            ))
             .previewDisplayName("Success")
 
-            BugReportResultView(store: Store(initialState: BugReportResultFeature.State(error: "Just an error"),
-                                             reducer: { BugReportResultFeature() }))
+            BugReportResultView(store: Store(
+                initialState: BugReportResultFeature.State(error: "Just an error"),
+                reducer: { BugReportResultFeature() }
+            ))
             .previewDisplayName("Error")
         }
     }

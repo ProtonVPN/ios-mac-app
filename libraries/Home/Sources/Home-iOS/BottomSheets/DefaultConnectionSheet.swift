@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Collections
 import ComposableArchitecture
+import ConnectionInventory
 import Domain
 import Ergonomics
-import Strings
-import Theme
-import ConnectionInventory
 import HomeShared
+import Strings
+import SwiftUI
+import Theme
 
 extension View {
     @ViewBuilder
@@ -53,7 +53,8 @@ struct DefaultConnectionSheet: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         section {
             Text(Localizable.homeDefaultConnectionTitle)
                 .styled(.normal)
@@ -88,7 +89,8 @@ struct DefaultConnectionSheet: View {
         }
     }
 
-    @ViewBuilder private func section(
+    @ViewBuilder
+    private func section(
         title: @escaping () -> some View,
         content: @escaping () -> some View
     ) -> some View {
@@ -96,7 +98,8 @@ struct DefaultConnectionSheet: View {
         content()
     }
 
-    @ViewBuilder private func sectionHeader(title: () -> some View) -> some View {
+    @ViewBuilder
+    private func sectionHeader(title: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
             title()
@@ -109,22 +112,21 @@ struct DefaultConnectionSheet: View {
 
 #if DEBUG
 
-#Preview {
-    ZStack { // Xcode 15: #Preview macro only supports a single View in its body
-        @Shared(.recents) var recents: OrderedSet<RecentConnection> = [
-            .pinnedFastest,
-            .connectionRegion,
-            .connectionSecureCoreFastest
-        ]
-        let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
-        VStack { } // Any old view that we can hook the sheet onto
-            .sheet(isPresented: .constant(true)) {
-                DefaultConnectionSheet(store: previewStore)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.medium, .large])
-
-            }
-            .preferredColorScheme(.dark)
+    #Preview {
+        ZStack { // Xcode 15: #Preview macro only supports a single View in its body
+            @Shared(.recents) var recents: OrderedSet<RecentConnection> = [
+                .pinnedFastest,
+                .connectionRegion,
+                .connectionSecureCoreFastest,
+            ]
+            let previewStore = Store(initialState: .init()) { DefaultConnectionFeature() }
+            VStack {} // Any old view that we can hook the sheet onto
+                .sheet(isPresented: .constant(true)) {
+                    DefaultConnectionSheet(store: previewStore)
+                        .presentationDragIndicator(.visible)
+                        .presentationDetents([.medium, .large])
+                }
+                .preferredColorScheme(.dark)
+        }
     }
-}
 #endif

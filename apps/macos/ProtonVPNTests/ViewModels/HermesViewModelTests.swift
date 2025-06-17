@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Combine
 import Connection
 import Dependencies
 import Domain
-import LegacyCommon
 import Hermes
+import LegacyCommon
 @testable import ProtonVPN
+import XCTest
 
 private final class HermesTestContainer: MockDependencyContainer {
     let netShieldPropertyProvider: NetShieldPropertyProviderMock
@@ -175,7 +175,7 @@ final class HermesViewModelTests: XCTestCase {
         let firstDiffElementMoved = viewModel.activeHermesResolvers[0]
         let firstDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 2, element: firstDiffElementMoved, associatedWith: nil),
-            .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil)
+            .remove(offset: 0, element: firstDiffElementMoved, associatedWith: nil),
         ])!
         viewModel.applyDiff(firstDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.google, .quadNine, .cloudFlare])
@@ -183,7 +183,7 @@ final class HermesViewModelTests: XCTestCase {
         let secondDiffElementMoved = viewModel.activeHermesResolvers[1]
         let secondDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 0, element: secondDiffElementMoved, associatedWith: nil),
-            .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil)
+            .remove(offset: 1, element: secondDiffElementMoved, associatedWith: nil),
         ])!
         viewModel.applyDiff(secondDiff)
         XCTAssertEqual(viewModel.activeHermesResolvers, [.quadNine, .google, .cloudFlare])
@@ -243,14 +243,14 @@ final class HermesViewModelTests: XCTestCase {
         let firstDiffElement = viewModel.activeHermesResolvers[0]
         let firstDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: firstDiffElement, associatedWith: nil)
+            .remove(offset: 0, element: firstDiffElement, associatedWith: nil),
         ])!
         viewModel.applyDiff(firstDiff)
 
         let secondDiffElement = viewModel.activeHermesResolvers[0]
         let secondDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 1, element: secondDiffElement, associatedWith: nil),
-            .remove(offset: 0, element: secondDiffElement, associatedWith: nil)
+            .remove(offset: 0, element: secondDiffElement, associatedWith: nil),
         ])!
         viewModel.applyDiff(secondDiff)
 
@@ -286,6 +286,6 @@ private extension HermesViewModelTests {
     static let extraExpectedResolvers: [HermesResolver] = [
         .cloudFlare,
         .cloudFlareDoH,
-        .cloudFlareDoT
+        .cloudFlareDoT,
     ]
 }

@@ -29,18 +29,17 @@ let __emailPredicate = NSPredicate(format: "SELF MATCHES %@", __regexEmail)
 
 public extension String {
     var isEmail: Bool {
-        return __emailPredicate.evaluate(with: self)
+        __emailPredicate.evaluate(with: self)
     }
 }
 
-public extension Optional where Wrapped == String {
-    
+public extension String? {
     var isEmpty: Bool {
-        return self?.isEmpty ?? true
+        self?.isEmpty ?? true
     }
-    
+
     var isEmail: Bool {
-        return self?.isEmail ?? false
+        self?.isEmail ?? false
     }
 
     /// Check if strings are equal. If either of them is null, returns false
@@ -50,5 +49,4 @@ public extension Optional where Wrapped == String {
         }
         return a.elementsEqual(b)
     }
-    
 }

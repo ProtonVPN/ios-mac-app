@@ -26,15 +26,19 @@ struct MainView: View {
     var body: some View {
         TabView(selection: $store.currentTab.sending(\.selectTab)) {
             NavigationStack {
-                HomeLoadingView(store: store.scope(state: \.homeLoading,
-                                                   action: \.homeLoading))
+                HomeLoadingView(store: store.scope(
+                    state: \.homeLoading,
+                    action: \.homeLoading
+                ))
             }
             .tag(MainFeature.Tab.home)
             .tabItem { Text("Home", comment: "Title of the tab bar item.") }
 
             NavigationStack {
-                SettingsView(store: store.scope(state: \.settings, 
-                                                action: \.settings))
+                SettingsView(store: store.scope(
+                    state: \.settings,
+                    action: \.settings
+                ))
             }
             .tag(MainFeature.Tab.settings)
             .tabItem { Text("Settings", comment: "Title of the tab bar item.") }

@@ -40,15 +40,15 @@ public protocol NetworkingFactory {
 final class CoreNetworkingDelegateMock: NetworkingDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { .init { $0.finish() } }
 
-    func set(apiService: APIService) { }
-    func onLogout() { }
+    func set(apiService _: APIService) {}
+    func onLogout() {}
 
-    func onForceUpgrade(message: String) { }
+    func onForceUpgrade(message _: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?
     var paymentDelegateForLoginAndSignup: HumanVerifyPaymentDelegate?
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) { }
-    func onDeviceVerify(parameters: DeviceVerifyParameters) -> String? { nil }
+    func onHumanVerify(parameters _: HumanVerifyParameters, currentURL _: URL?, completion _: @escaping ((HumanVerifyFinishReason) -> Void)) {}
+    func onDeviceVerify(parameters _: DeviceVerifyParameters) -> String? { nil }
     func getSupportURL() -> URL { URL(string: "")! }
 }
 
@@ -56,8 +56,8 @@ public enum CoreNetworkingDelegateKey: TestDependencyKey {
     public static let testValue: NetworkingDelegate = CoreNetworkingDelegateMock()
 }
 
-extension DependencyValues {
-    public var networkingDelegate: NetworkingDelegate {
+public extension DependencyValues {
+    var networkingDelegate: NetworkingDelegate {
         get { self[CoreNetworkingDelegateKey.self] }
         set { self[CoreNetworkingDelegateKey.self] = newValue }
     }

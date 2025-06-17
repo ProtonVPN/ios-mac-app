@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import struct Domain.VPNConnectionFeatures
+import Foundation
 import struct VPNShared.VpnCertificate
 
 public struct FullAuthenticationData: Equatable, Sendable {
@@ -33,7 +33,7 @@ public struct FullAuthenticationData: Equatable, Sendable {
 
     /// Returns a subset of data necessary to authenticate a LocalAgent connection
     public var authenticationData: VPNAuthenticationData {
-        return VPNAuthenticationData(
+        VPNAuthenticationData(
             clientKey: keys.privateKey,
             clientCertificate: certificate.certificate
         )

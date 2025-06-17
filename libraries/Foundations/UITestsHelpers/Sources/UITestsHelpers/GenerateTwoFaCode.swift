@@ -20,7 +20,6 @@ import Foundation
 import SwiftOTP
 
 public enum GenerateTwoFaCode {
-    
     public static func generateCodeFor2FAUser(_ key: String) async -> String {
         let expiryInterval: TimeInterval = 5
         let totp = TOTP(secret: base32DecodeToData(key)!)

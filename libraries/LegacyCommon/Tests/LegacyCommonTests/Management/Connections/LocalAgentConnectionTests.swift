@@ -23,8 +23,8 @@ import XCTest
 import GoLibs
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
@@ -33,14 +33,14 @@ import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 class LocalAgentConnectionTests: ConnectionTestCaseDriver {
     override func setUp() async throws {
         #if os(macOS)
-        throw XCTSkip("LocalAgent connection tests are skipped on macOS, since there is no cert refresh provider.")
+            throw XCTSkip("LocalAgent connection tests are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try await super.setUp()
+            try await super.setUp()
         #endif
     }
 
     func simpleErrorCase(_ code: Int) -> (() -> Void) {
-        { [unowned self] in self.laError(code, nil) }
+        { [unowned self] in laError(code, nil) }
     }
 
     override func invokeTest() {
@@ -52,20 +52,34 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
     func testLocalAgentRekeyReconnectionCases() {
         let errorServerSessionDoesNotMatch = 86202
 
-        let expectations: [ExpectationCategory] = [.certificateRefresh,
-                                                   .vpnDisconnection,
-                                                   .vpnConnection,
-                                                   .localAgentConnection]
+        let expectations: [ExpectationCategory] = [
+            .certificateRefresh,
+            .vpnDisconnection,
+            .vpnConnection,
+            .localAgentConnection,
+        ]
 
         let subcases: [Subcase] = [
-            (subcaseDescription("bad certificate signature"),
-             simpleErrorCase(laConsts.errorCodeBadCertSignature), expectations),
-            (subcaseDescription("certificate was revoked"),
-             simpleErrorCase(laConsts.errorCodeCertificateRevoked), expectations),
-            (subcaseDescription("same key was reused in another session"),
-             simpleErrorCase(laConsts.errorCodeKeyUsedMultipleTimes), expectations),
-            (subcaseDescription("server session doesn't match"),
-             simpleErrorCase(errorServerSessionDoesNotMatch), expectations),
+            (
+                subcaseDescription("bad certificate signature"),
+                simpleErrorCase(laConsts.errorCodeBadCertSignature),
+                expectations
+            ),
+            (
+                subcaseDescription("certificate was revoked"),
+                simpleErrorCase(laConsts.errorCodeCertificateRevoked),
+                expectations
+            ),
+            (
+                subcaseDescription("same key was reused in another session"),
+                simpleErrorCase(laConsts.errorCodeKeyUsedMultipleTimes),
+                expectations
+            ),
+            (
+                subcaseDescription("server session doesn't match"),
+                simpleErrorCase(errorServerSessionDoesNotMatch),
+                expectations
+            ),
         ]
 
         var keys: VpnKeys?
@@ -74,12 +88,16 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             let newKeys = self.container.vpnAuthenticationStorage.keys
             XCTAssertNotNil(newKeys)
 
-            XCTAssertNotEqual(keys?.privateKey.derRepresentation,
-                              newKeys?.privateKey.derRepresentation,
-                              "Private key stayed the same in subcase '\(subcase)'")
-            XCTAssertNotEqual(keys?.publicKey.derRepresentation,
-                              newKeys?.publicKey.derRepresentation,
-                              "Public key stayed the same in subcase '\(subcase)'")
+            XCTAssertNotEqual(
+                keys?.privateKey.derRepresentation,
+                newKeys?.privateKey.derRepresentation,
+                "Private key stayed the same in subcase '\(subcase)'"
+            )
+            XCTAssertNotEqual(
+                keys?.publicKey.derRepresentation,
+                newKeys?.publicKey.derRepresentation,
+                "Public key stayed the same in subcase '\(subcase)'"
+            )
             keys = newKeys
         }
 
@@ -97,10 +115,16 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
         let expectations: [ExpectationCategory] = [.certificateRefresh, .localAgentConnection]
 
         let subcases: [Subcase] = [
-            (subcaseDescription("certificate has expired"),
-             simpleErrorCase(laConsts.errorCodeCertificateExpired), expectations),
-            (subcaseDescription("no certificate provided"),
-             simpleErrorCase(laConsts.errorCodeCertNotProvided), expectations)
+            (
+                subcaseDescription("certificate has expired"),
+                simpleErrorCase(laConsts.errorCodeCertificateExpired),
+                expectations
+            ),
+            (
+                subcaseDescription("no certificate provided"),
+                simpleErrorCase(laConsts.errorCodeCertNotProvided),
+                expectations
+            ),
         ]
 
         connectSynchronously(expectCertRefresh: true)
@@ -123,14 +147,20 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
         )
 
         let subcases: [Subcase] = [
-            (subcaseDescription(alertSubcases.maxSessions),
-             simpleErrorCase(laConsts.errorCodeMaxSessionsPlus), [.vpnDisconnection, .alertDisplayed]),
-            (subcaseDescription("user bad behavior"),
-             simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection]),
+            (
+                subcaseDescription(alertSubcases.maxSessions),
+                simpleErrorCase(laConsts.errorCodeMaxSessionsPlus),
+                [.vpnDisconnection, .alertDisplayed]
+            ),
+            (
+                subcaseDescription("user bad behavior"),
+                simpleErrorCase(laConsts.errorCodeUserBadBehavior),
+                [.vpnDisconnection]
+            ),
             (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
-                 self.mockProviderState.forceResponse = .error(message: "Internal server error")
-                 self.laError(self.laConsts.errorCodeCertificateExpired, nil)
-             }, [.vpnDisconnection, .alertDisplayed])
+                mockProviderState.forceResponse = .error(message: "Internal server error")
+                laError(laConsts.errorCodeCertificateExpired, nil)
+            }, [.vpnDisconnection, .alertDisplayed]),
         ]
 
         var first = true
@@ -154,23 +184,27 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
 
         let featuresStored: ExpectationCategory = .custom(name: "stored features")
         container.vpnAuthenticationStorage.certAndFeaturesStored = { [unowned self] _ in
-            self.fulfillExpectationCategory(featuresStored)
+            fulfillExpectationCategory(featuresStored)
         }
 
         populateExpectations(description: "Local agent receiving features and refreshing certificate", [featuresStored, .certificateRefresh])
 
         mockProviderState.shouldRefresh = true
-        let features = VPNConnectionFeatures(netshield: .level1,
-                                             vpnAccelerator: true,
-                                             bouncing: "0",
-                                             natType: .strictNAT,
-                                             safeMode: false)
-        let localAgentConfiguration = LocalAgentConfiguration(hostname: "10.2.0.1:65432",
-                                                              netshield: features.netshield,
-                                                              vpnAccelerator: features.vpnAccelerator,
-                                                              bouncing: features.bouncing,
-                                                              natType: features.natType,
-                                                              safeMode: features.safeMode)
+        let features = VPNConnectionFeatures(
+            netshield: .level1,
+            vpnAccelerator: true,
+            bouncing: "0",
+            natType: .strictNAT,
+            safeMode: false
+        )
+        let localAgentConfiguration = LocalAgentConfiguration(
+            hostname: "10.2.0.1:65432",
+            netshield: features.netshield,
+            vpnAccelerator: features.vpnAccelerator,
+            bouncing: features.bouncing,
+            natType: features.natType,
+            safeMode: features.safeMode
+        )
 
         let localAgentFeatures = LocalAgentNewFeatures()!.with(configuration: localAgentConfiguration)
         localAgentConnection?.status = LocalAgentStatusMessage()

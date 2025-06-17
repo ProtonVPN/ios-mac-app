@@ -20,8 +20,8 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 
 import Domain
 import Ergonomics
@@ -33,11 +33,11 @@ public struct VpnCertificate: Sendable, Equatable {
     public let refreshTime: Date
 
     public var isExpired: Bool {
-        return Date() > validUntil
+        Date() > validUntil
     }
 
     public var shouldBeRefreshed: Bool {
-        return Date() > refreshTime
+        Date() > refreshTime
     }
 
     enum CodingKeys: String, CodingKey {
@@ -50,37 +50,35 @@ public struct VpnCertificate: Sendable, Equatable {
         self.certificate = certificate
         self.validUntil = validUntil
         self.refreshTime = refreshTime
-
     }
 
     #if os(iOS)
-    // Not implemented on MacOS, see CertificateCryptoService
-    public func getPublicKey() throws -> Data {
-        @Dependency(\.certificateCryptoService) var crypto
-        let derRepresentation = try crypto.derRepresentation(ofPEMEncodedCertificate: certificate)
-        return try crypto.publicKey(ofDEREncodedCertificate: derRepresentation)
-    }
+        // Not implemented on MacOS, see CertificateCryptoService
+        public func getPublicKey() throws -> Data {
+            @Dependency(\.certificateCryptoService) var crypto
+            let derRepresentation = try crypto.derRepresentation(ofPEMEncodedCertificate: certificate)
+            return try crypto.publicKey(ofDEREncodedCertificate: derRepresentation)
+        }
     #endif
 }
 
 public extension VpnCertificate {
     init(dict: JSONDictionary) throws {
-        self.init(
-            certificate: try dict.stringOrThrow(key: "Certificate"),
-            validUntil: try dict.unixTimestampOrThrow(key: "ExpirationTime"),
-            refreshTime: try dict.unixTimestampOrThrow(key: "RefreshTime")
+        try self.init(
+            certificate: dict.stringOrThrow(key: "Certificate"),
+            validUntil: dict.unixTimestampOrThrow(key: "ExpirationTime"),
+            refreshTime: dict.unixTimestampOrThrow(key: "RefreshTime")
         )
     }
 }
 
 extension VpnCertificate: Codable {
-
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.init(
-            certificate: try container.decode(String.self, forKey: .certificate),
-            validUntil: try container.decode(Date.self, forKey: .validUntil),
-            refreshTime: try container.decode(Date.self, forKey: .refreshTime)
+        try self.init(
+            certificate: container.decode(String.self, forKey: .certificate),
+            validUntil: container.decode(Date.self, forKey: .validUntil),
+            refreshTime: container.decode(Date.self, forKey: .refreshTime)
         )
     }
 
@@ -90,7 +88,6 @@ extension VpnCertificate: Codable {
         try container.encode(validUntil, forKey: .validUntil)
         try container.encode(refreshTime, forKey: .refreshTime)
     }
-
 }
 
 extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible {
@@ -98,25 +95,25 @@ extension VpnCertificate: CustomStringConvertible, CustomDebugStringConvertible 
         var properties = [
             "certificateFingerprint: '\(certificate.fingerprint)'",
             "validUntil: '\(validUntil)'",
-            "refreshTime: '\(refreshTime)'"
+            "refreshTime: '\(refreshTime)'",
         ]
         #if os(iOS) && DEBUG
-        do {
-            let publicKey = try getPublicKey()
-            // On release builds, let's avoid the costly process of parsing the certificate every time we want to log it
-            properties.append(contentsOf: [
-                "certificatePublicKeyFingerprint: '\(publicKey.fingerprint)'",
-                "certificatePublicKey: '\(publicKey.base64EncodedString())'"
-            ])
-        } catch {
-            properties.append("certificateError: \(error)")
-        }
+            do {
+                let publicKey = try getPublicKey()
+                // On release builds, let's avoid the costly process of parsing the certificate every time we want to log it
+                properties.append(contentsOf: [
+                    "certificatePublicKeyFingerprint: '\(publicKey.fingerprint)'",
+                    "certificatePublicKey: '\(publicKey.base64EncodedString())'",
+                ])
+            } catch {
+                properties.append("certificateError: \(error)")
+            }
         #endif
 
         return "VPNCertificate(\(properties.joined(separator: ", ")))"
     }
-    
-    public var debugDescription: String { return description }
+
+    public var debugDescription: String { description }
 }
 
 public struct VpnCertificateWithFeatures {

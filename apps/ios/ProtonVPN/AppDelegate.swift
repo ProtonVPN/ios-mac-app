@@ -21,8 +21,8 @@
 //
 
 // System frameworks
-import UIKit
 import Foundation
+import UIKit
 
 // Third-party dependencies
 import Dependencies
@@ -41,21 +41,22 @@ import ProtonCoreNetworking
 import ProtonCoreObservability
 import ProtonCorePushNotifications
 import ProtonCoreServices
-import ProtonCoreUIFoundations
 import ProtonCoreTelemetry
+import ProtonCoreUIFoundations
 
-// Local dependencies (Core first, then Shared, then Features, then Foundations)
-import LegacyCommon
-import VPNShared
-import VPNAppCore
 import Announcement
-import Settings
-import Logging
-import PMLogger
 import Domain
 import Ergonomics
 
-public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+// Local dependencies (Core first, then Shared, then Features, then Foundations)
+import LegacyCommon
+import Logging
+import PMLogger
+import Settings
+import VPNAppCore
+import VPNShared
+
+public let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
 final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
@@ -85,17 +86,16 @@ final class AppDelegate: UIResponder {
 }
 
 // MARK: - UIApplicationDelegate
+
 extension AppDelegate: UIApplicationDelegate {
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         #if DEBUG
-        #if targetEnvironment(simulator)
-        // Force log out if running UI tests
-        if ProcessInfo.processInfo.arguments.contains("UITests") {
-            appSessionManager.logOut(force: false, reason: "UI tests")
-        }
-        #endif
+            #if targetEnvironment(simulator)
+                // Force log out if running UI tests
+                if ProcessInfo.processInfo.arguments.contains("UITests") {
+                    appSessionManager.logOut(force: false, reason: "UI tests")
+                }
+            #endif
         #endif
 
         // Clear out any overrides that may have been present in previous builds
@@ -162,15 +162,15 @@ extension AppDelegate: UIApplicationDelegate {
 
     private func setupDebugHelpers() {
         #if DEBUG
-        CertificateConstants.certificateDuration = "10 minutes"
+            CertificateConstants.certificateDuration = "10 minutes"
         #endif
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationWillEnterForeground(_: UIApplication) {
         appStateManager.refreshState()
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    func application(_: UIApplication, continue userActivity: NSUserActivity, restorationHandler _: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         // Handle Siri intents
         let prefix = "com.protonmail.vpn."
         guard userActivity.activityType.hasPrefix(prefix) else {
@@ -184,7 +184,7 @@ extension AppDelegate: UIApplicationDelegate {
         return handleAction(action, verified: verified)
     }
 
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
               let host = components.host else {
             log.error("Invalid URL", category: .app)
@@ -210,9 +210,9 @@ extension AppDelegate: UIApplicationDelegate {
 
         let algorithm = CryptoConstants.widgetChallengeAlgorithm
         guard let s = queryItems.first(where: { $0.name == "s" })?.value?.data(using: .utf8),
-           let a = queryItems.first(where: { $0.name == "a" })?.value,
-               a == algorithm.stringValue,
-           let signature = Data(base64Encoded: s) else {
+              let a = queryItems.first(where: { $0.name == "a" })?.value,
+              a == algorithm.stringValue,
+              let signature = Data(base64Encoded: s) else {
             return false
         }
 
@@ -231,12 +231,12 @@ extension AppDelegate: UIApplicationDelegate {
         return false
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    func applicationDidEnterBackground(_: UIApplication) {
         log.info("applicationDidEnterBackground", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: true)
     }
 
-    func applicationDidBecomeActive(_ application: UIApplication) {
+    func applicationDidBecomeActive(_: UIApplication) {
         log.info("applicationDidBecomeActive", category: .os)
         vpnManager.appBackgroundStateDidChange(isBackground: false)
 
@@ -253,32 +253,30 @@ extension AppDelegate: UIApplicationDelegate {
         }
     }
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         pushNotificationService.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+    func application(_: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         pushNotificationService.didFailToRegisterForRemoteNotifications(withError: error)
     }
 
     private func setupLogsForApp() {
-        let logFile = self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        let logFile = container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
 
         let fileLogHandler = FileLogHandler(logFile)
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 }
 
-fileprivate extension AppDelegate {
-
+private extension AppDelegate {
     // MARK: - Private
 
     func handleAction(_ action: String, verified: Bool = false) -> Bool {
         switch action {
-
         case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
                 self?.navigationService.presentWelcome(initialError: nil)
@@ -330,7 +328,8 @@ fileprivate extension AppDelegate {
         return true
     }
 
-    @objc func stateDidUpdate() {
+    @objc
+    func stateDidUpdate() {
         switch appStateManager.state {
         case .connected:
             NotificationCenter.default.removeObserver(self)
@@ -378,10 +377,10 @@ extension AppDelegate {
         PMLog.disableExternalLogging()
     }
 
-    private func setupCoreIntegration(launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) {
+    private func setupCoreIntegration(launchOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) {
         injectDefaultCryptoImplementation()
 
-        ProtonCoreLog.PMLog.callback = { (message, level) in
+        ProtonCoreLog.PMLog.callback = { message, level in
             switch level {
             case .debug, .info, .trace, .warn:
                 log.debug("\(message)", category: .core)
@@ -393,7 +392,7 @@ extension AppDelegate {
         let apiService = container.makeNetworking().apiService
         apiService.acquireSessionIfNeeded { [unowned apiService, unowned self] result in
             switch result {
-            case .success(.sessionAlreadyPresent(let authCredential)), .success(.sessionFetchedAndAvailable(let authCredential)):
+            case let .success(.sessionAlreadyPresent(authCredential)), let .success(.sessionFetchedAndAvailable(authCredential)):
                 FeatureFlagsRepository.shared.setApiService(apiService)
 
                 if !authCredential.userID.isEmpty {
@@ -401,9 +400,9 @@ extension AppDelegate {
                 }
 
                 Task { [self] in
-                     do {
+                    do {
                         try await FeatureFlagsRepository.shared.fetchFlags()
-                        self.registerForPushNotificationsIfNeeded()
+                        registerForPushNotificationsIfNeeded()
                     } catch {
                         log.error("Could not retrieve feature flags: \(error)", category: .core, event: .error)
                     }
@@ -412,14 +411,14 @@ extension AppDelegate {
                 TelemetryService.shared.setApiService(apiService: apiService)
                 TelemetryService.shared.setTelemetryEnabled(telemetrySettings.telemetryUsageData)
 
-                let isTelemetryEnabled = self.telemetrySettings.telemetryCrashReports
+                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
 
                 if isTelemetryEnabled {
                     enableExternalLogging()
                 } else {
                     disableExternalLogging()
                 }
-            case .failure(let error):
+            case let .failure(error):
                 log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
             default:
                 break
@@ -457,8 +456,8 @@ extension AppDelegate {
                     return .success(())
                 }
 
-                NotificationType.allAccountRecoveryTypes.forEach {
-                    pushNotificationService.registerHandler(vpnHandler, forType: $0)
+                for accountRecoveryType in NotificationType.allAccountRecoveryTypes {
+                    pushNotificationService.registerHandler(vpnHandler, forType: accountRecoveryType)
                 }
             }
         }

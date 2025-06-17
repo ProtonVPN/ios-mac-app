@@ -29,72 +29,75 @@ protocol WindowControllerDelegate: AnyObject {
 
 class WindowController: NSWindowController {
     private var eventMonitor: Any?
-    
+
     var monitorsKeyEvents: Bool? {
         didSet {
             configureEventMonitor()
         }
     }
-    
+
     weak var delegate: WindowControllerDelegate?
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     override init(window: NSWindow?) {
         super.init(window: window)
         window?.delegate = self
     }
-    
+
     deinit {
         removeEventMonitor()
     }
-    
+
     // MARK: - Private functions
+
     private func configureEventMonitor() {
-        guard let monitorsKeyEvents = monitorsKeyEvents else {
+        guard let monitorsKeyEvents else {
             return
         }
-        
+
         monitorsKeyEvents ? addEventMonitor() : removeEventMonitor()
     }
-    
+
     private func addEventMonitor() {
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [weak self] event in
-            guard let self = self else {
+            guard let self else {
                 return nil
             }
-            
-            if event.window != self.window {
+
+            if event.window != window {
                 return event
             }
 
-            if event.modifierFlags.contains(.command) && !event.modifierFlags.contains(.shift) && event.characters == "w" {
-                if let delegate = self.delegate {
+            if event.modifierFlags.contains(.command), !event.modifierFlags.contains(.shift), event.characters == "w" {
+                if let delegate {
                     delegate.windowCloseRequested(self)
                 } else {
-                    self.close()
+                    close()
                 }
                 return nil
             }
             return event
         }
     }
-    
+
     private func removeEventMonitor() {
-        guard let eventMonitor = eventMonitor else {
+        guard let eventMonitor else {
             return
         }
-        
+
         NSEvent.removeMonitor(eventMonitor)
     }
 }
 
 // MARK: - Handling action on 'X' window button press
+
 extension WindowController: NSWindowDelegate {
-    func windowShouldClose(_ sender: NSWindow) -> Bool {
-        if let delegate = delegate {
+    func windowShouldClose(_: NSWindow) -> Bool {
+        if let delegate {
             delegate.windowCloseRequested(self)
             return false
         } else {
@@ -102,7 +105,7 @@ extension WindowController: NSWindowDelegate {
         }
     }
 
-    func windowWillClose(_ notification: Notification) {
+    func windowWillClose(_: Notification) {
         delegate?.windowWillClose(self)
     }
 }

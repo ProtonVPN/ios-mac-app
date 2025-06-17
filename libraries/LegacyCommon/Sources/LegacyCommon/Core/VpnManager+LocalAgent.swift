@@ -25,9 +25,9 @@ import Foundation
 import Dependencies
 
 import ExtensionIPC
-import VPNShared
-import VPNAppCore
 import NetShield
+import VPNAppCore
+import VPNShared
 
 import Domain
 import Ergonomics
@@ -36,7 +36,7 @@ private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-age
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
-        guard let vpnProtocol = self.currentVpnProtocol else {
+        guard let vpnProtocol = currentVpnProtocol else {
             log.error("Skipping local agent connection, current protocol is nil!", category: .localAgent)
             return
         }
@@ -47,17 +47,19 @@ extension VpnManager {
 
         let connect = { (data: VpnAuthenticationData) in
             localAgentQueue.sync { [unowned self] in
-                guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, natTypePropertyProvider: self.natTypePropertyProvider, netShieldPropertyProvider: self.netShieldPropertyProvider, safeModePropertyProvider: self.safeModePropertyProvider, vpnProtocol: self.currentVpnProtocol) else {
+                guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, natTypePropertyProvider: natTypePropertyProvider, netShieldPropertyProvider: netShieldPropertyProvider, safeModePropertyProvider: safeModePropertyProvider, vpnProtocol: currentVpnProtocol) else {
                     log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                     return
                 }
 
-                self.disconnectLocalAgentNoSync()
-                self.localAgent = LocalAgentImplementation(factory: self.localAgentConnectionFactory,
-                                                           propertiesManager: self.propertiesManager,
-                                                           netShieldPropertyProvider: self.netShieldPropertyProvider)
-                self.localAgent?.delegate = self
-                self.localAgent?.connect(data: data, configuration: configuration)
+                disconnectLocalAgentNoSync()
+                localAgent = LocalAgentImplementation(
+                    factory: localAgentConnectionFactory,
+                    propertiesManager: propertiesManager,
+                    netShieldPropertyProvider: netShieldPropertyProvider
+                )
+                localAgent?.delegate = self
+                localAgent?.connect(data: data, configuration: configuration)
             }
         }
 
@@ -69,9 +71,13 @@ extension VpnManager {
         // load last authentication data (that should be available)
         vpnAuthentication.loadAuthenticationData { [weak self] result in
             switch result {
-            case .failure(let error):
-                log.error("Failed to initialize local agent because of missing authentication data",
-                          category: .localAgent, event: .error, metadata: ["error": .string(.init(describing: error))])
+            case let .failure(error):
+                log.error(
+                    "Failed to initialize local agent because of missing authentication data",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {
                     return
                 }
@@ -79,7 +85,7 @@ extension VpnManager {
                 switch remoteClientError {
                 case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                case .tooManyCertRequests(let retryAfter):
+                case let .tooManyCertRequests(retryAfter):
                     self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case let .success(data):
@@ -110,16 +116,19 @@ extension VpnManager {
             case let .success(data):
                 completion(data)
             case let .failure(error):
-                log.error("Failed to refresh certificate in local agent",
-                          category: .localAgent, event: .error,
-                          metadata: ["error": .string(.init(describing: error))])
+                log.error(
+                    "Failed to refresh certificate in local agent",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 SentryHelper.shared?.log(error: error)
 
                 if let remoteClientError = error as? AuthenticationRemoteClientError {
                     switch remoteClientError {
                     case .needNewKeys:
                         self?.reconnectWithNewKeyAndCertificate()
-                    case .tooManyCertRequests(let retryAfter):
+                    case let .tooManyCertRequests(retryAfter):
                         self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                     }
                     return
@@ -132,9 +141,9 @@ extension VpnManager {
                     // Don't disconnect the VPN on iOS if the app is in the background - our app could be getting
                     // "pre-warmed," and we may not have the necessary privileges to successfully execute a cert refresh.
                     #if os(iOS)
-                    guard self?.disconnectOnCertRefreshError == true else {
-                        return
-                    }
+                        guard self?.disconnectOnCertRefreshError == true else {
+                            return
+                        }
                     #endif
 
                     self?.disconnect { [weak self] in
@@ -151,7 +160,7 @@ extension VpnManager {
         vpnAuthentication.clearEverything { [weak self] in
             // Force keygen on our end, otherwise we won't be able to fetch a certificate.
             _ = self?.vpnAuthentication.loadClientPrivateKey()
-            self?.refreshCertificateWithError { result in
+            self?.refreshCertificateWithError { _ in
                 log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
                 executeOnUIThread {
                     AppEvent.needsReconnect.post()
@@ -161,7 +170,7 @@ extension VpnManager {
     }
 
     func disconnectWithAlert(alert: SystemAlert) {
-        disconnect { }
+        disconnect {}
         alertService?.push(alert: alert)
     }
 
@@ -169,13 +178,13 @@ extension VpnManager {
         get {
             switch currentVpnProtocol {
             case .ike:
-                return propertiesManager.lastIkeConnection
+                propertiesManager.lastIkeConnection
             case .openVpn:
-                return propertiesManager.lastOpenVpnConnection
+                propertiesManager.lastOpenVpnConnection
             case .wireGuard:
-                return propertiesManager.lastWireguardConnection
+                propertiesManager.lastWireguardConnection
             case nil:
-                return nil
+                nil
             }
         }
         set {
@@ -266,7 +275,7 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Key used multiple times, trying to generate new key and certificate and reconnect", category: .localAgent, event: .error)
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
-            disconnect { }
+            disconnect {}
             guard let credentials = vpnKeychain.fetchCached() else {
                 log.error("Cannot show max session alert because getting credentials failed", category: .localAgent, event: .error)
                 return
@@ -277,7 +286,7 @@ extension VpnManager: LocalAgentDelegate {
             disconnectWithAlert(alert: VpnServerErrorAlert())
         case .guestSession:
             log.error("Internal status that should never be seen, check the app implementation", category: .localAgent, event: .error)
-            disconnect { }
+            disconnect {}
         case .policyViolationDelinquent:
             log.error("Disconnecting because of unpaid invoices", category: .localAgent, event: .error)
             disconnectWithAlert(alert: DelinquentUserAlert())
@@ -287,7 +296,7 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Received torrent not allowed error from LocalAgent (doing nothing for now, ServiceChecker will handle it)")
         case .userBadBehavior:
             log.error("Local agent reporting bad behavior, kicking client", category: .localAgent, event: .error)
-            disconnect { }
+            disconnect {}
         case .restrictedServer:
             log.error("Local agent reported restricted server error, waiting for the local agent to recover", category: .localAgent, event: .error)
         case .serverSessionDoesNotMatch:
@@ -298,6 +307,7 @@ extension VpnManager: LocalAgentDelegate {
             alertService?.push(alert: DomainErrorAlert(alert: error.alert))
         }
     }
+
     // swiftlint:enable cyclomatic_complexity
 
     func didChangeState(state: LocalAgentState) {
@@ -337,10 +347,13 @@ extension VpnManager: LocalAgentDelegate {
         // If features are different from the ones we have in current certificate, refresh it
         vpnAuthentication.refreshCertificates(features: features, completion: { [weak self] result in
             switch result {
-            case .failure(let error):
-                log.error("Failed to refresh certificate in local agent after receiving features",
-                          category: .localAgent, event: .error,
-                          metadata: ["error": .string(.init(describing: error))])
+            case let .failure(error):
+                log.error(
+                    "Failed to refresh certificate in local agent after receiving features",
+                    category: .localAgent,
+                    event: .error,
+                    metadata: ["error": .string(.init(describing: error))]
+                )
                 SentryHelper.shared?.log(error: error)
 
                 guard let remoteClientError = error as? AuthenticationRemoteClientError else {
@@ -350,7 +363,7 @@ extension VpnManager: LocalAgentDelegate {
                 switch remoteClientError {
                 case .needNewKeys:
                     self?.reconnectWithNewKeyAndCertificate()
-                case .tooManyCertRequests(let retryAfter):
+                case let .tooManyCertRequests(retryAfter):
                     self?.alertService?.push(alert: TooManyCertificateRequestsAlert(retryAfter: retryAfter))
                 }
             case .success:
@@ -361,7 +374,7 @@ extension VpnManager: LocalAgentDelegate {
 
     func didReceiveConnectionDetails(_ details: ConnectionDetailsMessage) {
         if let exitIp = details.exitIp {
-            self.updateActiveConnection(exitIp: String(describing: exitIp))
+            updateActiveConnection(exitIp: String(describing: exitIp))
         }
     }
 
@@ -371,7 +384,7 @@ extension VpnManager: LocalAgentDelegate {
 
     private func didReceiveFeature(safeMode: Bool?) {
         // ignore nil value received from the Local Agent and also nil value from the provider because it means the feature is not enabled and values should not be used
-        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode = safeMode, currentSafeMode != safeMode else {
+        guard let currentSafeMode = safeModePropertyProvider.safeMode, let safeMode, currentSafeMode != safeMode else {
             return
         }
 

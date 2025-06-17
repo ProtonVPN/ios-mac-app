@@ -24,15 +24,14 @@ import UIKit
 import VPNShared
 
 class AppConstants {
-
     static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
-    
-    struct NetworkExtensions {
+
+    enum NetworkExtensions {
         static let openVpn = "\(appBundleId).OpenVPN-Extension"
         static let wireguard = "\(appBundleId).WireGuardiOS-Extension"
     }
-    
-    struct Time {
+
+    enum Time {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: TimeInterval = 3 // seconds
         static let timeForForegroundStuck: TimeInterval = .minutes(30)
@@ -40,7 +39,7 @@ class AppConstants {
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = .hours(3)
         static let serverLoadsRefresh: TimeInterval = .minutes(15)
-        
+
         // Account
         static let userAccountRefresh: TimeInterval = .minutes(3)
 
@@ -51,15 +50,15 @@ class AppConstants {
         // Payments
         static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
     }
-    
-    struct Filenames {
+
+    enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
     }
 }
 
 extension String {
     var asMainAppBundleIdentifier: String {
-        var result = self.replacingOccurrences(of: ".widget", with: "")
+        var result = replacingOccurrences(of: ".widget", with: "")
         result = result.replacingOccurrences(of: ".Siri-Shortcut-Handler", with: "")
         result = result.replacingOccurrences(of: ".OpenVPN-Extension", with: "")
         result = result.replacingOccurrences(of: ".WireGuardiOS-Extension", with: "")

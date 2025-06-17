@@ -138,14 +138,14 @@ struct ModalBodyView: View {
     }
 
     private func shouldDisplaySpecificFeatures(_ features: some Collection<Feature>) -> Bool {
-        return features.contains { feature in
+        features.contains { feature in
             switch feature {
             case .banner:
-                return true
+                true
             case .toggle:
-                return true
+                true
             default:
-                return false
+                false
             }
         }
     }
@@ -153,18 +153,18 @@ struct ModalBodyView: View {
     private var shouldBannerUseAlternateWording: Bool {
         switch modalType {
         case .onboardingWelcome:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 
     private var subtitleContentColor: Color {
         switch modalType {
         case .onboardingWelcome, .onboardingGetStarted:
-            return .white
+            .white
         default:
-            return Color(.text, .weak)
+            Color(.text, .weak)
         }
     }
 }

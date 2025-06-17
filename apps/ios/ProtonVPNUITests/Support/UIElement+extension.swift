@@ -19,14 +19,13 @@
 @testable import fusion
 import XCTest
 
-extension UIElement {
-
+public extension UIElement {
     /**
      Clears the text from the targeted UI element.
      Calls `clearText()` on the located UI element and returns the current instance of `UIElement`.
      */
     @discardableResult
-    public func clearText() -> UIElement {
+    func clearText() -> UIElement {
         uiElement()!.tapAndClearText()
         return self
     }

@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Dependencies
+import Foundation
 
 @Reducer
 struct BugReportResultFeature {
-
     @ObservableState
     struct State: Equatable {
         var error: String?
@@ -35,25 +34,24 @@ struct BugReportResultFeature {
     }
 
     var body: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .finish:
-                return .run(priority: .userInitiated) { _ in
+                .run(priority: .userInitiated) { _ in
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
-                
+
             case .retry:
                 // Retry is done on the parent view
-                return .none
+                .none
 
             case .troubleshoot:
-                return .run(priority: .userInitiated) { _ in
+                .run(priority: .userInitiated) { _ in
                     @Dependency(\.troubleshoot) var troubleshoot
                     troubleshoot()
                 }
             }
         }
     }
-
 }

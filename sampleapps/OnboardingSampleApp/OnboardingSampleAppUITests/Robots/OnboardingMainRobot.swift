@@ -19,11 +19,11 @@
 import Foundation
 import XCTest
 
-fileprivate let onboarding = "StartButton"
-fileprivate let takeATourButton = "TakeATourButton"
-fileprivate let welcomeTitle = "WelcomeTitle"
-fileprivate let welcomeDescription = "WelcomeSubtitle"
-fileprivate let skipButton = "SkipButton"
+private let onboarding = "StartButton"
+private let takeATourButton = "TakeATourButton"
+private let welcomeTitle = "WelcomeTitle"
+private let welcomeDescription = "WelcomeSubtitle"
+private let skipButton = "SkipButton"
 
 class OnboardingMainRobot {
     let app: XCUIApplication
@@ -33,24 +33,24 @@ class OnboardingMainRobot {
         self.app = app
         self.verify = Verify(app: app)
     }
-    
+
     func startOnboarding() -> OnboardingMainRobot {
         app.buttons[onboarding].tap()
         return OnboardingMainRobot(app: app)
     }
-    
+
     func startUserOnboarding() -> OnboardingSlidesRobot {
         app.buttons[takeATourButton].tap()
         return OnboardingSlidesRobot(app: app)
     }
-    
+
     class Verify {
         let app: XCUIApplication
 
         init(app: XCUIApplication) {
             self.app = app
         }
-        
+
         @discardableResult
         func welcomeScreenIsShown() -> OnboardingMainRobot {
             XCTAssert(app.staticTexts[welcomeTitle].waitForExistence(timeout: 5))
@@ -59,7 +59,7 @@ class OnboardingMainRobot {
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
             return OnboardingMainRobot(app: app)
         }
-        
+
         @discardableResult
         func onboardingScreen() -> OnboardingMainRobot {
             XCTAssert(app.buttons[onboarding].waitForExistence(timeout: 5))

@@ -20,17 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import Foundation
+import LegacyCommon
 import Strings
 
 final class TroubleshootingPopup: NSViewController {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private var tableView: NSTableView!
 
     // MARK: Properties
 
@@ -75,8 +74,8 @@ final class TroubleshootingPopup: NSViewController {
 // MARK: Table view delegate
 
 extension TroubleshootingPopup: NSTableViewDelegate {
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel?.items.count ?? 0
+    func numberOfRows(in _: NSTableView) -> Int {
+        viewModel?.items.count ?? 0
     }
 
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -98,15 +97,15 @@ extension TroubleshootingPopup: NSTableViewDelegate {
         return height > tableView.rowHeight ? height : tableView.rowHeight
     }
 
-    func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        return false
+    func tableView(_: NSTableView, shouldSelectRow _: Int) -> Bool {
+        false
     }
 }
 
 // MARK: Table view data source
 
 extension TroubleshootingPopup: NSTableViewDataSource {
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    func tableView(_ tableView: NSTableView, viewFor _: NSTableColumn?, row: Int) -> NSView? {
         let rowItem = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: cellIdentifier), owner: nil) as! TroubleshootingRowItem
         rowItem.item = viewModel!.items[row]
         return rowItem

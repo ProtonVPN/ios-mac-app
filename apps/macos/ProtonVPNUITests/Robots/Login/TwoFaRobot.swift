@@ -17,26 +17,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
-fileprivate let twoFaAuthentication = "Two-factor authentication"
-fileprivate let twoFaAuthenticationTextField = "twoFactorTextField"
-fileprivate let authButton = "Authenticate"
+private let twoFaAuthentication = "Two-factor authentication"
+private let twoFaAuthenticationTextField = "twoFactorTextField"
+private let authButton = "Authenticate"
 
 class TwoFaRobot: CoreElements {
-    
     @discardableResult
     func fillTwoFACode(code: String) -> MainRobot {
         textField(twoFaAuthenticationTextField).tap().typeText(code)
         button(authButton).tap()
         return MainRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func twoFaAuthenticationIsShown() -> TwoFaRobot {
             staticText(twoFaAuthentication).checkExists()

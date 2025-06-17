@@ -19,7 +19,6 @@
 import SwiftUI
 
 struct SettingsCellView: View {
-
     let title: LocalizedStringKey
     let icon: Image
     let action: () -> Void
@@ -43,7 +42,6 @@ struct SettingsCellView: View {
 }
 
 private struct SettingsButtonStyle: ButtonStyle {
-
     private static let size = CGSize(width: Constants.maxPreferredContentViewWidth, height: 120)
 
     @Environment(\.isFocused) var isFocused

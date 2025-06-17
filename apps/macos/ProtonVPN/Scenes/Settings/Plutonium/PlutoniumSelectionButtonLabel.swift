@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 import ProtonCoreUIFoundations
 import Strings
@@ -42,36 +42,36 @@ struct PlutoniumSelectionButtonLabel: View {
     var apps: [PlutoniumApp] {
         switch mode {
         case .exclusion:
-            return exclusionActivated.apps
+            exclusionActivated.apps
         case .inclusion:
-            return inclusionActivated.apps
+            inclusionActivated.apps
         }
     }
 
     var ips: [String] {
         switch mode {
         case .exclusion:
-            return exclusionActivated.ips
+            exclusionActivated.ips
         case .inclusion:
-            return inclusionActivated.ips
+            inclusionActivated.ips
         }
     }
 
     var itemsCount: Int {
         switch listType {
         case .apps:
-            return apps.count
+            apps.count
         case .ips:
-            return ips.count
+            ips.count
         }
     }
 
     var others: Int {
         switch listType {
         case .apps:
-            return itemsCount - appsRendered.count
+            itemsCount - appsRendered.count
         case .ips:
-            return itemsCount - ipsRendered.count
+            itemsCount - ipsRendered.count
         }
     }
 
@@ -80,16 +80,16 @@ struct PlutoniumSelectionButtonLabel: View {
         case .apps:
             switch mode {
             case .exclusion:
-                return Localizable.plutoniumExclusionListApps
+                Localizable.plutoniumExclusionListApps
             case .inclusion:
-                return Localizable.plutoniumInclusionListApps
+                Localizable.plutoniumInclusionListApps
             }
         case .ips:
             switch mode {
             case .exclusion:
-                return Localizable.plutoniumExcludeModeIps
+                Localizable.plutoniumExcludeModeIps
             case .inclusion:
-                return Localizable.plutoniumIncludeModeIps
+                Localizable.plutoniumIncludeModeIps
             }
         }
     }

@@ -19,9 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import Strings
-import Domain
 
 public enum NetworkError: Int, CustomNSError {
     public static let errorDomain = "NetworkErrorDomain"
@@ -39,15 +39,15 @@ public enum NetworkError: Int, CustomNSError {
     public var rawValue: Int {
         switch self {
         case .requestTimedOut:
-            return NetworkErrorCode.timedOut
+            NetworkErrorCode.timedOut
         case .cannotConnectToHost:
-            return NetworkErrorCode.cannotConnectToHost
+            NetworkErrorCode.cannotConnectToHost
         case .networkConnectionLost:
-            return NetworkErrorCode.networkConnectionLost
+            NetworkErrorCode.networkConnectionLost
         case .notConnectedToInternet:
-            return NetworkErrorCode.notConnectedToInternet
+            NetworkErrorCode.notConnectedToInternet
         case .tls:
-            return NetworkErrorCode.tls
+            NetworkErrorCode.tls
         }
     }
 
@@ -72,15 +72,15 @@ public enum NetworkError: Int, CustomNSError {
     public var localizedDescription: String {
         switch self {
         case .requestTimedOut:
-            return Localizable.neRequestTimedOut
+            Localizable.neRequestTimedOut
         case .cannotConnectToHost:
-            return Localizable.neUnableToConnectToHost
+            Localizable.neUnableToConnectToHost
         case .networkConnectionLost:
-            return Localizable.neNetworkConnectionLost
+            Localizable.neNetworkConnectionLost
         case .notConnectedToInternet:
-            return Localizable.neNotConnectedToTheInternet
+            Localizable.neNotConnectedToTheInternet
         case .tls:
-            return Localizable.errorMitmDescription
+            Localizable.errorMitmDescription
         }
     }
 
@@ -89,13 +89,12 @@ public enum NetworkError: Int, CustomNSError {
     }
 }
 
-extension Error {
-
+public extension Error {
     /// Returns true if the request failed due to a network error, and it is reasonably safe to retry.
     ///
     /// - Note: In contrast to `isNetworkError`, this returns false when we *really* might be blocked (for example, when
     /// the underlying error is HTTP 451: Unavailable For Legal Reasons)
-    public var shouldRetry: Bool {
+    var shouldRetry: Bool {
         let nsError = self as NSError
         let retriableNSURLDomainErrorCodes = [
             NetworkErrorCode.timedOut,
@@ -105,23 +104,23 @@ extension Error {
             NetworkErrorCode.cannotFindHost,
             NetworkErrorCode.dnsLookupFailed,
             NetworkErrorCode.secureConnectionFailed,
-            NetworkErrorCode.cannotParseResponse // Potentially returned when requests are interrupted by network interface changes
+            NetworkErrorCode.cannotParseResponse, // Potentially returned when requests are interrupted by network interface changes
         ]
 
-        if nsError.domain == NSURLErrorDomain && retriableNSURLDomainErrorCodes.contains(nsError.code) {
+        if nsError.domain == NSURLErrorDomain, retriableNSURLDomainErrorCodes.contains(nsError.code) {
             return true
         }
 
         // ProtonMailAPIService aggressively wraps network errors as `potentiallyBlocked` errors
         if nsError.code == NetworkErrorCode.potentiallyBlocked {
             // Retry the request if the underlying error is retriable
-            return nsError.underlyingErrors.contains(where: { $0.shouldRetry })
+            return nsError.underlyingErrors.contains(where: \.shouldRetry)
         }
 
         return false
     }
 
-    public var isNetworkError: Bool {
+    var isNetworkError: Bool {
         let nsError = self as NSError
         switch nsError.code {
         case NetworkErrorCode.timedOut,
@@ -140,7 +139,7 @@ extension Error {
         }
     }
 
-    public var isTlsError: Bool {
+    var isTlsError: Bool {
         let nsError = self as NSError
         switch nsError.code {
         case NetworkErrorCode.tls:
@@ -149,7 +148,6 @@ extension Error {
             return false
         }
     }
-
 }
 
 extension NSError {

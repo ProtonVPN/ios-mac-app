@@ -22,8 +22,8 @@ import Clocks
 import ComposableArchitecture
 import Dependencies
 
-import Domain
 import CoreConnection
+import Domain
 import LocalAgent
 import VPNAppCore
 
@@ -33,7 +33,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.connectionIntentStorage) private var intentStorage
     @Dependency(\.connectionIntentResolver) private var intentResolver
 
-    public init() { }
+    public init() {}
 
     public struct State: Equatable, Sendable {
         @SharedReader(.userTier) public var userTier: Int?
@@ -107,7 +107,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .stopObserving:
                 return .merge(.send(.core(.stopObserving)), .cancel(id: CancelID.observation))
 
-            case .input(.connect(let intent)):
+            case let .input(.connect(intent)):
                 do throws(ConnectionIntentResolutionError) {
                     try intentResolver.authorize(intent, state.userTier ?? .freeTier)
                 } catch {
@@ -136,7 +136,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .send(.prepare(intent))
                 }
 
-            case .input(.applySettings(let agentFeatures)):
+            case let .input(.applySettings(agentFeatures)):
                 if !state.coreConnectionState.is(\.connected) {
                     log.warning("Setting connection features while not connected", category: .connection)
                 }
@@ -151,7 +151,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .input(.onLogout):
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
 
-            case .prepare(let intent):
+            case let .prepare(intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
                 assert(state.coreConnectionState, is: \.disconnected)
                 state.shouldRegisterServerChangeOnConnection = intent.spec.location == .random
@@ -163,7 +163,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     }.cancellable(id: CancelID.preparation, cancelInFlight: true)
                 )
 
-            case .finishedPreparing(.success(let resolvedIntent)):
+            case let .finishedPreparing(.success(resolvedIntent)):
                 guard state.coreConnectionState.is(\.disconnected) else {
                     // Preparation can only be initiated while we are fully disconnected. If upon finishing preparation
                     // we are not disconnected, the tunnel was started externally. Let's disconnect with an error
@@ -184,7 +184,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     )
                 }
 
-            case .finishedPreparing(.failure(let error)):
+            case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
                 let wrappedError = ConnectionError.WrappedError(wrapped: error)
                 return .concatenate(
@@ -192,7 +192,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     .send(.delegate(.connectionFailed(.preparation(.wrapped(wrappedError)))))
                 )
 
-            case .core(.delegate(.stateChanged(_, .disconnected(.some(let error))))):
+            case let .core(.delegate(.stateChanged(_, .disconnected(.some(error))))):
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .disconnected),
                     .send(.delegate(.connectionFailed(error)))
@@ -211,16 +211,16 @@ public struct ConnectionFeature: Reducer, Sendable {
                     )
                 }
 
-            case .core(.delegate(.stateChanged(_, .connected(_, let connectedAt, let details)))):
+            case let .core(.delegate(.stateChanged(_, .connected(_, connectedAt, details)))):
                 if state.shouldRegisterServerChangeOnConnection {
                     @Dependency(\.serverChangeAuthorizer) var authorizer
                     authorizer.registerServerChange(connectedAt: connectedAt)
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connected(intent, intent.server, connectedAt, details)
+                    .connected(intent, intent.server, connectedAt, details)
                 }
 
-            case .core(.delegate(.stateChanged(let oldState, .starting))):
+            case let .core(.delegate(.stateChanged(oldState, .starting))):
                 if oldState.is(\.unknown) {
                     // Since the previous state is unknown, we're figuring out the actual connection state at app startup.
                     // Let's skip the `connecting` while we continue to determine whether we're connected
@@ -228,7 +228,7 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .none
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connecting(.resolved(intent, intent.server))
+                    .connecting(.resolved(intent, intent.server))
                 }
 
             case .core(.delegate(.stateChanged(_, .connecting))):
@@ -238,10 +238,10 @@ public struct ConnectionFeature: Reducer, Sendable {
                     return .none
                 }
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
-                    return .connecting(.resolved(intent, intent.server))
+                    .connecting(.resolved(intent, intent.server))
                 }
 
-            case .core(.delegate(.stateChanged(let oldState, .disconnecting))):
+            case let .core(.delegate(.stateChanged(oldState, .disconnecting))):
                 let queuedIntent = state.reconnectionIntent
                 return updateStateWithStoredIntentOrDisconnect(&state) { intent in
                     if let reconnectionIntent = queuedIntent {
@@ -254,7 +254,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case .core(.delegate(.stateChanged(_, .unknown))):
                 return .send(.delegate(.stateChanged(.resolving)))
 
-            case .core(.delegate(.error(let connectionError))):
+            case let .core(.delegate(.error(connectionError))):
                 return .send(.delegate(.connectionFailed(connectionError)))
 
             case .core:
@@ -376,7 +376,7 @@ public struct ConnectionFeature: Reducer, Sendable {
 
 extension ConnectionFeature.State {
     var coreConnectionState: CoreConnectionState {
-        return CoreConnectionState(connectionFeatureState: core)
+        CoreConnectionState(connectionFeatureState: core)
     }
 }
 
@@ -389,14 +389,15 @@ public enum ConnectionState: Equatable, Sendable {
     case connecting(Intent)
     case connected(ServerConnectionIntent, Server, Date, ConnectionDetailsMessage?)
 
-    @CasePathable public enum Intent: Equatable, Sendable {
+    @CasePathable
+    public enum Intent: Equatable, Sendable {
         case unresolved(ConnectionPreparationIntent)
         case resolved(ServerConnectionIntent, Server)
     }
 }
 
-extension ConnectionFeature.State {
-    public static let initialState = ConnectionFeature.State(
+public extension ConnectionFeature.State {
+    static let initialState = ConnectionFeature.State(
         currentIntent: nil,
         queuedIntent: nil,
         connectionState: .resolving,

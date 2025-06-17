@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import LegacyCommon
+import UIKit
 
 final class NetShieldSelectionViewController: UITableViewController {
     private let viewModel: NetShieldSelectionViewModel
@@ -29,7 +29,8 @@ final class NetShieldSelectionViewController: UITableViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

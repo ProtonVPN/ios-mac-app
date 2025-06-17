@@ -19,7 +19,6 @@
 import XCTest
 
 final class OnboardingSampleAppUITests: XCTestCase {
-
     let app = XCUIApplication()
 
     override func setUpWithError() throws {

@@ -17,12 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import VPNAppCore
 import Foundation
+import VPNAppCore
 
 @Reducer
 public struct ChangeServerFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var dateFinished: Date
@@ -46,7 +45,7 @@ public struct ChangeServerFeature {
         case changeServerButtonTapped
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         EmptyReducer()

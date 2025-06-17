@@ -21,85 +21,84 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class PopUpViewController: NSViewController {
-    
-    @IBOutlet weak var bodyView: NSView!
-    @IBOutlet weak var popUpIcon: NSImageView!
-    @IBOutlet weak var popUpDescription: NSTextField!
+    @IBOutlet var bodyView: NSView!
+    @IBOutlet var popUpIcon: NSImageView!
+    @IBOutlet var popUpDescription: NSTextField!
     @IBOutlet var popUpDescriptionTextView: NSTextView!
-    @IBOutlet weak var leadingDescriptionConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: CancellationButton!
-    @IBOutlet weak var confirmButton: PrimaryActionButton!
-    
+    @IBOutlet var leadingDescriptionConstraint: NSLayoutConstraint!
+
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var cancelButton: CancellationButton!
+    @IBOutlet var confirmButton: PrimaryActionButton!
+
     let viewModel: PopUpViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: PopUpViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("PopUp"), bundle: nil)
-        
+
         viewModel.dismissViewController = { [weak self] in
             DispatchQueue.main.async {
                 self?.dismiss(nil)
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupBodySection()
         setupFooterSection()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         view.window?.applyWarningAppearance(withTitle: viewModel.title)
     }
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
-        
+
         viewModel.updateInterface = { [weak self] in
             self?.setupBodySection()
             self?.setupFooterSection()
         }
     }
-    
+
     override func viewWillDisappear() {
         super.viewWillDisappear()
-        
+
         viewModel.cleanUp()
     }
-    
+
     private func setupBodySection() {
         bodyView.wantsLayer = true
         DarkAppearance {
             bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         popUpIcon.image = AppTheme.Icon.vpnMainTransparent
         if !viewModel.showIcon {
             popUpIcon.isHidden = true
             leadingDescriptionConstraint.constant = 20
         }
-        
+
         // HACK: Because the text view is inside a scroll view, it doesn't resize correctly. To address this, the text view is aligned to the text field, which forces the resizing of the dialog.
 
-        let attributedDescription: NSAttributedString
-        if viewModel.joinedTitleAndMessage {
-            attributedDescription = viewModel.attributedDescription
+        let attributedDescription: NSAttributedString = if viewModel.joinedTitleAndMessage {
+            viewModel.attributedDescription
         } else {
-            attributedDescription = viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
+            viewModel.attributedDescription.string.styled(alignment: .natural, textColor: .white)
         }
 
         popUpDescription.attributedStringValue = attributedDescription
@@ -109,16 +108,15 @@ class PopUpViewController: NSViewController {
         }
         popUpDescriptionTextView.delegate = viewModel
 
-
         popUpDescriptionTextView.textStorage?.setAttributedString(attributedDescription)
     }
-    
+
     private func setupFooterSection() {
         footerView.wantsLayer = true
         DarkAppearance {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         if let cancelTitle = viewModel.cancelButtonTitle {
             cancelButton.title = cancelTitle
             cancelButton.fontSize = .paragraph
@@ -128,33 +126,35 @@ class PopUpViewController: NSViewController {
         } else {
             cancelButton.isHidden = true
         }
-        
+
         confirmButton.title = viewModel.confirmButtonTitle
         confirmButton.fontSize = .paragraph
         confirmButton.actionType = viewModel.confirmationType
         confirmButton.target = self
         confirmButton.action = #selector(confirmButtonAction)
     }
-    
-    @objc private func cancelButtonAction() {
+
+    @objc
+    private func cancelButtonAction() {
         viewModel.cancel()
         dismiss(nil)
     }
-    
-    @objc private func confirmButtonAction() {
+
+    @objc
+    private func confirmButtonAction() {
         viewModel.confirm()
         dismiss(nil)
     }
 }
 
 // MARK: - Equatable
+
 extension PopUpViewController {
-    
     override func isEqual(_ object: Any?) -> Bool {
         guard let other = object as? PopUpViewController else {
             return false
         }
-        
+
         return viewModel == other.viewModel
     }
 }

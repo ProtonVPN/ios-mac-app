@@ -39,9 +39,9 @@ extension HermesNotificationType {
     ) -> any SystemAlert {
         switch self {
         case .enableHermes, .enableNetShield:
-            return HermesSettingsViewAlert(type: self, confirmHandler: actionHandler, cancelHandler: cancelHandler)
+            HermesSettingsViewAlert(type: self, confirmHandler: actionHandler, cancelHandler: cancelHandler)
         case .reconnectNecessary:
-            return ReconnectOnActionAlert(
+            ReconnectOnActionAlert(
                 actionTitle: Localizable.hermesApplyChangesWindowTitle,
                 confirmHandler: actionHandler,
                 cancelHandler: cancelHandler
@@ -54,22 +54,22 @@ private extension HermesNotificationType {
     var title: String? {
         switch self {
         case .enableHermes:
-            return Localizable.hermesConflictHermesOnTitle
+            Localizable.hermesConflictHermesOnTitle
         case .reconnectNecessary:
-            return nil
+            nil
         case .enableNetShield:
-            return Localizable.hermesConflictNetshieldOnTitle
+            Localizable.hermesConflictNetshieldOnTitle
         }
     }
 
     var message: String {
         switch self {
         case .enableHermes:
-            return Localizable.hermesConflictHermesOnDescription
+            Localizable.hermesConflictHermesOnDescription
         case .reconnectNecessary:
-            return Localizable.hermesApplyChangesDescription
+            Localizable.hermesApplyChangesDescription
         case .enableNetShield:
-            return Localizable.hermesConflictNetshieldOnDescription
+            Localizable.hermesConflictNetshieldOnDescription
         }
     }
 }
@@ -95,7 +95,7 @@ final class HermesSettingsViewAlert: SystemAlert {
         self.message = type.message
         self.actions = [
             AlertAction(title: Localizable.continue, style: .confirmative, handler: confirmHandler),
-            AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler)
+            AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler),
         ]
     }
 }

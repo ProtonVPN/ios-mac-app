@@ -21,7 +21,6 @@ import Foundation
 import Strings
 
 public extension ConnectionSpec.Location {
-
     private func regionName(locale: Locale, code: String) -> String {
         locale.localizedString(forRegionCode: code) ?? code
     }
@@ -29,11 +28,11 @@ public extension ConnectionSpec.Location {
     func accessibilityText(locale: Locale) -> String {
         switch self {
         case .fastest:
-            return Localizable.connectionCardAccessibilityFastest
+            Localizable.connectionCardAccessibilityFastest
         case .secureCore(.fastest):
-            return Localizable.connectionCardAccessibilityFastestSc
+            Localizable.connectionCardAccessibilityFastestSc
         default:
-            return text(locale: locale)
+            text(locale: locale)
         }
     }
 
@@ -41,28 +40,28 @@ public extension ConnectionSpec.Location {
     func headerText(locale: Locale) -> String? {
         switch self {
         case .random:
-            return nil
+            nil
         default:
-            return text(locale: locale)
+            text(locale: locale)
         }
     }
 
     func text(locale: Locale) -> String {
         switch self {
         case .fastest, .secureCore(.fastest):
-            return Localizable.homeDefaultConnectionFastestName
+            Localizable.homeDefaultConnectionFastestName
 
         case .random, .secureCore(.random):
-            return Localizable.homeRecentsRandomServerTitle
+            Localizable.homeRecentsRandomServerTitle
 
-        case .region(let code),
-                .exact(_, _, _, _, let code),
-                .secureCore(.fastestHop(let code)),
-                .secureCore(.hop(let code, _)):
-            return regionName(locale: locale, code: code)
+        case let .region(code),
+             let .exact(_, _, _, _, code),
+             let .secureCore(.fastestHop(code)),
+             let .secureCore(.hop(code, _)):
+            regionName(locale: locale, code: code)
 
-        case .gateway(let name):
-            return name
+        case let .gateway(name):
+            name
         }
     }
 
@@ -85,9 +84,8 @@ public extension ConnectionSpec.Location {
             return text
         case .secureCore(.fastest), .secureCore(.fastestHop), .secureCore(.random):
             return Localizable.viaSecureCore
-        case .secureCore(.hop(_, let via)):
+        case let .secureCore(.hop(_, via)):
             return Localizable.viaCountry(regionName(locale: locale, code: via))
-
         case .gateway:
             // Similarly to fastest/random/region, we're not specifying an exact server. Leave subtext blank.
             return nil

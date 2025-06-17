@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 final class PlanPurchaseViewController: UIViewController {
-    @IBOutlet private weak var planPurchasedButton: UIButton!
+    @IBOutlet private var planPurchasedButton: UIButton!
 
     var completion: OnboardingPlanPurchaseCompletion?
 
@@ -30,7 +30,8 @@ final class PlanPurchaseViewController: UIViewController {
         planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
     }
 
-    @IBAction private func planPurchasedTapped(_ sender: Any) {
+    @IBAction
+    private func planPurchasedTapped(_: Any) {
         completion?(.planPurchased)
     }
 }

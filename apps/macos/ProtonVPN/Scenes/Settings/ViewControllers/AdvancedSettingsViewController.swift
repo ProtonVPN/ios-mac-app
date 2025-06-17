@@ -17,27 +17,27 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
-import LegacyCommon
-import Ergonomics
-import Strings
-import Theme
 import ComposableArchitecture
 import Domain
+import Ergonomics
 import Hermes
+import LegacyCommon
 import ProtonCoreFeatureFlags
+import Strings
+import Theme
 
 final class AdvancedSettingsViewController: NSViewController, ReloadableViewController {
-
-    @IBOutlet private weak var alternativeRoutingView: SettingsTickboxView!
-    @IBOutlet private weak var natTypeView: SettingsTickboxView!
-    @IBOutlet private weak var safeModeView: SettingsTickboxView!
-    @IBOutlet private weak var usageDataView: SettingsTickboxView!
-    @IBOutlet private weak var crashReportsView: SettingsTickboxView!
-    @IBOutlet private weak var hermesView: SettingsTickboxView!
+    @IBOutlet private var alternativeRoutingView: SettingsTickboxView!
+    @IBOutlet private var natTypeView: SettingsTickboxView!
+    @IBOutlet private var safeModeView: SettingsTickboxView!
+    @IBOutlet private var usageDataView: SettingsTickboxView!
+    @IBOutlet private var crashReportsView: SettingsTickboxView!
+    @IBOutlet private var hermesView: SettingsTickboxView!
 
     private var viewModel: AdvancedSettingsViewModel
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
@@ -91,18 +91,22 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
 
     private func setupUsageDataTypeItem() {
         let tooltip = Localizable.settingsMacUsageStatsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacUsageStatsTitle,
-                                                  buttonState: viewModel.usageData,
-                                                  toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.settingsMacUsageStatsTitle,
+            buttonState: viewModel.usageData,
+            toolTip: String(tooltip)
+        )
 
         usageDataView.setupItem(model: model, delegate: self)
     }
 
     private func setupCrashReportsTypeItem() {
         let tooltip = Localizable.settingsMacCrashReportsTooltip
-        let model = SettingsTickboxView.ViewModel(labelText: Localizable.settingsMacCrashReportsTitle,
-                                                  buttonState: viewModel.crashReports,
-                                                  toolTip: String(tooltip))
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.settingsMacCrashReportsTitle,
+            buttonState: viewModel.crashReports,
+            toolTip: String(tooltip)
+        )
 
         crashReportsView.setupItem(model: model, delegate: self)
     }
@@ -142,15 +146,16 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         }
     }
 
-    @objc private func didTapHermesView(_ sender: Any?) {
+    @objc
+    private func didTapHermesView(_: Any?) {
         if hermesChildWindowController != nil {
             hermesChildWindowController?.window?.makeKeyAndOrderFront(self)
         } else {
             let controller = HermesWindowController(viewModel: viewModel.hermesViewModel)
-            controller.window?.centerWindow(in: self.view.window?.screen)
+            controller.window?.centerWindow(in: view.window?.screen)
             controller.showWindow(self)
             controller.delegate = self
-            self.hermesChildWindowController = controller
+            hermesChildWindowController = controller
         }
     }
 

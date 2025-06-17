@@ -21,31 +21,30 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class LargeDropdownButton: HoverDetectionButton {
-    
     var isConnected: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var dropDownExpanded: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
+
         configureButton()
     }
-    
+
     private func configureButton() {
         wantsLayer = true
         isBordered = false
@@ -55,31 +54,30 @@ class LargeDropdownButton: HoverDetectionButton {
 
 // swiftlint:disable operator_usage_whitespace
 class StatusBarAppConnectButton: LargeDropdownButton {
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.border))
-        context.setFillColor(self.cgColor(.background))
+        context.setStrokeColor(cgColor(.border))
+        context.setFillColor(cgColor(.background))
 
         if isConnected {
-            ib = NSRect(x: bounds.origin.x + lw/2, y: bounds.origin.y + lw/2, width: bounds.width - lw, height: bounds.height - lw)
+            ib = NSRect(x: bounds.origin.x + lw / 2, y: bounds.origin.y + lw / 2, width: bounds.width - lw, height: bounds.height - lw)
         } else {
-            ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw/2, height: bounds.height)
+            ib = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: bounds.width - lw / 2, height: bounds.height)
         }
-        
+
         context.setLineWidth(lw)
-        
+
         let path = CGMutablePath()
         path.addRoundedRectangle(ib, cornerRadius: AppTheme.ButtonConstants.cornerRadius)
-        
+
         context.addPath(path)
         context.drawPath(using: .fillStroke)
 
-        let buttonTitle = self.style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
+        let buttonTitle = style(isConnected ? Localizable.disconnect : Localizable.quickConnect, font: .themeFont(.heading4))
         let textHeight = buttonTitle.size().height
         buttonTitle.draw(in: CGRect(
             x: 0,
@@ -89,6 +87,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
         ))
     }
 }
+
 // swiftlint:enable operator_usage_whitespace
 
 extension StatusBarAppConnectButton: CustomStyleContext {
@@ -123,7 +122,6 @@ extension StatusBarAppConnectButton: CustomStyleContext {
 
 // swiftlint:disable operator_usage_whitespace
 class StatusBarAppProfileDropdownButton: LargeDropdownButton {
-    
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
@@ -132,36 +130,37 @@ class StatusBarAppProfileDropdownButton: LargeDropdownButton {
 
         let lw: CGFloat = 2
         let ib: CGRect
-        context.setStrokeColor(self.cgColor(.border))
-        context.setFillColor(self.cgColor(.background))
+        context.setStrokeColor(cgColor(.border))
+        context.setFillColor(cgColor(.background))
         if isConnected {
-            ib = NSRect(x: bounds.origin.x - lw/2 + buttonMargin, y: bounds.origin.y + lw/2, width: bounds.width - lw/2 - buttonMargin, height: bounds.height - lw)
+            ib = NSRect(x: bounds.origin.x - lw / 2 + buttonMargin, y: bounds.origin.y + lw / 2, width: bounds.width - lw / 2 - buttonMargin, height: bounds.height - lw)
         } else {
-            ib = NSRect(x: bounds.origin.x + lw/2 + buttonMargin, y: bounds.origin.y, width: bounds.width - lw/2 - buttonMargin, height: bounds.height)
+            ib = NSRect(x: bounds.origin.x + lw / 2 + buttonMargin, y: bounds.origin.y, width: bounds.width - lw / 2 - buttonMargin, height: bounds.height)
         }
-        
+
         context.setLineWidth(lw)
 
         let path = CGMutablePath()
         path.addRoundedRectangle(ib, cornerRadius: AppTheme.ButtonConstants.cornerRadius)
 
         let ah: CGFloat = dropDownExpanded ? -4 : 4 // arrowHeight
-        let borderMargin: CGFloat = self.customStyle(context: .border) == .transparent ? 0 : 2
-        let midX: CGFloat = bounds.midX - borderMargin + buttonMargin/2
+        let borderMargin: CGFloat = customStyle(context: .border) == .transparent ? 0 : 2
+        let midX: CGFloat = bounds.midX - borderMargin + buttonMargin / 2
         let arrow = CGMutablePath()
-        arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah/2))
-        arrow.addLine(to: CGPoint(x: midX, y: bounds.midY + ah/2))
-        arrow.addLine(to: CGPoint(x: midX + ah, y: bounds.midY - ah/2))
-        
+        arrow.move(to: CGPoint(x: midX - ah, y: bounds.midY - ah / 2))
+        arrow.addLine(to: CGPoint(x: midX, y: bounds.midY + ah / 2))
+        arrow.addLine(to: CGPoint(x: midX + ah, y: bounds.midY - ah / 2))
+
         context.addPath(path)
         context.drawPath(using: .fillStroke)
-        
+
         context.setLineWidth(1)
         context.setStrokeColor(.cgColor(.icon))
         context.addPath(arrow)
         context.drawPath(using: .stroke)
     }
 }
+
 // swiftlint:enable operator_usage_whitespace
 
 extension StatusBarAppProfileDropdownButton: CustomStyleContext {

@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import Dependencies
-import VPNShared
 @testable import LegacyCommon
+import VPNShared
+import XCTest
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {
-    static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    static func canUse(onPlan plan: String, userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         if plan == "vpnbiz2023" {
             return .success
         }
@@ -36,7 +36,7 @@ enum TestNetShieldType: ModularAppFeature {
     case level1
     case level2
 
-    func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(onPlan _: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard featureFlags.netShield else {
             return .failure(.featureDisabled)
         }
@@ -53,7 +53,6 @@ enum TestNetShieldType: ModularAppFeature {
 }
 
 class FeatureAuthorizerProviderTests: XCTestCase {
-
     func testAuthorizationOfFeatureWithNoSubFeatures() throws {
         let provider = withDependencies {
             $0.credentialsProvider = .constant(credentials: .tier(.paidTier))

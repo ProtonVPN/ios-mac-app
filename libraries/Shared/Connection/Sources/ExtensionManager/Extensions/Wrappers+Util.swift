@@ -23,7 +23,6 @@ extension TunnelProviderManager {
 }
 
 extension TunnelProviderManagerFactory {
-
     /// Loads an existing `TunnelProviderManager`, or creates and loads a new manager.
     func loadManager(forProviderBundleID bundleID: String) async throws -> TunnelProviderManager {
         let managers = try await loadFromPreferences()

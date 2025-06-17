@@ -1,5 +1,5 @@
 //
-//  News.swift
+//  Announcement.swift
 //  vpncore - Created on 2020-10-05.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,7 +24,6 @@ import Foundation
 
 /// API calls this thing Notification
 public struct Announcement: Codable {
-    
     public let notificationID: String
     public let startTime: Date
     public let endTime: Date
@@ -32,24 +31,25 @@ public struct Announcement: Codable {
     public var knownType: NotificationType? {
         .init(rawValue: type)
     }
+
     public let offer: Offer?
     public let reference: String?
-    
+
     // Is set from the app, NOT api
     public var isRead: Bool? = false
-    
+
     // Wrapper param that returns false in case isRead is nil
     public var wasRead: Bool {
-        return isRead == true
+        isRead == true
     }
-    
+
     mutating func setAsRead(_ read: Bool) {
         isRead = read
     }
 }
 
-extension Announcement {
-    public enum NotificationType: Int, Codable {
+public extension Announcement {
+    enum NotificationType: Int, Codable {
         case `default` = 0
         case oneTime = 1
         case banner = 2
@@ -57,9 +57,8 @@ extension Announcement {
 }
 
 extension Announcement {
-
     var fullScreenImage: FullScreenImage? {
-        guard case .image(let panel) = offer?.panel?.panelMode() else {
+        guard case let .image(panel) = offer?.panel?.panelMode() else {
             return nil
         }
         return panel.fullScreenImage

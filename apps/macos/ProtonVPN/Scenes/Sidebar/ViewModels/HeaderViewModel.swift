@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import VPNShared
-import VPNAppCore
-import LegacyCommon
 import Announcement
+import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Theme
 import Domain
-import Strings
 import Ergonomics
+import Strings
+import Theme
 
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)
@@ -47,13 +47,13 @@ final class HeaderViewModel {
     @Dependency(\.featureFlagProvider) var featureFlags
     @Dependency(\.credentialsProvider) var credentials
 
-    public typealias Factory = AppStateManagerFactory &
-        PropertiesManagerFactory &
+    public typealias Factory =
+        AnnouncementsViewModelFactory & AppStateManagerFactory &
         CoreAlertServiceFactory &
-        ProfileManagerFactory &
         NavigationServiceFactory &
-        VpnGatewayFactory &
-        AnnouncementsViewModelFactory
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        VpnGatewayFactory
 
     private let factory: Factory
 
@@ -78,7 +78,7 @@ final class HeaderViewModel {
     private var lastChangeServerAvailableState: ServerChangeAuthorizer.ServerChangeAvailability?
 
     var canChangeServer: ServerChangeAuthorizer.ServerChangeAvailability {
-        if let lastState = lastChangeServerAvailableState, case .unavailable(let until, _, _) = lastState, until.isFuture {
+        if let lastState = lastChangeServerAvailableState, case let .unavailable(until, _, _) = lastState, until.isFuture {
             // Don't re-calculate server change availability if we know we don't need to
             // (if we are already in time-out, this won't change unless we upgrade)
             return lastState
@@ -103,37 +103,37 @@ final class HeaderViewModel {
         }
     }
 
-    init(factory: Factory, appStateManager: AppStateManager, navService: NavigationService) {
+    init(factory: Factory, appStateManager _: AppStateManager, navService _: NavigationService) {
         self.factory = factory
         startObserving()
     }
 
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
 
     var connectedCountryCode: String? {
-        return appStateManager.activeConnection()?.server.countryCode
+        appStateManager.activeConnection()?.server.countryCode
     }
 
     var headerLabel: NSAttributedString {
-        return formHeaderLabel()
+        formHeaderLabel()
     }
 
     var ipLabel: NSAttributedString {
-        return formIpLabel()
+        formIpLabel()
     }
 
     var loadLabel: NSAttributedString? {
-        return formLoadLabel()
+        formLoadLabel()
     }
 
     var loadLabelShort: NSAttributedString? {
-        return formLoadLabel(short: true)
+        formLoadLabel(short: true)
     }
 
     var loadPercentage: Int? {
-        return appStateManager.activeConnection()?.server.load
+        appStateManager.activeConnection()?.server.load
     }
 
     var vpnProtocol: NSAttributedString? {
@@ -172,7 +172,8 @@ final class HeaderViewModel {
         vpnGateway.connectTo(profile: ProfileConstants.randomProfile(connectionProtocol: propertiesManager.connectionProtocol, defaultProfileAccessTier: 0))
     }
 
-    @objc private func timerTicked() {
+    @objc
+    private func timerTicked() {
         let viewState = ServerChangeViewState.from(state: canChangeServer)
         delegate?.changeServerStateUpdated(to: viewState)
         changeServerStateUpdated?(viewState)
@@ -192,7 +193,7 @@ final class HeaderViewModel {
     }
 
     var hasUnreadAnnouncements: Bool {
-        return announcementManager.hasUnreadAnnouncements
+        announcementManager.hasUnreadAnnouncements
     }
 
     var announcementIconUrl: URL? {
@@ -214,7 +215,7 @@ final class HeaderViewModel {
     }
 
     var announcementTooltip: String? {
-        return announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
+        announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
     }
 
     // MARK: - Private functions
@@ -222,14 +223,14 @@ final class HeaderViewModel {
     private func startObserving() {
         let connectionChangedEvents: [AppEvent] = [
             .activeServerTypeChanged,
-            .connectionStateChanged
+            .connectionStateChanged,
         ]
         connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
 
         let contentChangedEvents: [AppEvent] = [
             .userIp,
             .activeConnectionChanged,
-            .profileContentChanged
+            .profileContentChanged,
         ]
         contentChangedEvents.subscribe(self, selector: #selector(contentChangedNotification))
 
@@ -241,7 +242,8 @@ final class HeaderViewModel {
         )
     }
 
-    @objc private func vpnConnectionChanged() {
+    @objc
+    private func vpnConnectionChanged() {
         guard isVisible else {
             return
         }
@@ -256,7 +258,8 @@ final class HeaderViewModel {
         contentChanged?()
     }
 
-    @objc private func contentChangedNotification() {
+    @objc
+    private func contentChangedNotification() {
         executeOnUIThread {
             self.contentChanged?()
         }
@@ -275,27 +278,25 @@ final class HeaderViewModel {
         statistics?.stopGathering()
         statistics = nil
 
-        statistics = NetworkStatistics(with: 1.0) { [weak self] (bitrate) in
-            guard let self = self else {
+        statistics = NetworkStatistics(with: 1.0) { [weak self] bitrate in
+            guard let self else {
                 return
             }
 
-            self.delegate?.bitrateUpdated(with: self.formBitrateLabel(with: bitrate))
+            delegate?.bitrateUpdated(with: formBitrateLabel(with: bitrate))
         }
     }
 
     private func rateString(for rate: UInt32) -> String {
-        let rateString: String
-
-        switch rate {
+        let rateString = switch rate {
         case let rate where rate >= UInt32(pow(1024.0, 3)):
-            rateString = "\(String(format: "%.1f", Double(rate) / pow(1024.0, 3))) GB/s"
+            "\(String(format: "%.1f", Double(rate) / pow(1024.0, 3))) GB/s"
         case let rate where rate >= UInt32(pow(1024.0, 2)):
-            rateString = "\(String(format: "%.1f", Double(rate) / pow(1024.0, 2))) MB/s"
+            "\(String(format: "%.1f", Double(rate) / pow(1024.0, 2))) MB/s"
         case let rate where rate >= 1024:
-            rateString = "\(String(format: "%.1f", Double(rate) / 1024.0)) KB/s"
+            "\(String(format: "%.1f", Double(rate) / 1024.0)) KB/s"
         default:
-            rateString = "\(String(format: "%.1f", Double(rate))) B/s"
+            "\(String(format: "%.1f", Double(rate))) B/s"
         }
 
         return rateString
@@ -334,9 +335,9 @@ final class HeaderViewModel {
 
     private func getCurrentIp() -> String? {
         if isConnected {
-            return appStateManager.activeConnection()?.serverIp.exitIp
+            appStateManager.activeConnection()?.serverIp.exitIp
         } else {
-            return propertiesManager.userLocation?.ip
+            propertiesManager.userLocation?.ip
         }
     }
 

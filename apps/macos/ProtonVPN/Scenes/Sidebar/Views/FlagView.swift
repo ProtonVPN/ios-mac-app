@@ -29,7 +29,7 @@ class FlagView: NSView {
             needsDisplay = true
         }
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
@@ -37,28 +37,28 @@ class FlagView: NSView {
             log.error("Flag view could not obtain drawing context.", category: .ui)
             return
         }
-        
+
         fillBackground(context: context)
-        
+
         if let image = backgroundImage {
             image.draw(in: bounds)
             addGradient(context: context)
         }
     }
-    
+
     private func fillBackground(context: CGContext) {
         let path = CGMutablePath()
         path.addRect(bounds)
-        
+
         context.setFillColor(.cgColor(.background))
         context.addPath(path)
         context.drawPath(using: .fill)
     }
-    
-    private func addGradient(context: CGContext) {
+
+    private func addGradient(context _: CGContext) {
         let diagonal = NSGradient(starting: .transparent, ending: .normal)
         diagonal?.draw(in: bounds, angle: 0)
-        
+
         let curtain = NSGradient(starting: .transparent, ending: .normal)
         curtain?.draw(in: bounds, angle: 270)
     }

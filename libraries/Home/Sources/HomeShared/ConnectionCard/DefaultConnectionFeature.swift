@@ -18,14 +18,14 @@
 
 import Collections
 import ComposableArchitecture
-import Domain
 import ConnectionInventory
+import Domain
 
 @Reducer
 public struct DefaultConnectionFeature {
     public typealias ActionSender = (Action) -> Void
 
-    public init() { }
+    public init() {}
 
     @ObservableState
     public struct State: Equatable {
@@ -37,7 +37,7 @@ public struct DefaultConnectionFeature {
             return resolver.preferenceModels(recents: recents)
         }
 
-        public init() { }
+        public init() {}
     }
 
     @CasePathable
@@ -48,7 +48,7 @@ public struct DefaultConnectionFeature {
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case .preferenceSelected(let preference):
+            case let .preferenceSelected(preference):
                 state.$defaultConnectionPreference.withLock { $0 = preference }
                 return .run { _ in
                     @Dependency(\.defaultConnectionStorage) var storage

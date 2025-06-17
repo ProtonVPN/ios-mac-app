@@ -24,7 +24,6 @@ import SharedViews
 import Strings
 
 struct WidgetAdoptionView: View {
-
     let primaryAction: () -> Void
 
     init(primaryAction: @escaping () -> Void) {
@@ -61,7 +60,7 @@ struct WidgetAdoptionView: View {
     private var content: some View {
         VStack(alignment: .leading, spacing: 0) {
             titleView
-            ScrollView() {
+            ScrollView {
                 VStack(alignment: .leading, spacing: .themeSpacing24) {
                     LottieView(animation: .widgetAdoption)
                         .playing(loopMode: .loop)

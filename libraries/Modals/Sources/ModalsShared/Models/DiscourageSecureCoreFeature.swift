@@ -27,5 +27,5 @@ public struct DiscourageSecureCoreFeature {
     public let activate: String = Localizable.modalsDiscourageSecureCoreActivate
     public let cancel: String = Localizable.modalsCommonCancel
 
-    public init() { }
+    public init() {}
 }

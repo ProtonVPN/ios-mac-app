@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 import LegacyCommon
 import VPNAppCore
 
@@ -39,7 +39,7 @@ final class HelpPopoverViewModel {
     func resetAction() {
         linkOpener.open(.resetPassword)
     }
-    
+
     func forgotAction() {
         linkOpener.open(.forgotUsername)
     }

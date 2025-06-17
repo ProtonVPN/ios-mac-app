@@ -20,39 +20,38 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import ModalsShared
 import Theme
+import UIKit
 
 class UserAccountUpdateViewController: UIViewController {
+    @IBOutlet private var reconnectionView: UIView!
+    @IBOutlet private var serversView: UIView!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var descriptionLbl: UILabel!
 
-    @IBOutlet private weak var reconnectionView: UIView!
-    @IBOutlet private weak var serversView: UIView!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var descriptionLbl: UILabel!
+    @IBOutlet private var featuresTitleLbl: UILabel!
 
-    @IBOutlet private weak var featuresTitleLbl: UILabel!
+    @IBOutlet private var primaryActionBtn: UIButton!
+    @IBOutlet private var secondActionBtn: UIButton!
 
-    @IBOutlet private weak var primaryActionBtn: UIButton!
-    @IBOutlet private weak var secondActionBtn: UIButton!
+    @IBOutlet private var feature1View: UIView!
+    @IBOutlet private var feature1Lbl: UILabel!
 
-    @IBOutlet private weak var feature1View: UIView!
-    @IBOutlet private weak var feature1Lbl: UILabel!
+    @IBOutlet private var feature2View: UIView!
+    @IBOutlet private var feature2Lbl: UILabel!
 
-    @IBOutlet private weak var feature2View: UIView!
-    @IBOutlet private weak var feature2Lbl: UILabel!
+    @IBOutlet private var feature3View: UIView!
+    @IBOutlet private var feature3Lbl: UILabel!
 
-    @IBOutlet private weak var feature3View: UIView!
-    @IBOutlet private weak var feature3Lbl: UILabel!
+    @IBOutlet private var fromServerTitleLbl: UILabel!
+    @IBOutlet private var fromServerIV: UIImageView!
+    @IBOutlet private var fromServerLbl: UILabel!
 
-    @IBOutlet private weak var fromServerTitleLbl: UILabel!
-    @IBOutlet private weak var fromServerIV: UIImageView!
-    @IBOutlet private weak var fromServerLbl: UILabel!
-
-    @IBOutlet private weak var toServerTitleLbl: UILabel!
-    @IBOutlet private weak var toServerIV: UIImageView!
-    @IBOutlet private weak var toServerLbl: UILabel!
+    @IBOutlet private var toServerTitleLbl: UILabel!
+    @IBOutlet private var toServerIV: UIImageView!
+    @IBOutlet private var toServerLbl: UILabel!
 
     @IBOutlet private var checkmarks: [UIImageView]!
 
@@ -99,15 +98,15 @@ class UserAccountUpdateViewController: UIViewController {
         feature2Lbl.font = .systemFont(ofSize: 15, weight: .regular)
         feature3Lbl.font = .systemFont(ofSize: 15, weight: .regular)
 
-         if let image = viewModel.image {
-             imageView.image = image
-         } else {
-             imageView.isHidden = true
-         }
+        if let image = viewModel.image {
+            imageView.image = image
+        } else {
+            imageView.isHidden = true
+        }
 
-        checkmarks.forEach {
-            $0.image = viewModel.checkmark
-            $0.tintColor = .color(.background, .interactive)
+        for item in checkmarks {
+            item.image = viewModel.checkmark
+            item.tintColor = .color(.background, .interactive)
         }
 
         setupFeatures()
@@ -119,8 +118,8 @@ class UserAccountUpdateViewController: UIViewController {
 
     private func setupFeatures() {
         guard let options = viewModel.options, !options.isEmpty else {
-            [feature1View, feature2View, feature3View, featuresTitleLbl].forEach {
-                $0?.isHidden = true
+            for item in [feature1View, feature2View, feature3View, featuresTitleLbl] {
+                item?.isHidden = true
             }
             return
         }
@@ -153,20 +152,22 @@ class UserAccountUpdateViewController: UIViewController {
         toServerTitleLbl.text = viewModel.toServerTitle
     }
 
-    private func setServerHeader( _ server: (String, Image), _ flag: UIImageView, _ serverName: UILabel) {
+    private func setServerHeader(_ server: (String, Image), _ flag: UIImageView, _ serverName: UILabel) {
         serverName.text = server.0
         flag.image = server.1
     }
 
     // MARK: - Actions
 
-    @IBAction private func didTapPrimaryAction(_ sender: Any) {
+    @IBAction
+    private func didTapPrimaryAction(_: Any) {
         dismiss(animated: true, completion: { [weak self] in
             self?.onPrimaryButtonTap?()
         })
     }
 
-    @IBAction private func didTapSecondAction(_ sender: Any) {
+    @IBAction
+    private func didTapSecondAction(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }

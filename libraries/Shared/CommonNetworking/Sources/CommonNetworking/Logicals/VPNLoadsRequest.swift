@@ -20,11 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import ProtonCoreNetworking
 import Ergonomics
+import ProtonCoreNetworking
 
 public final class VPNLoadsRequest: Request {
-
     private let ip: String?
 
     private init(ip: String?) {
@@ -36,15 +35,15 @@ public final class VPNLoadsRequest: Request {
     }
 
     public var path: String {
-        return "/vpn/v1/loads"
+        "/vpn/v1/loads"
     }
 
     public var isAuth: Bool {
-        return false
+        false
     }
 
     public var header: [String: Any] {
-        if let ip = ip {
+        if let ip {
             return ["x-pm-netzone": ip]
         }
 

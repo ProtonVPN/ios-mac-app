@@ -17,31 +17,31 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-import Domain
-import VPNShared
+    import Domain
+    import VPNShared
 
-public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
-    public var lastActiveNetShieldType: NetShieldType = .level1
+    public final class NetShieldPropertyProviderMock: NetShieldPropertyProvider {
+        public var lastActiveNetShieldType: NetShieldType = .level1
 
-    public var netShieldType: NetShieldType = .off {
-        didSet {
-            AppEvent.netShield.post(netShieldType)
+        public var netShieldType: NetShieldType = .off {
+            didSet {
+                AppEvent.netShield.post(netShieldType)
+            }
         }
+
+        public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+            // Turn NetShield off on downgrade to free plan
+            if tier.isFreeTier {
+                netShieldType = .off
+            }
+            // Switch NetShield to level 1 on any upgrade from free plan
+            if tier > oldTier, oldTier.isFreeTier {
+                netShieldType = .level1
+            }
+        }
+
+        public init() {}
     }
-
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        // Turn NetShield off on downgrade to free plan
-        if tier.isFreeTier {
-            netShieldType = .off
-        }
-        // Switch NetShield to level 1 on any upgrade from free plan
-        if tier > oldTier && oldTier.isFreeTier {
-            netShieldType = .level1
-        }
-    }
-    
-    public init() {}
-}
 #endif

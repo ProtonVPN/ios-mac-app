@@ -23,7 +23,6 @@ import class NetworkExtension.NETunnelProviderManager
 import let CoreConnection.log
 
 extension TunnelProviderManagerFactory {
-
     static var liveValue: TunnelProviderManagerFactory {
         .init(
             create: {
@@ -48,7 +47,7 @@ extension TunnelProviderManagerFactory {
                 }
             },
             loadFromPreferences: {
-                return try await NETunnelProviderManager.loadAllFromPreferences()
+                try await NETunnelProviderManager.loadAllFromPreferences()
             }
         )
     }

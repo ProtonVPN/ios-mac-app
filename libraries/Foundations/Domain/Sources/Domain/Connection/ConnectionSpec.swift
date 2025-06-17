@@ -21,7 +21,6 @@ import Strings
 
 /// Defines users intent as to where (s)he wanted to connect
 public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
-
     public let location: Location
     public let features: Set<Feature>
     public let profileId: String?
@@ -57,17 +56,17 @@ public struct ConnectionSpec: Equatable, Hashable, Codable, Sendable {
         case p2p
         case tor
 
-        // todo: Localized strings
+        // TODO: Localized strings
         public var description: String {
             switch self {
             case .smart:
-                return "Smart"
+                "Smart"
             case .streaming:
-                return "Streaming"
+                "Streaming"
             case .p2p:
-                return "P2P"
+                "P2P"
             case .tor:
-                return "TOR"
+                "TOR"
             }
         }
     }
@@ -105,31 +104,37 @@ public extension ConnectionSpec.Location {
     func withServer(number: Int) -> Self {
         switch self {
         case let .exact(server, logicalID, _, subregion, regionCode):
-            return .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
+            .exact(server, logicalID: logicalID, number: number, subregion: subregion, regionCode: regionCode)
         default:
-            return self
+            self
         }
     }
 }
 
 public extension ConnectionSpec.Location {
-    static let specificCity = Self.exact(.paid,
-                                         logicalID: nil,
-                                         number: nil,
-                                         subregion: "Szczebrzeszyn",
-                                         regionCode: "PL")
+    static let specificCity = Self.exact(
+        .paid,
+        logicalID: nil,
+        number: nil,
+        subregion: "Szczebrzeszyn",
+        regionCode: "PL"
+    )
 
-    static let specificCityServer = Self.exact(.paid,
-                                               logicalID: nil,
-                                               number: 456,
-                                               subregion: "Szczebrzeszyn",
-                                               regionCode: "PL")
+    static let specificCityServer = Self.exact(
+        .paid,
+        logicalID: nil,
+        number: 456,
+        subregion: "Szczebrzeszyn",
+        regionCode: "PL"
+    )
 
-    static let specificCountryServer = Self.exact(.free,
-                                                  logicalID: nil,
-                                                  number: 123,
-                                                  subregion: nil,
-                                                  regionCode: "PL")
+    static let specificCountryServer = Self.exact(
+        .free,
+        logicalID: nil,
+        number: 123,
+        subregion: nil,
+        regionCode: "PL"
+    )
 }
 
 public extension ConnectionSpec {
@@ -143,10 +148,10 @@ public extension ConnectionSpec {
     static let specificCountryServer = ConnectionSpec(location: .specificCountryServer, features: [])
 
     func with(location: ConnectionSpec.Location) -> Self {
-        .init(location: location, features: self.features)
+        .init(location: location, features: features)
     }
 
     func withAllFeatures() -> Self {
-        .init(location: self.location, features: [.p2p, .tor])
+        .init(location: location, features: [.p2p, .tor])
     }
 }

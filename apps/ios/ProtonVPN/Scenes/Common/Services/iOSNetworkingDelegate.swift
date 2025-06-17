@@ -6,17 +6,17 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import CommonNetworking
+import Domain
 import Foundation
 import GoLibs
+import LegacyCommon
 import ProtonCoreDataModel
-import ProtonCoreNetworking
-import ProtonCoreServices
 import ProtonCoreForceUpgrade
 import ProtonCoreHumanVerification
-import CommonNetworking
-import LegacyCommon
+import ProtonCoreNetworking
+import ProtonCoreServices
 import VPNAppCore
-import Domain
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     let sessionAuthenticatedEvents: AsyncStream<Bool>
@@ -62,12 +62,12 @@ extension iOSNetworkingDelegate {
         set { humanVerify?.paymentDelegateForLoginAndSignup = newValue }
     }
 
-    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: @escaping (HumanVerifyFinishReason) -> Void) {
         humanVerify?.onHumanVerify(parameters: parameters, currentURL: currentURL, completion: completion)
     }
 
     func getSupportURL() -> URL {
-        return VPNLink.support.url
+        VPNLink.support.url
     }
 }
 

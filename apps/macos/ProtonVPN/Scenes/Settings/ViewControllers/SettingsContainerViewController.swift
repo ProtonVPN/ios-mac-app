@@ -24,19 +24,18 @@ import Cocoa
 import LegacyCommon
 
 final class SettingsContainerViewController: NSViewController {
-    
-    @IBOutlet private weak var tabBarControllerViewContainer: NSView!
-    @IBOutlet private weak var activeControllerViewContainer: NSView!
+    @IBOutlet private var tabBarControllerViewContainer: NSView!
+    @IBOutlet private var activeControllerViewContainer: NSView!
 
     private let viewModel: SettingsContainerViewModel
     private var tabBarViewController: SettingsTabBarViewController!
     private var tabBarViewModel: SettingsTabBarViewModel
     private var activeViewController: NSViewController?
-    
+
     private lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        return GeneralSettingsViewController(viewModel: self.viewModel.generalSettingsViewModel)
+        return GeneralSettingsViewController(viewModel: viewModel.generalSettingsViewModel)
     }()
-    
+
     private lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
         return ConnectionSettingsViewController(viewModel: viewModel.connectionSettingsViewModel)
     }()
@@ -44,41 +43,46 @@ final class SettingsContainerViewController: NSViewController {
     private lazy var advancedSettingsViewController: AdvancedSettingsViewController = { [unowned self] in
         return AdvancedSettingsViewController(viewModel: viewModel.advancedSettingsViewModel)
     }()
-    
+
     let accountViewController: AccountViewController
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, accountViewModel: AccountViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
         self.accountViewController = AccountViewController(accountViewModel: accountViewModel)
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupTabBar()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         tabBarViewModel.activeTab = tabBarViewModel.activeTab
     }
-    
+
     private func setupTabBar() {
-        NotificationCenter.default.addObserver(self, selector: #selector(tabChanged(_:)),
-                                               name: tabBarViewModel.tabChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tabChanged(_:)),
+            name: tabBarViewModel.tabChanged,
+            object: nil
+        )
         tabBarViewController = SettingsTabBarViewController(viewModel: tabBarViewModel)
         tabBarControllerViewContainer.pin(viewController: tabBarViewController)
     }
-    
+
     private func set(viewController: NSViewController) {
-        if let activeViewController = activeViewController {
+        if let activeViewController {
             activeControllerViewContainer.willRemoveSubview(activeViewController.view)
             activeViewController.view.removeFromSuperview()
             activeViewController.removeFromParent()
@@ -86,8 +90,9 @@ final class SettingsContainerViewController: NSViewController {
         activeControllerViewContainer.pin(viewController: viewController)
         activeViewController = viewController
     }
-    
-    @objc private func tabChanged(_ notification: Notification) {
+
+    @objc
+    private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? SettingsTab {
             switch tab {
             case .general:

@@ -17,12 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import Modals
 import UITestsHelpers
+import XCTest
 
 class ConnectionTestsFreeUser: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let loginRobot = LoginRobot()
     private let countriesSelectionRobot = CountriesSectionRobot()
@@ -33,7 +32,7 @@ class ConnectionTestsFreeUser: ProtonVPNUITests {
         logoutIfNeeded()
         loginAsFreeUser()
     }
-    
+
     override func tearDown() {
         super.tearDown()
         if mainRobot.isConnected() {
@@ -42,48 +41,47 @@ class ConnectionTestsFreeUser: ProtonVPNUITests {
             mainRobot.cancelConnecting()
         }
     }
-    
+
     @MainActor
     func testConnectAndDisconnect() async throws {
         let unprotectedIpAddress = try await NetworkUtils.getIpAddress()
-        
+
         mainRobot
             .quickConnectToAServer()
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, userType: .Free)
-        
+
         sleep(2)
-        
+
         let protectedIpAddress = try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: unprotectedIpAddress)
-        
+
         mainRobot
             .disconnect()
             .verify
             .checkConnectionCardIsDisconnected()
-        
+
         try await mainRobot.verify.checkIpAddressChanged(previousIpAddress: protectedIpAddress)
     }
-    
+
     @MainActor
     func testChangeServer() {
-        
         mainRobot
             .quickConnectToAServer()
             .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, userType: .Free)
-        
+
         let connectedFreeServer = mainRobot.getConnectedCountry()
-        
+
         if mainRobot.isAbleToChangeServer() {
             mainRobot
                 .clickChangeServer()
                 .waitForConnected(with: ConnectionProtocol.Smart)
                 .verify.checkConnectionCardIsConnected(with: ConnectionProtocol.Smart, userType: .Free)
-            
+
             mainRobot
                 .verify.checkConnectedServerChanged(connectedServer: connectedFreeServer)
         } else {
             mainRobot
                 .clickChangeServer()
-            
+
             modalsRobot
                 .verify.checkModalAppear(type: ModalType.cantSkip)
                 .closeModal()

@@ -21,14 +21,13 @@
 //
 
 import GSMessages
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 class CreateProfileViewController: UITableViewController {
-    
     private var genericDataSource: GenericTableViewDataSource?
-    
+
     var viewModel: CreateOrEditProfileViewModel? {
         didSet {
             viewModel?.saveButtonUpdated = { [weak self] in
@@ -46,61 +45,64 @@ class CreateProfileViewController: UITableViewController {
             }
         }
     }
-    
+
     weak var profilesViewControllerDelegate: ProfilesViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupTableView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         updateTableView()
         tableView.reloadData()
     }
-    
+
     // MARK: - Private functions
+
     private func setupView() {
-        self.title = Localizable.createNewProfile
+        title = Localizable.createNewProfile
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Localizable.save, style: .plain, target: self, action: #selector(saveTapped))
         renderSaveButton()
-        
+
         // for dismissing keyboard after name is entered
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
+        view.addGestureRecognizer(tap)
     }
-    
+
     private func setupTableView() {
         updateTableView()
-        
+
         tableView.separatorColor = .normalSeparatorColor()
         tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
-    
+
     private func updateTableView() {
-        guard let viewModel = viewModel else { return }
-        
+        guard let viewModel else { return }
+
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
     }
-    
-    @objc private func handleTap(_ sender: UIGestureRecognizer) {
+
+    @objc
+    private func handleTap(_: UIGestureRecognizer) {
         view.endEditing(true)
     }
-    
-    @objc private func saveTapped() {
-        guard let viewModel = viewModel else {
-            self.navigationController?.popViewController(animated: true)
+
+    @objc
+    private func saveTapped() {
+        guard let viewModel else {
+            navigationController?.popViewController(animated: true)
             return
         }
-        
+
         viewModel.saveProfile { [weak self] success in
             guard success else {
                 return

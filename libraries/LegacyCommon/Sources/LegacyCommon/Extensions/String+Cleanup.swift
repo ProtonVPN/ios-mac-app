@@ -22,12 +22,12 @@
 
 import Foundation
 
-extension String {    
+public extension String {
     /// Returns the first characters in the string until the startingCharacter
-    public func removeSubstring(startingWithCharacter char: Character) -> String {
-        guard let last = self.firstIndex(of: char) else {
+    func removeSubstring(startingWithCharacter char: Character) -> String {
+        guard let last = firstIndex(of: char) else {
             return self
         }
-        return String(self[startIndex..<last])
+        return String(self[startIndex ..< last])
     }
 }

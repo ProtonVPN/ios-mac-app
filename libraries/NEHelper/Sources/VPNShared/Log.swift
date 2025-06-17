@@ -19,4 +19,4 @@
 import Foundation
 import Logging
 
-let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.VPNShared.logger")
+let log: Logging.Logger = .init(label: "ProtonVPN.VPNShared.logger")

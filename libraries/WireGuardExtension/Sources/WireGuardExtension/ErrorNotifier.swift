@@ -12,7 +12,7 @@ final class ErrorNotifier {
     }
 
     func notify(_ error: PacketTunnelProviderError) {
-        guard let activationAttemptId = activationAttemptId, let lastErrorFilePath = FileManager.networkExtensionLastErrorFileURL?.path else { return }
+        guard let activationAttemptId, let lastErrorFilePath = FileManager.networkExtensionLastErrorFileURL?.path else { return }
         let errorMessageData = "\(activationAttemptId)\n\(error)".data(using: .utf8)
         FileManager.default.createFile(atPath: lastErrorFilePath, contents: errorMessageData, attributes: nil)
     }

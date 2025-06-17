@@ -22,18 +22,18 @@
 
 import Foundation
 
-import ProtonCoreNetworking
 import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
 
 import Domain
 import VPNShared
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 
-fileprivate let deviceName = UIDevice.current.name
+    fileprivate let deviceName = UIDevice.current.name
 #else
-fileprivate let deviceName = Host.current().localizedName ?? ""
+    fileprivate let deviceName = Host.current().localizedName ?? ""
 #endif
 
 final class CertificateRequest: Request {
@@ -50,7 +50,7 @@ final class CertificateRequest: Request {
     }
 
     var method: HTTPMethod {
-        return .post
+        .post
     }
 
     var parameters: [String: Any]? {
@@ -58,14 +58,14 @@ final class CertificateRequest: Request {
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
-            "Mode": "session"
+            "Mode": "session",
         ] as [String: Any]
-        
+
         // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
-        if let features = features {
+        if let features {
             params["Features"] = features.asDict
         }
-        
+
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
         }
@@ -74,7 +74,7 @@ final class CertificateRequest: Request {
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew) {
             params["Renew"] = true
         }
-        
+
         return params
     }
 

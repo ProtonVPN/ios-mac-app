@@ -20,15 +20,15 @@ import Foundation
 import Strings
 
 public class NetShieldStatsNumberFormatter: NumberFormatter {
-
-    public override init() {
+    override public init() {
         super.init()
         allowsFloats = true
         maximumFractionDigits = 1
         maximumIntegerDigits = 3
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,17 +43,17 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
         func localized(amount: String) -> String {
             switch self {
             case .kilo:
-                return Localizable.netshieldStatsBlockedK(amount)
+                Localizable.netshieldStatsBlockedK(amount)
             case .mega:
-                return Localizable.netshieldStatsBlockedM(amount)
+                Localizable.netshieldStatsBlockedM(amount)
             case .giga:
-                return Localizable.netshieldStatsBlockedG(amount)
+                Localizable.netshieldStatsBlockedG(amount)
             case .tera:
-                return Localizable.netshieldStatsBlockedT(amount)
+                Localizable.netshieldStatsBlockedT(amount)
             case .peta:
-                return Localizable.netshieldStatsBlockedP(amount)
+                Localizable.netshieldStatsBlockedP(amount)
             case .exa:
-                return Localizable.netshieldStatsBlockedE(amount)
+                Localizable.netshieldStatsBlockedE(amount)
             }
         }
     }
@@ -61,8 +61,8 @@ public class NetShieldStatsNumberFormatter: NumberFormatter {
     public func string(from number: Int) -> String {
         var reduced = CGFloat(abs(number))
         var multiplier = 0
-        while reduced >= 1_000 {
-            reduced /= 1_000
+        while reduced >= 1000 {
+            reduced /= 1000
             multiplier += 1
         }
         let suffix = Suffix(rawValue: multiplier)

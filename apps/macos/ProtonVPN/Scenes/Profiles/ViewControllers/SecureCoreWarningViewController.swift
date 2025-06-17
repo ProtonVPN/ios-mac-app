@@ -21,69 +21,71 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 import Strings
 
 final class SecureCoreWarningViewController: NSViewController {
-    
-    @IBOutlet weak var descriptionLabel: NSTextField!
-    @IBOutlet weak var upgradeButton: PrimaryActionButton!
-    @IBOutlet weak var learnMoreButton: InteractiveActionButton!
+    @IBOutlet var descriptionLabel: NSTextField!
+    @IBOutlet var upgradeButton: PrimaryActionButton!
+    @IBOutlet var learnMoreButton: InteractiveActionButton!
 
     private let viewModel: SecureCoreWarningViewModel
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     required init(viewModel: SecureCoreWarningViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("SecureCoreWarning"), bundle: nil)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupView()
         setupComponents()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         view.window?.applyModalAppearance(withTitle: Localizable.upgradeRequired)
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background, .weak)
         }
     }
-    
+
     private func setupComponents() {
         descriptionLabel.usesSingleLineMode = false
         descriptionLabel.cell?.lineBreakMode = .byWordWrapping
         descriptionLabel.attributedStringValue = Localizable.planDoesNotIncludeSecureCore.styled(font: .themeFont(.heading4, bold: true))
-        
+
         upgradeButton.title = Localizable.upgradeRequired
         upgradeButton.target = self
         upgradeButton.action = #selector(upgradeButtonAction)
-        
+
         learnMoreButton.title = Localizable.learnMoreAboutSecureCore
         learnMoreButton.target = self
         learnMoreButton.action = #selector(learnMoreButtonAction)
     }
-    
-    @objc private func upgradeButtonAction() {
+
+    @objc
+    private func upgradeButtonAction() {
         Task {
             await viewModel.upgradeButtonPressed()
         }
         dismiss(nil)
     }
-    
-    @objc private func learnMoreButtonAction() {
+
+    @objc
+    private func learnMoreButtonAction() {
         viewModel.learnMoreButtonPressed()
         dismiss(nil)
     }

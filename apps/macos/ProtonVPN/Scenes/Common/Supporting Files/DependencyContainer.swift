@@ -21,27 +21,27 @@
 //
 
 import AppKit
+import BugReport
+import CommonNetworking
+import Ergonomics
 import Foundation
 import LegacyCommon
-import CommonNetworking
-import BugReport
 import NetworkExtension
-import Ergonomics
 
 final class DependencyContainer: Container {
     // Singletons
     private lazy var navigationService = NavigationService(self)
 
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: config.wireguardVpnExtensionBundleIdentifier,
-                                                                    appGroup: config.appGroup,
-                                                                    factory: self)
-    private lazy var vpnAuthentication: VpnAuthentication = {
-        return VpnAuthenticationManager(self)
-    }()
+    private lazy var wireguardFactory = WireguardMacProtocolFactory(
+        bundleId: config.wireguardVpnExtensionBundleIdentifier,
+        appGroup: config.appGroup,
+        factory: self
+    )
+    private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
-    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
-    private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
+    private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
+    private lazy var macAlertService: MacAlertService = .init(factory: self)
 
     private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
 
@@ -77,9 +77,9 @@ final class DependencyContainer: Container {
         let prefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
 
         #if TLS_PIN_DISABLE
-        let pin = false
+            let pin = false
         #else
-        let pin = true
+            let pin = true
         #endif
 
         super.init(
@@ -99,6 +99,7 @@ final class DependencyContainer: Container {
     }
 
     // MARK: - Overridden config methods
+
     override var modelId: String? {
         makeModelIdChecker().modelId
     }
@@ -106,42 +107,53 @@ final class DependencyContainer: Container {
     // MARK: - Overridden factory methods
 
     // MARK: NetworkingDelegate
+
     override func makeNetworkingDelegate() -> NetworkingDelegate {
         networkingDelegate
     }
 
     // MARK: CoreAlertServiceFactory
+
     override func makeCoreAlertService() -> CoreAlertService {
         macAlertService
     }
 
     // MARK: WireguardProtocolFactoryCreator
+
     override func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         wireguardFactory
     }
 
     // MARK: VpnCredentialsConfiguratorFactoryCreator
+
     override func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
-        MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager(),
-                                             vpnAuthentication: makeVpnAuthentication(),
-                                             appGroup: config.appGroup)
+        MacVpnCredentialsConfiguratorFactory(
+            propertiesManager: makePropertiesManager(),
+            vpnAuthentication: makeVpnAuthentication(),
+            appGroup: config.appGroup
+        )
     }
 
     // MARK: VpnAuthentication
+
     override func makeVpnAuthentication() -> VpnAuthentication {
         vpnAuthentication
     }
 
     // MARK: LogContentProviderFactory
+
     override func makeLogContentProvider() -> LogContentProvider {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
-        return MacOSLogContentProvider(appLogsFolder: appLogsFolder,
-                                       wireguardProtocolFactory: makeWireguardProtocolFactory())
+        return MacOSLogContentProvider(
+            appLogsFolder: appLogsFolder,
+            wireguardProtocolFactory: makeWireguardProtocolFactory()
+        )
     }
 
     // MARK: UpdateManagerFactory
+
     override func makeUpdateChecker() -> UpdateChecker {
         updateManager
     }
@@ -176,42 +188,50 @@ extension DependencyContainer: AppSessionRefreshTimerDelegate {
 }
 
 // MARK: NavigationServiceFactory
+
 extension DependencyContainer: NavigationServiceFactory {
     func makeNavigationService() -> NavigationService {
-        return navigationService
+        navigationService
     }
 }
 
 // MARK: WindowServiceFactory
+
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
 }
 
 // MARK: OsxUiAlertServiceFactory
+
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
-        return OsxUiAlertService(factory: self)
+        OsxUiAlertService(factory: self)
     }
 }
 
 // MARK: AppSessionManagerFactory
+
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
-        return appSessionManager
+        appSessionManager
     }
 }
 
 // MARK: NotificationManagerFactory
+
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
-        return NotificationManager(appStateManager: makeAppStateManager(),
-                                   appSessionManager: makeAppSessionManager())
+        NotificationManager(
+            appStateManager: makeAppStateManager(),
+            appSessionManager: makeAppSessionManager()
+        )
     }
 }
 
 // MARK: MigrationManagerFactory
+
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
         let propertiesManager = makePropertiesManager()
@@ -221,78 +241,89 @@ extension DependencyContainer: MigrationManagerFactory {
 }
 
 // MARK: RefreshTimerFactory
+
 extension DependencyContainer: AppSessionRefreshTimerFactory {
     func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
-        return refreshTimer
+        refreshTimer
     }
 }
 
 // MARK: - AppSessionRefresherFactory
+
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
-        return appSessionManager
+        appSessionManager
     }
 }
 
 // MARK: - HeaderViewModelFactory
+
 extension DependencyContainer: HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel {
-        return HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
+        HeaderViewModel(factory: self, appStateManager: makeAppStateManager(), navService: navigationService)
     }
 }
 
 // MARK: - SystemExtensionManagerFactory
+
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
-        return sysexManager
+        sysexManager
     }
 }
 
 // MARK: XPCConnectionsRepositoryFactory
+
 extension DependencyContainer: XPCConnectionsRepositoryFactory {
     func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
-        return xpcConnectionsRepository
+        xpcConnectionsRepository
     }
 }
 
 // MARK: BugReportCreatorFactory
+
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
-        return MacOSBugReportCreator()
+        MacOSBugReportCreator()
     }
 }
 
 // MARK: AppCertificateRefreshManagerFactory
+
 extension DependencyContainer: AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
-        return appCertificateRefreshManager
+        appCertificateRefreshManager
     }
 }
 
 // MARK: ModelIdCheckerFactory
+
 extension DependencyContainer: ModelIdCheckerFactory {
     func makeModelIdChecker() -> ModelIdCheckerProtocol {
-        return ModelIdChecker()
+        ModelIdChecker()
     }
 }
 
 // MARK: ProtonReachabilityCheckerFactory
+
 extension DependencyContainer: ProtonReachabilityCheckerFactory {
     func makeProtonReachabilityChecker() -> ProtonReachabilityChecker {
-        return URLSessionProtonReachabilityChecker()
+        URLSessionProtonReachabilityChecker()
     }
 }
 
 // MARK: StatusMenuViewModelFactory
+
 extension DependencyContainer: StatusMenuViewModelFactory {
     func makeStatusMenuViewModel() -> StatusMenuViewModel {
-        return StatusMenuViewModel(factory: self)
+        StatusMenuViewModel(factory: self)
     }
 }
 
 // MARK: UpdateManagerFactory
+
 extension DependencyContainer: UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager {
-        return updateManager
+        updateManager
     }
 }

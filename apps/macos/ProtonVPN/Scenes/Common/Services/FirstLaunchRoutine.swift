@@ -20,15 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 import LegacyCommon
 import VPNShared
 
 class AppLaunchRoutine {
-    
     static var launchedBefore = true
-    
+
     static func execute(propertiesManager: PropertiesManagerProtocol) {
         @Dependency(\.defaultsProvider) var provider
         let defaults = provider.getDefaults()

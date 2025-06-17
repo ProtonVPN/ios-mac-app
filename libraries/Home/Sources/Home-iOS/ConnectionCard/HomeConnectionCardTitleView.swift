@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
+import ComposableArchitecture
+import Dependencies
 import Ergonomics
 import HomeShared
+import var ProtonCoreUIFoundations.IconProvider
+import Strings
+import SwiftUI
 import Theme
 import VPNAppCore
-import Dependencies
-import ComposableArchitecture
-import var ProtonCoreUIFoundations.IconProvider
 
 struct HomeConnectionCardHeader: View {
     private let model: ConnectionCardHeaderModel
@@ -49,7 +49,8 @@ struct HomeConnectionCardHeader: View {
         }
     }
 
-    @ViewBuilder private var titleView: some View {
+    @ViewBuilder
+    private var titleView: some View {
         if let action {
             Button {
                 actionSender(action)
@@ -75,10 +76,10 @@ struct HomeConnectionCardHeader: View {
     private var action: HomeConnectionCardFeature.Action? {
         switch model {
         case .disconnected(isPaid: true):
-            return .delegate(.defaultConnectionTapped)
+            .delegate(.defaultConnectionTapped)
 
         default:
-            return nil
+            nil
         }
     }
 
@@ -89,19 +90,19 @@ struct HomeConnectionCardHeader: View {
     private var titleString: String {
         switch model {
         case .resolving:
-            return Localizable.connectionCardLoading
+            Localizable.connectionCardLoading
 
         case .disconnected(isPaid: true):
-            return Localizable.connectionCardDefaultConnection
+            Localizable.connectionCardDefaultConnection
 
         case .disconnected(isPaid: false):
-            return Localizable.connectionsFree
+            Localizable.connectionsFree
 
         case .connecting:
-            return Localizable.connectionCardConnectingTo
+            Localizable.connectionCardConnectingTo
 
         case .connected:
-            return Localizable.connectionCardSafelyBrowsingFrom
+            Localizable.connectionCardSafelyBrowsingFrom
         }
     }
 }

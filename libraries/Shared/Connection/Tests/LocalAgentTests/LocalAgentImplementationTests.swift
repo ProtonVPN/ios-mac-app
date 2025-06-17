@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import XCTest
-import Dependencies
 
 @testable import LocalAgent
 
 final class LocalAgentImplementationTests: XCTestCase {
-
     func testEventsAreEmittedOnSubsequentSubscriptions() async throws {
         let agent: LocalAgentImplementation = withDependencies {
             $0.date = .constant(.now)

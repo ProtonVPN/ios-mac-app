@@ -18,13 +18,13 @@
 
 import ComposableArchitecture
 
-import struct Domain.VPNConnectionFeatures
-import struct Domain.Server
 import Connection
+import Domain
+import struct Domain.Server
+import struct Domain.VPNConnectionFeatures
+import Foundation
 import ModalsServices
 import Persistence
-import Foundation
-import Domain
 
 @Reducer
 struct MainFeature {
@@ -62,7 +62,7 @@ struct MainFeature {
         case connectDisconnectingIfNecessary(String)
 
         case errorOccurred(Error)
-        
+
         case connectionStateUpdated(ConnectionState)
         case observeConnectionState
     }
@@ -82,8 +82,10 @@ struct MainFeature {
                     .send(.connection(.input(.onLaunch))),
                     .send(.observeConnectionState)
                 )
+
             case .onLogout:
                 return .send(.connection(.input(.onLogout)))
+
             case .observeConnectionState:
                 return .publisher {
                     state.$connectionState.publisher
@@ -92,13 +94,13 @@ struct MainFeature {
                 }
                 .cancellable(id: CancelId.connectionState)
 
-            case .connectionStateUpdated(let connectionState):
+            case let .connectionStateUpdated(connectionState):
                 if case .home = state.currentTab {
                     state.$mainBackground.withLock { $0 = .init(connectionState: connectionState) }
                 }
                 return .none
 
-            case .selectTab(let tab):
+            case let .selectTab(tab):
                 state.currentTab = tab
                 switch tab {
                 case .home:
@@ -107,16 +109,17 @@ struct MainFeature {
                 case .settings:
                     return .send(.settings(.tabSelected))
                 }
+
             case .settings:
                 return .none
 
-            case .homeLoading(.loaded(.countryList(.selectItem(let item)))):
+            case let .homeLoading(.loaded(.countryList(.selectItem(item)))):
                 func effect(_ server: Server?) -> Effect<Action> { // when connecting/connected to a country
                     if let server, server.logical.exitCountryCode == item.code { // and the selected server is the same as the connecting/connected one
-                        return .send(.connection(.input(.disconnect))) // just disconnect
+                        .send(.connection(.input(.disconnect))) // just disconnect
                     } else { // and the selected server is different
                         // start reconnection, which will first cancel/disconnect current connection
-                        return .send(.connectDisconnectingIfNecessary(item.code))
+                        .send(.connectDisconnectingIfNecessary(item.code))
                     }
                 }
                 if case let .connected(_, server, _, _) = state.connectionState {
@@ -130,7 +133,7 @@ struct MainFeature {
                 }
                 return .send(.connectDisconnectingIfNecessary(item.code))
 
-            case .homeLoading(.loaded(.protectionStatus(.delegate(let action)))):
+            case let .homeLoading(.loaded(.protectionStatus(.delegate(action)))):
                 switch action {
                 case .userClickedDisconnect:
                     return .send(.connection(.input(.disconnect)))
@@ -143,7 +146,7 @@ struct MainFeature {
             case .homeLoading:
                 return .none
 
-            case .connectDisconnectingIfNecessary(let code):
+            case let .connectDisconnectingIfNecessary(code):
                 return .run { send in
                     let intent = try connectionPreparationIntent(code: code)
                     return await send(.connection(.input(.connect(intent))))
@@ -160,21 +163,21 @@ struct MainFeature {
                 }
                 return .none
 
-            case .connection(.delegate(.stateChanged(let connectionState))):
+            case let .connection(.delegate(.stateChanged(connectionState))):
                 state.$connectionState.withLock { $0 = connectionState }
                 if case .disconnected = connectionState {
                     return .send(.updateUserLocation)
                 }
                 return .none
 
-            case .connection(.delegate(.connectionFailed(let error))):
+            case let .connection(.delegate(.connectionFailed(error))):
                 return .send(.errorOccurred(error))
 
             case .connection:
                 return .none
 
-            case .errorOccurred(let error):
-                return .run { send in await alertService.feed(error) }
+            case let .errorOccurred(error):
+                return .run { _ in await alertService.feed(error) }
             }
         }
     }

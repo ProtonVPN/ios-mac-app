@@ -44,13 +44,13 @@ struct HermesView: ExplicitlySizedView {
     @FocusState private var locationTextFieldIsFocused: Bool
 
     private var isEnabledBinding: Binding<Bool> {
-        return .init { viewModel.isEnabled } set: { newValue in
+        .init { viewModel.isEnabled } set: { newValue in
             viewModel.setIsEnabled(newValue)
         }
     }
 
     private var localHermesResolvers: Binding<[HermesResolver]> {
-        return .init { viewModel.activeHermesResolvers } set: { newValue in
+        .init { viewModel.activeHermesResolvers } set: { newValue in
             viewModel.applyDiff(newValue.difference(from: viewModel.activeHermesResolvers))
         }
     }
@@ -155,9 +155,9 @@ struct HermesView: ExplicitlySizedView {
     private var resolverLocationOverlay: some View {
         switch resolverLocationValidation {
         case .empty, .valid:
-            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.purple)
+            RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.purple)
         case .invalid, .duplicate, .unexpectedError:
-            return RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.red)
+            RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color.red)
         }
     }
 
@@ -278,7 +278,7 @@ private struct HermesSectionView<Content: View>: View {
 
 final class HermesWindow: NSWindow {
     override var canBecomeKey: Bool {
-        return true
+        true
     }
 
     init(viewModel: HermesViewModel) {

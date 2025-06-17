@@ -23,9 +23,9 @@ import Foundation
 import KeychainAccess
 import Logging
 
-import VPNShared
-import VPNCrypto
 import VPNAppCore
+import VPNCrypto
+import VPNShared
 
 import Domain
 
@@ -44,7 +44,7 @@ public protocol VpnKeychainProtocol {
     func clear()
 
     #if os(iOS)
-    func fetchWidgetPublicKey() throws -> CryptoService.Key
+        func fetchWidgetPublicKey() throws -> CryptoService.Key
     #endif
 }
 
@@ -67,7 +67,7 @@ extension VpnKeychainProtocol {
         do {
             return try credentialsProvider()
         } catch {
-            if let keychainError = error as? KeychainError, case .credentialsMissing(let key) = keychainError {
+            if let keychainError = error as? KeychainError, case let .credentialsMissing(key) = keychainError {
                 log.debug("Credentials missing from vpn keychain", metadata: ["storageKey": "\(key)"])
                 return nil
             }
@@ -81,7 +81,7 @@ public protocol VpnKeychainFactory {
     func makeVpnKeychain() -> VpnKeychainProtocol
 }
 
-internal enum KeychainEnvironment {
+enum KeychainEnvironment {
     static var secItemAdd = SecItemAdd
     static var secItemDelete = SecItemDelete
     static var secItemCopyMatching = SecItemCopyMatching
@@ -94,7 +94,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         let localizedDescription: String
     }
 
-    private struct StorageKey {
+    private enum StorageKey {
         static let vpnCredentials = "vpnCredentials"
         static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"
@@ -102,7 +102,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let wireguardSettings = "ProtonVPN_wg_settings"
         static let widgetPublicKey = "ch.proton.vpn.widget.public_key"
     }
-    
+
     private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
 
     /// Singleton implementation of the `VPNKeychain` ensures that the live value provided by `Dependencies` and the
@@ -115,7 +115,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let encoder = JSONEncoder()
 
     private var cached: CachedVpnCredentials?
-    
+
     public func fetch() throws -> VpnCredentials {
         let key = StorageKey.vpnCredentials
         guard let data = try appKeychain.getData(key) else {
@@ -155,19 +155,19 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func fetchCached() throws -> CachedVpnCredentials {
-        return try cached ?? CachedVpnCredentials(credentials: fetch())
+        try cached ?? CachedVpnCredentials(credentials: fetch())
     }
-    
+
     public func fetchOpenVpnPassword() throws -> Data {
         do {
             let password = try getPasswordReference(forKey: StorageKey.vpnServerPassword)
             return password
-        } catch let error {
+        } catch {
             log.error("Error while fetching open vpn password from the keychain", category: .keychain, metadata: ["error": "\(error)"])
             throw CommonVpnError.vpnCredentialsMissing
         }
     }
-    
+
     public func storeAndDetectDowngrade(vpnCredentials: VpnCredentials) {
         // TODO: Refactor to make it obvious that code posting notifications is
         // being run AFTER storing credentials to the keychain.
@@ -191,21 +191,21 @@ public class VpnKeychain: VpnKeychainProtocol {
             let data = try encoder.encode(vpnCredentials)
             try appKeychain.set(data, key: StorageKey.vpnCredentials)
             cached = CachedVpnCredentials(credentials: vpnCredentials)
-        } catch let error {
+        } catch {
             log.error("Keychain (vpn) write error", category: .keychain, metadata: ["error": "\(error)"])
         }
-        
+
         do {
             try setPassword(vpnCredentials.password, forKey: StorageKey.vpnServerPassword)
-        } catch let error {
+        } catch {
             log.error("Error occurred during OpenVPN password storage", category: .keychain, metadata: ["error": "\(error)"])
         }
-        
+
         DispatchQueue.main.async {
             AppEvent.credentialsChanged.post(vpnCredentials)
         }
     }
-    
+
     public func clear() {
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
@@ -217,9 +217,9 @@ public class VpnKeychain: VpnKeychainProtocol {
             DispatchQueue.main.async {
                 AppEvent.credentialsChanged.post()
             }
-        } catch { }
+        } catch {}
     }
-    
+
     // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be
     // a "persistent keychain reference to a keychain item containing the password component of the
     // tunneling protocol authentication credential".
@@ -227,13 +227,13 @@ public class VpnKeychain: VpnKeychainProtocol {
         var query = formBaseQuery(forKey: key)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
-        
+
         var secItem: AnyObject?
         let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
-        
+
         if let item = secItem as? Data {
             return item
         } else {
@@ -273,36 +273,38 @@ public class VpnKeychain: VpnKeychainProtocol {
             }
         }
     }
-    
+
     public func setPassword(_ password: String, forKey key: String) throws {
         try setPasswordData(password.data(using: .utf8)!, forKey: key)
     }
 
     private func clearPassword(forKey key: String) throws {
         let query = formBaseQuery(forKey: key)
-        
+
         let result = KeychainEnvironment.secItemDelete(query as CFDictionary)
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
-    
+
     private func formBaseQuery(forKey key: String) -> [AnyHashable: Any] {
-        return [
+        [
             kSecClass as AnyHashable: kSecClassGenericPassword,
             kSecAttrGeneric as AnyHashable: key,
             kSecAttrAccount as AnyHashable: key,
             kSecAttrService as AnyHashable: key,
-            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         ] as [AnyHashable: Any]
     }
-    
+
     // MARK: - Certificates
-    
+
     public func getServerCertificate() throws -> SecCertificate {
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate,
-                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+        ]
         var item: CFTypeRef?
         let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &item)
         guard result == errSecSuccess else {
@@ -311,59 +313,62 @@ public class VpnKeychain: VpnKeychainProtocol {
 
         return item as! SecCertificate
     }
-    
+
     public func storeServerCertificate() throws {
         let certificateFile = Bundle.main.path(forResource: StorageKey.serverCertificate, ofType: "der")!
         let certificateData = NSData(contentsOfFile: certificateFile)!
         let certificate = SecCertificateCreateWithData(nil, certificateData)!
-        
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecValueRef as String: certificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate]
-        
+
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecValueRef as String: certificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+        ]
+
         let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
         guard result == errSecSuccess else {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
-    
+
     private func deleteServerCertificate() {
-        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
-                                    kSecAttrLabel as String: StorageKey.serverCertificate,
-                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassCertificate,
+            kSecAttrLabel as String: StorageKey.serverCertificate,
+            kSecReturnRef as String: kCFBooleanTrue as Any,
+        ]
         _ = KeychainEnvironment.secItemDelete(query as CFDictionary)
     }
-    
+
     // MARK: - Wireguard
-    
+
     public func store(wireguardConfiguration: Data) throws -> Data {
         try setPasswordData(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
         return try fetchWireguardConfigurationReference()
     }
-    
+
     public func fetchWireguardConfigurationReference() throws -> Data {
-        return try getPasswordReference(forKey: StorageKey.wireguardSettings)
+        try getPasswordReference(forKey: StorageKey.wireguardSettings)
     }
-    
+
     public func fetchWireguardConfiguration() throws -> String? {
-        
         var query = formBaseQuery(forKey: StorageKey.wireguardSettings)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecValuePersistentRef as AnyHashable] = try fetchWireguardConfigurationReference()
         query[kSecReturnData as AnyHashable] = true
-        
+
         var secItem: AnyObject?
         let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
         if result != errSecSuccess {
             log.error("Keychain error", category: .keychain, metadata: ["SecItemCopyMatching": "\(result)"])
             return nil
         }
-        
+
         if let item = secItem as? Data {
             let config = String(data: item, encoding: String.Encoding.utf8)
             log.debug("Config read", category: .keychain, metadata: ["config": "\(config ?? "-")"])
             return config
-            
+
         } else {
             log.error("Keychain error: can't read data", category: .keychain)
             return nil
@@ -371,18 +376,19 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     // MARK: - Widget
-    #if os(iOS)
-    public func fetchWidgetPublicKey() throws -> CryptoService.Key {
-        guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {
-            throw Error(localizedDescription: "Keychain error: widget public key not found")
-        }
 
-        return try CryptoService.Key(
-            data: data,
-            keyType: CryptoConstants.widgetChallengeKeyType,
-            keyClass: .publicKey,
-            keySize: CryptoConstants.widgetChallengeKeyWidth
-        )
-    }
+    #if os(iOS)
+        public func fetchWidgetPublicKey() throws -> CryptoService.Key {
+            guard let data = try appKeychain.getData(StorageKey.widgetPublicKey) else {
+                throw Error(localizedDescription: "Keychain error: widget public key not found")
+            }
+
+            return try CryptoService.Key(
+                data: data,
+                keyType: CryptoConstants.widgetChallengeKeyType,
+                keyClass: .publicKey,
+                keySize: CryptoConstants.widgetChallengeKeyWidth
+            )
+        }
     #endif
 }

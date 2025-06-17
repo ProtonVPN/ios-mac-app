@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import struct Ergonomics.GenericError
-import XCTest
+import Foundation
 @testable import LegacyCommon
+import XCTest
 
 extension DataManager {
     static func mock(data: Data?) -> DataManager {
@@ -129,8 +129,10 @@ class TelemetryBufferTests: XCTestCase {
 
     // When asked for the oldest event, Buffer will return the first event from the list
     func testBufferReturnsFirstEvent() async {
-        let mock: [TelemetryBuffer.BufferedEvent] = [.mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!),
-                                                     .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!)]
+        let mock: [TelemetryBuffer.BufferedEvent] = [
+            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000000")!),
+            .mock(id: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!),
+        ]
         let data = try! JSONEncoder().encode(mock)
 
         await withDependencies {
@@ -145,7 +147,7 @@ class TelemetryBufferTests: XCTestCase {
 
     // Test that event is being saved to storage
     func testBufferSavesMax100Events() async throws {
-        let mock = (0...TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
+        let mock = (0 ... TelemetryBuffer.Constants.maxStoredEvents).map { _ in TelemetryBuffer.BufferedEvent
             .mock()
         }
         let data = try! JSONEncoder().encode(mock)

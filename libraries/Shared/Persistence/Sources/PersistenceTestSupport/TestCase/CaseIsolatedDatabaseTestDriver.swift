@@ -32,12 +32,12 @@ public protocol CaseIsolatedDatabaseTestDriver: AbstractDatabaseTestDriver {
     static var internalRepositoryWrapper: ServerRepositoryWrapper! { get set }
 }
 
-extension CaseIsolatedDatabaseTestDriver {
+public extension CaseIsolatedDatabaseTestDriver {
     private var setUpErrorMessage: String {
         "Did you forget to invoke the static `setUpRepository()` in your test case's overridden `setUp` class method?"
     }
 
-    public static func setUpRepository() {
+    static func setUpRepository() {
         let repositoryImplementation = withDependencies {
             $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
         } operation: {
@@ -48,17 +48,17 @@ extension CaseIsolatedDatabaseTestDriver {
         internalRepository = .wrapped(wrappedWith: internalRepositoryWrapper!)
     }
 
-    public var repository: ServerRepository {
+    var repository: ServerRepository {
         assert(Self.internalRepository != nil, setUpErrorMessage)
         return Self.internalRepository!
     }
 
-    public var repositoryWrapper: ServerRepositoryWrapper {
+    var repositoryWrapper: ServerRepositoryWrapper {
         assert(Self.internalRepository != nil, setUpErrorMessage)
         return Self.internalRepositoryWrapper!
     }
 
-    public func setUpRepository() throws {
+    func setUpRepository() throws {
         assertionFailure("Invoke the static version of this method in the class method `XCTestCase.setUp()`")
     }
 }

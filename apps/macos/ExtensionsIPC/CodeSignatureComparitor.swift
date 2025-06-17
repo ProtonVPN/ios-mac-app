@@ -26,12 +26,13 @@ struct CodeSignatureError: Error, CustomStringConvertible {
     let description: String
 }
 
-struct CodeSignatureComparitor {
+enum CodeSignatureComparitor {
     public static func codeSignatureMatches(auditToken: audit_token_t) throws -> Bool {
-        return try codeSigningCertificatesForSelf() == codeSigningCertificates(for: auditToken)
+        try codeSigningCertificatesForSelf() == codeSigningCertificates(for: auditToken)
     }
 
     // MARK: - Private
+
     private static func execute(secFunction: () -> OSStatus) throws {
         let status = secFunction()
         guard status == errSecSuccess else {
@@ -86,7 +87,7 @@ struct CodeSignatureComparitor {
     private static func codeSigningCertificates(for code: SecStaticCode) throws -> [SecCertificate] {
         guard let info = try secCodeInfo(for: code),
               let certificates = info[kSecCodeInfoCertificates as String] as? [SecCertificate] else {
-              throw CodeSignatureError(description: "codeSigningCertificates: no certificates found")
+            throw CodeSignatureError(description: "codeSigningCertificates: no certificates found")
         }
         return certificates
     }

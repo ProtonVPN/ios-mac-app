@@ -29,11 +29,11 @@ public struct VPNAuthenticationData: Sendable {
 }
 
 #if DEBUG
-// Can be moved to a separate target if there are more things we'd like mocks of in the future
-extension VPNAuthenticationData {
-    public static let empty = VPNAuthenticationData(
-        clientKey: .init(rawRepresentation: [], derRepresentation: "", base64X25519Representation: ""),
-        clientCertificate: ""
-    )
-}
+    // Can be moved to a separate target if there are more things we'd like mocks of in the future
+    public extension VPNAuthenticationData {
+        static let empty = VPNAuthenticationData(
+            clientKey: .init(rawRepresentation: [], derRepresentation: "", base64X25519Representation: ""),
+            clientCertificate: ""
+        )
+    }
 #endif

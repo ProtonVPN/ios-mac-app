@@ -26,18 +26,17 @@ import NetworkExtension
 import Strings
 
 class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
-    
-    func handle(intent: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
+    func handle(intent _: QuickConnectIntent, completion: @escaping (QuickConnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
         completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
-    
-    func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
+
+    func handle(intent _: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
         let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
         completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
 
-    func handle(intent: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
+    func handle(intent _: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
         Task {
             let status = await getVpnStatus()
             let text = self.getConnectionStatusString(status: status)
@@ -45,11 +44,11 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         }
     }
 
-    override func handler(for intent: INIntent) -> Any {
+    override func handler(for _: INIntent) -> Any {
         // This is the default implementation.  If you want different objects to handle different intents,
         // you can override this and return the handler you want for that particular intent.
-        
-        return self
+
+        self
     }
 
     // MARK: -
@@ -60,7 +59,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     /// There is also a personal VPN section that is managed not by `NETunnelProviderManager`,
     /// but by `NEVPNManager` which is used by IKEv2, so we add this as well.
     private func getVpnStatus() async -> NEVPNStatus? {
-        var statuses = (try? await NETunnelProviderManager.loadAllFromPreferences().map { $0.connection.status }) ?? []
+        var statuses = await (try? NETunnelProviderManager.loadAllFromPreferences().map(\.connection.status)) ?? []
 
         // Add "personal" VPN status to the mix (IKEv2)
         let personal = NEVPNManager.shared()
@@ -92,5 +91,4 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
             return Localizable.disconnected
         }
     }
-
 }

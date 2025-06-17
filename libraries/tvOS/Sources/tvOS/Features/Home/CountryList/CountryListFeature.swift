@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
-import Foundation
 import CommonNetworking
+import ComposableArchitecture
 import Domain
+import Foundation
 
 @Reducer
 struct CountryListFeature {
-
     /// More info about recommended countries selection:
     /// https://confluence.protontech.ch/pages/viewpage.action?pageId=128215858#Productmetricsforbusiness-Streaming
     static let recommendedCountries: [String] = ["US", "UK", "CA", "FR", "DE"]
@@ -39,24 +38,26 @@ struct CountryListFeature {
             let allCountries = repository
                 .getGroups(filteredBy: [
                     .isNotUnderMaintenance,
-                    .kind(.country)
+                    .kind(.country),
                 ])
                 .enumerated()
-                .compactMap { (index, group) in
-                    return group.item(index: index, section: 1)
+                .compactMap { index, group in
+                    group.item(index: index, section: 1)
                 }
 
-            let recommendedCountries: [CountryListItem] = {
-                CountryListFeature.recommendedCountries
-                    .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
-                    .map { CountryListItem(section: 0, row: 0, code: $0) }
-            }()
-            countriesSection = .init(name: "All countries",
-                                     items: allCountries,
-                                     sectionIndex: 1)
-            recommendedSection = .init(name: "Recommended",
-                                       items: [.fastest] + recommendedCountries,
-                                       sectionIndex: 0)
+            let recommendedCountries: [CountryListItem] = CountryListFeature.recommendedCountries
+                .filter { code in allCountries.contains { $0.code == code } } // be sure we can actually connect to that country
+                .map { CountryListItem(section: 0, row: 0, code: $0) }
+            self.countriesSection = .init(
+                name: "All countries",
+                items: allCountries,
+                sectionIndex: 1
+            )
+            self.recommendedSection = .init(
+                name: "Recommended",
+                items: [.fastest] + recommendedCountries,
+                sectionIndex: 0
+            )
         }
     }
 
@@ -72,7 +73,7 @@ struct CountryListFeature {
 
 private extension ServerGroupInfo {
     func item(index: Int, section: Int) -> CountryListItem? {
-        guard case .country(let code) = kind else { return nil }
+        guard case let .country(code) = kind else { return nil }
         let row = Int(floor(Double(index) / Double(CountryListView.columnCount)))
         return CountryListItem(section: section, row: row, code: code)
     }

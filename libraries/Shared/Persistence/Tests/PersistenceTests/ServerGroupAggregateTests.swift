@@ -23,7 +23,6 @@ import Persistence
 import PersistenceTestSupport
 
 final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
-
     func testMaintenanceWithMixedStatus() throws {
         let mixedStatusServers = [
             TestData.createMockServer(withID: "UK#01", status: 0),
@@ -41,7 +40,7 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
     func testMaintenanceWithAllUnderMaintenanceStatus() throws {
         let maintenanceServers = [
             TestData.createMockServer(withID: "UK#01", status: 0),
-            TestData.createMockServer(withID: "UK#02", status: 0)
+            TestData.createMockServer(withID: "UK#02", status: 0),
         ]
 
         repository.upsert(servers: maintenanceServers)
@@ -64,5 +63,4 @@ final class ServerGroupAggregateTests: TestIsolatedDatabaseTestCase {
 
         XCTAssertFalse(group.isUnderMaintenance)
     }
-
 }

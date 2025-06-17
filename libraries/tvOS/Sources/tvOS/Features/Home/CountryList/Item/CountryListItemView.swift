@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Theme
 import ComposableArchitecture
 import Connection
 import struct Domain.Server
+import SwiftUI
+import Theme
 
 struct CountryListItemView: View {
     let item: CountryListItem
@@ -88,14 +88,14 @@ struct CountryListItemView: View {
 
     private var connectedCode: String? {
         switch connectionState {
-        case .connected(_, let server, _, _):
-            return server.logical.entryCountryCode
-        case .connecting(.unresolved(let intent)):
-            return intent.server.logical.entryCountryCode
-        case .connecting(.resolved(_, let server)):
-            return server.logical.entryCountryCode
+        case let .connected(_, server, _, _):
+            server.logical.entryCountryCode
+        case let .connecting(.unresolved(intent)):
+            intent.server.logical.entryCountryCode
+        case let .connecting(.resolved(_, server)):
+            server.logical.entryCountryCode
         default:
-            return nil
+            nil
         }
     }
 }

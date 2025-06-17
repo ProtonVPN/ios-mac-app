@@ -6,11 +6,11 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import Foundation
 import Dependencies
+import Foundation
+import LegacyCommon
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import LegacyCommon
 import VPNShared
 
 final class UserCachedStatus: ServicePlanDataStorage {
@@ -29,7 +29,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     var servicePlansDetails: [Plan]? {
         get {
-            return try? storage.get([Plan].self, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
+            try? storage.get([Plan].self, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
         set {
             try? storage.set(newValue, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
@@ -38,7 +38,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     var defaultPlanDetails: Plan? {
         get {
-            return try? storage.get(Plan.self, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
+            try? storage.get(Plan.self, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
         set {
             try? storage.set(newValue, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
@@ -47,7 +47,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     var currentSubscription: Subscription? {
         get {
-            return try? storage.get(Subscription.self, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
+            try? storage.get(Subscription.self, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
         }
         set {
             try? storage.set(newValue, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
@@ -73,7 +73,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     var paymentMethods: [PaymentMethod]? {
         get {
-            return try? storage.get([PaymentMethod].self, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
+            try? storage.get([PaymentMethod].self, forKey: UserCachedStatusKeys.paymentMethods.rawValue)
         }
         set {
             try? storage.set(newValue, forKey: UserCachedStatusKeys.paymentMethods.rawValue)

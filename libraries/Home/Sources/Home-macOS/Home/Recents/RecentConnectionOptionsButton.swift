@@ -21,10 +21,10 @@ import SwiftUI
 import ProtonCoreUIFoundations
 
 import Domain
+import HomeShared
 import Strings
 import Theme
 import VPNAppCore
-import HomeShared
 
 struct RecentConnectionOptionsButton: View {
     let item: RecentConnection
@@ -38,7 +38,7 @@ struct RecentConnectionOptionsButton: View {
     var body: some View {
         VStack {
             Button {
-                self.isPresented.toggle()
+                isPresented.toggle()
             } label: {
                 IconProvider.threeDotsVertical
                     .resizable()
@@ -47,9 +47,11 @@ struct RecentConnectionOptionsButton: View {
             }
             .help(Localizable.homeRecentsOptionsButtonHelp)
             .buttonStyle(RecentsButtonStyle())
-            .popover(isPresented: $isPresented,
-                     attachmentAnchor: .point(.bottom),
-                     arrowEdge: .bottom) {
+            .popover(
+                isPresented: $isPresented,
+                attachmentAnchor: .point(.bottom),
+                arrowEdge: .bottom
+            ) {
                 VStack(alignment: .leading, spacing: 0) {
                     OptionButton(role: .pin(isPinned: item.pinned)) {
                         isPresented = false
@@ -71,34 +73,35 @@ struct RecentConnectionOptionsButton: View {
     }
 }
 
-
 private extension RecentConnectionOptionsButton {
     struct OptionButton: View {
         enum Role {
             case pin(isPinned: Bool)
             case remove
         }
+
         let role: Role
         let action: () -> Void
 
         var image: Image {
             switch role {
-            case .pin(let isPinned):
-                return (isPinned
-                        ? IconProvider.pinSlashFilled
-                        : IconProvider.pinFilled)
+            case let .pin(isPinned):
+                isPinned
+                    ? IconProvider.pinSlashFilled
+                    : IconProvider.pinFilled
             case .remove:
-                return IconProvider.trashCross
+                IconProvider.trashCross
             }
         }
+
         var text: Text {
             switch role {
-            case .pin(let isPinned):
-                return Text(isPinned
-                            ? Localizable.actionHomeUnpin
-                            : Localizable.actionHomePin)
+            case let .pin(isPinned):
+                Text(isPinned
+                    ? Localizable.actionHomeUnpin
+                    : Localizable.actionHomePin)
             case .remove:
-                return Text(Localizable.actionRemove)
+                Text(Localizable.actionRemove)
             }
         }
 
@@ -122,7 +125,6 @@ private extension RecentConnectionOptionsButton {
 }
 
 private struct RecentConnectOptionsButtonStyle: ButtonStyle {
-
     @State var isHovered: Bool = false
 
     func makeBody(configuration: Configuration) -> some View {
@@ -135,7 +137,7 @@ private struct RecentConnectOptionsButtonStyle: ButtonStyle {
             .onHover { isHovered = $0 }
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = []
         style.insert(isHovered ? .interactive : .transparent)
         return Color(.background, style)

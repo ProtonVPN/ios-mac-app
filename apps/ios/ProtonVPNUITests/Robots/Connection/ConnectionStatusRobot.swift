@@ -7,37 +7,35 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
-fileprivate let statusNotConnected = Localizable.notConnected
-fileprivate let statusConnected = Localizable.connectedTo
-fileprivate let tabQCInactive = "quick connect inactive button"
-fileprivate let tabQCActive = "quick connect active button"
-fileprivate let netshieldUpgradeButton = Localizable.upgrade
-fileprivate let getPlusButton = "GetPlusButton"
-fileprivate let notNowbutton = "UseFreeButton"
-fileprivate let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
-fileprivate let disconnectButtonId = "disconnect_button"
-fileprivate let connectionStatusProtected = Localizable.connectionStatusProtected
-fileprivate let connectionInforHeaderId = "connection_info_header"
-fileprivate let netShieldStatsViewId = "net_shield_stats"
-fileprivate let locationTextId = "location_text"
+private let statusNotConnected = Localizable.notConnected
+private let statusConnected = Localizable.connectedTo
+private let tabQCInactive = "quick connect inactive button"
+private let tabQCActive = "quick connect active button"
+private let netshieldUpgradeButton = Localizable.upgrade
+private let getPlusButton = "GetPlusButton"
+private let notNowbutton = "UseFreeButton"
+private let connectionStatusUnprotected = Localizable.connectionStatusUnprotected
+private let disconnectButtonId = "disconnect_button"
+private let connectionStatusProtected = Localizable.connectionStatusProtected
+private let connectionInforHeaderId = "connection_info_header"
+private let netShieldStatsViewId = "net_shield_stats"
+private let locationTextId = "location_text"
 
 class ConnectionStatusRobot: CoreElements {
-    
     let verify = Verify()
 
     @discardableResult
     public func isConnected() -> Bool {
-        return staticText(connectionStatusProtected)
+        staticText(connectionStatusProtected)
             .waitUntilExists(time: 1)
             .exists()
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func connectedToAServer(_ name: String) -> HomeRobot {
             staticText(connectionStatusProtected)
@@ -49,7 +47,7 @@ class ConnectionStatusRobot: CoreElements {
                 .checkHasLabel(name)
             return HomeRobot()
         }
-        
+
         @discardableResult
         func connectedToASecureCoreServer(_ secureCoreServerName: String) -> ConnectionStatusRobot {
             button(secureCoreServerName)
@@ -58,7 +56,7 @@ class ConnectionStatusRobot: CoreElements {
             button(disconnectButtonId).waitUntilExists().checkExists()
             return ConnectionStatusRobot()
         }
-        
+
         @discardableResult
         func connectionStatusNotConnected() -> HomeRobot {
             staticText(connectionStatusUnprotected)
@@ -67,7 +65,6 @@ class ConnectionStatusRobot: CoreElements {
             if let locationText = staticText(locationTextId)
                 .checkExists(message: "Location text is not visible")
                 .label() {
-
                 if let result = splitCountryAndIP(from: locationText) {
                     XCTAssertTrue(
                         result.ipAddress.isValidIPv4Address,
@@ -85,7 +82,7 @@ class ConnectionStatusRobot: CoreElements {
             }
             return HomeRobot()
         }
-        
+
         @discardableResult
         func connectionStatusConnected<T: CoreElements>(robot _: T.Type = HomeRobot.self) -> T {
             button(disconnectButtonId)
@@ -96,7 +93,7 @@ class ConnectionStatusRobot: CoreElements {
                 .checkExists(message: "\(connectionStatusProtected) is not visible in 60 seconds")
             return T()
         }
-        
+
         @discardableResult
         func protocolNameIsCorrect(_ expectedProtocol: ConnectionProtocol) -> ConnectionStatusRobot {
             if case .Smart = expectedProtocol {
@@ -106,7 +103,7 @@ class ConnectionStatusRobot: CoreElements {
             }
             return ConnectionStatusRobot()
         }
-        
+
         func upsellModalIsShown() -> ConnectionStatusRobot {
             button(getPlusButton).waitUntilExists().checkExists()
             button(notNowbutton).tap()

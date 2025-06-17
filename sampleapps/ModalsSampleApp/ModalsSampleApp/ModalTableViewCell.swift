@@ -19,7 +19,7 @@
 import UIKit
 
 final class ModalTableViewCell: UITableViewCell {
-    @IBOutlet weak var modalTitle: UILabel!
+    @IBOutlet var modalTitle: UILabel!
 }
 
 final class SwitchTableViewCell: UITableViewCell {
@@ -31,14 +31,15 @@ final class SwitchTableViewCell: UITableViewCell {
         }
     }
 
-    @IBOutlet weak var cellTitle: UILabel!
-    @IBOutlet weak var switchButton: UISwitch! {
+    @IBOutlet var cellTitle: UILabel!
+    @IBOutlet var switchButton: UISwitch! {
         didSet {
             switchButton.addTarget(self, action: #selector(didTapSwitch), for: .valueChanged)
         }
     }
 
-    @objc private func didTapSwitch() {
+    @objc
+    private func didTapSwitch() {
         switchValueChangedHandler?(switchButton.isOn)
     }
 }

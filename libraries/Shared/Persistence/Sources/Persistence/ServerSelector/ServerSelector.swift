@@ -18,8 +18,8 @@
 
 import Foundation
 
-import IssueReporting
 import Dependencies
+import IssueReporting
 
 import Domain
 import Ergonomics
@@ -48,26 +48,26 @@ public struct ServerSelector: Sendable {
             var charCode: FourCharCode {
                 switch self {
                 case .featuresNotSupported:
-                    return "LFNS"
+                    "LFNS"
                 case .locationNotFound:
-                    return "LLNF"
+                    "LLNF"
                 case .protocolNotSupported:
-                    return "LPNS"
+                    "LPNS"
                 case .maintenance:
-                    return "LMNT"
+                    "LMNT"
                 }
             }
 
             var userInfo: [String: Any] {
                 switch self {
                 case let .featuresNotSupported(features):
-                    return ["features": features]
+                    ["features": features]
                 case let .locationNotFound(location):
-                    return ["location": location]
+                    ["location": location]
                 case let .protocolNotSupported(unsupportedProtocol):
-                    return ["protocol": unsupportedProtocol]
+                    ["protocol": unsupportedProtocol]
                 case .maintenance:
-                    return [:]
+                    [:]
                 }
             }
         }
@@ -79,18 +79,18 @@ public struct ServerSelector: Sendable {
             var charCode: FourCharCode {
                 switch self {
                 case .protocolNotSupported:
-                    return "EPNS"
+                    "EPNS"
                 case .maintenance:
-                    return "EMNT"
+                    "EMNT"
                 }
             }
 
             var userInfo: [String: Any] {
                 switch self {
                 case let .protocolNotSupported(unsupportedProtocol):
-                    return ["protocol": unsupportedProtocol]
+                    ["protocol": unsupportedProtocol]
                 case .maintenance:
-                    return [:]
+                    [:]
                 }
             }
         }
@@ -98,25 +98,25 @@ public struct ServerSelector: Sendable {
         public var charCode: FourCharCode {
             switch self {
             case let .noEndpoints(reason):
-                return reason.charCode
+                reason.charCode
             case let .noLogical(reason):
-                return reason.charCode
+                reason.charCode
             }
         }
 
         public var extraUserInfo: [String: Any]? {
             switch self {
             case let .noEndpoints(reason):
-                return reason.userInfo
+                reason.userInfo
             case let .noLogical(reason):
-                return reason.userInfo
+                reason.userInfo
             }
         }
     }
 }
 
 extension ServerSelector: DependencyKey {
-    public static let liveValue = ServerSelector(select: { (spec, userTier, acceptableProtocols) throws(ServerSelectionError) -> Server in
+    public static let liveValue = ServerSelector(select: { spec, userTier, acceptableProtocols throws(ServerSelectionError) -> Server in
         @Dependency(\.serverRepository) var repository
 
         let tierFilter: VPNServerFilter? = userTier == .freeTier ? .tier(.max(tier: .freeTier)) : nil
@@ -132,7 +132,7 @@ extension ServerSelector: DependencyKey {
         let steps: [(VPNServerFilter, ServerSelectionError.LogicalResolutionFailureReason)] = [
             (.features(spec.serverFeatureFilter), .featuresNotSupported(spec.features)),
             (.supports(protocol: acceptableProtocols), .protocolNotSupported(acceptableProtocols)),
-            (.isNotUnderMaintenance, .maintenance)
+            (.isNotUnderMaintenance, .maintenance),
         ]
 
         for (filter, reason) in steps {
@@ -169,7 +169,7 @@ extension ServerSelector: DependencyKey {
     })
 }
 
-extension Array<ServerInfo> {
+extension [ServerInfo] {
     func filter(_ filter: VPNServerFilter) -> Self {
         self.filter(filter.allows(_:))
     }
@@ -178,11 +178,11 @@ extension Array<ServerInfo> {
 extension VPNServerFilter {
     func allows(_ info: ServerInfo) -> Bool {
         switch self {
-        case .features(let filter):
+        case let .features(filter):
             let hasAllRequiredFeatures = info.logical.feature.intersection(filter.required) == filter.required
             let hasNoExcludedFeatures = info.logical.feature.intersection(filter.excluded).isEmpty
             return hasAllRequiredFeatures && hasNoExcludedFeatures
-        case .supports(let vpnProtocol):
+        case let .supports(vpnProtocol):
             return info.protocolSupport.contains(vpnProtocol)
         case .isNotUnderMaintenance:
             return !info.logical.isUnderMaintenance
@@ -194,8 +194,8 @@ extension VPNServerFilter {
     }
 }
 
-extension DependencyValues {
-    public var serverSelector: ServerSelector {
+public extension DependencyValues {
+    var serverSelector: ServerSelector {
         get { self[ServerSelector.self] }
         set { self[ServerSelector.self] = newValue }
     }
@@ -214,11 +214,11 @@ extension ConnectionSpec {
     var order: VPNServerOrder {
         switch location {
         case .random:
-            return .random
+            .random
         case .secureCore(.random):
-            return .random
+            .random
         default:
-            return .fastest
+            .fastest
         }
     }
 
@@ -232,7 +232,7 @@ extension ConnectionSpec {
 
     private var requiredFeatureSet: ServerFeature {
         var requiredFeatures: [ServerFeature] = features
-            .compactMap { ServerFeature.init(connectionSpecFeature: $0) }
+            .compactMap { ServerFeature(connectionSpecFeature: $0) }
         if location.isSecureCore {
             requiredFeatures.append(.secureCore)
         }
@@ -242,35 +242,35 @@ extension ConnectionSpec {
     var serverTierFilter: VPNServerFilter? {
         switch location {
         case .exact(.free, _, _, _, _):
-            return .tier(.max(tier: 0))
+            .tier(.max(tier: 0))
 
         default:
-            return nil
+            nil
         }
     }
 
     var locationFilters: [VPNServerFilter] {
         switch location {
         case .fastest, .random, .secureCore(.random), .secureCore(.fastest):
-            return []
+            []
 
-        case .region(let code):
-            return [.exitCountryCode(code)]
+        case let .region(code):
+            [.exitCountryCode(code)]
 
-        case .gateway(let name):
-            return [.kind(.gateway(name: name))]
+        case let .gateway(name):
+            [.kind(.gateway(name: name))]
 
-        case .exact(_, let logicalID, let number, let subRegion, let region):
-            return logicalID.map { [.logicalID($0)] } ?? [
+        case let .exact(_, logicalID, number, subRegion, region):
+            logicalID.map { [.logicalID($0)] } ?? [
                 Self.regionFilter(region: region, number: number),
-                subRegion.map(VPNServerFilter.city)
+                subRegion.map(VPNServerFilter.city),
             ].compactMap { $0 }
 
-        case .secureCore(.fastestHop(let to)):
-            return [.exitCountryCode(to)]
+        case let .secureCore(.fastestHop(to)):
+            [.exitCountryCode(to)]
 
-        case .secureCore(.hop(let to, let via)):
-            return [.exitCountryCode(to), .entryCountryCode(via)]
+        case let .secureCore(.hop(to, via)):
+            [.exitCountryCode(to), .entryCountryCode(via)]
         }
     }
 

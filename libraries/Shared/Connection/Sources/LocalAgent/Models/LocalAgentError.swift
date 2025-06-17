@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CasePaths
-import GoLibs
 import let CoreConnection.log
 import Domain
+import Foundation
+import GoLibs
 import Strings
 
 public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConvertibleError {
@@ -52,12 +52,12 @@ public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConve
     }
 }
 
-@CasePathable
-
 /// A collection of errors that can be reported by the Local Agent.
 /// Each case is defined with an appropriate resolution strategy.
 /// For more information, check [Shared VPN Libraries](https://github.com/ProtonVPN/go-vpn-lib/tree/master/localAgent)
 /// and [Local Agent Error Codes](https://protonvpn.gitlab-pages.protontech.ch/knowledge-base/Certificates-and-Local-Agent/LocalAgent-error-codes)
+@CasePathable
+
 public enum LocalAgentError: ProtonVPNError {
     public static var errorDomain: String { "LocalAgentRemoteError" }
 
@@ -113,58 +113,58 @@ public enum LocalAgentError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .restrictedServer:
-            return "LRXS"
+            "LRXS"
         case .certificateExpired:
-            return "LCRX"
+            "LCRX"
         case .certificateRevoked:
-            return "LCRV"
+            "LCRV"
         case .maxSessionsUnknown:
-            return "LMSU"
+            "LMSU"
         case .maxSessionsFree:
-            return "LMSF"
+            "LMSF"
         case .maxSessionsBasic:
-            return "LMSB"
+            "LMSB"
         case .maxSessionsPlus:
-            return "LMS+"
+            "LMS+"
         case .maxSessionsVisionary:
-            return "LMSV"
+            "LMSV"
         case .maxSessionsPro:
-            return "LMSP"
+            "LMSP"
         case .keyUsedMultipleTimes:
-            return "LKMT"
+            "LKMT"
         case .serverError:
-            return "LSRV"
+            "LSRV"
         case .policyViolationLowPlan:
-            return "LPVL"
+            "LPVL"
         case .policyViolationDelinquent:
-            return "LPVD"
+            "LPVD"
         case .userTorrentNotAllowed:
-            return "LTRN"
+            "LTRN"
         case .userBadBehavior:
-            return "LUBB"
+            "LUBB"
         case .guestSession:
-            return "LGSX"
+            "LGSX"
         case .badCertificateSignature:
-            return "LBCS"
+            "LBCS"
         case .certificateNotProvided:
-            return "LCNP"
+            "LCNP"
         case .serverSessionDoesNotMatch:
-            return "LSNM"
-        case .systemError(_):
-            return "LSER"
+            "LSNM"
+        case .systemError:
+            "LSER"
         case .unknown:
-            return "LUNK"
+            "LUNK"
         }
     }
 
     public var underlyingError: Error? {
         switch self {
-        case .systemError(let error):
-            return error
-        case .unknown(let code):
-            return NSError(domain: Self.errorDomain, code: code)
+        case let .systemError(error):
+            error
+        case let .unknown(code):
+            NSError(domain: Self.errorDomain, code: code)
         default:
-            return nil
+            nil
         }
     }
 }

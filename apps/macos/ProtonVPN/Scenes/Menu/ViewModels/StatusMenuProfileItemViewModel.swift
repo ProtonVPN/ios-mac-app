@@ -21,37 +21,36 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
-import Strings
 import Domain
+import LegacyCommon
+import Strings
+import Theme
 
 class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
-    
     private let vpnGateway: VpnGatewayProtocol
-    
+
     var canConnect: Bool {
-        return !underMaintenance && canUseProfile
+        !underMaintenance && canUseProfile
     }
-    
+
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
-    
+
     var name: NSAttributedString {
         let style: AppTheme.Style = canConnect ? .normal : .weak
         return profile.name.styled(style, font: .themeFont(.paragraph), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
-    
+
     var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
+        formSecondaryDescription()
     }
-        
+
     init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {
         self.vpnGateway = vpnGateway
         super.init(profile: profile, userTier: userTier)
     }
-    
+
     func connectAction() {
         if canConnect {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
@@ -59,15 +58,14 @@ class StatusMenuProfileItemViewModel: AbstractProfileViewModel {
             vpnGateway.connectTo(profile: profile)
         }
     }
-    
+
     private func formSecondaryDescription() -> NSAttributedString {
-        let description: String
-        if underMaintenance {
-            description = Localizable.maintenance
+        let description: String = if underMaintenance {
+            Localizable.maintenance
         } else {
-            description = ""
+            ""
         }
-        
+
         return description.styled(.weak, font: .themeFont(.paragraph), alignment: .right)
     }
 }

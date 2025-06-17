@@ -1,5 +1,5 @@
 //
-//  NSFont+Extension.swift
+//  NSFont+SymbolicTraits.swift
 //  ProtonVPN - Created on 26/11/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,22 +21,22 @@
 //
 
 #if canImport(Cocoa)
-import Cocoa
+    import Cocoa
 
-extension NSFont {
-    func with(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
-        let descriptor = self.fontDescriptor.withSymbolicTraits(
-            NSFontDescriptor.SymbolicTraits(traits).union(self.fontDescriptor.symbolicTraits)
-        )
-        return NSFont(descriptor: descriptor, size: 0) ?? self
-    }
+    extension NSFont {
+        func with(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
+            let descriptor = fontDescriptor.withSymbolicTraits(
+                NSFontDescriptor.SymbolicTraits(traits).union(fontDescriptor.symbolicTraits)
+            )
+            return NSFont(descriptor: descriptor, size: 0) ?? self
+        }
 
-    func without(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
-        let descriptor = self.fontDescriptor.withSymbolicTraits(
-            self.fontDescriptor.symbolicTraits.subtracting(NSFontDescriptor.SymbolicTraits(traits))
-        )
-        return NSFont(descriptor: descriptor, size: 0) ?? self
+        func without(_ traits: NSFontDescriptor.SymbolicTraits...) -> NSFont {
+            let descriptor = fontDescriptor.withSymbolicTraits(
+                fontDescriptor.symbolicTraits.subtracting(NSFontDescriptor.SymbolicTraits(traits))
+            )
+            return NSFont(descriptor: descriptor, size: 0) ?? self
+        }
     }
-}
 
 #endif

@@ -22,15 +22,14 @@
 
 import Cocoa
 import Dependencies
+import Domain
+import Ergonomics
 import LegacyCommon
 import VPNAppCore
-import Ergonomics
-import Domain
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
-    
     var title: String! { get }
-    
+
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
     var options: [QuickSettingsDropdownOptionPresenter] { get }
     var dismiss: (() -> Void)? { get set }
@@ -40,24 +39,23 @@ protocol QuickSettingDropdownPresenterProtocol: AnyObject {
 }
 
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
-
     weak var viewController: QuickSettingsDetailViewControllerProtocol?
-    
+
     var title: String! {
-        return ""
+        ""
     }
-    
+
     var learnLink: String {
-        return VPNLink.learnMore.urlString
+        VPNLink.learnMore.urlString
     }
-    
+
     let vpnGateway: VpnGatewayProtocol
     let appStateManager: AppStateManager
     let alertService: CoreAlertService
-    
+
     var dismiss: (() -> Void)?
-    
-    init( _ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
+
+    init(_ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.alertService = alertService
@@ -65,11 +63,11 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
 
         AppEvent.planChanged.subscribe(self, selector: #selector(vpnPlanChanged))
     }
-    
+
     var options: [QuickSettingsDropdownOptionPresenter] {
-        return []
+        []
     }
-    
+
     func viewDidLoad() {
         viewController?.dropdownTitle.attributedStringValue = title.styled(font: .themeFont(.heading4), alignment: .left)
         viewController?.dropdownUpgradeButton.target = self
@@ -77,9 +75,9 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         viewController?.dropdownLearnMore.target = self
         viewController?.dropdownLearnMore.action = #selector(didTapLearnMore)
     }
-    
+
     // MARK: - Utils
-    
+
     func displayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
         log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
@@ -94,13 +92,15 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         }
     }
 
-    @objc private func vpnPlanChanged() {
+    @objc
+    private func vpnPlanChanged() {
         viewController?.reloadOptions()
     }
-    
+
     // MARK: - Actions
-    
-    @objc private func didTapLearnMore() {
+
+    @objc
+    private func didTapLearnMore() {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(learnLink)
     }
@@ -110,7 +110,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         return UpsellAlert()
     }
 
-    @objc func presentUpsellAlert() {
+    @objc
+    func presentUpsellAlert() {
         alertService.push(alert: alert)
     }
 

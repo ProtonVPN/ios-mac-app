@@ -20,7 +20,6 @@ import Modals
 import UIKit
 
 final class ViewController: UITableViewController {
-    
     let upsells: [(type: ModalType, title: String)] = [
         (.welcomePlus(numberOfServers: 1300, numberOfDevices: 10, numberOfCountries: 61), "Welcome Plus"),
         (.welcomeUnlimited, "Welcome Unlimited"),
@@ -37,17 +36,21 @@ final class ViewController: UITableViewController {
         (.profiles, "Profiles"),
         (.cantSkip(before: Date().addingTimeInterval(10), totalDuration: 10, longSkip: false), "Server Roulette"),
         (.cantSkip(before: Date().addingTimeInterval(15), totalDuration: 15, longSkip: true), "Server Roulette (Too many skips)"),
-        (.subscription, title: "Subscription")]
+        (.subscription, title: "Subscription"),
+    ]
     let upgrades: [(type: UserAccountUpdateViewModel, title: String)] = [
-        (.subscriptionDowngradedReconnecting(numberOfCountries: 63,
-                                             numberOfDevices: 5,
-                                             fromServer: ViewController.fromServer,
-                                             toServer: ViewController.toServer), "Subscription Downgraded Reconnecting"),
+        (.subscriptionDowngradedReconnecting(
+            numberOfCountries: 63,
+            numberOfDevices: 5,
+            fromServer: ViewController.fromServer,
+            toServer: ViewController.toServer
+        ), "Subscription Downgraded Reconnecting"),
         (.subscriptionDowngraded(numberOfCountries: 63, numberOfDevices: 5), "Subscription Downgraded"),
         (.reachedDeviceLimit, "Reached Device Limit"),
         (.reachedDevicePlanLimit(planName: "Plus", numberOfDevices: 5), "Reached Device Plan Limit"),
         (.pendingInvoicesReconnecting(fromServer: fromServer, toServer: toServer), "Pending Invoices Reconnecting"),
-        (.pendingInvoices, "Pending Invoices")]
+        (.pendingInvoices, "Pending Invoices"),
+    ]
 
     static let fromServer = ("US-CA#63", UIImage(named: "flags_US")!)
     static let toServer = ("US-CA#78", UIImage(named: "flags_US")!)
@@ -57,29 +60,29 @@ final class ViewController: UITableViewController {
 
     let modalsFactory = ModalsFactory()
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         6
     }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
-            return 2 // presentation mode + legacy modal
+            2 // presentation mode + legacy modal
         case 1:
-            return 1
+            1
         case 2:
-            return upsells.count
+            upsells.count
         case 3:
-            return 2 // secure core / free connections
+            2 // secure core / free connections
         case 4:
-            return upgrades.count
+            upgrades.count
         case 5:
-            return 1 // onboarding
+            1 // onboarding
         default:
-            return 1
+            1
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchTableViewCell", for: indexPath) as! SwitchTableViewCell
@@ -96,35 +99,34 @@ final class ViewController: UITableViewController {
         }
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModalTableViewCell", for: indexPath)
 
-        let title: String
-        if indexPath.section == 1 {
-            title = "What's new"
+        let title: String = if indexPath.section == 1 {
+            "What's new"
         } else if indexPath.section == 2 {
-            title = upsells[indexPath.row].title
+            upsells[indexPath.row].title
         } else if indexPath.section == 3 {
             if indexPath.row == 0 {
-                title = "Discourage Secure Core"
+                "Discourage Secure Core"
             } else if indexPath.row == 1 {
-                title = "Free connections"
+                "Free connections"
             } else {
-                title = "-"
+                "-"
             }
         } else if indexPath.section == 4 {
-            title = upgrades[indexPath.row].title
+            upgrades[indexPath.row].title
         } else if indexPath.section == 5 {
-            title = "Onboarding"
+            "Onboarding"
         } else {
-            title = ""
+            ""
         }
 
         if let modalCell = cell as? ModalTableViewCell {
             modalCell.modalTitle.text = title
         }
-        
+
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section != 0 else {
             return
         }
@@ -181,9 +183,11 @@ final class ViewController: UITableViewController {
     }
 
     func pushAllCountries() {
-        let allCountries = modalsFactory.modalViewController(modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63), 
-                                                             primaryAction: { self.presentedViewController?.dismiss(animated: true) },
-                                                             dismissAction: { self.presentedViewController?.dismiss(animated: true) })
+        let allCountries = modalsFactory.modalViewController(
+            modalType: .allCountries(numberOfServers: 1800, numberOfCountries: 63),
+            primaryAction: { self.presentedViewController?.dismiss(animated: true) },
+            dismissAction: { self.presentedViewController?.dismiss(animated: true) }
+        )
 
         (presentedViewController as? UINavigationController)?.pushViewController(allCountries, animated: true)
     }
@@ -191,11 +195,11 @@ final class ViewController: UITableViewController {
 
 private extension ViewController {
     func plansClient() -> PlansClient {
-        return PlansClient(
+        PlansClient(
             retrievePlans: {
                 [
                     PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
-                    PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF"))
+                    PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF")),
                 ]
             },
             validate: { _ in

@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Dependencies
-import Sharing
 import Foundation
+import Sharing
 private import DependenciesMacros
 
 private import Network
@@ -78,50 +78,48 @@ public struct HermesClient: Sendable {
 }
 
 extension HermesClient: TestDependencyKey {
-    public static let testValue: HermesClient = {
-        return .init {
-            return SharedReader(value: false)
-        } setIsEnabled: { _ in
-            ()
-        } activeHermesResolvers: {
-            return SharedReader(value: [.proton])
-        } validateHermesLocation: { location in
-            return HermesResolverLocationValidator.isValid(location) != nil
-        } addHermesResolver: { _ in
-            false
-        } removeHermesResolver: { _ in
-            false
-        } applyDiff: { _ in
-            ()
-        }
-    }()
+    public static let testValue: HermesClient = .init {
+        SharedReader(value: false)
+    } setIsEnabled: { _ in
+        ()
+    } activeHermesResolvers: {
+        SharedReader(value: [.proton])
+    } validateHermesLocation: { location in
+        HermesResolverLocationValidator.isValid(location) != nil
+    } addHermesResolver: { _ in
+        false
+    } removeHermesResolver: { _ in
+        false
+    } applyDiff: { _ in
+        ()
+    }
 }
 
-extension DependencyValues {
-    public var hermesClient: HermesClient {
+public extension DependencyValues {
+    var hermesClient: HermesClient {
         get { self[HermesClient.self] }
         set { self[HermesClient.self] = newValue }
     }
 }
 
-extension HermesResolver {
-    public static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")
+public extension HermesResolver {
+    static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")
 }
 
 #if DEBUG
-extension HermesResolver: ExpressibleByStringLiteral {
-    public init(stringLiteral value: StringLiteralType) {
-        self.location = value
+    extension HermesResolver: ExpressibleByStringLiteral {
+        public init(stringLiteral value: StringLiteralType) {
+            self.location = value
+        }
     }
-}
 
-extension HermesResolver {
-    public static let cloudFlare: HermesResolver = "1.1.1.1"
-    public static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
-    public static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
-    public static let google: HermesResolver = "8.8.8.8"
-    public static let googleDoT: HermesResolver = "tls://8.8.8.8"
-    public static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
-    public static let quadNine: HermesResolver = "9.9.9.9"
-}
+    public extension HermesResolver {
+        static let cloudFlare: HermesResolver = "1.1.1.1"
+        static let cloudFlareDoT: HermesResolver = "tls://1.1.1.1"
+        static let cloudFlareDoH: HermesResolver = "https://1.1.1.1/dns-query"
+        static let google: HermesResolver = "8.8.8.8"
+        static let googleDoT: HermesResolver = "tls://8.8.8.8"
+        static let googleDoH: HermesResolver = "https://8.8.8.8/dns-query"
+        static let quadNine: HermesResolver = "9.9.9.9"
+    }
 #endif

@@ -23,34 +23,33 @@
 import Cocoa
 
 class PVPNTextField: NSTextField {
-    
     override var attributedStringValue: NSAttributedString {
         didSet {
             setBackgroundColor()
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupTransparency()
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupTransparency()
     }
-    
+
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
         setBackgroundColor()
     }
-    
+
     private func setupTransparency() {
         isBordered = false
         focusRingType = .none
         drawsBackground = false
     }
-    
+
     private func setBackgroundColor() {
         var nextSuperview: NSView? = superview
         while nextSuperview != nil {

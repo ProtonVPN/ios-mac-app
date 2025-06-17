@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
+@testable import CommonNetworking
 import ComposableArchitecture
 import Ergonomics
 import ModalsServices
 @testable import tvOS
-@testable import CommonNetworking
+import XCTest
 
 final class AppFeatureTests: XCTestCase {
     @MainActor
@@ -102,7 +102,8 @@ final class AppFeatureTests: XCTestCase {
         }
     }
 
-    @MainActor func testUpsellDismissedWhenUpsellFlowCompleted() async {
+    @MainActor
+    func testUpsellDismissedWhenUpsellFlowCompleted() async {
         let state = AppFeature.State(
             welcome: .init(destination: .upsell(.loaded(planOptions: [], purchaseInProgress: true))),
             networking: .authenticated(.auth(uid: "userid"))

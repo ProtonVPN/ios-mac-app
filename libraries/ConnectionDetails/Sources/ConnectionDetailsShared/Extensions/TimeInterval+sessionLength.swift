@@ -20,7 +20,6 @@ import Foundation
 import Strings
 
 public extension TimeInterval {
-
     /// VPN session length text (with translation)
     var sessionLengthText: String {
         let time = -self
@@ -33,22 +32,22 @@ public extension TimeInterval {
             let minutes = Int(time / Self.minute)
             let seconds = Int(time - Double(minutes) * Self.minute)
             return seconds > 0
-            ? Localizable.sessionLengthMinutesAndSeconds(Int(minutes), Int(seconds))
-            : Localizable.sessionLengthMinutes(Int(minutes))
+                ? Localizable.sessionLengthMinutesAndSeconds(Int(minutes), Int(seconds))
+                : Localizable.sessionLengthMinutes(Int(minutes))
 
         case Self.hour ..< Self.day:
             let hours = Int(time / (Self.hour))
             let minutes = Int((time - Double(hours) * Self.hour) / Self.minute)
             return minutes > 0
-            ? Localizable.sessionLengthHoursAndMinutes(Int(hours), Int(minutes))
-            : Localizable.sessionLengthHours(Int(hours))
+                ? Localizable.sessionLengthHoursAndMinutes(Int(hours), Int(minutes))
+                : Localizable.sessionLengthHours(Int(hours))
 
         case Self.day...:
             let days = Int(time / (Self.day))
             let hours = Int((time - Double(days) * Self.day) / Self.hour)
             return hours > 0
-            ? Localizable.sessionLengthDaysAndHours(Int(days), Int(hours))
-            : Localizable.sessionLengthDays(Int(days))
+                ? Localizable.sessionLengthDaysAndHours(Int(days), Int(hours))
+                : Localizable.sessionLengthDays(Int(days))
 
         default:
             return ""
@@ -58,5 +57,4 @@ public extension TimeInterval {
     static var minute: Self = 60
     static var hour: Self = 60 * 60
     static var day: Self = 60 * 60 * 24
-
 }

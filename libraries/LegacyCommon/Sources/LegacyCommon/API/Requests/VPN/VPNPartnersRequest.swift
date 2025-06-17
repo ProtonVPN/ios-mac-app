@@ -18,23 +18,22 @@
 
 import ProtonCoreNetworking
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #endif
 
 final class VPNPartnersRequest: Request {
-
     var path: String {
-#if os(iOS)
-        return "/vpn/v1/partners?WithImageScale=\(Int(UIScreen.main.scale))"
-#else
-        // For mac the backing scale factor always seem to return 2, so instead of
-        // importing AppKit here and checking we'll just hard-code it.
-        return "/vpn/v1/partners?WithImageScale=2"
-#endif
+        #if os(iOS)
+            return "/vpn/v1/partners?WithImageScale=\(Int(UIScreen.main.scale))"
+        #else
+            // For mac the backing scale factor always seem to return 2, so instead of
+            // importing AppKit here and checking we'll just hard-code it.
+            return "/vpn/v1/partners?WithImageScale=2"
+        #endif
     }
 
     var isAuth: Bool {
-        return true
+        true
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

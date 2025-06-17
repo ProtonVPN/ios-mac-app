@@ -20,11 +20,9 @@ import Foundation
 import XCTest
 
 class QuickSettingsTests: ProtonVPNUITests {
-    
     private let quickSettingsRobot = QuickSettingsRobot()
-        
+
     func testOpenQuickSettingsDropdown() {
-        
         logoutIfNeeded()
         loginAsPlusUser()
         quickSettingsRobot
@@ -38,7 +36,6 @@ class QuickSettingsTests: ProtonVPNUITests {
 
     // Disabled to make the redesigned app build. Please re-enable with new robots :)
     func disabled_testSecureCoreAndNetshieldAreNotAvailableForFreeUser() {
-        
         logoutIfNeeded()
         loginAsFreeUser()
         quickSettingsRobot

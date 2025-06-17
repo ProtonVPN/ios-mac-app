@@ -24,56 +24,56 @@ import Cocoa
 import Theme
 
 class MapHeaderViewController: NSViewController {
+    @IBOutlet var backgroundView: MapHeaderBackground!
+    @IBOutlet var connectLabel: NSTextField!
+    @IBOutlet var connectImage: ButtonImageView!
 
-    @IBOutlet weak var backgroundView: MapHeaderBackground!
-    @IBOutlet weak var connectLabel: NSTextField!
-    @IBOutlet weak var connectImage: ButtonImageView!
-    
     private var viewModel: MapHeaderViewModel!
-    
+
     var headerClicked: (() -> Void)? {
         didSet {
             connectImage.imageClicked = { [weak self] in self?.headerClicked?() }
             backgroundView.clicked = { [weak self] in self?.headerClicked?() }
         }
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: MapHeaderViewModel) {
         super.init(nibName: NSNib.Name("MapHeader"), bundle: nil)
         self.viewModel = viewModel
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupPersistentView()
         setupEphemeralView()
     }
-    
+
     override func viewDidLayout() {
         super.viewDidLayout()
-        if backgroundView.frame.width < backgroundView.width && !view.isHidden {
+        if backgroundView.frame.width < backgroundView.width, !view.isHidden {
             backgroundView.isHidden = true
         } else if backgroundView.isHidden {
             backgroundView.isHidden = false
         }
     }
-    
+
     private func setupPersistentView() {
         connectImage.image = AppTheme.Icon.houseFilled.colored()
 
         connectImage.setAccessibilityIdentifier("ConnectImage")
     }
-    
+
     private func setupEphemeralView() {
         backgroundView.isConnected = viewModel.isConnected
         connectLabel.attributedStringValue = viewModel.description
-        
+
         connectLabel.setAccessibilityIdentifier("ConnectionStatus")
     }
 }

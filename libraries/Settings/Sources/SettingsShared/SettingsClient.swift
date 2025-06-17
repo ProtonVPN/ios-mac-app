@@ -49,14 +49,14 @@ public struct SettingsClient: TestDependencyKey, Sendable {
         isActive: { false },
         featureChangeAvailability: { _ in .immediate },
         protocolChangeAvailability: { _ in .immediate },
-        disconnect: { },
+        disconnect: {},
         reconnect: { _ in },
         update: { _ in }
     )
 }
 
-extension DependencyValues {
-    public var settingsClient: SettingsClient {
+public extension DependencyValues {
+    var settingsClient: SettingsClient {
         get { self[SettingsClient.self] }
         set { self[SettingsClient.self] = newValue }
     }

@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import BugReport
+import Dependencies
+import Foundation
 import VPNShared
 
 public protocol DynamicBugReportStorageFactory {
@@ -32,20 +32,19 @@ public protocol DynamicBugReportStorage {
 }
 
 public class DynamicBugReportStorageUserDefaults: DynamicBugReportStorage {
-
     @Dependency(\.storage) var storage
     private let storageKey: String = "DynamicBugReport"
-    
-    public init() { }
-    
+
+    public init() {}
+
     public func fetch() -> BugReportModel? {
         try? storage.get(BugReportModel.self, forKey: storageKey)
     }
-    
+
     public func store(_ bugReport: BugReportModel) {
         try? storage.set(bugReport, forKey: storageKey)
     }
-    
+
     public func clear() {
         storage.removeObject(forKey: storageKey)
     }

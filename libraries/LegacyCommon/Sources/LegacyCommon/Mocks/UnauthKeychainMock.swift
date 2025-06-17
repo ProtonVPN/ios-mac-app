@@ -1,5 +1,5 @@
 //
-//  VpnKeychainMock.swift
+//  UnauthKeychainMock.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,26 +20,25 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import ProtonCoreNetworking
-import VPNAppCore // UnauthKeychain
+    import Foundation
+    import ProtonCoreNetworking
+    import VPNAppCore // UnauthKeychain
 
-public class UnauthKeychainMock: UnauthKeychainHandle {
+    public class UnauthKeychainMock: UnauthKeychainHandle {
+        public init() {}
 
-    public init() {}
+        public var unauthCredentialsCachedInMemory: AuthCredential?
 
-    public var unauthCredentialsCachedInMemory: AuthCredential?
+        public func fetch() -> AuthCredential? {
+            unauthCredentialsCachedInMemory
+        }
 
-    public func fetch() -> AuthCredential? {
-        unauthCredentialsCachedInMemory
+        public func store(_ credentials: AuthCredential) {
+            unauthCredentialsCachedInMemory = credentials
+        }
+
+        public func clear() {
+            unauthCredentialsCachedInMemory = nil
+        }
     }
-
-    public func store(_ credentials: AuthCredential) {
-        unauthCredentialsCachedInMemory = credentials
-    }
-
-    public func clear() {
-        unauthCredentialsCachedInMemory = nil
-    }
-}
 #endif

@@ -20,14 +20,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import Strings
+import UIKit
 
 protocol ServersFeaturesInformationViewModel {
-    func titleFor( _ section: Int ) -> String?
+    func titleFor(_ section: Int) -> String?
     func featuresCount(for section: Int) -> Int
-    func getFeatureViewModel( indexPath: IndexPath ) -> FeatureCellViewModel
+    func getFeatureViewModel(indexPath: IndexPath) -> FeatureCellViewModel
     var totalFeatures: Int { get }
     var headerHeight: CGFloat { get }
 }
@@ -40,11 +40,11 @@ struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInforma
                 SmartRoutingFeatureCellViewModel(),
                 StreamingFeatureCellViewModel(),
                 P2PFeatureCellViewModel(),
-                TorFeatureCellViewModel()
+                TorFeatureCellViewModel(),
             ],
             [
-                LoadPerformanceFeatureCellViewModel()
-            ]
+                LoadPerformanceFeatureCellViewModel(),
+            ],
         ]
     )
 
@@ -54,21 +54,21 @@ struct ServersFeaturesInformationViewModelImplementation: ServersFeaturesInforma
     let features: [[FeatureCellViewModel]]
 
     // MARK: - ServersFeaturesInformationViewModel
-    
+
     let headerHeight: CGFloat = 52
-    
+
     var totalFeatures: Int {
-        return features.count
+        features.count
     }
-    
+
     func featuresCount(for section: Int) -> Int {
-        return features[section].count
+        features[section].count
     }
-    
+
     func getFeatureViewModel(indexPath: IndexPath) -> FeatureCellViewModel {
-        return features[indexPath.section][indexPath.row]
+        features[indexPath.section][indexPath.row]
     }
-    
+
     func titleFor(_ section: Int) -> String? {
         guard showTitles else { return nil }
 

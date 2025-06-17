@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
 import Domain
+import Foundation
 
 @DependencyClient
 public struct LocationClient: Sendable {
@@ -37,15 +37,13 @@ extension LocationClient: DependencyKey {
         )
     }()
 
-    public static let testValue: LocationClient = {
-        LocationClient {
-            .init(ip: "1.2.3.4", country: "PL", isp: "Play")
-        }
-    }()
+    public static let testValue: LocationClient = LocationClient {
+        .init(ip: "1.2.3.4", country: "PL", isp: "Play")
+    }
 }
 
-extension DependencyValues {
-    public var locationClient: LocationClient {
+public extension DependencyValues {
+    var locationClient: LocationClient {
         get { self[LocationClient.self] }
         set { self[LocationClient.self] = newValue }
     }

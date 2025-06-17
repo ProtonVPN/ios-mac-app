@@ -20,13 +20,13 @@ import Foundation
 
 import Domain
 
-extension ServerGroupInfo.Kind {
-    public var filter: VPNServerFilter {
+public extension ServerGroupInfo.Kind {
+    var filter: VPNServerFilter {
         switch self {
-        case .country(let code):
-            return .kind(.country(code: code))
-        case .gateway(let name):
-            return .kind(.gateway(name: name))
+        case let .country(code):
+            .kind(.country(code: code))
+        case let .gateway(name):
+            .kind(.gateway(name: name))
         }
     }
 }

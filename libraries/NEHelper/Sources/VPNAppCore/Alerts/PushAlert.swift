@@ -18,17 +18,16 @@
 
 import Dependencies
 
-extension DependencyValues {
-    public var pushAlert: @Sendable (SystemAlert) -> Void {
+public extension DependencyValues {
+    var pushAlert: @Sendable (SystemAlert) -> Void {
         get { self[PushAlertKey.self] }
         set { self[PushAlertKey.self] = newValue }
     }
 }
 
-public enum PushAlertKey { }
+public enum PushAlertKey {}
 
 extension PushAlertKey: TestDependencyKey {
-    public static let testValue: @Sendable (SystemAlert) -> Void = { alert in
-
+    public static let testValue: @Sendable (SystemAlert) -> Void = { _ in
     }
 }

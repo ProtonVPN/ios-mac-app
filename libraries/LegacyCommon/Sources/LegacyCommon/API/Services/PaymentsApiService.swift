@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CommonNetworking
 import Foundation
 import ProtonCoreNetworking
-import CommonNetworking
 
 public enum PaymentsApiServiceSuccess {
     case planUpgraded
@@ -39,13 +39,15 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
     private let vpnApiService: VpnApiService
 
     public typealias Factory = NetworkingFactory &
-        VpnKeychainFactory &
-        VpnApiServiceFactory
+        VpnApiServiceFactory &
+        VpnKeychainFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  vpnApiService: factory.makeVpnApiService())
+        self.init(
+            networking: factory.makeNetworking(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            vpnApiService: factory.makeVpnApiService()
+        )
     }
 
     public init(networking: Networking, vpnKeychain: VpnKeychainProtocol, vpnApiService: VpnApiService) {
@@ -91,11 +93,11 @@ public final class PaymentsApiServiceImplementation: PaymentsApiService {
             guard let self else { return }
             // check if the plan is upgraded already
             do {
-                let credentials = try await self.vpnApiService.clientCredentials()
+                let credentials = try await vpnApiService.clientCredentials()
                 // the plan is still not upgraded, try again
                 if credentials.planName == originalPlan {
                     log.debug("The plan is not yet upgraded after applying promo code, trying again", category: .app)
-                    self.checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
+                    checkPlanUpgraded(originalPlan: originalPlan, retries: retries - 1, completion: completion)
                 } else { // the plan has been upgraded
                     log.debug("The plan is upgraded after applying promo code", category: .app)
                     completion(.planUpgraded)

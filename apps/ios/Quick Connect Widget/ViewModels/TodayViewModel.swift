@@ -21,11 +21,11 @@
 //
 
 import Foundation
-import Reachability
 import LegacyCommon
 import Localization
-import Strings
 import os.log
+import Reachability
+import Strings
 
 enum TodayViewModelState {
     case blank
@@ -48,16 +48,16 @@ final class TodayViewModel {
     private let secureDeepLinkGenerator = SecureDeepLinkGenerator()
 
     weak var delegate: TodayViewModelDelegate?
-    
+
     init(vpnStateConfiguration: VpnStateConfiguration) {
         self.vpnStateConfiguration = vpnStateConfiguration
 
-        reachability = try? Reachability()
+        self.reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.delegate?.didChangeState(state: .unreachable) }
         try? reachability?.startNotifier()
     }
-    
+
     func update(completion: (() -> Void)? = nil) {
         connectionChanged(completion: completion)
     }
@@ -76,12 +76,11 @@ final class TodayViewModel {
                 return
             }
 
-            let action: String
-            switch info.state {
+            let action: String = switch info.state {
             case .connected, .connecting:
-                action = URLConstants.deepLinkDisconnectAction
+                URLConstants.deepLinkDisconnectAction
             default:
-                action = URLConstants.deepLinkConnectAction
+                URLConstants.deepLinkConnectAction
             }
 
             components.host = action
@@ -95,15 +94,16 @@ final class TodayViewModel {
             self?.delegate?.didRequestUrl(url: url)
         }
     }
-    
+
     deinit {
-        reachability?.stopNotifier()        
+        reachability?.stopNotifier()
     }
-    
+
     // MARK: - Utils
-    
-    @objc private func connectionChanged(completion: (() -> Void)? = nil) {
-        if let reachability = reachability, reachability.connection == .unavailable {
+
+    @objc
+    private func connectionChanged(completion: (() -> Void)? = nil) {
+        if let reachability, reachability.connection == .unavailable {
             delegate?.didChangeState(state: .unreachable)
             completion?()
             return

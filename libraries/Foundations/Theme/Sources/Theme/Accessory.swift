@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import var ProtonCoreUIFoundations.IconProvider
+import SwiftUI
 
 public struct Accessory: View {
     private let style: Style
@@ -43,8 +43,8 @@ public struct Accessory: View {
 
         var modifier: CGFloat {
             switch self {
-            case .regular: return 1.0
-            case .large: return 1.5
+            case .regular: 1.0
+            case .large: 1.5
             }
         }
     }
@@ -61,35 +61,35 @@ public struct Accessory: View {
         var image: Image? {
             switch self {
             case .disclosure:
-                return IconProvider.chevronRight
+                IconProvider.chevronRight
             case .externalLink:
-                return IconProvider.arrowOutSquare
-            case .checkmark(let isActive):
-                return isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
+                IconProvider.arrowOutSquare
+            case let .checkmark(isActive):
+                isActive ? IconProvider.checkmarkCircleFilled : IconProvider.emptyCircle
             case .none:
-                return nil
+                nil
             }
         }
 
         var color: Color? {
             switch self {
-            case .checkmark(let isActive):
-                return .init(.icon, isActive ? [.interactive, .active] : .weak)
+            case let .checkmark(isActive):
+                .init(.icon, isActive ? [.interactive, .active] : .weak)
             default:
-                return .init(.icon, .weak)
+                .init(.icon, .weak)
             }
         }
 
         var iconSize: CGFloat {
             switch self {
             case .disclosure:
-                return Self.square
+                Self.square
             case .externalLink:
-                return Self.square
+                Self.square
             case .checkmark:
-                return Self.radius
+                Self.radius
             case .none:
-                return Self.radius
+                Self.radius
             }
         }
     }
@@ -112,7 +112,6 @@ public struct Accessory: View {
 }
 
 struct Accessory_Previews: PreviewProvider {
-
     struct Cell: View {
         let title: String
         let accessory: Accessory

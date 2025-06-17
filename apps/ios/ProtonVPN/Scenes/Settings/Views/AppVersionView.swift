@@ -23,14 +23,12 @@
 import UIKit
 
 class AppVersionView: UIView {
-    @IBOutlet weak var appVersionLabel: UILabel!
-    
+    @IBOutlet var appVersionLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .backgroundColor()
         appVersionLabel.textColor = .weakTextColor()
-        
     }
-
 }

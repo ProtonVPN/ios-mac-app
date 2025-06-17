@@ -21,13 +21,11 @@ import Logging
 import PMLogger
 
 class WGLogFormatter: PMLogFormatter {
-
     private let jsonEncoder = JSONEncoder()
 
-    public init() {
-    }
+    public init() {}
 
-    public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
+    public func formatMessage(_ level: Logging.Logger.Level, message: String, function _: String, file _: String, line _: UInt, metadata: [String: String], date _: Date) -> String { // swiftlint:disable:this function_parameter_count
         let (category, event, meta) = extract(metadata: metadata)
         var metaString = ""
         if !meta.isEmpty, let metaJsonData = try? jsonEncoder.encode(meta) {
@@ -35,26 +33,25 @@ class WGLogFormatter: PMLogFormatter {
         }
         return "\(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-
 }
 
 extension Logging.Logger.Level {
     var stringValue: String {
         switch self {
         case .trace:
-            return "TRACE"
+            "TRACE"
         case .debug:
-            return "DEBUG"
+            "DEBUG"
         case .info:
-            return "INFO "
+            "INFO "
         case .notice:
-            return "NOTIC"
+            "NOTIC"
         case .warning:
-            return "WARN "
+            "WARN "
         case .error:
-            return "ERROR"
+            "ERROR"
         case .critical:
-            return "FATAL"
+            "FATAL"
         }
     }
 }

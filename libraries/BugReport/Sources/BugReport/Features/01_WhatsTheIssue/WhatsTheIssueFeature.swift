@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
 @Reducer
 struct WhatsTheIssueFeature: Reducer {
-
     @ObservableState
     struct State: Equatable {
         var categories: [Category]
@@ -45,7 +44,6 @@ struct WhatsTheIssueFeature: Reducer {
 
     @Reducer
     struct Route {
-
         @ObservableState
         enum State: Equatable {
             case quickFixes(QuickFixesFeature.State)
@@ -62,7 +60,7 @@ struct WhatsTheIssueFeature: Reducer {
         BindingReducer()
         Reduce { state, action in
             switch action {
-            case .categorySelected(let category):
+            case let .categorySelected(category):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
                     state.route = .quickFixes(QuickFixesFeature.State(category: category))
                 } else {
@@ -87,7 +85,7 @@ struct WhatsTheIssueFeature: Reducer {
 
             // Other
 
-            case .binding(_):
+            case .binding:
                 // Everything's done in BindingReducer()
                 return .none
             }
@@ -101,5 +99,4 @@ struct WhatsTheIssueFeature: Reducer {
             })
         })
     }
-
 }

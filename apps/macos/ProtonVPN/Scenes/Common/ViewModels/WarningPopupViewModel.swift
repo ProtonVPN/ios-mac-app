@@ -22,11 +22,10 @@
 
 import Cocoa
 import LegacyCommon
-import Theme
 import Strings
+import Theme
 
 class WarningPopupViewModel {
-    
     let image: NSImage?
     let title: String
     let description: String
@@ -37,16 +36,18 @@ class WarningPopupViewModel {
     let confirmTitle: String
     let onCancel: (() -> Void)?
     let cancelTitle: String
-    
-    init(image: NSImage? = AppTheme.Icon.vpnMainTransparent,
-         title: String,
-         description: String,
-         linkDescription: String?,
-         url: String?,
-         onConfirm: @escaping () -> Void,
-         confirmTitle: String = Localizable.ok,
-         onCancel: (() -> Void)?,
-         cancelTitle: String = Localizable.cancel) {
+
+    init(
+        image: NSImage? = AppTheme.Icon.vpnMainTransparent,
+        title: String,
+        description: String,
+        linkDescription: String?,
+        url: String?,
+        onConfirm: @escaping () -> Void,
+        confirmTitle: String = Localizable.ok,
+        onCancel: (() -> Void)?,
+        cancelTitle: String = Localizable.cancel
+    ) {
         self.image = image
         self.title = title
         self.description = description
@@ -57,7 +58,7 @@ class WarningPopupViewModel {
         self.linkDescription = linkDescription
         self.url = url
     }
-    
+
     convenience init(image: NSImage? = AppTheme.Icon.vpnMainTransparent, title: String, description: String, onConfirm: @escaping () -> Void) {
         self.init(image: image, title: title, description: description, linkDescription: nil, url: nil, onConfirm: onConfirm, onCancel: nil)
     }

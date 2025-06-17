@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import NetworkExtension
+import XCTest
 
 import Dependencies
 
@@ -35,9 +35,11 @@ import VPNShared
 /// base dependencies required for fully mocking business logic & connection flows.
 class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     let expectationTimeout: TimeInterval = 10
-    let neVpnEvents = [NEVPNConnectionMock.connectionCreatedNotification,
-                       NEVPNConnectionMock.tunnelStateChangeNotification,
-                       NEVPNManagerMock.managerCreatedNotification]
+    let neVpnEvents = [
+        NEVPNConnectionMock.connectionCreatedNotification,
+        NEVPNConnectionMock.tunnelStateChangeNotification,
+        NEVPNManagerMock.managerCreatedNotification,
+    ]
 
     var mockProviderState: (
         forceResponse: WireguardProviderRequest.Response?,
@@ -56,15 +58,17 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     var tunnelConnectionCreated: ((NETunnelProviderSessionMock) -> Void)?
     var statusChanged: ((NEVPNStatus) -> Void)?
 
-    var request = ConnectionRequest(serverType: .standard,
-                                    connectionType: .country("CH", .fastest),
-                                    connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                    netShieldType: .level1,
-                                    natType: .moderateNAT,
-                                    safeMode: true,
-                                    profileId: nil,
-                                    profileName: nil,
-                                    trigger: nil)
+    var request = ConnectionRequest(
+        serverType: .standard,
+        connectionType: .country("CH", .fastest),
+        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+        netShieldType: .level1,
+        natType: .moderateNAT,
+        safeMode: true,
+        profileId: nil,
+        profileName: nil,
+        trigger: nil
+    )
 
     func disconnectGatewayWithOverriddenDependencies(_ completion: @escaping () -> Void = {}) {
         withDependencies { $0.serverRepository = repository } operation: {
@@ -72,7 +76,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         }
     }
 
-    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) -> Void {
+    func processGatewayConnectionRequestWithOverriddenDependencies(request: ConnectionRequest) {
         withDependencies { $0.serverRepository = repository } operation: {
             container.vpnGateway.connect(with: request)
         }
@@ -84,7 +88,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container = withDependencies {
             $0.serverRepository = repository
         } operation: {
-            return MockDependencyContainer()
+            MockDependencyContainer()
         }
         container.propertiesManager.featureFlags = testData.defaultClientConfig.featureFlags
 
@@ -130,25 +134,26 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         container = nil
     }
 
-    @objc func handleNEVPNEvent(_ notification: Notification) {
+    @objc
+    func handleNEVPNEvent(_ notification: Notification) {
         switch notification.name {
         case NEVPNConnectionMock.tunnelStateChangeNotification:
             guard let status = notification.object as? NEVPNStatus else {
                 break
             }
-            self.statusChanged?(status)
+            statusChanged?(status)
             return
         case NEVPNConnectionMock.connectionCreatedNotification:
             if let tunnelConnection = notification.object as? NETunnelProviderSessionMock {
                 if let config = tunnelConnection.vpnManager.protocolConfiguration as? NETunnelProviderProtocol,
                    config.providerBundleIdentifier == MockDependencyContainer.wireguardProviderBundleId || config.providerBundleIdentifier == MockDependencyContainer.openvpnProviderBundleId {
-                    tunnelConnection.providerMessageSent = self.handleProviderMessage(messageData:)
+                    tunnelConnection.providerMessageSent = handleProviderMessage(messageData:)
                 }
 
-                self.tunnelConnectionCreated?(tunnelConnection)
+                tunnelConnectionCreated?(tunnelConnection)
                 return
             } else if let connection = notification.object as? NEVPNConnectionMock {
-                self.connectionCreated?(connection)
+                connectionCreated?(connection)
                 return
             } else {
                 break
@@ -157,7 +162,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
             guard let tunnelManager = notification.object as? NETunnelProviderManagerMock else {
                 break
             }
-            self.tunnelManagerCreated?(tunnelManager)
+            tunnelManagerCreated?(tunnelManager)
             return
         default:
             XCTFail("Unexpected notification \(notification.name)")
@@ -175,7 +180,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         }
 
         switch providerRequest {
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             guard !mockProviderState.needNewSession else {
                 return WireguardProviderRequest.Response.errorSessionExpired.asData
             }
@@ -214,12 +219,13 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
     func makeNewCertificate() -> VpnCertificate {
         let refreshTime = Date().addingTimeInterval(.hours(6))
         let expiryTime = refreshTime.addingTimeInterval(.hours(6))
-        let certDict: [String: Any] = ["Certificate": "abcd1234",
-                                       "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
-                                       "RefreshTime": Int(refreshTime.timeIntervalSince1970)]
-        return try! VpnCertificate(dict: certDict.mapValues({ $0 as AnyObject }))
+        let certDict: [String: Any] = [
+            "Certificate": "abcd1234",
+            "ExpirationTime": Int(expiryTime.timeIntervalSince1970),
+            "RefreshTime": Int(refreshTime.timeIntervalSince1970),
+        ]
+        return try! VpnCertificate(dict: certDict.mapValues { $0 as AnyObject })
     }
-
 }
 
 class ConnectionTestCaseDriver: BaseConnectionTestCase {
@@ -234,22 +240,22 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         var description: String {
             switch self {
             case .vpnConnection:
-                return "vpn connection"
+                "vpn connection"
             case .vpnDisconnection:
-                return "vpn disconnection"
+                "vpn disconnection"
             case .localAgentConnection:
-                return "local agent connection"
+                "local agent connection"
             case .certificateRefresh:
-                return "certificate refresh"
+                "certificate refresh"
             case .alertDisplayed:
-                return "alert displayed"
-            case .custom(let name):
-                return name
+                "alert displayed"
+            case let .custom(name):
+                name
             }
         }
     }
 
-    typealias Subcase = (description: String, closure: (() -> Void), expectations: [ExpectationCategory])
+    typealias Subcase = (description: String, closure: () -> Void, expectations: [ExpectationCategory])
 
     /// To help manage your expectations. ;)
     static let expectationManagementQueue = DispatchQueue(label: "queue for thread-safe access to expectation data structures")
@@ -277,19 +283,19 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         shouldNotDisconnect = false
 
         container.localAgentConnectionFactory.connectionWasCreated = { [unowned self] connection in
-            self.localAgentConnection = connection
+            localAgentConnection = connection
 
-            self.fulfillExpectationCategory(.localAgentConnection)
+            fulfillExpectationCategory(.localAgentConnection)
         }
 
         didRequestCertRefresh = { [unowned self] features in
-            self.certRefreshFeatures = features
+            certRefreshFeatures = features
 
-            self.fulfillExpectationCategory(.certificateRefresh)
+            fulfillExpectationCategory(.certificateRefresh)
         }
 
         tunnelManagerCreated = { [unowned self] vpnManager in
-            self.manager = vpnManager
+            manager = vpnManager
         }
 
         statusChanged = { [unowned self] vpnStatus in
@@ -297,23 +303,23 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             if vpnStatus == .connected {
                 expectationCategory = .vpnConnection
             } else if vpnStatus == .disconnected {
-                XCTAssertFalse(shouldNotDisconnect, "Did not expect to disconnect from VPN \(self.inThisCase)")
+                XCTAssertFalse(shouldNotDisconnect, "Did not expect to disconnect from VPN \(inThisCase)")
                 expectationCategory = .vpnDisconnection
             } else {
                 return
             }
 
-            self.fulfillExpectationCategory(expectationCategory)
+            fulfillExpectationCategory(expectationCategory)
         }
 
-        container.alertService.alertAdded = { [unowned self] alert in
-            self.fulfillExpectationCategory(.alertDisplayed)
+        container.alertService.alertAdded = { [unowned self] _ in
+            fulfillExpectationCategory(.alertDisplayed)
         }
     }
 
     func fulfillExpectationCategory(_ category: ExpectationCategory) {
         guard let expectation = expectationsToFulfill[category]?.popLast() else {
-            XCTFail("Did not expect \(category) \(self.inThisCase)")
+            XCTFail("Did not expect \(category) \(inThisCase)")
             return
         }
 
@@ -322,13 +328,13 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
 
     func laState(_ state: String?) {
         localAgentEventQueue.async { [unowned self] in
-            self.localAgentConnection?.client.onState(state)
+            localAgentConnection?.client.onState(state)
         }
     }
 
     func laError(_ code: Int, _ description: String?) {
         localAgentEventQueue.async { [unowned self] in
-            self.localAgentConnection?.client.onError(code, description: description)
+            localAgentConnection?.client.onError(code, description: description)
         }
     }
 
@@ -357,7 +363,6 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             wait(for: expectationsToAwait, timeout: expectationTimeout)
         })
 
-
         Self.expectationManagementQueue.sync {
             expectationsToFulfill = [:]
             expectationsToAwait = []
@@ -369,7 +374,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
     /// the name of the parent test case, and the action that the expectation represents (e.g.,
     /// vpn connect, disconnect, cert refresh, etc.) Then, run the closure and wait for the
     /// expectations specified by the subcase.
-    func driveSubcase(_ subcase: Subcase, enforceExpectationOrder: Bool = false) {
+    func driveSubcase(_ subcase: Subcase, enforceExpectationOrder _: Bool = false) {
         populateExpectations(description: subcase.description, subcase.expectations)
         currentSubcaseDescription = "\(subcase.description)"
 
@@ -401,12 +406,14 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
         awaitExpectations()
 
-        guard let protocolConfig = self.manager?.protocolConfiguration as? NETunnelProviderProtocol else {
+        guard let protocolConfig = manager?.protocolConfiguration as? NETunnelProviderProtocol else {
             XCTFail("Protocol config is not NETunnelProviderProtocol")
             return
         }
-        XCTAssertEqual(protocolConfig.providerBundleIdentifier,
-                       MockDependencyContainer.wireguardProviderBundleId)
+        XCTAssertEqual(
+            protocolConfig.providerBundleIdentifier,
+            MockDependencyContainer.wireguardProviderBundleId
+        )
 
         currentSubcaseDescription = nil
         expectationsToFulfill = [:]
@@ -419,7 +426,7 @@ class ConnectionTestCaseDriver: BaseConnectionTestCase {
             container.vpnGateway.disconnect()
         })
         awaitExpectations()
-        
+
         expectationsToFulfill = [:]
         currentSubcaseDescription = nil
     }

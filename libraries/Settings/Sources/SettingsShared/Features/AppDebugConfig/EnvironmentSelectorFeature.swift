@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
 import Dependencies
+import Foundation
 import Theme
 
 import CommonNetworking
@@ -70,7 +70,7 @@ public struct DebugConfigurationFeature {
         }
 
         public var environmentsCaption: (AppTheme.Style, String) {
-            if atlasSecretFetchURLString.isEmpty && atlasSecret.isEmpty {
+            if atlasSecretFetchURLString.isEmpty, atlasSecret.isEmpty {
                 return (.warning, "Atlas secret not set and neither is fetch URL. Enter a URL and tap 'Fetch' to set.")
             }
 
@@ -86,10 +86,9 @@ public struct DebugConfigurationFeature {
 
             if !atlasSecretFetchURLString.isEmpty {
                 return (.normal, """
-                     Tap 'Fetch' to refresh atlas secret from
-                     \(atlasSecretFetchURLString).
-                     """
-                )
+                Tap 'Fetch' to refresh atlas secret from
+                \(atlasSecretFetchURLString).
+                """)
             }
 
             if atlasSecret.hasPrefix("https://") {
@@ -102,10 +101,10 @@ public struct DebugConfigurationFeature {
             }
 
             return (
-                 .normal, """
-                 Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
-                 and tap 'Fetch' to set it automatically.
-                 """
+                .normal, """
+                Atlas secret has been set manually. You can manually enter an atlas secret above, or enter a URL \
+                and tap 'Fetch' to set it automatically.
+                """
             )
         }
 
@@ -128,16 +127,16 @@ public struct DebugConfigurationFeature {
             @Dependency(\.settingsStorage) var settingsStorage
             let settings = settingsStorage.getEnvironment()
             self.apiEndpoint = settings.apiEndpoint.isEmpty ? State.defaultApiUrlString : settings.apiEndpoint
-            self.newApiEndpointURLString = self.apiEndpoint
+            self.newApiEndpointURLString = apiEndpoint
             self.atlasSecret = settings.atlasSecret
             self.atlasSecretFetchURLString = settings.atlasSecretFetchURLString
             self.overrides = settings.featureFlagOverrides
                 .sorted(by: { $0.key < $1.key })
                 .enumerated()
-                .reduce(into: Array(), { partialResult, element in
+                .reduce(into: Array()) { partialResult, element in
                     let (index, item) = element
                     partialResult.append(.init(index: index, name: item.key, value: item.value))
-                }) + [.empty(index: settings.featureFlagOverrides.count)]
+                } + [.empty(index: settings.featureFlagOverrides.count)]
         }
     }
 
@@ -168,13 +167,11 @@ public struct DebugConfigurationFeature {
             switch action {
             case .userDefaultsTapped:
                 state.destination = .userDefaults(.init(alert: nil, content: .none))
-
             case .keychainTapped:
                 state.destination = .keychain(.init(alert: nil, content: .none))
-
-            case .atlasSecretResponseReceived(let result):
+            case let .atlasSecretResponseReceived(result):
                 switch result {
-                case .success(let data):
+                case let .success(data):
                     state.fetchingAtlasSecret = false
 
                     guard let string = String(data: data, encoding: .utf8),
@@ -188,7 +185,7 @@ public struct DebugConfigurationFeature {
                         state.atlasSecretFetchURLString = state.atlasSecret
                     }
                     state.atlasSecret = string
-                case .failure(let error):
+                case let .failure(error):
                     state.atlasSecretFetchErrorDescription = String(describing: error)
                 }
             case .fetchAtlasSecretButtonTapped:
@@ -213,7 +210,7 @@ public struct DebugConfigurationFeature {
             case .resetAndKillAppButtonTapped:
                 state.newApiEndpointURLString = State.defaultApiUrlString
                 return .concatenate(
-                    .run { [state] send in
+                    .run { [state] _ in
                         @Dependency(\.settingsStorage) var storage
                         do {
                             try storage.setEnvironment(.init(
@@ -232,17 +229,17 @@ public struct DebugConfigurationFeature {
                 }
                 // Need to send alert telling user to kill the app
                 return .concatenate(
-                    .run { [state] send in
+                    .run { [state] _ in
                         @Dependency(\.settingsStorage) var storage
                         do {
                             try storage.setEnvironment(.init(
                                 apiEndpoint: state.newApiEndpointURLString,
                                 atlasSecret: state.atlasSecret,
                                 atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                featureFlagOverrides: state.overrides.reduce(into: [:], { partialResult, item in
+                                featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
                                     guard !item.name.isEmpty else { return }
                                     partialResult[item.name] = item.value
-                                })
+                                }
                             ))
                         }
                     },
@@ -266,14 +263,14 @@ public struct DebugConfigurationFeature {
                         """
                     )
                 })
-            case .overridesRemoved(let indexSet):
+            case let .overridesRemoved(indexSet):
                 state.overrides.remove(atOffsets: indexSet)
 
                 // recompute the indices so that the text fields have the correct labels
-                for index in 0..<state.overrides.count {
+                for index in 0 ..< state.overrides.count {
                     state.overrides[index].index = index
                 }
-            case .toggle(let id):
+            case let .toggle(id):
                 guard let index = state.overrides.firstIndex(where: { $0.id == id }) else { break }
                 state.overrides[index].value = !state.overrides[index].value
             case .binding(\.overrides):
@@ -315,10 +312,11 @@ public struct ManuallySpecifiedFeatureFlag: FeatureFlagTypeProtocol {
     public init?(rawValue: String) {
         self.rawValue = rawValue
     }
-    
+
     public var rawValue: String
 }
 
+// swiftformat:disable:next extensionAccessControl
 extension DebugConfigurationFeature {
     @Reducer
     public enum Destination {
@@ -328,10 +326,10 @@ extension DebugConfigurationFeature {
     }
 }
 
-extension DebugConfigurationFeature.Destination.State: Equatable { }
+extension DebugConfigurationFeature.Destination.State: Equatable {}
 
-extension DebugConfigurationFeature.State {
-    public enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
+public extension DebugConfigurationFeature.State {
+    enum CustomEnvironment: Identifiable, Equatable, CaseIterable {
         case protonBTI
         case protonBlack
 
@@ -340,18 +338,18 @@ extension DebugConfigurationFeature.State {
         package var url: String {
             switch self {
             case .protonBTI:
-                return ObfuscatedConstants.btiAPIHost
+                ObfuscatedConstants.btiAPIHost
             case .protonBlack:
-                return ObfuscatedConstants.blackAPIHost
+                ObfuscatedConstants.blackAPIHost
             }
         }
 
         package var label: String {
             switch self {
             case .protonBTI:
-                return "BTI"
+                "BTI"
             case .protonBlack:
-                return "Black"
+                "Black"
             }
         }
     }

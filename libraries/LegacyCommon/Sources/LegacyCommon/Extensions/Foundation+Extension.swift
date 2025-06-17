@@ -28,54 +28,56 @@ public func dispatch_after_delay(_ delay: TimeInterval, queue: DispatchQueue, bl
 
 public func delay(_ delay: Double, closure: @escaping () -> Void) {
     DispatchQueue.main.asyncAfter(
-        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure
+    )
 }
 
 public func NSLocalizedString(_ key: String) -> String {
-    return NSLocalizedString(key, comment: "")
+    NSLocalizedString(key, comment: "")
 }
 
 // MARK: - Internal
+
 // Allows overwriting of values by clients using vpncore
-internal func NSLocalizedString(_ key: String, comment: String = "") -> String {
+func NSLocalizedString(_ key: String, comment: String = "") -> String {
     func enPathForBundle(_ bundle: Bundle) -> String? {
-        return bundle.path(forResource: "en", ofType: "lproj")
+        bundle.path(forResource: "en", ofType: "lproj")
     }
-    
+
     // Look for string in client bundle
     var string = NSLocalizedString(key, bundle: Bundle.main, value: key, comment: comment)
     guard string == key else {
         return string
     }
-    
+
     #if DEBUG
-    if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
-        // Use client strings for tests
-        return string
-    }
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil {
+            // Use client strings for tests
+            return string
+        }
     #endif
-    
+
     // Look for string in vpncore
     string = NSLocalizedString(key, bundle: Bundle.main, value: key, comment: comment)
     guard string == key else {
         return string
     }
-    
+
     if let enClientPath = enPathForBundle(Bundle.main),
        let enClientBundle = Bundle(path: enClientPath) {
         // Use en translation from client if the preferred language is returning the key
         string = NSLocalizedString(key, bundle: enClientBundle, comment: comment)
     }
-    
+
     guard string == key else {
         return string
     }
-    
+
     guard let enCorePath = enPathForBundle(Bundle.main),
           let enCoreBundle = Bundle(path: enCorePath) else {
         return key
     }
-    
+
     // Use en translation from vpncore if the preferred language is returning the key
     return NSLocalizedString(key, bundle: enCoreBundle, comment: comment)
 }

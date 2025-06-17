@@ -26,8 +26,8 @@ import VPNAppCore
 private var storage = Container.sharedContainer.makePropertiesManager()
 private var netShield = Container.sharedContainer.makeNetShieldPropertyProvider()
 
-extension SettingsStorageKey {
-    public static var userDefaults: SettingsStorage {
+public extension SettingsStorageKey {
+    static var userDefaults: SettingsStorage {
         SettingsStorage(
             getConnectionProtocol: { storage.connectionProtocol },
             setConnectionProtocol: { storage.connectionProtocol = $0 },

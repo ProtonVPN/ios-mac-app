@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import StoreKit
-import ProtonCorePayments
+import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
+import ProtonCorePayments
+import StoreKit
 
 struct PlanIAPTuple: Identifiable, Equatable {
     let planOption: PlanOption
@@ -35,26 +35,26 @@ enum PaymentsError: Error, CustomStringConvertible {
     var code: Int? {
         switch self {
         case .iapDisabled:
-            return nil
+            nil
 
         case .planNotFound:
-            return -1
+            -1
         }
     }
 
     var codeSuffix: String? {
-        code.map { "(\($0))"}
+        code.map { "(\($0))" }
     }
 
     /// Default error description, suffixed with the code if it has one, to ease error identification.
     var description: String {
-        return ["In-App Purchases are temporarily not available.", codeSuffix]
+        ["In-App Purchases are temporarily not available.", codeSuffix]
             .compactMap { $0 }
             .joined(separator: " ")
     }
 }
 
-extension ProcessCompletionResult: @unchecked Sendable { }
+extension ProcessCompletionResult: @unchecked Sendable {}
 
 struct PaymentsClient: Sendable, DependencyKey {
     let startObserving: @Sendable () async -> AsyncStream<ProcessCompletionResult>
@@ -125,7 +125,7 @@ struct PaymentsClient: Sendable, DependencyKey {
                 // If a purchase is already in progress, `buyPlan` returns `.planPurchaseProcessingInProgress`
                 // and carries on processing said purchase. The final result is received through the `AsyncStream`
                 // subscribed to through `startObserving`.
-                return await withCheckedContinuation {
+                await withCheckedContinuation {
                     payments.purchaseManager.buyPlan(plan: product.iap, finishCallback: $0.resume(returning:))
                 }
             }
@@ -133,15 +133,13 @@ struct PaymentsClient: Sendable, DependencyKey {
     }()
 
     static let testValue: PaymentsClient = .init(
-        startObserving: { .init(unfolding: { nil })},
+        startObserving: { .init(unfolding: { nil }) },
         getOptions: unimplemented(),
         attemptPurchase: unimplemented(placeholder: .purchaseCancelled)
     )
-
 }
 
 extension DependencyValues {
-
     var paymentsClient: PaymentsClient {
         get { self[PaymentsClient.self] }
         set { self[PaymentsClient.self] = newValue }
@@ -159,7 +157,7 @@ final class StoreKitDelegate: StoreKitManagerDelegate {
 final class TransientTokenStorage: PaymentTokenStorage {
     private var token: PaymentToken?
 
-    init() { }
+    init() {}
 
     func add(_ token: PaymentToken) {
         self.token = token

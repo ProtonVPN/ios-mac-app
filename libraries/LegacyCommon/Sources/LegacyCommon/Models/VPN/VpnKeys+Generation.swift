@@ -16,23 +16,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import GoLibs
 import VPNShared
 
 extension PublicKey {
     init(keyPair: Ed25519KeyPair) {
         var error: NSError?
-        self.init(rawRepresentation: ([UInt8])(keyPair.publicKeyBytes()!),
-                  derRepresentation: keyPair.publicKeyPKIXPem(&error))
+        self.init(
+            rawRepresentation: [UInt8](keyPair.publicKeyBytes()!),
+            derRepresentation: keyPair.publicKeyPKIXPem(&error)
+        )
     }
 }
 
 extension PrivateKey {
     init(keyPair: Ed25519KeyPair) {
-        self.init(rawRepresentation: ([UInt8])(keyPair.privateKeyBytes()!),
-                  derRepresentation: keyPair.privateKeyPKIXPem(),
-                  base64X25519Representation: keyPair.toX25519Base64())
+        self.init(
+            rawRepresentation: [UInt8](keyPair.privateKeyBytes()!),
+            derRepresentation: keyPair.privateKeyPKIXPem(),
+            base64X25519Representation: keyPair.toX25519Base64()
+        )
     }
 }

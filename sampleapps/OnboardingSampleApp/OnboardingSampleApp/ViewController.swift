@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import Onboarding
+import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var startAButton: UIButton!
-    @IBOutlet private weak var vpnSuccessSwitch: UISwitch!
-    @IBOutlet private weak var startBButton: UIButton!
+    @IBOutlet private var startAButton: UIButton!
+    @IBOutlet private var vpnSuccessSwitch: UISwitch!
+    @IBOutlet private var startBButton: UIButton!
 
     private var coordinator: OnboardingCoordinator!
 
@@ -33,17 +33,22 @@ final class ViewController: UIViewController {
         startAButton.accessibilityIdentifier = "StartButton"
     }
 
-    @IBAction private func startATapped(_ sender: Any) {
+    @IBAction
+    private func startATapped(_: Any) {
         startOnboarding()
     }
 
     private func startOnboarding() {
-        coordinator = OnboardingCoordinator(configuration: Configuration(constants: Constants(numberOfDevices: 10,
-                                                                                              numberOfServers: 1300,
-                                                                                              numberOfFreeServers: 23,
-                                                                                              numberOfFreeCountries: 3,
-                                                                                              numberOfCountries: 61),
-                                                                         telemetryEnabled: true))
+        coordinator = OnboardingCoordinator(configuration: Configuration(
+            constants: Constants(
+                numberOfDevices: 10,
+                numberOfServers: 1300,
+                numberOfFreeServers: 23,
+                numberOfFreeCountries: 3,
+                numberOfCountries: 61
+            ),
+            telemetryEnabled: true
+        ))
         coordinator.delegate = self
         let vc = coordinator.start()
         vc.modalPresentationStyle = .fullScreen

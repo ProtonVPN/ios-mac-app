@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CasePaths
-import Dependencies
 import CommonNetworking
+import Dependencies
+import Foundation
 
 struct NetworkClient: Sendable {
     var fetchSignInCode: @Sendable () async throws -> SignInCode
@@ -28,7 +28,6 @@ struct NetworkClient: Sendable {
 
 @CasePathable
 public enum SessionAuthResult: Equatable {
-
     case authenticated(SessionAuthResponse)
 
     /// When we receive code 422 (invalid selector), return this instead of throwing an error
@@ -63,8 +62,8 @@ extension NetworkClient: DependencyKey {
 
 extension DependencyValues {
     var networkClient: NetworkClient {
-      get { self[NetworkClient.self] }
-      set { self[NetworkClient.self] = newValue }
+        get { self[NetworkClient.self] }
+        set { self[NetworkClient.self] = newValue }
     }
 }
 

@@ -8,12 +8,12 @@
 
 import Foundation
 
-extension Result where Success == Void {
-    public static var success: Self { .success(()) }
+public extension Result where Success == Void {
+    static var success: Self { .success(()) }
 }
 
-extension Result {
-    public func invoke(success: @escaping (Success) -> Void, failure: @escaping (Error) -> Void) {
+public extension Result {
+    func invoke(success: @escaping (Success) -> Void, failure: @escaping (Error) -> Void) {
         switch self {
         case let .success(data):
             success(data)
@@ -25,9 +25,9 @@ extension Result {
 
 /// Allows us to define `Equatable` `Result` types for modelling domains where there is no value associated with success
 public struct None: Equatable, ExpressibleByNilLiteral {
-    public init(nilLiteral: ()) { }
+    public init(nilLiteral _: ()) {}
 }
 
-extension Result where Success == None {
-    public static var success: Self { .success(nil) }
+public extension Result where Success == None {
+    static var success: Self { .success(nil) }
 }

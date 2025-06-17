@@ -17,29 +17,31 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Strings
-import Theme
-import SwiftUI
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 #if os(macOS)
-import AppKit
-public typealias Image = NSImage
+    import AppKit
 
-public extension Image {
-    var swiftUIImage: SwiftUI.Image {
-        SwiftUI.Image(nsImage: self)
+    public typealias Image = NSImage
+
+    public extension Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(nsImage: self)
+        }
     }
-}
 #else
-import UIKit
-public typealias Image = UIImage
+    import UIKit
 
-public extension Image {
-    var swiftUIImage: SwiftUI.Image {
-        SwiftUI.Image(uiImage: self)
+    public typealias Image = UIImage
+
+    public extension Image {
+        var swiftUIImage: SwiftUI.Image {
+            SwiftUI.Image(uiImage: self)
+        }
     }
-}
 #endif
 
 public enum Feature: Hashable, Identifiable {
@@ -83,150 +85,150 @@ public enum Feature: Hashable, Identifiable {
     case toggle(id: ToggleID, title: String, subtitle: String, state: Bool)
 }
 
-extension Feature: Equatable { }
+extension Feature: Equatable {}
 
-extension Feature {
+public extension Feature {
     // swiftlint:disable:next cyclomatic_complexity
-    public func title() -> String? {
+    func title() -> String? {
         switch self {
         case .streaming:
-            return Localizable.modalsUpsellAllCountriesFeatureStreaming
-        case .multipleDevices(let numberOfDevices):
-            return Localizable.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
+            Localizable.modalsUpsellAllCountriesFeatureStreaming
+        case let .multipleDevices(numberOfDevices):
+            Localizable.modalsUpsellAllCountriesFeatureMultipleDevices(numberOfDevices)
         case .blockAds:
-            return Localizable.modalsUpsellNetShieldAds
+            Localizable.modalsUpsellNetShieldAds
         case .protectFromMalware:
-            return Localizable.modalsUpsellNetShieldMalware
+            Localizable.modalsUpsellNetShieldMalware
         case .highSpeedNetshield:
-            return Localizable.modalsUpsellNetShieldHighSpeed
+            Localizable.modalsUpsellNetShieldHighSpeed
         case .routeSecureServers:
-            return Localizable.modalsUpsellSecureCoreRoute
+            Localizable.modalsUpsellSecureCoreRoute
         case .addLayer:
-            return Localizable.modalsUpsellSecureCoreLayer
+            Localizable.modalsUpsellSecureCoreLayer
         case .protectFromAttacks:
-            return Localizable.modalsUpsellSecureCoreAttacks
+            Localizable.modalsUpsellSecureCoreAttacks
         case .gaming:
-            return Localizable.modalsUpsellFeaturesModerateNatGaming
+            Localizable.modalsUpsellFeaturesModerateNatGaming
         case .directConnection:
-            return Localizable.modalsUpsellFeaturesModerateNatDirectConnections
+            Localizable.modalsUpsellFeaturesModerateNatDirectConnections
         case .fasterServers:
-            return Localizable.upsellVpnAcceleratorFasterServers
+            Localizable.upsellVpnAcceleratorFasterServers
         case .increaseConnectionSpeeds:
-            return Localizable.upsellVpnAcceleratorIncreaseConnectionSpeeds
+            Localizable.upsellVpnAcceleratorIncreaseConnectionSpeeds
         case .distantServers:
-            return Localizable.upsellVpnAcceleratorDistantServers
+            Localizable.upsellVpnAcceleratorDistantServers
         case .accessLAN:
-            return Localizable.upsellCustomizationAccessLAN
+            Localizable.upsellCustomizationAccessLAN
         case .profiles:
-            return Localizable.upsellCustomizationProfiles
+            Localizable.upsellCustomizationProfiles
         case .quickConnect:
-            return Localizable.upsellCustomizationQuickConnect
+            Localizable.upsellCustomizationQuickConnect
         case .location:
-            return Localizable.upsellProfilesFeatureLocation
+            Localizable.upsellProfilesFeatureLocation
         case .profilesProtocols:
-            return Localizable.upsellProfilesFeatureProtocols
+            Localizable.upsellProfilesFeatureProtocols
         case .autoConnect:
-            return Localizable.upsellProfilesFeatureAutoConnect
+            Localizable.upsellProfilesFeatureAutoConnect
         case .anyLocation:
-            return Localizable.upsellCountriesAnyLocation
+            Localizable.upsellCountriesAnyLocation
         case .higherSpeed:
-            return Localizable.upsellCountriesHigherSpeeds
+            Localizable.upsellCountriesHigherSpeeds
         case .geoblockedContent:
-            return Localizable.upsellCountriesGeoblockedContent
-        case .multipleCountries(let countries):
-            return Localizable.upsellCountriesConnectTo(countries)
+            Localizable.upsellCountriesGeoblockedContent
+        case let .multipleCountries(countries):
+            Localizable.upsellCountriesConnectTo(countries)
         case .moneyGuarantee:
-            return Localizable.upsellCountriesMoneyBack
+            Localizable.upsellCountriesMoneyBack
         case let .welcomeNewServersCountries(servers, countries):
-            return Localizable.welcomeScreenFeatureServersCountries(servers, countries)
+            Localizable.welcomeScreenFeatureServersCountries(servers, countries)
         case .welcomeAdvancedFeatures:
-            return Localizable.welcomeUpgradeAdvancedFeatures
-        case .welcomeDevices(let devices):
-            return Localizable.welcomeScreenFeatureDevices(devices)
+            Localizable.welcomeUpgradeAdvancedFeatures
+        case let .welcomeDevices(devices):
+            Localizable.welcomeScreenFeatureDevices(devices)
         case .banner:
-            return nil
+            nil
         case .toggle:
-            return nil
+            nil
         }
     }
 
-    public func boldTitleElements() -> [String] {
+    func boldTitleElements() -> [String] {
         switch self {
         case .gaming:
-            return [Localizable.modalsUpsellModerateNatSubtitleBold]
+            [Localizable.modalsUpsellModerateNatSubtitleBold]
         case .increaseConnectionSpeeds:
-            return [Localizable.upsellVpnAcceleratorIncreaseConnectionSpeedsBold]
+            [Localizable.upsellVpnAcceleratorIncreaseConnectionSpeedsBold]
         case .profiles:
-            return [Localizable.upsellCustomizationProfilesBold]
+            [Localizable.upsellCustomizationProfilesBold]
         case .quickConnect:
-            return [Localizable.upsellCustomizationQuickConnectBold]
+            [Localizable.upsellCustomizationQuickConnectBold]
         case .accessLAN:
-            return [Localizable.upsellCustomizationAccessLANBold]
+            [Localizable.upsellCustomizationAccessLANBold]
         default:
-            return []
+            []
         }
     }
 
-    public var image: Image? {
+    var image: Image? {
         switch self {
         case .streaming:
-            return IconProvider.play
+            IconProvider.play
         case .multipleDevices:
-            return IconProvider.locks
+            IconProvider.locks
         case .blockAds:
-            return IconProvider.circleSlash
+            IconProvider.circleSlash
         case .protectFromMalware:
-            return IconProvider.shield
+            IconProvider.shield
         case .highSpeedNetshield:
-            return IconProvider.rocket
+            IconProvider.rocket
         case .routeSecureServers:
-            return IconProvider.servers
+            IconProvider.servers
         case .addLayer:
-            return IconProvider.locks
+            IconProvider.locks
         case .protectFromAttacks:
-            return IconProvider.alias
+            IconProvider.alias
         case .gaming:
-            return IconProvider.magicWand
+            IconProvider.magicWand
         case .directConnection:
-            return IconProvider.arrowsLeftRight
+            IconProvider.arrowsLeftRight
         case .fasterServers:
-            return IconProvider.servers
+            IconProvider.servers
         case .increaseConnectionSpeeds:
-            return IconProvider.bolt
+            IconProvider.bolt
         case .distantServers:
-            return IconProvider.chartLine
+            IconProvider.chartLine
         case .accessLAN:
-            return IconProvider.printer
+            IconProvider.printer
         case .profiles:
-            return IconProvider.powerOff
+            IconProvider.powerOff
         case .quickConnect:
-            return IconProvider.bolt
+            IconProvider.bolt
         case .location:
-            return IconProvider.globe
+            IconProvider.globe
         case .profilesProtocols:
-            return IconProvider.sliders
+            IconProvider.sliders
         case .autoConnect:
-            return IconProvider.rocket
+            IconProvider.rocket
         case .anyLocation:
-            return IconProvider.globe
+            IconProvider.globe
         case .higherSpeed:
-            return IconProvider.rocket
+            IconProvider.rocket
         case .geoblockedContent:
-            return IconProvider.lockOpen
+            IconProvider.lockOpen
         case .multipleCountries:
-            return IconProvider.globe
+            IconProvider.globe
         case .moneyGuarantee:
-            return IconProvider.shieldFilled
+            IconProvider.shieldFilled
         case .welcomeNewServersCountries:
-            return IconProvider.globe
+            IconProvider.globe
         case .welcomeAdvancedFeatures:
-            return IconProvider.sliders
+            IconProvider.sliders
         case .welcomeDevices:
-            return IconProvider.locks
+            IconProvider.locks
         case .banner:
-            return IconProvider.play
+            IconProvider.play
         case .toggle:
-            return nil
+            nil
         }
     }
 }

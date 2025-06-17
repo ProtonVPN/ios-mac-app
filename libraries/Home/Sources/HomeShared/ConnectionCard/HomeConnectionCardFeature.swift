@@ -17,11 +17,11 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import VPNAppCore
+import Dependencies
 import Domain
 import Foundation
-import Dependencies
 import OrderedCollections
+import VPNAppCore
 
 @Reducer
 public struct HomeConnectionCardFeature {
@@ -59,9 +59,9 @@ public struct HomeConnectionCardFeature {
                     recents: recents,
                     secureCore: secureCoreToggle
                 )
-            case .connected(let connectionSpec, _),
-                    .connecting(let connectionSpec, _),
-                    .resolving(.some(let connectionSpec), _):
+            case let .connected(connectionSpec, _),
+                 let .connecting(connectionSpec, _),
+                 let .resolving(.some(connectionSpec), _):
                 return connectionSpec
             }
         }
@@ -77,7 +77,7 @@ public struct HomeConnectionCardFeature {
 
         public init() {
             @Dependency(\.serverChangeAuthorizer) var authorizer
-            serverChangeAvailability = authorizer.serverChangeAvailability()
+            self.serverChangeAvailability = authorizer.serverChangeAvailability()
         }
     }
 
@@ -92,6 +92,7 @@ public struct HomeConnectionCardFeature {
             // Header
             case defaultConnectionTapped
         }
+
         case delegate(Delegate)
         case watchConnectionStatus
         case newConnectionStatus(VPNConnectionStatus)
@@ -101,13 +102,14 @@ public struct HomeConnectionCardFeature {
         case watchConnectionStatus
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .delegate:
                 return .none
+
             case .watchConnectionStatus:
                 return .publisher {
                     state

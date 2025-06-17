@@ -22,13 +22,14 @@
 
 import Foundation
 import Network
+import Reachability
 
 import Dependencies
 
 import GoLibs
 
-import VPNShared
 import NetShield
+import VPNShared
 
 import Domain
 import Ergonomics
@@ -67,8 +68,7 @@ public protocol LocalAgentConnectionWrapper {
     func sendGetStatus(_: Bool)
 }
 
-extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {
-}
+extension LocalAgentAgentConnection: LocalAgentConnectionWrapper {}
 
 public protocol LocalAgentConnectionFactoryCreator {
     func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory
@@ -77,42 +77,48 @@ public protocol LocalAgentConnectionFactoryCreator {
 public protocol LocalAgentConnectionFactory {
     // Wrapper function for LocalAgentAgentConnection for unit testing.
     // swiftlint:disable:next function_parameter_count
-    func makeLocalAgentConnection(clientCertPEM: String,
-                                  clientKeyPEM: String,
-                                  serverCAsPEM: String,
-                                  host: String,
-                                  certServerName: String,
-                                  client: LocalAgentNativeClientProtocol,
-                                  features: LocalAgentFeatures?,
-                                  connectivity: Bool) throws -> LocalAgentConnectionWrapper
+    func makeLocalAgentConnection(
+        clientCertPEM: String,
+        clientKeyPEM: String,
+        serverCAsPEM: String,
+        host: String,
+        certServerName: String,
+        client: LocalAgentNativeClientProtocol,
+        features: LocalAgentFeatures?,
+        connectivity: Bool
+    ) throws -> LocalAgentConnectionWrapper
 }
 
 public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnectionFactory {
     // swiftlint:disable:next function_parameter_count
-    public func makeLocalAgentConnection(clientCertPEM: String,
-                                         clientKeyPEM: String,
-                                         serverCAsPEM: String,
-                                         host: String,
-                                         certServerName: String,
-                                         client: LocalAgentNativeClientProtocol,
-                                         features: LocalAgentFeatures?,
-                                         connectivity: Bool) throws -> LocalAgentConnectionWrapper {
+    public func makeLocalAgentConnection(
+        clientCertPEM: String,
+        clientKeyPEM: String,
+        serverCAsPEM: String,
+        host: String,
+        certServerName: String,
+        client: LocalAgentNativeClientProtocol,
+        features: LocalAgentFeatures?,
+        connectivity: Bool
+    ) throws -> LocalAgentConnectionWrapper {
         var error: NSError?
-        let result = LocalAgentNewAgentConnection(clientCertPEM,
-                                                  clientKeyPEM,
-                                                  serverCAsPEM,
-                                                  host,
-                                                  certServerName,
-                                                  client,
-                                                  features,
-                                                  connectivity,
-                                                  &error)
+        let result = LocalAgentNewAgentConnection(
+            clientCertPEM,
+            clientKeyPEM,
+            serverCAsPEM,
+            host,
+            certServerName,
+            client,
+            features,
+            connectivity,
+            &error
+        )
 
-        if let error = error {
+        if let error {
             throw error
         }
 
-        guard let result = result else {
+        guard let result else {
             log.assertionFailure("LocalAgentNewAgentConnection should have returned error")
             throw LocalAgentError.serverError
         }
@@ -120,7 +126,7 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
         return result
     }
 
-    public init() { }
+    public init() {}
 }
 
 final class LocalAgentImplementation: LocalAgent {
@@ -149,8 +155,8 @@ final class LocalAgentImplementation: LocalAgent {
     init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.propertiesManager = propertiesManager
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        client = LocalAgentNativeClientImplementation()
-        agentConnectionFactory = factory
+        self.client = LocalAgentNativeClientImplementation()
+        self.agentConnectionFactory = factory
         client.delegate = self
 
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
@@ -203,14 +209,16 @@ final class LocalAgentImplementation: LocalAgent {
         )
 
         do {
-            agent = try agentConnectionFactory.makeLocalAgentConnection(clientCertPEM: data.clientCertificate,
-                                                                        clientKeyPEM: data.clientKey.derRepresentation,
-                                                                        serverCAsPEM: rootCerts,
-                                                                        host: Self.localAgentHostname,
-                                                                        certServerName: configuration.hostname,
-                                                                        client: client,
-                                                                        features: LocalAgentNewFeatures()?.with(configuration: configuration),
-                                                                        connectivity: networkMonitor.currentPath.status == .satisfied)
+            agent = try agentConnectionFactory.makeLocalAgentConnection(
+                clientCertPEM: data.clientCertificate,
+                clientKeyPEM: data.clientKey.derRepresentation,
+                serverCAsPEM: rootCerts,
+                host: Self.localAgentHostname,
+                certServerName: configuration.hostname,
+                client: client,
+                features: LocalAgentNewFeatures()?.with(configuration: configuration),
+                connectivity: networkMonitor.currentPath.status == .satisfied
+            )
         } catch {
             log.error("Creating local agent connection failed with \(error)", category: .localAgent)
         }
@@ -285,7 +293,7 @@ final class LocalAgentImplementation: LocalAgent {
     }
 
     private func netShieldStatsChanged(to stats: NetShieldModel) {
-        self.delegate?.netShieldStatsChanged(to: stats)
+        delegate?.netShieldStatsChanged(to: stats)
         NotificationCenter.default.post(NetShieldStatsNotification(data: stats), object: self)
     }
 }
@@ -302,7 +310,8 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
             trackersCount: statistics.netShield.trackersBlocked ?? 0,
             adsCount: statistics.netShield.adsBlocked ?? 0,
             dataSaved: UInt64(statistics.netShield.bytesSaved),
-            enabled: true)
+            enabled: true
+        )
 
         lastReceivedStats = stats
         netShieldStatsChanged(to: stats)
@@ -318,7 +327,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
     }
 
     func didChangeState(state: LocalAgentState?) {
-        guard let state = state else {
+        guard let state else {
             return
         }
 
@@ -366,6 +375,5 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
             }
             delegate?.didReceiveFeatures(vpnFeatures)
         }
-        
     }
 }

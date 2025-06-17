@@ -19,13 +19,13 @@
 import Foundation
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(Cocoa)
-import Cocoa
+    import Cocoa
 #endif
 
 #if canImport(SystemExtensions)
-import SystemExtensions
+    import SystemExtensions
 #endif
 
 import Dependencies
@@ -77,13 +77,13 @@ public final class DomainErrorAlert: SystemAlert {
     }
 }
 
-extension SystemAlert {
-    public static var className: String {
-        return String(describing: self)
+public extension SystemAlert {
+    static var className: String {
+        String(describing: self)
     }
 
-    public var className: String {
-        return String(describing: type(of: self))
+    var className: String {
+        String(describing: type(of: self))
     }
 }
 
@@ -95,19 +95,20 @@ public struct ReconnectInfo {
         public let name: String
 
         #if canImport(UIKit)
-        public let image: UIImage
+            public let image: UIImage
 
-        public init(name: String, image: UIImage) {
-            self.name = name
-            self.image = image
-        }
+            public init(name: String, image: UIImage) {
+                self.name = name
+                self.image = image
+            }
+
         #elseif canImport(Cocoa)
-        public let image: NSImage
+            public let image: NSImage
 
-        public init(name: String, image: NSImage) {
-            self.name = name
-            self.image = image
-        }
+            public init(name: String, image: NSImage) {
+                self.name = name
+                self.image = image
+            }
         #endif
     }
 
@@ -153,7 +154,6 @@ public final class AccountDeletionErrorAlert: SystemAlert {
 }
 
 public final class AccountDeletionWarningAlert: SystemAlert {
-
     public var title: String? = Localizable.vpnConnectionActive
     public var message: String? = Localizable.accountDeletionConnectionWarning
     public var actions = [AlertAction]()
@@ -175,7 +175,7 @@ public final class AppUpdateRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(_ error: Error) {
-        message = error.localizedDescription
+        self.message = error.localizedDescription
     }
 }
 
@@ -186,7 +186,7 @@ public final class CannotAccessVpnCredentialsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class P2pBlockedAlert: SystemAlert {
@@ -244,7 +244,7 @@ public final class DelinquentUserAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class VpnStuckAlert: SystemAlert {
@@ -276,28 +276,28 @@ public final class MaintenanceAlert: SystemAlert {
     public let type: MaintenanceAlertType
 
     public init() {
-        title = Localizable.allServersInProfileUnderMaintenance
-        type = .alert
+        self.title = Localizable.allServersInProfileUnderMaintenance
+        self.type = .alert
     }
 
     public init(countryName: String) {
-        title = Localizable.countryServersUnderMaintenance(countryName)
-        type = .alert
+        self.title = Localizable.countryServersUnderMaintenance(countryName)
+        self.type = .alert
     }
 
     public init(cityName: String) {
-        title = Localizable.countryServersUnderMaintenance(cityName)
-        type = .alert
+        self.title = Localizable.countryServersUnderMaintenance(cityName)
+        self.type = .alert
     }
 
     /// If `forSpecificCountry` is set, switches between country and servers texts, if it's nil, uses one text
     public init(forSpecificCountry: Bool?) {
-        if let forSpecificCountry = forSpecificCountry {
-            title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
+        if let forSpecificCountry {
+            self.title = forSpecificCountry ? Localizable.allServersInCountryUnderMaintenance : Localizable.allServersUnderMaintenance
         } else {
-            title = Localizable.serverUnderMaintenance
+            self.title = Localizable.serverUnderMaintenance
         }
-        type = .notification
+        self.type = .notification
     }
 
     public enum MaintenanceAlertType {
@@ -347,14 +347,18 @@ public final class ProtocolNotAvailableForServerAlert: SystemAlert {
 
     public init(confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
-            actions.append(AlertAction(title: Localizable.disconnect,
-                                       style: .destructive,
-                                       handler: confirmHandler))
+            actions.append(AlertAction(
+                title: Localizable.disconnect,
+                style: .destructive,
+                handler: confirmHandler
+            ))
         }
         let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
-        actions.append(AlertAction(title: dismissText,
-                                   style: .cancel,
-                                   handler: cancelHandler ?? dismiss))
+        actions.append(AlertAction(
+            title: dismissText,
+            style: .cancel,
+            handler: cancelHandler ?? dismiss
+        ))
     }
 }
 
@@ -368,22 +372,26 @@ public final class LocationNotAvailableAlert: SystemAlert {
     /// Switching the title and message according to the presence of profileName.
     public init(profileName: String? = nil, confirmHandler: (() -> Void)? = nil, cancelHandler: (() -> Void)? = nil) {
         if let confirmHandler {
-            actions.append(AlertAction(title: Localizable.disconnect,
-                                       style: .destructive,
-                                       handler: confirmHandler))
+            actions.append(AlertAction(
+                title: Localizable.disconnect,
+                style: .destructive,
+                handler: confirmHandler
+            ))
         }
         let dismissText = confirmHandler == nil ? Localizable.ok : Localizable.cancel
-        actions.append(AlertAction(title: dismissText,
-                                   style: .cancel,
-                                   handler: cancelHandler ?? dismiss))
-        dismiss = cancelHandler
+        actions.append(AlertAction(
+            title: dismissText,
+            style: .cancel,
+            handler: cancelHandler ?? dismiss
+        ))
+        self.dismiss = cancelHandler
 
         if let profileName {
-            title = Localizable.locationNotAvailableForProfileTitle
-            message = Localizable.locationNotAvailableForProfileText(profileName)
+            self.title = Localizable.locationNotAvailableForProfileTitle
+            self.message = Localizable.locationNotAvailableForProfileText(profileName)
         } else {
-            title = Localizable.locationNotAvailableTitle
-            message = Localizable.locationNotAvailableText
+            self.title = Localizable.locationNotAvailableTitle
+            self.message = Localizable.locationNotAvailableText
         }
     }
 }
@@ -393,9 +401,9 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
     public let linkText: String = Localizable.alertProtocolDeprecatedLinkText
 
     #if os(iOS) || os(tvOS)
-    public var message: String? = Localizable.alertProtocolDeprecatedBodyIos
+        public var message: String? = Localizable.alertProtocolDeprecatedBodyIos
     #elseif os(macOS)
-    public var message: String? = Localizable.alertProtocolDeprecatedBodyMacos
+        public var message: String? = Localizable.alertProtocolDeprecatedBodyMacos
     #endif
 
     public let confirmTitle: String = Localizable.alertProtocolDeprecatedEnableSmart
@@ -415,20 +423,20 @@ public final class ProtocolDeprecatedAlert: SystemAlert {
             handler: enableSmartProtocolHandler
         ))
         #if os(iOS)
-        // On MacOS, a hyperlink is placed in the alert body instead
-        actions.append(AlertAction(
-            title: Localizable.alertProtocolDeprecatedLearnMore,
-            style: .secondary,
-            handler: {
-                @Dependency(\.linkOpener) var linkOpener
-                linkOpener.open(.protocolDeprecations)
-            }
-        ))
+            // On MacOS, a hyperlink is placed in the alert body instead
+            actions.append(AlertAction(
+                title: Localizable.alertProtocolDeprecatedLearnMore,
+                style: .secondary,
+                handler: {
+                    @Dependency(\.linkOpener) var linkOpener
+                    linkOpener.open(.protocolDeprecations)
+                }
+            ))
         #endif
         actions.append(AlertAction(
             title: Localizable.alertProtocolDeprecatedClose,
             style: .cancel,
-            handler: { }
+            handler: {}
         ))
     }
 }
@@ -437,6 +445,7 @@ public final class ReconnectOnSettingsChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User was changing settings, but cancelled reconnecting."
     }
+
     public static let userCancelled = UserCancelledReconnect()
 
     public var title: String? = Localizable.changeSettings
@@ -462,7 +471,7 @@ public final class ReconnectOnActionAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        title = actionTitle
+        self.title = actionTitle
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
             confirmHandler()
@@ -510,6 +519,7 @@ public final class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public struct UserCancelledReconnect: Error, CustomStringConvertible {
         public let description = "User selected smart protocol, but cancelled reconnecting."
     }
+
     public static let userCancelled = UserCancelledReconnect()
 
     public var title: String? = Localizable.smartProtocolReconnectModalTitle
@@ -584,9 +594,9 @@ public final class MITMAlert: SystemAlert {
     public init(messageType: MessageType = .api) {
         switch messageType {
         case .api:
-            message = Localizable.errorMitmDescription
+            self.message = Localizable.errorMitmDescription
         case .vpn:
-            message = Localizable.errorMitmVpnDescription
+            self.message = Localizable.errorMitmVpnDescription
         }
     }
 }
@@ -599,7 +609,7 @@ public final class UnreachableNetworkAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(error: Error, troubleshoot: @escaping () -> Void) {
-        message = error.localizedDescription
+        self.message = error.localizedDescription
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: nil))
         actions.append(AlertAction(title: Localizable.neTroubleshoot, style: .confirmative, handler: troubleshoot))
     }
@@ -622,7 +632,7 @@ public final class VpnServerOnMaintenanceAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class ReconnectOnNetshieldChangeAlert: SystemAlert {
@@ -633,7 +643,7 @@ public final class ReconnectOnNetshieldChangeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        message = isOn ? Localizable.netshieldAlertReconnectDescriptionOn : Localizable.netshieldAlertReconnectDescriptionOff
+        self.message = isOn ? Localizable.netshieldAlertReconnectDescriptionOn : Localizable.netshieldAlertReconnectDescriptionOff
         actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
     }
@@ -659,7 +669,7 @@ public final class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class UserPlanDowngradedAlert: UserAccountUpdateAlert {
@@ -677,7 +687,7 @@ public final class UserPlanDowngradedAlert: UserAccountUpdateAlert {
         actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = Localizable.subscriptionExpiredReconnectionDescription
+            self.message = Localizable.subscriptionExpiredReconnectionDescription
         }
     }
 }
@@ -697,7 +707,7 @@ public final class UserBecameDelinquentAlert: UserAccountUpdateAlert {
         actions.append(AlertAction(title: Localizable.noThanks, style: .cancel, handler: nil))
         self.reconnectInfo = reconnectInfo
         if reconnectInfo != nil {
-            message = Localizable.delinquentReconnectionDescription
+            self.message = Localizable.delinquentReconnectionDescription
         }
     }
 }
@@ -709,7 +719,7 @@ public final class VpnServerErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class VpnServerSubscriptionErrorAlert: SystemAlert {
@@ -719,7 +729,7 @@ public final class VpnServerSubscriptionErrorAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class DiscourageSecureCoreAlert: SystemAlert {
@@ -733,9 +743,10 @@ public final class DiscourageSecureCoreAlert: SystemAlert {
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(.learnMore)
     }
+
     public var dismiss: (() -> Void)?
 
-    public init() { }
+    public init() {}
 }
 
 public final class SubuserWithoutConnectionsAlert: SystemAlert {
@@ -760,8 +771,8 @@ public final class TooManyCertificateRequestsAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(retryAfter: TimeInterval? = nil) {
-        guard let retryAfter = retryAfter else {
-            message = Localizable.vpnauthTooManyCertsDescription
+        guard let retryAfter else {
+            self.message = Localizable.vpnauthTooManyCertsDescription
             return
         }
 
@@ -776,7 +787,7 @@ public final class TooManyCertificateRequestsAlert: SystemAlert {
             minutesToWait += 1
         }
 
-        message = Localizable.vpnauthTooManyCertsRetryAfter(minutesToWait)
+        self.message = Localizable.vpnauthTooManyCertsRetryAfter(minutesToWait)
     }
 }
 
@@ -787,8 +798,7 @@ public final class ProtonUnreachableAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public init() {
-    }
+    public init() {}
 }
 
 public final class ConnectingWithBadLANAlert: SystemAlert {
@@ -812,7 +822,7 @@ public final class ConnectingWithBadLANAlert: SystemAlert {
 
         actions.append(contentsOf: [
             .init(title: Localizable.killSwitchEnable, style: .confirmative, handler: killSwitchOnHandler),
-            .init(title: Localizable.continue, style: .destructive, handler: connectAnywayHandler)
+            .init(title: Localizable.continue, style: .destructive, handler: connectAnywayHandler),
         ])
     }
 }
@@ -828,21 +838,21 @@ public final class UpgradeOperatingSystemAlert: SystemAlert {
         let platform: String
 
         #if os(iOS)
-        platform = "iOS"
+            platform = "iOS"
         #elseif os(macOS)
-        platform = "macOS"
+            platform = "macOS"
         #elseif os(tvOS)
-        platform = "tvOS"
+            platform = "tvOS"
         #elseif os(visionOS)
-        platform = "visionOS"
+            platform = "visionOS"
         #else
-        platform = "Unrecognized"
+            platform = "Unrecognized"
         #endif
 
         self.title = Localizable.operatingSystemOutOfDateAlertTitle
         self.message = Localizable.operatingSystemOutOfDateAlertDescription(platform, version.osVersionString)
         self.actions = [
-            .init(title: Localizable.gotIt, style: .confirmative, handler: nil)
+            .init(title: Localizable.gotIt, style: .confirmative, handler: nil),
         ]
     }
 }
@@ -860,10 +870,10 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
     public init(accountTier: Int) {
         self.accountTier = accountTier
         if accountTier.isFreeTier {
-            message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus)
+            self.message = Localizable.maximumDevicePlanLimitPart1(Localizable.tierPlus)
                 + Localizable.maximumDevicePlanLimitPart2(DomainConstants.maxDeviceCount)
         } else {
-            message = Localizable.maximumDeviceReachedDescription
+            self.message = Localizable.maximumDeviceReachedDescription
         }
 
         actions.append(AlertAction(title: Localizable.upgrade, style: .confirmative, handler: nil))
@@ -872,57 +882,56 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
 }
 
 #if canImport(SystemExtensions)
-public final class SysexEnabledAlert: SystemAlert {
-    public var title: String? = Localizable.sysexEnabledTitle
-    public var message: String? = Localizable.sysexEnabledDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
+    public final class SysexEnabledAlert: SystemAlert {
+        public var title: String? = Localizable.sysexEnabledTitle
+        public var message: String? = Localizable.sysexEnabledDescription
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
 
-    public init() { }
-}
-
-public final class SysexInstallingErrorAlert: SystemAlert {
-    public var title: String? = Localizable.sysexCannotEnable
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init?(error: Error) {
-        guard let sysexError = error as? OSSystemExtensionError else {
-            return nil
-        }
-
-        let subcase: String
-        switch sysexError.code {
-        case .unsupportedParentBundleLocation:
-            subcase = Localizable.sysexErrorDescriptionSubcaseBadLocation
-        case .forbiddenBySystemPolicy:
-            subcase = Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
-        case .authorizationRequired:
-            subcase = Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
-        default:
-            subcase = Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
-        }
-
-        self.message = Localizable.sysexErrorDescription(subcase)
-
-        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+        public init() {}
     }
-}
 
-public final class SystemExtensionTourAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    public var cancelHandler: () -> Void
+    public final class SysexInstallingErrorAlert: SystemAlert {
+        public var title: String? = Localizable.sysexCannotEnable
+        public var message: String?
+        public var actions = [AlertAction]()
+        public let isError: Bool = true
+        public var dismiss: (() -> Void)?
 
-    public init(cancelHandler: @escaping() -> Void) {
-        self.cancelHandler = cancelHandler
-        self.dismiss = cancelHandler
+        public init?(error: Error) {
+            guard let sysexError = error as? OSSystemExtensionError else {
+                return nil
+            }
+
+            let subcase: String = switch sysexError.code {
+            case .unsupportedParentBundleLocation:
+                Localizable.sysexErrorDescriptionSubcaseBadLocation
+            case .forbiddenBySystemPolicy:
+                Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
+            case .authorizationRequired:
+                Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
+            default:
+                Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
+            }
+
+            self.message = Localizable.sysexErrorDescription(subcase)
+
+            actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: nil))
+        }
     }
-}
+
+    public final class SystemExtensionTourAlert: SystemAlert {
+        public var title: String?
+        public var message: String?
+        public var actions = [AlertAction]()
+        public let isError: Bool = false
+        public var dismiss: (() -> Void)?
+        public var cancelHandler: () -> Void
+
+        public init(cancelHandler: @escaping () -> Void) {
+            self.cancelHandler = cancelHandler
+            self.dismiss = cancelHandler
+        }
+    }
 #endif

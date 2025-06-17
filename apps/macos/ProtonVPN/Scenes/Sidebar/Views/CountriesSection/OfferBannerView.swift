@@ -1,5 +1,5 @@
 //
-//  CountryItemCellView.swift
+//  OfferBannerView.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,24 +22,23 @@
 
 import Cocoa
 
-import SDWebImage
 import Dependencies
+import SDWebImage
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
-import Announcement
 
 import Ergonomics
-import Theme
 import Strings
+import Theme
 import Timer
 
 final class OfferBannerView: NSView {
-
-    @IBOutlet private weak var image: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var label: NSTextField!
-    @IBOutlet private weak var separatorViewBottom: NSView!
+    @IBOutlet private var image: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var label: NSTextField!
+    @IBOutlet private var separatorViewBottom: NSView!
     @IBOutlet var dismissButton: NSButton!
 
     private var viewModel: OfferBannerViewModel!
@@ -98,14 +97,16 @@ final class OfferBannerView: NSView {
 
     // MARK: - Actions
 
-    @IBAction private func didTap(_ sender: Any) {
+    @IBAction
+    private func didTap(_: Any) {
         @Dependency(\.sessionService) var sessionService
         Task {
             await viewModel.action(sessionService)
         }
     }
 
-    @IBAction private func didDismiss(_ sender: Any) {
+    @IBAction
+    private func didDismiss(_: Any) {
         viewModel.dismiss()
     }
 

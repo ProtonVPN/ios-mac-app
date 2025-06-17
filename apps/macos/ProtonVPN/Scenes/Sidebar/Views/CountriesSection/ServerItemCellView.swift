@@ -21,30 +21,29 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 protocol ServerItemCellViewDelegate: AnyObject {
     func userDidRequestStreamingInfo(server: ServerItemViewModel)
 }
 
 final class ServerItemCellView: NSView {
-    
-    @IBOutlet private weak var loadIcon: ColoredLoadButton!
+    @IBOutlet private var loadIcon: ColoredLoadButton!
 
-    @IBOutlet private weak var serverInfoStackView: NSStackView!
+    @IBOutlet private var serverInfoStackView: NSStackView!
     private weak var featuresStackView: NSStackView!
 
-    @IBOutlet private weak var serverLbl: NSTextField!
-    @IBOutlet private weak var cityLbl: NSTextField!
-    @IBOutlet private weak var secureCoreIV: NSImageView!
-    @IBOutlet private weak var secureFlagIV: NSImageView!
-    @IBOutlet private weak var connectBtn: ConnectButton!
-    @IBOutlet private weak var maintenanceIV: NSButton!
-    @IBOutlet private weak var upgradeBtn: NSButton!
-    
+    @IBOutlet private var serverLbl: NSTextField!
+    @IBOutlet private var cityLbl: NSTextField!
+    @IBOutlet private var secureCoreIV: NSImageView!
+    @IBOutlet private var secureFlagIV: NSImageView!
+    @IBOutlet private var connectBtn: ConnectButton!
+    @IBOutlet private var maintenanceIV: NSButton!
+    @IBOutlet private var upgradeBtn: NSButton!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         wantsLayer = true
@@ -61,16 +60,20 @@ final class ServerItemCellView: NSView {
         maintenanceIV.layer?.borderWidth = 2.0
         maintenanceIV.image = AppTheme.Icon.wrench
             .colored(.weak)
-            .resize(newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
-                    newHeight: Int(maintenanceIV.bounds.height) - imageMargin)
+            .resize(
+                newWidth: Int(maintenanceIV.bounds.width) - imageMargin,
+                newHeight: Int(maintenanceIV.bounds.height) - imageMargin
+            )
 
         secureCoreIV.image = AppTheme.Icon.chevronsRight.colored([.interactive, .strong])
 
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 12))
-        let trackingArea = NSTrackingArea(rect: trackingFrame,
-                                          options: [.mouseEnteredAndExited, .activeInKeyWindow],
-                                          owner: self,
-                                          userInfo: nil)
+        let trackingArea = NSTrackingArea(
+            rect: trackingFrame,
+            options: [.mouseEnteredAndExited, .activeInKeyWindow],
+            owner: self,
+            userInfo: nil
+        )
         addTrackingArea(trackingArea)
 
         connectBtn.wantsLayer = true
@@ -81,18 +84,20 @@ final class ServerItemCellView: NSView {
         featuresStackView.distribution = .fill
         featuresStackView.spacing = .UI.halfMargin
         addSubview(featuresStackView, positioned: .below, relativeTo: connectBtn)
-        addConstraints([serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -.UI.halfMargin),
-                        serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
-                        featuresStackView.heightAnchor.constraint(equalToConstant: .UI.iconSize)])
+        addConstraints([
+            serverInfoStackView.trailingAnchor.constraint(equalTo: featuresStackView.leadingAnchor, constant: -.UI.halfMargin),
+            serverInfoStackView.centerYAnchor.constraint(equalTo: featuresStackView.centerYAnchor),
+            featuresStackView.heightAnchor.constraint(equalToConstant: .UI.iconSize),
+        ])
         self.featuresStackView = featuresStackView
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        featuresStackView.subviews.forEach {
-            ($0 as? NSButton)?.sd_cancelCurrentImageLoad()
-            ($0 as? NSImageView)?.sd_cancelCurrentImageLoad()
-            $0.removeFromSuperview()
+        for subview in featuresStackView.subviews {
+            (subview as? NSButton)?.sd_cancelCurrentImageLoad()
+            (subview as? NSImageView)?.sd_cancelCurrentImageLoad()
+            subview.removeFromSuperview()
         }
     }
 
@@ -125,9 +130,9 @@ final class ServerItemCellView: NSView {
         view.wantsLayer = true
         featuresStackView.addArrangedSubview(view)
     }
-    
+
     private var viewModel: ServerItemViewModel!
-    
+
     var disabled: Bool = false
 
     weak var delegate: ServerItemCellViewDelegate?
@@ -140,13 +145,13 @@ final class ServerItemCellView: NSView {
         cityLbl.isHidden = true
         connectBtn.isHidden = false
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         upgradeBtn.isHidden = !viewModel.isUsersTierTooLow
         cityLbl.isHidden = viewModel.isConnected || viewModel.isUsersTierTooLow
         connectBtn.isHidden = !viewModel.isConnected || viewModel.isUsersTierTooLow
     }
-    
+
     func updateView(withModel viewModel: ServerItemViewModel) {
         self.viewModel = viewModel
         loadIcon.load = viewModel.load
@@ -164,19 +169,19 @@ final class ServerItemCellView: NSView {
         setupInfoView()
 
         addFeatures()
-        
-        [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl].forEach {
-            $0?.alphaValue = viewModel.alphaOfMainElements
+
+        for item in [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl] {
+            item?.alphaValue = viewModel.alphaOfMainElements
         }
 
-        featuresStackView.views.forEach {
-            $0.alphaValue = viewModel.alphaOfMainElements
+        for view in featuresStackView.views {
+            view.alphaValue = viewModel.alphaOfMainElements
         }
-                
+
         if let code = viewModel.entryCountry {
             secureFlagIV.image = AppTheme.Icon.flag(countryCode: code)
         }
-        
+
         setupAccessibility()
     }
 
@@ -187,27 +192,31 @@ final class ServerItemCellView: NSView {
         maintenanceIV.isHidden = !isUnderMaintenance
         loadIcon.isHidden = isUnderMaintenance
     }
-    
-    @IBAction private func didTapConnectBtn(_ sender: Any) {
+
+    @IBAction
+    private func didTapConnectBtn(_: Any) {
         viewModel.connectAction()
     }
-    
-    @IBAction private func didTapUpgradeBtn(_ sender: Any) {
+
+    @IBAction
+    private func didTapUpgradeBtn(_: Any) {
         viewModel.upgradeAction()
     }
 
-    @objc private func didTapStreaming(_ sender: Any) {
+    @objc
+    private func didTapStreaming(_: Any) {
         delegate?.userDidRequestStreamingInfo(server: viewModel)
     }
 
     // MARK: - Accessibility
+
     private func setupAccessibility() {
         setAccessibilityLabel(viewModel.accessibilityLabel)
         connectBtn.nameForAccessibility = viewModel.serverName
         connectBtn.setAccessibilityElement(true)
     }
-    
+
     override func accessibilityChildren() -> [Any]? {
-        return [connectBtn as Any]
+        [connectBtn as Any]
     }
 }

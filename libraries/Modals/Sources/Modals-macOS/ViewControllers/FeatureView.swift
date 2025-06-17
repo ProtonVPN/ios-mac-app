@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import AppKit
+import Foundation
 import ModalsShared
-import Theme
 import SwiftUI
+import Theme
 
 final class FeatureView: NSView {
-
     // MARK: Outlets
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet weak var iconImageView: NSImageView!
+
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet var iconImageView: NSImageView!
     @IBOutlet var contentView: NSView!
 
     override init(frame frameRect: NSRect) {
@@ -50,7 +50,7 @@ final class FeatureView: NSView {
             trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topAnchor.constraint(equalTo: contentView.topAnchor),
-            bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 

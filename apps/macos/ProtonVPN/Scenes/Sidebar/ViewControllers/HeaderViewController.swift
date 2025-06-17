@@ -24,66 +24,66 @@ import Cocoa
 
 import SDWebImage
 
-import LegacyCommon
 import Announcement
+import LegacyCommon
 
-import Theme
-import Ergonomics
 import Domain
+import Ergonomics
+import Theme
 
 final class HeaderViewController: NSViewController {
-    
     private enum AccessibilityIdentifiers {
         static let ipLabel: String = "ipLabel"
         static let protocolLabel: String = "protocolLabel"
         static let headerLabel: String = "headerLabel"
     }
 
-    @IBOutlet private weak var backgroundView: NSView!
-    @IBOutlet private weak var flagView: FlagView!
-    @IBOutlet private weak var headerLabel: NSTextField!
-    @IBOutlet private weak var ipLabel: NSTextField!
-    @IBOutlet private weak var loadLabel: NSTextField!
-    @IBOutlet private weak var loadIcon: LoadCircle!
-    @IBOutlet private weak var speedLabel: NSTextField!
-    @IBOutlet private weak var connectButton: LargeConnectButton!
-    @IBOutlet private weak var changeServerView: ChangeServerView!
-    @IBOutlet private weak var announcementsContainer: NSView!
-    @IBOutlet private weak var announcementsButton: NSButton!
-    @IBOutlet private weak var protocolLabel: NSTextField!
-    @IBOutlet private weak var badgeView: NSView!
+    @IBOutlet private var backgroundView: NSView!
+    @IBOutlet private var flagView: FlagView!
+    @IBOutlet private var headerLabel: NSTextField!
+    @IBOutlet private var ipLabel: NSTextField!
+    @IBOutlet private var loadLabel: NSTextField!
+    @IBOutlet private var loadIcon: LoadCircle!
+    @IBOutlet private var speedLabel: NSTextField!
+    @IBOutlet private var connectButton: LargeConnectButton!
+    @IBOutlet private var changeServerView: ChangeServerView!
+    @IBOutlet private var announcementsContainer: NSView!
+    @IBOutlet private var announcementsButton: NSButton!
+    @IBOutlet private var protocolLabel: NSTextField!
+    @IBOutlet private var badgeView: NSView!
 
-    @IBOutlet private weak var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private weak var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
-    @IBOutlet private weak var ipLoadRowContainer: NSView!
+    @IBOutlet private var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
+    @IBOutlet private var ipLoadRowContainer: NSView!
 
     var announcementsButtonPressed: (() -> Void)?
-    
+
     private var viewModel: HeaderViewModel!
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: HeaderViewModel) {
         super.init(nibName: NSNib.Name("Header"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         viewModel.delegate = self
         setupPersistentView()
         setupEphemeralView()
         viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
-        
+
         setupAnnouncements()
         setupBadgeView()
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewDidAppear() {
         super.viewDidAppear()
         viewModel.isVisible = true
@@ -94,38 +94,38 @@ final class HeaderViewController: NSViewController {
         super.viewDidDisappear()
         viewModel.isVisible = false
     }
-    
+
     private func setupPersistentView() {
         backgroundView.wantsLayer = true
         DarkAppearance {
             backgroundView.layer?.backgroundColor = .cgColor(.background)
         }
-                
+
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)
 
         changeServerView.handler = changeServerButtonAction
     }
-    
+
     private func setupEphemeralView() {
         setupFlagView()
-        
+
         headerLabel.attributedStringValue = viewModel.headerLabel
         headerLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.headerLabel)
         ipLabel.attributedStringValue = viewModel.ipLabel
         ipLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.ipLabel)
-        
+
         setupLoad()
         setupProtocol()
         setupBitrate()
-        
+
         setupButtons()
     }
-    
+
     private func setupFlagView() {
         if viewModel.isConnected, let countryCode = viewModel.connectedCountryCode {
             flagView.backgroundImage = AppTheme.Icon.flag(countryCode: countryCode, style: .large)
-        } else if !viewModel.isConnected && flagView.backgroundImage != nil {
+        } else if !viewModel.isConnected, flagView.backgroundImage != nil {
             flagView.backgroundImage = nil
         }
     }
@@ -136,10 +136,9 @@ final class HeaderViewController: NSViewController {
 
         return ipLoadRowContainer.bounds.width - widthOfOtherElements - padding
     }
-    
+
     private func setupLoad() {
         if viewModel.isConnected, let loadDescription = viewModel.loadLabel, let loadDescriptionShort = viewModel.loadLabelShort, let loadPercentage = viewModel.loadPercentage {
-
             if horizontalSpaceAvailableForLoadLabel < 10 + loadDescription.size().width {
                 loadLabel.attributedStringValue = loadDescriptionShort
                 loadLabel.toolTip = loadDescription.string
@@ -168,7 +167,7 @@ final class HeaderViewController: NSViewController {
         protocolLabel.attributedStringValue = vpnProcol
         protocolLabel.setAccessibilityIdentifier(AccessibilityIdentifiers.protocolLabel)
     }
-    
+
     private func setupBitrate() {
         if viewModel.isConnected {
             speedLabel.isHidden = false
@@ -187,17 +186,19 @@ final class HeaderViewController: NSViewController {
 
         changeServerView.isHidden = !shouldShowChangeServer
     }
-    
-    @objc private func quickConnectButtonAction() {
+
+    @objc
+    private func quickConnectButtonAction() {
         viewModel.quickConnectAction()
     }
 
-    @objc private func changeServerButtonAction() {
+    @objc
+    private func changeServerButtonAction() {
         viewModel.changeServerAction()
     }
-    
+
     // MARK: Announcements
-    
+
     fileprivate func setupBadgeView() {
         badgeView.wantsLayer = true
         badgeView.layer?.cornerRadius = 3
@@ -207,14 +208,15 @@ final class HeaderViewController: NSViewController {
         badgeView.isHidden = true
     }
 
-    @objc func setupAnnouncements() {
-        guard let viewModel = viewModel else {
+    @objc
+    func setupAnnouncements() {
+        guard let viewModel else {
             announcementsButton.isHidden = true
             return
         }
         Task {
             await viewModel.prefetchImages()
-            
+
             guard viewModel.showAnnouncements else {
                 announcementsButton.isHidden = true
                 return
@@ -243,7 +245,7 @@ final class HeaderViewController: NSViewController {
         }
 
         let downloader = SDWebImageDownloader()
-        downloader.downloadImage(with: iconUrl) { [weak self] (image, _, _, _) in
+        downloader.downloadImage(with: iconUrl) { [weak self] image, _, _, _ in
             if let icon = image {
                 SDImageCache.shared.store(icon, forKey: iconUrl.absoluteString, completion: nil)
                 setup(icon)
@@ -252,8 +254,9 @@ final class HeaderViewController: NSViewController {
             }
         }
     }
-    
-    @IBAction private func announcementsButtonTapped(_ sender: Any) {
+
+    @IBAction
+    private func announcementsButtonTapped(_: Any) {
         announcementsButtonPressed?()
     }
 }

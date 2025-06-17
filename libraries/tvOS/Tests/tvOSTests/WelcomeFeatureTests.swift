@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
 @testable import tvOS
+import XCTest
 
 final class WelcomeFeatureTests: XCTestCase {
-
     @MainActor
     func testShowCreateAccount() async {
         let store = TestStore(initialState: WelcomeFeature.State()) {
@@ -61,7 +60,7 @@ final class WelcomeFeatureTests: XCTestCase {
     func testCodeExpired() async {
         let store = TestStore(initialState: WelcomeFeature.State(destination: .signIn(.init(authentication: .waitingForAuthentication(code: .init(selector: "", userCode: ""), remainingAttempts: 0))))) {
             WelcomeFeature()
-        } 
+        }
         await store.send(.destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted)))))) {
             $0.destination = .codeExpired(.init())
         }

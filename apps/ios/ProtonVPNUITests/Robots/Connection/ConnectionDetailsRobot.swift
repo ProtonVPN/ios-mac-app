@@ -17,15 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import XCTest
 import Strings
 import UITestsHelpers
+import XCTest
 
-fileprivate let connectionDetailsTitle = Localizable.connectionDetailsTitle
-fileprivate let connectionFlagInfoId = "connection_flag_info_view"
+private let connectionDetailsTitle = Localizable.connectionDetailsTitle
+private let connectionFlagInfoId = "connection_flag_info_view"
 
 class ConnectionDetailsRobot: CoreElements {
-
     let verify = Verify()
 
     @discardableResult
@@ -35,7 +34,6 @@ class ConnectionDetailsRobot: CoreElements {
     }
 
     class Verify: CoreElements {
-
         @discardableResult
         func connectionDetailsIsShown() -> ConnectionDetailsRobot {
             staticText(connectionDetailsTitle).checkExists(message: "Connection details are not shown")
@@ -74,7 +72,7 @@ class ConnectionDetailsRobot: CoreElements {
 
         @discardableResult
         private func checkStaticText(_ identifier: String, contains label: String) -> UIElement {
-            return staticText(identifier)
+            staticText(identifier)
                 .firstMatch()
                 .checkContainsLabel(label)
         }

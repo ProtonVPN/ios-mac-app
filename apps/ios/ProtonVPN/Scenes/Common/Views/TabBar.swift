@@ -23,17 +23,15 @@
 import UIKit
 
 class TabBar: UITabBar {
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         isTranslucent = false
     }
 }
 
 extension TabBar {
-    
     override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
+        UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
     }
 }

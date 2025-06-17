@@ -16,30 +16,28 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 import Strings
 
 extension ConnectionProtocol: LocalizedStringConvertible {
-
     public var localizedDescription: String {
         switch self {
         case let .vpnProtocol(vpnProtocol):
-            return vpnProtocol.localizedDescription
+            vpnProtocol.localizedDescription
         case .smartProtocol:
-            return "Smart"
+            "Smart"
         }
     }
 }
 
 extension VpnProtocol: LocalizedStringConvertible {
-
     public var localizedDescription: String {
         var string: String
         switch self {
         case .ike:
             string = Localizable.ikev2
-        case .openVpn(let transportProtocol):
+        case let .openVpn(transportProtocol):
             string = Localizable.openvpn
             switch transportProtocol {
             case .tcp:
@@ -47,7 +45,7 @@ extension VpnProtocol: LocalizedStringConvertible {
             case .udp:
                 string += " (\(Localizable.udp))"
             }
-        case .wireGuard(let transportProtocol):
+        case let .wireGuard(transportProtocol):
             string = Localizable.wireguard
             switch transportProtocol {
             case .udp:

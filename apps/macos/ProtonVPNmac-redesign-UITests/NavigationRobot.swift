@@ -19,7 +19,6 @@
 import XCTest
 
 class NavigationRobot {
-
     enum NavigationIdentifier: String {
         case settingsTab = "Settings tab"
         case countriesTab = "Countries tab"

@@ -16,19 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
-import VPNAppCore
 import Connection
+import Foundation
 import Strings
+import VPNAppCore
 
 @Reducer
 public struct IPViewFeature {
-
     @ObservableState
     public struct State: Equatable {
         public var vpnIp: String? {
-            guard case .connected(_, let server, _, let connectionDetailsMessage) = connectionState else {
+            guard case let .connected(_, server, _, connectionDetailsMessage) = connectionState else {
                 return nil
             }
             if let connectionDetailsIP = connectionDetailsMessage?.exitIp {
@@ -43,7 +42,7 @@ public struct IPViewFeature {
         @SharedReader(.vpnConnectionStatus) private var vpnConnectionStatus: VPNConnectionStatus
         @SharedReader(.connectionState) private var connectionState: ConnectionState
 
-        public init() { }
+        public init() {}
 
         public var buttonIsVisible: Bool { userIP != nil }
     }
@@ -52,8 +51,7 @@ public struct IPViewFeature {
         case changeIPVisibility
     }
 
-    public init() {
-    }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in

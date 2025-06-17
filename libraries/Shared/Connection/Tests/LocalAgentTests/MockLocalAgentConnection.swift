@@ -19,13 +19,12 @@
 import Foundation
 
 import class GoLibs.LocalAgentAgentConnection
-import class GoLibs.LocalAgentStatusMessage
 import class GoLibs.LocalAgentFeatures
+import class GoLibs.LocalAgentStatusMessage
 
 @testable import LocalAgent
 
 class MockAgentConnection: LocalAgentConnection {
-
     var currentState: LocalAgentState
     var status: LocalAgentStatusMessage?
 
@@ -38,7 +37,7 @@ class MockAgentConnection: LocalAgentConnection {
         currentState = .disconnected
     }
 
-    func setConnectivity(_: Bool) { }
-    func setFeatures(_: LocalAgentFeatures?) { }
-    func sendGetStatus(_: Bool) { }
+    func setConnectivity(_: Bool) {}
+    func setFeatures(_: LocalAgentFeatures?) {}
+    func sendGetStatus(_: Bool) {}
 }

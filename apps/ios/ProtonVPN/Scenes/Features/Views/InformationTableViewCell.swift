@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import LegacyCommon
+import UIKit
 
 final class InformationTableViewCell: UITableViewCell {
     struct ViewModel {
@@ -25,19 +25,21 @@ final class InformationTableViewCell: UITableViewCell {
         let description: String
         let icon: Icon
     }
+
     static var cellIdentifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
-    @IBOutlet private weak var icon: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
+
+    @IBOutlet private var icon: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UILabel!
 
     var viewModel: ViewModel! {
         didSet {
             switch viewModel.icon {
-            case .image(let image):
+            case let .image(image):
                 icon.image = image
-            case .url(let url):
+            case let .url(url):
                 if let url {
                     icon.af.setImage(withURL: url)
                 }

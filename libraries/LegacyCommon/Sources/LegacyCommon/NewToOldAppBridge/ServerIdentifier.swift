@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
 import Dependencies
 import DependenciesMacros
+import Domain
 import Ergonomics
 import Persistence
 
 import Connection
 
 extension ServerIdentifier: @retroactive DependencyKey {
-    public static let liveValue: ServerIdentifier = ServerIdentifier(
+    public static let liveValue: ServerIdentifier = .init(
         fullServerInfo: { logicalServerInfo in
             @Dependency(\.serverRepository) var repository
             let idFilter = VPNServerFilter.logicalID(logicalServerInfo.logicalID)
@@ -38,7 +38,7 @@ extension ServerIdentifier: @retroactive DependencyKey {
                     category: .persistence,
                     metadata: [
                         "logicalID": "\(logicalServerInfo.logicalID)",
-                        "serverID": "\(logicalServerInfo.serverID)"
+                        "serverID": "\(logicalServerInfo.serverID)",
                     ]
                 )
                 return nil

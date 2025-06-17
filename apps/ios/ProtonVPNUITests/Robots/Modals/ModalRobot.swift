@@ -19,10 +19,9 @@
 import fusion
 import Strings
 
-fileprivate let closeButton = Localizable.close
+private let closeButton = Localizable.close
 
 class ModalRobot: CoreElements {
-    
     @discardableResult
     func closeModal<T: CoreElements>(robot _: T.Type) -> T {
         button(closeButton).tap()

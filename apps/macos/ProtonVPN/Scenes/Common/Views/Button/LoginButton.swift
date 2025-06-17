@@ -21,14 +21,14 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class LoginButton: HoverDetectionButton {
     var displayTitle: String?
-    
+
     override var isEnabled: Bool {
         didSet {
             needsDisplay = true
@@ -41,10 +41,10 @@ class LoginButton: HoverDetectionButton {
             addCursorRect(bounds, cursor: .pointingHand)
         }
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         wantsLayer = true
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         layer?.borderWidth = 2
@@ -52,7 +52,7 @@ class LoginButton: HoverDetectionButton {
             layer?.borderColor = self.cgColor(.border)
             layer?.backgroundColor = self.cgColor(.background)
         }
-        attributedTitle = self.style((displayTitle ?? Localizable.login), font: .themeFont(.heading4))
+        attributedTitle = style(displayTitle ?? Localizable.login, font: .themeFont(.heading4))
     }
 }
 

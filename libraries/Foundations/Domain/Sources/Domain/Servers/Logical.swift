@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import struct CoreLocation.CLLocationCoordinate2D
+import Foundation
 
 public struct Logical: Codable, Equatable, Sendable {
     public let id: String
@@ -85,14 +85,14 @@ public struct Logical: Codable, Equatable, Sendable {
     }
 
     public var isVirtual: Bool {
-        if let hostCountry = hostCountry, !hostCountry.isEmpty {
+        if let hostCountry, !hostCountry.isEmpty {
             return true
         }
         return false
     }
 
     public var isUnderMaintenance: Bool {
-        return status == 0
+        status == 0
     }
 
     public var connectionSpecFeatures: [ConnectionSpec.Feature] {
@@ -112,7 +112,7 @@ public struct Logical: Codable, Equatable, Sendable {
     }
 
     public var coordinates: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 
     public var serverNameComponents: ServerNameComponents {

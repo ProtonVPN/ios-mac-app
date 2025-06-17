@@ -22,19 +22,19 @@ import enum NetworkExtension.NEVPNStatus
 import ComposableArchitecture
 import Dependencies
 
+import let CoreConnection.log
 import struct CoreConnection.LogicalServerInfo
 import ExtensionIPC
-import let CoreConnection.log
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 @available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
 
-    public init() { }
+    public init() {}
 
     private enum CancelID {
         case tunnelStart
@@ -70,12 +70,12 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .startObservingStateChanges:
                 // Subscribe to state changes
                 let initial: Effect<ExtensionFeature.Action> = .run { send in
-                    let status = try await self.tunnelManager.status
+                    let status = try await tunnelManager.status
                     return await send(.tunnelStatusChanged(status))
                 }
                 let observation: Effect<ExtensionFeature.Action> = .run { send in
                     // TODO: make sure we are only subscribed to state changes for the active tunnel
-                    for await status in try await self.tunnelManager.statusStream {
+                    for await status in try await tunnelManager.statusStream {
                         await send(.tunnelStatusChanged(status))
                     }
                 }
@@ -90,7 +90,7 @@ public struct ExtensionFeature: Reducer, Sendable {
             case .stopObservingStateChanges:
                 return .cancel(id: CancelID.observation)
 
-            case .connect(let intent):
+            case let .connect(intent):
                 let logicalServerInfo = LogicalServerInfo(logicalServer: intent.server)
                 state = .preparingConnection(logicalServerInfo)
                 return .run { send in
@@ -106,7 +106,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // Tunnel has started, but we may still need to wait for connection to be established
                 return .none
 
-            case .connectionFinished(.success(let connectionInfo)):
+            case let .connectionFinished(.success(connectionInfo)):
                 // Tunnel has started, and responded with information about what logical and server it has connected to
                 state = .connected(connectionInfo)
                 return .none
@@ -139,10 +139,10 @@ public struct ExtensionFeature: Reducer, Sendable {
 
                 return .run { send in
                     @Dependency(\.date) var date
-                    let result = await Result { TunnelConnectionResponse(
-                        logicalInfo: try await tunnelManager.connectedServer,
-                        connectionDate: try await tunnelManager.session.connectedDate ?? date.now
-                    )}
+                    let result = await Result { try await TunnelConnectionResponse(
+                        logicalInfo: tunnelManager.connectedServer,
+                        connectionDate: tunnelManager.session.connectedDate ?? date.now
+                    ) }
                     return await send(.connectionFinished(result))
                 }
 
@@ -166,7 +166,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 // We don't need to model a reasserting status. Our tunnel should only briefly enter this state
                 return .none
 
-            case .disconnect(let error):
+            case let .disconnect(error):
                 if case .preparingConnection = state {
                     // The tunnel has not yet been started, so we can transition straight into `.disconnected`.
                     state = .disconnected(error)
@@ -184,16 +184,16 @@ public struct ExtensionFeature: Reducer, Sendable {
                     }
                 )
 
-            case .tunnelStartRequestFinished(.failure(let error)):
+            case let .tunnelStartRequestFinished(.failure(error)):
                 // Start request failed, so there's no need to disconnect
                 state = .disconnected(.tunnelStartFailed(error))
                 return logLastDisconnectEffect
 
-            case .connectionFinished(.failure(let error)):
+            case let .connectionFinished(.failure(error)):
                 log.error("Tunnel failed to connect", category: .connection, metadata: ["error": "\(error)"])
                 return .send(.disconnect(.unknownServer))
 
-            case .tunnelStatusChanged(let unknownFutureStatus):
+            case let .tunnelStatusChanged(unknownFutureStatus):
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])
                 assertionFailure("Unknown tunnel status \(unknownFutureStatus)")
                 return .none
@@ -209,11 +209,11 @@ public struct ExtensionFeature: Reducer, Sendable {
     }
 
     private var logLastDisconnectEffect: Effect<Action> {
-        .run { send in
+        .run { _ in
             if let error = try await tunnelManager.session.fetchLastDisconnectError() {
                 log.error("Last disconnect error: \(error)", category: .connection)
             }
-        } catch: { error, send in
+        } catch: { error, _ in
             log.error("Failed to determine last disconnect error \(error)", category: .connection)
         }
     }
@@ -226,9 +226,9 @@ private extension ExtensionFeature.State {
     var shouldTransitionToDisconnecting: Bool {
         switch self {
         case .preparingConnection, .connecting, .connected:
-            return true
+            true
         case .unknown, .disconnecting, .disconnected:
-            return false
+            false
         }
     }
 }
@@ -245,11 +245,11 @@ public enum TunnelConnectionError: Error, Equatable {
     public static func == (lhs: TunnelConnectionError, rhs: TunnelConnectionError) -> Bool {
         switch lhs {
         case .tunnelStartFailed:
-            return rhs.is(\.tunnelStartFailed)
+            rhs.is(\.tunnelStartFailed)
         case .unknownServer:
-            return rhs.is(\.unknownServer)
+            rhs.is(\.unknownServer)
         case .tunnelAborted:
-            return rhs.is(\.tunnelAborted)
+            rhs.is(\.tunnelAborted)
         }
     }
 }
@@ -260,11 +260,11 @@ extension TunnelConnectionError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .tunnelStartFailed:
-            return "TNST"
+            "TNST"
         case .unknownServer:
-            return "UNKS"
+            "UNKS"
         case .tunnelAborted:
-            return "TNAB"
+            "TNAB"
         }
     }
 
@@ -274,10 +274,10 @@ extension TunnelConnectionError: ProtonVPNError {
 
     public var underlyingError: Error? {
         switch self {
-        case .tunnelStartFailed(let error):
-            return error
+        case let .tunnelStartFailed(error):
+            error
         default:
-            return nil
+            nil
         }
     }
 }
@@ -292,15 +292,15 @@ public struct TunnelConnectionResponse: Equatable, Sendable {
     }
 }
 
-extension ExtensionFeature.State {
+package extension ExtensionFeature.State {
     /// The network extension process has a mind of its own. If we've previously invoked `startTunnel`, and we invoke
     /// `stopTunnel` before waiting for the extension to actually transition to `.connected` or `.disconnected`, we
     /// may get unexpected results. For now, the parent feature should delay disconnection until this feature is ready
     /// to accept such events.
-    package var isInteractionAllowed: Bool {
+    var isInteractionAllowed: Bool {
         switch self {
         case .connected, .disconnected:
-            return true
+            true
 
         case .connecting:
             // Technically, the network extension could be ready for interaction in this state. Currently, the
@@ -309,10 +309,10 @@ extension ExtensionFeature.State {
             // complete an ipc round trip to determine what server we are connected to. As a result, we will take
             // slightly longer to cancel our connection.
             // This could be improved by storing the last `NEVPNStatus` received in our state.
-            return false
+            false
 
         case .unknown, .preparingConnection, .disconnecting:
-            return false
+            false
         }
     }
 }

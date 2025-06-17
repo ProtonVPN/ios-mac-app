@@ -21,18 +21,17 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 
 class StreamOptionCVItem: NSCollectionViewItem {
+    @IBOutlet private var serviceIV: NSImageView!
+    @IBOutlet private var serviceLbl: NSTextField!
 
-    @IBOutlet private weak var serviceIV: NSImageView!
-    @IBOutlet private weak var serviceLbl: NSTextField!
-        
     public var viewModel: StreamOptionCVItemViewModelProtocol? {
         didSet {
-            guard let viewModel = self.viewModel else { return }
-            
+            guard let viewModel else { return }
+
             serviceLbl.stringValue = viewModel.serviceName
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
@@ -40,11 +39,11 @@ class StreamOptionCVItem: NSCollectionViewItem {
             DarkAppearance {
                 view.layer?.backgroundColor = .cgColor(.background)
             }
-            
+
             guard let url = viewModel.url else { return }
-            
+
             serviceIV.sd_cancelCurrentImageLoad()
-            serviceIV.sd_setImage(with: url) { [weak self] (_, _, _, _) in
+            serviceIV.sd_setImage(with: url) { [weak self] _, _, _, _ in
                 self?.serviceIV.isHidden = false
                 self?.serviceLbl.isHidden = true
             }

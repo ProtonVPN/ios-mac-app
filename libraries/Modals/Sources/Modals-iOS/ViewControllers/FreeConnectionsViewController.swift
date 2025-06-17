@@ -17,24 +17,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import ModalsShared
 import Overture
 import Strings
 import Theme
+import UIKit
 
 class FreeConnectionsViewController: UIViewController {
-
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var subTitleLabel: UILabel!
-    @IBOutlet private weak var bannerLabel: UILabel!
-    @IBOutlet private weak var bannerImageView: UIImageView!
-    @IBOutlet private weak var bannerChevronView: UIImageView!
-    @IBOutlet private weak var bannerButton: UIButton!
-    @IBOutlet private weak var roundedBackgroundView: UIView!
-    @IBOutlet private weak var countriesList: UICollectionView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet private var subTitleLabel: UILabel!
+    @IBOutlet private var bannerLabel: UILabel!
+    @IBOutlet private var bannerImageView: UIImageView!
+    @IBOutlet private var bannerChevronView: UIImageView!
+    @IBOutlet private var bannerButton: UIButton!
+    @IBOutlet private var roundedBackgroundView: UIView!
+    @IBOutlet private var countriesList: UICollectionView!
 
     var onBannerPress: (() -> Void)?
     var countries: [(String, Image?)]?
@@ -51,10 +50,10 @@ class FreeConnectionsViewController: UIViewController {
         closeButtonStyle(closeButton)
         topTitleStyle(titleLabel)
         middleSubtitleStyle(subTitleLabel)
-        
+
         descriptionLabel.font = .systemFont(ofSize: 15, weight: .regular)
         descriptionLabel.textColor = .color(.text)
-        
+
         bannerButton.setTitle("", for: .normal)
 
         // Banner
@@ -77,22 +76,22 @@ class FreeConnectionsViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerButtonTapped(_ sender: Any) {
+    @IBAction
+    private func bannerButtonTapped(_: Any) {
         onBannerPress?()
     }
 
-    @IBAction private func closeButtonTapped(_ sender: Any) {
+    @IBAction
+    private func closeButtonTapped(_: Any) {
         dismiss(animated: true)
     }
-
 }
 
 extension FreeConnectionsViewController: UICollectionViewDataSource {
-
     // MARK: - UICollectionViewDataSource
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return countries?.count ?? 0
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        countries?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -106,14 +105,14 @@ extension FreeConnectionsViewController: UICollectionViewDataSource {
 
 // MARK: - View styling
 
-fileprivate let topTitleStyle = concat(centeredTextStyle, and: {
+private let topTitleStyle = concat(centeredTextStyle, and: {
     $0.font = .systemFont(ofSize: 17, weight: .bold)
 })
 
-fileprivate let middleSubtitleStyle = concat(baseTextStyle, and: {
+private let middleSubtitleStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 17, weight: .bold)
 })
 
-fileprivate let bannerTextStyle = concat(baseTextStyle, and: {
+private let bannerTextStyle = concat(baseTextStyle, and: {
     $0.font = .systemFont(ofSize: 13, weight: .regular)
 })

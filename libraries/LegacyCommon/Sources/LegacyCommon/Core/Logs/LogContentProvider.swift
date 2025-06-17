@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
-import ProtonCoreFeatureFlags
 import Connection
-import PMLogger
+import Dependencies
 import Domain
+import Foundation
+import PMLogger
+import ProtonCoreFeatureFlags
 
 public protocol LogContentProviderFactory {
     func makeLogContentProvider() -> LogContentProvider
@@ -32,66 +32,61 @@ public protocol LogContentProvider {
 }
 
 #if os(iOS)
-/// Create and return a proper LogData implementation for a given log source
-public class IOSLogContentProvider: LogContentProvider {
+    /// Create and return a proper LogData implementation for a given log source
+    public class IOSLogContentProvider: LogContentProvider {
+        private let folder: URL
+        private let appGroup: String
+        private let wireguardProtocolFactory: WireguardProtocolFactory
 
-    private let folder: URL
-    private let appGroup: String
-    private let wireguardProtocolFactory: WireguardProtocolFactory
+        public init(appLogsFolder folder: URL, appGroup: String, wireguardProtocolFactory: WireguardProtocolFactory) {
+            self.folder = folder
+            self.appGroup = appGroup
+            self.wireguardProtocolFactory = wireguardProtocolFactory
+        }
 
-    public init(appLogsFolder folder: URL, appGroup: String, wireguardProtocolFactory: WireguardProtocolFactory) {
-        self.folder = folder
-        self.appGroup = appGroup
-        self.wireguardProtocolFactory = wireguardProtocolFactory
-    }
+        public func getLogData(for source: LogSource) -> LogContent {
+            switch source {
+            case .app:
+                return AppLogContent(folder: folder)
 
-    public func getLogData(for source: LogSource) -> LogContent {
-        switch source {
-        case .app:
-            return AppLogContent(folder: folder)
+            case .osLog:
+                return OSLogContent()
 
-        case .osLog:
-            return OSLogContent()
+            case .wireguard:
+                guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
+                    let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
+                    return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(DomainConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
+                }
 
-        case .wireguard:
-            guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
-                let folder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) ?? FileManager.default.temporaryDirectory
-                return WGiOSLogContent(fileLogContent: FileLogContent(file: folder.appendingPathComponent(DomainConstants.LogFiles.wireGuard)), wireguardProtocolFactory: wireguardProtocolFactory)
+                @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
+                return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
             }
-
-            @Dependency(\.wireguardIOSLogProvider) var wireguardIOSLogProvider
-            return wireguardIOSLogProvider.logContentForAppGroup(appGroup)
         }
     }
-
-}
 
 #elseif os(macOS)
 
-/// Create and return a proper LogData implementation for a given log source
-public class MacOSLogContentProvider: LogContentProvider {
+    /// Create and return a proper LogData implementation for a given log source
+    public class MacOSLogContentProvider: LogContentProvider {
+        private let folder: URL
+        private let wireguardProtocolFactory: WireguardProtocolFactory
 
-    private let folder: URL
-    private let wireguardProtocolFactory: WireguardProtocolFactory
+        public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory) {
+            self.folder = folder
+            self.wireguardProtocolFactory = wireguardProtocolFactory
+        }
 
-    public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory) {
-        self.folder = folder
-        self.wireguardProtocolFactory = wireguardProtocolFactory
-    }
+        public func getLogData(for source: LogSource) -> LogContent {
+            switch source {
+            case .app:
+                AppLogContent(folder: folder)
 
-    public func getLogData(for source: LogSource) -> LogContent {
-        switch source {
-        case .app:
-            return AppLogContent(folder: folder)
+            case .osLog:
+                OSLogContent()
 
-        case .osLog:
-            return OSLogContent()
-
-        case .wireguard:
-            return NELogContent(neLogProvider: wireguardProtocolFactory)
-            
+            case .wireguard:
+                NELogContent(neLogProvider: wireguardProtocolFactory)
+            }
         }
     }
-
-}
 #endif

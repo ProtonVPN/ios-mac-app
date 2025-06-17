@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import fusion
 import UITestsHelpers
+import XCTest
 
 class PlanTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     private struct Plan {
@@ -80,7 +79,6 @@ class PlanTests: ProtonVPNUITests {
     // This test temporary disabled
     /// Test showing standard plans for upgrade but not Black Friday 2022 plans
     func testShowUpdatePlansForCurrentFreePlan() {
-        
         loginAndGoToAccountDetails(BF22Users.freeUser.credentials)
             .goToUpgradeSubscription()
             .verify.upgradeSubscriptionScreenShown()
@@ -94,7 +92,7 @@ class PlanTests: ProtonVPNUITests {
     }
 
     private func loginAndGoToAccountDetails(_ user: Credentials) -> AccountRobot {
-        return loginRobot
+        loginRobot
             .enterCredentials(user)
             .signIn(robot: HomeRobot.self)
             .verify.isLoggedIn()

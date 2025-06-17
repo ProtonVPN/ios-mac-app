@@ -25,54 +25,54 @@ import LegacyCommon
 import ProtonCoreUIFoundations
 
 class ProfileItemView: NSView {
-
-    @IBOutlet weak var profileImage: NSImageView!
-    @IBOutlet weak var profileCircle: ProfileCircle!
-    @IBOutlet weak var profileName: NSTextField!
-    @IBOutlet weak var secondaryDescription: PVPNTextField!
-    @IBOutlet weak var nameToDescriptionConstraint: NSLayoutConstraint!
-    @IBOutlet weak var connectButton: ConnectButton!
-    @IBOutlet weak var rowSeparator: NSBox!
+    @IBOutlet var profileImage: NSImageView!
+    @IBOutlet var profileCircle: ProfileCircle!
+    @IBOutlet var profileName: NSTextField!
+    @IBOutlet var secondaryDescription: PVPNTextField!
+    @IBOutlet var nameToDescriptionConstraint: NSLayoutConstraint!
+    @IBOutlet var connectButton: ConnectButton!
+    @IBOutlet var rowSeparator: NSBox!
 
     private var viewModel: ProfileItemViewModel!
     private var trackingArea: NSTrackingArea?
-    
+
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
-        
+
         if newSuperview != nil {
             trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
             addTrackingArea(trackingArea!)
-        } else if let trackingArea = trackingArea {
+        } else if let trackingArea {
             removeTrackingArea(trackingArea)
         }
     }
-    
-    override open func mouseEntered(with event: NSEvent) {
+
+    override open func mouseEntered(with _: NSEvent) {
         connectButton.isHidden = !viewModel.enabled
     }
-    
-    override open func mouseExited(with event: NSEvent) {
+
+    override open func mouseExited(with _: NSEvent) {
         connectButton.isHidden = true
     }
-    
+
     func updateView(withModel viewModel: ProfileItemViewModel, hideSeparator: Bool = false) {
         self.viewModel = viewModel
-        
+
         setupImage()
         setupProfileName()
         setupSecondaryDescription()
         setupConnectButton()
         setupAvailability()
-        
+
         rowSeparator.fillColor = .color(.border, .weak)
         rowSeparator.isHidden = hideSeparator
     }
-    
+
     // MARK: - Private functions
+
     private func setupImage() {
         switch viewModel.icon {
-        case .image(let image):
+        case let .image(image):
             profileImage.image = image.colored()
         case .bolt:
             profileImage.image = IconProvider.bolt.colored()
@@ -82,45 +82,46 @@ class ProfileItemView: NSView {
             profileImage.image = IconProvider.arrowsSwapRight.colored()
             profileImage.isHidden = false
             profileCircle.isHidden = true
-        case .circle(let color):
+        case let .circle(color):
             profileCircle.profileColor = NSColor(rgbHex: color)
             profileImage.isHidden = true
             profileCircle.isHidden = false
         }
     }
-    
+
     private func setupProfileName() {
         profileName.attributedStringValue = viewModel.name
         profileName.usesSingleLineMode = true
     }
-    
+
     private func setupSecondaryDescription() {
         secondaryDescription.isHidden = viewModel.hideDescription
         nameToDescriptionConstraint.constant = viewModel.hideDescription ? 0 : 15
         secondaryDescription.attributedStringValue = viewModel.secondaryDescription
     }
-    
+
     private func setupConnectButton() {
         connectButton.isHidden = true
         connectButton.target = self
         connectButton.action = #selector(connectButtonAction)
     }
-    
-    @objc private func connectButtonAction() {
+
+    @objc
+    private func connectButtonAction() {
         viewModel.connectAction()
     }
-    
+
     private func setupAvailability() {
-        [profileImage, profileCircle, profileName, secondaryDescription].forEach { view in
+        for view in [profileImage, profileCircle, profileName, secondaryDescription] {
             view?.alphaValue = viewModel.alphaOfMainElements
         }
         connectButton.upgradeRequired = !viewModel.canUseProfile
     }
-    
+
     // MARK: - Accessibility
-    
+
     override func accessibilityChildren() -> [Any]? {
-        return nil
+        nil
     }
 
     override func accessibilityValue() -> Any? {
@@ -137,6 +138,6 @@ class ProfileItemView: NSView {
     }
 
     override func accessibilityRole() -> NSAccessibility.Role? {
-        return .button
+        .button
     }
 }

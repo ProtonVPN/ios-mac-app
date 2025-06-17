@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import CombineSchedulers
+import ModalsServices
+import ModalsShared
 import SharedViews
 import Strings
-import ModalsShared
-import ModalsServices
+import SwiftUI
 
 @MainActor
 struct PlanOptionsListView: View {
@@ -76,7 +76,7 @@ struct PlanOptionsListView: View {
     }
 
     private func discount(option: PlanOption) -> Int? {
-        return viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
+        viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
     }
 
     private var contentView: some View {
@@ -128,7 +128,7 @@ struct PlanOptionsListView: View {
 #Preview("Classic") {
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     let viewModel = PlanOptionsListViewModel(client: client)
@@ -140,16 +140,17 @@ struct PlanOptionsListView: View {
     let plans: [PlanOption] = [
         .twoYearsWebPlan,
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(
         retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
             return plans
         },
         validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-        })
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+        }
+    )
     let viewModel = PlanOptionsListViewModel(client: client)
     return PlanOptionsListView(viewModel: viewModel)
 }

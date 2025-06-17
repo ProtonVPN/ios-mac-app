@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dispatch
 import Combine
 import ComposableArchitecture
+import Dispatch
 
 public extension Effect {
     static func listen<StreamElement>(
@@ -27,11 +27,11 @@ public extension Effect {
         reinjecting toAction: @escaping @MainActor @Sendable (StreamElement) async throws -> Action,
         catch handler: (@Sendable (_ error: any Error, _ send: Send<Action>) async -> Void)? = nil
     ) -> Self {
-        self.run(
+        run(
             priority: priority,
             operation: { send in
                 for await value in stream() {
-                    await send(try toAction(value))
+                    try await send(toAction(value))
                 }
             },
             catch: handler

@@ -27,8 +27,10 @@ public struct UserSettings: Codable {
     public let password: Password
     public let twoFactor: TwoFactor
 
-    public init(password: Password,
-                twoFactor: TwoFactor) {
+    public init(
+        password: Password,
+        twoFactor: TwoFactor
+    ) {
         self.password = password
         self.twoFactor = twoFactor
     }

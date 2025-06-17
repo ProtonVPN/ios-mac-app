@@ -25,7 +25,6 @@ import VPNAppCore
 
 @Reducer
 public struct PlutoniumFeature {
-
     @ObservableState
     public struct State: Equatable {
         enum ValidationError: Error {
@@ -61,7 +60,7 @@ public struct PlutoniumFeature {
                 return true // if the whole feature enables/disables, reconnect
             }
             switch feature {
-            case .disabled(let mode), .enabled(let mode): // compare only the currently selected mode
+            case let .disabled(mode), let .enabled(mode): // compare only the currently selected mode
                 switch mode {
                 case .exclusion:
                     return exclusionActivated != exclusionActivatedApplied
@@ -77,7 +76,7 @@ public struct PlutoniumFeature {
 
         var validationError: ValidationError?
 
-        public init() { }
+        public init() {}
     }
 
     @CasePathable
@@ -89,25 +88,24 @@ public struct PlutoniumFeature {
         case onAppear // discover apps
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
-
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:
                 switch state.feature {
-                case .disabled(let mode):
+                case let .disabled(mode):
                     state.$feature.withLock {
                         $0 = .enabled(mode)
                     }
-                case .enabled(let mode):
+                case let .enabled(mode):
                     state.$feature.withLock {
                         $0 = .disabled(mode)
                     }
                 }
                 return .none
-            case .entryClicked(let entry, let operation, let mode):
+            case let .entryClicked(entry, operation, mode):
                 do throws(State.ValidationError) {
                     try state.perform(operation: operation, entry: entry, mode: mode)
                     if case .ip = entry, operation == .add {
@@ -124,7 +122,7 @@ public struct PlutoniumFeature {
                     }
                 }
                 return .none
-            case .inputFieldChanged(let input):
+            case let .inputFieldChanged(input):
                 state.ipEntry = input
                 state.validationError = nil
                 return .none
@@ -133,7 +131,7 @@ public struct PlutoniumFeature {
                 state.discoveredApps = appsProvider.enumerateAppsFolder()
 
                 return .none
-            case .modeSelectionClicked(let mode):
+            case let .modeSelectionClicked(mode):
                 state.$feature.withLock {
                     $0 = .enabled(mode)
                 }
@@ -165,10 +163,12 @@ extension PlutoniumFeature.State {
 }
 
 extension PlutoniumActivated {
-    mutating func apply(operation: PlutoniumFeature.State.Operation,
-                        entry: PlutoniumFeature.State.Entry) throws(PlutoniumFeature.State.ValidationError) {
+    mutating func apply(
+        operation: PlutoniumFeature.State.Operation,
+        entry: PlutoniumFeature.State.Entry
+    ) throws(PlutoniumFeature.State.ValidationError) {
         switch entry {
-        case .app(let entry):
+        case let .app(entry):
             switch operation {
             case .add:
                 if !apps.contains(entry) {
@@ -177,7 +177,7 @@ extension PlutoniumActivated {
             case .remove:
                 apps.removeAll { $0 == entry }
             }
-        case .ip(let entry):
+        case let .ip(entry):
             switch operation {
             case .add:
                 if ips.contains(entry) {

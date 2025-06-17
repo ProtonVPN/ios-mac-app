@@ -1,30 +1,30 @@
 //
-//  SentryHelper.swift
+//  Sentry.swift
 //  SentryHelper
 //
 //  Created by Jaroslav on 2021-09-10.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
+import Domain
 import Foundation
+import ProtonCoreFeatureFlags
 import Sentry
 import VPNShared
-import ProtonCoreFeatureFlags
-import Domain
 
 /// `SentryHelper` defines a `log` instance method, we need to rename `log` in this file
-fileprivate let moduleLog = VPNAppCore.log
+private let moduleLog = VPNAppCore.log
 
 public final class SentryHelper {
     public private(set) static var shared: SentryHelper?
 
-    public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId: @escaping () -> String?) {
+    public static func setupSentry(dsn: String, isEnabled: @escaping () -> Bool, getUserId _: @escaping () -> String?) {
         guard shared == nil else {
             moduleLog.assertionFailure("Sentry already setup")
             return
         }
 
-        SentrySDK.start { (options) in
+        SentrySDK.start { options in
             options.dsn = dsn
             options.debug = false
             options.enableAutoSessionTracking = false
@@ -53,7 +53,7 @@ public final class SentryHelper {
     private let sentryEnabled: () -> Bool
 
     init(isEnabled: @escaping () -> Bool) {
-        sentryEnabled = isEnabled
+        self.sentryEnabled = isEnabled
     }
 
     public func log(error: Error) {
@@ -61,7 +61,7 @@ public final class SentryHelper {
         // if crash reporting is enabled.
         SentrySDK.capture(error: error)
     }
-    
+
     public func log(message: String, extra: [String: Any] = [:]) {
         let event = Event()
         event.message = SentryMessage(formatted: message)

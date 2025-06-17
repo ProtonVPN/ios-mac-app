@@ -23,23 +23,22 @@ import XCTest
 import Dependencies
 
 import GoLibs
-import ProtonCoreServices
 import ProtonCoreNetworking
+import ProtonCoreServices
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 import VPNSharedTesting
 
 @testable import LegacyCommon
 
 final class ConnectionSwitchingTests: BaseConnectionTestCase {
-
     override func setUpWithError() throws {
-#if os(macOS)
-        throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
-#endif
+        #if os(macOS)
+            throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
+        #endif
         try super.setUpWithError()
     }
 
@@ -50,7 +49,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     }
 
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
-        return withEscapedDependencies { dependencies in
+        withEscapedDependencies { dependencies in
             DispatchQueue.main.async {
                 dependencies.yield {
                     closure()
@@ -128,7 +127,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let retryExpectation = XCTestExpectation()
         var seenPorts: [Int: Bool] = [:]
 
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { _, port in
             if seenPorts[port] == nil {
                 seenPorts[port] = true
                 // fail all pings on first try
@@ -143,15 +142,17 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         let tunnelProviderExpectation = XCTestExpectation()
 
@@ -173,22 +174,24 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
     /// This test should show than when trying to determine the best port for Wireguard if pings for all the ports fail
     /// the checker tries one more time and if the pings for all the ports fail again the connection fails with an error
     func testWireguardAvailablityCheckerRetryChoosingBestPortWhenAllFailAndFailTheConnectionWhenTheyAllFailAgain() throws {
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { serverIp, port in
+        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.udp)]?.pingCallback = { _, _ in
             // fail all the pings
-            return false
+            false
         }
 
         repository.upsert(servers: [VPNServer(legacyModel: testData.server2)])
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         let stateChangedToErrorExpectation = XCTestExpectation()
         let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
@@ -261,15 +264,17 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         var currentManager: NEVPNManagerMock?
         var currentStatus: NEVPNStatus?
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .smartProtocol,
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .smartProtocol,
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
         var tunnelProviderExpectation = expectations.initialConnection
 
@@ -285,10 +290,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         }
 
         didRequestCertRefresh = { _ in
-#if os(macOS)
-            // MasOS should connect with IKE
-            XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
-#endif
+            #if os(macOS)
+                // MasOS should connect with IKE
+                XCTFail("Should not request to refresh certificate for non-certificate-authenticated protocol")
+            #endif
         }
 
         container.propertiesManager.hasConnected = true // check that we don't display FirstTimeConnectingAlert
@@ -300,15 +305,15 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssert(container.appStateManager.state.isConnected)
 
         let platformManager: NEVPNManagerMock?
-#if os(iOS)
-        // wireguard was made unavailable above. protocol should fallback to wireguard TLS
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-        platformManager = currentManager
-#elseif os(macOS)
-        // on macos, protocol should fallback to IKEv2
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
-        platformManager = container.neVpnManager
-#endif
+        #if os(iOS)
+            // wireguard was made unavailable above. protocol should fallback to wireguard TLS
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+            platformManager = currentManager
+        #elseif os(macOS)
+            // on macos, protocol should fallback to IKEv2
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .ike)
+            platformManager = container.neVpnManager
+        #endif
 
         // server2 has a lower score, so it should connect instead of server1
         XCTAssertNotNil(platformManager?.protocolConfiguration?.serverAddress)
@@ -320,13 +325,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         didRequestCertRefresh = { _ in }
 
-#if os(iOS)
-        // on iOS, force TLS to be unavailable to force it to fallback to TCP
-        container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
-#elseif os(macOS)
-        // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
-        container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
-#endif
+        #if os(iOS)
+            // on iOS, force TLS to be unavailable to force it to fallback to TCP
+            container.availabilityCheckerResolverFactory.checkers[.wireGuard(.tls)]?.availabilityCallback = unavailableCallback
+        #elseif os(macOS)
+            // on macOS, force ike to be unavailable to force it to fallback to wireguard TLS
+            container.availabilityCheckerResolverFactory.checkers[.ike]?.availabilityCallback = unavailableCallback
+        #endif
 
         statusChanged = { status in
             currentStatus = status
@@ -362,13 +367,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         connectionExpectations = [expectations.reconnection, expectations.reconnectionAppStateChange]
         await fulfillment(of: connectionExpectations, timeout: expectationTimeout)
 
-#if os(iOS)
-        // on ios, protocol should fallback to WireGuard TCP
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
-#elseif os(macOS)
-        // on macos, protocol should fallback to WireGuard TLS
-        XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
-#endif
+        #if os(iOS)
+            // on ios, protocol should fallback to WireGuard TCP
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tcp))
+        #elseif os(macOS)
+            // on macos, protocol should fallback to WireGuard TLS
+            XCTAssertEqual(container.vpnManager.currentVpnProtocol, .wireGuard(.tls))
+        #endif
 
         XCTAssertEqual(currentManager?.protocolConfiguration?.serverAddress, testData.server2.ips.first?.entryIp)
         XCTAssert(container.appStateManager.state.isConnected)
@@ -469,14 +474,14 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
 
             let unavailableCallback: AvailabilityCheckerMock.AvailabilityCallback = { _ in
-                    .unavailable
+                .unavailable
             }
 
             let unavailableProtocols: [VpnProtocol] = [
                 .ike,
                 .openVpn(.tcp),
                 .openVpn(.udp),
-                .wireGuard(.udp)
+                .wireGuard(.udp),
             ]
 
             for vpnProtocol in unavailableProtocols {
@@ -484,9 +489,9 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
 
             let expectations = (
-                connection: (1...5).map { XCTestExpectation(description: "connection #\($0)") },
-                clientConfig: (1...5).map { XCTestExpectation(description: "fetch client config #\($0)") },
-                disconnect: (1...5).map { XCTestExpectation(description: "disconnect #\($0)") }
+                connection: (1 ... 5).map { XCTestExpectation(description: "connection #\($0)") },
+                clientConfig: (1 ... 5).map { XCTestExpectation(description: "fetch client config #\($0)") },
+                disconnect: (1 ... 5).map { XCTestExpectation(description: "disconnect #\($0)") }
             )
             let protocolAlertExpectation = XCTestExpectation(description: "Protocol not supported alert should be shown")
             protocolAlertExpectation.expectedFulfillmentCount = 1
@@ -517,22 +522,26 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 }
             }
 
-            let request = ConnectionRequest(serverType: .standard,
-                                            connectionType: .country("CH", .fastest),
-                                            connectionProtocol: .smartProtocol,
-                                            netShieldType: .level1,
-                                            natType: .moderateNAT,
-                                            safeMode: true,
-                                            profileId: nil,
-                                            profileName: nil,
-                                            trigger: .country)
+            let request = ConnectionRequest(
+                serverType: .standard,
+                connectionType: .country("CH", .fastest),
+                connectionProtocol: .smartProtocol,
+                netShieldType: .level1,
+                natType: .moderateNAT,
+                safeMode: true,
+                profileId: nil,
+                profileName: nil,
+                trigger: .country
+            )
 
             // Feature flag disables all protocols allowed by API config (contradictory setup edge case)
             container.networkingDelegate.apiClientConfig = testData.defaultClientConfig
                 .with(featureFlags: .wireGuardTlsDisabled, smartProtocolConfig: .onlyWgTcpAndTls)
             container.authKeychain.setMockUsername("user")
-            let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                           maxTier: .freeTier)
+            let freeCreds = VpnKeychainMock.vpnCredentials(
+                planName: "free",
+                maxTier: .freeTier
+            )
             container.networkingDelegate.apiCredentials = freeCreds
 
             await retrieveAndSetVpnProperties()
@@ -622,9 +631,9 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
         let (totalConnections, totalDisconnections) = (4, 4)
         let expectations = (
-            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
-            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
-            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            connections: (1 ... totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1 ... totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1 ... totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
             downgradeAlert: XCTestExpectation(description: "downgraded alert"),
             delinquentAlert: XCTestExpectation(description: "delinquent alert"),
             upgradeNotification: XCTestExpectation(description: "notify upgrade state")
@@ -655,19 +664,23 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        let request = ConnectionRequest(serverType: .standard,
-                                        connectionType: .country("CH", .fastest),
-                                        connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
-                                        netShieldType: .level1,
-                                        natType: .moderateNAT,
-                                        safeMode: true,
-                                        profileId: nil,
-                                        profileName: nil,
-                                        trigger: .country)
+        let request = ConnectionRequest(
+            serverType: .standard,
+            connectionType: .country("CH", .fastest),
+            connectionProtocol: .vpnProtocol(.wireGuard(.udp)),
+            netShieldType: .level1,
+            natType: .moderateNAT,
+            safeMode: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: .country
+        )
 
-        var (nConnections,
-             nDisconnections,
-             nAppStateConnectTransitions) = (0, 0, 0)
+        var (
+            nConnections,
+            nDisconnections,
+            nAppStateConnectTransitions
+        ) = (0, 0, 0)
 
         var observedStates: [AppState] = []
         let observer = NotificationCenter.default.addObserver(forName: AppEvent.appStateManagerStateChange.name, object: nil, queue: nil) { notification in
@@ -679,7 +692,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                            "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map(\.description))")
                     return
                 }
 
@@ -704,7 +717,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -712,14 +725,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
             default:
                 break
             }
-
         }
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
         wait(for: [expectations.connections[0], expectations.appStateConnectedTransitions[0]], timeout: expectationTimeout)
@@ -733,8 +745,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(plusCreds.planName, "plus")
         XCTAssertEqual(plusCreds.maxTier, .paidTier)
 
-        let freeCreds = VpnKeychainMock.vpnCredentials(planName: "free",
-                                                       maxTier: .freeTier)
+        let freeCreds = VpnKeychainMock.vpnCredentials(
+            planName: "free",
+            maxTier: .freeTier
+        )
         container.networkingDelegate.apiCredentials = freeCreds
 
         let downgrade: VpnDowngradeInfo = (plusCreds, freeCreds)
@@ -746,12 +760,14 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             NotificationCenter.default.post(name: VpnKeychainMock.vpnCredentialsChanged, object: freeCreds)
         }
 
-        wait(for: [expectations.disconnections[0],
-                   expectations.downgradeAlert], timeout: expectationTimeout)
+        wait(for: [
+            expectations.disconnections[0],
+            expectations.downgradeAlert,
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nDisconnections, 1)
         container.alertService.alerts.removeAll()
 
-        guard let downgradedAlert = downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
+        guard let downgradedAlert, let reconnectInfo = downgradedAlert.reconnectInfo else {
             XCTFail("Downgraded alert not found or reconnect info not found in downgraded alert")
             return
         }
@@ -759,8 +775,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(reconnectInfo.fromServer.name, testData.server3.name)
         XCTAssertEqual(reconnectInfo.toServer.name, testData.server1.name)
 
-        wait(for: [expectations.connections[1],
-                   expectations.appStateConnectedTransitions[1]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[1],
+            expectations.appStateConnectedTransitions[1],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 2)
 
         // Should have reconnected to server1 now that the user tier has changed
@@ -786,8 +804,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(nDisconnections, 2)
 
         processGatewayConnectionRequestWithOverriddenDependencies(request: request)
-        wait(for: [expectations.connections[2],
-                   expectations.appStateConnectedTransitions[2]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[2],
+            expectations.appStateConnectedTransitions[2],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 3)
 
         // Should have reconnected to server3 now that the user is again eligible
@@ -808,8 +828,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         XCTAssertEqual(delinquentAlert?.reconnectInfo?.fromServer.name, testData.server3.name)
         XCTAssertEqual(delinquentAlert?.reconnectInfo?.toServer.name, testData.server1.name)
 
-        wait(for: [expectations.connections[3],
-                   expectations.appStateConnectedTransitions[3]], timeout: expectationTimeout)
+        wait(for: [
+            expectations.connections[3],
+            expectations.appStateConnectedTransitions[3],
+        ], timeout: expectationTimeout)
         XCTAssertEqual(nConnections, 4)
 
         // Should have reconnected to server1 now that user is delinquent
@@ -840,10 +862,10 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let (totalConnections, totalDisconnections) = (2, 2)
 
         let expectations = (
-            connections: (1...totalConnections).map { XCTestExpectation(description: "connection \($0)") },
-            appStateConnectedTransitions: (1...totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
-            disconnections: (1...totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
-            serverSaves: (1...totalConnections + 1).map { XCTestExpectation(description: "server list store \($0)") },
+            connections: (1 ... totalConnections).map { XCTestExpectation(description: "connection \($0)") },
+            appStateConnectedTransitions: (1 ... totalConnections).map { XCTestExpectation(description: "app state transition -> connected \($0)") },
+            disconnections: (1 ... totalDisconnections).map { XCTestExpectation(description: "disconnection \($0)") },
+            serverSaves: (1 ... totalConnections + 1).map { XCTestExpectation(description: "server list store \($0)") },
             upgradeNotification: XCTestExpectation(description: "notify upgrade state"),
             refreshLogicalsAfterPlanUpgrade: XCTestExpectation(description: "refresh logicals after plan upgrade")
         )
@@ -858,10 +880,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             }
         }
 
-        var (nConnections,
-             nDisconnections,
-             nServerSaves,
-             nAppStateConnectTransitions) = (0, 0, 0, 0)
+        var (
+            nConnections,
+            nDisconnections,
+            nServerSaves,
+            nAppStateConnectTransitions
+        ) = (0, 0, 0, 0)
 
         var storedServers: [ServerModel] = []
         repositoryWrapper.didStoreServers = { newServers in
@@ -882,7 +906,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
 
                 guard nAppStateConnectTransitions < totalConnections else {
                     XCTFail("Didn't expect that many (\(nAppStateConnectTransitions + 1)) connection transitions - " +
-                            "previous observed states \(observedStates.map { $0.description })")
+                        "previous observed states \(observedStates.map(\.description))")
                     return
                 }
 
@@ -907,7 +931,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -915,7 +939,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
@@ -937,7 +961,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             for: [
                 expectations.connections[0],
                 expectations.appStateConnectedTransitions[0],
-                expectations.serverSaves[0]
+                expectations.serverSaves[0],
             ],
             timeout: expectationTimeout
         )
@@ -977,7 +1001,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             for: [
                 expectations.upgradeNotification,
                 expectations.refreshLogicalsAfterPlanUpgrade,
-                expectations.serverSaves[1]
+                expectations.serverSaves[1],
             ],
             timeout: expectationTimeout
         )
@@ -1017,13 +1041,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         let totalDisconnections = totalConnections
 
         let expectations = (
-            alerts: (1...totalAlerts).map {
+            alerts: (1 ... totalAlerts).map {
                 XCTestExpectation(description: "Alert \($0)/\(totalAlerts)")
             },
-            connections: (1...totalConnections).map {
+            connections: (1 ... totalConnections).map {
                 XCTestExpectation(description: "Connection \($0)/\(totalConnections)")
             },
-            disconnections: (1...totalConnections).map {
+            disconnections: (1 ... totalConnections).map {
                 XCTestExpectation(description: "Disconnection \($0)/\(totalConnections)")
             }
         )
@@ -1051,7 +1075,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nConnections += 1 }
                 guard nConnections < totalConnections else {
                     XCTFail("Didn't expect that many (\(nConnections + 1)) connection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.connections[nConnections].fulfill()
@@ -1059,14 +1083,13 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 defer { nDisconnections += 1 }
                 guard nDisconnections < totalDisconnections else {
                     XCTFail("Didn't expect that many (\(nDisconnections + 1)) disconnection transitions - " +
-                            "previous statuses \(observedStatuses.map { $0.description })")
+                        "previous statuses \(observedStatuses.map(\.description))")
                     return
                 }
                 expectations.disconnections[nDisconnections].fulfill()
             default:
                 break
             }
-
         }
 
         // We want to create a different one every time so the request UUID can change.
@@ -1137,11 +1160,11 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 // Now add a bunch of connections to the stack, we should get the longer delay
                 // We already have one server change in the stack, so add one less than the limit
                 let connectionsToAdd = $0.serverChangeStorage.config.changeServerAttemptLimit - 1
-                for i in 0..<connectionsToAdd {
+                for i in 0 ..< connectionsToAdd {
                     $0.serverChangeAuthorizer.registerServerChange(connectedAt: date
                         .addingTimeInterval(TimeInterval(
                             -(connectionsToAdd - i - 1) *
-                             serverChangeStorage
+                                serverChangeStorage
                                 .config
                                 .changeServerShortDelayInSeconds
                         ))

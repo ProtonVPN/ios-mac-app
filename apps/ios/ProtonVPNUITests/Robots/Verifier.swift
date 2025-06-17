@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
-protocol Verifier { }
+protocol Verifier {}
 
 extension CoreElements: Verifier {
     @discardableResult
@@ -37,9 +37,9 @@ enum UpsellModalType {
     var identifyingString: String {
         switch self {
         case .secureCore:
-            return "Double the encryption with Secure Core"
+            "Double the encryption with Secure Core"
         case .profiles:
-            return "Get quick access to your frequent connections"
+            "Get quick access to your frequent connections"
         }
     }
 }

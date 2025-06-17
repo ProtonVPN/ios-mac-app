@@ -21,11 +21,11 @@
 //
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-public final class ServerIpMock: ServerIp {
-    public convenience init(entryIp: String) {
-        self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
+    public final class ServerIpMock: ServerIp {
+        public convenience init(entryIp: String) {
+            self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
+        }
     }
-}
 #endif

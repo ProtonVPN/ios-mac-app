@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import ComposableArchitecture
 @testable import BugReport
+import ComposableArchitecture
+import XCTest
 
 @MainActor
 final class QuickFixesTests: XCTestCase {
-
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithQuickFixes: BugReport.Category {
@@ -47,5 +46,4 @@ final class QuickFixesTests: XCTestCase {
             resultState.contactFormState = nil
         })
     }
-
 }

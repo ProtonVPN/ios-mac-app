@@ -20,18 +20,16 @@ import Foundation
 import XCTest
 
 class SettingsTests: ProtonVPNUITests {
-    
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
-    
+
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
         loginAsPlusUser()
     }
-    
+
     func testNavigateThroughSettings() {
-        
         mainRobot
             .openAppSettings()
             .verify.checkSettingsIsOpen()

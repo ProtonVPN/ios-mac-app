@@ -43,12 +43,12 @@ package struct TunnelKeychain: DependencyKey {
     }()
 }
 
-extension TunnelKeychain {
-    package func store(wireguardConfigData data: Data) throws -> Data {
+package extension TunnelKeychain {
+    func store(wireguardConfigData data: Data) throws -> Data {
         try storeWireguardConfig(data)
     }
 
-    package func store(wireguardConfigString: String) throws -> Data {
+    func store(wireguardConfigString: String) throws -> Data {
         guard let configData = wireguardConfigString.data(using: .utf8) else {
             throw VPNKeychainError.encodingError
         }
@@ -57,8 +57,8 @@ extension TunnelKeychain {
     }
 }
 
-extension DependencyValues {
-    package var tunnelKeychain: TunnelKeychain {
+package extension DependencyValues {
+    var tunnelKeychain: TunnelKeychain {
         get { self[TunnelKeychain.self] }
         set { self[TunnelKeychain.self] = newValue }
     }
@@ -80,7 +80,7 @@ public enum TunnelKeychainImplementationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidDataFormatRetrievedFromKeychain:
-            return "Data retrieved from the Keychain isn't in the expected format."
+            "Data retrieved from the Keychain isn't in the expected format."
         }
     }
 }
@@ -176,7 +176,8 @@ struct TunnelKeychainImplementation {
         }
     }
 
-    @discardableResult private func clearPassword(forKey key: String) throws -> Bool {
+    @discardableResult
+    private func clearPassword(forKey key: String) throws -> Bool {
         let query = formBaseQuery(forKey: key)
         let result = KeychainEnvironment.secItemDelete(query as CFDictionary)
 
@@ -194,12 +195,12 @@ struct TunnelKeychainImplementation {
     }
 
     private func formBaseQuery(forKey key: String) -> [AnyHashable: Any] {
-        return [
+        [
             kSecClass as AnyHashable: kSecClassGenericPassword,
             kSecAttrGeneric as AnyHashable: key,
             kSecAttrAccount as AnyHashable: key,
             kSecAttrService as AnyHashable: key,
-            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            kSecAttrAccessible as AnyHashable: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly,
         ] as [AnyHashable: Any]
     }
 
@@ -211,7 +212,7 @@ struct TunnelKeychainImplementation {
     }
 
     public func fetchWireguardConfigurationReference() throws -> Data {
-        return try getPasswordReference(forKey: StorageKey.wireguardSettings)
+        try getPasswordReference(forKey: StorageKey.wireguardSettings)
     }
 
     public func fetchWireguardConfiguration() throws -> String? {

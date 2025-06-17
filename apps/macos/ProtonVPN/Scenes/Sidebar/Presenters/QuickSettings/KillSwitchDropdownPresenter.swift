@@ -21,41 +21,41 @@
 //
 
 import AppKit
-import Foundation
 import Dependencies
-import LegacyCommon
-import VPNAppCore
-import Theme
-import Strings
 import Domain
+import Foundation
+import LegacyCommon
+import Strings
+import Theme
+import VPNAppCore
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-    
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory
-    
+
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory & PropertiesManagerFactory & VpnGatewayFactory
+
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
-    
+
     override var learnLink: String {
-        return VPNLink.killSwitchSupport.urlString
+        VPNLink.killSwitchSupport.urlString
     }
-    
+
     override var title: String! {
-        return Localizable.killSwitch
+        Localizable.killSwitch
     }
-    
-    init( _ factory: Factory ) {
+
+    init(_ factory: Factory) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
-    
+
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [killSwitchOff, killSwitchOn]
+        [killSwitchOff, killSwitchOn]
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
@@ -67,9 +67,9 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 5) + 12
         }
     }
-    
+
     // MARK: - Private
-    
+
     private var killSwitchOff: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOff.capitalized
@@ -83,7 +83,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             dismissCallback()
         })
     }
-    
+
     private var killSwitchOn: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOn.capitalized
@@ -114,20 +114,33 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                 return
             }
 
-            log.info("User receiving T2 warning after attempting to enable Kill Switch",
-                     category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+            log.info(
+                "User receiving T2 warning after attempting to enable Kill Switch",
+                category: .connectionConnect,
+                event: .trigger,
+                metadata: ["feature": "killSwitch"]
+            )
             self.alertService.push(alert: NEKSOnT2Alert(
                 killSwitchOffHandler: {
-                    log.info("User has disabled Kill Switch after receiving T2 warning",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    log.info(
+                        "User has disabled Kill Switch after receiving T2 warning",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "killSwitch"]
+                    )
                     dismissCallback()
                 },
                 connectAnywayHandler: {
-                    log.info("User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
+                    log.info(
+                        "User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "killSwitch"]
+                    )
                     connectAfterLocalNetworkWarning()
                     dismissCallback()
-                })
+                }
+            )
             )
         })
     }

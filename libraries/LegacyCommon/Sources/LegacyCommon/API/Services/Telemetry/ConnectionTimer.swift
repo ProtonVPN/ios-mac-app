@@ -19,7 +19,6 @@
 import Foundation
 
 class ConnectionTimer: TelemetryTimer {
-
     enum Error: Swift.Error {
         case missingStartedConnectionDate
         case missingStoppedConnectionDate

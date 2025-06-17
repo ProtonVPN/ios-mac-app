@@ -1,5 +1,5 @@
 //
-//  LogFilesProvider.swift
+//  LogSource.swift
 //  Core
 //
 //  Created by Jaroslav on 2021-06-04.
@@ -19,9 +19,9 @@ public enum LogSource: CaseIterable {
 
     public var title: String {
         switch self {
-        case .app: return Localizable.applicationLogs
-        case .wireguard: return Localizable.wireguardLogs
-        case .osLog: return "os_log" // Not used in UI
+        case .app: Localizable.applicationLogs
+        case .wireguard: Localizable.wireguardLogs
+        case .osLog: "os_log" // Not used in UI
         }
     }
 }

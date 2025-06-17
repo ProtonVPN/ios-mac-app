@@ -16,36 +16,37 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public enum LegacyDefaultsMigration {
     private static var migrationKey: String { "migratedTo" }
 
     #if os(iOS)
-    public static func migrateTo(sharedDefaults: UserDefaults) {
-        migrate(from: UserDefaults.standard, to: sharedDefaults)
-    }
-    private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
-        if !specifiedDefaults.bool(forKey: Self.migrationKey) {
-            // Move any compatible data from old defaults to the new one
-            standardDefaults.dictionaryRepresentation().forEach { (key, value) in
-                specifiedDefaults.set(value, forKey: key)
-            }
-
-            specifiedDefaults.setValue(true, forKey: Self.migrationKey)
-            specifiedDefaults.synchronize()
+        public static func migrateTo(sharedDefaults: UserDefaults) {
+            migrate(from: UserDefaults.standard, to: sharedDefaults)
         }
-    }
+
+        private static func migrate(from standardDefaults: UserDefaults, to specifiedDefaults: UserDefaults) {
+            if !specifiedDefaults.bool(forKey: migrationKey) {
+                // Move any compatible data from old defaults to the new one
+                for (key, value) in standardDefaults.dictionaryRepresentation() {
+                    specifiedDefaults.set(value, forKey: key)
+                }
+
+                specifiedDefaults.setValue(true, forKey: migrationKey)
+                specifiedDefaults.synchronize()
+            }
+        }
     #endif
 
     public static func migrateLargeData(from userDefaults: UserDefaults) {
         // Remove values of large objects that may potentially cause issues if left in user defaults
         let keysForDataToRemove = [
-            "servers" // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
+            "servers", // iOS version ~4.1.18, vpn/logicals response grew beyond user defaults XPC limits: VPNAPPL-1676
             // In the future, we may choose to migrate Profiles too.
         ] // hardcoded in case the keys are changed in the future
-        keysForDataToRemove.forEach { key in
+        for key in keysForDataToRemove {
             if userDefaults.data(forKey: key) != nil {
                 log.debug("Removing value for key \(key)", category: .persistence)
                 userDefaults.removeObject(forKey: key)

@@ -16,17 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CustomDump
+import Foundation
 import PMLogger
 
 extension ConnectionDetailsMessage: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         let description = "ConnectionDetailsMessage(exitIp: \(exitIp), deviceIp: \(deviceIp), deviceCountry: \(deviceCountry))"
         #if DEBUG
-        return description
+            return description
         #else
-        return description.maskIPs
+            return description.maskIPs
         #endif
     }
 }

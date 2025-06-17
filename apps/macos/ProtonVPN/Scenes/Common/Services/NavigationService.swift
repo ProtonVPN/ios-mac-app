@@ -21,53 +21,52 @@
 //
 
 import Cocoa
-import os
 import Network
+import os
 
 import ComposableArchitecture
 
 import PMLogger
 
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
 import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 protocol NavigationServiceFactory {
     func makeNavigationService() -> NavigationService
 }
 
 class NavigationService {
-    
-    typealias Factory = HelpMenuViewModelFactory
-        & PropertiesManagerFactory
-        & WindowServiceFactory
-        & VpnKeychainFactory
-        & VpnApiServiceFactory
+    typealias Factory = AppSessionManagerFactory
         & AppStateManagerFactory
-        & AppSessionManagerFactory
+        & AuthKeychainHandleFactory
         & CoreAlertServiceFactory
-        & ReportBugViewModelFactory
-        & NavigationServiceFactory
-        & UpdateManagerFactory
-        & ProfileManagerFactory
-        & VpnGatewayFactory
-        & VpnProtocolChangeManagerFactory
-        & VpnManagerFactory
-        & VpnStateConfigurationFactory
-        & SystemExtensionManagerFactory
+        & HelpMenuViewModelFactory
         & LogFileManagerFactory
         & NATTypePropertyProviderFactory
-        & SafeModePropertyProviderFactory
+        & NavigationServiceFactory
         & NetShieldPropertyProviderFactory
-        & ProtonReachabilityCheckerFactory
         & NetworkingFactory
-        & AuthKeychainHandleFactory
+        & ProfileManagerFactory
+        & PropertiesManagerFactory
+        & ProtonReachabilityCheckerFactory
+        & ReportBugViewModelFactory
+        & SafeModePropertyProviderFactory
+        & SystemExtensionManagerFactory
         & TelemetrySettingsFactory
+        & UpdateManagerFactory
+        & VpnApiServiceFactory
+        & VpnGatewayFactory
+        & VpnKeychainFactory
+        & VpnManagerFactory
+        & VpnProtocolChangeManagerFactory
+        & VpnStateConfigurationFactory
+        & WindowServiceFactory
     private let factory: Factory
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
@@ -79,20 +78,20 @@ class NavigationService {
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
-    
+
     var appHasPresented = false
     var isSystemTeardown = false
 
     private var notificationTokens: [NotificationToken] = []
-    
+
     // Add a flag and interval to suppress duplicate reconnection after wake
     private var didHandleWake = false
     private let wakeSuppressionInterval: TimeInterval = 3 // seconds
-    
+
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
         self.factory = factory
     }
-    
+
     func launched() {
         notificationTokens.append(
             NotificationCenter.default.addObserver(
@@ -140,13 +139,15 @@ class NavigationService {
             showLogIn()
         }
     }
-    
-    @objc private func sessionSwitchedOut(_ notification: NSNotification) {
+
+    @objc
+    private func sessionSwitchedOut(_: NSNotification) {
         log.debug("User session did resign active", category: .app)
         vpnGateway.disconnect()
     }
-    
-    @objc private func sessionBecameActive(_ notification: NSNotification) {
+
+    @objc
+    private func sessionBecameActive(_: NSNotification) {
         log.debug("User session did become active", category: .app)
         // Only auto-connect if not just handled by wake
         guard !didHandleWake else {
@@ -172,11 +173,13 @@ class NavigationService {
         vpnGateway.autoConnect()
     }
 
-    @objc func handleSleep() {
+    @objc
+    func handleSleep() {
         vpnGateway.disconnect()
     }
 
-    @objc func handleWake() {
+    @objc
+    func handleWake() {
         log.debug("User device has woken up", category: .app)
         didHandleWake = true
         autoConnectIfEnabled()
@@ -186,15 +189,15 @@ class NavigationService {
         }
     }
 
-#if REDESIGN
-    var sendAction: AppReducer.ActionSender?
-#endif
+    #if REDESIGN
+        var sendAction: AppReducer.ActionSender?
+    #endif
 
     private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
         switch data {
-        case .established(let vpnGateway):
+        case let .established(vpnGateway):
             if appSessionManager.sessionStatus != .established {
                 log.error("Expected session to be established when receiving gateway")
             }
@@ -211,7 +214,7 @@ class NavigationService {
             if appHasPresented {
                 showSidebar()
             }
-        case .lost(let loginError):
+        case let .lost(loginError):
             showLogIn(initialError: loginError)
         }
     }
@@ -219,33 +222,33 @@ class NavigationService {
     func loginViewModel() -> LoginViewModel {
         LoginViewModel(factory: factory)
     }
-    
+
     private func showLogIn(initialError: String? = nil) {
         appHasPresented = true
-#if REDESIGN
-        sendAction?(.showLogin(.showError(initialError: initialError)))
-#else
-        let viewModel = loginViewModel()
-        viewModel.initialError = initialError
-        windowService.showLogin(viewModel: viewModel)
-        NSApp.activate(ignoringOtherApps: true)
-#endif
+        #if REDESIGN
+            sendAction?(.showLogin(.showError(initialError: initialError)))
+        #else
+            let viewModel = loginViewModel()
+            viewModel.initialError = initialError
+            windowService.showLogin(viewModel: viewModel)
+            NSApp.activate(ignoringOtherApps: true)
+        #endif
     }
-    
+
     private func attemptSilentLogIn() {
         let viewModel = LoginViewModel(factory: factory)
         viewModel.logInSilently()
     }
-    
+
     private func showSidebar() {
         appHasPresented = true
-#if REDESIGN
-        sendAction?(.logIn(.init()))
-#else
-        windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
-#endif
+        #if REDESIGN
+            sendAction?(.logIn(.init()))
+        #else
+            windowService.showSidebar(appStateManager: appStateManager, vpnGateway: vpnGateway)
+        #endif
     }
-    
+
     func handleSilentLoginFailure() {
         showLogIn()
     }
@@ -265,30 +268,29 @@ class NavigationService {
 // MARK: - Menu controllers extension
 
 extension NavigationService {
-    
     func openAbout(factory: AboutViewController.Factory) {
         guard !windowService.showIfPresent(windowController: AboutWindowController.self) else { return }
         windowService.openAbout(factory: factory)
     }
-    
+
     func openAcknowledgements() {
         guard !windowService.showIfPresent(windowController: AcknowledgementsWindowController.self) else { return }
         windowService.openAcknowledgements()
     }
-    
+
     func checkForUpdates() {
         updateManager.checkForUpdates(appSessionManager, userInitiated: true)
     }
-    
+
     func openLogsFolder(filename: String? = nil) {
         let logFileManager = factory.makeLogFileManager()
         let filename = filename ?? AppConstants.Filenames.appLogFilename
         NSWorkspace.shared.activateFileViewerSelecting([logFileManager.getFileUrl(named: filename)])
     }
-    
+
     func openSettings(to tab: SettingsTab) {
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
-        
+
         windowService.openSettingsWindow(
             viewModel: SettingsContainerViewModel(factory: factory),
             tabBarViewModel: SettingsTabBarViewModel(initialTab: tab),
@@ -299,27 +301,28 @@ extension NavigationService {
             )
         )
     }
-    
+
     func logOutRequested() {
         appSessionManager.logOut()
     }
-    
+
     func showApplication() {
         appHasPresented = true
         openRequiredWindow()
     }
-    
+
     func openProfiles(_ initialTab: ProfilesTab) {
         guard !windowService.showIfPresent(windowController: ProfilesWindowController.self) else { return }
 
         windowService.openProfilesWindow(viewModel: ProfilesContainerViewModel(initialTab: initialTab, vpnGateway: vpnGateway, alertService: alertService, vpnKeychain: vpnKeychain))
     }
-    
-    @objc private func tearDown(_ notification: Notification) {
+
+    @objc
+    private func tearDown(_: Notification) {
         log.debug("System user is being logged out, or app data is being cleared", category: .os)
         isSystemTeardown = true
     }
-    
+
     private func openRequiredWindow() {
         if !windowService.bringWindowsToForeground() {
             if appSessionManager.sessionStatus == .established {
@@ -330,7 +333,7 @@ extension NavigationService {
 
             NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
         }
-        
+
         // Addresses bug where menu bar becomes active when switching from .accessory to .regular mode
         if (NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock").first?.activate(options: []))! {
             dispatch_after_delay(0.1, queue: .main) {
@@ -343,37 +346,37 @@ extension NavigationService {
 // MARK: - AppDelegate extension
 
 extension NavigationService {
-    func handleApplicationReopen(hasVisibleWindows: Bool) -> Bool {
+    func handleApplicationReopen(hasVisibleWindows _: Bool) -> Bool {
         appHasPresented = true
 
         // Don't ever dismiss the system extension tour, Sparkle will use this function when presenting the alert,
         // and we wouldn't want random update prompts to dismiss the tour unnecessarily
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
         openRequiredWindow()
-        
+
         return false
     }
-    
+
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
         guard isSystemTeardown else {
             appSessionManager.replyToApplicationShouldTerminate()
             return .terminateLater
         }
-        
+
         // Do not show disconnect modal, because user asked for macOS logOff/shutdown
         // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
-        
+
         guard vpnGateway.connection != .disconnected else {
             return .terminateNow
         }
-        
+
         vpnGateway.disconnect {
             DispatchQueue.main.async {
                 self.isSystemTeardown = false
                 NSApp.reply(toApplicationShouldTerminate: true)
             }
         }
-        
+
         return .terminateLater
     }
 }

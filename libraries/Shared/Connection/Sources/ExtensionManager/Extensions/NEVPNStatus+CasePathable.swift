@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import Foundation
 import enum NetworkExtension.NEVPNStatus
-import CasePaths
 
 extension NEVPNStatus: @retroactive CasePathable {
     public struct AllCasePaths {
@@ -28,30 +28,35 @@ extension NEVPNStatus: @retroactive CasePathable {
                 extract: { guard case .disconnecting = $0 else { return nil } }
             )
         }
-        public var disconnected: AnyCasePath<NEVPNStatus, Void>{
+
+        public var disconnected: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.disconnected },
                 extract: { guard case .disconnected = $0 else { return nil } }
             )
         }
+
         public var connecting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connecting },
                 extract: { guard case .connecting = $0 else { return nil } }
             )
         }
+
         public var connected: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.connected },
                 extract: { guard case .connected = $0 else { return nil } }
             )
         }
+
         public var reasserting: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.reasserting },
                 extract: { guard case .reasserting = $0 else { return nil } }
             )
         }
+
         public var invalid: AnyCasePath<NEVPNStatus, Void> {
             AnyCasePath(
                 embed: { NEVPNStatus.invalid },
@@ -60,5 +65,5 @@ extension NEVPNStatus: @retroactive CasePathable {
         }
     }
 
-    public static let allCasePaths: AllCasePaths = AllCasePaths()
+    public static let allCasePaths: AllCasePaths = .init()
 }

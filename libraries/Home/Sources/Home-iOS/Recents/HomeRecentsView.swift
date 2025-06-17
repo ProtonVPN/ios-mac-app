@@ -23,14 +23,14 @@ import ComposableArchitecture
 import Dependencies
 
 import Domain
+import Ergonomics
 import HomeShared
+import OrderedCollections
+import ProtonCoreUIFoundations
+import SharedViews
 import Strings
 import Theme
-import Ergonomics
 import VPNAppCore
-import SharedViews
-import ProtonCoreUIFoundations
-import OrderedCollections
 
 public struct RecentsSectionView: View {
     let store: StoreOf<RecentsFeature>
@@ -63,7 +63,8 @@ public struct RecentsSectionView: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         if (store.userTier ?? .freeTier).isFreeTier {
             sectionTitleView(title: Localizable.homeRecentsUpsellSection)
             UpsellCarousel(sendAction: { _ = store.send($0) })
@@ -88,26 +89,27 @@ public struct RecentsSectionView: View {
 }
 
 #if DEBUG && compiler(>=6)
-@available(iOS 18, *)
-#Preview("Recents", traits: .dependencies { $0.recentsStorage = .previewValue }) {
-    let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(),
-        reducer: RecentsFeature.init
-    )
-    return ScrollView {
-        RecentsSectionView(store: store)
+    @available(iOS 18, *)
+    #Preview("Recents", traits: .dependencies { $0.recentsStorage = .previewValue }) {
+        let store: StoreOf<RecentsFeature> = .init(
+            initialState: .init(),
+            reducer: RecentsFeature.init
+        )
+        return ScrollView {
+            RecentsSectionView(store: store)
+        }
+        .background(Color(.background, .normal))
     }
-    .background(Color(.background, .normal))
-}
-@available(iOS 18, *)
-#Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
-    let store: StoreOf<RecentsFeature> = .init(
-        initialState: .init(),
-        reducer: RecentsFeature.init
-    )
-    return ScrollView {
-        RecentsSectionView(store: store)
+
+    @available(iOS 18, *)
+    #Preview("No recents", traits: .dependencies { $0.recentsStorage = .withElements(array: []) }) {
+        let store: StoreOf<RecentsFeature> = .init(
+            initialState: .init(),
+            reducer: RecentsFeature.init
+        )
+        return ScrollView {
+            RecentsSectionView(store: store)
+        }
+        .background(Color(.background, .normal))
     }
-    .background(Color(.background, .normal))
-}
 #endif

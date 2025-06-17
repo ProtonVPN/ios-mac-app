@@ -40,31 +40,30 @@ public protocol MaintenanceManagerProtocol {
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-    
-    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory
-    
+    public typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnApiServiceFactory & VpnGatewayFactory & VpnKeychainFactory
+
     private let factory: Factory
-    
+
     private lazy var vpnApiService: VpnApiService = self.factory.makeVpnApiService()
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     private lazy var vpnKeychain: VpnKeychainProtocol = self.factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-    
+
     private var timer: Timer?
-    
-    public init( factory: Factory) {
+
+    public init(factory: Factory) {
         self.factory = factory
     }
-    
+
     // MARK: - MaintenanceManagerProtocol
-    
+
     public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?) {
         if !repeats || timeInterval <= 0 {
-            self.checkServer(completion, failure: failure)
+            checkServer(completion, failure: failure)
             return
         }
-        
+
         if timer != nil {
             guard timer?.timeInterval != timeInterval else {
                 return // Only restart timer if time interval has changed
@@ -72,19 +71,19 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             timer?.invalidate()
             timer = nil
         }
-        
-        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
+
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
             self.checkServer(completion, failure: failure)
         }
     }
-    
+
     public func stopObserving() {
         if timer != nil {
             timer?.invalidate()
         }
         timer = nil
     }
-    
+
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
         @Dependency(\.propertiesManager) var propertiesManager
         let location = propertiesManager.userLocation
@@ -93,7 +92,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             completion?(false)
             return
         }
-        
+
         switch appStateManager.state {
         case .connected, .connecting:
             break
@@ -102,7 +101,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             completion?(false)
             return
         }
-        
+
         let serverID = activeConnection.serverIp.id
 
         // This doesn't need to be a strict check, it's just to reduce load on the API
@@ -131,7 +130,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                         )
                         completion?(true)
 
-                    case .success(.notModified(let lastModified)):
+                    case let .success(.notModified(lastModified)):
                         log.debug("Servers not modified", category: .api, metadata: ["LastModified": "\(optional: lastModified)"])
                         completion?(true)
 

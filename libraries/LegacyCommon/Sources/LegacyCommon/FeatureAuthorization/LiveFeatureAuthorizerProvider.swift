@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     @Dependency(\.credentialsProvider) var credentialsProvider
@@ -32,9 +32,9 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     }
 
     public func authorizer<Feature: AppFeature>(
-        for feature: Feature.Type
+        for _: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
-        return {
+        {
             let (plan, tier) = accountDetails
 
             return Feature.canUse(
@@ -48,7 +48,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: ModularAppFeature>(
         forSubFeatureOf feature: Feature.Type
     ) -> (Feature) -> FeatureAuthorizationResult {
-        return { feature in
+        { feature in
             let (plan, tier) = accountDetails
 
             return feature.canUse(
@@ -62,7 +62,7 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     public func authorizer<Feature: ModularAppFeature>(
         for feature: Feature.Type
     ) -> Authorizer<Feature> {
-        return Authorizer(canUse: { feature in
+        Authorizer(canUse: { feature in
             let (plan, tier) = accountDetails
 
             return feature.canUse(

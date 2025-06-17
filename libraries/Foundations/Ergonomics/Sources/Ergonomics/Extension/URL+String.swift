@@ -18,15 +18,14 @@
 
 import Foundation
 
-extension Optional where Wrapped == URL {
-    
+extension URL? {
     /// Url as string or empty string if nil
     var stringOrEmpty: String {
         switch self {
         case .none:
-            return ""
-        case .some(let url):
-            return url.absoluteString
+            ""
+        case let .some(url):
+            url.absoluteString
         }
     }
 }

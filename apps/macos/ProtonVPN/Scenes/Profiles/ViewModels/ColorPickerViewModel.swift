@@ -25,13 +25,13 @@ import LegacyCommon
 
 class ColorPickerViewModel {
     private let colors: [NSColor]
-    
+
     var colorSelected: (() -> Void)?
-    
+
     var colorCount: Int {
-        return colors.count
+        colors.count
     }
-    
+
     var selectedColorIndex: Int {
         didSet {
             guard selectedColorIndex < colors.count else {
@@ -45,30 +45,30 @@ class ColorPickerViewModel {
     var selectedColor: NSColor {
         color(atIndex: selectedColorIndex)
     }
-    
+
     init() {
-        colors = ProfileConstants.profileColors
-        selectedColorIndex = colors.randomIndex
+        self.colors = ProfileConstants.profileColors
+        self.selectedColorIndex = colors.randomIndex
     }
-    
+
     func selectRandom() {
         selectedColorIndex = colors.randomIndex
     }
-    
+
     func select(rgbHex: Int) {
         if let newIndex = colors.firstIndex(where: { $0.hexRepresentation == rgbHex }) {
             selectedColorIndex = newIndex
         }
     }
-    
+
     func select(index: Int) {
-        if index >= 0 && index < colorCount {
+        if index >= 0, index < colorCount {
             selectedColorIndex = index
         }
     }
-    
+
     func color(atIndex index: Int) -> NSColor {
-        return colors[index]
+        colors[index]
     }
 }
 

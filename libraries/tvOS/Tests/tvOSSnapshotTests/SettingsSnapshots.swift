@@ -16,15 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import SnapshotTesting
-import ComposableArchitecture
-@testable import tvOS
-import SwiftUI
 @testable import CommonNetworking
+import ComposableArchitecture
+import Ergonomics
 @testable import ExtensionManager
 @testable import LocalAgent
-import Ergonomics
+import SnapshotTesting
+import SwiftUI
+@testable import tvOS
+import XCTest
 
 final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
     func testLightSettings() {
@@ -58,8 +58,8 @@ final class SettingsFeatureSnapshotTests: TVSnapshotTestCase {
         let appView = NavigationStack {
             AppView(store: store)
         }
-            .frame(.rect(width: 1920, height: 1080))
-            .background(Color(.background, .strong))
+        .frame(.rect(width: 1920, height: 1080))
+        .background(Color(.background, .strong))
 
         snap(appView, caseName: "1 List", trait: trait)
         store.send(.main(.settings(.showDrillDown(.contactUs))))

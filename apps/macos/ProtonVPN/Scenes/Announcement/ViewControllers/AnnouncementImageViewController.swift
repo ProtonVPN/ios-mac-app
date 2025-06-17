@@ -20,26 +20,27 @@ import AppKit
 
 import Dependencies
 
-import LegacyCommon
-import CommonNetworking
-import VPNAppCore
 import Announcement
+import CommonNetworking
+import LegacyCommon
+import VPNAppCore
 
+import Domain
 import Ergonomics
 import Strings
-import Domain
 
 final class AnnouncementImageViewController: NSViewController {
-    @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var imageViewWidth: NSLayoutConstraint!
-    @IBOutlet private weak var imageViewHeight: NSLayoutConstraint!
-    @IBOutlet private weak var progressIndicator: NSProgressIndicator!
-    @IBOutlet private weak var actionButton: PrimaryActionButton!
+    @IBOutlet private var imageView: NSImageView!
+    @IBOutlet private var imageViewWidth: NSLayoutConstraint!
+    @IBOutlet private var imageViewHeight: NSLayoutConstraint!
+    @IBOutlet private var progressIndicator: NSProgressIndicator!
+    @IBOutlet private var actionButton: PrimaryActionButton!
 
     private let data: OfferPanel.ImagePanel
     private let offerReference: String?
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -82,7 +83,7 @@ final class AnnouncementImageViewController: NSViewController {
             return
         }
 
-        imageView.sd_setImage(with: imageURL) { [weak self] image, error, cacheType, url in
+        imageView.sd_setImage(with: imageURL) { [weak self] image, error, _, _ in
             guard error == nil,
                   let image,
                   let self else {
@@ -90,21 +91,23 @@ final class AnnouncementImageViewController: NSViewController {
                 log.warning("Couldn't retrieve image from URL: \(imageURL)")
                 return
             }
-            self.progressIndicator.stopAnimation(nil)
-            self.actionButton.isHidden = false
+            progressIndicator.stopAnimation(nil)
+            actionButton.isHidden = false
             /// Usually `scale` would be 0.5
             let scale = 1 / (NSScreen.main?.backingScaleFactor ?? 1)
 
-            let desiredSize = CGSize(width: CGFloat(source.width ?? image.size.width),
-                                     height: CGFloat(source.height ?? image.size.height)) // pixel values
+            let desiredSize = CGSize(
+                width: CGFloat(source.width ?? image.size.width),
+                height: CGFloat(source.height ?? image.size.height)
+            ) // pixel values
 
             let imageViewSize = desiredSize.fitting(NSScreen.availableSizeInPixels()) // still in pixels
 
             // multiply by scale to get point values
-            self.imageViewWidth.constant = imageViewSize.width * scale
-            self.imageViewHeight.constant = imageViewSize.height * scale
+            imageViewWidth.constant = imageViewSize.width * scale
+            imageViewHeight.constant = imageViewSize.height * scale
 
-            self.didPresentOffer()
+            didPresentOffer()
         }
     }
 
@@ -114,7 +117,8 @@ final class AnnouncementImageViewController: NSViewController {
         }
     }
 
-    @IBAction private func didTapActionButton(_ sender: Any) {
+    @IBAction
+    private func didTapActionButton(_: Any) {
         guard data.button.action == .openURL else {
             log.warning("Announcement does not contain <OpenURL> action. Action is <\(data.button.action?.rawValue ?? "nil")>, url: <\(data.button.url)>")
             return

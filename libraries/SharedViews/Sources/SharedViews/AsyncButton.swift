@@ -20,13 +20,12 @@ import SwiftUI
 
 // TODO: Provide an API to be able to customize the disabled look
 @available(iOS 15.0, macOS 12.0, *)
-public struct AsyncButton<Label> : View where Label : View {
+public struct AsyncButton<Label>: View where Label: View {
     let role: ButtonRole?
     let taskPriority: TaskPriority?
     let disableWhileInProgress: Bool
     let action: @MainActor () async -> Void
-    @ViewBuilder
-    let label: () -> Label
+    @ViewBuilder let label: () -> Label
 
     @State private var taskHandle: Task<Void, Never>?
     @State private var taskInProgress: Bool = false

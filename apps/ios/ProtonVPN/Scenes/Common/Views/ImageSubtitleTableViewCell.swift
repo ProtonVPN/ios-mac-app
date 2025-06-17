@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import ProtonCoreUIFoundations
+import UIKit
 
 /// A two-line, detail accessory cell with a large image at the leading edge.
 final class ImageSubtitleTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var _imageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet private var _imageView: UIImageView!
 
     var selectionHandler: (() -> Void)?
 

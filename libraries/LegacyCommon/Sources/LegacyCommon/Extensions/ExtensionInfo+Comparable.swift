@@ -20,15 +20,15 @@ import Foundation
 
 extension ExtensionInfo: Equatable, Comparable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.compare(to: rhs) == .orderedSame
+        lhs.compare(to: rhs) == .orderedSame
     }
 
     public static func > (lhs: Self, rhs: Self) -> Bool {
-        return lhs.compare(to: rhs) == .orderedDescending
+        lhs.compare(to: rhs) == .orderedDescending
     }
 
     public static func < (lhs: Self, rhs: Self) -> Bool {
-        return lhs.compare(to: rhs) == .orderedAscending
+        lhs.compare(to: rhs) == .orderedAscending
     }
 
     public func compare(to other: Self) -> ComparisonResult {
@@ -45,7 +45,7 @@ extension ExtensionInfo: Equatable, Comparable {
             return versionComparison
         }
 
-        let thisBuildComponents = self.build.split(separator: ".")
+        let thisBuildComponents = build.split(separator: ".")
         let otherBuildComponents = other.build.split(separator: ".")
 
         guard thisBuildComponents.count == otherBuildComponents.count else {

@@ -24,32 +24,30 @@ import AppKit
 import Theme
 
 class StatusWindow: NSPanel {
-    
     override var canBecomeKey: Bool {
-        return true
+        true
     }
 }
 
 // Responsible for the status icon itself and the window for the status bar app
 final class StatusMenuWindowController: WindowController {
-
     private var windowModel: StatusMenuWindowModel?
-    
+
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     private let statusMenu = NSMenu()
-    
+
     private let iconManager: StatusBarIconBlinker
 
     private var eventsMonitor: Any?
 
     var windowIsVisible: Bool {
-        return window?.isVisible == true
+        window?.isVisible == true
     }
 
     var lastOpenApplication: NSRunningApplication?
 
     weak var windowService: WindowService?
-    
+
     override var contentViewController: NSViewController? {
         didSet {
             if let viewController = contentViewController {
@@ -58,37 +56,38 @@ final class StatusMenuWindowController: WindowController {
             }
         }
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Not implemented")
     }
-    
+
     override init(window: NSWindow?) {
-        iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
-        
+        self.iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
+
         super.init(window: window)
-        
+
         monitorsKeyEvents = true
     }
-    
+
     deinit {
         eventsMonitor.map { NSEvent.removeMonitor($0) }
     }
-    
+
     func update(with windowModel: StatusMenuWindowModel) {
         self.windowModel = windowModel
-        
+
         contentViewController = windowModel.statusMenuViewController
-        
+
         setupIcon()
-        
+
         self.windowModel?.contentChanged = { [weak self] in
             DispatchQueue.main.async { [weak self] in
                 self?.setupIcon()
             }
         }
-        
-        self.eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
+
+        eventsMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { [weak self] event in
             switch event.type {
             case .leftMouseDown:
                 if event.isStatusItemClicked(event: event) == self?.statusItem {
@@ -99,17 +98,17 @@ final class StatusMenuWindowController: WindowController {
             default:
                 break
             }
-            
+
             return event
         }
     }
-    
+
     private func setupIcon() {
         iconManager.setImage(windowModel?.statusIcon ?? .unknown)
         iconManager.isBlinking = windowModel?.isStatusIconBlinking ?? false
         NSApp.applicationIconImage = (windowModel?.appIcon ?? .active).image
     }
-    
+
     private func togglePopover() {
         if windowIsVisible {
             dismissPopover()
@@ -117,26 +116,26 @@ final class StatusMenuWindowController: WindowController {
             showPopover()
         }
     }
-    
+
     private func showPopover() {
         guard let button = statusItem.button, let frame = button.window?.frame else { return }
-        
+
         button.isHighlighted = true
         showWindow(self, relativeTo: frame)
     }
-    
+
     private func dismissPopover() {
         if windowIsVisible {
             close()
             statusItem.button?.isHighlighted = false
         }
     }
-    
+
     private func showWindow(_ sender: Any?, relativeTo frame: CGRect) {
         super.showWindow(sender)
-        
-        guard let window = window else { return }
-        
+
+        guard let window else { return }
+
         let height: CGFloat = 436 // positions countries so that 3.5 rows are showing
         let width: CGFloat = 300
         var extensionFrame = CGRect(x: frame.minX, y: frame.minY - height, width: width, height: height)
@@ -149,13 +148,13 @@ final class StatusMenuWindowController: WindowController {
         window.setFrame(extensionFrame, display: true)
         window.makeKeyAndOrderFront(sender)
     }
-    
+
     override func close() {
         window?.orderOut(nil)
     }
-    
+
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
 
@@ -165,7 +164,7 @@ final class StatusMenuWindowController: WindowController {
         window.backgroundColor = NSColor.clear
         window.hidesOnDeactivate = false
         window.hasShadow = true
-        
+
         window.styleMask = .nonactivatingPanel
         window.level = .popUpMenu
         window.collectionBehavior = [.fullScreenAuxiliary]
@@ -174,28 +173,25 @@ final class StatusMenuWindowController: WindowController {
 }
 
 extension StatusMenuWindowController {
-    override func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_: Notification) {
         windowService?.windowWillClose(self)
         dismissPopover()
     }
-    
-    func windowDidResignKey(_ notification: Notification) {
+
+    func windowDidResignKey(_: Notification) {
         dismissPopover()
     }
 }
 
 extension NSStatusBarButton {
-    
-    override open func mouseDown(with event: NSEvent) {
+    override open func mouseDown(with _: NSEvent) {
         // allow StatusMenuController to manage the behavour of clicking
-        return
     }
 }
 
 extension NSEvent {
-    
     func isStatusItemClicked(event: NSEvent) -> NSStatusItem? {
-        guard let window = window else { return nil }
+        guard let window else { return nil }
         guard window.className.hasPrefix("NSStatusBar"), window.className.hasSuffix("Window") else { return nil }
         guard event.eventNumber != 1337 else { return nil } // Bartender app event (avoid Bartender events from being misinterpreted as clicks on our app icon)
         return window.value(forKey: "statusItem") as? NSStatusItem
@@ -204,12 +200,11 @@ extension NSEvent {
 
 extension StatusIcon {
     var image: NSImage {
-        var result: NSImage
-        switch self {
-        case .connected: result = Theme.Asset.connected.image
-        case .disconnected: result = Theme.Asset.disconnected.image
-        case .connecting: result = Theme.Asset.idle.image
-        case .unknown: result = Theme.Asset.emptyIcon.image
+        var result: NSImage = switch self {
+        case .connected: Theme.Asset.connected.image
+        case .disconnected: Theme.Asset.disconnected.image
+        case .connecting: Theme.Asset.idle.image
+        case .unknown: Theme.Asset.emptyIcon.image
         }
 
         result = result
@@ -220,50 +215,49 @@ extension StatusIcon {
 }
 
 extension AppIcon {
-#if DEBUG // use Debug icon for staging builds
-    static let appIconConnected = Theme.Asset.dynamicAppIconDebugConnected.image
-    static let appIconDisconnected = Theme.Asset.dynamicAppIconDebugDisconnected.image
-#else
-    static let appIconConnected = Theme.Asset.dynamicAppIconConnected.image
-    static let appIconDisconnected = Theme.Asset.dynamicAppIconDisconnected.image
-#endif
+    #if DEBUG // use Debug icon for staging builds
+        static let appIconConnected = Theme.Asset.dynamicAppIconDebugConnected.image
+        static let appIconDisconnected = Theme.Asset.dynamicAppIconDebugDisconnected.image
+    #else
+        static let appIconConnected = Theme.Asset.dynamicAppIconConnected.image
+        static let appIconDisconnected = Theme.Asset.dynamicAppIconDisconnected.image
+    #endif
     var image: NSImage {
         switch self {
         case .active:
-            return AppIcon.appIconConnected
+            AppIcon.appIconConnected
         case .disconnected:
-            return AppIcon.appIconDisconnected
+            AppIcon.appIconDisconnected
         }
     }
 }
 
 class StatusBarIconBlinker {
-    
     private var statusItem: NSStatusItem
     private var statusIcon: StatusIcon
-    
+
     private var emptyImage: NSImage = StatusIcon.unknown.image
     private var interval: TimeInterval = AppConstants.Time.statusIconBlink
     private var timer: Timer?
-    
+
     public var isBlinking: Bool = false {
         didSet {
-            if isBlinking && timer == nil {
+            if isBlinking, timer == nil {
                 start()
                 return
             }
-            if !isBlinking && timer != nil {
+            if !isBlinking, timer != nil {
                 stop()
                 return
             }
         }
     }
-    
+
     public init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
         self.statusItem = statusItem
         self.statusIcon = statusIcon
     }
-    
+
     public func setImage(_ statusIcon: StatusIcon) {
         if statusIcon != self.statusIcon {
             self.statusIcon = statusIcon
@@ -272,23 +266,23 @@ class StatusBarIconBlinker {
             }
         }
     }
-    
+
     private func start() {
         timer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
-    
+
     private func stop() {
         timer?.invalidate()
         timer = nil
         statusItem.button?.image = statusIcon.image
     }
-    
-    @objc func fireTimer() {
+
+    @objc
+    func fireTimer() {
         if statusItem.button?.image == emptyImage {
             statusItem.button?.image = statusIcon.image
         } else {
             statusItem.button?.image = emptyImage
         }
     }
-    
 }

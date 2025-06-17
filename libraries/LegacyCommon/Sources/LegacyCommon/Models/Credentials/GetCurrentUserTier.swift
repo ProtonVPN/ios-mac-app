@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 extension DependencyValues {
-  var getCurrentUserTier: @Sendable () throws -> Int {
-    get { self[GetCurrentUserTierKey.self] }
-    set { self[GetCurrentUserTierKey.self] = newValue }
-  }
+    var getCurrentUserTier: @Sendable () throws -> Int {
+        get { self[GetCurrentUserTierKey.self] }
+        set { self[GetCurrentUserTierKey.self] = newValue }
+    }
 }
 
 private enum GetCurrentUserTierKey: DependencyKey {

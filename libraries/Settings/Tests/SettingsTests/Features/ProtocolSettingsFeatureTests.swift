@@ -24,7 +24,6 @@ import ComposableArchitecture
 
 @MainActor
 final class ProtocolSettingsTests: XCTestCase {
-
     func testProtocolSetWhenDisconnected() async throws {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(protocol: .smartProtocol, reconnectionAlert: nil)

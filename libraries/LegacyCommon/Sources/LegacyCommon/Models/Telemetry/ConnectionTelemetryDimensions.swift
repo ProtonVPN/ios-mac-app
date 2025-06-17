@@ -19,9 +19,8 @@
 import Foundation
 
 import Domain
-import VPNShared
 import VPNAppCore
-import Domain
+import VPNShared
 
 public struct ConnectionDimensions: Encodable {
     public typealias VPNStatus = CommonTelemetryDimensions.VPNStatus
@@ -40,19 +39,21 @@ public struct ConnectionDimensions: Encodable {
     let isp: String // max 25 char
     let isServerFree: Bool // only used for adding "free" to the serverFeatures
 
-    init(outcome: Outcome,
-         userTier: UserTier,
-         vpnStatus: VPNStatus,
-         vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
-         networkType: NetworkType,
-         serverFeatures: ServerFeature,
-         vpnCountry: String,
-         userCountry: String,
-         `protocol`: VpnProtocol,
-         server: String,
-         port: String,
-         isp: String,
-         isServerFree: Bool) {
+    init(
+        outcome: Outcome,
+        userTier: UserTier,
+        vpnStatus: VPNStatus,
+        vpnTrigger: UserInitiatedVPNChange.VPNTrigger,
+        networkType: NetworkType,
+        serverFeatures: ServerFeature,
+        vpnCountry: String,
+        userCountry: String,
+        protocol: VpnProtocol,
+        server: String,
+        port: String,
+        isp: String,
+        isServerFree: Bool
+    ) {
         self.outcome = outcome
         self.userTier = userTier
         self.vpnStatus = vpnStatus
@@ -61,7 +62,7 @@ public struct ConnectionDimensions: Encodable {
         self.serverFeatures = serverFeatures
         self.vpnCountry = vpnCountry
         self.userCountry = userCountry
-        self.`protocol` = `protocol`
+        self.protocol = `protocol`
         self.server = server
         self.port = port
         self.isp = isp
@@ -79,7 +80,7 @@ public struct ConnectionDimensions: Encodable {
         try container.encode(serverFeatures, forKey: .serverFeatures)
         try container.encode(vpnCountry, forKey: .vpnCountry)
         try container.encode(userCountry, forKey: .userCountry)
-        try container.encode(protocolString(`protocol`), forKey: .`protocol`)
+        try container.encode(protocolString(`protocol`), forKey: .protocol)
         try container.encode(server, forKey: .server)
         try container.encode(port, forKey: .port)
         try container.encode(isp, forKey: .isp)
@@ -88,28 +89,28 @@ public struct ConnectionDimensions: Encodable {
     private func protocolString(_ protocol: VpnProtocol) -> String {
         switch `protocol` {
         case .ike:
-            return "ikev2"
-        case .openVpn(let openVpnTransport):
+            "ikev2"
+        case let .openVpn(openVpnTransport):
             switch openVpnTransport {
             case .tcp:
-                return "openvpn_tcp"
+                "openvpn_tcp"
             case .udp:
-                return "openvpn_udp"
+                "openvpn_udp"
             }
-        case .wireGuard(let wireGuardTransport):
+        case let .wireGuard(wireGuardTransport):
             switch wireGuardTransport {
             case .tcp:
-                return "wireguard_tcp"
+                "wireguard_tcp"
             case .udp:
-                return "wireguard_udp"
+                "wireguard_udp"
             case .tls:
-                return "wireguard_tls"
+                "wireguard_tls"
             }
         }
     }
 
     enum CodingKeys: String, CodingKey {
-        case outcome = "outcome"
+        case outcome
         case userTier = "user_tier"
         case vpnStatus = "vpn_status"
         case vpnTrigger = "vpn_trigger"
@@ -117,10 +118,10 @@ public struct ConnectionDimensions: Encodable {
         case serverFeatures = "server_features"
         case vpnCountry = "vpn_country"
         case userCountry = "user_country"
-        case `protocol` = "protocol"
-        case server = "server"
-        case port = "port"
-        case isp = "isp"
+        case `protocol`
+        case server
+        case port
+        case isp
         case modalSource = "modal_source"
     }
 
@@ -142,5 +143,4 @@ public struct ConnectionDimensions: Encodable {
         case mobile
         case other
     }
-
 }

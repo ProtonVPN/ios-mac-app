@@ -116,7 +116,6 @@ public struct EnvironmentSelectorDesktopView: View {
             .scrollContentBackground(.hidden)
             .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
-
     }
 
     private var userDefaultsCell: some View {
@@ -168,7 +167,7 @@ public struct EnvironmentSelectorDesktopView: View {
     }
 
     init(store: StoreOf<DebugConfigurationFeature>) {
-        self._store = .constant(store)
+        _store = .constant(store)
     }
 
     public init(continueHandler: @escaping () -> Void) {
@@ -180,7 +179,6 @@ public struct EnvironmentSelectorDesktopView: View {
         ))
     }
 }
-
 
 private struct EnvironmentSelectorButtonStyle: ButtonStyle {
     static let active = Self(isActive: true)
@@ -199,7 +197,7 @@ private struct EnvironmentSelectorButtonStyle: ButtonStyle {
             .cornerRadius(.themeRadius8)
     }
 
-    func backgroundColor(isPressed: Bool) -> Color {
+    func backgroundColor(isPressed _: Bool) -> Color {
         var style: AppTheme.Style = [.interactive]
         style.insert(isActive ? [] : .weak)
         return Color(.background, style)
@@ -224,7 +222,7 @@ extension View {
     EnvironmentSelectorDesktopView(store: Store(
         initialState: DebugConfigurationFeature.State(
             apiEndpoint: "https://vpn-api.proton.me",
-            atlasSecret: String((0..<32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
+            atlasSecret: String((0 ..< 32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
             overrides: [.empty()]
         ),

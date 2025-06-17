@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
+import SwiftUI
 
 struct SettingsDrillDownView: View {
     private static let maximumContentWidth: CGFloat = 1420
@@ -29,12 +29,13 @@ struct SettingsDrillDownView: View {
             .frame(width: Self.maximumContentWidth)
             .onExitCommand { store.send(.onExitCommand) }
     }
-    
-    @ViewBuilder var viewBody: some View {
+
+    @ViewBuilder
+    var viewBody: some View {
         switch store.state {
         case .eula:
             EULAView()
-        case .dynamic(let destination):
+        case let .dynamic(destination):
             DynamicDrillDownView(model: destination.model)
                 .focusable()
         }
@@ -43,7 +44,7 @@ struct SettingsDrillDownView: View {
 
 struct DynamicDrillDownView: View {
     let model: DynamicDrillDownModel
-    
+
     var body: some View {
         HStack(spacing: .themeSpacing120) {
             VStack(alignment: .leading, spacing: .themeSpacing24) {
@@ -53,7 +54,7 @@ struct DynamicDrillDownView: View {
                 Text(model.description)
                     .font(.title3)
                     .foregroundStyle(Color(.text, .weak)) +
-                Text(verbatim: model.displayURL)
+                    Text(verbatim: model.displayURL)
                     .font(.title3)
                     .foregroundStyle(Color(.text, .interactive))
                     .fontWeight(.bold)

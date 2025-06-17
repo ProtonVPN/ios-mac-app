@@ -25,55 +25,56 @@ import Cocoa
 import LegacyCommon
 import VPNAppCore
 
-import Strings
 import Domain
+import Strings
 
 class ProfileItemViewModel: AbstractProfileViewModel {
-    
     private static let maxCharCount = 30
-    
+
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
     private let sysexManager: SystemExtensionManager
-    
+
     var enabled: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
-    
+
     var icon: ProfileIcon {
-        return profile.profileIcon
+        profile.profileIcon
     }
-    
+
     var name: NSAttributedString {
         var adjustedName = profile.name
         if adjustedName.count > ProfileItemViewModel.maxCharCount {
-            adjustedName = adjustedName[0..<ProfileItemViewModel.maxCharCount] + "..."
+            adjustedName = adjustedName[0 ..< ProfileItemViewModel.maxCharCount] + "..."
         }
         return adjustedName.styled(font: .themeFont(.heading4), alignment: .left, lineBreakMode: .byTruncatingTail)
     }
-    
+
     var hideDescription: Bool {
-        return !underMaintenance
+        !underMaintenance
     }
-    
+
     var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
+        formSecondaryDescription()
     }
-    
-    init(profile: Profile,
-         vpnGateway: VpnGatewayProtocol,
-         userTier: Int,
-         alertService: CoreAlertService,
-         sysexManager: SystemExtensionManager) {
+
+    init(
+        profile: Profile,
+        vpnGateway: VpnGatewayProtocol,
+        userTier: Int,
+        alertService: CoreAlertService,
+        sysexManager: SystemExtensionManager
+    ) {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.sysexManager = sysexManager
         super.init(profile: profile, userTier: userTier)
     }
-    
+
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
-        
+
         guard canUseProfile else {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             alertService.push(alert: AllCountriesUpsellAlert())
@@ -81,13 +82,13 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         }
 
         let performConnection = { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.connect)
-            log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
-            self.vpnGateway.connectTo(profile: self.profile)
+            log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(profile: profile)
         }
 
         guard profile.connectionProtocol.requiresSystemExtension else {
@@ -104,13 +105,12 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             }
         }
     }
-    
+
     private func formSecondaryDescription() -> NSAttributedString {
-        let description: String
-        if underMaintenance {
-            description = Localizable.maintenance
+        let description: String = if underMaintenance {
+            Localizable.maintenance
         } else {
-            description = ""
+            ""
         }
         return description.styled(.weak, font: .themeFont(bold: true), alignment: .right)
     }

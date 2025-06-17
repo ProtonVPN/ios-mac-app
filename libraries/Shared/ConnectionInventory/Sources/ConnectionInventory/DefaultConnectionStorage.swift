@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
-import WidgetKit
 import Domain
+import Foundation
+import WidgetKit
 
 // Improvement: Sendable conformance (requires refactor to Storage dependency)
 @DependencyClient
@@ -33,14 +33,14 @@ public struct DefaultConnectionPreferenceStorage: DependencyKey {
         /// Defined here
         case defaultConnection = "DefaultConnectionPreference"
         /// Also defined in PropertiesManager.Keys
-        case smartProtocol = "smartProtocol"
+        case smartProtocol
         /// Also defined in PropertiesManager.Keys
         case vpnProtocol = "VpnProtocol"
     }
 }
 
-extension DefaultConnectionPreferenceStorage {
-    public static let liveValue: DefaultConnectionPreferenceStorage = {
+public extension DefaultConnectionPreferenceStorage {
+    static let liveValue: DefaultConnectionPreferenceStorage = {
         @Dependency(\.storage) var storage
         @Dependency(\.defaultsProvider) var defaultsProvider
 
@@ -66,8 +66,8 @@ extension DefaultConnectionPreferenceStorage {
     }()
 }
 
-extension DependencyValues {
-    public var defaultConnectionStorage: DefaultConnectionPreferenceStorage {
+public extension DependencyValues {
+    var defaultConnectionStorage: DefaultConnectionPreferenceStorage {
         get { self[DefaultConnectionPreferenceStorage.self] }
         set { self[DefaultConnectionPreferenceStorage.self] = newValue }
     }

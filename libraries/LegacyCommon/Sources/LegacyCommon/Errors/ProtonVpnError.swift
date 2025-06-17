@@ -1,5 +1,5 @@
 //
-//  CommonVpnError.swift
+//  ProtonVpnError.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -19,9 +19,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
 import Foundation
 import Strings
-import Domain
 
 // The errors happend locally
 public enum CommonVpnError: FourCharCode, ProtonVPNError {
@@ -53,29 +53,29 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
     public var errorDescription: String? {
         switch self {
         case .fetchSession:
-            return Localizable.errorFetchSession
+            Localizable.errorFetchSession
         case .connectionFailed:
-            return Localizable.connectionFailed
+            Localizable.connectionFailed
         case .vpnManagerUnavailable:
-            return "Couldn't retrieve vpn manager"
+            "Couldn't retrieve vpn manager"
         case .removeVpnProfileFailed:
-            return "Failed to remove VPN profile"
+            "Failed to remove VPN profile"
         case .tlsInitialisation:
-            return Localizable.errorTlsInitialisation
+            Localizable.errorTlsInitialisation
         case .tlsServerVerification:
-            return Localizable.errorTlsServerVerification
+            Localizable.errorTlsServerVerification
         case .vpnSessionInProgress:
-            return Localizable.errorVpnSessionIsActive
+            Localizable.errorVpnSessionIsActive
         case .keychainWriteFailed:
-            return Localizable.errorKeychainWrite
+            Localizable.errorKeychainWrite
         case .subuserWithoutSessions:
-            return Localizable.subuserAlertDescription1
+            Localizable.subuserAlertDescription1
         case .userCredentialsMissing:
-            return Localizable.errorUserCredentialsMissing
+            Localizable.errorUserCredentialsMissing
         case .userCredentialsExpired:
-            return Localizable.errorUserCredentialsExpired
+            Localizable.errorUserCredentialsExpired
         case .vpnCredentialsMissing:
-            return Localizable.errorVpnCredentialsMissing
+            Localizable.errorVpnCredentialsMissing
         }
     }
 }

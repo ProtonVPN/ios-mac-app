@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  CountriesViewController.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,27 +24,26 @@ import UIKit
 
 import Dependencies
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
-import Announcement
 import Search
 
-import Strings
 import Domain
+import Strings
 
 final class CountriesViewController: UIViewController {
-    
-    @IBOutlet private weak var connectionBarContainerView: UIView!
-    @IBOutlet private weak var secureCoreSeparator: UIView!
-    @IBOutlet private weak var secureCoreSeparatorHeight: NSLayoutConstraint!
-    @IBOutlet private weak var secureCoreBar: UIView!
-    @IBOutlet private weak var secureCoreLabel: UILabel!
-    @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
-    @IBOutlet private weak var tableView: UITableView!
-    
+    @IBOutlet private var connectionBarContainerView: UIView!
+    @IBOutlet private var secureCoreSeparator: UIView!
+    @IBOutlet private var secureCoreSeparatorHeight: NSLayoutConstraint!
+    @IBOutlet private var secureCoreBar: UIView!
+    @IBOutlet private var secureCoreLabel: UILabel!
+    @IBOutlet private var secureCoreSwitch: ConfirmationToggleSwitch!
+    @IBOutlet private var tableView: UITableView!
+
     var viewModel: CountriesViewModel!
     var connectionBarViewController: ConnectionBarViewController?
 
@@ -60,7 +59,7 @@ final class CountriesViewController: UIViewController {
 
         tabBarItem.accessibilityIdentifier = "Countries"
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         viewModel.delegate = self
@@ -76,25 +75,25 @@ final class CountriesViewController: UIViewController {
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupAnnouncements()
         }
     }
-    
+
     private func setupView() {
         navigationItem.title = Localizable.countries
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
-    
+
     private func setupConnectionBar() {
-        if let connectionBarViewController = connectionBarViewController {
+        if let connectionBarViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
-    
+
     private func setupSecureCoreBar() {
         secureCoreSeparator.backgroundColor = .normalSeparatorColor()
         secureCoreSeparatorHeight.constant = 1 / UIScreen.main.scale
@@ -102,7 +101,7 @@ final class CountriesViewController: UIViewController {
         secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = Localizable.useSecureCore
         secureCoreSwitch.accessibilityIdentifier = "secureCoreSwitch"
-        if let viewModel = viewModel {
+        if let viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
@@ -110,7 +109,7 @@ final class CountriesViewController: UIViewController {
             let toOn = self?.viewModel?.secureCoreOn == true
             self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
                 DispatchQueue.main.async {
-                    guard let self = self else {
+                    guard let self else {
                         return
                     }
 
@@ -123,7 +122,7 @@ final class CountriesViewController: UIViewController {
             }
         }
     }
-    
+
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
@@ -136,23 +135,24 @@ final class CountriesViewController: UIViewController {
         tableView.register(BannerViewCell.nib, forCellReuseIdentifier: BannerViewCell.identifier)
         tableView.register(OfferBannerViewCell.nib, forCellReuseIdentifier: OfferBannerViewCell.identifier)
     }
-    
+
     private func setupNavigationBar() {
         let infoButton = UIBarButtonItem(image: IconProvider.infoCircle, style: .plain, target: self, action: #selector(displayServicesInfo))
         let searchButton = UIBarButtonItem(image: IconProvider.magnifier, style: .plain, target: self, action: #selector(showSearch))
         searchButton.accessibilityIdentifier = "countrySearchButton"
         navigationItem.rightBarButtonItems = [searchButton, infoButton]
     }
-    
-    @objc private func displayServicesInfo() {
+
+    @objc
+    private func displayServicesInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.servicesInfo
         let vc = ServersFeaturesInformationVC(viewModel)
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true, completion: nil)
     }
-    
+
     private func contentChanged() {
-        guard let viewModel = viewModel else { return }
+        guard let viewModel else { return }
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
@@ -167,64 +167,65 @@ final class CountriesViewController: UIViewController {
             return
         }
 
-        self.navigationController?.pushViewController(countryViewController, animated: true)
+        navigationController?.pushViewController(countryViewController, animated: true)
     }
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.numberOfSections()
+    func numberOfSections(in _: UITableView) -> Int {
+        viewModel.numberOfSections()
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if viewModel.numberOfSections() < 2 {
             return nil
         }
-        
+
         guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView else {
             return nil
         }
-        
+
         headerView.setName(name: viewModel.titleFor(section: section) ?? "")
         headerView.callback = viewModel.callback(forSection: section)
 
         return headerView
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return viewModel.headerHeight(for: section)
+
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        viewModel.headerHeight(for: section)
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows(in: section)
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.numberOfRows(in: section)
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {
-        case .serverGroup(let viewModel):
+        case let .serverGroup(viewModel):
             guard let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryCell.identifier) as? CountryCell else {
                 return UITableViewCell()
             }
             countryCell.viewModel = viewModel
             return countryCell
 
-        case .profile(let viewModel):
+        case let .profile(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DefaultProfileTableViewCell.identifier) as? DefaultProfileTableViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = viewModel
             return cell
 
-        case .banner(let viewModel):
+        case let .banner(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: BannerViewCell.identifier) as? BannerViewCell else {
                 return UITableViewCell()
             }
             cell.viewModel = viewModel
             return cell
-        case .offerBanner(let viewModel):
+
+        case let .offerBanner(viewModel):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: OfferBannerViewCell.identifier) as? OfferBannerViewCell else {
                 return UITableViewCell()
             }
@@ -233,20 +234,20 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = viewModel.cellModel(for: indexPath.row, in: indexPath.section)
         switch cellModel {
-        case .serverGroup(let viewModel):
+        case let .serverGroup(viewModel):
             showCountry(cellModel: viewModel)
 
         case .profile:
             // Default profile cell used atm intercepts clicks and handles them inside `DefaultProfileViewModel`.
             break
 
-        case .banner(let viewModel):
+        case let .banner(viewModel):
             viewModel.action()
 
-        case .offerBanner(let viewModel):
+        case let .offerBanner(viewModel):
             @Dependency(\.sessionService) var sessionService
             Task {
                 await viewModel.action(sessionService)
@@ -254,23 +255,20 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
 
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.1
+    func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
+        0.1
     }
 }
 
 // MARK: - CountriesVMDelegate
 
 extension CountriesViewController: CountriesVMDelegate {
-
     func onContentChange() {
         contentChanged()
         reloadSearch()
     }
 
-    func displayFastestConnectionInfo() {
-
-    }
+    func displayFastestConnectionInfo() {}
 
     func displayGatewayInfo() {
         let viewModel = ServersFeaturesInformationViewModelImplementation.gatewaysInfo

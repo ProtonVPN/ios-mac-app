@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Hermes
-import Domain
-import Sharing
 import Dependencies
+import Domain
+import Hermes
 import ProtonCoreFeatureFlags
+import Sharing
 
 private extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var hermesEnabled: Self {
@@ -35,8 +35,7 @@ private extension SharedKey where Self == FileStorageKey<[HermesResolver]>.Defau
 }
 
 extension HermesClient: @retroactive DependencyKey {
-    @Shared(.hermesResolvers)
-    private static var hermesResolvers
+    @Shared(.hermesResolvers) private static var hermesResolvers
 
     public static let liveValue: HermesClient = .init {
         guard FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS) else { return .init(value: false) }
@@ -50,7 +49,7 @@ extension HermesClient: @retroactive DependencyKey {
         @SharedReader(.hermesResolvers) var hermesResolvers
         return $hermesResolvers
     } validateHermesLocation: { location in
-        return HermesResolverLocationValidator.isValid(location) != nil
+        HermesResolverLocationValidator.isValid(location) != nil
     } addHermesResolver: { newResolver in
         let newResolvers = hermesResolvers + [newResolver]
         $hermesResolvers.withLock { $0 = newResolvers }

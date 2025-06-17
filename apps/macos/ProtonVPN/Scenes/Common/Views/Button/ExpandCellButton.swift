@@ -21,23 +21,23 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 class ExpandCellButton: HoverDetectionButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         configureButton()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()
     }
-        
+
     private func configureButton() {
         wantsLayer = true
-        contentTintColor = self.color(.icon)
+        contentTintColor = color(.icon)
         DarkAppearance {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)

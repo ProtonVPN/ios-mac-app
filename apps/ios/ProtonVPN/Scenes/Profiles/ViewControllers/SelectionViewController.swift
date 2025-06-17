@@ -36,38 +36,37 @@ struct SelectionDataSet {
     var dataTitle: String
     var data: [SelectionSection]
     var selectedIndex: IndexPath?
-    
+
     public func section(at index: Int) -> SelectionSection {
-        return data[index]
+        data[index]
     }
-    
+
     public func item(at indexPath: IndexPath) -> SelectionRow {
-        return section(at: indexPath.section).cells[indexPath.row]
+        section(at: indexPath.section).cells[indexPath.row]
     }
 }
 
 class SelectionViewController: UIViewController {
-    
-    @IBOutlet weak var tableView: UITableView!
-    
+    @IBOutlet var tableView: UITableView!
+
     var dataSet: SelectionDataSet!
     var dataSelected: ((Any) -> Void)?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
         setupTableView()
     }
-    
+
     func setupView() {
-        self.title = dataSet.dataTitle
+        title = dataSet.dataTitle
     }
-    
+
     func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
+
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.backgroundColor = .backgroundColor()
         tableView.rowHeight = UIConstants.cellHeight
@@ -79,11 +78,10 @@ class SelectionViewController: UIViewController {
 }
 
 extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSet.data.count
+    func numberOfSections(in _: UITableView) -> Int {
+        dataSet.data.count
     }
-    
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
             if let title = dataSet.section(at: section).title {
@@ -93,23 +91,22 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UIView()
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if dataSet.section(at: section).title != nil {
             return UIConstants.headerHeight
         }
         return 0.0
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSet.data[section].cells.count
+
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataSet.data[section].cells.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: SelectionTableViewCell.identifier, for: indexPath) as? SelectionTableViewCell {
-            
             cell.nameLabel.attributedText = dataSet.item(at: indexPath).title
-            
+
             if let index = dataSet.selectedIndex, index == indexPath {
                 cell.accessoryType = .checkmark
                 tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -120,7 +117,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UITableViewCell()
     }
-    
+
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         let sectionCount = numberOfSections(in: tableView)
         if section == sectionCount - 1 {
@@ -128,7 +125,7 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
-    
+
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if let oldIndex = tableView.indexPathForSelectedRow {
             tableView.cellForRow(at: oldIndex)?.accessoryType = .none
@@ -138,8 +135,8 @@ extension SelectionViewController: UITableViewDelegate, UITableViewDataSource {
         dataSelected?(dataSet.item(at: indexPath).object)
         return indexPath
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.popViewController(animated: true)
+
+    func tableView(_: UITableView, didSelectRowAt _: IndexPath) {
+        navigationController?.popViewController(animated: true)
     }
 }

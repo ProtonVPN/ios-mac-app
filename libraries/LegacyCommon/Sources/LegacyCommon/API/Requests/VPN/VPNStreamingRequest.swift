@@ -23,13 +23,12 @@
 import ProtonCoreNetworking
 
 final class VPNStreamingRequest: Request {
-        
     var path: String {
-        return "/vpn/v1/streamingservices"
+        "/vpn/v1/streamingservices"
     }
 
     var isAuth: Bool {
-        return false
+        false
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

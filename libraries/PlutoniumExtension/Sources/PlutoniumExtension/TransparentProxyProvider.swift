@@ -16,18 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Foundation
+import Logging
 import NetworkExtension
 import os
-import Logging
 import PMLogger
-import ComposableArchitecture
 
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
-
-    public override init() {
+    override public init() {
         super.init()
         setupLogs()
     }
@@ -42,18 +41,18 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }()
 
-    open override func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startProxy(options _: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
         guard case .enabled = feature else {
             log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
             completionHandler(PlutoniumError.featureDisabled)
-            self.stopProxy(with: .none, completionHandler: {})
+            stopProxy(with: .none, completionHandler: {})
             return
         }
 
         let settings = createNetworkSettings()
         setTunnelNetworkSettings(settings) { error in
-            if let error = error {
+            if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
             } else {
                 log.info("Successfully set tunnel network settings.")
@@ -62,12 +61,12 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }
 
-    open override func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+    override open func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         log.debug("Stopping proxy provider with reason: \(reason)")
         completionHandler()
     }
 
-    open override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
+    override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
 
         guard let inclusionHelper else {
@@ -143,6 +142,6 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 }

@@ -20,7 +20,6 @@ import SwiftUI
 import Theme
 
 public struct MapPin: View {
-
     @Binding var mode: Mode
 
     @Environment(\.accessibilityReduceMotion) var reduceMotion
@@ -53,15 +52,18 @@ public struct MapPin: View {
 
     var externalGradientCircle: some View {
         Circle()
-            .fill(RadialGradient(colors: [mode.color,
-                                          mode.color.opacity(0.01)],
-                                 center: .center,
-                                 startRadius: 96,
-                                 endRadius: 0))
+            .fill(RadialGradient(
+                colors: [
+                    mode.color,
+                    mode.color.opacity(0.01),
+                ],
+                center: .center,
+                startRadius: 96,
+                endRadius: 0
+            ))
             .opacity(0.5)
             .frame(width: 96, height: 96)
             .withPhaseAnimation(reduceMotion: reduceMotion)
-
     }
 }
 
@@ -71,13 +73,13 @@ extension View {
         if #available(iOS 17.0, *) {
             self
                 .phaseAnimator(AnimationPhase.allCases) { content, phase in
-                content
-                    .scaleEffect(phase.scaleEffect)
-                    .rotationEffect(phase.rotationEffect)
-            } animation: {
-                guard !reduceMotion else { return nil }
-                return $0.animation
-            }
+                    content
+                        .scaleEffect(phase.scaleEffect)
+                        .rotationEffect(phase.rotationEffect)
+                } animation: {
+                    guard !reduceMotion else { return nil }
+                    return $0.animation
+                }
         } else {
             self
         }
@@ -110,11 +112,11 @@ private enum AnimationPhase: CaseIterable {
     var animation: Animation {
         switch self {
         case .wait:
-            return .easeInOut(duration: 2)
+            .easeInOut(duration: 2)
         case .initial:
-            return .smooth(duration: 0.75)
+            .smooth(duration: 0.75)
         case .scale:
-            return .easeInOut(duration: 0.75)
+            .easeInOut(duration: 0.75)
         }
     }
 
@@ -131,33 +133,34 @@ private enum AnimationPhase: CaseIterable {
     var rotationEffect: Angle {
         switch self {
         case .wait:
-            return .degrees(180)
+            .degrees(180)
         case .initial:
-            return .degrees(90)
+            .degrees(90)
         case .scale:
-            return .degrees(0)
+            .degrees(0)
         }
     }
 }
 
 // MARK: - Preview
-#if compiler(>=6)
-@available(iOS 17, *)
-#Preview {
-    @Previewable @State var mode: MapPin.Mode = .exitConnected
 
-    VStack {
-        MapPin(mode: $mode)
-        ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
-            Button {
-                withAnimation {
-                    mode = newMode
+#if compiler(>=6)
+    @available(iOS 17, *)
+    #Preview {
+        @Previewable @State var mode: MapPin.Mode = .exitConnected
+
+        VStack {
+            MapPin(mode: $mode)
+            ForEach(MapPin.Mode.allCases, id: \.self) { newMode in
+                Button {
+                    withAnimation {
+                        mode = newMode
+                    }
+                } label: {
+                    Text(String(describing: newMode))
                 }
-            } label: {
-                Text(String(describing: newMode))
             }
         }
     }
-}
 
 #endif

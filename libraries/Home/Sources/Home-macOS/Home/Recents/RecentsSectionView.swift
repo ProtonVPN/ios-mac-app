@@ -24,13 +24,12 @@ import ProtonCoreUIFoundations
 
 import Domain
 import HomeShared
-import VPNAppCore
+import SharedViews
 import Strings
 import Theme
-import SharedViews
+import VPNAppCore
 
 struct RecentsSectionView: View {
-
     let items: [RecentConnection]
 
     let sendAction: HomeFeature.ActionSender
@@ -44,10 +43,10 @@ struct RecentsSectionView: View {
             } label: {
                 HStack(spacing: .themeSpacing4) {
                     (recentsHidden
-                     ? IconProvider.chevronRightFilled
-                     : IconProvider.chevronDownFilled)
-                    .resizable()
-                    .frame(.square(16))
+                        ? IconProvider.chevronRightFilled
+                        : IconProvider.chevronDownFilled)
+                        .resizable()
+                        .frame(.square(16))
                     Text(Localizable.homeRecentsRecentSection)
                     Spacer()
                         .frame(maxWidth: .infinity)
@@ -68,18 +67,21 @@ struct RecentsSectionView: View {
 
 struct HomeRecentsSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        let store: StoreOf<HomeFeature> = .init(initialState:
-            .init(connections: [
-                RecentConnection.pinnedConnection, // first is ignored
-                .pinnedConnection,
-                .connectionRegion,
-                .connectionRegionPinned, // maintenance
-                .connectionSecureCore, // maintenance
-                .connectionSecureCoreFastest
-            ],
-                  connectionStatus: .init(protectionState: .protected(netShield: .random)),
-                  vpnConnectionStatus: .disconnected),
-                                                reducer: { HomeFeature() }
+        let store: StoreOf<HomeFeature> = .init(
+            initialState:
+            .init(
+                connections: [
+                    RecentConnection.pinnedConnection, // first is ignored
+                    .pinnedConnection,
+                    .connectionRegion,
+                    .connectionRegionPinned, // maintenance
+                    .connectionSecureCore, // maintenance
+                    .connectionSecureCoreFastest,
+                ],
+                connectionStatus: .init(protectionState: .protected(netShield: .random)),
+                vpnConnectionStatus: .disconnected
+            ),
+            reducer: { HomeFeature() }
         )
         WithViewStore(store, observe: { $0 }) { store in
             RecentsSectionView(

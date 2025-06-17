@@ -22,24 +22,23 @@
 
 import Cocoa
 
-@NSApplicationMain
+@main
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         let mainAppIdentifier = "ch.protonvpn.mac"
         let running = NSWorkspace.shared.runningApplications
         var alreadyRunning = false
-        
+
         for app in running {
             if app.bundleIdentifier == mainAppIdentifier {
                 alreadyRunning = true
                 break
             }
         }
-        
+
         if !alreadyRunning {
             DistributedNotificationCenter.default().addObserver(self, selector: #selector(terminate), name: Notification.Name("killMe"), object: mainAppIdentifier)
-            
+
             let path = Bundle.main.bundlePath as NSString
             var components = path.pathComponents
             components.removeLast()
@@ -47,16 +46,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             components.removeLast()
             components.append("MacOS")
             components.append("ProtonVPN")
-            
+
             let newPath = NSString.path(withComponents: components)
-            
+
             NSWorkspace.shared.launchApplication(newPath)
         } else {
             terminate()
         }
     }
-    
-    @objc func terminate() {
+
+    @objc
+    func terminate() {
         NSApp.terminate(nil)
     }
 }

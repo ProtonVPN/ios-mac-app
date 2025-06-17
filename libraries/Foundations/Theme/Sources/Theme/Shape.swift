@@ -17,23 +17,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(SwiftUI)
-import SwiftUI
+    import SwiftUI
 
-extension Shape {
-    /// Stroke and fill the shape in one single modifier.
-    ///
-    /// From: https://www.swiftbysundell.com/articles/stroking-and-filling-a-swiftui-shape-at-the-same-time/
-    /// - Parameters:
-    ///   - strokeContent: The color or gradient with which to stroke this shape.
-    ///   - lineWidth: The width of the stroke that outlines this shape.
-    ///   - fillContent: The style options that determine how the fill renders.
-    /// - Returns: A stroked and filled shape.
-    public func style<S: ShapeStyle, F: ShapeStyle>(
-        withStroke strokeContent: S,
-        lineWidth: CGFloat = 1,
-        fill fillContent: F
-    ) -> some View {
-        stroke(strokeContent, lineWidth: lineWidth).background(fill(fillContent))
+    public extension Shape {
+        /// Stroke and fill the shape in one single modifier.
+        ///
+        /// From: https://www.swiftbysundell.com/articles/stroking-and-filling-a-swiftui-shape-at-the-same-time/
+        /// - Parameters:
+        ///   - strokeContent: The color or gradient with which to stroke this shape.
+        ///   - lineWidth: The width of the stroke that outlines this shape.
+        ///   - fillContent: The style options that determine how the fill renders.
+        /// - Returns: A stroked and filled shape.
+        func style(
+            withStroke strokeContent: some ShapeStyle,
+            lineWidth: CGFloat = 1,
+            fill fillContent: some ShapeStyle
+        ) -> some View {
+            stroke(strokeContent, lineWidth: lineWidth).background(fill(fillContent))
+        }
     }
-}
 #endif

@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import NetShieldShared
+import XCTest
 
 final class NetShieldStatsNumberFormatterTests: XCTestCase {
-
     var formatter = {
         let formatter = NetShieldStatsNumberFormatter()
         formatter.decimalSeparator = "."
@@ -43,7 +42,7 @@ final class NetShieldStatsNumberFormatterTests: XCTestCase {
     }
 
     func test1234() throws {
-        let string = formatter.string(from: 1_234)
+        let string = formatter.string(from: 1234)
         XCTAssertEqual(string, "1.2 K")
     }
 

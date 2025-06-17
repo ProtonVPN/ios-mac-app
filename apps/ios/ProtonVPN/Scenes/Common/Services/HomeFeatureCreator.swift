@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
-import Strings
-import ProtonCoreUIFoundations
-import SwiftUI
+import ComposableArchitecture
+import Dependencies
 import Domain
 import Home
-import Settings
-import Dependencies
-import ComposableArchitecture
-import NEHelper
-import VPNAppCore
 import LegacyCommon
+import NEHelper
+import ProtonCoreUIFoundations
+import Settings
+import Strings
+import SwiftUI
+import UIKit
+import VPNAppCore
 
 enum HomeFeatureCreator {
     static func loadInitialState() -> HomeFeature.State {
@@ -35,7 +35,7 @@ enum HomeFeatureCreator {
             // Set initial values of properties that can't be loaded easily from user defaults
             @Dependency(\.defaultConnectionStorage) var storage
             @Shared(.defaultConnectionPreference) var defaultConnectionPreference
-            try $defaultConnectionPreference.withLock { $0 = ((try storage.getPreference()) ?? .fastest) }
+            try $defaultConnectionPreference.withLock { $0 = try ((storage.getPreference()) ?? .fastest) }
         } catch {
             log.error("Failed to load initial state: \(error)")
         }

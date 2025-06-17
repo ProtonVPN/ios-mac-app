@@ -36,25 +36,24 @@ public enum Flag: Equatable {
         // VPNAPPL-2543: Refer to static assets via swiftgen asset, instead of hardcoded name
         switch self {
         case .fastest:
-            return "Fastest"
+            "Fastest"
 
         case .mostRecent:
-            return "MostRecent"
+            "MostRecent"
 
         case .random:
-            return "Random"
+            "Random"
 
         case .gateway:
-            return "Gateway"
+            "Gateway"
 
-        case .country(let code):
-            return code
+        case let .country(code):
+            code
         }
     }
 }
 
 public struct FlagSizes {
-
     let frame: CGSize
 
     // Simple flag
@@ -74,7 +73,7 @@ public struct FlagSizes {
             frame: CGSize(width: 30, height: 24),
             simpleFlag: CGSize(width: 30, height: 20),
             scTopFlag: CGSize(width: 24, height: 16),
-            scBottomFlag: CGSize(width: 18, height: 12), 
+            scBottomFlag: CGSize(width: 18, height: 12),
             cornerRadius: .themeRadius4,
             folder: "Flags/"
         )
@@ -128,9 +127,11 @@ public struct SimpleFlagView: View {
             .swiftUIImage
             .resizable()
             .cornerRadius(cornerRadius * scale)
-            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale}
-            .frame(width: startSize.width * scale,
-                   height: startSize.height * scale)
+            .alignmentGuide(.firstTextBaseline) { $0[.bottom] - (startSize.height / 5) * scale }
+            .frame(
+                width: startSize.width * scale,
+                height: startSize.height * scale
+            )
     }
 
     fileprivate init(regionCode: String, size: CGSize, cornerRadius: CGFloat = .themeRadius4) {
@@ -172,12 +173,14 @@ private struct FlagShadowView: View {
             path.addLine(to: .init(x: (flagSize.scBottomFlag.width - (flagSize.frame.width - flagSize.scTopFlag.width - 1)) * scale, y: 6 * scale))
         }
         .stroke(shadowColor, lineWidth: 2 * scale)
-        .frame(width: flagSize.scBottomFlag.width * scale,
-               height: flagSize.scBottomFlag.height * scale)
+        .frame(
+            width: flagSize.scBottomFlag.width * scale,
+            height: flagSize.scBottomFlag.height * scale
+        )
     }
 }
 
-fileprivate struct SecureCoreFlagCurveView: View {
+private struct SecureCoreFlagCurveView: View {
     let curveColor: Color
 
     public let startSize: CGSize
@@ -207,7 +210,7 @@ public struct SecureCoreFlagView: View {
     public let regionCode: String
     public let viaRegionCode: String?
     public let flagShadowColor: Color = .black.opacity(0.4)
-    public let flagCurveColor: Color = Color(.text, .hint)
+    public let flagCurveColor: Color = .init(.text, .hint)
 
     let flagSize: FlagSizes
     @ScaledMetric var scale: CGFloat = 1
@@ -218,8 +221,10 @@ public struct SecureCoreFlagView: View {
                 ImageAsset(name: "Flags/\(viaRegionCode)")
                     .swiftUIImage
                     .resizable()
-                    .frame(width: flagSize.scBottomFlag.width * scale,
-                           height: flagSize.scBottomFlag.height * scale)
+                    .frame(
+                        width: flagSize.scBottomFlag.width * scale,
+                        height: flagSize.scBottomFlag.height * scale
+                    )
                     .cornerRadius(.themeRadius2½ * scale)
                     .padding([.top], (flagSize.frame.height - flagSize.scBottomFlag.height) * scale)
 
@@ -233,8 +238,10 @@ public struct SecureCoreFlagView: View {
 
             } else {
                 SecureCoreFlagCurveView(curveColor: flagCurveColor, startSize: flagSize.simpleFlag)
-                    .frame(width: flagSize.simpleFlag.width * scale,
-                           height: flagSize.simpleFlag.height * scale)
+                    .frame(
+                        width: flagSize.simpleFlag.width * scale,
+                        height: flagSize.simpleFlag.height * scale
+                    )
                     .offset(x: -3 * scale, y: 3 * scale)
 
                 SimpleFlagView(regionCode: regionCode, size: flagSize.simpleFlag)
@@ -256,7 +263,6 @@ public struct SecureCoreFlagView: View {
 
 #Preview("Baseline Alignment") {
     VStack(alignment: .leading) {
-
         HStack(alignment: .firstTextBaseline) {
             SimpleFlagView(regionCode: "CH", flagSize: .defaultSize)
             Text("Switzerland")

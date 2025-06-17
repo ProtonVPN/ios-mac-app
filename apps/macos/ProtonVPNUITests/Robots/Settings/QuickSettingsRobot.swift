@@ -17,65 +17,63 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
-fileprivate let secureCoreButton = "SecureCoreButton"
-fileprivate let netShieldButton = "NetShieldButton"
-fileprivate let killSwitchButton = "KillSwitchButton"
-fileprivate let qsTitle = "QSTitle"
-fileprivate let qsDescription = "QSDescription"
-fileprivate let learnMoreButton = "LearnMoreButton"
-fileprivate let qsNote = "QSNote"
-fileprivate let upgradeButton = "UpgradeButton"
-fileprivate let killSwitchModalTitle = "Turn Kill Switch on?"
-fileprivate let notNowButton = "Not now"
-fileprivate let continueButton = "Continue"
-fileprivate let modalUpgradeButton = "ModalUpgradeButton"
-fileprivate let modalTitle = "TitleLabel"
-fileprivate let modalDescription = "DescriptionLabel"
+private let secureCoreButton = "SecureCoreButton"
+private let netShieldButton = "NetShieldButton"
+private let killSwitchButton = "KillSwitchButton"
+private let qsTitle = "QSTitle"
+private let qsDescription = "QSDescription"
+private let learnMoreButton = "LearnMoreButton"
+private let qsNote = "QSNote"
+private let upgradeButton = "UpgradeButton"
+private let killSwitchModalTitle = "Turn Kill Switch on?"
+private let notNowButton = "Not now"
+private let continueButton = "Continue"
+private let modalUpgradeButton = "ModalUpgradeButton"
+private let modalTitle = "TitleLabel"
+private let modalDescription = "DescriptionLabel"
 
 class QuickSettingsRobot: CoreElements {
-    
     func secureCoreDropdown() -> QuickSettingsRobot {
         button(secureCoreButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func netShieldDropdown() -> QuickSettingsRobot {
         button(netShieldButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func killSwitchDropdown() -> QuickSettingsRobot {
         button(killSwitchButton).tapInCenter()
         return QuickSettingsRobot()
     }
-    
+
     func continueEnable() -> QuickSettingsRobot {
         button(continueButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func enableNotNow() -> QuickSettingsRobot {
         button(notNowButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func upgradeFeature() -> QuickSettingsRobot {
         button(upgradeButton).forceTap()
         return QuickSettingsRobot()
     }
-    
+
     func closeUpsellModal() -> QuickSettingsRobot {
         dialog().firstMatch().onChild(button("_XCUI:CloseWindow")).tap()
         return QuickSettingsRobot()
     }
-    
+
     let verify = Verify()
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func checkDropdownIsOpen() -> QuickSettingsRobot {
             staticText(qsTitle).checkExists()
@@ -84,13 +82,13 @@ class QuickSettingsRobot: CoreElements {
             staticText(qsNote).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkUpgradeRequired() -> QuickSettingsRobot {
             button(upgradeButton).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkModalIsOpen() -> QuickSettingsRobot {
             staticText("By activating Kill Switch, you won't be able to access devices on your local network. ").checkExists()
@@ -98,7 +96,7 @@ class QuickSettingsRobot: CoreElements {
             button(continueButton).checkExists()
             return QuickSettingsRobot()
         }
-        
+
         @discardableResult
         func checkUpsellModalIsOpen() -> QuickSettingsRobot {
             staticText(modalTitle).checkExists()

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Collections
 import ComposableArchitecture
-import SharedViews
 import Domain
+import Foundation
+import SharedViews
 import Strings
 
 public struct ConnectionPreferenceModel: Equatable, Hashable {
@@ -47,6 +47,6 @@ public struct ConnectionPreferenceModel: Equatable, Hashable {
                 header: .init(title: Localizable.homeDefaultConnectionMostRecentName, showConnectedPin: false),
                 subheader: .textual(.withoutFeatures(location: Localizable.homeDefaultConnectionMostRecentDescription))
             )
-        )
+        ),
     ]
 }

@@ -18,12 +18,11 @@
 
 import XCTest
 
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 /// This test case verifies that all tests operate on the same shared ephemeral database
 final class CaseIsolatedTestCaseTests: CaseIsolatedDatabaseTestCase {
-
     static var expectedEntriesInDatabase = 0
 
     func testInsertingServer1() {
@@ -41,7 +40,6 @@ final class CaseIsolatedTestCaseTests: CaseIsolatedDatabaseTestCase {
 
 /// This test case verifies that all tests operate on their own ephemeral databases
 final class TestIsolatedTestCaseTests: TestIsolatedDatabaseTestCase {
-
     func testInsertingServer1() {
         repository.upsert(servers: [TestData.createMockServer(withID: "paid1", tier: 0)])
         XCTAssertEqual(repository.serverCount(), 1)

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Domain
-import Theme
 import ComposableArchitecture
+import Domain
 import SettingsShared
+import SwiftUI
+import Theme
 
 struct KeychainDebugView: View {
     @Binding var store: StoreOf<KeychainDebugFeature>
@@ -35,7 +35,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private var content: some View {
+    @ViewBuilder
+    private var content: some View {
         switch store.content {
         case .none:
             ProgressView()
@@ -44,7 +45,7 @@ struct KeychainDebugView: View {
         case .loading:
             ProgressView()
 
-        case .loaded(let data):
+        case let .loaded(data):
             Form {
                 Section("VPN Authentication Keychain") {
                     vpnKeysCell(keys: data.keys)
@@ -55,7 +56,7 @@ struct KeychainDebugView: View {
                 .styled(.hint)
                 .padding(.all)
 
-        case .failed(let error):
+        case let .failed(error):
             HStack(alignment: .center) {
                 VStack(alignment: .center, spacing: 20) {
                     Image(systemName: "exclamationmark.triangle")
@@ -66,7 +67,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func vpnKeysCell(keys: KeychainDebugFeature.State.AuthKeychainData.Keys?) -> some View {
+    @ViewBuilder
+    private func vpnKeysCell(keys: KeychainDebugFeature.State.AuthKeychainData.Keys?) -> some View {
         if let keys {
             VStack(alignment: .leading) {
                 HStack {
@@ -94,7 +96,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func certificateCell(certificate: KeychainDebugFeature.State.AuthKeychainData.Certificate?) -> some View {
+    @ViewBuilder
+    private func certificateCell(certificate: KeychainDebugFeature.State.AuthKeychainData.Certificate?) -> some View {
         if let certificate {
             VStack(alignment: .leading) {
                 Text("Certificate")
@@ -118,7 +121,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func featuresCell(features: VPNConnectionFeatures?) -> some View {
+    @ViewBuilder
+    private func featuresCell(features: VPNConnectionFeatures?) -> some View {
         if let features {
             VStack(alignment: .leading) {
                 Text("Certificate Features")
@@ -135,7 +139,8 @@ struct KeychainDebugView: View {
         }
     }
 
-    @ViewBuilder private func cell(title: String, value: String) -> some View {
+    @ViewBuilder
+    private func cell(title: String, value: String) -> some View {
         Text(title)
             .styled(.disabled)
         copyableText(value)
@@ -171,5 +176,4 @@ struct FeaturesView: View {
             Text(value)
         }
     }
-
 }

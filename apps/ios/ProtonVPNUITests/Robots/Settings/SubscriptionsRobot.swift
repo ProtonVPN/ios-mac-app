@@ -20,14 +20,12 @@ import Foundation
 import fusion
 import XCTest
 
-fileprivate let upgradeSubscriptionTitle = "Upgrade your plan"
+private let upgradeSubscriptionTitle = "Upgrade your plan"
 
 class SubscriptionsRobot: CoreElements {
-
     let verify = Verify()
 
     class Verify: CoreElements {
-
         @discardableResult
         public func verifyTableCellStaticText(cellName: String, text: String) -> SubscriptionsRobot {
             let planCell = table("PaymentsUIViewController.tableView").onChild(cell(cellName))

@@ -1,5 +1,5 @@
 //
-//  ConnectingWindow.swift
+//  ConnectingWindowController.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,39 +23,37 @@
 import Cocoa
 
 class ConnectingWindowController: WindowController {
-        
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: ConnectingViewController) {
         let window = ConnectingOverlayWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
-        
+
         window.styleMask = .borderless
         window.backgroundColor = NSColor.clear
         window.isOpaque = false
         window.hasShadow = false
         window.appearance = NSAppearance(named: .darkAqua)
-        
+
         window.ignoresMouseEvents = false
     }
 }
 
 class ConnectingOverlayWindow: NSWindow {
-    
     // This makes `addCursorRect` in `ConnectingOverlayButton` work.
     override var canBecomeKey: Bool {
-        return true
+        true
     }
-    
 }

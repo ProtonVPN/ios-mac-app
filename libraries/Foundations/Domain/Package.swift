@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -8,7 +8,7 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .tvOS(.v17),
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(name: "Domain", targets: ["Domain"]),
@@ -21,7 +21,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.0.2")),
-        .package(path: "../../../external/protoncore") // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
+        .package(path: "../../../external/protoncore"), // Heavy dependency - logic that requires ProtonCore could live as extensions in another package
     ],
     targets: [
         .executableTarget(name: "errordecoder", path: "Sources/ErrorDecoder"),

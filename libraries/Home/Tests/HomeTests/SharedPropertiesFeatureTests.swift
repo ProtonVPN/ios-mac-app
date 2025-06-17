@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
+@testable import CommonNetworking
 import ComposableArchitecture
 import Domain
 import Ergonomics
-@testable import CommonNetworking
 @testable import HomeShared
+import XCTest
 
 @MainActor
 final class SharedPropertiesFeatureTests: XCTestCase {
-
     func testFetchesLoadsOnIPChange() async {
         @Shared(.connectionState) var connectionState = .disconnected
         let loadsFetched = XCTestExpectation(description: "We should hit the API to fetch server loads")
@@ -62,7 +61,7 @@ final class SharedPropertiesFeatureTests: XCTestCase {
         } withDependencies: {
             $0.date = .constant(now)
             $0.continuousClock = clock
-            $0.logicalsClient.fetchLoads = { _ in return [] }
+            $0.logicalsClient.fetchLoads = { _ in [] }
             $0.serverRepository = .init(upsertLoads: { _ in })
         }
         store.exhaustivity = .off

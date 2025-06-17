@@ -1,5 +1,5 @@
 //
-//  VpnAuthenticationKeychain.swift
+//  VpnAuthenticationStorageSync.swift
 //  vpncore - Created on 16.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
 import Domain
+import Foundation
 
 public protocol VpnAuthenticationStorageFactory {
     func makeVpnAuthenticationStorage() -> VpnAuthenticationStorageSync
@@ -59,13 +59,13 @@ public enum VPNAuthenticationStorageKey: DependencyKey {
     public static let liveValue: VpnAuthenticationStorageSync = VpnAuthenticationKeychain()
 }
 
-extension DependencyValues {
-    public var vpnAuthenticationStorage: VpnAuthenticationStorageSync {
+public extension DependencyValues {
+    var vpnAuthenticationStorage: VpnAuthenticationStorageSync {
         get { self[VPNAuthenticationStorageKey.self] }
         set { self[VPNAuthenticationStorageKey.self] = newValue }
     }
 
-    public var vpnAuthenticationStorageConfig: String {
+    var vpnAuthenticationStorageConfig: String {
         get { self[VPNAuthenticationStorageConfigKey.self] }
         set { self[VPNAuthenticationStorageConfigKey.self] = newValue }
     }

@@ -16,16 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ModalsShared
 import Foundation
-import UIKit
+import ModalsShared
 import Theme
+import UIKit
 
 final class FeatureView: UIView {
-
     // MARK: Outlets
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
+
+    @IBOutlet private var iconImageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 
@@ -54,6 +54,6 @@ final class FeatureView: UIView {
 
 private extension AppTheme.FontSize {
     static var customFeatureViewFontSize: CGFloat {
-        return 15.0
+        15.0
     }
 }

@@ -24,61 +24,60 @@ import Cocoa
 
 // Use for buttons that shouldn't hover when obscured (less efficient than HoverDetectionButton)
 class HoverDetectionButtonAdvanced: NSButton {
-    
     var isHovered: Bool = false {
         didSet {
             resetCursorRects()
             needsDisplay = true
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         layer?.masksToBounds = false
-        
+
         isBordered = false
         setButtonType(.momentaryChange)
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         layer?.masksToBounds = false
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         if isEnabled {
             updateHoveredState(with: event)
         }
     }
-    
+
     override func mouseMoved(with event: NSEvent) {
         if isEnabled {
             updateHoveredState(with: event)
         }
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         discardCursorRects()
         isHovered = false
     }
-    
+
     override func mouseDown(with event: NSEvent) {
         if let mouseInside = mouseInside(with: event), mouseInside {
             super.mouseDown(with: event)
         }
     }
-    
+
     override func updateTrackingAreas() {
         trackingAreas.forEach { removeTrackingArea($0) }
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.mouseMoved, NSTrackingArea.Options.activeAlways, NSTrackingArea.Options.inVisibleRect], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
-        
+
         updateHoveredState(with: nil)
-        
+
         super.updateTrackingAreas()
     }
-    
+
     override func resetCursorRects() {
         if isHovered {
             addCursorRect(bounds, cursor: .pointingHand)
@@ -87,24 +86,25 @@ class HoverDetectionButtonAdvanced: NSButton {
             NSCursor.arrow.set()
         }
     }
-    
+
     // MARK: - Private
+
     private func updateHoveredState(with event: NSEvent?) {
         let newHovered = mouseInside(with: event)
-        if let newHovered = newHovered, newHovered != isHovered {
+        if let newHovered, newHovered != isHovered {
             isHovered = newHovered
         }
     }
-    
+
     private func mouseInside(with event: NSEvent?) -> Bool? {
-        if let event = event {
+        if let event {
             // hit test before hovering incase a view is obscuring this one already
             guard let hitView = window?.contentView?.hitTest(event.locationInWindow) else { return nil }
-            
+
             return hitView === self
         } else {
-            guard let window = window else { return nil }
-            
+            guard let window else { return nil }
+
             let mouseInWindow = window.mouseLocationOutsideOfEventStream
             let mouseInView = convert(mouseInWindow, from: nil)
             return bounds.contains(mouseInView)

@@ -20,24 +20,23 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
-import Theme
 import Strings
+import Theme
+import UIKit
 
 final class SwitchTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
-    @IBOutlet weak var upsellImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var switchControl: ConfirmationToggleSwitch!
+    @IBOutlet var upsellImageView: UIImageView!
 
     var upsellTapped: (() -> Void)?
     var toggled: ((Bool, @escaping (Bool) -> Void) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.isSelected = false
+
+        isSelected = false
 
         backgroundColor = .secondaryBackgroundColor()
         label.textColor = .normalTextColor()
@@ -57,11 +56,12 @@ final class SwitchTableViewCell: UITableViewCell {
         }
 
         switchControl.tapped = { [unowned self] in
-            self.toggled?(!self.switchControl.isOn, update)
+            toggled?(!switchControl.isOn, update)
         }
     }
 
-    @IBAction func upsellImageViewTapped(_ sender: Any) {
+    @IBAction
+    func upsellImageViewTapped(_: Any) {
         guard let upsellTapped else {
             log.error("Upsell tapped but no upsell action has defined for this element")
             return
@@ -75,11 +75,12 @@ final class SwitchTableViewCell: UITableViewCell {
             log.assertionFailure("We shouldn't display cells for disabled features")
             // We shouldn't be showing UI for a feature that has been disabled, so just fall back to showing upsell
             fallthrough
+
         case .upsell:
             switchControl.isHidden = true
             upsellImageView.isHidden = false
 
-        case .available(let isOn, let isInterative):
+        case let .available(isOn, isInterative):
             switchControl.isHidden = false
             upsellImageView.isHidden = true
 

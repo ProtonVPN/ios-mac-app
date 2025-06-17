@@ -16,19 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import WidgetKit
-import VPNAppCore
-import Theme
-import Strings
-import ProtonCoreUIFoundations
 import Domain
+import ProtonCoreUIFoundations
 import SharedViews
+import Strings
+import SwiftUI
+import Theme
+import VPNAppCore
+import WidgetKit
 
 import ComposableArchitecture
 
-public struct ConnectWidgetView : View {
-
+public struct ConnectWidgetView: View {
     let entry: ConnectWidgetEntry
 
     @Environment(\.widgetFamily) var widgetFamily
@@ -55,7 +54,7 @@ public struct ConnectWidgetView : View {
                     ServerInfoView(entry: entry)
                     VStack(spacing: .themeSpacing16) {
                         ButtonsView(entry: entry)
-                        if (widgetFamily == .systemLarge) {
+                        if widgetFamily == .systemLarge {
                             RecentsView(entry: entry, geometry: geometry)
                         }
                     }
@@ -125,7 +124,6 @@ private struct HeaderView: View {
         }
         .frame(maxWidth: .infinity, idealHeight: 40)
     }
-
 }
 
 private struct ServerInfoView: View {
@@ -159,7 +157,6 @@ private struct ServerInfoView: View {
 }
 
 private struct RecentsView: View {
-
     private static let recentsHeight: CGFloat = 90
 
     @Environment(\.widgetFamily) var widgetFamily
@@ -225,9 +222,11 @@ private struct RecentsView: View {
                 .foregroundStyle(Color(.text, .weak))
 
             LazyHGrid(rows: [GridItem(.fixed(itemWidth))], spacing: .themeSpacing8) {
-                ForEach(Array(entry.recentServers.prefix(3).enumerated()),
-                        id: \.offset,
-                        content: recentItem)
+                ForEach(
+                    Array(entry.recentServers.prefix(3).enumerated()),
+                    id: \.offset,
+                    content: recentItem
+                )
             }
             .frame(height: Self.recentsHeight)
         }
@@ -244,12 +243,11 @@ private struct RecentsView: View {
     }
 }
 
-private struct ButtonsView : View {
+private struct ButtonsView: View {
     @Environment(\.widgetFamily) var widgetFamily
     let entry: ConnectWidgetEntry
 
-    var body: some View
-    {
+    var body: some View {
         switch entry.protectionState {
         case .protected:
             Button(intent: DisconnectFromVPNIntent()) {

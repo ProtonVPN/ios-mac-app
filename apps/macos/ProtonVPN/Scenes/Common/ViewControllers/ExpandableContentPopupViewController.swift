@@ -21,31 +21,30 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class ExpandableContentPopupViewController: NSViewController {
-    
     let viewModel: ExpandablePopupViewModel
-    
-    @IBOutlet weak var actionBtn: CancellationButton!
-    @IBOutlet weak var contentView: NSView!
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var popupImage: NSImageView!
-    @IBOutlet weak var headerLbl: NSTextField!
-    @IBOutlet weak var expandableLbl: NSTextField!
-    @IBOutlet weak var footerLbl: NSTextField!
-    @IBOutlet weak var displayMoreBtn: InteractiveActionButton!
-    @IBOutlet weak var hiddenContentHeightConstraint: NSLayoutConstraint!
-    
+
+    @IBOutlet var actionBtn: CancellationButton!
+    @IBOutlet var contentView: NSView!
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var popupImage: NSImageView!
+    @IBOutlet var headerLbl: NSTextField!
+    @IBOutlet var expandableLbl: NSTextField!
+    @IBOutlet var footerLbl: NSTextField!
+    @IBOutlet var displayMoreBtn: InteractiveActionButton!
+    @IBOutlet var hiddenContentHeightConstraint: NSLayoutConstraint!
+
     private var expanded = false
     private var animating = false
-    
+
     private let closedHeight: CGFloat = 0
     private lazy var expandedHeight: CGFloat = self.expandableLbl.realHeight(self.headerLbl.bounds.width)
-    
+
     required init(viewModel: ExpandablePopupViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("ExpandableContentPopup"), bundle: nil)
@@ -55,13 +54,14 @@ class ExpandableContentPopupViewController: NSViewController {
             }
         }
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = viewModel.title
@@ -87,20 +87,23 @@ class ExpandableContentPopupViewController: NSViewController {
     }
 
     // MARK: - Private
-    @objc private func didPressActionBtn() {
+
+    @objc
+    private func didPressActionBtn() {
         if animating { return }
         viewModel.action()
     }
-    
-    @objc private func expandBtnTap() {
+
+    @objc
+    private func expandBtnTap() {
         if animating { return }
         animating = true
         expanded = !expanded
-        
+
         displayMoreBtn.title = (expanded ? Localizable.lessInfo : Localizable.moreInfo) + "  "
         displayMoreBtn.image = expanded ? AppTheme.Icon.arrowUp : AppTheme.Icon.arrowDown
-        self.hiddenContentHeightConstraint.constant = self.expanded ? self.closedHeight : self.expandedHeight
-        self.expandableLbl.alphaValue = self.expanded ? 0 : 1
+        hiddenContentHeightConstraint.constant = expanded ? closedHeight : expandedHeight
+        expandableLbl.alphaValue = expanded ? 0 : 1
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = 0.15
             self.hiddenContentHeightConstraint.animator().constant = self.expanded ? self.expandedHeight : self.closedHeight

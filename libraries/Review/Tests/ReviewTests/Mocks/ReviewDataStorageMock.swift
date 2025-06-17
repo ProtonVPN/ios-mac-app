@@ -30,5 +30,5 @@ final class ReviewDataStorageMock: ReviewDataStorage {
         lastReviewShownTimestamp = nil
         activeConnectionStartTimestamp = nil
         firstSuccessConnectionStartTimestamp = nil
-    }    
+    }
 }

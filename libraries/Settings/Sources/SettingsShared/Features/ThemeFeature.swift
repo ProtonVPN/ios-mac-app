@@ -27,9 +27,9 @@ import Theme
 extension ColorScheme: @retroactive LocalizedStringConvertible {
     public var localizedDescription: String {
         switch self {
-        case .auto: return Localizable.settingsThemeValueAuto
-        case .light: return Localizable.settingsThemeValueLight
-        case .dark: return Localizable.settingsThemeValueDark
+        case .auto: Localizable.settingsThemeValueAuto
+        case .light: Localizable.settingsThemeValueLight
+        case .dark: Localizable.settingsThemeValueDark
         }
     }
 }
@@ -37,7 +37,7 @@ extension ColorScheme: @retroactive LocalizedStringConvertible {
 public struct ThemeSettingsFeature: Reducer {
     public typealias State = ColorScheme
 
-    public init() { }
+    public init() {}
 
     public enum Action: Equatable {
         case set(colorScheme: State)
@@ -45,7 +45,7 @@ public struct ThemeSettingsFeature: Reducer {
 
     public func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action {
-        case .set(let colorScheme):
+        case let .set(colorScheme):
             state = colorScheme
             return .none
         }

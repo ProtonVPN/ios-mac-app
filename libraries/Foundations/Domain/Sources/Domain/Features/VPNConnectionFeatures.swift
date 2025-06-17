@@ -38,11 +38,11 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         var result = [String: Any]()
         result[CodingKeys.netshield.rawValue] = netshield.rawValue
         result[CodingKeys.vpnAccelerator.rawValue] = vpnAccelerator
-        if let bouncing = bouncing {
+        if let bouncing {
             result[CodingKeys.bouncing.rawValue] = bouncing
         }
         result[CodingKeys.natType.rawValue] = natType.flag
-        if let safeMode = safeMode {
+        if let safeMode {
             result[CodingKeys.safeMode.rawValue] = safeMode
         }
         return result
@@ -55,7 +55,7 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
     }
 
     public func copyWithChanged(bouncing: String?) -> Self {
-        return copy(with: (field: \.bouncing, newValue: bouncing))
+        copy(with: (field: \.bouncing, newValue: bouncing))
     }
 }
 
@@ -70,21 +70,21 @@ extension VPNConnectionFeatures: Codable {
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        netshield = try values.decode(NetShieldType.self, forKey: .netshield)
-        vpnAccelerator = try values.decode(Bool.self, forKey: .vpnAccelerator)
-        bouncing = try values.decodeIfPresent(String.self, forKey: .bouncing)
+        self.netshield = try values.decode(NetShieldType.self, forKey: .netshield)
+        self.vpnAccelerator = try values.decode(Bool.self, forKey: .vpnAccelerator)
+        self.bouncing = try values.decodeIfPresent(String.self, forKey: .bouncing)
         if let natTypeValue = try values.decodeIfPresent(NATType.self, forKey: .natType) {
-            natType = natTypeValue
+            self.natType = natTypeValue
         } else {
-            natType = .default
+            self.natType = .default
         }
-        safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
     }
 }
 
-extension VPNConnectionFeatures {
-    public func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
-        let equalsWithoutSafeMode = self.netshield == other?.netshield && self.vpnAccelerator == other?.vpnAccelerator && self.bouncing == other?.bouncing && self.natType == other?.natType
+public extension VPNConnectionFeatures {
+    func equals(other: VPNConnectionFeatures?, safeModeFeatureEnabled: Bool) -> Bool {
+        let equalsWithoutSafeMode = netshield == other?.netshield && vpnAccelerator == other?.vpnAccelerator && bouncing == other?.bouncing && natType == other?.natType
 
         // if Safe Mode is disabled by feature flag ignore it when doing the comparison
         // this is needed for the situation when Safe Mode is set to nil because of the feature flag but the Local Agent sends back false (the default value),
@@ -93,6 +93,6 @@ extension VPNConnectionFeatures {
             return equalsWithoutSafeMode
         }
 
-        return equalsWithoutSafeMode && self.safeMode == other?.safeMode
+        return equalsWithoutSafeMode && safeMode == other?.safeMode
     }
 }

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import VPNShared
 
 // These dependencies are linked against both the application and the WireGuard extension
@@ -27,7 +27,7 @@ enum Constants {
 }
 
 extension DefaultsProvider: DependencyKey {
-    public static let liveValue: DefaultsProvider = DefaultsProvider(
+    public static let liveValue: DefaultsProvider = .init(
         getDefaults: {
             // Use shared defaults
             UserDefaults(suiteName: Constants.appGroup)!

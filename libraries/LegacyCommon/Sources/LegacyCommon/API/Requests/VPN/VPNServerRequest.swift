@@ -23,19 +23,18 @@
 import ProtonCoreNetworking
 
 final class VPNServerRequest: Request {
-    
     let serverId: String
-    
-    init( _ serverId: String) {
+
+    init(_ serverId: String) {
         self.serverId = serverId
     }
-    
+
     var path: String {
-        return "/vpn/v1/servers/" + serverId
+        "/vpn/v1/servers/" + serverId
     }
 
     var isAuth: Bool {
-        return false
+        false
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

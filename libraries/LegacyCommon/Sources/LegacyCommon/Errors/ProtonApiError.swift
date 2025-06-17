@@ -1,5 +1,5 @@
 //
-//  ApiError.swift
+//  ProtonApiError.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,11 +20,10 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import Strings
+import VPNShared
 
 public enum ParseError: LocalizedError {
-    
     case authInfoParse
     case authCredentialsParse
     case modulusParse
@@ -39,11 +38,11 @@ public enum ParseError: LocalizedError {
     public var localizedDescription: String {
         switch self {
         case .serverParse:
-            return "Can't parse the servers info"
+            "Can't parse the servers info"
         case .loadsParse:
-            return "Can't update server loads"
+            "Can't update server loads"
         default:
-            return Localizable.errorInternalError
+            Localizable.errorInternalError
         }
     }
 }

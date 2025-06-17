@@ -24,27 +24,26 @@ import Foundation
 import LegacyCommon
 
 final class SettingsContainerViewModel {
-
-    typealias Factory = PropertiesManagerFactory
-        & ConnectionSettingsViewModel.Factory
+    typealias Factory = ConnectionSettingsViewModel.Factory
         & AdvancedSettingsViewModel.Factory
         & NetShieldPropertyProviderFactory
+        & PropertiesManagerFactory
 
     private let factory: Factory
-    
+
     init(factory: Factory) {
         self.factory = factory
     }
-    
+
     var generalSettingsViewModel: GeneralSettingsViewModel {
-        return GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
+        GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
     }
-    
+
     var connectionSettingsViewModel: ConnectionSettingsViewModel {
-        return ConnectionSettingsViewModel(factory: factory)
+        ConnectionSettingsViewModel(factory: factory)
     }
 
     var advancedSettingsViewModel: AdvancedSettingsViewModel {
-        return AdvancedSettingsViewModel(factory: factory)
+        AdvancedSettingsViewModel(factory: factory)
     }
 }

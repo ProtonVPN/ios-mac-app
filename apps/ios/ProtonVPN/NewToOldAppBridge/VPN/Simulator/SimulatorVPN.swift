@@ -18,123 +18,119 @@
 
 #if targetEnvironment(simulator)
 
-import Foundation
+    import Foundation
 
-import Domain
-import VPNAppCore
-import LegacyCommon
+    import Domain
+    import LegacyCommon
+    import VPNAppCore
 
-/// Allows "connecting" to VPN on a simulator by faking VPN connection status
-///
-/// Usage:
-/// .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
-/// .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
-///
-class SimulatorHelper {
+    /// Allows "connecting" to VPN on a simulator by faking VPN connection status
+    ///
+    /// Usage:
+    /// .dependency(\.connectToVPN, SimulatorHelper.shared.connect)
+    /// .dependency(\.disconnectVPN, SimulatorHelper.shared.disconnect)
+    ///
+    class SimulatorHelper {
+        public static var shared = SimulatorHelper()
 
-    public static var shared = SimulatorHelper()
-
-    private var status: VPNConnectionStatus = .disconnected {
-        didSet {
-            AppEvent.appStateManagerDisplayStateChange.post(status.appDisplayState)
+        private var status: VPNConnectionStatus = .disconnected {
+            didSet {
+                AppEvent.appStateManagerDisplayStateChange.post(status.appDisplayState)
+            }
         }
-    }
 
-    private var targetStatus: VPNConnectionStatus?
+        private var targetStatus: VPNConnectionStatus?
 
-    private let queue: DispatchQueue = DispatchQueue.main
+        private let queue: DispatchQueue = .main
 
-    // MARK: - Connect
+        // MARK: - Connect
 
-    var connect: @Sendable (ConnectionSpec) -> Void {
-        return { specs in
-            switch self.status {
-            case .disconnected, .connected:
-                let propertyManager = Container.sharedContainer.makePropertiesManager()
-                propertyManager.lastConnectionIntent = specs
+        var connect: @Sendable (ConnectionSpec) -> Void {
+            { specs in
+                switch self.status {
+                case .disconnected, .connected:
+                    let propertyManager = Container.sharedContainer.makePropertiesManager()
+                    propertyManager.lastConnectionIntent = specs
 
-                self.switchToConnected(specs)
-            case .connecting:
-                self.switchToDisconnected(specs, delay: 0, completed: {
                     self.switchToConnected(specs)
-                })
-            default:
-                log.assertionFailure("Called connect on wrong state: \(self.status)")
+                case .connecting:
+                    self.switchToDisconnected(specs, delay: 0, completed: {
+                        self.switchToConnected(specs)
+                    })
+                default:
+                    log.assertionFailure("Called connect on wrong state: \(self.status)")
+                }
+            }
+        }
+
+        private func switchToConnected(_ specs: ConnectionSpec) {
+            targetStatus = .connected(specs, specs.actualConnection)
+            queue.async {
+                self.status = .connecting(specs, nil)
+            }
+            queue.asyncAfter(deadline: .now() + .seconds(2)) {
+                self.status = self.targetStatus!
+            }
+        }
+
+        // MARK: - Connect
+
+        var disconnect: @Sendable () -> Void {
+            {
+                switch self.status {
+                case let .connected(specs, _):
+                    self.switchToDisconnected(specs)
+
+                case let .connecting(specs, _):
+                    self.switchToDisconnected(specs, delay: 0)
+
+                default:
+                    log.assertionFailure("Called connect on wrong state: \(self.status)")
+                }
+            }
+        }
+
+        private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1, completed: (() -> Void)? = nil) {
+            targetStatus = .disconnected
+            queue.async {
+                self.status = .disconnecting(specs, specs.actualConnection)
+            }
+            queue.asyncAfter(deadline: .now() + .seconds(delay)) {
+                self.status = self.targetStatus!
+                completed?()
+            }
+        }
+
+        public static var serverChangeAuthorizer: ServerChangeAuthorizer = // Basic implementation for simulator support, change it according to your needs.
+            ServerChangeAuthorizer {
+                .unavailable(until: .now + 5, duration: 5, exhaustedSkips: false)
+            } registerServerChangeAtDate: { _ in
+            }
+    }
+
+    // MARK: - VPNConnectionStatus -> AppDisplayState
+
+    extension VPNConnectionStatus {
+        var appDisplayState: AppDisplayState {
+            switch self {
+            case .disconnected:
+                .disconnected
+            case .connected:
+                .connected
+            case .connecting:
+                .connecting
+            case .resolving:
+                .loadingConnectionInfo
+            case .disconnecting:
+                .disconnecting
             }
         }
     }
 
-    private func switchToConnected(_ specs: ConnectionSpec) {
-        targetStatus = .connected(specs, specs.actualConnection)
-        queue.async {
-            self.status = .connecting(specs, nil)
-        }
-        queue.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            self.status = self.targetStatus!
-        })
+    // MARK: - VPNConnectionActual -> ConnectionSpec
+
+    extension ConnectionSpec {
+        var actualConnection: VPNConnectionActual { .mock() }
     }
-
-    // MARK: - Connect
-
-    var disconnect: @Sendable () -> Void {
-        return {
-            switch self.status {
-            case .connected(let specs, _):
-                self.switchToDisconnected(specs)
-
-            case .connecting(let specs, _):
-                self.switchToDisconnected(specs, delay: 0)
-
-            default:
-                log.assertionFailure("Called connect on wrong state: \(self.status)")
-            }
-        }
-    }
-
-    private func switchToDisconnected(_ specs: ConnectionSpec, delay: Int = 1, completed: (() -> Void)? = nil) {
-        targetStatus = .disconnected
-        queue.async {
-            self.status = .disconnecting(specs, specs.actualConnection)
-        }
-        queue.asyncAfter(deadline: .now() + .seconds(delay), execute: {
-            self.status = self.targetStatus!
-            completed?()
-        })
-    }
-
-    public static var serverChangeAuthorizer: ServerChangeAuthorizer = {
-        // Basic implementation for simulator support, change it according to your needs.
-        ServerChangeAuthorizer {
-            .unavailable(until: .now + 5, duration: 5, exhaustedSkips: false)
-        } registerServerChangeAtDate: { date in
-
-        }
-    }()
-}
-
-// MARK: - VPNConnectionStatus -> AppDisplayState
-
-extension VPNConnectionStatus {
-    var appDisplayState: AppDisplayState {
-        switch self {
-        case .disconnected:
-            return .disconnected
-        case .connected:
-            return .connected
-        case .connecting:
-            return .connecting
-        case .resolving:
-            return .loadingConnectionInfo
-        case .disconnecting:
-            return .disconnecting
-        }
-    }
-}
-
-// MARK: - VPNConnectionActual -> ConnectionSpec
-
-extension ConnectionSpec {
-    var actualConnection: VPNConnectionActual { .mock() }
-}
 
 #endif

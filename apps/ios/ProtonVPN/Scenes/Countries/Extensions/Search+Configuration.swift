@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import Search
+import Foundation
 import LegacyCommon
+import Persistence
+import Search
 import UIKit
 import VPNShared
-import Persistence
 
 extension Search.Configuration {
     init() {
@@ -39,14 +39,14 @@ final class SearchModuleStorage: SearchStorage {
     @Dependency(\.storage) var storage
     private let key = "RECENT_SEARCHES"
 
-    init() { }
+    init() {}
 
     func clear() {
         storage.removeObject(forKey: key)
     }
 
     func get() -> [String] {
-        return (try? storage.get([String].self, forKey: key)) ?? []
+        (try? storage.get([String].self, forKey: key)) ?? []
     }
 
     func save(data: [String]) {

@@ -20,7 +20,6 @@ import Logging
 
 // Only levels that we actually use are added here
 public extension Logging.Logger {
-    
     func debug(
         _ message: @autoclosure () -> Message,
         category: Logger.Category? = nil,
@@ -35,7 +34,7 @@ public extension Logging.Logger {
             self.log(level: .debug, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
         }
     }
-    
+
     func info(
         _ message: @autoclosure () -> Message,
         category: Logger.Category? = nil,
@@ -50,7 +49,7 @@ public extension Logging.Logger {
             self.log(level: .info, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
         }
     }
-    
+
     func warning(
         _ message: @autoclosure () -> Message,
         category: Logger.Category? = nil,
@@ -65,7 +64,7 @@ public extension Logging.Logger {
             self.log(level: .warning, message(), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
         }
     }
-    
+
     func error(
         _ message: @autoclosure () -> Message,
         category: Logger.Category? = nil,
@@ -94,9 +93,9 @@ public extension Logging.Logger {
         withoutActuallyEscaping(metadata) { escapingMetadata in
             self.log(level: .critical, .init(stringLiteral: message), metadata: getMeta(escapingMetadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
         }
-#if DEBUG
-        Swift.assertionFailure(message)
-#endif
+        #if DEBUG
+            Swift.assertionFailure(message)
+        #endif
     }
 
     /// Metadata predefined keys
@@ -104,19 +103,18 @@ public extension Logging.Logger {
         case category
         case event
     }
-    
+
     /// Add our own category and event into metada data
     private func getMeta(_ originalMetadata: @escaping () -> Metadata?, category: Logger.Category? = nil, event: Logger.Event? = nil) -> (() -> Metadata?) {
-        return {
+        {
             var res: Metadata = originalMetadata() ?? Metadata()
-            if let category = category {
+            if let category {
                 res[MetaKey.category.rawValue] = .string(category.rawValue)
             }
-            if let event = event {
+            if let event {
                 res[MetaKey.event.rawValue] = .string(event.rawValue)
             }
             return res
         }
     }
-    
 }

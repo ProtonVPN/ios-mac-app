@@ -17,80 +17,80 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-import Domain
-import VPNShared
+    import Domain
+    import VPNShared
 
-public class AvailabilityCheckerResolverFactoryMock: AvailabilityCheckerResolverFactory {
-    public var mockResolver: AvailabilityCheckerResolverMock!
-    public var checkers: [VpnProtocol: AvailabilityCheckerMock]
+    public class AvailabilityCheckerResolverFactoryMock: AvailabilityCheckerResolverFactory {
+        public var mockResolver: AvailabilityCheckerResolverMock!
+        public var checkers: [VpnProtocol: AvailabilityCheckerMock]
 
-    public init(checkers: [VpnProtocol: AvailabilityCheckerMock]) {
-        self.checkers = checkers
-    }
-
-    public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
-        if mockResolver == nil {
-            mockResolver = AvailabilityCheckerResolverMock(wireguardConfig: wireguardConfig, checkers: checkers)
-        }
-        return mockResolver
-    }
-}
-
-public class AvailabilityCheckerResolverMock: AvailabilityCheckerResolver {
-    public let wireguardConfig: WireguardConfig
-
-    public var checkers: [VpnProtocol: AvailabilityCheckerMock]
-
-    public init(wireguardConfig: WireguardConfig, checkers: [VpnProtocol: AvailabilityCheckerMock]) {
-        self.wireguardConfig = wireguardConfig
-        self.checkers = checkers
-    }
-
-    public func availabilityChecker(for vpnProtocol: VpnProtocol) -> SmartProtocolAvailabilityChecker {
-        checkers[vpnProtocol]!
-    }
-}
-
-public class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
-    public typealias AvailabilityCallback = ((ServerIp) -> SmartProtocolAvailabilityCheckerResult)
-    public var availabilityCallback: AvailabilityCallback?
-    public var pingCallback: ((ServerIp, Int) -> Bool)?
-
-    public let vpnProtocol: VpnProtocol
-    public let availablePorts: [Int]
-
-    public var defaultPorts: [Int] {
-        availablePorts
-    }
-
-    public init(vpnProtocol: VpnProtocol, availablePorts: [Int]) {
-        self.vpnProtocol = vpnProtocol
-        self.availablePorts = availablePorts
-    }
-
-    public func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-        if let pingCallback = pingCallback {
-            completion(pingCallback(server, port))
-            return
+        public init(checkers: [VpnProtocol: AvailabilityCheckerMock]) {
+            self.checkers = checkers
         }
 
-        completion(true)
+        public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
+            if mockResolver == nil {
+                mockResolver = AvailabilityCheckerResolverMock(wireguardConfig: wireguardConfig, checkers: checkers)
+            }
+            return mockResolver
+        }
     }
 
-    public func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        if let availabilityCallback = availabilityCallback {
-            completion(availabilityCallback(server))
-            return
+    public class AvailabilityCheckerResolverMock: AvailabilityCheckerResolver {
+        public let wireguardConfig: WireguardConfig
+
+        public var checkers: [VpnProtocol: AvailabilityCheckerMock]
+
+        public init(wireguardConfig: WireguardConfig, checkers: [VpnProtocol: AvailabilityCheckerMock]) {
+            self.wireguardConfig = wireguardConfig
+            self.checkers = checkers
         }
 
-        guard !availablePorts.isEmpty else {
-            completion(.unavailable)
-            return
+        public func availabilityChecker(for vpnProtocol: VpnProtocol) -> SmartProtocolAvailabilityChecker {
+            checkers[vpnProtocol]!
         }
-
-        completion(.available(ports: availablePorts))
     }
-}
+
+    public class AvailabilityCheckerMock: SmartProtocolAvailabilityChecker {
+        public typealias AvailabilityCallback = (ServerIp) -> SmartProtocolAvailabilityCheckerResult
+        public var availabilityCallback: AvailabilityCallback?
+        public var pingCallback: ((ServerIp, Int) -> Bool)?
+
+        public let vpnProtocol: VpnProtocol
+        public let availablePorts: [Int]
+
+        public var defaultPorts: [Int] {
+            availablePorts
+        }
+
+        public init(vpnProtocol: VpnProtocol, availablePorts: [Int]) {
+            self.vpnProtocol = vpnProtocol
+            self.availablePorts = availablePorts
+        }
+
+        public func ping(protocolName _: String, server: ServerIp, port: Int, timeout _: TimeInterval, completion: @escaping (Bool) -> Void) {
+            if let pingCallback {
+                completion(pingCallback(server, port))
+                return
+            }
+
+            completion(true)
+        }
+
+        public func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
+            if let availabilityCallback {
+                completion(availabilityCallback(server))
+                return
+            }
+
+            guard !availablePorts.isEmpty else {
+                completion(.unavailable)
+                return
+            }
+
+            completion(.available(ports: availablePorts))
+        }
+    }
 #endif

@@ -26,14 +26,14 @@ enum WGConstants {
     static let keychainAccessGroup: String = "\(Self.appIdentifierPrefix)prt.ProtonVPN"
 
     static var appIdentifierPrefix: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
 
     static var appGroupId: String {
         #if os(tvOS)
-        return AppGroups.main
+            return AppGroups.main
         #else
-        #error("Unimplemented")
+            #error("Unimplemented")
         #endif
     }
 }

@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import AppKit
-import Theme
 import ComposableArchitecture
+import SwiftUI
+import Theme
 
 public extension NSViewController {
     static func plutonium(store: StoreOf<PlutoniumFeature>) -> NSViewController {

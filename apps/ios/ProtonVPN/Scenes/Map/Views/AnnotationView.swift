@@ -20,29 +20,29 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 
 // abstract superclass
 class AnnotationView: UIView {
-
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     }
 
     var available: Bool {
-        return false
+        false
     }
 
     var selected: Bool {
-        return false
+        false
     }
 
     var connectedState: Bool {
-        return false
+        false
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError()
     }
 

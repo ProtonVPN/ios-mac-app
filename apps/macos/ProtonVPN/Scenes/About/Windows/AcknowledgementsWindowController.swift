@@ -25,24 +25,24 @@ import LegacyCommon
 import Strings
 
 class AcknowledgementsWindowController: WindowController {
-    
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: AcknowledgementsViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
-        
+
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.miniaturizable)
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.acknowledgements

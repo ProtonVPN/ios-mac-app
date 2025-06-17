@@ -16,25 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import System
-import SnapshotTesting
 import IssueReporting
+import SnapshotTesting
 import SwiftUI
+import System
+import XCTest
 
 class TVSnapshotTestCase: XCTestCase {
     static let precision: Float = 0.99
     static let perceptualPrecision: Float = 0.98
 
-    func snap<T: View>(
-        _ view: @autoclosure () throws -> T,
+    func snap(
+        _ view: @autoclosure () throws -> some View,
         caseName: String,
         trait: UIUserInterfaceStyle,
         record recording: Bool? = nil,
         timeout: TimeInterval = 5,
         fileID: StaticString = #fileID,
         file filePath: StaticString = #filePath,
-        testName: String = #function,
+        testName _: String = #function,
         line: UInt = #line,
         column: UInt = #column
     ) {
@@ -46,8 +46,8 @@ class TVSnapshotTestCase: XCTestCase {
             snapshotDirectory = "\(projectDir)/libraries/tvOS/Tests/tvOSSnapshotTests/__Snapshots__/\(suite)"
         }
 
-        let failure = verifySnapshot(
-            of: try view(),
+        let failure = try verifySnapshot(
+            of: view(),
             as: .image(
                 precision: Self.precision,
                 perceptualPrecision: Self.perceptualPrecision,

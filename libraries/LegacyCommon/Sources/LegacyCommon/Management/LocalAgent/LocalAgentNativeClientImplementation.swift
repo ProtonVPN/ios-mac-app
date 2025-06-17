@@ -1,5 +1,5 @@
 //
-//  NativeClient.swift
+//  LocalAgentNativeClientImplementation.swift
 //  vpncore - Created on 27.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -31,19 +31,14 @@ protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
 }
 
 final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
+    func onTlsSessionEnded() {}
 
-    func onTlsSessionEnded() {
-
-    }
-
-    func onTlsSessionStarted() {
-
-    }
+    func onTlsSessionStarted() {}
 
     weak var delegate: LocalAgentNativeClientImplementationDelegate?
 
     func log(_ text: String?) {
-        guard let text = text else {
+        guard let text else {
             return
         }
 
@@ -56,11 +51,11 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
     }
 
     func onState(_ state: String?) {
-        guard let state = state else {
+        guard let state else {
             LegacyCommon.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }
-        
+
         LegacyCommon.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
         delegate?.didChangeState(state: LocalAgentState.from(string: state))
     }

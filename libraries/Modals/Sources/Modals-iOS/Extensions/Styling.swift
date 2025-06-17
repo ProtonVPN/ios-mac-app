@@ -18,8 +18,8 @@
 
 import Foundation
 import Overture
-import UIKit
 import Theme
+import UIKit
 
 let baseButtonStyle: (UIButton) -> Void = {
     $0.layer.cornerRadius = 8

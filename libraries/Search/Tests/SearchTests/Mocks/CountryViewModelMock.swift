@@ -17,14 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 @testable import Search
+import UIKit
 
 final class CountryViewModelMock: CountryViewModel {
     var isGateway: Bool = false
-    
+
     var isRedesign: Bool = false
-    
+
     var showCountryConnectButton: Bool = true
 
     var showFeatureIcons: Bool = true
@@ -55,29 +55,27 @@ final class CountryViewModelMock: CountryViewModel {
 
     let isSecureCoreCountry: Bool
 
-    func connectAction() {
-
-    }
+    func connectAction() {}
 
     let cities: [CityViewModel]
 
     init(country: String, servers: [ServerTier: [ServerViewModel]], isSecureCoreCountry: Bool = false) {
-        description = country
+        self.description = country
         self.servers = servers
         self.isSecureCoreCountry = isSecureCoreCountry
 
-        let servers = ServerTier.sorted(by: .plus).flatMap({ servers[$0] ?? [] })
-        let groups = Dictionary.init(grouping: servers, by: { $0.city })
-        self.cities = groups.map({
+        let servers = ServerTier.sorted(by: .plus).flatMap { servers[$0] ?? [] }
+        let groups = Dictionary(grouping: servers, by: { $0.city })
+        self.cities = groups.map {
             CityViewModelMock(cityName: $0.key, countryName: country, translatedCityName: $0.value.first?.translatedCity)
-        }).sorted(by: { $0.cityName < $1.cityName })
+        }.sorted(by: { $0.cityName < $1.cityName })
     }
 
     func getServers() -> [ServerTier: [ServerViewModel]] {
-        return servers
+        servers
     }
 
     func getCities() -> [CityViewModel] {
-        return cities
+        cities
     }
 }

@@ -25,9 +25,9 @@ public struct TruncatedIp {
     public init?(ip: String) {
         // Remove the last octet
         if let index = ip.lastIndex(of: ".") { // IPv4
-            value = ip.replacingCharacters(in: index..<ip.endIndex, with: ".0")
+            self.value = ip.replacingCharacters(in: index ..< ip.endIndex, with: ".0")
         } else if let index = ip.lastIndex(of: ":") { // IPv6
-            value = ip.replacingCharacters(in: index..<ip.endIndex, with: "::")
+            self.value = ip.replacingCharacters(in: index ..< ip.endIndex, with: "::")
         } else {
             return nil
         }

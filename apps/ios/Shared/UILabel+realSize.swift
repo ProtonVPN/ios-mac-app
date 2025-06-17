@@ -23,7 +23,6 @@
 import UIKit
 
 extension UILabel {
-
     /// Calculate the real content size of a UILabel which value could be depending of a second view p.e: stackviews.
     var realSize: CGSize {
         let sizeLabel = UILabel()

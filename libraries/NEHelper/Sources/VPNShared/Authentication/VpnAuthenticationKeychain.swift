@@ -28,12 +28,12 @@ import PMLogger
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
     @Dependency(\.vpnKeysGenerator) var vpnKeysGenerator
 
-    private struct KeychainStorageKey {
+    private enum KeychainStorageKey {
         static let vpnKeys = "vpnKeys"
         static let vpnCertificate = "vpnCertificate"
     }
 
-    private struct DefaultsStorageKey {
+    private enum DefaultsStorageKey {
         static let vpnCertificateFeatures = "vpnCertificateFeatures"
     }
 
@@ -42,7 +42,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
 
     public init() {
         @Dependency(\.vpnAuthenticationStorageConfig) var accessGroup
-        appKeychain = KeychainActor(accessGroup: accessGroup)
+        self.appKeychain = KeychainActor(accessGroup: accessGroup)
     }
 
     public func deleteKeys() {
@@ -59,7 +59,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
 
     public func getKeys() -> VpnKeys {
         let keys: VpnKeys
-        if let existingKeys = self.getStoredKeys() {
+        if let existingKeys = getStoredKeys() {
             log.info("Using existing vpn authentication keys", category: .userCert)
             keys = existingKeys
         } else {
@@ -68,14 +68,14 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
             // `LegacyCommon.CoreVPNKeysGenerator`.
             keys = try! vpnKeysGenerator.generateKeys()
             log.info("Storing new VPN keys", category: .userCert, metadata: ["keys": "\(keys)"])
-            self.store(keys: keys)
+            store(keys: keys)
         }
 
         return keys
     }
 
     public func getStoredCertificate() -> VpnCertificate? {
-       do {
+        do {
             guard let json = try appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
                 return nil
             }
@@ -126,7 +126,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
                 category: .userCert,
                 metadata: [
                     "certificate": "\(certificate)",
-                    "features": "\(String(describing: certificate.features))"
+                    "features": "\(String(describing: certificate.features))",
                 ]
             )
             delegate?.certificateStored(certificate.certificate)
@@ -150,4 +150,3 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorageSync {
         try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
     }
 }
-

@@ -30,30 +30,27 @@ public protocol LogFileManager {
 
 public class LogFileManagerImplementation: LogFileManager {
     public static let logDirLaunchArgument = "-LogDirectory"
-    
-    public init() {
-    }
-    
+
+    public init() {}
+
     /// Returns full log files URL given its name
     public func getFileUrl(named filename: String) -> URL {
         let arguments = ProcessInfo.processInfo.arguments
-        let logDirectory: URL
-
-        if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
-           case let next = arguments.index(after: index),
-           next < arguments.count,
-           case let dir = arguments[next],
-           FileManager.default.fileExists(atPath: dir),
-           let url = URL(string: dir) {
-            logDirectory = url
+        let logDirectory: URL = if let index = arguments.firstIndex(of: Self.logDirLaunchArgument),
+                                   case let next = arguments.index(after: index),
+                                   next < arguments.count,
+                                   case let dir = arguments[next],
+                                   FileManager.default.fileExists(atPath: dir),
+                                   let url = URL(string: dir) {
+            url
         } else {
-            logDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+            FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
                 .appendingPathComponent("Logs", isDirectory: true)
         }
 
         return logDirectory.appendingPathComponent(filename, isDirectory: false)
     }
-    
+
     /// Dumps given string into a log file.
     /// Will overwrite the file if it's present.
     public func dump(logs: String, toFile filename: String) {
@@ -64,5 +61,4 @@ public class LogFileManagerImplementation: LogFileManager {
             os_log("Error dumping logs to file: %{public}s", log: OSLog(subsystem: "PMLogger", category: "LogFileManager"), type: OSLogType.error, error as CVarArg)
         }
     }
-    
 }

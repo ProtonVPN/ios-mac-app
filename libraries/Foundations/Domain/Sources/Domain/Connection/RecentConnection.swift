@@ -54,12 +54,11 @@ extension RecentConnection: Identifiable {
     }
 }
 
-extension RecentConnection: Codable {
-}
+extension RecentConnection: Codable {}
 
-extension RecentConnection {
-    public static var sampleData: [RecentConnection] {
-        return [
+public extension RecentConnection {
+    static var sampleData: [RecentConnection] {
+        [
             RecentConnection(
                 pinnedDate: Date(),
                 underMaintenance: Bool.random(),
@@ -101,7 +100,7 @@ extension RecentConnection {
                 underMaintenance: Bool.random(),
                 connectionDate: Date(),
                 connection: .init(location: .secureCore(.hop(to: "FR", via: "CH")), features: [])
-            )
+            ),
         ]
     }
 }

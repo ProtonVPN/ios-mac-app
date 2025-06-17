@@ -32,8 +32,7 @@ public protocol UnauthKeychainHandle {
 }
 
 public final class UnauthKeychain: UnauthKeychainHandle {
-
-    private struct StorageKey {
+    private enum StorageKey {
         static let unauthSessionCredentials = "unauthSessionCredentials"
     }
 
@@ -41,7 +40,7 @@ public final class UnauthKeychain: UnauthKeychainHandle {
 
     public static let `default` = UnauthKeychain()
 
-    private init() { }
+    private init() {}
 
     public func fetch() -> AuthCredential? {
         do {
@@ -49,7 +48,7 @@ public final class UnauthKeychain: UnauthKeychainHandle {
                 return nil
             }
             return AuthCredential.unarchive(data: data as NSData)
-        } catch let error {
+        } catch {
             log.error("Keychain (unauth) read error: \(error)", category: .keychain)
             return nil
         }

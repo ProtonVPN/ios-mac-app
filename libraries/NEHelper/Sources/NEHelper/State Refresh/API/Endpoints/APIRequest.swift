@@ -93,36 +93,36 @@ enum APIHTTPErrorCode: Int, Error, CustomStringConvertible {
     var description: String {
         switch self {
         case .badRequest:
-            return "The application sent a badly-formatted request. Please contact the developer."
+            "The application sent a badly-formatted request. Please contact the developer."
         case .tokenExpired:
-            return "The current access token has expired. Please refresh the token."
+            "The current access token has expired. Please refresh the token."
         case .conflict:
-            return "Database conflict - please retry your request, or try logging out and back in again."
+            "Database conflict - please retry your request, or try logging out and back in again."
         case .unprocessableEntity:
-            return "The current session has expired. Please log in again."
+            "The current session has expired. Please log in again."
         case .tooManyRequests:
-            return "The client has sent too many requests in one period and should try again after a reasonable time."
+            "The client has sent too many requests in one period and should try again after a reasonable time."
         case .internalError:
-            return "The remote service has experienced an internal error."
+            "The remote service has experienced an internal error."
         case .serviceUnavailable:
-            return "The remote service is currently unavailable. Please try again after a reasonable time."
+            "The remote service is currently unavailable. Please try again after a reasonable time."
         }
     }
 }
 
 extension HTTPURLResponse {
     var apiHttpErrorCode: APIHTTPErrorCode? {
-        APIHTTPErrorCode(rawValue: self.statusCode)
+        APIHTTPErrorCode(rawValue: statusCode)
     }
 
     func value(forApiHeader header: APIHeader) -> String? {
         if #available(iOSApplicationExtension 13.0, *) {
             return value(forHTTPHeaderField: header.rawValue)
         } else {
-            let kvPair = self.allHeaderFields.first { (key, _) in
+            let kvPair = allHeaderFields.first { key, _ in
                 (key as? String)?.lowercased() == header.rawValue.lowercased()
             }
-            guard let kvPair = kvPair else {
+            guard let kvPair else {
                 return nil
             }
             return kvPair.value as? String

@@ -26,6 +26,6 @@ public typealias JSONDictionary = [String: Any]
 
 extension Data {
     var jsonDictionary: JSONDictionary? {
-        return (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
+        (try? JSONSerialization.jsonObject(with: self, options: .mutableContainers)) as? JSONDictionary
     }
 }

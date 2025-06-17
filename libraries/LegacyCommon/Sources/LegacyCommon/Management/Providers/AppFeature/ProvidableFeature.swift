@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 /// Defines the requirements for a feature that can be managed by the generic `AppFeaturePropertyProviderProtocol`
 ///
@@ -29,7 +29,7 @@ import Domain
 /// this type.
 ///
 /// - Note: Check `VPNAccelerator` for implementation ideas.
-public typealias ProvidableFeature = AppFeature & ModularAppFeature & StorableFeature & DefaultableFeature
+public typealias ProvidableFeature = AppFeature & DefaultableFeature & ModularAppFeature & StorableFeature
 
 public protocol DefaultableFeature {
     static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> Self
@@ -53,11 +53,10 @@ public protocol StorableFeature: Codable {
 
     /// notification sent whenever the current value changes
     static var event: AppEvent? { get }
-
 }
 
-extension StorableFeature where LegacyStorageType == Void {
-    public static var legacyConversion: ((LegacyStorageType) -> Self)? { nil }
+public extension StorableFeature where LegacyStorageType == Void {
+    static var legacyConversion: ((LegacyStorageType) -> Self)? { nil }
 }
 
 /// Helper protocol that simplifies display/interaction logic in the view and business layers by enabling generic

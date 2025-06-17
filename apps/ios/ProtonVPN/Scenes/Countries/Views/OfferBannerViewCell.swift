@@ -1,5 +1,5 @@
 //
-//  OneLineTableViewCell.swift
+//  OfferBannerViewCell.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,21 +20,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import Theme
+import Announcement
+import Ergonomics
 import LegacyCommon
 import SDWebImage
 import Strings
+import Theme
 import Timer
-import Ergonomics
-import Announcement
+import UIKit
 
 class OfferBannerViewCell: UITableViewCell {
-
-    @IBOutlet weak var roundedBackgroundView: RoundedBackgroundView!
-    @IBOutlet weak var offerImageView: UIImageView!
-    @IBOutlet weak var timeRemainingLabel: UILabel!
-    @IBOutlet weak var dismissButton: UIButton! {
+    @IBOutlet var roundedBackgroundView: RoundedBackgroundView!
+    @IBOutlet var offerImageView: UIImageView!
+    @IBOutlet var timeRemainingLabel: UILabel!
+    @IBOutlet var dismissButton: UIButton! {
         didSet {
             dismissButton.setImage(Theme.Asset.dismissButton.image, for: .normal)
             dismissButton.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
@@ -49,14 +48,15 @@ class OfferBannerViewCell: UITableViewCell {
 
     var timer: BackgroundTimer?
 
-    @IBAction func dismissButtonTapped(_ sender: UIButton) {
+    @IBAction
+    func dismissButtonTapped(_: UIButton) {
         timer?.invalidate()
         viewModel?.dismiss()
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = .color(.background)
+        backgroundColor = .color(.background)
         timeRemainingLabel.textColor = .color(.text, .weak)
         timeRemainingLabel.font = .systemFont(ofSize: 13)
 
@@ -69,7 +69,7 @@ class OfferBannerViewCell: UITableViewCell {
         timer = viewModel.createTimer(updateTimeRemaining: updateTimeRemaining)
 
         if let image = SDImageCache.shared.imageFromCache(forKey: viewModel.imageURL.absoluteString) {
-            self.offerImageView.image = image
+            offerImageView.image = image
             return
         }
         SDWebImageDownloader.shared.downloadImage(with: viewModel.imageURL) { [weak self] image, _, _, _ in
@@ -93,9 +93,10 @@ class OfferBannerViewCell: UITableViewCell {
 }
 
 class RoundedBackgroundView: UIView {
-
-    let colors = [Theme.Asset.offerBannerGradientLeft.color,
-                  Theme.Asset.offerBannerGradientRight.color]
+    let colors = [
+        Theme.Asset.offerBannerGradientLeft.color,
+        Theme.Asset.offerBannerGradientRight.color,
+    ]
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -105,9 +106,11 @@ class RoundedBackgroundView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.gradientBorder(colors: colors,
-                             startPoint: .CoordinateSpace.left,
-                             endPoint: .CoordinateSpace.right,
-                             andRoundCornersWithRadius: .themeRadius12)
+        layer.gradientBorder(
+            colors: colors,
+            startPoint: .CoordinateSpace.left,
+            endPoint: .CoordinateSpace.right,
+            andRoundCornersWithRadius: .themeRadius12
+        )
     }
 }

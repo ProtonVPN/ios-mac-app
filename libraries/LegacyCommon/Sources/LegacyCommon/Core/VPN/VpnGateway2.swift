@@ -22,8 +22,8 @@ import Dependencies
 
 import Domain
 import Persistence
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public protocol VpnGatewayProtocol2 {
     func connect(withIntent: ConnectionSpec) async throws
@@ -38,7 +38,6 @@ public protocol VpnGateway2Factory {
 /// It still uses `AppStateManager` but doesn't have complexity of original `VpnGateway`.
 /// Some of the features of `VpnGateway` should be moved to other places.
 public class VpnGateway2: VpnGatewayProtocol2 {
-
     private let appStateManager: AppStateManager
     private let propertiesManager: PropertiesManagerProtocol
     private let serverTierChecker: ServerTierChecker
@@ -46,13 +45,13 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     typealias Factory =
         AppStateManagerFactory &
-        SiriHelperFactory &
-        NetShieldPropertyProviderFactory &
-        NATTypePropertyProviderFactory &
-        SafeModePropertyProviderFactory &
-        PropertiesManagerFactory &
         AvailabilityCheckerResolverFactory &
-        ServerTierCheckerFactory
+        NATTypePropertyProviderFactory &
+        NetShieldPropertyProviderFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        ServerTierCheckerFactory &
+        SiriHelperFactory
 
     init(_ factory: Factory) {
         self.appStateManager = factory.makeAppStateManager()
@@ -63,9 +62,9 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
     }
-    
+
     public func connect(withIntent intent: ConnectionSpec) async throws {
-        let wireguardConfig = self.propertiesManager.wireguardConfig
+        let wireguardConfig = propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(
             wireguardConfig: wireguardConfig
         )
@@ -76,14 +75,15 @@ public class VpnGateway2: VpnGatewayProtocol2 {
                 .configWithWireGuard(tcpEnabled: false, tlsEnabled: false)
         }
         let connectionPreparer = VpnConnectionPreparer(
-            appStateManager: self.appStateManager,
-            serverTierChecker: self.serverTierChecker,
+            appStateManager: appStateManager,
+            serverTierChecker: serverTierChecker,
             availabilityCheckerResolver: availabilityCheckerResolver,
             smartProtocolConfig: smartProtocolConfig,
-            wireguardConfig: wireguardConfig)
+            wireguardConfig: wireguardConfig
+        )
         let connectionProtocol: ConnectionProtocol = propertiesManager.smartProtocol
-        ? .smartProtocol
-        : .vpnProtocol(propertiesManager.vpnProtocol)
+            ? .smartProtocol
+            : .vpnProtocol(propertiesManager.vpnProtocol)
 
         let server = try selectServer(intent: intent, connectionProtocol: connectionProtocol)
 
@@ -104,7 +104,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     }
 
     public func disconnect() async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) -> Void in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             appStateManager.disconnect {
                 continuation.resume()
             }
@@ -115,40 +115,41 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        return netShieldPropertyProvider.netShieldType
+        netShieldPropertyProvider.netShieldType
     }
 
     private let natTypePropertyProvider: NATTypePropertyProvider
     private var natType: NATType {
-        return natTypePropertyProvider.natType
+        natTypePropertyProvider.natType
     }
 
     private let safeModePropertyProvider: SafeModePropertyProvider
     private var safeMode: Bool? {
-        return safeModePropertyProvider.safeMode
+        safeModePropertyProvider.safeMode
     }
 
     // MARK: - Server select
 
-    // todo: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
+    // TODO: Whole server selection should probably be refactored, because now `ConnectionSpec` is not
     // exactly the same as old `ConnectionRequest`
     private func selectServer(intent: ConnectionSpec, connectionProtocol: ConnectionProtocol) throws -> ServerModel {
-
         @Dependency(\.getCurrentUserTier) var getCurrentUserTier
         let currentUserTier = (try? getCurrentUserTier()) ?? .freeTier
 
         let type = intent.serverType
 
-        // todo: when old code is deleted, refactor server selector to throw directly
+        // TODO: when old code is deleted, refactor server selector to throw directly
         var notifyResolutionUnavailableCalled: (forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason)?
 
-        let selector = VpnServerSelector(serverType: type,
-                                         userTier: currentUserTier,
-                                         connectionProtocol: connectionProtocol,
-                                         smartProtocolConfig: propertiesManager.smartProtocolConfig,
-                                         appStateGetter: { [unowned self] in
-            self.appStateManager.state
-        })
+        let selector = VpnServerSelector(
+            serverType: type,
+            userTier: currentUserTier,
+            connectionProtocol: connectionProtocol,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig,
+            appStateGetter: { [unowned self] in
+                appStateManager.state
+            }
+        )
         selector.changeActiveServerType = { _ in }
         selector.notifyResolutionUnavailable = { forSpecificCountry, type, reason in
             notifyResolutionUnavailableCalled = (forSpecificCountry, type, reason)
@@ -156,7 +157,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
 
         let selected = selector.selectServer(connectionRequest: intent.connectionRequest)
 
-        // todo: when old code is deleted, refactor server selector to throw directly
+        // TODO: when old code is deleted, refactor server selector to throw directly
         if let notifyResolutionUnavailableCalled {
             throw GatewayError.resolutionUnavailable(
                 forSpecificCountry: notifyResolutionUnavailableCalled.forSpecificCountry,
@@ -199,14 +200,13 @@ extension ConnectionSpec {
     }
 }
 
-fileprivate extension ConnectionSpec {
-
+private extension ConnectionSpec {
     // Important! Use only for server selection. Only serverType and connectionType are filled in correctly.
     // If used elsewhere, please fill in other properties properly.
     var connectionRequest: ConnectionRequest {
         ConnectionRequest(
-            serverType: self.serverType,
-            connectionType: self.connectionRequestType,
+            serverType: serverType,
+            connectionType: connectionRequestType,
             connectionProtocol: .smartProtocol, // This is NOT used in server selection
             netShieldType: .off,
             natType: .default,
@@ -218,20 +218,20 @@ fileprivate extension ConnectionSpec {
     }
 
     var connectionRequestType: ConnectionRequestType {
-        switch self.location {
+        switch location {
         case .fastest:
             return .fastest
 
         case .random:
             return .random
 
-        case .region(let code):
+        case let .region(code):
             return .country(code, .fastest)
 
-        case .gateway(let name):
+        case let .gateway(name):
             return .gateway(name: name)
 
-        case .exact(_, _, let number, let subregion, let regionCode):
+        case let .exact(_, _, number, subregion, regionCode):
             if let number {
                 @Dependency(\.serverRepository) var serverRepository
                 let name = "\(regionCode)#\(number)"
@@ -247,15 +247,15 @@ fileprivate extension ConnectionSpec {
                 return .country(regionCode, .fastest)
             }
 
-        case .secureCore(let secureCoreSpecs):
+        case let .secureCore(secureCoreSpecs):
             switch secureCoreSpecs {
             case .fastest:
                 return .fastest
             case .random:
                 return .random
-            case .fastestHop(to: let to):
+            case let .fastestHop(to: to):
                 return .country(to, .fastest)
-            case .hop(let to, let via):
+            case let .hop(to, via):
                 @Dependency(\.serverRepository) var serverRepository
                 if let server = serverRepository.getFirstServer(filteredBy: [.entryCountryCode(via), .exitCountryCode(to)], orderedBy: .none) {
                     return .country(to, .server(.init(server: server)))

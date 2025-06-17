@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Copyright © 2018-2020 WireGuard LLC. All Rights Reserved.
 
+import Ergonomics
 import Foundation
 import WireGuardKit
-import Ergonomics
 
 extension TunnelConfiguration {
-
     enum ParserState {
         case inInterfaceSection
         case inPeerSection
@@ -47,11 +46,10 @@ extension TunnelConfiguration {
         var attributes = [String: String]()
 
         for (lineIndex, line) in lines.enumerated() {
-            var trimmedLine: String
-            if let commentRange = line.range(of: "#") {
-                trimmedLine = String(line[..<commentRange.lowerBound])
+            var trimmedLine = if let commentRange = line.range(of: "#") {
+                String(line[..<commentRange.lowerBound])
             } else {
-                trimmedLine = String(line)
+                String(line)
             }
 
             trimmedLine = trimmedLine.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -84,7 +82,7 @@ extension TunnelConfiguration {
                             throw ParseError.peerHasUnrecognizedKey(keyWithCase)
                         }
                     }
-                } else if lowercasedLine != "[interface]" && lowercasedLine != "[peer]" {
+                } else if lowercasedLine != "[interface]", lowercasedLine != "[peer]" {
                     throw ParseError.invalidLine(line)
                 }
             }
@@ -112,13 +110,13 @@ extension TunnelConfiguration {
             }
         }
 
-        let peerPublicKeysArray = peerConfigurations.map { $0.publicKey }
+        let peerPublicKeysArray = peerConfigurations.map(\.publicKey)
         let peerPublicKeysSet = Set<WireGuardKit.PublicKey>(peerPublicKeysArray)
         if peerPublicKeysArray.count != peerPublicKeysSet.count {
             throw ParseError.multiplePeersWithSamePublicKey
         }
 
-        if let interfaceConfiguration = interfaceConfiguration {
+        if let interfaceConfiguration {
             self.init(name: name, interface: interfaceConfiguration, peers: peerConfigurations)
         } else {
             throw ParseError.noInterface
@@ -132,11 +130,11 @@ extension TunnelConfiguration {
             output.append("ListenPort = \(listenPort)\n")
         }
         if !interface.addresses.isEmpty {
-            let addressString = interface.addresses.map { $0.stringRepresentation }.joined(separator: ", ")
+            let addressString = interface.addresses.map(\.stringRepresentation).joined(separator: ", ")
             output.append("Address = \(addressString)\n")
         }
         if !interface.dns.isEmpty || !interface.dnsSearch.isEmpty {
-            var dnsLine = interface.dns.map { $0.stringRepresentation }
+            var dnsLine = interface.dns.map(\.stringRepresentation)
             dnsLine.append(contentsOf: interface.dnsSearch)
             let dnsString = dnsLine.joined(separator: ", ")
             output.append("DNS = \(dnsString)\n")
@@ -152,7 +150,7 @@ extension TunnelConfiguration {
                 output.append("PresharedKey = \(preSharedKey)\n")
             }
             if !peer.allowedIPs.isEmpty {
-                let allowedIPsString = peer.allowedIPs.map { $0.stringRepresentation }.joined(separator: ", ")
+                let allowedIPsString = peer.allowedIPs.map(\.stringRepresentation).joined(separator: ", ")
                 output.append("AllowedIPs = \(allowedIPsString)\n")
             }
             if let endpoint = peer.endpoint {
@@ -250,6 +248,4 @@ extension TunnelConfiguration {
         }
         return peer
     }
-
 }
-

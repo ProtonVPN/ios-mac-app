@@ -20,10 +20,10 @@ import Foundation
 
 public extension String {
     func prepending(_ s: String) -> String {
-        return s + self
+        s + self
     }
 
     func appending(_ s: String) -> String {
-        return self + s
+        self + s
     }
 }

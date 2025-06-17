@@ -36,7 +36,7 @@ protocol ProfilesMenuViewModelFactory {
 
 extension DependencyContainer: ProfilesMenuViewModelFactory {
     func makeProfilesMenuViewModel() -> ProfilesMenuViewModel {
-        return ProfilesMenuViewModel(
+        ProfilesMenuViewModel(
             appSessionManager: makeAppSessionManager(),
             navService: makeNavigationService(),
             alertService: makeCoreAlertService()
@@ -63,10 +63,10 @@ class ProfilesMenuViewModel {
         self.navService = navService
         self.alertService = alertService
 
-        notificationTokens = [
+        self.notificationTokens = [
             NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged),
             NotificationCenter.default.addObserver(for: AppEvent.planChanged.name, object: nil, handler: planChanged),
-            NotificationCenter.default.addObserver(for: AppEvent.featureFlags.name, object: nil, handler: featureFlagsChanged)
+            NotificationCenter.default.addObserver(for: AppEvent.featureFlags.name, object: nil, handler: featureFlagsChanged),
         ]
     }
 
@@ -79,7 +79,7 @@ class ProfilesMenuViewModel {
     func showProfilesUpsellAlert() {
         alertService.push(alert: ProfilesUpsellAlert())
     }
-    
+
     func overviewAction() {
         guard canUserUseProfiles else {
             // The menu shouldn't be visible for free users, so this is just a failsafe
@@ -88,7 +88,7 @@ class ProfilesMenuViewModel {
         }
         navService.openProfiles(ProfilesTab.overview)
     }
-    
+
     func createNewProfileAction() {
         guard canUserUseProfiles else {
             // The menu shouldn't be visible for free users, so this is just a failsafe
@@ -97,17 +97,18 @@ class ProfilesMenuViewModel {
         }
         navService.openProfiles(ProfilesTab.createNewProfile)
     }
-    
+
     // MARK: - Private functions
-    private func sessionChanged(data: SessionChanged.T) {
+
+    private func sessionChanged(data _: SessionChanged.T) {
         contentChanged?()
     }
 
-    private func featureFlagsChanged(notification: Notification) {
+    private func featureFlagsChanged(notification _: Notification) {
         contentChanged?()
     }
 
-    private func planChanged(notification: Notification) {
+    private func planChanged(notification _: Notification) {
         contentChanged?()
     }
 }

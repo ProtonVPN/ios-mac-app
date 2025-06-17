@@ -16,24 +16,23 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import SwiftUI
-import ProtonCoreUIFoundations
-import Theme
 import ComposableArchitecture
+import Foundation
+import ProtonCoreUIFoundations
+import SwiftUI
+import Theme
 
 /// Displays the list of countries (and other connectable items, like "fastest").
 struct CountryListView: View {
-
     @Bindable var store: StoreOf<CountryListFeature>
 
     // Watch which item is focused to highlight selected row
     @FocusState private var focusedIndex: ItemCoordinate?
 
     static let columnCount = 6
-    static private let gridItemWidth: Double = 210
-    static private let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
-    static private let gridItemHeight: Double = 315
+    private static let gridItemWidth: Double = 210
+    private static let unfocusedOpacity: Double = 0.5 // "Unfocused" items are half transparent
+    private static let gridItemHeight: Double = 315
 
     let columns: [GridItem]
 
@@ -67,7 +66,7 @@ struct CountryListView: View {
                     .opacity(focusedIndex?.section == 1 ? 1 : Self.unfocusedOpacity)
             }
         }
-        .bind($store.focusedIndex, to: self.$focusedIndex)
+        .bind($store.focusedIndex, to: $focusedIndex)
     }
 
     @ViewBuilder
@@ -95,7 +94,7 @@ struct CountryListView: View {
     /// sections are half transparent.
     private func opacity(forCoordinate coordinate: ItemCoordinate) -> Double {
         guard let focused = focusedIndex else {
-            if coordinate.section == 0 && coordinate.row == 0 {
+            if coordinate.section == 0, coordinate.row == 0 {
                 return 1 // by default highlight the recommended section
             }
             return Self.unfocusedOpacity
@@ -121,7 +120,7 @@ extension CountryListView.ItemCoordinate {
     static let fastest: Self = .init(section: 0, item: .fastest)
 }
 
-fileprivate struct CountryListButtonStyle: ButtonStyle {
+private struct CountryListButtonStyle: ButtonStyle {
     // Without this style `hoverEffect` adds colored background which we don't need
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label

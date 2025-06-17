@@ -17,8 +17,6 @@ public protocol VpnCredentialsConfiguratorFactoryCreator {
 
 /// Factory that produces `VpnCredentialsConfigurator` instances for each protocol.
 public protocol VpnCredentialsConfiguratorFactory {
-    
     /// Returns `VpnCredentialsConfigurator` that handles given protocol.
     func getCredentialsConfigurator(for protocol: VpnProtocol) -> VpnCredentialsConfigurator
-    
 }

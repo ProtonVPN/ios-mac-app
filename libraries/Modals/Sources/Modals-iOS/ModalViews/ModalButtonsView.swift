@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ModalsShared
-import SwiftUI
 import SharedViews
+import SwiftUI
 
 struct ModalButtonsView: View {
     let modalModel: ModalModel
@@ -46,9 +46,11 @@ struct ModalButtonsView: View {
 
 struct ModalButtons_Previews: PreviewProvider {
     static var previews: some View {
-        ModalButtonsView(modalModel: ModalType.safeMode.modalModel(),
-                         primaryAction: { },
-                         dismissAction: { })
-            .previewDisplayName("ModalButtons")
+        ModalButtonsView(
+            modalModel: ModalType.safeMode.modalModel(),
+            primaryAction: {},
+            dismissAction: {}
+        )
+        .previewDisplayName("ModalButtons")
     }
 }

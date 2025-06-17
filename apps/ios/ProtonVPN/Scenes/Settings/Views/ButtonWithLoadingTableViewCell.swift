@@ -19,10 +19,9 @@
 import UIKit
 
 final class ButtonWithLoadingTableViewCell: UITableViewCell {
-    
     @IBOutlet private var button: UIButton!
     @IBOutlet private var loading: UIActivityIndicatorView!
-    
+
     var controller: ButtonWithLoadingIndicatorController? {
         didSet {
             controller?.startLoading = { [weak self] in
@@ -35,25 +34,28 @@ final class ButtonWithLoadingTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     }
-    
-    func setup(title: String,
-               accessibilityIdentifier: String?,
-               color: UIColor,
-               controller: ButtonWithLoadingIndicatorController) {
-        self.button.setTitle(title, for: .normal)
-        self.button.setTitleColor(color, for: .normal)
-        self.button.accessibilityIdentifier = accessibilityIdentifier
+
+    func setup(
+        title: String,
+        accessibilityIdentifier: String?,
+        color: UIColor,
+        controller: ButtonWithLoadingIndicatorController
+    ) {
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(color, for: .normal)
+        button.accessibilityIdentifier = accessibilityIdentifier
         self.controller = controller
     }
-    
-    @IBAction private func onPressed(_ sender: Any) {
+
+    @IBAction
+    private func onPressed(_: Any) {
         assert(controller != nil, "It's required for the cell to have a controller associated")
         controller?.onPressed()
     }

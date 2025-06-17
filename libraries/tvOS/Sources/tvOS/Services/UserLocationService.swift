@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import ComposableArchitecture
 import Dependencies
 import Domain
-import ComposableArchitecture
+import Foundation
 
 public class UserLocationService {
-
     @Shared(.userLocation) var userLocation: UserLocation?
 
     /// Update user location (ip)
@@ -43,18 +42,16 @@ public class UserLocationService {
 }
 
 extension UserLocationService: DependencyKey {
-    public static var liveValue: UserLocationService = UserLocationService()
+    public static var liveValue: UserLocationService = .init()
 }
 
-extension DependencyValues {
-    public var userLocationService: UserLocationService {
-      get { self[UserLocationService.self] }
-      set { self[UserLocationService.self] = newValue }
+public extension DependencyValues {
+    var userLocationService: UserLocationService {
+        get { self[UserLocationService.self] }
+        set { self[UserLocationService.self] = newValue }
     }
 }
 
 class UserLocationServiceMock: UserLocationService {
-    public override func updateUserLocation() async throws {
-
-    }
+    override public func updateUserLocation() async throws {}
 }

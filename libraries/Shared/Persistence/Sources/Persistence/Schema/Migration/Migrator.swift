@@ -24,7 +24,6 @@ import Domain
 
 /// Wrapper around `DatabaseMigrator` that registers all known `SchemaVersion`s
 struct Migrator {
-
     static let `default` = Migrator() // A single instance is able to handle migrating to any known version
 
     private let migrator: DatabaseMigrator
@@ -32,17 +31,17 @@ struct Migrator {
     init() {
         var migrator = DatabaseMigrator()
 
-#if DEBUG
-        // Speed up development by nuking the database when migrations change
-        // https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/migrations
-        // Turn this on while working on schema changes, but don't forget to turn it off after finalising the migration.
-        // Keeping this off allows us to experience migrations (during development) as real users would, as well prevent us
-        // from inadvertantly making changes to the schema
-        migrator.eraseDatabaseOnSchemaChange = false
-#endif
+        #if DEBUG
+            // Speed up development by nuking the database when migrations change
+            // https://swiftpackageindex.com/groue/grdb.swift/documentation/grdb/migrations
+            // Turn this on while working on schema changes, but don't forget to turn it off after finalising the migration.
+            // Keeping this off allows us to experience migrations (during development) as real users would, as well prevent us
+            // from inadvertantly making changes to the schema
+            migrator.eraseDatabaseOnSchemaChange = false
+        #endif
 
         // Register migrations in the order of their declaration
-        SchemaVersion.all.forEach { version in
+        for version in SchemaVersion.all {
             migrator.registerMigration(version.identifier, migrate: version.migrationBlock)
         }
 
@@ -64,7 +63,7 @@ struct Migrator {
             category: .persistence,
             metadata: [
                 "appliedMigrations": "\(appliedMigrations)",
-                "registeredMigrations": "\(migrator.migrations)"
+                "registeredMigrations": "\(migrator.migrations)",
             ]
         )
 
@@ -78,7 +77,7 @@ struct Migrator {
             category: .persistence,
             metadata: [
                 "currentVersion": "\(appliedMigrations.last ?? "-")",
-                "targetVersion": "\(targetVersion.identifier)"
+                "targetVersion": "\(targetVersion.identifier)",
             ]
         )
 

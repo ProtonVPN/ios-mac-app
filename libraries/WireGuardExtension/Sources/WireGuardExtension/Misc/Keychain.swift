@@ -11,7 +11,7 @@ enum Keychain {
         let ret = SecItemCopyMatching([
             kSecClass: kSecClassGenericPassword,
             kSecValuePersistentRef: ref,
-            kSecReturnData: true
+            kSecReturnData: true,
         ] as CFDictionary, &result)
         if ret != errSecSuccess || result == nil {
             wg_log(.error, message: "Unable to open config from keychain: \(ret)")
@@ -22,7 +22,7 @@ enum Keychain {
 
     static func makeReference(containing value: String, called name: String, previouslyReferencedBy oldRef: Data? = nil) -> Data? {
         var ret: OSStatus
-        guard let bundleIdentifier = bundleIdentifier else {
+        guard let bundleIdentifier else {
             wg_log(.error, staticMessage: "Unable to determine bundle identifier")
             return nil
         }
@@ -33,17 +33,17 @@ enum Keychain {
             kSecAttrDescription: "wg-quick(8) config",
             kSecAttrService: bundleIdentifier,
             kSecValueData: value.data(using: .utf8) as Any,
-            kSecReturnPersistentRef: true
+            kSecReturnPersistentRef: true,
         ]
 
         #if os(iOS) || os(tvOS)
-        items[kSecAttrAccessGroup] = FileManager.appGroupId
-        items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
+            items[kSecAttrAccessGroup] = FileManager.appGroupId
+            items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlock
         #elseif os(macOS)
-        items[kSecAttrSynchronizable] = false
-        items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            items[kSecAttrSynchronizable] = false
+            items[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         #else
-        #error("Unimplemented")
+            #error("Unimplemented")
         #endif
 
         var ref: CFTypeRef?
@@ -52,7 +52,7 @@ enum Keychain {
             wg_log(.error, message: "Unable to add config to keychain: \(ret)")
             return nil
         }
-        if let oldRef = oldRef {
+        if let oldRef {
             deleteReference(called: oldRef)
         }
         return ref as? Data
@@ -67,11 +67,15 @@ enum Keychain {
 
     static func deleteReferences(except whitelist: Set<Data>) {
         var result: CFTypeRef?
-        let ret = SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                                       kSecAttrService: Bundle.main.bundleIdentifier as Any,
-                                       kSecMatchLimit: kSecMatchLimitAll,
-                                       kSecReturnPersistentRef: true] as CFDictionary,
-                                      &result)
+        let ret = SecItemCopyMatching(
+            [
+                kSecClass: kSecClassGenericPassword,
+                kSecAttrService: Bundle.main.bundleIdentifier as Any,
+                kSecMatchLimit: kSecMatchLimitAll,
+                kSecReturnPersistentRef: true,
+            ] as CFDictionary,
+            &result
+        )
         if ret != errSecSuccess || result == nil {
             return
         }
@@ -84,9 +88,13 @@ enum Keychain {
     }
 
     static func verifyReference(called ref: Data) -> Bool {
-        return SecItemCopyMatching([kSecClass: kSecClassGenericPassword,
-                                    kSecValuePersistentRef: ref] as CFDictionary,
-                                   nil) != errSecItemNotFound
+        SecItemCopyMatching(
+            [
+                kSecClass: kSecClassGenericPassword,
+                kSecValuePersistentRef: ref,
+            ] as CFDictionary,
+            nil
+        ) != errSecItemNotFound
     }
 
     // MARK: - By name (for macOS sysex)
@@ -113,13 +121,13 @@ enum Keychain {
     }
 
     static func saveWgConfig(_ data: Data) -> Bool {
-        if let oldData = Self.loadWgConfig() {
+        if let oldData = loadWgConfig() {
             if oldData == data {
                 wg_log(.debug, message: "New value is the same as the old (\(data.hashValue)). Will not write to keychain.")
                 return true
             } else {
                 wg_log(.debug, staticMessage: "Old value found in the keychain. Will delete it.")
-                Self.deleteWgConfig()
+                deleteWgConfig()
             }
         } else {
             wg_log(.debug, staticMessage: "No config in the keychain. Will write new.")
@@ -165,12 +173,10 @@ enum Keychain {
         query[kSecAttrAccount] = "ProtonVPN WG"
         query[kSecClass as CFString] = kSecClassGenericPassword
 
-        if let bundleIdentifier = bundleIdentifier {
+        if let bundleIdentifier {
             query[kSecAttrService as CFString] = bundleIdentifier
         }
 
         return query
     }
-
 }
-

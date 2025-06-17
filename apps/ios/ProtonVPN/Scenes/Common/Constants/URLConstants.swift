@@ -23,33 +23,31 @@
 import Foundation
 
 struct URLConstants {
-    
-    private init () { }
-    
+    private init() {}
+
     // MARK: - DeepLinking
 
     static let deepLinkScheme = "protonvpn"
     static let deepLinkBaseUrl = "\(deepLinkScheme)://"
-    
+
     static let deepLinkConnectAction = "connect"
-    
+
     static let deepLinkConnectUrl = URLConstants.deepLinkBaseUrl + URLConstants.deepLinkConnectAction
-    
+
     static let deepLinkDisconnectAction = "disconnect"
-    
+
     static let deepLinkDisconnectUrl = URLConstants.deepLinkBaseUrl + URLConstants.deepLinkDisconnectAction
-    
+
     static let deepLinkLoginAction = "login"
-    
+
     static let deepLinkLoginUrl = URLConstants.deepLinkBaseUrl + URLConstants.deepLinkLoginAction
 
     static let deepLinkRefresh = "refresh"
     static let deepLinkRefreshAccount = "refresh-account"
-    
+
     // MARK: - Other
-    
+
     static let utmSource = "app-ios"
 
     static let appStoreUrl = "itms-apps://itunes.apple.com/app/id1437005085"
-    
 }

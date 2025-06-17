@@ -14,10 +14,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ProtonCoreFeatureFlags
 import Connection
-import Persistence
 import Domain
+import Persistence
+import ProtonCoreFeatureFlags
 import VPNAppCore
 
 import protocol Foundation.LocalizedError
@@ -31,7 +31,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         var errorDescription: String? {
             switch self {
             case .cancelled:
-                return "Connection attempt cancelled"
+                "Connection attempt cancelled"
             }
         }
     }
@@ -40,13 +40,11 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         FeatureFlagsRepository.isConnectionFeatureEnabled
     }
 
-    public static let liveValue = {
-        if Self.isEnabled, #available(iOS 16, *) {
-            return newConnect
-        } else {
-            return legacyConnect
-        }
-    }()
+    public static let liveValue = if Self.isEnabled, #available(iOS 16, *) {
+        newConnect
+    } else {
+        legacyConnect
+    }
 
     @available(iOS 16, *)
     static let newConnect: @Sendable (
@@ -55,8 +53,8 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         UserInitiatedVPNChange.VPNTrigger?
     ) async throws -> Void = {
         spec,
-        specifiedProtocol,
-        trigger in
+            specifiedProtocol,
+            trigger in
         // First, let's try to resolve the server we want to connect to.
         // This way we can avoid disconnecting if we are already connected and can't resolve the target server
         @Dependency(\.serverSelector) var serverSelector
@@ -64,13 +62,12 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
         // Let's grab protocol information from PropertiesManager until redesigned settings are in place
         @Dependency(\.propertiesManager) var propertiesManager
         let connectionProtocol = specifiedProtocol ?? propertiesManager.connectionProtocol
-        let acceptableProtocols: ProtocolSupport
-        switch connectionProtocol {
-        case .vpnProtocol(let vpnProtocol):
-            acceptableProtocols = vpnProtocol.protocolSupport
+        let acceptableProtocols: ProtocolSupport = switch connectionProtocol {
+        case let .vpnProtocol(vpnProtocol):
+            vpnProtocol.protocolSupport
         case .smartProtocol:
-            acceptableProtocols = propertiesManager.smartProtocolConfig.supportedProtocols
-                .reduce(.zero, { $0.union($1.protocolSupport) })
+            propertiesManager.smartProtocolConfig.supportedProtocols
+                .reduce(.zero) { $0.union($1.protocolSupport) }
         }
 
         @SharedReader(.userTier) var userTier: Int?

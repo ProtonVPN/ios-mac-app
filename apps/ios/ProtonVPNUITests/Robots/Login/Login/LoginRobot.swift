@@ -8,70 +8,68 @@
 
 import fusion
 import ProtonCoreQuarkCommands
-import UITestsHelpers
 import Strings
+import UITestsHelpers
 
-fileprivate let titleId = "LoginViewController.titleLabel"
-fileprivate let subtitleId = "LoginViewController.subtitleLabel"
-fileprivate let loginTextFieldId = "LoginViewController.loginTextField.textField"
-fileprivate let passwordTextFieldId = "LoginViewController.passwordTextField.textField"
-fileprivate let signInButtonId = "LoginViewController.signInButton"
-fileprivate let invalidCredentialText = "The password is not correct. Please try again with a different password."
-fileprivate let helpButtonId = "UINavigationItem.rightBarButtonItem"
-fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account password."
-fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
-fileprivate let errorBannerMessage = "Email address already used."
-fileprivate let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
-fileprivate let okButton = Localizable.ok
-fileprivate let loginButton = "Sign in again"
-fileprivate let invalidUsernameErrorMessage = "Invalid username"
-fileprivate let captchaNextButton = Localizable.modalsCommonNext
+private let titleId = "LoginViewController.titleLabel"
+private let subtitleId = "LoginViewController.subtitleLabel"
+private let loginTextFieldId = "LoginViewController.loginTextField.textField"
+private let passwordTextFieldId = "LoginViewController.passwordTextField.textField"
+private let signInButtonId = "LoginViewController.signInButton"
+private let invalidCredentialText = "The password is not correct. Please try again with a different password."
+private let helpButtonId = "UINavigationItem.rightBarButtonItem"
+private let enterPasswordErrorMessage = "Please enter your Proton Account password."
+private let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
+private let errorBannerMessage = "Email address already used."
+private let assignConnectionErrorBannerMessage = "subuserAlertDescription1"
+private let okButton = Localizable.ok
+private let loginButton = "Sign in again"
+private let invalidUsernameErrorMessage = "Invalid username"
+private let captchaNextButton = Localizable.modalsCommonNext
 
 class LoginRobot: CoreElements {
-    
     public let verify = Verify()
-    
+
     @discardableResult
     func enterCredentials(_ name: Credentials) -> LoginRobot {
-        return typeUsername(username: name.username)
+        typeUsername(username: name.username)
             .typePassword(password: name.password)
     }
 
     func enterCredentials(_ user: User) -> LoginRobot {
-        return typeUsername(username: user.name)
+        typeUsername(username: user.name)
             .typePassword(password: user.password)
     }
 
     @discardableResult
     func enterIncorrectCredentials(_ username: String, _ password: String) -> LoginRobot {
-        return typeUsername(username: username)
+        typeUsername(username: username)
             .typePassword(password: password)
     }
-    
+
     @discardableResult
     func signIn<T: CoreElements>(robot _: T.Type) -> T {
         button(signInButtonId).tap()
         return T()
     }
-    
+
     @discardableResult
     func verifyCaptcha() -> LoginRobot {
         button(captchaNextButton).tap()
         return LoginRobot()
     }
-    
+
     private func typeUsername(username: String) -> LoginRobot {
         textField(loginTextFieldId).tap().typeText(username)
         return self
     }
-    
+
     private func typePassword(password: String) -> LoginRobot {
         secureTextField(passwordTextFieldId).tap().typeText(password)
         return self
     }
-    
+
     class Verify: CoreElements {
-        
         @discardableResult
         func loginScreenIsShown() -> LoginRobot {
             staticText(titleId).waitUntilExists().checkExists()
@@ -94,21 +92,21 @@ class LoginRobot: CoreElements {
             button(okButton).checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func specialCharErrorDialog() -> LoginRobot {
             textView(invalidUsernameErrorMessage).waitUntilExists().checkExists()
             button(okButton).checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func emailAddressAlreadyExists() -> LoginRobot {
             textView(errorBannerMessage).waitUntilExists().checkExists()
             button(okButton).waitUntilExists().checkExists().tap()
             return LoginRobot()
         }
-        
+
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
             staticText(assignConnectionErrorBannerMessage).waitUntilExists().checkExists()

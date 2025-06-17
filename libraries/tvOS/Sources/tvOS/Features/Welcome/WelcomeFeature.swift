@@ -71,7 +71,7 @@ struct WelcomeFeature {
             case .destination(.presented(.signIn(.signInFinished(.failure(.authenticationAttemptsExhausted))))):
                 state.destination = .codeExpired(.init())
                 return .none
-            case .destination(.presented(.signIn(.codeFetchingFinished(.failure(let error))))):
+            case let .destination(.presented(.signIn(.codeFetchingFinished(.failure(error))))):
                 // Since we don't retry fetching the sign-in code, let's pop back to the welcome screen
                 return .concatenate(
                     .send(.destination(.dismiss)),
@@ -85,7 +85,7 @@ struct WelcomeFeature {
             case .onAppear:
                 return .publisher { state.$userTier.publisher.receive(on: UIScheduler.shared).map(Action.userTierUpdated) }
                     .cancellable(id: CancelId.userTier)
-            case .userTierUpdated(let tier):
+            case let .userTierUpdated(tier):
                 guard let tier else { return .none }
                 if tier == 0 {
                     state.destination = .upsell(.loading)

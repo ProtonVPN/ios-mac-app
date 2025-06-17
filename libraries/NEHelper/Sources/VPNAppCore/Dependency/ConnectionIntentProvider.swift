@@ -38,8 +38,8 @@ public struct ConnectionIntentStorage: TestDependencyKey, Sendable {
     }
 }
 
-extension DependencyValues {
-    public var connectionIntentStorage: ConnectionIntentStorage {
+public extension DependencyValues {
+    var connectionIntentStorage: ConnectionIntentStorage {
         get { self[ConnectionIntentStorage.self] }
         set { self[ConnectionIntentStorage.self] = newValue }
     }

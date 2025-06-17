@@ -22,7 +22,6 @@ import SwiftUI
 import Theme
 
 struct PrimaryButtonStyle: ButtonStyle {
-
     func makeBody(configuration: Configuration) -> some View {
         configuration
             .label
@@ -39,9 +38,7 @@ struct PrimaryButtonStyle: ButtonStyle {
 
 struct PrimaryButtonStyle_Previews: PreviewProvider {
     static var previews: some View {
-        Button {
-
-        } label: {
+        Button {} label: {
             Text("Preview button")
         }
         .buttonStyle(PrimaryButtonStyle())

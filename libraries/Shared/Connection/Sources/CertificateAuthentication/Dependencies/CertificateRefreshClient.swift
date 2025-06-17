@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
-import ExtensionIPC
-import CoreConnection
 import CommonNetworking
+import CoreConnection
+import ExtensionIPC
 
 import Domain
 
@@ -57,7 +57,7 @@ extension CertificateRefreshClient {
             case .ok:
                 return .ok
 
-            case .error(let message):
+            case let .error(message):
                 return .ipcError(message: message)
 
             case .errorSessionExpired:
@@ -66,7 +66,7 @@ extension CertificateRefreshClient {
             case .errorNeedKeyRegeneration:
                 return .requiresNewKeys
 
-            case .errorTooManyCertRequests(let retryAfter):
+            case let .errorTooManyCertRequests(retryAfter):
                 return .tooManyCertRequests(retryAfter: retryAfter)
             }
         },

@@ -25,8 +25,8 @@ package struct BundleIDClient: Sendable {
     package let bundleIdentifierForTarget: @Sendable () -> String
 }
 
-extension DependencyValues {
-    package var bundleIDClient: BundleIDClient {
+package extension DependencyValues {
+    var bundleIDClient: BundleIDClient {
         get { self[BundleIDClient.self] }
         set { self[BundleIDClient.self] = newValue }
     }
@@ -40,13 +40,13 @@ extension BundleIDClient: DependencyKey {
 
     package static let liveValue = BundleIDClient {
         #if os(iOS)
-        return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
+            return isStagingBuild ? "ch.protonmail.vpn.debug.WireGuardiOS-Extension" : "ch.protonmail.vpn.WireGuardiOS-Extension"
         #elseif os(macOS)
-        return "ch.protonvpn.mac.WireGuard-Extension"
+            return "ch.protonvpn.mac.WireGuard-Extension"
         #elseif os(tvOS)
-        return "ch.protonmail.vpn.WireGuard-tvOS"
+            return "ch.protonmail.vpn.WireGuard-tvOS"
         #else
-        fatalError("Unsupported platform")
+            fatalError("Unsupported platform")
         #endif
     }
 

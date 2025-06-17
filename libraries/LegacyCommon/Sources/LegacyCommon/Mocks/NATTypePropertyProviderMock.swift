@@ -17,24 +17,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
+    import Foundation
 
-import Domain
-import VPNShared
+    import Domain
+    import VPNShared
 
-public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
-    public var natType: NATType = .default {
-        didSet {
-            AppEvent.natType.post(natType)
+    public final class NATTypePropertyProviderMock: NATTypePropertyProvider {
+        public var natType: NATType = .default {
+            didSet {
+                AppEvent.natType.post(natType)
+            }
         }
-    }
 
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        if tier.isFreeTier {
-            natType = .default
+        public func adjustAfterPlanChange(from _: Int, to tier: Int) {
+            if tier.isFreeTier {
+                natType = .default
+            }
         }
-    }
 
-    public init() {}
-}
+        public init() {}
+    }
 #endif

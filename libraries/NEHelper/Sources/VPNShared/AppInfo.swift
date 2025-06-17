@@ -18,20 +18,19 @@
 
 import Foundation
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #endif
 
 import Dependencies
 import Domain
 import Ergonomics
 
-
 public protocol AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo
 }
 
-extension AppInfoFactory {
-    public func makeAppInfo() -> AppInfo {
+public extension AppInfoFactory {
+    func makeAppInfo() -> AppInfo {
         makeAppInfo(context: .default)
     }
 }
@@ -46,29 +45,29 @@ public protocol AppInfo {
     var osVersion: OperatingSystemVersion { get }
 }
 
-extension AppInfo {
-    public var appVersion: String {
+public extension AppInfo {
+    var appVersion: String {
         clientId + "@" + bundleShortVersion
     }
 
-    public func clientId(forContext specificContext: AppContext) -> String {
-        return clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
+    func clientId(forContext specificContext: AppContext) -> String {
+        clientInfoDictionary[specificContext.clientIdKey] as? String ?? ""
     }
 
-    public var clientId: String {
+    var clientId: String {
         clientId(forContext: context)
     }
 
-    public var bundleShortVersion: String {
-        return bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
+    var bundleShortVersion: String {
+        bundleInfoDictionary["CFBundleShortVersionString"] as? String ?? ""
     }
 
-    public var bundleVersion: String {
-        return bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
+    var bundleVersion: String {
+        bundleInfoDictionary["CFBundleVersion"] as? String ?? ""
     }
 
-    public var revisionInfo: String {
-        return bundleInfoDictionary["RevisionInfo"] as? String ??
+    var revisionInfo: String {
+        bundleInfoDictionary["RevisionInfo"] as? String ??
             "\(bundleShortVersion) (\(bundleVersion))"
     }
 
@@ -91,19 +90,19 @@ extension AppInfo {
     }
 
     private var osVersionAndModelString: String {
-        var modelString: String = ""
-        if let modelName = modelName {
+        var modelString = ""
+        if let modelName {
             modelString = "; \(modelName)"
         }
 
         return "\(osVersionString)\(modelString)"
     }
 
-    public var userAgent: String {
+    var userAgent: String {
         "\(processName)/\(bundleShortVersion) (\(osVersionAndModelString))"
     }
 
-    public var debugInfoString: String {
+    var debugInfoString: String {
         "\(osVersionAndModelString). \(processName): \(revisionInfo)"
     }
 }
@@ -123,29 +122,29 @@ public class AppInfoImplementation: AppInfo {
         modelName: String? = nil
     ) {
         self.context = context
-        processName = processInfo.processName
-        osVersion = processInfo.operatingSystemVersion
+        self.processName = processInfo.processName
+        self.osVersion = processInfo.operatingSystemVersion
 
-        if let modelName = modelName {
+        if let modelName {
             self.modelName = modelName
         } else {
             #if canImport(UIKit)
-            self.modelName = UIDevice.current.modelName
+                self.modelName = UIDevice.current.modelName
             #elseif os(macOS)
-            self.modelName = Host.current().localizedName ?? nil
+                self.modelName = Host.current().localizedName ?? nil
             #endif
         }
 
         guard let file = bundle.path(forResource: "Client", ofType: "plist"),
               let clientDict = NSDictionary(contentsOfFile: file) as? [String: Any],
               let infoDict = bundle.infoDictionary else {
-            clientInfoDictionary = [:]
-            bundleInfoDictionary = [:]
+            self.clientInfoDictionary = [:]
+            self.bundleInfoDictionary = [:]
             return
         }
 
-        clientInfoDictionary = clientDict
-        bundleInfoDictionary = infoDict
+        self.clientInfoDictionary = clientDict
+        self.bundleInfoDictionary = infoDict
     }
 }
 
@@ -160,8 +159,8 @@ public enum AppInfoKey: TestDependencyKey {
     }
 }
 
-extension DependencyValues {
-    public var appInfo: AppInfo {
+public extension DependencyValues {
+    var appInfo: AppInfo {
         get { self[AppInfoKey.self] }
         set { self[AppInfoKey.self] = newValue }
     }

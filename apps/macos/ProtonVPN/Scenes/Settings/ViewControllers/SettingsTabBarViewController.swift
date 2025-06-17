@@ -21,64 +21,68 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 import Strings
 
 final class SettingsTabBarViewController: NSViewController {
-    
-    @IBOutlet private weak var headerLabel: NSTextField!
-    @IBOutlet private weak var tabBarView: TabBarView!
-    @IBOutlet private weak var generalButton: TabBarButton!
-    @IBOutlet private weak var connectionButton: TabBarButton!
-    @IBOutlet private weak var accountButton: TabBarButton!
-    @IBOutlet private weak var advancedButon: TabBarButton!
+    @IBOutlet private var headerLabel: NSTextField!
+    @IBOutlet private var tabBarView: TabBarView!
+    @IBOutlet private var generalButton: TabBarButton!
+    @IBOutlet private var connectionButton: TabBarButton!
+    @IBOutlet private var accountButton: TabBarButton!
+    @IBOutlet private var advancedButon: TabBarButton!
 
     private var viewModel: SettingsTabBarViewModel!
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewModel: SettingsTabBarViewModel) {
         super.init(nibName: NSNib.Name("SettingsTabBar"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
         setupView()
         setupComponents()
-        NotificationCenter.default.addObserver(self, selector: #selector(tabChanged(_:)),
-                                               name: viewModel.tabChanged, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(tabChanged(_:)),
+            name: viewModel.tabChanged,
+            object: nil
+        )
     }
-    
+
     private func setupView() {
         view.wantsLayer = true
         DarkAppearance {
             view.layer?.backgroundColor = .cgColor(.background)
         }
-        
+
         tabBarView.tabWidth = accountButton.bounds.width
         tabBarView.tabHeight = accountButton.bounds.height
         tabBarView.tabCount = SettingsTab.allCases.count
         tabBarView.focusedTabIndex = viewModel.activeTab.rawValue
     }
-    
+
     private func setupComponents() {
         headerLabel.attributedStringValue = Localizable.preferences.styled(font: .themeFont(.heading1), alignment: .left)
-        
+
         generalButton.title = Localizable.general
         generalButton.target = self
         generalButton.action = #selector(generalButtonAction)
         generalButton.isFocused = viewModel.activeTab == .general
-        
+
         connectionButton.title = Localizable.connection
         connectionButton.target = self
         connectionButton.action = #selector(connectionButtonAction)
         connectionButton.isFocused = viewModel.activeTab == .connection
-        
+
         accountButton.title = Localizable.account
         accountButton.target = self
         accountButton.action = #selector(accountButtonAction)
@@ -89,24 +93,29 @@ final class SettingsTabBarViewController: NSViewController {
         advancedButon.action = #selector(advancedButtonAction)
         advancedButon.isFocused = viewModel.activeTab == .advanced
     }
-    
-    @objc private func generalButtonAction() {
+
+    @objc
+    private func generalButtonAction() {
         viewModel.generalAction()
     }
-    
-    @objc private func connectionButtonAction() {
+
+    @objc
+    private func connectionButtonAction() {
         viewModel.connectionAction()
     }
-        
-    @objc private func accountButtonAction() {
+
+    @objc
+    private func accountButtonAction() {
         viewModel.accountAction()
     }
 
-    @objc private func advancedButtonAction() {
+    @objc
+    private func advancedButtonAction() {
         viewModel.advancedAction()
     }
-    
-    @objc private func tabChanged(_ notification: Notification) {
+
+    @objc
+    private func tabChanged(_ notification: Notification) {
         if let tab = notification.object as? SettingsTab {
             tabBarView.focusedTabIndex = tab.rawValue
             generalButton.isFocused = tab == .general

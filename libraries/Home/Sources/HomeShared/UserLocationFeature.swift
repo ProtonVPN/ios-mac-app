@@ -20,25 +20,25 @@ import Foundation
 
 import ComposableArchitecture
 
-import Domain
 import enum Connection.ConnectionState
-import VPNAppCore
+import Domain
 import Ergonomics
+import VPNAppCore
 
 #if canImport(UIKit)
-import class UIKit.UIApplication
+    import class UIKit.UIApplication
 #elseif canImport(AppKit)
-import class AppKit.NSApplication
+    import class AppKit.NSApplication
 #endif
 
 let didBecomeActiveNotification: NSNotification.Name = {
-#if canImport(UIKit)
-    return UIApplication.didBecomeActiveNotification
-#elseif canImport(AppKit)
-    return NSApplication.didBecomeActiveNotification
-#else
-    fatalError("Unsupported platform")
-#endif
+    #if canImport(UIKit)
+        return UIApplication.didBecomeActiveNotification
+    #elseif canImport(AppKit)
+        return NSApplication.didBecomeActiveNotification
+    #else
+        fatalError("Unsupported platform")
+    #endif
 }()
 
 @Reducer
@@ -134,11 +134,11 @@ public struct UserLocationFeature {
                     await send(.userLocationFetchFinished(result))
                 }.cancellable(id: CancelID.userLocation, cancelInFlight: true)
 
-            case .userLocationFetchFinished(.success(let location)):
+            case let .userLocationFetchFinished(.success(location)):
                 let userIP = location.ip
                 let lowercasedUserCountry = location.country.lowercased()
 
-                if userIP == state.userIP && lowercasedUserCountry == state.userCountry?.lowercased() {
+                if userIP == state.userIP, lowercasedUserCountry == state.userCountry?.lowercased() {
                     log.debug("User Location unchanged from last fetch", category: .api)
                     return .none
                 }
@@ -149,11 +149,11 @@ public struct UserLocationFeature {
                 state.$lastLocationRetrieval.withLock { $0 = date.now }
                 return .send(.delegate(.userLocationChanged(location)))
 
-            case .userLocationFetchFinished(.failure(let error)):
+            case let .userLocationFetchFinished(.failure(error)):
                 log.error("User location request failed", category: .api, metadata: ["error": "\(error)"])
                 return .none
 
-            case .didBecomeActive(_):
+            case .didBecomeActive:
                 return .send(.fetchUserLocation)
 
             case .tearDown:

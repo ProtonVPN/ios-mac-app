@@ -21,17 +21,17 @@ import UIKit
 
 final class SearchSectionHeaderView: UITableViewHeaderFooterView {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets
 
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var titleLabelLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var titleLabelLeadingConstraint: NSLayoutConstraint!
 
     // MARK: Properties
 

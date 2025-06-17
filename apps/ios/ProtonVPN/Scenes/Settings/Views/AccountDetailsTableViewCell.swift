@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import Theme
+import UIKit
 
 final class AccountDetailsTableViewCell: UITableViewCell {
-
     @IBOutlet private var initialsRect: UIView!
     @IBOutlet private var initialsText: UILabel!
     @IBOutlet private var username: UILabel!
@@ -47,13 +46,15 @@ final class AccountDetailsTableViewCell: UITableViewCell {
         accessibilityIdentifier = "Account Details cell"
     }
 
-    func setup(initials: NSAttributedString,
-               username: NSAttributedString,
-               plan: NSAttributedString,
-               handler: @escaping () -> Void) {
-        self.initialsText.attributedText = initials
+    func setup(
+        initials: NSAttributedString,
+        username: NSAttributedString,
+        plan: NSAttributedString,
+        handler: @escaping () -> Void
+    ) {
+        initialsText.attributedText = initials
         self.username.attributedText = username
         self.plan.attributedText = plan
-        self.completionHandler = handler
+        completionHandler = handler
     }
 }

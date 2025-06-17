@@ -20,8 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Dependencies
+import Foundation
 import Hermes
 
 struct ClientConfigResponse {
@@ -74,9 +74,11 @@ extension ClientConfigResponse: Decodable {
         let defaultPorts = try container.decode(DefaultPorts.self, forKey: .defaultPorts)
 
         let wireguardPorts = defaultPorts.wireGuard
-        let (wireguardUdp, wireguardTcp, wireguardTls) = (wireguardPorts?.udp,
-                                                          wireguardPorts?.tcp,
-                                                          wireguardPorts?.tls ?? wireguardPorts?.tcp)
+        let (wireguardUdp, wireguardTcp, wireguardTls) = (
+            wireguardPorts?.udp,
+            wireguardPorts?.tcp,
+            wireguardPorts?.tls ?? wireguardPorts?.tcp
+        )
 
         @Dependency(\.hermesClient) var hermesClient
         @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
@@ -101,7 +103,7 @@ extension ClientConfigResponse: Decodable {
         // decoded directly from the parent object without a container. See `ServerChangeConfig` docs for more info
         let serverChangeConfig = (try? ServerChangeConfig(from: decoder)) ?? ServerChangeConfig()
 
-        clientConfig = ClientConfig(
+        self.clientConfig = ClientConfig(
             featureFlags: featureFlags,
             serverRefreshInterval: serverRefreshInterval,
             wireGuardConfig: wireguardConfig,

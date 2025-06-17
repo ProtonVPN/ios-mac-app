@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CoreLocation
+import Foundation
 
 public enum CountriesCoordinates {
-
     static let countryCenterCoordinatesFile = "CountryCenterCoordinates"
     static let countryBoundingBoxesFile = "CountryBoundingBoxes"
     static let countriesWithDisputedTerritoriesFile = "CountriesWithDisputedTerritories"
@@ -58,7 +57,7 @@ public enum CountriesCoordinates {
         }
         return [
             CLLocationCoordinate2D(latitude: doubles[1], longitude: doubles[0]),
-            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2])
+            CLLocationCoordinate2D(latitude: doubles[3], longitude: doubles[2]),
         ]
     }
 }

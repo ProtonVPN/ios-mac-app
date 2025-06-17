@@ -21,10 +21,10 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class ShowApplicationButton: HoverDetectionButton {
     required init?(coder: NSCoder) {
@@ -32,13 +32,13 @@ class ShowApplicationButton: HoverDetectionButton {
 
         configureView()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
-        
+
         configureView()
     }
-    
+
     private func configureView() {
         let hover: AppTheme.Style = isHovered ? .hovered : []
         attributedTitle = Localizable.showProtonvpn.styled([.interactive, .hint] + hover)

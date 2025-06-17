@@ -27,6 +27,5 @@ import VPNAppCore
 @testable import ProtonVPN
 
 class AlertServiceEmptyStub: AlertService {
-    
-    func push(alert: SystemAlert) {}
+    func push(alert _: SystemAlert) {}
 }

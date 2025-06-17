@@ -16,18 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import WidgetKit
-import Domain
-import Dependencies
-import VPNShared
-import VPNAppCore
-import ConnectionInventory
-import OrderedCollections
 import AppIntents
 import ComposableArchitecture
+import ConnectionInventory
+import Dependencies
+import Domain
+import OrderedCollections
+import VPNAppCore
+import VPNShared
+import WidgetKit
 
 struct Provider: TimelineProvider {
-
     @Dependency(\.authKeychain) var authKeychain
     @Dependency(\.recentsStorage) var recentsStorage
     @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage
@@ -35,7 +34,6 @@ struct Provider: TimelineProvider {
     @SharedReader(.vpnConnectionStatus) var vpnConnectionStatus: VPNConnectionStatus
 
     func recentConnectionList() -> [RecentConnection] {
-
         let preference = try? defaultConnectionStorage.getPreference()
 
         return connectionInventory.recentConnectionList(
@@ -45,18 +43,20 @@ struct Provider: TimelineProvider {
         ).elements
     }
 
-    func placeholder(in context: Context) -> ConnectWidgetEntry {
-        .init(date: .now,
-              connectionSpec: .defaultFastest,
-              protectionState: .protected,
-              recentServers: [])
+    func placeholder(in _: Context) -> ConnectWidgetEntry {
+        .init(
+            date: .now,
+            connectionSpec: .defaultFastest,
+            protectionState: .protected,
+            recentServers: []
+        )
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (ConnectWidgetEntry) -> ()) {
+    func getSnapshot(in _: Context, completion: @escaping (ConnectWidgetEntry) -> Void) {
         completion(createTimelineEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+    func getTimeline(in _: Context, completion: @escaping (Timeline<Entry>) -> Void) {
         completion(Timeline(entries: [createTimelineEntry()], policy: .never))
     }
 
@@ -68,7 +68,7 @@ struct Provider: TimelineProvider {
         case .mostRecent:
             let recents = recentsStorage.readFromStorage()
             return recents.elements.first?.connection ?? .defaultFastest
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }
@@ -77,18 +77,21 @@ struct Provider: TimelineProvider {
         let credentials: AuthCredentials? = authKeychain.fetch()
 
         guard credentials?.userId != nil else {
-            return ConnectWidgetEntry(date: .now,
-                                       connectionSpec: nil,
-                                       protectionState: .signedOut,
-                                       recentServers: [])
+            return ConnectWidgetEntry(
+                date: .now,
+                connectionSpec: nil,
+                protectionState: .signedOut,
+                recentServers: []
+            )
         }
 
         let recents = recentConnectionList()
 
-        return ConnectWidgetEntry(date: .now,
-                                   connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
-                                   protectionState: vpnConnectionStatus.protectionState,
-                                   recentServers: recents
+        return ConnectWidgetEntry(
+            date: .now,
+            connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
+            protectionState: vpnConnectionStatus.protectionState,
+            recentServers: recents
         )
     }
 }
@@ -97,20 +100,20 @@ private extension VPNConnectionStatus {
     var protectionState: ConnectWidgetEntry.ProtectionState {
         switch self {
         case .resolving, .disconnected, .disconnecting:
-            return .unprotected
+            .unprotected
         case .connecting:
-            return .protecting
+            .protecting
         case .connected:
-            return .protected
+            .protected
         }
     }
 
     var connectionSpec: ConnectionSpec? {
         switch self {
         case .resolving, .disconnected, .disconnecting:
-            return nil
+            nil
         case .connecting, .connected:
-            return self.spec
+            spec
         }
     }
 }

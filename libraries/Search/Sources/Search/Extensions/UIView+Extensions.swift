@@ -24,8 +24,8 @@ extension UIView {
         guard let view = UINib(nibName: name, bundle: Bundle.module).instantiate(withOwner: self, options: nil).first as? UIView else {
             fatalError()
         }
-        view.frame = self.bounds
-        self.addSubview(view)
+        view.frame = bounds
+        addSubview(view)
         return view
     }
 }

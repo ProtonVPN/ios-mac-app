@@ -17,26 +17,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Strings
+import UIKit
 
 final class PlaceholderView: UIView {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var itemsStackView: UIStackView!
+    @IBOutlet private var itemsStackView: UIStackView!
     @IBOutlet private var contentView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 
     var onlyCountries: Bool = false {
         didSet {
-            itemViews.forEach {
+            for itemView in itemViews {
                 if onlyCountries {
-                    $0.isHidden = $0.item != PlaceholderItem.countries
+                    itemView.isHidden = itemView.item != PlaceholderItem.countries
                 } else {
-                    $0.isHidden = false
+                    itemView.isHidden = false
                 }
             }
         }
@@ -48,7 +47,7 @@ final class PlaceholderView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        contentView = loadFromNib(name: "PlaceholderView")
+        self.contentView = loadFromNib(name: "PlaceholderView")
 
         setupUI()
     }
@@ -66,8 +65,8 @@ final class PlaceholderView: UIView {
             return view
         }
 
-        items.forEach {
-            itemsStackView.addArrangedSubview($0)
+        for item in items {
+            itemsStackView.addArrangedSubview(item)
         }
     }
 }

@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Connection
-import Settings
 import Dependencies
+import Settings
 import Sharing
 import VPNAppCore
 
@@ -44,7 +44,7 @@ extension SettingsClient: @retroactive DependencyKey {
                 return .withConnectionUpdate
             }
         },
-        protocolChangeAvailability: { connectionProtocol in
+        protocolChangeAvailability: { _ in
             @Shared(.connectionState) var connectionState
             switch connectionState {
             case .disconnected, .disconnecting:
@@ -57,7 +57,7 @@ extension SettingsClient: @retroactive DependencyKey {
             case .connecting(.unresolved):
                 return .withReconnect
 
-            case .connected(_, let server, _, _), .connecting(.resolved(_, let server)):
+            case let .connected(_, server, _, _), let .connecting(.resolved(_, server)):
                 @Dependency(\.propertiesManager) var properties
                 let supportedProtocols = properties.smartProtocolConfig.supportedProtocols
                 let serverSupportsNewProtocol = server.endpoint.supports(protocolSet: .init(vpnProtocols: supportedProtocols))
@@ -68,7 +68,7 @@ extension SettingsClient: @retroactive DependencyKey {
             @Dependency(\.disconnectVPN) var disconnect
             try await disconnect(.auto)
         },
-        reconnect: { featureChanges in
+        reconnect: { _ in
             @Dependency(\.connectionIntentStorage) var storage
             let lastIntent = try storage.getConnectionIntent()
 

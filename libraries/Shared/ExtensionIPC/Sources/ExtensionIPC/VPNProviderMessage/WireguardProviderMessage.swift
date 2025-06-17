@@ -71,10 +71,10 @@ public enum WireguardProviderRequest: ProviderRequest {
             return datagram(.flushLogsToFile)
         case let .setApiSelector(selector, sessionCookie):
             return encodeApiSelector(selector: selector, sessionCookie: sessionCookie)
-        case .refreshCertificate(let features):
+        case let .refreshCertificate(features):
             let encoder = JSONEncoder()
             var featuresData: Data?
-            if let features = features, let encodedFeatures = try? encoder.encode(features) {
+            if let features, let encodedFeatures = try? encoder.encode(features) {
                 featuresData = encodedFeatures
             }
             return datagram(.refreshCertificate) + (featuresData ?? Data())
@@ -109,7 +109,7 @@ public enum WireguardProviderRequest: ProviderRequest {
                let decodedFeatures = try? JSONDecoder().decode(VPNConnectionFeatures.self, from: messageData) {
                 features = decodedFeatures
             }
-            
+
             return .refreshCertificate(features: features)
         case .cancelRefreshOperations:
             return .cancelRefreshes
@@ -125,7 +125,7 @@ public enum WireguardProviderRequest: ProviderRequest {
 
         let dict: JSONDictionary = [
             Keys.selector.rawValue: selector as AnyObject,
-            Keys.sessionCookie.rawValue: cookieDict as AnyObject
+            Keys.sessionCookie.rawValue: cookieDict as AnyObject,
         ]
 
         let data = datagram(.setApiSelector) + ((try? JSONSerialization.data(withJSONObject: dict)) ?? Data())
@@ -165,15 +165,15 @@ public enum WireguardProviderRequest: ProviderRequest {
 
         public var asData: Data {
             switch self {
-            case .ok(let data):
+            case let .ok(data):
                 return datagram(.ok) + (data ?? Data())
             case .errorSessionExpired:
                 return datagram(.sessionExpired)
             case .errorNeedKeyRegeneration:
                 return datagram(.needKeyRegen)
-            case .errorTooManyCertRequests(let retryAfter):
+            case let .errorTooManyCertRequests(retryAfter):
                 var data = datagram(.tooManyCertRequests)
-                if let retryAfter = retryAfter {
+                if let retryAfter {
                     let intData = withUnsafeBytes(of: retryAfter) { bufPtr -> Data? in
                         guard let ptr = bufPtr.baseAddress else { return nil }
                         return Data(bytes: ptr, count: MemoryLayout<Int>.size)
@@ -181,7 +181,7 @@ public enum WireguardProviderRequest: ProviderRequest {
                     data += intData ?? Data()
                 }
                 return data
-            case .error(let message):
+            case let .error(message):
                 return datagram(.unrecoverableError) + (message.data(using: .utf8) ?? Data())
             }
         }
@@ -219,7 +219,7 @@ public enum WireguardProviderRequest: ProviderRequest {
         return String(data: data[1...], encoding: .utf8) ?? ""
     }
 
-    private static func decodeInteger<N: BinaryInteger>(_ type: N.Type, data: Data) -> N? {
+    private static func decodeInteger<N: BinaryInteger>(_: N.Type, data: Data) -> N? {
         let width = MemoryLayout<N>.size
         guard data.count == 1 + width else { return nil }
 
@@ -246,21 +246,21 @@ public enum WireguardProviderRequest: ProviderRequest {
 
 private extension HTTPCookiePropertyKey {
     var hasDateRepresentation: Bool {
-        return rawValue.lowercased() == "created" || rawValue.lowercased() == "expires"
+        rawValue.lowercased() == "created" || rawValue.lowercased() == "expires"
     }
 }
 
 private extension HTTPCookie {
     var asDict: JSONDictionary? {
-        guard let properties = properties else { return nil }
+        guard let properties else { return nil }
 
-        let dict: JSONDictionary = properties.reduce(into: [:], { partialResult, kvPair in
+        let dict: JSONDictionary = properties.reduce(into: [:]) { partialResult, kvPair in
             if kvPair.key.hasDateRepresentation, let date = kvPair.value as? Date {
                 partialResult[kvPair.key.rawValue] = Int(date.timeIntervalSince1970) as AnyObject
             } else {
                 partialResult[kvPair.key.rawValue] = kvPair.value as AnyObject
             }
-        })
+        }
 
         return dict
     }
@@ -284,19 +284,19 @@ extension WireguardProviderRequest: CustomStringConvertible, CustomDebugStringCo
     public var description: String {
         switch self {
         case .cancelRefreshes:
-            return "cancelRefreshes"
+            "cancelRefreshes"
         case .flushLogsToFile:
-            return "flushLogsToFile"
+            "flushLogsToFile"
         case .getRuntimeTunnelConfiguration:
-            return "getRuntimeTunnelConfiguration"
+            "getRuntimeTunnelConfiguration"
         case .setApiSelector:
-            return "setApiSelector"
-        case .refreshCertificate(let features):
-            return "refreshCertificate(features: \(String(describing: features))"
+            "setApiSelector"
+        case let .refreshCertificate(features):
+            "refreshCertificate(features: \(String(describing: features))"
         case .restartRefreshes:
-            return "restartRefreshes"
+            "restartRefreshes"
         case .getCurrentLogicalAndServerId:
-            return "getCurrentLogicalAndServerId"
+            "getCurrentLogicalAndServerId"
         }
     }
 

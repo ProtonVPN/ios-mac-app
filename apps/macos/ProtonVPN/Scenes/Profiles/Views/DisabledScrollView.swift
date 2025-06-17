@@ -23,14 +23,12 @@
 import Cocoa
 
 class DisabledScrollView: NSScrollView {
-
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         hasVerticalScroller = false
         hasHorizontalScroller = false
     }
-    
-    override func scrollWheel(with event: NSEvent) {
-    }
+
+    override func scrollWheel(with _: NSEvent) {}
 }

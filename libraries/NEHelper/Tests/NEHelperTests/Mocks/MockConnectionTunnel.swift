@@ -17,10 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import NetworkExtension
-import XCTest
-import VPNShared
 import NEHelper
+import NetworkExtension
+import VPNShared
+import XCTest
 
 struct MockDataTaskFactory: DataTaskFactory {
     let cookieStorage: CookieStorageProtocol = HTTPCookieStorage()
@@ -29,12 +29,12 @@ struct MockDataTaskFactory: DataTaskFactory {
     let requestCallback: RequestCallback
 
     func dataTask(_ request: URLRequest, completionHandler: @escaping MockDataTask.CompletionCallback) -> DataTaskProtocol {
-        return MockDataTask(request: request, dataTaskFactory: self, completionHandler: completionHandler)
+        MockDataTask(request: request, dataTaskFactory: self, completionHandler: completionHandler)
     }
 }
 
 struct MockDataTask: DataTaskProtocol {
-    typealias CompletionCallback = ((Data?, URLResponse?, Error?) -> Void)
+    typealias CompletionCallback = (Data?, URLResponse?, Error?) -> Void
 
     let request: URLRequest
     let dataTaskFactory: MockDataTaskFactory
@@ -45,9 +45,7 @@ struct MockDataTask: DataTaskProtocol {
     }
 }
 
-protocol MockConnectionWriteDelegate {
-
-}
+protocol MockConnectionWriteDelegate {}
 
 class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
     let hostname: String
@@ -80,7 +78,7 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 
     var closedForWriting = false
 
-    var stateChangeCallback: ((NWTCPConnectionState) -> ())?
+    var stateChangeCallback: ((NWTCPConnectionState) -> Void)?
 
     func write(_ data: Data) async throws {
         guard !closedForWriting else {
@@ -107,7 +105,6 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
             return nil
         }
 
-
         guard let dataReadCallback = factory?.dataReadCallback else {
             XCTFail("No dataReadCallback was set")
             return nil
@@ -128,7 +125,7 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
         closedForWriting = true
     }
 
-    func observeStateChange(withCallback callback: @escaping ((NWTCPConnectionState) -> ())) -> ObservationHandle {
+    func observeStateChange(withCallback callback: @escaping ((NWTCPConnectionState) -> Void)) -> ObservationHandle {
         stateChangeCallback = callback
         factory?.stateObservingCallback(self)
         return self
@@ -140,18 +137,19 @@ class MockConnectionTunnel: ConnectionTunnel & ObservationHandle {
 }
 
 class MockConnectionTunnelFactory: ConnectionTunnelFactory {
-    typealias StateObservingCallback = ((MockConnectionTunnel) -> ())
-    typealias DataReadCallback = ((MockConnectionTunnel) throws -> (Data))
-    typealias DataWriteCallback = ((MockConnectionTunnel, Data) throws -> (Void))
+    typealias StateObservingCallback = (MockConnectionTunnel) -> Void
+    typealias DataReadCallback = (MockConnectionTunnel) throws -> (Data)
+    typealias DataWriteCallback = (MockConnectionTunnel, Data) throws -> Void
 
     let stateObservingCallback: StateObservingCallback
     let dataReadCallback: DataReadCallback
     let dataWriteCallback: DataWriteCallback
 
-    init(stateObservingCallback: @escaping StateObservingCallback,
-         dataReadCallback: @escaping DataReadCallback,
-         dataWriteCallback: @escaping DataWriteCallback)
-    {
+    init(
+        stateObservingCallback: @escaping StateObservingCallback,
+        dataReadCallback: @escaping DataReadCallback,
+        dataWriteCallback: @escaping DataWriteCallback
+    ) {
         self.stateObservingCallback = stateObservingCallback
         self.dataReadCallback = dataReadCallback
         self.dataWriteCallback = dataWriteCallback

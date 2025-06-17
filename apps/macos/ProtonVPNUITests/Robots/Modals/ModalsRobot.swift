@@ -17,72 +17,67 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import fusion
+import Modals
 import Strings
 import XCTest
-import Modals
-import fusion
 
 class ModalsRobot: CoreElements {
-    
     let accessAllCountriesBanner = AllCountriesModal()
     let cantSkipBanner = CantSkipBanner()
-    
+
     func closeModal() -> ModalsRobot {
         dialog().firstMatch().onChild(button("_XCUI:CloseWindow")).tap()
         return self
     }
-    
+
     let verify = Verify()
-    
+
     class Verify {
-        
         @discardableResult
         func checkModalAppear(type: ModalType) -> ModalsRobot {
             switch type {
             case .allCountries:
-                return ModalsRobot().accessAllCountriesBanner.verify.checkModalAppear()
+                ModalsRobot().accessAllCountriesBanner.verify.checkModalAppear()
             case .cantSkip:
-                return ModalsRobot().cantSkipBanner.verify.checkModalAppear()
+                ModalsRobot().cantSkipBanner.verify.checkModalAppear()
             default:
-                return ModalsRobot()
+                ModalsRobot()
             }
         }
     }
-    
+
     class AllCountriesModal {
-        
         let verify = Verify()
-        
+
         class Verify: CoreElements {
-            
             func checkModalAppear() -> ModalsRobot {
                 let container = dialog("Untitled")
                 container.checkExists()
-                container.onChild(staticText( Localizable.modalsNewUpsellAllCountriesTitle)).checkExists(message: "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'")
+                container.onChild(staticText(Localizable.modalsNewUpsellAllCountriesTitle)).checkExists(message: "Banner title does not contain expected text '\(Localizable.modalsNewUpsellAllCountriesTitle)'")
                 container.onChild(staticText(NSPredicate(format: "title CONTAINS[c] %@", "VPN Plus"))).checkExists(message: "Banner description does not contain expected text 'VPN Plus'")
-                
+
                 container.onChild(button("ModalUpgradeButton")).checkExists(message: "ModalUpgradeButton does not appear at the AccessAllCountriesBanner")
-                
+
                 return ModalsRobot()
             }
         }
     }
-    
+
     class CantSkipBanner {
         let verify = Verify()
-        
+
         class Verify: CoreElements {
-            
             func checkModalAppear() -> ModalsRobot {
                 let container = dialog("Untitled")
                 container.checkExists()
-                
+
                 let bannerDescription: String = container.onChild(staticText("DescriptionLabel")).value() as? String ?? ""
-                
+
                 XCTAssertTrue(bannerDescription.contains(Localizable.upsellSpecificLocationSubtitle), "Banner description does not contain expected text '\(Localizable.upsellSpecificLocationSubtitle)'. Actual message: \(bannerDescription)")
-                
+
                 container.onChild(button("Upgrade")).checkExists(message: "Upgrade button does not appear at the AccessAllCountriesBanner")
-                
+
                 return ModalsRobot()
             }
         }

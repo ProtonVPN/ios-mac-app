@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
 import Connection
+import SwiftUI
 
 enum MainBackground: Equatable, Sendable {
     case settingsDrillDown
@@ -40,19 +40,18 @@ enum MainBackground: Equatable, Sendable {
 }
 
 struct HomeBackgroundGradient: View {
-
     var mainBackground: MainBackground
 
     var color: Color {
         switch mainBackground {
         case .connected:
-            return Color(.connectedGradient)
+            Color(.connectedGradient)
         case .disconnected:
-            return Color(.disconnectedGradient)
+            Color(.disconnectedGradient)
         case .connecting:
-            return Color(.connectingGradient)
+            Color(.connectingGradient)
         default:
-            return .clear
+            .clear
         }
     }
 

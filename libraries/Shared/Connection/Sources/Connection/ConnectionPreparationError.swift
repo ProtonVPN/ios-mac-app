@@ -18,18 +18,18 @@
 
 import Foundation
 
-import Dependencies
 import CasePaths
+import Dependencies
 
-import Localization
-import LocalAgent
+import CertificateAuthentication
 import CoreConnection
 import ExtensionManager
-import CertificateAuthentication
+import LocalAgent
+import Localization
 
 import Domain
-import Strings
 import Ergonomics
+import Strings
 
 @CasePathable
 public enum ConnectionPreparationError: ProtonVPNError, Equatable {
@@ -42,10 +42,10 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     public var charCode: FourCharCode {
         switch self {
         case .featureNotReady:
-            return "PRNR" // PReparation Not Ready
+            "PRNR" // PReparation Not Ready
 
         case .wrapped:
-            return "PRWE" // PReparation Wrapped Error
+            "PRWE" // PReparation Wrapped Error
         }
     }
 
@@ -54,7 +54,7 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     }
 
     public var underlyingError: (any Error)? {
-        if case .wrapped(let error) = self {
+        if case let .wrapped(error) = self {
             return error.wrapped
         }
         return nil

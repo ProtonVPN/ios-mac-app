@@ -30,13 +30,13 @@ import LegacyCommon
 
 protocol CountriesServersHeaderViewModelProtocol: AnyObject {
     var title: String { get }
-    var didTapInfoBtn: ( () -> Void )? { get }
+    var didTapInfoBtn: (() -> Void)? { get }
 }
 
 class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
-    
+
     init(
         _ sectionHeader: String,
         totalCountries: Int?,
@@ -50,7 +50,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         self.title = title
 
         if let buttonType {
-            didTapInfoBtn = { [weak countriesViewModel] in
+            self.didTapInfoBtn = { [weak countriesViewModel] in
                 switch buttonType {
                 case .premium:
                     countriesViewModel?.displayPremiumServices?()
@@ -73,7 +73,7 @@ class CountryHeaderViewModel: CountriesServersHeaderViewModelProtocol {
 class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
     let title: String
     var didTapInfoBtn: (() -> Void)?
-    
+
     init(
         _ sectionHeader: String,
         totalServers: Int,
@@ -82,15 +82,15 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
         propertiesManager: PropertiesManagerProtocol,
         countriesViewModel: CountriesSectionViewModel
     ) {
-        title = sectionHeader + " (\(totalServers))"
+        self.title = sectionHeader + " (\(totalServers))"
         guard tier.isPaidTier else {
-            didTapInfoBtn = { [weak countriesViewModel] in
+            self.didTapInfoBtn = { [weak countriesViewModel] in
                 countriesViewModel?.displayFreeServices()
             }
             return
         }
 
-        guard case .country(let code) = kind,
+        guard case let .country(code) = kind,
               !propertiesManager.secureCoreToggle,
               tier.isPaidTier,
               let streamServicesDict = propertiesManager.streamingServices[code],
@@ -99,7 +99,7 @@ class ServerHeaderViewModel: CountriesServersHeaderViewModelProtocol {
             return
         }
 
-        didTapInfoBtn = { [weak countriesViewModel] in
+        self.didTapInfoBtn = { [weak countriesViewModel] in
             let countryName = LocalizationUtility().countryName(forCode: code) ?? ""
             countriesViewModel?.displayStreamingServices?(countryName, streamServices, propertiesManager)
         }

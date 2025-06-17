@@ -151,49 +151,49 @@ public extension ModalType {
     var showUpgradeButton: Bool {
         switch self {
         case .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-            return false
+            false
         case let .cantSkip(until, _, _):
-            return Date().timeIntervalSince(until) < 0
+            Date().timeIntervalSince(until) < 0
         default:
-            return true
+            true
         }
     }
 
     var changeDate: Date? {
         switch self {
         case let .cantSkip(until, _, _):
-            return until
+            until
         default:
-            return nil
+            nil
         }
     }
 
     var hasNewUpsellScreen: Bool {
         switch self {
         case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN, .hermes, .plutonium:
-            return true
+            true
         case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
-            return false
+            false
         }
     }
 
     var shouldVerticallyCenterContent: Bool {
         switch self {
         case .onboardingWelcome, .onboardingGetStarted:
-            return false
+            false
         default:
-            return true
+            true
         }
     }
 
     var multipleStepsModal: (stepCount: Int, totalStepCount: Int)? {
         switch self {
         case .onboardingWelcome:
-            return (1, 2)
+            (1, 2)
         case .onboardingGetStarted:
-            return (2, 2)
+            (2, 2)
         default:
-            return nil
+            nil
         }
     }
 }
@@ -202,18 +202,18 @@ private extension ModalType {
     func primaryButtonTitle() -> String {
         switch self {
         case .netShield:
-            return Localizable.modalsUpsellNetShieldTitle
+            Localizable.modalsUpsellNetShieldTitle
         case .onboardingWelcome:
-            return Localizable.continue
+            Localizable.continue
         case .onboardingGetStarted, .welcomeFallback, .welcomeUnlimited, .welcomePlus:
-            return Localizable.modalsCommonGetStarted
+            Localizable.modalsCommonGetStarted
         default:
-            return Localizable.upgrade
+            Localizable.upgrade
         }
     }
 
     func secondaryButtonTitle() -> String? {
-        return Localizable.notNow
+        Localizable.notNow
     }
 
     func title(legacy: Bool) -> String {
@@ -222,7 +222,7 @@ private extension ModalType {
             return legacy ? Localizable.modalsUpsellNetShieldTitle : Localizable.modalsNewUpsellNetshieldTitle
         case .secureCore:
             return legacy ? Localizable.modalsUpsellSecureCoreTitle : Localizable.modalsNewUpsellSecureCoreTitle
-        case .allCountries(let numberOfServers, let numberOfCountries):
+        case let .allCountries(numberOfServers, numberOfCountries):
             return legacy ?
                 Localizable.modalsUpsellAllCountriesTitle(numberOfServers, numberOfCountries) :
                 Localizable.modalsNewUpsellAllCountriesTitle
@@ -239,7 +239,7 @@ private extension ModalType {
         case .profiles:
             return Localizable.upsellProfilesTitle
         case let .cantSkip(before, _, longSkip):
-            if before.timeIntervalSinceNow > 0 && longSkip { // hide the title after timer runs out
+            if before.timeIntervalSinceNow > 0, longSkip { // hide the title after timer runs out
                 return Localizable.upsellCustomizationTitle
             }
             return ""
@@ -280,8 +280,9 @@ private extension ModalType {
         case .secureCore:
             return .init(
                 text: legacy ? Localizable.modalsUpsellFeaturesSubtitle : Localizable.modalsNewUpsellSecureCoreSubtitle,
-                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold])
-        case .allCountries(let numberOfServers, let numberOfCountries):
+                boldText: legacy ? [] : [Localizable.modalsNewUpsellSecureCoreSubtitleBold]
+            )
+        case let .allCountries(numberOfServers, numberOfCountries):
             let text = legacy ?
                 Localizable.modalsUpsellFeaturesSubtitle :
                 Localizable.modalsNewUpsellAllCountriesSubtitle(numberOfServers, numberOfCountries)
@@ -318,12 +319,14 @@ private extension ModalType {
         case .welcomePlus:
             return .init(text: Localizable.welcomeUpgradeSubtitlePlus, boldText: [])
         case .welcomeUnlimited:
-#if os(iOS)
-            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown, 
-                         boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold])
-#else
-            return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
-#endif
+            #if os(iOS)
+                return .init(
+                    text: Localizable.welcomeUpgradeSubtitleUnlimitedMarkdown,
+                    boldText: [Localizable.welcomeUpgradeSubtitleUnlimitedBold]
+                )
+            #else
+                return .init(text: Localizable.welcomeUpgradeSubtitleUnlimited, boldText: [])
+            #endif
         case .welcomeFallback:
             return .init(text: Localizable.welcomeUpgradeSubtitleFallback)
         case .welcomeToProton:
@@ -352,44 +355,45 @@ private extension ModalType {
     func features() -> [Feature] {
         switch self {
         case .netShield:
-            return [.blockAds, .protectFromMalware, .highSpeedNetshield]
+            [.blockAds, .protectFromMalware, .highSpeedNetshield]
         case .secureCore:
-            return [.routeSecureServers, .addLayer, .protectFromAttacks]
+            [.routeSecureServers, .addLayer, .protectFromAttacks]
         case .allCountries:
-            return [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
+            [.anyLocation, .higherSpeed, .geoblockedContent, .streaming]
         case let .country(_, numberOfDevices, numberOfCountries):
-            return [
+            [
                 .multipleCountries(numberOfCountries),
                 .higherSpeed,
                 .streaming,
                 .multipleDevices(numberOfDevices),
-                .moneyGuarantee]
+                .moneyGuarantee,
+            ]
         case .safeMode:
-            return []
+            []
         case .moderateNAT:
-            return [.gaming, .directConnection]
+            [.gaming, .directConnection]
         case .vpnAccelerator:
-            return [.fasterServers, .increaseConnectionSpeeds, .distantServers]
+            [.fasterServers, .increaseConnectionSpeeds, .distantServers]
         case .customization:
-            return [.accessLAN, .profiles, .quickConnect]
+            [.accessLAN, .profiles, .quickConnect]
         case .profiles:
-            return [.location, .profilesProtocols, .autoConnect]
+            [.location, .profilesProtocols, .autoConnect]
         case .cantSkip:
-            return []
+            []
         case let .welcomePlus(numberOfServers, numberOfDevices, numberOfCountries):
-            return [
+            [
                 .welcomeNewServersCountries(numberOfServers, numberOfCountries),
                 .welcomeAdvancedFeatures,
-                .welcomeDevices(numberOfDevices)
+                .welcomeDevices(numberOfDevices),
             ]
         case .welcomeUnlimited:
-            return []
+            []
         case .welcomeFallback:
-            return []
+            []
         case .welcomeToProton, .onboardingWelcome:
-            return [.banner]
+            [.banner]
         case .onboardingGetStarted:
-            return [
+            [
                 .toggle(
                     id: .statistics,
                     title: Localizable.onboardingGetStartedStatisticsToggleTitle,
@@ -401,23 +405,23 @@ private extension ModalType {
                     title: Localizable.onboardingGetStartedCrashesToggleTitle,
                     subtitle: Localizable.onboardingGetStartedCrashesToggleSubtitle,
                     state: true
-                )
+                ),
             ]
         case .subscription:
-            return []
+            []
         case .streaming, .p2pSupport, .devices, .torOverVPN:
-            return []
+            []
         case .hermes:
-            return []
+            []
         case .plutonium:
-            return []
+            []
         }
     }
 
     func shouldAddGradient() -> Bool {
         switch self {
         default:
-            return true
+            true
         }
     }
 }

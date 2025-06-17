@@ -21,15 +21,15 @@ import Foundation
 final class TestsTimer {
     private var startTime: Date?
     private var endTime: Date?
-    
+
     func StartTimer() {
         startTime = Date()
     }
-    
+
     func EndTimer() {
         endTime = Date()
     }
-    
+
     func GetElapsedTime() -> String {
         let elapsedTime = endTime!.timeIntervalSince(startTime!)
         return String(format: "%.2f", elapsedTime)

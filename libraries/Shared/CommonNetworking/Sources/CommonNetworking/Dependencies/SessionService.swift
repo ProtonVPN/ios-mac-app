@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import Domain
+import Foundation
 import IssueReporting
 
 public enum PlanSession {
@@ -29,11 +29,11 @@ public enum PlanSession {
     var queryItems: [URLQueryItem] {
         switch self {
         case .upgrade:
-            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
+            [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem, .typeQueryItem]
         case .manageSubscription:
-            return [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
+            [.actionQueryItem, .appQueryItem, .fullscreenQueryItem, .redirectQueryItem]
         case .promo2yPlan:
-            return [
+            [
                 .actionQueryItem,
                 .appQueryItem,
                 .redirectQueryItem,
@@ -43,7 +43,7 @@ public enum PlanSession {
                 .disableCycleSelectorQueryItem,
                 .disablePlanSelectorQueryItem,
                 .startCheckoutQueryItem,
-                .hideCloseQueryItem
+                .hideCloseQueryItem,
             ]
         }
     }
@@ -121,8 +121,8 @@ public struct SessionService: DependencyKey {
     public static let testValue: SessionService = liveValue
 }
 
-extension SessionService {
-    public func getPlanSession(mode: PlanSession) async -> URL? {
+public extension SessionService {
+    func getPlanSession(mode: PlanSession) async -> URL? {
         @Dependency(\.networking) var networking
         guard let accountHost = URL(string: networking.apiService.dohInterface.getAccountHost()) else {
             log.error("Failed to fork session, invalid Account Host URL", category: .app)
@@ -140,7 +140,7 @@ extension SessionService {
         }
     }
 
-    public func getUpgradePlanSession(url: String) async -> String {
+    func getUpgradePlanSession(url: String) async -> String {
         do {
             let selector = try await selector(.webLogin)
             return url + "#selector=" + selector
@@ -153,19 +153,19 @@ extension SessionService {
         }
     }
 
-    public func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
+    func getExtensionSessionSelector(extensionContext: AppContext) async throws -> String {
         try await selector(.appContext(extensionContext))
     }
 }
 
-extension DependencyValues {
-    public var sessionService: SessionService {
+public extension DependencyValues {
+    var sessionService: SessionService {
         get { self[SessionService.self] }
         set { self[SessionService.self] = newValue }
     }
 }
 
-fileprivate extension URLQueryItem {
+private extension URLQueryItem {
     static let actionQueryItem = URLQueryItem(name: "action", value: "subscribe-account")
     static let fullscreenQueryItem = URLQueryItem(name: "fullscreen", value: "off")
     static let redirectQueryItem = URLQueryItem(name: "redirect", value: "protonvpn://refresh")

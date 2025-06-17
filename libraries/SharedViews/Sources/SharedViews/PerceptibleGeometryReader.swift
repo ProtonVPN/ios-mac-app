@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import SwiftUI
 import Perception
+import SwiftUI
 
 /// Functionally equivalent to wrapping `content` in `WithPerceptionTracking` and `GeometryReader` closures.
 ///

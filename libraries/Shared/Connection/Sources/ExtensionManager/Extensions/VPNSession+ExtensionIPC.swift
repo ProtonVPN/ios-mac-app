@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import NetworkExtension
+import CoreConnection
 import Dependencies
+import enum ExtensionIPC.ProviderMessageError
 import protocol ExtensionIPC.ProviderRequest
 import enum ExtensionIPC.WireguardProviderRequest
-import enum ExtensionIPC.ProviderMessageError
-import CoreConnection
+import Foundation
+import NetworkExtension
 
 extension VPNSession {
     func send(_ message: WireguardProviderRequest, withRetries retries: Int, retryInterval: Duration) async throws -> Data {
@@ -34,7 +34,7 @@ extension VPNSession {
         // notification." If we encounter an xpc error, try sleeping for a second and then trying again - the extension
         // could still be launching, or we could be coming out of sleep. If we retry enough times and still get
         // nowhere, return an error.
-        for attempt in 1...retries {
+        for attempt in 1 ... retries {
             log.debug("Sending provider message", category: .ipc, metadata: ["message": "\(message)", "attempt": "\(attempt)"])
             let data: Data? = try await _sendProviderMessage(messageData)
             try Task.checkCancellation()

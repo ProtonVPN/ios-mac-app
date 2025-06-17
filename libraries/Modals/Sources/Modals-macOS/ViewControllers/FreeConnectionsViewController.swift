@@ -17,21 +17,20 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Cocoa
+import Ergonomics
 import ModalsShared
 import Strings
-import Ergonomics
 
 final class FreeConnectionsViewController: NSViewController {
-
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var descriptionLabel: NSTextField!
-    @IBOutlet private weak var subTitleLabel: NSTextField!
-    @IBOutlet private weak var bannerLabel: NSTextField!
-    @IBOutlet private weak var bannerImageView: NSImageView!
-    @IBOutlet private weak var bannerChevronView: NSImageView!
-    @IBOutlet private weak var roundedBackgroundView: NSView!
-    @IBOutlet private weak var countriesList: NSCollectionView!
-    @IBOutlet private weak var countriesListLayout: NSCollectionViewFlowLayout!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var descriptionLabel: NSTextField!
+    @IBOutlet private var subTitleLabel: NSTextField!
+    @IBOutlet private var bannerLabel: NSTextField!
+    @IBOutlet private var bannerImageView: NSImageView!
+    @IBOutlet private var bannerChevronView: NSImageView!
+    @IBOutlet private var roundedBackgroundView: NSView!
+    @IBOutlet private var countriesList: NSCollectionView!
+    @IBOutlet private var countriesListLayout: NSCollectionViewFlowLayout!
 
     var onBannerPress: (() -> Void)?
     var countries: [(String, Image?)]?
@@ -39,7 +38,8 @@ final class FreeConnectionsViewController: NSViewController {
     /// Used for calculating size of country cells
     private var _viewForSizing: CountryCellView?
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -109,7 +109,8 @@ final class FreeConnectionsViewController: NSViewController {
 
     // MARK: - Actions
 
-    @IBAction private func bannerTapped(_ sender: Any) {
+    @IBAction
+    private func bannerTapped(_: Any) {
         onBannerPress?()
     }
 }
@@ -117,9 +118,8 @@ final class FreeConnectionsViewController: NSViewController {
 // MARK: - NSCollectionViewDataSource
 
 extension FreeConnectionsViewController: NSCollectionViewDataSource {
-
-    func collectionView(_ collectionView: NSCollectionView, numberOfItemsInSection section: Int) -> Int {
-        return countries?.count ?? 0
+    func collectionView(_: NSCollectionView, numberOfItemsInSection _: Int) -> Int {
+        countries?.count ?? 0
     }
 
     func collectionView(_ collectionView: NSCollectionView, itemForRepresentedObjectAt indexPath: IndexPath) -> NSCollectionViewItem {
@@ -135,8 +135,7 @@ extension FreeConnectionsViewController: NSCollectionViewDataSource {
 // MARK: - NSCollectionViewDelegateFlowLayout
 
 extension FreeConnectionsViewController: NSCollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
+    func collectionView(_: NSCollectionView, layout _: NSCollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> NSSize {
         guard let cell = viewForSizing else {
             return NSSize(width: 50, height: 16)
         }
@@ -157,5 +156,4 @@ extension FreeConnectionsViewController: NSCollectionViewDelegateFlowLayout {
         }
         return _viewForSizing
     }
-
 }

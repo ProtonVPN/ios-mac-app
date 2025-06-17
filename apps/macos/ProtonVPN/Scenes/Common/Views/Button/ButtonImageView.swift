@@ -23,30 +23,30 @@
 import Cocoa
 
 class ButtonImageView: NSImageView {
-
     var imageClicked: (() -> Void)?
-    
-    override func mouseUp(with event: NSEvent) {
+
+    override func mouseUp(with _: NSEvent) {
         imageClicked?()
     }
-    
 }
 
 class HoverableButtonImageView: ButtonImageView {
-
     override var isEnabled: Bool {
         didSet {
             window?.invalidateCursorRects(for: self)
         }
     }
+
     override open func awakeFromNib() {
         super.awakeFromNib()
 
-        let trackingArea = NSTrackingArea(rect: bounds,
-                                          options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
-                                          owner: self,
-                                          userInfo: nil)
-        self.addTrackingArea(trackingArea)
+        let trackingArea = NSTrackingArea(
+            rect: bounds,
+            options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways],
+            owner: self,
+            userInfo: nil
+        )
+        addTrackingArea(trackingArea)
     }
 
     override func resetCursorRects() {

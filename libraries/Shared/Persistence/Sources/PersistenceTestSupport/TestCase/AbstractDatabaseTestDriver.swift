@@ -29,7 +29,6 @@ import Persistence
 ///
 /// This protocol has to be public in order for deriving protocols to also be public.
 public protocol AbstractDatabaseTestDriver: AnyObject {
-
     /// Provides an interface to register callbacks
     var repositoryWrapper: ServerRepositoryWrapper { get }
 

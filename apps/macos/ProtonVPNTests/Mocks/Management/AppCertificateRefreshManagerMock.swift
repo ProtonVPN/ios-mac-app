@@ -17,18 +17,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 @testable import ProtonVPN
+import VPNShared
 
 class AppCertificateRefreshManagerMock: AppCertificateRefreshManager {
-
     // Callbacks
     var planNextRefreshCalled: (() -> Void)?
     var certificateDeletedCalled: (() -> Void)?
     var certificateStoredCalled: ((VPNShared.VpnCertificate) -> Void)?
 
     // AppCertificateRefreshManager
-    
+
     func planNextRefresh() {
         planNextRefreshCalled?()
     }

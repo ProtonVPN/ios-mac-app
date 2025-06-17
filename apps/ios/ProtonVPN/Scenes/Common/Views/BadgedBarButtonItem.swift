@@ -23,43 +23,43 @@
 import UIKit
 
 final class BadgedBarButtonItem: UIBarButtonItem {
-    
     var badgeColor: UIColor = .brandColor()
     var showBadge: Bool = false {
         didSet {
             badgeView.isHidden = !showBadge
         }
     }
-    
+
     var onTouchUpInside: (() -> Void)?
-    
+
     private var button = UIButton()
     private var badgeView = UIView()
-    
+
     init(withImage image: UIImage?) {
         super.init()
         setupView(withImage: image)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView(withImage image: UIImage?) {
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.setImage(image, for: .normal)
-        
+
         badgeView.frame = CGRect(x: 16, y: 0, width: 5, height: 5)
         badgeView.backgroundColor = badgeColor
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = badgeView.frame.width / 2
         button.addSubview(badgeView)
-        
-        self.customView = button
+
+        customView = button
     }
-    
-    @objc private func buttonPressed() {
+
+    @objc
+    private func buttonPressed() {
         onTouchUpInside?()
     }
-    
 }

@@ -24,7 +24,6 @@ import ComposableArchitecture
 
 @MainActor
 final class SettingsTests: XCTestCase {
-
     func testChildFeaturePresentedWhenTapped() async throws {
         let store = TestStore(
             initialState: SettingsFeature.State(
@@ -49,7 +48,8 @@ final class SettingsTests: XCTestCase {
                 netShield: .on,
                 killSwitch: .on,
                 protocol: .init(protocol: .smartProtocol, reconnectionAlert: nil),
-                theme: .auto),
+                theme: .auto
+            ),
             reducer: SettingsFeature()
         )
 

@@ -17,26 +17,26 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import Domain
+    import Domain
+    import Foundation
 
-public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
-    public var safeMode: Bool? = false {
-        didSet {
-            AppEvent.safeMode.post(safeMode)
+    public final class SafeModePropertyProviderMock: SafeModePropertyProvider {
+        public var safeMode: Bool? = false {
+            didSet {
+                AppEvent.safeMode.post(safeMode)
+            }
         }
-    }
 
-    public var isUserEligibleForSafeModeChange: Bool = true
+        public var isUserEligibleForSafeModeChange: Bool = true
 
-    public var safeModeFeatureEnabled: Bool = true
+        public var safeModeFeatureEnabled: Bool = true
 
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
-        if tier.isFreeTier {
-            safeMode = true
+        public func adjustAfterPlanChange(from _: Int, to tier: Int) {
+            if tier.isFreeTier {
+                safeMode = true
+            }
         }
-    }
 
-    public init() {}
-}
+        public init() {}
+    }
 #endif

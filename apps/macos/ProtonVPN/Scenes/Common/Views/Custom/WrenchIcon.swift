@@ -24,10 +24,9 @@ import Cocoa
 import Theme
 
 class WrenchIcon: NSImageView {
-
     private let wrenchIcon = AppTheme.Icon.wrench
 
-    override func draw(_ dirtyRect: NSRect) {
+    override func draw(_: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
         // circle
@@ -41,11 +40,12 @@ class WrenchIcon: NSImageView {
         let wrenchSize = wrenchIcon.size
         let desiredHeight = bounds.height / 2
         let desiredSize = CGSize(width: wrenchSize.width / (wrenchSize.height / desiredHeight), height: desiredHeight)
-        var infoRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
-                              size: desiredSize)
+        var infoRect = CGRect(
+            origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
+            size: desiredSize
+        )
         if let image = wrenchIcon.colored(.weak).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
             context.draw(image, in: infoRect)
         }
     }
-    
 }

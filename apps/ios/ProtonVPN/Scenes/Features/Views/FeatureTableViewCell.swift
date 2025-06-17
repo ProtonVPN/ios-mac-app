@@ -32,21 +32,20 @@ import VPNAppCore
 import Strings
 
 class FeatureTableViewCell: UITableViewCell {
-    
-    @IBOutlet private weak var iconIV: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var descriptionLbl: UILabel!
-    @IBOutlet private weak var learnMoreBtn: UIButton!
-    
-    @IBOutlet weak var loadViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var loadView: UIView!
-    @IBOutlet private weak var loadLowView: UIView!
-    @IBOutlet private weak var loadLowLbl: UILabel!
-    @IBOutlet private weak var loadMediumView: UIView!
-    @IBOutlet private weak var loadMediumLbl: UILabel!
-    @IBOutlet private weak var loadHighView: UIView!
-    @IBOutlet private weak var loadHighLbl: UILabel!
-    
+    @IBOutlet private var iconIV: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var descriptionLbl: UILabel!
+    @IBOutlet private var learnMoreBtn: UIButton!
+
+    @IBOutlet var loadViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var loadView: UIView!
+    @IBOutlet private var loadLowView: UIView!
+    @IBOutlet private var loadLowLbl: UILabel!
+    @IBOutlet private var loadMediumView: UIView!
+    @IBOutlet private var loadMediumLbl: UILabel!
+    @IBOutlet private var loadHighView: UIView!
+    @IBOutlet private var loadHighLbl: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
@@ -55,14 +54,14 @@ class FeatureTableViewCell: UITableViewCell {
         learnMoreBtn.tintColor = UIColor.textAccent()
         learnMoreBtn.setImage(IconProvider.arrowOutSquare, for: .normal)
     }
-    
+
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.text = viewModel.title
             switch viewModel.icon {
-            case .image(let image):
+            case let .image(image):
                 iconIV.image = image
-            case .url(let url):
+            case let .url(url):
                 if let url {
                     iconIV.af.setImage(withURL: url)
                 }
@@ -70,7 +69,7 @@ class FeatureTableViewCell: UITableViewCell {
 
             descriptionLbl.text = viewModel.description
             learnMoreBtn.setTitle(Localizable.learnMore, for: .normal)
-            
+
             if viewModel.displayLoads {
                 loadView.isHidden = false
                 loadViewHeightConstraint.constant = 32
@@ -86,10 +85,11 @@ class FeatureTableViewCell: UITableViewCell {
             }
         }
     }
-    
+
     // MARK: - Actions
-    
-    @IBAction private func didTapLearnMore(_ sender: Any) {
+
+    @IBAction
+    private func didTapLearnMore(_: Any) {
         guard let urlContact = viewModel.urlContact else { return }
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(urlContact)

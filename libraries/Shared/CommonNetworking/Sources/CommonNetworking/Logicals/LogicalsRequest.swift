@@ -18,18 +18,17 @@
 
 import Foundation
 
-import ProtonCoreFeatureFlags
 import ProtonCoreAPIClient
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 
 import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 /// The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
 public struct LogicalsRequest: ConditionalRequest {
-
     private static let protocolDescriptions = VpnProtocol.allCases.map(\.apiDescription).joined(separator: ",")
     public let condition: RequestCondition? // public because of protocol requirement
 
@@ -91,7 +90,7 @@ public struct LogicalsRequest: ConditionalRequest {
     }
 }
 
-extension Array<URLQueryItem> {
+extension [URLQueryItem] {
     init(_ elements: (name: String, value: String?)...) {
         self = elements.map { URLQueryItem(name: $0.name, value: $0.value) }
     }

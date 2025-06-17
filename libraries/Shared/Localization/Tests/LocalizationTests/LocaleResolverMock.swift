@@ -17,60 +17,59 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import Localization
+    import Foundation
+    import Localization
 
-fileprivate let locales: [String: LocaleWrapperMock] = [
-    "en-US": LocaleWrapperMock(
-        ietfRegionTag: "us",
-        regionCodeDict: [
-            "US": "Murica",
-        ]),
-    "en": LocaleWrapperMock(
-        ietfRegionTag: "ch",
-        regionCodeDict: [
-            "CH": "Switzerland",
-            "US": "United States",
-            "FR": "France"
-        ]),
-    "fr": LocaleWrapperMock(
-        ietfRegionTag: "ch",
-        regionCodeDict: [
-        "CH": "Suisse",
-        "US": "Etats-Unis"
-        ])
-]
+    fileprivate let locales: [String: LocaleWrapperMock] = [
+        "en-US": LocaleWrapperMock(
+            ietfRegionTag: "us",
+            regionCodeDict: [
+                "US": "Murica",
+            ]),
+        "en": LocaleWrapperMock(
+            ietfRegionTag: "ch",
+            regionCodeDict: [
+                "CH": "Switzerland",
+                "US": "United States",
+                "FR": "France",
+            ]),
+        "fr": LocaleWrapperMock(
+            ietfRegionTag: "ch",
+            regionCodeDict: [
+                "CH": "Suisse",
+                "US": "Etats-Unis",
+            ]),
+    ]
 
-public class LocaleResolverMock: LocaleResolver {
-    public var preferredLanguages: [String] = []
+    public class LocaleResolverMock: LocaleResolver {
+        public var preferredLanguages: [String] = []
 
-    public var currentLocale: LocaleWrapper = locales["fr"]!
+        public var currentLocale: LocaleWrapper = locales["fr"]!
 
-    public func locale(withIdentifier identifier: String) -> LocaleWrapper {
-        locales[identifier]!
+        public func locale(withIdentifier identifier: String) -> LocaleWrapper {
+            locales[identifier]!
+        }
+
+        public init(preferredLanguages: [String], currentLocale: LocaleWrapper) {
+            self.preferredLanguages = preferredLanguages
+            self.currentLocale = currentLocale
+        }
+
+        public init() {}
     }
 
-    public init(preferredLanguages: [String], currentLocale: LocaleWrapper) {
-        self.preferredLanguages = preferredLanguages
-        self.currentLocale = currentLocale
+    public struct LocaleWrapperMock: LocaleWrapper {
+        public let ietfRegionTag: String?
+
+        public let regionCodeDict: [String: String]
+
+        public func localizedString(forRegionCode regionCode: String) -> String? {
+            regionCodeDict[regionCode]
+        }
+
+        public init(ietfRegionTag: String?, regionCodeDict: [String: String]) {
+            self.ietfRegionTag = ietfRegionTag
+            self.regionCodeDict = regionCodeDict
+        }
     }
-
-    public init() {
-    }
-}
-
-public struct LocaleWrapperMock: LocaleWrapper {
-    public let ietfRegionTag: String?
-
-    public let regionCodeDict: [String: String]
-
-    public func localizedString(forRegionCode regionCode: String) -> String? {
-        regionCodeDict[regionCode]
-    }
-
-    public init(ietfRegionTag: String?, regionCodeDict: [String : String]) {
-        self.ietfRegionTag = ietfRegionTag
-        self.regionCodeDict = regionCodeDict
-    }
-}
 #endif

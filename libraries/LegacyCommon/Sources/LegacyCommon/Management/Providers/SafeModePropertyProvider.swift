@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import Ergonomics
-import VPNShared
 import Domain
+import Ergonomics
+import Foundation
+import VPNShared
 
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {
     /// Current Safe Mdde
@@ -60,7 +60,7 @@ public class SafeModePropertyProviderImplementation: SafeModePropertyProvider {
         }
     }
 
-    public func adjustAfterPlanChange(from oldTier: Int, to tier: Int) {
+    public func adjustAfterPlanChange(from _: Int, to tier: Int) {
         guard tier.isPaidTier else {
             safeMode = false
             return

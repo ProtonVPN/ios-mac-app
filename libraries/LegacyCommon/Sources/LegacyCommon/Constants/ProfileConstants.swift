@@ -20,9 +20,9 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 import Dependencies
@@ -34,7 +34,6 @@ import Strings
 import Theme
 
 import VPNAppCore
-
 
 public enum ProfileConstants {
     public static let fastestId = "st_f"
@@ -65,7 +64,7 @@ public enum ProfileConstants {
     }
 
     // Profile that selects country and server randomly
-    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier: Int) -> Profile {
+    public static func randomProfile(connectionProtocol: ConnectionProtocol, defaultProfileAccessTier _: Int) -> Profile {
         Profile(
             id: randomId,
             accessTier: 0,
@@ -78,11 +77,11 @@ public enum ProfileConstants {
         )
     }
 
-#if canImport(UIKit)
-    public typealias ProfileColors = [UIColor]
-#elseif canImport(AppKit)
-    public typealias ProfileColors = [NSColor]
-#endif
+    #if canImport(UIKit)
+        public typealias ProfileColors = [UIColor]
+    #elseif canImport(AppKit)
+        public typealias ProfileColors = [NSColor]
+    #endif
 
     public static let profileColors: ProfileColors = [
         ColorProvider.PurpleBase,
@@ -94,6 +93,6 @@ public enum ProfileConstants {
         ColorProvider.PacificBase,
         ColorProvider.ReefBase,
         ColorProvider.FernBase,
-        ColorProvider.OliveBase
+        ColorProvider.OliveBase,
     ]
 }

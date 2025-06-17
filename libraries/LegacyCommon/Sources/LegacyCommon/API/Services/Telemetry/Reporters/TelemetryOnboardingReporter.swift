@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Ergonomics
 import CommonNetworking
+import Ergonomics
+import Foundation
 
 class TelemetryOnboardingReporter {
-
-    public typealias Factory = PropertiesManagerFactory & NetworkingFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & PropertiesManagerFactory & TelemetryAPIFactory & TelemetrySettingsFactory & VpnKeychainFactory
 
     private let factory: Factory
 
@@ -43,9 +42,13 @@ class TelemetryOnboardingReporter {
         }
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
-        let event = OnboardingEvent(event: event,
-                                    dimensions: .init(userCountry: propertiesManager.userLocation?.country ?? "",
-                                                      userPlan: planName))
+        let event = OnboardingEvent(
+            event: event,
+            dimensions: .init(
+                userCountry: propertiesManager.userLocation?.country ?? "",
+                userPlan: planName
+            )
+        )
         try await telemetryEventScheduler.report(event: event)
     }
 }

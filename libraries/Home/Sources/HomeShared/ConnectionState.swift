@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Domain
 import Connection
 import Dependencies
+import Domain
+import Foundation
 import VPNAppCore
 
 extension VPNConnectionActual {

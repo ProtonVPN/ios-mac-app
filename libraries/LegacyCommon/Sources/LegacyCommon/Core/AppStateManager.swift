@@ -21,53 +21,54 @@
 
 import Foundation
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 import Reachability
 
-import Timer
 import CommonNetworking
-import VPNShared
-import VPNAppCore
-import Ergonomics
 import Domain
+import Ergonomics
+import Timer
+import VPNAppCore
+import VPNShared
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager
 }
 
 public protocol AppStateManager {
-    
     var state: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
 
     /// Helper to get app state in a thread safe manner when async calls can be used
-    @MainActor var stateThreadSafe: AppState { get }
+    @MainActor
+    var stateThreadSafe: AppState { get }
 
     // The state displayed to the user in the UI is not always the same as the "real" VPN state
     // For example when connected to the VPN and using local agent we do not want to show the user "Connected" because Internet is not yet available before the local agent connects
     // So we fake it with a "Loading connection info" display state
     var displayState: AppDisplayState { get }
-    
+
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
-    
+
     func cancelConnectionAttempt()
     func cancelConnectionAttempt(completion: @escaping () -> Void)
-        
+
     func prepareToConnect()
     func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration)
-    
+
     func disconnect()
     func disconnect(completion: @escaping () -> Void)
-    
+
     func refreshState()
     func connectedDate() async -> Date?
     func activeConnection() -> ConnectionConfiguration?
 }
 
 public extension AppStateManager {
-    @MainActor var stateThreadSafe: AppState { get { self.state } }
+    @MainActor
+    var stateThreadSafe: AppState { state }
 }
 
 public class AppStateManagerImplementation: AppStateManager {
@@ -78,9 +79,9 @@ public class AppStateManagerImplementation: AppStateManager {
     private let timerFactory: TimerFactory
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
-        
+
     public weak var alertService: CoreAlertService?
-    
+
     // Be aware that `whenReachable` handler is used in `checkNetworkConditionsAndCredentialsAndConnect` on macOS
     private var reachability: Reachability?
 
@@ -108,11 +109,13 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
+
     private var vpnState: VpnState = .invalid {
         didSet {
             onVpnStateChanged?(vpnState)
         }
     }
+
     public var onVpnStateChanged: ((VpnState) -> Void)?
     private var lastAttemptedConfiguration: ConnectionConfiguration?
     private var attemptingConnection = false
@@ -123,8 +126,9 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
+
     private var reconnectingAfterStuckDisconnecting = false
-    
+
     private var timeoutTimer: BackgroundTimer?
     private var serviceChecker: ServiceChecker?
 
@@ -134,34 +138,36 @@ public class AppStateManagerImplementation: AppStateManager {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
 
-    public typealias Factory = VpnApiServiceFactory &
-        VpnManagerFactory &
-        NetworkingFactory &
+    public typealias Factory =
         CoreAlertServiceFactory &
-        TimerFactoryCreator &
-        PropertiesManagerFactory &
-        VpnKeychainFactory &
-        VpnManagerConfigurationPreparerFactory &
-        VpnAuthenticationFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
-        SafeModePropertyProviderFactory
-    
+        NetworkingFactory &
+        PropertiesManagerFactory &
+        SafeModePropertyProviderFactory &
+        TimerFactoryCreator & VpnApiServiceFactory &
+        VpnAuthenticationFactory &
+        VpnKeychainFactory &
+        VpnManagerConfigurationPreparerFactory &
+        VpnManagerFactory
+
     public convenience init(_ factory: Factory) {
-        self.init(vpnApiService: factory.makeVpnApiService(),
-                  vpnManager: factory.makeVpnManager(),
-                  networking: factory.makeNetworking(),
-                  alertService: factory.makeCoreAlertService(),
-                  timerFactory: factory.makeTimerFactory(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  vpnKeychain: factory.makeVpnKeychain(),
-                  configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
-                  vpnAuthentication: factory.makeVpnAuthentication(),
-                  natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
-                  netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-                  safeModePropertyProvider: factory.makeSafeModePropertyProvider())
+        self.init(
+            vpnApiService: factory.makeVpnApiService(),
+            vpnManager: factory.makeVpnManager(),
+            networking: factory.makeNetworking(),
+            alertService: factory.makeCoreAlertService(),
+            timerFactory: factory.makeTimerFactory(),
+            propertiesManager: factory.makePropertiesManager(),
+            vpnKeychain: factory.makeVpnKeychain(),
+            configurationPreparer: factory.makeVpnManagerConfigurationPreparer(),
+            vpnAuthentication: factory.makeVpnAuthentication(),
+            natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
+            netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
+        )
     }
-    
+
     public init(
         vpnApiService: VpnApiService,
         vpnManager: VpnManagerProtocol,
@@ -190,19 +196,19 @@ public class AppStateManagerImplementation: AppStateManager {
         self.safeModePropertyProvider = safeModePropertyProvider
 
         handleVpnStateChange(vpnManager.state)
-        reachability = try? Reachability()
+        self.reachability = try? Reachability()
         setupReachability()
         startObserving()
     }
-    
+
     deinit {
         reachability?.stopNotifier()
     }
-    
+
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
         vpnManager.isOnDemandEnabled(handler: handler)
     }
-    
+
     public func prepareToConnect() {
         if !propertiesManager.hasConnected {
             switch vpnState {
@@ -213,62 +219,62 @@ public class AppStateManagerImplementation: AppStateManager {
                 break
             }
         }
-        
+
         prepareServerCertificate()
-        
+
         if case VpnState.disconnecting = vpnState {
             stuckDisconnecting = true
         }
-        
+
         state = .preparingConnection
         attemptingConnection = true
         beginTimeoutCountdown()
         notifyObservers()
     }
-    
+
     public func cancelConnectionAttempt() {
         cancelConnectionAttempt {}
     }
-    
+
     public func cancelConnectionAttempt(completion: @escaping () -> Void) {
         AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.abort)
         state = .aborted(userInitiated: true)
         attemptingConnection = false
         cancelTimeout()
-        
+
         notifyObservers()
-        
+
         disconnect(completion: completion)
     }
-    
+
     public func refreshState() {
         vpnManager.refreshState()
     }
 
     public func checkNetworkConditionsAndCredentialsAndConnect(withConfiguration configuration: ConnectionConfiguration) {
-        guard let reachability = reachability else { return }
+        guard let reachability else { return }
         if case AppState.aborted = state { return }
-        
+
         if reachability.connection == .unavailable {
             #if os(macOS)
-            // we want to show the alert if app was not launched at login, or if it was, then after a small delay
-            if AppStartup.isLaunchedAtLogin {
-                let timeAmount: TimeInterval = 10
-                if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
-                    // App has been launched at login within the last `timeAmount` seconds.
-                    let retryWorkItem = DispatchWorkItem { [weak self] in
-                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                // we want to show the alert if app was not launched at login, or if it was, then after a small delay
+                if AppStartup.isLaunchedAtLogin {
+                    let timeAmount: TimeInterval = 10
+                    if let processStartDate = AppStartup.processStartDate, -processStartDate.timeIntervalSinceNow < timeAmount {
+                        // App has been launched at login within the last `timeAmount` seconds.
+                        let retryWorkItem = DispatchWorkItem { [weak self] in
+                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                        }
+                        reachability.whenReachable = { [weak self, retryWorkItem] _ in
+                            // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
+                            retryWorkItem.cancel()
+                            self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
+                        return
                     }
-                    reachability.whenReachable = { [weak self, retryWorkItem] _ in
-                        // if reachability changes within the time window, let's cancel the scheduling and retry calling the method
-                        retryWorkItem.cancel()
-                        self?.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: configuration)
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + timeAmount, execute: retryWorkItem)
-                    return
                 }
-            }
-            reachability.whenReachable = nil // cleanup
+                reachability.whenReachable = nil // cleanup
             #endif
             // let's finally show the alert if:
             //     - !os(macOS)
@@ -277,7 +283,7 @@ public class AppStateManagerImplementation: AppStateManager {
             notifyNetworkUnreachable()
             return
         }
-        
+
         do {
             let vpnCredentials = try vpnKeychain.fetchCached()
             if vpnCredentials.isDelinquent {
@@ -296,11 +302,11 @@ public class AppStateManagerImplementation: AppStateManager {
             connectionFailed()
             return
         }
-        
+
         lastAttemptedConfiguration = configuration
-        
+
         attemptingConnection = true
-        
+
         // ServerStorage no longer exists. If we want to continue logging this, we should use the timestamp stored for VPNAPPL-2078
         // let serverAge = serverStorage.fetchAge()
         // if Date().timeIntervalSince1970 - serverAge > (2 * 60 * 60) {
@@ -321,27 +327,27 @@ public class AppStateManagerImplementation: AppStateManager {
     public func disconnect() {
         disconnect {}
     }
-    
+
     public func disconnect(completion: @escaping () -> Void) {
         log.info("VPN disconnect started", category: .connectionDisconnect)
         propertiesManager.intentionallyDisconnected = true
 
         #if os(macOS)
-        self.propertiesManager.connectedServerNameDoNotUse = nil
+            propertiesManager.connectedServerNameDoNotUse = nil
         #endif
 
         vpnManager.disconnect(completion: completion)
     }
 
     public func connectedDate() async -> Date? {
-        return await vpnManager.connectedDate()
+        await vpnManager.connectedDate()
     }
 
     public func activeConnection() -> ConnectionConfiguration? {
         guard let currentVpnProtocol = vpnManager.currentVpnProtocol else {
             return nil
         }
-        
+
         switch currentVpnProtocol {
         case .ike:
             return propertiesManager.lastIkeConnection
@@ -351,23 +357,25 @@ public class AppStateManagerImplementation: AppStateManager {
             return propertiesManager.lastWireguardConnection
         }
     }
-    
+
     // MARK: - Private functions
-    
+
     private func beginTimeoutCountdown() {
         cancelTimeout()
 
-        timeoutTimer = timerFactory.scheduledTimer(runAt: Date().addingTimeInterval(30),
-                                                   leeway: .seconds(5),
-                                                   queue: .main) { [weak self] in
+        timeoutTimer = timerFactory.scheduledTimer(
+            runAt: Date().addingTimeInterval(30),
+            leeway: .seconds(5),
+            queue: .main
+        ) { [weak self] in
             self?.timeout()
         }
     }
-    
+
     private func cancelTimeout() {
         timeoutTimer?.invalidate()
     }
-    
+
     private func timeout() {
         log.info("Connection attempt timed out", category: .connectionConnect)
         state = .aborted(userInitiated: false)
@@ -376,7 +384,7 @@ public class AppStateManagerImplementation: AppStateManager {
         stopAttemptingConnection()
         notifyObservers()
     }
-    
+
     private func stopAttemptingConnection() {
         log.info("Stop preparing connection", category: .connectionConnect)
         cancelTimeout()
@@ -397,33 +405,33 @@ public class AppStateManagerImplementation: AppStateManager {
             cancelConnectionAttempt()
             return
         }
-        
+
         switch connectionConfiguration.vpnProtocol {
         case .ike:
-            self.propertiesManager.lastIkeConnection = connectionConfiguration
+            propertiesManager.lastIkeConnection = connectionConfiguration
         case .openVpn:
-            self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
+            propertiesManager.lastOpenVpnConnection = connectionConfiguration
         case .wireGuard:
-            self.propertiesManager.lastWireguardConnection = connectionConfiguration
+            propertiesManager.lastWireguardConnection = connectionConfiguration
         }
-        
+
         vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: vpnManagerConfiguration, completion: {
             // COMPLETION
         })
     }
-    
+
     private func setupReachability() {
-        guard let reachability = reachability else {
+        guard let reachability else {
             return
         }
-        
+
         do {
             try reachability.startNotifier()
         } catch {
             return
         }
     }
-    
+
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
             executeOnUIThread {
@@ -441,7 +449,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func vpnStateChanged() {
         reachability?.whenReachable = nil
-        
+
         let newState = vpnManager.state
         switch newState {
         case .error:
@@ -454,24 +462,25 @@ public class AppStateManagerImplementation: AppStateManager {
         default:
             break
         }
-        
+
         vpnState = newState
         handleVpnStateChange(newState)
     }
-    
-    @objc private func killSwitchChanged() {
+
+    @objc
+    private func killSwitchChanged() {
         if state.isConnected {
             propertiesManager.intentionallyDisconnected = true
             vpnManager.setOnDemand(propertiesManager.hasConnected)
         }
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     private func handleVpnStateChange(_ vpnState: VpnState) {
         if case VpnState.disconnecting = vpnState {} else {
             stuckDisconnecting = false
         }
-        
+
         switch vpnState {
         case .invalid:
             return // NEVPNManager hasn't initialised yet
@@ -482,17 +491,17 @@ public class AppStateManagerImplementation: AppStateManager {
             } else {
                 state = .disconnected
             }
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             state = .connecting(descriptor)
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             propertiesManager.intentionallyDisconnected = false
 
             #if os(macOS)
-            propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
+                propertiesManager.connectedServerNameDoNotUse = activeConnection()?.server.name
             #endif
 
             serviceChecker?.stop()
-            if let alertService = alertService {
+            if let alertService {
                 serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
             }
             attemptingConnection = false
@@ -500,7 +509,7 @@ public class AppStateManagerImplementation: AppStateManager {
             cancelTimeout()
         case .reasserting:
             return // usually this step is quick
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             if attemptingConnection { // needs to disconnect before attempting to connect
                 if case AppState.connecting = state {
                     stopAttemptingConnection()
@@ -510,17 +519,18 @@ public class AppStateManagerImplementation: AppStateManager {
             } else {
                 state = .disconnecting(descriptor)
             }
-        case .error(let error):
+        case let .error(error):
             state = .error(error)
         }
-        
+
         if !state.isConnected {
             serviceChecker?.stop()
             serviceChecker = nil
         }
-        
+
         notifyObservers()
     }
+
     // swiftlint:enable cyclomatic_complexity
 
     private func connectionFailed() {
@@ -530,14 +540,14 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
-        if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
+        if case VpnState.disconnecting = vpnState, stuckDisconnecting {
             log.error("Stale VPN connection failing to disconnect", category: .connectionConnect)
             vpnStuck()
             return
         }
-        
+
         attemptingConnection = false
-        
+
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             checkApiForFailureReason(vpnCredentials: vpnCredentials)
@@ -546,26 +556,26 @@ public class AppStateManagerImplementation: AppStateManager {
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
-    
+
     private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
         Task {
             let rSessionCount = try? await vpnApiService.sessionsCount().sessionCount
             let rVpnCredentials = try? await vpnApiService.clientCredentials()
             await MainActor.run { [weak self] in
-                guard let self = self, self.state.isDisconnected else {
+                guard let self, state.isDisconnected else {
                     return
                 }
 
                 if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
                     let accountTier = rVpnCredentials?.maxTier ?? vpnCredentials.maxTier
-                    self.maxSessionsReached(accountTier: accountTier)
+                    maxSessionsReached(accountTier: accountTier)
                 } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
-                    self.vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
-                    guard let lastConfiguration = self.lastAttemptedConfiguration else {
+                    vpnKeychain.storeAndDetectDowngrade(vpnCredentials: newVpnCredentials)
+                    guard let lastConfiguration = lastAttemptedConfiguration else {
                         return
                     }
-                    if self.state.isDisconnected {
-                        self.isOnDemandEnabled { enabled in
+                    if state.isDisconnected {
+                        isOnDemandEnabled { enabled in
                             guard !enabled else { return }
                             log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
                             self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfiguration)
@@ -578,44 +588,44 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private func maxSessionsReached(accountTier: Int) {
         #if canImport(AppKit)
-        let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
-        NotificationCenter.default.post(notification)
+            let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
+            NotificationCenter.default.post(notification)
         #endif
         let alert = MaxSessionsAlert(accountTier: accountTier)
-        self.alertService?.push(alert: alert)
-        self.connectionFailed()
+        alertService?.push(alert: alert)
+        connectionFailed()
     }
-    
+
     private func notifyObservers() {
         DispatchQueue.main.async {
             AppEvent.appStateManagerStateChange.post(self.state)
         }
     }
-    
+
     private func notifyNetworkUnreachable() {
         attemptingConnection = false
         cancelTimeout()
         connectionFailed()
-        
+
         DispatchQueue.main.async {
             self.alertService?.push(alert: VpnNetworkUnreachableAlert())
         }
     }
-    
+
     private func vpnStuck() {
         vpnManager.removeConfigurations(completionHandler: { [weak self] error in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            guard error == nil, self.reconnectingAfterStuckDisconnecting == false, let lastConfig = self.lastAttemptedConfiguration else {
-                self.alertService?.push(alert: VpnStuckAlert())
-                self.connectionFailed()
+            guard error == nil, reconnectingAfterStuckDisconnecting == false, let lastConfig = lastAttemptedConfiguration else {
+                alertService?.push(alert: VpnStuckAlert())
+                connectionFailed()
                 return
             }
-            self.reconnectingAfterStuckDisconnecting = true
+            reconnectingAfterStuckDisconnecting = true
             log.info("Attempt connection after vpn stuck", category: .connectionConnect, event: .trigger)
-            self.checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfig) // Retry connection
+            checkNetworkConditionsAndCredentialsAndConnect(withConfiguration: lastConfig) // Retry connection
         })
     }
 

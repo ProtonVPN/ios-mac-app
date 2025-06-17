@@ -20,7 +20,6 @@ import ComposableArchitecture
 
 @Reducer
 struct HomeLoadingFeature {
-
     @ObservableState
     enum State: Equatable {
         case loaded(HomeFeature.State)
@@ -49,11 +48,10 @@ struct HomeLoadingFeature {
             case .startLoading:
                 state = .loading
                 return .none
-            case .finishedLoading(let result):
+            case let .finishedLoading(result):
                 switch result {
                 case .success:
                     state = .loaded(.init())
-                    break
                 case .failure:
                     state = .loadingFailed
                     return .run { send in
@@ -70,7 +68,7 @@ struct HomeLoadingFeature {
                         await send(.finishedLoading(Result { try await refresher.refreshLogicals() }))
                     }
                 } else {
-                    return .send(.finishedLoading(.success(Void())))
+                    return .send(.finishedLoading(.success(())))
                 }
             }
         }

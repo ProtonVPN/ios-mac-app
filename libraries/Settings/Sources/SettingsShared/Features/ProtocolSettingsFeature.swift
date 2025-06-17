@@ -28,7 +28,6 @@ public struct ProtocolSettingsFeature: Reducer {
     @Dependency(\.connectToVPN) var connectVPN
     @Dependency(\.settingsStorage) var storage
 
-
     public struct State: Equatable {
         public var `protocol`: ConnectionProtocol
         public var vpnConnectionStatus: VPNConnectionStatus
@@ -71,14 +70,14 @@ public struct ProtocolSettingsFeature: Reducer {
             }
             if state.vpnConnectionStatus == .disconnected {
                 return .run { send in
-                    return await send(.setProtocol(TaskResult {
+                    await send(.setProtocol(TaskResult {
                         try await storage.setConnectionProtocol(`protocol`)
                         return `protocol`
                     }))
                 }
             } else {
                 return .run { send in
-                    return await send(.showReconnectionAlert(`protocol`))
+                    await send(.showReconnectionAlert(`protocol`))
                 }
             }
 
@@ -96,7 +95,7 @@ public struct ProtocolSettingsFeature: Reducer {
             }
             return .none
 
-        case .reconnectionAlert(.presented(.reconnectWith(let `protocol`))):
+        case let .reconnectionAlert(.presented(.reconnectWith(`protocol`))):
             // This may require a blocking interface to at least disconnecting (maybe also connecting)
             return .run { send in
                 // let status = await connectionStatus()
@@ -107,7 +106,6 @@ public struct ProtocolSettingsFeature: Reducer {
                 }))
                 // guard case let .connected(specs) = status else { return }
                 // connectVPN(specs)
-                return
             }
 
         case .reconnectionAlert(.dismiss):

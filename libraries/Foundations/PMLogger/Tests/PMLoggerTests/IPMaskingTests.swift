@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import PMLogger
+import XCTest
 
 final class IPMaskingTests: XCTestCase {
-
     func testIPV4MaskingWorks() throws {
         XCTAssertEqual("1.2.3.4".maskIPv4, "1.2.*.*")
         XCTAssertEqual("1.20.3.4".maskIPv4, "1.20.*.*")
@@ -29,7 +28,8 @@ final class IPMaskingTests: XCTestCase {
         XCTAssertEqual("1.2.3.255".maskIPv4, "1.2.*.*")
         XCTAssertEqual(
             "This is a long and interesting string that contains not only IP address like 1.2.3.255, but some other text and maybe even more IP addresses like these: 127.0.0.1, 10.10.0.1".maskIPv4,
-            "This is a long and interesting string that contains not only IP address like 1.2.*.*, but some other text and maybe even more IP addresses like these: 127.0.*.*, 10.10.*.*")
+            "This is a long and interesting string that contains not only IP address like 1.2.*.*, but some other text and maybe even more IP addresses like these: 127.0.*.*, 10.10.*.*"
+        )
 
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv4, "Just a string with some numbers like 1 2 3 4")
     }
@@ -44,7 +44,7 @@ final class IPMaskingTests: XCTestCase {
             "2001:0db8:0000:0000:0000:0000:0000:0001",
             "2001:4860:4860::8888",
             "2a02:120b:2c0d:5600:e4d4:2ff:fe01:b9d4",
-            "2400:cb00:2048:1::681f:3a6d"
+            "2400:cb00:2048:1::681f:3a6d",
         ]
 
         for ip in ipv6Addresses {
@@ -53,7 +53,8 @@ final class IPMaskingTests: XCTestCase {
 
         XCTAssertEqual(
             "This is a long and interesting string that contains not only IP address like \(ipv6Addresses[0]), but some other text and maybe even more IP addresses like these: \(ipv6Addresses[1]), \(ipv6Addresses[2])".maskIPv6,
-            "This is a long and interesting string that contains not only IP address like ip:v6:removed, but some other text and maybe even more IP addresses like these: ip:v6:removed, ip:v6:removed")
+            "This is a long and interesting string that contains not only IP address like ip:v6:removed, but some other text and maybe even more IP addresses like these: ip:v6:removed, ip:v6:removed"
+        )
 
         XCTAssertEqual("Just a string with some numbers like 1 2 3 4".maskIPv6, "Just a string with some numbers like 1 2 3 4")
     }
@@ -61,5 +62,4 @@ final class IPMaskingTests: XCTestCase {
     func testIPMaskingWorks() throws {
         XCTAssertEqual("1.2.3.4 and 2a02:120b:2c0d:5600:e4d4:2ff:fe01:b9d4".maskIPs, "1.2.*.* and ip:v6:removed")
     }
-
 }

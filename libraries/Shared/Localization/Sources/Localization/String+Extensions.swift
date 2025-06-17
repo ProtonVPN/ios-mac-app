@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension String {
-    public var normalized: String {
-        return folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
+public extension String {
+    var normalized: String {
+        folding(options: [.diacriticInsensitive, .caseInsensitive], locale: .current)
             .replacingOccurrences(of: "ł", with: "l")
     }
 }

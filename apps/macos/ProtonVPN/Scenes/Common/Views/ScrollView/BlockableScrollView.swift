@@ -24,7 +24,7 @@ import Cocoa
 
 class BlockableScrollView: NSScrollView {
     var block: Bool = false
-    
+
     override func hitTest(_ point: NSPoint) -> NSView? {
         if block { return nil }
         return super.hitTest(point)

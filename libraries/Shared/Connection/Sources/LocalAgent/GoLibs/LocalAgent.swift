@@ -18,14 +18,14 @@
 
 import Foundation
 
-import Dependencies
 import CasePaths
+import Dependencies
 
-import protocol GoLibs.LocalAgentNativeClientProtocol
 import class GoLibs.LocalAgentFeatures
+import protocol GoLibs.LocalAgentNativeClientProtocol
 
-import Domain
 import CoreConnection
+import Domain
 
 protocol LocalAgent {
     func createEventStream() -> AsyncStream<LocalAgentEvent>
@@ -50,11 +50,11 @@ public enum LocalAgentEvent: Sendable {
 
 @available(iOS 16, *)
 struct LocalAgentKey: DependencyKey {
-#if targetEnvironment(simulator)
-    static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
-#else
-    static let liveValue: LocalAgent = LocalAgentImplementation()
-#endif
+    #if targetEnvironment(simulator)
+        static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
+    #else
+        static let liveValue: LocalAgent = LocalAgentImplementation()
+    #endif
 }
 
 @available(iOS 16, *)
@@ -69,9 +69,9 @@ package extension NetShieldType {
     var shouldObserveNetShieldStats: Bool {
         switch self {
         case .off, .level1:
-            return false
+            false
         case .level2:
-            return true
+            true
         }
     }
 }

@@ -19,10 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
-import VPNShared
 import Domain
+import Foundation
+import VPNShared
 
 public protocol ProfileStorageFactory {
     func makeProfileStorage() -> ProfileStorage
@@ -40,7 +40,7 @@ public final class ProfileStorage {
     }
 
     private static let storageVersion = StorageVersion.v2
-    private static let versionKey     = "profileCacheVersion"
+    private static let versionKey = "profileCacheVersion"
 
     private let authKeychain: AuthKeychainHandle
 
@@ -56,7 +56,7 @@ public final class ProfileStorage {
     public init(authKeychain: AuthKeychainHandle) {
         self.authKeychain = authKeychain
     }
-    
+
     func fetch() -> [Profile] {
         @Dependency(\.defaultsProvider) var provider
 
@@ -77,10 +77,10 @@ public final class ProfileStorage {
                 store(profiles)
             }
         }
-        
+
         return profiles
     }
-    
+
     func store(_ profiles: [Profile], storageVersion: StorageVersion = .current) {
         guard let storageKey = storageKey(for: storageVersion) else {
             log.error("Unable to store profiles without a storage key.", category: .persistence)
@@ -91,18 +91,18 @@ public final class ProfileStorage {
             AppEvent.profileStorageChanged.post(profiles)
         }
     }
-    
+
     // MARK: - Private functions
 
     private func storageKey(for version: StorageVersion) -> String? {
         switch version {
         case .v1:
-            return authKeychain.username.map { "profiles_" + $0 }
+            authKeychain.username.map { "profiles_" + $0 }
         case .v2:
-            return authKeychain.userId.map { "profiles_" + $0 }
+            authKeychain.userId.map { "profiles_" + $0 }
         }
     }
-    
+
     private func fetchFromMemory(storageKey: String) -> [Profile] {
         @Dependency(\.defaultsProvider) var provider
         guard let data = provider.getDefaults().data(forKey: storageKey) else {
@@ -126,20 +126,19 @@ public final class ProfileStorage {
         }
         return []
     }
-    
+
     private func storeInMemory(_ profiles: [Profile], storageKey: String) {
         @Dependency(\.defaultsProvider) var provider
         provider.getDefaults().set(Self.storageVersion.rawValue, forKey: Self.versionKey)
         let archivedData = try? encoder.encode(profiles)
         provider.getDefaults().set(archivedData, forKey: storageKey)
     }
-    
+
     private func removeSystemProfiles(in profiles: [Profile]) -> [Profile] {
-        return profiles.filter({ $0.profileType != .system })
+        profiles.filter { $0.profileType != .system }
     }
-    
+
     private func systemProfilesPresent(in profiles: [Profile]) -> Bool {
-        return !profiles.filter({ $0.profileType == .system }).isEmpty
+        !profiles.filter { $0.profileType == .system }.isEmpty
     }
-    
 }

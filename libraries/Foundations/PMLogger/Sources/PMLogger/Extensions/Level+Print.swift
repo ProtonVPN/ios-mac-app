@@ -22,38 +22,38 @@ public extension Logging.Logger.Level {
     var emoji: String {
         switch self {
         case .trace:
-            return "⚪"
+            "⚪"
         case .debug:
-            return "🟢"
+            "🟢"
         case .info:
-            return "🔵"
+            "🔵"
         case .notice:
-            return "🟠"
+            "🟠"
         case .warning:
-            return "🟡"
+            "🟡"
         case .error:
-            return "🔴"
+            "🔴"
         case .critical:
-            return "💥"
+            "💥"
         }
     }
 
     var stringValue: String {
         switch self {
         case .trace:
-            return "TRACE"
+            "TRACE"
         case .debug:
-            return "DEBUG"
+            "DEBUG"
         case .info:
-            return "INFO "
+            "INFO "
         case .notice:
-            return "NOTIC"
+            "NOTIC"
         case .warning:
-            return "WARN "
+            "WARN "
         case .error:
-            return "ERROR"
+            "ERROR"
         case .critical:
-            return "FATAL"
+            "FATAL"
         }
     }
 }

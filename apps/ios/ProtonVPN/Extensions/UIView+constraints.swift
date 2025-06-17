@@ -23,31 +23,29 @@
 import UIKit
 
 extension UIView {
-
     func addFillingSubview(_ subView: UIView) {
-        self.addSubview(subView)
-        
-        subView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        subView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        subView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        subView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        addSubview(subView)
+
+        subView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        subView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        subView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        subView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
-    
+
     func add(subView: UIView, withTopMargin topMargin: CGFloat? = nil, rightMargin: CGFloat? = nil, bottomMargin: CGFloat? = nil, leftMargin: CGFloat? = nil) {
-        self.addSubview(subView)
-        
-        if let topMargin = topMargin {
-            subView.topAnchor.constraint(equalTo: self.topAnchor, constant: topMargin).isActive = true
+        addSubview(subView)
+
+        if let topMargin {
+            subView.topAnchor.constraint(equalTo: topAnchor, constant: topMargin).isActive = true
         }
-        if let bottomMargin = bottomMargin {
-            subView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: bottomMargin).isActive = true
+        if let bottomMargin {
+            subView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: bottomMargin).isActive = true
         }
-        if let leftMargin = leftMargin {
-            subView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: leftMargin).isActive = true
+        if let leftMargin {
+            subView.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMargin).isActive = true
         }
-        if let rightMargin = rightMargin {
-            subView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: rightMargin).isActive = true
+        if let rightMargin {
+            subView.rightAnchor.constraint(equalTo: rightAnchor, constant: rightMargin).isActive = true
         }
     }
-    
 }

@@ -27,11 +27,11 @@ import Dependencies
 import ProtonCoreFeatureFlags
 import ProtonCoreUtilities
 
+import Announcement
 import CommonNetworking
 import LegacyCommon
 import VPNAppCore // UnauthKeychain
 import VPNShared
-import Announcement
 
 import Domain
 import Ergonomics
@@ -49,7 +49,7 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
+    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
@@ -59,26 +59,26 @@ protocol AppSessionManager {
 }
 
 final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
-
-    typealias Factory = VpnApiServiceFactory &
-                        AppStateManagerFactory &
-                        VpnKeychainFactory &
-                        PropertiesManagerFactory &
-                        VpnGatewayFactory &
-                        CoreAlertServiceFactory &
-                        NetworkingFactory &
-                        AppSessionRefreshTimerFactory &
-                        VpnAuthenticationFactory &
-                        ProfileManagerFactory &
-                        AppCertificateRefreshManagerFactory &
-                        SystemExtensionManagerFactory &
-                        AuthKeychainHandleFactory &
-                        UnauthKeychainHandleFactory &
-                        UpdateCheckerFactory
+    typealias Factory =
+        AppCertificateRefreshManagerFactory &
+        AppSessionRefreshTimerFactory &
+        AppStateManagerFactory &
+        AuthKeychainHandleFactory &
+        CoreAlertServiceFactory &
+        NetworkingFactory &
+        ProfileManagerFactory &
+        PropertiesManagerFactory &
+        SystemExtensionManagerFactory &
+        UnauthKeychainHandleFactory &
+        UpdateCheckerFactory & VpnApiServiceFactory &
+        VpnAuthenticationFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory
     private let factory: Factory
 
-    internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    @MainActor var appState: AppState { appStateManager.state }
+    lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    @MainActor
+    var appState: AppState { appStateManager.state }
 
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var appSessionRefreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -98,14 +98,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
-        self.propertiesManager.restoreStartOnBootStatus()
+        propertiesManager.restoreStartOnBootStatus()
 
         AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: public log in interface (completion handlers)
 
-    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
         // Invoke async implementation
         executeOnUIThread(
             attemptLogin,
@@ -149,7 +149,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         if sessionStatus == .notEstablished {
             sessionStatus = .established
             propertiesManager.hasConnected = true
-            post(notification: SessionChanged(data: .established(gateway: self.factory.makeVpnGateway())))
+            post(notification: SessionChanged(data: .established(gateway: factory.makeVpnGateway())))
         }
 
         appSessionRefreshTimer.startTimers()
@@ -176,10 +176,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         let credentials = properties.vpnCredentials
         vpnKeychain.storeAndDetectDowngrade(vpnCredentials: credentials)
-        if case .modified(let lastModified, let servers, let isFreeTier) = properties.serverInfo {
+        if case let .modified(lastModified, servers, isFreeTier) = properties.serverInfo {
             let isFreeTierRequest = await shouldRefreshServersAccordingToUserTier && credentials.maxTier == .freeTier
             assert(isFreeTierRequest == isFreeTier)
-            self.serverManager.update(
+            serverManager.update(
                 servers: servers.map { VPNServer(legacyModel: $0) },
                 freeServersOnly: isFreeTierRequest,
                 lastModifiedAt: lastModified
@@ -273,12 +273,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func confirmAndDisconnectActiveSession() async throws {
         try await withCheckedThrowingContinuation { continuation in
             let alert = ActiveSessionWarningAlert(confirmHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
 
-                if self.appStateManager.state.isConnected {
-                    self.appStateManager.disconnect { continuation.resume() }
+                if appStateManager.state.isConnected {
+                    appStateManager.disconnect { continuation.resume() }
                     return
                 }
 
@@ -331,12 +331,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     private func logOutCleanup() {
         let group = DispatchGroup()
         appSessionRefreshTimer.stopTimers()
-        
+
         if let userId = authKeychain.userId {
             FeatureFlagsRepository.shared.resetFlags(for: userId)
             FeatureFlagsRepository.shared.clearUserId()
         }
-        
+
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
@@ -369,7 +369,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             _ = sysexManager.uninstallAll(userInitiated: false)
         }
 
-        guard sessionStatus == .established && !appStateManager.state.isSafeToEnd && !propertiesManager.rememberLoginAfterUpdate else {
+        guard sessionStatus == .established, !appStateManager.state.isSafeToEnd, !propertiesManager.rememberLoginAfterUpdate else {
             NSApp.reply(toApplicationShouldTerminate: true)
             return
         }
@@ -396,10 +396,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: User plan changed (before refreshing data)
+
     override func userPlanChanged(_ notification: Notification) {
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
            downgradeInfo.from.maxTier < downgradeInfo.to.maxTier {
-
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
@@ -446,7 +446,8 @@ private extension WireguardConfig {
 }
 
 extension AppSessionManagerImplementation {
-    @objc private func updateWiregardConfig(_ notification: Notification) {
+    @objc
+    private func updateWiregardConfig(_: Notification) {
         propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
     }
 }

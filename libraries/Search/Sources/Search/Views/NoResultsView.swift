@@ -17,15 +17,14 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Strings
+import UIKit
 
 final class NoResultsView: UIView {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var contentView: UIView!
 
     // MARK: Setup
@@ -33,7 +32,7 @@ final class NoResultsView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        contentView = loadFromNib(name: "NoResultsView")
+        self.contentView = loadFromNib(name: "NoResultsView")
 
         setupUI()
     }

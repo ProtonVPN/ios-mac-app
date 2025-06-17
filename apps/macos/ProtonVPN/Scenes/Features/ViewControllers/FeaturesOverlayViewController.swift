@@ -21,27 +21,27 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 final class FeaturesOverlayViewController: OverlayViewController {
-
-    @IBOutlet private weak var featuresStackView: NSStackView!
-    @IBOutlet private weak var featuresTitleTF: NSTextField!
-    @IBOutlet private weak var dismissButton: HoverDetectionButton!
+    @IBOutlet private var featuresStackView: NSStackView!
+    @IBOutlet private var featuresTitleTF: NSTextField!
+    @IBOutlet private var dismissButton: HoverDetectionButton!
 
     private let viewModel: FeaturesOverlayViewModelProtocol
-    
+
     init(viewModel: FeaturesOverlayViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         featuresTitleTF.attributedStringValue = viewModel.title.styled(.hint, font: .themeFont(.small), alignment: .natural)
@@ -69,15 +69,16 @@ final class FeaturesOverlayViewController: OverlayViewController {
     }
 
     private func addSectionTitle(sectionTitle: String?) {
-        guard let sectionTitle = sectionTitle else { return }
+        guard let sectionTitle else { return }
         let attributedString = sectionTitle.styled(.hint, font: .themeFont(.small), alignment: .natural)
         let titleTextField = NSTextField(labelWithAttributedString: attributedString)
         featuresStackView.addArrangedSubview(titleTextField)
     }
-    
+
     // MARK: - Actions
-    
-    @IBAction func didTapDismissBtn(_ sender: Any) {
+
+    @IBAction
+    func didTapDismissBtn(_: Any) {
         dismiss(self)
     }
 }

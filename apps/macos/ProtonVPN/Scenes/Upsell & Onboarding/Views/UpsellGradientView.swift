@@ -1,5 +1,5 @@
 //
-//  MapGradientView.swift
+//  UpsellGradientView.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,7 +24,6 @@ import Cocoa
 import Theme
 
 class UpsellGradientView: NSView {
-
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 

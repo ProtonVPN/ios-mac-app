@@ -1,5 +1,5 @@
 //
-//  CreateOrEditProfileViewModeltests.swift
+//  CreateOrEditProfileViewModelTests.swift
 //  ProtonVPN - Created on 19/07/2019.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,21 +24,20 @@ import XCTest
 
 import CommonNetworking
 import Domain
-import Strings
-import Localization
 import LegacyCommon
+import Localization
+import Strings
 
+import Dependencies
+import Persistence
 import TimerMock
 import VPNAppCore // UnauthKeychain
 import VPNShared
 import VPNSharedTesting
-import Dependencies
-import Persistence
 
 @testable import ProtonVPN
 
 class CreateOrEditProfileViewModelTests: XCTestCase {
-
     lazy var servers = [
         serverModel("serv3", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
         serverModel("serv4", tier: .freeTier, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
@@ -66,16 +65,17 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         pinApiEndpoints: false
     )
     var vpnApiService: VpnApiService {
-        return VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
+        VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
     }
 
     lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         vpnKeychain: vpnKeychain,
         alertService: AlertServiceEmptyStub(),
-        propertiesManager: propertiesManager)
+        propertiesManager: propertiesManager
+    )
 
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(
+        AppStateManagerImplementation(
             vpnApiService: vpnApiService,
             vpnManager: VpnManagerMock(),
             networking: networking,
@@ -181,7 +181,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     }
 
     private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) throws {
-
         let serverRepository: ServerRepository = .liveValue
         try serverRepository.upsert(servers: servers)
 
@@ -198,19 +197,19 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                 appStateManager: appStateManager,
                 vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
                 profileManager: profileManager,
-                propertiesManager: propertiesManager)
+                propertiesManager: propertiesManager
+            )
         }
 
-        let tableViewCellTitle: String
-        switch dataSetType {
+        let tableViewCellTitle: String = switch dataSetType {
         case .country:
-            tableViewCellTitle = Localizable.country
+            Localizable.country
         case .server:
-            tableViewCellTitle = Localizable.server
+            Localizable.server
         }
 
-        viewModel.tableViewData.forEach { section in
-            section.cells.forEach { cell in
+        for section in viewModel.tableViewData {
+            for cell in section.cells {
                 switch cell {
                 case .pushKeyValueAttributed(key: let key, value: _, handler: let handler):
                     if key == tableViewCellTitle {

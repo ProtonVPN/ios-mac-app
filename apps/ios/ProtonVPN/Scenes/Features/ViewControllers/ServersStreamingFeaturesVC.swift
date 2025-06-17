@@ -20,37 +20,37 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 class ServersStreamingFeaturesVC: UIViewController {
-    
     private let viewModel: ServersStreamingFeaturesViewModel
 
-    @IBOutlet private weak var closeButton: UIButton!
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var titleLbl: UILabel!
-    @IBOutlet private weak var countryLbl: UILabel!
-    @IBOutlet private weak var featuresLbl: UILabel!
-    @IBOutlet private weak var instructionLbl: UILabel!
-    @IBOutlet private weak var noteLbl: UILabel!
-    @IBOutlet private weak var servicesCV: UICollectionView!
-    @IBOutlet private weak var extraLbl: UILabel!
-    @IBOutlet private weak var servicesCVHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var closeButton: UIButton!
+    @IBOutlet private var iconImageView: UIImageView!
+    @IBOutlet private var titleLbl: UILabel!
+    @IBOutlet private var countryLbl: UILabel!
+    @IBOutlet private var featuresLbl: UILabel!
+    @IBOutlet private var instructionLbl: UILabel!
+    @IBOutlet private var noteLbl: UILabel!
+    @IBOutlet private var servicesCV: UICollectionView!
+    @IBOutlet private var extraLbl: UILabel!
+    @IBOutlet private var servicesCVHeightConstraint: NSLayoutConstraint!
 
-    init( _ viewModel: ServersStreamingFeaturesViewModel ) {
+    init(_ viewModel: ServersStreamingFeaturesViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - View Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         closeButton.setImage(IconProvider.crossBig, for: .normal)
@@ -66,38 +66,38 @@ class ServersStreamingFeaturesVC: UIViewController {
         servicesCV.dataSource = self
         view.backgroundColor = .backgroundColor()
     }
-    
+
     // MARK: - Actions
-    
-    @IBAction private func didTapDismiss(_ sender: Any) {
+
+    @IBAction
+    private func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }
 
 extension ServersStreamingFeaturesVC: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
-    
     // MARK: - UICollectionViewDataSource
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumLineSpacingForSectionAt _: Int) -> CGFloat {
+        0
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+
+    func collectionView(_: UICollectionView, layout _: UICollectionViewLayout, minimumInteritemSpacingForSectionAt _: Int) -> CGFloat {
+        0
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+    func collectionView(_ collectionView: UICollectionView, layout _: UICollectionViewLayout, sizeForItemAt _: IndexPath) -> CGSize {
         let size = collectionView.frame.width / CGFloat(viewModel.columnsAmount)
         servicesCVHeightConstraint.constant = CGFloat(viewModel.totalRows) * size
         return CGSize(width: size, height: size)
     }
-    
+
     // MARK: - UICollectionViewDataSource
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.totalItems
+
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
+        viewModel.totalItems
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StreamingServiceCell.identifier, for: indexPath) as! StreamingServiceCell
         cell.propertiesManager = viewModel.propertiesManager

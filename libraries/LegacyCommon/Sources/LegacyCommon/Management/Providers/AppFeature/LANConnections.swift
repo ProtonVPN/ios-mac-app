@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
+import Foundation
 
 /// Controls whether traffic destined for local networks will be excluded from the tunnel
 public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
@@ -26,7 +26,7 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
     /// LAN Traffic is 'allowed' to bypass tunnel: 'Allow LAN connections' is on in the UI.
     case on
 
-    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             return .success
@@ -44,7 +44,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
 
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
-    public static func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         guard #available(iOS 14.2, *) else {
             return .failure(.featureDisabled)
         }
@@ -55,9 +55,9 @@ extension ExcludeLocalNetworks: ProvidableFeature {
     }
 
     public static func defaultValue(
-        onPlan plan: String,
+        onPlan _: String,
         userTier: Int,
-        featureFlags: FeatureFlags
+        featureFlags _: FeatureFlags
     ) -> ExcludeLocalNetworks {
         if userTier.isFreeTier {
             return .off

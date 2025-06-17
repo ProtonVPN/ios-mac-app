@@ -19,21 +19,21 @@
 import Foundation
 
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 
-public extension NSFont {
-    static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false) -> NSFont {
-        return themeFont(literalSize: semanticSize.rawValue, bold: bold)
-    }
+    public extension NSFont {
+        static func themeFont(_ semanticSize: AppTheme.FontSize = .paragraph, bold: Bool = false) -> NSFont {
+            themeFont(literalSize: semanticSize.rawValue, bold: bold)
+        }
 
-    static func themeFont(literalSize: Double, bold: Bool = false) -> NSFont {
-        let result = systemFont(ofSize: literalSize)
-        if bold {
-            return result.with(.bold)
-        } else {
-            return result
+        static func themeFont(literalSize: Double, bold: Bool = false) -> NSFont {
+            let result = systemFont(ofSize: literalSize)
+            if bold {
+                return result.with(.bold)
+            } else {
+                return result
+            }
         }
     }
-}
 
 #endif

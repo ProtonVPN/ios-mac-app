@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 enum ZoomType {
     case `in`
@@ -31,36 +31,36 @@ enum ZoomType {
 }
 
 class ZoomButton: HoverDetectionButton {
-    
     let zoomType: ZoomType
     let imageView = NSImageView()
-    
+
     override var frame: NSRect {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     init(type zoomType: ZoomType) {
         self.zoomType = zoomType
 
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
 
         let image = zoomType == .in ? AppTheme.Icon.plus : AppTheme.Icon.minus
-        imageView.image = self.colorImage(image)
+        imageView.image = colorImage(image)
         imageView.isHidden = false
 
         isTransparent = true
         addSubview(imageView)
     }
-    
-    required init?(coder: NSCoder) {
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         guard let context = NSGraphicsContext.current?.cgContext else {
             return
         }
@@ -70,8 +70,8 @@ class ZoomButton: HoverDetectionButton {
         let plusButtonFrame = CGRect(x: 0.5, y: 0.5, width: bounds.width - 1, height: bounds.height - 1)
 
         context.setLineWidth(lineWidth)
-        context.setStrokeColor(self.cgColor(.border))
-        context.setFillColor(self.cgColor(.background))
+        context.setStrokeColor(cgColor(.border))
+        context.setFillColor(cgColor(.background))
 
         let path = CGMutablePath()
         path.addRoundedRectangle(plusButtonFrame, cornerRadius: cornerRadius)
@@ -80,13 +80,15 @@ class ZoomButton: HoverDetectionButton {
         context.drawPath(using: .fillStroke)
 
         let margin: CGFloat = 6
-        let imageFrame = CGRect(x: margin / 2, y: margin / 2,
-                                width: bounds.width - margin,
-                                height: bounds.width - margin)
+        let imageFrame = CGRect(
+            x: margin / 2,
+            y: margin / 2,
+            width: bounds.width - margin,
+            height: bounds.width - margin
+        )
         imageView.frame = imageFrame
         imageView.needsDisplay = true
     }
-    
 }
 
 extension ZoomButton: CustomStyleContext {

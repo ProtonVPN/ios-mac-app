@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import LegacyCommon
+import XCTest
 
 final class DefaultPortsDecodingTests: XCTestCase {
     func testDecodeBlackServers() {

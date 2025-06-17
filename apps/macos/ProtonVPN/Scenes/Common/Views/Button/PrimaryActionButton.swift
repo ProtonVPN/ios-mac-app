@@ -1,5 +1,5 @@
 //
-//  GreenAffirmationButton.swift
+//  PrimaryActionButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 import VPNAppCore
 
 class PrimaryActionButton: HoverDetectionButton {
@@ -32,29 +32,29 @@ class PrimaryActionButton: HoverDetectionButton {
             configureButton()
         }
     }
-    
+
     override var title: String {
         didSet {
             configureTitle()
         }
     }
-    
+
     var fontSize: AppTheme.FontSize = .heading4 {
         didSet {
             configureTitle()
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureButton()
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()
     }
-    
+
     private func configureButton() {
         wantsLayer = true
         layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
@@ -62,9 +62,9 @@ class PrimaryActionButton: HoverDetectionButton {
             layer?.backgroundColor = self.cgColor(.background)
         }
     }
-    
+
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 
     override var intrinsicContentSize: NSSize {

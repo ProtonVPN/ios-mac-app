@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Domain
+import Ergonomics
 import Foundation
 import NetworkExtension
-import Ergonomics
-import Domain
 import Strings
 
 public protocol ProviderMessage: Equatable {
@@ -36,8 +36,8 @@ public protocol ProviderMessageSender: AnyObject {
     func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
 }
 
-extension ProviderMessageSender {
-    public func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
+public extension ProviderMessageSender {
+    func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
         try await withCheckedThrowingContinuation { continuation in
             send(message) {
                 continuation.resume(with: $0)
@@ -60,25 +60,25 @@ extension ProviderMessageError: ProtonVPNError {
     public static let errorDomain = "ProviderMessageErrorDomain"
 
     public var errorDescription: String? {
-        return includeCode(inside: Localizable.providerMessageError)
+        includeCode(inside: Localizable.providerMessageError)
     }
 
     public var charCode: FourCharCode {
         switch self {
         case .noDataReceived:
-            return "NRCV"
+            "NRCV"
         case .cancelled:
-            return "CANC"
+            "CANC"
         case .decodingError:
-            return "MDCD"
+            "MDCD"
         case .sendingError:
-            return "MSND"
+            "MSND"
         case .unknownRequest:
-            return "UNRQ"
+            "UNRQ"
         case .unknownResponse:
-            return "UNRS"
+            "UNRS"
         case .remoteError:
-            return "RMOT"
+            "RMOT"
         }
     }
 }

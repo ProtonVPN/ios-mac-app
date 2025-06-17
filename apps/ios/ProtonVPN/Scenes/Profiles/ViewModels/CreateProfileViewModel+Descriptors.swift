@@ -1,5 +1,5 @@
 //
-//  CreateNewProfileViewModel+Descriptors.swift
+//  CreateProfileViewModel+Descriptors.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,55 +20,55 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import Foundation
 import LegacyCommon
-import UIKit
+import Localization
 import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 import Strings
-import Domain
-import Localization
+import UIKit
 
 extension CreateOrEditProfileViewModel {
     private var fontSize: CGFloat {
-        return 17
+        17
     }
+
     private var baselineOffset: CGFloat {
-        return 4
+        4
     }
 
     // MARK: - Country / Gateway
 
-    internal func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
+    func countryDescriptor(for group: ServerGroupInfo) -> NSAttributedString {
         let imageAttributedString: NSAttributedString
         let countryString: String
 
         switch group.kind {
-        case .country(let countryCode):
+        case let .country(countryCode):
             imageAttributedString = embeddedCountryFlag(countryCode: countryCode)
             countryString = "  " + (LocalizationUtility.default.countryName(forCode: countryCode) ?? "")
-        case .gateway(let name):
+        case let .gateway(name):
             imageAttributedString = embeddedImageIcon(image: IconProvider.servers)
             countryString = "  " + name
         }
 
-        let nameAttributedString: NSAttributedString
-        if group.minTier <= userTier {
-            nameAttributedString = NSMutableAttributedString(
+        let nameAttributedString: NSAttributedString = if group.minTier <= userTier {
+            NSMutableAttributedString(
                 string: countryString,
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
+                    .foregroundColor: UIColor.normalTextColor(),
                 ]
             )
         } else {
-            nameAttributedString = NSMutableAttributedString(
+            NSMutableAttributedString(
                 string: countryString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.weakTextColor()
+                    .foregroundColor: UIColor.weakTextColor(),
                 ]
             )
         }
@@ -77,8 +77,8 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Server
 
-    internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
-        return server.isSecureCore
+    func serverDescriptor(for server: ServerModel) -> NSAttributedString {
+        server.isSecureCore
             ? serverDescriptorForSecureCore(
                 entryCountry: server.entryCountry,
                 entryCountryCode: server.entryCountryCode
@@ -90,8 +90,8 @@ extension CreateOrEditProfileViewModel {
             )
     }
 
-    internal func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
-        return server.logical.feature.contains(.secureCore)
+    func serverDescriptor(for server: ServerInfo) -> NSAttributedString {
+        server.logical.feature.contains(.secureCore)
             ? serverDescriptorForSecureCore(
                 entryCountry: server.logical.entryCountry,
                 entryCountryCode: server.logical.entryCountryCode
@@ -109,7 +109,7 @@ extension CreateOrEditProfileViewModel {
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: UIColor.normalTextColor()
+                .foregroundColor: UIColor.normalTextColor(),
             ]
         )
         let entryCountryFlag = embeddedCountryFlag(countryCode: entryCountryCode)
@@ -118,7 +118,7 @@ extension CreateOrEditProfileViewModel {
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
                 .baselineOffset: baselineOffset,
-                .foregroundColor: UIColor.normalTextColor()
+                .foregroundColor: UIColor.normalTextColor(),
             ]
         )
         return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
@@ -127,23 +127,22 @@ extension CreateOrEditProfileViewModel {
     private func serverDescriptorForStandard(serverName: String, countryCode: String, serverTier: Int) -> NSAttributedString {
         let countryFlag = embeddedCountryFlag(countryCode: countryCode)
         let serverString = "  " + serverName
-        let serverDescriptor: NSAttributedString
-        if serverTier <= userTier {
-            serverDescriptor = NSMutableAttributedString(
+        let serverDescriptor: NSAttributedString = if serverTier <= userTier {
+            NSMutableAttributedString(
                 string: serverString,
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.normalTextColor()
+                    .foregroundColor: UIColor.normalTextColor(),
                 ]
             )
         } else {
-            serverDescriptor = NSMutableAttributedString(
+            NSMutableAttributedString(
                 string: serverString + " (\(Localizable.upgradeRequired))",
                 attributes: [
                     .font: UIFont.systemFont(ofSize: fontSize),
                     .baselineOffset: baselineOffset,
-                    .foregroundColor: UIColor.weakTextColor()
+                    .foregroundColor: UIColor.weakTextColor(),
                 ]
             )
         }
@@ -152,10 +151,10 @@ extension CreateOrEditProfileViewModel {
 
     // MARK: - Pre-set
 
-    internal func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
+    func defaultServerDescriptor(forIndex index: Int) -> NSAttributedString {
         let image: UIImage
         let name: String
-        
+
         switch index {
         case 0:
             image = IconProvider.bolt
@@ -170,7 +169,7 @@ extension CreateOrEditProfileViewModel {
             string: "  " + name,
             attributes: [
                 .font: UIFont.systemFont(ofSize: fontSize),
-                .baselineOffset: baselineOffset
+                .baselineOffset: baselineOffset,
             ]
         )
         nameAttributedString.insert(imageAttributedString, at: 0)
@@ -181,7 +180,7 @@ extension CreateOrEditProfileViewModel {
     // MARK: - Icon
 
     private func embeddedImageIcon(image: UIImage?, baselineOffset: CGFloat? = nil, size: CGSize = CGSize(width: 18, height: 18)) -> NSAttributedString {
-        if let image = image {
+        if let image {
             return NSAttributedString.imageAttachment(image: image, baselineOffset: baselineOffset, size: size)
         }
         return NSAttributedString(string: "")
@@ -202,7 +201,7 @@ extension CreateOrEditProfileViewModel {
     }
 
     private func roundedCroppedImage(image: UIImage?, targetSize: CGSize, cornerRadius: CGFloat) -> UIImage? {
-        guard let image = image else {
+        guard let image else {
             return nil
         }
 

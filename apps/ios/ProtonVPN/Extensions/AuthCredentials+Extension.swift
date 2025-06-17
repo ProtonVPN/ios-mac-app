@@ -17,12 +17,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
 import ProtonCoreNetworking
+import VPNShared
 
 public extension AuthCredentials {
     func toAuthCredential() -> AuthCredential {
-        .init(Credential.init(
+        .init(Credential(
             UID: sessionId,
             accessToken: accessToken,
             refreshToken: refreshToken,

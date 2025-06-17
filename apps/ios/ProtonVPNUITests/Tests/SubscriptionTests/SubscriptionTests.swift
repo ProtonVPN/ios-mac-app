@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import fusion
-import ProtonCoreTestingToolkitUITestsPaymentsUI
 import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkitUITestsPaymentsUI
 import StoreKitTest
+import XCTest
 
 final class SubscriptionTests: ProtonVPNUITests {
-
     private var session: SKTestSession!
 
     override func setUp() {
@@ -41,11 +40,11 @@ final class SubscriptionTests: ProtonVPNUITests {
     }
 
     func testUpgradeAccountFromFreeToUnlimited() throws {
-         try createUserVerifySubscription(plan: .unlimited)
+        try createUserVerifySubscription(plan: .unlimited)
     }
 
     func testUpgradeAccountFromFreeToVPN2022() throws {
-         try createUserVerifySubscription(plan: .vpn2022)
+        try createUserVerifySubscription(plan: .vpn2022)
     }
 
     private func createUserVerifySubscription(plan: PaymentsPlan) throws {

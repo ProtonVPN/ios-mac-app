@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
-@testable import tvOS
 import Connection
 import DomainTestSupport
+@testable import tvOS
+import XCTest
 
 final class ProtectionStatusFeatureTests: XCTestCase {
-
     @MainActor
     func testOnAppear() async {
         let store = TestStore(initialState: ProtectionStatusFeature.State()) {

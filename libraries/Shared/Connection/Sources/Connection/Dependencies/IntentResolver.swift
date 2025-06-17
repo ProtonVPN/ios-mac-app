@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Dependencies
 import ComposableArchitecture
 import CoreConnection
-import VPNShared
+import Dependencies
 import Domain
+import Foundation
+import VPNShared
 
 /// Duplicates logic in `ConnectionAuthorizer` in `LegacyCommon` for now, but can add more resolution errors later.
 @CasePathable
@@ -33,7 +33,7 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
 
 struct ConnectionIntentResolver: DependencyKey, Sendable {
     let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
-    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws (ConnectionIntentResolutionError) -> ()
+    let authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 
     static let liveValue: ConnectionIntentResolver = .init { intent in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
@@ -45,7 +45,7 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
         let portSelectionResult = try await portSelector.select(intent.server.endpoint, specifiedProtocol)
         try Task.checkCancellation()
 
-        guard case .wireGuard(let transport) = portSelectionResult.chosenProtocol else {
+        guard case let .wireGuard(transport) = portSelectionResult.chosenProtocol else {
             throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
         }
 
@@ -62,18 +62,18 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
             tunnelSettings: tunnelSettings,
             features: features
         )
-    } authorize: { intent, userTier throws (ConnectionIntentResolutionError) in
+    } authorize: { intent, userTier throws(ConnectionIntentResolutionError) in
         // Paid users can always change servers.
         guard userTier.isFreeTier else { return }
 
         @Dependency(\.serverChangeAuthorizer) var changeAuthorizer
 
         switch intent.spec.location {
-            // Free users can always connect to the fastest server.
+        // Free users can always connect to the fastest server.
         case .fastest:
             return
 
-            // Free users can choose a random server a fixed number of times in a given interval.
+        // Free users can choose a random server a fixed number of times in a given interval.
         case .random:
             switch changeAuthorizer.serverChangeAvailability() {
             case .available:
@@ -82,13 +82,14 @@ struct ConnectionIntentResolver: DependencyKey, Sendable {
                 throw .serverChangeUnavailable(until: date, duration: duration, exhaustedSkips: exhaustedSkips)
             }
 
-        case .gateway(let name):
+        case let .gateway(name):
             log.assertionFailure("Free user requested connection to gateway", category: .connection)
             throw .specificCountryUnavailable(countryCode: name)
 
-            // Free users aren't allowed to choose an exact server.
-        case .region(let code), .exact(_, _, _, _, let code):
+        // Free users aren't allowed to choose an exact server.
+        case let .region(code), let .exact(_, _, _, _, code):
             throw .specificCountryUnavailable(countryCode: code)
+
         case .secureCore:
             throw .secureCoreUnavailable
         }

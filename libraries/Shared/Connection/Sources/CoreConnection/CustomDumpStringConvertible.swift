@@ -16,44 +16,44 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CustomDump
-import Ergonomics
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
+import Ergonomics
+import Foundation
 import struct VPNShared.VpnCertificate
 
 // For now, let's override the dump descriptions with minimal info so `_printChanges` reducer is easier to read
 extension Domain.Server: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "Server(name: \(logical.name))"
+        "Server(name: \(logical.name))"
     }
 }
 
 extension Domain.VPNConnectionFeatures: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNConnectionFeatures(netShield: \(self.netshield), vpnAccelerator: \(self.vpnAccelerator), natType: \(self.natType)"
+        "VPNConnectionFeatures(netShield: \(netshield), vpnAccelerator: \(vpnAccelerator), natType: \(natType)"
     }
 }
 
 extension VPNKeys: CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNKeys"
+        "VPNKeys"
     }
 }
 
 extension VpnCertificate: @retroactive CustomDumpStringConvertible {
     public var customDumpDescription: String {
-        return "VPNCertificate(validUntil: \(validUntil))"
+        "VPNCertificate(validUntil: \(validUntil))"
     }
 }
 
 extension PrivateKey: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         #if DEBUG
-        return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
+            return "PrivateKey(fingerprint: \(rawRepresentation.fingerprint))"
         #else
-        return "PrivateKey"
+            return "PrivateKey"
         #endif
     }
 }
@@ -61,9 +61,9 @@ extension PrivateKey: CustomDumpStringConvertible {
 extension PublicKey: CustomDumpStringConvertible {
     public var customDumpDescription: String {
         #if DEBUG
-        return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
+            return "PublicKey(fingerprint: \(rawRepresentation.fingerprint))"
         #else
-        return "PublicKey"
+            return "PublicKey"
         #endif
     }
 }

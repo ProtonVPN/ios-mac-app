@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
 import struct StoreKit.Product
+import Strings
+import SwiftUI
 
 struct PurchaseOptionsView: View {
-    
     let products: [PlanIAPTuple]
 
     let sendAction: UpsellFeature.ActionSender
@@ -49,12 +48,12 @@ struct PurchaseOptionsView: View {
                 if subscription.subscriptionPeriod.unit == .year {
                     VStack {
                         headlineText("\(product.displayPrice)")
-                        + bodyText(" /year")
+                            + bodyText(" /year")
                         bodyText(pricePerMonth(product))
                     }
                 } else if subscription.subscriptionPeriod.unit == .month {
                     headlineText("\(product.displayPrice)")
-                    + bodyText(" /month")
+                        + bodyText(" /month")
                 } else {
                     headlineText("\(product.displayPrice)")
                 }
@@ -69,12 +68,12 @@ struct PurchaseOptionsView: View {
     }
 
     private func headlineText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.system(size: 38, weight: .regular))
     }
 
     private func bodyText(_ text: String) -> Text {
-        return Text(text)
+        Text(text)
             .font(.body)
             .fontWeight(.regular)
             .foregroundStyle(Color(.text, .weak))
@@ -114,11 +113,11 @@ struct PurchaseOptionsView: View {
             VStack(alignment: .trailing) {
                 if planDuration.months == 12 {
                     headlineText(planPriceString)
-                    + bodyText(" /year")
+                        + bodyText(" /year")
                     bodyText("\(pricePerMonthString) /month")
                 } else if planDuration == .oneMonth {
                     headlineText(planPriceString)
-                    + bodyText(" /month")
+                        + bodyText(" /month")
                 } else {
                     headlineText(planPriceString)
                 }
@@ -159,7 +158,7 @@ private extension DateComponents {
     // This property is a fallback in case where DateComponentsFormatter returns `nil`
     // Not ideal but should do the job
     var fallbackDuration: String {
-        var duration: String = ""
+        var duration = ""
         if let year, year != 0 {
             duration += Localizable.planDurationYear(year)
         }

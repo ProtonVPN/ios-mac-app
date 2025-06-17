@@ -23,10 +23,10 @@ import Perception
 
 import ProtonCoreUIFoundations
 
+import Combine
 import LegacyCommon
 import Strings
 import Theme
-import Combine
 
 protocol TickboxViewDelegate: AnyObject {
     func toggleTickbox(_ tickboxView: SettingsTickboxView, to value: ButtonState)
@@ -34,7 +34,6 @@ protocol TickboxViewDelegate: AnyObject {
 }
 
 class SettingsTickboxView: NSView, SwitchButtonDelegate {
-
     typealias ActionHandler = () -> Void
 
     struct ViewModel {
@@ -63,12 +62,12 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
 
     private weak var delegate: TickboxViewDelegate?
 
-    @IBOutlet private weak var label: PVPNTextField!
-    @IBOutlet private weak var switchButton: SwitchButton?
-    @IBOutlet private weak var upsellImageView: HoverableButtonImageView?
-    @IBOutlet private weak var separator: NSBox!
-    @IBOutlet private weak var infoIcon: NSImageView?
-    @IBOutlet private weak var onOffLabel: NSTextField?
+    @IBOutlet private var label: PVPNTextField!
+    @IBOutlet private var switchButton: SwitchButton?
+    @IBOutlet private var upsellImageView: HoverableButtonImageView?
+    @IBOutlet private var separator: NSBox!
+    @IBOutlet private var infoIcon: NSImageView?
+    @IBOutlet private var onOffLabel: NSTextField?
 
     private var model: ViewModel?
 
@@ -112,16 +111,19 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         imageAttachment.image = IconProvider.chevronRight
             .colored(.color(.text))
             .resizeWhilePreservingRatio(newHeight: .themeSpacing16)
-        imageAttachment.bounds = .init(origin: .init(x: 0, y: -2),
-                                       size: .init(width: .themeSpacing16,
-                                                   height: .themeSpacing16))
+        imageAttachment.bounds = .init(
+            origin: .init(x: 0, y: -2),
+            size: .init(
+                width: .themeSpacing16,
+                height: .themeSpacing16
+            )
+        )
         let imageAttachmentString = NSAttributedString(attachment: imageAttachment)
 
-        let text: String
-        if isOn {
-            text = Localizable.switchSideButtonOn.capitalized + "  "
+        let text: String = if isOn {
+            Localizable.switchSideButtonOn.capitalized + "  "
         } else {
-            text = Localizable.switchSideButtonOff.capitalized + "  "
+            Localizable.switchSideButtonOff.capitalized + "  "
         }
         let isOnLabel = NSMutableAttributedString()
         let isOn = text.styled(font: .themeFont(.heading4), alignment: .right)
@@ -159,7 +161,7 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
             switchButton?.isHidden = true
             onOffLabel?.isHidden = true
 
-        case .available(let isOn, let isInteractive):
+        case let .available(isOn, isInteractive):
             upsellImageView?.isHidden = true
             switchButton?.isHidden = false
             switchButton?.enabled = isInteractive
@@ -183,11 +185,11 @@ class SettingsTickboxView: NSView, SwitchButtonDelegate {
         delegate?.upsellTapped(self)
     }
 
-    func switchButtonClicked(_ button: NSButton) {
+    func switchButtonClicked(_: NSButton) {
         delegate?.toggleTickbox(self, to: isOn ? .on : .off)
     }
 
-    override func mouseDown(with event: NSEvent) {
+    override func mouseDown(with _: NSEvent) {
         didTapHandler?()
     }
 }

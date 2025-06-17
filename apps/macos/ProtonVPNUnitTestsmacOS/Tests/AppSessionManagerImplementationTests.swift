@@ -16,20 +16,19 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import LegacyCommon
+import XCTest
 
-import VPNShared
 import Dependencies
 @testable import ProtonVPN
+import VPNShared
 
-fileprivate let testData = MockTestData()
-fileprivate let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", expiration: Date(), scopes: [])
-fileprivate let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
-fileprivate let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil)
+private let testData = MockTestData()
+private let testAuthCredentials = AuthCredentials(username: "username", accessToken: "", refreshToken: "", sessionId: "", userId: "", expiration: Date(), scopes: [])
+private let testVPNCredentials = VpnKeychainMock.vpnCredentials(accountPlan: .plus, maxTier: CoreAppConstants.VpnTiers.plus)
+private let subuserCredentials = VpnCredentials(status: 0, expirationTime: Date(), accountPlan: .plus, maxConnect: 0, maxTier: 0, services: 0, groupId: "", name: "", password: "", delinquent: 0, credit: 0, currency: "", hasPaymentMethod: false, planName: nil, subscribed: nil)
 
 final class AppSessionManagerImplementationTests: XCTestCase {
-
     fileprivate var alertService: AppSessionManagerAlertServiceMock!
     fileprivate var authKeychain: AuthKeychainHandleMock!
     fileprivate var unauthKeychain: UnauthKeychainMock!
@@ -371,8 +370,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
     }
 }
 
-fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
-
+private class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
     @Dependency(\.date) var date
 
     private let container = DependencyContainer()
@@ -417,18 +415,17 @@ fileprivate class ManagerFactoryMock: AppSessionManagerImplementation.Factory {
         self.alertService = alertService
         self.appStateManager = appStateManager
     }
-
 }
 
 class AuthKeychainHandleMock: AuthKeychainHandle {
     var credentials: AuthCredentials?
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext: VPNShared.AppContext?) throws { }
-    func fetch(forContext: AppContext?) -> AuthCredentials? { return credentials }
-    func clear() { }
+    func store(_: VPNShared.AuthCredentials, forContext _: VPNShared.AppContext?) throws {}
+    func fetch(forContext _: AppContext?) -> AuthCredentials? { credentials }
+    func clear() {}
 }
 
-fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
+private class AppSessionManagerAlertServiceMock: CoreAlertService {
     private var alertHandlers: [(alertType: SystemAlert.Type, handler: (SystemAlert) -> Void)] = []
 
     init() {}
@@ -445,10 +442,10 @@ fileprivate class AppSessionManagerAlertServiceMock: CoreAlertService {
     }
 }
 
-fileprivate extension SystemAlert {
+private extension SystemAlert {
     func triggerHandler(forFirstActionOfType type: PrimaryActionType) {
         actions.first { $0.style == type }?.handler?()
     }
 }
 
-fileprivate class NavigationServiceMock: NavigationService { }
+private class NavigationServiceMock: NavigationService {}

@@ -6,12 +6,13 @@ import PackageDescription
 let package = Package(
     name: "PlutoniumExtension",
     platforms: [
-        .macOS(.v13)
+        .macOS(.v13),
     ],
     products: [
         .library(
             name: "PlutoniumExtension",
-            targets: ["PlutoniumExtension"]),
+            targets: ["PlutoniumExtension"]
+        ),
     ],
     dependencies: [
         .package(path: "../Foundations/PMLogger"),
@@ -25,11 +26,11 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 "PMLogger",
                 .product(name: "VPNAppCore", package: "NEHelper"),
-            ]),
+            ]
+        ),
         .testTarget(
             name: "PlutoniumExtensionTests",
             dependencies: ["PlutoniumExtension"]
         ),
     ]
 )
-

@@ -19,46 +19,46 @@
 import Foundation
 
 #if canImport(AppKit)
-import AppKit
+    import AppKit
 
-public extension NSImage {
-    func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {
-        self.colored(.color(context, style))
-    }
-
-    func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default, centeredVerticallyForFont font: NSFont? = nil) -> NSAttributedString {
-        var resultingImage = self
-        if let style = style {
-            resultingImage = self.colored(context: context, style)
-        }
-        resultingImage = resultingImage.resize(size)
-
-        let attachment = NSTextAttachment()
-        attachment.image = resultingImage
-        if let font = font {
-            let imageY = (font.capHeight - resultingImage.size.height).rounded(.toNearestOrEven) / 2
-            attachment.bounds = CGRect(origin: CGPoint(x: 0, y: imageY), size: resultingImage.size)
+    public extension NSImage {
+        func colored(context: AppTheme.Context = .icon, _ style: AppTheme.Style = .normal) -> NSImage {
+            colored(.color(context, style))
         }
 
-        return NSAttributedString(attachment: attachment)
-    }
+        func asAttachment(context: AppTheme.Context = .icon, style: AppTheme.Style? = nil, size: AppTheme.IconSize = .default, centeredVerticallyForFont font: NSFont? = nil) -> NSAttributedString {
+            var resultingImage = self
+            if let style {
+                resultingImage = colored(context: context, style)
+            }
+            resultingImage = resultingImage.resize(size)
 
-    func resize(_ newSize: AppTheme.IconSize) -> NSImage {
-        switch newSize {
-        case .square(let size):
-            return self.resize(newWidth: Int(size), newHeight: Int(size))
-        case let .rect(width, height):
-            return self.resize(newWidth: Int(width), newHeight: Int(height))
-        case .default:
-            return self
+            let attachment = NSTextAttachment()
+            attachment.image = resultingImage
+            if let font {
+                let imageY = (font.capHeight - resultingImage.size.height).rounded(.toNearestOrEven) / 2
+                attachment.bounds = CGRect(origin: CGPoint(x: 0, y: imageY), size: resultingImage.size)
+            }
+
+            return NSAttributedString(attachment: attachment)
+        }
+
+        func resize(_ newSize: AppTheme.IconSize) -> NSImage {
+            switch newSize {
+            case let .square(size):
+                resize(newWidth: Int(size), newHeight: Int(size))
+            case let .rect(width, height):
+                resize(newWidth: Int(width), newHeight: Int(height))
+            case .default:
+                self
+            }
         }
     }
-}
 
-public extension CustomStyleContext {
-    func colorImage(_ image: NSImage, context: AppTheme.Context = .icon) -> NSImage {
-        image.colored(context: context, self.customStyle(context: context))
+    public extension CustomStyleContext {
+        func colorImage(_ image: NSImage, context: AppTheme.Context = .icon) -> NSImage {
+            image.colored(context: context, customStyle(context: context))
+        }
     }
-}
 
 #endif

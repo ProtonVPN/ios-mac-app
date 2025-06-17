@@ -19,11 +19,10 @@
 import ProtonCoreNetworking
 
 final class TelemetryRequestMultiple: Request {
-
     var parameters: [String: Any]?
     let isBusiness: Bool
 
-    init( _ events: [String: Any], isBusiness: Bool) {
+    init(_ events: [String: Any], isBusiness: Bool) {
         self.parameters = events
         self.isBusiness = isBusiness
     }
@@ -35,7 +34,7 @@ final class TelemetryRequestMultiple: Request {
     var method: HTTPMethod = .post
 
     var isAuth: Bool {
-        return true
+        true
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

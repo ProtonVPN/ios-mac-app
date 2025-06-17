@@ -21,8 +21,8 @@ import enum NetworkExtension.NEVPNStatus
 
 import Dependencies
 
-import struct Domain.ServerConnectionIntent
 import CoreConnection
+import struct Domain.ServerConnectionIntent
 import ExtensionIPC
 
 protocol TunnelManager {
@@ -38,17 +38,17 @@ protocol TunnelManager {
 
 @available(iOS 16, *)
 enum TunnelManagerKey: DependencyKey {
-#if targetEnvironment(simulator)
-    static let liveValue: TunnelManager = {
-        let mockSession = VPNSessionMock(status: .disconnected)
-        mockSession.messageHandler = MessageHandler.full
-        let manager = MockTunnelManager(connection: mockSession)
-        manager.shouldGenerateKeysIfMissing = true
-        return manager
-    }()
-#else
-    static let liveValue: TunnelManager = PacketTunnelManager()
-#endif
+    #if targetEnvironment(simulator)
+        static let liveValue: TunnelManager = {
+            let mockSession = VPNSessionMock(status: .disconnected)
+            mockSession.messageHandler = MessageHandler.full
+            let manager = MockTunnelManager(connection: mockSession)
+            manager.shouldGenerateKeysIfMissing = true
+            return manager
+        }()
+    #else
+        static let liveValue: TunnelManager = PacketTunnelManager()
+    #endif
 }
 
 final class PacketTunnelManager: TunnelManager {
@@ -62,7 +62,7 @@ final class PacketTunnelManager: TunnelManager {
     private func loadManager() async throws -> TunnelProviderManager {
         let bundleID = bundleID.bundleIdentifierForTarget()
         let manager = try await managerFactory.loadManager(forProviderBundleID: bundleID)
-        self.cachedLoadedManager = manager
+        cachedLoadedManager = manager
         return manager
     }
 
@@ -140,7 +140,7 @@ final class PacketTunnelManager: TunnelManager {
     var connectedServer: LogicalServerInfo {
         get async throws {
             let response = try await loadedManager.session.send(WireguardProviderRequest.getCurrentLogicalAndServerId)
-            guard case .ok(let data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
+            guard case let .ok(data) = response, let data, let ids = String(data: data, encoding: .utf8) else {
                 log.error("Error decoding getCurrentLogicalAndServerId response", category: .connection)
                 throw TunnelManagerError.ipc(.getCurrentLogicalAndServerId, nil)
             }

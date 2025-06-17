@@ -49,8 +49,8 @@ extension SmartPortSelectorBridge: TestDependencyKey {
     )
 }
 
-extension DependencyValues {
-    public var smartPortSelector: SmartPortSelectorBridge {
+public extension DependencyValues {
+    var smartPortSelector: SmartPortSelectorBridge {
         get { self[SmartPortSelectorBridge.self] }
         set { self[SmartPortSelectorBridge.self] = newValue }
     }

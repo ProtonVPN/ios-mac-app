@@ -20,6 +20,6 @@ import Foundation
 
 public extension Collection where Element: Identifiable {
     subscript(id elementID: Element.ID) -> Element? {
-        return first { $0.id == elementID }
+        first { $0.id == elementID }
     }
 }

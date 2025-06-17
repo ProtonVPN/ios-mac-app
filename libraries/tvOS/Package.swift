@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -7,7 +7,7 @@ let package = Package(
     name: "tvOS",
     defaultLocalization: "en",
     platforms: [
-        .tvOS(.v17)
+        .tvOS(.v17),
     ],
     products: [
         .library(name: "tvOS", targets: ["tvOS"]),
@@ -43,11 +43,12 @@ let package = Package(
                 .core(module: "Networking"),
                 .core(module: "Payments"),
                 .core(module: "UIFoundations"),
-                .core(module: "Services")
+                .core(module: "Services"),
             ],
             resources: [
-                .process("Resources/Assets.xcassets")
-            ]),
+                .process("Resources/Assets.xcassets"),
+            ]
+        ),
         .target(
             name: "tvOSTestSupport",
             dependencies: ["tvOS"]
@@ -77,7 +78,7 @@ let package = Package(
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
             ]
-        )
+        ),
     ]
 )
 

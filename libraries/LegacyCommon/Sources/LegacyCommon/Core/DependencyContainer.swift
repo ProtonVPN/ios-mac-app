@@ -16,29 +16,29 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import Domain
-import NetworkExtension
-import Timer
-import Localization
-import PMLogger
 import CommonNetworking
+import Dependencies
+import Domain
+import Ergonomics
+import Foundation
+import Localization
+import NetworkExtension
+import PMLogger
+import Timer
 import VPNAppCore
 import VPNShared
-import Dependencies
-import Ergonomics
 
 import ProtonCoreFeatureFlags
 import ProtonCorePushNotifications
 
-typealias PropertiesToOverride = NetworkingDelegateFactory &
-                                CoreAlertServiceFactory &
-                                WireguardProtocolFactoryCreator &
-                                VpnCredentialsConfiguratorFactoryCreator &
-                                VpnAuthenticationFactory &
-                                LogContentProviderFactory &
-                                UpdateCheckerFactory &
-                                VpnConnectionInterceptDelegate
+typealias PropertiesToOverride =
+    CoreAlertServiceFactory &
+    LogContentProviderFactory & NetworkingDelegateFactory &
+    UpdateCheckerFactory &
+    VpnAuthenticationFactory &
+    VpnConnectionInterceptDelegate &
+    VpnCredentialsConfiguratorFactoryCreator &
+    WireguardProtocolFactoryCreator
 
 open class Container: PropertiesToOverride {
     public struct Config {
@@ -84,7 +84,7 @@ open class Container: PropertiesToOverride {
     private lazy var authKeychain: AuthKeychainHandle = AuthKeychain.default
     private lazy var unauthKeychain: UnauthKeychainHandle = UnauthKeychain.default
     private lazy var profileManager = ProfileManager(self)
-    internal private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
+    private(set) lazy var networking = CoreNetworking(self, pinApiEndpoints: config.pinApiEndpoints)
     private lazy var ikeFactory = IkeProtocolFactory(factory: self)
     private lazy var vpnAuthenticationKeychain = VpnAuthenticationKeychain()
     private lazy var vpnManager: VpnManagerProtocol = VpnManager(self, config: config)
@@ -97,7 +97,7 @@ open class Container: PropertiesToOverride {
     private lazy var pushNotificationService: PushNotificationServiceProtocol = PushNotificationService(apiService: networking.apiService)
 
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = .init(factory: self)
 
     // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(self)
@@ -142,41 +142,47 @@ open class Container: PropertiesToOverride {
     }
 
     // MARK: - Configs to override
+
     #if os(macOS)
-    open var modelId: String? {
-        shouldHaveOverridden()
-    }
+        open var modelId: String? {
+            shouldHaveOverridden()
+        }
     #endif
 
     open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
         [
-            MisconfiguredLocalNetworkIntercept(factory: self)
+            MisconfiguredLocalNetworkIntercept(factory: self),
         ]
     }
 
     // MARK: - Factories to override
 
     // MARK: NetworkingDelegate
+
     open func makeNetworkingDelegate() -> NetworkingDelegate {
         shouldHaveOverridden()
     }
 
     // MARK: CoreAlertService
+
     open func makeCoreAlertService() -> CoreAlertService {
         shouldHaveOverridden()
     }
 
     // MARK: WireguardProtocolFactoryCreator
+
     open func makeWireguardProtocolFactory() -> WireguardProtocolFactory {
         shouldHaveOverridden()
     }
 
     // MARK: VpnCredentialsConfigurator
+
     open func makeVpnCredentialsConfiguratorFactory() -> VpnCredentialsConfiguratorFactory {
         shouldHaveOverridden()
     }
 
     // MARK: VpnAuthentication
+
     open func makeVpnAuthentication() -> VpnAuthentication {
         shouldHaveOverridden()
     }
@@ -191,6 +197,7 @@ open class Container: PropertiesToOverride {
 }
 
 // MARK: PropertiesManagerFactory
+
 extension Container: PropertiesManagerFactory {
     public func makePropertiesManager() -> PropertiesManagerProtocol {
         propertiesManager
@@ -198,6 +205,7 @@ extension Container: PropertiesManagerFactory {
 }
 
 // MARK: VpnKeychainFactory
+
 extension Container: VpnKeychainFactory {
     public func makeVpnKeychain() -> VpnKeychainProtocol {
         vpnKeychain
@@ -205,6 +213,7 @@ extension Container: VpnKeychainFactory {
 }
 
 // MARK: AuthKeychainHandleFactory
+
 extension Container: AuthKeychainHandleFactory {
     public func makeAuthKeychainHandle() -> AuthKeychainHandle {
         authKeychain
@@ -218,6 +227,7 @@ extension Container: UnauthKeychainHandleFactory {
 }
 
 // MARK: ProfileManagerFactory
+
 extension Container: ProfileManagerFactory {
     public func makeProfileManager() -> ProfileManager {
         profileManager
@@ -225,17 +235,19 @@ extension Container: ProfileManagerFactory {
 }
 
 // MARK: AppInfoFactory
+
 extension Container: AppInfoFactory {
     public func makeAppInfo(context: AppContext) -> AppInfo {
         #if os(macOS)
-        return AppInfoImplementation(context: context, modelName: modelId)
+            return AppInfoImplementation(context: context, modelName: modelId)
         #else
-        return AppInfoImplementation(context: context)
+            return AppInfoImplementation(context: context)
         #endif
     }
 }
 
 // MARK: NetworkingFactory
+
 extension Container: NetworkingFactory {
     public func makeNetworking() -> Networking {
         networking
@@ -243,6 +255,7 @@ extension Container: NetworkingFactory {
 }
 
 // MARK: NEVPNManagerWrapperFactory
+
 extension Container: NEVPNManagerWrapperFactory {
     public func makeNEVPNManagerWrapper() -> NEVPNManagerWrapper {
         NEVPNManager.shared()
@@ -250,6 +263,7 @@ extension Container: NEVPNManagerWrapperFactory {
 }
 
 // MARK: NETunnelProviderManagerWrapperFactory
+
 extension Container: NETunnelProviderManagerWrapperFactory {
     public func makeNewManager() -> NETunnelProviderManagerWrapper {
         NETunnelProviderManager()
@@ -267,6 +281,7 @@ extension Container: NETunnelProviderManagerWrapperFactory {
 }
 
 // MARK: NATTypePropertyProviderFactory
+
 extension Container: NATTypePropertyProviderFactory {
     public func makeNATTypePropertyProvider() -> NATTypePropertyProvider {
         NATTypePropertyProviderImplementation()
@@ -274,6 +289,7 @@ extension Container: NATTypePropertyProviderFactory {
 }
 
 // MARK: SafeModePropertyProviderFactory
+
 extension Container: SafeModePropertyProviderFactory {
     public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
         SafeModePropertyProviderImplementation()
@@ -281,6 +297,7 @@ extension Container: SafeModePropertyProviderFactory {
 }
 
 // MARK: NetShieldPropertyProviderFactory
+
 extension Container: NetShieldPropertyProviderFactory {
     public func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
         NetShieldPropertyProviderImplementation()
@@ -288,6 +305,7 @@ extension Container: NetShieldPropertyProviderFactory {
 }
 
 // MARK: VpnStateConfigurationFactory
+
 extension Container: VpnStateConfigurationFactory {
     public func makeVpnStateConfiguration() -> VpnStateConfiguration {
         VpnStateConfigurationManager(self, config: config)
@@ -316,6 +334,7 @@ extension Container: VpnAuthenticationStorageFactory {
 }
 
 // MARK: VpnManagerConfigurationPreparer
+
 extension Container: VpnManagerConfigurationPreparerFactory {
     public func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
         VpnManagerConfigurationPreparer(self)
@@ -323,6 +342,7 @@ extension Container: VpnManagerConfigurationPreparerFactory {
 }
 
 // MARK: AppStateManagerFactory
+
 extension Container: AppStateManagerFactory {
     public func makeAppStateManager() -> AppStateManager {
         appStateManager
@@ -330,6 +350,7 @@ extension Container: AppStateManagerFactory {
 }
 
 // MARK: AvailabilityCheckerResolverFactory
+
 extension Container: AvailabilityCheckerResolverFactory {
     public func makeAvailabilityCheckerResolver(wireguardConfig: WireguardConfig) -> AvailabilityCheckerResolver {
         AvailabilityCheckerResolverImplementation(wireguardConfig: wireguardConfig)
@@ -337,6 +358,7 @@ extension Container: AvailabilityCheckerResolverFactory {
 }
 
 // MARK: VpnGatewayFactory
+
 extension Container: VpnGatewayFactory {
     public func makeVpnGateway() -> VpnGatewayProtocol {
         vpnGateway
@@ -344,6 +366,7 @@ extension Container: VpnGatewayFactory {
 }
 
 // MARK: VpnGateway2Factory
+
 extension Container: VpnGateway2Factory {
     public func makeVpnGateway2() -> VpnGatewayProtocol2 {
         VpnGateway2(self)
@@ -351,6 +374,7 @@ extension Container: VpnGateway2Factory {
 }
 
 // MARK: ServerTierCheckerFactory
+
 extension Container: ServerTierCheckerFactory {
     func makeServerTierChecker() -> ServerTierChecker {
         ServerTierChecker(alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain())
@@ -358,6 +382,7 @@ extension Container: ServerTierCheckerFactory {
 }
 
 // MARK: LogFileManagerFactory
+
 extension Container: LogFileManagerFactory {
     public func makeLogFileManager() -> LogFileManager {
         LogFileManagerImplementation()
@@ -365,6 +390,7 @@ extension Container: LogFileManagerFactory {
 }
 
 // MARK: PaymentsApiServiceFactory
+
 extension Container: PaymentsApiServiceFactory {
     public func makePaymentsApiService() -> PaymentsApiService {
         PaymentsApiServiceImplementation(self)
@@ -372,6 +398,7 @@ extension Container: PaymentsApiServiceFactory {
 }
 
 // MARK: PushNotificationsServiceFactory
+
 extension Container: PushNotificationServiceFactory {
     public func makePushNotificationService() -> ProtonCorePushNotifications.PushNotificationServiceProtocol {
         pushNotificationService
@@ -379,6 +406,7 @@ extension Container: PushNotificationServiceFactory {
 }
 
 // MARK: ReportsApiServiceFactory
+
 extension Container: ReportsApiServiceFactory {
     public func makeReportsApiService() -> ReportsApiService {
         ReportsApiService(self)
@@ -386,6 +414,7 @@ extension Container: ReportsApiServiceFactory {
 }
 
 // MARK: ReportBugViewModelFactory
+
 extension Container: ReportBugViewModelFactory {
     public func makeReportBugViewModel() -> ReportBugViewModel {
         ReportBugViewModel(self, config: config)
@@ -393,41 +422,47 @@ extension Container: ReportBugViewModelFactory {
 }
 
 // MARK: TroubleshootViewModelFactory
+
 extension Container: TroubleshootViewModelFactory {
     public func makeTroubleshootViewModel() -> TroubleshootViewModel {
-        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+        TroubleshootViewModel(propertiesManager: makePropertiesManager())
     }
 }
 
 // MARK: MaintenanceManagerFactory
+
 extension Container: MaintenanceManagerFactory {
     public func makeMaintenanceManager() -> MaintenanceManagerProtocol {
-        return maintenanceManager
+        maintenanceManager
     }
 }
 
 // MARK: MaintenanceManagerHelperFactory
+
 extension Container: MaintenanceManagerHelperFactory {
     public func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
-        return maintenanceManagerHelper
+        maintenanceManagerHelper
     }
 }
 
 // MARK: DynamicBugReportManagerFactory
+
 extension Container: DynamicBugReportManagerFactory {
     public func makeDynamicBugReportManager() -> DynamicBugReportManager {
-        return dynamicBugReportManager
+        dynamicBugReportManager
     }
 }
 
 // MARK: TimerFactoryCreator
+
 extension Container: TimerFactoryCreator {
     public func makeTimerFactory() -> TimerFactory {
-        return timerFactory
+        timerFactory
     }
 }
 
 // MARK: LocalAgentConnectionFactoryCreator
+
 extension Container: LocalAgentConnectionFactoryCreator {
     public func makeLocalAgentConnectionFactory() -> LocalAgentConnectionFactory {
         LocalAgentConnectionFactoryImplementation()
@@ -435,6 +470,7 @@ extension Container: LocalAgentConnectionFactoryCreator {
 }
 
 // MARK: IkeProtocolFactoryCreator
+
 extension Container: IkeProtocolFactoryCreator {
     public func makeIkeProtocolFactory() -> IkeProtocolFactory {
         ikeFactory
@@ -442,6 +478,7 @@ extension Container: IkeProtocolFactoryCreator {
 }
 
 // MARK: ProfileStorageFactory
+
 extension Container: ProfileStorageFactory {
     public func makeProfileStorage() -> ProfileStorage {
         ProfileStorage(self)
@@ -449,6 +486,7 @@ extension Container: ProfileStorageFactory {
 }
 
 // MARK: DynamicBugReportStorageFactory
+
 extension Container: DynamicBugReportStorageFactory {
     public func makeDynamicBugReportStorage() -> DynamicBugReportStorage {
         DynamicBugReportStorageUserDefaults()
@@ -456,6 +494,7 @@ extension Container: DynamicBugReportStorageFactory {
 }
 
 // MARK: SiriHelperFactory
+
 extension Container: SiriHelperFactory {
     public func makeSiriHelper() -> SiriHelperProtocol {
         SiriHelper()
@@ -463,20 +502,23 @@ extension Container: SiriHelperFactory {
 }
 
 // MARK: TelemetryServiceFactory
+
 extension Container: TelemetryServiceFactory {
     public func makeTelemetryService() async -> TelemetryService {
-        return await _telemetryServiceTask.value
+        await _telemetryServiceTask.value
     }
 }
 
 // MARK: TelemetrySettingsFactory
+
 extension Container: TelemetrySettingsFactory {
     public func makeTelemetrySettings() -> TelemetrySettings {
-        return TelemetrySettings(self)
+        TelemetrySettings(self)
     }
 }
 
 // MARK: TelemetryAPIFactory
+
 extension Container: TelemetryAPIFactory {
     public func makeTelemetryAPI(networking: Networking) -> TelemetryAPI {
         TelemetryAPIImplementation(networking: networking)

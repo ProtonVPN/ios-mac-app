@@ -16,23 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import Modals
 import Search
+import UIKit
 
 final class ViewController: UIViewController {
-    @IBOutlet private weak var userTierSegmentedControl: UISegmentedControl!
-    @IBOutlet private weak var modeSegmentedControl: UISegmentedControl!
+    @IBOutlet private var userTierSegmentedControl: UISegmentedControl!
+    @IBOutlet private var modeSegmentedControl: UISegmentedControl!
 
-    private var coordinator: SearchCoordinator = {
-        return SearchCoordinator(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
-    }()
-    private let modals: ModalsFactory = {
-        return ModalsFactory()
-    }()
+    private var coordinator: SearchCoordinator = .init(configuration: Configuration(constants: Constants(numberOfCountries: 61)), storage: Storage())
+
+    private let modals: ModalsFactory = .init()
 
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
 
         navigationController?.navigationBar.barTintColor = UIColor.black
         navigationController?.navigationBar.tintColor = UIColor.white
@@ -45,29 +42,31 @@ final class ViewController: UIViewController {
         modeSegmentedControl.addTarget(self, action: #selector(modeChanged), for: .valueChanged)
     }
 
-    @IBAction private func searchTapped(_ sender: Any) {
-        coordinator.start(navigationController: self.navigationController!, data: createData(), mode: createMode())
+    @IBAction
+    private func searchTapped(_: Any) {
+        coordinator.start(navigationController: navigationController!, data: createData(), mode: createMode())
     }
 
-    @objc private func modeChanged() {
+    @objc
+    private func modeChanged() {
         userTierSegmentedControl.isEnabled = modeSegmentedControl.selectedSegmentIndex == 0
     }
 
     private func createMode() -> SearchMode {
         switch modeSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .standard(createTier())
+            .standard(createTier())
         default:
-            return .secureCore
+            .secureCore
         }
     }
 
     private func createTier() -> UserTier {
         switch userTierSegmentedControl.selectedSegmentIndex {
         case 0:
-            return .free
+            .free
         default:
-            return .plus
+            .plus
         }
     }
 
@@ -77,10 +76,10 @@ final class ViewController: UIViewController {
         let isSecureCoreCountry = mode == .secureCore
         let entryCountryName: String? = mode == .secureCore ? "Italy" : nil
 
-        let switzerlandServers: [ServerTier : [ServerViewModel]] = {
+        let switzerlandServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CH#1", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "CH#2", city: "Geneva", countryName: "Switzerland", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -89,16 +88,16 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "CH#3", city: "Zurich", countryName: "Switzerland", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
 
-        let usServers: [ServerTier : [ServerViewModel]] = {
+        let usServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "NY#1", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "NY#2", city: "New York", countryName: "United States", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -107,16 +106,16 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "WA#3", city: "Seatle", countryName: "United States", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
 
-        let czechiaServers: [ServerTier : [ServerViewModel]] = {
+        let czechiaServers: [ServerTier: [ServerViewModel]] = {
             let free = [
                 ServerItemViewModel(server: "CZ#1", city: "Prague", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
-                ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName)
+                ServerItemViewModel(server: "CZ#2", city: "Brno", countryName: "Czechia", isUsersTierTooLow: tier == ServerTier.free, entryCountryName: entryCountryName),
             ]
             switch tier {
             case .free:
@@ -125,8 +124,8 @@ final class ViewController: UIViewController {
                 return [
                     ServerTier.free: free,
                     ServerTier.plus: [
-                        ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName)
-                    ]
+                        ServerItemViewModel(server: "CZ#3", city: "Prague", countryName: "Czechia", entryCountryName: entryCountryName),
+                    ],
                 ]
             }
         }()
@@ -134,7 +133,7 @@ final class ViewController: UIViewController {
         return [
             CountryItemViewModel(country: "Switzerland", servers: switzerlandServers, isSecureCoreCountry: isSecureCoreCountry),
             CountryItemViewModel(country: "United States", servers: usServers, isSecureCoreCountry: isSecureCoreCountry),
-            CountryItemViewModel(country: "Czechia", servers: czechiaServers, isSecureCoreCountry: isSecureCoreCountry)
+            CountryItemViewModel(country: "Czechia", servers: czechiaServers, isSecureCoreCountry: isSecureCoreCountry),
         ]
     }
 }
@@ -147,29 +146,21 @@ extension ViewController: SearchCoordinatorDelegate {
         navigationController?.present(upsellViewController, animated: true, completion: nil)
     }
 
-    func userDidSelectCountry(model: CountryViewModel) {
-
-    }
+    func userDidSelectCountry(model _: CountryViewModel) {}
 }
 
 extension ViewController: UpsellViewControllerDelegate {
-    func upsellDidDisappear(upsell: UpsellViewController?) {
+    func upsellDidDisappear(upsell _: UpsellViewController?) {}
 
+    func userDidTapNext(upsell _: UpsellViewController) {}
+
+    func userDidDismissUpsell(upsell _: UpsellViewController?) {}
+
+    func shouldDismissUpsell(upsell _: UpsellViewController?) -> Bool {
+        true
     }
 
-    func userDidTapNext(upsell: UpsellViewController) {
-
-    }
-
-    func userDidDismissUpsell(upsell: UpsellViewController?) {
-        
-    }
-
-    func shouldDismissUpsell(upsell: UpsellViewController?) -> Bool {
-        return true
-    }
-
-    func userDidRequestPlus(upsell: UpsellViewController?) {
+    func userDidRequestPlus(upsell _: UpsellViewController?) {
         coordinator.reload(data: createData(forceTier: .plus), mode: createMode())
         navigationController?.dismiss(animated: true, completion: nil)
     }

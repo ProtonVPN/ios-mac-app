@@ -23,7 +23,6 @@ import UITestsHelpers
 import XCTest
 
 class ConnectionTestsBase: ProtonVPNUITests {
-
     let loginRobot = LoginRobot()
     let connectionStatusRobot = ConnectionStatusRobot()
     let countryListRobot = CountryListRobot()
@@ -50,7 +49,7 @@ class ConnectionTestsBase: ProtonVPNUITests {
             homeRobot.quickDisconnectViaQCButton()
         }
     }
-    
+
     func closePopUpButtonIfNeeded() {
         if homeRobot.button(okButtonId).exists() {
             homeRobot.button(okButtonId).tap()

@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Domain
 import Dependencies
+import Domain
 import OrderedCollections
 
 public struct RecentsStorage {
@@ -26,18 +26,16 @@ public struct RecentsStorage {
 }
 
 extension RecentsStorage: DependencyKey {
-    public static var liveValue: RecentsStorage = {
-        RecentsStorage(
-            readFromStorage: RecentsStorageImplementation.readFromStorage,
-            saveToStorage: RecentsStorageImplementation.saveToStorage
-        )
-    }()
+    public static var liveValue: RecentsStorage = .init(
+        readFromStorage: RecentsStorageImplementation.readFromStorage,
+        saveToStorage: RecentsStorageImplementation.saveToStorage
+    )
 }
 
-extension DependencyValues {
-    public var recentsStorage: RecentsStorage {
-      get { self[RecentsStorage.self] }
-      set { self[RecentsStorage.self] = newValue }
+public extension DependencyValues {
+    var recentsStorage: RecentsStorage {
+        get { self[RecentsStorage.self] }
+        set { self[RecentsStorage.self] = newValue }
     }
 }
 
@@ -45,20 +43,17 @@ extension RecentsStorage: TestDependencyKey {
     public static let testValue = RecentsStorage {
         []
     } saveToStorage: { _ in
-
     }
 
     public static func withElements(array: [RecentConnection]) -> RecentsStorage {
         RecentsStorage {
             OrderedSet(array)
         } saveToStorage: { _ in
-            
         }
     }
 
     public static let previewValue = RecentsStorage {
         OrderedSet(RecentConnection.sampleData)
     } saveToStorage: { _ in
-
     }
 }

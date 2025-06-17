@@ -21,14 +21,14 @@
 //
 
 import Foundation
-import VPNShared
-@testable import ProtonVPN
 import LegacyCommon
+@testable import ProtonVPN
+import VPNShared
 
 class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
     var protocolChanged: ((VpnProtocol) -> Void)?
 
-    func change(toProtocol: VpnProtocol, userInitiated: Bool, completion: @escaping (Result<(), Error>) -> Void) {
+    func change(toProtocol: VpnProtocol, userInitiated _: Bool, completion: @escaping (Result<Void, Error>) -> Void) {
         protocolChanged?(toProtocol)
         completion(.success)
     }

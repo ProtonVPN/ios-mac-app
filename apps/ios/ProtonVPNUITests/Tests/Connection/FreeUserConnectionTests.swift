@@ -16,14 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UITestsHelpers
 import Strings
+import UITestsHelpers
 
 @MainActor
 class FreeUserConnectionTests: ConnectionTestsBase {
-
     func testConnectAndDisconnectViaQCButtonFreeUser() {
-
         login(as: UserType.Free.credentials)
             .quickConnectViaQCButton()
             .verify.connectionStatusConnected()
@@ -36,7 +34,6 @@ class FreeUserConnectionTests: ConnectionTestsBase {
     }
 
     func testConnectToAPlusServerWithFreeUser() async throws {
-
         let (countryName, _) = try await ServersListUtils.getRandomCountry()
 
         login(as: UserType.Free.credentials)

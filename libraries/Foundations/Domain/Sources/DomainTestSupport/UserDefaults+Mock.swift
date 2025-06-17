@@ -21,7 +21,7 @@ import Foundation
 public final class TestDefaults: UserDefaults, @unchecked Sendable {
     let suiteName: String
 
-    public override init?(suiteName: String?) {
+    override public init?(suiteName: String?) {
         guard let suiteName else { return nil }
 
         self.suiteName = suiteName

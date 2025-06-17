@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
+import ConnectionDetailsShared
+import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
-import ConnectionDetailsShared
-import ComposableArchitecture
-import Strings
-import ProtonCoreUIFoundations
 
 public struct IPView: View {
-
     let store: StoreOf<IPViewFeature>
 
     private let minTopHeight: CGFloat = 16
@@ -55,16 +54,16 @@ public struct IPView: View {
                     HStack(spacing: buttonSpacing) {
                         Text(Localizable.connectionDetailsIpviewIpMy)
                             .foregroundColor(Color(.text, .weak))
-                        
+
                         if store.buttonIsVisible {
                             Button {
                                 store.send(.changeIPVisibility)
                             } label: {
                                 (store.localIpHidden
-                                 ? IconProvider.eye
-                                 : IconProvider.eyeSlash)
-                                .resizable().frame(width: buttonSize, height: buttonSize)
-                                .foregroundColor(Color(.text, .weak))
+                                    ? IconProvider.eye
+                                    : IconProvider.eyeSlash)
+                                    .resizable().frame(width: buttonSize, height: buttonSize)
+                                    .foregroundColor(Color(.text, .weak))
                             }
                         }
                     }
@@ -80,11 +79,11 @@ public struct IPView: View {
                     store.send(.changeIPVisibility)
                 }
                 .frame(maxWidth: .infinity) // Makes both sides equal width
-                
+
                 IconProvider.arrowRight
                     .accessibilityHidden(true)
                     .foregroundColor(Color(.text, .weak))
-                
+
                 VStack {
                     Text(Localizable.connectionDetailsIpviewIpVpn)
                         .foregroundColor(Color(.text, .weak))

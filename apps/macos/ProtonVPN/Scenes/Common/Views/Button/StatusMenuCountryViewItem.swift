@@ -23,21 +23,21 @@
 import Cocoa
 
 class StatusMenuCountryViewItem: NSCollectionViewItem {
+    @IBOutlet var countryFlag: NSImageView!
+    @IBOutlet var countryCodeLabel: NSTextField!
+    @IBOutlet var button: StatusMenuItemBackground!
 
-    @IBOutlet weak var countryFlag: NSImageView!
-    @IBOutlet weak var countryCodeLabel: NSTextField!
-    @IBOutlet weak var button: StatusMenuItemBackground!
-    
     var viewModel: StatusMenuCountryItemViewModel?
-    
+
     func update(viewModel: StatusMenuCountryItemViewModel) {
         self.viewModel = viewModel
         countryFlag.image = viewModel.flag
         countryCodeLabel.attributedStringValue = viewModel.description
     }
-    
-    @IBAction func selected(_ sender: Any) {
-        if let viewModel = viewModel {
+
+    @IBAction
+    func selected(_: Any) {
+        if let viewModel {
             viewModel.connect()
         }
     }

@@ -26,11 +26,11 @@ public struct AppView: View {
     @Environment(\.locale) var locale
 
     init(store: StoreOf<AppFeature>) {
-        self._store = .constant(store)
+        _store = .constant(store)
     }
 
     public init() {
-        self._store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature() }))
+        _store = .constant(.init(initialState: AppFeature.State(), reducer: { AppFeature() }))
     }
 
     public var body: some View {
@@ -59,7 +59,7 @@ public struct AppView: View {
                 } else {
                     UpsellView(store: store.scope(state: \.upsell, action: \.upsell))
                         .background(Image(.backgroundStage))
-                        .task { store.send(.upsell(.loadProducts))}
+                        .task { store.send(.upsell(.loadProducts)) }
                 }
             } else {
                 progressView

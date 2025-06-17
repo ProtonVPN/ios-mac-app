@@ -16,14 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
+import UIKit
 
 class ServersInformationViewController: UIViewController {
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     struct ViewModel {
@@ -36,9 +36,9 @@ class ServersInformationViewController: UIViewController {
         let rowViewModels: [InformationTableViewCell.ViewModel]
     }
 
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var closeButton: UIButton!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var titleLabel: UILabel!
 
     var viewModel: ViewModel!
 
@@ -59,23 +59,26 @@ class ServersInformationViewController: UIViewController {
         titleLabel.textColor = .normalTextColor()
     }
 
-    @IBAction func didTapDismiss(_ sender: Any) {
+    @IBAction
+    func didTapDismiss(_: Any) {
         dismiss(animated: true, completion: nil)
     }
 }
 
 extension ServersInformationViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in _: UITableView) -> Int {
         viewModel.sections.count
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.sections[section].rowViewModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: InformationTableViewCell.cellIdentifier,
-                                                 for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: InformationTableViewCell.cellIdentifier,
+            for: indexPath
+        )
         guard let informationCell = cell as? InformationTableViewCell else {
             return cell
         }
@@ -87,21 +90,23 @@ extension ServersInformationViewController: UITableViewDataSource {
 }
 
 extension ServersInformationViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         viewModel.sections[section].title != nil ? 56 : 0
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UIView()
         let label = UILabel()
         label.font = .systemFont(ofSize: 15)
         label.textColor = .weakTextColor()
 
         header.addSubview(label)
-        header.addConstraints([header.topAnchor.constraint(equalTo: label.topAnchor),
-                               header.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -16),
-                               header.rightAnchor.constraint(equalTo: label.rightAnchor),
-                               header.bottomAnchor.constraint(equalTo: label.bottomAnchor)])
+        header.addConstraints([
+            header.topAnchor.constraint(equalTo: label.topAnchor),
+            header.leftAnchor.constraint(equalTo: label.leftAnchor, constant: -16),
+            header.rightAnchor.constraint(equalTo: label.rightAnchor),
+            header.bottomAnchor.constraint(equalTo: label.bottomAnchor),
+        ])
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = viewModel.sections[section].title
         return header

@@ -15,44 +15,43 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-import XCTest
-import Strings
 import Localization
+import Strings
+import XCTest
 
-fileprivate let vpnLogicalsURL = "https://api.protonvpn.ch/vpn/logicals?WithTranslations"
+private let vpnLogicalsURL = "https://api.protonvpn.ch/vpn/logicals?WithTranslations"
 
 /// A utility class for managing and retrieving VPN server information.
 public enum ServersListUtils {
-    
     // Static variable to store fetched logical servers
     private static var cachedLogicalServers: [LogicalServer] = []
     private static var isFetched: Bool = false
-    
+
     /// An enumeration of errors that can occur in `ServersListUtils`.
     private enum ServersListUtils: Error, LocalizedError {
         case failedGetRandomServer
         case failedGetRandomCountry
         case failedGetRandomCity
         case failedGetRandomServerInfo
-        
+
         /// Provides a localized description of the error.
         public var errorDescription: String {
             switch self {
             case .failedGetRandomServer:
-                return "Failed to get random server"
+                "Failed to get random server"
             case .failedGetRandomCountry:
-                return "Failed to get random country"
+                "Failed to get random country"
             case .failedGetRandomCity:
-                return "Failed to get random city"
+                "Failed to get random city"
             case .failedGetRandomServerInfo:
-                return "Failed to get random server info"
+                "Failed to get random server info"
             }
         }
     }
-    
+
     /**
      Fetches logical servers from the predefined URL if not already fetched.
-     
+
      - Returns: An array of `LogicalServer` objects.
      - Throws: An error if fetching or decoding the data fails.
      */
@@ -63,13 +62,13 @@ public enum ServersListUtils {
             cachedLogicalServers = vpnLogicalsResponse.logicalServers
             isFetched = true
         }
-        
+
         return cachedLogicalServers
     }
-    
+
     /**
      Retrieves available VPN servers.
-     
+
      - Returns: An array of available `LogicalServer` objects.
      - Throws: An error if fetching or filtering the server data fails.
      */
@@ -77,10 +76,10 @@ public enum ServersListUtils {
         let logicals = try await fetchLogicals()
         return logicals.filter { $0.status == 1 }
     }
-    
+
     /**
      Retrieves the name of a random available server.
-     
+
      - Returns: A string containing the server name.
      - Throws: `ServersListUtils.failedGetRandomServer` if no available server could be found.
      */
@@ -91,34 +90,34 @@ public enum ServersListUtils {
         }
         return randomServer.name
     }
-    
+
     /**
      Retrieves a list of unique exit country codes from available servers.
-     
+
      - Returns: An array of strings containing exit country codes.
      - Throws: An error if fetching the server data fails.
      */
     public static func getAvailableExitCountriesCodes() async throws -> [String] {
         let availableServers = try await getAvailableServers()
-        let exitCountries = Set(availableServers.compactMap { $0.exitCountry })
+        let exitCountries = Set(availableServers.compactMap(\.exitCountry))
         return Array(exitCountries)
     }
-    
+
     /**
      Retrieves a list of unique cities from available servers.
-     
+
      - Returns: An array of strings containing city names.
      - Throws: An error if fetching the server data fails.
      */
     public static func getAvailableCities() async throws -> [String] {
         let availableServers = try await getAvailableServers()
-        let cities = Set(availableServers.compactMap { $0.city })
+        let cities = Set(availableServers.compactMap(\.city))
         return Array(cities)
     }
-    
+
     /**
      Retrieves a list of available country names from exit country codes.
-     
+
      - Returns: An array of strings containing country names.
      - Throws: An error if fetching the server data or localization fails.
      */
@@ -126,10 +125,10 @@ public enum ServersListUtils {
         let countryCodes = try await getAvailableExitCountriesCodes()
         return countryCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
     }
-    
+
     /**
      Retrieves the name of a random available city.
-     
+
      - Returns: A string containing the city name.
      - Throws: `ServersListUtils.failedGetRandomCity` if no available city could be found.
      */
@@ -140,10 +139,10 @@ public enum ServersListUtils {
         }
         return randomCity
     }
-    
+
     /**
      Retrieves information of a random available server including country, city, and server name.
-     
+
      - Returns: A tuple containing country name, city name, and server name.
      - Throws: `ServersListUtils.failedGetRandomServerInfo` if no available server could be found or if any required information is missing.
      */
@@ -152,17 +151,17 @@ public enum ServersListUtils {
         guard let randomServer = availableServers.randomElement() else {
             throw ServersListUtils.failedGetRandomServerInfo
         }
-        
+
         let translatedCountryName: String = LocalizationUtility.default.countryName(forCode: randomServer.exitCountry) ?? Localizable.unavailable
         guard let city = randomServer.city else {
             throw ServersListUtils.failedGetRandomServerInfo
         }
         return (country: translatedCountryName, city: city, server: randomServer.name)
     }
-    
+
     /**
      Retrieves a list of entry countries for a specified exit country code.
-     
+
      - Parameter exitCountryCode: The exit country code to filter servers.
      - Returns: An array of strings containing entry country names.
      - Throws: An error if fetching the server data or localization fails.
@@ -170,27 +169,27 @@ public enum ServersListUtils {
     public static func getEntryCountries(for exitCountryCode: String) async throws -> [String] {
         let allServerswithExistCountry = try await fetchLogicals()
             .filter { $0.exitCountry == exitCountryCode }
-        let entryCountriesCodes = Set(allServerswithExistCountry.filter { $0.entryCountry != exitCountryCode }.compactMap { $0.entryCountry })
+        let entryCountriesCodes = Set(allServerswithExistCountry.filter { $0.entryCountry != exitCountryCode }.compactMap(\.entryCountry))
         let translatedEntryCountries: [String] = entryCountriesCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
         return translatedEntryCountries
     }
-    
+
     /**
      Retrieves a list of unique secure core country codes.
-     
+
      - Returns: An array of strings containing secure core country codes.
      - Throws: An error if fetching the server data fails.
      */
     public static func getSecureCoreCountriesCodes() async throws -> [String] {
         let logicals = try await fetchLogicals()
         let availableCountries = try await getAvailableExitCountriesCodes()
-        let serversWithEntryCountry = Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map { $0.exitCountry }))
+        let serversWithEntryCountry = Array(Set(logicals.filter { $0.exitCountry != $0.entryCountry }.map(\.exitCountry)))
         return serversWithEntryCountry
     }
-    
+
     /**
      Retrieves a list of secure core country names.
-     
+
      - Returns: An array of strings containing secure core country names.
      - Throws: An error if fetching the server data or localization fails.
      */
@@ -199,22 +198,22 @@ public enum ServersListUtils {
         let countriesNames: [String] = countriesCodes.map { LocalizationUtility.default.countryName(forCode: $0) ?? Localizable.unavailable }
         return countriesNames.sorted()
     }
-    
+
     /**
      Retrieves information of a random country, optionally filtering for secure core countries.
-     
+
      - Parameter secureCore: A boolean indicating whether to filter for secure core countries.
      - Returns: A tuple containing the country name and country code.
      - Throws: `ServersListUtils.failedGetRandomServerInfo` if no country could be found or if localization fails.
      */
     public static func getRandomCountry(secureCore: Bool = false) async throws -> (name: String, code: String) {
         let countryCodes = try await secureCore ? getSecureCoreCountriesCodes() : getAvailableExitCountriesCodes()
-        
+
         guard let randomCountryCode = countryCodes.randomElement() else {
             throw ServersListUtils.failedGetRandomServerInfo
         }
         let translatedCountryName: String = LocalizationUtility.default.countryName(forCode: randomCountryCode) ?? Localizable.unavailable
-        
+
         return (name: translatedCountryName, code: randomCountryCode)
     }
 }

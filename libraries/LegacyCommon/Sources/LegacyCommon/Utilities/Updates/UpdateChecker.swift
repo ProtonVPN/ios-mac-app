@@ -24,7 +24,6 @@ public protocol UpdateCheckerFactory {
 
 /// Check if updates for current app is available. Implemented on each platform depending on the way the app is distributed.
 public protocol UpdateChecker {
-
     /// Check if current app can be updated.
     func isUpdateAvailable() async -> Bool
 
@@ -33,5 +32,4 @@ public protocol UpdateChecker {
 
     /// Start updating app.
     func startUpdate()
-    
 }

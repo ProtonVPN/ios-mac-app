@@ -55,12 +55,12 @@ extension ImagePrefetcher: DependencyKey {
     }
 
     #if DEBUG
-    public static var testValue: ImagePrefetcher = Self()
+        public static var testValue: ImagePrefetcher = Self()
     #endif
 }
 
-extension DependencyValues {
-    public var imagePrefetcher: ImagePrefetcher {
+public extension DependencyValues {
+    var imagePrefetcher: ImagePrefetcher {
         get { self[ImagePrefetcher.self] }
         set { self[ImagePrefetcher.self] = newValue }
     }

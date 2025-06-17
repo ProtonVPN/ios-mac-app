@@ -16,13 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import PlutoniumExtension
 import NetworkExtension
+import PlutoniumExtension
 
 #if DEBUG
-final class TransparentProxyProvider: PlutoniumTransparentProxyProvider {
-    // we define the transparent proxy here as a subclass of PlutoniumTransparentProxyProvider
-}
+    final class TransparentProxyProvider: PlutoniumTransparentProxyProvider {
+        // we define the transparent proxy here as a subclass of PlutoniumTransparentProxyProvider
+    }
 #else
-final class TransparentProxyProvider: NETransparentProxyProvider { }
+    final class TransparentProxyProvider: NETransparentProxyProvider {}
 #endif

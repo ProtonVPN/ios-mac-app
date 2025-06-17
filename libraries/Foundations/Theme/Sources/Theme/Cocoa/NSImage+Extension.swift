@@ -21,86 +21,88 @@
 //
 
 #if canImport(Cocoa)
-import Cocoa
-import AppKit
-import Ergonomics
+    import AppKit
+    import Cocoa
+    import Ergonomics
 
-public extension NSImage {
-    func resize(newWidth width: Int, newHeight height: Int) -> NSImage {
-        resizeWhilePreservingRatio(newWidth: CGFloat(width), newHeight: CGFloat(height))
-    }
-
-    func resizeWhilePreservingRatio(newWidth width: CGFloat? = nil, newHeight height: CGFloat? = nil) -> NSImage {
-        let w: CGFloat
-        let h: CGFloat
-        if let width, let height {
-            h = height
-            w = width
-        } else if width == nil, let height {
-            h = height
-            w = (h / size.height) * size.width
-        } else if height == nil, let width {
-            w = width
-            h = (w / size.width) * size.height
-        } else {
-            return self
+    public extension NSImage {
+        func resize(newWidth width: Int, newHeight height: Int) -> NSImage {
+            resizeWhilePreservingRatio(newWidth: CGFloat(width), newHeight: CGFloat(height))
         }
-        return resize(w: w, h: h)
-    }
 
-    private func resize(w: CGFloat, h: CGFloat) -> NSImage {
-        let destSize = NSSize(width: w, height: h)
-        let newImage = NSImage(size: destSize)
-        newImage.lockFocus()
-        self.draw(in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
-                  from: NSRect(x: 0, y: 0, width: self.size.width, height: self.size.height),
-                  operation: NSCompositingOperation.sourceOver,
-                  fraction: CGFloat(1))
-        newImage.unlockFocus()
-        newImage.size = destSize
-        let newResized = NSImage(data: newImage.tiffRepresentation!)!
-        newResized.isTemplate = isTemplate
-        return newResized
-    }
-    
-    func colored(_ color: NSColor) -> NSImage {
-        return NSImage(size: size, flipped: false) { bounds in
-            DarkAppearance {
-                color.set()
-                bounds.fill()
-                self.draw(
-                    in: bounds,
-                    from: .init(origin: .zero, size: self.size),
-                    operation: .destinationIn,
-                    fraction: 1.0
-                )
+        func resizeWhilePreservingRatio(newWidth width: CGFloat? = nil, newHeight height: CGFloat? = nil) -> NSImage {
+            let w: CGFloat
+            let h: CGFloat
+            if let width, let height {
+                h = height
+                w = width
+            } else if width == nil, let height {
+                h = height
+                w = (h / size.height) * size.width
+            } else if height == nil, let width {
+                w = width
+                h = (w / size.width) * size.height
+            } else {
+                return self
             }
-            return true
+            return resize(w: w, h: h)
+        }
+
+        private func resize(w: CGFloat, h: CGFloat) -> NSImage {
+            let destSize = NSSize(width: w, height: h)
+            let newImage = NSImage(size: destSize)
+            newImage.lockFocus()
+            draw(
+                in: NSRect(x: 0, y: 0, width: destSize.width, height: destSize.height),
+                from: NSRect(x: 0, y: 0, width: size.width, height: size.height),
+                operation: NSCompositingOperation.sourceOver,
+                fraction: CGFloat(1)
+            )
+            newImage.unlockFocus()
+            newImage.size = destSize
+            let newResized = NSImage(data: newImage.tiffRepresentation!)!
+            newResized.isTemplate = isTemplate
+            return newResized
+        }
+
+        func colored(_ color: NSColor) -> NSImage {
+            NSImage(size: size, flipped: false) { bounds in
+                DarkAppearance {
+                    color.set()
+                    bounds.fill()
+                    self.draw(
+                        in: bounds,
+                        from: .init(origin: .zero, size: self.size),
+                        operation: .destinationIn,
+                        fraction: 1.0
+                    )
+                }
+                return true
+            }
+        }
+
+        func grayOut() -> NSImage? {
+            guard let image = cgImage else {
+                return nil
+            }
+
+            let bitmap = NSBitmapImageRep(cgImage: image)
+
+            guard let greyScale = bitmap.converting(to: .genericGray, renderingIntent: .default) else {
+                return nil
+            }
+
+            let greyImage = NSImage(size: greyScale.size)
+            greyImage.addRepresentation(greyScale)
+            return greyImage
         }
     }
 
-    func grayOut() -> NSImage? {
-        guard let image = cgImage else {
-            return nil
+    public extension NSImage {
+        var cgImage: CGImage? {
+            var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: size)
+            return self.cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
         }
-
-        let bitmap = NSBitmapImageRep(cgImage: image)
-
-        guard let greyScale = bitmap.converting(to: .genericGray, renderingIntent: .default) else {
-            return nil
-        }
-
-        let greyImage = NSImage(size: greyScale.size)
-        greyImage.addRepresentation(greyScale)
-        return greyImage
     }
-}
-
-public extension NSImage {
-    var cgImage: CGImage? {
-        var rect = NSRect(origin: CGPoint(x: 0, y: 0), size: self.size)
-        return self.cgImage(forProposedRect: &rect, context: NSGraphicsContext.current, hints: nil)
-    }
-}
 
 #endif

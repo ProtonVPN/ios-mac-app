@@ -17,41 +17,44 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(SwiftUI)
-import SwiftUI
+    import SwiftUI
 
-extension View {
-    private static func dashStroke(lineWidth: CGFloat) -> StrokeStyle {
-        StrokeStyle(lineWidth: lineWidth,
-                    lineCap: .square,
-                    lineJoin: .miter,
-                    dash: [.themeSpacing8])
-    }
-    
-    public func themeBorder(style: AppTheme.Style = .weak,
-                            dashed: Bool = false,
-                            lineWidth: CGFloat = 1,
-                            cornerRadius: AppTheme.CornerRadius) -> some View {
-        let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
-        let strokeStyle = dashed ? Self.dashStroke(lineWidth: lineWidth) : StrokeStyle(lineWidth: lineWidth)
-        let stroke = rectangle
-            .stroke(Color(.border, style), style: strokeStyle)
-            .padding(dashed ? 1 : 0)
-        return self
-            .clipShape(rectangle)
-            .overlay(stroke)
-    }
+    public extension View {
+        private static func dashStroke(lineWidth: CGFloat) -> StrokeStyle {
+            StrokeStyle(
+                lineWidth: lineWidth,
+                lineCap: .square,
+                lineJoin: .miter,
+                dash: [.themeSpacing8]
+            )
+        }
 
-    public func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
-        let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
-        return self.clipShape(rectangle)
-    }
+        func themeBorder(
+            style: AppTheme.Style = .weak,
+            dashed: Bool = false,
+            lineWidth: CGFloat = 1,
+            cornerRadius: AppTheme.CornerRadius
+        ) -> some View {
+            let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
+            let strokeStyle = dashed ? Self.dashStroke(lineWidth: lineWidth) : StrokeStyle(lineWidth: lineWidth)
+            let stroke = rectangle
+                .stroke(Color(.border, style), style: strokeStyle)
+                .padding(dashed ? 1 : 0)
+            return clipShape(rectangle)
+                .overlay(stroke)
+        }
 
-    public func frame(_ size: AppTheme.IconSize) -> some View {
-        return frame(width: size.width, height: size.height)
-    }
+        func clipRectangle(cornerRadius: AppTheme.CornerRadius) -> some View {
+            let rectangle = RoundedRectangle(cornerRadius: cornerRadius.rawValue)
+            return clipShape(rectangle)
+        }
 
-    public func frame(_ size: CGSize) -> some View {
-        return frame(width: size.width, height: size.height)
+        func frame(_ size: AppTheme.IconSize) -> some View {
+            frame(width: size.width, height: size.height)
+        }
+
+        func frame(_ size: CGSize) -> some View {
+            frame(width: size.width, height: size.height)
+        }
     }
-}
 #endif

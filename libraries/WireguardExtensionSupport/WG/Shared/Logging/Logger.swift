@@ -29,14 +29,14 @@ public class Logger {
     }
 
     func writeLog(to targetFile: String) -> Bool {
-        return write_log_to_file(targetFile, self.log) == 0
+        write_log_to_file(targetFile, log) == 0
     }
 
     static func configureGlobal(tagged tag: String, withFilePath filePath: String?) {
         if Logger.global != nil {
             return
         }
-        guard let filePath = filePath else {
+        guard let filePath else {
             os_log("Unable to determine log destination path. Log will not be saved to file.", log: OSLog.default, type: .error)
             return
         }
@@ -72,15 +72,15 @@ extension OSLogType {
     var stringValue: String {
         switch self {
         case .info:
-            return "Info"
+            "Info"
         case .debug:
-            return "Debug"
+            "Debug"
         case .error:
-            return "Error"
+            "Error"
         case .fault:
-            return "Fatal"
+            "Fatal"
         default:
-            return "Debug"
+            "Debug"
         }
     }
 }

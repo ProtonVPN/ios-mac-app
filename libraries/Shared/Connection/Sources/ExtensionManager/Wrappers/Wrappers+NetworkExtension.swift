@@ -24,11 +24,10 @@ import class NetworkExtension.NETunnelProviderSession
 import class NetworkExtension.NEVPNManager
 
 import let CoreConnection.log
-import enum ExtensionIPC.WireguardProviderRequest
 import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 
 extension NETunnelProviderSession: VPNSession {
-    
     static let maxRetries = 5
     static let retryInterval = Duration.seconds(1)
 

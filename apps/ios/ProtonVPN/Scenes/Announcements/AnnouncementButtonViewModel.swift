@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Announcement
+import Dependencies
 import Foundation
 import LegacyCommon
-import Dependencies
-import Announcement
 
 protocol AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel
@@ -31,28 +31,27 @@ protocol AnnouncementButtonViewModelFactory {
 
 extension DependencyContainer: AnnouncementButtonViewModelFactory {
     func makeAnnouncementButtonViewModel() -> AnnouncementButtonViewModel {
-        return AnnouncementButtonViewModel(factory: self)
+        AnnouncementButtonViewModel(factory: self)
     }
 }
 
 final class AnnouncementButtonViewModel {
-    
     // Must be pre-set in AppDelegate!
     static var shared: AnnouncementButtonViewModel!
-    
-    typealias Factory = PropertiesManagerFactory & AnnouncementsViewModelFactory
+
+    typealias Factory = AnnouncementsViewModelFactory & PropertiesManagerFactory
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     @Dependency(\.announcementManager) var announcementManager
     // The announcementsViewModel property can't be lazy because we depend on the behaviour in its init method.
     private let announcementsViewModel: AnnouncementsViewModel
-    
+
     init(factory: Factory) {
         self.factory = factory
-        announcementsViewModel = factory.makeAnnouncementsViewModel()
+        self.announcementsViewModel = factory.makeAnnouncementsViewModel()
     }
-    
+
     // MARK: Main part
 
     var iconUrl: URL? {
@@ -61,14 +60,14 @@ final class AnnouncementButtonViewModel {
         }
         return nil
     }
-    
+
     var showAnnouncements: Bool {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return announcementManager.shouldShowAnnouncementsIcon()
     }
-    
+
     var hasUnreadAnnouncements: Bool {
         announcementManager.hasUnreadAnnouncements
     }

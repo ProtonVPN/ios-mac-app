@@ -16,25 +16,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import UIKit
 import Strings
+import UIKit
 
 final class UpsellCell: UITableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets
 
-    @IBOutlet private weak var subtitleLabel: UILabel!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var mainView: UIView!
-    @IBOutlet private weak var iconImageView: UIImageView!
-    @IBOutlet private weak var chevronImageView: UIImageView!
+    @IBOutlet private var subtitleLabel: UILabel!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var mainView: UIView!
+    @IBOutlet private var iconImageView: UIImageView!
+    @IBOutlet private var chevronImageView: UIImageView!
 
     // MARK: Properties
 

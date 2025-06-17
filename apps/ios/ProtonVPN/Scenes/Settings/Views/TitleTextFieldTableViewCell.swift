@@ -1,5 +1,5 @@
 //
-//  EditKeyValueTableViewCell.swift
+//  TitleTextFieldTableViewCell.swift
 //  ProtonVPN - Created on 20.08.19.
 //
 //
@@ -10,25 +10,23 @@
 import UIKit
 
 class TitleTextFieldTableViewCell: UITableViewCell {
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var textField: UITextField!
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var textField: UITextField!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         titleLabel.textColor = .normalTextColor()
-        
+
         textField.font = UIFont.systemFont(ofSize: 17)
         textField.textColor = .normalTextColor()
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
 }

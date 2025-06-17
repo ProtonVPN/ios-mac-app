@@ -25,7 +25,6 @@ import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-
     typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     let store: StoreOf<PlutoniumFeature>
@@ -33,16 +32,17 @@ class PlutoniumWindowController: WindowController {
     private let alertService: CoreAlertService
     private let vpnGateway: VpnGatewayProtocol
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
 
     required init(factory: Factory) {
-        alertService = factory.makeCoreAlertService()
-        vpnGateway = factory.makeVpnGateway()
+        self.alertService = factory.makeCoreAlertService()
+        self.vpnGateway = factory.makeVpnGateway()
 
         let state = PlutoniumFeature.State()
-        store = StoreOf<PlutoniumFeature>(initialState: state) {
+        self.store = StoreOf<PlutoniumFeature>(initialState: state) {
             PlutoniumFeature()
         }
         let viewController: NSViewController = .plutonium(store: store)
@@ -65,7 +65,7 @@ class PlutoniumWindowController: WindowController {
         window.backgroundColor = .color(.background)
     }
 
-    override func windowWillClose(_ notification: Notification) {
+    override func windowWillClose(_: Notification) {
         guard vpnGateway.connection != .disconnected,
               store.requiresReconnection else {
             return
@@ -78,7 +78,7 @@ class PlutoniumWindowController: WindowController {
                     vpnGateway.retryConnection()
                 }
             },
-            cancelHandler: { }
+            cancelHandler: {}
         ))
     }
 }

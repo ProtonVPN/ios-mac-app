@@ -22,47 +22,47 @@ import GRDB
 
 import Domain
 
-extension QueryInterfaceRequest {
-    public func filterServers(
+public extension QueryInterfaceRequest {
+    func filterServers(
         _ filters: [VPNServerFilter],
         logicalAlias: TableAlias,
         statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> Self {
-        return filters
+        filters
             .map { $0.sqlExpression(logical: logicalAlias, status: statusAlias, overrides: overrideAlias) }
             .reduce(self) { request, sqlExpression in request.filter(sqlExpression) }
     }
 
-    public func order(
+    func order(
         _ serverOrder: VPNServerOrder,
         logicalAlias: TableAlias,
         statusAlias: TableAlias
     ) -> Self {
         switch serverOrder {
         case .none:
-            return self
+            self
 
         case .random:
-            return order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
+            order(statusAlias[LogicalStatus.Columns.status].desc, SQL("RANDOM()"))
 
         case .fastest:
-            return order(statusAlias[LogicalStatus.Columns.score].asc)
+            order(statusAlias[LogicalStatus.Columns.score].asc)
 
         case .nameAscending:
-            return order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
+            order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
         }
     }
 
-    func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
+    internal func ordering(by groupOrder: VPNServerGroupOrder, logicalAlias: TableAlias) -> Self {
         switch groupOrder {
         case .exitCountryCodeAscending:
-            return order(
+            order(
                 logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
                 logicalAlias[Logical.Columns.exitCountryCode].asc
             )
         case .localizedCountryNameAscending:
-            return order(
+            order(
                 logicalAlias[Logical.Columns.gatewayName].ascNullsLast,
                 localizedCountryName(logicalAlias[Logical.Columns.exitCountryCode]).asc
             )
@@ -96,7 +96,6 @@ extension Endpoint {
 }
 
 extension QueryInterfaceRequest where RowDecoder == Endpoint {
-
     /// Represents the condition of whether a logical server is virtual (a.k.a. supports smart routing or not)
     private func isVirtual(_ logicalAlias: TableAlias) -> SQLExpression {
         let exitCountryCode = logicalAlias[Logical.Columns.exitCountryCode]
@@ -118,8 +117,7 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
         statusAlias: TableAlias,
         overrideAlias: TableAlias
     ) -> QueryInterfaceRequest<Endpoint> {
-        return self
-            .annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
+        annotated(with: bitwiseOr(statusAlias[LogicalStatus.Columns.status & Endpoint.Columns.status]).forKey("statusUnion"))
             .annotated(with: bitwiseAnd(isVirtual(logicalAlias)).forKey("isVirtual"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.id]).forKey("serverCount"))
             .annotated(with: count(distinct: logicalAlias[Logical.Columns.city]).forKey("cityCount"))
@@ -135,14 +133,12 @@ extension QueryInterfaceRequest where RowDecoder == Endpoint {
     }
 
     func groupingByServerType(logicalAlias: TableAlias) -> QueryInterfaceRequest<GroupInfoResult> {
-        return self
-            .group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
+        group(logicalAlias[Logical.Columns.gatewayName], logicalAlias[Logical.Columns.exitCountryCode])
             .asRequest(of: GroupInfoResult.self)
     }
 }
 
 extension GroupInfoResult {
-
     static func request(
         filters: [VPNServerFilter],
         groupOrder: VPNServerGroupOrder

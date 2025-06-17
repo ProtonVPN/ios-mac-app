@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import Strings
+import SwiftUI
 
 struct UpdateAvailableView: View {
-
     @Binding var isActive: Bool
 
     @Environment(\.colors) var colors: Colors
@@ -35,9 +34,8 @@ struct UpdateAvailableView: View {
 
     var updatevView: some View {
         VStack(spacing: 0) {
-
             #if os(iOS)
-            Color.clear.frame(maxWidth: .infinity, maxHeight: 1) // Prevents UpdateAvailableView's background bleeding on NavigationBar
+                Color.clear.frame(maxWidth: .infinity, maxHeight: 1) // Prevents UpdateAvailableView's background bleeding on NavigationBar
             #endif
 
             HStack {
@@ -58,12 +56,11 @@ struct UpdateAvailableView: View {
                 Button(Localizable.updateViewButton, action: { CurrentEnv.bugReportDelegate?.updateApp() })
                     .buttonStyle(UpdateButtonStyle())
                     .accessibilityIdentifier("Update app button")
-
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 24)
             #if os(iOS)
-            .background(colors.backgroundWeak)
+                .background(colors.backgroundWeak)
             #endif
         }
     }

@@ -20,7 +20,6 @@ import Foundation
 
 /// Delegate that is used by this BugReport library to communicate wit hthe app.
 public protocol BugReportDelegate: AnyObject {
-
     /// Configuration for Dynamic Bug Report UI.
     var model: BugReportModel { get }
 

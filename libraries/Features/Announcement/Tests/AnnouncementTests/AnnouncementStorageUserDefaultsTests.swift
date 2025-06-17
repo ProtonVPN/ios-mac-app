@@ -22,46 +22,45 @@
 
 import XCTest
 
+@testable import Announcement
 import Domain
 import DomainTestSupport
-@testable import Announcement
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
-    
     private var storage: AnnouncementStorageUserDefaults!
     private var userDefaults: UserDefaults!
-    
+
     override func setUp() {
         super.setUp()
-        
+
         userDefaults = .testValue()
         storage = AnnouncementStorageUserDefaults(userDefaults: userDefaults, keyNameProvider: StaticKeyNameProvider())
     }
-    
+
     override func tearDown() {
         super.tearDown()
         userDefaults.removePersistentDomain(forName: #file)
     }
-    
+
     func testStoreAndFetchWorks() {
         XCTAssertFalse(storage.fetch().containsAnnouncement(withId: "id"))
         storage.store([Announcement.mock(id: "id")])
         userDefaults.synchronize()
         XCTAssert(storage.fetch().containsAnnouncement(withId: "id"))
     }
-    
+
     func testStoringPreservesIsReadFlag() {
         var announcements = ["1", "2", "3"].map(Announcement.mock(id:))
         storage.store(announcements)
-        
+
         XCTAssertFalse(announcements[0].wasRead)
         announcements[0].isRead = true
         storage.store(announcements)
-        
+
         let announcementsRead = storage.fetch()
         XCTAssert(announcementsRead[0].wasRead)
     }
-    
+
     func testNotificationIsFiredOnStore() {
         expectationNotificationFired = XCTestExpectation(description: "AnnouncementStorageNotifications.contentChanged was fired")
         NotificationCenter.default.addObserver(
@@ -72,27 +71,27 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
         )
 
         storage.store([])
-        
+
         wait(for: [expectationNotificationFired], timeout: 0.2)
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     private var expectationNotificationFired: XCTestExpectation!
-    
-    @objc func notificationFired() {
+
+    @objc
+    func notificationFired() {
         expectationNotificationFired.fulfill()
     }
-    
 }
 
-fileprivate extension Announcement {
+private extension Announcement {
     static func mock(id: String) -> Self {
         Self(notificationID: id, startTime: Date(), endTime: Date(), type: Announcement.NotificationType.default.rawValue, offer: nil, reference: nil)
     }
 }
 
-fileprivate class StaticKeyNameProvider: KeyNameProvider {
+private class StaticKeyNameProvider: KeyNameProvider {
     public var storageKey: String {
-        return "announcements"
+        "announcements"
     }
 }

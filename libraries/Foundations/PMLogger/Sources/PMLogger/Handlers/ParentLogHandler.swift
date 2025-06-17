@@ -24,7 +24,6 @@ import Logging
 /// - Important: The documentation states that LogHandler implementations must be structs (VPNAPPL-1753).
 /// If something strange is going on, check that it's not because this, and concrete log handlers, are classes.
 open class ParentLogHandler: LogHandler {
-
     public var formatter: PMLogFormatter
     public var logLevel = Logging.Logger.Level.trace
     public var metadata = Logging.Logger.Metadata()
@@ -37,18 +36,17 @@ open class ParentLogHandler: LogHandler {
 
     public subscript(metadataKey key: String) -> Logging.Logger.Metadata.Value? {
         get {
-            return metadata[key]
+            metadata[key]
         }
         set(newValue) {
             metadata[key] = newValue
         }
     }
 
-    open func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
+    open func log(level _: Logging.Logger.Level, message _: Logging.Logger.Message, metadata _: Logging.Logger.Metadata?, source _: String, file _: String, function _: String, line _: UInt) { // swiftlint:disable:this function_parameter_count
         // Without this method, instead of a proper method of subclasses, method with the same signature
         // on LogHandler extension is called. Which leads to infinite loop.
         // Some info can be found here: https://github.com/apple/swift-log/issues/248
         fatalError("Please override this method")
     }
-
 }

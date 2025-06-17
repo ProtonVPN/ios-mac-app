@@ -20,40 +20,39 @@ import XCTest
 
 let app = XCUIApplication()
 
-fileprivate let bugReportHeading = "Report an issue"
-fileprivate let backButton = "Back"
-fileprivate let showBugReportButton = "Show bug report"
+private let bugReportHeading = "Report an issue"
+private let backButton = "Back"
+private let showBugReportButton = "Show bug report"
 // Step 1
-fileprivate let stepOneTitle = "What's the issue?"
-fileprivate let browsingSpeedIssue = "Browsing speed_"
-fileprivate let usingTheAppIssue = "Using the app_"
-fileprivate let somethingElseIssue = "Something else_"
+private let stepOneTitle = "What's the issue?"
+private let browsingSpeedIssue = "Browsing speed_"
+private let usingTheAppIssue = "Using the app_"
+private let somethingElseIssue = "Something else_"
 // Step 2
-fileprivate let stepTwoTitle = "Quick fixes"
-fileprivate let stepTwoSubtitle = "These tips could help to solve your issue faster."
-fileprivate let fixOne = "Log out and log back in."
-fileprivate let fixTwo = "Restart the app."
-fileprivate let fixThree = "Try a different server. Servers in nearby countries often have faster connection speeds."
-fileprivate let contactUsButton = "Contact us"
-fileprivate let cancelButton = "Cancel"
+private let stepTwoTitle = "Quick fixes"
+private let stepTwoSubtitle = "These tips could help to solve your issue faster."
+private let fixOne = "Log out and log back in."
+private let fixTwo = "Restart the app."
+private let fixThree = "Try a different server. Servers in nearby countries often have faster connection speeds."
+private let contactUsButton = "Contact us"
+private let cancelButton = "Cancel"
 // Step 3
-fileprivate let emailTextField = "Single line input _email"
-fileprivate let whatWentWrongTextField = "Multiline input What went wrong?"
-fileprivate let networkTypeTextField = "Single line input Network type"
-fileprivate let whatAreYouTringToDoTextField = "Multiline input What are you trying to do?"
-fileprivate let whatIsTheSpeedTextField = "Single line input What is the speed you are getting?"
-fileprivate let connectionSpeedTextField = "Single line input What is your connection speed without VPN?"
-fileprivate let logsSwitch = "Toggle _logs"
-fileprivate let logsWarning = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully."
-fileprivate let sendReportButton = "Send report"
+private let emailTextField = "Single line input _email"
+private let whatWentWrongTextField = "Multiline input What went wrong?"
+private let networkTypeTextField = "Single line input Network type"
+private let whatAreYouTringToDoTextField = "Multiline input What are you trying to do?"
+private let whatIsTheSpeedTextField = "Single line input What is the speed you are getting?"
+private let connectionSpeedTextField = "Single line input What is your connection speed without VPN?"
+private let logsSwitch = "Toggle _logs"
+private let logsWarning = "Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully."
+private let sendReportButton = "Send report"
 // Messages
-fileprivate let successMessageTitle = "Thanks for your feedback"
-fileprivate let errorMessageTitle = "Your report wasn’t sent"
-fileprivate let gotItButton = "Got it"
-fileprivate let tryAgainButton = "Try again"
-fileprivate let troubleshootgButton = "Troubleshoot"
-fileprivate let statusLabel = "Troubleshooting"
-
+private let successMessageTitle = "Thanks for your feedback"
+private let errorMessageTitle = "Your report wasn’t sent"
+private let gotItButton = "Got it"
+private let tryAgainButton = "Try again"
+private let troubleshootgButton = "Troubleshoot"
+private let statusLabel = "Troubleshooting"
 
 class BugReportRobot {
     func openBugReport() -> BugReportRobot {
@@ -65,39 +64,39 @@ class BugReportRobot {
         app.buttons[somethingElseIssue].tap()
         return BugReportRobot()
     }
-    
+
     func contactUs() -> BugReportRobot {
         app.buttons[contactUsButton].tap()
         return BugReportRobot()
     }
-    
+
     func cancelReport() -> BugReportRobot {
         app.buttons[cancelButton].tap()
         return BugReportRobot()
     }
-    
+
     func reportUsingTheAppIssue() -> BugReportRobot {
         app.buttons[usingTheAppIssue].tap()
         return BugReportRobot()
     }
-    
+
     func reportBrowsingSpeedIssue() -> BugReportRobot {
         app.buttons[browsingSpeedIssue].tap()
         return BugReportRobot()
     }
-    
+
     func enterEmailAddress(_ email: String) -> BugReportRobot {
         app.textFields[emailTextField].tap()
         app.textFields[emailTextField].typeText(email)
         return BugReportRobot()
     }
-    
+
     func enterDescription(_ text: String) -> BugReportRobot {
         app.textViews[whatWentWrongTextField].tap()
         app.textViews[whatWentWrongTextField].typeText(text)
         return BugReportRobot()
     }
-    
+
     func fillDetails(_ text: String) -> BugReportRobot {
         app.textFields[networkTypeTextField].tap()
         app.textFields[networkTypeTextField].typeText(text)
@@ -110,12 +109,12 @@ class BugReportRobot {
         XCUIApplication().keyboards.buttons["Return"].tap()
         return BugReportRobot()
     }
-    
+
     func sendBugReport() -> BugReportRobot {
         app.buttons[sendReportButton].tap()
         return BugReportRobot()
     }
-    
+
     // need to fix toggle a11y
     func toggleSendLogs() -> BugReportRobot {
         app.switches[logsSwitch].firstMatch.tap()
@@ -123,22 +122,21 @@ class BugReportRobot {
         app.switches[logsSwitch].firstMatch.tap()
         return BugReportRobot()
     }
-    
+
     func backToPreviousScreen() -> BugReportRobot {
         app.buttons[backButton].tap()
         return BugReportRobot()
     }
-    
+
     func openTroubleshootScreen() -> BugReportRobot {
         XCTAssert(app.buttons[troubleshootgButton].waitForExistence(timeout: 3))
         app.buttons[troubleshootgButton].tap()
         return BugReportRobot()
     }
-    
+
     public let verify = Verify()
-    
+
     class Verify {
-        
         @discardableResult
         func reportAnIssueScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[bugReportHeading].exists)
@@ -147,7 +145,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[somethingElseIssue].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func usingTheAppScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[stepTwoTitle].exists)
@@ -158,7 +156,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[cancelButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         func browsingSpeedScreenIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[stepTwoTitle].exists)
             XCTAssertTrue(app.staticTexts[stepTwoSubtitle].exists)
@@ -167,20 +165,20 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[cancelButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func bugReportFormIsShown() -> BugReportRobot {
             XCTAssert(app.textFields[emailTextField].waitForExistence(timeout: 6))
             XCTAssertFalse(app.buttons[sendReportButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func sendErrorLogsWarningIsShown() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[logsWarning].exists)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func successMessageIsShown() -> BugReportRobot {
             XCTAssert(app.staticTexts[successMessageTitle].waitForExistence(timeout: 5))
@@ -188,7 +186,7 @@ class BugReportRobot {
             app.buttons[gotItButton].tap()
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func errorMessageIsShown() -> BugReportRobot {
             XCTAssert(app.staticTexts[errorMessageTitle].waitForExistence(timeout: 5))
@@ -198,7 +196,7 @@ class BugReportRobot {
             XCTAssertTrue(app.buttons[sendReportButton].isEnabled)
             return BugReportRobot()
         }
-        
+
         @discardableResult
         func troubleshootButtonIsClicked() -> BugReportRobot {
             XCTAssertTrue(app.staticTexts[statusLabel].exists)

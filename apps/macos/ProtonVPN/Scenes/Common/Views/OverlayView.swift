@@ -23,10 +23,9 @@
 import Cocoa
 
 class OverlayView: NSView {
-
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         wantsLayer = true
     }
 }

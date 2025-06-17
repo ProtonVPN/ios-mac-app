@@ -48,7 +48,7 @@ public struct Alert: Equatable, Sendable {
     }
 
     public func callAsFunction() -> Self {
-        return self
+        self
     }
 }
 

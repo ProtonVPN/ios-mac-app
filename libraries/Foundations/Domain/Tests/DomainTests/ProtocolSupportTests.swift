@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Domain
+import XCTest
 
 final class ProtocolSupportTests: XCTestCase {
-
     func testConversionFromVpnProtocolToProtocolSupport() throws {
         // Test empty, full and few variations
         XCTAssertEqual(ProtocolSupport(vpnProtocols: []), ProtocolSupport.zero)
@@ -30,7 +29,7 @@ final class ProtocolSupportTests: XCTestCase {
             .wireGuard(.tls),
             .wireGuard(.udp),
             .openVpn(.udp),
-            .openVpn(.tcp)
+            .openVpn(.tcp),
         ]), ProtocolSupport.all)
 
         XCTAssertEqual(
@@ -51,5 +50,4 @@ final class ProtocolSupportTests: XCTestCase {
             ProtocolSupport([.wireGuardTCP, .ikev2])
         )
     }
-
 }

@@ -57,14 +57,16 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private let appGroup: String
 
     public typealias Factory = IkeProtocolFactoryCreator &
-    WireguardProtocolFactoryCreator &
-    PropertiesManagerFactory
+        PropertiesManagerFactory &
+        WireguardProtocolFactoryCreator
 
     public convenience init(_ factory: Factory, config: Container.Config) {
-        self.init(ikeProtocolFactory: factory.makeIkeProtocolFactory(),
-                  wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
-                  propertiesManager: factory.makePropertiesManager(),
-                  appGroup: config.appGroup)
+        self.init(
+            ikeProtocolFactory: factory.makeIkeProtocolFactory(),
+            wireguardProtocolFactory: factory.makeWireguardProtocolFactory(),
+            propertiesManager: factory.makePropertiesManager(),
+            appGroup: config.appGroup
+        )
     }
 
     public init(ikeProtocolFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, propertiesManager: PropertiesManagerProtocol, appGroup: String) {
@@ -100,11 +102,11 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private func getFactory(for vpnProtocol: VpnProtocol) -> VpnProtocolFactory {
         switch vpnProtocol {
         case .ike:
-            return ikeProtocolFactory
+            ikeProtocolFactory
         case .openVpn:
             fatalError("OpenVPN has been deprecated")
         case .wireGuard:
-            return wireguardProtocolFactory
+            wireguardProtocolFactory
         }
     }
 
@@ -115,16 +117,16 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         let dispatchGroup = DispatchGroup()
         for vpnProtocol in protocols {
             dispatchGroup.enter()
-            self.getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] manager, error in
+            getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] manager, error in
                 defer { dispatchGroup.leave() }
-                guard let self = self, let manager = manager else {
-                    guard let error = error else { return }
+                guard let self, let manager else {
+                    guard let error else { return }
 
                     log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\" is active: \"\(String(describing: error))\"", category: .connection)
                     return
                 }
 
-                let state = self.determineNewState(vpnManager: manager)
+                let state = determineNewState(vpnManager: manager)
                 if state.stableConnection || state.volatileConnection {
                     activeProtocols.append(vpnProtocol)
                 }
@@ -155,7 +157,7 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
             do {
                 let manager = try await getFactory(for: vpnProtocol).vpnProviderManager(for: .status)
 
-                let state = self.determineNewState(vpnManager: manager)
+                let state = determineNewState(vpnManager: manager)
                 if state.stableConnection || state.volatileConnection {
                     activeProtocols.append(vpnProtocol)
                 }
@@ -187,15 +189,15 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
 
     public func determineActiveVpnState(vpnProtocol: VpnProtocol, completion: @escaping ((Result<(NEVPNManagerWrapper, VpnState), Error>) -> Void)) {
         getFactory(for: vpnProtocol).vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
                 return
             }
-            guard let self = self, let vpnManager = vpnManager else {
+            guard let self, let vpnManager else {
                 return
             }
 
-            let newState = self.determineNewState(vpnManager: vpnManager)
+            let newState = determineNewState(vpnManager: vpnManager)
             completion(.success((vpnManager, newState)))
         }
     }
@@ -211,37 +213,42 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
         determineActiveVpnProtocol(defaultToIke: defaultToIke) { [weak self] vpnProtocol in
-            guard let self = self else {
+            guard let self else {
                 return
             }
 
-            guard let vpnProtocol = vpnProtocol else {
-                completion(VpnStateConfigurationInfo(state: .disconnected,
-                                                     hasConnected: self.propertiesManager.hasConnected,
-                                                     connection: nil))
+            guard let vpnProtocol else {
+                completion(VpnStateConfigurationInfo(
+                    state: .disconnected,
+                    hasConnected: propertiesManager.hasConnected,
+                    connection: nil
+                ))
                 return
             }
 
-            let connection: ConnectionConfiguration?
-            switch vpnProtocol {
+            let connection: ConnectionConfiguration? = switch vpnProtocol {
             case .ike:
-                connection = self.propertiesManager.lastIkeConnection
+                propertiesManager.lastIkeConnection
             case .openVpn:
-                connection = self.propertiesManager.lastOpenVpnConnection
+                propertiesManager.lastOpenVpnConnection
             case .wireGuard:
-                connection = self.propertiesManager.lastWireguardConnection
+                propertiesManager.lastWireguardConnection
             }
 
-            self.determineActiveVpnState(vpnProtocol: vpnProtocol) { result in
+            determineActiveVpnState(vpnProtocol: vpnProtocol) { result in
                 switch result {
                 case let .failure(error):
-                    completion(VpnStateConfigurationInfo(state: VpnState.error(error),
-                                                         hasConnected: self.propertiesManager.hasConnected,
-                                                         connection: connection))
+                    completion(VpnStateConfigurationInfo(
+                        state: VpnState.error(error),
+                        hasConnected: self.propertiesManager.hasConnected,
+                        connection: connection
+                    ))
                 case let .success((_, state)):
-                    completion(VpnStateConfigurationInfo(state: state,
-                                                         hasConnected: self.propertiesManager.hasConnected,
-                                                         connection: connection))
+                    completion(VpnStateConfigurationInfo(
+                        state: state,
+                        hasConnected: self.propertiesManager.hasConnected,
+                        connection: connection
+                    ))
                 }
             }
         }
@@ -253,29 +260,34 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
         let defaulting = defaultToIke ? "Defaulting" : "Not defaulting"
         log.info("Getting protocol information. \(defaulting) to IKEv2 if no provider available.")
         guard let vpnProtocol = await determineActiveVpnProtocol(defaultToIke: defaultToIke) else {
-            return VpnStateConfigurationInfo(state: .disconnected,
-                                             hasConnected: self.propertiesManager.hasConnected,
-                                             connection: nil)
+            return VpnStateConfigurationInfo(
+                state: .disconnected,
+                hasConnected: propertiesManager.hasConnected,
+                connection: nil
+            )
         }
 
-        let connection: ConnectionConfiguration?
-        switch vpnProtocol {
+        let connection: ConnectionConfiguration? = switch vpnProtocol {
         case .ike:
-            connection = self.propertiesManager.lastIkeConnection
+            propertiesManager.lastIkeConnection
         case .openVpn:
-            connection = self.propertiesManager.lastOpenVpnConnection
+            propertiesManager.lastOpenVpnConnection
         case .wireGuard:
-            connection = self.propertiesManager.lastWireguardConnection
+            propertiesManager.lastWireguardConnection
         }
         do {
             let (_, state) = try await determineActiveVpnState(vpnProtocol: vpnProtocol)
-            return VpnStateConfigurationInfo(state: state,
-                                             hasConnected: self.propertiesManager.hasConnected,
-                                             connection: connection)
+            return VpnStateConfigurationInfo(
+                state: state,
+                hasConnected: propertiesManager.hasConnected,
+                connection: connection
+            )
         } catch {
-            return VpnStateConfigurationInfo(state: VpnState.error(error),
-                                             hasConnected: self.propertiesManager.hasConnected,
-                                             connection: connection)
+            return VpnStateConfigurationInfo(
+                state: VpnState.error(error),
+                hasConnected: propertiesManager.hasConnected,
+                connection: connection
+            )
         }
     }
 }

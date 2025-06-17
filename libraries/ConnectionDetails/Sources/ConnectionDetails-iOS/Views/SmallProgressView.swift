@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ProtonCoreUIFoundations
 import SwiftUI
 import Theme
-import ProtonCoreUIFoundations
 
 /// Progress indicator that changes color based on the percentage
 public struct SmallProgressView: View {
-
     let percentage: Int
 
     private let threshold1 = 51
@@ -36,13 +35,12 @@ public struct SmallProgressView: View {
     }
 
     private var color: Color {
-        let circleStyle: AppTheme.Style
-        if percentage < threshold1 {
-            circleStyle = .success
+        let circleStyle: AppTheme.Style = if percentage < threshold1 {
+            .success
         } else if percentage < threshold2 {
-            circleStyle = .warning
+            .warning
         } else {
-            circleStyle = .danger
+            .danger
         }
         return Color(.icon, circleStyle)
     }

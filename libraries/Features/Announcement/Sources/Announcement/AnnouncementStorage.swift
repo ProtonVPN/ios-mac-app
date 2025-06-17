@@ -26,9 +26,9 @@ import Dependencies
 
 import LegacyCommon
 
-import VPNShared
-import Ergonomics
 import Domain
+import Ergonomics
+import VPNShared
 
 public protocol AnnouncementStorage {
     func fetch() -> [Announcement]
@@ -45,6 +45,7 @@ public protocol AnnouncementStorageFactory {
 }
 
 // MARK: AnnouncementStorageFactory
+
 extension Container: AnnouncementStorageFactory {
     public func makeAnnouncementStorage() -> AnnouncementStorage {
         @Dependency(\.defaultsProvider) var provider
@@ -53,28 +54,28 @@ extension Container: AnnouncementStorageFactory {
 }
 
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
-
     static let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
         return decoder
     }()
+
     let userDefaults: UserDefaults
     private let keyNameProvider: KeyNameProvider
-    
+
     public init(userDefaults: UserDefaults, keyNameProvider: KeyNameProvider?) {
         self.userDefaults = userDefaults
         self.keyNameProvider = keyNameProvider ?? AuthKeychainStorageKeyProvider()
     }
-    
+
     public func fetch() -> [Announcement] {
         guard let data = userDefaults.data(forKey: storageKey),
               let result = try? Self.decoder.decode([Announcement].self, from: data) else {
-                return []
+            return []
         }
         return result
     }
-    
+
     public func store(_ objects: [Announcement]) {
         // Read and apply isRead flags from current objects
         let current = fetch().reduce(into: [String: Bool]()) { result, element in
@@ -94,7 +95,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
             executeOnUIThread {
                 AppEvent.announcementStorageContent.post(objects)
             }
-        } catch let error {
+        } catch {
             log.error("Announcement error: \(error)", category: .ui)
         }
     }
@@ -102,13 +103,12 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
     public func clear() {
         userDefaults.removeObject(forKey: storageKey)
     }
- 
+
     // MARK: - Private
-    
+
     private var storageKey: String {
-        return keyNameProvider.storageKey
+        keyNameProvider.storageKey
     }
-    
 }
 
 /// Generates key depending on currently logged in user.
@@ -116,6 +116,6 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 /// In tests it's better to use another class that will not depend on the Keychain.
 private class AuthKeychainStorageKeyProvider: KeyNameProvider {
     public var storageKey: String {
-        return "announcements_" + (AuthKeychain.default.username ?? "")
+        "announcements_" + (AuthKeychain.default.username ?? "")
     }
 }

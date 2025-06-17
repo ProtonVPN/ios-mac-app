@@ -22,21 +22,20 @@
 
 import Foundation
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(Cocoa)
-import Cocoa
+    import Cocoa
 #endif
 
 // MARK: - Links
 
-extension NSMutableAttributedString {
-
+public extension NSMutableAttributedString {
     /// Add a `.link` attribute to a given text
     /// - Parameters:
     ///     - links: Parameters to pass to `add(link: String, withUrl url: String)` method
-    public func add(links: [(String, String)]) -> NSMutableAttributedString {
+    func add(links: [(String, String)]) -> NSMutableAttributedString {
         for (link, url) in links {
-            _ = self.add(link: link, withUrl: url)
+            _ = add(link: link, withUrl: url)
         }
         return self
     }
@@ -45,15 +44,14 @@ extension NSMutableAttributedString {
     /// - Parameters:
     ///     - link: Text that will become a link
     ///     - withUrl: String representation or URL for a link
-    public func add(link: String, withUrl: String) -> NSMutableAttributedString {
-        let fullText = self.string
+    func add(link: String, withUrl: String) -> NSMutableAttributedString {
+        let fullText = string
         guard let url = URL(string: withUrl), let subrange = fullText.range(of: link) else {
             return self
         }
         let nsRange = NSRange(subrange, in: fullText)
-        self.addAttribute(.link, value: url, range: nsRange)
+        addAttribute(.link, value: url, range: nsRange)
 
         return self
     }
-
 }

@@ -20,12 +20,11 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import VPNShared
-import Strings
 import ProtonCoreNetworking
+import Strings
+import VPNShared
 
 public class VpnCredentials: NSObject, NSSecureCoding, Codable {
-
     public static var supportsSecureCoding: Bool = true
 
     public let status: Int
@@ -46,22 +45,22 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
 
     override public var description: String {
         "Status: \(status)\n" +
-        "Plan title: \(planTitle)\n" +
-        "Plan name: \(planName)\n" +
-        "Max connect: \(maxConnect)\n" +
-        "Max tier: \(maxTier)\n" +
-        "Services: \(services ?? -1)\n" +
-        "Group ID: \(groupId)\n" +
-        "Name: \(name)\n" +
-        "Password: \(password)\n" +
-        "Delinquent: \(delinquent)\n" +
-        "Credit: \(credit) (in \(currency))" +
-        "Has Payment Method: \(hasPaymentMethod)\n" +
-        "Subscribed: \(String(describing: subscribed))" +
-        "BusinessEvents: \(businessEvents)"
+            "Plan title: \(planTitle)\n" +
+            "Plan name: \(planName)\n" +
+            "Max connect: \(maxConnect)\n" +
+            "Max tier: \(maxTier)\n" +
+            "Services: \(services ?? -1)\n" +
+            "Group ID: \(groupId)\n" +
+            "Name: \(name)\n" +
+            "Password: \(password)\n" +
+            "Delinquent: \(delinquent)\n" +
+            "Credit: \(credit) (in \(currency))" +
+            "Has Payment Method: \(hasPaymentMethod)\n" +
+            "Subscribed: \(String(describing: subscribed))" +
+            "BusinessEvents: \(businessEvents)"
     }
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.status = try container.decode(Int.self, forKey: .status)
         self.planTitle = (try? container.decodeIfPresent(String.self, forKey: .planTitle)) ?? Localizable.freeTierPlanTitle
@@ -114,25 +113,25 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         self.businessEvents = businessEvents
         super.init()
     }
-    
+
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
 
-        planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
-        planName = vpnDic.string("PlanName") ?? "free"
-        status = try vpnDic.intOrThrow(key: "Status")
-        maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
-        services = try dic.intOrThrow(key: "Services")
-        groupId = try vpnDic.stringOrThrow(key: "GroupID")
-        name = try vpnDic.stringOrThrow(key: "Name")
-        password = try vpnDic.stringOrThrow(key: "Password")
-        delinquent = try dic.intOrThrow(key: "Delinquent")
-        credit = try dic.intOrThrow(key: "Credit")
-        currency = try dic.stringOrThrow(key: "Currency")
-        hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
-        subscribed = dic.int(key: "Subscribed")
-        businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
+        self.planTitle = vpnDic.string("PlanTitle") ?? Localizable.freeTierPlanTitle
+        self.planName = vpnDic.string("PlanName") ?? "free"
+        self.status = try vpnDic.intOrThrow(key: "Status")
+        self.maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
+        self.maxTier = vpnDic.int(key: "MaxTier") ?? .freeTier
+        self.services = try dic.intOrThrow(key: "Services")
+        self.groupId = try vpnDic.stringOrThrow(key: "GroupID")
+        self.name = try vpnDic.stringOrThrow(key: "Name")
+        self.password = try vpnDic.stringOrThrow(key: "Password")
+        self.delinquent = try dic.intOrThrow(key: "Delinquent")
+        self.credit = try dic.intOrThrow(key: "Credit")
+        self.currency = try dic.stringOrThrow(key: "Currency")
+        self.hasPaymentMethod = try dic.boolOrThrow(key: "HasPaymentMethod")
+        self.subscribed = dic.int(key: "Subscribed")
+        self.businessEvents = vpnDic.bool(key: "BusinessEvents", or: false)
         super.init()
     }
 
@@ -157,11 +156,12 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
             "HasPaymentMethod": hasPaymentMethod,
             "Subscribed": subscribed ?? 0,
         ] as [String: Any])
-        .mapValues({ $0 as AnyObject })
+            .mapValues { $0 as AnyObject }
     }
-    
+
     // MARK: - NSCoding
-    private struct CoderKey {
+
+    private enum CoderKey {
         static let status = "status"
         static let planTitle = "planTitle"
         static let planName = "planName"
@@ -179,7 +179,7 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         static let subscribed = "subscribed"
         static let businessEvents = "businessEvents"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         guard let groupId = aDecoder.decodeObject(forKey: CoderKey.groupId) as? String,
               let name = aDecoder.decodeObject(forKey: CoderKey.name) as? String,
@@ -206,14 +206,14 @@ public class VpnCredentials: NSObject, NSSecureCoding, Codable {
         )
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 }
 
-extension VpnCredentials {
-    public var isDelinquent: Bool {
-        return delinquent > 2
+public extension VpnCredentials {
+    var isDelinquent: Bool {
+        delinquent > 2
     }
 }
 
@@ -236,7 +236,7 @@ public struct CachedVpnCredentials {
     public let businessEvents: Bool
 
     public var canUsePromoCode: Bool {
-        return !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
+        !isDelinquent && !hasPaymentMethod && credit == 0 && subscribed == 0
     }
 }
 
@@ -244,7 +244,7 @@ extension CachedVpnCredentials {
     init(credentials: VpnCredentials) {
         self.init(
             status: credentials.status,
-            planName: credentials.planName, 
+            planName: credentials.planName,
             planTitle: credentials.planTitle,
             maxConnect: credentials.maxConnect,
             maxTier: credentials.maxTier,
@@ -253,15 +253,16 @@ extension CachedVpnCredentials {
             credit: credentials.credit,
             currency: credentials.currency,
             hasPaymentMethod: credentials.hasPaymentMethod,
-            subscribed: credentials.subscribed, 
+            subscribed: credentials.subscribed,
             businessEvents: credentials.businessEvents
         )
     }
 }
 
 // MARK: - Checks performed on CachedVpnCredentials
-extension CachedVpnCredentials {
-    public var isDelinquent: Bool {
-        return delinquent > 2
+
+public extension CachedVpnCredentials {
+    var isDelinquent: Bool {
+        delinquent > 2
     }
 }

@@ -21,9 +21,9 @@
 //
 
 import Cocoa
+import Ergonomics
 import LegacyCommon
 import Theme
-import Ergonomics
 
 class CancellationButton: HoverDetectionButton {
     enum Style {
@@ -34,7 +34,7 @@ class CancellationButton: HoverDetectionButton {
     public var style: Style = .default
 
     private var isDestructive: Bool {
-        return style == .destructive
+        style == .destructive
     }
 
     override var title: String {
@@ -67,7 +67,7 @@ class CancellationButton: HoverDetectionButton {
     }
 
     private func configureTitle() {
-        attributedTitle = self.style(title, font: .themeFont(fontSize))
+        attributedTitle = style(title, font: .themeFont(fontSize))
     }
 }
 

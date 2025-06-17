@@ -23,15 +23,14 @@
 import Cocoa
 
 class WhiteHoverLinkButton: NSButton {
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Setup tracking area
-        let trackingArea = NSTrackingArea(rect: self.bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
-        self.addTrackingArea(trackingArea)
+        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
+        addTrackingArea(trackingArea)
     }
-    
-    override func mouseEntered(with event: NSEvent) {
+
+    override func mouseEntered(with _: NSEvent) {
         if isEnabled {
             var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
             attributes[NSAttributedString.Key.foregroundColor] = NSColor.color(.text)
@@ -39,8 +38,8 @@ class WhiteHoverLinkButton: NSButton {
             addCursorRect(bounds, cursor: .pointingHand)
         }
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         var attributes = attributedTitle.attributes(at: 0, longestEffectiveRange: nil, in: NSRange(location: 0, length: attributedTitle.length))
         attributes[NSAttributedString.Key.foregroundColor] = NSColor.color(.text, .interactive)
         attributedTitle = NSAttributedString(string: attributedTitle.string, attributes: attributes)

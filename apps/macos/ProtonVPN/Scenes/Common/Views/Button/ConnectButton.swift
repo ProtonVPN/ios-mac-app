@@ -21,43 +21,42 @@
 //
 
 import Cocoa
-import LegacyCommon
-import Theme
 import Ergonomics
+import LegacyCommon
 import Strings
+import Theme
 
 class ConnectButton: ResizingTextButton {
-    
     override var title: String {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var isConnected: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var upgradeRequired: Bool = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     var nameForAccessibility: String? {
         didSet {
             needsDisplay = true
         }
     }
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureButton()
         setAccessibilityRole(.button)
     }
-    
+
     override func viewWillDraw() {
         super.viewWillDraw()
         configureButton()
@@ -78,7 +77,7 @@ class ConnectButton: ResizingTextButton {
             layer?.backgroundColor = self.cgColor(.background)
             layer?.borderColor = self.cgColor(.border)
         }
-        self.image = nil
+        image = nil
         attributedTitle = text.styled(font: .themeFont(.small))
     }
 

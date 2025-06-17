@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Search
+import UIKit
 
 final class CityViewModelMock: CityViewModel {
     var isRedesign: Bool = false
@@ -41,9 +41,7 @@ final class CityViewModelMock: CityViewModel {
 
     var connectionChanged: (() -> Void)?
 
-    func connectAction() {
-
-    }
+    func connectAction() {}
 
     init(cityName: String, countryName: String = "", translatedCityName: String? = nil) {
         self.cityName = cityName

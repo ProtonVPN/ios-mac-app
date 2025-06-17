@@ -25,11 +25,11 @@ import Cocoa
 import Dependencies
 
 import Domain
-import Theme
-import Strings
 import LegacyCommon
-import VPNShared
+import Strings
+import Theme
 import VPNAppCore
+import VPNShared
 
 enum ConnectionSettingsError: FourCharCode, ProtonVPNError {
     static let errorDomain: String = "ConnectionSettingsErrorDomain"
@@ -43,21 +43,21 @@ final class ConnectionSettingsViewModel {
     @Dependency(\.featureAuthorizerProvider) var authorizerProvider
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = PropertiesManagerFactory
-        & VpnGatewayFactory
-        & CoreAlertServiceFactory
-        & ProfileManagerFactory
-        & SystemExtensionManagerFactory
-        & VpnProtocolChangeManagerFactory
-        & VpnManagerFactory
-        & VpnStateConfigurationFactory
+    typealias Factory = AppStateManagerFactory
         & AuthKeychainHandleFactory
-        & AppStateManagerFactory
+        & CoreAlertServiceFactory
         & NavigationServiceFactory
+        & ProfileManagerFactory
+        & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
+        & VpnManagerFactory
+        & VpnProtocolChangeManagerFactory
+        & VpnStateConfigurationFactory
 
     private let factory: Factory
     private typealias ProtocolSwitchAction = VpnProtocolChangeManagerImplementation.ProtocolSwitchAction
-    
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var sysexManager: SystemExtensionManager = factory.makeSystemExtensionManager()
@@ -85,22 +85,22 @@ final class ConnectionSettingsViewModel {
     }
 
     private var featureFlags: FeatureFlags {
-        return propertiesManager.featureFlags
+        propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
     var protocolPendingChanged: ((Bool) -> Void)?
-    
+
     init(factory: Factory) {
         self.factory = factory
         self.sysexPending = true
         self.selectedProtocol = .smartProtocol // dummy value must be assigned before we can access `propertiesManager`
-        selectedProtocol = propertiesManager.connectionProtocol
+        self.selectedProtocol = propertiesManager.connectionProtocol
 
         let settingsChangedEvents: [AppEvent] = [
             .vpnProtocol,
             .excludeLocalNetworks,
-            .vpnAccelerator
+            .vpnAccelerator,
         ]
         settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
 
@@ -108,19 +108,17 @@ final class ConnectionSettingsViewModel {
 
         checkSysexOrResetProtocol(selectedProtocol)
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Available protocols and Profiles
 
-    lazy var availableConnectionProtocols: [ConnectionProtocol] = {
-        ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
-            .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
-            .uniqued
-            .sorted(by: ConnectionProtocol.uiSort)
-    }()
+    lazy var availableConnectionProtocols: [ConnectionProtocol] = ConnectionProtocol.availableProtocols(wireguardTLSEnabled: propertiesManager.featureFlags.wireGuardTls)
+        .appending(selectedProtocol) // Edge case - user's protocol has been deprecated. Show it as disabled
+        .uniqued
+        .sorted(by: ConnectionProtocol.uiSort)
 
     var availableProfiles: [Profile] {
         guard profileAuthorizer.canUseProfiles else {
@@ -134,38 +132,39 @@ final class ConnectionSettingsViewModel {
     }
 
     // MARK: - Quick and auto connect for current user
+
     var username: String? {
         authKeychain.username
     }
 
     var autoConnect: (enabled: Bool, profileId: String?)? {
         get {
-            guard let username = username else { return nil }
+            guard let username else { return nil }
             return propertiesManager.getAutoConnect(for: username)
         }
         set {
-            guard let newValue = newValue else { return }
-            guard let username = username else { return }
+            guard let newValue else { return }
+            guard let username else { return }
             propertiesManager.setAutoConnect(for: username, enabled: newValue.enabled, profileId: newValue.profileId)
         }
     }
 
     var quickConnect: String? {
         get {
-            guard let username = username else { return nil }
+            guard let username else { return nil }
             return propertiesManager.getQuickConnect(for: username)
         }
         set {
-            guard let username = username else { return }
+            guard let username else { return }
             propertiesManager.setQuickConnect(for: username, quickConnect: newValue)
         }
     }
-    
+
     // MARK: - Current Index
-    
+
     var autoConnectProfileIndex: Int {
-        guard let autoConnect = autoConnect, autoConnect.enabled else { return 0 }
-        
+        guard let autoConnect, autoConnect.enabled else { return 0 }
+
         guard let profileId = autoConnect.profileId else { return 1 }
         let index = availableProfiles.firstIndex {
             $0.id == profileId
@@ -176,18 +175,18 @@ final class ConnectionSettingsViewModel {
         guard listIndex < autoConnectItemCount else { return 1 }
         return listIndex
     }
-    
+
     var quickConnectProfileIndex: Int {
         guard let profileId = quickConnect else { return 0 }
         let index = profileManager.allProfiles.firstIndex {
             $0.id == profileId
         }
-        
+
         guard let profileIndex = index, profileIndex < quickConnectItemCount else { return 0 }
         return profileIndex
     }
 
-    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = authorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
@@ -200,26 +199,26 @@ final class ConnectionSettingsViewModel {
     }
 
     // MARK: - Item counts
-    
+
     var autoConnectItemCount: Int {
-        return availableProfiles.count + 1 // Add one to account for the 'disabled' option
+        availableProfiles.count + 1 // Add one to account for the 'disabled' option
     }
-    
+
     var quickConnectItemCount: Int {
-        return availableProfiles.count
+        availableProfiles.count
     }
-    
+
     var protocolItemCount: Int {
-        return availableConnectionProtocols.count
+        availableConnectionProtocols.count
     }
-        
+
     // MARK: - Setters
-    
+
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
             throw ConnectionSettingsError.autoConnectRange
         }
-        
+
         if index > 0 {
             let selectedProfile = availableProfiles[index - 1]
             autoConnect = (enabled: true, profileId: selectedProfile.id)
@@ -229,12 +228,12 @@ final class ConnectionSettingsViewModel {
             log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "nil"])
         }
     }
-    
+
     func setQuickConnect(_ index: Int) throws {
         guard index < quickConnectItemCount else {
             throw ConnectionSettingsError.quickConnectRange
         }
-        
+
         let selectedProfile = profileManager.allProfiles[index]
         quickConnect = selectedProfile.id
         log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
@@ -265,13 +264,13 @@ final class ConnectionSettingsViewModel {
         protocolItem(for: protocolIndex)?.requiresSystemExtension == true && sysexPending
     }
 
-    func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<(), Error>) -> Void) {
+    func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<Void, Error>) -> Void) {
         sysexPending = true
         switch connectionProtocol {
         case .smartProtocol:
-            self.confirmEnableSmartProtocol(completion)
-        case .vpnProtocol(let transportProtocol):
-            let changeCompletionHandler: (Result<(), Error>) -> Void = { [weak self] result in
+            confirmEnableSmartProtocol(completion)
+        case let .vpnProtocol(transportProtocol):
+            let changeCompletionHandler: (Result<Void, Error>) -> Void = { [weak self] result in
                 self?.sysexPending = false
                 if case .success = result {
                     self?.propertiesManager.smartProtocol = false
@@ -281,7 +280,7 @@ final class ConnectionSettingsViewModel {
             }
 
             guard transportProtocol == .ike else {
-                self.vpnProtocolChangeManager.change(
+                vpnProtocolChangeManager.change(
                     toProtocol: transportProtocol,
                     userInitiated: true,
                     completion: changeCompletionHandler
@@ -290,18 +289,18 @@ final class ConnectionSettingsViewModel {
             }
 
             // Show IKEv2 deprecation warning
-            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
-                guard let self = self else {
+            alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol.")
-                self.confirmEnableSmartProtocol(completion)
+                confirmEnableSmartProtocol(completion)
             }, continueHandler: { [weak self] in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway.")
-                self.vpnProtocolChangeManager.change(
+                vpnProtocolChangeManager.change(
                     toProtocol: transportProtocol,
                     userInitiated: true,
                     completion: changeCompletionHandler
@@ -309,39 +308,48 @@ final class ConnectionSettingsViewModel {
             }))
         }
     }
-        
-    @objc private func settingsChanged() {
+
+    @objc
+    private func settingsChanged() {
         reloadNeeded?()
     }
 
-    @objc private func tourCancelled() {
+    @objc
+    private func tourCancelled() {
         reloadNeeded?()
     }
-    
-    func confirmEnableSmartProtocol(_ completion: @escaping (Result<(), Error>) -> Void) {
+
+    func confirmEnableSmartProtocol(_ completion: @escaping (Result<Void, Error>) -> Void) {
         switch vpnGateway.connection {
         case .connected, .connecting:
             let config = propertiesManager.smartProtocolConfig
-            let supported = appStateManager.activeConnection()?.server.supports(connectionProtocol: .smartProtocol,
-                                                                                smartProtocolConfig: config) == true
+            let supported = appStateManager.activeConnection()?.server.supports(
+                connectionProtocol: .smartProtocol,
+                smartProtocolConfig: config
+            ) == true
 
-            let alert: SystemAlert
-            if supported {
-                alert = ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
+            let alert: SystemAlert = if supported {
+                ReconnectOnSmartProtocolChangeAlert(confirmHandler: { [weak self] in
                     self?.enableSmartProtocol(and: .reconnect, completion)
                 }, cancelHandler: {
                     completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
                 })
             } else {
-                alert = ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
-                    log.info("User changed to smart protocol, even though current server doesn't support it",
-                             category: .connectionConnect, event: .trigger,
-                             metadata: ["smartProtocolConfig": "\(config)"])
+                ProtocolNotAvailableForServerAlert(confirmHandler: { [weak self] in
+                    log.info(
+                        "User changed to smart protocol, even though current server doesn't support it",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["smartProtocolConfig": "\(config)"]
+                    )
                     self?.enableSmartProtocol(and: .disconnect, completion)
                 }, cancelHandler: {
-                    log.info("User did not change to smart protocol, since current server doesn't support it",
-                             category: .connectionConnect, event: .trigger,
-                             metadata: ["smartProtocolConfig": "\(config)"])
+                    log.info(
+                        "User did not change to smart protocol, since current server doesn't support it",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["smartProtocolConfig": "\(config)"]
+                    )
                     completion(.failure(ReconnectOnSmartProtocolChangeAlert.userCancelled))
                 })
             }
@@ -352,7 +360,7 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<(), Error>) -> Void) {
+    private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
         sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
             self?.sysexPending = false
 
@@ -363,17 +371,29 @@ final class ConnectionSettingsViewModel {
 
                 switch then {
                 case .disconnect:
-                    log.info("Will disconnect after VPN feature change",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Will disconnect after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     self?.vpnGateway.disconnect { completion(.success) }
                 case .reconnect:
-                    log.info("Connection will restart after VPN feature change",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Connection will restart after VPN feature change",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     self?.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
                     completion(.success)
                 case .doNothing:
-                    log.info("Smart protocol was enabled",
-                             category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                    log.info(
+                        "Smart protocol was enabled",
+                        category: .connectionConnect,
+                        event: .trigger,
+                        metadata: ["feature": "smartProtocol"]
+                    )
                     completion(.success)
                 }
             case let .failure(error):
@@ -390,17 +410,17 @@ final class ConnectionSettingsViewModel {
         }
     }
 
-    private func checkSysexOrResetProtocol(_ protocol: ConnectionProtocol) {
-        self.sysexPending = true
+    private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
+        sysexPending = true
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
-            self.sysexPending = false
-            if case .failure(let error) = result {
-                self.selectedProtocol = .vpnProtocol(.ike)
+            sysexPending = false
+            if case let .failure(error) = result {
+                selectedProtocol = .vpnProtocol(.ike)
             }
         }
     }
-    
+
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let newValue: VPNAccelerator = enabled ? .on : .off
         vpnStateConfiguration.getInfo { [weak self] info in
@@ -429,7 +449,7 @@ final class ConnectionSettingsViewModel {
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
-        
+
         if propertiesManager.killSwitch {
             let alert = AllowLANConnectionsAlert(connected: isConnected) {
                 self.featurePropertyProvider.setValue(newValue)
@@ -442,17 +462,17 @@ final class ConnectionSettingsViewModel {
             } cancelHandler: {
                 completion(false)
             }
-            
-            self.alertService.push(alert: alert)
+
+            alertService.push(alert: alert)
             return
         }
-        
+
         guard isConnected else {
-            self.featurePropertyProvider.setValue(newValue)
+            featurePropertyProvider.setValue(newValue)
             completion(true)
             return
         }
-        
+
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
             self.featurePropertyProvider.setValue(newValue)
             log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
@@ -472,13 +492,13 @@ final class ConnectionSettingsViewModel {
     func showVPNAcceleratorUpsell() {
         alertService.push(alert: VPNAcceleratorUpsellAlert())
     }
-    
+
     func showPlutoniumUpsell() {
         alertService.push(alert: PlutoniumUpsellAlert())
     }
 
     // MARK: - Item
-    
+
     func autoConnectItem(for index: Int) -> NSAttributedString {
         if index > 0 {
             return profileString(for: index - 1)
@@ -490,15 +510,15 @@ final class ConnectionSettingsViewModel {
 
     // Don't show quick connect customisation if user is not authorized to use profiles
     var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
-    
+
     func quickConnectItem(for index: Int) -> NSAttributedString {
-        return profileString(for: index)
+        profileString(for: index)
     }
-        
+
     func protocolString(for vpnProtocol: ConnectionProtocol) -> NSAttributedString {
-        return vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
+        vpnProtocol.description.styled(.dropdown, font: .themeFont(.heading4), alignment: .left)
     }
-    
+
     // MARK: - Values
 
     private func attributedAttachment(style: AppTheme.Style, width: CGFloat = 12) -> NSAttributedString {
@@ -511,7 +531,7 @@ final class ConnectionSettingsViewModel {
         attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
     }
-    
+
     private func concatenated(imageString: NSAttributedString, with text: String, enabled: Bool) -> NSAttributedString {
         let style: AppTheme.Style = enabled ? .dropdown : [.transparent, .disabled]
         let nameAttributedString = ("  " + text).styled(style, font: .themeFont(.heading4))
@@ -545,5 +565,4 @@ final class ConnectionSettingsViewModel {
     func showPlutoniumSettings() {
         navService.showPlutonium()
     }
-
 }

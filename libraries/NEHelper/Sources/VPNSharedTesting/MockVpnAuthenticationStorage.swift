@@ -22,16 +22,16 @@ import Domain
 import VPNShared
 
 public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
-    public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> ())?
-    public var keysStored: ((VpnKeys) -> ())?
+    public var certAndFeaturesStored: ((VpnCertificateWithFeatures) -> Void)?
+    public var keysStored: ((VpnKeys) -> Void)?
     public var certDeleted: (() -> Void)?
     public var keysDeleted: (() -> Void)?
 
     public var keys: VpnKeys?
     public var cert: VpnCertificate?
     public var features: VPNConnectionFeatures?
-    
-    public init() { }
+
+    public init() {}
 
     public func deleteKeys() {
         keys = nil
@@ -46,12 +46,12 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     }
 
     public func getKeys() -> VpnKeys {
-        if let keys = keys {
+        if let keys {
             return keys
         }
 
         let newKeys = VpnKeys.mock()
-        self.store(keys: newKeys)
+        store(keys: newKeys)
         return newKeys
     }
 
@@ -73,22 +73,22 @@ public class MockVpnAuthenticationStorage: VpnAuthenticationStorageSync {
     }
 
     public func store(_ certificate: VpnCertificateWithFeatures) {
-        self.cert = certificate.certificate
-        self.features = certificate.features
+        cert = certificate.certificate
+        features = certificate.features
         delegate?.certificateStored(certificate.certificate)
         certAndFeaturesStored?(certificate)
     }
 
     public func store(_ certificate: VpnCertificate) {
-        self.cert = certificate
+        cert = certificate
         delegate?.certificateStored(certificate)
     }
 
     public var delegate: VpnAuthenticationStorageDelegate?
 }
 
-extension MockVpnAuthenticationStorage {
-    public func with(keys: VpnKeys) -> Self {
+public extension MockVpnAuthenticationStorage {
+    func with(keys: VpnKeys) -> Self {
         store(keys: keys)
         return self
     }

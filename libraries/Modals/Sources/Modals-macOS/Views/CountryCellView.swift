@@ -20,9 +20,8 @@ import Cocoa
 import ModalsShared
 
 class CountryCellView: NSCollectionViewItem {
-
-    @IBOutlet private weak var flagImageView: NSImageView!
-    @IBOutlet private weak var countryNameField: NSTextField!
+    @IBOutlet private var flagImageView: NSImageView!
+    @IBOutlet private var countryNameField: NSTextField!
 
     static let cellIdentifier = NSUserInterfaceItemIdentifier("CountryCellView")
     static let nib = NSNib.Name("CountryCellView")

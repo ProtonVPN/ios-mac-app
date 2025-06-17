@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import UIKit
 import Overture
 import Theme
+import UIKit
 
 var colors = Colors()
 
@@ -92,18 +92,18 @@ let lineSeparatorStyle: (UIView, NSLayoutConstraint) -> Void = {
 }
 
 let highlightMatches = { (label: UILabel, string: String?, searchText: String?) in
-    guard let searchText = searchText, !searchText.isEmpty, let string = string, !string.isEmpty else {
+    guard let searchText, !searchText.isEmpty, let string, !string.isEmpty else {
         label.text = string
         return
     }
 
     let text = NSMutableAttributedString(string: string, attributes: [
         NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17),
-        NSAttributedString.Key.foregroundColor: colors.weakText
+        NSAttributedString.Key.foregroundColor: colors.weakText,
     ])
 
-    string.findStartingRanges(of: searchText).forEach {
-        text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: $0)
+    for findStartingRange in string.findStartingRanges(of: searchText) {
+        text.addAttributes([NSAttributedString.Key.foregroundColor: colors.text], range: findStartingRange)
     }
 
     label.attributedText = text

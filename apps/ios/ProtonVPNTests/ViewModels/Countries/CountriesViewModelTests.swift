@@ -21,15 +21,15 @@ import XCTest
 
 import Dependencies
 
-import Domain
-import Persistence
-import LegacyCommon
-import Search
-@testable import ProtonVPN
-import VPNSharedTesting
-import IssueReporting
 import Announcement
+import Domain
+import IssueReporting
+import LegacyCommon
+import Persistence
 import ProtonCoreFeatureFlags
+@testable import ProtonVPN
+import Search
+import VPNSharedTesting
 
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!
@@ -45,7 +45,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     var mockFactory: DependencyFactory {
-        return DependencyFactory(propertiesManager: mockPropertiesManager)
+        DependencyFactory(propertiesManager: mockPropertiesManager)
     }
 
     var mockGateway: VpnGatewayProtocol {
@@ -57,7 +57,7 @@ final class CountriesViewModelTests: XCTestCase {
     var serverGroups: [ServerGroupInfo]!
 
     func withMockedRepository<T>(_ operation: () -> T) -> T {
-        return withDependencies {
+        withDependencies {
             // Normally we would be able to omit all arguments except groups, but doing so triggers a linker bug with XCTDynamicOverlay.
             $0.serverRepository = .init(
                 serverCount: { 0 },
@@ -70,7 +70,7 @@ final class CountriesViewModelTests: XCTestCase {
                 groups: { _, _ in self.serverGroups },
                 getMetadata: { _ in nil },
                 setMetadata: { _, _ in },
-                closeConnection: { }
+                closeConnection: {}
             )
         } operation: {
             operation()
@@ -160,7 +160,7 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     private func assert(_ rowVM: RowViewModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {
-        guard case .serverGroup(let viewModel) = rowVM else {
+        guard case let .serverGroup(viewModel) = rowVM else {
             XCTFail("Expected row view model to be a server group, but found: \(rowVM)")
             return
         }
@@ -193,19 +193,18 @@ struct AnnouncementManagerMock: AnnouncementManager {
     var hasUnreadAnnouncements: Bool { false }
     func fetchCurrentAnnouncementsFromStorage() -> [Announcement] { [] }
     func fetchCurrentOfferBannerFromStorage() -> Announcement? { nil }
-    func offerBannerViewModel(dismiss: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
-    func markAsRead(announcement: Announcement) { }
-    func markAsRead(notificationID: String) { }
+    func offerBannerViewModel(dismiss _: @escaping (Announcement) -> Void) -> OfferBannerViewModel? { nil }
+    func markAsRead(announcement _: Announcement) {}
+    func markAsRead(notificationID _: String) {}
     func shouldShowAnnouncementsIcon() -> Bool { false }
 }
 
 struct CountryServiceMock: CountryService {
     func makeCountriesViewController() -> CountriesViewController { CountriesViewController() }
-    func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController { CountryViewController() }
+    func makeCountryViewController(country _: CountryItemViewModel) -> CountryViewController { CountryViewController() }
 }
 
 enum MockServerGroup {
-
     static var dev: ServerGroupInfo {
         .init(kind: .gateway(name: "Dev"), featureIntersection: .restricted, featureUnion: .restricted, minTier: .paidTier, maxTier: .paidTier, serverCount: 2, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: false, isUnderMaintenance: false, protocolSupport: .wireGuardUDP)
     }
@@ -217,5 +216,4 @@ enum MockServerGroup {
     static var switzerland: ServerGroupInfo {
         .init(kind: .country(code: "CH"), featureIntersection: .zero, featureUnion: .zero, minTier: .paidTier, maxTier: .paidTier, serverCount: 3, cityCount: 1, latitude: 0, longitude: 0, supportsSmartRouting: true, isUnderMaintenance: false, protocolSupport: .ikev2)
     }
-
 }

@@ -22,11 +22,10 @@
 import Foundation
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 public class Profile: NSObject, NSCoding, Identifiable, Codable {
-
     public static let idLength = 20
 
     public let id: String
@@ -38,10 +37,9 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public let name: String
     public let connectionProtocol: ConnectionProtocol
     public let lastConnectedDate: Date?
-    
+
     override public var description: String {
-        return
-            "ID: \(id)\n" +
+        "ID: \(id)\n" +
             "Access tier: \(accessTier)\n" +
             "Profile icon: \(profileIcon.description)\n" +
             "Profile type: \(profileType.description)\n" +
@@ -51,10 +49,9 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             "Protocol: \(connectionProtocol)\n" +
             "Last connected date: \(lastConnectedDate?.description ?? "None")"
     }
-    
+
     public var logDescription: String {
-        return
-            "ID: \(id) " +
+        "ID: \(id) " +
             "Access tier: \(accessTier) " +
             "Profile icon: \(profileIcon.description) " +
             "Profile type: \(profileType.description) " +
@@ -72,16 +69,16 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     public func connectionRequest(withDefaultNetshield netShield: NetShieldType, withDefaultNATType natType: NATType, withDefaultSafeMode safeMode: Bool?, trigger: UserInitiatedVPNChange.VPNTrigger?) -> ConnectionRequest {
         switch serverOffering {
         case let .fastest(countryCode):
-            let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .fastest) }) ?? ConnectionRequestType.fastest
+            let connectionType: ConnectionRequestType = countryCode.flatMap { ConnectionRequestType.country($0, .fastest) } ?? ConnectionRequestType.fastest
             return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShield, natType: natType, safeMode: safeMode, profileId: id, profileName: name, trigger: trigger)
         case let .random(countryCode):
-            let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .random) }) ?? ConnectionRequestType.random
+            let connectionType: ConnectionRequestType = countryCode.flatMap { ConnectionRequestType.country($0, .random) } ?? ConnectionRequestType.random
             return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShield, natType: natType, safeMode: safeMode, profileId: id, profileName: name, trigger: trigger)
         case let .custom(serverWrapper):
             return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: connectionProtocol, netShieldType: netShield, natType: natType, safeMode: safeMode, profileId: id, profileName: name, trigger: trigger)
         }
     }
-    
+
     public init(
         id: String,
         accessTier: Int,
@@ -103,7 +100,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         self.connectionProtocol = connectionProtocol
         self.lastConnectedDate = lastConnectedDate
     }
-    
+
     public convenience init(
         accessTier: Int,
         profileIcon: ProfileIcon,
@@ -129,14 +126,15 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     }
 
     // MARK: - NSCoding
-    private struct CoderKey {
+
+    private enum CoderKey {
         static let id = "id"
         static let accessTier = "accessTier"
         static let name = "name"
         static let connectionProtocol = "connectionProtocol"
         static let lastConnectedDate = "lastConnectedDate"
     }
-    
+
     public required convenience init?(coder aDecoder: NSCoder) {
         let id = aDecoder.decodeObject(forKey: CoderKey.id) as! String
         let accessTier = aDecoder.decodeInteger(forKey: CoderKey.accessTier)
@@ -181,11 +179,12 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
             lastConnectedDate: date
         )
     }
-    public func encode(with aCoder: NSCoder) {
+
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
-    
-    public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
+
+    public func copyWith(newNetShieldType _: NetShieldType) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -213,7 +212,7 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
         )
     }
 
-    public func withProtocol(_ `protocol`: ConnectionProtocol) -> Profile {
+    public func withProtocol(_ protocol: ConnectionProtocol) -> Profile {
         Profile(
             id: id,
             accessTier: accessTier,
@@ -227,25 +226,25 @@ public class Profile: NSObject, NSCoding, Identifiable, Codable {
     }
 }
 
-fileprivate extension ConnectionProtocol {
+private extension ConnectionProtocol {
     static func from(codingValue: Int) -> ConnectionProtocol? {
         switch codingValue {
         case 0:
-            return .smartProtocol
+            .smartProtocol
         case 1:
-            return .vpnProtocol(.ike)
+            .vpnProtocol(.ike)
         case 2:
-            return .vpnProtocol(.openVpn(.udp))
+            .vpnProtocol(.openVpn(.udp))
         case 3:
-            return .vpnProtocol(.openVpn(.tcp))
+            .vpnProtocol(.openVpn(.tcp))
         case 4:
-            return .vpnProtocol(.wireGuard(.udp))
+            .vpnProtocol(.wireGuard(.udp))
         case 5:
-            return .vpnProtocol(.wireGuard(.tcp))
+            .vpnProtocol(.wireGuard(.tcp))
         case 6:
-            return .vpnProtocol(.wireGuard(.tls))
+            .vpnProtocol(.wireGuard(.tls))
         default:
-            return nil
+            nil
         }
     }
 }

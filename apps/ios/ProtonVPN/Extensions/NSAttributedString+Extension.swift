@@ -20,11 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
+import UIKit
 
 extension NSAttributedString {
-    
     static func concatenate(_ strings: NSAttributedString...) -> NSAttributedString {
         let mutableAttributedString = NSMutableAttributedString()
         strings.forEach { mutableAttributedString.append($0) }
@@ -39,16 +38,16 @@ extension NSAttributedString {
         }
         return imageAttachment(image: image, size: size)
     }
-    
+
     static func imageAttachment(image: UIImage, baselineOffset: CGFloat? = nil, size: CGSize? = nil) -> NSAttributedString {
         let attachment = NSTextAttachment()
-        if let size = size {
+        if let size {
             attachment.bounds = CGRect(origin: .zero, size: size)
         }
 
         attachment.image = image
         let string = NSMutableAttributedString(attachment: attachment)
-        if let baselineOffset = baselineOffset {
+        if let baselineOffset {
             // swiftlint:disable:next legacy_constructor
             string.addAttribute(NSAttributedString.Key.baselineOffset, value: baselineOffset, range: NSMakeRange(0, string.length))
         }

@@ -23,10 +23,9 @@ public typealias HomeAsset = HomeShared.HomeAsset
 public typealias HomeFeature = HomeShared.HomeFeature
 
 #if canImport(Home_iOS)
-import Home_iOS
+    import Home_iOS
 
-public typealias HomeView = Home_iOS.HomeView
-public typealias WidgetSettingsView = Home_iOS.WidgetSettingsView
+    public typealias HomeView = Home_iOS.HomeView
+    public typealias WidgetSettingsView = Home_iOS.WidgetSettingsView
 
 #endif
-

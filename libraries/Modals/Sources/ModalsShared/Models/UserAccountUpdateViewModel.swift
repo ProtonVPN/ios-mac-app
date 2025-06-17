@@ -17,9 +17,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCoreUIFoundations
 import Strings
 import Theme
-import ProtonCoreUIFoundations
 
 public enum UserAccountUpdateViewModel {
     case subscriptionDowngradedReconnecting(numberOfCountries: Int, numberOfDevices: Int, fromServer: (String, Image), toServer: (String, Image))
@@ -30,106 +30,108 @@ public enum UserAccountUpdateViewModel {
     case reachedDevicePlanLimit(planName: String, numberOfDevices: Int)
 }
 
-extension UserAccountUpdateViewModel {
-    public var fromServerTitle: String { Localizable.fromServerTitle }
-    public var toServerTitle: String { Localizable.toServerTitle }
+public extension UserAccountUpdateViewModel {
+    var fromServerTitle: String { Localizable.fromServerTitle }
+    var toServerTitle: String { Localizable.toServerTitle }
 
-    public var primaryButtonTitle: String {
+    var primaryButtonTitle: String {
         switch self {
         case .subscriptionDowngraded, .subscriptionDowngradedReconnecting:
-            return Localizable.upgradeAgain
+            Localizable.upgradeAgain
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return Localizable.updateBilling
+            Localizable.updateBilling
         case .reachedDeviceLimit:
-            return Localizable.newPlansBrandGotIt
+            Localizable.newPlansBrandGotIt
         case .reachedDevicePlanLimit:
-            return Localizable.modalsGetPlus
+            Localizable.modalsGetPlus
         }
     }
 
-    public var secondaryButtonTitle: String? {
+    var secondaryButtonTitle: String? {
         switch self {
         case .reachedDeviceLimit:
-            return nil
+            nil
         default:
-            return Localizable.noThanks
+            Localizable.noThanks
         }
     }
 
-    public var options: [String]? {
+    var options: [String]? {
         switch self {
-        case .subscriptionDowngradedReconnecting(let numberOfCountries, let numberOfDevices, _, _),
-                .subscriptionDowngraded(let numberOfCountries, let numberOfDevices):
-            return [Localizable.subscriptionUpgradeOption1(numberOfCountries),
-                    Localizable.subscriptionUpgradeOption2(numberOfDevices),
-                    Localizable.subscriptionUpgradeOption3]
+        case let .subscriptionDowngradedReconnecting(numberOfCountries, numberOfDevices, _, _),
+             let .subscriptionDowngraded(numberOfCountries, numberOfDevices):
+            [
+                Localizable.subscriptionUpgradeOption1(numberOfCountries),
+                Localizable.subscriptionUpgradeOption2(numberOfDevices),
+                Localizable.subscriptionUpgradeOption3,
+            ]
         default:
-            return nil
+            nil
         }
     }
 
-    public var title: String? {
+    var title: String? {
         switch self {
         case .subscriptionDowngradedReconnecting, .subscriptionDowngraded:
-            return Localizable.subscriptionExpiredTitle
+            Localizable.subscriptionExpiredTitle
         case .pendingInvoicesReconnecting, .pendingInvoices:
-            return Localizable.delinquentTitle
+            Localizable.delinquentTitle
         case .reachedDevicePlanLimit, .reachedDeviceLimit:
-            return Localizable.maximumDeviceTitle
+            Localizable.maximumDeviceTitle
         }
     }
 
-    public var subtitle: String? {
+    var subtitle: String? {
         switch self {
         case .subscriptionDowngradedReconnecting:
-            return Localizable.subscriptionExpiredReconnectionDescription
+            Localizable.subscriptionExpiredReconnectionDescription
         case .subscriptionDowngraded:
-            return Localizable.subscriptionExpiredDescription
+            Localizable.subscriptionExpiredDescription
         case .pendingInvoicesReconnecting:
-            return Localizable.delinquentReconnectionDescription
+            Localizable.delinquentReconnectionDescription
         case .pendingInvoices:
-            return Localizable.delinquentDescription
-        case .reachedDevicePlanLimit(let planName, let numberOfDevices):
-            return Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
+            Localizable.delinquentDescription
+        case let .reachedDevicePlanLimit(planName, numberOfDevices):
+            Localizable.maximumDevicePlanLimitPart1(planName) + Localizable.maximumDevicePlanLimitPart2(numberOfDevices)
         case .reachedDeviceLimit:
-            return Localizable.maximumDeviceLimit
+            Localizable.maximumDeviceLimit
         }
     }
 
-    public var image: Image? {
+    var image: Image? {
         switch self {
         case .reachedDevicePlanLimit:
-            return Asset.maximumDeviceLimitUpsell.image
+            Asset.maximumDeviceLimitUpsell.image
         case .reachedDeviceLimit:
-            return Asset.maximumDeviceLimitWarning.image
+            Asset.maximumDeviceLimitWarning.image
         default:
-            return nil
+            nil
         }
     }
 
-    public var checkmark: Image? {
+    var checkmark: Image? {
         IconProvider.checkmarkCircleFilled
     }
 
-    public var fromServer: (String, Image)? {
+    var fromServer: (String, Image)? {
         switch self {
-        case .pendingInvoicesReconnecting(let fromServer, _):
-            return fromServer
-        case .subscriptionDowngradedReconnecting(_, _, let fromServer, _):
-            return fromServer
+        case let .pendingInvoicesReconnecting(fromServer, _):
+            fromServer
+        case let .subscriptionDowngradedReconnecting(_, _, fromServer, _):
+            fromServer
         default:
-            return nil
+            nil
         }
     }
 
-    public var toServer: (String, Image)? {
+    var toServer: (String, Image)? {
         switch self {
-        case .pendingInvoicesReconnecting(_, let toServer):
-            return toServer
-        case .subscriptionDowngradedReconnecting(_, _, _, let toServer):
-            return toServer
+        case let .pendingInvoicesReconnecting(_, toServer):
+            toServer
+        case let .subscriptionDowngradedReconnecting(_, _, _, toServer):
+            toServer
         default:
-            return nil
+            nil
         }
     }
 }

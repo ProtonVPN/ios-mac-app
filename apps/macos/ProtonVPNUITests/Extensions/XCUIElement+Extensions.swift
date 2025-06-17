@@ -32,17 +32,17 @@ extension XCUIElement {
             coordinatesClick(dx: dx, dy: dy)
         }
     }
-    
+
     /// Clicks at a given coordinate.
     ///
     /// - Parameters:
     ///   - dx: The x-coordinate normalized offset. Default value is 0.5.
     ///   - dy: The y-coordinate normalized offset. Default value is 0.5.
     func coordinatesClick(dx: Double = 0.5, dy: Double = 0.5) {
-        let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector.init(dx: dx, dy: dy))
+        let coordinate: XCUICoordinate = coordinate(withNormalizedOffset: CGVector(dx: dx, dy: dy))
         coordinate.click()
     }
-    
+
     /// Forcibly hovers the element if its not hittable.
     ///
     /// - Parameters:
@@ -55,14 +55,14 @@ extension XCUIElement {
             coordinatesHover(dx: dx, dy: dy)
         }
     }
-    
+
     /// Hovers over a given coordinate.
     ///
     /// - Parameters:
     ///   - dx: The x-coordinate normalized offset. Default value is 0.5.
     ///   - dy: The y-coordinate normalized offset. Default value is 0.5.
     func coordinatesHover(dx: Double = 0.5, dy: Double = 0.5) {
-        let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset: CGVector.init(dx: dx, dy: dy))
+        let coordinate: XCUICoordinate = coordinate(withNormalizedOffset: CGVector(dx: dx, dy: dy))
         coordinate.hover()
     }
 }

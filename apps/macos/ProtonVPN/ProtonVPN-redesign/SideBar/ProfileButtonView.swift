@@ -18,18 +18,18 @@
 
 #if REDESIGN
 
-import SwiftUI
-import Theme
-import ProtonCoreUIFoundations
+    import ProtonCoreUIFoundations
+    import SwiftUI
+    import Theme
 
-struct ProfileButtonView: View {
-    var body: some View {
-        IconProvider.userCircle
-            .resizable()
-            .frame(.square(.themeSpacing16))
-            .tint(Color(.text))
-            .padding(.themeSpacing24)
+    struct ProfileButtonView: View {
+        var body: some View {
+            IconProvider.userCircle
+                .resizable()
+                .frame(.square(.themeSpacing16))
+                .tint(Color(.text))
+                .padding(.themeSpacing24)
+        }
     }
-}
 
 #endif

@@ -18,14 +18,14 @@
 //  along with VPNAppCore.  If not, see <https://www.gnu.org/licenses/>.
 
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(Cocoa)
-import Cocoa
+    import Cocoa
 #endif
 
 import Dependencies
-import PMLogger
 import Domain
+import PMLogger
 
 public struct LinkOpener: DependencyKey {
     public let open: (URL) -> Void
@@ -45,23 +45,23 @@ public struct LinkOpener: DependencyKey {
 
     public static var liveValue: LinkOpener = .init { url in
         #if canImport(UIKit)
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         #elseif canImport(Cocoa)
-        NSWorkspace.shared.open(url)
+            NSWorkspace.shared.open(url)
         #endif
     }
 
     #if DEBUG
-    static let testLinkOpenerOpenedURL = Notification.Name("TestLinkOpenerOpenedURL")
+        static let testLinkOpenerOpenedURL = Notification.Name("TestLinkOpenerOpenedURL")
 
-    public static var testValue: LinkOpener = .init { url in
-        NotificationCenter.default.post(name: Self.testLinkOpenerOpenedURL, object: url)
-    }
+        public static var testValue: LinkOpener = .init { url in
+            NotificationCenter.default.post(name: Self.testLinkOpenerOpenedURL, object: url)
+        }
     #endif
 }
 
-extension DependencyValues {
-    public var linkOpener: LinkOpener {
+public extension DependencyValues {
+    var linkOpener: LinkOpener {
         get { self[LinkOpener.self] }
         set { self[LinkOpener.self] = newValue }
     }

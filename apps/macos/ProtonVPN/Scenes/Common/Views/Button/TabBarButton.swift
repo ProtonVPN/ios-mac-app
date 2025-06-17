@@ -27,19 +27,19 @@ class TabBarButton: NSButton {
     static func backgroundColor(forFocus present: Bool) -> CGColor {
         .cgColor(.background, present ? .weak : .normal)
     }
-    
+
     override var title: String {
         didSet {
             setupAttributedTitle()
         }
     }
-    
+
     var isFocused: Bool = false {
         didSet {
             setupAttributedTitle()
         }
     }
-    
+
     var isHovered: Bool = false {
         didSet {
             if !isFocused {
@@ -55,15 +55,15 @@ class TabBarButton: NSButton {
     }
 
     override func accessibilityRole() -> NSAccessibility.Role? {
-        return .tabGroup
+        .tabGroup
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         isBordered = false
         setButtonType(.momentaryChange)
-        
+
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
@@ -74,22 +74,22 @@ class TabBarButton: NSButton {
         }
     }
 
-    override func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with _: NSEvent) {
         isHovered = true
     }
-    
-    override func mouseExited(with event: NSEvent) {
+
+    override func mouseExited(with _: NSEvent) {
         isHovered = false
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         wantsLayer = true
 
         layer?.backgroundColor = .clear
     }
-    
+
     private func setupAttributedTitle() {
         let shouldHighlight = isFocused || isHovered
         attributedTitle = title.styled(shouldHighlight ? .normal : .weak, font: .themeFont(.heading4))

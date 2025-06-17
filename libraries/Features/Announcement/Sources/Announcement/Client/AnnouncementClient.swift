@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
+import Foundation
 
 @DependencyClient
 public struct AnnouncementClient: Sendable {
@@ -37,18 +37,15 @@ extension AnnouncementClient: DependencyKey {
     }()
 
     #if DEBUG
-    public static var testValue: AnnouncementClient = {
-        AnnouncementClient {
+        public static var testValue: AnnouncementClient = AnnouncementClient {
             AnnouncementResponse(notifications: [])
         }
-    }()
     #endif
 }
 
-extension DependencyValues {
-    public var announcementClient: AnnouncementClient {
+public extension DependencyValues {
+    var announcementClient: AnnouncementClient {
         get { self[AnnouncementClient.self] }
         set { self[AnnouncementClient.self] = newValue }
     }
 }
-

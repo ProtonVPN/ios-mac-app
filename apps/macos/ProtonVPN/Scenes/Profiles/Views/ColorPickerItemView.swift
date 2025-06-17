@@ -23,15 +23,14 @@
 import Cocoa
 
 class ColorPickerItemView: NSCollectionViewItem {
+    @IBOutlet var colorPickerCircle: ColorPickerCircle!
 
-    @IBOutlet weak var colorPickerCircle: ColorPickerCircle!
-        
     override var isSelected: Bool {
         didSet {
             colorPickerCircle.isSelected = isSelected
         }
     }
-    
+
     var circleColor: NSColor? {
         didSet {
             colorPickerCircle.color = circleColor

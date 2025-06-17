@@ -27,22 +27,21 @@ import Combine
 import ComposableArchitecture
 import Dependencies
 
-import ProtonCoreUIFoundations
 import ProtonCoreFeatureFlags
+import ProtonCoreUIFoundations
 
 import Persistence
 
-import Search
 import LegacyCommon
-import VPNAppCore
 import Localization
+import Search
+import VPNAppCore
 
 import Domain
 import Strings
 import Theme
 
 class ServerItemViewModel: ServerItemViewModelCore {
-
     @Dependency(\.serverRepository) var repository
 
     private let alertService: AlertService
@@ -67,8 +66,8 @@ class ServerItemViewModel: ServerItemViewModelCore {
         guard FeatureFlagsRepository.isConnectionFeatureEnabled else {
             if let activeConnection = vpnGateway.lastConnectionRequest,
                vpnGateway.connection == .connecting,
-               case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType,
-               case CountryConnectionRequestType.server(let activeServer) = countryRequestType,
+               case let ConnectionRequestType.country(_, countryRequestType) = activeConnection.connectionType,
+               case let CountryConnectionRequestType.server(activeServer) = countryRequestType,
                activeServer.id == serverModel.logical.id {
                 return true
             }
@@ -83,15 +82,15 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     var viaCountry: (name: String, code: String)? {
-        return nil
+        nil
     }
 
     var connectedUiState: Bool {
-        return isConnected || isConnecting
+        isConnected || isConnecting
     }
 
     fileprivate var canConnect: Bool {
-        return !isUsersTierTooLow && !underMaintenance
+        !isUsersTierTooLow && !underMaintenance
     }
 
     var connectionChanged: (() -> Void)?
@@ -99,34 +98,34 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     // MARK: First line in the TableCell
 
-    var description: String { return serverModel.logical.name }
+    var description: String { serverModel.logical.name }
 
     var city: String {
-        return serverModel.logical.city ?? ""
+        serverModel.logical.city ?? ""
     }
 
     var loadColor: UIColor {
         if serverModel.logical.load > 90 {
-            return .notificationErrorColor()
+            .notificationErrorColor()
         } else if serverModel.logical.load > 75 {
-            return .notificationWarningColor()
+            .notificationWarningColor()
         } else {
-            return .notificationOKColor()
+            .notificationOKColor()
         }
     }
 
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return Theme.Asset.vpnSubscriptionBadge.image
+            Theme.Asset.vpnSubscriptionBadge.image
         } else if underMaintenance {
-            return IconProvider.wrench
+            IconProvider.wrench
         } else {
-            return IconProvider.powerOff
+            IconProvider.powerOff
         }
     }
 
     var textInPlaceOfConnectIcon: String? {
-        return isUsersTierTooLow ? Localizable.upgrade : nil
+        isUsersTierTooLow ? Localizable.upgrade : nil
     }
 
     init(
@@ -187,6 +186,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
     }
 
     // MARK: - Private functions
+
     private var cancellables = Set<AnyCancellable>()
 
     fileprivate func startObserving() {
@@ -202,8 +202,9 @@ class ServerItemViewModel: ServerItemViewModelCore {
         }
     }
 
-    @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged {
+    @objc
+    fileprivate func stateChanged() {
+        if let connectionChanged {
             DispatchQueue.main.async {
                 connectionChanged()
             }
@@ -212,10 +213,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
 }
 
 // MARK: - SecureCoreServerItemViewModel subclass
-class SecureCoreServerItemViewModel: ServerItemViewModel {
 
+class SecureCoreServerItemViewModel: ServerItemViewModel {
     override var viaCountry: (name: String, code: String)? {
-        return isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
+        isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
     }
 
     override fileprivate func startObserving() {
@@ -241,7 +242,7 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     var entryCountryName: String? {
-        return viaCountry?.name
+        viaCountry?.name
     }
 
     var entryCountryFlag: UIImage? {
@@ -253,18 +254,18 @@ extension ServerItemViewModel: ServerViewModel {
     }
 
     var countryName: String {
-        return LocalizationUtility.default.countryName(forCode: serverModel.logical.exitCountryCode) ?? ""
+        LocalizationUtility.default.countryName(forCode: serverModel.logical.exitCountryCode) ?? ""
     }
 
     var countryFlag: UIImage? {
-        return UIImage.flag(countryCode: serverModel.logical.exitCountryCode)
+        UIImage.flag(countryCode: serverModel.logical.exitCountryCode)
     }
 
     var translatedCity: String? {
-        return serverModel.logical.translatedCity
+        serverModel.logical.translatedCity
     }
 
     var textColor: UIColor {
-        return UIColor.normalTextColor()
+        UIColor.normalTextColor()
     }
 }

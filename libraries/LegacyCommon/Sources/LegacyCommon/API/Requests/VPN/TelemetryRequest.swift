@@ -23,11 +23,10 @@ public struct TelemetryResponse: Codable {
 }
 
 final class TelemetryRequest: Request {
-
     var parameters: [String: Any]?
     let isBusiness: Bool
 
-    init( _ event: [String: Any], isBusiness: Bool) {
+    init(_ event: [String: Any], isBusiness: Bool) {
         self.parameters = event
         self.isBusiness = isBusiness
     }
@@ -39,7 +38,7 @@ final class TelemetryRequest: Request {
     var method: HTTPMethod = .post
 
     var isAuth: Bool {
-        return true
+        true
     }
 
     var retryPolicy: ProtonRetryPolicy.RetryMode {

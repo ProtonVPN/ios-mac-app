@@ -20,7 +20,6 @@ import Foundation
 
 /// App logs can be split into several files. This class collects logs from all of them.
 public class AppLogContent: LogContent {
-
     private let folder: URL
     private let filenameWithoutExtension: String = "ProtonVPN"
     private let fileManager = FileManager.default
@@ -38,14 +37,13 @@ public class AppLogContent: LogContent {
 
     public func loadContent(callback: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = self.urls.reduce("", { prev, url in
+            let result = self.urls.reduce("") { prev, url in
                 guard let contents = try? String(contentsOf: url) else {
                     return prev
                 }
                 return prev + contents + "\n"
-            })
+            }
             callback(result)
         }
     }
-
 }

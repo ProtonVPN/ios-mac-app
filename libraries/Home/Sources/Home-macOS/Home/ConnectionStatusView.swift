@@ -16,15 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import HomeShared
-import Theme
-import Strings
 import ComposableArchitecture
+import HomeShared
 import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import Theme
 
 struct ConnectionStatusView: View {
-
     let store: StoreOf<ConnectionStatusFeature>
 
     public init(store: StoreOf<ConnectionStatusFeature>) {
@@ -34,22 +33,22 @@ struct ConnectionStatusView: View {
     func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return Color(.background, .success)
+            Color(.background, .success)
         case .unprotected:
-            return Color(.background, .danger)
+            Color(.background, .danger)
         case .protecting:
-            return .white
+            .white
         }
     }
 
     func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return nil
+            nil
         case .unprotected:
-            return Localizable.connectionStatusUnprotected
+            Localizable.connectionStatusUnprotected
         case .protecting:
-            return Localizable.connectionStatusProtecting
+            Localizable.connectionStatusProtecting
         }
     }
 
@@ -63,7 +62,7 @@ struct ConnectionStatusView: View {
                     .themeFont(.title2(emphasised: true))
                     .foregroundColor(Color(.text, .success))
             case .protectedSecureCore:
-                    IconProvider.locksFilled
+                IconProvider.locksFilled
                     .foregroundColor(Color(.background, .success))
                 Text(Localizable.connectionStatusProtected)
                     .themeFont(.title2(emphasised: true))
@@ -80,15 +79,15 @@ struct ConnectionStatusView: View {
     func locationText(protectionState: ProtectionState) -> Text? {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return nil
+            nil
         case let .unprotected(country, ip),
-            let .protecting(country, ip):
-            return Text(country)
+             let .protecting(country, ip):
+            Text(country)
                 .themeFont(.body(emphasised: true))
                 .foregroundColor(Color(.text))
-            + Text(" • ")
+                + Text(" • ")
                 .foregroundColor(Color(.text))
-            + Text(ip)
+                + Text(ip)
                 .themeFont(.body())
                 .foregroundColor(Color(.text, .weak))
         }
@@ -97,9 +96,11 @@ struct ConnectionStatusView: View {
     var body: some View {
         WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack(alignment: .top) {
-                LinearGradient(colors: [gradientColor(protectionState: viewStore.protectionState).opacity(0.5), .clear],
-                               startPoint: .top,
-                               endPoint: .bottom)
+                LinearGradient(
+                    colors: [gradientColor(protectionState: viewStore.protectionState).opacity(0.5), .clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
                 .frame(maxHeight: 150)
                 VStack(spacing: 0) {
                     titleView(protectionState: viewStore.protectionState)
@@ -116,13 +117,17 @@ struct ConnectionStatusView: View {
                             locationText
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
-                        } else if case .protected(let netShield) = viewStore.protectionState {
-                            NetShieldStatsView() // todo: update netshield stats
+                        } else if case let .protected(netShield) = viewStore.protectionState {
+                            NetShieldStatsView() // TODO: update netshield stats
                         }
                     }
-                    .background(.translucentLight,
-                                in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                     style: .continuous))
+                    .background(
+                        .translucentLight,
+                        in: RoundedRectangle(
+                            cornerRadius: .themeRadius8,
+                            style: .continuous
+                        )
+                    )
                     .padding(.horizontal, .themeSpacing16)
                 }
             }
@@ -134,18 +139,25 @@ struct ConnectionStatusView: View {
 
 struct ConnectionStatusView_Previews: PreviewProvider {
     static var previews: some View {
-
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protected(netShield: .random)),
-                                          reducer: { ConnectionStatusFeature() }))
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protected(netShield: .random)),
+            reducer: { ConnectionStatusFeature() }
+        ))
         .previewDisplayName("Protected")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
-                                          reducer: { ConnectionStatusFeature() }))
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protectedSecureCore(netShield: .random)),
+            reducer: { ConnectionStatusFeature() }
+        ))
         .previewDisplayName("ProtectedSecureCore")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: { ConnectionStatusFeature() }))
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .unprotected(country: "Poland", ip: "192.168.1.0")),
+            reducer: { ConnectionStatusFeature() }
+        ))
         .previewDisplayName("Unprotected")
-        ConnectionStatusView(store: .init(initialState: .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0")),
-                                          reducer: { ConnectionStatusFeature() }))
+        ConnectionStatusView(store: .init(
+            initialState: .init(protectionState: .protecting(country: "Poland", ip: "192.168.1.0")),
+            reducer: { ConnectionStatusFeature() }
+        ))
         .background(.black)
         .previewDisplayName("Protecting")
     }

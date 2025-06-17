@@ -26,24 +26,23 @@ import Foundation
  Ed25519 public key
  */
 public struct PublicKey: Sendable, Codable, CustomStringConvertible, CustomDebugStringConvertible {
-
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
     // ASN.1 DER
     public let derRepresentation: String
-    
+
     public init(rawRepresentation: [UInt8], derRepresentation: String) {
         self.rawRepresentation = rawRepresentation
         self.derRepresentation = derRepresentation
     }
 
     public var description: String {
-    #if DEBUG
-        return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)', base64: '\(Data(rawRepresentation).base64EncodedString())')"
-    #else
-        return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
-    #endif
+        #if DEBUG
+            return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)', base64: '\(Data(rawRepresentation).base64EncodedString())')"
+        #else
+            return "PublicKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+        #endif
     }
 
     public var debugDescription: String { description }
@@ -61,7 +60,7 @@ public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebu
 
     // base64 encoded X25519 key
     public let base64X25519Representation: String
-    
+
     public init(rawRepresentation: [UInt8], derRepresentation: String, base64X25519Representation: String) {
         self.rawRepresentation = rawRepresentation
         self.derRepresentation = derRepresentation
@@ -69,14 +68,14 @@ public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebu
     }
 
     public var description: String {
-    #if DEBUG
-        return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
-    #else
-        return "PrivateKey(<redacted>)"
-    #endif
+        #if DEBUG
+            return "PrivateKey(fingerprint: '\(Data(rawRepresentation).fingerprint)')"
+        #else
+            return "PrivateKey(<redacted>)"
+        #endif
     }
 
-    public var debugDescription: String  { description }
+    public var debugDescription: String { description }
 }
 
 /**
@@ -85,7 +84,7 @@ public struct PrivateKey: Sendable, Codable, CustomStringConvertible, CustomDebu
 public struct VpnKeys: Sendable, Codable {
     public let privateKey: PrivateKey
     public let publicKey: PublicKey
-    
+
     public init(privateKey: PrivateKey, publicKey: PublicKey) {
         self.privateKey = privateKey
         self.publicKey = publicKey

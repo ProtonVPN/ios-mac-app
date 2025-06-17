@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import CasePaths
 import Connection
+import Foundation
+import XCTest
 
 /// Helper for asserting that delegate `stateChanged` actions are received with the expected state transition
 /// - Parameters:
@@ -34,11 +34,11 @@ public func stateChangePredicate<Action>(
     extract: @escaping (Action) -> (CoreConnectionState, CoreConnectionState)?,
     strict: Bool = true
 ) -> (Action) -> Bool {
-    return { action in
+    { action in
         guard let (oldState, newState) = extract(action) else {
             return false
         }
-        if oldState.is(oldValue) && newState.is(newValue) {
+        if oldState.is(oldValue), newState.is(newValue) {
             return true
         }
         if strict {
@@ -50,7 +50,7 @@ public func stateChangePredicate<Action>(
     }
 }
 
-fileprivate func caseName(of value: Any) -> String {
+private func caseName(of value: Any) -> String {
     let mirror = Mirror(reflecting: value)
     return String(describing: mirror.children.first?.label ?? "\(value)")
 }

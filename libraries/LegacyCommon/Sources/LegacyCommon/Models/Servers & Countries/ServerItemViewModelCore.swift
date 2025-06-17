@@ -31,19 +31,19 @@ open class ServerItemViewModelCore {
     public var isP2PAvailable: Bool { serverModel.logical.feature.contains(.p2p) }
 
     public var isSecureCoreEnabled: Bool {
-        return serverModel.logical.feature.contains(.secureCore)
+        serverModel.logical.feature.contains(.secureCore)
     }
 
     public var load: Int {
-        return serverModel.logical.load
+        serverModel.logical.load
     }
 
     public var underMaintenance: Bool {
-        return serverModel.logical.status == 0
+        serverModel.logical.status == 0
     }
 
     public var isUsersTierTooLow: Bool {
-        return userTier < serverModel.logical.tier
+        userTier < serverModel.logical.tier
     }
 
     public var isStreamingAvailable: Bool {
@@ -54,7 +54,7 @@ open class ServerItemViewModelCore {
     }
 
     public var isCurrentProtocolSupported: Bool {
-        return !serverModel.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
+        !serverModel.protocolSupport.isDisjoint(with: propertiesManager.currentProtocolSupport)
     }
 
     public var alphaOfMainElements: CGFloat {
@@ -69,10 +69,12 @@ open class ServerItemViewModelCore {
         return 1.0
     }
 
-    public init(serverModel: ServerInfo,
-                vpnGateway: VpnGatewayProtocol,
-                appStateManager: AppStateManager,
-                propertiesManager: PropertiesManagerProtocol) {
+    public init(
+        serverModel: ServerInfo,
+        vpnGateway: VpnGatewayProtocol,
+        appStateManager: AppStateManager,
+        propertiesManager: PropertiesManagerProtocol
+    ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager

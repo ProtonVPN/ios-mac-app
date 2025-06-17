@@ -24,11 +24,11 @@ import UIKit
 
 public final class CountryCell: UITableViewCell, ConnectTableViewCell {
     public static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     public static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     static let chevronRight = UIImage(named: "ic-chevron-right", in: .module, compatibleWith: nil) // swiftlint:disable:this hardcoded_assets
@@ -36,19 +36,19 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Outlets
 
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet private weak var flagIcon: UIImageView!
-    @IBOutlet private weak var flagIconHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var flagIconWidthConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var countryName: UILabel!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet private var flagIcon: UIImageView!
+    @IBOutlet private var flagIconHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var flagIconWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private var countryName: UILabel!
 
-    @IBOutlet private weak var p2pIV: UIImageView!
-    @IBOutlet private weak var smartIV: UIImageView!
-    @IBOutlet private weak var torIV: UIImageView!
+    @IBOutlet private var p2pIV: UIImageView!
+    @IBOutlet private var smartIV: UIImageView!
+    @IBOutlet private var torIV: UIImageView!
 
-    @IBOutlet private weak var rightChevron: UIImageView!
-    @IBOutlet private weak var entrySeparator: UIImageView!
-    @IBOutlet private weak var flagsStackView: UIStackView!
+    @IBOutlet private var rightChevron: UIImageView!
+    @IBOutlet private var entrySeparator: UIImageView!
+    @IBOutlet private var flagsStackView: UIStackView!
 
     // MARK: Properties
 
@@ -78,7 +78,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
             backgroundColor = .clear
             flagIcon.image = viewModel.flag
             flagIcon.tintColor = .white
-            [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
+            for view in [flagIcon, countryName, torIV, p2pIV, smartIV] {
                 view?.alpha = viewModel.alphaOfMainElements
             }
             flagIconHeightConstraint.constant = viewModel.isRedesign ? 20 : 32
@@ -98,7 +98,8 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 
     // MARK: Actions
 
-    @IBAction private func connectTapped(_ sender: Any) {
+    @IBAction
+    private func connectTapped(_: Any) {
         viewModel?.connectAction()
     }
 
@@ -130,7 +131,7 @@ public final class CountryCell: UITableViewCell, ConnectTableViewCell {
 }
 
 extension CountryCell: UIPointerInteractionDelegate {
-    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+    public func pointerInteraction(_ interaction: UIPointerInteraction, styleFor _: UIPointerRegion) -> UIPointerStyle? {
         var pointerStyle: UIPointerStyle?
         if let interactionView = interaction.view {
             let targetedPreview = UITargetedPreview(view: interactionView)

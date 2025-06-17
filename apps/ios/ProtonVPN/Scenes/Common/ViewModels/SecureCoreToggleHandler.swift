@@ -27,7 +27,6 @@ import VPNAppCore
 import ComposableArchitecture
 
 protocol SecureCoreToggleHandler: AnyObject {
-
     var alertService: AlertService { get }
     var propertiesManager: PropertiesManagerProtocol { get }
     var vpnGateway: VpnGatewayProtocol { get }
@@ -39,7 +38,6 @@ protocol SecureCoreToggleHandler: AnyObject {
 
 extension SecureCoreToggleHandler {
     private func completionWrapper(succeeded: Bool, completion: @escaping (Bool) -> Void) {
-
         @Shared(.secureCoreToggle) var secureCoreToggle
 
         DispatchQueue.global(qos: .background).async {
@@ -97,7 +95,7 @@ extension SecureCoreToggleHandler {
         alertService.push(alert: alert)
     }
 
-    internal func toggleState(toOn: Bool, completion: @escaping (Bool) -> Void) {
+    func toggleState(toOn: Bool, completion: @escaping (Bool) -> Void) {
         guard let (insufficientPlan, isNotConnectedToVPN) = checkPlanAndConnection() else {
             completionWrapper(succeeded: true, completion: completion)
             return
@@ -107,7 +105,7 @@ extension SecureCoreToggleHandler {
             alertService.push(alert: SecureCoreUpsellAlert())
             return
         }
-        if propertiesManager.discourageSecureCore && toOn {
+        if propertiesManager.discourageSecureCore, toOn {
             showDiscourageSecureCoreAlert(isNotConnectedToVPN: isNotConnectedToVPN, completion: completion)
         } else if isNotConnectedToVPN {
             completionWrapper(succeeded: true, completion: completion)

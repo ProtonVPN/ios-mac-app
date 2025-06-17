@@ -1,23 +1,18 @@
 import ModalsShared
-import UIKit
 import SwiftUI
+import UIKit
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
 public final class ModalsFactory {
-
     public init() {}
 
     // MARK: Properties
 
-    private lazy var discourageStoryboard: UIStoryboard = {
-        UIStoryboard(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
-    }()
-    private lazy var userAccountUpdateStoryboard: UIStoryboard = {
-        UIStoryboard(name: "UserAccountUpdateViewController", bundle: Bundle.module)
-    }()
-    private lazy var freeConnectionsViewStoryboard: UIStoryboard = {
-        UIStoryboard(name: "FreeConnectionsViewController", bundle: Bundle.module)
-    }()
+    private lazy var discourageStoryboard: UIStoryboard = .init(name: "DiscourageSecureCoreViewController", bundle: Bundle.module)
+
+    private lazy var userAccountUpdateStoryboard: UIStoryboard = .init(name: "UserAccountUpdateViewController", bundle: Bundle.module)
+
+    private lazy var freeConnectionsViewStoryboard: UIStoryboard = .init(name: "FreeConnectionsViewController", bundle: Bundle.module)
 
     public func whatsNewViewController(variant: WhatsNewView.PlanVariant) -> UIViewController {
         WhatsNewView(variant: variant).hostingController()

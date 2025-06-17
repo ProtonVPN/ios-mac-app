@@ -68,7 +68,7 @@ class RequestParsingTests: XCTestCase {
 
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
-            guard let httpResponse = httpResponse, let body = body else {
+            guard let httpResponse, let body else {
                 XCTFail("No response or body received.")
                 return
             }
@@ -89,7 +89,7 @@ class RequestParsingTests: XCTestCase {
             let response = Self.makeResponse(preamble: "HTTP/1.1 420 Enhance Your Calm", headers: headers, body: nil)
             let (httpResponse, body) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
 
-            guard let httpResponse = httpResponse else {
+            guard let httpResponse else {
                 XCTFail("No response received.")
                 return
             }
@@ -109,7 +109,7 @@ class RequestParsingTests: XCTestCase {
         let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
         do {
             let response = "This is not an HTTP response.\nThese are just random English sentences.".data(using: .utf8)!
-            let (_, _) = try HTTPURLResponse.parse(responseFromURL: url, data: response)
+            let _ = try HTTPURLResponse.parse(responseFromURL: url, data: response)
             XCTFail("Expected to throw an error from the above function.")
         } catch HTTPError.parseError {
             // This is expected
@@ -119,29 +119,29 @@ class RequestParsingTests: XCTestCase {
     }
 
     static let actual400ErrorResponseBody = "{\"Code\":2000,\"Error\":\"Request body is invalid (Syntax error)\",\"ErrorDescription\":\"\",\"Details\":{}}HTTP/1.1 400 Bad request\r\n" +
-                   "Content-length: 90\r\n" +
-                   "Cache-Control: no-cache\r\n" +
-                   "Connection: close\r\n" +
-                   "Content-Type: text/html\r\n" +
-                   "\r\n" +
-                   "<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n"
+        "Content-length: 90\r\n" +
+        "Cache-Control: no-cache\r\n" +
+        "Connection: close\r\n" +
+        "Content-Type: text/html\r\n" +
+        "\r\n" +
+        "<html><body><h1>400 Bad request</h1>\nYour browser sent an invalid request.\n</body></html>\n"
 
     static let actual400ErrorResponse = ("HTTP/1.1 400 Bad Request\r\ndate: Mon, 25 Apr 2022 15:20:39 GMT\r\n" +
-           "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
-           "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
-           "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
-           "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=proton.me; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
-           "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
-           "content-length: 97\r\n + " +
-           "content-type: application/json\r\n" +
-           "content-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\n" +
-           "expect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
-           "public-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
-           "x-content-type-options: nosniff\r\n" +
-           "x-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\n" +
-           "referrer-policy: strict-origin-when-cross-origin\r\n" +
-           "x-permitted-cross-domain-policies: none\r\n" +
-           "\r\n" + actual400ErrorResponseBody).data(using: .utf8)!
+        "cache-control: max-age=0, must-revalidate, no-cache, no-store, private\r\n" +
+        "expires: Fri, 04 May 1984 22:15:00 GMT\r\n" +
+        "access: application/vnd.protonmail.api+json;apiversion=1\r\n" +
+        "set-cookie: Session-Id=Yma8R9WZUcufgnz4wI1LIAAAAQM; Domain=proton.me; Path=/; HttpOnly; Secure; Max-Age=7776000\r\n" +
+        "set-cookie: Tag=vpn-a; Path=/; Secure; Max-Age=7776000\r\n" +
+        "content-length: 97\r\n + " +
+        "content-type: application/json\r\n" +
+        "content-security-policy: default-src \'self\'; script-src \'self\' \'unsafe-eval\' \'nonce-Yma8R9WZUcufgnz4wI1LIAAAAQM\' \'strict-dynamic\' https:; style-src \'self\' \'unsafe-inline\'; img-src http: https: data: blob: cid:; frame-src https:; connect-src https: wss:; media-src https:; report-uri https://reports.protonmail.com/reports/csp;\r\nstrict-transport-security: max-age=31536000; includeSubDomains; preload\r\n" +
+        "expect-ct: max-age=2592000, enforce, report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+        "public-key-pins-report-only: pin-sha256=\"8joiNBdqaYiQpKskgtkJsqRxF7zN0C0aqfi8DacknnI=\"; pin-sha256=\"drtmcR2kFkM8qJClsuWgUzxgBkePfRCkRpqUesyDmeE=\"; report-uri=\"https://reports.protonmail.com/reports/tls\"\r\n" +
+        "x-content-type-options: nosniff\r\n" +
+        "x-xss-protection: 1; mode=block; report=https://reports.protonmail.com/reports/csp\r\n" +
+        "referrer-policy: strict-origin-when-cross-origin\r\n" +
+        "x-permitted-cross-domain-policies: none\r\n" +
+        "\r\n" + actual400ErrorResponseBody).data(using: .utf8)!
 
     func testHTTPErrorResponseParsing() {
         let url = URL(string: "https://itdoesntmatterwherethiscamefrom.com")!
@@ -155,7 +155,6 @@ class RequestParsingTests: XCTestCase {
         } catch {
             XCTFail("Shouldn't fail")
         }
-
     }
 
     func testValidHTTPRequestGeneration() throws {
@@ -208,18 +207,21 @@ class RequestParsingTests: XCTestCase {
                         vpnAccelerator: true,
                         bouncing: "bouncing",
                         natType: .moderateNAT,
-                        safeMode: true),
+                        safeMode: true
+                    ),
                     renew: true
                 )
             )
         )
-        checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(responseType: "response",
-                                                                        grantType: "grant",
-                                                                        refreshToken: "refresh",
-                                                                        redirectURI: "example.org")))
+        checkKeysArePascalCasedForRequest(TokenRefreshRequest(params: .init(
+            responseType: "response",
+            grantType: "grant",
+            refreshToken: "refresh",
+            redirectURI: "example.org"
+        )))
     }
 
-    func checkKeysArePascalCasedForRequest<R: APIRequest>(_ request: R) {
+    func checkKeysArePascalCasedForRequest(_ request: some APIRequest) {
         guard let body = request.body else {
             XCTFail("Request \(request) should have a body")
             return

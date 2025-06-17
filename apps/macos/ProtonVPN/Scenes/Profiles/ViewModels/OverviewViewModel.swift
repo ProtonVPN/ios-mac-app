@@ -24,38 +24,37 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
 import CommonNetworking
+import LegacyCommon
 
 import Domain
 
 final class OverviewViewModel {
-    
     private let profileManager: ProfileManager
     private let vpnGateway: VpnGatewayProtocol
 
-    @Dependency(\.sessionService)
-    private var sessionService: SessionService
+    @Dependency(\.sessionService) private var sessionService: SessionService
 
     var contentChanged: (() -> Void)?
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
-    
+
     init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.profileManager = profileManager
 
         AppEvent.profileContentChanged.subscribe(self, selector: #selector(profilesChanged))
     }
-    
-    @objc private func profilesChanged() {
+
+    @objc
+    private func profilesChanged() {
         contentChanged?()
     }
-    
+
     var cellHeight: CGFloat {
-        return 50.0
+        50.0
     }
-    
+
     private var userTier: Int {
         do {
             return try vpnGateway.userTier()
@@ -63,13 +62,13 @@ final class OverviewViewModel {
             return .freeTier
         }
     }
-    
+
     var cellCount: Int {
-        return profileManager.allProfiles.count
+        profileManager.allProfiles.count
     }
-    
+
     func cellModel(forIndex index: Int) -> OverviewItemViewModel {
-        return OverviewItemViewModel(
+        OverviewItemViewModel(
             profile: profileManager.allProfiles[index],
             editProfile: editProfile,
             profileManager: profileManager,
@@ -77,7 +76,7 @@ final class OverviewViewModel {
             userTier: userTier
         )
     }
-    
+
     func createNewProfileAction() {
         createNewProfile?()
     }

@@ -20,17 +20,16 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 @testable import LegacyCommon
+import XCTest
 
 class StringUrl: XCTestCase {
-
     func testRemovesProtocol() throws {
         let domain = "www.domain.com"
         XCTAssert("http://\(domain)".domainWithoutPathAndProtocol.elementsEqual(domain))
         XCTAssert("https://\(domain)".domainWithoutPathAndProtocol.elementsEqual(domain))
     }
-    
+
     func testRemovesPath() throws {
         let domain = "www.domain.com"
         XCTAssert("https://\(domain)/".domainWithoutPathAndProtocol.elementsEqual(domain))

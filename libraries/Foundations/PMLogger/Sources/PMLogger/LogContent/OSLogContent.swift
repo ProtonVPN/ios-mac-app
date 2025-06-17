@@ -26,7 +26,7 @@ public class OSLogContent: LogContent {
     private var filter: ((OSLogEntryLog) -> Bool) = {
         $0.process == "ProtonVPN"
     }
-    
+
     public init(
         scope: OSLogStore.Scope = .currentProcessIdentifier,
         since: Date? = nil,
@@ -39,7 +39,7 @@ public class OSLogContent: LogContent {
             self.filter = filter
         }
     }
-    
+
     private let dateFormatter = ISO8601DateFormatter()
 
     public func loadContent(callback: @escaping (String) -> Void) {
@@ -48,12 +48,10 @@ public class OSLogContent: LogContent {
                 let dateFormatter = ISO8601DateFormatter()
                 dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
                 let store = try OSLogStore(scope: self.scope)
-                let position: OSLogPosition
-
-                if let since = self.since {
-                    position = store.position(date: since)
+                let position: OSLogPosition = if let since = self.since {
+                    store.position(date: since)
                 } else {
-                    position = store.position(timeIntervalSinceLatestBoot: 1)
+                    store.position(timeIntervalSinceLatestBoot: 1)
                 }
 
                 let entries = try store.getEntries(at: position)
@@ -61,10 +59,10 @@ public class OSLogContent: LogContent {
                     .filter(self.filter)
                     .map {
                         "\($0.process) | " +
-                        "\($0.subsystem) | " +
-                        "\(dateFormatter.string(from: $0.date)) | " +
-                        "\($0.level.stringValue.uppercased()) | " +
-                        "\($0.composedMessage)"
+                            "\($0.subsystem) | " +
+                            "\(dateFormatter.string(from: $0.date)) | " +
+                            "\($0.level.stringValue.uppercased()) | " +
+                            "\($0.composedMessage)"
                     }
                 let result = entries.joined(separator: "\n")
                 callback(result)
@@ -79,19 +77,19 @@ extension OSLogEntryLog.Level {
     var stringValue: String {
         switch self {
         case .undefined:
-            return "Debug"
+            "Debug"
         case .debug:
-            return "Debug"
+            "Debug"
         case .info:
-            return "Info"
+            "Info"
         case .notice:
-            return "Notice"
+            "Notice"
         case .error:
-            return "Error"
+            "Error"
         case .fault:
-            return "Fatal"
+            "Fatal"
         default:
-            return "Debug"
+            "Debug"
         }
     }
 }

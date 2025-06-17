@@ -19,9 +19,9 @@
 import Collections
 import Dependencies
 import DependenciesMacros
-import SharedViews
-import IssueReporting
 import Domain
+import IssueReporting
+import SharedViews
 
 @DependencyClient
 public struct DefaultConnectionResolver: Sendable {
@@ -50,7 +50,6 @@ enum DefaultConnectionResolverImplementation {
         recents: OrderedSet<RecentConnection>,
         secureCore: Bool
     ) -> ConnectionSpec {
-
         let fastest = ConnectionSpec(location: secureCore ? .secureCore(.fastest) : .fastest, features: [])
 
         switch preference {
@@ -64,33 +63,33 @@ enum DefaultConnectionResolverImplementation {
             }
             return mostRecent.connection
 
-        case .recent(let spec):
+        case let .recent(spec):
             return spec
         }
     }
 
     static func shouldOfferDefaultConnectionPreference(for recent: RecentConnection) -> Bool {
         // 'Fastest' is already a static preference, so lets not offer it as an option
-        return recent.connection.location != .fastest
+        recent.connection.location != .fastest
     }
 
     @Sendable
     static func preferenceModels(for recents: OrderedSet<RecentConnection>) -> [ConnectionPreferenceModel] {
-        return recents
+        recents
             .filter(shouldOfferDefaultConnectionPreference(for:))
             .map { recent in
-            let spec = recent.connection
-            let infoBuilder = ConnectionInfoBuilder(intent: spec, server: nil, withServerNumber: false)
+                let spec = recent.connection
+                let infoBuilder = ConnectionInfoBuilder(intent: spec, server: nil, withServerNumber: false)
 
-            return ConnectionPreferenceModel(
-                preference: .recent(spec),
-                locationFeatureModel: .init(
-                    flag: spec.location.flagComposition,
-                    header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
-                    subheader: infoBuilder.subheader
+                return ConnectionPreferenceModel(
+                    preference: .recent(spec),
+                    locationFeatureModel: .init(
+                        flag: spec.location.flagComposition,
+                        header: .init(title: infoBuilder.textHeader, showConnectedPin: false),
+                        subheader: infoBuilder.subheader
+                    )
                 )
-            )
-        }
+            }
     }
 }
 

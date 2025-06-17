@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import DependenciesMacros
+import Foundation
 
 import Connection
 import Domain
@@ -46,7 +46,7 @@ extension SmartPortSelectorBridge: @retroactive DependencyKey {
                     continuation.resume(returning: result)
                 }
 
-            case .vpnProtocol(let vpnProtocol):
+            case let .vpnProtocol(vpnProtocol):
                 let smartPortSelector = SmartPortSelectorImplementation(
                     wireguardUdpChecker: resolver.availabilityChecker(for: .wireGuard(.udp)),
                     wireguardTcpChecker: resolver.availabilityChecker(for: .wireGuard(.tcp))

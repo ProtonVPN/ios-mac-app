@@ -24,12 +24,12 @@ import Cocoa
 
 class TextFieldWithFocus: NSTextField {
     weak var focusDelegate: TextFieldFocusDelegate?
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupTransparency()
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupTransparency()
@@ -39,9 +39,9 @@ class TextFieldWithFocus: NSTextField {
         focusDelegate?.willReceiveFocus(self)
         super.mouseDown(with: event)
     }
-    
+
     override func becomeFirstResponder() -> Bool {
-        if let focusDelegate = focusDelegate {
+        if let focusDelegate {
             guard focusDelegate.shouldBecomeFirstResponder else {
                 return false
             }
@@ -57,7 +57,7 @@ class TextFieldWithFocus: NSTextField {
         }
         return super.resignFirstResponder()
     }
-    
+
     // swiftlint:disable cyclomatic_complexity
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         guard event.type == NSEvent.EventType.keyDown else {
@@ -93,9 +93,11 @@ class TextFieldWithFocus: NSTextField {
 
         return super.performKeyEquivalent(with: event)
     }
+
     // swiftlint:enable cyclomatic_complexity
-    
+
     // MARK: - Private functions
+
     private func setupTransparency() {
         isBordered = false
         focusRingType = .none
@@ -103,12 +105,12 @@ class TextFieldWithFocus: NSTextField {
     }
 }
 
-fileprivate extension NSEvent.ModifierFlags {
+private extension NSEvent.ModifierFlags {
     var deviceIndependentFlags: Self {
         Self(rawValue: rawValue & Self.deviceIndependentFlagsMask.rawValue)
     }
 
     func plus(_ another: Self) -> Self {
-        Self(rawValue: self.rawValue | another.rawValue)
+        Self(rawValue: rawValue | another.rawValue)
     }
 }

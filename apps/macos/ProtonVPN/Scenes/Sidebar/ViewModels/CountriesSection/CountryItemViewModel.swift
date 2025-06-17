@@ -24,13 +24,13 @@ import Cocoa
 
 import LegacyCommon
 
+import Dependencies
 import Domain
+import Ergonomics
 import Localization
 import Strings
-import Dependencies
-import Ergonomics
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 final class CountryItemViewModel {
     /// Contains information about the region such as the country code, the tier the
@@ -45,9 +45,9 @@ final class CountryItemViewModel {
     /// Hide feature icons in Gateway countries
     public let showFeatureIcons: Bool
 
-    fileprivate let vpnGateway: VpnGatewayProtocol
-    fileprivate let appStateManager: AppStateManager
-    fileprivate let propertiesManager: PropertiesManagerProtocol
+    private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
+    private let propertiesManager: PropertiesManagerProtocol
 
     private weak var countriesSectionViewModel: CountriesSectionViewModel?
 
@@ -59,7 +59,7 @@ final class CountryItemViewModel {
     var isStreamingAvailable: Bool {
         !propertiesManager.secureCoreToggle && propertiesManager.streamingServices[countryCode] != nil
     }
-    
+
     let isTierTooLow: Bool
     let isServerUnderMaintenance: Bool
     private(set) var isOpened: Bool
@@ -68,25 +68,26 @@ final class CountryItemViewModel {
 
     var countryCode: String {
         switch serversGroup.kind {
-        case .country(let countryCode):
-            return countryCode
+        case let .country(countryCode):
+            countryCode
         case .gateway:
-            return ""
+            ""
         }
     }
+
     var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
 
     var countryName: String {
         switch serversGroup.kind {
-        case .country(let countryCode):
-            return LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
-        case .gateway(let name):
-            return name
+        case let .country(countryCode):
+            LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable
+        case let .gateway(name):
+            name
         }
     }
-    
+
     var alphaForMainElements: CGFloat {
-        return underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
+        underMaintenance ? 0.25 : (isTierTooLow ? 0.5 : 1)
     }
 
     var accessibilityLabel: String {
@@ -94,14 +95,14 @@ final class CountryItemViewModel {
         if underMaintenance { return "\(countryName). \(Localizable.onMaintenance)" }
         return countryName
     }
-    
+
     var isConnected: Bool {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected
             && connectedServer.isSecureCore == false
             && connectedServer.kind == serversGroup.kind
     }
-    
+
     let displaySeparator: Bool
 
     init(
@@ -117,7 +118,6 @@ final class CountryItemViewModel {
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) {
-
         self.id = id
         self.serversGroup = serversGroup
         self.vpnGateway = vpnGateway
@@ -132,7 +132,7 @@ final class CountryItemViewModel {
         self.showCountryConnectButton = showCountryConnectButton
         self.showFeatureIcons = showFeatureIcons
     }
-    
+
     func connectAction() {
         if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.country))
@@ -145,11 +145,11 @@ final class CountryItemViewModel {
             vpnGateway.connectTo(serverGroup: serversGroup.kind, ofType: serverType, trigger: .country)
         }
     }
-    
+
     func upgradeAction() {
         countriesSectionViewModel?.displayCountryUpsell(countryCode: countryCode)
     }
-    
+
     func changeCellState() {
         countriesSectionViewModel?.toggleCountryCell(for: self)
         isOpened = !isOpened

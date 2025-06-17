@@ -16,19 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 actor TelemetryBuffer {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
 
-    struct Constants {
+    enum Constants {
         static let maxStoredEvents = 100
         static let maxStorageDuration: TimeInterval = .days(7)
         static let measurementGroup: String = "vpn.any.connection"
     }
+
     @Dependency(DataManager.self) var dataManager
     @Dependency(\.date) var date
 
@@ -39,6 +40,7 @@ actor TelemetryBuffer {
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }()
+
     let decoder = JSONDecoder()
 
     enum BufferType: String {
@@ -82,8 +84,10 @@ actor TelemetryBuffer {
         let events = events.compactMap {
             try? JSONSerialization.jsonObject(with: $0.data) as? JSONDictionary
         }
-        return ["MeasurementGroup": Constants.measurementGroup,
-                "EventInfo": events]
+        return [
+            "MeasurementGroup": Constants.measurementGroup,
+            "EventInfo": events,
+        ]
     }
 
     func discardOutdatedEvents() {
@@ -136,10 +140,8 @@ actor TelemetryBuffer {
         }
     }
 
-    lazy var fileUrl: URL = {
-        FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-            .appendingPathComponent(bufferType.rawValue, isDirectory: false)
-    }()
+    lazy var fileUrl: URL = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+        .appendingPathComponent(bufferType.rawValue, isDirectory: false)
 }
 
 extension TelemetryBuffer {

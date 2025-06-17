@@ -17,9 +17,9 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import Foundation
 import Domain
 import Ergonomics
+import Foundation
 import VPNShared
 
 @Reducer
@@ -33,7 +33,7 @@ public struct KeychainDebugFeature {
         package var content: Content
     }
 
-    package init() { }
+    package init() {}
 
     public enum Action {
         case loadKeychainData
@@ -79,11 +79,11 @@ public struct KeychainDebugFeature {
                     return await send(.loadKeychainDataFinished(.success(.init(keys: keys, certificate: certificate))))
                 }
 
-            case .loadKeychainDataFinished(.success(let data)):
+            case let .loadKeychainDataFinished(.success(data)):
                 state.content = .loaded(data)
                 return .none
 
-            case .loadKeychainDataFinished(.failure(let error)):
+            case let .loadKeychainDataFinished(.failure(error)):
                 state.content = .failed("\(error)")
                 return .none
 
@@ -141,16 +141,16 @@ public struct KeychainDebugFeature {
     }
 }
 
-extension KeychainDebugFeature.State {
+public extension KeychainDebugFeature.State {
     @CasePathable
-    public enum Content: Equatable, Sendable {
+    enum Content: Equatable, Sendable {
         case none
         case loading
         case loaded(AuthKeychainData)
         case failed(String)
     }
 
-    public struct AuthKeychainData: Equatable, Sendable {
+    struct AuthKeychainData: Equatable, Sendable {
         public let keys: Keys?
         public let certificate: Certificate?
 

@@ -25,7 +25,7 @@ final class TruncatedIpTests: XCTestCase {
     func testTruncatesIPv4() {
         XCTAssertEqual(TruncatedIp(ip: "213.153.191.49")?.value, "213.153.191.0")
     }
-    
+
     func testTruncatesIPv6() {
         XCTAssertEqual(TruncatedIp(ip: "2001:0000:130F:0000:0000:09C0:876A:130B")?.value, "2001:0000:130F:0000:0000:09C0:876A::")
     }

@@ -47,7 +47,7 @@ public struct ProtocolSupport: OptionSet, Codable, CaseIterable, CustomStringCon
 
     public var description: String {
         var elements: [VpnProtocol] = []
-        for supportedProtocol in Self.allCases where self.contains(supportedProtocol) {
+        for supportedProtocol in Self.allCases where contains(supportedProtocol) {
             guard let element = VpnProtocol(element: supportedProtocol) else { continue }
             elements.append(element)
         }
@@ -59,17 +59,17 @@ extension VpnProtocol {
     fileprivate var protocolSupportBitPosition: Int {
         switch self {
         case .ike:
-            return 0
+            0
         case .wireGuard(.udp):
-            return 1
+            1
         case .wireGuard(.tcp):
-            return 2
+            2
         case .wireGuard(.tls):
-            return 3
+            3
         case .openVpn(.udp):
-            return 4
+            4
         case .openVpn(.tcp):
-            return 5
+            5
         }
     }
 
@@ -93,6 +93,6 @@ extension VpnProtocol {
     }
 
     public var protocolSupport: ProtocolSupport {
-        ProtocolSupport(bitPosition: self.protocolSupportBitPosition)
+        ProtocolSupport(bitPosition: protocolSupportBitPosition)
     }
 }

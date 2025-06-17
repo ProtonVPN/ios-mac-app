@@ -29,19 +29,18 @@ import VPNAppCore
 import Ergonomics
 
 class FeatureRowView: NSView {
-    
-    @IBOutlet private weak var iconIV: NSImageView!
-    @IBOutlet private weak var titleLbl: NSTextField!
-    @IBOutlet private weak var descriptionLbl: NSTextField!
-    @IBOutlet private weak var learnMoreBtn: InteractiveActionButton!
-    
+    @IBOutlet private var iconIV: NSImageView!
+    @IBOutlet private var titleLbl: NSTextField!
+    @IBOutlet private var descriptionLbl: NSTextField!
+    @IBOutlet private var learnMoreBtn: InteractiveActionButton!
+
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.attributedStringValue = viewModel.title.styled(.normal, font: .themeFont(.small))
             switch viewModel.icon {
-            case .url(let url):
+            case let .url(url):
                 iconIV.sd_setImage(with: url)
-            case .image(let image):
+            case let .image(image):
                 iconIV.image = image
             }
 
@@ -54,7 +53,8 @@ class FeatureRowView: NSView {
         }
     }
 
-    @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
+    @IBAction
+    private func didTapLearnMoreBtn(_: Any) {
         guard let urlContact = viewModel.urlContact else { return }
         @Dependency(\.linkOpener) var linkOpener
         linkOpener.open(urlContact)

@@ -19,9 +19,9 @@
 import ProtonCoreNetworking
 import ProtonCoreUIFoundations
 #if canImport(UIKit)
-import UIKit
+    import UIKit
 #elseif canImport(AppKit)
-import AppKit
+    import AppKit
 #endif
 
 final class AnnouncementRequest {
@@ -44,25 +44,24 @@ final class AnnouncementRequest {
 
     private var supportedImageFormats: String {
         supportedFormats
-            .map { $0.rawValue }
+            .map(\.rawValue)
             .joined(separator: ",")
     }
 
     private var screenSize: CGSize {
-#if canImport(UIKit)
-        let size = UIScreen.main.sizeInPixels()
-#elseif canImport(AppKit)
-        let size: CGSize
-        if Thread.isMainThread {
-            size = MainActor.assumeIsolated {
-                return NSScreen.availableSizeInPixels()
+        #if canImport(UIKit)
+            let size = UIScreen.main.sizeInPixels()
+        #elseif canImport(AppKit)
+            let size: CGSize = if Thread.isMainThread {
+                MainActor.assumeIsolated {
+                    NSScreen.availableSizeInPixels()
+                }
+            } else {
+                DispatchQueue.main.sync {
+                    NSScreen.availableSizeInPixels()
+                }
             }
-        } else {
-            size = DispatchQueue.main.sync {
-                 return NSScreen.availableSizeInPixels()
-            }
-        }
-#endif
+        #endif
         return size
     }
 
@@ -74,7 +73,7 @@ final class AnnouncementRequest {
         [
             queryItem(.formats, value: supportedImageFormats),
             queryItem(.width, value: "\(Int(screenSize.width))"),
-            queryItem(.height, value: "\(Int(screenSize.height))")
+            queryItem(.height, value: "\(Int(screenSize.height))"),
         ]
     }
 }
@@ -93,68 +92,68 @@ extension AnnouncementRequest: Request {
 
 #if canImport(UIKit)
 
-extension UIScreen {
-    func sizeInPixels() -> CGSize {
-        let size = UIScreen.main.bounds.size
-        let scale = UIScreen.main.scale
-        if UIDevice.current.isIpad {
-            return size
-                .scaled(by: scale)
-                .horizontal()
-        } else {
-            return size.scaled(by: scale)
+    extension UIScreen {
+        func sizeInPixels() -> CGSize {
+            let size = UIScreen.main.bounds.size
+            let scale = UIScreen.main.scale
+            if UIDevice.current.isIpad {
+                return size
+                    .scaled(by: scale)
+                    .horizontal()
+            } else {
+                return size.scaled(by: scale)
+            }
         }
     }
-}
 
 #elseif canImport(AppKit)
-@MainActor
-extension NSScreen {
-    public static func availableSizeInPixels() -> CGSize {
-        guard let screen = NSScreen.main else {
-            return CGSize(width: 1920, height: 1080) // fullHD
+    @MainActor
+    extension NSScreen {
+        public static func availableSizeInPixels() -> CGSize {
+            guard let screen = NSScreen.main else {
+                return CGSize(width: 1920, height: 1080) // fullHD
+            }
+
+            let visibleFrameSize = screen.visibleFrame.size
+            let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor) // in pixels
+            let fitting: CGSize = if scaled.width > scaled.height {
+                // If the frame * scale is higher than 4K, dial it down to 4K.
+                scaled.fitting(CGSize(width: 3840, height: 2160))
+            } else {
+                scaled.fitting(CGSize(width: 2160, height: 3840))
+            }
+            let freeSpace = CGSize(
+                width: fitting.width,
+                height: fitting.height - occupiedHeight(screen)
+            )
+            return freeSpace
         }
 
-        let visibleFrameSize = screen.visibleFrame.size
-        let scaled = visibleFrameSize.scaled(by: screen.backingScaleFactor) // in pixels
-        let fitting: CGSize
-        if scaled.width > scaled.height {
-            // If the frame * scale is higher than 4K, dial it down to 4K.
-            fitting = scaled.fitting(CGSize(width: 3840, height: 2160))
-        } else {
-            fitting = scaled.fitting(CGSize(width: 2160, height: 3840))
+        /// Height in pixels that we need to subtract because it's occupied by system.
+        private static func occupiedHeight(_ screen: NSScreen) -> CGFloat {
+            let isNotch: Bool = if let top = NSScreen.main?.safeAreaInsets.top {
+                top != 0
+            } else {
+                false
+            }
+
+            let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ?? 24
+            let appTitleBarHeight: CGFloat = 28
+            let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
+            let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32
+            return screen.backingScaleFactor *
+                (menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight)
         }
-        let freeSpace = CGSize(width: fitting.width,
-                               height: fitting.height - occupiedHeight(screen))
-        return freeSpace
     }
-
-    /// Height in pixels that we need to subtract because it's occupied by system.
-    private static func occupiedHeight(_ screen: NSScreen) -> CGFloat {
-        let isNotch: Bool
-        if let top = NSScreen.main?.safeAreaInsets.top {
-            isNotch = top != 0
-        } else {
-            isNotch = false
-        }
-
-        let menuBarHeight = NSApplication.shared.mainMenu?.menuBarHeight ??  24
-        let appTitleBarHeight: CGFloat = 28
-        let notchAdditionalHeight: CGFloat = isNotch ? 12 : 0
-        let buttonAndPaddingHeight: CGFloat = 40 + 2 * 32
-        return screen.backingScaleFactor * 
-        (menuBarHeight + notchAdditionalHeight + buttonAndPaddingHeight + appTitleBarHeight)
-    }
-}
 
 #endif
 
-extension CGSize {
-    fileprivate func scaled(by scale: CGFloat) -> CGSize {
+private extension CGSize {
+    func scaled(by scale: CGFloat) -> CGSize {
         CGSize(width: width * scale, height: height * scale)
     }
-    
-    fileprivate func horizontal() -> CGSize {
+
+    func horizontal() -> CGSize {
         let newWidth = max(width, height)
         let newHeight = min(width, height)
         return CGSize(width: newWidth, height: newHeight)

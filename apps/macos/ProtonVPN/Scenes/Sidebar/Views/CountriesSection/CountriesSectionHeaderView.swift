@@ -21,15 +21,14 @@
 //
 
 import Cocoa
-import Theme
 import Ergonomics
+import Theme
 
 final class CountriesSectionHeaderView: NSView {
-
     typealias ActionHandler = () -> Void
 
-    @IBOutlet private weak var titleLbl: NSTextField!
-    @IBOutlet private weak var informationBtn: NSButton!
+    @IBOutlet private var titleLbl: NSTextField!
+    @IBOutlet private var informationBtn: NSButton!
 
     var didTapInformationButton: ActionHandler?
 
@@ -58,7 +57,8 @@ final class CountriesSectionHeaderView: NSView {
         informationBtn.image = AppTheme.Icon.infoCircleFilled.colored(.hint)
     }
 
-    @IBAction private func didTapInformationBtn(_ sender: Any) {
+    @IBAction
+    private func didTapInformationBtn(_: Any) {
         didTapInformationButton?()
     }
 }

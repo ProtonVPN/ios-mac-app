@@ -17,14 +17,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
-import VPNAppCore
 import Domain
+import VPNAppCore
 
 @Reducer
 public struct ConnectionStatusBannerFeature {
-
     public typealias ActionSender = (Action) -> Void
-    
+
     public enum UpsellMode {
         case netshield
         case serverChange
@@ -50,7 +49,7 @@ public struct ConnectionStatusBannerFeature {
         case upsellTap
     }
 
-    public init() { }
+    public init() {}
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -62,7 +61,7 @@ public struct ConnectionStatusBannerFeature {
                 switch authorizer.serverChangeAvailability() {
                 case .available:
                     state.upsellMode = .netshield
-                case .unavailable(let until, _, _):
+                case let .unavailable(until, _, _):
                     state.upsellMode = .serverChange
                     // Change server block will eventually disappear, so let's wait for the timeout and check again
                     return .run { send in

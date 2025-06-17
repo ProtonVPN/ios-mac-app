@@ -20,15 +20,14 @@ import Foundation
 import Logging
 
 public class FileLogFormatter: PMLogFormatter {
-    
-    internal let dateFormatter = ISO8601DateFormatter()
+    let dateFormatter = ISO8601DateFormatter()
     private let jsonEncoder = JSONEncoder()
 
     public init() {
         dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
     }
-    
-    public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
+
+    public func formatMessage(_ level: Logging.Logger.Level, message: String, function _: String, file _: String, line _: UInt, metadata: [String: String], date: Date) -> String { // swiftlint:disable:this function_parameter_count
         let dateTime = dateFormatter.string(from: date)
         let (category, event, meta) = extract(metadata: metadata)
         var metaString = ""
@@ -37,5 +36,4 @@ public class FileLogFormatter: PMLogFormatter {
         }
         return "\(dateTime) | \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
-    
 }

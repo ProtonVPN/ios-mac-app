@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 import Modals
 
 /// Responsible for authorizing or denying connection requests based on the user's plan and available features
@@ -35,7 +35,7 @@ public enum ConnectionAuthorizationFailureReason: Error, Equatable {
 }
 
 extension ConnectionAuthorizer: DependencyKey {
-    public static var liveValue: ConnectionAuthorizer = ConnectionAuthorizer(
+    public static var liveValue: ConnectionAuthorizer = .init(
         authorize: { request in
             @Dependency(\.credentialsProvider) var credentials
             @Dependency(\.serverChangeAuthorizer) var serverChangeAuthorizer
@@ -60,14 +60,14 @@ extension ConnectionAuthorizer: DependencyKey {
                     ))
                 }
 
-            case .city(let countryCode, _), .country(let countryCode, _):
+            case let .city(countryCode, _), let .country(countryCode, _):
                 guard credentials.tier.isFreeTier else {
                     return .success
                 }
 
                 return .failure(.specificCountryUnavailable(countryCode: countryCode))
 
-            case .gateway(let name):
+            case let .gateway(name):
                 guard credentials.tier.isFreeTier else {
                     return .success
                 }
@@ -79,13 +79,13 @@ extension ConnectionAuthorizer: DependencyKey {
     )
 
     #if DEBUG
-    public static var testValue: ConnectionAuthorizer = liveValue
+        public static var testValue: ConnectionAuthorizer = liveValue
     #endif
 }
 
-extension DependencyValues {
-    public var connectionAuthorizer: ConnectionAuthorizer {
-      get { self[ConnectionAuthorizer.self] }
-      set { self[ConnectionAuthorizer.self] = newValue }
+public extension DependencyValues {
+    var connectionAuthorizer: ConnectionAuthorizer {
+        get { self[ConnectionAuthorizer.self] }
+        set { self[ConnectionAuthorizer.self] = newValue }
     }
 }

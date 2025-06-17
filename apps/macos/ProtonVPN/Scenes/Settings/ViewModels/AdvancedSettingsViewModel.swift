@@ -18,26 +18,26 @@
 
 import Foundation
 
-import Dependencies
 import ComposableArchitecture
+import Dependencies
 
 import LegacyCommon
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 import Domain
 import Strings
 
 final class AdvancedSettingsViewModel {
-    typealias Factory = PropertiesManagerFactory
+    typealias Factory = CoreAlertServiceFactory
         & NATTypePropertyProviderFactory
-        & SafeModePropertyProviderFactory
         & NetShieldPropertyProviderFactory
-        & CoreAlertServiceFactory
-        & VpnStateConfigurationFactory
+        & PropertiesManagerFactory
+        & SafeModePropertyProviderFactory
+        & TelemetrySettingsFactory
         & VpnGatewayFactory
         & VpnManagerFactory
-        & TelemetrySettingsFactory
+        & VpnStateConfigurationFactory
     private let factory: Factory
 
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
@@ -54,7 +54,7 @@ final class AdvancedSettingsViewModel {
     @Dependency(\.hermesClient) private var hermesClient
 
     private var featureFlags: FeatureFlags {
-        return propertiesManager.featureFlags
+        propertiesManager.featureFlags
     }
 
     var reloadNeeded: (() -> Void)?
@@ -67,7 +67,7 @@ final class AdvancedSettingsViewModel {
         let events: [AppEvent] = [
             .natType,
             .featureFlags,
-            .safeMode
+            .safeMode,
         ]
 
         events.subscribe(self, selector: #selector(settingsChanged))
@@ -78,11 +78,11 @@ final class AdvancedSettingsViewModel {
     }
 
     var alternativeRouting: Bool {
-        return propertiesManager.alternativeRouting
+        propertiesManager.alternativeRouting
     }
 
     var isNATTypeFeatureEnabled: Bool {
-        return featureFlags.moderateNAT
+        featureFlags.moderateNAT
     }
 
     var usageData: Bool {
@@ -116,14 +116,14 @@ final class AdvancedSettingsViewModel {
     }
 
     var isSafeModeFeatureEnabled: Bool {
-        return featureFlags.safeMode
+        featureFlags.safeMode
     }
 
     var safeMode: Bool {
-        return safeModePropertyProvider.safeMode ?? true
+        safeModePropertyProvider.safeMode ?? true
     }
 
-    func displayState<T: ProvidableFeature & ToggleableFeature>(for feature: T.Type) -> PaidFeatureDisplayState {
+    func displayState(for feature: (some ProvidableFeature & ToggleableFeature).Type) -> PaidFeatureDisplayState {
         let authorizer: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: feature)
         switch authorizer() {
         case .success:
@@ -219,7 +219,8 @@ final class AdvancedSettingsViewModel {
         propertiesManager.alternativeRouting = enabled
     }
 
-    @objc private func settingsChanged() {
+    @objc
+    private func settingsChanged() {
         reloadNeeded?()
     }
 }

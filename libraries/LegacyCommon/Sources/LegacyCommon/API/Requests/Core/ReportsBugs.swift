@@ -25,21 +25,21 @@ public final class ReportsBugs: Request {
     public let bug: ReportBug
     private let authKeychain: AuthKeychainHandle
 
-    public init( _ bug: ReportBug, authKeychain: AuthKeychainHandle) {
+    public init(_ bug: ReportBug, authKeychain: AuthKeychainHandle) {
         self.bug = bug
         self.authKeychain = authKeychain
     }
 
     public var path: String {
-        return "/core/v4/reports/bug"
+        "/core/v4/reports/bug"
     }
 
     public var method: HTTPMethod {
-        return .post
+        .post
     }
 
     public var parameters: [String: Any]? {
-        return [
+        [
             "OS": bug.os,
             "OSVersion": bug.osVersion,
             "Client": bug.client,
@@ -51,7 +51,7 @@ public final class ReportsBugs: Request {
             "Email": bug.email,
             "Country": bug.country,
             "ISP": bug.ISP,
-            "Plan": bug.plan
+            "Plan": bug.plan,
         ]
     }
 

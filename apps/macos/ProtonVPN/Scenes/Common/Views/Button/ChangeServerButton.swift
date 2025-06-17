@@ -16,22 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Cocoa
+import Ergonomics
 import Foundation
 import LegacyCommon
-import Cocoa
 import ProtonCoreUIFoundations
 import Strings
 import Theme
-import Ergonomics
 
 /// Uses text fields and an image view to display the `unavailable` state, because I went mad trying to implement an
 /// NSButton subclass with multiple strings aligned to different edges, with padding and an image
 class ChangeServerView: NSView {
-
-    @IBOutlet private weak var button: ChangeServerButton!
-    @IBOutlet private weak var changeServerLabel: NSTextField!
-    @IBOutlet private weak var hourglassImageView: NSImageView!
-    @IBOutlet private weak var timerLabel: NSTextField!
+    @IBOutlet private var button: ChangeServerButton!
+    @IBOutlet private var changeServerLabel: NSTextField!
+    @IBOutlet private var hourglassImageView: NSImageView!
+    @IBOutlet private var timerLabel: NSTextField!
 
     var handler: (() -> Void)?
 
@@ -54,7 +53,7 @@ class ChangeServerView: NSView {
             hourglassImageView.isHidden = true
             timerLabel.attributedStringValue = .init()
 
-        case .unavailable(let duration):
+        case let .unavailable(duration):
             button.attributedTitle = .init()
             changeServerLabel.attributedStringValue = Localizable.changeServer
                 .styled(.weak, font: .themeFont(.heading4))
@@ -64,10 +63,12 @@ class ChangeServerView: NSView {
         }
     }
 
-    @IBAction func onButtonTapped(_ sender: Any) {
+    @IBAction
+    func onButtonTapped(_: Any) {
         handler?()
     }
 }
+
 extension ChangeServerView: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {

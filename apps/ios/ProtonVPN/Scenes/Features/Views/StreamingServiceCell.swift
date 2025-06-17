@@ -20,31 +20,30 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
-import LegacyCommon
 import Alamofire
 import AlamofireImage
+import LegacyCommon
+import UIKit
 
 class StreamingServiceCell: UICollectionViewCell {
+    @IBOutlet private var serviceIV: UIImageView!
+    @IBOutlet private var serviceLbl: UILabel!
 
-    @IBOutlet private weak var serviceIV: UIImageView!
-    @IBOutlet private weak var serviceLbl: UILabel!
-    
     public var propertiesManager: PropertiesManagerProtocol!
-    
+
     public var service: VpnStreamingOption? {
         didSet {
             serviceLbl.text = service?.name
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
-            
+
             guard propertiesManager.featureFlags.streamingServicesLogos,
                   let icon = service?.icon,
                   let baseUrl = propertiesManager.streamingResourcesUrl,
-                  let url = URL(string: baseUrl + icon ) else {
+                  let url = URL(string: baseUrl + icon) else {
                 return
             }
-            
+
             serviceIV.isHidden = false
             serviceLbl.isHidden = true
             serviceIV.af.cancelImageRequest()

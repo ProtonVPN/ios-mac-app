@@ -22,7 +22,6 @@
 import Foundation
 
 public enum AppState {
-    
     case disconnected
     case preparingConnection
     case connecting(ServerDescriptor)
@@ -30,7 +29,7 @@ public enum AppState {
     case disconnecting(ServerDescriptor)
     case aborted(userInitiated: Bool)
     case error(Error)
-    
+
     public var description: String {
         let base = "AppState - "
         switch self {
@@ -38,61 +37,61 @@ public enum AppState {
             return base + "Disconnected"
         case .preparingConnection:
             return base + "Preparing connection"
-        case .connecting(let descriptor):
+        case let .connecting(descriptor):
             return base + "Connecting to: \(descriptor.description)"
-        case .connected(let descriptor):
+        case let .connected(descriptor):
             return base + "Connected to: \(descriptor.description)"
-        case .disconnecting(let descriptor):
+        case let .disconnecting(descriptor):
             return base + "Disconnecting from: \(descriptor.description)"
-        case .aborted(let userInitiated):
+        case let .aborted(userInitiated):
             return base + "Aborted, user initiated: \(userInitiated)"
-        case .error(let error):
+        case let .error(error):
             return base + "Error: \(error.localizedDescription)"
         }
     }
-    
+
     public var isConnected: Bool {
         switch self {
         case .connected:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
-    
+
     public var isDisconnected: Bool {
         switch self {
         case .disconnected, .preparingConnection, .connecting, .aborted, .error:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
-    
+
     public var isStable: Bool {
         switch self {
         case .disconnected, .connected, .aborted, .error:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
-    
+
     public var isSafeToEnd: Bool {
         switch self {
         case .connecting, .connected, .disconnecting:
-            return false
+            false
         default:
-            return true
+            true
         }
     }
-    
+
     public var descriptor: ServerDescriptor? {
         switch self {
-        case .connecting(let desc), .connected(let desc), .disconnecting(let desc):
-            return desc
+        case let .connecting(desc), let .connected(desc), let .disconnecting(desc):
+            desc
         default:
-            return nil
+            nil
         }
     }
 

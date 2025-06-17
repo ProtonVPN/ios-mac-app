@@ -25,8 +25,8 @@ import Foundation
 import IssueReporting
 
 import Domain
-import VPNShared
 import VPNAppCore
+import VPNShared
 
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
@@ -39,21 +39,23 @@ final class SmartProtocolImplementation: SmartProtocol {
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let fallback: (SmartProtocolProtocol, [Int])
 
-    init(availabilityCheckerResolver: AvailabilityCheckerResolver,
-         smartProtocolConfig: SmartProtocolConfig,
-         wireguardConfig: WireguardConfig) {
+    init(
+        availabilityCheckerResolver: AvailabilityCheckerResolver,
+        smartProtocolConfig: SmartProtocolConfig,
+        wireguardConfig: WireguardConfig
+    ) {
         self.availabilityCheckerResolver = availabilityCheckerResolver
 
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]
         var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
         #if os(macOS)
-        if smartProtocolConfig.iKEv2 {
-            log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
-            checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
+            if smartProtocolConfig.iKEv2 {
+                log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
+                checkers[.ikev2] = availabilityCheckerResolver.availabilityChecker(for: .ike)
 
-            fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
-        }
+                fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
+            }
         #endif
 
         if smartProtocolConfig.wireGuardUdp {
@@ -77,9 +79,9 @@ final class SmartProtocolImplementation: SmartProtocol {
             self.fallback = fallback
         } else {
             #if os(macOS)
-            self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
+                self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
             #else
-            self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
+                self.fallback = (SmartProtocolProtocol.wireguardUdp, wireguardConfig.defaultUdpPorts)
             #endif
         }
 

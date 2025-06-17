@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import AppKit
+import Foundation
 
 class PopUpButtonItemViewModel {
-    typealias Handler = (() -> Void)
+    typealias Handler = () -> Void
 
     let title: NSAttributedString
     var checked: Bool

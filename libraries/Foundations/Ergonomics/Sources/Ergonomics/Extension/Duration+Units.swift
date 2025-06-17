@@ -18,12 +18,14 @@
 
 import Foundation
 
-extension Duration {
-    @inlinable public static func minutes<T: BinaryInteger>(_ minutes: T) -> Self {
-        return .seconds(minutes * 60)
+public extension Duration {
+    @inlinable
+    static func minutes(_ minutes: some BinaryInteger) -> Self {
+        .seconds(minutes * 60)
     }
 
-    @inlinable public static func hours<T: BinaryInteger>(_ hours: T) -> Self {
-        return .seconds(hours * 3600)
+    @inlinable
+    static func hours(_ hours: some BinaryInteger) -> Self {
+        .seconds(hours * 3600)
     }
 }

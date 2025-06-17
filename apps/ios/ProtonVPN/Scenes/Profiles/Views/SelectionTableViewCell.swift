@@ -23,15 +23,14 @@
 import UIKit
 
 class SelectionTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var nameLabel: UILabel!
-    
+    @IBOutlet var nameLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         tintColor = .normalTextColor()
-        
+
         nameLabel.textColor = .normalTextColor()
     }
 
@@ -41,5 +40,4 @@ class SelectionTableViewCell: UITableViewCell {
         selectionStyle = .none
         // Configure the view for the selected state
     }
-    
 }

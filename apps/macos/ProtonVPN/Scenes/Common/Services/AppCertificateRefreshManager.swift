@@ -29,7 +29,6 @@ protocol AppCertificateRefreshManager: VpnAuthenticationStorageDelegate {
 }
 
 final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshManager {
-
     /// Last time interval that was waited before retry on API error. Will be increased by `nextRetryBackoff()`.
     private var lastRetryInterval: TimeInterval = 10
 
@@ -60,8 +59,9 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 
         startTimer(at: nextRefreshTime)
     }
-    
-    @objc private func refreshCertificateTimerTick() {
+
+    @objc
+    private func refreshCertificateTimerTick() {
         Task {
             await refreshCertificate()
         }
@@ -71,12 +71,12 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
     private func refreshCertificate() async {
         do {
             try await appSessionManager.refreshVpnAuthCertificate()
-            self.lastRetryInterval = 10
+            lastRetryInterval = 10
             // Planning next refresh happens in `certificateStored()`
         } catch {
-            let delay = self.nextRetryBackoff()
+            let delay = nextRetryBackoff()
             log.error("Failed to refresh certificate through API: \(error). Will retry in \(delay) seconds.", category: .userCert)
-            self.startTimer(at: Date().addingTimeInterval(delay))
+            startTimer(at: Date().addingTimeInterval(delay))
         }
     }
 
@@ -103,15 +103,13 @@ final class AppCertificateRefreshManagerImplementation: AppCertificateRefreshMan
 // MARK: - VpnAuthenticationStorageDelegate implementation
 
 extension AppCertificateRefreshManagerImplementation {
-
     func certificateDeleted() {
         stopTimer()
     }
 
-    func certificateStored(_ certificate: VpnCertificate) {
+    func certificateStored(_: VpnCertificate) {
         Task {
             await planNextRefresh()
         }
     }
-
 }

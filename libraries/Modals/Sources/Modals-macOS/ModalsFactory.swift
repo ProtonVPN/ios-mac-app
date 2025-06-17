@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AppKit
 import Foundation
 import ModalsShared
-import AppKit
 import SwiftUI
 
-public struct ModalsFactory {
-
+public enum ModalsFactory {
     // MARK: Properties
 
-    static public func upsellViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {
+    public static func upsellViewController(modalType: ModalType, upgradeAction: (() -> Void)?, continueAction: (() -> Void)?) -> NSViewController {
         let upsell = UpsellViewController()
         upsell.modalType = modalType
         upsell.upgradeAction = upgradeAction
@@ -33,11 +32,11 @@ public struct ModalsFactory {
         return upsell
     }
 
-    static public func whatsNewViewController() -> NSViewController {
+    public static func whatsNewViewController() -> NSViewController {
         WhatsNewViewController()
     }
 
-    static public func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
+    public static func discourageSecureCoreViewController(onDontShowAgain: ((Bool) -> Void)?, onActivate: (() -> Void)?, onCancel: (() -> Void)?, onLearnMore: (() -> Void)?) -> NSViewController {
         let discourageSecureCoreViewController = DiscourageSecureCoreViewController()
         discourageSecureCoreViewController.onDontShowAgain = onDontShowAgain
         discourageSecureCoreViewController.onActivate = onActivate
@@ -46,7 +45,7 @@ public struct ModalsFactory {
         return discourageSecureCoreViewController
     }
 
-    static public func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
+    public static func freeConnectionsViewController(countries: [(String, ModalsShared.Image?)], upgradeAction: (() -> Void)?) -> NSViewController {
         let controller = FreeConnectionsViewController()
         controller.onBannerPress = upgradeAction
         controller.countries = countries

@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import ModalsShared
 import ModalsServices
+import ModalsShared
+import SwiftUI
 
 struct PlanOptionsView: View {
-    private static let imagePadding: EdgeInsets = EdgeInsets(top: 0, leading: 52, bottom: 24, trailing: 52)
+    private static let imagePadding: EdgeInsets = .init(top: 0, leading: 52, bottom: 24, trailing: 52)
     private static let maxContentWidth: CGFloat = 480
 
     typealias ActionHandler = () -> Void
@@ -109,7 +109,7 @@ struct PlanOptionsView: View {
     }
 
     private var imagePadding: EdgeInsets? {
-        return modalType.hasNewUpsellScreen ? Self.imagePadding : nil
+        modalType.hasNewUpsellScreen ? Self.imagePadding : nil
     }
 }
 
@@ -119,10 +119,10 @@ import CombineSchedulers
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in
-        try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
+        try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
     })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
@@ -131,16 +131,17 @@ import CombineSchedulers
     let scheduler: AnySchedulerOf<DispatchQueue> = .main
     let plans: [PlanOption] = [
         .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(
         retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500...2000).randomElement()!))
+            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
             return plans
         },
         validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000...3000).randomElement()!))
-        })
+            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+        }
+    )
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 
@@ -149,7 +150,7 @@ import CombineSchedulers
         .init(duration: .twoYears, price: .init(amount: 145, currency: "USD")),
         .init(duration: .oneYear, price: .init(amount: 85, currency: "EUR")),
         .init(duration: .threeMonths, price: .init(amount: 33, currency: "JPY")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
     ]
     let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
     return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)

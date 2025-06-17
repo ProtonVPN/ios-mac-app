@@ -19,11 +19,9 @@
 import Foundation
 
 public final class UpdateViewModel: ObservableObject {
-
     @Published var updateIsAvailable: Bool
 
     init(updateIsAvailable: Bool) {
         self.updateIsAvailable = updateIsAvailable
     }
-
 }

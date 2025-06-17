@@ -24,15 +24,15 @@ import Cocoa
 
 import Dependencies
 
-import LegacyCommon
 import CommonNetworking
-import VPNShared
-import VPNAppCore
+import LegacyCommon
 import Persistence
+import VPNAppCore
+import VPNShared
 
-import Theme
 import Domain
 import Strings
+import Theme
 
 protocol CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel
@@ -40,19 +40,18 @@ protocol CreateNewProfileViewModelFactory {
 
 extension DependencyContainer: CreateNewProfileViewModelFactory {
     func makeCreateNewProfileViewModel(editProfile: Notification.Name) -> CreateNewProfileViewModel {
-        return CreateNewProfileViewModel(editProfile: editProfile, factory: self)
+        CreateNewProfileViewModel(editProfile: editProfile, factory: self)
     }
 }
 
 class CreateNewProfileViewModel {
-
-    typealias Factory = CoreAlertServiceFactory &
-        VpnKeychainFactory &
-        PropertiesManagerFactory &
-        AppStateManagerFactory &
-        VpnGatewayFactory &
+    typealias Factory =
+        AppStateManagerFactory & CoreAlertServiceFactory &
         ProfileManagerFactory &
-        SystemExtensionManagerFactory
+        PropertiesManagerFactory &
+        SystemExtensionManagerFactory &
+        VpnGatewayFactory &
+        VpnKeychainFactory
     private let factory: Factory
 
     typealias MenuContentUpdate = Set<KeyPath<CreateNewProfileViewModel, [PopUpButtonItemViewModel]>>
@@ -132,12 +131,14 @@ class CreateNewProfileViewModel {
             state.profileName
         }
         set {
-            state = ModelState(profileName: newValue,
-                               serverType: state.serverType,
-                               serverGroups: state.serverGroups,
-                               countryIndex: state.countryIndex,
-                               serverOffering: state.serverOffering,
-                               connectionProtocol: state.connectionProtocol)
+            state = ModelState(
+                profileName: newValue,
+                serverType: state.serverType,
+                serverGroups: state.serverGroups,
+                countryIndex: state.countryIndex,
+                serverOffering: state.serverOffering,
+                connectionProtocol: state.connectionProtocol
+            )
         }
     }
 
@@ -145,15 +146,17 @@ class CreateNewProfileViewModel {
 
     var serverTypeMenuItems: [PopUpButtonItemViewModel] {
         ServerType.humanReadableCases.map { item in
-                .init(title: menuStyle(item.localizedString),
-                      checked: state.serverType == item,
-                      handler: { [weak self] in self?.update(type: item) })
+            .init(
+                title: menuStyle(item.localizedString),
+                checked: state.serverType == item,
+                handler: { [weak self] in self?.update(type: item) }
+            )
         }
     }
 
     // Filter currently available servers by their type: standard, secure core, p2p, tor
     private func serverGroups(for type: ServerType) -> [ServerGroupInfo] {
-        return serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
+        serverRepository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
     }
 
     /// Contains one placeholder item at the beginning, followed by all available countries.
@@ -164,14 +167,14 @@ class CreateNewProfileViewModel {
             checked: state.countryIndex == nil,
             handler: { [weak self] in self?.update(countryIndex: nil) }
         )] +
-        // Countries by index in their grouping
-        state.serverGroups.enumerated().map { (index, grouping) in
-            PopUpButtonItemViewModel(
-                title: countryDescriptor(for: grouping),
-                checked: state.countryIndex == index,
-                handler: { [weak self] in self?.update(countryIndex: index) }
-            )
-        }
+            // Countries by index in their grouping
+            state.serverGroups.enumerated().map { index, grouping in
+                PopUpButtonItemViewModel(
+                    title: countryDescriptor(for: grouping),
+                    checked: state.countryIndex == index,
+                    handler: { [weak self] in self?.update(countryIndex: index) }
+                )
+            }
     }
 
     /// Helper function to get the list of servers according to a group (country) selected
@@ -212,7 +215,7 @@ class CreateNewProfileViewModel {
             // Add default "profiles": fastest and random (only for countries, not gateways)
             result += [
                 ServerOffering.fastest(group.serverOfferingID),
-                ServerOffering.random(group.serverOfferingID)
+                ServerOffering.random(group.serverOfferingID),
             ].map { offering in
                 PopUpButtonItemViewModel(
                     title: serverDescriptor(for: offering),
@@ -229,7 +232,7 @@ class CreateNewProfileViewModel {
         // List all available servers
         result += currentGroupServers.map { server in
             var checked = false
-            if case .custom(let selectedServerWrapper) = state.serverOffering {
+            if case let .custom(selectedServerWrapper) = state.serverOffering {
                 checked = selectedServerWrapper.server.id == server.logical.id
             }
 
@@ -241,8 +244,9 @@ class CreateNewProfileViewModel {
                     // not effective to pre-fill ServerOffering objects before one is selected,
                     // so we do it here, only for the selected object.
                     if let vpnServer = self?.serverRepository.getFirstServer(
-                            filteredBy: [.logicalID(server.logical.id)],
-                            orderedBy: .fastest) {
+                        filteredBy: [.logicalID(server.logical.id)],
+                        orderedBy: .fastest
+                    ) {
                         let serverModel = ServerModel(server: vpnServer)
                         let offering = ServerOffering.custom(ServerWrapper(server: serverModel))
                         self?.update(serverOffering: offering)
@@ -314,58 +318,65 @@ class CreateNewProfileViewModel {
         self.propertiesManager = propertiesManager
 
         self.state = ModelState.default // initialize all stored properties so we can use createStartingState
-        self.state = self.createStartingState()
+        self.state = createStartingState()
 
         // Check is required here, as the didSet check is not invoked when assigning inside the constructor
         checkSystemExtensionOrResetProtocol(newProtocol: state.connectionProtocol, shouldStartTour: true)
 
         setupUserTier()
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(editProfile(_:)),
-                                               name: editProfile,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editProfile(_:)),
+            name: editProfile,
+            object: nil
+        )
     }
 
     // MARK: Updating state
 
     private func update(type: ServerType) {
-        if type == .secureCore && !userTierSupportsSecureCore && !alreadyPresentedSecureCoreWarning {
+        if type == .secureCore, !userTierSupportsSecureCore, !alreadyPresentedSecureCoreWarning {
             secureCoreWarning?()
             alreadyPresentedSecureCoreWarning = true
         }
 
-        state = state.updating(serverType: type,
-                               newTypeGrouping: serverGroups(for: type),
-                               selectedCountryGroup: state.selectedGroup,
-                               smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        state = state.updating(
+            serverType: type,
+            newTypeGrouping: serverGroups(for: type),
+            selectedCountryGroup: state.selectedGroup,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig
+        )
     }
 
     private func update(countryIndex: Int?) {
-        state = state.updating(countryIndex: countryIndex,
-                               selectedCountryGroup: state.selectedGroup,
-                               smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        state = state.updating(
+            countryIndex: countryIndex,
+            selectedCountryGroup: state.selectedGroup,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig
+        )
     }
 
     private func update(serverOffering: ServerOffering?) {
-        state = state.updating(serverOffering: serverOffering,
-                               selectedCountryGroup: state.selectedGroup,
-                               smartProtocolConfig: propertiesManager.smartProtocolConfig)
+        state = state.updating(
+            serverOffering: serverOffering,
+            selectedCountryGroup: state.selectedGroup,
+            smartProtocolConfig: propertiesManager.smartProtocolConfig
+        )
     }
 
     /// Starts the system extension tour if system extensions are required for `connection protocol` but are not enabled
     private func update(connectionProtocol: ConnectionProtocol?, userInitiated: Bool = false) {
-
         checkSystemExtensionOrResetProtocol(newProtocol: connectionProtocol, shouldStartTour: true)
         state = state.updating(connectionProtocol: connectionProtocol)
 
-        if connectionProtocol == .vpnProtocol(.ike) && userInitiated {
-            self.alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
-                guard let self = self else {
+        if connectionProtocol == .vpnProtocol(.ike), userInitiated {
+            alertService.push(alert: IkeDeprecatedAlert(enableSmartProtocolHandler: { [weak self] in
+                guard let self else {
                     return
                 }
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User accepted to switch to Smart protocol for a new profile.")
-                self.update(connectionProtocol: .smartProtocol)
+                update(connectionProtocol: .smartProtocol)
             }, continueHandler: {
                 SentryHelper.shared?.log(message: "IKEv2 Deprecation: User decided to continue with IKEv2 anyway for a new profile.")
             }))
@@ -392,8 +403,8 @@ class CreateNewProfileViewModel {
 
         let resetProtocol = { [weak self] in
             guard let `self` else { return }
-            self.state = self.state.updating(connectionProtocol: .vpnProtocol(.ike))
-            self.protocolPending?(false)
+            state = state.updating(connectionProtocol: .vpnProtocol(.ike))
+            protocolPending?(false)
         }
 
         protocolPending?(true)
@@ -403,7 +414,7 @@ class CreateNewProfileViewModel {
             DispatchQueue.main.async { [weak self] in
                 guard let `self` else { return }
 
-                self.protocolPending?(false)
+                protocolPending?(false)
 
                 if let error = result.error {
                     log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
@@ -417,14 +428,15 @@ class CreateNewProfileViewModel {
 
     // MARK: Populate fields from an existing profile, or save it to the profile manager
 
-    @objc private func editProfile(_ notification: Notification) {
+    @objc
+    private func editProfile(_ notification: Notification) {
         if let profile = notification.object as? Profile {
             prefillInfo(for: profile)
         }
     }
 
     private func prefillInfo(for profile: Profile) {
-        guard profile.profileType == .user, case ProfileIcon.circle(let color) = profile.profileIcon else {
+        guard profile.profileType == .user, case let ProfileIcon.circle(color) = profile.profileIcon else {
             return
         }
 
@@ -437,17 +449,19 @@ class CreateNewProfileViewModel {
         if profile.serverOffering.countryCode != nil {
             countryIndex = grouping.firstIndex {
                 switch $0.kind {
-                case .country(let countryCode):
-                    return countryCode == profile.serverOffering.countryCode
-                case .gateway(let name):
-                    return name == profile.serverOffering.countryCode
+                case let .country(countryCode):
+                    countryCode == profile.serverOffering.countryCode
+                case let .gateway(name):
+                    name == profile.serverOffering.countryCode
                 }
             }
 
             if let countryIndex, connectionProtocol != nil,
-               !profile.serverOffering.supports(connectionProtocol: connectionProtocol!,
-                                                withCountryGroup: grouping[countryIndex],
-                                                smartProtocolConfig: propertiesManager.smartProtocolConfig) {
+               !profile.serverOffering.supports(
+                   connectionProtocol: connectionProtocol!,
+                   withCountryGroup: grouping[countryIndex],
+                   smartProtocolConfig: propertiesManager.smartProtocolConfig
+               ) {
                 connectionProtocol = nil
             }
         }
@@ -455,12 +469,14 @@ class CreateNewProfileViewModel {
         colorPickerViewModel.select(rgbHex: color)
         profileId = profile.id
 
-        state = ModelState(profileName: profile.name,
-                           serverType: profile.serverType,
-                           serverGroups: grouping,
-                           countryIndex: countryIndex,
-                           serverOffering: profile.serverOffering,
-                           connectionProtocol: connectionProtocol)
+        state = ModelState(
+            profileName: profile.name,
+            serverType: profile.serverType,
+            serverGroups: grouping,
+            countryIndex: countryIndex,
+            serverOffering: profile.serverOffering,
+            connectionProtocol: connectionProtocol
+        )
 
         prefillContent?() // tell the view controller to fill in non-menu things (like the name)
     }
@@ -497,22 +513,23 @@ class CreateNewProfileViewModel {
 
         let profileId = profileId ?? .randomString(length: Profile.idLength)
 
-        let accessTier: Int
-        switch serverOffering {
+        let accessTier: Int = switch serverOffering {
         case .fastest, .random:
-            accessTier = selectedGroup.minTier
-        case .custom(let wrapper):
-            accessTier = wrapper.server.tier
+            selectedGroup.minTier
+        case let .custom(wrapper):
+            wrapper.server.tier
         }
 
-        let profile = Profile(id: profileId,
-                              accessTier: accessTier,
-                              profileIcon: .circle(colorPickerViewModel.selectedColor.hexRepresentation),
-                              profileType: .user,
-                              serverType: state.serverType,
-                              serverOffering: serverOffering,
-                              name: name,
-                              connectionProtocol: connectionProtocol)
+        let profile = Profile(
+            id: profileId,
+            accessTier: accessTier,
+            profileIcon: .circle(colorPickerViewModel.selectedColor.hexRepresentation),
+            profileType: .user,
+            serverType: state.serverType,
+            serverOffering: serverOffering,
+            name: name,
+            connectionProtocol: connectionProtocol
+        )
 
         let result = self.profileId != nil ?
             profileManager.updateProfile(profile) :
@@ -531,16 +548,16 @@ extension CreateNewProfileViewModel: CustomStyleContext {
     func customStyle(context: AppTheme.Context) -> AppTheme.Style {
         switch context {
         case .text:
-            return .dropdown
+            .dropdown
         case .field, .icon:
-            return .normal
+            .normal
         case .border, .background:
-            return .weak
+            .weak
         }
     }
 }
 
-fileprivate struct ModelState {
+private struct ModelState {
     let profileName: String?
     let serverType: ServerType
     let serverGroups: [ServerGroupInfo]
@@ -548,89 +565,110 @@ fileprivate struct ModelState {
     let serverOffering: ServerOffering?
     let connectionProtocol: ConnectionProtocol?
 
-    static let `default` = Self(profileName: nil,
-                                serverType: .standard,
-                                serverGroups: [],
-                                countryIndex: nil,
-                                serverOffering: nil,
-                                connectionProtocol: nil)
+    static let `default` = Self(
+        profileName: nil,
+        serverType: .standard,
+        serverGroups: [],
+        countryIndex: nil,
+        serverOffering: nil,
+        connectionProtocol: nil
+    )
 }
 
 /// Editing a profile uses 4 menus, containing the server type, country, server, and protocol.
 /// Changing the first element can potentially impact subsequent ones.
 /// These update functions call one other in a tree, according to which updates may impact other selected values.
 extension ModelState {
-    func updating(serverType: ServerType,
-                  newTypeGrouping: [ServerGroupInfo],
-                  selectedCountryGroup: ServerGroupInfo?,
-                  smartProtocolConfig: SmartProtocolConfig) -> Self {
-
+    func updating(
+        serverType: ServerType,
+        newTypeGrouping: [ServerGroupInfo],
+        selectedCountryGroup: ServerGroupInfo?,
+        smartProtocolConfig: SmartProtocolConfig
+    ) -> Self {
         // Re-select country/gateway if it's still there after ServerType change
         let countryIndex = newTypeGrouping.firstIndex { $0.kind == selectedCountryGroup?.kind }
 
-        return ModelState(profileName: self.profileName,
-                          serverType: serverType,
-                          serverGroups: newTypeGrouping,
-                          countryIndex: self.countryIndex,
-                          serverOffering: self.serverOffering,
-                          connectionProtocol: self.connectionProtocol)
-            .updating(countryIndex: countryIndex,
-                      selectedCountryGroup: selectedCountryGroup,
-                      smartProtocolConfig: smartProtocolConfig)
+        return ModelState(
+            profileName: profileName,
+            serverType: serverType,
+            serverGroups: newTypeGrouping,
+            countryIndex: self.countryIndex,
+            serverOffering: serverOffering,
+            connectionProtocol: connectionProtocol
+        )
+        .updating(
+            countryIndex: countryIndex,
+            selectedCountryGroup: selectedCountryGroup,
+            smartProtocolConfig: smartProtocolConfig
+        )
     }
 
-    func updating(countryIndex: Int?,
-                  selectedCountryGroup: ServerGroupInfo?,
-                  smartProtocolConfig: SmartProtocolConfig) -> Self {
+    func updating(
+        countryIndex: Int?,
+        selectedCountryGroup: ServerGroupInfo?,
+        smartProtocolConfig: SmartProtocolConfig
+    ) -> Self {
         var serverOffering = serverOffering
         if self.countryIndex != countryIndex {
             serverOffering = nil
         }
 
-        return ModelState(profileName: self.profileName,
-                          serverType: self.serverType,
-                          serverGroups: self.serverGroups,
-                          countryIndex: countryIndex,
-                          serverOffering: self.serverOffering,
-                          connectionProtocol: self.connectionProtocol)
-            .updating(serverOffering: serverOffering,
-                      selectedCountryGroup: selectedCountryGroup,
-                      smartProtocolConfig: smartProtocolConfig)
+        return ModelState(
+            profileName: profileName,
+            serverType: serverType,
+            serverGroups: serverGroups,
+            countryIndex: countryIndex,
+            serverOffering: self.serverOffering,
+            connectionProtocol: connectionProtocol
+        )
+        .updating(
+            serverOffering: serverOffering,
+            selectedCountryGroup: selectedCountryGroup,
+            smartProtocolConfig: smartProtocolConfig
+        )
     }
 
-    func updating(serverOffering: ServerOffering?,
-                  selectedCountryGroup: ServerGroupInfo?,
-                  smartProtocolConfig: SmartProtocolConfig) -> Self {
+    func updating(
+        serverOffering: ServerOffering?,
+        selectedCountryGroup: ServerGroupInfo?,
+        smartProtocolConfig: SmartProtocolConfig
+    ) -> Self {
         var connectionProtocol = connectionProtocol
         if self.serverOffering != serverOffering,
            let serverOffering,
            connectionProtocol != nil,
-           !serverOffering.supports(connectionProtocol: connectionProtocol!,
-                                    withCountryGroup: selectedCountryGroup,
-                                    smartProtocolConfig: smartProtocolConfig) {
+           !serverOffering.supports(
+               connectionProtocol: connectionProtocol!,
+               withCountryGroup: selectedCountryGroup,
+               smartProtocolConfig: smartProtocolConfig
+           ) {
             connectionProtocol = nil
         }
 
-        return ModelState(profileName: self.profileName,
-                          serverType: self.serverType,
-                          serverGroups: self.serverGroups,
-                          countryIndex: self.countryIndex,
-                          serverOffering: serverOffering,
-                          connectionProtocol: self.connectionProtocol)
-            .updating(connectionProtocol: connectionProtocol)
+        return ModelState(
+            profileName: profileName,
+            serverType: serverType,
+            serverGroups: serverGroups,
+            countryIndex: countryIndex,
+            serverOffering: serverOffering,
+            connectionProtocol: self.connectionProtocol
+        )
+        .updating(connectionProtocol: connectionProtocol)
     }
 
     func updating(connectionProtocol: ConnectionProtocol?) -> Self {
-        Self(profileName: self.profileName,
-             serverType: self.serverType,
-             serverGroups: self.serverGroups,
-             countryIndex: self.countryIndex,
-             serverOffering: self.serverOffering,
-             connectionProtocol: connectionProtocol)
+        Self(
+            profileName: profileName,
+            serverType: serverType,
+            serverGroups: serverGroups,
+            countryIndex: countryIndex,
+            serverOffering: serverOffering,
+            connectionProtocol: connectionProtocol
+        )
     }
 
     var selectedGroup: ServerGroupInfo? {
-        guard let countryIndex = countryIndex, countryIndex >= 0 && countryIndex < serverGroups.count else {
+        guard let countryIndex, countryIndex >= 0, countryIndex < serverGroups.count else {
             return nil
         }
         return serverGroups[countryIndex]

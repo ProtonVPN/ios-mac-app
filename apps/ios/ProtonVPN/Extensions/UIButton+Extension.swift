@@ -22,17 +22,15 @@
 
 import UIKit
 
-extension UIButton {
-    
-    public static func closeButton() -> UIButton {
+public extension UIButton {
+    static func closeButton() -> UIButton {
         let closeImage = Asset.closeNavBar.image.withRenderingMode(.alwaysTemplate)
         let closeButton = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 44, height: 44))
         closeButton.setImage(closeImage, for: .normal)
         closeButton.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
         closeButton.addConstraint(NSLayoutConstraint(item: closeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 44))
-        closeButton.imageEdgeInsets = UIEdgeInsets.init(top: 12, left: 0, bottom: 12, right: 24)
+        closeButton.imageEdgeInsets = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 24)
         closeButton.tintColor = .normalTextColor()
         return closeButton
     }
-    
 }

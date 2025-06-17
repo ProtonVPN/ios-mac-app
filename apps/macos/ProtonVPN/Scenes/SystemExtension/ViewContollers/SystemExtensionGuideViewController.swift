@@ -20,11 +20,10 @@ import AppKit
 import Combine
 import SwiftUI
 
-import LegacyCommon
 import Domain
+import LegacyCommon
 
 class SystemExtensionGuideViewController: NSViewController {
-
     private var cancellables = Set<AnyCancellable>()
 
     weak var windowService: WindowService?
@@ -38,7 +37,8 @@ class SystemExtensionGuideViewController: NSViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -57,7 +57,7 @@ class SystemExtensionGuideViewController: NSViewController {
 
     func allExtensionsInstalled() {
         finishedTour = true
-        self.view.window?.close()
+        view.window?.close()
     }
 
     func userWillCloseWindow() {
@@ -73,7 +73,7 @@ extension SystemExtensionGuideViewController: WindowControllerDelegate {
     }
 
     func windowWillClose(_ sender: WindowController) {
-        self.userWillCloseWindow()
+        userWillCloseWindow()
         windowService?.windowWillClose(sender)
     }
 }

@@ -19,17 +19,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import CommonNetworking
 import Dependencies
+import Foundation
+import LegacyCommon
+import Modals
 import ProtonCoreDataModel
 import ProtonCorePayments
 import ProtonCorePaymentsUI
-import LegacyCommon
 import UIKit
-import VPNShared
-import Modals
-import CommonNetworking
 import VPNAppCore
+import VPNShared
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -77,30 +77,32 @@ final class CorePlanService: PlanService {
     weak var delegate: PlanServiceDelegate?
 
     var iapStatus: IAPSupportStatus {
-        return userCachedStatus.iapSupportStatus
+        userCachedStatus.iapSupportStatus
     }
 
-    public typealias Factory = NetworkingFactory &
-        CoreAlertServiceFactory &
-        AuthKeychainHandleFactory
+    public typealias Factory =
+        AuthKeychainHandleFactory &
+        CoreAlertServiceFactory & NetworkingFactory
 
     public convenience init(_ factory: Factory) {
-        self.init(networking: factory.makeNetworking(),
-                  alertService: factory.makeCoreAlertService(),
-                  authKeychain: factory.makeAuthKeychainHandle())
+        self.init(
+            networking: factory.makeNetworking(),
+            alertService: factory.makeCoreAlertService(),
+            authKeychain: factory.makeAuthKeychainHandle()
+        )
     }
 
     init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
         self.authKeychain = authKeychain
 
-        tokenStorage = TokenStorage()
-        userCachedStatus = UserCachedStatus()
-        payments = Payments(
+        self.tokenStorage = TokenStorage()
+        self.userCachedStatus = UserCachedStatus()
+        self.payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,
             localStorage: userCachedStatus,
-            reportBugAlertHandler: { receipt in
+            reportBugAlertHandler: { _ in
                 log.error("Error from payments, showing bug report", category: .iap)
                 alertService.push(alert: ReportBugAlert())
             }
@@ -135,7 +137,7 @@ final class CorePlanService: PlanService {
         paymentsUI = createPaymentsUI(onlyPlusPlan: true)
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             switch response {
-            case .planAlreadyPurchased(let error):
+            case let .planAlreadyPurchased(error):
                 log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
             case let .purchasedPlan(accountPlan: plan):
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
@@ -152,7 +154,7 @@ final class CorePlanService: PlanService {
             case .toppedUpCredits:
                 log.debug("Credits topped up", category: .iap)
             case let .apiMightBeBlocked(message, error):
-               log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
+                log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
             case .open:
                 log.debug("Purchase screen opened", category: .iap)
             }
@@ -166,16 +168,18 @@ final class CorePlanService: PlanService {
 
     private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
         let plusPlanNames = ["vpnplus", "vpn2022"]
-        let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter({ plusPlanNames.contains($0) }) : ObfuscatedConstants.planNames
-        return PaymentsUI(payments: payments,
-                          clientApp: ClientApp.vpn,
-                          shownPlanNames: planNames,
-                          customization: .init(inAppTheme: { .dark }))
+        let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter { plusPlanNames.contains($0) } : ObfuscatedConstants.planNames
+        return PaymentsUI(
+            payments: payments,
+            clientApp: ClientApp.vpn,
+            shownPlanNames: planNames,
+            customization: .init(inAppTheme: { .dark })
+        )
     }
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {
         switch response {
-        case .planAlreadyPurchased(let error):
+        case let .planAlreadyPurchased(error):
             log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
@@ -194,14 +198,13 @@ final class CorePlanService: PlanService {
             log.debug("Credits topped up", category: .iap)
         case let .apiMightBeBlocked(message, originalError: error):
             log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
-
         }
     }
 }
 
 extension CorePlanService: StoreKitManagerDelegate {
     var isUnlocked: Bool {
-        return true
+        true
     }
 
     var isSignedIn: Bool {

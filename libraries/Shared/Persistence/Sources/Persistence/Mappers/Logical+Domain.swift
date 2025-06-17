@@ -21,13 +21,12 @@ import Foundation
 import Domain
 
 extension VPNServer {
-
     private var serverNameComponents: ServerNameComponents {
         .init(name: logical.name)
     }
 
     var logicalRecord: Persistence.Logical {
-        let serverNameComponents = self.serverNameComponents
+        let serverNameComponents = serverNameComponents
 
         return .init(
             id: logical.id,
@@ -49,16 +48,16 @@ extension VPNServer {
     }
 
     var logicalStatus: Persistence.LogicalStatus {
-        return .init(
+        .init(
             logicalID: logical.id,
             status: logical.status,
-            load: logical.load, 
+            load: logical.load,
             score: logical.score
         )
     }
 
     var endpointRecords: [Persistence.Endpoint] {
-        return endpoints.map { endpoint in
+        endpoints.map { endpoint in
             .init(
                 logicalId: id,
                 id: endpoint.id,
@@ -73,12 +72,12 @@ extension VPNServer {
     }
 
     var overrideRecords: [Persistence.EndpointOverrides] {
-        return endpoints.compactMap { $0.overrideInfo }
+        endpoints.compactMap(\.overrideInfo)
     }
 }
 
-extension Domain.Logical {
-    init(
+public extension Domain.Logical {
+    internal init(
         staticInfo: Persistence.Logical,
         dynamicInfo: Persistence.LogicalStatus
     ) {
@@ -104,29 +103,29 @@ extension Domain.Logical {
 
     /// For non-secure core logicals, this is equal to `exitCountryCode`. The access modifier is public while
     /// LegacyCommon code still relies on `entryCountryCode` directly rather than `kind`.
-    public var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
+    var entryCountryCode: String { kind.entryCountryCode ?? exitCountryCode }
 
     /// Returns nil if this logical is not a gateway. The access modifier is public while LegacyCommon code still relies
     /// on `gatewayName` directly rather than `kind`.
-    public var gatewayName: String? { kind.gatewayName }
+    var gatewayName: String? { kind.gatewayName }
 }
 
 extension ContinuousServerProperties {
     var databaseRecord: LogicalStatus {
-        return LogicalStatus(logicalID: serverId, status: status, load: load, score: score)
+        LogicalStatus(logicalID: serverId, status: status, load: load, score: score)
     }
 }
 
-extension Domain.Logical.Kind {
-    public var entryCountryCode: String? {
-        if case .secureCore(let entryCountryCode) = self {
+public extension Domain.Logical.Kind {
+    var entryCountryCode: String? {
+        if case let .secureCore(entryCountryCode) = self {
             return entryCountryCode
         }
         return nil
     }
 
-    public var gatewayName: String? {
-        if case .gateway(let name) = self {
+    var gatewayName: String? {
+        if case let .gateway(name) = self {
             return name
         }
         return nil

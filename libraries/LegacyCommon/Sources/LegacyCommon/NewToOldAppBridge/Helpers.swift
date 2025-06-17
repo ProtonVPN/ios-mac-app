@@ -22,7 +22,7 @@ import ComposableArchitecture
 /// Error thrown when using the ``SharedReader.when`` helper and deadline is hit.
 struct SharedReaderTimeoutError: Error {}
 
-extension Shared where Value: Equatable {
+package extension Shared where Value: Equatable {
     /// Regularly checks when the underlying value satisfies the check.
     /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
     /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
@@ -32,7 +32,7 @@ extension Shared where Value: Equatable {
     ///   - clock: the clock on which we base time calculations.
     ///   - deadline: the deadline that determines at which point we're calling
     ///   - operation: the operation you want to perform.
-    package func when<C: Clock>(
+    func when<C: Clock>(
         equals checkingValue: Value,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),
@@ -56,7 +56,7 @@ extension Shared where Value: Equatable {
     }
 }
 
-extension SharedReader where Value: CasePathable {
+package extension SharedReader where Value: CasePathable {
     /// Regularly checks when the underlying value satisfies the check.
     /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
     /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
@@ -66,7 +66,7 @@ extension SharedReader where Value: CasePathable {
     ///   - clock: the clock on which we base time calculations.
     ///   - deadline: the deadline that determines at which point we're calling
     ///   - operation: the operation you want to perform.
-    package func when<C: Clock>(
+    func when<C: Clock>(
         willBe caseKeyPath: PartialCaseKeyPath<Value>,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),
@@ -90,7 +90,7 @@ extension SharedReader where Value: CasePathable {
     }
 }
 
-extension SharedReader where Value: Equatable {
+package extension SharedReader where Value: Equatable {
     /// Regularly checks when the underlying value satisfies the check.
     /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
     /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
@@ -100,7 +100,7 @@ extension SharedReader where Value: Equatable {
     ///   - clock: the clock on which we base time calculations.
     ///   - deadline: the deadline that determines at which point we're calling
     ///   - operation: the operation you want to perform.
-    package func when<C: Clock>(
+    func when<C: Clock>(
         equals checkingValue: Value,
         every interval: C.Duration,
         on clock: C = ContinuousClock(),

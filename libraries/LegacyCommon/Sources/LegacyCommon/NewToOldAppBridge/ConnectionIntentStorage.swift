@@ -16,10 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
-import VPNAppCore
 import Domain
+import Foundation
+import VPNAppCore
 
 extension ConnectionIntentStorage: @retroactive DependencyKey {
     public static let liveValue = ConnectionIntentStorage(getConnectionIntent: {
@@ -48,7 +48,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
         let legacyServer = Server(logical: legacyLogical, endpoint: legacyEndpoint)
         let legacyFeatures = lastWGConfig.ports
 
-        guard case .wireGuard(let transport) = lastWGConfig.vpnProtocol else {
+        guard case let .wireGuard(transport) = lastWGConfig.vpnProtocol else {
             throw LegacyIntentRetrievalFailure.unexpectedProtocol(lastWGConfig.vpnProtocol)
         }
         // TunnelFeatures are not currently used by a consumer of `getConnectionIntent`

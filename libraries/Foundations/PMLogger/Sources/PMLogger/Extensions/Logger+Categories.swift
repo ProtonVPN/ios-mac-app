@@ -19,9 +19,8 @@
 import Foundation
 import Logging
 
-extension Logger {
-    
-    public enum Category: String {
+public extension Logger {
+    enum Category: String {
         case connection = "conn"
         case connectionConnect = "conn.connect"
         case connectionDisconnect = "conn.disconnect"
@@ -48,7 +47,7 @@ extension Logger {
         case telemetry
     }
 
-    public enum Event: String {
+    enum Event: String {
         case current
         case stateChange = "state_change"
         case error

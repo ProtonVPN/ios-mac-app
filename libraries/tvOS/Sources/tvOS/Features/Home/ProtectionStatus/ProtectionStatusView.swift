@@ -16,16 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import ComposableArchitecture
-import ProtonCoreUIFoundations
-import Localization
-import Domain
 import Connection
+import Domain
+import Localization
+import ProtonCoreUIFoundations
+import SwiftUI
 import Theme
 
 struct ProtectionStatusView: View {
-
     @Bindable var store: StoreOf<ProtectionStatusFeature>
 
     struct Model {
@@ -37,30 +36,30 @@ struct ProtectionStatusView: View {
         init(connectionState: Connection.ConnectionState) {
             switch connectionState {
             case .connected:
-                icon = IconProvider.lockFilled
-                title = "Protected"
-                foregroundColor = Asset.vpnGreen.swiftUIColor
-                buttonTitle = "Disconnect"
+                self.icon = IconProvider.lockFilled
+                self.title = "Protected"
+                self.foregroundColor = Asset.vpnGreen.swiftUIColor
+                self.buttonTitle = "Disconnect"
             case .connecting:
-                icon = nil
-                title = "Connecting"
-                foregroundColor = Color(.text)
-                buttonTitle = "Cancel"
+                self.icon = nil
+                self.title = "Connecting"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Cancel"
             case .disconnected:
-                icon = IconProvider.lockOpenFilled
-                title = "Unprotected"
-                foregroundColor = Color(.text, .danger)
-                buttonTitle = "Quick Connect"
+                self.icon = IconProvider.lockOpenFilled
+                self.title = "Unprotected"
+                self.foregroundColor = Color(.text, .danger)
+                self.buttonTitle = "Quick Connect"
             case .disconnecting:
-                icon = nil
-                title = "Disconnecting"
-                foregroundColor = Color(.text)
-                buttonTitle = "Quick Connect"
+                self.icon = nil
+                self.title = "Disconnecting"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Quick Connect"
             case .resolving:
-                icon = nil
-                title = "Loading"
-                foregroundColor = Color(.text)
-                buttonTitle = "Cancel"
+                self.icon = nil
+                self.title = "Loading"
+                self.foregroundColor = Color(.text)
+                self.buttonTitle = "Cancel"
             }
         }
     }
@@ -102,13 +101,13 @@ struct ProtectionStatusView: View {
             ProgressView()
         }
     }
-    
+
     @ViewBuilder
     private var locationText: Text? {
         if let location = displayedLocation {
             Text(verbatim: LocalizationUtility.default.countryName(forCode: location.country) ?? "")
-            +
-            Text(verbatim: " • \(location.ip)")
+                +
+                Text(verbatim: " • \(location.ip)")
                 .foregroundStyle(Color(.text, .weak))
         }
     }
@@ -118,7 +117,7 @@ struct ProtectionStatusView: View {
         let ip: String?
 
         switch store.connectionState {
-        case .connected(_, let server, _, let connectionDetails):
+        case let .connected(_, server, _, connectionDetails):
             country = server.logical.exitCountryCode
             ip = connectionDetails.map { String(describing: $0.exitIp) } ?? server.endpoint.exitIp
         default:
@@ -151,7 +150,6 @@ struct ProtectionStatusView: View {
 }
 
 private struct ConnectButtonStyle: ButtonStyle {
-
     @Environment(\.isFocused) var isFocused
 
     func makeBody(configuration: Configuration) -> some View {

@@ -22,11 +22,10 @@ import Dependencies
 import GRDB
 
 import Domain
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 final class RoundingTests: CaseIsolatedDatabaseTestCase {
-
     func testRoundToSmallest100() {
         XCTAssertEqual(4123.roundedServerCount(), 4100)
     }

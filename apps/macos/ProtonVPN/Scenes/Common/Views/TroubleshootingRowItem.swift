@@ -20,17 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import Foundation
+import LegacyCommon
 
 final class TroubleshootingRowItem: NSTableRowView {
-
     // MARK: Outlets
 
-    @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var switchView: SwitchButton!
+    @IBOutlet private var titleLabel: NSTextField!
+    @IBOutlet private var switchView: SwitchButton!
     private let textView = NSTextView()
 
     // MARK: Properties
@@ -40,7 +39,7 @@ final class TroubleshootingRowItem: NSTableRowView {
 
     var item: TroubleshootItem? {
         didSet {
-            guard let item = item else {
+            guard let item else {
                 return
             }
 
@@ -65,7 +64,7 @@ final class TroubleshootingRowItem: NSTableRowView {
             }
         }
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
@@ -79,7 +78,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         titleLabel.font = NSFont.boldSystemFont(ofSize: 17)
 
         textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint])
+            NSAttributedString.Key.foregroundColor: NSColor.color(.text, [.interactive, .hint]),
         ]
 
         textView.isEditable = false
@@ -91,7 +90,7 @@ final class TroubleshootingRowItem: NSTableRowView {
         NSLayoutConstraint.activate([
             textView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             textView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -4),
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
+            textView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
         ])
         trailingConstraint = textView.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor, constant: 8)
         trailingConstraint?.isActive = true
@@ -115,7 +114,7 @@ final class TroubleshootingRowItem: NSTableRowView {
 // MARK: Switch button delegate
 
 extension TroubleshootingRowItem: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
+    func switchButtonClicked(_: NSButton) {
         (item as? ActionableTroubleshootItem)?.set(isOn: switchView.currentButtonState == .on)
     }
 }

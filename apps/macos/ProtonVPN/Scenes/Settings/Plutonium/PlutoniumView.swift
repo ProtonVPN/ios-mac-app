@@ -24,12 +24,12 @@ import Dependencies
 
 import ProtonCoreUIFoundations
 
-import SettingsShared
-import Theme
-import Strings
 import Domain
-import VPNAppCore
+import SettingsShared
+import Strings
+import Theme
 import UniformTypeIdentifiers
+import VPNAppCore
 
 public struct PlutoniumView: View {
     @Perception.Bindable public var store: StoreOf<PlutoniumFeature>
@@ -95,7 +95,8 @@ public struct PlutoniumView: View {
                 return false
             }, set: {
                 store.send(.toggleModeClicked($0))
-            })
+            }
+        )
     }
 
     private var configView: some View {
@@ -138,7 +139,8 @@ public struct PlutoniumView: View {
                 store.feature.mode
             }, set: {
                 store.send(.modeSelectionClicked($0))
-            })
+            }
+        )
     }
 
     private var modesSelector: some View {
@@ -167,7 +169,7 @@ public struct PlutoniumView: View {
     }
 
     private var appsHeaderTitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExclusionListApps
@@ -177,7 +179,7 @@ public struct PlutoniumView: View {
     }
 
     private var appsHeaderSubtitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExcludeModeApps
@@ -187,7 +189,7 @@ public struct PlutoniumView: View {
     }
 
     private var ipsHeaderTitle: String {
-        guard case .enabled(let mode) = store.feature else { return "" }
+        guard case let .enabled(mode) = store.feature else { return "" }
         switch mode {
         case .exclusion:
             return Localizable.plutoniumExcludeModeIps
@@ -290,14 +292,18 @@ public struct PlutoniumView: View {
     private func appsList() -> some View {
         VStack {
             HStack(spacing: .themeRadius8) {
-                appsSection(title: Localizable.plutoniumAllApps,
-                            subtitle: nil,
-                            apps: store.remainingApps,
-                            operation: .add)
-                appsSection(title: appsHeaderTitle,
-                            subtitle: appsHeaderSubtitle,
-                            apps: store.activatedApps,
-                            operation: .remove)
+                appsSection(
+                    title: Localizable.plutoniumAllApps,
+                    subtitle: nil,
+                    apps: store.remainingApps,
+                    operation: .add
+                )
+                appsSection(
+                    title: appsHeaderTitle,
+                    subtitle: appsHeaderSubtitle,
+                    apps: store.activatedApps,
+                    operation: .remove
+                )
             }
             doneButton { appsSheet.toggle() }
         }
@@ -375,10 +381,12 @@ public struct PlutoniumView: View {
         .frame(width: Self.appsSectionWidth)
         .background(Color(.background, (operation == .remove && dragOver) ? [.transparent, .hovered] : [.transparent]))
         .clipRectangle(cornerRadius: .radius8)
-        .themeBorder(style: [],
-                     dashed: (operation == .remove && dragOver),
-                     lineWidth: (operation == .remove && dragOver) ? 2 : 0,
-                     cornerRadius: .radius8)
+        .themeBorder(
+            style: [],
+            dashed: operation == .remove && dragOver,
+            lineWidth: (operation == .remove && dragOver) ? 2 : 0,
+            cornerRadius: .radius8
+        )
     }
 
     private func openPanelLabel() -> some View {
@@ -392,7 +400,7 @@ public struct PlutoniumView: View {
             Text(Localizable.plutoniumImportAppsSubtitle1)
                 .themeFont(.footnote(emphasised: false))
                 .foregroundColor(Color(.text, .hint))
-            + Text(Localizable.plutoniumImportAppsSubtitle2)
+                + Text(Localizable.plutoniumImportAppsSubtitle2)
                 .themeFont(.footnote(emphasised: false))
                 .foregroundColor(Color(.text, [.interactive, .hint]))
         }

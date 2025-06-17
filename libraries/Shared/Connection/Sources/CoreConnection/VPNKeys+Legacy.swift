@@ -17,15 +17,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import protocol VPNShared.VpnAuthenticationStorageSync
 import struct VPNShared.PrivateKey
 import struct VPNShared.PublicKey
+import protocol VPNShared.VpnAuthenticationStorageSync
 import struct VPNShared.VpnKeys
 
 // Bridge between new key models with improved error handling and old keys from LegacyCommon
 
-extension CoreConnection.PrivateKey {
-    package init(fromLegacyKey legacyKey: VPNShared.PrivateKey) {
+package extension CoreConnection.PrivateKey {
+    init(fromLegacyKey legacyKey: VPNShared.PrivateKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
             derRepresentation: legacyKey.derRepresentation,
@@ -34,8 +34,8 @@ extension CoreConnection.PrivateKey {
     }
 }
 
-extension CoreConnection.PublicKey {
-    package init(fromLegacyKey legacyKey: VPNShared.PublicKey) {
+package extension CoreConnection.PublicKey {
+    init(fromLegacyKey legacyKey: VPNShared.PublicKey) {
         self.init(
             rawRepresentation: legacyKey.rawRepresentation,
             derRepresentation: legacyKey.derRepresentation
@@ -43,8 +43,8 @@ extension CoreConnection.PublicKey {
     }
 }
 
-extension CoreConnection.VPNKeys {
-    package init(fromLegacyKeys legacyKeys: VPNShared.VpnKeys) {
+package extension CoreConnection.VPNKeys {
+    init(fromLegacyKeys legacyKeys: VPNShared.VpnKeys) {
         self.init(
             privateKey: .init(fromLegacyKey: legacyKeys.privateKey),
             publicKey: .init(fromLegacyKey: legacyKeys.publicKey)

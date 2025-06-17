@@ -20,21 +20,21 @@ import Foundation
 import PMLogger
 
 class FileManagerMock: FileManagerWrapper {
-    
-    init() {
-    }
+    init() {}
 
     @ThrowingFuncStub(FileManagerMock.createDirectory) var createDirectoryStub
     func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws {
         try createDirectoryStub(url, createIntermediates, attributes)
     }
 
-    @FuncStub(FileManagerMock.fileExists, initialReturn: false) var fileExistsStub
+    @FuncStub(FileManagerMock.fileExists, initialReturn: false)
+    var fileExistsStub
     func fileExists(atPath path: String) -> Bool {
         fileExistsStub(path)
     }
 
-    @FuncStub(FileManagerMock.createFile, initialReturn: true) var createFileStub
+    @FuncStub(FileManagerMock.createFile, initialReturn: true)
+    var createFileStub
     func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey: Any]?) -> Bool {
         createFileStub(path, data, attr)
     }
@@ -44,12 +44,14 @@ class FileManagerMock: FileManagerWrapper {
         try moveItemStub(srcURL, dstURL)
     }
 
-    @ThrowingFuncStub(FileManagerMock.contentsOfDirectory, initialReturn: []) var contentsOfDirectoryStub
+    @ThrowingFuncStub(FileManagerMock.contentsOfDirectory, initialReturn: [])
+    var contentsOfDirectoryStub
     func contentsOfDirectory(at url: URL, includingPropertiesForKeys keys: [URLResourceKey]?, options mask: FileManager.DirectoryEnumerationOptions) throws -> [URL] {
         try contentsOfDirectoryStub(url, keys, mask)
     }
 
-    @ThrowingFuncStub(FileManagerMock.attributesOfItem, initialReturn: [:]) var attributesOfItemStub
+    @ThrowingFuncStub(FileManagerMock.attributesOfItem, initialReturn: [:])
+    var attributesOfItemStub
     func attributesOfItem(atPath path: String) throws -> [FileAttributeKey: Any] {
         try attributesOfItemStub(path)
     }
@@ -59,8 +61,9 @@ class FileManagerMock: FileManagerWrapper {
         try removeItemStub(URL)
     }
 
-    @ThrowingFuncStub(FileManagerMock.createFileHandle, initialReturn: try FileHandleMock(forWritingTo: URL(string: "/file")!)) var createFileHandleStub
+    @ThrowingFuncStub(FileManagerMock.createFileHandle, initialReturn: try FileHandleMock(forWritingTo: URL(string: "/file")!))
+    var createFileHandleStub
     public func createFileHandle(forWritingTo url: URL) throws -> FileHandleWrapper {
-        return try createFileHandleStub(url)
+        try createFileHandleStub(url)
     }
 }

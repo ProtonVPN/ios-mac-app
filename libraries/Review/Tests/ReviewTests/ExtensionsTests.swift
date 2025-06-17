@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-@testable import Review
 import DomainTestSupport
+@testable import Review
+import XCTest
 
 final class ExtensionsTests: XCTestCase {
     private var userDefaults: UserDefaults!
@@ -48,18 +48,18 @@ final class ExtensionsTests: XCTestCase {
     func testDaysSinceDate() {
         let now = Date()
 
-        let date1 = now.addingTimeInterval(86_400)
+        let date1 = now.addingTimeInterval(86400)
         XCTAssertEqual(date1.timeIntervalSince(now).days, "1d")
 
-        let date2 = now.addingTimeInterval(86_400 + 156)
+        let date2 = now.addingTimeInterval(86400 + 156)
         XCTAssertEqual(date2.timeIntervalSince(now).days, "1d")
 
-        let date3 = now.addingTimeInterval(5 * 86_400 + 156)
+        let date3 = now.addingTimeInterval(5 * 86400 + 156)
         XCTAssertEqual(date3.timeIntervalSince(now).days, "5d")
 
         XCTAssertEqual(now.timeIntervalSince(now).days, "0d")
 
-        let date4 = now.addingTimeInterval(-2 * 86_400 - 156)
+        let date4 = now.addingTimeInterval(-2 * 86400 - 156)
         XCTAssertEqual(date4.timeIntervalSince(now).days, "-2d")
     }
 }

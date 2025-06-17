@@ -20,7 +20,6 @@ import Foundation
 import LegacyCommon
 
 class AppSessionRefreshTimerMock: AppSessionRefreshTimer {
-
     // Callbacks
     var startCalled: (() -> Void)?
     var stopCalled: (() -> Void)?

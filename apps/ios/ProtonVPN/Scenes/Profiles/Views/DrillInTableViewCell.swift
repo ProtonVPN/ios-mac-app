@@ -23,17 +23,15 @@
 import UIKit
 
 class DrillInTableViewCell: UITableViewCell {
+    @IBOutlet var keyLabel: UILabel!
+    @IBOutlet var valueLabel: UILabel!
 
-    @IBOutlet weak var keyLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         backgroundColor = .secondaryBackgroundColor()
         keyLabel.textColor = .normalTextColor()
         valueLabel.textColor = .weakTextColor()
         selectionStyle = .none
     }
-    
 }

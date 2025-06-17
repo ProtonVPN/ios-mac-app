@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import Dependencies
+import Foundation
 @testable import LegacyCommon
+import XCTest
 
 public class ServerChangeAuthorizerTests: XCTestCase {
-
     func testAuthorizesServerChangeWhenStackIsEmpty() {
         let sut = ServerChangeAuthorizerImplementation()
         let now = Date()
@@ -112,35 +111,35 @@ public class ServerChangeAuthorizerTests: XCTestCase {
                 .init(intent: .fastest, date: later, upsellNext: false),
                 .init(intent: .fastest, date: later, upsellNext: false),
                 .init(intent: .fastest, date: later, upsellNext: false),
-                .init(intent: .random, date: start, upsellNext: false)
+                .init(intent: .random, date: start, upsellNext: false),
             ]
             XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
         }
     }
 
     func testAlwaysReturnsAvailableForPaidUsers() {
-            let sut = ServerChangeAuthorizerImplementation()
-            let start = Date()
-            let delayExpiryDate = start.addingTimeInterval(5)
+        let sut = ServerChangeAuthorizerImplementation()
+        let start = Date()
+        let delayExpiryDate = start.addingTimeInterval(5)
 
-            let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
-            let config: ServerChangeConfig = .init(
-                changeServerAttemptLimit: 3,
-                changeServerShortDelayInSeconds: 5,
-                changeServerLongDelayInSeconds: 10
+        let connectionStack: [ServerChangeStorage.ConnectionStackItem] = [.init(intent: .random, date: start, upsellNext: false)]
+        let config: ServerChangeConfig = .init(
+            changeServerAttemptLimit: 3,
+            changeServerShortDelayInSeconds: 5,
+            changeServerLongDelayInSeconds: 10
+        )
+
+        withDependencies {
+            $0.date = .constant(start)
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
+            $0.featureFlagProvider = .constant(flags: .allDisabled)
+            $0.serverChangeStorage = .init(
+                getConfig: { config },
+                getConnectionStack: { connectionStack }
             )
-
-            withDependencies {
-                $0.date = .constant(start)
-                $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
-                $0.featureFlagProvider = .constant(flags: .allDisabled)
-                $0.serverChangeStorage = .init(
-                    getConfig: { config },
-                    getConnectionStack: { connectionStack }
-                )
-            } operation: {
-                XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
-            }
+        } operation: {
+            XCTAssertEqual(sut.serverChangeAvailability(), .unavailable(until: delayExpiryDate, duration: 5, exhaustedSkips: false))
+        }
 
         withDependencies {
             $0.date = .constant(start)
@@ -228,14 +227,14 @@ public class ServerChangeAuthorizerTests: XCTestCase {
             )
         } operation: {
             var expectedItems = [
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: start)
             XCTAssertEqual(connectionStack, expectedItems)
 
             expectedItems = [
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: second)
             XCTAssertEqual(connectionStack, expectedItems)
@@ -243,7 +242,7 @@ public class ServerChangeAuthorizerTests: XCTestCase {
             expectedItems = [
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: third, upsellNext: false),
                 ServerChangeStorage.ConnectionStackItem(intent: .random, date: second, upsellNext: true),
-                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false)
+                ServerChangeStorage.ConnectionStackItem(intent: .random, date: start, upsellNext: false),
             ]
             sut.registerServerChange(connectedAt: third)
             XCTAssertEqual(connectionStack, expectedItems)

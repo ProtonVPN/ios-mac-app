@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
-import XCTest
 import CommonNetworking
 import Dependencies
+import Foundation
 @testable import LegacyCommon
+import XCTest
 
 class DoHHostsParsingTests: XCTestCase {
     func testHostParsingForLiveEnvironment() {

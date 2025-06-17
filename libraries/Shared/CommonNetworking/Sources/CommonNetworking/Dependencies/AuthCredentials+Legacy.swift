@@ -1,5 +1,5 @@
 //
-//  AuthCredentials+LegacyCommon.swift
+//  AuthCredentials+Legacy.swift
 //  Core
 //
 //  Created by Jaroslav on 2021-06-22.
@@ -10,8 +10,8 @@ import Foundation
 import ProtonCoreNetworking
 import VPNShared
 
-extension AuthCredentials {
-    public func updatedWithAuth(auth: Credential) -> AuthCredentials {
+public extension AuthCredentials {
+    func updatedWithAuth(auth: Credential) -> AuthCredentials {
         AuthCredentials(
             username: username,
             accessToken: auth.accessToken,
@@ -23,7 +23,7 @@ extension AuthCredentials {
         )
     }
 
-    public convenience init(_ credential: Credential) {
+    convenience init(_ credential: Credential) {
         self.init(
             username: credential.userName,
             accessToken: credential.accessToken,
@@ -36,8 +36,8 @@ extension AuthCredentials {
     }
 }
 
-extension Credential {
-    public init(_ credentials: AuthCredentials) {
+public extension Credential {
+    init(_ credentials: AuthCredentials) {
         self.init(
             UID: credentials.sessionId,
             accessToken: credentials.accessToken,

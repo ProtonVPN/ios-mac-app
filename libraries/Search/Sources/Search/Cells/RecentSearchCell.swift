@@ -20,18 +20,18 @@ import UIKit
 
 final class RecentSearchCell: UITableViewCell {
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
 
     static var nib: UINib {
-        return UINib(nibName: identifier, bundle: Bundle.module)
+        UINib(nibName: identifier, bundle: Bundle.module)
     }
 
     // MARK: Outlets
 
-    @IBOutlet private weak var lineViewHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var lineView: UIView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private var lineViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var lineView: UIView!
+    @IBOutlet private var titleLabel: UILabel!
 
     // MARK: Properties
 

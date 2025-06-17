@@ -20,25 +20,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Foundation
 import LegacyCommon
-import AppKit
 import Strings
 
 class WindowMenuController: NSObject {
-    
-    @IBOutlet weak var windowMenu: NSMenu!
-    @IBOutlet weak var minimizeItem: NSMenuItem!
-    
+    @IBOutlet var windowMenu: NSMenu!
+    @IBOutlet var minimizeItem: NSMenuItem!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setupPersistentView()
     }
-    
+
     // MARK: - Private functions
+
     private func setupPersistentView() {
         windowMenu.title = Localizable.menuWindow
         minimizeItem.title = Localizable.menuMinimize
     }
-    
 }

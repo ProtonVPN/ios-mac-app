@@ -7,16 +7,15 @@
 //
 
 import fusion
-import XCTest
-import UITestsHelpers
 import Strings
+import UITestsHelpers
+import XCTest
 
-fileprivate let smartButton = Localizable.smartTitle
-fileprivate let settingsButtonId = "Settings back btn"
-fileprivate let stealthButton = Localizable.wireguardTls
+private let smartButton = Localizable.smartTitle
+private let settingsButtonId = "Settings back btn"
+private let stealthButton = Localizable.wireguardTls
 
 class ProtocolsListRobot: CoreElements {
-
     @discardableResult
     func stealthProtocolOn() -> ProtocolsListRobot {
         cell(stealthButton).tap()
@@ -28,13 +27,13 @@ class ProtocolsListRobot: CoreElements {
         cell(smartButton).tap()
         return ProtocolsListRobot()
     }
-    
+
     @discardableResult
     func returnToSettings() -> SettingsRobot {
         button(settingsButtonId).tap()
         return SettingsRobot()
     }
-    
+
     /// Choose protocol from the protocol list
     /// - Precondition: Default protocol is Smart
     @discardableResult

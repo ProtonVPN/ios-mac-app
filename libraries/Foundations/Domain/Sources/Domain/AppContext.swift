@@ -16,8 +16,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
+import Foundation
 
 public enum AppContext: String {
     case mainApp
@@ -27,9 +27,9 @@ public enum AppContext: String {
     public var clientIdKey: String {
         switch self {
         case .mainApp, .siriIntentHandler:
-            return "Id"
+            "Id"
         case .wireGuardExtension:
-            return "WireGuardId"
+            "WireGuardId"
         }
     }
 
@@ -42,8 +42,8 @@ extension AppContext: DependencyKey {
     public static let testValue: AppContext = .mainApp
 }
 
-extension DependencyValues {
-    public var appContext: AppContext {
+public extension DependencyValues {
+    var appContext: AppContext {
         get { self[AppContext.self] }
         set { self[AppContext.self] = newValue }
     }

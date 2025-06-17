@@ -17,11 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import fusion
-import ProtonCoreTestingToolkitUITestsLogin
 import ProtonCoreQuarkCommands
+import ProtonCoreTestingToolkitUITestsLogin
 
 final class LoginExternalAccountTests: ProtonVPNUITests {
-
     private let loginRobot = LoginRobot()
 
     override func setUp() {
@@ -52,7 +51,6 @@ final class LoginExternalAccountTests: ProtonVPNUITests {
     }
 
     func testSignInWithExternalAccountWorks() throws {
-
         let randomEmail = "\(StringUtils.randomAlphanumericString(length: 8))@gmail.com"
         let randomName = "\(StringUtils.randomAlphanumericString(length: 8))"
         let randomPassword = StringUtils.randomAlphanumericString(length: 8)

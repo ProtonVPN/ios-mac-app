@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Theme
 import SwiftUI
+import Theme
 
 struct ThemeToggleStyle: ToggleStyle {
-    private let activeColor: Color = Color(.background, [.interactive])
-    private let inactiveColor: Color = Color(.background, [.interactive, .weak])
+    private let activeColor: Color = .init(.background, [.interactive])
+    private let inactiveColor: Color = .init(.background, [.interactive, .weak])
 
     func makeBody(configuration: Configuration) -> some View {
         HStack {

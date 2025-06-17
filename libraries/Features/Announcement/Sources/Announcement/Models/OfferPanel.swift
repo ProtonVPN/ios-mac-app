@@ -31,17 +31,19 @@ public struct OfferPanel: Codable {
     public let pageFooter: String?
     public let showCountdown: Bool?
 
-    internal init(fullScreenImage: FullScreenImage? = nil,
-                  button: OfferButton,
-                  incentive: String? = nil,
-                  incentivePrice: String? = nil,
-                  pill: String? = nil,
-                  pictureURL: String? = nil,
-                  title: String? = nil,
-                  features: [OfferFeature]? = nil,
-                  featuresFooter: String? = nil,
-                  pageFooter: String? = nil,
-                  showCountdown: Bool? = nil) {
+    init(
+        fullScreenImage: FullScreenImage? = nil,
+        button: OfferButton,
+        incentive: String? = nil,
+        incentivePrice: String? = nil,
+        pill: String? = nil,
+        pictureURL: String? = nil,
+        title: String? = nil,
+        features: [OfferFeature]? = nil,
+        featuresFooter: String? = nil,
+        pageFooter: String? = nil,
+        showCountdown: Bool? = nil
+    ) {
         self.fullScreenImage = fullScreenImage
         self.button = button
         self.incentive = incentive

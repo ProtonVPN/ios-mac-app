@@ -16,18 +16,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Cocoa
 import ProtonCoreUIFoundations
 import Theme
-import Cocoa
 #if canImport(SwiftUI)
-import SwiftUI
+    import SwiftUI
 #endif
 
-extension AppTheme {
+public extension AppTheme {
     @dynamicMemberLookup
-    public enum Icon {
+    enum Icon {
         static subscript(dynamicMember keyPath: KeyPath<IconProviderBase, NSImage>) -> NSImage {
-            return IconProvider[keyPath: keyPath]
+            IconProvider[keyPath: keyPath]
         }
 
         static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> NSImage? {
@@ -37,13 +37,13 @@ extension AppTheme {
             return NSImage(named: style.imageName(countryCode: countryCode))
         }
 
-#if canImport(SwiftUI)
-        static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> Image? {
-            if style == .plain {
-                return IconProvider.flag(forCountryCode: countryCode)
+        #if canImport(SwiftUI)
+            static func flag(countryCode: String, style: AppTheme.FlagStyle = .plain) -> Image? {
+                if style == .plain {
+                    return IconProvider.flag(forCountryCode: countryCode)
+                }
+                return Image(style.imageName(countryCode: countryCode))
             }
-            return Image(style.imageName(countryCode: countryCode))
-        }
-#endif
+        #endif
     }
 }

@@ -20,9 +20,9 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
 import enum Domain.WireGuardTransport
 import Ergonomics
+import Foundation
 
 public struct WireguardConfig: Codable, Equatable {
     public let defaultUdpPorts: [Int]
@@ -32,13 +32,15 @@ public struct WireguardConfig: Codable, Equatable {
     public let dnsServers: [String]
 
     public var address: String {
-        return "10.2.0.2/32"
+        "10.2.0.2/32"
     }
+
     public var allowedIPs: String {
-        return "0.0.0.0/0"
+        "0.0.0.0/0"
     }
+
     public var persistentKeepalive: Int? { // seconds
-        return 25
+        25
     }
 
     init(
@@ -60,13 +62,13 @@ public struct WireguardConfig: Codable, Equatable {
     public func defaultPorts(for transport: WireGuardTransport) -> [Int] {
         switch transport {
         case .udp:
-            return defaultUdpPorts
+            defaultUdpPorts
 
         case .tcp:
-            return defaultTcpPorts
+            defaultTcpPorts
 
         case .tls:
-            return defaultTlsPorts
+            defaultTlsPorts
         }
     }
 }
@@ -127,28 +129,28 @@ public struct StoredWireguardConfig: Codable {
 
 /// This is what gets stored in the keychain, to communicate the connection
 /// details with the WireGuard network extension.
-extension StoredWireguardConfig {
+public extension StoredWireguardConfig {
     /// `asWireguardConfiguration` translates this object into a text configuration file
     /// that the `wireguard-go` backend understands.
-    public func asWireguardConfiguration() -> String {
-        return """
-            [Interface]
-            \(attribute: "PrivateKey = ", optional: clientPrivateKey)
-            Address = \(wireguardConfig.address)
+    func asWireguardConfiguration() -> String {
+        """
+        [Interface]
+        \(attribute: "PrivateKey = ", optional: clientPrivateKey)
+        Address = \(wireguardConfig.address)
 
-            DNS = \(wireguardConfig.dnsServers.joined(separator: ","))
+        DNS = \(wireguardConfig.dnsServers.joined(separator: ","))
 
-            [Peer]
-            \(attribute: "PublicKey = ", optional: serverPublicKey)
-            AllowedIPs = \(wireguardConfig.allowedIPs)
-            Endpoint = \(entryServerAddress):\(ports.first!)
-            \(attribute: "PersistentKeepalive = ", optional: wireguardConfig.persistentKeepalive)
-            """
+        [Peer]
+        \(attribute: "PublicKey = ", optional: serverPublicKey)
+        AllowedIPs = \(wireguardConfig.allowedIPs)
+        Endpoint = \(entryServerAddress):\(ports.first!)
+        \(attribute: "PersistentKeepalive = ", optional: wireguardConfig.persistentKeepalive)
+        """
     }
 }
 
 private extension DefaultStringInterpolation {
-    mutating func appendInterpolation<T>(attribute: String, optional: T?) {
+    mutating func appendInterpolation(attribute: String, optional: (some Any)?) {
         guard let optional else {
             return
         }

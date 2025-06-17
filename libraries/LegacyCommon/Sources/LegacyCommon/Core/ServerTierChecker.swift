@@ -27,19 +27,18 @@ protocol ServerTierCheckerFactory {
 }
 
 class ServerTierChecker {
-    
     public weak var alertService: CoreAlertService?
-    
+
     private let vpnKeychain: VpnKeychainProtocol
-    
+
     init(alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol) {
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
     }
-    
+
     func serverRequiresUpgrade(_ server: ServerModel) -> Bool? {
         do {
-            let userTier = try self.userTier()
+            let userTier = try userTier()
             if server.tier > userTier {
                 notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .upgrade(server.tier))
                 return true
@@ -51,8 +50,8 @@ class ServerTierChecker {
             return false
         }
     }
-    
-    func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
+
+    func notifyResolutionUnavailable(forSpecificCountry: Bool, type _: ServerType, reason: ResolutionUnavailableReason) {
         DispatchQueue.main.async { [weak self] in
             switch reason {
             case .upgrade:
@@ -61,12 +60,12 @@ class ServerTierChecker {
                 self?.alertService?.push(alert: MaintenanceAlert(forSpecificCountry: forSpecificCountry))
             case .protocolNotSupported:
                 self?.alertService?.push(alert: ProtocolNotAvailableForServerAlert())
-            case .locationNotFound(let profileName):
+            case let .locationNotFound(profileName):
                 self?.alertService?.push(alert: LocationNotAvailableAlert(profileName: profileName))
             }
         }
     }
-    
+
     private func userTier() throws -> Int {
         let tier = try vpnKeychain.fetchCached().maxTier
         return tier

@@ -25,30 +25,29 @@ import LegacyCommon
 import Strings
 
 class ReportBugWindowController: WindowController {
-
-    required init?(coder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("Unsupported initializer")
     }
-    
+
     required init(viewController: NSViewController) {
         let window = NSWindow(contentViewController: viewController)
         window.title = viewController.title ?? ""
         super.init(window: window)
-        
+
         setupWindow()
         monitorsKeyEvents = true
     }
-    
+
     private func setupWindow() {
-        guard let window = window else {
+        guard let window else {
             return
         }
-        
+
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.title = Localizable.reportBug
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = .color(.background, .weak)
     }
-    
 }

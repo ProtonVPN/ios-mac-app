@@ -16,17 +16,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
-import Strings
-import ProtonCoreUIFoundations
-import HomeShared
-import Dependencies
-import VPNAppCore
 import ComposableArchitecture
+import Dependencies
+import HomeShared
 import NetShield
+import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
+import VPNAppCore
 
 struct ConnectionStatusUpsell: View {
-
     private struct Model {
         let title: String
         let subtitle: String
@@ -35,13 +34,13 @@ struct ConnectionStatusUpsell: View {
         init(mode: ConnectionStatusBannerFeature.UpsellMode) {
             switch mode {
             case .netshield:
-                title = Localizable.netshieldTitle
-                subtitle = Localizable.netshieldUpsellSubtitle
-                icon = HomeAsset.netshieldMobileSmall
+                self.title = Localizable.netshieldTitle
+                self.subtitle = Localizable.netshieldUpsellSubtitle
+                self.icon = HomeAsset.netshieldMobileSmall
             case .serverChange:
-                title = Localizable.wrongCountryBannerTitle
-                subtitle = Localizable.wrongCountryBannerSubtitle
-                icon = HomeAsset.wrongCountrySmall
+                self.title = Localizable.wrongCountryBannerTitle
+                self.subtitle = Localizable.wrongCountryBannerSubtitle
+                self.icon = HomeAsset.wrongCountrySmall
             }
         }
     }
@@ -50,8 +49,10 @@ struct ConnectionStatusUpsell: View {
 
     let sendAction: ConnectionStatusBannerFeature.ActionSender
 
-    public init(mode: ConnectionStatusBannerFeature.UpsellMode,
-                sendAction: @escaping ConnectionStatusBannerFeature.ActionSender) {
+    public init(
+        mode: ConnectionStatusBannerFeature.UpsellMode,
+        sendAction: @escaping ConnectionStatusBannerFeature.ActionSender
+    ) {
         self.mode = mode
         self.sendAction = sendAction
     }

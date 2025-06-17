@@ -1,5 +1,5 @@
 //
-//  ExtensionsSettingsViewModel.swift
+//  WidgetSettingsViewModel.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -25,12 +25,11 @@ import LegacyCommon
 import Strings
 
 struct WidgetSettingsViewModel {
-
     var tableViewData: [TableViewSection] {
         let sections: [TableViewSection] = [
-            widgetInstructions
+            widgetInstructions,
         ]
-        
+
         return sections
     }
 
@@ -38,9 +37,9 @@ struct WidgetSettingsViewModel {
         let cells: [TableViewCellModel] = [
             .instructionStep(number: 1, text: Localizable.activateWidgetStep1),
             .instructionStep(number: 2, text: Localizable.activateWidgetStep2),
-            .instructionStep(number: 3, text: Localizable.activateWidgetStep3)
+            .instructionStep(number: 3, text: Localizable.activateWidgetStep3),
         ]
-        
+
         return TableViewSection(title: Localizable.activateWidget.uppercased(), cells: cells)
     }
 }

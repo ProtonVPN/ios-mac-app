@@ -24,18 +24,19 @@ import Foundation
 
 import Dependencies
 
-import VPNShared
-import VPNAppCore
 import LegacyCommon
+import VPNAppCore
+import VPNShared
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 public protocol AnnouncementsViewModelFactory {
     func makeAnnouncementsViewModel() -> AnnouncementsViewModel
 }
 
 // MARK: AnnouncementsViewModelFactory
+
 extension Container: AnnouncementsViewModelFactory {
     public func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
         AnnouncementsViewModel(factory: self)
@@ -63,15 +64,14 @@ public final class AnnouncementOfferAlert: SystemAlert {
 
 /// Control view showing the list of announcements
 public class AnnouncementsViewModel {
-    
-    public typealias Factory = CoreAlertServiceFactory & AppInfoFactory & PropertiesManagerFactory
+    public typealias Factory = AppInfoFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     private let factory: Factory
 
     @Dependency(\.announcementManager) var announcementManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    
+
     // Data
     private(set) var items: [Announcement] = []
 
@@ -85,7 +85,7 @@ public class AnnouncementsViewModel {
 
     // Callbacks
     public var refreshView: (() -> Void)?
-    
+
     public init(factory: Factory) {
         self.factory = factory
         fillItems()
@@ -124,14 +124,15 @@ public class AnnouncementsViewModel {
         }
         alertService.push(alert: AnnouncementOfferAlert(data: data, offerReference: announcement.reference))
     }
-        
+
     // MARK: - Data
-    
+
     private func fillItems() {
         items = announcementManager.fetchCurrentAnnouncementsFromStorage()
     }
-    
-    @objc func dataChanged() {
+
+    @objc
+    func dataChanged() {
         fillItems()
         refreshView?()
     }

@@ -1,5 +1,5 @@
 //
-//  CountriesSectionViewModel.swift
+//  CountriesViewModel.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -29,14 +29,14 @@ import Domain
 import Ergonomics
 import Strings
 
+import Announcement
+import LegacyCommon
 import Localization
 import Modals
-import Search
-import LegacyCommon
 import ProtonCoreFeatureFlags
+import Search
 import VPNAppCore
 import VPNShared
-import Announcement
 
 typealias Row = RowViewModel
 
@@ -54,17 +54,17 @@ private enum Section {
 
     var title: String {
         switch self {
-        case .gateways(let title, _, _): return title
-        case .countries(let title, _, _, _): return title
-        case .profiles(let title, _): return title
+        case let .gateways(title, _, _): title
+        case let .countries(title, _, _, _): title
+        case let .profiles(title, _): title
         }
     }
 
     var rows: [Row] {
         switch self {
-        case .gateways(_, let rows, _): return rows
-        case .countries(_, let rows, _, _): return rows
-        case .profiles(_, let rows): return rows
+        case let .gateways(_, rows, _): rows
+        case let .countries(_, rows, _, _): rows
+        case let .profiles(_, rows): rows
         }
     }
 }
@@ -76,64 +76,63 @@ protocol CountriesVMDelegate: AnyObject {
 }
 
 class CountriesViewModel: SecureCoreToggleHandler {
-
     private var tableData = [Section]()
-    
+
     // MARK: vars and init
+
     private enum ModelState {
-        
         case standard([ServerGroupInfo])
         case secureCore([ServerGroupInfo])
 
         var currentContent: [ServerGroupInfo] {
             switch self {
-            case .standard(let content):
-                return content
-            case .secureCore(let content):
-                return content
+            case let .standard(content):
+                content
+            case let .secureCore(content):
+                content
             }
         }
 
         var serverType: ServerType {
             switch self {
             case .standard:
-                return .standard
+                .standard
             case .secureCore:
-                return .secureCore
+                .secureCore
             }
         }
     }
-    
+
     private var userTier: Int = .freeTier
     private var state: ModelState = .standard([])
-    
+
     var activeView: ServerType {
-        return state.serverType
+        state.serverType
     }
-    
+
     var secureCoreOn: Bool {
-        return state.serverType == .secureCore
+        state.serverType == .secureCore
     }
 
     var maxTier: Int {
-        return (try? keychain.fetchCached().maxTier) ?? .freeTier
+        (try? keychain.fetchCached().maxTier) ?? .freeTier
     }
 
     public typealias Factory = AppStateManagerFactory
-        & PropertiesManagerFactory
-        & CoreAlertServiceFactory
         & ConnectionStatusServiceFactory
-        & VpnKeychainFactory
-        & PlanServiceFactory
-        & SearchStorageFactory
-        & NetShieldPropertyProviderFactory
+        & CoreAlertServiceFactory
         & NATTypePropertyProviderFactory
+        & NetShieldPropertyProviderFactory
+        & PlanServiceFactory
+        & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
+        & SearchStorageFactory
+        & VpnKeychainFactory
     private let factory: Factory
-    
+
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    internal lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    internal lazy var alertService: AlertService = factory.makeCoreAlertService()
+    lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     private lazy var planService: PlanService = factory.makePlanService()
@@ -151,12 +150,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol
     lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
-    
+
     init(factory: Factory, vpnGateway: VpnGatewayProtocol, countryService: CountryService) {
         self.factory = factory
         self.vpnGateway = vpnGateway
         self.countryService = countryService
-        
+
         refreshTier()
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
         fillTableData()
@@ -176,9 +175,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
 
     private var freeCountries: [(String, UIImage?)] {
-        return state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
+        state.currentContent.compactMap { (serverGroup: ServerGroupInfo) -> (String, UIImage?)? in
             switch serverGroup.kind {
-            case .country(let code):
+            case let .country(code):
                 guard serverGroup.minTier.isFreeTier else {
                     return nil
                 }
@@ -191,11 +190,11 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
     }
-    
+
     var enableViewToggle: Bool {
-        return vpnGateway.connection != .connecting
+        vpnGateway.connection != .connecting
     }
-    
+
     func headerHeight(for section: Int) -> CGFloat {
         if numberOfSections() < 2 {
             return 0
@@ -203,15 +202,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
         return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
     }
-    
+
     func numberOfSections() -> Int {
-        return tableData.count
+        tableData.count
     }
-    
+
     func numberOfRows(in section: Int) -> Int {
-        return content(for: section).count
+        content(for: section).count
     }
-    
+
     func titleFor(section: Int) -> String? {
         guard numberOfRows(in: section) != 0 else {
             return nil
@@ -237,7 +236,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             }
         }
     }
-    
+
     func cellModel(for rowIndex: Int, in sectionIndex: Int) -> RowViewModel {
         guard let section = section(sectionIndex) else {
             fatalError("Wrong row requested: (\(rowIndex):\(sectionIndex)")
@@ -251,7 +250,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool
     ) -> CountryItemViewModel {
-        return CountryItemViewModel(
+        CountryItemViewModel(
             serversGroup: serversGroup,
             serverType: state.serverType,
             appStateManager: appStateManager,
@@ -266,15 +265,16 @@ class CountriesViewModel: SecureCoreToggleHandler {
             isRedesign: FeatureFlagsRepository.isRedesigniOSEnabled
         )
     }
-    
+
     func countryViewController(viewModel: CountryItemViewModel) -> CountryViewController? {
-        return countryService.makeCountryViewController(country: viewModel)
+        countryService.makeCountryViewController(country: viewModel)
     }
-    
+
     // MARK: - Private functions
+
     private func refreshTier() {
         do {
-            if (try keychain.fetchCached()).isDelinquent {
+            if try (keychain.fetchCached()).isDelinquent {
                 userTier = .freeTier
                 return
             }
@@ -297,37 +297,39 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
         return tableData[index]
     }
-    
+
     private func addObservers() {
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(activeServerTypeSet))
 
         let reloadEvents: [AppEvent] = [
             .planChanged,
             .vpnProtocol,
-            .smartProtocol
+            .smartProtocol,
         ]
 
         reloadEvents.subscribe(self, selector: #selector(reloadContent))
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent), name: ServerListUpdateNotification.name, object: nil)
     }
-    
-    internal func setStateOf(type: ServerType) {
+
+    func setStateOf(type: ServerType) {
         let groups = repository.getGroups(filteredBy: [.features(type.serverTypeFilter)])
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            self.state = .standard(groups)
+            state = .standard(groups)
         case .secureCore:
-            self.state = .secureCore(groups)
+            state = .secureCore(groups)
         }
     }
-    
-    @objc private func activeServerTypeSet() {
+
+    @objc
+    private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
         reloadContent()
     }
 
-    @objc private func reloadContent() {
+    @objc
+    private func reloadContent() {
         executeOnUIThread {
             self.refreshTier()
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
@@ -346,8 +348,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let gatewayContent = currentContent
             .filter {
                 switch $0.kind {
-                case .country: return false
-                case .gateway: return true
+                case .country: false
+                case .gateway: true
                 }
             }
             .map {
@@ -372,8 +374,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
             // Remove gateways from the list
             currentContent = currentContent.filter {
                 switch $0.kind {
-                case .country: return true
-                case .gateway: return false
+                case .country: true
+                case .gateway: false
                 }
             }
         }
@@ -394,10 +396,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))
-        
+
         // 'fastest' is visible for old design free users, also in the redesign, visible for all tiers.
         let firstRows = (isRedesign || userTier == 0) ? [fastest] : []
-        
+
         switch userTier {
         case 0: // Free
             let rowsFree = firstRows
@@ -485,9 +487,9 @@ extension CountriesViewModel {
     var searchData: [CountryViewModel] {
         switch state {
         case let .standard(data):
-            return data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         case let .secureCore(data):
-            return data.map({ countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) })
+            data.map { countryCellModel(serversGroup: $0, serversFilter: nil, showCountryConnectButton: true, showFeatureIcons: false) }
         }
     }
 }

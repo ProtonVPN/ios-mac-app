@@ -23,10 +23,10 @@
 import Cocoa
 import Dependencies
 
+import Domain
 import LegacyCommon
 import PMLogger
 import VPNShared
-import Domain
 
 protocol HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel
@@ -34,25 +34,25 @@ protocol HelpMenuViewModelFactory {
 
 extension DependencyContainer: HelpMenuViewModelFactory {
     func makeHelpMenuViewModel() -> HelpMenuViewModel {
-        return HelpMenuViewModel(factory: self)
+        HelpMenuViewModel(factory: self)
     }
 }
 
 class HelpMenuViewModel {
-    typealias Factory = VpnManagerFactory
-                        & NavigationServiceFactory
-                        & VpnKeychainFactory
-                        & CoreAlertServiceFactory
-                        & SystemExtensionManagerFactory
-                        & PropertiesManagerFactory
-                        & LogFileManagerFactory
-                        & LogContentProviderFactory
-                        & AuthKeychainHandleFactory
-                        & AppInfoFactory
-                        & WindowServiceFactory
-                        & VpnAuthenticationStorageFactory
+    typealias Factory = AppInfoFactory
+        & AuthKeychainHandleFactory
+        & CoreAlertServiceFactory
+        & LogContentProviderFactory
+        & LogFileManagerFactory
+        & NavigationServiceFactory
+        & PropertiesManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnAuthenticationStorageFactory
+        & VpnKeychainFactory
+        & VpnManagerFactory
+        & WindowServiceFactory
     private var factory: Factory
-    
+
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -72,12 +72,12 @@ class HelpMenuViewModel {
     func logDebugInfoString() {
         log.info("Build info: \(factory.makeAppInfo().debugInfoString)")
     }
-    
+
     func openLogsFolderAction() {
         logDebugInfoString()
         navService.openLogsFolder()
     }
-    
+
     func openWGVpnLogsFolderAction() {
         // Save log to file
         logContentProvider.getLogData(for: .wireguard).loadContent { logContent in
@@ -89,35 +89,35 @@ class HelpMenuViewModel {
     func systemExtensionTutorialAction() {
         windowService.openSystemExtensionGuideWindow(cancelledHandler: {})
     }
-    
+
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
-            self.vpnManager.disconnect { [self] in
-                self.clearAllDataAndTerminate()
+            vpnManager.disconnect { [self] in
+                clearAllDataAndTerminate()
             }
         })
     }
-    
+
     func openReportBug() {
         logDebugInfoString()
         navService.showReportBug()
     }
 
     private func clearAllDataAndTerminate() {
-        self.vpnManager.disconnect { }
+        vpnManager.disconnect {}
 
         AppEvent.clearingApplicationData.post()
 
-        if self.systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
+        if systemExtensionManager.uninstallAll(userInitiated: true, timeout: nil) == .timedOut {
             log.error("Timed out waiting for sysext uninstall, proceeding to clear app data", category: .sysex)
         }
 
         // keychain
-        self.vpnKeychain.clear()
-        self.authKeychain.clear()
+        vpnKeychain.clear()
+        authKeychain.clear()
 
-        self.vpnAuthenticationStorage.deleteCertificate()
-        self.vpnAuthenticationStorage.deleteKeys()
+        vpnAuthenticationStorage.deleteCertificate()
+        vpnAuthenticationStorage.deleteKeys()
 
         // app data
         if let bundleIdentifier = Bundle.main.bundleIdentifier {
@@ -134,7 +134,7 @@ class HelpMenuViewModel {
         let itemsToDelete = [
             FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?.path(), // legacy: old server storage
             AppConstants.FilePaths.sandbox, // legacy
-            AppConstants.FilePaths.starterSandbox // legacy
+            AppConstants.FilePaths.starterSandbox, // legacy
         ]
 
         itemsToDelete.compactMap { $0 }.forEach { path in
@@ -144,7 +144,7 @@ class HelpMenuViewModel {
         nukeServerDatabase()
 
         // vpn profile
-        self.vpnManager.removeConfigurations { _ in
+        vpnManager.removeConfigurations { _ in
             // quit app
             DispatchQueue.main.async {
                 NSApplication.shared.terminate(self)
@@ -166,7 +166,7 @@ class HelpMenuViewModel {
 
     private func nukeServerDatabase() {
         @Dependency(\.databaseConfiguration) var config
-        guard case .physical(let path) = config.databaseType else {
+        guard case let .physical(path) = config.databaseType else {
             assertionFailure("We should be using a persistence database in the app target")
             return
         }

@@ -1,5 +1,5 @@
-import XCTest
 @testable import ExtensionIPC
+import XCTest
 
 final class ExtensionIPCTests: XCTestCase {
     func testExample() throws {

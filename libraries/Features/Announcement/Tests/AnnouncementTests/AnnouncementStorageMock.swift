@@ -20,26 +20,26 @@
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import Domain
 @testable import Announcement
+import Domain
+import Foundation
 
 public class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
     public var announcementStorage: AnnouncementStorage
-    
+
     public init(_ announcementStorage: AnnouncementStorage) {
         self.announcementStorage = announcementStorage
     }
-    
+
     public func makeAnnouncementStorage() -> AnnouncementStorage {
-        return self.announcementStorage
+        announcementStorage
     }
 }
 
-extension Array where Element == Announcement {
+public extension [Announcement] {
     /// Helper for testing if array contains concrete Announcement
-    public func containsAnnouncement(withId id: String) -> Bool {
-        return self.contains(where: {
+    func containsAnnouncement(withId id: String) -> Bool {
+        contains(where: {
             $0.notificationID == id
         })
     }

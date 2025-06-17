@@ -20,38 +20,38 @@
 //  along with Proton Mail.  If not, see <https://www.gnu.org/licenses/>.
 
 #if DEBUG
-import Foundation
-import OHHTTPStubs
-import OHHTTPStubsSwift
+    import Foundation
+    import OHHTTPStubs
+    import OHHTTPStubsSwift
 
-final class LoginExternalAccountNotSupportedSetup {
-    static func stop() {
-        HTTPStubs.removeAllStubs()
-    }
-
-    static func start() {
-        HTTPStubs.setEnabled(true)
-
-        // get code stub
-        weak var usersStub = stub(condition: pathEndsWith("auth/v4") && isMethodPOST()) { _ in
-            let body = loginResponse.data(using: String.Encoding.utf8) ?? Data()
-            let headers = ["Content-Type": "application/json;charset=utf-8"]
-            return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
+    enum LoginExternalAccountNotSupportedSetup {
+        static func stop() {
+            HTTPStubs.removeAllStubs()
         }
-        usersStub?.name = "External accounts not supported stub"
-    }
 
-    static var loginResponse: String {
-    """
-        {
-          "Error" : "This app does not support external accounts",
-          "Code" : 5099,
-          "ErrorDescription" : "",
-          "Details" : {
+        static func start() {
+            HTTPStubs.setEnabled(true)
 
-          }
+            // get code stub
+            weak var usersStub = stub(condition: pathEndsWith("auth/v4") && isMethodPOST()) { _ in
+                let body = loginResponse.data(using: String.Encoding.utf8) ?? Data()
+                let headers = ["Content-Type": "application/json;charset=utf-8"]
+                return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
+            }
+            usersStub?.name = "External accounts not supported stub"
         }
-    """
+
+        static var loginResponse: String {
+            """
+                {
+                  "Error" : "This app does not support external accounts",
+                  "Code" : 5099,
+                  "ErrorDescription" : "",
+                  "Details" : {
+
+                  }
+                }
+            """
+        }
     }
-}
 #endif

@@ -18,34 +18,34 @@
 
 #if canImport(UIKit)
 
-import UIKit
-import SwiftUI
+    import SwiftUI
+    import UIKit
 
-/// A helper for non-crucial or distracting animations that should be disabled if the user has toggled Reduce Motion
-/// in system accessibility settings.
-public func withOptionalAnimation<Result>(
-    _ animation: Animation = .default,
-    shouldAnimate animationCondition: @autoclosure () -> Bool = true,
-    body: () throws -> Result
-) rethrows -> Result {
-    let isReduceMotionEnabled = !UIAccessibility.isReduceMotionEnabled
-    let shouldAnimate = animationCondition() && !isReduceMotionEnabled
-    return try withAnimation(animation, shouldAnimate: shouldAnimate, body: body)
-}
-
-/// Animates the `body` with `animation`, unless `animationCondition` evaluates to false
-public func withAnimation<Result>(
-    _ animation: Animation = .default,
-    shouldAnimate: @autoclosure () -> Bool = true,
-    body: () throws -> Result
-) rethrows -> Result {
-    if shouldAnimate() {
-        return try withAnimation(animation, body)
-    } else {
-        // Important: explicitly evalute `body` instead of passing a nil animation, since the latter delays UI changes
-        // (at least when performed within a reducer)
-        return try body()
+    /// A helper for non-crucial or distracting animations that should be disabled if the user has toggled Reduce Motion
+    /// in system accessibility settings.
+    public func withOptionalAnimation<Result>(
+        _ animation: Animation = .default,
+        shouldAnimate animationCondition: @autoclosure () -> Bool = true,
+        body: () throws -> Result
+    ) rethrows -> Result {
+        let isReduceMotionEnabled = !UIAccessibility.isReduceMotionEnabled
+        let shouldAnimate = animationCondition() && !isReduceMotionEnabled
+        return try withAnimation(animation, shouldAnimate: shouldAnimate, body: body)
     }
-}
+
+    /// Animates the `body` with `animation`, unless `animationCondition` evaluates to false
+    public func withAnimation<Result>(
+        _ animation: Animation = .default,
+        shouldAnimate: @autoclosure () -> Bool = true,
+        body: () throws -> Result
+    ) rethrows -> Result {
+        if shouldAnimate() {
+            try withAnimation(animation, body)
+        } else {
+            // Important: explicitly evalute `body` instead of passing a nil animation, since the latter delays UI changes
+            // (at least when performed within a reducer)
+            try body()
+        }
+    }
 
 #endif

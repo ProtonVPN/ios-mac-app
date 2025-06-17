@@ -17,39 +17,37 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
-fileprivate let profilesButton = "Profiles"
-fileprivate let fastestButton = "Fastest"
-fileprivate let randomButton = "Random"
-fileprivate let createProfileButton = "Create Profile"
-fileprivate let manageProfileButton = "Manage Profiles"
+private let profilesButton = "Profiles"
+private let fastestButton = "Fastest"
+private let randomButton = "Random"
+private let createProfileButton = "Create Profile"
+private let manageProfileButton = "Manage Profiles"
 
 class ProfileRobot: CoreElements {
-    
     @discardableResult
     func createProfile() -> CreateProfileRobot {
         button(createProfileButton).tap()
         return CreateProfileRobot()
     }
-     
+
     func manageProfiles() -> ManageProfilesRobot {
         button(manageProfileButton).tap()
         return ManageProfilesRobot()
     }
-     
+
     let verify = Verify()
 
     class Verify: CoreElements {
-         
         @discardableResult
         func checkDefaultProfilesExist() -> ProfileRobot {
             table().onChild(cell(fastestButton)).waitUntilExists().checkExists()
             table().onChild(cell(randomButton)).waitUntilExists().checkExists()
             return ProfileRobot()
         }
-         
+
         func checkButtonsExist() -> ProfileRobot {
             button(profilesButton).waitUntilExists(time: 5).checkExists()
             button(profilesButton).checkEnabled()

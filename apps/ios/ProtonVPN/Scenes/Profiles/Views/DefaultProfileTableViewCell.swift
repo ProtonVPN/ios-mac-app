@@ -1,5 +1,5 @@
 //
-//  OneLineTableViewCell.swift
+//  DefaultProfileTableViewCell.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -20,19 +20,18 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import LegacyCommon
+import UIKit
 
 final class DefaultProfileTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var connectButton: UIButton!
-    @IBOutlet weak var connectButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var leftImageView: UIImageView!
+    @IBOutlet var label: UILabel!
+    @IBOutlet var connectButton: UIButton!
+    @IBOutlet var connectButtonTrailingConstraint: NSLayoutConstraint!
 
     var viewModel: DefaultProfileViewModel? {
         didSet {
-            guard let viewModel = viewModel else { return }
+            guard let viewModel else { return }
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
@@ -58,19 +57,20 @@ final class DefaultProfileTableViewCell: UITableViewCell {
         connectButton.tintColor = .white
         label.textColor = .normalTextColor()
     }
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
+
         selectionStyle = .none
     }
-    
-    @IBAction func connect(_ sender: Any) {
+
+    @IBAction
+    func connect(_: Any) {
         viewModel?.connectAction()
     }
-    
+
     private func stateChanged() {
-        guard let viewModel = viewModel else {
+        guard let viewModel else {
             return
         }
         if let icon = viewModel.imageInPlaceOfConnectIcon {

@@ -32,8 +32,8 @@ import Sharing
 final class HermesViewModel {
     public typealias Factory = CoreAlertServiceFactory &
         NetShieldPropertyProviderFactory &
-        VpnStateConfigurationFactory &
-        VpnGatewayFactory
+        VpnGatewayFactory &
+        VpnStateConfigurationFactory
 
     enum LocationValidation {
         case empty
@@ -75,8 +75,8 @@ final class HermesViewModel {
         @Dependency(\.hermesClient) var hermesClient
         let hermesIsEnabled = hermesClient.isEnabled()
         let resolvers = hermesClient.activeHermesResolvers()
-        self._isEnabled = hermesIsEnabled
-        self._activeHermesResolvers = hermesClient.activeHermesResolvers()
+        _isEnabled = hermesIsEnabled
+        _activeHermesResolvers = hermesClient.activeHermesResolvers()
         self.alertService = factory.makeCoreAlertService()
         self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
         self.vpnStateConfiguration = factory.makeVpnStateConfiguration()

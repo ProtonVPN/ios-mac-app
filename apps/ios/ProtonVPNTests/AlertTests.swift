@@ -20,29 +20,28 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import XCTest
 import SwiftUI
+import XCTest
 
 import GSMessages
 
 import PMLogger
-import ProtonCoreNetworking
 import ProtonCoreAccountRecovery
+import ProtonCoreNetworking
 import ProtonCorePasswordChange
 
-import Modals
 import LegacyCommon
+import Modals
 import VPNAppCore
 
 @testable import ProtonVPN
 
-fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
+private let windowService = WindowServiceMock()
+private let uiAlertService = IosUiAlertService(windowService: windowService)
 
 class AlertTests: XCTestCase {
-
     let alertService = IosAlertService(IosAlertServiceFactoryMock())
-    
+
     override func setUp() {
         super.setUp()
         windowService.displayCount = 0
@@ -50,30 +49,30 @@ class AlertTests: XCTestCase {
 
     func testSingleInstanceOfAlerts() {
         XCTAssertEqual(windowService.displayCount, 0)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: MITMAlert())
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
-        
+
         alertService.push(alert: AppUpdateRequiredAlert(ResponseError.unknownError))
         XCTAssertEqual(windowService.displayCount, 2)
     }
-    
+
     func testUpdatingAlertCompletionHandlers() {
         XCTAssertEqual(windowService.displayCount, 0)
-        
+
         let confirmationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
         let cancellationHandler1 = {
             XCTFail("Shouldn't reach here")
         }
-        
+
         var confirmRan = false
         var cancelRan = false
         let confirmationHandler2 = {
@@ -82,104 +81,104 @@ class AlertTests: XCTestCase {
         let cancellationHandler2 = {
             cancelRan = true
         }
-        
+
         let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
         let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
-        
+
         alertService.push(alert: alert1)
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alertService.push(alert: alert2)
         XCTAssertEqual(windowService.displayCount, 1)
-        
+
         alert1.actions[0].handler?()
         alert1.actions[1].handler?()
-        
+
         XCTAssert(confirmRan && cancelRan)
     }
-    
 }
 
-fileprivate class WindowServiceMock: WindowService {
+private class WindowServiceMock: WindowService {
     var displayCount = 0
-    
-    func show(viewController: UIViewController) {}
-    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
-    func dismissModal(_ completion: (() -> Void)?) {}
-    
-    func present(modal: UIViewController) {
+
+    func show(viewController _: UIViewController) {}
+    func addToStack(_: UIViewController, checkForDuplicates _: Bool) {}
+    func dismissModal(_: (() -> Void)?) {}
+
+    func present(modal _: UIViewController) {
         displayCount += 1
     }
-    
-    func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?) {
-    }
-    
-    func popStackToRoot() {
-    
-    }
+
+    func present(message _: String, type _: PresentedMessageType, accessibilityIdentifier _: String?) {}
+
+    func popStackToRoot() {}
 
     var topmostPresentedViewController: UIViewController?
 }
 
-fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
+private class IosAlertServiceFactoryMock: IosAlertService.Factory {
     func makeUIAlertService() -> UIAlertService {
-        return uiAlertService
+        uiAlertService
     }
-    
+
     func makeAppSessionManager() -> AppSessionManager {
-        return AppSessionManagerMock(sessionStatus: .established,
-                                     loggedIn: true,
-                                     sessionChanged: Notification.Name(rawValue: ""),
-                                     vpnGateway: VpnGatewayMock())
+        AppSessionManagerMock(
+            sessionStatus: .established,
+            loggedIn: true,
+            sessionChanged: Notification.Name(rawValue: ""),
+            vpnGateway: VpnGatewayMock()
+        )
     }
-    
+
     func makeWindowService() -> WindowService {
-        return windowService
+        windowService
     }
-    
+
     func makeSettingsService() -> SettingsService {
-        return SettingsServiceMock()
+        SettingsServiceMock()
     }
-    
+
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        return TroubleshootCoordinatorMock()
+        TroubleshootCoordinatorMock()
     }
 
     func makePlanService() -> PlanService {
-        return PlanServiceMock()
+        PlanServiceMock()
     }
 }
 
-fileprivate class SettingsServiceMock: SettingsService {
+private class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
         let viewModel = LogSelectionViewModel()
         return LogSelectionViewController(viewModel: viewModel, settingsService: self)
     }
-    
-    func makeLogsViewController(logSource: LogSource) -> LogsViewController {
-        return LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
+
+    func makeLogsViewController(logSource _: LogSource) -> LogsViewController {
+        LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
-    
+
     func makeSettingsViewController() -> SettingsViewController? {
-        return nil
+        nil
     }
-    
+
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
-        return nil
+        nil
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
-        return TelemetrySettingsViewController(preferenceChangeUsageData: { _ in },
-                                               preferenceChangeCrashReports: { _ in },
-                                               usageStatisticsOn: { true },
-                                               crashReportsOn: { true })
+        TelemetrySettingsViewController(
+            preferenceChangeUsageData: { _ in },
+            preferenceChangeCrashReports: { _ in },
+            usageStatisticsOn: { true },
+            crashReportsOn: { true }
+        )
     }
-    
+
     func makeExtensionsSettingsViewController() -> UIViewController {
         let viewModel = WidgetSettingsViewModel()
         return WidgetSettingsViewController(viewModel: viewModel)
     }
-    
+
     func presentLogs() {}
     func presentReportBug() {}
 
@@ -188,12 +187,12 @@ fileprivate class SettingsServiceMock: SettingsService {
         return UIHostingController(rootView: AccountRecoveryView(viewModel: viewModel))
     }
 
-    func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
-        return nil
+    func makePasswordChangeViewController(mode _: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
+        nil
     }
 }
 
-fileprivate class LogContentMock: LogContent {
+private class LogContentMock: LogContent {
     var isEmpty: Bool
 
     init(isEmpty: Bool) {

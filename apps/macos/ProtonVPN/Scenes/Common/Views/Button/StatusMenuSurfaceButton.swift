@@ -1,5 +1,5 @@
 //
-//  CellSurfaceButton.swift
+//  StatusMenuSurfaceButton.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,18 +23,17 @@
 import Cocoa
 
 class StatusMenuSurfaceButton: CellSurfaceButton {
-    
     var stateChanged: (() -> Void)?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
         layer?.cornerRadius = 3
-        
+
         let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeAlways], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }
-    
+
     override func viewWillDraw() {
         stateChanged?()
     }

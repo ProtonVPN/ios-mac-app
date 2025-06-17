@@ -33,77 +33,76 @@ extension NEPacketTunnelProvider: ConnectionTunnelFactory {
         let endpoint = NWHostEndpoint(hostname: hostname, port: port)
 
         #if DEBUG
-        let delegate: NWTCPConnectionAuthenticationDelegate = self
+            let delegate: NWTCPConnectionAuthenticationDelegate = self
         #else
-        let delegate: NWTCPConnectionAuthenticationDelegate? = nil
+            let delegate: NWTCPConnectionAuthenticationDelegate? = nil
         #endif
         return createTCPConnectionThroughTunnel(to: endpoint, enableTLS: useTLS, tlsParameters: nil, delegate: delegate)
     }
 }
 
 #if DEBUG
-extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
-    public func shouldEvaluateTrust(for connection: NWTCPConnection) -> Bool {
-        return true
-    }
-
-    private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
-        let result = closure()
-        guard result == errSecSuccess else {
-            let userInfo: [String: Any]?
-            if let string = SecCopyErrorMessageString(result, nil) as? String {
-                userInfo = [ NSLocalizedDescriptionKey: string ]
-            } else {
-                userInfo = nil
-            }
-
-            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
-        }
-    }
-
-    /// This allows BTI to work on debug builds.
-    ///
-    /// - Warning: This overrides **all** TLS validation errors. It should **never** be enabled in production.
-    public func evaluateTrust(for connection: NWTCPConnection, peerCertificateChain: [Any], completionHandler completion: @escaping (SecTrust) -> Void) {
-        log.info("Debug: overriding trust for \(connection)")
-        var secTrust: SecTrust?
-
-        do {
-            // Create a trust object with the certificates from the chain.
-            try secEvaluate {
-                SecTrustCreateWithCertificates(
-                    peerCertificateChain as CFArray,
-                    nil,
-                    &secTrust
-                )
-            }
-
-            guard let secTrust else {
-                throw POSIXError(.ENOENT)
-            }
-
-            // Evaluate the trust. This is necessary to copy the exceptions out in the next step.
-            // We don't care about return values or errors here.
-            var error: CFError?
-            _ = SecTrustEvaluateWithError(secTrust, &error)
-
-            // Now that we've evaluated the trust, if we're on a test environment, the Security
-            // stack's head probably exploded and filled the SecTrust object with validation
-            // errors. Create exceptions for all of these errors and add them back to the trust
-            // object for re-evaluation.
-            let exceptions = SecTrustCopyExceptions(secTrust)
-            guard SecTrustSetExceptions(secTrust, exceptions) else {
-                throw POSIXError(.EPERM)
-            }
-        } catch {
-            log.error("Couldn't evaluate trust of \(connection): \(error)")
+    extension NEPacketTunnelProvider: @retroactive NWTCPConnectionAuthenticationDelegate {
+        public func shouldEvaluateTrust(for _: NWTCPConnection) -> Bool {
+            true
         }
 
-        if let secTrust {
-            completion(secTrust)
+        private func secEvaluate(_ closure: @escaping () -> OSStatus) throws {
+            let result = closure()
+            guard result == errSecSuccess else {
+                let userInfo: [String: Any]? = if let string = SecCopyErrorMessageString(result, nil) as? String {
+                    [NSLocalizedDescriptionKey: string]
+                } else {
+                    nil
+                }
+
+                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: userInfo)
+            }
+        }
+
+        /// This allows BTI to work on debug builds.
+        ///
+        /// - Warning: This overrides **all** TLS validation errors. It should **never** be enabled in production.
+        public func evaluateTrust(for connection: NWTCPConnection, peerCertificateChain: [Any], completionHandler completion: @escaping (SecTrust) -> Void) {
+            log.info("Debug: overriding trust for \(connection)")
+            var secTrust: SecTrust?
+
+            do {
+                // Create a trust object with the certificates from the chain.
+                try secEvaluate {
+                    SecTrustCreateWithCertificates(
+                        peerCertificateChain as CFArray,
+                        nil,
+                        &secTrust
+                    )
+                }
+
+                guard let secTrust else {
+                    throw POSIXError(.ENOENT)
+                }
+
+                // Evaluate the trust. This is necessary to copy the exceptions out in the next step.
+                // We don't care about return values or errors here.
+                var error: CFError?
+                _ = SecTrustEvaluateWithError(secTrust, &error)
+
+                // Now that we've evaluated the trust, if we're on a test environment, the Security
+                // stack's head probably exploded and filled the SecTrust object with validation
+                // errors. Create exceptions for all of these errors and add them back to the trust
+                // object for re-evaluation.
+                let exceptions = SecTrustCopyExceptions(secTrust)
+                guard SecTrustSetExceptions(secTrust, exceptions) else {
+                    throw POSIXError(.EPERM)
+                }
+            } catch {
+                log.error("Couldn't evaluate trust of \(connection): \(error)")
+            }
+
+            if let secTrust {
+                completion(secTrust)
+            }
         }
     }
-}
 #endif
 
 /// Wrapper protocol for `NWTCPConnectionTunnel`, providing most of the same properties and methods (besides `observeStateChange`).
@@ -125,19 +124,19 @@ public protocol ConnectionTunnel {
 /// `state`'s initial value.
 extension NWTCPConnection: ConnectionTunnel {
     public func write(_ data: Data) async throws {
-        return try await withUnsafeThrowingContinuation { c in
+        try await withUnsafeThrowingContinuation { (continuation: UnsafeContinuation<Void, Error>) in
             self.write(data) { error in
                 if let error {
-                    c.resume(throwing: error)
+                    continuation.resume(throwing: error)
                     return
                 }
-                c.resume(returning: ())
+                continuation.resume(returning: ())
             }
         }
     }
 
     public func readMinimumLength(_ minimum: Int, maximumLength: Int) async throws -> Data? {
-        return try await withUnsafeThrowingContinuation { c in
+        try await withUnsafeThrowingContinuation { c in
             self.readMinimumLength(minimum, maximumLength: maximumLength) { data, error in
                 if let error {
                     c.resume(throwing: error)
@@ -158,8 +157,7 @@ public protocol ObservationHandle {
     func invalidate()
 }
 
-extension NSKeyValueObservation: ObservationHandle {
-}
+extension NSKeyValueObservation: ObservationHandle {}
 
 // MARK: Cookie storage
 
@@ -169,8 +167,7 @@ public protocol CookieStorageProtocol {
     func cookies(for: URL) -> [HTTPCookie]?
 }
 
-extension HTTPCookieStorage: CookieStorageProtocol {
-}
+extension HTTPCookieStorage: CookieStorageProtocol {}
 
 // MARK: DataTask protocols
 
@@ -179,8 +176,7 @@ public protocol DataTaskProtocol {
     func resume()
 }
 
-extension URLSessionDataTask: DataTaskProtocol {
-}
+extension URLSessionDataTask: DataTaskProtocol {}
 
 /// A wrapper protocol for generating NWTCPConnections using NEPacketTunnelProvider.
 public protocol DataTaskFactory {
@@ -218,38 +214,39 @@ public class ConnectionTunnelDataTaskFactory: DataTaskFactory {
     public func dataTask(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> DataTaskProtocol {
         let id = UUID()
 
-        let cookies: [HTTPCookie]
-        if let url = request.url {
-            cookies = cookieStorage.cookies(for: url) ?? []
+        let cookies: [HTTPCookie] = if let url = request.url {
+            cookieStorage.cookies(for: url) ?? []
         } else {
-            cookies = []
+            []
         }
 
-        let task = NWTCPDataTask(provider: provider,
-                                 timerFactory: timerFactory,
-                                 request: request,
-                                 cookiesToSend: cookies,
-                                 timeoutInterval: timeoutInterval,
-                                 taskId: id,
-                                 completionHandler: { [weak self] data, response, error in
-            if let error = error {
-                log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-            } else {
-                log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
-            }
+        let task = NWTCPDataTask(
+            provider: provider,
+            timerFactory: timerFactory,
+            request: request,
+            cookiesToSend: cookies,
+            timeoutInterval: timeoutInterval,
+            taskId: id,
+            completionHandler: { [weak self] data, response, error in
+                if let error {
+                    log.error("Request finished with error \(error)", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                } else {
+                    log.debug("Request finished", category: .net, metadata: ["id": "\(id)", "url": "\(String(describing: request.url))", "status": "\(String(describing: response?.statusCode))"])
+                }
 
-            if let response = response, let url = request.url {
-                let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
-                self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
-            }
+                if let response, let url = request.url {
+                    let stringValues = response.allHeaderFields.filter { $0.key is String && $0.value is String } as! [String: String]
+                    let cookies = HTTPCookie.cookies(withResponseHeaderFields: stringValues, for: url)
+                    self?.cookieStorage.setCookies(cookies, for: url, mainDocumentURL: nil)
+                }
 
-            self?.tasksQueue.async {
-                // We're going away, but we don't care if deallocation is synchronous or not
-                self?.tasks.removeValue(forKey: id)
+                self?.tasksQueue.async {
+                    // We're going away, but we don't care if deallocation is synchronous or not
+                    self?.tasks.removeValue(forKey: id)
+                }
+                completionHandler(data, response, error)
             }
-            completionHandler(data, response, error)
-        })
+        )
 
         // This needs to be synchronous so we don't go away immediately after returning
         tasksQueue.sync {
@@ -272,7 +269,7 @@ class NWTCPDataTask: DataTaskProtocol {
     /// The object that lets us create background timers.
     private let timerFactory: TimerFactory
     /// The completion handler for data returned by the HTTP request.
-    private let completionHandler: ((Data?, HTTPURLResponse?, Error?) -> Void)
+    private let completionHandler: (Data?, HTTPURLResponse?, Error?) -> Void
     /// The cookies to send to the server as part of the HTTP request.
     private let cookiesToSend: [HTTPCookie]
     /// The request timeout interval.
@@ -291,19 +288,22 @@ class NWTCPDataTask: DataTaskProtocol {
             timeoutTimer?.invalidate()
         }
     }
+
     /// Id used to identify tasks for exmaple in logs
     let taskId: UUID
 
     /// The handle to the object observing state changes on the network connection.
     private var observation: ObservationHandle?
 
-    init(provider: ConnectionTunnelFactory,
-         timerFactory: TimerFactory,
-         request: URLRequest,
-         cookiesToSend: [HTTPCookie],
-         timeoutInterval: TimeInterval,
-         taskId: UUID,
-         completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)) {
+    init(
+        provider: ConnectionTunnelFactory,
+        timerFactory: TimerFactory,
+        request: URLRequest,
+        cookiesToSend: [HTTPCookie],
+        timeoutInterval: TimeInterval,
+        taskId: UUID,
+        completionHandler: @escaping ((Data?, HTTPURLResponse?, Error?) -> Void)
+    ) {
         self.provider = provider
         self.timerFactory = timerFactory
         self.request = request
@@ -319,7 +319,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
     deinit {
         #if DEBUG
-        log.debug("NWTCPDataTask.deinit", category: .net, metadata: ["id": "\(taskId)"])
+            log.debug("NWTCPDataTask.deinit", category: .net, metadata: ["id": "\(taskId)"])
         #endif
         self.observation?.invalidate()
         self.timeoutTimer?.invalidate()
@@ -339,7 +339,7 @@ class NWTCPDataTask: DataTaskProtocol {
 
         let requestData: Data
         do {
-            self.connection = try createTunnelWithRequest()
+            connection = try createTunnelWithRequest()
             requestData = try request.data()
         } catch {
             completionHandler(nil, nil, error)
@@ -349,14 +349,14 @@ class NWTCPDataTask: DataTaskProtocol {
         // Resolve the caller's request either by calling their completion handler with the specified error or by
         // sending the request if we reach a success condition (which will then call the completion handler with
         // the server's response data, assuming it is well-formed).
-        let resolveRequest = { [weak self] (result: Result<(), Error>) in
-            guard let self = self else {
+        let resolveRequest = { [weak self] (result: Result<Void, Error>) in
+            guard let self else {
                 log.warning("NWTCPConnection resolveRequest with released self called", category: .net)
                 return
             }
 
-            guard !self.resolved, let connection = self.connection else {
-                log.warning("NWTCPConnection resolveRequest stopping", category: .net, metadata: ["resolved": "\(self.resolved)", "connection": "\(String(describing: self.connection))"])
+            guard !resolved, let connection else {
+                log.warning("NWTCPConnection resolveRequest stopping", category: .net, metadata: ["resolved": "\(resolved)", "connection": "\(String(describing: self.connection))"])
                 return
             }
 
@@ -367,7 +367,7 @@ class NWTCPDataTask: DataTaskProtocol {
             }
 
             if case let .failure(error) = result {
-                self.completionHandler(nil, nil, error)
+                completionHandler(nil, nil, error)
                 return
             }
 
@@ -375,20 +375,20 @@ class NWTCPDataTask: DataTaskProtocol {
                 to: url,
                 data: requestData,
                 over: connection,
-                uuid: self.taskId,
-                completionHandler: self.completionHandler
+                uuid: taskId,
+                completionHandler: completionHandler
             )
         }
 
         // Look for changes in the NWTCPConnection's state, adding a timeout if we stay waiting in
         // `.connecting` or `.waiting` for too long.
-        self.observation = connection?.observeStateChange { [weak self, taskId] state in
-            guard let self = self else {
+        observation = connection?.observeStateChange { [weak self, taskId] state in
+            guard let self else {
                 log.warning("NWTCPConnection observeStateChange with released self called: \(state)", category: .net, metadata: ["id": "\(taskId)"])
                 return
             }
 
-            self.queue.async {
+            queue.async {
                 log.info("Connection state changed: \(state)", category: .net, metadata: ["id": "\(taskId)"])
 
                 switch state {
@@ -422,7 +422,7 @@ class NWTCPDataTask: DataTaskProtocol {
                             domain: NSPOSIXErrorDomain,
                             code: Int(ETIMEDOUT),
                             userInfo: userInfo
-                        )) )
+                        )))
                     }
                 case .invalid:
                     log.error("Connection state invalidated", category: .net, metadata: ["id": "\(self.taskId)"])
@@ -436,11 +436,11 @@ class NWTCPDataTask: DataTaskProtocol {
     private func portAndTLSDetails() -> (port: Int, useTLS: Bool)? {
         switch request.url?.scheme {
         case "https":
-            return (request.url?.port ?? 443, true)
+            (request.url?.port ?? 443, true)
         case "http":
-            return (request.url?.port ?? 80, false)
+            (request.url?.port ?? 80, false)
         default:
-            return nil
+            nil
         }
     }
 

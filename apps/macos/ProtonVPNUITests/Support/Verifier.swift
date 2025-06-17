@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import XCTest
 import fusion
+import XCTest
 
 class Verifier: CoreElements {
     @discardableResult
@@ -34,7 +34,7 @@ enum UpsellModalType {
     var identifyingString: String {
         switch self {
         case .profiles:
-            return "Get quick access to your frequent connections"
+            "Get quick access to your frequent connections"
         }
     }
 }

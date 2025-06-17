@@ -23,7 +23,6 @@ import Foundation
 ///
 /// Expectations can be set in case they are needed for async testing.
 class FileSystemMock {
-
     let fileManager = FileManagerMock()
     let handlerMockFactory = SizeWatchingFileHandleMockFactory()
 
@@ -39,35 +38,33 @@ class FileSystemMock {
             return true
         }
         fileManager.fileExistsStub.addToBody { _, path in
-            return self.handlerMockFactory.exists(at: URL(string: path)!)
+            self.handlerMockFactory.exists(at: URL(string: path)!)
         }
         fileManager.removeItemStub.addToBody { _, url in
             self.removeFileCallback?()
             self.handlerMockFactory.delete(for: url)
         }
         fileManager.createFileHandleStub.addToBody { _, url in
-            return try self.handlerMockFactory.handler(for: url)
+            try self.handlerMockFactory.handler(for: url)
         }
         fileManager.moveItemStub.addToBody { _, from, to in
             self.moveFileCallback?()
             self.handlerMockFactory.move(from: from, to: to)
         }
-        fileManager.contentsOfDirectoryStub.addToBody { _, folderUrl, keys, mask in
-            return self.handlerMockFactory.files.filter { element in
-                return element.key.path.hasPrefix(folderUrl.path)
-            }.map { $0.key }
+        fileManager.contentsOfDirectoryStub.addToBody { _, folderUrl, _, _ in
+            self.handlerMockFactory.files.filter { element in
+                element.key.path.hasPrefix(folderUrl.path)
+            }.map(\.key)
         }
         fileManager.attributesOfItemStub.addToBody { _, path in
-            return [FileAttributeKey.creationDate: self.handlerMockFactory.creationDate(for: URL(string: path)!) as Any]
+            [FileAttributeKey.creationDate: self.handlerMockFactory.creationDate(for: URL(string: path)!) as Any]
         }
     }
-
 }
 
 /// Creates FileHandleMocks and tracks their size by adding the size of written data to its current size counter.
 /// It also keeps track of URLs and returns the same instance for the same URL.
 class SizeWatchingFileHandleMockFactory {
-
     var files = [URL: (FileHandleMock, Date)]()
 
     func handler(for url: URL) throws -> FileHandleMock {
@@ -79,7 +76,7 @@ class SizeWatchingFileHandleMockFactory {
 
         let mock = try FileHandleMock(forWritingTo: url)
         mock.seekToEndCustomStub.addToBody { _ in
-            return currentSize
+            currentSize
         }
         mock.writeCustomStub.addToBody { _, data in
             currentSize += UInt64(data.count)
@@ -90,7 +87,7 @@ class SizeWatchingFileHandleMockFactory {
     }
 
     func exists(at url: URL) -> Bool {
-        return files.contains { $0.key.path == url.path }
+        files.contains { $0.key.path == url.path }
     }
 
     func delete(for url: URL) {
@@ -103,7 +100,6 @@ class SizeWatchingFileHandleMockFactory {
     }
 
     func creationDate(for url: URL) -> Date? {
-        return files[url]?.1
+        files[url]?.1
     }
-
 }

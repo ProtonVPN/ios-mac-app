@@ -16,23 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import Combine
+import ComposableArchitecture
 import HomeShared
-import SwiftUI
-import Strings
-import VPNShared
-import ProtonCoreUIFoundations
 import NetShield
-import VPNAppCore
+import ProtonCoreUIFoundations
+import Strings
+import SwiftUI
 import Theme
+import VPNAppCore
+import VPNShared
 
 import Dependencies
 import Localization
 
 @MainActor
 public struct ConnectionStatusView: View {
-
     private static let maxContentWidth: CGFloat = 480
 
     @Perception.Bindable var store: StoreOf<ConnectionStatusFeature>
@@ -44,24 +43,24 @@ public struct ConnectionStatusView: View {
     private func title(protectionState: ProtectionState) -> String? {
         switch protectionState {
         case .resolving:
-            return Localizable.connectionStatusLoading
+            Localizable.connectionStatusLoading
         case .protected, .protectedSecureCore:
-            return nil
+            nil
         case .unprotected:
-            return Localizable.connectionStatusUnprotected
+            Localizable.connectionStatusUnprotected
         case .protecting:
-            return Localizable.connectionStatusProtecting
+            Localizable.connectionStatusProtecting
         }
     }
 
     private func gradientColor(protectionState: ProtectionState) -> Color {
         switch protectionState {
         case .protected, .protectedSecureCore:
-            return Color(.background, .success)
+            Color(.background, .success)
         case .unprotected:
-            return Color(.background, .danger)
+            Color(.background, .danger)
         case .protecting, .resolving:
-            return .white
+            .white
         }
     }
 
@@ -145,9 +144,13 @@ public struct ConnectionStatusView: View {
                         }
                     }
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
-                        .background(.translucentLight,
-                                    in: RoundedRectangle(cornerRadius: .themeRadius8,
-                                                         style: .continuous))
+                        .background(
+                            .translucentLight,
+                            in: RoundedRectangle(
+                                cornerRadius: .themeRadius8,
+                                style: .continuous
+                            )
+                        )
                         .frame(maxWidth: Self.maxContentWidth)
                         .padding(.horizontal, .themeSpacing16)
                 }

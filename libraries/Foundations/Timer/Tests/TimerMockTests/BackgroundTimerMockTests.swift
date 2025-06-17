@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Timer
 @testable import TimerMock
+import XCTest
 
 final class BackgroundTimerMockTests: XCTestCase {
-
     private var factory: TimerFactoryMock!
 
     // We have to have a strong reference to timer object because otherwise it will be deallocated and timer will not execute out closure
@@ -61,7 +60,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         factory.runRepeatingTimers()
 
         // Run with done closure and count how many times it was called
-        for _ in 1...expectation.expectedFulfillmentCount - 1 {
+        for _ in 1 ... expectation.expectedFulfillmentCount - 1 {
             factory.runRepeatingTimers {
                 expectationRepeatingTimersAreDone.fulfill()
             }
@@ -76,7 +75,7 @@ final class BackgroundTimerMockTests: XCTestCase {
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = 3
 
-        for _ in 1...expectation.expectedFulfillmentCount {
+        for _ in 1 ... expectation.expectedFulfillmentCount {
             factory.scheduleAfter(.milliseconds(1), on: DispatchQueue.global()) {
                 expectation.fulfill()
             }
@@ -86,5 +85,4 @@ final class BackgroundTimerMockTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
         timer = nil
     }
-
 }

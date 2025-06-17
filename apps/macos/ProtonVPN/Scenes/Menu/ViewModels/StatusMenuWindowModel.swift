@@ -1,5 +1,5 @@
 //
-//  StatusMenuViewModel.swift
+//  StatusMenuWindowModel.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -24,8 +24,8 @@ import Cocoa
 
 import LegacyCommon
 
-import Ergonomics
 import Domain
+import Ergonomics
 
 protocol StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel
@@ -33,40 +33,39 @@ protocol StatusMenuWindowModelFactory {
 
 extension DependencyContainer: StatusMenuWindowModelFactory {
     func makeStatusMenuWindowModel() -> StatusMenuWindowModel {
-        return StatusMenuWindowModel(factory: self)
+        StatusMenuWindowModel(factory: self)
     }
 }
 
 class StatusMenuWindowModel {
-    
-    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & AppSessionRefreshTimerFactory & VpnGatewayFactory
+    typealias Factory = AppSessionManagerFactory & AppSessionRefreshTimerFactory & AppSessionRefresherFactory & StatusMenuViewModelFactory & VpnGatewayFactory
     private let factory: Factory
-    
+
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    
+
     var contentChanged: (() -> Void)?
 
     private var notificationTokens: [NotificationToken] = []
-    
+
     init(factory: Factory) {
         self.factory = factory
         startObserving()
     }
-    
+
     var isSessionEstablished: Bool {
-        return appSessionManager.sessionStatus == .established
+        appSessionManager.sessionStatus == .established
     }
-    
+
     var isConnected: Bool {
-        return vpnGateway.connection == .connected
+        vpnGateway.connection == .connected
     }
-    
+
     var statusMenuViewController: StatusMenuViewController {
         let viewModel = factory.makeStatusMenuViewModel()
         return StatusMenuViewController(with: viewModel)
     }
-    
+
     var statusIcon: StatusIcon {
         guard isSessionEstablished else { return .disconnected }
         switch vpnGateway.connection {
@@ -88,18 +87,19 @@ class StatusMenuWindowModel {
             return .disconnected
         }
     }
-    
+
     var isStatusIconBlinking: Bool {
-        return vpnGateway.connection == .connecting
+        vpnGateway.connection == .connecting
     }
-    
+
     // MARK: - Private functions
+
     private func startObserving() {
         notificationTokens.append(NotificationCenter.default.addObserver(for: SessionChanged.self, object: appSessionManager, handler: sessionChanged))
     }
 
     private func sessionChanged(data: SessionChanged.T) {
-        if case .established(let vpnGateway) = data {
+        if case let .established(vpnGateway) = data {
             if !isSessionEstablished {
                 log.error("Expected session to be established when receiving gateway")
             }
@@ -107,23 +107,24 @@ class StatusMenuWindowModel {
         } else {
             sessionEnded()
         }
-        
+
         contentChanged?()
     }
-    
+
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
 
         AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(handleChange))
         AppEvent.connectionStateChanged.subscribe(self, selector: #selector(handleChange))
     }
-    
+
     private func sessionEnded() {
         AppEvent.activeServerTypeChanged.unsubscribe(self)
         AppEvent.connectionStateChanged.unsubscribe(self)
     }
-    
-    @objc private func handleChange() {
+
+    @objc
+    private func handleChange() {
         contentChanged?()
     }
 }

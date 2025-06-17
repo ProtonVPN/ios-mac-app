@@ -19,22 +19,22 @@
 import Foundation
 
 #if DEBUG
-extension CachedVpnCredentials {
-    static func tier(_ tier: Int, planName: String = "Awesome") -> Self {
-        .init(
-            status: 0,
-            planName: planName, 
-            planTitle: "does it matter?",
-            maxConnect: 10,
-            maxTier: tier,
-            services: 1,
-            delinquent: 0,
-            credit: 1,
-            currency: "Monopoly",
-            hasPaymentMethod: true,
-            subscribed: nil,
-            businessEvents: false
-        )
+    extension CachedVpnCredentials {
+        static func tier(_ tier: Int, planName: String = "Awesome") -> Self {
+            .init(
+                status: 0,
+                planName: planName,
+                planTitle: "does it matter?",
+                maxConnect: 10,
+                maxTier: tier,
+                services: 1,
+                delinquent: 0,
+                credit: 1,
+                currency: "Monopoly",
+                hasPaymentMethod: true,
+                subscribed: nil,
+                businessEvents: false
+            )
+        }
     }
-}
 #endif

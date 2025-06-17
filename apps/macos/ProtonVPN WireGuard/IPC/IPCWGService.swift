@@ -1,5 +1,5 @@
 //
-//  XPCWGService.swift
+//  IPCWGService.swift
 //  ProtonVPN WireGuard
 //
 //  Created by Jaroslav on 2021-08-02.
@@ -13,7 +13,7 @@ class IPCWGService: XPCBaseService {
 }
 
 extension IPCWGService { // ProviderCommunication
-    override func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
+    override func setCredentials(username _: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         log("Will save config to keychain in old format.")
 
         guard let data = password.data(using: .utf8) else {
@@ -44,13 +44,13 @@ extension IPCWGService { // ProviderCommunication
         log("New config saved.")
         completionHandler(true)
     }
-    
+
     override func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
         log("Got getLogs XPC request")
         if Logger.global == nil {
             Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
         }
-        guard let logViewHelper = logViewHelper else {
+        guard let logViewHelper else {
             completionHandler(nil)
             return
         }
@@ -62,5 +62,4 @@ extension IPCWGService { // ProviderCommunication
             completionHandler(logContent.data(using: .utf8))
         }
     }
-    
 }

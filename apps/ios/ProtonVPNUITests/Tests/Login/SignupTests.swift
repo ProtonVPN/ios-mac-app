@@ -1,5 +1,5 @@
 //
-//  NewSignupTests.swift
+//  SignupTests.swift
 //  ProtonVPNUITests
 //
 //  Created by Egle Predkelyte on 2021-09-01.
@@ -10,10 +10,9 @@ import fusion
 import ProtonCoreQuarkCommands
 import ProtonCoreTestingToolkitUITestsLogin
 
-fileprivate let verificationCode = "666666"
+private let verificationCode = "666666"
 
 class SignupTests: ProtonVPNUITests {
-
     override func setUp() {
         super.setUp()
         setupAtlasEnvironment()
@@ -53,7 +52,8 @@ class SignupTests: ProtonVPNUITests {
                 password: randomPassword,
                 userEmail: randomEmail,
                 verificationCode: verificationCode,
-                retRobot: CreatingAccountRobot.self)
+                retRobot: CreatingAccountRobot.self
+            )
 
         verifyOnboardingScreen(for: randomUsername)
     }

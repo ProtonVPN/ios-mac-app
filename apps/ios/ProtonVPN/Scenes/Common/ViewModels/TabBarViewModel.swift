@@ -20,10 +20,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import ProtonCoreFeatureFlags
-import LegacyCommon
 import Domain
+import Foundation
+import LegacyCommon
+import ProtonCoreFeatureFlags
 
 protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
@@ -37,6 +37,7 @@ protocol TabBarViewModelDelegate: AnyObject {
 
 class TabBarViewModel {
     // MARK: Properties
+
     let navigationService: NavigationService
     let sessionManager: AppSessionManager
     let appStateManager: AppStateManager
@@ -45,10 +46,11 @@ class TabBarViewModel {
     weak var delegate: TabBarViewModelDelegate?
 
     var showLoginAnimated: Bool {
-        return true
+        true
     }
 
     // MARK: Initializers
+
     init(navigationService: NavigationService, sessionManager: AppSessionManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.navigationService = navigationService
         self.sessionManager = sessionManager
@@ -90,7 +92,8 @@ class TabBarViewModel {
         }
     }
 
-    @objc func stateChanged() {
+    @objc
+    func stateChanged() {
         guard !FeatureFlagsRepository.isRedesigniOSEnabled else { return }
         DispatchQueue.main.async { [weak self] in
             switch self?.appStateManager.displayState {
@@ -109,6 +112,7 @@ class TabBarViewModel {
     }
 
     // MARK: - Private
+
     private func startObserving() {
         AppEvent.appStateManagerDisplayStateChange.subscribe(self, selector: #selector(stateChanged))
     }

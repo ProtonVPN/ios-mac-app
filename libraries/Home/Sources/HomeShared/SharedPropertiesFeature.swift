@@ -22,12 +22,12 @@ import ComposableArchitecture
 
 import ProtonCoreFeatureFlags
 
+import Announcement
 import CommonNetworking
 import Connection
+import Domain
 import Ergonomics
 import Persistence
-import Announcement
-import Domain
 import VPNAppCore
 
 @Reducer
@@ -63,13 +63,11 @@ public struct SharedPropertiesFeature {
         case watchAnnouncementBanner
     }
 
-    private static let connectionStatusStream: AsyncStream<VPNConnectionStatus> = {
-        if FeatureFlagsRepository.isConnectionFeatureEnabled {
-            return Dependency(\.connectionBridge).wrappedValue.statusStream()
-        } else {
-            return Dependency(\.vpnConnectionStatusPublisher).wrappedValue()
-        }
-    }()
+    private static let connectionStatusStream: AsyncStream<VPNConnectionStatus> = if FeatureFlagsRepository.isConnectionFeatureEnabled {
+        Dependency(\.connectionBridge).wrappedValue.statusStream()
+    } else {
+        Dependency(\.vpnConnectionStatusPublisher).wrappedValue()
+    }
 
     private let longLivingConnectionStatusEffect: Effect<Action> = .run { @MainActor send in
         if !FeatureFlagsRepository.isConnectionFeatureEnabled {
@@ -106,11 +104,11 @@ public struct SharedPropertiesFeature {
                     longLivingAnnouncementBannerEffect
                 )
 
-            case .userLocation(.delegate(.userLocationChanged(let location))):
+            case let .userLocation(.delegate(.userLocationChanged(location))):
                 return .send(.refreshServerLoads(location))
 
-            case .refreshServerLoads(let location):
-                return .run { send in
+            case let .refreshServerLoads(location):
+                return .run { _ in
                     let loads = try await logicalsClient.fetchLoads(location: location)
                     log.debug("Fetched server loads", category: .api, metadata: ["serverCount": "\(loads.count)"])
                     repository.upsert(loads: loads)
@@ -118,14 +116,14 @@ public struct SharedPropertiesFeature {
                     log.error("Failed to update loads", category: .api, metadata: ["error": "\(error)"])
                 }
 
-            case .userLocation(_):
+            case .userLocation:
                 return .none
 
-            case .newConnectionStatus(let newValue):
+            case let .newConnectionStatus(newValue):
                 state.$vpnConnectionStatus.withLock { $0 = newValue }
                 return .none
 
-            case .newConnectionState(let newValue):
+            case let .newConnectionState(newValue):
                 state.$connectionState.withLock { $0 = newValue }
                 if newValue.is(\.disconnected) {
                     // User location will be fetched if it hasn't already been done recently
@@ -133,9 +131,9 @@ public struct SharedPropertiesFeature {
                     return .send(.userLocation(.fetchUserLocation))
                 }
                 return .none
-                
+
             case .newAnnouncementBanner:
-                return .run { send in
+                return .run { _ in
                     let urls = announcementManager.fetchCurrentAnnouncementsFromStorage().compactMap(\.prefetchableImage)
                     await imagePrefetcher.prefetchURLs(urls)
                     $announcementBanner.withLock { $0 = announcementManager.fetchCurrentOfferBannerFromStorage() }
@@ -146,13 +144,13 @@ public struct SharedPropertiesFeature {
 }
 
 #if DEBUG
-import Combine
+    import Combine
 
-extension LocationClient {
-    public static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
-        Timer.publish(every: interval, on: .main, in: .default)
-            .autoconnect()
-            .map { _ in UserLocation.samples.randomElement()! }
+    public extension LocationClient {
+        static func jumping(every interval: TimeInterval = 1) -> some Publisher<UserLocation, Never> {
+            Timer.publish(every: interval, on: .main, in: .default)
+                .autoconnect()
+                .map { _ in UserLocation.samples.randomElement()! }
+        }
     }
-}
 #endif

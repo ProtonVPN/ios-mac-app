@@ -1,5 +1,5 @@
 //
-//  AlertService.swift
+//  AlertServiceDummy.swift
 //  vpncore - Created on 26.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -19,17 +19,16 @@
 //  You should have received a copy of the GNU General Public License
 //  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Ergonomics
+import Foundation
 import VPNAppCore
 
 public class CoreAlertServiceDummy: CoreAlertService {
-    
     public var alerts = [SystemAlert]()
-    public var alertAdded: ( (SystemAlert) -> Void )?
-    
+    public var alertAdded: ((SystemAlert) -> Void)?
+
     public init() {}
-    
+
     public func push(alert: SystemAlert) {
         executeOnUIThread {
             self.alerts.append(alert)

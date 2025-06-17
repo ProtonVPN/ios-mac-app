@@ -1,5 +1,5 @@
 //
-//  ConnectionLine.swift
+//  ConnectionView.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,22 +23,22 @@
 import UIKit
 
 class ConnectionView: UIView {
-
     let viewModel: ConnectionViewModel
-    
+
     var width: CGFloat {
-        return viewModel.lineWidth
+        viewModel.lineWidth
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(frame: CGRect, viewModel: ConnectionViewModel) {
         self.viewModel = viewModel
-        
+
         super.init(frame: frame)
-        
+
         layer.borderColor = UIColor.brandColor().cgColor
         layer.cornerRadius = width * 0.5
         layer.borderWidth = width * 0.5

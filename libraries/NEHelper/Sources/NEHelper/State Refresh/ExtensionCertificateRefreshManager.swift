@@ -1,5 +1,5 @@
 //
-//  CertificateRefreshManager.swift
+//  ExtensionCertificateRefreshManager.swift
 //  WireGuardiOS Extension
 //
 //  Created by Jaroslav on 2021-06-28.
@@ -22,7 +22,7 @@ public enum CertificateRefreshError: Error {
     case internalError(message: String)
 }
 
-public typealias CertificateRefreshCompletion = ((Result<(), CertificateRefreshError>) -> Void)
+public typealias CertificateRefreshCompletion = (Result<Void, CertificateRefreshError>) -> Void
 
 /// Class for making sure there is always up-to-date certificate.
 /// After running `start()` for the first time, will start Timer to run a minute before certificates `RefreshTime`.
@@ -38,6 +38,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         /// `checkInterval`, so check happens at least once during this period.
         var refreshEarlierBy: TimeInterval = -3 * 60
     }
+
     fileprivate static var intervals = Intervals()
 
     private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
@@ -55,10 +56,12 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         Self.intervals.checkInterval
     }
 
-    public init(apiService: ExtensionAPIService,
-                timerFactory: TimerFactory,
-                vpnAuthenticationStorage: VpnAuthenticationStorageSync,
-                keychain: AuthKeychainHandle) {
+    public init(
+        apiService: ExtensionAPIService,
+        timerFactory: TimerFactory,
+        vpnAuthenticationStorage: VpnAuthenticationStorageSync,
+        keychain _: AuthKeychainHandle
+    ) {
         let workQueue = DispatchQueue(label: "ch.protonvpn.extension.wireguard.certificate-refresh")
 
         self.vpnAuthenticationStorage = vpnAuthenticationStorage
@@ -70,8 +73,10 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         operationQueue.qualityOfService = .default
         operationQueue.underlyingQueue = workQueue
 
-        super.init(timerFactory: timerFactory,
-                   workQueue: workQueue)
+        super.init(
+            timerFactory: timerFactory,
+            workQueue: workQueue
+        )
     }
 
     deinit {
@@ -93,23 +98,27 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     /// Because of this, all requests to refresh the certificate are serialized to avoid races. Calls may
     /// take a while to complete (or time out) due to network conditions, or because multiple API calls are
     /// occasionally necessary to refresh the cert (because of session management).
-    public func checkRefreshCertificateNow(features: VPNConnectionFeatures?,
-                                           userInitiated: Bool = false,
-                                           forceRefreshDueToExpiredSession: Bool = false,
-                                           completion: @escaping CertificateRefreshCompletion) {
+    public func checkRefreshCertificateNow(
+        features: VPNConnectionFeatures?,
+        userInitiated: Bool = false,
+        forceRefreshDueToExpiredSession: Bool = false,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         if operationQueue.isSuspended {
             log.error("Adding certificate refresh operation to suspended refresh manager", category: .userCert)
         }
-        operationQueue.addOperation(CertificateRefreshAsyncOperation(features: features,
-                                                                     userInitiated: userInitiated,
-                                                                     forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
-                                                                     manager: self,
-                                                                     completion: completion))
+        operationQueue.addOperation(CertificateRefreshAsyncOperation(
+            features: features,
+            userInitiated: userInitiated,
+            forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
+            manager: self,
+            completion: completion
+        ))
     }
 
     /// Running timers in NE proved to be not very reliable, so we run it every `checkInterval` seconds all the time,
     /// to make sure we don't miss the time when certificate has to be refreshed.
-    override internal func work() {
+    override func work() {
         let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
 
         checkRefreshCertificateNow(features: features, completion: { result in
@@ -123,7 +132,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     /// If the cert refresh manager's session expires, this function needs to be called with a forked session selector
     /// in order to start it back up again with a fresh API session.
-    public func newSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<(), Error>) -> Void)) {
+    public func newSession(withSelector selector: String, sessionCookie: HTTPCookie?, completionHandler: @escaping ((Result<Void, Error>) -> Void)) {
         let timeOutInterval = Self.intervals.refreshWaitTimeout
         guard semaphore.wait(timeout: .now() + timeOutInterval) == .success else {
             log.assertionFailure("Timed out waiting for semaphore while starting new session")
@@ -143,12 +152,13 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             let features = self?.vpnAuthenticationStorage.getStoredCertificateFeatures()
             // If we're starting a new session, we need to get a new certificate to avoid getting a 409 Key Conflict error.
             self?.checkRefreshCertificateNow(features: features, forceRefreshDueToExpiredSession: true, completion: { result in
-                completionHandler(result.mapError({ $0 }))
+                completionHandler(result.mapError { $0 })
             })
         }
     }
 
     // MARK: - Private
+
     private func certificateDoesNeedRefreshing(features: VPNConnectionFeatures?) -> Bool {
         // If we're able to get a certificate from the keychain...
         guard let storedCert = vpnAuthenticationStorage.getStoredCertificate() else {
@@ -156,7 +166,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             return true
         }
 
-        if let features = features {
+        if let features {
             // and we're also able to retrieve the features stored from the last request...
             guard let storedFeatures = vpnAuthenticationStorage.getStoredCertificateFeatures() else {
                 log.info("Could not find stored certificate features, refreshing.", category: .userCert)
@@ -192,13 +202,15 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
     /// - Note: *Do not* call this function. Call `checkRefreshCertificateNow` instead. Because of the nature
     ///         of the synchronization in the encapsulating function, it's important to always call the completion
     ///         in error cases, otherwise the operation queue will get stuck.
-    fileprivate func checkRefreshCertificateNowNoSync(features: VPNConnectionFeatures?,
-                                                      userInitiated: Bool,
-                                                      forceRefreshDueToExpiredSession: Bool,
-                                                      asPartOf operation: CertificateRefreshAsyncOperation,
-                                                      completion: @escaping CertificateRefreshCompletion) {
+    fileprivate func checkRefreshCertificateNowNoSync(
+        features: VPNConnectionFeatures?,
+        userInitiated _: Bool,
+        forceRefreshDueToExpiredSession: Bool,
+        asPartOf operation: CertificateRefreshAsyncOperation,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         #if DEBUG
-        dispatchPrecondition(condition: .onQueue(workQueue))
+            dispatchPrecondition(condition: .onQueue(workQueue))
         #endif
 
         guard forceRefreshDueToExpiredSession || certificateDoesNeedRefreshing(features: features) else {
@@ -214,11 +226,11 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
         let der = keys.publicKey.derRepresentation
         apiService.refreshCertificate(publicKey: der, asPartOf: operation) { [weak self] result in
             switch result {
-            case .success(let cert):
+            case let .success(cert):
                 let certAndFeatures = VpnCertificateWithFeatures(certificate: cert, features: features)
                 self?.vpnAuthenticationStorage.store(certAndFeatures)
                 completion(.success(()))
-            case .failure(let error):
+            case let .failure(error):
                 guard let certError = error as? CertificateRefreshError else {
                     completion(.failure(.internalError(message: String(describing: error))))
                     return
@@ -281,11 +293,13 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
     var observation: NSKeyValueObservation!
     unowned let manager: ExtensionCertificateRefreshManager
 
-    init(features: VPNConnectionFeatures?,
-         userInitiated: Bool,
-         forceRefreshDueToExpiredSession: Bool,
-         manager: ExtensionCertificateRefreshManager,
-         completion: @escaping CertificateRefreshCompletion) {
+    init(
+        features: VPNConnectionFeatures?,
+        userInitiated: Bool,
+        forceRefreshDueToExpiredSession: Bool,
+        manager: ExtensionCertificateRefreshManager,
+        completion: @escaping CertificateRefreshCompletion
+    ) {
         self.features = features
         self.isUserInitiated = userInitiated
         self.forceRefreshDueToExpiredSession = forceRefreshDueToExpiredSession
@@ -293,7 +307,7 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
         self.completion = completion
     }
 
-    private func finish(_ result: Result<(), CertificateRefreshError>) {
+    private func finish(_ result: Result<Void, CertificateRefreshError>) {
         completion(result)
         finish()
     }
@@ -321,10 +335,12 @@ class CertificateRefreshAsyncOperation: AsyncOperation {
         }
 
         guard !isCancelled else { return }
-        manager.checkRefreshCertificateNowNoSync(features: features,
-                                                 userInitiated: isUserInitiated,
-                                                 forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
-                                                 asPartOf: self) { result in
+        manager.checkRefreshCertificateNowNoSync(
+            features: features,
+            userInitiated: isUserInitiated,
+            forceRefreshDueToExpiredSession: forceRefreshDueToExpiredSession,
+            asPartOf: self
+        ) { result in
             guard !self.isCancelled else { return }
             self.observation.invalidate()
 

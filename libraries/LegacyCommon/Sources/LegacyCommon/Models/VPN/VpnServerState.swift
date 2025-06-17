@@ -24,13 +24,12 @@ import Foundation
 import VPNShared
 
 public struct VpnServerState {
-    
     public let id: String!
     public let domain: String!
     public let status: Int!
     public let entryIP: String!
     public let exitIP: String!
-    
+
     init(dictionary: JSONDictionary) throws {
         self.id = try dictionary.stringOrThrow(key: "ID")
         self.domain = try dictionary.stringOrThrow(key: "Domain")

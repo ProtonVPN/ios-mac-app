@@ -16,12 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import Timer
 @testable import NEHelper
+import Timer
+import XCTest
 
 final class RefreshManagerTests: XCTestCase {
-
     /// Make sure `work` is not run right after manager is created.
     func testFirstRunIsAfterRefreshIntervalTimePassed() throws {
         let expectationStart = XCTestExpectation(description: "Timer was started")
@@ -63,7 +62,7 @@ final class RefreshManagerTests: XCTestCase {
         manager.workCallback = {
             expectationWorkDone.fulfill()
         }
-        manager.resume { }
+        manager.resume {}
 
         // Now work should be done right after resume, as the time has passed, so we wait shorter than the interval
         wait(for: [expectationWorkDone], timeout: waitIntervalBase / 10)
@@ -73,16 +72,15 @@ final class RefreshManagerTests: XCTestCase {
 // MARK: - Mock
 
 private class TestRefreshManager: RefreshManager {
-
     init(timerFactory: TimerFactory, workQueue: DispatchQueue, interval: TimeInterval, workCallback: @escaping (() -> Void)) {
         self.workCallback = workCallback
         self._interval = interval
         super.init(timerFactory: timerFactory, workQueue: workQueue)
     }
 
-    var workCallback: (() -> Void)
+    var workCallback: () -> Void
 
-    override internal func work() {
+    override func work() {
         workCallback()
     }
 

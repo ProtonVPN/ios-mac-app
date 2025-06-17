@@ -20,14 +20,14 @@ import Foundation
 import PMLogger
 
 class FileHandleMock: FileHandleWrapper {
-
     public let url: URL
 
     required init(forWritingTo url: URL) throws {
         self.url = url
     }
 
-    @ThrowingFuncStub(FileHandleWrapper.seekToEnd, initialReturn: 0) var seekToEndCustomStub
+    @ThrowingFuncStub(FileHandleWrapper.seekToEnd, initialReturn: 0)
+    var seekToEndCustomStub
     func seekToEnd() throws -> UInt64 {
         try seekToEndCustomStub()
     }

@@ -21,80 +21,81 @@
 //
 
 import Cocoa
-import LegacyCommon
 import Ergonomics
+import LegacyCommon
 import Strings
 
 class WarningPopupViewController: NSViewController {
-
-    @IBOutlet weak var bodyView: NSView!
-    @IBOutlet weak var warningImage: NSImageView!
-    @IBOutlet weak var warningDescriptionLabel: NSTextField!
-    @IBOutlet weak var warningScrollViewContainer: NSScrollView!
+    @IBOutlet var bodyView: NSView!
+    @IBOutlet var warningImage: NSImageView!
+    @IBOutlet var warningDescriptionLabel: NSTextField!
+    @IBOutlet var warningScrollViewContainer: NSScrollView!
     @IBOutlet var warningDescription: PVPNTextViewLink!
 
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var cancelButton: CancellationButton!
-    @IBOutlet weak var continueButton: PrimaryActionButton!
-    
+    @IBOutlet var footerView: NSView!
+    @IBOutlet var cancelButton: CancellationButton!
+    @IBOutlet var continueButton: PrimaryActionButton!
+
     var viewModel: WarningPopupViewModel!
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     required init(viewModel: WarningPopupViewModel) {
         super.init(nibName: NSNib.Name("WarningPopup"), bundle: nil)
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupBodySection()
         setupFooterSection()
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
         view.window?.applyWarningAppearance(withTitle: viewModel.title)
     }
-    
+
     private func setupBodySection() {
         warningScrollViewContainer.isHidden = true
         bodyView.wantsLayer = true
         DarkAppearance {
             bodyView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         warningImage.image = viewModel.image
         warningDescriptionLabel.attributedStringValue = viewModel.description.styled(alignment: .natural)
     }
-    
+
     private func setupFooterSection() {
         footerView.wantsLayer = true
         DarkAppearance {
             footerView.layer?.backgroundColor = .cgColor(.background, .weak)
         }
-        
+
         cancelButton.title = Localizable.cancel
         cancelButton.fontSize = .paragraph
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonAction)
-        
+
         continueButton.title = Localizable.continue
         continueButton.fontSize = .paragraph
         continueButton.target = self
         continueButton.action = #selector(continueButtonAction)
     }
-    
-    @objc private func cancelButtonAction() {
+
+    @objc
+    private func cancelButtonAction() {
         viewModel.onCancel?()
         dismiss(nil)
     }
-    
-    @objc private func continueButtonAction() {
+
+    @objc
+    private func continueButtonAction() {
         viewModel.onConfirm()
         dismiss(nil)
     }

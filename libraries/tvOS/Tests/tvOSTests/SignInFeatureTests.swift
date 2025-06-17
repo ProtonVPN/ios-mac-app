@@ -16,14 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 import ComposableArchitecture
 import struct Ergonomics.GenericError
 import IssueReporting
 @testable import tvOS
+import XCTest
 
 final class SignInFeatureTests: XCTestCase {
-
     @MainActor
     func testPollServerShouldCancelIfNotWaitingForAuthentication() async {
         let store = TestStore(initialState: SignInFeature.State(authentication: .loadingSignInCode)) {
@@ -77,7 +76,7 @@ final class SignInFeatureTests: XCTestCase {
         }
 
         store.dependencies.networkClient = .init(
-            fetchSignInCode: { .init(selector: "", userCode: "")},
+            fetchSignInCode: { .init(selector: "", userCode: "") },
             forkedSession: { selector in
                 XCTAssertEqual(selector, mockSignInResponse.selector)
                 return .authenticated(.mock)
@@ -139,7 +138,7 @@ final class SignInFeatureTests: XCTestCase {
         await clock.advance(by: pollConf.delayBeforePollingStarts)
         var failAfterAttempts = pollConf.failAfterAttempts
 
-        for _ in 1...pollConf.failAfterAttempts {
+        for _ in 1 ... pollConf.failAfterAttempts {
             failAfterAttempts -= 1
             await clock.advance(by: pollConf.period)
             await store.receive(\.pollServer) {

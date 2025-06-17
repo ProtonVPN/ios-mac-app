@@ -24,11 +24,11 @@ import Dependencies
 
 import Domain
 import HomeShared
-import Theme
-import Strings
-import VPNAppCore
-import SharedViews
 import ProtonCoreUIFoundations
+import SharedViews
+import Strings
+import Theme
+import VPNAppCore
 
 struct HomeConnectionCardView: View {
     @Dependency(\.locale) private var locale
@@ -68,7 +68,7 @@ struct HomeConnectionCardView: View {
         if store.vpnConnectionStatus.connectionStatusAvailable {
             IconProvider.chevronRight
                 .foregroundColor(Color(.icon, .weak))
-        } else if store.vpnConnectionStatus == .disconnected && (store.userTier ?? .freeTier).isFreeTier {
+        } else if store.vpnConnectionStatus == .disconnected, (store.userTier ?? .freeTier).isFreeTier {
             IconProvider.infoCircle
                 .foregroundColor(Color(.icon, .weak))
         }
@@ -89,7 +89,6 @@ struct HomeConnectionCardView: View {
                     store.send(.delegate(.disconnect))
                 case .resolving:
                     store.send(.delegate(.disconnect))
-                    break
                 }
             }
         } label: {
@@ -110,11 +109,15 @@ struct HomeConnectionCardView: View {
             if store.showChangeServerButton {
                 switch store.serverChangeAvailability ?? .available {
                 case .available:
-                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                            changeServerAllowedDate: .distantPast)
+                    ChangeServerButtonLabel(
+                        sendAction: { _ = store.send($0) },
+                        changeServerAllowedDate: .distantPast
+                    )
                 case let .unavailable(until, _, _):
-                    ChangeServerButtonLabel(sendAction: { _ = store.send($0) },
-                                            changeServerAllowedDate: until)
+                    ChangeServerButtonLabel(
+                        sendAction: { _ = store.send($0) },
+                        changeServerAllowedDate: until
+                    )
                 }
             }
         }
@@ -178,7 +181,7 @@ struct HomeConnectionCardView: View {
     }
 }
 
-fileprivate extension VPNConnectionStatus {
+private extension VPNConnectionStatus {
     var connectionStatusAvailable: Bool {
         guard case .connected = self else { return false }
         return true
@@ -187,118 +190,124 @@ fileprivate extension VPNConnectionStatus {
     var showingConnectButton: Bool {
         switch self {
         case .disconnected, .disconnecting:
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }
 
 #if targetEnvironment(simulator)
-#if compiler(>=6)
-@available(iOS 18, *)
-#Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
-    @Shared(.userTier) var userTier
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    $userTier.withLock { $0 = 0 }
-    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
-    return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
-        HomeConnectionCardFeature()
-    }))
-    .padding()
-    .preferredColorScheme(.dark)
-}
+    #if compiler(>=6)
+        @available(iOS 18, *)
+        #Preview("Change Server Available", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .availableValue }) {
+            @Shared(.userTier) var userTier
+            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+            $userTier.withLock { $0 = 0 }
+            $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
+            return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
+                HomeConnectionCardFeature()
+            }))
+            .padding()
+            .preferredColorScheme(.dark)
+        }
 
-@available(iOS 18, *)
-#Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
-    @Shared(.userTier) var userTier
-    @Shared(.vpnConnectionStatus) var vpnConnectionStatus
-    $userTier.withLock { $0 = 0 }
-    $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
-    return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
-        HomeConnectionCardFeature()
-    }))
-    .padding()
-    .preferredColorScheme(.dark)
-}
-#endif
+        @available(iOS 18, *)
+        #Preview("Change Server Unavailable", traits: .sizeThatFitsLayout, .dependencies { $0.serverChangeAuthorizer = .previewValue }) {
+            @Shared(.userTier) var userTier
+            @Shared(.vpnConnectionStatus) var vpnConnectionStatus
+            $userTier.withLock { $0 = 0 }
+            $vpnConnectionStatus.withLock { $0 = .connected(.secureCoreCountryHop, nil) }
+            return HomeConnectionCardView(store: .init(initialState: .init(), reducer: {
+                HomeConnectionCardFeature()
+            }))
+            .padding()
+            .preferredColorScheme(.dark)
+        }
+    #endif
 
-@available(iOS 17, *)
-#Preview("Free users", traits: .fixedLayout(width: 840, height: 300)) {
-    cardPair(spec: .defaultFastest, userTier: 0)
+    @available(iOS 17, *)
+    #Preview("Free users", traits: .fixedLayout(width: 840, height: 300)) {
+        cardPair(spec: .defaultFastest, userTier: 0)
+            .padding()
+            .preferredColorScheme(.dark)
+    }
+
+    @available(iOS 17, *)
+    #Preview("Standard", traits: .fixedLayout(width: 740, height: 1100)) {
+        VStack {
+            cardPair(spec: .defaultFastest)
+            cardPair(spec: .specificCountry)
+            cardPair(spec: .specificCity)
+            cardPair(spec: .specificCityServer)
+            cardPair(spec: .specificCountryServer)
+        }
         .padding()
         .preferredColorScheme(.dark)
-}
-
-@available(iOS 17, *)
-#Preview("Standard", traits: .fixedLayout(width: 740, height: 1100)) {
-    VStack {
-        cardPair(spec: .defaultFastest)
-        cardPair(spec: .specificCountry)
-        cardPair(spec: .specificCity)
-        cardPair(spec: .specificCityServer)
-        cardPair(spec: .specificCountryServer)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 
-@available(iOS 17, *)
-#Preview("Secure Core", traits: .fixedLayout(width: 740, height: 700)) {
-    VStack(spacing: .themeSpacing24) {
-        cardPair(spec: .secureCoreFastest)
-        cardPair(spec: .secureCoreCountry)
-        cardPair(spec: .secureCoreCountryHop)
+    @available(iOS 17, *)
+    #Preview("Secure Core", traits: .fixedLayout(width: 740, height: 700)) {
+        VStack(spacing: .themeSpacing24) {
+            cardPair(spec: .secureCoreFastest)
+            cardPair(spec: .secureCoreCountry)
+            cardPair(spec: .secureCoreCountryHop)
+        }
+        .padding()
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 
-@available(iOS 17, *)
-#Preview("Connection Features", traits: .fixedLayout(width: 740, height: 900)) {
-    VStack(spacing: .themeSpacing24) {
-        cardPair(spec: .defaultFastest.withAllFeatures())
-        cardPair(spec: .specificCountry.withAllFeatures())
-        cardPair(spec: .specificCity.withAllFeatures())
-        cardPair(spec: .specificCityServer.withAllFeatures())
+    @available(iOS 17, *)
+    #Preview("Connection Features", traits: .fixedLayout(width: 740, height: 900)) {
+        VStack(spacing: .themeSpacing24) {
+            cardPair(spec: .defaultFastest.withAllFeatures())
+            cardPair(spec: .specificCountry.withAllFeatures())
+            cardPair(spec: .specificCity.withAllFeatures())
+            cardPair(spec: .specificCityServer.withAllFeatures())
+        }
+        .padding()
+        .preferredColorScheme(.dark)
     }
-    .padding()
-    .preferredColorScheme(.dark)
-}
 
-fileprivate func cardPair(spec: ConnectionSpec, userTier: Int = 2) -> some View {
-    return HStack(spacing: .themeSpacing24) {
-        HomeConnectionCardView(store: .disconnectedStore(defaultConnection: spec, userTier: userTier))
-        HomeConnectionCardView(store: .connectedStore(intentSpec: spec, userTier: userTier))
-    }
-}
-
-extension HomeConnectionCardFeature.State {
-    static func constant(status: VPNConnectionStatus,
-                         defaultConnection: ConnectionSpec,
-                         userTier: Int) -> Self {
-        var state = HomeConnectionCardFeature.State()
-        state.$userTier = .constant(userTier)
-        state.$vpnConnectionStatus = .constant(status)
-        return state
-    }
-}
-
-extension StoreOf<HomeConnectionCardFeature> {
-    static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: Int) -> Self {
-        .init(initialState: .constant(status: .disconnected,
-                                      defaultConnection: defaultConnection,
-                                      userTier: userTier)) {
-            HomeConnectionCardFeature()
+    fileprivate func cardPair(spec: ConnectionSpec, userTier: Int = 2) -> some View {
+        HStack(spacing: .themeSpacing24) {
+            HomeConnectionCardView(store: .disconnectedStore(defaultConnection: spec, userTier: userTier))
+            HomeConnectionCardView(store: .connectedStore(intentSpec: spec, userTier: userTier))
         }
     }
 
-    static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
-        .init(initialState: .constant(status: .connected(intentSpec, nil),
-                                      defaultConnection: .defaultFastest,
-                                      userTier: userTier)) {
-            HomeConnectionCardFeature()
+    extension HomeConnectionCardFeature.State {
+        static func constant(
+            status: VPNConnectionStatus,
+            defaultConnection _: ConnectionSpec,
+            userTier: Int
+        ) -> Self {
+            var state = HomeConnectionCardFeature.State()
+            state.$userTier = .constant(userTier)
+            state.$vpnConnectionStatus = .constant(status)
+            return state
         }
     }
-}
+
+    extension StoreOf<HomeConnectionCardFeature> {
+        static func disconnectedStore(defaultConnection: ConnectionSpec, userTier: Int) -> Self {
+            .init(initialState: .constant(
+                status: .disconnected,
+                defaultConnection: defaultConnection,
+                userTier: userTier
+            )) {
+                HomeConnectionCardFeature()
+            }
+        }
+
+        static func connectedStore(intentSpec: ConnectionSpec, userTier: Int) -> Self {
+            .init(initialState: .constant(
+                status: .connected(intentSpec, nil),
+                defaultConnection: .defaultFastest,
+                userTier: userTier
+            )) {
+                HomeConnectionCardFeature()
+            }
+        }
+    }
 #endif

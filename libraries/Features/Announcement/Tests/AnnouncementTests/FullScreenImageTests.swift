@@ -16,11 +16,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
 @testable import Announcement
+import XCTest
 
 class FullScreenImageTests: XCTestCase {
-
     override func setUp() {
         super.setUp()
     }
@@ -30,8 +29,10 @@ class FullScreenImageTests: XCTestCase {
     }
 
     func testSelectsFirstAvailableURL() {
-        let sources: [FullScreenImage.Source] = [.init(url: "first", type: "", width: nil, height: nil),
-                                                 .init(url: "second", type: "", width: nil, height: nil)]
+        let sources: [FullScreenImage.Source] = [
+            .init(url: "first", type: "", width: nil, height: nil),
+            .init(url: "second", type: "", width: nil, height: nil),
+        ]
         let sut = FullScreenImage(source: sources, alternativeText: "")
         XCTAssertEqual(sut.firstURL?.absoluteString, "first")
     }
@@ -40,5 +41,4 @@ class FullScreenImageTests: XCTestCase {
         let sut = FullScreenImage(source: [], alternativeText: "")
         XCTAssertEqual(sut.firstURL, nil)
     }
-
 }

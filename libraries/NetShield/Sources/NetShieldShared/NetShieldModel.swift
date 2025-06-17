@@ -29,9 +29,9 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
     // TODO: With VPNAPPL-2541, remove this below since we'll get it for free
     public static func == (lhs: NetShieldModel, rhs: NetShieldModel) -> Bool {
         lhs.ads == rhs.ads &&
-        lhs.trackers == rhs.trackers &&
-        lhs.data == rhs.data &&
-        lhs.enabled == rhs.enabled
+            lhs.trackers == rhs.trackers &&
+            lhs.data == rhs.data &&
+            lhs.enabled == rhs.enabled
     }
 
     public init(trackersCount: Int, adsCount: Int, dataSaved: UInt64, enabled: Bool) {
@@ -41,7 +41,7 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
         self.enabled = enabled
     }
 
-    public static func zero(enabled: Bool) -> NetShieldModel {
+    public static func zero(enabled _: Bool) -> NetShieldModel {
         .init(trackersCount: 0, adsCount: 0, dataSaved: 0, enabled: false)
     }
 
@@ -52,7 +52,7 @@ public final class NetShieldModel: Sendable, Equatable, ObservableObject {
 
 extension NetShieldModel: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "NetShieldModel(trackersCount: \(trackersCount), adsCount: \(adsCount), dataSaved: \(dataSaved), enabled: \(enabled))"
+        "NetShieldModel(trackersCount: \(trackersCount), adsCount: \(adsCount), dataSaved: \(dataSaved), enabled: \(enabled))"
     }
 }
 
@@ -74,7 +74,7 @@ public struct StatModel: Equatable {
     package static let emptyData: StatModel = .data(value: "–", isEnabled: true)
 }
 
-extension NetShieldModel {
+public extension NetShieldModel {
     private static let formatter = NetShieldStatsNumberFormatter()
     private static let byteCountFormatter = {
         let formatter = ByteCountFormatter()
@@ -82,21 +82,21 @@ extension NetShieldModel {
         return formatter
     }()
 
-    public var ads: StatModel {
+    var ads: StatModel {
         .ads(value: Self.formatter.string(from: adsCount), count: adsCount, isEnabled: enabled)
     }
 
-    public var trackers: StatModel {
+    var trackers: StatModel {
         .trackers(value: Self.formatter.string(from: trackersCount), count: trackersCount, isEnabled: enabled)
     }
 
-    public var data: StatModel {
+    var data: StatModel {
         .data(value: Self.byteCountFormatter.string(fromByteCount: Int64(dataSaved)), isEnabled: enabled)
     }
 }
 
-extension StatModel {
-    public static func trackers(value: String, count: Int, isEnabled: Bool) -> StatModel {
+public extension StatModel {
+    static func trackers(value: String, count: Int, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsTrackersStopped(count).replacingOccurrences(of: "\n", with: " "),
@@ -105,7 +105,7 @@ extension StatModel {
         )
     }
 
-    public static func ads(value: String, count: Int, isEnabled: Bool) -> StatModel {
+    static func ads(value: String, count: Int, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsAdsBlocked(count).replacingOccurrences(of: "\n", with: " "),
@@ -114,7 +114,7 @@ extension StatModel {
         )
     }
 
-    public static func data(value: String, isEnabled: Bool) -> StatModel {
+    static func data(value: String, isEnabled: Bool) -> StatModel {
         StatModel(
             value: value,
             title: Localizable.netshieldStatsDataSaved.replacingOccurrences(of: "\n", with: " "),
@@ -126,9 +126,9 @@ extension StatModel {
 
 public extension NetShieldModel {
     static var random: NetShieldModel { // TODO: make only available in DEBUG for previews
-        let trackers = Int.random(in: 0...1000)
-        let ads = Int.random(in: 0...1000000000)
-        let data = UInt64.random(in: 0...100000000000000)
+        let trackers = Int.random(in: 0 ... 1000)
+        let ads = Int.random(in: 0 ... 1_000_000_000)
+        let data = UInt64.random(in: 0 ... 100_000_000_000_000)
         return NetShieldModel(trackersCount: trackers, adsCount: ads, dataSaved: data, enabled: true)
     }
 }

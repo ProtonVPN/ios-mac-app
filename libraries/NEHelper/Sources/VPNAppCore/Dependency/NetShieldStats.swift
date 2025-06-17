@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Dependencies
 import Ergonomics
+import Foundation
 import NetShield
 
 // This approach is broken because we're listening to the stream from two places
@@ -33,8 +33,8 @@ public struct NetShieldStatsProvider: TestDependencyKey, Sendable {
     )
 }
 
-extension DependencyValues {
-    public var netShieldStatsProvider: NetShieldStatsProvider {
+public extension DependencyValues {
+    var netShieldStatsProvider: NetShieldStatsProvider {
         get { self[NetShieldStatsProvider.self] }
         set { self[NetShieldStatsProvider.self] = newValue }
     }
@@ -42,7 +42,6 @@ extension DependencyValues {
 
 @available(macOS 12, *)
 extension NetShieldStatsProvider: DependencyKey {
-
     public static let liveValue: NetShieldStatsProvider = {
         let actor = NetShieldStatsProviderImplementation()
 
@@ -65,7 +64,7 @@ actor NetShieldStatsProviderImplementation {
 
     private func startObserving() async {
         for await value in NotificationCenter.default.notifications(NetShieldStatsNotification.self) {
-            self.stats = value
+            stats = value
         }
     }
 }

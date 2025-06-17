@@ -18,44 +18,42 @@
 
 #if REDESIGN
 
-import SwiftUI
-import AppKit
-import ComposableArchitecture
+    import AppKit
+    import ComposableArchitecture
+    import SwiftUI
 
-struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
+    struct LoginViewControllerRepresentable: NSViewControllerRepresentable {
+        typealias NSViewControllerType = LoginViewController
 
-    typealias NSViewControllerType = LoginViewController
+        let loginViewModel: LoginViewModel
 
-    let loginViewModel: LoginViewModel
-
-    let store: StoreOf<LoginFeature>
-
-    init(store: StoreOf<LoginFeature>, loginViewModel: LoginViewModel) {
-        self.store = store
-        self.loginViewModel = loginViewModel
-    }
-
-    func makeNSViewController(context: Context) -> LoginViewController {
-        return LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
-    }
-
-    func updateNSViewController(_ nsViewController: LoginViewController, context: Context) {
-
-    }
-
-    func makeCoordinator() -> Coordinator {
-        return Coordinator(store: store)
-    }
-
-    class Coordinator: NSObject {
         let store: StoreOf<LoginFeature>
-        init(store: StoreOf<LoginFeature>) {
+
+        init(store: StoreOf<LoginFeature>, loginViewModel: LoginViewModel) {
             self.store = store
+            self.loginViewModel = loginViewModel
         }
-        func login() {
-            store.send(.loginButtonPressed(username: "", password: ""))
+
+        func makeNSViewController(context _: Context) -> LoginViewController {
+            LoginViewController(viewModel: loginViewModel, coordinator: makeCoordinator())
+        }
+
+        func updateNSViewController(_: LoginViewController, context _: Context) {}
+
+        func makeCoordinator() -> Coordinator {
+            Coordinator(store: store)
+        }
+
+        class Coordinator: NSObject {
+            let store: StoreOf<LoginFeature>
+            init(store: StoreOf<LoginFeature>) {
+                self.store = store
+            }
+
+            func login() {
+                store.send(.loginButtonPressed(username: "", password: ""))
+            }
         }
     }
-}
 
 #endif

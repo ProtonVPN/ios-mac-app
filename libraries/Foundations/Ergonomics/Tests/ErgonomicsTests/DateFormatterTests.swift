@@ -22,7 +22,6 @@ import XCTest
 import Ergonomics
 
 final class DateFormatterTests: XCTestCase {
-
     struct DateTestCase {
         let timestamp: TimeInterval
         let imfString: String
@@ -31,8 +30,8 @@ final class DateFormatterTests: XCTestCase {
 
     public let cases: [DateTestCase] = [
         .init(timestamp: 0, imfString: "Thu, 01 Jan 1970 00:00:00 GMT", description: "Unix epoch"),
-        .init(timestamp: 1712057924, imfString: "Tue, 02 Apr 2024 11:38:44 GMT", description: "AM"),
-        .init(timestamp: 1712073621, imfString: "Tue, 02 Apr 2024 16:00:21 GMT", description: "PM"),
+        .init(timestamp: 1_712_057_924, imfString: "Tue, 02 Apr 2024 11:38:44 GMT", description: "AM"),
+        .init(timestamp: 1_712_073_621, imfString: "Tue, 02 Apr 2024 16:00:21 GMT", description: "PM"),
     ]
 
     func testConvertsStringToDate() throws {
@@ -44,7 +43,7 @@ final class DateFormatterTests: XCTestCase {
     }
 
     func testReturnsStringWithCorrectFormat() throws {
-        cases.forEach { testCase in
+        for testCase in cases {
             let date = Date(timeIntervalSince1970: testCase.timestamp)
             let formattedString = DateFormatter.imf.string(from: date)
             XCTAssertEqual(formattedString, testCase.imfString, testCase.description)

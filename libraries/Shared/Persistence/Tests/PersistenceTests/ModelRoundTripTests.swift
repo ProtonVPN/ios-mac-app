@@ -19,12 +19,11 @@
 import Foundation
 import XCTest
 
-import PersistenceTestSupport
 @testable import Persistence
+import PersistenceTestSupport
 
 /// These tests verify that no information is lost in translation from model, to internal database record, back to model
 final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
-
     func testVPNServerWithMultipleOverrides() throws {
         let serverToInsert = TestData.serverWithMultipleEndpointsAndOverrides
         repository.upsert(servers: [serverToInsert])

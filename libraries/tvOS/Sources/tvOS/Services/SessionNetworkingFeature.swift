@@ -83,8 +83,8 @@ struct SessionNetworkingFeature: Reducer {
                     await send(.sessionFetched(Result { try await networking.acquireSessionIfNeeded() }))
                 }
 
-            case .sessionFetched(.success(.sessionAlreadyPresent(let credentials))),
-                    .sessionFetched(.success(.sessionFetchedAndAvailable(let credentials))):
+            case let .sessionFetched(.success(.sessionAlreadyPresent(credentials))),
+                 let .sessionFetched(.success(.sessionFetchedAndAvailable(credentials))):
                 // Credentials already stored in keychain by Networking implementation in CommonNetworking
                 let session: CommonNetworking.Session = credentials.isForUnauthenticatedSession
                     ? .unauth(uid: credentials.sessionID)
@@ -98,7 +98,7 @@ struct SessionNetworkingFeature: Reducer {
                     // we have a session, now get the user tier
                     let userTier = try await networking.userTier
                     await send(.userTierRetrieved(userTier, session))
-                } catch: { error, send in
+                } catch: { error, _ in
                     log.debug("Failed to retrieve user tier with error: \(error)", category: .api)
                 }
 
@@ -106,7 +106,7 @@ struct SessionNetworkingFeature: Reducer {
                 state = .unauthenticated(.sessionUnavailable)
                 return .none
 
-            case .sessionFetched(.failure(let error)):
+            case let .sessionFetched(.failure(error)):
                 state = .unauthenticated(.network(internalError: error))
                 return .none
 
@@ -114,15 +114,17 @@ struct SessionNetworkingFeature: Reducer {
                 state = .unauthenticated(nil)
                 return .send(.startLogout)
 
-            case .forkedSessionAuthenticated(.success(let credentials)):
+            case let .forkedSessionAuthenticated(.success(credentials)):
                 // We forked a session ourselves, and web client just authenticated it
                 let session = Session.auth(uid: credentials.sessionId)
                 try? authKeychain.store(credentials)
                 return .run { send in
                     // we have a session, now get the user tier
                     let (userTier, userDisplayName) = try await (networking.userTier, networking.userDisplayName)
-                    _ = await (send(.userTierRetrieved(userTier, session)),
-                               send(.delegate(.displayName(userDisplayName))))
+                    _ = await (
+                        send(.userTierRetrieved(userTier, session)),
+                        send(.delegate(.displayName(userDisplayName)))
+                    )
                     // let's listen to logout events
                     for await authenticated in networkingDelegate.sessionAuthenticatedEvents where !authenticated {
                         await send(.sessionExpired)
@@ -132,11 +134,13 @@ struct SessionNetworkingFeature: Reducer {
                     @Dependency(\.alertService) var alertService
                     await alertService.feed(error)
                 }
-            case .userTierRetrieved(let tier, let session):
-                    state = .authenticated(session)
-                    networking.setSession(session)
-                    unauthKeychain.clear()
-                    return .send(.delegate(.tier(tier)))
+
+            case let .userTierRetrieved(tier, session):
+                state = .authenticated(session)
+                networking.setSession(session)
+                unauthKeychain.clear()
+                return .send(.delegate(.tier(tier)))
+
             case .forkedSessionAuthenticated(.failure):
                 return .none
             }
@@ -151,11 +155,11 @@ enum SessionFetchingError: Error, Equatable {
     static func == (lhs: SessionFetchingError, rhs: SessionFetchingError) -> Bool {
         switch (lhs, rhs) {
         case (.sessionUnavailable, .sessionUnavailable):
-            return true
+            true
         case (.network, .network):
-            return true
+            true
         default:
-            return false
+            false
         }
     }
 }

@@ -21,7 +21,7 @@ import ComposableArchitecture
 @Reducer
 struct CodeExpiredFeature {
     @ObservableState
-    struct State: Equatable { }
+    struct State: Equatable {}
 
     enum Action {
         case generateNewCode
@@ -30,10 +30,10 @@ struct CodeExpiredFeature {
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .generateNewCode:
-                return .run { send in
+                .run { _ in
                     await dismiss()
                 }
             }

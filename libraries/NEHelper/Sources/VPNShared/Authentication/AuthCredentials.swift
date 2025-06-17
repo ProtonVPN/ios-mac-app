@@ -27,7 +27,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     static let VERSION: Int = 0 // Current build version.
 
     public static var supportsSecureCoding: Bool = true
-    
+
     public let cacheVersion: Int // Cached version default is 0
     public let username: String
     public let accessToken: String
@@ -39,8 +39,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public var mailboxPassword: String = ""
 
     override public var description: String {
-        return
-            "Username: \(username)\n" +
+        "Username: \(username)\n" +
             "Access token: \(accessToken)\n" +
             "Refresh token: \(refreshToken)\n" +
             "Session ID: \(sessionId)\n" +
@@ -48,7 +47,7 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
             "Scopes: \(scopes)\n" +
             "Mailbox Password: \(mailboxPassword)\n"
     }
-    
+
     public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?) {
         self.cacheVersion = version ?? Self.VERSION
         self.username = username
@@ -60,21 +59,22 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.mailboxPassword = mailboxPassword ?? ""
         super.init()
     }
-    
+
     public init(username: String, dic: JSONDictionary) throws {
         self.cacheVersion = Self.VERSION
         self.username = username
-        accessToken = try dic.stringOrThrow(key: "AccessToken")
-        refreshToken = try dic.stringOrThrow(key: "RefreshToken")
-        sessionId = try dic.stringOrThrow(key: "UID")
-        userId = try dic.stringOrThrow(key: "UserID")
+        self.accessToken = try dic.stringOrThrow(key: "AccessToken")
+        self.refreshToken = try dic.stringOrThrow(key: "RefreshToken")
+        self.sessionId = try dic.stringOrThrow(key: "UID")
+        self.userId = try dic.stringOrThrow(key: "UserID")
         let scopeString = try dic.stringOrThrow(key: "Scope")
-        scopes = scopeString.components(separatedBy: .whitespaces)
+        self.scopes = scopeString.components(separatedBy: .whitespaces)
         super.init()
     }
 
     // MARK: - NSCoding
-    private struct CoderKey {
+
+    private enum CoderKey {
         static let authCacheVersion = "authCacheVersion"
         static let username = "username"
         static let accessToken = "accessToken"
@@ -84,31 +84,33 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         static let scopes = "scopes"
         static let mailboxPassword = "mailboxPassword"
     }
-    
+
     public required convenience init(coder aDecoder: NSCoder) {
         var scopes: [String] = []
         if let scopesData = aDecoder.decodeObject(forKey: CoderKey.scopes) as? Data,
            let unarchivedScopes = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self, NSString.self], from: scopesData) {
             scopes = unarchivedScopes as? [String] ?? []
         }
-        
-        self.init(version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
-                  username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
-                  accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,
-                  refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
-                  sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
-                  userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
-                  scopes: scopes,
-                  mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?)
+
+        self.init(
+            version: aDecoder.decodeInteger(forKey: CoderKey.authCacheVersion),
+            username: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.username)! as String,
+            accessToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.accessToken)! as String,
+            refreshToken: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.refreshToken)! as String,
+            sessionId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.sessionId)! as String,
+            userId: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.userId) as String?,
+            scopes: scopes,
+            mailboxPassword: aDecoder.decodeObject(of: NSString.self, forKey: CoderKey.mailboxPassword) as String?
+        )
     }
 
-    public func encode(with aCoder: NSCoder) {
+    public func encode(with _: NSCoder) {
         log.assertionFailure("We migrated away from NSCoding, this method shouldn't be used anymore")
     }
 
     // MARK: - Decodable
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.cacheVersion = try container.decode(Int.self, forKey: .cacheVersion)
         self.username = try container.decode(String.self, forKey: .username)

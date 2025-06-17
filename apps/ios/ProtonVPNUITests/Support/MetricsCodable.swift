@@ -56,7 +56,7 @@ struct FailureMetrics: Codable {
 struct LokiCodable: Codable {
     private let value: Any
 
-    init<T: Codable>(_ value: T) {
+    init(_ value: some Codable) {
         self.value = value
     }
 
@@ -67,11 +67,11 @@ struct LokiCodable: Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if let intVal = try? container.decode(Int.self) {
-            value = intVal
+            self.value = intVal
         } else if let stringVal = try? container.decode(String.self) {
-            value = stringVal
+            self.value = stringVal
         } else if let doubleVal = try? container.decode(Double.self) {
-            value = doubleVal
+            self.value = doubleVal
         } else {
             throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unsupported type")
         }

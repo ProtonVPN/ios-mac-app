@@ -16,13 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
 import HomeShared
 import Strings
+import SwiftUI
 import Theme
 
 struct UpsellCarousel: View {
-
     @State private var scrollViewWidth: CGFloat = .zero
     let sendAction: RecentsFeature.ActionSender
 
@@ -70,8 +69,7 @@ extension View {
     }
 }
 
-fileprivate struct UpsellBanner: View {
-
+private struct UpsellBanner: View {
     let model: BannerModel
     let width: CGFloat
 
@@ -101,7 +99,7 @@ fileprivate struct UpsellBanner: View {
     }
 }
 
-fileprivate struct BannerModel {
+private struct BannerModel {
     let title: String
     let subtitle: String
     let image: HomeShared.ImageAsset
@@ -109,46 +107,46 @@ fileprivate struct BannerModel {
     init(type: BannerType) {
         switch type {
         case .worldwideCover:
-            title = Localizable.upsellCarouselWorldwideTitle
-            subtitle = Localizable.upsellCarouselWorldwideSubtitle
-            image = HomeAsset.worldwideCoverageSmall
+            self.title = Localizable.upsellCarouselWorldwideTitle
+            self.subtitle = Localizable.upsellCarouselWorldwideSubtitle
+            self.image = HomeAsset.worldwideCoverageSmall
         case .fasterBrowsing:
-            title = Localizable.upsellCarouselFasterBrowsingTitle
-            subtitle = Localizable.upsellCarouselFasterBrowsingSubtitle
-            image = HomeAsset.speedSmall
+            self.title = Localizable.upsellCarouselFasterBrowsingTitle
+            self.subtitle = Localizable.upsellCarouselFasterBrowsingSubtitle
+            self.image = HomeAsset.speedSmall
         case .streaming:
-            title = Localizable.upsellCarouselStreamingTitle
-            subtitle = Localizable.upsellCarouselStreamingSubtitle
-            image = HomeAsset.streamingMobileSmall
+            self.title = Localizable.upsellCarouselStreamingTitle
+            self.subtitle = Localizable.upsellCarouselStreamingSubtitle
+            self.image = HomeAsset.streamingMobileSmall
         case .netshield:
-            title = Localizable.upsellCarouselNetshieldTitle
-            subtitle = Localizable.upsellCarouselNetshieldSubtitle
-            image = HomeAsset.netshieldMobileSmall
+            self.title = Localizable.upsellCarouselNetshieldTitle
+            self.subtitle = Localizable.upsellCarouselNetshieldSubtitle
+            self.image = HomeAsset.netshieldMobileSmall
         case .secureCore:
-            title = Localizable.upsellCarouselSecureCoreTitle
-            subtitle = Localizable.upsellCarouselSecureCoreSubtitle
-            image = HomeAsset.secureCoreSmall
+            self.title = Localizable.upsellCarouselSecureCoreTitle
+            self.subtitle = Localizable.upsellCarouselSecureCoreSubtitle
+            self.image = HomeAsset.secureCoreSmall
         case .p2p:
-            title = Localizable.upsellCarouselP2pTitle
-            subtitle = Localizable.upsellCarouselP2pSubtitle
-            image = HomeAsset.p2pSmall
+            self.title = Localizable.upsellCarouselP2pTitle
+            self.subtitle = Localizable.upsellCarouselP2pSubtitle
+            self.image = HomeAsset.p2pSmall
         case .devices:
-            title = Localizable.upsellCarouselDevicesTitle
-            subtitle = Localizable.upsellCarouselDevicesSubtitle
-            image = HomeAsset.multipleDevicesSmall
+            self.title = Localizable.upsellCarouselDevicesTitle
+            self.subtitle = Localizable.upsellCarouselDevicesSubtitle
+            self.image = HomeAsset.multipleDevicesSmall
         case .tor:
-            title = Localizable.upsellCarouselTorTitle
-            subtitle = Localizable.upsellCarouselTorSubtitle
-            image = HomeAsset.torSmall
+            self.title = Localizable.upsellCarouselTorTitle
+            self.subtitle = Localizable.upsellCarouselTorSubtitle
+            self.image = HomeAsset.torSmall
         case .more:
-            title = Localizable.upsellCarouselMoreTitle
-            subtitle = Localizable.upsellCarouselMoreSubtitle
-            image = HomeAsset.customisationMobileSmall
+            self.title = Localizable.upsellCarouselMoreTitle
+            self.subtitle = Localizable.upsellCarouselMoreSubtitle
+            self.image = HomeAsset.customisationMobileSmall
         }
     }
 }
 
-fileprivate struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey { }
+private struct CarouselWidthPreferenceKey: ViewDimensionPreferenceKey {}
 
 #Preview {
     UpsellCarousel { _ in }

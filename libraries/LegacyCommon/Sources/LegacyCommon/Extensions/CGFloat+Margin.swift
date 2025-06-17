@@ -19,7 +19,7 @@
 import Foundation
 
 public extension CGFloat {
-    struct UI { // swiftlint:disable:this type_name
+    enum UI { // swiftlint:disable:this type_name
         public static let halfMargin: CGFloat = 8
         public static let margin: CGFloat = 16
         public static let oneAndHalfMargin: CGFloat = 24

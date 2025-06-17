@@ -17,8 +17,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Search
 import LegacyCommon
+import Search
 
 extension CountriesViewController: SearchCoordinatorDelegate {
     func userDidRequestPlanPurchase() {
@@ -37,8 +37,9 @@ extension CountriesViewController: SearchCoordinatorDelegate {
         coordinator?.reload(data: viewModel.searchData, mode: searchMode)
     }
 
-    @objc func showSearch() {
-        guard let navigationController = navigationController else {
+    @objc
+    func showSearch() {
+        guard let navigationController else {
             return
         }
 

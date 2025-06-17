@@ -21,13 +21,12 @@ import SwiftUI
 import ComposableArchitecture
 import SDWebImageSwiftUI
 
-import Theme
 import Announcement
-import Strings
 import HomeShared
+import Strings
+import Theme
 
 struct AnnouncementBannerView: View {
-
     let store: StoreOf<AnnouncementBannerFeature>
 
     public init(store: StoreOf<AnnouncementBannerFeature>) {
@@ -36,7 +35,7 @@ struct AnnouncementBannerView: View {
 
     private let colors = [
         Theme.Asset.offerBannerGradientRight.swiftUIColor,
-        Theme.Asset.offerBannerGradientLeft.swiftUIColor
+        Theme.Asset.offerBannerGradientLeft.swiftUIColor,
     ]
 
     private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
@@ -57,7 +56,7 @@ struct AnnouncementBannerView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            if case .banner(let model) = store.state {
+            if case let .banner(model) = store.state {
                 content(model: model)
             } else {
                 EmptyView()
@@ -88,8 +87,10 @@ struct AnnouncementBannerView: View {
                             LinearGradient(
                                 colors: colors,
                                 startPoint: .leading,
-                                endPoint: .trailing),
-                            lineWidth: 1)
+                                endPoint: .trailing
+                            ),
+                            lineWidth: 1
+                        )
                 )
                 .cornerRadius(.themeRadius8)
             }
@@ -106,11 +107,11 @@ struct AnnouncementBannerView: View {
         .task {
             @Dependency(\.imagePrefetcher) var imagePrefetcher
             if await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString) {
-                self.showBanner = true
+                showBanner = true
                 return
             }
             await imagePrefetcher.prefetchURLs([model.imageURL])
-            self.showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
+            showBanner = await imagePrefetcher.containsImageForKey(model.imageURL.absoluteString)
         }
     }
 }
