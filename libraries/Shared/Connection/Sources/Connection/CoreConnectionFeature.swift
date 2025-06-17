@@ -250,7 +250,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case let .certAuth(.loadingFinished(.failure(error))):
             log.error("Failed to load authentication data: \(error)")
             // We encountered an unrecoverable failure to load, fetch or refresh a certificate. Disconnect with the error
-            return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
+            return .send(.disconnect(.connectionFailure(.certAuth(error))))
 
         case .tunnel(.tunnelStatusChanged(.disconnected)):
             state.shouldDisconnectWhenAllowed = false

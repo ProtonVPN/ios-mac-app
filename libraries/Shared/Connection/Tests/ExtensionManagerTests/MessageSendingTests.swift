@@ -16,9 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import XCTest
+import Testing
 import Dependencies
 import ExtensionIPC
-import XCTest
+import Ergonomics
+import NetworkExtension
 
 @testable import ExtensionManager
 
@@ -30,8 +33,24 @@ final class MessageSendingTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor
-    func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
+    @MainActor func testThrowsSendingErrorWhenSendProviderMessageThrows() async throws {
+        let internalSendFailure = NEVPNError(.configurationInvalid)
+
+        let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
+        connection.messageHandler = MessageHandler.usingInternalSend
+        connection.internalMessageSender = { _ in
+            // According to Apple documentation, possible errors include:
+            // - NEVPNErrorConfigurationInvalid
+            // - NEVPNErrorConfigurationDisabled
+            throw internalSendFailure
+        }
+
+        await #expect(throws: ProviderMessageError.sendingError(.internalSendFailed(internalSendFailure))) {
+            try await connection.send(.refreshCertificate(features: nil))
+        }
+    }
+
+    @MainActor func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -46,13 +65,13 @@ final class MessageSendingTests: XCTestCase {
             return nil
         }
 
-        await withDependencies {
+        try await withDependencies {
             $0.continuousClock = clock
         } operation: {
             let task = Task { try await connection.send(.refreshCertificate(features: nil)) }
 
             var delays = 0
-            for _ in 1 ... 4 {
+            for _ in 1...4 {
                 // We've made our send instant, and the delay is 1 second between retries
                 await clock.advance(by: .seconds(1))
                 delays += 1
@@ -62,20 +81,13 @@ final class MessageSendingTests: XCTestCase {
             await fulfillment(of: [messageSent], timeout: 0)
 
             let result = await task.result
-            guard case let .failure(error) = result else {
-                XCTFail("Expected task to fail, but got \(result)")
-                return
-            }
-            guard (error as? ProviderMessageError) == .noDataReceived else {
-                XCTFail("Expected cancellation error, got \(error)")
-                return
-            }
+            let providerMessageError = try XCTUnwrap(result.error as? ProviderMessageError)
+            XCTAssertEqual(providerMessageError, .noDataReceived)
         }
     }
 
     /// Verifies the implementation of `send(WireguardProviderMessage:)` is cancelled properly
-    @MainActor
-    func testCancellingTaskPreventsRetries() async throws {
+    @MainActor func testCancellingTaskPreventsRetries() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -84,12 +96,12 @@ final class MessageSendingTests: XCTestCase {
         let messageSent = XCTestExpectation(description: "Original message should have been sent")
         let retrySent = XCTestExpectation(description: "Message should have been retried")
 
-        await withDependencies {
+        try await withDependencies {
             $0.continuousClock = clock
         } operation: {
             connection.internalMessageSender = { _ in
                 messageSent.fulfill()
-                try await clock.sleep(for: .seconds(10))
+                try? await clock.sleep(for: .seconds(10))
                 return nil
             }
 
@@ -103,7 +115,7 @@ final class MessageSendingTests: XCTestCase {
 
             connection.internalMessageSender = { _ in
                 retrySent.fulfill()
-                try await clock.sleep(for: .seconds(10))
+                try? await clock.sleep(for: .seconds(10))
                 return nil
             }
 
@@ -119,14 +131,8 @@ final class MessageSendingTests: XCTestCase {
             await clock.advance(by: .seconds(1))
 
             let result = await task.result
-            guard case let .failure(error) = result else {
-                XCTFail("Expected task to fail, but got \(result)")
-                return
-            }
-            guard error is CancellationError else {
-                XCTFail("Expected cancellation error, got \(error)")
-                return
-            }
+            let providerMessageError = try XCTUnwrap(result.error as? ProviderMessageError)
+            XCTAssertEqual(providerMessageError, .cancelled)
         }
     }
 }

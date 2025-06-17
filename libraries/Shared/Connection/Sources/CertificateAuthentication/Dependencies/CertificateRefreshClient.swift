@@ -16,26 +16,39 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Foundation
+import CasePaths
+import Dependencies
 
-import CommonNetworking
-import CoreConnection
 import ExtensionIPC
+import CoreConnection
+import CommonNetworking
 
 import Domain
+import Ergonomics
 
-struct CertificateRefreshClientError: Error {
-    let localizedDescription: String
+/// Errors that the network extension can report while
+@CasePathable public enum CertificateRefreshError: Error {
+    case cancelled
+    case sessionMissingOrExpired
+    case sessionForkingFailed(Error)
+    case requiresNewKeys
+    case tooManyCertRequests(retryAfter: Int?)
+    case ipcError(IPCError)
 
-    init(_ localizedDescription: String) {
-        self.localizedDescription = localizedDescription
+    @CasePathable public enum IPCError {
+        /// We encountered an issue while communicating with the network extension
+        case providerMessageError(ProviderMessageError)
+
+        /// An error occurred that isn't explictly defined by the network extension
+        /// This includes things like network requests timing out (for now >:) )
+        case unspecified(message: String)
     }
 }
 
 struct CertificateRefreshClient: DependencyKey {
-    var refreshCertificate: (VPNConnectionFeatures) async throws -> CertificateRefreshResult
-    var pushSelector: () async throws -> Void
+    var refreshCertificate: (VPNConnectionFeatures) async throws(CertificateRefreshError) -> Void
+    var pushSelector: () async throws(CertificateRefreshError) -> Void
 }
 
 extension DependencyValues {
@@ -46,43 +59,62 @@ extension DependencyValues {
 }
 
 extension CertificateRefreshClient {
+    private static func parse(response: WireguardProviderRequest.Response) throws(CertificateRefreshError) {
+        switch response {
+        case .ok: // happy path
+            return
+
+        case .errorSessionExpired:
+            throw .sessionMissingOrExpired
+
+        case .errorNeedKeyRegeneration:
+            throw .requiresNewKeys
+
+        case .errorTooManyCertRequests(let retryAfter):
+            throw .tooManyCertRequests(retryAfter: retryAfter)
+
+        case .error(let message):
+            throw .ipcError(.unspecified(message: message))
+        }
+    }
+
+    /// Transforms `ProviderMessageError` into `CertificateRefreshError.ipcError`
+    /// without needing to indent with a `do` block
+    private static func send(
+        request: WireguardProviderRequest
+    ) async throws(CertificateRefreshError) -> WireguardProviderRequest.Response {
+        @Dependency(\.tunnelMessageSender) var messageSender
+        do throws(ProviderMessageError) {
+            return try await messageSender.send(request)
+        } catch {
+            throw .ipcError(.providerMessageError(error))
+        }
+    }
+
+    private static func forkSession() async throws(CertificateRefreshError) -> String {
+        @Dependency(\.sessionService) var sessionService
+        do {
+            return try await sessionService.selector(.appContext(.wireGuardExtension))
+        } catch {
+            throw .sessionForkingFailed(error)
+        }
+    }
+
     public static let liveValue: CertificateRefreshClient = .init(
-        refreshCertificate: { features in
-            @Dependency(\.tunnelMessageSender) var messageSender
-
+        refreshCertificate: { features throws(CertificateRefreshError) in
             let request = WireguardProviderRequest.refreshCertificate(features: features)
-            let response = try await messageSender.send(request)
-
-            switch response {
-            case .ok:
-                return .ok
-
-            case let .error(message):
-                return .ipcError(message: message)
-
-            case .errorSessionExpired:
-                return .sessionMissingOrExpired
-
-            case .errorNeedKeyRegeneration:
-                return .requiresNewKeys
-
-            case let .errorTooManyCertRequests(retryAfter):
-                return .tooManyCertRequests(retryAfter: retryAfter)
-            }
+            let response = try await send(request: request)
+            try parse(response: response) // if this doesn't throw, all is good
         },
-        pushSelector: {
-            @Dependency(\.sessionService) var sessionService
+        pushSelector: { () throws(CertificateRefreshError) in
             @Dependency(\.tunnelMessageSender) var messageSender
+            @Dependency(\.sessionService) var sessionService
 
-            let selector = try await sessionService.selector(.appContext(.wireGuardExtension))
+            let selector = try await forkSession()
             let cookie = sessionService.sessionCookie()
             let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: cookie)
-            let response = try await messageSender.send(request)
-
-            guard case .ok = response else {
-                // Unlike during certificate refresh, we don't expect any non-ok responses
-                throw CertificateRefreshClientError("Unexpected ipc result: \(response)")
-            }
+            let response = try await send(request: request)
+            try parse(response: response) // if this doesn't throw, all is good
         }
     )
 }

@@ -16,20 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import ComposableArchitecture
 import Foundation
+import ComposableArchitecture
 
-import CommonNetworking
 import CoreConnection
-import enum ExtensionIPC.ProviderMessageError
+import CommonNetworking
 import enum ExtensionIPC.WireguardProviderRequest
+import enum ExtensionIPC.ProviderMessageError
 
-import protocol Domain.ProtonVPNError
+import Localization
+import Ergonomics
+import Strings
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
-import Ergonomics
-import Localization
-import Strings
+import protocol Domain.ProtonVPNError
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
@@ -40,7 +40,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     @Dependency(\.certificateRefreshClient) var refreshClient
     @Dependency(\.date) var date
 
-    public init() {}
+    public init() { }
 
     @CasePathable
     @dynamicMemberLookup
@@ -63,9 +63,12 @@ public struct CertificateAuthenticationFeature: Reducer {
         case loadFromStorage
         case loadingFromStorageFinished(CertificateLoadingResult)
         case refreshCertificate
-        case selectorPushingFinished(Result<Bool, Error>)
-        case refreshFinished(Result<CertificateRefreshResult, Error>)
-        case loadingFinished(Result<FullAuthenticationData, Error>)
+        /// `Bool` success value circumvents compiler crash when building tests
+        case refreshFinished(Result<Bool, CertificateRefreshError>)
+        /// Essentially the same as `refreshFinished`, see `CertificateRefreshClient.pushSelector`
+        /// `Bool` success value circumvents compiler crash when building tests
+        case selectorPushingFinished(Result<Bool, CertificateRefreshError>)
+        case loadingFinished(Result<FullAuthenticationData, CertificateAuthenticationError>)
     }
 
     package enum CancelID {
@@ -77,6 +80,12 @@ public struct CertificateAuthenticationFeature: Reducer {
             let finishWithError: (inout State, CertificateAuthenticationError) -> Effect<Action> = { state, error in
                 state = .failed(error)
                 return .send(.loadingFinished(.failure(error)))
+            }
+            let refreshIfAllowedOrFinishWithError: (inout State, CertificateAuthenticationError) -> Effect<Action> = { state, error in
+                guard case .loading(true) = state else {
+                    return finishWithError(&state, error)
+                }
+                return .send(.refreshCertificate)
             }
 
             switch action {
@@ -101,7 +110,7 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .loadAuthenticationData:
                 // First, let's see if we have a certificate cached in memory
-                guard case let .loaded(data) = state else {
+                guard case .loaded(let data) = state else {
                     log.debug("State doesn't contain cached certificate, reloading from storage", category: .connection)
                     state = .loading(shouldRefreshIfNecessary: true)
                     return .send(.loadFromStorage)
@@ -129,14 +138,14 @@ public struct CertificateAuthenticationFeature: Reducer {
                 log.debug("Cached certificate still valid and with up-to-date features", category: .connection, metadata: [
                     "now": "\(date.now)",
                     "refreshTime": "\(data.certificate.refreshTime)",
-                    "validUntil": "\(data.certificate.validUntil)",
+                    "validUntil": "\(data.certificate.validUntil)"
                 ])
                 return .send(.loadingFinished(.success(data)))
 
             case .loadFromStorage:
                 return .send(.loadingFromStorageFinished(authenticationStorage.loadAuthenticationData()))
 
-            case let .loadingFromStorageFinished(.loaded(data)):
+            case .loadingFromStorageFinished(.loaded(let data)):
                 let storedFeatures = data.features
                 let currentFeatures = featureProvider.connectionFeatures()
                 guard storedFeatures == currentFeatures else {
@@ -150,75 +159,83 @@ public struct CertificateAuthenticationFeature: Reducer {
                 state = .loaded(data)
                 return .send(.loadingFinished(.success(data)))
 
-            case let .loadingFromStorageFinished(failureReason):
-                guard case let .loading(isAllowedToRefresh) = state else {
+            case .loadingFromStorageFinished(let failureReason):
+                guard case .loading = state else {
                     reportIssue("We were expecting a loading state, but got: \(state)")
                     return .none
                 }
-                if case .keysMissing = failureReason {
+                switch failureReason {
+                case .loaded:
+                    assertionFailure("This case should have been handled earlier in the switch")
+                    return .none
+
+                case .keysMissing:
                     // It wouldn't do us any good to regenerate keys here.
                     // We would need to also restart the tunnel with the new private key.
                     log.error("Keys should have been generated prior to starting the tunnel.")
-                    return finishWithError(&state, .wontRefresh(.keysMissing))
-                }
+                    return finishWithError(&state, .keysMissing)
 
-                if isAllowedToRefresh {
-                    return .send(.refreshCertificate)
+                case .certificateExpired:
+                    return refreshIfAllowedOrFinishWithError(&state, .certificateExpired)
+
+                case .certificateMissing:
+                    return refreshIfAllowedOrFinishWithError(&state, .certificateMissing)
                 }
-                return finishWithError(&state, .wontRefresh(failureReason))
 
             case .refreshCertificate:
                 let features = featureProvider.connectionFeatures()
                 return .run { send in
-                    let refreshResult = await Result { try await refreshClient.refreshCertificate(features) }
+                    let refreshResult = await Result { () async throws(CertificateRefreshError) in
+                        try await refreshClient.refreshCertificate(features)
+                        return true
+                    }
                     if Task.isCancelled {
                         log.debug("Certificate refresh cancelled", category: .userCert)
-                        return await send(.refreshFinished(.failure(ProviderMessageError.cancelled)))
+                        return await send(.refreshFinished(.failure(.cancelled)))
                     }
                     return await send(.refreshFinished(refreshResult))
                 }.cancellable(id: CancelID.certificateRefreshAndRetries, cancelInFlight: true)
 
-            case .refreshFinished(.success(.ok)):
+            case .refreshFinished(.success), .selectorPushingFinished(.success):
+                // Extension has completed the certificate refresh and it should be available in the keychain
                 state = .loading(shouldRefreshIfNecessary: false)
                 return .send(.loadFromStorage)
 
-            case .refreshFinished(.success(.sessionMissingOrExpired)):
+            case .refreshFinished(.failure(.sessionMissingOrExpired)):
                 return .run { send in
-                    let result = await Result {
+                    let refreshResult = await Result { () async throws(CertificateRefreshError) in
                         try await refreshClient.pushSelector()
-                        // returning a Bool is to circumvent a compiler build issue with Result<Void, _> & CaseKeyPaths
                         return true
                     }
-                    if Task.isCancelled { return }
-                    await send(.selectorPushingFinished(result))
+                    if Task.isCancelled {
+                        log.debug("Selector pushing cancelled", category: .userCert)
+                        return await send(.selectorPushingFinished(.failure(.cancelled)))
+                    }
+                    await send(.selectorPushingFinished(refreshResult))
                 }.cancellable(id: CancelID.certificateRefreshAndRetries)
 
-            case .selectorPushingFinished(.success):
-                // Extension now has a session. Let's try again
-                return .send(.refreshCertificate)
-
-            case let .refreshFinished(.success(.tooManyCertRequests(retryAfter))):
-                // TODO: Wait and retry
-                // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
-                // certificates many times in a short period when changing features, not during the initial connection
-                log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)")
-                return finishWithError(&state, .refreshWasRateLimited(retryAfter: retryAfter))
-
-            case let .refreshFinished(.success(.ipcError(message: message))):
-                let refreshError = CertificateAuthenticationError.ipc(message: message)
-                state = .failed(refreshError)
-                return .send(.loadingFinished(.failure(refreshError)))
-
-            case .refreshFinished(.success(.requiresNewKeys)):
-                authenticationStorage.deleteKeys() // Makes sure keys are regenerated during the next connection attempt
-                return finishWithError(&state, .wontRefresh(.keysMissing))
-
-            case let .refreshFinished(.failure(error)), let .selectorPushingFinished(.failure(error)):
-                if case .cancelled = error as? ProviderMessageError {
+            case .selectorPushingFinished(.failure(let error)), .refreshFinished(.failure(let error)):
+                switch error {
+                case .cancelled:
                     state = .idle
+                    log.debug("Certificate refresh was cancelled", category: .userCert)
                     return .none
+
+                case .tooManyCertRequests(let retryAfter):
+                    // TODO: Wait and retry
+                    // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
+                    // certificates many times in a short period when changing features, not during the initial connection
+                     log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)")
+
+                case .requiresNewKeys:
+                    // Make sure keys are regenerated during the next connection attempt
+                    authenticationStorage.deleteKeys()
+
+                case  .sessionMissingOrExpired, .sessionForkingFailed, .ipcError:
+                    // There's nothing special we can do to mitigate these failures
+                    break
                 }
-                return finishWithError(&state, .unexpected(error))
+                return finishWithError(&state, .refreshFailed(error))
 
             case .loadingFinished:
                 // End result of this feature, to be handled by parent.
@@ -241,63 +258,45 @@ public enum CertificateLoadingResult: Sendable, Equatable {
 }
 
 @CasePathable
-public enum CertificateRefreshResult: Sendable {
-    case ok // happy path
-    case sessionMissingOrExpired
-    case requiresNewKeys
-    case tooManyCertRequests(retryAfter: Int?)
-    case ipcError(message: String)
-}
-
-@CasePathable
 public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     public static let errorDomain = "CertificateAuthenticationErrorDomain"
+
+    case certificateMissing
+    case certificateExpired
+    case keysMissing
+    case loadingFailed(Error)
 
     /// We were unable to create new keys.
     case keyGenerationFailed(Error)
     /// We will not or are unable to refresh the certificate due to the current state of the stored certs/keys.
-    case wontRefresh(CertificateLoadingResult)
+    case refreshFailed(CertificateRefreshError)
     /// The API told us to wait, we will try again in a certain interval.
     case refreshWasRateLimited(retryAfter: Int?)
     /// We got a message from the extension with a specific error message.
     case ipc(message: String)
-    /// An unexpected error occurred.
-    case unexpected(Error)
 
-    public static func == (lhs: CertificateAuthenticationError, rhs: CertificateAuthenticationError) -> Bool {
-        switch (lhs, rhs) {
-        case (.wontRefresh, .wontRefresh):
-            true
-
-        case (.refreshWasRateLimited, .refreshWasRateLimited):
-            true
-
-        case (.ipc, .ipc):
-            true
-
-        case (.unexpected, .unexpected):
-            true
-
-        case (.keyGenerationFailed, .keyGenerationFailed):
-            true
-
-        default:
-            false
-        }
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.charCode == rhs.charCode
     }
 
     public var charCode: FourCharCode {
         switch self {
+        case .certificateMissing:
+            return "CMIS"
+        case .certificateExpired:
+            return "CEXP"
+        case .keysMissing:
+            return "KMIS"
+        case .loadingFailed:
+            return "LOFA"
         case .keyGenerationFailed:
-            "KGEN"
-        case .wontRefresh:
-            "RFSH"
+            return "KGEN"
+        case .refreshFailed:
+            return "RFSH"
         case .refreshWasRateLimited:
-            "RATE"
+            return "RATE"
         case .ipc:
-            "RIPC"
-        case .unexpected:
-            "UNEX"
+            return "RIPC"
         }
     }
 
@@ -307,10 +306,12 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
 
     public var underlyingError: Error? {
         switch self {
-        case let .keyGenerationFailed(error), let .unexpected(error):
-            error
+        case let .keyGenerationFailed(error):
+            return error
+        case let .refreshFailed(refreshError):
+            return refreshError
         default:
-            nil
+            return nil
         }
     }
 
@@ -318,11 +319,9 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
         var result: [String: Any] = [:]
 
         switch self {
-        case let .wontRefresh(loadingResult):
-            result["WontRefresh"] = loadingResult
-        case let .ipc(message):
+        case .ipc(let message):
             result["IPCMessage"] = message
-        case let .refreshWasRateLimited(retryAfter):
+        case .refreshWasRateLimited(let retryAfter):
             result["RetryAfter"] = "\(optional: retryAfter)"
         default:
             return nil

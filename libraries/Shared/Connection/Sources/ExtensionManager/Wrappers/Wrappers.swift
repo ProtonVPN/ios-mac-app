@@ -38,7 +38,7 @@ public protocol VPNSession: AnyObject {
     func startTunnel() throws
     func stopTunnel()
 
-    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+    func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
     /// Meant to be used internally only, for testing/mocking. Use `send(WireguardProviderRequest:)` instead.
     func _sendProviderMessage(_ messageData: Data) async throws -> Data?
