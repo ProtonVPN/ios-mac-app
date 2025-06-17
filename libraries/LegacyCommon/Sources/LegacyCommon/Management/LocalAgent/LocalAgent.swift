@@ -21,7 +21,6 @@
 //
 
 import Foundation
-import Reachability
 import Network
 
 import Dependencies
@@ -128,7 +127,7 @@ final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
     private static let refreshInterval: TimeInterval = 60.0
     private static let refreshLeeway: DispatchTimeInterval = .seconds(5)
-    private static let statusRequestQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.netshield")
+    private static let monitorQueue = DispatchQueue(label: "ch.protonvpn.localAgent.monitorQueue")
 
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let propertiesManager: PropertiesManagerProtocol
@@ -137,7 +136,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
-    private let reachability: Reachability?
+    private let networkMonitor = NWPathMonitor()
 
     private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?
@@ -150,15 +149,26 @@ final class LocalAgentImplementation: LocalAgent {
     init(factory: LocalAgentConnectionFactory, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.propertiesManager = propertiesManager
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        reachability = try? Reachability()
         client = LocalAgentNativeClientImplementation()
         agentConnectionFactory = factory
         client.delegate = self
 
-        try? reachability?.startNotifier()
-
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
-        reachability?.whenReachable = { [weak self] _ in self?.agent?.setConnectivity(true) }
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            switch path.status {
+            case .satisfied:
+                self?.agent?.setConnectivity(true)
+            case .unsatisfied:
+                self?.agent?.setConnectivity(false)
+            case .requiresConnection:
+                // The path is not currently available, but establishing a new connection may activate the path.
+                self?.agent?.setConnectivity(true)
+            @unknown default:
+                // let's hope for the best here :)
+                self?.agent?.setConnectivity(true)
+            }
+        }
+        networkMonitor.start(queue: Self.monitorQueue)
 
         startObservingNetShieldCriteria()
     }
@@ -172,7 +182,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     deinit {
         stopStatusMonitoringIfNecessary()
-        reachability?.stopNotifier()
+        networkMonitor.cancel()
         agent?.close()
     }
 
@@ -200,7 +210,7 @@ final class LocalAgentImplementation: LocalAgent {
                                                                         certServerName: configuration.hostname,
                                                                         client: client,
                                                                         features: LocalAgentNewFeatures()?.with(configuration: configuration),
-                                                                        connectivity: true)
+                                                                        connectivity: networkMonitor.currentPath.status == .satisfied)
         } catch {
             log.error("Creating local agent connection failed with \(error)", category: .localAgent)
         }
@@ -261,7 +271,7 @@ final class LocalAgentImplementation: LocalAgent {
             runAt: Date(),
             repeating: Self.refreshInterval,
             leeway: Self.refreshLeeway,
-            queue: Self.statusRequestQueue
+            queue: Self.monitorQueue
         ) { [weak self] in
             self?.requestStatus(withStats: true)
         }

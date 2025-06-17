@@ -22,6 +22,7 @@
 
 import Cocoa
 import os
+import Network
 
 import ComposableArchitecture
 
@@ -84,6 +85,10 @@ class NavigationService {
 
     private var notificationTokens: [NotificationToken] = []
     
+    // Add a flag and interval to suppress duplicate reconnection after wake
+    private var didHandleWake = false
+    private let wakeSuppressionInterval: TimeInterval = 3 // seconds
+    
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
         self.factory = factory
     }
@@ -116,13 +121,24 @@ class NavigationService {
             name: NSWorkspace.sessionDidBecomeActiveNotification,
             object: nil
         )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(handleSleep),
+            name: NSWorkspace.willSleepNotification,
+            object: nil
+        )
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(handleWake),
+            name: NSWorkspace.didWakeNotification,
+            object: nil
+        )
 
         if propertiesManager.startMinimized {
             attemptSilentLogIn()
         } else {
             showLogIn()
         }
-        
     }
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
@@ -132,6 +148,15 @@ class NavigationService {
     
     @objc private func sessionBecameActive(_ notification: NSNotification) {
         log.debug("User session did become active", category: .app)
+        // Only auto-connect if not just handled by wake
+        guard !didHandleWake else {
+            log.debug("Suppressed autoConnectIfEnabled due to recent wake", category: .app)
+            return
+        }
+        autoConnectIfEnabled()
+    }
+
+    private func autoConnectIfEnabled() {
         guard vpnGateway.connection == .disconnected else {
             return
         }
@@ -146,9 +171,25 @@ class NavigationService {
 
         vpnGateway.autoConnect()
     }
+
+    @objc func handleSleep() {
+        vpnGateway.disconnect()
+    }
+
+    @objc func handleWake() {
+        log.debug("User device has woken up", category: .app)
+        didHandleWake = true
+        autoConnectIfEnabled()
+        // Reset the flag after a short interval
+        DispatchQueue.main.asyncAfter(deadline: .now() + wakeSuppressionInterval) {
+            self.didHandleWake = false
+        }
+    }
+
 #if REDESIGN
     var sendAction: AppReducer.ActionSender?
 #endif
+
     private func sessionChanged(data: SessionChanged.T) {
         windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
 
