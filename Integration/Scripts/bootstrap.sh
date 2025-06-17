@@ -51,6 +51,15 @@ fi
 echo "Linking and updating submodules.."
 git submodule update --init
 
+# Setup pre-commit hook
+echo "Setting up pre-commit git hook"
+echo "Copying pre-commit to .git/hooks"
+cp git-hooks/pre-commit .git/hooks
+echo "Granting pre-commit executable rights"
+chmod +x .git/hooks/pre-commit
+echo "Granting pre-commit script executable rights"
+chmod +x Integration/scripts/swift-format-it.sh
+
 # Open project
 echo "Opening ProtonVPN Xcode project 👾"
 xed .
