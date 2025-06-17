@@ -133,6 +133,12 @@
             "value" : " / miesiąc"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /mês"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -317,6 +323,12 @@
             "value" : " / rok"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " /ano"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -493,6 +505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ / miesiąc"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/mês"
           }
         },
         "pt-BR" : {
@@ -673,6 +691,12 @@
             "value" : "Zaakceptuj i kontynuuj"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aceitar e continuar"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -851,6 +875,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wszystkie kraje"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todos os países"
           }
         },
         "pt-BR" : {
@@ -1039,6 +1069,12 @@
             "value" : "Wystąpił błąd."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um erro."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1219,6 +1255,12 @@
             "value" : "Czy na pewno chcesz się wylogować z Proton VPN?"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tem a certeza que deseja sair do Proton VPN?"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1271,6 +1313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "您确定要退出 Proton VPN 吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您確定要登出 Proton VPN 嗎？"
           }
         }
       }
@@ -1390,6 +1438,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Funkcja dostępna w planie Proton VPN Plus"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disponível com o Proton VPN Plus"
           }
         },
         "pt-BR" : {
@@ -1578,6 +1632,12 @@
             "value" : "Anuluj"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1758,6 +1818,12 @@
             "value" : "Połącz się z szybkimi serwerami na całym świecie i streamuj ulubione programy z ochroną VPN."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conecte-se a servidores de alta velocidade em todo o mundo e faça streaming dos seus programas favoritos com proteção VPN."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1929,6 +1995,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Połączono"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligado"
           }
         },
         "pt-BR" : {
@@ -2114,6 +2186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Łączenie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A ligar"
           }
         },
         "pt-BR" : {
@@ -2302,6 +2380,12 @@
             "value" : "Połączenie nie powiodło się"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro de ligação"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2486,6 +2570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skontaktuj się z nami"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contacte-nos"
           }
         },
         "pt-BR" : {
@@ -2674,6 +2764,12 @@
             "value" : "Utwórz konto"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar uma conta"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2858,6 +2954,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utwórz konto Proton"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Criar conta Proton"
           }
         },
         "pt-BR" : {
@@ -3046,6 +3148,12 @@
             "value" : "Rozłącz"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconectar"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3230,6 +3338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rozłączanie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A desligar"
           }
         },
         "pt-BR" : {
@@ -3418,6 +3532,12 @@
             "value" : "Błąd"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erro"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3602,6 +3722,12 @@
             "value" : "Najszybszy"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O mais rápido"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3779,6 +3905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Generuj nowy kod"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerar um novo código"
           }
         },
         "pt-BR" : {
@@ -3963,6 +4095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ok"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entendido"
           }
         },
         "pt-BR" : {
@@ -4150,6 +4288,12 @@
             "value" : "Strona główna"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Início"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4330,6 +4474,12 @@
             "value" : "Jeśli masz problem z usługą Proton VPN, nasz zespół wsparcia klienta pomoże Ci.\n\nZeskanuj kod QR lub przejdź do"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se estiver com dificuldades para utilizar o Proton VPN, a nossa equipa de apoio ao cliente terá prazer em ajudar.\n\nBasta escanear o código QR ou ir para"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4494,6 +4644,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zawiera ochronę VPN w wersji premium dla urządzeń mobilnych i desktopowych (połączenie do 10 urządzeń jednocześnie)"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inclui proteção VPN premium para o seu telemóvel e computador (conecte até 10 dispositivos em simultâneo)"
           }
         },
         "pt-BR" : {
@@ -4666,6 +4822,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ładowanie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A carregar"
           }
         },
         "pt-BR" : {
@@ -4845,6 +5007,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ładowanie krajów"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A carregar países"
           }
         },
         "pt-BR" : {
@@ -5027,6 +5195,12 @@
             "value" : "Potrzebujesz pomocy z Proton VPN?\n\nOdwiedź nasze centrum pomocy dla wskazówek, poradników i odpowiedzi na najczęściej zadawane pytania.\n\nZeskanuj kod QR lub przejdź do"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisa de ajuda para configurar ou utilizar o Proton VPN?\n\nConsulte o nosso centro de ajuda online para dicas para resolver problemas, guias de configuração, e respostas para perguntas frequentes.\n\nBasta escanear o código QR ou ir para"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5073,6 +5247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "需要帮助设置或使用 Proton VPN 吗？\n\n请访问我们的在线支持中心，了解故障排除技巧、设置指南和常见问题答案。\n\n只需扫描二维码或访问"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要設定或使用 Proton VPN 的協助嗎？\n\n請造訪我們的已連線說明中心，以取得疑難排解秘訣、設定指南以及常見問題解答。\n\n掃描 QR 代碼或前往"
           }
         }
       }
@@ -5199,6 +5379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Polityka prywatności"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidade"
           }
         },
         "pt-BR" : {
@@ -5383,6 +5569,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Polityka prywatności"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidade"
           }
         },
         "pt-BR" : {
@@ -5571,6 +5763,12 @@
             "value" : "Chroniony"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protegido"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5751,6 +5949,12 @@
             "value" : "Proton VPN na Apple TV jest dostępny w płatnych planach. Sprawdź i zarządzaj subskrypcją na naszej stronie internetowej."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Proton VPN para Apple TV está disponível em todos os planos pagos. Pode verificar e gerir a sua subscrição no nosso sítio web."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5921,6 +6125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN na Apple TV nie jest dostępny w darmowym planie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Proton VPN para Apple TV não está disponível nos planos gratuitos."
           }
         },
         "pt-BR" : {
@@ -6095,6 +6305,12 @@
             "value" : "Polityka braku przechowywania logów Proton VPN została potwierdzona przez zewnętrzny audyt. Nigdy nie będziemy śledzić użytkownika, zapisywać adresów IP ani udostępniać danych stronom trzecim."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A rigorosa política de não registo do Proton VPN é certificada por uma auditoria externa. Nunca o rastrearemos online, registaremos o seu endereço IP nem partilharemos as suas informações com terceiros."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6267,6 +6483,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Szybkie połączenie"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligação rápida"
           }
         },
         "pt-BR" : {
@@ -6455,6 +6677,12 @@
             "value" : "Zalecane"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6628,6 +6856,12 @@
             "value" : "Rozwiązywanie"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A resolver"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6674,6 +6908,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在处理"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "解析中"
           }
         }
       }
@@ -6794,6 +7034,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeskanuj kod QR lub przejdź do\n"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Leia o código QR ou vá para\n"
           }
         },
         "pt-BR" : {
@@ -6967,6 +7213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ustawienia"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definições"
           }
         },
         "pt-BR" : {
@@ -7154,6 +7406,12 @@
             "value" : "Zaloguj się"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sessão"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7332,6 +7590,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zaloguj się."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sessão na sua conta."
           }
         },
         "pt-BR" : {
@@ -7520,6 +7784,12 @@
             "value" : "Wyloguj"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar sessão"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7702,6 +7972,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wylogować się?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar sessão?"
           }
         },
         "pt-BR" : {
@@ -7890,6 +8166,12 @@
             "value" : "Wylogowywanie..."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A terminar sessão..."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8068,6 +8350,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Centrum pomocy"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Centro de suporte"
           }
         },
         "pt-BR" : {
@@ -8254,6 +8542,12 @@
             "value" : "Regulamin"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de serviço"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8430,6 +8724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regulamin"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Termos de serviço"
           }
         },
         "pt-BR" : {
@@ -8611,6 +8911,12 @@
             "value" : "Wystąpił problem.\nSprawdź połączenie z Internetem"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um problema.\nVerifique a sua conexão de rede."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8663,6 +8969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "这里有一个错误。\n请检查您的网络连接"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "發生了一個問題。\n請檢查您的網路連線。"
           }
         }
       }
@@ -8783,6 +9095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aby przeczytać politykę prywatności, zeskanuj kod QR lub przejdź do"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para ler nossa política de privacidade, leia o código QR ou vá para"
           }
         },
         "pt-BR" : {
@@ -8949,6 +9267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Subskrybuj plan VPN Plus, aby odblokować błyskawiczny streaming z serwerami w ponad 100 krajach."
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para beneficiar de um streaming ultrarrápido com servidores em mais de 100 países, subscreva o VPN Plus."
           }
         },
         "pt-BR" : {
@@ -9123,6 +9447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niechroniony"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sem proteção"
           }
         },
         "pt-BR" : {
@@ -9303,6 +9633,12 @@
             "value" : "Ulepsz plan, aby używać aplikacji lub zaloguj się za pomocą innego konta, jeśli masz już plan Proton VPN Plus"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melhore o seu plano agora para utilizar a aplicação ou inicie sessão com outra conta se já tiver o Proton VPN Plus."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9473,6 +9809,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zwiększ swoją prywatność"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Melhorar a sua privacidade"
           }
         },
         "pt-BR" : {
@@ -9655,6 +9997,12 @@
             "value" : "Korzystając z innego urządzenia przejdź do"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Com outro dispositivo, aceda a"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9821,6 +10169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Używasz planu Proton Free?"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usando o Proton Free?"
           }
         },
         "pt-BR" : {
@@ -10001,6 +10355,12 @@
             "value" : "Odwiedź nasze centrum pomocy dla wskazówek, poradników i odpowiedzi na najczęściej zadawane pytania."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulte o nosso centro de ajuda online para dicas para resolver problemas, guias de configuração, e respostas para perguntas frequentes."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10168,6 +10528,12 @@
             "value" : "Oglądaj bez bycia oglądanym."
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assista o que quiser com total privacidade."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10332,6 +10698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oglądaj ulubione filmy i programy telewizyjne w dowolnej usłudze streamingowej"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desfrute das suas séries de televisão e filmes preferidos na maioria das plataformas de streaming."
           }
         },
         "pt-BR" : {
@@ -10502,6 +10874,12 @@
             "value" : "Wpisz kod weryfikacyjny"
           }
         },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando solicitado a fornecer o seu código de verificação, Introduza"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10668,6 +11046,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wpisz kod weryfikacyjny (pobieranie)"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando solicitado a fornecer o seu código de verificação, Introduza (a recuperar)"
           }
         },
         "pt-BR" : {
@@ -10841,6 +11225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kod weryfikacyjny wygasł"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O seu código de verificação expirou"
           }
         },
         "pt-BR" : {
