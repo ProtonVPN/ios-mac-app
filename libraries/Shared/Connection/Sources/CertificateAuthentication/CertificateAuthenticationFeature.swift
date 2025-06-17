@@ -225,7 +225,7 @@ public struct CertificateAuthenticationFeature: Reducer {
                     // TODO: Wait and retry
                     // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
                     // certificates many times in a short period when changing features, not during the initial connection
-                     log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)")
+                    log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)", category: .userCert)
 
                 case .requiresNewKeys:
                     // Make sure keys are regenerated during the next connection attempt
@@ -233,6 +233,7 @@ public struct CertificateAuthenticationFeature: Reducer {
 
                 case  .sessionMissingOrExpired, .sessionForkingFailed, .ipcError:
                     // There's nothing special we can do to mitigate these failures
+                    log.error("Certificate refresh failed", category: .userCert, metadata: ["error": "\(error)"])
                     break
                 }
                 return finishWithError(&state, .refreshFailed(error))
@@ -270,10 +271,6 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     case keyGenerationFailed(Error)
     /// We will not or are unable to refresh the certificate due to the current state of the stored certs/keys.
     case refreshFailed(CertificateRefreshError)
-    /// The API told us to wait, we will try again in a certain interval.
-    case refreshWasRateLimited(retryAfter: Int?)
-    /// We got a message from the extension with a specific error message.
-    case ipc(message: String)
 
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.charCode == rhs.charCode
@@ -291,12 +288,8 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
             return "LOFA"
         case .keyGenerationFailed:
             return "KGEN"
-        case .refreshFailed:
-            return "RFSH"
-        case .refreshWasRateLimited:
-            return "RATE"
-        case .ipc:
-            return "RIPC"
+        case .refreshFailed(let refreshError):
+            return refreshError.charCode
         }
     }
 
@@ -306,27 +299,27 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
 
     public var underlyingError: Error? {
         switch self {
+        case let .loadingFailed(error):
+            return error
+
         case let .keyGenerationFailed(error):
             return error
+
         case let .refreshFailed(refreshError):
-            return refreshError
+            return refreshError.underlyingError ?? refreshError
+
         default:
             return nil
         }
     }
 
     public var extraUserInfo: [String: Any]? {
-        var result: [String: Any] = [:]
-
         switch self {
-        case .ipc(let message):
-            result["IPCMessage"] = message
-        case .refreshWasRateLimited(let retryAfter):
-            result["RetryAfter"] = "\(optional: retryAfter)"
+        case .refreshFailed(let error):
+            return error.extraUserInfo
+
         default:
             return nil
         }
-
-        return result
     }
 }

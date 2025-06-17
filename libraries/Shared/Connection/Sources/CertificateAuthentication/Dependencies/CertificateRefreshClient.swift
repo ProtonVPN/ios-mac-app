@@ -27,7 +27,8 @@ import CommonNetworking
 import Domain
 import Ergonomics
 
-/// Errors that the network extension can report while
+/// Errors that the network extension can report while processing our requests to refresh our certificate or consume a
+/// session selector
 @CasePathable public enum CertificateRefreshError: Error {
     case cancelled
     case sessionMissingOrExpired

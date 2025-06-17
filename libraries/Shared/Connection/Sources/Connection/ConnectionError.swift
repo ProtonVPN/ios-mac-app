@@ -18,18 +18,18 @@
 
 import Foundation
 
-import CasePaths
 import Dependencies
+import CasePaths
 
-import CertificateAuthentication
+import Localization
+import LocalAgent
 import CoreConnection
 import ExtensionManager
-import LocalAgent
-import Localization
+import CertificateAuthentication
 
 import Domain
-import Ergonomics
 import Strings
+import Ergonomics
 
 @CasePathable
 public enum ConnectionError: Error, Equatable, Sendable {
@@ -44,7 +44,6 @@ public enum ConnectionError: Error, Equatable, Sendable {
             String(reflecting: lhs.wrapped) == String(reflecting: rhs.wrapped)
         }
     }
-
     /// Asked to connect with a protocol that is no longer supported, such as OpenVPN.
     ///
     /// This error (should be) quite rare and will only happen when the user has stale configuration data from a
@@ -73,85 +72,85 @@ extension ConnectionError: ProtonVPNError {
 
     public var errorDescription: String? {
         switch self {
-        case let .unexpectedProtocol(vpnProtocol):
-            Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
-        case let .certAuth(certAuthError):
-            certAuthError.errorDescription
-        case let .tunnel(tunnelError):
-            tunnelError.errorDescription
-        case let .agent(agentError):
-            agentError.errorDescription
-        case let .preparation(preparationError):
-            preparationError.errorDescription
+        case .unexpectedProtocol(let vpnProtocol):
+            return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
+        case .certAuth(let certAuthError):
+            return certAuthError.errorDescription
+        case .tunnel(let tunnelError):
+            return tunnelError.errorDescription
+        case .agent(let agentError):
+            return agentError.errorDescription
+        case .preparation(let preparationError):
+            return preparationError.errorDescription
         case .intentMissing:
-            includeCode(inside: Localizable.connectionErrorIntentMissing)
+            return includeCode(inside: Localizable.connectionErrorIntentMissing)
         case .serverMissing:
-            includeCode(inside: Localizable.connectionErrorServerMissing)
+            return includeCode(inside: Localizable.connectionErrorServerMissing)
         case .timeout:
-            includeCode(inside: Localizable.connectionErrorTimeout)
+            return includeCode(inside: Localizable.connectionErrorTimeout)
         }
     }
 
     public var charCode: FourCharCode {
         switch self {
-        case let .unexpectedProtocol(vpnProtocol):
+        case .unexpectedProtocol(let vpnProtocol):
             switch vpnProtocol {
             case .ike:
-                "UXIK"
-            case let .openVpn(transport):
-                transport == .tcp ? "UXOT" : "UXOU"
-            case let .wireGuard(transport):
+                return "UXIK"
+            case .openVpn(let transport):
+                return transport == .tcp ? "UXOT" : "UXOU"
+            case .wireGuard(let transport):
                 switch transport {
                 case .udp:
-                    "UXWU"
+                    return "UXWU"
                 case .tcp:
-                    "UXWT"
+                    return "UXWT"
                 case .tls:
-                    "UXWS"
+                    return "UXWS"
                 }
             }
-        case .certAuth:
-            "CRTA"
+        case .certAuth(let certAuthError):
+            return certAuthError.charCode
         case .tunnel:
-            "TUNN"
+            return "TUNN"
         case .agent:
-            "AGNT"
-        case let .preparation(preparationError):
-            preparationError.charCode
+            return "AGNT"
+        case .preparation(let preparationError):
+            return preparationError.charCode
         case .intentMissing:
-            "ITNT"
+            return "ITNT"
         case .serverMissing:
-            "SVRM"
-        case let .timeout(stage):
+            return "SVRM"
+        case .timeout(let stage):
             switch stage {
             case .tunnelStartingAndConnecting:
-                "TOTS"
+                return "TOTS"
             case .refreshingCertificate:
-                "TORC"
+                return "TORC"
             case .connectingToLocalAgentServer:
-                "TOLA"
+                return "TOLA"
             }
         }
     }
 
     public var underlyingError: Error? {
         switch self {
-        case let .tunnel(tunnelError):
-            tunnelError
-        case let .certAuth(certAuthError):
-            certAuthError
-        case let .agent(agentError):
-            agentError
-        case let .preparation(preparationError):
-            preparationError.underlyingError
+        case .tunnel(let tunnelError):
+            return tunnelError
+        case .certAuth(let certAuthError):
+            return certAuthError
+        case .agent(let agentError):
+            return agentError
+        case .preparation(let preparationError):
+            return preparationError.underlyingError
         default:
-            nil
+            return nil
         }
     }
 }
 
-public extension Alert {
-    static let connectionFailedAlert = Self(message: Localizable.connectionFailed)
+extension Alert {
+    public static let connectionFailedAlert = Self(message: Localizable.connectionFailed)
 }
 
 extension ConnectionError: AlertConvertibleError {
@@ -161,11 +160,11 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .tunnel:
             break
-        case let .agent(agentError):
+        case .agent(let agentError):
             return agentError.alert
         case .preparation(.featureNotReady):
             break
-        case let .preparation(.wrapped(wrappedError)):
+        case .preparation(.wrapped(let wrappedError)):
             return wrappedError.alert
         case .serverMissing:
             break
@@ -173,7 +172,7 @@ extension ConnectionError: AlertConvertibleError {
             break
         case .timeout:
             break
-        case .unexpectedProtocol:
+        case .unexpectedProtocol(_):
             break
         }
 
@@ -190,7 +189,7 @@ extension LocalAgentConnectionError: AlertConvertibleError {
         switch self {
         case .failedToEstablishConnection:
             break
-        case let .agentError(agentError):
+        case .agentError(let agentError):
             return agentError.alert
         case .serverCertificateError:
             break
@@ -208,15 +207,15 @@ extension LocalAgentError: AlertConvertibleError {
     public var alert: Alert {
         switch self {
         case .restrictedServer,
-             .certificateExpired,
-             .certificateRevoked:
+                .certificateExpired,
+                .certificateRevoked:
             break
         case .maxSessionsUnknown,
-             .maxSessionsFree,
-             .maxSessionsBasic,
-             .maxSessionsPlus,
-             .maxSessionsVisionary,
-             .maxSessionsPro:
+                .maxSessionsFree,
+                .maxSessionsBasic,
+                .maxSessionsPlus,
+                .maxSessionsVisionary,
+                .maxSessionsPro:
             let message = Localizable.maximumDeviceReachedDescription
             let title = Localizable.maximumDeviceTitle
             return .init(title: title, message: message)
@@ -243,10 +242,10 @@ extension LocalAgentError: AlertConvertibleError {
         case .guestSession:
             break // Possible disconnection error, but no specific message to the user
         case .badCertificateSignature,
-             .certificateNotProvided,
-             .serverSessionDoesNotMatch,
-             .systemError,
-             .unknown:
+                .certificateNotProvided,
+                .serverSessionDoesNotMatch,
+                .systemError,
+                .unknown:
             break
         }
         return .connectionFailedAlert
@@ -255,6 +254,6 @@ extension LocalAgentError: AlertConvertibleError {
 
 extension ConnectionError.WrappedError: AlertConvertibleError {
     public var alert: Alert {
-        .connectionFailedAlert
+        return .connectionFailedAlert
     }
 }

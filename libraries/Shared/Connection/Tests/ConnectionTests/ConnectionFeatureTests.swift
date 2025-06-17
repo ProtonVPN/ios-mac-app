@@ -637,6 +637,34 @@ final class ConnectionFeatureTests: XCTestCase {
         await store.receive(stateChange(to: \.disconnected))
     }
 
+    @MainActor func testFeatureSendsDelegateActionWhenSessionForkingFails() async {
+        let environment = ConnectionEnvironment.disconnected()
+        let store = environment.createConnectionTestStore()
+
+        environment.vpnAuthStorage.cert = nil
+        // Simulate the session forking request timing out
+        store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
+            // The internet connection appears to be offline
+            let genericNetworkError = NSError(domain: NSURLErrorDomain, code: -1009)
+            throw .sessionForkingFailed(genericNetworkError)
+        }
+
+        store.exhaustivity = .off
+        await store.send(.input(.onLaunch))
+        await store.receive(stateChange(to: \.disconnected))
+
+        await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+        await store.receive(stateChange(to: \.connecting.unresolved))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.connecting.resolved))
+
+        await environment.clock.advance(by: .seconds(29))
+        await store.receive(\.delegate.connectionFailed.certAuth.refreshFailed.sessionForkingFailed)
+        await store.receive(stateChange(to: \.disconnecting))
+        await environment.clock.advance(by: .seconds(1))
+        await store.receive(stateChange(to: \.disconnected))
+    }
+
     @MainActor func testFeatureCancelsFirstPreparationWhenSecondConnectionRequested() async {
         let environment = ConnectionEnvironment.disconnected()
         let store = environment.createConnectionTestStore()
