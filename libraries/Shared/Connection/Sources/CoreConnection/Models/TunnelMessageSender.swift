@@ -31,7 +31,7 @@ public struct TunnelMessageSender: TestDependencyKey {
         self.send = send
     }
 
-    public static let testValue = TunnelMessageSender(send: unimplemented())
+    public static let testValue = TunnelMessageSender(send: unimplemented(throwing: .noDataReceived))
 }
 
 public extension DependencyValues {
