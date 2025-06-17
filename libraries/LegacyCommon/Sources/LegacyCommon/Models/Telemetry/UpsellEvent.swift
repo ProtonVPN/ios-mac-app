@@ -58,7 +58,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             case userCountry = "user_country"
             case daysSinceAccountCreation = "days_since_account_creation"
             case upgradedUserPlan = "upgraded_user_plan"
-            case reference = "reference"
+            case reference
             case flowType = "flow_type"
         }
 
@@ -77,13 +77,13 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
 
         public func encode(to encoder: Encoder) throws {
             var container: KeyedEncodingContainer<UpsellEvent.Dimensions.CodingKeys> = encoder.container(keyedBy: UpsellEvent.Dimensions.CodingKeys.self)
-            try container.encode(self.modalSource, forKey: .modalSource)
-            try container.encode(self.userPlan, forKey: .userPlan)
-            try container.encode(self.vpnStatus, forKey: .vpnStatus)
-            try container.encode(self.userCountry, forKey: .userCountry)
-            try container.encodeIfPresent(self.upgradedUserPlan, forKey: .upgradedUserPlan)
-            try container.encodeIfPresent(self.reference, forKey: .reference)
-            try container.encodeIfPresent(self.flowType, forKey: .flowType)
+            try container.encode(modalSource, forKey: .modalSource)
+            try container.encode(userPlan, forKey: .userPlan)
+            try container.encode(vpnStatus, forKey: .vpnStatus)
+            try container.encode(userCountry, forKey: .userCountry)
+            try container.encodeIfPresent(upgradedUserPlan, forKey: .upgradedUserPlan)
+            try container.encodeIfPresent(reference, forKey: .reference)
+            try container.encodeIfPresent(flowType, forKey: .flowType)
 
             // Custom encoded values:
             try container.encode(daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)

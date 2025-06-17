@@ -510,9 +510,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     // MARK: Attempt to pass telemetry on web purchases
 
-    private var userEngagedWithWebUpsell: Bool = false
     private var userEngagedWithWebUpsellDate: Date?
-    private static let webPaymentsThreshold: TimeInterval = .minutes(5)
+    private static let webPaymentsThreshold: TimeInterval = .minutes(15)
 
     @objc
     private func userEngagedWithUpsell(_ notification: Notification) {
@@ -520,14 +519,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         // check if we have stale info
         if let userEngagedWithWebUpsellDate {
             if now.timeIntervalSince(userEngagedWithWebUpsellDate) > Self.webPaymentsThreshold {
-                self.userEngagedWithWebUpsell = false
                 self.userEngagedWithWebUpsellDate = nil
             }
         }
         guard let upsellData = notification.object as? UpsellData else { return }
         // ensure that this was web purchase attempt
         guard upsellData.flowType == .external else { return }
-        userEngagedWithWebUpsell = true
         userEngagedWithWebUpsellDate = now
     }
 
@@ -538,10 +535,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         if let downgradeInfo = notification.object as? VpnDowngradeInfo,
            downgradeInfo.from.maxTier < downgradeInfo.to.maxTier,
            // we have web upsell engagement info
-           let userEngagedWithWebUpsellDate, userEngagedWithWebUpsell,
+           let userEngagedWithWebUpsellDate,
            // it happened within a threshold
            now.timeIntervalSince(userEngagedWithWebUpsellDate) < Self.webPaymentsThreshold {
-
             // At some point it may be possible to plumb the modal source through from the redirect deep link.
             // For now we will leave it nil and let the telemetry service take its best guess.
             let modalSource: UpsellModalSource? = nil
@@ -552,7 +548,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 flowType: .external
             )
             AppEvent.userCompletedUpsellAlertJourney.post(upsellSuccessData)
-            self.userEngagedWithWebUpsell = false
             self.userEngagedWithWebUpsellDate = nil
         }
 

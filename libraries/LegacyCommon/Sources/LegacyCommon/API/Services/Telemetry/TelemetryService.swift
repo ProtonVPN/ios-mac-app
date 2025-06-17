@@ -123,7 +123,8 @@ public class TelemetryServiceImplementation: TelemetryService {
             newPlanName: newPlanName,
             offerReference: offerReference,
             flowType: flowType,
-            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off)
+            vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off
+        )
     }
 
     public func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws {
