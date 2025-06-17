@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sh git-hooks/swift-format-it.sh

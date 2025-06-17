@@ -72,7 +72,7 @@ class ConnectingOverlayViewModel {
     private var isReconnecting: Bool {
         switch appState {
         case .preparingConnection, .connecting:
-            return !propertiesManager.intentionallyDisconnected
+            !propertiesManager.intentionallyDisconnected
         default:
             false
         }
