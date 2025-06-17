@@ -18,11 +18,27 @@
 
 import Foundation
 import Dependencies
+import CommonNetworking
 import enum VPNShared.VPNAuthenticationStorageConfigKey
 
-extension VPNAuthenticationStorageConfigKey: DependencyKey {
+extension VPNAuthenticationStorageConfigKey: @retroactive DependencyKey {
     public static let liveValue: String = {
         let accessGroup = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         return "\(accessGroup)prt.ProtonVPN"
+    }()
+}
+
+extension CustomHostValidator: @retroactive DependencyKey {
+
+    /// By default, `testValue` defined in `CommonNetworking` uses release host validation.
+    /// Let's override it here when building for staging or debug.
+    /// This cannot be done in `CommonNetworking` until SPM decides to allow more than just
+    /// `debug` and `release` build configurations.
+    public static let liveValue: CustomHostValidator = {
+        #if DEBUG || STAGING
+        return CustomHostValidator.debug
+        #else
+        return CustomHostValidator.release
+        #endif
     }()
 }

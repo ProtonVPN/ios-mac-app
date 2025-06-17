@@ -33,19 +33,27 @@ public class DoHVPN: DoH, ServerConfig {
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
-        if let customHost {
-            #if !DEBUG
-            // Only allow custom hosts using a domain we control.
-            let url = URL(string: customHost)
-            guard url?.host()?.hasSuffix("proton.black") == true else {
-                return liveURL
-            }
-            #endif
-            log.debug("Allowing host \(customHost)...")
-            return customHost
+        guard let customHost else {
+            return liveURL
         }
 
-        return liveURL
+        // In RELEASE, verify the host is valid and a domain we control.
+        // This dependency is defined in this module, and by default validates using prod/release rules.
+        // It is meant to be overridden in app targets where we have the ability to distinguish between Staging and
+        // Release builds.
+        @Dependency(\.customHostValidator) var validator
+        do {
+            try validator.validate(customHost)
+            log.debug("Allowing custom host", category: .api, metadata: ["customHost": "\(customHost)"])
+            return customHost
+        } catch {
+            log.debug(
+                "Rejecting custom host, falling back to default live url",
+                category: .api,
+                metadata: ["customHost": "\(customHost)", "error": "\(error)"]
+            )
+            return liveURL
+        }
     }
 
     public var captchaHost: String {
