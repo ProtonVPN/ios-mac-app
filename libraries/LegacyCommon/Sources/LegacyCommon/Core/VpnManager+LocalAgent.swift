@@ -134,8 +134,8 @@ extension VpnManager {
                     return
                 }
 
-                log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), disconnecting", category: .localAgent, event: .error)
-                // we used to present a VPNAuthCertificateRefreshErrorAlert here, but it proved not to bring any value, removed as of VPNAPPL-2834
+                log.error("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting", category: .localAgent, event: .error)
+                self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
 
                 self?.connectionQueue.async { [weak self] in
                     // Don't disconnect the VPN on iOS if the app is in the background - our app could be getting

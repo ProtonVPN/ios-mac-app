@@ -141,13 +141,26 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
 
     func testLocalAgentDisconnectionCases() {
         // this is so we can assert on the type of the error displayed further down.
-        let maxSessions = "maximum sessions exceeded"
+        let alertSubcases = (
+            maxSessions: "maximum sessions exceeded",
+            failedCertRefresh: "failed cert refresh"
+        )
 
         let subcases: [Subcase] = [
-            (subcaseDescription(maxSessions),
-             simpleErrorCase(laConsts.errorCodeMaxSessionsPlus), [.vpnDisconnection, .alertDisplayed]),
-            (subcaseDescription("user bad behavior"),
-             simpleErrorCase(laConsts.errorCodeUserBadBehavior), [.vpnDisconnection])
+            (
+                subcaseDescription(alertSubcases.maxSessions),
+                simpleErrorCase(laConsts.errorCodeMaxSessionsPlus),
+                [.vpnDisconnection, .alertDisplayed]
+            ),
+            (
+                subcaseDescription("user bad behavior"),
+                simpleErrorCase(laConsts.errorCodeUserBadBehavior),
+                [.vpnDisconnection]
+            ),
+            (subcaseDescription(alertSubcases.failedCertRefresh), { [unowned self] in
+                mockProviderState.forceResponse = .error(message: "Internal server error")
+                laError(laConsts.errorCodeCertificateExpired, nil)
+            }, [.vpnDisconnection, .alertDisplayed]),
         ]
 
         var first = true
@@ -155,10 +168,11 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             connectSynchronously("\(#function): \(subcase.description)", expectCertRefresh: first)
             driveSubcase(subcase)
 
-            if subcase.description == maxSessions {
+            if subcase.description == alertSubcases.maxSessions {
                 XCTAssert(container.alertService.alerts.last is MaxSessionsAlert)
+            } else if subcase.description == alertSubcases.failedCertRefresh {
+                XCTAssert(container.alertService.alerts.last is VPNAuthCertificateRefreshErrorAlert)
             }
-
             first = false
         }
     }
