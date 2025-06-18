@@ -32,7 +32,6 @@ import enum ExtensionIPC.WireguardProviderRequest
 public protocol VPNSession: AnyObject {
     var status: NEVPNStatus { get }
     var connectedDate: Date? { get }
-    @available(iOS 16, *)
     func fetchLastDisconnectError() async throws -> Error?
 
     func startTunnel() throws

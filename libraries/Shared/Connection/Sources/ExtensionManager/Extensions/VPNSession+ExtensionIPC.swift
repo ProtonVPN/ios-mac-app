@@ -88,7 +88,6 @@ extension VPNSession {
     }
 }
 
-@available(iOS 16, *)
 extension TunnelMessageSender: DependencyKey {
     private static func getSession() async throws(ProviderMessageError) -> VPNSession {
         do {

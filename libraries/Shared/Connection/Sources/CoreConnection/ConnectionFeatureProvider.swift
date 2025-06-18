@@ -21,7 +21,7 @@ import DependenciesMacros
 import Domain
 import Foundation
 
-@available(iOS 16, tvOS 17, *)
+@available(tvOS 17, *)
 public struct ConnectionFeatureProvider: Sendable {
     public internal(set) var connectionFeatures: @Sendable () -> VPNConnectionFeatures
     public internal(set) var setConnectionFeatures: @Sendable (_: VPNConnectionFeatures) -> Void

@@ -43,7 +43,6 @@ let didBecomeActiveNotification: NSNotification.Name = {
     #endif
 }()
 
-@available(iOS 16, *)
 public struct LocalAgentFeature: Reducer, Sendable {
     static let netShieldTimerInterval: Duration = .seconds(60)
     static let netShieldTimerTolerance: Duration = .seconds(5)

@@ -36,7 +36,6 @@ protocol TunnelManager {
     var statusStream: AsyncStream<NEVPNStatus> { get async throws }
 }
 
-@available(iOS 16, *)
 enum TunnelManagerKey: DependencyKey {
     #if targetEnvironment(simulator)
         static let liveValue: TunnelManager = {
@@ -174,7 +173,6 @@ enum TunnelManagerError: Error {
     case ipc(WireguardProviderRequest, Error?)
 }
 
-@available(iOS 16, *)
 extension DependencyValues {
     var tunnelManager: TunnelManager {
         get { self[TunnelManagerKey.self] }

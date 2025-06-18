@@ -33,7 +33,6 @@ import Domain
 
 /// Low-level reducer that handles connection logic internals. Mainly responsible for commmunication between its three
 /// sub-features, as well as failing the connection whenever it times out.
-@available(iOS 16, *)
 public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier

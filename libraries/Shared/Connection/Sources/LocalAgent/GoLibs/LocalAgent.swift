@@ -48,7 +48,6 @@ public enum LocalAgentEvent: Sendable {
     case stats(FeatureStatisticsMessage)
 }
 
-@available(iOS 16, *)
 struct LocalAgentKey: DependencyKey {
     #if targetEnvironment(simulator)
         static let liveValue: LocalAgent = LocalAgentMock(state: .disconnected)
@@ -57,7 +56,6 @@ struct LocalAgentKey: DependencyKey {
     #endif
 }
 
-@available(iOS 16, *)
 extension DependencyValues {
     var localAgent: LocalAgent {
         get { self[LocalAgentKey.self] }

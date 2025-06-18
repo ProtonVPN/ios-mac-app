@@ -28,7 +28,6 @@ import struct Domain.VPNConnectionFeatures
 import ExtensionManager
 import LocalAgent
 
-@available(iOS 16, *)
 @CasePathable
 public enum CoreConnectionState: Equatable, Sendable, CasePathable {
     case unknown

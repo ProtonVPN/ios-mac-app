@@ -23,7 +23,6 @@ import Dependencies
 import DependenciesMacros
 
 @DependencyClient
-@available(iOS 16, *)
 public struct ConnectionBridge: Sendable {
     public typealias Intent = ConnectionFeature.Action.Input
 
