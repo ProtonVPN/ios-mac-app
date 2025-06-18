@@ -16,20 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import CasePaths
 import Dependencies
+import Foundation
 
-import ExtensionIPC
-import CoreConnection
 import CommonNetworking
+import CoreConnection
+import ExtensionIPC
 
 import Domain
 import Ergonomics
 
 /// Errors that the network extension can report while processing our requests to refresh our certificate or consume a
 /// session selector
-@CasePathable public enum CertificateRefreshError: Error {
+@CasePathable
+public enum CertificateRefreshError: Error {
     case cancelled
     case sessionMissingOrExpired
     case sessionForkingFailed(Error)
@@ -37,7 +38,8 @@ import Ergonomics
     case tooManyCertRequests(retryAfter: Int?)
     case ipcError(IPCError)
 
-    @CasePathable public enum IPCError {
+    @CasePathable
+    public enum IPCError {
         /// We encountered an issue while communicating with the network extension
         case providerMessageError(ProviderMessageError)
 
@@ -71,10 +73,10 @@ extension CertificateRefreshClient {
         case .errorNeedKeyRegeneration:
             throw .requiresNewKeys
 
-        case .errorTooManyCertRequests(let retryAfter):
+        case let .errorTooManyCertRequests(retryAfter):
             throw .tooManyCertRequests(retryAfter: retryAfter)
 
-        case .error(let message):
+        case let .error(message):
             throw .ipcError(.unspecified(message: message))
         }
     }

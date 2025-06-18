@@ -60,7 +60,6 @@ extension VPNSession {
         throw .noDataReceived
     }
 
-
     private func send(messageData: Data) async throws(ProviderMessageError) -> Data? {
         do {
             return try await _sendProviderMessage(messageData)
@@ -99,11 +98,9 @@ extension TunnelMessageSender: DependencyKey {
         }
     }
 
-    public static let liveValue: TunnelMessageSender = {
-        return TunnelMessageSender(
-            send: { message throws(ProviderMessageError) in
-                try await getSession().send(message)
-            }
-        )
-    }()
+    public static let liveValue: TunnelMessageSender = .init(
+        send: { message throws(ProviderMessageError) in
+            try await getSession().send(message)
+        }
+    )
 }

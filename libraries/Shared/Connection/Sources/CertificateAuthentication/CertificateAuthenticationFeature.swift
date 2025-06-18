@@ -16,20 +16,20 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import ComposableArchitecture
+import Foundation
 
-import CoreConnection
 import CommonNetworking
-import enum ExtensionIPC.WireguardProviderRequest
+import CoreConnection
 import enum ExtensionIPC.ProviderMessageError
+import enum ExtensionIPC.WireguardProviderRequest
 
-import Localization
-import Ergonomics
-import Strings
+import protocol Domain.ProtonVPNError
 import struct Domain.Server
 import struct Domain.VPNConnectionFeatures
-import protocol Domain.ProtonVPNError
+import Ergonomics
+import Localization
+import Strings
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
@@ -40,7 +40,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     @Dependency(\.certificateRefreshClient) var refreshClient
     @Dependency(\.date) var date
 
-    public init() { }
+    public init() {}
 
     @CasePathable
     @dynamicMemberLookup
@@ -110,7 +110,7 @@ public struct CertificateAuthenticationFeature: Reducer {
 
             case .loadAuthenticationData:
                 // First, let's see if we have a certificate cached in memory
-                guard case .loaded(let data) = state else {
+                guard case let .loaded(data) = state else {
                     log.debug("State doesn't contain cached certificate, reloading from storage", category: .connection)
                     state = .loading(shouldRefreshIfNecessary: true)
                     return .send(.loadFromStorage)
@@ -138,14 +138,14 @@ public struct CertificateAuthenticationFeature: Reducer {
                 log.debug("Cached certificate still valid and with up-to-date features", category: .connection, metadata: [
                     "now": "\(date.now)",
                     "refreshTime": "\(data.certificate.refreshTime)",
-                    "validUntil": "\(data.certificate.validUntil)"
+                    "validUntil": "\(data.certificate.validUntil)",
                 ])
                 return .send(.loadingFinished(.success(data)))
 
             case .loadFromStorage:
                 return .send(.loadingFromStorageFinished(authenticationStorage.loadAuthenticationData()))
 
-            case .loadingFromStorageFinished(.loaded(let data)):
+            case let .loadingFromStorageFinished(.loaded(data)):
                 let storedFeatures = data.features
                 let currentFeatures = featureProvider.connectionFeatures()
                 guard storedFeatures == currentFeatures else {
@@ -159,7 +159,7 @@ public struct CertificateAuthenticationFeature: Reducer {
                 state = .loaded(data)
                 return .send(.loadingFinished(.success(data)))
 
-            case .loadingFromStorageFinished(let failureReason):
+            case let .loadingFromStorageFinished(failureReason):
                 guard case .loading = state else {
                     reportIssue("We were expecting a loading state, but got: \(state)")
                     return .none
@@ -214,14 +214,14 @@ public struct CertificateAuthenticationFeature: Reducer {
                     await send(.selectorPushingFinished(refreshResult))
                 }.cancellable(id: CancelID.certificateRefreshAndRetries)
 
-            case .selectorPushingFinished(.failure(let error)), .refreshFinished(.failure(let error)):
+            case let .selectorPushingFinished(.failure(error)), let .refreshFinished(.failure(error)):
                 switch error {
                 case .cancelled:
                     state = .idle
                     log.debug("Certificate refresh was cancelled", category: .userCert)
                     return .none
 
-                case .tooManyCertRequests(let retryAfter):
+                case let .tooManyCertRequests(retryAfter):
                     // TODO: Wait and retry
                     // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
                     // certificates many times in a short period when changing features, not during the initial connection
@@ -231,10 +231,9 @@ public struct CertificateAuthenticationFeature: Reducer {
                     // Make sure keys are regenerated during the next connection attempt
                     authenticationStorage.deleteKeys()
 
-                case  .sessionMissingOrExpired, .sessionForkingFailed, .ipcError:
+                case .sessionMissingOrExpired, .sessionForkingFailed, .ipcError:
                     // There's nothing special we can do to mitigate these failures
                     log.error("Certificate refresh failed", category: .userCert, metadata: ["error": "\(error)"])
-                    break
                 }
                 return finishWithError(&state, .refreshFailed(error))
 
@@ -279,17 +278,17 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     public var charCode: FourCharCode {
         switch self {
         case .certificateMissing:
-            return "CMIS"
+            "CMIS"
         case .certificateExpired:
-            return "CEXP"
+            "CEXP"
         case .keysMissing:
-            return "KMIS"
+            "KMIS"
         case .loadingFailed:
-            return "LOFA"
+            "LOFA"
         case .keyGenerationFailed:
-            return "KGEN"
-        case .refreshFailed(let refreshError):
-            return refreshError.charCode
+            "KGEN"
+        case let .refreshFailed(refreshError):
+            refreshError.charCode
         }
     }
 
@@ -300,26 +299,26 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
     public var underlyingError: Error? {
         switch self {
         case let .loadingFailed(error):
-            return error
+            error
 
         case let .keyGenerationFailed(error):
-            return error
+            error
 
         case let .refreshFailed(refreshError):
-            return refreshError.underlyingError ?? refreshError
+            refreshError.underlyingError ?? refreshError
 
         default:
-            return nil
+            nil
         }
     }
 
     public var extraUserInfo: [String: Any]? {
         switch self {
-        case .refreshFailed(let error):
-            return error.extraUserInfo
+        case let .refreshFailed(error):
+            error.extraUserInfo
 
         default:
-            return nil
+            nil
         }
     }
 }

@@ -16,11 +16,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
+import Domain
+import Ergonomics
 import Foundation
 import NetworkExtension
-import Ergonomics
-import Domain
-import CasePaths
 import Strings
 
 public protocol ProviderMessage: Equatable {
@@ -37,8 +37,8 @@ public protocol ProviderMessageSender: AnyObject {
     func send<R>(_ message: R, completion: ((Result<R.Response, ProviderMessageError>) -> Void)?) where R: ProviderRequest
 }
 
-extension ProviderMessageSender {
-    public func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
+public extension ProviderMessageSender {
+    func send<R: ProviderRequest>(_ message: R) async throws -> R.Response {
         try await withCheckedThrowingContinuation { continuation in
             send(message) {
                 continuation.resume(with: $0)
@@ -47,7 +47,8 @@ extension ProviderMessageSender {
     }
 }
 
-@CasePathable public enum ProviderMessageError: Error, Equatable {
+@CasePathable
+public enum ProviderMessageError: Error, Equatable {
     case cancelled
     case sendingError(SendingError)
     case noDataReceived
@@ -56,7 +57,8 @@ extension ProviderMessageSender {
     case unknownResponse
     case remoteError(message: String)
 
-    @CasePathable public enum SendingError: Error, Equatable {
+    @CasePathable
+    public enum SendingError: Error, Equatable {
         /// We normally have the `TunnelManager` loaded.
         /// If not, the method to retrieve it can throw while we are loading the manager from preferences.
         case managerUnavailable(Error)
@@ -69,13 +71,13 @@ extension ProviderMessageSender {
         public static func == (lhs: SendingError, rhs: SendingError) -> Bool {
             switch (lhs, rhs) {
             case (.managerUnavailable, .managerUnavailable):
-                return true
+                true
 
             case (.internalSendFailed, .internalSendFailed):
-                return true
+                true
 
             default:
-                return false
+                false
             }
         }
     }
@@ -85,25 +87,25 @@ extension ProviderMessageError: ProtonVPNError {
     public static let errorDomain = "ProviderMessageErrorDomain"
 
     public var errorDescription: String? {
-        return includeCode(inside: Localizable.providerMessageError)
+        includeCode(inside: Localizable.providerMessageError)
     }
 
     public var charCode: FourCharCode {
         switch self {
         case .noDataReceived:
-            return "NRCV"
+            "NRCV"
         case .cancelled:
-            return "CANC"
+            "CANC"
         case .decodingError:
-            return "MDCD"
+            "MDCD"
         case .sendingError:
-            return "MSND"
+            "MSND"
         case .unknownRequest:
-            return "UNRQ"
+            "UNRQ"
         case .unknownResponse:
-            return "UNRS"
+            "UNRS"
         case .remoteError:
-            return "RMOT"
+            "RMOT"
         }
     }
 }

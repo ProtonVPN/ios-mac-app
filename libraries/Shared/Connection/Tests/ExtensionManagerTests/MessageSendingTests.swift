@@ -16,12 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import XCTest
-import Testing
 import Dependencies
-import ExtensionIPC
 import Ergonomics
+import ExtensionIPC
 import NetworkExtension
+import Testing
+import XCTest
 
 @testable import ExtensionManager
 
@@ -33,7 +33,8 @@ final class MessageSendingTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor func testThrowsSendingErrorWhenSendProviderMessageThrows() async throws {
+    @MainActor
+    func testThrowsSendingErrorWhenSendProviderMessageThrows() async throws {
         let internalSendFailure = NEVPNError(.configurationInvalid)
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -50,7 +51,8 @@ final class MessageSendingTests: XCTestCase {
         }
     }
 
-    @MainActor func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
+    @MainActor
+    func testThrowsRetriesExhaustedAfterRetryLimitReached() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)
@@ -71,7 +73,7 @@ final class MessageSendingTests: XCTestCase {
             let task = Task { try await connection.send(.refreshCertificate(features: nil)) }
 
             var delays = 0
-            for _ in 1...4 {
+            for _ in 1 ... 4 {
                 // We've made our send instant, and the delay is 1 second between retries
                 await clock.advance(by: .seconds(1))
                 delays += 1
@@ -87,7 +89,8 @@ final class MessageSendingTests: XCTestCase {
     }
 
     /// Verifies the implementation of `send(WireguardProviderMessage:)` is cancelled properly
-    @MainActor func testCancellingTaskPreventsRetries() async throws {
+    @MainActor
+    func testCancellingTaskPreventsRetries() async throws {
         let clock = TestClock()
 
         let connection = VPNSessionMock(status: .connected, connectedDate: nil, lastDisconnectError: nil)

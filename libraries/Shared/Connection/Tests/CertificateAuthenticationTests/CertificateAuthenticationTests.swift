@@ -266,7 +266,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = storageMock
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { _ in  }, // Extension doesn't throw an error but doesn't actually update the certificate
+                refreshCertificate: { _ in }, // Extension doesn't throw an error but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }

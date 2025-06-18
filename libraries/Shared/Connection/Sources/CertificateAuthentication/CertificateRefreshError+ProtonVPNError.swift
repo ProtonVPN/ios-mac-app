@@ -16,9 +16,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
 import Domain
 import Ergonomics
+import Foundation
 
 extension CertificateRefreshError: ProtonVPNError {
     public static let errorDomain: String = "CertificateRefreshErrorDomain"
@@ -26,71 +26,70 @@ extension CertificateRefreshError: ProtonVPNError {
     public var charCode: FourCharCode {
         switch self {
         case .cancelled:
-            return "CRCC"
+            "CRCC"
         case .sessionMissingOrExpired:
-            return "CRSM"
+            "CRSM"
         case .sessionForkingFailed:
-            return "CRFF"
+            "CRFF"
         case .requiresNewKeys:
-            return "CRRK"
+            "CRRK"
         case .tooManyCertRequests:
-            return "CRRL"
-        case .ipcError(let ipcError):
-            return ipcError.charCode
+            "CRRL"
+        case let .ipcError(ipcError):
+            ipcError.charCode
         }
     }
 
     public var extraUserInfo: [String: Any]? {
         switch self {
-        case .ipcError(let error):
-            return error.extraUserInfo
-       case .tooManyCertRequests(let retryAfter):
-            return ["RetryAfter": "\(optional: retryAfter)"]
+        case let .ipcError(error):
+            error.extraUserInfo
+        case let .tooManyCertRequests(retryAfter):
+            ["RetryAfter": "\(optional: retryAfter)"]
         default:
-            return nil
+            nil
         }
     }
 
     public var underlyingError: Error? {
         switch self {
-        case .sessionForkingFailed(let error):
-            return error
+        case let .sessionForkingFailed(error):
+            error
 
-        case .ipcError(let error):
-            return error.underlyingError ?? error
+        case let .ipcError(error):
+            error.underlyingError ?? error
 
         default:
-            return nil
+            nil
         }
     }
 }
 
 extension CertificateRefreshError.IPCError: ProtonVPNError {
-
     public var charCode: FourCharCode {
         switch self {
-        case .providerMessageError(let error):
-            return error.charCode
+        case let .providerMessageError(error):
+            error.charCode
         case .unspecified:
-            return "IPCM"
+            "IPCM"
         }
     }
 
     public var extraUserInfo: [String: Any]? {
         switch self {
-        case .unspecified(let message):
-            return ["IPCMessage": message]
+        case let .unspecified(message):
+            ["IPCMessage": message]
         default:
-            return nil
+            nil
         }
     }
 
     public var underlyingError: Error? {
         switch self {
-        case .providerMessageError(.sendingError(let error)):
-            return error
+        case let .providerMessageError(.sendingError(error)):
+            error
         default:
-            return nil
+            nil
         }
     }
 }
