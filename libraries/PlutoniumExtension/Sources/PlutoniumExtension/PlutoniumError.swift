@@ -18,4 +18,7 @@
 
 enum PlutoniumError: Error {
     case featureDisabled
+    case vpnInterfaceNotFound
+    case xpcConnectionError
+    case unexpectedError
 }

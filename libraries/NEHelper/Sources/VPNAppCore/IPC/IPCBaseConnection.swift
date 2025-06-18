@@ -11,7 +11,7 @@ import os.log
 
 /// App -> Provider IPC
 @objc
-protocol ProviderCommunication {
+public protocol ProviderCommunication {
     /// Used by both extensions to get log data
     func getLogs(_ completionHandler: @escaping (Data?) -> Void)
     /// Used by OpenVPN extension to set connection credentials.
@@ -25,8 +25,13 @@ protocol ProviderCommunication {
         _ data: Data,
         completionHandler: @escaping (Bool) -> Void
     )
+
+    /// Used by Plutonium extension to get current Wireguard network interface name.
+    func getInterfaceName(
+        _ completionHandler: @escaping (String?) -> Void
+    )
 }
 
 /// Provider -> App IPC
 @objc
-protocol AppCommunication {}
+public protocol AppCommunication {}

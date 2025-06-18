@@ -22,6 +22,7 @@
 /// a symmetrical purpose.
 
 import Foundation
+import VPNAppCore
 
 /// Service part working on Extension side of the connection.
 class XPCBaseService: NSObject {
@@ -57,6 +58,10 @@ extension XPCBaseService: ProviderCommunication {
 
     func setConfigData(_: Data, completionHandler _: @escaping (Bool) -> Void) {
         log("This is just a placeholder! Add `setConfigData` in each implementation.")
+    }
+
+    func getInterfaceName(_: @escaping (String?) -> Void) {
+        log("This is just a placeholder! Add `getInterfaceName` in each implementation.")
     }
 }
 

@@ -16,74 +16,61 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Foundation
 import Network
+import VPNAppCore
 
 extension NWInterface {
-    static func findWireGuardInterface(expectedIP: String) async -> NWInterface? {
-        await withCheckedContinuation { continuation in
-            let monitor = NWPathMonitor()
+    /// Find network interface by exact interface name
+    static func findBy(name interfaceName: String?) async -> NWInterface? {
+        guard let interfaceName else {
+            return nil
+        }
+
+        let monitor = NWPathMonitor()
+
+        return await withCheckedContinuation { continuation in
             monitor.pathUpdateHandler = { path in
-                for interface in path.availableInterfaces {
-                    // look for any "other" interface named "utun..."
-                    if interface.type == .other, interface.name.hasPrefix("utun") {
-                        if interface.hasIPv4Address(expectedIP) {
-                            continuation.resume(returning: interface)
-                            monitor.cancel()
-                            return
-                        }
-                    }
+                // Simply find the interface with the exact name
+                let wireguardInterface = path.availableInterfaces.first { interface in
+                    interface.name == interfaceName
                 }
-                // keep waiting until utun comes up with that IP
-                // TODO: Add a timeout mechanism.
+                monitor.cancel()
+                continuation.resume(returning: wireguardInterface)
             }
-            monitor.start(queue: .global(qos: .background))
+            monitor.start(queue: .global(qos: .userInitiated))
         }
     }
 
-    static func findInternetInterface() async -> NWInterface? {
-        await withCheckedContinuation { continuation in
-            let monitor = NWPathMonitor()
-            let queue = DispatchQueue(label: "InternetInterfaceMonitor")
+    /// Find the internet interface (the interface after the VPN interface that has internet access)
+    static func findInternetInterface(vpnInterfaceName: String) async -> NWInterface? {
+        let monitor = NWPathMonitor()
 
+        return await withCheckedContinuation { continuation in
             monitor.pathUpdateHandler = { path in
-                // Find the primary interface that has internet connectivity
-                // Prioritize: Ethernet -> WiFi -> Cellular
-                var bestInterface: NWInterface?
-                var bestPriority = 0
+                // Find the interface that comes after the VPN interface
+                var foundVPNInterface = false
+                var internetInterface: NWInterface?
 
                 for interface in path.availableInterfaces {
-                    var priority = 0
-
-                    switch interface.type {
-                    case .wiredEthernet:
-                        priority = 3
-                    case .wifi:
-                        priority = 2
-                    case .cellular:
-                        priority = 1
-                    default:
-                        continue
+                    if foundVPNInterface {
+                        // Check if this interface has internet access
+                        if interface.type != .loopback, path.status == .satisfied {
+                            internetInterface = interface
+                            break
+                        }
                     }
 
-                    // Check if this interface can reach the internet
-                    let pathToInternet = NWPath.Status.satisfied
-                    if path.status == pathToInternet, priority > bestPriority {
-                        bestInterface = interface
-                        bestPriority = priority
+                    if interface.name == vpnInterfaceName {
+                        foundVPNInterface = true
                     }
                 }
 
                 monitor.cancel()
-                continuation.resume(returning: bestInterface)
+                continuation.resume(returning: internetInterface)
             }
-
-            monitor.start(queue: queue)
+            monitor.start(queue: .global(qos: .userInitiated))
         }
-    }
-
-    func hasIPv4Address(_: String) -> Bool {
-        // TODO: Implement this
-        true
     }
 }

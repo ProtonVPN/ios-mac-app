@@ -69,9 +69,12 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         // Start the tunnel
         adapter.start(tunnelConfiguration: tunnelConfiguration, socketType: socket) { adapterError in
             guard let adapterError else {
-                let interfaceName = self.adapter.interfaceName ?? "unknown"
-                wg_log(.info, message: "Tunnel interface is \(interfaceName)")
+                let interfaceName = self.adapter.interfaceName
+                wg_log(.info, message: "Tunnel interface is \(interfaceName ?? "unknown")")
 
+                // Store interface name for IPC access
+                WireguardNetworkInterface.interfaceName = interfaceName
+                wg_log(.info, message: "Tunnel interface name stored for IPC access: \(interfaceName ?? "nil")")
                 completionHandler(nil)
 
                 return
@@ -119,6 +122,9 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
+
+        // Clean up interface name
+        WireguardNetworkInterface.interfaceName = nil
 
         adapter.stop { error in
             ErrorNotifier.removeLastErrorFile()

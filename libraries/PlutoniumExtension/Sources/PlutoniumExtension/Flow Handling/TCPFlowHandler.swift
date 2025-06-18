@@ -1,5 +1,5 @@
 //
-//  Created on 02/06/2025 by Shahin Katebi.
+//  Created on 20/06/2025 by Shahin Katebi.
 //
 //  Copyright (c) 2025 Proton AG
 //
@@ -20,150 +20,236 @@ import Foundation
 import Network
 import NetworkExtension
 
-final class TCPFlowHandler: @unchecked Sendable {
+/// Handles TCP flow copying between network interfaces.
+/// One instance per `NEAppProxyTCPFlow`.
+final actor TCPFlowHandler {
+    let id = UUID()
+
+    // MARK: ‑ Constants
+
     private static let maxBufferSize = 512 * 1024 // 512 KB
 
-    let connection: NWConnection
-    let flow: NEAppProxyTCPFlow
-    var onClose: (() -> Void)?
+    // MARK: ‑ Stored properties
 
-    // Add unique identifier for Set operations
-    private let id = UUID()
+    private let connection: NWConnection
+    private let tcpFlow: NEAppProxyTCPFlow
+    private let connectionQueue: DispatchQueue
+    private var isCancelled = false
+    private var onClose: (@Sendable () async -> Void)?
 
-    init?(flow: NEAppProxyTCPFlow, interface: NWInterface) {
-        self.flow = flow
+    // MARK: ‑ Init
+
+    init?(tcpFlow: NEAppProxyTCPFlow, targetInterface: NWInterface) {
+        self.tcpFlow = tcpFlow
+
         let parameters = NWParameters.tcp
-        parameters.requiredInterface = interface
+        parameters.requiredInterface = targetInterface
 
-        guard let remoteEndpoint = flow.remoteEndpoint else {
+        guard let remoteEndpoint = tcpFlow.remoteEndpoint else {
             log.error("Cannot get remote endpoint for TCP flow")
             return nil
         }
-        log.debug("Creating TCP connection to: \(remoteEndpoint)")
+
+        self.connectionQueue = DispatchQueue(
+            label: "ch.protonvpn.plutonium.tcp-\(UUID().uuidString)",
+            qos: .userInitiated
+        )
+
+        log.debug("TCP flow handler initialized for remote endpoint \(remoteEndpoint) on interface \(targetInterface)")
         self.connection = NWConnection(to: remoteEndpoint, using: parameters)
     }
 
-    func start() {
-        connection.stateUpdateHandler = { [weak self] state in
-            self?.handleConnectionState(state)
-        }
+    // MARK: ‑ Public
 
-        connection.start(queue: .global(qos: .default))
+    nonisolated func start(onClose: @escaping @Sendable () async -> Void) {
+        Task { await startIsolated(onClose: onClose) }
     }
 
-    private func handleConnectionState(_ state: NWConnection.State) {
+    nonisolated func stop() {
+        Task { await stopIsolated() }
+    }
+
+    // MARK: ‑ Private isolated helpers
+
+    private func startIsolated(onClose: @escaping @Sendable () async -> Void) async {
+        self.onClose = onClose
+        connection.stateUpdateHandler = { [weak self] state in
+            guard let self else { return }
+            Task { await self.handleStateUpdate(state) }
+        }
+
+        connection.start(queue: connectionQueue)
+    }
+
+    private func stopIsolated() async {
+        guard !isCancelled else { return }
+        isCancelled = true
+
+        tcpFlow.closeWriteWithError(nil)
+
+        connection.cancel()
+
+        await onClose?()
+        log.info("TCP tunnel connection closed")
+    }
+
+    // MARK: ‑ Connection state handling
+
+    private func handleStateUpdate(_ state: NWConnection.State) async {
         switch state {
+        case .setup:
+            log.debug("TCP connection setup")
+        case .preparing:
+            log.debug("TCP connection preparing")
+        case let .waiting(error):
+            log.debug("TCP connection waiting: \(error.localizedDescription)")
         case .ready:
-            log.info("TCP flow handler connection ready")
-            startDataForwarding()
+            log.debug("TCP flow handler connection ready")
+            await startDataForwarding()
         case let .failed(error):
             log.error("TCP flow handler connection failed: \(error.localizedDescription)")
-            close()
+            await stopIsolated()
         case .cancelled:
-            log.info("TCP flow handler connection cancelled")
-            close()
-        default:
-            break
+            log.debug("TCP connection cancelled")
+            await stopIsolated()
+        @unknown default:
+            log.debug("TCP connection entered an unknown state")
         }
     }
 
-    private func startDataForwarding() {
-        // First, open the TCP flow, sending nil as localEndpoint since the flow already has specific endpoint.
-        flow.open(withLocalEndpoint: nil) { [weak self] error in
-            if let error {
-                log.error("Failed to open TCP flow: \(error.localizedDescription)")
-                self?.close()
-                return
+    // MARK: ‑ Data forwarding
+
+    private func startDataForwarding() async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            tcpFlow.open(withLocalEndpoint: nil) { [weak self] error in
+                continuation.resume()
+                guard let self else { return }
+                Task { await self.handleFlowOpened(error) }
             }
-
-            log.info("TCP flow opened successfully - starting bidirectional forwarding")
-
-            // Forward data from app to tunnel
-            self?.forwardFromFlowToConnection()
-
-            // Forward data from tunnel to app
-            self?.forwardFromConnectionToFlow()
         }
     }
 
-    private func forwardFromFlowToConnection() {
-        flow.readData { [weak self] data, error in
+    private func handleFlowOpened(_ error: Error?) async {
+        if let error {
+            log.error("Failed to open TCP flow: \(error.localizedDescription)")
+            await stopIsolated()
+            return
+        }
+
+        log.debug("TCP flow opened successfully, starting bidirectional forwarding")
+        await forwardFromFlowToConnection()
+        await forwardFromConnectionToFlow()
+    }
+
+    // MARK: Forward app flow → target network
+
+    private func forwardFromFlowToConnection() async {
+        guard !isCancelled else { return }
+
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            tcpFlow.readData { [weak self] data, error in
+                continuation.resume()
+                guard let self else { return }
+                Task { await self.handleFlowRead(data: data, error: error) }
+            }
+        }
+    }
+
+    private func handleFlowRead(data: Data?, error: Error?) async {
+        if let error {
+            log.error("Error reading from TCP flow: \(error.localizedDescription)")
+            await stopIsolated()
+            return
+        }
+
+        guard let data, !data.isEmpty else {
+            log.info("TCP flow closed by client")
+            await stopIsolated()
+            return
+        }
+
+        connection.send(content: data, completion: .contentProcessed { [weak self] sendError in
             guard let self else { return }
+            Task { await self.handleSendResult(sendError) }
+        })
+    }
 
-            if let error {
-                log.error("Error reading from TCP flow: \(error.localizedDescription)")
-                close()
-                return
-            }
-
-            guard let data, !data.isEmpty else {
-                log.info("TCP flow closed by client")
-                close()
-                return
-            }
-
-            connection.send(content: data, completion: .contentProcessed { sendError in
-                if let sendError {
-                    log.error("Error sending to tunnel: \(sendError.localizedDescription)")
-                    self.close()
-                } else {
-                    // Continue reading
-                    self.forwardFromFlowToConnection()
-                }
-            })
+    private func handleSendResult(_ error: NWError?) async {
+        if let error {
+            log.error("Error sending to tunnel: \(error.localizedDescription)")
+            await stopIsolated()
+        } else {
+            await forwardFromFlowToConnection()
         }
     }
 
-    private func forwardFromConnectionToFlow() {
-        connection.receive(minimumIncompleteLength: 1, maximumLength: Self.maxBufferSize) { [weak self] data, _, isDone, error in
+    // MARK: Forward network response → app
+
+    private func forwardFromConnectionToFlow() async {
+        guard !isCancelled else { return }
+
+        connection.receive(
+            minimumIncompleteLength: 1,
+            maximumLength: Self.maxBufferSize
+        ) { [weak self] data, _, isDone, error in
             guard let self else { return }
+            Task { await self.handleConnectionReceive(
+                data: data,
+                isDone: isDone,
+                error: error
+            ) }
+        }
+    }
 
-            if let error {
-                log.error("Error receiving from tunnel: \(error.localizedDescription)")
-                close()
-                return
-            }
+    private func handleConnectionReceive(
+        data: Data?,
+        isDone: Bool,
+        error: NWError?
+    ) async {
+        if let error {
+            log.error("Error receiving from tunnel: \(error.localizedDescription)")
+            await stopIsolated()
+            return
+        }
 
-            guard let data, !data.isEmpty else {
-                if isDone {
-                    close()
-                }
-                return
-            }
+        guard let data, !data.isEmpty else {
+            if isDone { await stopIsolated() }
+            return
+        }
 
-            flow.write(data) { writeError in
-                if let writeError {
-                    log.error("Error writing to TCP flow: \(writeError.localizedDescription)")
-                    self.close()
-                    return
-                }
-                if isDone {
-                    // Done
-                    self.close()
-                } else {
-                    // Continue receiving
-                    self.forwardFromConnectionToFlow()
-                }
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            // Flow operations within actor isolation
+            tcpFlow.write(data) { [weak self] writeError in
+                continuation.resume()
+                guard let self else { return }
+                Task { await self.handleFlowWriteResult(writeError, isDone: isDone) }
             }
         }
     }
 
-    private func close() {
-        flow.closeWriteWithError(nil)
-        connection.cancel()
-        onClose?()
-        log.info("TCP tunnel connection closed")
+    private func handleFlowWriteResult(_ error: Error?, isDone: Bool) async {
+        if let error {
+            log.error("Error writing to TCP flow: \(error.localizedDescription)")
+            await stopIsolated()
+            return
+        }
+
+        if isDone {
+            await stopIsolated()
+        } else {
+            await forwardFromConnectionToFlow()
+        }
     }
 }
 
-// MARK: - Hashable & Equatable
+// MARK: ‑ Hashable & Equatable
 
 extension TCPFlowHandler: Hashable {
-    static func == (lhs: TCPFlowHandler, rhs: TCPFlowHandler) -> Bool {
+    nonisolated static func == (lhs: TCPFlowHandler, rhs: TCPFlowHandler) -> Bool {
         lhs.id == rhs.id
     }
 
-    func hash(into hasher: inout Hasher) {
-        id.hash(into: &hasher)
+    nonisolated func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

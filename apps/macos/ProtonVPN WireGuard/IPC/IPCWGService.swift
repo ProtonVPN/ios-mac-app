@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import NEHelper
+import VPNAppCore
 
 class IPCWGService: XPCBaseService {
     private let logViewHelper = LogViewHelper(logFilePath: FileManager.logFileURL?.path)
@@ -61,5 +63,11 @@ extension IPCWGService { // ProviderCommunication
             }
             completionHandler(logContent.data(using: .utf8))
         }
+    }
+
+    override func getInterfaceName(_ completionHandler: @escaping (String?) -> Void) {
+        log("Got getInterfaceName XPC request")
+        let interfaceName = WireguardNetworkInterface.interfaceName
+        completionHandler(interfaceName)
     }
 }
