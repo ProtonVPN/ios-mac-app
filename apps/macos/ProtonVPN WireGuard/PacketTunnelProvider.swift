@@ -108,6 +108,15 @@ final class PacketTunnelProvider: NEPacketTunnelProvider {
         }
     }
 
+    override func sleep(completionHandler: @escaping () -> Void) {
+        wg_log(.info, message: "sleep()")
+        completionHandler()
+    }
+
+    override func wake() {
+        wg_log(.info, message: "wake")
+    }
+
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         wg_log(.info, message: "Stopping tunnel. Reason: \(reason)")
 
