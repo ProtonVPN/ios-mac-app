@@ -43,7 +43,8 @@ public protocol TelemetryService: AnyObject {
         _ event: UpsellEvent.Event,
         modalSource: UpsellModalSource?,
         newPlanName: String?,
-        offerReference: String?
+        offerReference: String?,
+        flowType: UpsellEvent.FlowType?
     ) async throws
     func startSettingsHeartbeat()
 
@@ -51,16 +52,6 @@ public protocol TelemetryService: AnyObject {
     func connectionStateChanged(_ connectionState: ConnectionState) async throws
     func userInitiatedVPNChange(_ change: UserInitiatedVPNChange)
     func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType)
-}
-
-extension TelemetryService {
-    func upsellEvent(
-        _ event: UpsellEvent.Event,
-        modalSource: UpsellModalSource?,
-        newPlanName: String?
-    ) async throws {
-        try await upsellEvent(event, modalSource: modalSource, newPlanName: newPlanName, offerReference: nil)
-    }
 }
 
 /// Collects information about connection status updates and upsell.
@@ -123,13 +114,15 @@ public class TelemetryServiceImplementation: TelemetryService {
         _ event: UpsellEvent.Event,
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
-        offerReference: String? = nil
+        offerReference: String?,
+        flowType: UpsellEvent.FlowType?
     ) async throws {
         try await telemetryUpsellReporter.upsellEvent(
             event,
             modalSource: _modalSource,
             newPlanName: newPlanName,
             offerReference: offerReference,
+            flowType: flowType,
             vpnStatus: telemetryConnectionStatusReporter.previousConnectionStatus == .connected ? .on : .off
         )
     }

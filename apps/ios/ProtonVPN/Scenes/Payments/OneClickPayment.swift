@@ -128,16 +128,20 @@ final class OneClickPayment {
         completionHandler()
     }
 
-    func plansClient(validationHandler: (() -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
+    func plansClient(validationHandler: ((PlanOption, InAppPurchasePlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
         let client = PlansClient(
             retrievePlans: { [weak self] in
                 guard let self else { throw OneClickPurchaseError.presentingScreenDismissed }
                 return try await planOptions(with: plansDataSource)
             },
-            validate: { @MainActor [weak self] in
-                validationHandler?()
-                await self?.validate(selectedPlan: $0)
-            }, notNow: { [weak self] in
+            validate: { @MainActor [weak self] planOption in
+                let plan = self?.inAppPurchasePlans.first { plan, _ in
+                    plan.fingerprint == planOption.fingerprint
+                }
+                validationHandler?(planOption, plan?.iapPlan)
+                await self?.validate(selectedPlan: planOption)
+            },
+            notNow: { [weak self] in
                 notNowHandler?()
                 self?.completionHandler()
             }
@@ -187,7 +191,13 @@ final class OneClickPayment {
         // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
         case let .purchasedPlan(plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-            await planService.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+            await planService.delegate?
+                .paymentTransactionDidFinish(
+                    modalSource: nil,
+                    newPlanName: plan.protonName,
+                    offerReference: nil,
+                    flowType: .oneClick
+                )
         case .toppedUpCredits:
             assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
         case let .planPurchaseProcessingInProgress(plan):

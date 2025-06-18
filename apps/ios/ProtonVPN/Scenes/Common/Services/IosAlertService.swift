@@ -368,8 +368,14 @@ extension IosAlertService: CoreAlertService {
         let viewController = modalsFactory.upsellViewController(
             modalType: modalType,
             client: oneClickPayment.plansClient(
-                validationHandler: {
-                    AppEvent.userEngagedWithUpsellAlert.post(alert.modalSource)
+                validationHandler: { planOption, iapPlan in
+                    let upsellData = UpsellData(
+                        modalSource: alert.modalSource,
+                        newPlanName: iapPlan?.protonName,
+                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : iapPlan?.offer,
+                        flowType: planOption.purchaseType == .web ? .external : .oneClick
+                    )
+                    AppEvent.userEngagedWithUpsellAlert.post(upsellData)
                 },
                 notNowHandler: { [weak self] in
                     self?.windowService.dismissModal(nil)

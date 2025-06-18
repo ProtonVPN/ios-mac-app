@@ -52,6 +52,7 @@ class TelemetryUpsellReporter {
         modalSource _modalSource: UpsellModalSource?,
         newPlanName: String?,
         offerReference: String?,
+        flowType: UpsellEvent.FlowType?,
         vpnStatus: UpsellEvent.VPNStatus
     ) async throws {
         let modalSource: UpsellModalSource?
@@ -89,7 +90,8 @@ class TelemetryUpsellReporter {
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),
                 upgradedUserPlan: newPlanName,
-                reference: offerReference
+                reference: offerReference,
+                flowType: flowType
             )
         )
         try await telemetryEventScheduler.report(event: event)

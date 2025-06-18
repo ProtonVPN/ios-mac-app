@@ -83,7 +83,8 @@
             userCountry: "ZZ",
             daysSinceAccountCreation: 12,
             upgradedUserPlan: nil,
-            reference: nil
+            reference: nil,
+            flowType: nil
         )
 
         static let upsellEventDimensionsMock2: Self = .init(
@@ -93,7 +94,8 @@
             userCountry: "ZZ",
             daysSinceAccountCreation: 12,
             upgradedUserPlan: "plus",
-            reference: nil
+            reference: nil,
+            flowType: nil
         )
     }
 #endif

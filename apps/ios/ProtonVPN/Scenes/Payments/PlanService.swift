@@ -37,7 +37,7 @@ protocol PlanServiceFactory {
 
 protocol PlanServiceDelegate: AnyObject {
     @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?) async
+    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async
 }
 
 protocol PlanService {
@@ -143,7 +143,13 @@ final class CorePlanService: PlanService {
                 log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 completion()
                 Task { [weak self] in
-                    await self?.delegate?.paymentTransactionDidFinish(modalSource: nil, newPlanName: plan.protonName)
+                    await self?.delegate?
+                        .paymentTransactionDidFinish(
+                            modalSource: nil,
+                            newPlanName: plan.protonName,
+                            offerReference: nil,
+                            flowType: .regular
+                        )
                 }
             case let .purchaseError(error: error):
                 log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
@@ -184,7 +190,13 @@ final class CorePlanService: PlanService {
         case let .purchasedPlan(accountPlan: plan):
             log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             Task { [weak self] in
-                await self?.delegate?.paymentTransactionDidFinish(modalSource: modalSource, newPlanName: plan.protonName)
+                await self?.delegate?
+                    .paymentTransactionDidFinish(
+                        modalSource: modalSource,
+                        newPlanName: plan.protonName,
+                        offerReference: plan.offer,
+                        flowType: .oneClick
+                    )
             }
         case let .open(vc: _, opened: opened):
             assert(opened == true)

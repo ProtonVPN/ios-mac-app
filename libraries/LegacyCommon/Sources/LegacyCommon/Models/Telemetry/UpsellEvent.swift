@@ -44,6 +44,12 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         Values()
     }
 
+    public enum FlowType: String, Encodable {
+        case regular
+        case oneClick = "one_click"
+        case external
+    }
+
     public struct Dimensions: Encodable {
         public enum CodingKeys: String, CodingKey {
             case modalSource = "modal_source"
@@ -53,6 +59,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             case daysSinceAccountCreation = "days_since_account_creation"
             case upgradedUserPlan = "upgraded_user_plan"
             case reference
+            case flowType = "flow_type"
         }
 
         public let modalSource: UpsellModalSource
@@ -62,6 +69,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         public let daysSinceAccountCreation: Int
         public let upgradedUserPlan: String?
         public let reference: String?
+        public let flowType: FlowType?
 
         var daysSinceAccountCreationEncodedValue: String {
             AccountCreationRangeBucket(intValue: daysSinceAccountCreation)?.rawValue ?? "n/a"
@@ -75,6 +83,7 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             try container.encode(userCountry, forKey: .userCountry)
             try container.encodeIfPresent(upgradedUserPlan, forKey: .upgradedUserPlan)
             try container.encodeIfPresent(reference, forKey: .reference)
+            try container.encodeIfPresent(flowType, forKey: .flowType)
 
             // Custom encoded values:
             try container.encode(daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)

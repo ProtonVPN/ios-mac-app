@@ -77,7 +77,7 @@ public class TelemetryEventNotifier {
             .store(in: &cancellables)
 
         AppEvent.userEngagedWithUpsellAlert.publisher
-            .compactMap { $0.object as? UpsellModalSource }
+            .compactMap { $0.object as? UpsellData }
             .sink { [weak self] source in
                 self?.upsellEngaged(source)
             }
@@ -151,7 +151,8 @@ public class TelemetryEventNotifier {
     private func upsellDisplayed(_ source: ModalSource?) {
         Task {
             do {
-                try await telemetryService?.upsellEvent(.display, modalSource: source, newPlanName: nil)
+                try await telemetryService?
+                    .upsellEvent(.display, modalSource: source, newPlanName: nil, offerReference: nil, flowType: nil)
             } catch {
                 log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
             }
@@ -161,7 +162,14 @@ public class TelemetryEventNotifier {
     private func announcementDisplayed(_ offerReference: String?) {
         Task {
             do {
-                try await telemetryService?.upsellEvent(.display, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
+                try await telemetryService?
+                    .upsellEvent(
+                        .display,
+                        modalSource: .promoOffer,
+                        newPlanName: nil,
+                        offerReference: offerReference,
+                        flowType: nil
+                    )
             } catch {
                 log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
             }
@@ -171,25 +179,39 @@ public class TelemetryEventNotifier {
     private func announcementEngaged(_ offerReference: String?) {
         Task {
             do {
-                try await telemetryService?.upsellEvent(.upgradeAttempt, modalSource: .promoOffer, newPlanName: nil, offerReference: offerReference)
+                try await telemetryService?
+                    .upsellEvent(
+                        .upgradeAttempt,
+                        modalSource: .promoOffer,
+                        newPlanName: nil,
+                        offerReference: offerReference,
+                        flowType: nil
+                    )
             } catch {
                 log.debug("No telemetry event triggered for announcement offer: \(String(describing: offerReference)), error: \(error)", category: .telemetry)
             }
         }
     }
 
-    private func upsellEngaged(_ source: ModalSource?) {
+    private func upsellEngaged(_ upsellData: UpsellData) {
         Task {
             do {
-                try await telemetryService?.upsellEvent(.upgradeAttempt, modalSource: source, newPlanName: nil)
+                try await telemetryService?
+                    .upsellEvent(
+                        .upgradeAttempt,
+                        modalSource: upsellData.modalSource,
+                        newPlanName: upsellData.newPlanName,
+                        offerReference: upsellData.reference,
+                        flowType: upsellData.flowType
+                    )
             } catch {
-                log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+                log.debug("No telemetry event triggered for upsell alert: \(String(describing: upsellData.modalSource)), error: \(error)", category: .telemetry)
             }
         }
     }
 
     private func upsellCompleted(_ notification: Notification) {
-        guard let (source, newPlanName) = notification.object as? (ModalSource?, String?) else {
+        guard let upsellData = notification.object as? UpsellData else {
             log.assertionFailure("Notification object conversion failed in \(#function)")
             return
         }
@@ -198,10 +220,36 @@ public class TelemetryEventNotifier {
             try? await telemetryService?.onboardingEvent(.paymentDone)
 
             do {
-                try await telemetryService?.upsellEvent(.success, modalSource: source, newPlanName: newPlanName)
+                try await telemetryService?
+                    .upsellEvent(
+                        .success,
+                        modalSource: upsellData.modalSource,
+                        newPlanName: upsellData.newPlanName,
+                        offerReference: upsellData.reference,
+                        flowType: upsellData.flowType
+                    )
             } catch {
-                log.debug("No telemetry event triggered for upsell alert: \(String(describing: source)), error: \(error)", category: .telemetry)
+                log.debug("No telemetry event triggered for upsell alert: \(String(describing: upsellData.modalSource)), error: \(error)", category: .telemetry)
             }
         }
+    }
+}
+
+public struct UpsellData {
+    let modalSource: UpsellModalSource?
+    let newPlanName: String?
+    let reference: String?
+    public let flowType: UpsellEvent.FlowType?
+
+    public init(
+        modalSource: UpsellModalSource?,
+        newPlanName: String?,
+        reference: String?,
+        flowType: UpsellEvent.FlowType?
+    ) {
+        self.modalSource = modalSource
+        self.newPlanName = newPlanName
+        self.reference = reference
+        self.flowType = flowType
     }
 }
