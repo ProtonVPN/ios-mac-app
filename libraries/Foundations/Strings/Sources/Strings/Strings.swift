@@ -1828,10 +1828,10 @@ public enum Localizable {
   public static var vpnStuckDisconnectingBody: String { return Localizable.tr("Localizable", "_vpn_stuck_disconnecting_body", fallback: "Your device failed to terminate a previous VPN session. You will need to restart your device before you can establish a new VPN connection.") }
   /// VPN stuck alert
   public static var vpnStuckDisconnectingTitle: String { return Localizable.tr("Localizable", "_vpn_stuck_disconnecting_title", fallback: "Connection error") }
-  /// Failed to refresh VPN certificate. Please check your connection
-  public static var vpnauthCertfailDescription: String { return Localizable.tr("Localizable", "_vpnauth_certfail_description", fallback: "Failed to refresh VPN certificate. Please check your connection") }
-  /// Authentication error
-  public static var vpnauthCertfailTitle: String { return Localizable.tr("Localizable", "_vpnauth_certfail_title", fallback: "Authentication error") }
+  /// Try connecting in the app.
+  public static var vpnauthCertfailDescription: String { return Localizable.tr("Localizable", "_vpnauth_certfail_description", fallback: "Try connecting in the app.") }
+  /// Auto-connect failed
+  public static var vpnauthCertfailTitle: String { return Localizable.tr("Localizable", "_vpnauth_certfail_title", fallback: "Auto-connect failed") }
   /// You reached the maximum number of setting changes. Please try again in a few minutes
   public static var vpnauthTooManyCertsDescription: String { return Localizable.tr("Localizable", "_vpnauth_too_many_certs_description", fallback: "You reached the maximum number of setting changes. Please try again in a few minutes") }
   /// Plural format key: "%#@VARIABLE@"

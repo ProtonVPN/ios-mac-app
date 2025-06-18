@@ -1440,8 +1440,8 @@
 
 // MARK: Cert based auth
 
-"_vpnauth_certfail_title" = "Authentication error";
-"_vpnauth_certfail_description" = "Failed to refresh VPN certificate. Please check your connection";
+"_vpnauth_certfail_title" = "Auto-connect failed";
+"_vpnauth_certfail_description" = "Try connecting in the app.";
 
 "_vpnauth_too_many_certs_title" = "Authentication error";
 "_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
