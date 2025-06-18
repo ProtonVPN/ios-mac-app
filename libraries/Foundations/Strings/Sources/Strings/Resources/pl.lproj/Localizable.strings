@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Ponowne łączenie z %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Konfigurowanie nowego połączenia VPN, aby chronić Twój adres IP";
 
 /* iOS status view */
 "_connected_to" = "Połączono z";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Inna aplikacja może powodować konflikt z funkcją Kill Switch. Aby rozwiązać problem, zmień protokół na OpenVPN lub wyłącz funkcję Kill Switch i ponów próbę.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Zmień na OpenVPN i ponów próbę";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Logi aplikacji";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Logi OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Logi WireGuard";
 
@@ -1091,10 +1085,10 @@
 "_per_year_short" = "/ rok";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "Web only";
+"_web_only_feature" = "Tylko przez przeglądarkę";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+"_subscription_renewal_date" = "Subskrypcja odnowi się automatycznie %1$@ w kwocie %2$@ rocznie";
 
 /* iOS plan feature */
 "_feature_server_count" = "Połącz się z serwerami w";
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Dziękujemy za przesłanie zgłoszenia";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi aplikacji Proton VPN\n• Logi protokołu OpenVPN\n• Logi protokołu WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Kliknij dwukrotnie, aby skopiować";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Jeśli niestandardowy serwer DNS nie działa, zostanie użyty standardowy serwer DNS usługi VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Jeśli niestandardowy serwer DNS nie działa, zostanie użyty standardowy serwer DNS usługi VPN.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Spróbujemy połączyć się z tymi serwerami według kolejności. Jeśli żaden nie będzie działać, zostanie użyty serwer DNS usługi VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Włączyć niestandardowy serwer DNS?";

@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Riconnessione a %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Configura una nuova connessione VPN per proteggere il tuo IP";
 
 /* iOS status view */
 "_connected_to" = "Connesso a";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Un'altra applicazione potrebbe interferire con il kill switch. Per risolvere questo problema, passa al protocollo OpenVPN o disabilita il kill switch e riprova.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Passa a OpenVPN e riprova";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Log dell'applicazione";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Log OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Log di WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Grazie per la segnalazione";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Log dell'app Proton VPN\n• Log di OpenVPN\n• Log di WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -2984,11 +2975,14 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Doppio clic per copiare";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Se il tuo DNS personalizzato non funziona, il VPN standard verrà utilizzato.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Se il tuo DNS personalizzato non funziona, il VPN standard verrà utilizzato.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Proveremo a connetterci a questi server in ordine. Se nessuno di loro funziona, verrà utilizzato il DNS VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Vuoi abilitare il DNS personalizzato?";
+"_hermes_conflict_hermesOn_title" = "Abilitare il DNS personalizzato?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "Questo disabiliterà NetShield.";

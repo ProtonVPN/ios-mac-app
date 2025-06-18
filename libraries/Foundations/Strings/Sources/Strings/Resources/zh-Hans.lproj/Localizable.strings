@@ -1,0 +1,3000 @@
+/* Common word */
+
+"_cancel" = "取消";
+
+/* Common word */
+"_connect" = "连接";
+
+/* Common word */
+"_connected" = "已连接";
+
+/* Common word */
+"_delete" = "删除";
+
+/* Common word */
+"_disconnect" = "断开连接";
+
+/* Common word */
+"_disconnected" = "已断开";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "正在断开连接";
+
+/* Common word */
+"_done" = "完成";
+
+/* Common word */
+"_edit" = "更改";
+
+/* Common word */
+"_ok" = "好的";
+
+/* Common word */
+"_save" = "保存";
+
+/* Common word */
+"_unavailable" = "不可用";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "服务器扩展列表";
+
+"_collapse_list_of_servers" = "服务器崩溃列表。";
+
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
+/* Used as a title in alerts/modals */
+"_warning" = "注意";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "升级账户";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "升级套餐";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "账户等级";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "需要升级账户";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "维护中";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "需要重新连接";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "维护";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "退出";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "退出应用程序将断开活动的 VPN 连接。您想要继续吗？";
+
+/* Common word */
+"_enabled" = "已启用";
+
+/* Common word */
+"_disabled" = "关闭";
+
+/* Button in some alerts */
+"_disable" = "禁用";
+
+/* Button in Kill switch error alert */
+"_report" = "报告";
+
+/* Button in Kill switch error alert */
+"_ignore" = "忽略";
+
+"_continue" = "继续";
+
+/* Button in some alerts */
+"_show_instructions" = "显示说明";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "无法连接网络";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "无法建立 VPN 连接。您没有连接到互联网。";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN连接在使用中";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "不支持的 VPN 协议";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "VPN 协议不适用于您选择的连接。要连接，请尝试更改协议或服务器。";
+
+/* iOS: button in settings screen */
+"_log_out" = "登出";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "退出账户将断开 VPN 连接。";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "登出账户将断开当前 VPN 连接，是否继续？";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "更改协议需要断开当前 VPN 连接。";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "随时随地安全联网";
+
+/* Main mac app menu item */
+"_report_an_issue" = "反馈问题...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "帮助";
+
+/* MacOS: link in login screen */
+"_learn_more" = "了解详情";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "关闭";
+
+/* Changing settings title */
+"_change_settings" = "更改设定";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "获取Proton VPN Plus来解锁此功能和其他功能。";
+
+/* Display more information */
+"_more_info" = "了解详情";
+
+/* Display less information */
+"_less_info" = "更少信息";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "联系我们的客服";
+
+"_turn_on" = "打开";
+
+"_not_now" = "现在不要";
+
+"_allow" = "白名单";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP：%@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "公共IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "快速连接";
+
+/* Title of the change server button */
+"_change_server" = "更换服务器";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "国家/地区";
+
+"_show_protonvpn" = "显示 Proton VPN";
+
+/* Main mac app menu item */
+"_clear_application_data" = "清除应用数据";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "系统扩展教程";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "检查服务器状态";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "正在连接";
+
+"_connectingDotDotDot" = "正在连接...";
+
+/* iOS: countries list section header */
+"_countries_free" = "免费版国家";
+
+/* iOS: countries list section header */
+"_countries_premium" = "高级版国家";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "正在连接 %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "正在连接 %@";
+
+"_reconnecting_to" = "正在重新连接到 %@";
+
+"_reconnecting" = "设置新的 VPN 连接以保护您的 IP";
+
+/* iOS status view */
+"_connected_to" = "已连接到";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "连接超时";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "超时";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "连接至 %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "未连接";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "没连接上";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "重试";
+
+"_try_again_without_killswitch" = "禁用 Kill Switch 并重试";
+
+/* Button in some alerts */
+"_retry" = "重试";
+
+/* iOS: section header in countries list */
+"_free_servers" = "免费版服务器";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "增强版服务器";
+
+/* iOS: section header in countries list */
+"_test_servers" = "TEST 服务器";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "初始化连接......";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "连接成功";
+
+/* MacOS: connecting overlay */
+"_failed" = "失败";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "连接失败";
+
+/* iOS status view */
+"_security" = "安全性";
+
+/* iOS status view */
+"_status" = "状态";
+
+/* iOS status view */
+"_session_time" = "会话时间";
+
+/* iOS status view */
+"_location" = "位置";
+
+/* iOS status view */
+"_city" = "城市/区县";
+
+/* iOS status view */
+"_technical_details" = "技术细节";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "显示 Proton VPN 以登录...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "升级到Plus";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "使用 Secure Core";
+
+"_switch_side_button_on" = "开启";
+
+"_switch_side_button_off" = "关闭";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "另一个应用程序可能会干扰 Kill Switch 。要解决此问题，请切换到 OpenVPN 协议或禁用 Kill Switch 并重试。";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch 已阻止所有网络访问";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "“始终开启的 VPN”将自动重连";
+
+/* MacOS: About window title */
+"_about" = "关于";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "版本";
+
+/* MacOS: About window */
+"_version_current" = "当前版本：";
+
+/* MacOS: About window */
+"_release_date" = "发布时间：";
+
+/* MacOS: About window */
+"_changelog" = "更新记录";
+
+/* MacOS: About window */
+"_acknowledgements" = "致谢";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "用户名";
+
+/* Used in sign-in, sign-up */
+"_password" = "密码";
+
+/* Sign-up form */
+"_password_confirm" = "确认密码";
+
+/* Show/hide password switch */
+"_show" = "显示密码";
+
+/* Show/hide password switch */
+"_hide" = "隐藏密码";
+
+/* MacOS: Login button */
+"_login" = "登录";
+
+/* iOS: Login button in several places */
+"_log_in" = "登录";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "记住登录信息";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "开机自启动";
+
+/* MacOS: button in login screen */
+"_create_account" = "创建账户";
+
+/* MacOS: button in login screen */
+"_need_help" = "需要帮助？";
+
+/* MacOS: button in login screen */
+"_reset_password" = "重置密码";
+
+/* MacOS: button in login screen */
+"_common_issues" = "常见登录问题";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "忘记用户名";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "无法使用 SSO 登录，请再试一次。";
+
+/* iOS: button in login screen */
+"_forgot_password" = "忘记密码？";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "注册";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "此设备已有其他用户登录 Proton VPN，继续登录将使该用户下线。确定要继续吗？";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "输入邮箱地址";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "代码";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "输入电话号码";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "选择国家代码";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "搜索国家";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "我已有帐户";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "获取验证电邮";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "获取验证短信";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "请选择验证方式：";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "为避免滥用，您必须验证身份。";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "验证码验证";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "邮箱验证";
+
+"_use_sms_verification" = "短信验证";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "请求手动激活";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "提交";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "没收到验证码？";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "重新发送验证码";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "验证码请求成功";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "服务条款";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "使用 Proton VPN 即表示您同意我们的\n%@ 和 %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "隐私政策";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "验证码已发送给你，请在下面输入。";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "注册完成";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "您已成功注册 Proton VPN 免费用户。为了让您更好地了解 Proton VPN，我们赠送您 Proton VPN Plus 套餐 7 天试用期。";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "支付成功！您的 Proton VPN Plus 套餐已生效。";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "网络世界的自我保护之道";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "Proton VPN 尊重并保护您的隐私，为确保您使用此程序时的安全性和匿名性，我们的首要准则就是尽可能少地收集用户数据，具体包括：\n\n%@：用于登录、找回密码、接收重要通知。\n\n%@：仅当程序崩溃或用户反馈问题时上报。\n\nProton VPN 应用程序不接触其余任何用户信息，也不记录用户的线上活动等任何可用于识别个人身份的数据。且上述收集的所有数据均由 Proton VPN 内部系统存储及处理，不会泄露给第三方。";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "用户名、邮箱地址";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "您的设备型号和操作系统版本";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "同意并继续";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "地图";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "显示地图";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "隐藏地图";
+
+/* Description shown together with server info icon */
+"_tor_description" = "接入 Tor 网络";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "支持 P2P 传输";
+
+/* Description shown together with server info icon */
+"_premium_description" = "付费版服务器";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "通过 %@";
+
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "经 Secure Core 中转";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "中转自";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "负载 %@%%";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "首页";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "国家";
+
+"_no_servers_to_show" = "目前没有服务器可以在此显示。";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "您的套餐中不包含 Secure Core 功能。";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "了解关于 Secure Core 的信息";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "搜索国家";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "通过在 Secure Core 网络中中转您的流量以应对针对 VPN 连接的攻击。";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "切换 Secure Core 连接将中断当前 VPN 连接";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "服务器负载：";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "服务器 IP：";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "自动分配";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "付费版服务器";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "普通";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P 服务器";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor 服务器";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "收藏";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "收藏";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "推荐";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "我的配置文件";
+
+/* Button */
+"_save_as_profile" = "保存为配置文件";
+
+/* Button */
+"_delete_profile" = "删除收藏";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "配置已被删除";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "无法删除配置";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "添加收藏";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "管理收藏";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "配置文件总览";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "新配置已保存";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "无法创建配置";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "配置已更新。";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "编辑";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "剪切";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "复制";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "粘贴";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "删除";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "全选";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "概览";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "连接";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "操作";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "最快";
+
+/* Profile create/change form */
+"_fastest_available_server" = "使用最快的服务器";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "最快";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "随机";
+
+/* Profile create/change form */
+"_random_available_server" = "使用随机的服务器";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "随机";
+
+/* Profile create/change form */
+"_different_server_each_time" = "每次使用不同的服务器";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "没有可用的描述";
+
+"_create_profile" = "添加收藏";
+
+/* Profile create/change form */
+"_profile_settings" = "配置设置";
+
+/* Profile create/change form */
+"_connection_settings" = "连接设置";
+
+/* Profile create/change form */
+"_name" = "名称";
+
+/* Profile create/change form */
+"_enter_profile_name" = "输入名称";
+
+/* Profile create/change form */
+"_color" = "颜色";
+
+/* Profile create/change form */
+"_make_default_profile" = "设为默认配置";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "“快速连接”按钮使用默认配置文件。\n";
+
+"_feature" = "功能";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "选择国家";
+
+/* Profile create/change form */
+"_server" = "服务器";
+
+/* Profile create/change form */
+"_select_server" = "选择服务器";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "请输入名称";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "配置文件名最长为 25 个字符";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "请选择国家";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "请选择服务器";
+
+"_profile_name_needs_to_be_unique" = "相同的配置名字已经存在";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "点击继续，当前的选择将会丢失。您想要继续吗？";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "请检查是否所有输入框均已填写";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "删除收藏";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "配置文件将被永久删除。您想要继续吗？";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "选择配置文件颜色";
+
+/* Plan speed */
+"_plan_speed_medium" = "中等速度";
+
+/* Plan speed */
+"_plan_speed_high" = "速度较快";
+
+"_plan_speed_fastest" = "速度最快";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "内部 API 错误";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Proton VPN 会话已激活";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "缺少用户凭据。无法登录";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "用户凭据已过期。请登录";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "钥匙串中未找到 VPN 认证信息";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "我们未能确认您是真人操作，请重试或升级账户。";
+
+/* Error decoding an object */
+"_error_decode" = "解码分类中的存档数据失败: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "电子邮件验证被暂时禁用";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton 无法与您的设备通信。请稍后再试。";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "无法从会话中找到用户";
+
+/* Network error */
+"_ne_request_timed_out" = "网络请求超时。";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "无法连接服务器。";
+
+/* Network error */
+"_ne_network_connection_lost" = "网络连接丢失";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "未连接至互联网";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "连接 Proton 服务器失败";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "未知错误";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "未付的账单";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "您有到期未支付的账单，请前往 account.protonvpn.com 支付。";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "啊哦，出现了一些问题。请重新登录。";
+
+"_p2p_detected_popup_title" = "此服务器不允许 P2P 通信";
+
+"_p2p_detected_popup_body" = "您使用的服务器不支持点对点（P2P）传输，因此连接已中止。免费服务器和编号 100 以上的服务器均不支持 P2P。";
+
+"_p2p_forwarded_popup_title" = "连接路径已重置";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "服务器维护中";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "抱歉，您的账户等级不能使用此服务器。若要使用更多服务器，请升级账户。";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "所有位于此国家的服务器均在维护中，请选择其它国家的服务器。";
+
+"_unsecure_wifi" = "当前 Wi-Fi 连接不安全";
+
+"_unsecure_wifi_learn_more" = "了解详情";
+
+"_unsecure_wifi_title" = "此 Wi-Fi 不安全";
+
+"_maintenance_on_server_detected_title" = "此 VPN 服务器正在维护";
+
+"_maintenance_on_server_detected_subtitle" = "您刚才连接的服务器现在正在维护";
+
+"_maintenance_on_server_detected_description" = "正在为您重新连接最快的服务器。";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "您的连接需要重新启动才能应用此更改。";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@服务器维护中";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "配置文件中的服务器正在维护";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "所有服务器都在维护中，通常这表明 Proton VPN 遇到了技术问题或您的网络环境限制了 VPN 连接。";
+
+"_p2p_forwarded_popup_body" = "所选服务器不支持 P2P，故已为您改连另一服务器，且速度可能较慢。连接带有 P2P 标志的服务器可避免这种情况。";
+
+"_p2p_forwarded_popup_body_p1" = "所选服务器不支持 P2P，故已为您改连另一服务器，且速度可能较慢。连接带有";
+
+"_p2p_forwarded_popup_body_p2" = "标志的服务器可避免这种情况。";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "连接错误";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "您的设备未终止之前的 VPN 会话。您需要重启设备以建立新的 VPN 连接。";
+
+"_update_required" = "需要更新";
+
+"_update_required_no_longer_supported" = "此版本的 Proton VPN 不再支持，请更新应用程序继续使用。";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "联系客服";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "立即更新";
+
+"_invalid_refresh_token_please_login" = "距离您上次使用Proton VPN已经有一段时间了，请重新登录。";
+
+"_error_mitm_title" = "不安全的连接";
+
+"_error_mitm_description" = "在尝试连接 Proton VPN API 时，TLS 证书验证失败。您当前的网络连接可能受到监控。为了确保您的数据安全，我们阻止该应用访问 Proton VPN API。\n要登录或访问您的账户，请切换到新的网络并尝试再次连接。";
+
+"_error_mitm_vpn_description" = "未能核实此 VPN 服务器的 TLS 证书，您当前的网络环境可能已遭到监视。为保护您的数据安全，我们已停止连接此服务器。\n请选择其他服务器。";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "TLS 初始化失败";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "服务器证书验证失败。";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "您需要提供 %@\n以连接到 Proton VPN 服务。如果出现此请求，\n输入您的 %@ %@ 并点击“%@” %@。";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "计算机帐户密码";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac 密码";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "始终允许";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "明白了！";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "在应用内无法升级";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "您的 Proton VPN 套餐无法在应用内升级，请访问 account.protonvpn.com 以进行升级。";
+
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "您的 Proton VPN 订阅不能从 TestFlight 版本的应用程序升级，请访问 account.protonvpn.com 进行升级。";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "清除应用程序数据";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "所有 Proton VPN 数据将被删除，应用程序将退出。您想要继续吗？";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "禁用 Kill Switch";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "启用 Kill Switch";
+
+/* MacOS: Settings screen title */
+"_preferences" = "设置";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "设置";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "账户";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "出错";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "删除你的账户将会终止你的VPN活动。";
+
+/* MacOS: General tab in setting window */
+"_general" = "常规​​​​​";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "帐户类型";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "帐户套餐";
+
+"_manage_subscription_on_web" = "在网页仪表盘上管理您的订阅";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "当 VPN 隧道丢失时阻止所有网络流量。";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "始终开启 VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "“始终开启的 VPN”选项将保证 VPN 连接持续安全有效。为了保证您的隐私，此选项不能被关闭。";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "自动连接";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "App 启动后，自动连接所选 VPN 配置。";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "快速连接按钮将使用选定的配置文件进行连接。";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "启动后最小化";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "系统通知";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "预览版";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "预览版包含最新功能更新，但稳定性欠佳。";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "网络未开启防护时提示";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "当 Proton VPN 检测到所连网络未受保护时提示。";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "防范 DNS 泄露";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "防止 DNS 查询的内容泄露给第三方。此选项不能关闭。";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "安全密钥";
+
+/* iOS Settings: table section header */
+"_security_options" = "安全选项";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "订阅套餐";
+
+/* iOS plan selection: header */
+"_choose_plan" = "选择套餐";
+
+"_protocol" = "协议";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN 协议";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "查看日志";
+
+/* iOS logs screen title */
+"_logs" = "日志";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "程序日志";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard 日志";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "激活小组件";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "返回主屏幕，向右轻扫并打开“今天”视图。";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "滚动到底部，然后轻点“编辑”。";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "轻点 Proton VPN 旁边的“+”，然后轻点“完成”。";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "报告问题";
+
+"_allow_lan_title" = "允许 LAN 连接";
+
+"_allow_lan_info" = "允许跳过 VPN 并连接到您本地网络上的设备，如打印机。";
+
+"_allow_lan_description" = "如果允许访问LAN，Kill Switch 必须被关闭。\n\n继续吗？";
+
+"_allow_lan_note" = "您需要重新启动连接才能应用此更改。";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "打开 Kill Switch ？";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "激活 Kill Switch 后，您就无法访问本地网络上的设备了。\n\n是否继续？";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "订阅“%@”套餐";
+
+/* Account plan description */
+"_free_countries" = "3 个国家";
+
+/* Account plan description */
+"_all_countries" = "60多个国家";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "速度%@";
+
+/* Value of speed in _speed */
+"_medium" = "中等";
+
+/* Value of speed in _speed */
+"_high" = "高";
+
+/* Value of speed in _speed */
+"_highest" = "最快";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plus 服务器\nSecure Core\nTOR 服务器";
+
+/* Used instead of price for free plans. */
+"_free" = "Free";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "您想激活购买的订阅吗 ";
+
+/* Label in Plan information */
+"_most_popular" = "最受欢迎";
+
+/* Button in plan selection */
+"_select_plan" = "选择计划";
+
+/* Plan information */
+"_advanced_features" = "+ 高级功能";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "广告屏蔽器 (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "确认订购后，您需要支付所显示的金额，其中包括税款和平台附加费用（并非 Proton 直接收取）。完成支付后，您的账户将自动转入所选等级，为期一年，到期后可在网站或 iOS 应用中续费或退订。";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/年";
+
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "仅限网页版";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "订阅于 %1$@ 自动续订，费用为 %2$@/ 年";
+
+/* iOS plan feature */
+"_feature_server_count" = "连接到服务器";
+
+/* iOS plan feature */
+"_feature_speed" = "速度";
+
+/* iOS plan feature */
+"_feature_connections" = "同时连接数";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "安全看视频";
+
+/* iOS plan feature */
+"_feature_tor" = "经 Tor 连接 VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "欢迎使用！";
+
+"_no_thanks" = "不了，谢谢";
+
+"_welcome_description" = "感谢使用 Proton VPN。";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P 服务器";
+
+"_5_connections" = "5个连接数";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "多个国家";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "已结束";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "你的免费试用%@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "您的账户已降级至 Proton VPN 免费版。\n您将失去 %@ 的如下特权：";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "以后再说";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "立即升级";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "升级账户";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "您的免费试用期即将结束！";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "升级到 %@ 方可继续使用下列功能：";
+
+"_5_connections_description" = "最多 5 个设备\n同时连接";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "我们特别提供的\n加强安全版服务器";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "更多服务器";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "数百台服务器\n在全球";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "安全看视频";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "安全地传输\n您喜爱的内容";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "扩展";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "小组件";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "使用统计";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "请登录以开始";
+
+"_vpnstatus_not_loggedin" = "您尚未登录 ProtonVPN，请打开 Proton VPN 应用并登录。";
+
+/* Bug report attachments */
+"_report_attachments" = "附件";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN 日志";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "将您的客户端 VPN 日志一起上报";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "反馈内容";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "联系邮箱";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "您的反馈内容...";
+
+/* Bug report: Send report button text */
+"_report_send" = "发送报告";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "感谢您的反馈";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "邮箱：";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "出现什么问题了？";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "您具体都执行了哪些操作？";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "在此输入...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "一并提交应用日志及系统信息";
+
+/* Main mac app menu item */
+"_menu_about" = "关于 Proton VPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "检查更新...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "设置";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "隐藏 Proton VPN";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "隐藏其他";
+
+/* Main mac app menu item */
+"_menu_show_all" = "显示全部";
+
+/* Main mac app menu item */
+"_menu_logout" = "登出";
+
+/* Main mac app menu item */
+"_menu_quit" = "退出 Proton VPN";
+
+/* Main mac app menu item */
+"_menu_window" = "窗口";
+
+/* Main mac app menu item */
+"_menu_minimize" = "最小化";
+
+"_subscription_will_expire" = "账户等级将于 %@ 失效.";
+
+"_subscription_will_renew" = "账户将在 %@ 自动续费。";
+
+"_subscription_description" = "您可以充值以便到期自动续费。订购期满后余额将自动用于续订业务。";
+
+"_subscription_button" = "延长1年订阅方案 %@";
+
+"_subscription_extended_success" = "您已成功充值并开启自动续订。";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "排查问题";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "故障排查";
+
+"_troubleshoot_item_alt_title" = "允许使用备用线路";
+
+"_troubleshoot_item_alt_description" = "当 Proton 网站遭到封禁时，此选项允许程序改用其他线路连接 Proton 以绕过防火墙或规避网络故障。推荐开启以增强连接稳定性。\n了解详情";
+
+"_troubleshoot_item_alt_link1" = "了解详情";
+
+"_troubleshoot_item_nointernet_title" = "无网络连接";
+
+"_troubleshoot_item_nointernet_description" = "请确认您已连接网络。";
+
+"_troubleshoot_item_isp_title" = "运营商 (ISP) 问题";
+
+"_troubleshoot_item_isp_description" = "尝试更换网络后再连接 Proton（或使用 Tor）。";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "政府封锁";
+
+"_troubleshoot_item_gov_description" = "您所在的国家可能屏蔽了 Proton。尝试通过 Tor 连接 Proton。";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "杀毒软件干扰";
+
+"_troubleshoot_item_antivirus_description" = "暂时关闭或卸载杀毒软件。";
+
+"_troubleshoot_item_proxy_title" = "代理服务器或防火墙干扰";
+
+"_troubleshoot_item_proxy_description" = "关闭代理服务器和防火墙，或联系网络管理员。";
+
+"_troubleshoot_item_proton_title" = "Proton 宕机";
+
+"_troubleshoot_item_proton_description" = "查看 Proton 系统运行状态。";
+
+"_troubleshoot_item_proton_link1" = "Proton 运行状态";
+
+"_troubleshoot_item_other_title" = "仍未解决问题";
+
+"_troubleshoot_item_other_description" = "通过客服表单、邮箱（%@）或 Twitter 联系我们。";
+
+"_troubleshoot_item_other_link1" = "客服表单";
+
+"_troubleshoot_item_other_link2" = "电子邮件地址";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "已节省\n流量";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "保护自己免受网站和应用程序上的广告、恶意软件和跟踪器的侵害。如果网站无法加载，请尝试禁用 NetShield。\n了解详情";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "了解详情";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "使用 NetShield 无广告浏览";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "阻止网站和应用程序上的广告、跟踪器和恶意软件";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "使用 NetShield 拦截广告";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "当您升级到 VPN 商业版时";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "屏蔽广告、追踪脚本和恶意软件";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "关闭";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "启用";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "屏蔽恶意软件";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "阻止恶意软件、广告和跟踪器";
+
+"_netshield_alert_reconnect_description_on" = "您的连接将重新启动以更改 NetShield 模式。\n注意: 如果某些站点无法加载，请尝试禁用 NetShield。";
+
+"_netshield_alert_reconnect_description_off" = "您的连接将以NetShield模式重新启动。";
+
+"_netshield_alert_upgrade_description" = "NetShield 通过屏蔽广告和跟踪器来保护您的隐私。";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "广告拦截与恶意软件防护";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "新聞";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "正在结束 %@";
+
+"_quick_settings_title" = "快捷设置";
+
+"_quick_settings_secureCore_description" = "通过我们最安全的服务器在隐私友好的国家中传输您最敏感的数据。";
+
+"_quick_settings_netShield_description" = "浏览没有广告和恶意软件的互联网。";
+
+"_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
+
+"_quick_settings_secureCore_note" = "Secure Core 可能会降低 VPN 速度";
+
+"_quick_settings_netShield_note" = "若网页未载入，尝试停用 NetShield";
+
+"_quick_settings_killSwitch_note" = "如果您无法连接到本地网络上的设备，请尝试禁用 Kill Switch 。";
+
+"_quick_settings_get_plus" = "获取 Plus";
+
+"_applying_settings_" = "正在应用设定";
+
+"_reestablish_vpn_connection_" = "正在重新建立 VPN 连接";
+
+"_ip_will_not_be_exposed" = "您的 IP 将不会被曝光。";
+
+"_cancel_reconnection" = "这将取消任何重新连接尝试，并且让您断开连接";
+
+"_quick_settings_netshield_option_off" = "请勿屏蔽";
+
+"_quick_settings_netshield_option_level1" = "仅屏蔽恶意软件";
+
+"_quick_settings_netshield_option_level2" = "阻止恶意软件、广告和跟踪器";
+
+"_upgrade_required_securecore_description" = "Secure Core 需要 Plus 计划。 立即升级，以通过我们在隐私友好的国家/地区中最安全的服务器路由流量。";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch 正在保护您的 IP";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "一旦 ProtonVPN 重新连接到服务器，您的网络连接将立即恢复。\n若要在不使用 VPN 或 Kill Switch 的情况下使用互联网，请取消与服务器的重新连接。";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "无";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Kill Switch 保护";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "取消连接";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "启用智能协议以自动使用提供最佳连接的协议和端口。";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "需要重新连接";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "您的连接将以Smart Protocol模式重新启动。";
+
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "要使用 Proton VPN，您需要在 Mac 上启用**自定义 VPN 协议**。";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "自定义协议可实现更快、更安全的连接，您需要启用它们才能连接到大多数 Proton VPN 服务器。";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "要继续，请单击“**打开系统设置**”，然后按照此屏幕上的视频说明进行操作。";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "要继续，请单击“**打开安全首选项**”，然后按照此屏幕上的视频说明进行操作。";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "配置 Proton VPN";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "打开系统设置";
+
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "打开安全首选项";
+
+"_sysex_settings_description" = "Proton VPN 需要加载系统扩展才能利用智能协议、OpenVPN 和 WireGuard。";
+
+"_sysex_enabled_title" = "配置完成";
+
+"_sysex_enabled_description" = "配置完成。 现在，您可以使用最好的 VPN 技术更快地浏览互联网。";
+
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
+"_sysex_cannot_enable" = "无法启用系统扩展";
+
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "启用系统扩展时发生错误：%@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "请确保应用程序已正确安装在 /Applications 文件夹中。";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "当前系统策略禁止在设备上激活扩展名。";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "需要您的授权才能继续。";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "请联系我们的客服。（错误 %@）";
+
+"_vpnauth_certfail_title" = "认证错误";
+
+"_vpnauth_certfail_description" = "无法刷新 VPN 证书，请检查您的网络连接";
+
+"_vpnauth_too_many_certs_title" = "认证错误";
+
+"_vpnauth_too_many_certs_description" = "您已达到设置更改的最大数量。请在几分钟后再试一次";
+
+"_from_server_title" = "从 服务器：";
+
+"_to_server_title" = "到 服务器：";
+
+"_update_billing" = "更新付款方式";
+
+"_upgrade_again" = "再次升级";
+
+"_delinquent_title" = "您的 VPN 账户有未支付的账单";
+
+"_delinquent_description" = "完成支付即可继续使用高级功能。";
+
+"_delinquent_reconnection_description" = "您可在付款后重新使用高级功能。现在，我们正将您重连至最快且可用的免费服务器。";
+
+"_maximum_device_title" = "已达到最大设备数限制";
+
+"_maximum_device_reached_description" = "请断开另一个设备才可以使用这个设备连接。";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "请断开另一台设备的连接以连接到此设备或升级到 %@";
+
+"_reconnect_title" = "我们正在将您重连至可用的最快服务器。";
+
+"_subscription_expired_title" = "您的 VPN 套餐已过期";
+
+"_subscription_expired_description" = "套餐已降级。";
+
+"_subscription_expired_reconnection_description" = "您的套餐已降级，我们正将您重连至可用的最快服务器。";
+
+"_subscription_upgrade_title" = "再次升级以享受所有功能:";
+
+"_subscription_upgrade_option3" = "高级功能：NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "Free";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "信息";
+
+"_features_title" = "功能";
+
+"_performance_title" = "性能";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "串流中";
+
+"_p2p_title" = "P2P/BT 传输支持";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "服务器负载";
+
+"_streaming_servers_description" = "连接到该国家/地区的 Plus 服务器以开始流式传输。";
+
+"_streaming_servers_note" = "注意：关闭定位服务并清除流媒体应用程序的缓存，以确保显示新内容。";
+
+"_streaming_servers_extra" = "以及更多";
+
+"_feature_free_servers" = "免费服务器";
+
+"_feature_free_servers_description" = "每个人都将享受安全性和隐私。免费的服务器没有带宽限制，而且我们永远不会故意降低浏览网速。";
+
+"_feature_smart_routing_description" = "这项技术让 Proton VPN 在难以服务的地域更快更安全。";
+
+"_feature_streaming_description" = "PLUS服务器支持从全球任何地方访问流媒体服务（如Netflix、Disney+等）。";
+
+"_feature_p2p_description" = "用于 BitTorrent 和文件共享，这些服务器传输性能提供了更好的。";
+
+"_feature_tor_description" = "通过 Tor 网络传输网络流量。速度较慢，但更私密更安全。";
+
+"_performance_load_description" = "负载高的服务器比负载低的服务器传输慢。";
+
+"_performance_load_low" = "低";
+
+"_performance_load_medium" = "中等";
+
+"_performance_load_high" = "高";
+
+"_locations_all" = "所有位置";
+
+"_locations_free" = "免费版位置";
+
+"_locations_plus" = "Plus 版位置";
+
+"_locations_gateways" = "网关";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "免费版连接数";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "什么是网关？";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "VPN 网关是一种安全连接，可通过专用服务器提供对公司数据和服务的受控访问";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "修改 VPN Accelerator";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "VPN Accelerator 有一套独创的性能增强技术，最高可为 VPN 提速 400%%。\n了解详情";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "了解详情";
+
+"_action_requires_reconnect" = "您需要重新启动连接才能应用此更改。";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "输入有效的 IPv4 地址";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "地址已添加";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "添加";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "所有应用";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "无";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "未选择应用";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "排除模式";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "包含模式";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "排除的应用";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "受保护的应用";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "更改将在您重新连接后生效";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "导入应用";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "拖放到此处或";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "浏览应用";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "两全其美";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "暂无 IP 地址";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
+
+"_local_agent_server_error_title" = "服务器错误";
+
+"_local_agent_server_error_message" = "服务器发生错误。请连接到另一台服务器。";
+
+"_local_agent_policy_violation_error_title" = "违反政策";
+
+"_local_agent_policy_violation_error_message" = "您无权连接到该服务器，请选择另一个服务器或升级您的计划。";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "正在加载连接信息";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "正在加载 %@ 的连接信息";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "网络世界的自我保护之道";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "加密网络连接、保护隐私的瑞士高速 VPN。";
+
+"_force_upgrade_title" = "需要升级应用程序";
+
+"_force_upgrade_message" = "您正在使用的应用程序版本不再支持。请更新到最新版本。";
+
+"login_fetch_vpn_data" = "配置您的 VPN 访问";
+
+"login_summary_button" = "开始使用 Proton VPN";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "禁用 Kill Switch";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Kill Switch 稳定性警告";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "T2安全芯片";
+
+"_neks_t2_description" = "在此设备上使用网络锁功能不稳定。您的设备配备了T2安全芯片，当Proton VPN启用macOS系统的网络锁功能时，可能会导致系统稳定性问题。";
+
+"_neks_t2_connect" = "仍然开启";
+
+"_subuser_alert_title" = "感谢您升级到商业/Visionary计划";
+
+"_subuser_alert_description1" = "要开始您的 Proton VPN 之旅，请启用与您的账户或任何其他子账户的 VPN 连接。";
+
+"_subuser_alert_description2" = "此操作只需要几分钟，完成后就可以在所有设备上登录账户保护隐私了。";
+
+"_subuser_alert_description3" = "当前没有为此账户启用 VPN 连接。要开始使用 Proton VPN，请联系您的管理员。";
+
+"_subuser_alert_enable_connections_button" = "启用 VPN 连接";
+
+"_subuser_alert_login_button" = "再次登录";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "中等 NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "中等 NAT 禁用本地地址映射的随机化。这可能会稍微降低您的安全性，但允许点对点应用程序（例如在线游戏）建立直接连接。\n了解详情";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "了解详情";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "开启保守 NAT 模式";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "开启保守 NAT 模式";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "了解详情";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "分享匿名使用统计数据。这有助于我们克服 VPN 障碍并提高应用程序性能。";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "分享匿名崩溃报告。这有助于我们修复错误、检测防火墙并避免 VPN 阻塞。";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "分享匿名使用统计数据";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "使用数据帮助我们克服 VPN 障碍并提高应用程序性能。";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "分享匿名崩溃报告";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "崩溃报告帮助我们修复错误、检测防火墙并避免 VPN 阻塞。";
+
+/* Section title in Settings */
+"_advanced" = "高级";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "非标准端口";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "允许非标准端口流量通过VPN网络可使Proton VPN满足各种特殊联网需求。\n了解详情";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "了解详情";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "启用非标准端口";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "由于网络限制，Proton VPN 网站可能暂时无法访问。请使用移动应用程序创建新的 Proton 账户。";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "双因素身份验证 (2FA)";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "2FA 验证码";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "使用 2FA 验证码";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "恢复码";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "使用恢复码";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "认证账户";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "登录方法无效。请联系支持人员。";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "无法更改 %@ 设置。请稍后重试或连接到其他服务器";
+
+/* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "首页";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "国家";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "设置";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "您不受保护";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "您正在浏览未受保护的 %@。";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "VPN 已断开连接。连接到服务器以安全地浏览互联网。";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "最快的可用国家";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "当前可用的最快 Secure Core 国家/地区";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "双击显示您的 IP 地址";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "双击隐藏您的 IP 地址";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "关闭 \"连接详情\" 屏幕";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "默认连接";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "安全浏览";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "最后连接至";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "加载中...";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "正在连接...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "正在连接 %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "您上次连接到 %@。";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "您正在安全地从 %@ 浏览。";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "您正在使用 %3$@ 安全地浏览 %1$@ 服务器 %2$@。";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "加载中";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "选择默认连接";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "最快的国家";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "根据您的位置选择最佳服务器";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "最近";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "您最近使用过的连接";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "探索 VPN Plus";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "最近";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "操作";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "VPN Plus 提供的服务器";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "服务器维护中";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "随机国家";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "帮助";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "连接";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "移除";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "断开连接";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "取消";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "显示连接详情";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "固定";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "取消固定";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "自动选择";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "经 %@ 中转";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "您不受保护";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "保护您的数字身份";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "保护中";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "加载中";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "获取 Plus";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "广告网站使用 Cookie 和跟踪器来定位您。";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "跟踪器是收集、存储和销售有关您的网络活动信息的第三方网站。";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "NetShield 所屏蔽的广告、跟踪器和恶意软件预计需消耗的流量。";
+
+"_netshield_stats_data_saved" = "已节省\n流量";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "节点连接信息";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "已连接时长";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "国家/地区";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "城市";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "服务器";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "服务器负载";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "协议";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "我的 IP";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "不可用";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "您可以连接洋葱路由，使用至常规浏览器。";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "该服务器使用点对点技术可享用较高速率";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "服务器实际位于 %1$@，但您似乎是从 %2$@ 进行浏览。";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "您的活动经 2 重高安全性 VPN 服务器加密。";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "串流中";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "该服务器有以下流媒体解锁。";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "功能";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "信息";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "协议不可用";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "此配置文件使用的协议已过时且不再受支持。单击“更新”切换为使用默认的智能协议。了解详情";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "了解详情";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "此配置文件使用的协议已过时且不再受支持。单击“更新”切换为使用默认的智能协议。";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "更新";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "了解详情";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "关闭";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "设置";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "账户";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "功能";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "连接";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "常规​​​​​";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "支持";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "帮 Proton 做得更好";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Kill Switch";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "协议";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "高级设置";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "主题";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "测试版访问";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "小组件";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "支持中心";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "报告问题";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "调试日志";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "和我们一起对抗审查";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "评价 Proton VPN";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "恢复默认设置";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "登出";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "应用版本： %@";
+
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "登录到其他设备";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "启用";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "关闭";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "启用";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "关闭";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "自动";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "深色";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "浅色";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "自动*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "深色";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "浅色";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "速度优先 (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "稳定优先 (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "自动为连接选择最佳协议。";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "快速、安全、高效。WireGuard 比其他协议更省电。";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "快速、安全、高效。WireGuard 难以检测和阻止。";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "通过隐藏您的 VPN 连接来对抗 VPN 屏蔽审查。该协议可抵御 DPI（深度数据包检查），但速度可能不如其他协议。Stealth 是 Proton VPN 独有的功能。";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "成熟、久经考验、且安全。与其他一些协议相比，OpenVPN 的电池效率较低。";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "成熟、久经考验、且安全。OpenVPN 在网络条件差的情况下也很可靠，但速度可能不如其他协议。";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "快速、安全且稳定——但更容易被审查人员发现和阻止。";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "建议";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "新";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "VPN 协议决定了数据在 VPN 服务器与您的设备之间的传输方式。**[了解详情](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN连接在使用中";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "更改协议需要断开当前 VPN 连接。";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "取消";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "继续";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "网络接口不良";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "您的本地网络可能不安全（接口 \"%@\" 的 IP 和前缀为 “%@”）。您的数据可能会在未加密的情况下通过本地网络发送。启用 Kill Switch 将阻止这种流量。与本地外设的连接将被中断。";
+
+/* Title of the search screen */
+"search_title" = "搜索";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "查找地区";
+
+/* Section header in search */
+"search_countries" = "国家";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "瑞士、美国、意大利...";
+
+/* Section header in search */
+"search_cities" = "城市";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "纽约、伦敦、东京…";
+
+/* Section header in Search */
+"search_servers" = "服务器";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "美国地区";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "加利福尼亚、弗罗里达、科罗拉多…";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "您要的没找到";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "换个关键词试试";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "最近浏览";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "清空";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "确定要彻底清除搜索记录吗？";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "取消";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "继续";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "国家、城市或服务器";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "更多地区 = 更多未受限内容 + 增强的安全性 + 更快的速度";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core国家";
+
+/* Section header in search */
+"search_results_countries" = "国家";
+
+/* Section header in search */
+"search_results_cities" = "城市";
+
+/* Section header in search */
+"_free_servers" = "免费版服务器";
+
+/* Section header in search */
+"_plus_servers" = "增强版服务器";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "升级账户";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "现在不要";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "只需开通 Plus";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "您需要非标准端口来进行高级或专业计算吗？\n\n升级至 Plus 版即可享受此功能和其他高级功能。";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "开放非标准端口";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "提升您的游戏体验";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "使用 VPN Plus 解锁 NAT 类型 2";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT 类型 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "提高在线游戏和视频通话性能";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "NAT 类型 2（中等）通过启用设备之间的直接连接来优化速度和稳定性";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "观看您最喜爱的电影";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "享受最高速度（10Gbps）";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "通过NetShield屏蔽广告和恶意软件";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "通过 NetShield 畅享无广告的浏览体验";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "屏蔽广告和追踪脚本";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "免受恶意软件侵害";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "享受最高速度";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Secure Core 安全加倍";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "通过瑞士、瑞典和冰岛的强化安全服务器中转数据";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "为 VPN 连接增添一层额外保护";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "抵御网络攻击";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "浏览网速快上加快";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "服务器更快、不堵，速度高达 10 Gbps。";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "使用 VPN Plus 访问局域网 (LAN) 上的设备。";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "选择 NAT 类型 2，提高在线游戏和视频通话性能。";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "无广告浏览";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "用 NetShield 屏蔽广告、跟踪器和恶意软件。";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "双重保护";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "Secure Core 功能，为 VPN 连接增添一层额外保护。";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "更多地域任意选择";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "想连到特定的地域？";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "升级为VPN Plus以选择国家或地区.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "使用 VPN Plus 解锁配置文件.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "关于速度的说明...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "安全核心提供最高级别的安全性和隐私性，但它可能会降低您的互联网速度。如果需要更高的性能，可以禁用安全核心。";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "不再显示";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "开启 Secure Core";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "新版 Proton，全方位的隐私保护";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "Proton 界面现已焕然一新。\n服务繁多，使命不变。欢迎进入隐私优先的互联网。";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "好的";
+
+/* Common button title */
+"modals_common_cancel" = "取消";
+
+/* Common button title */
+"modals_common_learn_more" = "了解详情";
+
+/* Common button title */
+"modals_common_next" = "下一步";
+
+/* Common button title */
+"modals_common_get_started" = "入门";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "请断开另一台设备的连接以连接到此设备或升级到 %@";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "请断开另一个设备才可以使用这个设备连接。";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "4K 串流";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "无论身处何地，仍可观看想看的电影电视。";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "解锁点对点 (P2P) 下载和文件共享";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "隐藏 IP 地址的情况下，提高上传下载速度。";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "可同时保护 10 台设备";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "Proton VPN 在 8 种平台上都能用。";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "一键连至 Tor 网络";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "普通浏览器也能访问隐藏的服务器和洋葱网站。";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "以更高的速度浏览（高达 10 Gbps）";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "访问速度更快、拥挤程度较低的服务器。";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "使用 VPN Accelerator 最高可提速 400%%。";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "连接到远程服务器时提高了速度和稳定性。";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "解锁高级 VPN 定制";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "访问局域网 (LAN) 上的设备";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "局域网 (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "使用配置文件保存常用连接";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "收藏";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "通过快速连接更快地访问您的配置";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "快速连接";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "快速访问您的常用联系人";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "使用 VPN Plus 解锁配置文件";
+
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "收藏";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "保存您首选的服务器、城市或国家/地区。";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "设置自定义协议和高级 VPN 功能。";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "设置自动连接以实现更快的访问。";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "选择任意位置";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "更高的 VPN 速度";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "访问受地理限制的内容";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "更高的 VPN 速度";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30 天内可退款";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "想要选择特定国家或地区？";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "升级为VPN Plus以选择国家或地区";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "国家/地区选择";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "更新特性";
+
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "看看";
+
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "界面革新，安全不变";
+
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "我们翻新调整了界面，应用更加易于使用。";
+
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "“近来去过”功能";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "连过的服务器，再连一次更加简单。近期连接的服务器，还有收藏的服务器，会显示在首页。";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "网关已移动";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "现在，您可以从主导航访问您组织的专用服务器。";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "使用 VPN Plus 进行无限更改";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "使用 Proton Free，您可以每小时更改几次服务器。使用 VPN Plus 获得无限量的服务器更改。";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "目前您已达到免费服务器更改的最大数量。";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "更换服务器";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "高级安全功能";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "欢迎使用VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "欢迎使用 Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "祝贺您！";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "享受额外的隐私功能、超强的性能和更高级别的 VPN 定制。";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "恭喜！ 您解锁了所有 Proton 服务的高级安全性和功能，以及 500 GB 的总存储空间。\n\n享受最佳的Proton隐私。";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "恭喜！ 您解锁了所有 Proton 服务的高级安全性和功能，以及**500 GB**的总存储空间。\n\n享受最佳的Proton隐私。";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "您已升级您的订阅。享受先进的隐私功能和更高水平的性能。";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "欢迎使用 Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "私密浏览，访问被屏蔽的内容，享受数字自由。";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "经过认证的无记录 VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "VPN 活动由瑞士的隐私法保护。我们永远不会记录您的网上活动，也永远不会与第三方共享您的信息。";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "我们永远不会记录您的互联网活动或与第三方分享您的信息。";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "分享匿名的使用统计数据";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "使用数据会帮助我们克服 VPN 阻塞、提高应用性能。";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "分享匿名的崩溃报告";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "崩溃报告会帮助我们修复错误、检测防火墙并避免 VPN 阻塞。";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "提升隐私保护";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "开通 VPN Plus，获得高级隐私功能，网速更快。";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "选择计划";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "开通 VPN Plus";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /月";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "适用于 VPN 商业计划。";
+
+"onboarding_usage_stats_title" = "分享匿名使用统计数据";
+
+"onboarding_usage_stats_description" = "使用数据帮助我们克服 VPN 障碍并提高应用程序性能。";
+
+"onboarding_crash_reports_title" = "分享匿名崩溃报告";
+
+"onboarding_crash_reports_description" = "崩溃报告帮助我们修复错误、检测防火墙并避免 VPN 阻塞。";
+
+"onboarding_footer" = "这些统计数据不包含您的 IP 地址，因此无法用于识别您的身份。我们绝不会与第三方分享它们。";
+
+"onboarding_footer_learn_more" = "了解详情";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "免费版连接数";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "Proton Free 会自动为您连接速度最快的可用服务器，通常也是离您最近的服务器。";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "Proton Free 会自动将您连接到 %@ 个免费国家/地区中最快的可用免费服务器。这通常是离您最近的服务器。";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "开通 VPN Plus，获得全球覆盖";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "开通 VPN Plus，获得全球覆盖";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "不是您想要的国家或地区？";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "升级以选择任意服务器";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "不是您想要的国家或地区？ 升级可选择任意服务器";
+
+/* ReportBugwindow title */
+"_br_window_title" = "报告问题";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "有什么问题吗？";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "快速修复";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "这些提示可能有助更快排除问题。";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "未能正常工作？";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "联系我们";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "取消";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "提交反馈";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "正在发送";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "电子邮件地址";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "用户名";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "发送错误日志";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "日志是一类记录是什么操作导致了出错的文件。我们仅用其帮助工程师修复应用漏洞。";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "错误日志帮我们理解您遇到的问题。要是不提供这些信息，程序漏洞可能没法充分研究。";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "感谢您的反馈";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "我们会尽快与您联系。";
+
+/* ReportBug success window: button */
+"_br_success_button" = "好";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "您的反馈未发送。";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "重试";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "排查问题";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "更新 Proton VPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "继续使用旧版本 Proton VPN 可能会出问题。";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "更新";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "更改邮箱密码";
+
+/* Change password cell title */
+"_change_password" = "更改密码";
+
+/* Change password alert message */
+"_password_changed_successfully" = "密码更改成功";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "启用 IKEv2？";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "此协议将很快被删除。考虑切换到智能协议。了解详情";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "了解详情";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "使用 IKEv2 继续";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "启用智能协议";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "服务器不可用";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "此服务器已被删除。请尝试连接另一个服务器。";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "连接失败";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "您为 “%@” 选择的服务器目前不可用。请选择其他服务器或稍后再试。";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "更新您的软件";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "Proton VPN 新版本已发布。要获取更新，您首先需要将设备更新到 %1$@ %2$@ 或更高版本。";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "覆盖全世界";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "遍布 63 个国家的 1700 多个服务器地点";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "更快浏览";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "以更高的速度浏览（高达 10 Gbps）";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "串流中";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "看你想看的电影电视";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "拦截广告、恶意软件和跟踪器";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "为 VPN 连接增添一层额外保护";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "支持 P2P";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "通过 BitTorrent 和其他文件共享协议下载文件";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "保护 10 台设备";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "所有设备上均有安全和隐私";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "经 Tor 连接 VPN";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "在您的 VPN 连接上使用 Tor 网络获取额外的隐私";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "还有更多...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "解锁高级性能和隐私功能";
+
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "错误";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "该操作无法完成。（错误 %@）";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "连接错误";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "您选择的连接使用了本应用程序不再支持的协议（%@）。请选择其他连接方式。（错误 %@）";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "与服务器进行身份验证时出现问题。（错误 %@）";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "启动 VPN 时出现了问题。（错误 %@）";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_local_agent" = "连接时发生意外错误：%@";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "我们无法连接服务器。（错误 %@）";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "连接准备过程中出现问题（错误 %@）";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "您选择的服务器已不可用，请选择其他服务器。（错误 %@）";
+
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "我们在尝试连接时遇到错误：服务器未及时响应，请重试。（错误 %@）";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "连接出错。（错误 %@）";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "未受保护";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "请检查VPN是否已连接，并快速进入您常用的服务器。";
+
+/* Recents section title */
+"widget_recents_title" = "最近";
+
+/* Recents section description */
+"widget_recents_description" = "在此查看您的连接历史记录。";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "小组件功能回归";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "您现在无需离开主界面，即可直接查看和管理 VPN 连接。";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "试试 Proton VPN 小组件";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "请检查VPN连接状态，并可在主界面随时一键连接默认或常用服务器。";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "如何添加 Proton VPN 小组件";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "长按主屏幕上的任意位置即可。";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "点击**编辑**按钮，然后选择**添加小组件**";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "选择或搜索 **Proton VPN**";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "从轮播中选择您喜欢的小部件，然后按**添加小部件**进行确认";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "了解";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "高级 VPN 定制功能";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "使用 VPN Plus 的自定义 DNS 服务器连接。";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "升级";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "自定义 DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "偏好设置";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "自定义 DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "使用自托管或第三方域名系统 (DNS) 连接 VPN。";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "服务器 (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "添加新的 DNS 服务器";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "添加";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "请输入服务器的 IPv4 地址";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "输入 IPv4 地址";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "输入有效的 IPv4 地址";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "服务器已添加";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "出现意外错误。";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "双击复制";
+
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "如果自定义 DNS 服务器无法正常工作，系统将自动使用标准 VPN DNS。";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "我们将依次尝试连接这些服务器。如果都无法正常工作，则将使用 VPN DNS。";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "启用自定义 DNS？";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "这将停用 NetShield。";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "启用 NetShield？";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "这将停用自定义 DNS。";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "更改设置";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "您的连接需要重新启动才能应用此更改。";

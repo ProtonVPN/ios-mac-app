@@ -293,9 +293,6 @@
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "ممکن است برنامه دیگری با kill switch در تداخل است. برای حل این مشکل، به پروتکل OpenVPN تغییر دهید یا kill switch را غیر فعال کرده و دوباره تلاش کنید.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "به OpenVPN تغییر دهید و دوباره امتحان کنید";
-
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
 
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "لاگ‌های برنامه";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "لاگ‌های OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "گزارش‌های WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "از گزارش شما متشکریم";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "با ارائه اطلاعات زیر، تیم ما قادر به شناسایی مشکل شما و راه حلی احتمالی بهتر در زمانی کوتاهتر خواهد بود.:\n• ثبت وقایع برنامه Proton VPN\n• ثبت وقایع OpenVPN\n• ثبت وقایع WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "ایمیل:";
@@ -2984,11 +2975,14 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Double click to copy";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Enables Custom DNS?";
+"_hermes_conflict_hermesOn_title" = "Enable Custom DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "This will disable NetShield.";

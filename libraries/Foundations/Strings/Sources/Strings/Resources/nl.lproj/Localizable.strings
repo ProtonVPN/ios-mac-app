@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Opnieuw verbinden met %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Een nieuwe VPN-verbinding instellen om uw IP te beschermen";
 
 /* iOS status view */
 "_connected_to" = "Verbonden met";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Een andere toepassing kan interfereren met de IP-beveiliging. Om dit probleem op te lossen, schakelt u over naar het OpenVPN-protocol of schakelt u de IP-beveiliging uit en probeert u het opnieuw.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Overschakelen naar OpenVPN en probeer het opnieuw";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Applicatielogboek";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN logboeken";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard Logboeken";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Bedankt voor uw melding";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Door de volgende details te verstrekken, kan ons team uw probleem identificeren en een mogelijke oplossing met hogere kansen en kortere tijd vinden:\n• Proton VPN app logs\n• OpenVPN logboeken\n• WireGuard logboeken";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mailadres:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Dubbelklik om te kopiëren";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Als uw aangepaste DNS-server niet werkt, zal de standaard VPN DNS worden gebruikt.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Als uw aangepaste DNS-server niet werkt, zal de standaard VPN DNS gebruikt worden.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "We zullen proberen om verbinding te maken met deze servers in volgorde. Als geen van hen werkt, zal de VPN DNS gebruikt worden.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Aangepaste DNS inschakelen?";

@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Перападключэнне да %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Наладзьце новае падключэнне па VPN для абароны вашага IP";
 
 /* iOS status view */
 "_connected_to" = "Падключана да";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Іншая праграма можа перашкаджаць Kill Switch. Для выпраўлення праблемы, пераключыцеся на пратакол OpenVPN або адключыце Kill Switch і паспрабуйце зноў.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Пераключыцца на пратакол OpenVPN і паспрабаваць зноў";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы праграмы";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Журналы OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Дзякуй за вашу справаздачу";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Наша каманда зможа хутчэй вызначыць вашу праблему і прапануе магчымае рашэнне за кароткі час, калі вы ўключыце ў справаздачу наступную інфармацыю:\n• Журналы праграмы Proton VPN\n• Журналы OpenVPN\n• Журналы WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Электронная пошта:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Двойчы націсніце, каб скапіяваць";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Будзе выкарыстоўвацца стандартны DNS ад VPN, калі ваш карыстальніцкі сервер DNS не працуе.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Будзе выкарыстоўвацца стандартны DNS ад VPN, калі ваш карыстальніцкі сервер DNS не працуе.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Будзе зроблена спроба падключыцца да гэтых сервераў па парадку. Калі ніводны з іх працаваць не будзе, то будуць выкарыстоўвацца DNS ад VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Уключыць карыстальніцкі DNS?";

@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Opätovné pripájanie k %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Nastavuje sa nové VPN pripojenie na ochranu vašej IP";
 
 /* iOS status view */
 "_connected_to" = "Pripojené ku";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Nejaká iná aplikácia by mohla zasahovať do kill switch. Ak chcete tento problém odstrániť, prepnite na protokol OpenVPN alebo vypnite kill switch a skúste to znova.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Prepnúť na OpenVPN a skúsiť znova";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Logy aplikácie";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Logy OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Logy WireGuard";
 
@@ -1091,10 +1085,10 @@
 "_per_year_short" = "/ rok";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "Web only";
+"_web_only_feature" = "Len web";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+"_subscription_renewal_date" = "Predplatné sa automaticky obnoví %1$@ za %2$@/rok";
 
 /* iOS plan feature */
 "_feature_server_count" = "Pripojiť k serverom v";
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Ďakujeme za nahlásenie";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Ak poskytnete nasledujúce údaje, náš tím môže identifikovať váš problém a možné riešenie s väčšou pravdepodobnosťou a v kratšom čase:\n• logy aplikácie Proton VPN\n• logy OpenVPN\n• logy WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Dvojitým kliknutím skopírujte";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Ak váš vlastný DNS server nefunguje, použije sa štandardný VPN DNS.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Ak váš vlastný DNS server nefunguje, použije sa štandardný VPN DNS.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Pokúsime sa pripojiť k týmto serverom v uvedenom poradí. Ak žiadny z nich nebude fungovať, použije sa DNS siete VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Povoliť vlastné DNS?";

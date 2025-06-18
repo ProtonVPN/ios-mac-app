@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Opětovné připojování k %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Nastavování nového připojení VPN pro ochranu vaší IP adresy";
 
 /* iOS status view */
 "_connected_to" = "Připojeno k";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Do funkce Kill Switch může zasahovat jiná aplikace. Chcete-li tento problém vyřešit, přepněte na protokol OpenVPN nebo vypněte Kill Switch a zkuste to znovu.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Přepnout na OpenVPN a opakovat";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Záznam aplikace";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN logy";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "WireGuard logy";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Děkujeme za Vaši zprávu";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Pokud nám poskytnete následující údaje, náš tým dokáže identifikovat váš problém a najít možné řešení s vyšší pravděpodobností a v kratším čase:\n• logy Proton VPN\n• logy OpenVPN\n• logy WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Dvojitým kliknutím zkopírovat";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Pokud váš vlastní server DNS nefunguje, použije se standardní DNS VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Pokud váš vlastní server DNS nefunguje, použije se standardní DNS VPN.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Pokusíme se k těmto serverům připojit postupně. Pokud žádný z nich nebude fungovat, použije se DNS VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Povolit vlastní DNS?";

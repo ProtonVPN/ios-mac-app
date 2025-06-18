@@ -293,9 +293,6 @@
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Возможно, другое приложение мешает работе Kill Switch. Чтобы решить эту проблему, переключитесь на протокол OpenVPN или отключите Kill Switch и повторите попытку.";
 
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
-
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
 
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы приложения";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Журналы OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Журнал WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Спасибо за ваше сообщение";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Наша команда сможет определить проблему и найти возможное решение с большей вероятностью и за более короткий срок, если вы предоставите следующую информацию:\n• журналы приложения Proton VPN\n• журналы OpenVPN\n• журналы WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
@@ -2984,11 +2975,14 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "нажмите дважды, чтобы скопировать";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Если ваш собственный сервер DNS не работает, будет использоваться стандартная DNS от VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the standard VPN DNS will be used.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Включить пользовательскую DNS?";
+"_hermes_conflict_hermesOn_title" = "Enable Custom DNS?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "Это отключит NetShield.";

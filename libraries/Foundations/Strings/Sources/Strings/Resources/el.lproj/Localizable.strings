@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Επανασύνδεση σε %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Ρυθμίζεται νέα σύνδεση VPN για την προστασία της διεύθυνσης IP σας";
 
 /* iOS status view */
 "_connected_to" = "Συνδεδεμένο με";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Μια άλλη εφαρμογή ενδέχεται να παρεμβαίνει στη λειτουργία kill switch. Για να διορθώσετε αυτό το πρόβλημα, μεταβείτε στο πρωτόκολλο OpenVPN ή απενεργοποιήστε τη λειτουργία kill switch και προσπαθήστε ξανά.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Μεταβείτε στο OpenVPN και δοκιμάστε ξανά";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Καταγραφές Εφαρμογών";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Αρχεία καταγραφής OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Καταγραφικά WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Ευχαριστούμε για την αναφορά σας";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Παρέχοντας τις ακόλουθες λεπτομέρειες, η ομάδα μας μπορεί να εντοπίσει το πρόβλημά σας και μια πιθανή λύση με μεγαλύτερες πιθανότητες και μικρότερο χρόνο:\n• Αρχεία καταγραφής εφαρμογών Proton VPN\n• Αρχεία καταγραφής OpenVPN\n• Αρχεία καταγραφής WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Ηλεκτρονικό ταχυδρομείο:";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Διπλό κλικ για αντιγραφή";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Εάν ο προσαρμοσμένος διακομιστής DNS δε λειτουργεί, θα χρησιμοποιηθεί το τυπικό DNS VPN.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Εάν ο προσαρμοσμένος διακομιστής DNS δε λειτουργεί, θα χρησιμοποιηθεί το τυπικό DNS VPN.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Θα προσπαθήσουμε να συνδεθούμε σε αυτούς τους διακομιστές στη σειρά. Εάν κανένας από αυτούς δε λειτουργεί, θα χρησιμοποιηθεί το DNS VPN.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Ενεργοποίηση Προσαρμοσμένου DNS;";

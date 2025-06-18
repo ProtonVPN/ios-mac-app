@@ -1,0 +1,3000 @@
+/* Common word */
+
+"_cancel" = "Mégsem";
+
+/* Common word */
+"_connect" = "Kapcsolódás";
+
+/* Common word */
+"_connected" = "Csatlakoztatva";
+
+/* Common word */
+"_delete" = "Törlés";
+
+/* Common word */
+"_disconnect" = "Kapcsolat bontása";
+
+/* Common word */
+"_disconnected" = "Leválasztva";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Leválasztás";
+
+/* Common word */
+"_done" = "Kész";
+
+/* Common word */
+"_edit" = "Szerkesztés";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Common word */
+"_save" = "Mentés";
+
+/* Common word */
+"_unavailable" = "Nem elérhető";
+
+/* Description of the expand/collapse button used by accessibility Voice Over */
+"_expand_list_of_servers" = "Szerverlista nyitása";
+
+"_collapse_list_of_servers" = "Szerverlista csukása";
+
+/* Description of the upsell icon button for VoiceOver */
+"_vpnPlus_upsell_accessibility" = "VPN Plus";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Figyelmeztetés";
+
+/* Button in many places in both iOS and MacOS apps */
+"_upgrade" = "Nagyobb csomagra váltás";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Csomag frissítése";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription" = "Előfizetés kezelése";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Nagyobb csomag szükséges";
+
+/* MacOS: voice over indication for a country or server on maintenance */
+"_on_maintenance" = "Karbantartás";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Újracsatlakozás szükséges";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Karbantartás";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Kilépés";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Az alkalmazásból való kijelentkezés megszakítja az aktív VPN-kapcsolatot. Folytatja?";
+
+/* Common word */
+"_enabled" = "Elérhető";
+
+/* Common word */
+"_disabled" = "Letiltva";
+
+/* Button in some alerts */
+"_disable" = "Letiltás";
+
+/* Button in Kill switch error alert */
+"_report" = "Jelentés";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Mellőzés";
+
+"_continue" = "Folytatás";
+
+/* Button in some alerts */
+"_show_instructions" = "Utasítások megjelenítése";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "A hálózat nem elérhető";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Nem sikerült VPN-kapcsolatot létrehozni. Nem csatlakozik az internethez.";
+
+/* MacOS: alert before disconnection on protocol and/or SecureCore state change */
+"_vpn_connection_active" = "VPN kapcsolat aktív";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (title) */
+"_vpn_protocol_not_supported_title" = "Nem támogatott VPN protokoll";
+
+/* User is trying to switch to a VPN protocol that isn't supported on the current server (text) */
+"_vpn_protocol_not_supported_text" = "A VPN protokoll nem elérhető a kiválasztott kapcsolathoz. A csatlakozáshoz próbálja meg megváltoztatni a protokollt vagy a kiszolgálót.";
+
+/* iOS: button in settings screen */
+"_log_out" = "Kijelentkezés";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "A kijelentkezés befejezi a VPN-munkamenetet.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Az alkalmazásból való kijelentkezés megszakítja az aktív VPN-kapcsolatot. Folytatja?";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "A protokollok módosítása bezárja a jelenlegi VPN-munkamenetet.";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Biztonságos internet bárhol";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Hibabejelentés...";
+
+/* Main app menu; User with \Proton VPN\ inside the same main menu as a name for item that opens help page. */
+"_help" = "Segítség";
+
+/* MacOS: link in login screen */
+"_learn_more" = "További információk";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* Common word */
+"_close" = "Bezárás";
+
+/* Changing settings title */
+"_change_settings" = "Beállítások módosítása";
+
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "A funkció használatához Proton VPN Plus előfizetés szükséges.";
+
+/* Display more information */
+"_more_info" = "További információk";
+
+/* Display less information */
+"_less_info" = "Kevesebb infó";
+
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Kapcsolatfelvétel";
+
+"_turn_on" = "Bekapcsolás";
+
+"_not_now" = "Nem most";
+
+"_allow" = "Engedélyezés";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Publikus IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Gyors kapcsolódás";
+
+/* Title of the change server button */
+"_change_server" = "Szerver váltása";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* Profile create/edit menu */
+"_country" = "Ország";
+
+"_show_protonvpn" = "A Proton VPN-től";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Alkalmazás adatainak törlése";
+
+/* Main mac app menu item */
+"_system_extension_tutorial_menu_item" = "Rendszerbővítés bemutató";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Szerver elérhetőségének ellenőrzése";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Kapcsolódás";
+
+"_connectingDotDotDot" = "Kapcsolódás...";
+
+/* iOS: countries list section header */
+"_countries_free" = "Ingyenes országok";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Prémium országok";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Kapcsolódás %@";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+"_connecting_to" = "Kapcsolódás: %@";
+
+"_reconnecting_to" = "Újrakapcsolódás ehhez: %@";
+
+"_reconnecting" = "Új VPN kapcsolat beállítása IP-címének védelmére";
+
+/* iOS status view */
+"_connected_to" = "Kapcsolódva";
+
+/* macOS: Text on connection overlay shown after connection timed out */
+"_connection_timed_out" = "A kapcsolat megszakadt";
+
+/* Text that should be bold in _connection_timed_out string */
+"_connection_timed_out_bold" = "időtúllépés";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Kapcsolódva: %@";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Nem kapcsolódik";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Nincs kapcsolódva";
+
+/* MacOS: button in connecting overlay */
+"_try_again" = "Próbálja újra";
+
+"_try_again_without_killswitch" = "Kapcsolja ki a vészkapcsolót és próbálja újra";
+
+/* Button in some alerts */
+"_retry" = "Újra";
+
+/* iOS: section header in countries list */
+"_free_servers" = "Ingyenes szerverek";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "Plus szerverek";
+
+/* iOS: section header in countries list */
+"_test_servers" = "TESZT szerverek";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Kapcsolat létrehozása...";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Sikeres kapcsolódás";
+
+/* MacOS: connecting overlay */
+"_failed" = "sikertelen";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Kapcsolódás sikertelen";
+
+/* iOS status view */
+"_security" = "Biztonság";
+
+/* iOS status view */
+"_status" = "Állapot";
+
+/* iOS status view */
+"_session_time" = "Eltelt idő";
+
+/* iOS status view */
+"_location" = "Hely";
+
+/* iOS status view */
+"_city" = "Város";
+
+/* iOS status view */
+"_technical_details" = "Technikai részletek";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Proton VPN megjelenítése a bejelentkezéshez...";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Váltás a Plus csomagra";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "Secure Core használatához";
+
+"_switch_side_button_on" = "BE";
+
+"_switch_side_button_off" = "KI";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
+"_timeout_ks_ike_descritpion" = "Egy másik alkalmazás zavarhatja a vészkapcoslót. A probléma megoldásához váltson át az OpenVPN protokollra, vagy tiltsa le a vészkapcsolót, és próbálja meg újra.";
+
+/* Free tier plan title */
+"free_tier_plan_title" = "Proton VPN Free";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Vészkapcsoló blokkolja az összes kapcsolatot";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "A mindig bekapcsolt VPN automatikusan újracsatlakozik";
+
+/* MacOS: About window title */
+"_about" = "Névjegy";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Verzió";
+
+/* MacOS: About window */
+"_version_current" = "Aktuális verzió:";
+
+/* MacOS: About window */
+"_release_date" = "Megjelenési dátum:";
+
+/* MacOS: About window */
+"_changelog" = "Változások listája";
+
+/* MacOS: About window */
+"_acknowledgements" = "Közreműködők";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Felhasználónév";
+
+/* Used in sign-in, sign-up */
+"_password" = "Jelszó";
+
+/* Sign-up form */
+"_password_confirm" = "Jelszó megerősítése";
+
+/* Show/hide password switch */
+"_show" = "MEGJELENÍTÉS";
+
+/* Show/hide password switch */
+"_hide" = "ELREJTÉS";
+
+/* MacOS: Login button */
+"_login" = "Bejelentkezés";
+
+/* iOS: Login button in several places */
+"_log_in" = "Bejelentkezés";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Jelszó mentése";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Indítás a rendszerrel";
+
+/* MacOS: button in login screen */
+"_create_account" = "Fiók létrehozása";
+
+/* MacOS: button in login screen */
+"_need_help" = "Segítségre van szüksége?";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Jelszó visszaállítása";
+
+/* MacOS: button in login screen */
+"_common_issues" = "Általános bejelentkezési problémák";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Elfelejtett felhasználónév";
+
+/* MacOS: generic failure message for SSO login */
+"_sso_login_failure" = "Nem sikerült bejelentkezni az SSO-val. Próbálja meg újra.";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Elfelejtett jelszó?";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Regisztráció";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Egy másik felhasználó Proton VPN munkamenete aktív ezen az eszközön. A bejelentkezési folyamat folytatásával az aktuális munkamenet leáll. Folytatja?";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Email cím megadása";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Kód";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Telefonszám megadása";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Országkód kiválasztása";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Ország keresése";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Már van fiókom";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Ellenőrző e-mail küldése";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Ellenőrző SMS kérése";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Válasszon egy ellenőrzési módot a folytatáshoz:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "A visszaélések megelőzése érdekében igazolnia kell, hogy ember.";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Ellenőrzés CAPTCHA-val";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Ellenőrzés email-el";
+
+"_use_sms_verification" = "Ellenőrzés SMS-el";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Kézi aktiválás kérése";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Elküld";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Nem érkezett meg a kód?";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Új kód kérése";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Új kód kérése";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Szerződési feltételeket";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "A Proton VPN használatával elfogadja az alábbiakat:\na %@ és %@";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Adatvédelmi irányelvek";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Elküldtünk egy ellenőrző kódot, kérjük írja be.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Telepítés kész";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "A Proton VPN ingyenes csomagját választotta. Új felhasználóknak hét napig ingyenesen használható a Proton VPN Plus összes szolgáltatása.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "A vásárlás sikerült. Aktiváltuk a megrendelt Proton VPN Plus csomagot.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_title" = "Védje magát online";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_text" = "A Proton VPN elkötelezett az adatainak védelme és tiszteletben tartása mellett. Elsődleges irányelvünk, hogy a lehető legkevesebb felhasználói adatot gyűjtsük, hogy biztosítsuk a privát és anonim felhasználói élményt az alkalmazás használata során, különösen:\n\n%@ - a bejelentkezéshez, az elveszett jelszó helyreállításához és fontos szolgáltatási frissítések küldéséhez.\n\n%@ - csak az összeomlásról szóló jelentések és hibák esetén.\n\nA Proton VPN alkalmazás ezen adatokon kívül semmilyen felhasználói információt nem dolgoz fel. Nem naplózzuk az online tevékenységét, sem semmilyen személyes azonosítható információt. A fent felsorolt összes adatot a Proton VPN saját rendszerében tároljuk és dolgozzuk fel, harmadik fél soha nem fér hozzá.";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_user_details" = "Felhasználó név, email cím";
+
+/* iOS: data disclaimer screen */
+"_data_disclaimer_device_details" = "Eszköz típusa és az operációs rendszer verziója";
+
+/* iOS: data disclaimer screen button */
+"_data_disclaimer_agree" = "Egyetértek és folytatás";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Térkép";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_show" = "Térkép megjelenítése";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers */
+"_map_hide" = "Térkép elrejtése";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Csatlakozik a TOR hálozathoz";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Támogatja a P2P forgalmat";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Prémium szerver";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "%@-on keresztül";
+
+/* Used for SecureCore connection labels. */
+"_via_secure_core" = "Secure Core-on keresztül";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "ezen keresztül:";
+
+/* Server load percentage, shown in the sidebar header when connected to a server. Also shown in the tooltip when hovering over a server load icon in the sidebar country list. %@ is a placeholder for the numeric percentage value. */
+"_server_load_percentage" = "%@%% terhelés";
+
+/* iOS: Home screen title, tab bar item title; MacOS: TabBar tab title; */
+"_home" = "Otthoni";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Országok";
+
+"_no_servers_to_show" = "Jelenleg nincs megjelenítendő szerver.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "A csomag nem tartalmazza a Secure Core szolgáltatást.";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "További információk a Secure Core-ról";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Keresés az országok között";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "További védelmet nyújt a VPN-kiszolgálók kompromittálása ellen, azzal, hogy a forgalmat a Secure Core hálózatunkon keresztül irányítja át";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "A Secure Core bekapcsolásakor megszakad a jelenlegi kapcsolat.";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_load" = "Szerver terheltség:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_server_ip" = "Szerver IP:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_auto_assigned" = "Automatikusan hozzárendelve";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_premium_server" = "Prémium szerver";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Alap";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "Tor";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_p2p_server" = "P2P szerver";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list */
+"_tor_server" = "Tor szerver";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profilok";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Ajánlott";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Saját profilok";
+
+/* Button */
+"_save_as_profile" = "Mentés profilként";
+
+/* Button */
+"_delete_profile" = "Profil törlése";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "A profil törölve";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "A profilt nem sikerült törölni";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Profil létrehozása";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Profilok kezelése";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Profilok áttekintése";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Az új profil mentve";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "A profilt nem sikerült létrehozni";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil frissítve";
+
+/* MacOS menu item; MacOS Edit tab title; */
+"edit_menu_title" = "Szerkesztés";
+
+/* MacOS menu item; MacOS cut item title; */
+"cut_menu_title" = "Kivágás";
+
+/* MacOS menu item; MacOS copy item title; */
+"copy_menu_title" = "Másolás";
+
+/* MacOS menu item; MacOS paste item title; */
+"paste_menu_title" = "Beillesztés";
+
+/* MacOS menu item; MacOS delete item title; */
+"delete_menu_title" = "Törlés";
+
+/* MacOS menu item; MacOS select item title; */
+"select_all_menu_title" = "Összes kiválasztása";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Áttekintés";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Kapcsolat";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Művelet";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Leggyorsabb";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Leggyorsabb szerver";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Leggyorsabb";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Véletlen";
+
+/* Profile create/change form */
+"_random_available_server" = "Véletlenszerű szerver";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Véletlen";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Mindig más szerver";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Nincs elérhető leírás";
+
+"_create_profile" = "Profil létrehozása";
+
+/* Profile create/change form */
+"_profile_settings" = "Profil beállítások";
+
+/* Profile create/change form */
+"_connection_settings" = "Kapcsolódás beállítások";
+
+/* Profile create/change form */
+"_name" = "Név";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Profil nevének megadása";
+
+/* Profile create/change form */
+"_color" = "Szín";
+
+/* Profile create/change form */
+"_make_default_profile" = "Profil alapértelmezetté tétele";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "A „Gyors csatlakozás” gomb az alapértelmezett profilt használja.\n";
+
+"_feature" = "Funkció";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core";
+
+/* Profile create/change form */
+"_select_country" = "Ország kiválasztása";
+
+/* Profile create/change form */
+"_server" = "Szerver";
+
+/* Profile create/change form */
+"_select_server" = "Szerver kiválasztása";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Név nincs megadva";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "A profilnév maximális hossza 25 karakter lehet";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Kérjük, válasszon egy országot";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Szerver nincs kiválasztva";
+
+"_profile_name_needs_to_be_unique" = "Már létezik ilyen nevű profil";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "A folytatással a módosítások elvesznek. Folytatja?";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Nincs kitöltve minden szükséges mező";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Profil törlése";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "A profil végérvényesen törlődik. Folytatja?";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Profil szín kiválasztása";
+
+/* Plan speed */
+"_plan_speed_medium" = "Közepes sebesség";
+
+/* Plan speed */
+"_plan_speed_high" = "Nagy sebesség";
+
+"_plan_speed_fastest" = "Legnagyobb sebesség";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Belső API hiba";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "A Proton VPN munkamenet aktív";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Hiányoznak a felhasználói hitelesítő adatok. Nem sikerült bejelentkezni";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "A felhasználói hitelesítő adatok lejártak. Jelentkezzen be";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "A kulcstartóból hiányoznak a VPN-hitelesítő adatok";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Nem sikerült a robotellenőrzés. Kérjük, próbálja meg újra a prémium csomag megvásárlását.";
+
+/* Error decoding an object */
+"_error_decode" = "Nem sikerült dekódolni az osztály archivált adatait: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Az email ellenőrzés átmenetileg le van tiltva";
+
+/* Error writing to system keychain */
+"_error_keychain_write" = "A Proton nem tudott kommunikálni a készülékkel. Próbálja meg később újra.";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Nem található a felhasználó a munkamenetben";
+
+/* Network error */
+"_ne_request_timed_out" = "Hálózati időtúllépés";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "A szolgáltatás nem elérhető";
+
+/* Network error */
+"_ne_network_connection_lost" = "A hálózati kapcsolat megszakadt";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Nincs kapcsolódva az internethez";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Nem sikerült elérni a Proton szervereket";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Ismeretlen hiba";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Lejárt számlatartozás";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Lejárt számlatartozása van. Kérjük, egyenlítse ki a számláit az account.protonvpn.com címen";
+
+/* Generic sign in error */
+"_error_sign_in_again" = "Elnézést, valami rosszul sikerült. Jelentkezzen be újra.";
+
+"_p2p_detected_popup_title" = "A P2P forgalom nem engedélyezett ezen a szerveren";
+
+"_p2p_detected_popup_body" = "A kapcsolat le lett tiltva, mert ez a szerver nem támogatja a peer-to-peer (P2P) forgalmat. A P2P-t nem támogatják ingyenes szerverek, illetve a 100 vagy annál nagyobb számú szerverek.";
+
+"_p2p_forwarded_popup_title" = "Kapcsolódás átirányítva";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "A szerver karbantartás alatt áll";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Sajnos ehhez a szerverhez való kapcsolódáshoz nem megfelelő a csomagja. További szerverek eléréshez fontolja meg a nagyobb csomagra váltást.";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Az ország összes szervere karbantartás alatt áll. Kapcsolódjon egy másik országhoz.";
+
+"_unsecure_wifi" = "Nem biztonságos WiFi kapcsolatot észleltünk";
+
+"_unsecure_wifi_learn_more" = "További információk";
+
+"_unsecure_wifi_title" = "Nem biztonságos WiFi észlelve";
+
+"_maintenance_on_server_detected_title" = "A VPN kiszolgáló karbantartás alatt";
+
+"_maintenance_on_server_detected_subtitle" = "A szerver, amelyhez csatlakozott, karbantartás alatt áll";
+
+"_maintenance_on_server_detected_description" = "Átirányítjuk az elérhető leggyorsabb kiszolgálóhoz.";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani.";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ karbantartás alatt álló szerver";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "A profilszerverek karbantartás alatt állnak";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Minden szerver karbantartás alatt áll. Ez általában azt jelenti, hogy technikai nehézségek vannak a Proton VPN oldalán, vagy a hálózata korlátozott.";
+
+"_p2p_forwarded_popup_body" = "A kapcsolat automatikusan átirányításra került egy másik szerverre, mert egyes szerverek nem támogatják a fájlmegosztó (P2P) forgalmat. Ez csökkentheti a kapcsolat sebességét. Használjon P2P címkével jelölt szervereket az átirányítás elkerülésére.";
+
+"_p2p_forwarded_popup_body_p1" = "A kapcsolat automatikusan átirányításra került egy másik szerverre, mert egyes szerverek nem támogatják a fájlmegosztó (P2P) forgalmat. Ez csökkentheti a kapcsolat sebességét. Használjon";
+
+"_p2p_forwarded_popup_body_p2" = "ikonnal jelölt szervereket az átirányítás elkerülésére.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Kapcsolódási hiba";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Az eszköz nem fejezte be a korábbi VPN-munkamenetet. Új VPN-kapcsolat létrehozása előtt újra kell indítani a készüléket.";
+
+"_update_required" = "Frissítés szükséges";
+
+"_update_required_no_longer_supported" = "A Proton VPN ezen verziója már nem támogatott. Az alkalmazást frissíteni kell egy újabbra.";
+
+/* Secondary button title in the App update required alert  */
+"_update_required_support" = "Kapcsolatfelvétel";
+
+/* Primary button title in the App update required alert  */
+"_update_required_update" = "Frissítés";
+
+"_invalid_refresh_token_please_login" = "Egy ideje már nem használta a Proton VPN alkalmazást. Jelentkezzen be újra.";
+
+"_error_mitm_title" = "Nem biztonságos kapcsolat";
+
+"_error_mitm_description" = "A TLS-tanúsítvány érvényesítés sikertelen volt a Proton VPN API-hoz való csatlakozáskor. A jelenlegi internetkapcsolata megfigyelés alatt állhat. Az adatok biztonsága érdekében megakadályozzuk, hogy az alkalmazás hozzáférjen a Proton VPN API-hoz.\nA bejelentkezéshez vagy a fiókjához való hozzáféréshez váltson új hálózatra, és próbáljon meg újra csatlakozni.";
+
+"_error_mitm_vpn_description" = "A TLS-tanúsítvány érvényesítés sikertelen volt a VPN-szerverhez való csatlakozáskor. A jelenlegi internetkapcsolata megfigyelés alatt állhat. Az adatok biztonsága érdekében megakadályozzuk, hogy az alkalmazás hozzáférjen ehhez a VPN-kiszolgálóhoz.\nVálasszon másik kiszolgálót.";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "TLS inicializálási hiba";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "A szerver tanúsítványa nem ellenőrizhető.";
+
+/* Mac: neagent help screen. The numbers refer to a text field and button in an image displayed above this text. Final string with filled in variables looks like this: "You may be asked to provide your computer account password\nto connect to the Proton VPN service. If this request appears,\nenter your Mac password (1) and click ‘Always Allow’ (2)." */
+"_neagent_description" = "Szükség lehet a %@ megadására\na Proton VPN-hez való kapcsolódáshoz. Ha ez megjelenik,\nadja meg a %@ %@ és kattintson a '%@'-re %@.";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "számítógép jelszó";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac jelszót";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen name of the Always Allow button the user needs to press in the macOS system dialog asking for account password */
+"_neagent_always_allow" = "Mindig engedélyez";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* Button in several different alerts */
+"_got_it" = "Értem!";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to upgrade it. Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Nincs elérhető frissítés az alkalmazáshoz";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Ez a Proton VPN csomag nem frissíthető az alkalmazáson belül. A frissítés az account.protonvpn.com weblapon végezhető el.";
+
+/* Plan upgrade unavailable alert, with an attached reason. */
+"_upgrade_unavailable_on_testflight" = "A Proton VPN előfizetése nem frissíthető az alkalmazás TestFlight verziójáról, látogasson el a account.protonvpn.com oldalra a frissítéshez.";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Alkalmazás adatainak törlése";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Minden Proton VPN adat törlődik, és az alkalmazás kilép. Folytatja?";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Vészkapcsoló kikapcsolása";
+
+/* iOS and macOS: Enable kill switch on badly-routed networks */
+"_kill_switch_enable" = "Vészkapcsoló bekapcsolása";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Beállítások";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Beállítások";
+
+/* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
+"_account" = "Fiók";
+
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Hiba";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "A fiók törlése befejezi a VPN-munkamenetet.";
+
+/* MacOS: General tab in setting window */
+"_general" = "Általános";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Fiók típusa";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Csomag";
+
+"_manage_subscription_on_web" = "Az előfizetést a webes irányítópulton kezelheti";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Vészkapcsoló";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Blokkolja az összes hálózati forgalmat, ha a VPN-alagút elveszik.";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Mindig bekapcsolt VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "A mindig bekapcsolt VPN gyorsan és automatikusan visszaállítja a VPN kapcsolatot. A biztonság érdekében ez a szolgáltatás mindig be van kapcsolva.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Automatikus kapcs.";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Az alkalmazás indításakor kapcsolódik a kiválasztott profilhoz";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "A gyors csatlakozás gomb az előre kiválasztott profilhoz kapcsolódik";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Indítás a háttérben";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Rendszer értesítések";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Korai hozzáférés";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Legyen az elsők között, akik megkapják a legújabb frissítéseket. Kérjük, ne feledje, hogy a korai verziók kevésbé lehetnek stabilak.";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Értesítés a nem védett hálózatoknál";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Értesítést kap, ha a Proton VPN észleli, hogy nem védett hálózathoz kapcsolódik.";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS szivárgás elleni védelem";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Megakadályozza a DNS-lekérdezések részleteinek kiszivárgását harmadik felek számára. Mindig bekapcsolva.";
+
+/* iOS Settings: table section cell */
+"_security_keys" = "Hitelesítési kulcsok";
+
+/* iOS Settings: table section header */
+"_security_options" = "Biztonsági beállítások";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Csomag";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Előfizetés kiválasztása";
+
+"_protocol" = "Protokoll";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN protokoll";
+
+"_openvpn" = "OpenVPN";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: TCP option */
+"_tcp" = "TCP";
+
+/* iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option */
+"_udp" = "UDP";
+
+/* iOS Settings -> Protocol -> WireGuard: TLS option */
+"_tls" = "TLS";
+
+/* iOS Settings -> Protocol: WireGuard option */
+"_wireguard" = "WireGuard";
+
+/* Settings -> Protocol: WireGuard TLS Option called "Stealth". Should not be translated. */
+"_wireguard_tls" = "Stealth";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Napló megtekintése";
+
+/* iOS logs screen title */
+"_logs" = "Napló";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Alkalmazás napló";
+
+/* iOS Settings: WireGuard logs row */
+"_wireguard_logs" = "WireGuard naplók";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Widget aktiválása";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "A kezdőképernyőt balra elhúzva elérhetők a widgetek.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Görgessen legalulra és érintse meg a szerkesztés gombot.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Proton VPN widget hozzáadása az aktív widgetekhez.";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Hibajelentés";
+
+"_allow_lan_title" = "LAN kapcsolatok engedélyezése";
+
+"_allow_lan_info" = "Lehetővé teszi a VPN megkerülését és a helyi hálózaton lévő eszközökhöz, például a nyomtatóhoz való csatlakozást.";
+
+"_allow_lan_description" = "A LAN-hozzáférés engedélyezéséhez a vészkapcsolót ki kell kapcsolni.\n\nFolytatja?";
+
+"_allow_lan_note" = "Vegye figyelembe, hogy a kapcsolatát újra kell indítani a módosítás alkalmazásához.";
+
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_title" = "Bekapcsolja a vészkapcsolót?";
+
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "A vészkapcsoló aktiválásával nem tud hozzáférni a helyi hálózaton lévő eszközökhöz. \n\nFolytatja?";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ csomag kiválasztása";
+
+/* Account plan description */
+"_free_countries" = "3 ország";
+
+/* Account plan description */
+"_all_countries" = "60+ ország";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ sebesség";
+
+/* Value of speed in _speed */
+"_medium" = "Közepes";
+
+/* Value of speed in _speed */
+"_high" = "Gyors";
+
+/* Value of speed in _speed */
+"_highest" = "Leggyorsabb";
+
+/* Features of account plan */
+"_plus_plan_features" = "További szerverek\nSecure Core\nTor szerverek";
+
+/* Used instead of price for free plans. */
+"_free" = "Ingyenes";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Aktiválja a megvásárolt csomagot a következőhöz ";
+
+/* Label in Plan information */
+"_most_popular" = "Legnépszerűbb";
+
+/* Button in plan selection */
+"_select_plan" = "Csomag kiválasztása";
+
+/* Plan information */
+"_advanced_features" = "+ Speciális szolgáltatások";
+
+/* Plan information */
+"_adblocker_netshield_feature" = "Reklámblokkoló (NetShield)";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "A csomag megvásárlása után, a megjelenített összeg kerül elszámolásra az iTunes-fiókban, amely tartalmazza az adókat és a kiegészítő platformdíjakat (amelyeket nem a Proton számít fel közvetlenül). A vásárlás után automatikusan frissül a kiválasztott csomag egy évre, amely után megújítható vagy lemondható online vagy iOS-alkalmazásunkon keresztül.";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ év";
+
+/* Text, that appears next to a subscription payment option which is only valid for web purchase. */
+"_web_only_feature" = "Csak weben";
+
+/* %@1 is the next payment date; %@2 price per year from that date and so on. */
+"_subscription_renewal_date" = "Előfizetés automatikusan megújul %1$@-én, %2$@/év áron";
+
+/* iOS plan feature */
+"_feature_server_count" = "Csatlakozás a szerverhez itt";
+
+/* iOS plan feature */
+"_feature_speed" = "Sebesség";
+
+/* iOS plan feature */
+"_feature_connections" = "Egyidejű VPN-kapcsolat";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Biztonságos videónézés";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor VPN-en";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ÜDVÖZÖLJÜK A FEDÉLZETEN!";
+
+"_no_thanks" = "Nem, köszönöm";
+
+"_welcome_description" = "Köszönjük a Proton VPN használatát.";
+
+/* Plus word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "Plus";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P szerverek";
+
+"_5_connections" = "5 kapcsolódás";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Több ország";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "LEJÁRT";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Az ingyenes próbaverziója %@";
+
+/* %@ is always 'Proton VPN Plus' e.g. Your account has been downgraded to Proton VPN Free.\nHere's what you will miss from Proton VPN Plus: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "A fiókot átváltottuk a Proton VPN ingyenes csomagjába.\nEzeket a funkciókat nem tartalmazza a %@:";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Talán később";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Csomagváltás";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Váltás nagyobb csomagra";
+
+/* MacOS: \Trial about to expire\ screen title */
+"_free_trial_about_to_expire_title" = "Az ingyenes próbaverzió lejár!";
+
+/* %@ is always 'Proton VPN Plus' e.g. Upgrade to Proton VPN Plus and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Frissítsen a %@-ra, hogy továbbra is használhassa ezeket a funkciókat:";
+
+"_5_connections_description" = "Kapcsolódjon akár 5\neszközről egy időben";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_core_description" = "Rendkívül biztonságos szerverek\náltalunk üzemeltetett";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_title" = "Több kiszolgáló";
+
+/* MacOS: \Trial about to expire\ screen */
+"_multiple_servers_description" = "Több száz szerver\nvilágszerte";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_title" = "Biztonságos videónézés";
+
+/* MacOS: \Trial about to expire\ screen */
+"_secure_streaming_description" = "Kedvenc videók\nbiztonságos megtekintése";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Kiegészítések";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "Widget";
+
+/* Menu point in settings screen */
+"_usage_statistics" = "Használati statisztikák";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Jelentkezzen be a kezdéshez";
+
+"_vpnstatus_not_loggedin" = "Nincs bejelentkezve a Proton VPN-be. Nyissa meg a Proton VPN alkalmazást, és jelentkezzen be.";
+
+/* Bug report attachments */
+"_report_attachments" = "Mellékletek";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN napló";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Ennek engedélyezésével az ügyféloldali VPN-naplók hozzáadódnak ehhez a jelentéshez";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Üzenet";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "E-mail cím";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Az üzenet...";
+
+/* Bug report: Send report button text */
+"_report_send" = "Visszajelzés küldése";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Köszönjük a bejelentést";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "E-mail cím:";
+
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Milyen hibát észleltél?";
+
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Pontosan milyen lépéseket hajtottál végre?";
+
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Kezdjen el gépelni...";
+
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Tartalmazzon alkalmazás naplókat és rendszer információkat";
+
+/* Main mac app menu item */
+"_menu_about" = "A Proton VPN-ről";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Frissítések keresése...";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Beállítások";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Proton VPN elrejtése";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Többi elrejtése";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Összes megjelenítése";
+
+/* Main mac app menu item */
+"_menu_logout" = "Kijelentkezés";
+
+/* Main mac app menu item */
+"_menu_quit" = "Kilépés a Proton VPN-ből";
+
+/* Main mac app menu item */
+"_menu_window" = "Ablak";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Kis méret";
+
+"_subscription_will_expire" = "A jelenlegi csomag lejár: %@.";
+
+"_subscription_will_renew" = "A jelenlegi csomag automatikusan megújításra kerül: %@.";
+
+"_subscription_description" = "Előre vásárolhat kreditet a jelenlegi csomag automatikus meghosszabbításához. A jelenlegi előfizetési időszak végén ezekből a kreditekből vonjuk le a szolgáltatás díját.";
+
+"_subscription_button" = "Csomag meghosszabbítása 1 évre \n%@.";
+
+"_subscription_extended_success" = "Sikeresen vásárolt kreditet a jelenlegi csomag meghosszabbításához.";
+
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Hibaelhárítás";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Hibaelhárítás";
+
+"_troubleshoot_item_alt_title" = "Alternatív útválasztó engedélyezése";
+
+"_troubleshoot_item_alt_description" = "Ha a Proton szolgáltatásai le vannak tiltva, ezzel a beállítással az alkalmazás alternatív hálózati útvonalakat próbál meg használni, ami hasznos lehet tűzfalak megkerüléséhez vagy hálózati problémák megoldásához. Javasolt ezt a beállítást bekapcsolva a tartani nagyobb megbízhatóság érdekében. \nTovábbi információk";
+
+"_troubleshoot_item_alt_link1" = "További információk";
+
+"_troubleshoot_item_nointernet_title" = "Nincs internetkapcsolat";
+
+"_troubleshoot_item_nointernet_description" = "Ellenőrizze, hogy az internet kapcsolat működik-e.";
+
+"_troubleshoot_item_isp_title" = "Internet szolgáltató (ISP) probléma";
+
+"_troubleshoot_item_isp_description" = "Csatlakozzon a Prontonhoz egy másik hálózaton keresztül (vagy használjon Tor-t).";
+
+"_troubleshoot_item_isp_link1" = "Tor";
+
+"_troubleshoot_item_gov_title" = "Kormányzati blokk";
+
+"_troubleshoot_item_gov_description" = "Az ön országában a Proton elérése korlátozott lehet. Próbálja meg a Tor használatával elérni a Protont.";
+
+"_troubleshoot_item_gov_link1" = "Tor";
+
+"_troubleshoot_item_antivirus_title" = "Antivírus interferencia";
+
+"_troubleshoot_item_antivirus_description" = "Ideiglenesen tiltsa le vagy távolítsa el az antivírus szoftvert.";
+
+"_troubleshoot_item_proxy_title" = "Proxy/tűzfal interferencia";
+
+"_troubleshoot_item_proxy_description" = "Kapcsolja ki a proxy-t vagy a tűzfalat, vagy vegye fel a kapcsolatot a hálózati rendszergazdával.";
+
+"_troubleshoot_item_proton_title" = "A Proton nem érhető el";
+
+"_troubleshoot_item_proton_description" = "Ellenőrizze a Proton állapotát a rendszer jelentésekben.";
+
+"_troubleshoot_item_proton_link1" = "Proton Állapot";
+
+"_troubleshoot_item_other_title" = "Nem sikerült megoldást találni";
+
+"_troubleshoot_item_other_description" = "Vegye fel velünk a kapcsolatot a támogatási űrlapon, e-mailben (%@), vagy a Twitter segítségével.";
+
+"_troubleshoot_item_other_link1" = "támogatási űrlap";
+
+"_troubleshoot_item_other_link2" = "e-mail cím";
+
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Netshield statistics, the text for the count of bytes of data saved. Text appears in vertical orientation, so we need the next line symbol (\n). This can be a 3 words max text, each separated by \n. This will be preceded by the amount of data. Examples are "1 MB data saved", "56.9 GB data saved" */
+"_netshield_stats_data_saved" = "Adat\nelmentve";
+
+/* Settings -> Netshield, Status -> NetShield: Long description of the feature, displayed below netshield levels for premium users. Contains a link to https://protonvpn.com/support/netshield */
+"_netshield_feature_description" = "Védekezzen a hirdetések, rosszindulatú programok és nyomkövetők ellen a webhelyeken és alkalmazásokban. Ha a webhelyek nem töltődnek be, próbálja meg letiltani a NetShieldet.\nTovábbi információk";
+
+/* Link with more info in the NetShield Feature description */
+"_netshield_feature_description_alt_link" = "További információk";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_upsell_title" = "Reklámmentes böngészés a NetShield segítségével";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_upsell_subtitle" = "Hirdetések, nyomkövetők és rosszindulatú programok blokkolása webhelyeken és alkalmazásokban";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell title */
+"_netshield_business_upsell_title" = "Reklámok blokkolása a NetShielddel";
+
+/* Settings -> Netshield, Status -> NetShield: Netshield Upsell cell subtitle */
+"_netshield_business_upsell_subtitle" = "Amikor VPN Businessre előfizet";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+"_netshield_title_tooltip" = "Hirdetések, követők és rosszindulatú programok blokkolása";
+
+/* Settings -> Netshield, Status -> NetShield: Off */
+"_netshield_off" = "Ki";
+
+/* Status -> Netshield: On */
+"_netshield_on" = "Be";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Kártékony kódok blokkolása";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Rosszindulatú programok, hirdetések és nyomkövetők blokkolása";
+
+"_netshield_alert_reconnect_description_on" = "A NetShield üzemmód megváltoztatásához a kapcsolat újraindul.\nMegjegyzés: Ha egyes webhelyek nem töltődnek be, próbálja meg letiltani a NetShieldet.";
+
+"_netshield_alert_reconnect_description_off" = "A NetShield üzemmód megváltoztatásához a kapcsolat újraindul.";
+
+"_netshield_alert_upgrade_description" = "A NetShield hozzájárul a magnánszféra védelméhez a hirdetések és követők tiltásával.";
+
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Rosszindulatú szoftverek és hirdetések blokkolása";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Hírek";
+
+/* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
+"_offer_ending_" = "Vége %@";
+
+"_quick_settings_title" = "Gyorsbeállítások";
+
+"_quick_settings_secureCore_description" = "Vezesse át a legérzékenyebb adatait a legbiztonságosabb szervereinken, adatbiztonság-barát országokban.";
+
+"_quick_settings_netShield_description" = "Böngéssze az internetet reklámok és rosszindulatú kódok nélkül. ";
+
+"_quick_settings_killSwitch_description" = "Az IP cím szivárgás elkerülése végett letiltja az internetkapcsolatot, ha a VPN kapcsolat megszakad";
+
+"_quick_settings_secureCore_note" = "A Secure Core csökkentheti a VPN sebességét";
+
+"_quick_settings_netShield_note" = "Ha a weboldalak nem töltődnek be, próbálja meg letiltani a NetShieldet.";
+
+"_quick_settings_killSwitch_note" = "Ha nem tud csatlakozni a helyi hálózaton lévő eszközökhöz, próbálja meg a kill switch kikapcsolását.";
+
+"_quick_settings_get_plus" = "Plus választása";
+
+"_applying_settings_" = "Beállítások alkalmazása";
+
+"_reestablish_vpn_connection_" = "VPN-kapcsolat helyreállítása.";
+
+"_ip_will_not_be_exposed" = "Az IP címe nem kerül nyilvánosságra.";
+
+"_cancel_reconnection" = "Ez megszakítja az újrakapcsolódási kísérletet, és megszakad a kapcsolat.";
+
+"_quick_settings_netshield_option_off" = "Ne tiltsa le";
+
+"_quick_settings_netshield_option_level1" = "Csak a rosszindulatú programok blokkolása";
+
+"_quick_settings_netshield_option_level2" = "Rosszindulatú programok, hirdetések és nyomkövetők blokkolása";
+
+"_upgrade_required_securecore_description" = "A Secure Core a Plus csomaggal együtt érhető el. Fizessen elő, hogy a forgalmat a legbiztonságosabb, adatvédelmi szempontból barátságos országokban lévő szervereinken keresztül irányíthassa.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "A vészkapcsoló védi az IP-jét";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Az internetkapcsolat újraindul, amint a Proton VPN újra csatlakozik egy szerverhez.\nAz internet VPN és kill switch védelem nélküli használatához törölje az újracsatlakozást a szerverhez.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "nincs";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Vészkapcsoló védelem";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Újracsatlakozás megszakítása";
+
+/* Title for Smart Protocol in Settings */
+"_smart_protocol_title" = "Smart Protocol";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Az intelligens protokoll engedélyezése a legjobb kapcsolatot biztosító protokoll és port automatikus használatához.";
+
+/* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_title" = "Újracsatlakozás szükséges";
+
+/* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
+"_smart_protocol_reconnect_modal_body" = "A kapcsolat újraindul a Smart Protocol üzemmód megváltoztatásához.";
+
+/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
+"_sysex_description_1" = "A Proton VPN használatához engedélyeznie kell a **általános VPN protokollokat** a Mac számítógépén.";
+
+/* Part 2 of the description of the system extension wizard in mac */
+"_sysex_description_2" = "Az egyéni protokollok gyorsabb és biztonságosabb kapcsolatokat tesznek lehetővé, és a legtöbb Proton VPN-kiszolgálóhoz való csatlakozáshoz engedélyezni kell őket.";
+
+/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_3" = "A folytatáshoz kattintson a **Rendszerbeállítások megnyitása** gombra, majd kövesse a képernyőn megjelenő videoutasításokat.";
+
+/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
+"_sysex_description_4" = "A folytatáshoz kattintson a **Biztonsági beállítások megnyitása** gombra, majd kövesse a képernyőn megjelenő videoutasításokat.";
+
+/* Title of the system extension wizard in mac */
+"_sysex_set_up_proton_vpn" = "Proton VPN beállítása";
+
+/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_open_system_settings" = "Rendszerbeállítások megnyitása";
+
+/* Default action in the system extension wizard in mac. macOS Ventura */
+"_sysex_open_security_preferences" = "Biztonsági beállítások megnyitása";
+
+"_sysex_settings_description" = "A Proton VPN-nek szüksége van egy System Extension betöltésére, hogy be tudja emelni a Smart Protocolt, az OpenVPN-t és a WireGuardot.";
+
+"_sysex_enabled_title" = "Konfiguráció befejezve";
+
+"_sysex_enabled_description" = "A konfiguráció befejeződött. Mostantól gyorsabban böngészhet az interneten a legjobb VPN-technológiákkal.";
+
+/* The app was unable to enable system extensions on the device, which are required for connecting using WireGuard. */
+"_sysex_cannot_enable" = "Nem engedélyezhető a rendszerbővítés";
+
+/* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
+"_sysex_error_description" = "Hiba történt a rendszerbővítmények engedélyezése közben: %@";
+
+/* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
+"_sysex_error_description_subcase_bad_location" = "kérjük, győződjön meg arról, hogy az alkalmazás megfelelően van telepítve az /Applications mappába.";
+
+/* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "A jelenlegi rendszerházirend tiltja a bővítmények aktiválását az eszközén.";
+
+/* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
+"_sysex_error_description_subcase_authorization_required" = "A folytatáshoz az Ön engedélye szükséges.";
+
+/* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_sysex_error_description_subcase_default" = "Kérjük, lépjen kapcsolatba a támogató csapatunkkal. (Hiba %@)";
+
+"_vpnauth_certfail_title" = "Hitelesítési hiba";
+
+"_vpnauth_certfail_description" = "A VPN-tanúsítvány frissítése nem sikerült. Ellenőrizze a kapcsolatot";
+
+"_vpnauth_too_many_certs_title" = "Hitelesítési hiba";
+
+"_vpnauth_too_many_certs_description" = "Elérte a beállítások módosításának maximális számát. Néhány perc múlva próbálja meg újra.";
+
+"_from_server_title" = "Szervertől:";
+
+"_to_server_title" = "Szerver:";
+
+"_update_billing" = "SZÁMLÁZÁS FRISSÍTÉSE";
+
+"_upgrade_again" = "ELŐFIZETÉS ÚJRA";
+
+"_delinquent_title" = "A VPN fiókján függőben lévő számlák vannak";
+
+"_delinquent_description" = "Újra el tudja érni a prémium funkciókat miután ezek ki lettek fizetve.";
+
+"_delinquent_reconnection_description" = "Újra hozzá fog férni a prémium funkciókhoz, amint ezek ki vannak fizetve. Most újrakapcsolódunk a leggyorsabb, ingyenes csomagban elérhető szerverhez.";
+
+"_maximum_device_title" = "Elérte a maximálisan használható eszközök számát";
+
+"_maximum_device_reached_description" = "Kérjük, válasszon le egy másik eszközt, hogy ezzel kapcsolódni tudjon.";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Kérjük, válasszon le egy másik eszközt, hogy ezzel kapcsolódni tudjon, vagy frissítsen %@-re";
+
+"_reconnect_title" = "Újracsatlakozunk az elérhető leggyorsabb szerverhez.";
+
+"_subscription_expired_title" = "A VPN előfizetése lejárt";
+
+"_subscription_expired_description" = "Előfizetése kisebb csomagra váltott.";
+
+"_subscription_expired_reconnection_description" = "Előfizetése kisebb csomagra váltott, így újrakapcsolódunk a leggyorsabb elérhető szerverhez.";
+
+"_subscription_upgrade_title" = "Fizessen elő újra, hogy élvezhesse az összes funkciót:";
+
+"_subscription_upgrade_option3" = "Speciális funkciók: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "Ingyenes";
+
+"_tier_plus" = "Plus";
+
+"_tier_visionary" = "Visionary";
+
+"_information_title" = "Információk";
+
+"_features_title" = "Jellemzők";
+
+"_performance_title" = "Teljesítmény";
+
+"_smart_routing_title" = "Smart Routing";
+
+"_streaming_title" = "Lejátszás";
+
+"_p2p_title" = "P2P/BitTorrent";
+
+"_tor_title" = "Tor";
+
+"_server_load_title" = "Szerver terheltség";
+
+"_streaming_servers_description" = "Csatlakozzon egy Plus szerveren ebben az országban a streaming megkezdéséhez.";
+
+"_streaming_servers_note" = "Megjegyzés: Kapcsolja ki a helymeghatározó szolgáltatást, és törölje a streaming-alkalmazások gyorsítótárát, hogy az új tartalmak megjelenjenek.";
+
+"_streaming_servers_extra" = "és továbbiak";
+
+"_feature_free_servers" = "Ingyenes szerverek";
+
+"_feature_free_servers_description" = "Biztonság és adatbiztonság mindenkinek. Az ingyenes szervereken nincs adatkorlát, és soha nem fogjuk szándékosan lelassítani a böngészési sebességét.";
+
+"_feature_smart_routing_description" = "Ez a technológia lehetővé teszi a Proton VPN-t, hogy nagyobb sebességet és biztonságot adjon a nehezen kiszolgálható országokban.";
+
+"_feature_streaming_description" = "A Plus szerverek támogatják a videózást (Netflix, Disney+, stb) bárhonnan a világon.";
+
+"_feature_p2p_description" = "Ezek a szerverek nyújtják a legjobb teljesítményt a BitTorrent-hez és a fájlmegosztáshoz.";
+
+"_feature_tor_description" = "Az internetes forgalmat a Tor-hálózaton keresztül irányítja. Lassabb, de privátabb.";
+
+"_performance_load_description" = "A nagy terhelésű szerverek lassabbak, mint az alacsony terhelésűek.";
+
+"_performance_load_low" = "Alacsony";
+
+"_performance_load_medium" = "Közepes";
+
+"_performance_load_high" = "Gyors";
+
+"_locations_all" = "Minden hely";
+
+"_locations_free" = "Free helyek";
+
+"_locations_plus" = "Plus helyek";
+
+"_locations_gateways" = "Átjárók";
+
+/* Header before the list of connections available for free users (in the country list) */
+"_connections_free" = "Free kapcsolat";
+
+/* Gateways info modals title (both iOS and macOS) */
+"_gateways_modal_title" = "Mi az az átjáró?";
+
+/* Gateways info modals text (both iOS and macOS) */
+"_gateways_modal_text" = "A VPN átjáró egy olyan biztonságos kapcsolat, amely dedikált szervereken keresztül ellenőrzött hozzáférést biztosít a vállalat adataihoz és szolgáltatásaihoz";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+
+"_vpn_accelerator_change_title" = "VPN Accelerator módosítása";
+
+/* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
+"_vpn_accelerator_description" = "A VPN Accelerator egy sor egyedülálló teljesítménynövelő technológiát tesz lehetővé, amelyek akár 400%%-kal is növelhetik a VPN sebességét.\nTovábbi információk";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "További információk";
+
+"_action_requires_reconnect" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani";
+
+/* Settings page row title */
+"_plutonium_title" = "Split Tunneling";
+
+/* IP entry validation error */
+"_plutonium_validation_error" = "Adjon meg egy érvényes IPv4 címet";
+
+/* IP entry validation error */
+"_plutonium_address_exists" = "Cím már hozzá van adva";
+
+/* Button title for adding IP to the list */
+"_plutonium_add_button" = "Hozzáadás";
+
+/* Header title of all available apps section */
+"_plutonium_all_apps" = "Összes alkalmazás";
+
+/* Empty list title, appears when no elements are present */
+"_plutonium_none" = "Nincs";
+
+/* Description when user didn't include any apps in the list */
+"_plutonium_no_apps" = "Nincs kiválasztott alkalmazás";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_exclude_mode" = "Kihagyás mód";
+
+/* Title of the plutonium feature operation mode */
+"_plutonium_include_mode" = "Befoglaló mód";
+
+/* Header of the excluded apps list */
+"_plutonium_exclusion_list_apps" = "Kihagyott alkalmazások";
+
+/* Header of the excluded apps list */
+"_plutonium_inclusion_list_apps" = "Védett alkalmazások";
+
+/* Text appears when user makes any configuration changes that require reconnection */
+"_plutonium_reconnection_notice" = "A változtatások újracsatlakozáskor lépnek életbe";
+
+/* Title of a button that opens a panel for file selection */
+"_plutonium_import_apps_title" = "Alkalmazások importálása";
+
+/* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
+"_plutonium_import_apps_subtitle_1" = "Húzza és ejtse ide vagy ";
+
+/* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
+"_plutonium_import_apps_subtitle_2" = "alkalmazások tallózása";
+
+/* Plutonium upsell view title */
+"_plutonium_upsell_title" = "Mindkét világból a legjobbat";
+
+/* Description of an empty list of IPs */
+"_plutonium_empty_ip_list_content" = "Még nincsenek IP-címek";
+
+/* Plutonium upsell view subtitle */
+"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+
+/* Plutonium feature description */
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+
+/* Description of the plutonium feature operation mode */
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+
+/* Description of the included apps list */
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
+
+/* Description of the included apps list */
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
+
+/* Header of the excluded ips list */
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
+
+/* Header of the included ips list */
+"_plutonium_include_mode_ips" = "Protected IP addresses";
+
+"_local_agent_server_error_title" = "Szerverhiba";
+
+"_local_agent_server_error_message" = "Hiba történt a szerveren. Csatlakozzon egy másik szerverhez.";
+
+"_local_agent_policy_violation_error_title" = "Szabályzat megsértése";
+
+"_local_agent_policy_violation_error_message" = "Nem csatlakozhat a szerverhez. Válasszon másik szervert, vagy fizessen elő.";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Kapcsolódási adatok betöltése";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Kapcsolódási adatok betöltése ehhez: %@";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Védje magát online";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Nagy sebességű svájci VPN, amely az internet kapcsolatának titkosításával védi az adatait.";
+
+"_force_upgrade_title" = "Alkalmazás frissítése szükséges";
+
+"_force_upgrade_message" = "Az ön által jelenleg használt Proton VPN alkalmazás verziója már nem támogatott. Kérjük, frissítsen a legújabb verzióra.";
+
+"login_fetch_vpn_data" = "A VPN-hozzáférés konfigurálása";
+
+"login_summary_button" = "A Proton VPN használatának elkezdése";
+
+/* Also used for disabling kill switch in the 'NetworkExtension + KillSwitch on T2 Macs' case below */
+"_wgks_ks_off" = "Vészkapcsoló kikapcsolása";
+
+/* NetworkExtension + KillSwitch on T2 Macs */
+"_neks_t2_title" = "Vészkapcsoló stabilitási figyelmeztetés";
+
+/* Hyperlink to the "T2 Security Chip" page on Apple's website. String must also appear in the `_neks_t2_description' localized string. */
+"_neks_t2_hyperlink" = "T2 Biztonsági Chip";
+
+"_neks_t2_description" = "A vészkapcosló használata instabil ezen az eszközön.\n\nA készüléke T2 biztonsági chippel rendelkezik, ami rendszerstabilitási problémákat okozhat, ha a Proton VPN a macOS vészkapcsoló funkcióját használja.";
+
+"_neks_t2_connect" = "Egyébként is engedélyezd";
+
+"_subuser_alert_title" = "Köszönjük, hogy Business/Visionary-ra váltott.";
+
+"_subuser_alert_description1" = "A Proton VPN-ben való utazás megkezdéséhez, engedélyezze a VPN-kapcsolatokat a fiókjához vagy bármely más alfiókhoz.";
+
+"_subuser_alert_description2" = "Ez a lépés csak pár percet vesz igénybe. Ezután bejelentkezhet és megvédheti az összes eszközét.";
+
+"_subuser_alert_description3" = "Jelenleg nincs VPN-kapcsolat engedélyezve ehhez a fiókhoz. A Proton VPN-nel való utazás megkezdéséhez, lépjen kapcsolatba a rendszergazdával.";
+
+"_subuser_alert_enable_connections_button" = "VPN-kapcsolatok engedélyezése";
+
+"_subuser_alert_login_button" = "Bejelentkezés újra";
+
+/* Moderate NAT feature title in Settings */
+"_moderate_nat_title" = "Mérsékelt NAT";
+
+/* Explanation for the Moderate NAT feature shown next to the feature in Settings */
+"_moderate_nat_explanation" = "A mérsékelt NAT letiltja a helyi címek hozzárendelésének véletlenszerűségét. Ez némileg csökkentheti a biztonságot, de lehetővé teszi a peer-to-peer alkalmazások, például az online játékok számára a közvetlen kapcsolatok létrehozását. \ntovábbi információk";
+
+/* Link at the end of Moderate NAT feature explanation. Must match the explanation value */
+"_moderate_nat_explanation_link" = "További információk";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_enable_title" = "Mérsékelt NAT engedélyezése";
+
+/* Title for alert shown when enabling Moderate NAT requires reconnection */
+"_moderate_nat_change_title" = "Mérsékelt NAT engedélyezése";
+
+/* Clickable label title in the onboarding screen for mac */
+"_settings_mac_telemetry_learn_more" = "További információk";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_usage_stats" = "Anonim használati statisztikák megosztása. Ez segít nekünk a VPN-blokkok leküzdésében és az alkalmazás teljesítményének javításában.";
+
+/* Telemetry label in the onboarding screen for mac next to a toggle */
+"_onboarding_mac_crash_reports" = "Névtelen jelentések megosztása. Ez segít nekünk a hibák kijavításában, a tűzfalak felismerésében és a VPN blokkok elkerülésében.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_usage_stats_title" = "Anonim használati statisztikák megosztása";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_usage_stats_tooltip" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+
+/* Telemetry label in the settings window for mac */
+"_settings_mac_crash_reports_title" = "Névtelen összeomlási jelentések megosztása";
+
+/* Telemetry tooltip in the settings window for mac */
+"_settings_mac_crash_reports_tooltip" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+
+/* Section title in Settings */
+"_advanced" = "Speciális";
+
+/* Non-standard ports feature title in Settings */
+"_non_standard_ports_title" = "Nem szabványos portok";
+
+/* Explanation for the Non-standard ports feature shown next to the feature in Settings */
+"_non_standard_ports_explanation" = "Használja a Proton VPN-t bármilyen különleges igényhez oly módon, hogy engedélyezi a forgalmat nem szabványos portokba a VPN-en keresztül.\nTudjon meg többet";
+
+/* Link at the end of Non-standard ports feature explanation. Must match the explanation value */
+"_non_standard_ports_explanation_link" = "További információk";
+
+/* Title for alert shown when enabling Non-standard ports requires reconnection */
+"_non_standard_ports_change_title" = "Nem szabványos portok engedélyezése";
+
+/* Error message shown when the user clicks Create Account in the macOS app but the Proton website is not reachable */
+"proton_website_unreachable" = "A Proton VPN weboldal ideiglenesen elérhetetlen lehet hálózati korlátozások miatt. Kérjük, használja a mobil alkalmazást új Proton fiók létrehozására.";
+
+/* Title for the Two-factor authentication screen */
+"two_factor_authentication" = "Kétlépcsős hitelesítés";
+
+/* Placeholder for the Two Factor text field */
+"two_factor_code" = "Kétlépcsős kód";
+
+/* Title for the button to switch to entering two-factor code */
+"use_two_factor_code" = "Kétlépcsős kód használata";
+
+/* Placeholder for the Recovery code text field */
+"recovery_code" = "Helyreállítási kód";
+
+/* Title for the button to switch to entering recovery code */
+"use_recovery_code" = "Helyreállító kód használata";
+
+/* Button to confirm two-factor or recovery code in login */
+"authenticate" = "Hitelesítés";
+
+/* Error message shown when tryng to log in with an unsupported method */
+"login_unsupported_state" = "Érvénytelen bejelentkezési módszer. Lépjen kapcsolatba az ügyfélszolgálattal.";
+
+/* Error message shown when setting a VPN feature like VPN Accelerator is not possible at the moment */
+"vpn_feature_cannot_be_set_error" = "%@ beállítást nem sikerült megváltoztatni. Kérjük, próbálja újra később, vagy kapcsolódjon egy másik szerverre";
+
+/* Home tab in bottom menu */
+/* Home tab in bottom menu [Redesign_2023] */
+"_home_tab" = "Otthoni";
+
+/* Countries tab in bottom menu [Redesign_2023] */
+"_countries_tab" = "Országok";
+
+/* Settings tab in bottom menu [Redesign_2023] */
+"_settings_tab" = "Beállítások";
+
+/* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_header" = "Ön védtelen";
+
+/* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_label" = "A %@-ból védtelenül böngészik.";
+
+/* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
+"_home_unprotected_accessibility_hint" = "A VPN kapcsolat megszakadt. Csatlakozzon egy kiszolgálóhoz, hogy biztonságosan böngészhessen az interneten.";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents */
+"_connection_card_accessibility_fastest" = "A leggyorsabb elérhető ország";
+
+/* The hint that the screen reader will provide to voiceover users for the fastest connection item in recents when secure core is enabled */
+"_connection_card_accessibility_fastest_sc" = "A leggyorsabb elérhető ország Secure Core-ral";
+
+/* The hint that the screen reader will provide to voiceover users for showing the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_showAddress" = "Dupla koppintás az IP-cím megjelenítéséhez";
+
+/* The hint that the screen reader will provide to voiceover users for hiding the IP address in the Connection Details Screen */
+"_connection_details_accessibility_ipView_hideAddress" = "Dupla koppintás az IP-cím elrejtéséhez";
+
+/* The hint that the screen reader will provide to voiceover users for closing the Connection Details screen */
+"_connection_details_accessibility_close" = "A kapcsolat részleteit tartalmazó képernyő bezárása";
+
+/* Connection card in home tab: Interactive title for paid users - when tapped, expands the bottom sheet allowing the default connection to be customised. */
+"_connection_card_default_connection" = "Alapértelmezett kapcsolat";
+
+/* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
+"_connection_card_safely_browsing_from" = "Biztonságos böngészés innen";
+
+/* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
+"_connection_card_last_connected_to" = "Utoljára csatlakozva";
+
+/* Connection card in home tab: Connection card in home tab: shown while the app determines what state the VPN is in. */
+"_connection_card_loading" = "Betöltés...";
+
+/* Connection card in home tab: "Connecting to <country name>" [Redesign_2023] */
+"_connection_card_connecting_to" = "Kapcsolódás ehhez...";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_connecting_to" = "Kapcsolódás: %@.";
+
+/* Connection card in home tab, VoiceOver connection label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_last_connected_to" = "Legutoljára %@-hoz volt csatlakoztatva.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. %@ is a country name. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from" = "Biztonságosan böngészik %@-ból.";
+
+/* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
+"_connection_card_accessibility_browsing_from_fullDetails" = "Biztonságosan böngészik a %1$@ szerver %2$@-ról a %3$@ használatával.";
+
+/* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
+"_connection_card_accessibility_loading" = "Betöltés";
+
+/* Title of the bottom sheet on the home screen, which contains choices for selecting your default connection (fastest, most recent, or specific recent connection) */
+"home_default_connection_title" = "Válassza ki az alapértelmezett kapcsolatot";
+
+/* Name of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_name" = "Leggyorsabb ország";
+
+/* Description of the "Fastest" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_fastest_description" = "A legjobb szerver az Ön tartózkodási helye alapján";
+
+/* Name of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_name" = "Legújabb";
+
+/* Description of the "Most Recent" default connection option, in the default connection sheet on the home screen */
+"home_default_connection_most_recent_description" = "A legutóbb használt kapcsolat az Ön tartózkodási helyén";
+
+/* The section of upsell carousel in the Home tab. [Redesign_2023] */
+"_home_recents_upsell_section" = "VPN Plus felfedezése";
+
+/* The section of recent connections in the Home tab. [Redesign_2023] */
+"_home_recents_recent_section" = "Előzmények";
+
+/* Tooltip text for the pin/unpin/remove actions in the recents list. [Redesign_2023] */
+"_home_recents_options_button_help" = "Műveletek";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_plus_server" = "A szerver csak VPN Plus csomaggal érhető el";
+
+/* Tooltip text presented on hover over one of the recent connections items. [Redesign_2023] */
+"_home_recents_server_under_maintenance" = "A szerver karbantartás alatt áll";
+
+/* Title of the "Random" recent connection item */
+"home_recents_random_server_title" = "Véletlenszerű ország";
+
+/* For buttons / navigation links which open a help menu or tooltip. [Redesign_2023] */
+"_action_help" = "Segítség";
+
+/* For buttons which have an action that connects to a server. [Redesign_2023] */
+"_action_connect" = "Kapcsolódás";
+
+/* For buttons which have an action that removes an item. [Redesign_2023] */
+"_action_remove" = "Eltávolítás";
+
+/* For buttons which have an action that disconnects from a server. [Redesign_2023] */
+"_action_disconnect" = "Kapcsolat bontása";
+
+/* For buttons which have an action that cancels connecting to a server. [Redesign_2023] */
+"_connection_card_action_cancel" = "Mégsem";
+
+/* Home screen: Connection card hint on hover (macOS) [Redesign_2023] */
+"_show_connection_details_button_hint" = "Kapcsolat részleteinek megjelenítése";
+
+/* Home screen: pin this connection in the recents view. [Redesign_2023] */
+"_action_home_pin" = "Rögzítés";
+
+/* Home screen: unpin this connection from the recents view. [Redesign_2023] */
+"_action_home_unpin" = "Feloldás";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. Followed by images of flags representing some of the countries free users can connect to, and the count of additional countries beyond those. [Redesign_2023] */
+"home_fastest_connection_selection_description" = "Automatikusan kiválasztva a következők közül:";
+
+/* Home screen: The Suffix of the "Fastest" connection card's subtitle. %@ represents the number of countries free users can be connected to, in addition the ones represented by the flags preceding this number. [Redesign_2023] */
+"home_fastest_connection_additional_country_count" = "+%@";
+
+/* Secure core: connected to a country via another country. %@ is the country through which we are transiting to get to the final destination. [Redesign_2023] */
+"_secure_core_via_country" = "ezen keresztül: %@";
+
+/* Connection status title when user is not connected to a VPN [Redesign_2023] */
+"connection_status_unprotected" = "Ön védtelen";
+
+/* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
+"connection_status_protecting" = "Védje digitális személyazonosságát";
+
+/* Connection status title when user is connected to a VPN [Redesign_2023] */
+"connection_status_protected" = "Védett";
+
+/* Connection status title while VPN status is unknown */
+"connection_status_loading" = "Betöltés";
+
+/* Button title when user is on lower tier than the server requires [Redesign_2023] */
+"upsell_get_plus" = "Plus választása";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - advertisements blocked */
+"netshield_stats_hint_ads" = "A hirdetési webhelyek cookie-kat és nyomkövetőket használnak a megcélzásához.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - trackers stopped */
+"netshield_stats_hint_trackers" = "A nyomkövetők olyan harmadik féltől származó webhelyek, amelyek információkat gyűjtenek, tárolnak és értékesítenek az internetes tevékenységéről.";
+
+/* The hint that appears on mac when user hovers with a mouse over the value of netshield stats - data saved */
+"netshield_stats_hint_data" = "A NetShield által blokkolt hirdetések, nyomkövetők és rosszindulatú programok becsült mérete.";
+
+"_netshield_stats_data_saved" = "Adat\nelmentve";
+
+/* The count of trackers/ads blocked in thousands */
+"_netshield_stats_blocked_K" = "%@ K";
+
+/* The count of trackers/ads blocked in millions */
+"_netshield_stats_blocked_M" = "%@ M";
+
+/* The count of trackers/ads blocked in billions */
+"_netshield_stats_blocked_G" = "%@ G";
+
+/* The count of trackers/ads blocked in trillions */
+"_netshield_stats_blocked_T" = "%@ T";
+
+/* The count of trackers/ads blocked in quadrillions */
+"_netshield_stats_blocked_P" = "%@ P";
+
+/* The count of trackers/ads blocked in sextillions */
+"_netshield_stats_blocked_E" = "%@ E";
+
+/* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
+"_connection_details_title" = "Kapcsolat adatai";
+
+/* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
+"_connection_details_connected_for" = "Kapcsolódva";
+
+/* Connection details screen: Country (macOS and iOS) [Redesign_2023] */
+"_connection_details_country" = "Ország";
+
+/* Connection details screen: City (macOS and iOS) [Redesign_2023] */
+"_connection_details_city" = "Város";
+
+/* Connection details screen: Server (macOS and iOS) [Redesign_2023] */
+"_connection_details_server" = "Szerver";
+
+/* Connection details screen: Server load (macOS and iOS) [Redesign_2023] */
+"_connection_details_server_load" = "Szerver terheltség";
+
+/* Connection details screen: Protocol (macOS and iOS) [Redesign_2023] */
+"_connection_details_protocol" = "Protokoll";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_my" = "Az IP-címem";
+
+/* Connection details screen: IP view (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_vpn" = "VPN IP";
+
+/* Connection details screen: IP view - text shown instead of IP when app can't determine the IP address (macOS and iOS) [Redesign_2023] */
+"_connection_details_ipview_ip_unavailable" = "Nem elérhető";
+
+/* Connection details screen: Tor feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_tor" = "Tor";
+
+/* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_tor" = "A hagyományos böngészővel csatlakozhat a .onion webhelyekhez.";
+
+/* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_p2p" = "P2P";
+
+/* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_p2p" = "A peer-to-peer fájlmegosztás engedélyezve van ezen a szerveren.";
+
+/* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_smart_routing" = "Smart Routing";
+
+/* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
+"_connection_details_feature_description_smart_routing" = "A szerverek fizikailag %1$@-ban találhatók, de úgy tűnik, hogy a %2$@-ból böngészik.";
+
+/* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_secure_core" = "Secure Core";
+
+/* Connection details screen: Secure core description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_secure_core" = "Tevékenysége 2 nagy biztonságú VPN-kiszolgáló mögött van titkosítva.";
+
+/* Connection details screen: Streaming feature title (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_title_streaming" = "Lejátszás";
+
+/* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
+"_connection_details_feature_description_streaming" = "Ez a szerver TV- és filmlejátszásra van optimalizálva.";
+
+/* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
+"_connection_details_features_title" = "Funkciók";
+
+/* Connection details screen: Info button text, that show more info about given VPN feature (macOS and iOS) [Redesign_2023] */
+"_connection_details_info_button" = "Információk";
+
+/* Title of the deprecated protocol alert. Shown when the user attempts to connect to a profile with OpenVPN */
+"_alert_protocol_deprecated_title" = "Protokoll nem elérhető";
+
+/* Body of the deprecated protocol alert on MacOS. Shown when the user attempts to connect to a profile with OpenVPN. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). The 'Learn More' text is a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple */
+"_alert_protocol_deprecated_body_macos" = "Ez a profil egy elavult és már nem támogatott protokollt használ. Kattintson a „Frissítés” gombra az alapértelmezett Smart protokoll használatára való áttéréshez. További információk";
+
+/* The text inside the deprecated protocol alert that should be displayed as a hyperlink to https://protonvpn.com/blog/remove-vpn-protocols-apple (MacOS only) */
+"_alert_protocol_deprecated_link_text" = "További információk";
+
+/* Body of the deprecated protocol alert on iOS. Shown when the user attempts to connect to a profile with OpenVPN or IKEv2. 'Update' references the text of the alert button, and is emphasized with quotation marks (") which must be escaped with a single backslash (\). */
+"_alert_protocol_deprecated_body_ios" = "Ez a profil egy elavult és már nem támogatott protokollt használ. Kattintson a „Frissítés” gombra az alapértelmezett Smart protokoll használatára való áttéréshez.";
+
+/* Text for the 'Enable Smart protocol' action of the deprecated protocol alert. The alert is shown when the user attempts to quick connect, or connect to a profile that uses a deprecated protocol. This action enables Smart protocol, but does not continue the connection. */
+"_alert_protocol_deprecated_enable_smart" = "Frissítés";
+
+/* Text for the 'Learn more' action of the deprecated protocol alert on iOS. When tapped, opens https://protonvpn.com/blog/remove-vpn-protocols-apple in the device browser */
+"_alert_protocol_deprecated_learn_more" = "További információk";
+
+/* Text for the 'Close' action of the deprecated protocol alert. */
+"_alert_protocol_deprecated_close" = "Bezárás";
+
+/* Title at the top of the Settings tab [Redesign_2023] */
+"_settings_title" = "Beállítások";
+
+/* Title of the 'Account' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_account" = "Fiók";
+
+/* Title of the 'Features' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_features" = "Funkciók";
+
+/* Title of the 'Connection' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_connection" = "Kapcsolat";
+
+/* Title of the 'General' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_general" = "Általános";
+
+/* Title of the 'Support' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_support" = "Támogatás";
+
+/* Title of the 'Improve Proton' section in the Settings tab [Redesign_2023] */
+"_settings_section_title_improve_proton" = "Proton javítása";
+
+/* Title of the NetShield cell in the Settings tab [Redesign_2023] */
+"_settings_title_netshield" = "NetShield";
+
+/* Title of the KillSwitch cell in the Settings tab [Redesign_2023] */
+"_settings_title_kill_switch" = "Vészkapcsoló";
+
+/* Title of the Protocol cell in the Settings tab [Redesign_2023] */
+"_settings_title_protocol" = "Protokoll";
+
+/* Title of the VPN Accelerator cell in the Settings tab [Redesign_2023] */
+"_settings_title_vpn_accelerator" = "VPN Accelerator";
+
+/* Title of the Advanced Settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_advanced" = "Speciális beállítások";
+
+/* Title of the Theme cell in the Settings tab [Redesign_2023] */
+"_settings_title_theme" = "Téma";
+
+/* Title of the Beta Access cell in the Settings tab [Redesign_2023] */
+"_settings_title_beta_access" = "Béta hozzáférés";
+
+/* Title of the Widget cell in the Settings tab [Redesign_2023] */
+"_settings_title_widget" = "Kisalkalmazás";
+
+/* Title of the Support Center cell in the Settings tab [Redesign_2023] */
+"_settings_title_support_center" = "Súgóközpont";
+
+/* Title of the Report an Issue cell in the Settings tab [Redesign_2023] */
+"_settings_title_report_issue" = "Hibajelentés";
+
+/* Title of the Debug Logs cell in the Settings tab [Redesign_2023] */
+"_settings_title_debug_logs" = "Hibakeresési naplók";
+
+/* Title of the Help us fight censorship cell in the Settings tab [Redesign_2023] */
+"_settings_title_censorship" = "Segítsen nekünk a cenzúra elleni harcban";
+
+/* Title of the Rate Proton VPN cell in the Settings tab [Redesign_2023] */
+"_settings_title_rate" = "Proton VPN értékelése";
+
+/* Title of the Restore default settings cell in the Settings tab [Redesign_2023] */
+"_settings_title_restore_default_settings" = "Alapértelmezett beállítások visszaállítása";
+
+/* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
+"_settings_title_sign_out" = "Kijelentkezés";
+
+/* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
+"_settings_app_version" = "Alkalmazásverzió: %@";
+
+/* Title of the "Sign in to another device" cell in the Settings tab */
+"_settings_title_qr_code_sign_in" = "Jelentkezzen be egy másik eszközre";
+
+/* Represents the ON state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_on" = "Be";
+
+/* Represents the OFF state of the NetShield feature. Displayed in the NetShield settings cell in the Settings tab, and when drilled into the NetShield settings view [Redesign_2023] */
+"_settings_netshield_off" = "Ki";
+
+/* Represents the ON state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_on" = "Be";
+
+/* Represents the OFF state of the Kill Switch feature. Displayed in the Kill Switch settings cell in the Settings tab, and when drilled into the Kill Switch settings view [Redesign_2023] */
+"_settings_killswitch_off" = "Ki";
+
+/* Represents a value of Auto for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_auto" = "Automatikus";
+
+/* Represents a value of dark mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_dark" = "Sötét";
+
+/* Represents a value of light mode for the app theme setting. Displayed in the Theme settings cell in the Settings tab [Redesign_2023] */
+"_settings_theme_value_light" = "Világos";
+
+/* Represents a value of Auto for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view. An asterisk is appended to this string to point to a disclaimer below, clarifying that the app theme will be based on the system theme [Redesign_2023] */
+"_settings_theme_label_auto" = "Automatikus*";
+
+/* Represents a value of dark mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_dark" = "Sötét";
+
+/* Represents a value of light mode for the app theme setting. Displayed underneath the corresponding option when drilled into the Theme settings view [Redesign_2023] */
+"_settings_theme_label_light" = "Világos";
+
+/* UDP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_udp" = "Sebesség (UDP)";
+
+/* TCP protocols section header in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_section_title_tcp" = "Megbízhatóság (TCP)";
+
+/* Description of the smart protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_smart" = "Automatikusan kiválasztja a legjobb protokollt a kapcsolathoz.";
+
+/* Description of the WireGuard (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_udp" = "Gyors, biztonságos és hatékony. A WireGuard más protokolloknál energiatakarékosabb.";
+
+/* Description of the WireGuard (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tcp" = "Gyors, biztonságos és hatékony. A WireGuardot nehéz felismerni és blokkolni.";
+
+/* Description of the Stealth (WireGuard TLS) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_wireguard_tls" = "Legyőzi a VPN-blokkolásokat azáltal, hogy elrejti a VPN-kapcsolatot a cenzorok elől. Ez a protokoll ellenáll a DPI-nek (deep packet inspection), de nem biztos, hogy olyan gyors, mint más protokollok. A Stealth kizárólag a Proton VPN-hez tartozik.";
+
+/* Description of the OpenVPN (UDP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_udp" = "Bevált, alaposan tesztelt és biztonságos. Az OpenVPN kevésbé energiahatékony, mint néhány más protokoll.";
+
+/* Description of the OpenVPN (TCP) protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_openvpn_tcp" = "Bevált, alaposan tesztelt és biztonságos. Az OpenVPN rossz hálózati körülmények között is megbízható, de esetleg lassabb lehet, mint más protokollok.";
+
+/* Description of the IKEv2 protocol in the protocol settings screen [Redesign_2023] */
+"_settings_protocol_description_ikev2" = "Gyors, biztonságos és stabil - de a cenzorok számára könnyebben felismerhető és blokkolható.";
+
+/* Text displayed next to the title of the cell of the recommended protocol in Protocol Settings. Displayed in uppercase, with a border around it. [Redesign_2023] */
+"_settings_protocol_tag_recommended" = "AJÁNLOTT";
+
+/* Text displayed next to the titles of cells of any new protocols in Protocol Settings. Displayed in uppercase, with a border around it.  [Redesign_2023] */
+"_settings_protocol_tag_new" = "Új";
+
+/* Footer at the bottom of the Protocol Settings screen. Formatted with markdown, to embed a hyperlink to https://protonvpn.com/blog/whats-the-best-vpn-protocol/ [Redesign_2023] */
+"_settings_protocol_footer" = "A VPN protokoll határozza meg, hogy az adatok hogyan mozognak a VPN-kiszolgáló és az eszköze között. **[További információ](https://protonvpn.com/blog/whats-the-best-vpn-protocol/)**";
+
+/* Title of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_title" = "VPN kapcsolat aktív";
+
+/* Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_body" = "A protokollok módosítása bezárja a jelenlegi VPN-munkamenetet.";
+
+/* Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_cancel" = "Mégsem";
+
+/* Confirmation button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023] */
+"_settings_protocol_alert_button_continue" = "Folytatás";
+
+/* Error title warning the user that one of the device's interfaces has a badly-configured local network. This can result in traffic leaks if the user is not careful. */
+"_bad_interface_ip_range_alert_title" = "Rossz hálózati interfész";
+
+/* Error message indicating that one of the device's interfaces to the local network is poorly configured, which can result in traffic leaks if Kill Switch is not enabled. %@1 is the name of the bad network interface, %@2 is the IP and network prefix assigned to that interface in CIDR notation (an example would be 10.0.1.3/24). */
+"_prompt_kill_switch_due_to_bad_interface_ip_range" = "A helyi hálózat lehet, hogy nem biztonságos (a '%@' interfész IP-je és előtagja '%@'). Az adatok titkosítatlanul kerülhetnek átküldésre a helyi hálózaton. A vészkapcsoló engedélyezése blokkolja ezt a forgalmat. A helyi perifériákhoz való kapcsolódás megszakad.";
+
+/* Title of the search screen */
+"search_title" = "Keresés";
+
+/* Title of the Search screen infographic */
+"search_subtitle" = "Keresés bármilyen hely iránt";
+
+/* Section header in search */
+"search_countries" = "Országok";
+
+/* Sample countries the user can search for */
+"search_countries_sample" = "Svájc, Egyesült Államok, Olaszország...";
+
+/* Section header in search */
+"search_cities" = "Város";
+
+/* Sample cities the user can search for */
+"search_cities_sample" = "New York, London, Tokió...";
+
+/* Section header in Search */
+"search_servers" = "Szerverek";
+
+/* Sample servers the user can search for */
+"search_servers_sample" = "JP#50, CA#3, IT#14...";
+
+/* Section header in search */
+"search_us_regions" = "Az Egyesült Államok régiói";
+
+/* Sample US regions the user can search for */
+"search_us_regions_sample" = "Kalifornia, Floria, Kolorádó...";
+
+/* Title shown when nothing is found in search */
+"search_no_results_title" = "Nincs találat";
+
+/* Subtitle shown when nothing is found in search */
+"search_no_results_subtitle" = "Kérjük, próbálkozzon másik külcsszóval";
+
+/* Header for the recent searches section in search */
+"search_recent_header" = "Nemrég megtekintett";
+
+/* Button to clear recent searches history */
+"search_recent_clear" = "Ürítés";
+
+/* Title for the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_title" = "Keresési előzményei el fognak tűnni. Folytatja?";
+
+/* Cancel button title in the alert asking for confirmation before deleting recent searches */
+"search_recent_clear_cancel" = "Mégsem";
+
+/* Confirmation button title in alert asking for confirmation before deleting recent searches */
+"search_recent_clear_continue" = "Folytatás";
+
+/* Placeholder text showing in the search bar on the search screen */
+"search_bar_placeholder" = "Ország, Város vagy Szerver";
+
+/* Subtitle for the upsell banner shown to free users in search */
+"search_upsell_subtitle" = "Több hely = több nem blokkolt tartalom + extra biztonság + nagyobb sebesség";
+
+/* Section header in search */
+"search_secure_core_countries" = "Secure Core országok";
+
+/* Section header in search */
+"search_results_countries" = "Országok";
+
+/* Section header in search */
+"search_results_cities" = "Város";
+
+/* Section header in search */
+"_free_servers" = "Ingyenes szerverek";
+
+/* Section header in search */
+"_plus_servers" = "Plus szerverek";
+
+/* Upgrade plan button title */
+"modals_get_plus" = "Nagyobb csomagra váltás";
+
+/* Dismiss upsell screen button title */
+"modals_upsell_stay_free" = "Nem most";
+
+/* Subtitle of All Countries, NetShield and Secure Core upsell screens */
+"modals_upsell_features_subtitle" = "Amikor előfizet a Plus-ra";
+
+/* Subtitle of the Safe Mode upsell screen */
+"modals_upsell_features_safe_mode_subtitle" = "Haladó vagy profi számítástechnikai szükségletei vannak, melyekhez nem szokványos portok szükségesek?\n\nFejlesszen a VPN Plus-ra, hogy hozzá tudjon férni ehhez és más prémium szolgáltatásokhoz.";
+
+/* Title of the Safe Mode upsell screen */
+"modals_upsell_safe_mode_title" = "Forgalom engedélyezése nem szabványos portokba";
+
+/* Title of the Moderate NAT upsell screen */
+"modals_upsell_moderate_nat_title" = "Növelje játékélményét";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle" = "A 2. típusú NAT feloldása VPN Plus-szal";
+
+/* Bold part of the subtitle of Moderate NAT upsell screens */
+"modals_upsell_moderate_nat_subtitle_bold" = "NAT típus 2";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_gaming" = "Javítja az online játékok és a videóhívások teljesítményét";
+
+/* Feature of the Moderate NAT upsell screen */
+"modals_upsell_features_moderate_nat_direct_connections" = "A 2. típusú NAT (mérsékelt) optimalizálja a sebességet és a stabilitást az eszközök közötti közvetlen kapcsolatok lehetővé tételével.";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_streaming" = "Streamelje kedvenc filmjeit";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_highSpeed" = "Böngésszen a legmagasabb sebességeken (10 Gbps)";
+
+/* Feature of the All Countries upsell screen */
+"modals_upsell_all_countries_feature_netshield" = "Blokkolja a hirdetéseket és a rosszindulató szoftvereket a NetShielddel";
+
+/* Title of the NetShield upsell screen */
+"modals_upsell_net_shield_title" = "Élvezze a hirdetésmentes böngészést a Netshielddel";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_ads" = "Blokkoljon hirdetéseket és követőket";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_malware" = "Védje eszközét a rosszindulatú szoftverektől";
+
+/* Feature of the NetShield upsell screen */
+"modals_upsell_net_shield_highSpeed" = "Böngésszen a legmagasabb sebességeken";
+
+/* Title of the Secure Core upsell screen */
+"modals_upsell_secure_core_title" = "Duplázza meg a titkosítást a Secure Core-ral";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_route" = "Küldjön adatot teljesen biztonságos svájci, svéd és izlandi szervereken keresztül";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_layer" = "Még egy titkosítási réteg hozzáadása a VPN-kapcsolathoz";
+
+/* Feature of the Secure Core upsell screen */
+"modals_upsell_secure_core_attacks" = "Védje magát a hálózati támadásoktól";
+
+/* Title of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_title" = "Még nagyobb sebességgel böngészhet";
+
+/* Subtitle of the VPN Accelerator screen */
+"modals_new_upsell_vpn_accelerator_subtitle" = "Oldjon fel gyorsabb, kevésbé terhelt szervereket akár 10 Gbps sebességgel.";
+
+/* Subtitle of the Customization scren */
+"modals_new_upsell_customization_subtitle" = "A VPN Plus segítségével hozzáférhet a helyi hálózaton (LAN) lévő eszközökhöz.";
+
+/* Subtitle of Moderate NAT upsell screens */
+"modals_new_upsell_moderate_nat_subtitle" = "Javítsa az online játékok és a videohívások teljesítményét a NAT 2. típusával.";
+
+/* Title of Netshield upsell screen */
+"modals_new_upsell_netshield_title" = "Élvezze a reklámmentes böngészést";
+
+/* Subtitle of Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle" = "A NetShield segítségével blokkolhatja a hirdetéseket, nyomkövetőket és rosszindulatú programokat.";
+
+/* The bold portion of the subtitle of the Netshield upsell screen */
+"modals_new_upsell_netshield_subtitle_bold" = "NetShield";
+
+/* Title of Secure Core upsell screen */
+"modals_new_upsell_secure_core_title" = "Duplázza meg a védelmet";
+
+/* Subtitle of Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle" = "A Secure Core segítségével a titkosítás egy újabb szintjét adhatja hozzá a VPN-kapcsolatához.";
+
+/* The bold portion of the subtitle of the Secure Core upsell screen */
+"modals_new_upsell_secure_core_subtitle_bold" = "Secure Core";
+
+/* Title of All Countries upsell screen */
+"modals_new_upsell_all_countries_title" = "Hozzáférés minden országhoz";
+
+/* The bold portion of the subtitle of All Countries upsell screen */
+"modals_new_upsell_all_countries_subtitle_bold" = "VPN Plus";
+
+/* Title of Country upsell screen */
+"modals_new_upsell_country_title" = "Egy adott országhoz szeretne csatlakozni?";
+
+/* Subtitle of Country upsell screen */
+"modals_new_upsell_country_subtitle" = "Oldja fel az országválasztékot a VPN Plusszal.";
+
+/* Subtitle of Profiles upsell screen */
+"modals_new_upsell_profiles_subtitle" = "Profilok feloldása a VPN Plus-szal.";
+
+/* Title of the Secure Core discouragement screen */
+"modals_discourage_secure_core_title" = "Egy megjegyzés a sebességről...";
+
+/* Subtitle of the Secure Core discouragement screen */
+"modals_discourage_secure_core_subtitle" = "A Secure Core a legmagasabb szintű biztonságot és adatvédelmet kínálja, de csökkentheti az internet sebességét. Ha nagyobb teljesítményre van szüksége, letilthatja a Secure Core-t.";
+
+/* Turn off Secure Core discouragement screen */
+"modals_discourage_secure_core_dont_show" = "Ne jelenjen meg újra";
+
+/* Positive user action on Secure Core discouragement screen */
+"modals_discourage_secure_core_activate" = "Secure Core aktiválása";
+
+/* Title of the New Brand screen */
+"new_plans_brand_title" = "Frissített Proton, egységesített védelem";
+
+/* Subtitle of the New Brand screen */
+"new_plans_brand_subtitle" = "A Proton új megjelenésének bemutatása.\nSok szolgáltatás, egy küldetés. Üdvözli az az internet, amelyen az adatvédelem alapértelmezett.";
+
+/* Title of "done" button in New Brand screen */
+"new_plans_brand_got_it" = "Értem";
+
+/* Common button title */
+"modals_common_cancel" = "Mégsem";
+
+/* Common button title */
+"modals_common_learn_more" = "További információk";
+
+/* Common button title */
+"modals_common_next" = "Tovább";
+
+/* Common button title */
+"modals_common_get_started" = "Kezdés";
+
+/* Description of user account update screen part 1 */
+"maximum_device_plan_limit_part_1" = "Kérjük, válasszon le egy másik eszközt, hogy ezzel kapcsolódni tudjon, vagy frissítsen %@-re";
+
+/* Description of user account update screen */
+"maximum_device_limit" = "Kérjük, válasszon le egy másik eszközt, hogy ezzel kapcsolódni tudjon.";
+
+/* Title of streaming upsell modal */
+"upsell_streaming_title" = "Lejátszás 4K-ban";
+
+/* Subtitle of streaming upsell modal */
+"upsell_streaming_subtitle" = "Élvezze kedvenc filmjeit és tévéműsorait a világ bármely pontjáról.";
+
+/* Title of p2p support upsell modal */
+"upsell_p2pSupport_title" = "Peer-to-peer (P2P) letöltések és fájlmegosztás feloldása";
+
+/* Subtitle of p2p support upsell modal */
+"upsell_p2pSupport_subtitle" = "Javítsa a feltöltési és letöltési sebességet, miközben elrejti IP-címét.";
+
+/* Title of devices upsell modal */
+"upsell_devices_title" = "Védjen 10 eszközt egyszerre";
+
+/* Subtitle of devices upsell modal */
+"upsell_devices_subtitle" = "A Proton VPN 8 különböző platformon érhető el.";
+
+/* Title of torOverVPN upsell modal */
+"upsell_torOverVPN_title" = "Hozzáférés a Tor-hálózathoz egyetlen érintéssel";
+
+/* Subtitle of torOverVPN upsell modal */
+"upsell_torOverVPN_subtitle" = "A rejtett szolgáltatásokhoz és onion oldalakhoz a hagyományos böngészőjével csatlakozhat.";
+
+/* Title of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_title" = "Böngészés még nagyobb sebességgel (akár 10 Gbps)";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_faster_servers" = "Hozzáférés gyorsabb, kevésbé forgalmas szerverekhez.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds" = "Növelje a kapcsolat sebességet akár 400%%-kal a VPN Accelerator segítségével.";
+
+/* Bold part of the feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_increase_connection_speeds_bold" = "VPN Accelerator.";
+
+/* Feature of VPN Accelerator upsell modal */
+"upsell_vpn_accelerator_distant_servers" = "Javított sebesség és stabilitás távoli szerverekhez való csatlakozáskor.";
+
+/* Title of Customization upsell modal */
+"upsell_customization_title" = "Haladó VPN testreszabás feloldása";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_access_LAN" = "Hozzáférés a helyi hálózaton (LAN) lévő eszközökhöz";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_access_LAN_bold" = "helyi hálózat (LAN)";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_profiles" = "Gyakran használt kapcsolatok mentése profilokkal";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_profiles_bold" = "profilok";
+
+/* Feature of Customization upsell modal */
+"upsell_customization_quick_connect" = "Gyorsabb hozzáférés a profilokhoz a Gyors kapcsolódás segítségével";
+
+/* Bold part of the feature of Customization upsell modal */
+"upsell_customization_quick_connect_bold" = "Gyors kapcsolódás";
+
+/* Title of Profiles upsell modal */
+"upsell_profiles_title" = "Gyors hozzáférés a gyakori kapcsolatokhoz";
+
+/* Subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle" = "Profilok feloldása VPN Plus-szal";
+
+/* First bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_1" = "profilok";
+
+/* Second bold part of the subtitle of Profiles upsell modal */
+"upsell_profiles_subtitle_bold_2" = "VPN Plus";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_location" = "Mentse el a kívánt szervert, várost vagy országot.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_protocols" = "Egyéni protokollok és prémium VPN-funkciók beállítása.";
+
+/* Feature of Profiles upsell modal */
+"upsell_profiles_feature_auto_connect" = "Állítsa be az automatikus csatlakozást a még gyorsabb hozzáférés érdekében.";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_any_location" = "Válasszon tetszőleges helyszínt";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_even_higher_speed" = "Még nagyobb VPN sebesség";
+
+/* Feature of Countries upsell modal */
+"upsell_countries_geoblocked_content" = "Hozzáférés a földrajzi korlátozott tartalmakhoz";
+
+/* Feature of Country upsell modal */
+"upsell_countries_higher_speeds" = "Még nagyobb VPN sebesség";
+
+/* Feature of Country upsell modal */
+"upsell_countries_money_back" = "30 napos pénz-visszafizetési garancia";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_title" = "Egy adott országot szeretne kiválasztani?";
+
+/* Feature of Country upsell modal */
+"upsell_country_feature_subtitle" = "Oldja fel az országválasztékot a VPN Plusszal";
+
+/* Bold part of the feature of Country upsell modal */
+"upsell_country_feature_subtitle_bold" = "országválasztás";
+
+/* Title of the "What's new" screen */
+"modals_whats_new" = "Újdonságok";
+
+/* Button Title of the "What's new" screen */
+"modals_whats_new_button_title" = "Megtekintés";
+
+/* Title of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_title" = "Új kinézet, ugyanaz a védelem";
+
+/* Subtitle of redesign related content of the "What's new" screen */
+"modals_whats_new_redesign_subtitle" = "Felfrissítettük a dizájnunkat, és néhány dolgot áthelyeztünk, hogy az alkalmazás könnyebben használható legyen.";
+
+/* Title of recents related content of the "What's new" screen */
+"modals_whats_new_recents_title" = "Legutóbbiak megjelenítése";
+
+/* Subtitle of recents related content of the "What's new" screen */
+"modals_whats_new_recents_subtitle" = "Most még egyszerűbb újra csatlakozni kedvenc szervereidhez. A kezdőképernyőn megtekintheti a legfrissebb kapcsolatait, vagy a gyors hozzáférés érdekében kitűzheti őket.";
+
+/* Title of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_title" = "Az átjárók át lettek helyezve";
+
+/* Subtitle of gateways related content of the "What's new" screen */
+"modals_whats_new_gateways_subtitle" = "Mostantól a fő navigációból elérheti a szervezet dedikált szervereit.";
+
+/* Displayed when the user clicks "Connect to Random Server" after they've just clicked it. */
+"upsell_specific_location_subtitle" = "Szerezzen a VPN Plus csomaggal korlátlan szerver váltást";
+
+/* Displayed when the user clicks "Change server" after they've just changed it. */
+"upsell_specific_location_subtitle2" = "A Proton Free segítségével óránként néhányszor cserélhetsz szervert. A VPN Plus-szal korlátlan számú szerverváltást kaphat.";
+
+/* Displayed when the user clicks "Connect to Random Server" too many times in a given time interval. */
+"upsell_specific_location_title" = "Egyelőre elérted a maximális számú Ingyenes szerver módosítások számát.";
+
+/* The button text that will appear when the user has waited for the countdown and can proceed without upgrading. */
+"upsell_specific_location_change_server_button_title" = "Szerver váltása";
+
+/* The name of one of the features in the Welcome screen that the user sees after upgrading */
+"welcome_upgrade_advanced_features" = "Fejlett biztonsági funkciók";
+
+/* The title of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_title_plus" = "Üdvözli a VPN Plus";
+
+/* The title of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_title_unlimited" = "Üdvözli a Proton Unlimited";
+
+/* The title of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_title_fallback" = "Gratulálunk!";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Plus */
+"welcome_upgrade_subtitle_plus" = "Élvezze az extra adatvédelmi funkciókat, a felturbózott teljesítményt és a következő szintű VPN testreszabást.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited" = "Gratulálunk! Prémium szintű biztonságot ért el, nagy teljesítményű funkciókkal az összes Proton szolgáltatásban, továbbá 500 GB teljes tárhelyet.\n\nHasználja örömmel a Proton legjobb szolgáltatásait.";
+
+/* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Gratulálunk! Prémium szintű biztonságot ért el, nagy teljesítményű funkciókkal az összes Proton szolgáltatásban, továbbá **500 GB** teljes tárhelyet.\n\nHasználja örömmel a Proton legjobb szolgáltatásait.";
+
+/* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
+"welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
+
+/* The subtitle of the Welcome screen when user upgrades, but we couldn't determine to what plan */
+"welcome_upgrade_subtitle_fallback" = "Ön frissítette előfizetését. Élvezze a fejlett adatvédelmi funkciókat és a következő szintű teljesítményt.";
+
+/* Welcome to Proton screen shown during onboarding. Title label. */
+"welcome_to_proton_title" = "Üdvözli a Proton VPN";
+
+/* Welcome to Proton screen shown during onboarding. Subtitle label. */
+"welcome_to_proton_subtitle" = "Böngésszen privát módon, érjen el blokkolt tartalmakat és élvezze a digitális szabadságot.";
+
+/* Welcome to Proton screen shown during onboarding. Banner title label. */
+"welcome_to_proton_banner_title" = "Hitelesített, naplózás nélküli VPN";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle" = "Az Ön VPN-tevékenységét a svájci adatvédelmi törvények védik. Soha nem követjük Önt online, és nem osztjuk meg adatait harmadik féllel.";
+
+/* Welcome to Proton screen shown during onboarding. Banner subtitle label. */
+"welcome_to_proton_banner_subtitle_redesign" = "Soha nem naplózzuk az internetes tevékenységét, és nem osztjuk meg adatait harmadik felekkel.";
+
+/* Onboarding Get Started screen. Statistics Toggle title. */
+"onboarding_get_started_statistics_toggle_title" = "Anonim használati statisztikák megosztása";
+
+/* Onboarding Get Started screen. Statistics Toggle subtitle. */
+"onboarding_get_started_statistics_toggle_subtitle" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+
+/* Onboarding Get Started screen. Crashes Toggle title. */
+"onboarding_get_started_crashes_toggle_title" = "Névtelen összeomlási jelentések megosztása";
+
+/* Onboarding Get Started screen. Crashes Toggle subtitle. */
+"onboarding_get_started_crashes_toggle_subtitle" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+
+/* Title of paid plans list. */
+"upsell_plans_list_title" = "Fejlessze az adatvédelmét";
+
+/* Subtitle of paid plans list. */
+"upsell_plans_list_subtitle" = "Fejlett adatvédelmi funkciók és nagyobb sebesség a VPN Plus segítségével.";
+
+/* Header of paid plans list where there are more than 1 plan option to pick from. */
+"upsell_plans_list_section_header" = "Válasszon csomagot";
+
+/* Main Button of paid plans list allowing user to start payments process. */
+"upsell_plans_list_validate_button" = "VPN Plus beszerzése";
+
+/* Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly. */
+"upsell_plans_list_option_amountPerMonth" = " /hó";
+
+/* This is for a tooltip appearing over a "VPN Business" badge. Appears for users of the VPN Essentials plan to communicate the fact that their current plan does not support a given feature. */
+"_available_with_vpn_business_tooltip" = "A VPN üzleti csomaggal érhető el.";
+
+"onboarding_usage_stats_title" = "Anonim használati statisztikák megosztása";
+
+"onboarding_usage_stats_description" = "A használati adatok segítenek leküzdeni a VPN-blokkolásokat és javítani az alkalmazás teljesítményét.";
+
+"onboarding_crash_reports_title" = "Névtelen összeomlási jelentések megosztása";
+
+"onboarding_crash_reports_description" = "Az összeomlásjelentések segítenek a hibák kijavításában, a tűzfalak felismerésében és a VPN korlátozások elkerülésében.";
+
+"onboarding_footer" = "Ezek a statisztikák nem tartalmazzák az Ön IP-címét, és nem használhatók fel az Ön azonosítására. Soha nem osztjuk meg ezeket harmadik felekkel.";
+
+"onboarding_footer_learn_more" = "További információk";
+
+/* Modal that lists countries in which servers are available to free users: Title */
+"free_connections_modal_title" = "Free kapcsolat";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_description" = "A Proton Free automatikusan a leggyorsabb elérhető szerverhez csatlakozik. Ez általában a legközelebbi szerver lesz.";
+
+/* Modal that lists countries in which servers are available to free users: Description */
+"free_connections_modal_servers_description" = "A Proton Free automatikusan a leggyorsabb elérhető ingyenes szerverhez csatlakozik a %@ ingyenes országunkból. Ez általában az Önhöz legközelebbi szerver lesz.";
+
+/* Modal that lists countries in which servers are available to free users: banner with CTA */
+"free_connections_modal_banner" = "Világszintű lefedettség a VPN Plusszal";
+
+/* Text on upsell banner in country list */
+"_free_banner_text" = "Világszintű lefedettség a VPN Plusszal";
+
+/* Title of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_title" = "Nem a kívánt ország?";
+
+/* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
+"_wrong_country_banner_subtitle" = "Fizess elő bármelyik szerver kiválasztásához";
+
+/* Text of banner shown on macOS apps to upsell users who want to select a country */
+"_wrong_country_banner_text" = "Nem az az ország, amit akartál? Fizessen elő, és válasszon bármilyen szervert";
+
+/* ReportBugwindow title */
+"_br_window_title" = "Hibajelentés";
+
+/* ReportBug 1st step title */
+"_br_1_title" = "Mi a probléma?";
+
+/* ReportBug 2nd step (Quick fixes) title */
+"_br_2_title" = "Gyors javítások";
+
+/* ReportBug 2nd step (Quick fixes) subtitle */
+"_br_2_subtitle" = "Ezek a tippek segíthetnek problémája gyorsabban megoldásában.";
+
+/* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
+"_br_2_footer" = "Nem működött?";
+
+/* ReportBug 2nd step (Quick fixes) button to go to the next step */
+"_br_2_button_next" = "Lépjen velünk kapcsolatba";
+
+/* ReportBug 2nd step (Quick fixes) cancel button */
+"_br_2_button_cancel" = "Mégsem";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_send" = "Bejelentés elküldése";
+
+/* ReportBug 3rd step (form) send button */
+"_br_3_button_sending" = "Küldés";
+
+/* ReportBug 3rd step (form) email field name */
+"_br_3_email" = "E-mail cím";
+
+/* ReportBug 3rd step (form) username field name */
+"_br_3_username" = "Felhasználónév";
+
+/* ReportBug 3rd step (form) field to ask for includeing logs */
+"_br_3_logs_field" = "Hibanapló beküldése";
+
+/* ReportBug 3rd step (form) logs description */
+"_br_3_logs_description" = "A hibanapló egy olyan fájl, amiből megvizsgálhatjuk, hogy milyen műveleteket végzett el, amelyek a hibához vezettek. Csakis arra fogjuk használni, hogy segítse mérnökeinket a hibák kijavításában.";
+
+/* ReportBug 3rd step (form): message shown if user disabled logs */
+"_br_3_logs_disabled" = "A hibanaplók segítenek nekünk a problémája mélyére ásni. Ha nem csatolja, nem biztos, hogy teljes körűen ki tudjuk vizsgálni.";
+
+/* ReportBug success window: title text */
+"_br_success_title" = "Köszünjük a visszajelzést";
+
+/* ReportBug success window: subtitle text */
+"_br_success_subtitle" = "Újra felvesszük önnel a kapcsolatot, amint csak lehet.";
+
+/* ReportBug success window: button */
+"_br_success_button" = "Értem";
+
+/* ReportBug success window: title text */
+"_br_failure_title" = "A jelentése nem lett elküldve";
+
+/* ReportBug success window: retry button */
+"_br_failure_button_retry" = "Próbálja újra";
+
+/* ReportBug success window: troubleshoot button */
+"_br_failure_button_troubleshoot" = "Hibaelhárítás";
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Proton VPN frissítése";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "Nagyobb valószínűséggel fog problémákba ütközni a Proton VPN régebbi verzióiban.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Frissítés";
+
+/* Change mailbox password cell title */
+"_change_mailbox_password" = "E-mail titkosítási jelszó megváltoztatása";
+
+/* Change password cell title */
+"_change_password" = "Jelszó módosítása";
+
+/* Change password alert message */
+"_password_changed_successfully" = "A jelszó sikeresen megváltoztatva";
+
+/* Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. */
+"_ike_deprecation_alert_title" = "Bekapcsolja az IKEv2-t?";
+
+/* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message" = "Ezt a protokollt hamarosan eltávolítjuk. Fontolja meg az átállást a Smart protokollra. További információk";
+
+/* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
+"_ike_deprecation_alert_message_link_text" = "További információk";
+
+/* Button title for 'Continue with IKEv2' */
+"_ike_deprecation_alert_continue_button_title" = "Folytatás IKEv2-vel";
+
+/* Button title for 'Enable Smart protocol' */
+"_ike_deprecation_alert_enable_smart_button_title" = "Kapcsolja be a Smart protokollt";
+
+/* User is trying to connect to a server that is currently unavailable. (title) */
+"_location_not_available_title" = "A szerver nem elérhető";
+
+/* User is trying to connect to a server that is currently unavailable. (text) */
+"_location_not_available_text" = "Ez a szerver eltávolításra került. Próbáljon meg másik szerverhez csatlakozni.";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. (title) */
+"_location_not_available_for_profile_title" = "Sikertelen kapcsolódás";
+
+/* User is trying to connect to a server with a profile, but the server is currently unavailable. %@ is the profile name (text) */
+"_location_not_available_for_profile_text" = "A '%@' számára kiválasztott szerver jelenleg nem elérhető. Válasszon másik szervert, vagy próbálja meg később újra.";
+
+/* User's OS version is no longer actively supported by Proton VPN (alert title) */
+"_operating_system_out_of_date_alert_title" = "Frissítse szoftverét";
+
+/* Users' OS version is no longer actively supported by Proton VPN (alert text). %@1 is the name of the platform, like iOS or macOS. %@2 is the minimum version string that supports the next update. */
+"_operating_system_out_of_date_alert_description" = "A Proton VPN új verziója elérhető. A frissítéshez először frissítenie kell a készülékét a %1$@ %2$@ vagy újabb verzióra.";
+
+/* Home upsell carousel card title */
+"upsell_carousel_worldwide_title" = "Világméretű lefedettség";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_worldwide_subtitle" = "1700+ szerverhely 63 országban";
+
+/* Home upsell carousel card title */
+"upsell_carousel_faster_browsing_title" = "Gyorsabb böngészés";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_faster_browsing_subtitle" = "Böngészés még nagyobb sebességgel (akár 10 Gbps)";
+
+/* Home upsell carousel card title */
+"upsell_carousel_streaming_title" = "Lejátszás";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_streaming_subtitle" = "Nézze kedvenc filmjeit és tévéműsorait";
+
+/* Home upsell carousel card title */
+"upsell_carousel_netshield_title" = "NetShield";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_netshield_subtitle" = "Hirdetések, rosszindulatú programok és nyomkövetők blokkolása";
+
+/* Home upsell carousel card title */
+"upsell_carousel_secure_core_title" = "Secure Core";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_secure_core_subtitle" = "Még egy titkosítási réteg hozzáadása a VPN-kapcsolathoz";
+
+/* Home upsell carousel card title */
+"upsell_carousel_p2p_title" = "P2P támogatás";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_p2p_subtitle" = "Fájlok letöltése BitTorrent és más fájlmegosztó protokollokon keresztül";
+
+/* Home upsell carousel card title */
+"upsell_carousel_devices_title" = "10 eszköz védelme";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_devices_subtitle" = "Biztonság és adatvédelem minden eszközén";
+
+/* Home upsell carousel card title */
+"upsell_carousel_tor_title" = "Tor VPN-en";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_tor_subtitle" = "Használja a VPN kapcsolatát miközben a Tor hálózathoz van csatlakozva extra adatvédelemért";
+
+/* Home upsell carousel card title */
+"upsell_carousel_more_title" = "És sokkal több...";
+
+/* Home upsell carousel card subtitle */
+"upsell_carousel_more_subtitle" = "Még több teljesítmény- és adatvédelmi funkció feloldása";
+
+/* Error message: Catch-all error alert title. */
+"_generic_error_title" = "Hiba";
+
+/* Error message: Catch-all error description. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_generic_error_description" = "A műveletet nem sikerült befejezni. (Hiba %@)";
+
+/* Error alert title: a connection error has occurred. */
+"_connection_error_title" = "Csatlakozási hiba";
+
+/* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_unexpected_protocol" = "A választott kapcsolat olyan protokollt használ (%@), amelyet ez az alkalmazás már nem támogat. Kérem, válasszon másik kapcsolatot. (Hiba %@)";
+
+/* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_certificate_authentication" = "Probléma merült fel a szerverrel való hitelesítés során. (Hiba %@)";
+
+/* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_tunnel_connection" = "Probléma merült fel a VPN indításával kapcsolatban. (Hiba %@)";
+
+/* Error message: a problem occurred after the VPN connection was established, but before the authentication step with the connection agent completed. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_local_agent" = "Váratlan hiba történt csatlakozás közben: %@";
+
+/* Error message: the connection might have been established at one point, but the data is missing in order to display the proper connection state and/or maintain the connection. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_intent_missing" = "Nem sikerült csatlakozni a szerverhez. (Hiba %@)";
+
+/* Error message: a problem occurred while setting up the VPN connection, with a number of sub-errors that can occur. They're included in the second part of the string. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_preparation" = "Probléma adódott a kapcsolat előkészítésével (Hiba %@)";
+
+/* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_server_missing" = "A kiválasztott szerver már nem elérhető. Kérem, válasszon másik szervert. (Hiba %@)";
+
+/* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_connection_error_timeout" = "Hiba lépett fel a kapcsolódási kísérlet során: a szerver nem válaszolt időben. Próbálja meg újra. (Hiba %@)";
+
+/* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
+"_provider_message_error" = "Probléma adódott a kapcsolat előkészítésével. (Hiba %@)";
+
+/* The connection status text for widget when unprotected. */
+"widget_unprotected_header" = "Nem védett";
+
+/* Text that appears as subtitle to the widget when user is creating it */
+"widget_tray_description" = "Ellenőrizze, hogy csatlakoztott-e a VPN-hez, és gyors hozzáférést kapsz a kedvenc kapcsolataidhoz.";
+
+/* Recents section title */
+"widget_recents_title" = "Legutóbbiak";
+
+/* Recents section description */
+"widget_recents_description" = "Itt tekintheted meg a kapcsolati előzményeid.";
+
+/* What's new screen section title */
+"widget_whats_new_title" = "Visszatértek a widgetek";
+
+/* What's new screen section subtitle */
+"widget_whats_new_subtitle" = "Mostantól a kezdőképernyő elhagyása nélkül is megtekintheti és kezelheti VPN-kapcsolatát.";
+
+/* Widget adoption modal title. */
+"_widgetAdoption_modal_title" = "Próbálja ki a Proton VPN widgetet";
+
+/* Widget adoption modal subtitle. */
+"_widgetAdoption_modal_subtitle" = "Ellenőrizheti, hogy csatlakozik-e a VPN-hez, és a kezdőképernyőről elérheti az alapértelmezett és a kedvenc kapcsolatait.";
+
+/* Widget adoption modal instructions header. */
+"_widgetAdoption_modal_instructions_header" = "Hogyan adhatja hozzá a Proton VPN widgetet";
+
+/* Widget adoption modal 1st instruction content. */
+"_widgetAdoption_modal_instruction_1" = "Nyomja meg és tartsa lenyomva bárhol a kezdőképernyőn";
+
+/* Widget adoption modal 2nd instruction content. */
+"_widgetAdoption_modal_instruction_2" = "Nyomja meg a **Szerkesztés** gombot, majd válassza a **Widget hozzáadása** menüpontot";
+
+/* Widget adoption modal 3rd instruction content. */
+"_widgetAdoption_modal_instruction_3" = "Válassza ki vagy keresse a **Proton VPN** lehetőséget";
+
+/* Widget adoption modal 4th instruction content. */
+"_widgetAdoption_modal_instruction_4" = "Válassza ki kedvenc modulját a körhintából, majd nyomja meg a **Modul hozzáadása** gombot a jóváhagyáshoz";
+
+/* Widget adoption modal CTA. */
+"_widgetAdoption_modal_instruction_button" = "Megvan";
+
+/* Hermes Feature Upsell title within dedicated upsell screen */
+"_hermes_upsell_title" = "Haladó VPN testreszabás";
+
+/* Hermes Feature Upsell description within dedicated upsell screen */
+"_hermes_upsell_description" = "Kapcsolódás egyéni DNS szerver használatával a VPN Plusszal.";
+
+/* Hermes Feature Upsell button content within dedicated upsell screen */
+"_hermes_upsell_button" = "Nagyobb csomagra váltás";
+
+/* Hermes Feature Title within app settings screens */
+"_hermes_feature_title" = "Egyéni DNS";
+
+/* Hermes Feature Window Title within dedicated Hermes Settings view */
+"_hermes_feature_windowTitle" = "Beállítások";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Egyéni DNS";
+
+/* Hermes Feature Description within dedicated Hermes Settings view */
+"_hermes_feature_description" = "Csatlakozzon a VPN-hez saját üzemeltetésű vagy harmadik féltől származó domain név-rendszerrel (DNS).";
+
+/* Hermes entities header within dedicated Hermes Settings view */
+"_hermes_entities_header" = "Szerverek (%@)";
+
+/* Hermes entities Form header within dedicated Hermes Settings view */
+"_hermes_entities_form_header" = "Új DNS szerver hozzáadása";
+
+/* Hermes entities Form placeholder within dedicated Hermes Settings view */
+"_hermes_entities_form_placeholder" = "192.0.2.0";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view */
+"_hermes_entities_form_addButton" = "Hozzáadás";
+
+/* Hermes entities Form description within dedicated Hermes Settings view */
+"_hermes_entities_form_description" = "Adja meg a szerver IPv4 címét";
+
+/* Hermes entities Form validation "Enter Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterAddress" = "Adjon meg egy IPv4 címet";
+
+/* Hermes entities Form validation "Enter Valid Address" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_enterValidAddress" = "Adjon meg egy érvényes IPv4 címet";
+
+/* Hermes entities Form validation "Duplicate" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_duplicate" = "Szerver már hozzá van adva";
+
+/* Hermes entities Form validation "Unexpected Error" message within dedicated Hermes Settings view */
+"_hermes_entities_form_validation_unexpectedError" = "Váratlan hiba történt.";
+
+/* Hermes entities double click to copy within dedicated Hermes Settings view */
+"_hermes_entities_copyAction" = "Kattintson duplán a másoláshoz";
+
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Ha az egyéni DNS-szervere nem működik, az alap VPN DNS-e lép életbe.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "A szerverekhez való csatlakozás a megadott sorrendben történik. Ha egyik sem működik, a VPN DNS-e lép életbe.";
+
+/* Hermes conflict notification title within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_title" = "Egyéni DNS-t engedélyez?";
+
+/* Hermes conflict notification description within alert when enabling Hermes */
+"_hermes_conflict_hermesOn_description" = "Ez le fogja tiltani a NetShieldet.";
+
+/* Hermes conflict notification title within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_title" = "Engedélyezi a NetShieldet?";
+
+/* Hermes conflict notification description within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_description" = "Ez letiltja az egyéni DNS-t.";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_windowTitle" = "Beállítások módosítása";
+
+/* Hermes apply changes notification window title */
+"_hermes_applyChanges_description" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani.";

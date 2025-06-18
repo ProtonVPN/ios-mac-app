@@ -210,7 +210,7 @@
 
 "_reconnecting_to" = "Menghubungkan ulang ke %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Mengatur koneksi VPN baru untuk melindungi IP Anda";
 
 /* iOS status view */
 "_connected_to" = "Terhubung ke";
@@ -292,9 +292,6 @@
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and kill switch on */
 "_timeout_ks_ike_descritpion" = "Aplikasi lain mungkin mengganggu kinerja kill switch. Untuk menyelesaikan masalah ini, beralihlah ke protokol OpenVPN atau nonaktifkan kill switch dan coba lagi.";
-
-/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and kill switch on. Don't make this text longer than in english. */
-"_timeout_ks_ike_switch_protocol" = "Beralih ke OpenVPN dan coba lagi";
 
 /* Free tier plan title */
 "free_tier_plan_title" = "Proton VPN Free";
@@ -1007,9 +1004,6 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Catatan Aplikasi";
 
-/* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "Log OpenVPN";
-
 /* iOS Settings: WireGuard logs row */
 "_wireguard_logs" = "Log WireGuard";
 
@@ -1210,9 +1204,6 @@
 
 /* Bug report: Success message after report was sent */
 "_report_success" = "Terima kasih atas laporan Anda";
-
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas log Proton VPN\n• Berkas log Open VPN \n• Berkas log WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1621,7 +1612,7 @@
 "_plutonium_no_apps" = "Tidak ada aplikasi yang dipilih";
 
 /* Title of the plutonium feature operation mode */
-"_plutonium_exclude_mode" = "Mode pengecualian";
+"_plutonium_exclude_mode" = "Kecualikan mode";
 
 /* Title of the plutonium feature operation mode */
 "_plutonium_include_mode" = "Sertakan mode";
@@ -2984,8 +2975,11 @@
 /* Hermes entities double click to copy within dedicated Hermes Settings view */
 "_hermes_entities_copyAction" = "Klik dua kali untuk menyalin";
 
-/* Hermes entities footnote within dedicated Hermes Settings view */
-"_hermes_entities_footnote" = "Apabila server DNS khusus Anda tidak berfungsi, DNS VPN standar akan digunakan.";
+/* Hermes entities footnote with single entity within dedicated Hermes Settings view */
+"_hermes_entities_footnote_single" = "Apabila server DNS khusus Anda tidak berfungsi, DNS VPN standar akan digunakan.";
+
+/* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
+"_hermes_entities_footnote_multiple" = "Kami akan berusaha untuk terhubung ke server ini sesuai urutan. Apabila tidak ada satu pun dari server ini yang dapat digunakan, DNS milik VPN akan digunakan.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Aktifkan DNS Khusus?";

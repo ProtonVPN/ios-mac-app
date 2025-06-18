@@ -1,0 +1,7 @@
+"NSHumanReadableCopyright" = "Copyright © 2025 Proton Technologies AG. Minden jog fenntartva.";
+
+"NSCameraUsageDescription" = "Ez az alkalmazás kamerát használ a QR-kódok beolvasásához.";
+
+"NSFaceIDUsageDescription" = "Ez az alkalmazás Face ID-t használ az érzékeny adatok védelmére.";
+
+"NSUserNotificationsUsageDescription" = "Értesítéseket kell küldenünk Önnek, hogy értesítsük a fiókjában bekövetkező változásokról.";
