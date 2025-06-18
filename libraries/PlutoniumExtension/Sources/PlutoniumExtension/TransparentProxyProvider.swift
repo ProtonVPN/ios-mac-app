@@ -16,23 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import ComposableArchitecture
 import Foundation
+import Logging
 import Network
 @preconcurrency import NetworkExtension
 import os
-import Logging
 import PMLogger
-import ComposableArchitecture
 
 @preconcurrency import VPNAppCore
 
-open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unchecked Sendable
-{
-
+open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unchecked Sendable {
     private var activeTCPHandlers: Set<TCPFlowHandler> = []
     private var networkInterface: NWInterface?
 
-    public override init() {
+    override public init() {
         super.init()
         setupLogs()
     }
@@ -47,27 +45,27 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unche
         }
     }()
 
-    open override func startProxy(options: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
+    override open func startProxy(options _: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
         guard case .enabled = feature else {
             log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
             completionHandler(PlutoniumError.featureDisabled)
-            self.stopProxy(with: .none, completionHandler: {})
+            stopProxy(with: .none, completionHandler: {})
             return
         }
 
         let sendableCompletion = SendableCompletion(completion: completionHandler)
         let settings = createNetworkSettings()
         setTunnelNetworkSettings(settings) { error in
-            if let error = error {
+            if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
             } else {
                 log.info("Successfully set tunnel network settings.")
             }
             Task { @MainActor [weak self] in
-                guard let self = self else { return }
-    //            self.networkInterface = await findWireGuardInterface(expectedIP: "10.2.0.2")
-                self.networkInterface = await NWInterface.findInternetInterface()
+                guard let self else { return }
+                //            self.networkInterface = await findWireGuardInterface(expectedIP: "10.2.0.2")
+                networkInterface = await NWInterface.findInternetInterface()
                 if let networkInterface {
                     log.info("Found network interface: \(networkInterface.name) (\(networkInterface.type))")
                     sendableCompletion(nil)
@@ -77,15 +75,14 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unche
                 }
             }
         }
-
     }
 
-    open override func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+    override open func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         log.debug("Stopping proxy provider with reason: \(reason)")
         completionHandler()
     }
 
-    open override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
+    override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
 
         guard let inclusionHelper else {
@@ -169,14 +166,12 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unche
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        LoggingSystem.bootstrap { _ in return multiplexLogHandler }
+        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
-
 
     // MARK: - TCP Flow Handling
 
     private func handleTCPFlow(_ flow: NEAppProxyTCPFlow, through interface: NWInterface) -> Bool {
-
         guard let tcpFlowHandler = TCPFlowHandler(flow: flow, interface: interface) else {
             return false
         }
@@ -193,18 +188,18 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider, @unche
 
     // MARK: - UDP Flow Handling
 
-    private func handleUDPFlow(_ flow: NEAppProxyUDPFlow, through interface: NWInterface) -> Bool {
-        return false
+    private func handleUDPFlow(_: NEAppProxyUDPFlow, through _: NWInterface) -> Bool {
+        false
     }
 
-
     // MARK: - Helpers
+
     private struct SendableCompletion: @unchecked Sendable {
         let completion: (Error?) -> Void
 
         func callAsFunction(_ error: Error?) {
             Task { @MainActor in
-                  completion(error)
+                completion(error)
             }
         }
     }

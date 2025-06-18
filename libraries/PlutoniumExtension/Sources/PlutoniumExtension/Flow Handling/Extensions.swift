@@ -36,60 +36,60 @@ extension NEAppProxyTCPFlow {
     /// Returns the correct remote endpoint for both < macOS 15 and ≥ macOS 15.
     var remoteEndpoint: NWEndpoint? {
         if #available(macOS 15, *) {
-            return self.remoteFlowEndpoint
+            self.remoteFlowEndpoint
         } else {
-            return self.value(forKey: "remoteEndpoint") as? NWEndpoint
+            value(forKey: "remoteEndpoint") as? NWEndpoint
         }
     }
 }
 
 extension NEAppProxyFlow {
     /// Opens the flow, using:
-       /// On macOS 15+:     `open(withLocalFlowEndpoint:completionHandler:)`
-       /// On older macOS:   dynamical call to `open(withLocalEndpoint:completionHandler:)`
+    /// On macOS 15+:     `open(withLocalFlowEndpoint:completionHandler:)`
+    /// On older macOS:   dynamical call to `open(withLocalEndpoint:completionHandler:)`
     func open(
-            withLocalEndpoint endpoint: NWEndpoint?,
-            completionHandler: @escaping (Error?) -> Void
-        ) {
-            if #available(macOS 15, *) {
-                self.open(withLocalFlowEndpoint: endpoint, completionHandler: completionHandler)
-            } else {
-                let selectorName = "openWithLocalEndpoint:completionHandler:"
-                let sel = NSSelectorFromString(selectorName)
+        withLocalEndpoint endpoint: NWEndpoint?,
+        completionHandler: @escaping (Error?) -> Void
+    ) {
+        if #available(macOS 15, *) {
+            self.open(withLocalFlowEndpoint: endpoint, completionHandler: completionHandler)
+        } else {
+            let selectorName = "openWithLocalEndpoint:completionHandler:"
+            let sel = NSSelectorFromString(selectorName)
 
-                guard
-                    self.responds(to: sel),
-                    let methodIMP = self.method(for: sel)
-                else {
-                    let userInfo: [String: Any] = [
-                        NSLocalizedDescriptionKey: "‘\(selectorName)’ method not found on NEAppProxyFlow."
-                    ]
-                    let err = NSError(
-                        domain: "CompatOpenError",
-                        code: 1,
-                        userInfo: userInfo
-                    )
-                    completionHandler(err)
-                    return
-                }
-
-                // Cast the IMP to a Swift-callable C‐function pointer:
-                //
-                //   ObjC signature is:
-                //     - (void)openWithLocalEndpoint:(NWHostEndpoint*)endpoint
-                //                     completionHandler:(void (^)(NSError * _Nullable))handler;
-                //
-                typealias OpenFn = @convention(c) (
-                    AnyObject,           // "self" pointer
-                    Selector,            // the selector
-                    AnyObject?,          // the NWEndpoint? as AnyObject?
-                    @escaping (Error?) -> Void  // the completion block
-                ) -> Void
-
-                let fn = unsafeBitCast(methodIMP, to: OpenFn.self)
-
-                // Call the old Objective-C method
-                fn(self, sel, endpoint as AnyObject?, completionHandler)
+            guard
+                responds(to: sel),
+                let methodIMP = method(for: sel)
+            else {
+                let userInfo: [String: Any] = [
+                    NSLocalizedDescriptionKey: "‘\(selectorName)’ method not found on NEAppProxyFlow.",
+                ]
+                let err = NSError(
+                    domain: "CompatOpenError",
+                    code: 1,
+                    userInfo: userInfo
+                )
+                completionHandler(err)
+                return
             }
+
+            // Cast the IMP to a Swift-callable C‐function pointer:
+            //
+            //   ObjC signature is:
+            //     - (void)openWithLocalEndpoint:(NWHostEndpoint*)endpoint
+            //                     completionHandler:(void (^)(NSError * _Nullable))handler;
+            //
+            typealias OpenFn = @convention(c) (
+                AnyObject, // "self" pointer
+                Selector, // the selector
+                AnyObject?, // the NWEndpoint? as AnyObject?
+                @escaping (Error?) -> Void // the completion block
+            ) -> Void
+
+            let fn = unsafeBitCast(methodIMP, to: OpenFn.self)
+
+            // Call the old Objective-C method
+            fn(self, sel, endpoint as AnyObject?, completionHandler)
         }
+    }
 }

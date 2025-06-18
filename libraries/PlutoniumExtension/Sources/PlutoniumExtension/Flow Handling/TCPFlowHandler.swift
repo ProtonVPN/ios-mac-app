@@ -17,17 +17,16 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import NetworkExtension
 import Network
+import NetworkExtension
 
 final class TCPFlowHandler: @unchecked Sendable {
-
-    private static let maxBufferSize = 512 * 1024  // 512 KB
+    private static let maxBufferSize = 512 * 1024 // 512 KB
 
     let connection: NWConnection
     let flow: NEAppProxyTCPFlow
     var onClose: (() -> Void)?
-    
+
     // Add unique identifier for Set operations
     private let id = UUID()
 
@@ -57,7 +56,7 @@ final class TCPFlowHandler: @unchecked Sendable {
         case .ready:
             log.info("TCP flow handler connection ready")
             startDataForwarding()
-        case .failed(let error):
+        case let .failed(error):
             log.error("TCP flow handler connection failed: \(error.localizedDescription)")
             close()
         case .cancelled:
@@ -69,10 +68,9 @@ final class TCPFlowHandler: @unchecked Sendable {
     }
 
     private func startDataForwarding() {
-
         // First, open the TCP flow, sending nil as localEndpoint since the flow already has specific endpoint.
         flow.open(withLocalEndpoint: nil) { [weak self] error in
-            if let error = error {
+            if let error {
                 log.error("Failed to open TCP flow: \(error.localizedDescription)")
                 self?.close()
                 return
@@ -90,22 +88,22 @@ final class TCPFlowHandler: @unchecked Sendable {
 
     private func forwardFromFlowToConnection() {
         flow.readData { [weak self] data, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
-            if let error = error {
+            if let error {
                 log.error("Error reading from TCP flow: \(error.localizedDescription)")
-                self.close()
+                close()
                 return
             }
 
-            guard let data = data, !data.isEmpty else {
+            guard let data, !data.isEmpty else {
                 log.info("TCP flow closed by client")
-                self.close()
+                close()
                 return
             }
 
-            self.connection.send(content: data, completion: .contentProcessed { sendError in
-                if let sendError = sendError {
+            connection.send(content: data, completion: .contentProcessed { sendError in
+                if let sendError {
                     log.error("Error sending to tunnel: \(sendError.localizedDescription)")
                     self.close()
                 } else {
@@ -118,22 +116,22 @@ final class TCPFlowHandler: @unchecked Sendable {
 
     private func forwardFromConnectionToFlow() {
         connection.receive(minimumIncompleteLength: 1, maximumLength: Self.maxBufferSize) { [weak self] data, _, isDone, error in
-            guard let self = self else { return }
+            guard let self else { return }
 
-            if let error = error {
+            if let error {
                 log.error("Error receiving from tunnel: \(error.localizedDescription)")
-                self.close()
+                close()
                 return
             }
 
-            guard let data = data, !data.isEmpty else {
+            guard let data, !data.isEmpty else {
                 if isDone {
-                    self.close()
+                    close()
                 }
                 return
             }
 
-            self.flow.write(data) { writeError in
+            flow.write(data) { writeError in
                 if let writeError {
                     log.error("Error writing to TCP flow: \(writeError.localizedDescription)")
                     self.close()
@@ -159,9 +157,10 @@ final class TCPFlowHandler: @unchecked Sendable {
 }
 
 // MARK: - Hashable & Equatable
+
 extension TCPFlowHandler: Hashable {
     static func == (lhs: TCPFlowHandler, rhs: TCPFlowHandler) -> Bool {
-        return lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 
     func hash(into hasher: inout Hasher) {

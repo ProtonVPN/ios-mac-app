@@ -20,14 +20,13 @@ import Foundation
 import Network
 
 extension NWInterface {
-
     static func findWireGuardInterface(expectedIP: String) async -> NWInterface? {
-        return await withCheckedContinuation { continuation in
+        await withCheckedContinuation { continuation in
             let monitor = NWPathMonitor()
             monitor.pathUpdateHandler = { path in
                 for interface in path.availableInterfaces {
                     // look for any "other" interface named "utun..."
-                    if interface.type == .other && interface.name.hasPrefix("utun") {
+                    if interface.type == .other, interface.name.hasPrefix("utun") {
                         if interface.hasIPv4Address(expectedIP) {
                             continuation.resume(returning: interface)
                             monitor.cancel()
@@ -43,7 +42,7 @@ extension NWInterface {
     }
 
     static func findInternetInterface() async -> NWInterface? {
-        return await withCheckedContinuation { continuation in
+        await withCheckedContinuation { continuation in
             let monitor = NWPathMonitor()
             let queue = DispatchQueue(label: "InternetInterfaceMonitor")
 
@@ -69,7 +68,7 @@ extension NWInterface {
 
                     // Check if this interface can reach the internet
                     let pathToInternet = NWPath.Status.satisfied
-                    if path.status == pathToInternet && priority > bestPriority {
+                    if path.status == pathToInternet, priority > bestPriority {
                         bestInterface = interface
                         bestPriority = priority
                     }
@@ -83,9 +82,8 @@ extension NWInterface {
         }
     }
 
-    func hasIPv4Address(_ ipAddress: String) -> Bool {
-
+    func hasIPv4Address(_: String) -> Bool {
         // TODO: Implement this
-        return true
+        true
     }
 }
