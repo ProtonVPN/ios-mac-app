@@ -25,15 +25,18 @@ import ModalsShared
 public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]
     var validate: (PlanOption) async -> Void
+    var availableDiscount: (PlanOption) -> Int?
     var notNow: () -> Void
 
     public init(
         retrievePlans: @escaping () async throws -> [PlanOption],
         validate: @escaping (PlanOption) async -> Void,
+        availableDiscount: @escaping (PlanOption) -> Int?,
         notNow: @escaping () -> Void = {}
     ) {
         self.retrievePlans = retrievePlans
         self.validate = validate
+        self.availableDiscount = availableDiscount
         self.notNow = notNow
     }
 }
@@ -48,8 +51,6 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     @Published private(set) var isLoading: Bool = false
     @Published private(set) var isPurchaseInProgress: Bool = false
-
-    private(set) var mostExpensivePlan: PlanOption?
 
     var renewalTextForSelectedPlan: String? {
         @Dependency(\.date) var date
@@ -68,9 +69,8 @@ final class PlanOptionsListViewModel: ObservableObject {
     func onAppear() async {
         isLoading = true
         do {
-            plans = try await client.retrievePlans().sorted { $0.pricePerMonth < $1.pricePerMonth }
+            plans = try await client.retrievePlans().sorted { $0.storePricePerMonth < $1.storePricePerMonth }
             selectedPlan = plans.first
-            mostExpensivePlan = plans.first
             isLoading = false
         } catch {
             // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
@@ -84,6 +84,11 @@ final class PlanOptionsListViewModel: ObservableObject {
         isPurchaseInProgress = true
         await client.validate(selectedPlan)
         isPurchaseInProgress = false
+    }
+
+    @MainActor
+    func availableDiscount(comparedTo plan: PlanOption) -> Int? {
+        client.availableDiscount(plan)
     }
 
     @MainActor
@@ -106,13 +111,13 @@ private extension DateFormatter {
         static func mock() -> PlansClient {
             PlansClient(
                 retrievePlans: {
-                    [
-                        PlanOption(duration: .oneMonth, price: .init(amount: 35, currency: "CHF")),
-                        PlanOption(duration: .oneYear, price: .init(amount: 115, currency: "CHF")),
-                    ]
+                    [.oneMonth, .oneYear]
                 },
                 validate: { option in
                     print("User wants to go with \(option)")
+                },
+                availableDiscount: { _ in
+                    66
                 },
                 notNow: {
                     print("User wants to stay with free plan")

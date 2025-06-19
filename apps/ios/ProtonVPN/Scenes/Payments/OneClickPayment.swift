@@ -16,12 +16,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import StoreKit
 import UIKit
 
 import Dependencies
 
 import ProtonCoreFeatureFlags
-import ProtonCorePayments
+import ProtonCorePaymentsV2
 
 import CommonNetworking
 import LegacyCommon
@@ -32,25 +33,6 @@ import Domain
 import Strings
 
 final class OneClickPayment {
-    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory
-
-    enum UnavailableError: Error {
-        case featureFlagDisabled
-        case isTestFlight
-        case iapDisabled(localizedReason: String?)
-
-        var localizedDescription: String {
-            switch self {
-            case .featureFlagDisabled:
-                "Account upgrade is currently unavailable on this device."
-            case .isTestFlight:
-                "Account upgrade is not available on TestFlight."
-            case let .iapDisabled(localizedReason: reason):
-                reason ?? "In-App purchases are temporarily unavailable on this device."
-            }
-        }
-    }
-
     static var allowPayments: Bool {
         if Bundle.isTestflight {
             if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.allowSandboxPurchases) {
@@ -65,24 +47,20 @@ final class OneClickPayment {
         return true
     }
 
-    let plansDataSource: PlansDataSourceProtocol
-
     var completionHandler: () -> Void = {
         assertionFailure("You have to override this completionHandler!")
     }
 
     private let alertService: CoreAlertService
     private let planService: PlanService
-    private let payments: Payments
-
-    private var plansClientValue: PlansClient?
+    private let plansComposer: PlansComposerProviding
+    private let protonPlansManager: ProtonPlansManagerProviding
 
     init(
         alertService: CoreAlertService,
-        planService: PlanService,
-        payments: Payments
+        planService: PlanService?
     ) throws {
-        guard case let .right(plansDataSource) = payments.planService else {
+        guard let planService else {
             throw UnavailableError.featureFlagDisabled
         }
 
@@ -114,10 +92,10 @@ final class OneClickPayment {
             throw UnavailableError.iapDisabled(localizedReason: localizedReason)
         }
 
-        self.plansDataSource = plansDataSource
         self.alertService = alertService
         self.planService = planService
-        self.payments = payments
+        self.plansComposer = planService.plansComposer
+        self.protonPlansManager = planService.protonPlansManager
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
@@ -128,25 +106,34 @@ final class OneClickPayment {
         completionHandler()
     }
 
-    func plansClient(validationHandler: ((PlanOption, InAppPurchasePlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
+    func plansClient(validationHandler: ((PlanOption, ComposedPlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClient {
         let client = PlansClient(
             retrievePlans: { [weak self] in
-                guard let self else { throw OneClickPurchaseError.presentingScreenDismissed }
-                return try await planOptions(with: plansDataSource)
+                guard let self else { throw PurchaseError.presentingScreenDismissed }
+                return try await planOptions()
             },
             validate: { @MainActor [weak self] planOption in
-                let plan = self?.inAppPurchasePlans.first { plan, _ in
-                    plan.fingerprint == planOption.fingerprint
+                let composedPlan = self?.availablePlans.first {
+                    $0.product.id == planOption.id
                 }
-                validationHandler?(planOption, plan?.iapPlan)
+                validationHandler?(planOption, composedPlan)
                 await self?.validate(selectedPlan: planOption)
+            },
+            availableDiscount: { [weak self] planOption in
+                guard let mostExpensivePlan = self?.plansComposer.mostExpensivePlan else {
+                    return nil
+                }
+                return ComposedPlan
+                    .discount(
+                        currentPrice: planOption.storePricePerMonth,
+                        comparedPrice: mostExpensivePlan.storePricePerMonth
+                    )
             },
             notNow: { [weak self] in
                 notNowHandler?()
                 self?.completionHandler()
             }
         )
-        plansClientValue = client
         return client
     }
 
@@ -177,129 +164,176 @@ final class OneClickPayment {
             await redirectToWebPurchase()
             return
         }
-        let result = await buyPlan(planOption: selectedPlan)
-        await buyPlanResultHandler(result)
-    }
-
-    @MainActor
-    private func buyPlanResultHandler(_ result: PurchaseResult) async {
-        // calling `completionHandler()` should dismiss the flow but we should do it only under certain conditions:
-        switch result {
-        case let .planAlreadyPurchased(error):
-            log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
-            alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
-        // we have to wait for the welcomeScreen to be dismissed via a notification that will be sent
-        case let .purchasedPlan(plan):
-            log.debug("Purchased plan: \(plan.protonName)", category: .iap)
+        do {
+            let purchasedPlan = try await buyPlan(planOption: selectedPlan)
+            log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
             await planService.delegate?
                 .paymentTransactionDidFinish(
                     modalSource: nil,
-                    newPlanName: plan.protonName,
+                    newPlanName: purchasedPlan.plan.name,
                     offerReference: nil,
                     flowType: .oneClick
                 )
-        case .toppedUpCredits:
-            assertionFailure("This flow only supports subscriptions, got `toppedUpCredits` result")
-        case let .planPurchaseProcessingInProgress(plan):
-            log.debug("Purchasing \(plan.protonName)", category: .iap)
-        // a purchaseError, we don't dismiss the flow so user can retry (user can manually dismiss the flow)
-        case let .purchaseError(error, _):
+            completionHandler()
+        } catch let error as ProtonPlansManagerError {
+            self.buyPlanErrorHandler(error)
+        } catch {
             log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
-        // same, we don't dismiss the flow, we're displaying an alert (user can manually dismiss the flow)
-        case let .apiMightBeBlocked(message, originalError, _):
-            log.error("\(message)", category: .connection, metadata: ["error": "\(originalError)"])
-            alertService.push(alert: PaymentAlert(message: message, isError: true))
-        case .purchaseCancelled:
-            break
-        // renewal is not triggering the welcome screen immediately, so dismissing the flow after payment succeeds
-        case .renewalNotification:
-            log.debug("Notification of automatic renewal arrived", category: .iap)
-            completionHandler() // we have no welcome back screen (for now?) so let's just complete the flow
         }
     }
-
-    private var inAppPurchasePlans: [(planOption: PlanOption, iapPlan: InAppPurchasePlan?)] = []
 
     @MainActor
-    func planOptions(with plansDataSource: PlansDataSourceProtocol) async throws -> [PlanOption] {
-        try await plansDataSource.fetchAvailablePlans()
-        let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
-            plan.name == "vpn2022"
-        }.first // it's only going to be one with this plan name
-        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
-
-        if let vpn2022 {
-            inAppPurchasePlans = vpn2022.instances
-                .compactMap { InAppPurchasePlan(availablePlanInstance: $0) }
-                .compactMap { iAP -> (PlanOption, InAppPurchasePlan)? in
-                    guard let priceLabel = iAP.priceLabel(from: payments.storeKitManager),
-                          let period = iAP.period,
-                          let duration = PlanDuration(components: .init(month: Int(period)))
-                    else { return nil }
-                    let planOption = PlanOption(
-                        duration: duration,
-                        price: .init(
-                            amount: priceLabel.value.doubleValue,
-                            currency: iAP.currency ?? "",
-                            locale: priceLabel.locale
-                        )
-                    )
-                    return (planOption, iAP)
-                }
-        } else if !shouldShowTwoYearsWebPlan {
-            throw OneClickPurchaseError.defaultPlanNotFound
+    private func buyPlanErrorHandler(_ error: ProtonPlansManagerError) {
+        switch error {
+        case let .unableToMatchProtonPlanToStoreProduct(productId):
+            log.error("Unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(error)"])
+            alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
+        case .unableToGetUserTransactionUUID:
+            break
+        case .unableToRestorePurchases:
+            log.debug("Unable to restore purchases", category: .iap)
+        case .transactionCancelledByUser:
+            break
+        case .transactionPending:
+            log.debug("Transaction pending", category: .iap)
+        case .transactionUnknownError:
+            log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
+            alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
         }
-        if shouldShowTwoYearsWebPlan {
-            // add 2y web plan
-            inAppPurchasePlans.append((.twoYearsWebPlan, nil))
-        }
-
-        return inAppPurchasePlans.map(\.planOption)
     }
 
-    func buyPlan(planOption: PlanOption) async -> PurchaseResult {
-        guard planOption.purchaseType != .web else {
-            // should never happen
-            return .purchaseError(error: OneClickPurchaseError.planNotFound("Two years web plan should be purchased through web"))
+    private var availablePlans: [ComposedPlan] = []
+
+    @MainActor
+    func planOptions() async throws -> [PlanOption] {
+        let composedPlans = try await protonPlansManager.getAvailablePlans()
+        let userAppStoreCountryCode = await protonPlansManager.countryCode
+        let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+
+        if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
+            throw PurchaseError.defaultPlanNotFound
         }
 
-        if payments.storeKitManager.hasUnfinishedPurchase() {
-            log.debug("StoreKitManager is not ready to purchase", category: .userPlan)
-            return .purchaseError(error: OneClickPurchaseError.unfinishedPurchaseInQueue, processingPlan: nil)
-        }
-        let plan = inAppPurchasePlans.first { plan, _ in
-            plan.fingerprint == planOption.fingerprint
-        }
-        guard let iAP = plan?.iapPlan else {
-            let planName = plan?.iapPlan?.protonName ?? "Unknown"
-            return .purchaseError(error: OneClickPurchaseError.planNotFound(planName), processingPlan: nil)
-        }
-        return await withCheckedContinuation {
-            payments.purchaseManager.buyPlan(
-                plan: iAP,
-                finishCallback: $0.resume(returning:)
+        availablePlans = composedPlans
+        var iapPlans: [PlanOption] = composedPlans.map {
+            PlanOption(
+                id: $0.product.id,
+                storePricePerMonth: $0.storePricePerMonth,
+                amountOfMonths: $0.amountOfMonths,
+                durationLabel: $0.durationLabel,
+                displayPrice: $0.product.displayPrice,
+                pricePerMonth: $0.pricePerMonthLabel
             )
+        }
+        if shouldShowTwoYearsWebPlan {
+            iapPlans.append(.twoYearsWebPlan)
+        }
+        return iapPlans
+    }
+
+    func buyPlan(planOption: PlanOption) async throws -> ComposedPlan {
+        guard planOption.purchaseType != .web else {
+            // should never happen
+            throw PurchaseError.planNotFound(.webPlanPurchaseTriggeredWithinIap)
+        }
+
+        guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }) else {
+            throw PurchaseError.planNotFound(.planIDNotInAvailablePlanList)
+        }
+
+        guard let planName = composedPlan.plan.name else {
+            throw PurchaseError.planNotFound(.planNameMissing)
+        }
+
+        guard let product = composedPlan.product as? Product else {
+            throw PurchaseError.planNotFound(.planMissingProduct)
+        }
+
+        return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
+    }
+}
+
+extension OneClickPayment {
+    enum UnavailableError: Error {
+        case featureFlagDisabled
+        case isTestFlight
+        case iapDisabled(localizedReason: String?)
+
+        var localizedDescription: String {
+            switch self {
+            case .featureFlagDisabled:
+                "Account upgrade is currently unavailable on this device."
+            case .isTestFlight:
+                "Account upgrade is not available on TestFlight."
+            case let .iapDisabled(localizedReason: reason):
+                reason ?? "In-App purchases are temporarily unavailable on this device."
+            }
+        }
+    }
+
+    enum PurchaseError: Error, LocalizedError {
+        case defaultPlanNotFound
+        case planNotFound(PlanMissingReason)
+        case presentingScreenDismissed
+
+        enum PlanMissingReason {
+            case webPlanPurchaseTriggeredWithinIap
+            case planIDNotInAvailablePlanList
+            case planNameMissing
+            case planMissingProduct
+        }
+
+        var localizedDescription: String? {
+            switch self {
+            case .defaultPlanNotFound:
+                "Default plan not found"
+            case let .planNotFound(planName):
+                "StoreKitManager plan (\(planName)) not found"
+            case .presentingScreenDismissed:
+                "Presenting screen was dismissed"
+            }
         }
     }
 }
 
-enum OneClickPurchaseError: Error, LocalizedError {
-    case defaultPlanNotFound
-    case planNotFound(String)
-    case unfinishedPurchaseInQueue
-    case presentingScreenDismissed
+extension OneClickPayment.UnavailableError: ProtonVPNError {
+    static var errorDomain: String = "OneClickPayment.UnavailableError"
 
-    var localizedDescription: String? {
+    var charCode: FourCharCode {
+        switch self {
+        case .featureFlagDisabled:
+            return "OPFF"
+        case .isTestFlight:
+            return "OPTF"
+        case let .iapDisabled(localizedReason: reason):
+            log.warning("IAP is disabled on the backend: \(reason ?? "no reason provided")", category: .iap)
+            return "OPID"
+        }
+    }
+}
+
+extension OneClickPayment.PurchaseError: ProtonVPNError {
+    static var errorDomain: String = "OneClickPayment.PurchaseError"
+
+    var charCode: FourCharCode {
         switch self {
         case .defaultPlanNotFound:
-            "Default plan not found"
-        case let .planNotFound(planName):
-            "StoreKitManager plan (\(planName)) not found"
-        case .unfinishedPurchaseInQueue:
-            "StoreKitManager is not ready to purchase"
+            "OPNF"
+        case let .planNotFound(planMissingReason):
+            switch planMissingReason {
+            case .webPlanPurchaseTriggeredWithinIap:
+                "OPWI"
+            case .planIDNotInAvailablePlanList:
+                "OPNA"
+            case .planNameMissing:
+                "OPMN"
+            case .planMissingProduct:
+                "OPMP"
+            }
         case .presentingScreenDismissed:
-            "Presenting screen was dismissed"
+            "OPSD"
         }
     }
 }

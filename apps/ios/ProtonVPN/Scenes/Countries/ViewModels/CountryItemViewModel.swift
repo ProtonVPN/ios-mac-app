@@ -80,7 +80,7 @@ class CountryItemViewModel {
     private var vpnGateway: VpnGatewayProtocol
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService
+    private let planService: PlanService?
     let propertiesManager: PropertiesManagerProtocol
 
     // MARK: Computed properties
@@ -309,7 +309,7 @@ class CountryItemViewModel {
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
         propertiesManager: PropertiesManagerProtocol,
-        planService: PlanService,
+        planService: PlanService?,
         serversFilter: ((ServerModel) -> Bool)?,
         showCountryConnectButton: Bool,
         showFeatureIcons: Bool,

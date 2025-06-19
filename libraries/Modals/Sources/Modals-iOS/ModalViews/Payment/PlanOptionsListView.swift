@@ -76,7 +76,7 @@ struct PlanOptionsListView: View {
     }
 
     private func discount(option: PlanOption) -> Int? {
-        viewModel.mostExpensivePlan.flatMap { option.discount(comparedTo: $0) }
+        viewModel.availableDiscount(comparedTo: option)
     }
 
     private var contentView: some View {
@@ -125,32 +125,30 @@ struct PlanOptionsListView: View {
     }
 }
 
-#Preview("Classic") {
-    let plans: [PlanOption] = [
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
-    ]
-    let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () })
-    let viewModel = PlanOptionsListViewModel(client: client)
-    return PlanOptionsListView(viewModel: viewModel)
-}
+#if DEBUG
+    #Preview("Classic") {
+        let plans: [PlanOption] = [.oneYear, .oneMonth]
+        let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 })
+        let viewModel = PlanOptionsListViewModel(client: client)
+        return PlanOptionsListView(viewModel: viewModel)
+    }
 
-#Preview("Loading") {
-    let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    let plans: [PlanOption] = [
-        .twoYearsWebPlan,
-        .init(duration: .oneYear, price: .init(amount: 85, currency: "CHF")),
-        .init(duration: .oneMonth, price: .init(amount: 11, currency: "CHF")),
-    ]
-    let client: PlansClient = .init(
-        retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
-            return plans
-        },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-        }
-    )
-    let viewModel = PlanOptionsListViewModel(client: client)
-    return PlanOptionsListView(viewModel: viewModel)
-}
+    #Preview("Loading") {
+        let scheduler: AnySchedulerOf<DispatchQueue> = .main
+        let plans: [PlanOption] = [.twoYearsWebPlan, .oneYear, .oneMonth]
+        let client: PlansClient = .init(
+            retrievePlans: {
+                try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
+                return plans
+            },
+            validate: { _ in
+                try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+            },
+            availableDiscount: { _ in
+                33
+            }
+        )
+        let viewModel = PlanOptionsListViewModel(client: client)
+        return PlanOptionsListView(viewModel: viewModel)
+    }
+#endif

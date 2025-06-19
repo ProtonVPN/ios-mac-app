@@ -1,38 +1,32 @@
 //
-//  PlanService.swift
-//  vpncore - Created on 01.09.2021.
+//  Created on 22/05/2025 by Max Kupetskyi.
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2025 Proton AG
 //
-//  This file is part of LegacyCommon.
-//
-//  vpncore is free software: you can redistribute it and/or modify
+//  Proton VPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or
 //  (at your option) any later version.
 //
-//  vpncore is distributed in the hope that it will be useful,
+//  Proton VPN is distributed in the hope that it will be useful,
 //  but WITHOUT ANY WARRANTY; without even the implied warranty of
 //  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with LegacyCommon.  If not, see <https://www.gnu.org/licenses/>.
+//  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import CommonNetworking
+import Combine
 import Dependencies
 import Foundation
 import LegacyCommon
-import Modals
-import ProtonCoreDataModel
-import ProtonCorePayments
-import ProtonCorePaymentsUI
-import UIKit
+import ProtonCorePaymentsUIV2
+import ProtonCorePaymentsV2
 import VPNAppCore
 import VPNShared
 
 protocol PlanServiceFactory {
-    func makePlanService() -> PlanService
+    func makePlanService() -> PlanService?
 }
 
 protocol PlanServiceDelegate: AnyObject {
@@ -41,193 +35,150 @@ protocol PlanServiceDelegate: AnyObject {
 }
 
 protocol PlanService {
-    var iapStatus: IAPSupportStatus { get }
-    var countriesCount: Int { get }
     var delegate: PlanServiceDelegate? { get set }
-    var payments: Payments { get }
+    var protonPlansManager: ProtonPlansManagerProviding { get }
+    var plansComposer: PlansComposerProviding { get }
+    var countriesCount: Int { get }
+    var iapStatus: IAPSupportStatusV2 { get }
 
-    func presentPlanSelection(modalSource: UpsellModalSource?)
-    func presentSubscriptionManagement()
-    func updateServicePlans() async throws
-    func createPlusPlanUI(completion: @escaping () -> Void)
-
+    func presentSubscriptionManagement() async
+    func fetchAppleStatus() async throws
     func clear()
-}
-
-extension PlanService {
-    func presentPlanSelection() {
-        presentPlanSelection(modalSource: nil)
-    }
 }
 
 final class CorePlanService: PlanService {
     @Dependency(\.serverRepository) var serverRepository
-    private var paymentsUI: PaymentsUI?
-    let payments: Payments
+
+    private var cancellables: [AnyCancellable] = []
+
+    let remoteManager: RemoteManagerProviding
+    let paymentsAPIs: PaymentsAPIs
+    let plansComposer: PlansComposerProviding
+    let protonPlansManager: ProtonPlansManagerProviding
+
     private let alertService: CoreAlertService
     private let authKeychain: AuthKeychainHandle
-    private let userCachedStatus: UserCachedStatus
+    private let iapCachedStatus: IapCachedStatus
 
     var countriesCount: Int {
         serverRepository.countryCount()
     }
 
-    let tokenStorage: PaymentTokenStorage?
-
     weak var delegate: PlanServiceDelegate?
 
-    var iapStatus: IAPSupportStatus {
-        userCachedStatus.iapSupportStatus
+    /// V6PaymentStatusResponse from v6/status/apple
+    var iapStatus: IAPSupportStatusV2 {
+        iapCachedStatus.iapSupportStatus
     }
 
-    public typealias Factory =
-        AuthKeychainHandleFactory &
-        CoreAlertServiceFactory & NetworkingFactory
+    // MARK: - Init
 
-    public convenience init(_ factory: Factory) {
-        self.init(
-            networking: factory.makeNetworking(),
-            alertService: factory.makeCoreAlertService(),
-            authKeychain: factory.makeAuthKeychainHandle()
-        )
-    }
+    init?(alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
+        guard let authCredentials = authKeychain.fetch() else {
+            return nil
+        }
 
-    init(networking: Networking, alertService: CoreAlertService, authKeychain: AuthKeychainHandle) {
         self.alertService = alertService
         self.authKeychain = authKeychain
+        self.iapCachedStatus = IapCachedStatus()
 
-        self.tokenStorage = TokenStorage()
-        self.userCachedStatus = UserCachedStatus()
-        self.payments = Payments(
-            inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
-            apiService: networking.apiService,
-            localStorage: userCachedStatus,
-            reportBugAlertHandler: { _ in
-                log.error("Error from payments, showing bug report", category: .iap)
-                alertService.push(alert: ReportBugAlert())
-            }
+        @Dependency(\.dohConfiguration) var doh
+        let appInfo = AppInfoImplementation(context: .mainApp)
+
+        let remoteManager = RemoteManager(
+            sessionID: authCredentials.sessionId,
+            authToken: authCredentials.accessToken,
+            appVersion: appInfo.appVersion,
+            atlasSecret: doh.atlasSecret
         )
-    }
+        self.remoteManager = remoteManager
+        let paymentsAPIs = PaymentsAPIs(doh: doh)
+        self.paymentsAPIs = paymentsAPIs
+        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
+        self.protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
+        self.plansComposer = plansComposer
 
-    func updateServicePlans() async throws {
-        await payments.startObservingPaymentQueue(delegate: self)
-        try await payments.updateServiceIAPAvailability()
-    }
-
-    func presentPlanSelection(modalSource: UpsellModalSource?) {
-        if case let .disabled(localizedReason) = userCachedStatus.iapSupportStatus {
-            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
-            return
+        let transactionsObserverConfiguration = TransactionsObserverConfiguration(
+            sessionID: authCredentials.sessionId,
+            authToken: authCredentials.accessToken,
+            appVersion: appInfo.appVersion,
+            doh: doh
+        )
+        TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
+        Task {
+            try? await TransactionsObserver.shared.start()
         }
 
-        paymentsUI = createPaymentsUI()
-        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response, modalSource: modalSource)
-        }
-    }
-
-    func presentSubscriptionManagement() {
-        paymentsUI = createPaymentsUI()
-        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response, modalSource: nil)
-        }
-    }
-
-    func createPlusPlanUI(completion: @escaping () -> Void) {
-        paymentsUI = createPaymentsUI(onlyPlusPlan: true)
-        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            switch response {
-            case let .planAlreadyPurchased(error):
-                log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
-            case let .purchasedPlan(accountPlan: plan):
-                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
-                completion()
-                Task { [weak self] in
-                    await self?.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: plan.protonName,
-                            offerReference: nil,
-                            flowType: .regular
-                        )
-                }
-            case let .purchaseError(error: error):
-                log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
-            case .close:
-                log.debug("Payments closed", category: .iap)
-            case let .planPurchaseProcessingInProgress(accountPlan: plan):
-                log.debug("Purchasing \(plan.protonName)", category: .iap)
-            case .toppedUpCredits:
-                log.debug("Credits topped up", category: .iap)
-            case let .apiMightBeBlocked(message, error):
-                log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
-            case .open:
-                log.debug("Purchase screen opened", category: .iap)
-            }
-        }
+        protonPlansManager.transactionProgress.sink { [weak self] transactionProgress in
+            self?.handleTransactionProgress(transactionProgress)
+        }.store(in: &cancellables)
     }
 
     func clear() {
-        tokenStorage?.clear()
-        userCachedStatus.clear()
+        iapCachedStatus.clear()
     }
 
-    private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
-        let plusPlanNames = ["vpnplus", "vpn2022"]
-        let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter { plusPlanNames.contains($0) } : ObfuscatedConstants.planNames
-        return PaymentsUI(
-            payments: payments,
-            clientApp: ClientApp.vpn,
-            shownPlanNames: planNames,
-            customization: .init(inAppTheme: { .dark })
-        )
+    func fetchAppleStatus() async throws {
+        let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+        let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+        iapCachedStatus.iapSupportStatus = iapV6Response.status
     }
 
-    private func handlePaymentsResponse(response: PaymentsUIResultReason, modalSource: UpsellModalSource?) {
-        switch response {
-        case let .planAlreadyPurchased(error):
-            log.error("Plan already purchased", category: .connection, metadata: ["error": "\(error)"])
-        case let .purchasedPlan(accountPlan: plan):
-            log.debug("Purchased plan: \(plan.protonName)", category: .iap)
+    func presentSubscriptionManagement() async {
+        if case let .disabled(localizedReason) = iapCachedStatus.iapSupportStatus {
+            alertService.push(alert: UpgradeUnavailableAlert(message: localizedReason))
+            return
+        }
+        guard let authCredentials = authKeychain.fetch() else {
+            return
+        }
+
+        @Dependency(\.dohConfiguration) var doh
+        let appInfo = AppInfoImplementation(context: .mainApp)
+
+        Task { @MainActor in
+            // can only throw if no presentationMode is provided
+            try? PaymentsV2().showAvailablePlans(
+                presentationMode: .modal,
+                sessionID: authCredentials.sessionId,
+                accessToken: authCredentials.accessToken,
+                appVersion: appInfo.appVersion,
+                doh: doh
+            )
+        }
+    }
+
+    private func handleTransactionProgress(_ transactionProgress: TransactionHandlerState) {
+        switch transactionProgress {
+        case .idle:
+            break
+        case .generatingReceipt:
+            log.debug("Generating transaction receipt for iAP purchase", category: .iap)
+        case .creatingTransactionToken:
+            log.debug("Creating transaction token for iAP purchase", category: .iap)
+        case .createNewSubscription:
+            log.debug("Creating new subscription", category: .iap)
+        case .transactionCompleted:
+            log.debug("Purchased new plan", category: .iap)
             Task { [weak self] in
                 await self?.delegate?
                     .paymentTransactionDidFinish(
-                        modalSource: modalSource,
-                        newPlanName: plan.protonName,
-                        offerReference: plan.offer,
+                        modalSource: nil,
+                        newPlanName: nil,
+                        offerReference: nil,
                         flowType: .oneClick
                     )
             }
-        case let .open(vc: _, opened: opened):
-            assert(opened == true)
-        case let .planPurchaseProcessingInProgress(accountPlan: plan):
-            log.debug("Purchasing \(plan.protonName)", category: .iap)
-        case .close:
-            log.debug("Payments closed", category: .iap)
-        case let .purchaseError(error: error):
-            log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
-        case .toppedUpCredits:
-            log.debug("Credits topped up", category: .iap)
-        case let .apiMightBeBlocked(message, originalError: error):
-            log.error("\(message)", category: .connection, metadata: ["error": "\(error)"])
+        case .transactionCancelledByUser:
+            break
+        case .mismatchTransactionIDs:
+            log.error("Purchase failed due to mismatch transaction IDs", category: .iap)
+        case .transactionProcessError:
+            log.error("Purchase failed due to transaction process error", category: .iap)
+        case .unableToGetUserTransactionUUID:
+            log.error("Purchase failed due to unable to get user transaction UUID", category: .iap)
+        case .unknownError:
+            log.error("Purchase failed", category: .iap)
         }
-    }
-}
-
-extension CorePlanService: StoreKitManagerDelegate {
-    var isUnlocked: Bool {
-        true
-    }
-
-    var isSignedIn: Bool {
-        authKeychain.username != nil
-    }
-
-    var activeUsername: String? {
-        authKeychain.username
-    }
-
-    var userId: String? {
-        authKeychain.userId
     }
 }

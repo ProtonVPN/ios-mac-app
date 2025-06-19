@@ -46,7 +46,6 @@ class StatusViewModel {
         CoreAlertServiceFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
-        PlanServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -68,7 +67,6 @@ class StatusViewModel {
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
 
     // Used to send GSMessages to a view controller

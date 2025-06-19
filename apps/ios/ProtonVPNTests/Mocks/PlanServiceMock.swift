@@ -23,37 +23,30 @@
 import Foundation
 import LegacyCommon
 import Modals
-import ProtonCorePayments
+import ProtonCorePaymentsV2
 import VPNAppCore
 
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
-    var iapStatus: IAPSupportStatus = .enabled
+    var protonPlansManager: ProtonPlansManagerProviding {
+        fatalError("Should not invoke protonPlansManager")
+    }
 
-    var plansDataSource: PlansDataSourceProtocol?
-
-    var payments: ProtonCorePayments.Payments {
-        fatalError("Should not invoke payments accessor")
+    var plansComposer: PlansComposerProviding {
+        fatalError("Should not invoke plansComposer")
     }
 
     weak var delegate: PlanServiceDelegate?
 
-    var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
         63
     }
 
-    var allowUpgrade: Bool {
-        true
-    }
-
-    func updateServicePlans() async throws {}
-
-    func presentPlanSelection(modalSource _: UpsellModalSource?) {
-        callbackPresentPlanSelection?()
+    var iapStatus: IAPSupportStatusV2 {
+        .enabled
     }
 
     func presentSubscriptionManagement() {
@@ -62,5 +55,5 @@ class PlanServiceMock: PlanService {
 
     func clear() {}
 
-    func createPlusPlanUI(completion _: @escaping () -> Void) {}
+    func fetchAppleStatus() async throws {}
 }

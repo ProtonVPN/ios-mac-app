@@ -51,7 +51,7 @@ final class SettingsAccountViewModel {
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var planService: PlanService? = factory.makePlanService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
@@ -89,7 +89,7 @@ final class SettingsAccountViewModel {
         if let vpnCredentials = try? vpnKeychain.fetch() {
             accountPlanName = vpnCredentials.planTitle
             allowPlanManagement = vpnCredentials.maxTier.isPaidTier
-            allowUpgrade = planService.iapStatus.isEnabled && !allowPlanManagement
+            allowUpgrade = planService?.iapStatus.isEnabled == true && !allowPlanManagement
         } else {
             accountPlanName = Localizable.unavailable
             allowUpgrade = false
@@ -102,11 +102,7 @@ final class SettingsAccountViewModel {
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
-                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
-                    self?.manageSubscriptionAction()
-                } else {
-                    self?.buySubscriptionAction()
-                }
+                self?.manageSubscriptionAction()
             }))
         }
         if allowPlanManagement {
@@ -187,14 +183,11 @@ final class SettingsAccountViewModel {
         return TableViewSection(title: "", cells: cells)
     }
 
-    /// Open modal with new plan selection (for free/trial users and non-renewing plans)
-    private func buySubscriptionAction() {
-        planService.presentPlanSelection()
-    }
-
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        planService.presentSubscriptionManagement()
+        Task { [weak self] in
+            await self?.planService?.presentSubscriptionManagement()
+        }
     }
 
     private func deleteAccount() {

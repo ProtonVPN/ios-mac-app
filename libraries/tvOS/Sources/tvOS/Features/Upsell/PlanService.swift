@@ -18,63 +18,110 @@
 
 import Dependencies
 import Foundation
-import ProtonCorePayments
-import class StoreKit.SKProduct
+import ModalsServices
+import ProtonCorePaymentsV2
+import StoreKit
+import VPNShared
 
 struct PaymentsFactory {
-    var payments: @Sendable () -> Payments
+    var payments: @Sendable () -> PlanService
 }
 
 extension PaymentsFactory: DependencyKey {
-    static let liveValue = Payments(
-        inAppPurchaseIdentifiers: [],
-        apiService: Dependency(\.networking).wrappedValue.apiService,
-        localStorage: PlansCache(),
-        reportBugAlertHandler: { error in log.error("Bug alert handler: \(optional: error)") }
-    )
+    static let liveValue = PlanService()
 }
 
 extension DependencyValues {
-    var paymentsService: Payments {
+    var paymentsService: PlanService? {
         get { self[PaymentsFactory.self] }
         set { self[PaymentsFactory.self] = newValue }
     }
 }
 
-final class PlansCache: ServicePlanDataStorage {
-    var servicePlansDetails: [Plan]?
-    var defaultPlanDetails: Plan?
-    var currentSubscription: Subscription?
-    var credits: Credits?
-    var paymentMethods: [PaymentMethod]?
-    var iapSupportStatus: IAPSupportStatus = .disabled(localizedReason: nil)
-}
+final class PlanService {
+    let remoteManager: RemoteManagerProviding
+    let paymentsAPIs: PaymentsAPIs
+    let plansComposer: PlansComposerProviding
+    let protonPlansManager: ProtonPlansManagerProviding
+    var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
 
-struct PaymentsFFDisabledError: Swift.Error {
-    let localizedDescription: String = "DynamicPlan FF disabled!"
-}
+    // MARK: - Init
 
-extension Payments {
-    var plansDataSource: PlansDataSourceProtocol {
-        get throws(PaymentsFFDisabledError) {
-            guard case let .right(plansDataSource) = planService else {
-                throw PaymentsFFDisabledError()
-            }
-            return plansDataSource
+    init?() {
+        @Dependency(\.authKeychain) var authKeychain
+        guard let authCredentials = authKeychain.fetch() else {
+            return nil
         }
+
+        @Dependency(\.dohConfiguration) var doh
+        let appInfo = AppInfoImplementation(context: .mainApp)
+
+        let remoteManager = RemoteManager(
+            sessionID: authCredentials.sessionId,
+            authToken: authCredentials.accessToken,
+            appVersion: appInfo.appVersion,
+            atlasSecret: doh.atlasSecret
+        )
+        self.remoteManager = remoteManager
+        let paymentsAPIs = PaymentsAPIs(doh: doh)
+        self.paymentsAPIs = paymentsAPIs
+        let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
+        self.protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
+        self.plansComposer = plansComposer
+
+        let transactionsObserverConfiguration = TransactionsObserverConfiguration(
+            sessionID: authCredentials.sessionId,
+            authToken: authCredentials.accessToken,
+            appVersion: appInfo.appVersion,
+            doh: doh
+        )
+        TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
+        Task {
+            try? await TransactionsObserver.shared.start()
+        }
+    }
+
+    func fetchAppleStatus() async throws {
+        let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
+        let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+        iapSupportStatus = iapV6Response.status
+    }
+
+    private var availablePlans: [ComposedPlan] = []
+
+    @MainActor
+    func planOptions() async throws -> [PlanOption] {
+        let composedPlans = try await protonPlansManager.getAvailablePlans()
+        let vpn2022 = composedPlans.filter { composedPlan in
+            composedPlan.plan.name == "vpn2022"
+        }
+        availablePlans = vpn2022
+        return vpn2022.map {
+            PlanOption(
+                id: $0.product.id,
+                storePricePerMonth: $0.storePricePerMonth,
+                amountOfMonths: $0.amountOfMonths,
+                durationLabel: $0.durationLabel,
+                displayPrice: $0.product.displayPrice,
+                pricePerMonth: $0.pricePerMonthLabel
+            )
+        }
+    }
+
+    func buyPlan(planOption: PlanOption) async throws -> ComposedPlan {
+        guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }),
+              let planName = composedPlan.plan.name,
+              let product = composedPlan.product as? Product else {
+            throw PurchaseError.planNotFound("unknown")
+        }
+
+        return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
     }
 }
 
-extension InAppPurchasePlan {
-    func priceLabel(from storeKitManager: StoreKitManagerProtocol) -> (value: NSDecimalNumber, locale: Locale)? {
-        storeKitProductId.flatMap { storeKitManager.priceLabelForProduct(storeKitProductId: $0) }
-    }
-}
-
-extension StoreKitManagerProtocol {
-    func retryProcessingAllPendingTransactions() async {
-        await withCheckedContinuation {
-            retryProcessingAllPendingTransactions(finishHandler: $0.resume)
-        }
+extension PlanService {
+    enum PurchaseError: Error, LocalizedError {
+        case ffDisabled
+        case planNotFound(String)
     }
 }
