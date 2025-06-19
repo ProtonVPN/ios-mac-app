@@ -345,7 +345,6 @@
 		E59C7A932923B1650034E56F /* ServersInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59C7A922923B1650034E56F /* ServersInformationViewController.swift */; };
 		E59C7A972923B1BB0034E56F /* ServersInformationViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59C7A962923B1BB0034E56F /* ServersInformationViewController.storyboard */; };
 		E59FD94F2C58C5E30078A117 /* HomeFeatureCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */; };
-		E5A3DDEF2D9724D20081DD4C /* IssueReporting in Frameworks */ = {isa = PBXBuildFile; productRef = E5A3DDEE2D9724D20081DD4C /* IssueReporting */; };
 		E5B2F4C02D37D7FD000D4F10 /* WidgetIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B2F4BB2D37D7FD000D4F10 /* WidgetIntents.swift */; };
 		E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B3049C28BF628E0093517A /* AnnouncementViewController.swift */; };
 		E5BBFECF2B333A9F00FA9CF8 /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
@@ -953,7 +952,6 @@
 				4CF361FC2D6E09950088CEB3 /* Ergonomics in Frameworks */,
 				AD51BE502B908075002E40FD /* Persistence in Frameworks */,
 				AD51BE4C2B908075002E40FD /* Domain in Frameworks */,
-				E5A3DDEF2D9724D20081DD4C /* IssueReporting in Frameworks */,
 				ADFE22DC2B631B9B00B962BA /* PMLogger in Frameworks */,
 				AD51BE4A2B907FDB002E40FD /* Localization in Frameworks */,
 				ADFE22DA2B631B9B00B962BA /* Dependencies in Frameworks */,
@@ -2382,7 +2380,6 @@
 				AD51BE4D2B908075002E40FD /* Ergonomics */,
 				AD51BE4F2B908075002E40FD /* Persistence */,
 				AD51BE512B9085C3002E40FD /* Strings */,
-				E5A3DDEE2D9724D20081DD4C /* IssueReporting */,
 			);
 			productName = ProtonVPNTests;
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
