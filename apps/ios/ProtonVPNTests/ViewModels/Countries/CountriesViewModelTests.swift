@@ -23,7 +23,6 @@ import Dependencies
 
 import Announcement
 import Domain
-import IssueReporting
 import LegacyCommon
 import Persistence
 import ProtonCoreFeatureFlags
