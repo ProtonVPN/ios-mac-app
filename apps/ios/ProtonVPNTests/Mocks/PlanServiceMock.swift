@@ -20,24 +20,24 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import LegacyCommon
 import Modals
 import ProtonCorePaymentsV2
+import StoreKit
 import VPNAppCore
 
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
-    var protonPlansManager: ProtonPlansManagerProviding {
-        fatalError("Should not invoke protonPlansManager")
-    }
-
-    var plansComposer: PlansComposerProviding {
-        fatalError("Should not invoke plansComposer")
-    }
-
     weak var delegate: PlanServiceDelegate?
+
+    var mostExpensivePlan: ComposedPlan? { nil }
+
+    var countryCode: String? { nil }
+
+    var iapStatus: IAPSupportStatusV2 { .enabled }
 
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
@@ -45,15 +45,22 @@ class PlanServiceMock: PlanService {
         63
     }
 
-    var iapStatus: IAPSupportStatusV2 {
-        .enabled
+    func setDelegate(_ delegate: PlanServiceDelegate) {
+        self.delegate = delegate
     }
 
-    func presentSubscriptionManagement() {
+    func presentSubscriptionManagement(alertService _: CoreAlertService) {
         callbackPresentSubscriptionManagement?()
     }
 
-    func clear() {}
+    func getAvailablePlans() async throws -> [ComposedPlan] {
+        []
+    }
+
+    func purchase(_: Product, planName _: String, planCycle _: Int) async throws -> ComposedPlan {
+        throw GenericError(message: "Just error")
+    }
 
     func fetchAppleStatus() async throws {}
+    func clear() {}
 }

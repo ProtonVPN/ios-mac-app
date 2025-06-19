@@ -73,7 +73,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
-        PlanServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         ReviewFactory &
@@ -94,7 +93,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
-    private lazy var planService: PlanService? = factory.makePlanService()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     private lazy var searchStorage: SearchStorage = factory.makeSearchStorage()
     private lazy var review: Review = factory.makeReview()
@@ -103,6 +101,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
+    @Dependency(\.planService) private var planService
 
     var sessionStatus: SessionStatus = .notEstablished
 
@@ -112,7 +111,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         self.factory = factory
         super.init(factory: factory)
 
-        planService?.delegate = self
+        planService.setDelegate(self)
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
@@ -358,7 +357,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        try await planService?.fetchAppleStatus()
+        try await planService.fetchAppleStatus()
     }
 
     // swiftlint:enable function_body_length
@@ -470,7 +469,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
-        planService?.clear()
+        planService.clear()
         searchStorage.clear()
         review.clear()
 

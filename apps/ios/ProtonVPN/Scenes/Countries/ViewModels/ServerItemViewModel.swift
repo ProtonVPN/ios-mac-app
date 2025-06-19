@@ -46,7 +46,6 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService?
 
     var partnersIconsReceipts: [RequestReceipt] = []
 
@@ -134,12 +133,10 @@ class ServerItemViewModel: ServerItemViewModelCore {
         appStateManager: AppStateManager,
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
-        propertiesManager: PropertiesManagerProtocol,
-        planService: PlanService?
+        propertiesManager: PropertiesManagerProtocol
     ) {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
-        self.planService = planService
 
         super.init(
             serverModel: serverModel,
@@ -160,8 +157,9 @@ class ServerItemViewModel: ServerItemViewModelCore {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            Task { [weak self] in
-                await self?.planService?.presentSubscriptionManagement()
+            Task {
+                @Dependency(\.planService) var planService
+                await planService.presentSubscriptionManagement(alertService: alertService)
             }
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))

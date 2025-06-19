@@ -40,7 +40,6 @@ import Strings
 final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
-        PlanServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory & UIAlertServiceFactory &
         WindowServiceFactory
@@ -52,13 +51,13 @@ final class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
-    private lazy var planService: PlanService? = factory.makePlanService()
-
     private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
+
+    @Dependency(\.planService) private var planService
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -296,14 +295,14 @@ extension IosAlertService: CoreAlertService {
         case is UserPlanDowngradedAlert:
             if let server {
                 viewModel = .subscriptionDowngradedReconnecting(
-                    numberOfCountries: planService?.countriesCount ?? 0,
+                    numberOfCountries: planService.countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount,
                     fromServer: server.from,
                     toServer: server.to
                 )
             } else {
                 viewModel = .subscriptionDowngraded(
-                    numberOfCountries: planService?.countriesCount ?? 0,
+                    numberOfCountries: planService.countriesCount,
                     numberOfDevices: DomainConstants.maxDeviceCount
                 )
             }
@@ -318,7 +317,8 @@ extension IosAlertService: CoreAlertService {
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
             Task {
-                await self?.planService?.presentSubscriptionManagement()
+                guard let self else { return }
+                await self.planService.presentSubscriptionManagement(alertService: self)
             }
         }
 
@@ -354,10 +354,7 @@ extension IosAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let oneClickPayment: OneClickPayment
         do {
-            oneClickPayment = try OneClickPayment(
-                alertService: self,
-                planService: planService
-            )
+            oneClickPayment = try OneClickPayment(alertService: self)
         } catch {
             log.error("Unexpected payments error: \(error)")
             return
@@ -374,7 +371,7 @@ extension IosAlertService: CoreAlertService {
                     let upsellData = UpsellData(
                         modalSource: alert.modalSource,
                         newPlanName: composedPlan?.plan.name,
-                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil, // TODO: check offer
+                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
                         flowType: planOption.purchaseType == .web ? .external : .oneClick
                     )
                     AppEvent.userEngagedWithUpsellAlert.post(upsellData)
@@ -482,9 +479,10 @@ extension IosAlertService: CoreAlertService {
 
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
-            self?.windowService.dismissModal {
+            guard let self else { return }
+            windowService.dismissModal {
                 Task {
-                    await self?.planService?.presentSubscriptionManagement()
+                    await self.planService.presentSubscriptionManagement(alertService: self)
                 }
             }
         }

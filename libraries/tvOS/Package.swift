@@ -39,6 +39,7 @@ let package = Package(
                 .product(name: "ModalsServices", package: "Modals"),
                 .product(name: "VPNShared", package: "NEHelper"), // AuthKeychain
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Domain", package: "Domain"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
                 .core(module: "PaymentsV2"),
