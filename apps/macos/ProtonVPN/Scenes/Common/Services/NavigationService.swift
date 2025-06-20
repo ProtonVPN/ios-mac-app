@@ -122,12 +122,6 @@ class NavigationService {
         )
         NSWorkspace.shared.notificationCenter.addObserver(
             self,
-            selector: #selector(handleSleep),
-            name: NSWorkspace.willSleepNotification,
-            object: nil
-        )
-        NSWorkspace.shared.notificationCenter.addObserver(
-            self,
             selector: #selector(handleWake),
             name: NSWorkspace.didWakeNotification,
             object: nil
@@ -171,11 +165,6 @@ class NavigationService {
         }
 
         vpnGateway.autoConnect()
-    }
-
-    @objc
-    func handleSleep() {
-        vpnGateway.disconnect()
     }
 
     @objc
