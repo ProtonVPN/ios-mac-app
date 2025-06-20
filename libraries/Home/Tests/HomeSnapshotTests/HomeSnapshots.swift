@@ -16,24 +16,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-#if compiler(>=6) && canImport(Testing)
-
-import OrderedCollections
-import Testing
-import SnapshotTesting
 import ComposableArchitecture
-import VPNAppCore
 import Domain
 import DomainTestSupport
 import Ergonomics
-@testable import HomeShared
 @testable import Home
-import SwiftUI
+@testable import HomeShared
 import IssueReporting
+import OrderedCollections
+import SnapshotTesting
+import SwiftUI
+import Testing
+import VPNAppCore
 
 @Suite("Home")
-struct SwiftTestingTests {
-
+struct HomeScreenTests {
     static let homeTestData = [
         (
             ProtectionState.unprotected,
@@ -41,14 +38,18 @@ struct SwiftTestingTests {
         ),
         (
             ProtectionState.protecting(country: "Poland", ip: "1.2.3.4"),
-            VPNConnectionStatus.connecting(.specificCountryServer, .mock(country: "PL",
-                                                                         coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
+            VPNConnectionStatus.connecting(.specificCountryServer, .mock(
+                country: "PL",
+                coordinates: .init(latitude: 52.229686, longitude: 21.012247)
+            ))
         ),
         (
             ProtectionState.protected(netShield: .init(trackersCount: 432, adsCount: 12345, dataSaved: 123_456_789, enabled: true)),
-            VPNConnectionStatus.connected(.specificCountryServer, .mock(country: "PL",
-                                                                        coordinates: .init(latitude: 52.229686, longitude: 21.012247)))
-        )
+            VPNConnectionStatus.connected(.specificCountryServer, .mock(
+                country: "PL",
+                coordinates: .init(latitude: 52.229686, longitude: 21.012247)
+            ))
+        ),
     ]
 
     @Shared(.protectionState) var protectionState
@@ -68,7 +69,7 @@ struct SwiftTestingTests {
             $0.date = .constant(Date())
         }
         let appView = HomeView(store: store)
-            .frame(ViewImageConfig.iPhone13.size!) // iphone se 2022 size
+            .frame(ViewImageConfig.iPhone13.size!)
             .environment(\._accessibilityReduceMotion, true)
             .environment(\.colorScheme, .dark)
 
@@ -84,19 +85,25 @@ struct SwiftTestingTests {
             $protectionState |=| state.protection
             $vpnConnectionStatus |=| state.connection
 
-            let testName = [tier.isFreeTier ? "Free" : "Paid",
-                            protectionState.shortDescription(),
-                            vpnConnectionStatus.shortDescription()].joined(separator: "-")
+            let testName = [
+                tier.isFreeTier ? "Free" : "Paid",
+                protectionState.shortDescription(),
+                vpnConnectionStatus.shortDescription(),
+            ].joined(separator: "-")
 
             store.send(.map(.connectionStateUpdated(state.connection)))
 
-            self.assertSnapshot(of: appView, as: .image(layout: .sizeThatFits), testName: testName)
+            assertSnapshot(of: appView, as: .image(layout: .sizeThatFits), testName: testName)
+
+            // reset SVG map highlight
+            $userCountry |=| nil
+            store.send(.map(.connectionStateUpdated(state.connection)))
         }
     }
 
-    private func assertSnapshot<Value, Format>(
+    private func assertSnapshot<Value>(
         of value: @autoclosure () throws -> Value,
-        as snapshotting: Snapshotting<Value, Format>,
+        as snapshotting: Snapshotting<Value, some Any>,
         named name: String? = nil,
         record recording: Bool? = nil,
         timeout: TimeInterval = 5,
@@ -111,8 +118,8 @@ struct SwiftTestingTests {
             snapshotDirectory = "\(projectDir)/libraries/Home/Tests/HomeSnapshotTests/__Snapshots__/HomeSnapshots"
         }
 
-        let failure = verifySnapshot(
-            of: try value(),
+        let failure = try verifySnapshot(
+            of: value(),
             as: snapshotting,
             named: name,
             record: recording,
@@ -129,10 +136,9 @@ struct SwiftTestingTests {
     }
 }
 
-
 infix operator |=|
 
-public func |=| <Value> (lhs: Shared<Value>, rhs: Value) {
+public func |=| <Value>(lhs: Shared<Value>, rhs: Value) {
     lhs.withLock { $0 = rhs }
 }
 
@@ -141,30 +147,28 @@ extension Locale {
 }
 
 extension ProtectionState {
-    fileprivate func shortDescription() -> String {
+    func shortDescription() -> String {
         switch self {
-        case .unprotected: return "Unprotected"
-        case .protecting: return "Protecting"
-        case .protected: return "Protected"
-        case .protectedSecureCore: return "ProtectedSecureCore"
-        case .resolving: return "Loading"
+        case .unprotected: "Unprotected"
+        case .protecting: "Protecting"
+        case .protected: "Protected"
+        case .protectedSecureCore: "ProtectedSecureCore"
+        case .resolving: "Loading"
         }
     }
 }
 
 extension VPNConnectionStatus {
-    fileprivate func shortDescription() -> String {
+    func shortDescription() -> String {
         switch self {
-        case .disconnected: return "Disconnected"
-        case .connecting: return "Connecting"
-        case .resolving: return "Loading"
-        case .disconnecting: return "Disconnecting"
-        case .connected: return "Connected"
+        case .disconnected: "Disconnected"
+        case .connecting: "Connecting"
+        case .resolving: "Loading"
+        case .disconnecting: "Disconnecting"
+        case .connected: "Connected"
         }
     }
 }
-
-#endif
 
 /*
  We should only have a few tests on the whole home page, it's not meant to be comprehensive, just to make sure the elements fit together
