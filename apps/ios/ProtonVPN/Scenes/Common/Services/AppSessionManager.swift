@@ -65,7 +65,7 @@ protocol AppSessionManager {
     func refreshUserInfo()
 }
 
-class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
+final class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     typealias Factory =
         AppSessionRefreshTimerFactory &
         AppStateManagerFactory &
@@ -115,6 +115,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
+        AppEvent.hermes.subscribe(self, selector: #selector(updateWiregardConfig))
     }
 
     // MARK: - Beginning of the login logic.
@@ -599,5 +600,37 @@ extension AppSessionManagerImplementation {
         default:
             break
         }
+    }
+}
+
+// MARK: - WireGuard config
+
+import Hermes
+
+private extension WireguardConfig {
+    func refreshConfig() -> WireguardConfig {
+        @Dependency(\.hermesClient) var hermesClient
+        @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+
+        let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+        let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+
+        var hermesResolvers: [HermesResolver] = [.proton]
+        if hermesIsEnabled, hermesIsAllowed {
+            hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
+        }
+        return .init(
+            defaultUdpPorts: defaultUdpPorts,
+            defaultTcpPorts: defaultTcpPorts,
+            defaultTlsPorts: defaultTlsPorts,
+            dns: hermesResolvers.map(\.location)
+        )
+    }
+}
+
+extension AppSessionManagerImplementation {
+    @objc
+    private func updateWiregardConfig(_: Notification) {
+        propertiesManager.wireguardConfig = propertiesManager.wireguardConfig.refreshConfig()
     }
 }

@@ -39,8 +39,11 @@ final class SettingsViewController: UIViewController {
     var genericDataSource: GenericTableViewDataSource?
     var viewModel: SettingsViewModel? {
         didSet {
-            viewModel?.pushHandler = { [pushViewController] viewController in
-                pushViewController(viewController)
+            viewModel?.showModalController = { [weak self] viewController in
+                self?.present(viewController, animated: true)
+            }
+            viewModel?.pushHandler = { [weak self] viewController, translucent, hidesBackButton in
+                self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
             }
             viewModel?.reloadNeeded = { [weak self] in
                 guard let self, isViewLoaded else {
@@ -109,7 +112,14 @@ final class SettingsViewController: UIViewController {
         tableView.contentInset.bottom = UIConstants.cellHeight
     }
 
-    private func pushViewController(_ viewController: UIViewController) {
+    private func pushViewController(_ viewController: UIViewController, translucentNavBar: Bool, hidesBackButton: Bool) {
+        navigationController?.navigationBar.isTranslucent = translucentNavBar
+        navigationController?.navigationBar.backgroundColor = translucentNavBar ? .clear : nil
+
+        if hidesBackButton {
+            navigationItem.backBarButtonItem = .emptyBackBarButtonItem
+        }
+
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -118,4 +128,8 @@ final class SettingsViewController: UIViewController {
             connectionBarViewController.embed(in: self, with: connectionBarContainerView)
         }
     }
+}
+
+private extension UIBarButtonItem {
+    static let emptyBackBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 }

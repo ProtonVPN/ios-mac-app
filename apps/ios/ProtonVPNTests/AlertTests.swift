@@ -161,6 +161,10 @@ private class SettingsServiceMock: SettingsService {
         nil
     }
 
+    func makeHermesSettingsViewController(viewModel _: HermesSettingsViewModel) -> HermesSettingsViewController {
+        fatalError("Not implemented")
+    }
+
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {
         TelemetrySettingsViewController(
             preferenceChangeUsageData: { _ in },

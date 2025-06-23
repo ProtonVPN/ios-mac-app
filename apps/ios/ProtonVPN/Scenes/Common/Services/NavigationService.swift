@@ -72,6 +72,7 @@ protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> UIViewController
+    func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeLogsViewController(logSource: LogSource) -> LogsViewController
@@ -389,6 +390,10 @@ extension NavigationService: SettingsService {
         } else { // iOS 16
             return WidgetSettingsViewController(viewModel: WidgetSettingsViewModel())
         }
+    }
+
+    func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController {
+        HermesSettingsViewController(viewModel: viewModel)
     }
 
     func makeTelemetrySettingsViewController() -> TelemetrySettingsViewController {

@@ -89,17 +89,28 @@ final class SettingsViewModel {
     @Dependency(\.appFeaturePropertyProvider) private var featurePropertyProvider
     lazy var netShieldTypeAuthorizer = featureAuthorizerProvider.authorizer(forSubFeatureOf: NetShieldType.self)
 
+    @Dependency(\.hermesClient) private var hermesClient
+
     private var vpnGateway: VpnGatewayProtocol
     private var profileManager: ProfileManager?
     private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol?
     private let isAccountRecoveryEnabled: Bool
 
-    var pushHandler: ((UIViewController) -> Void)?
+    private var shouldShowCustomDNSSection: Bool {
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS)
+    }
+
+    var pushHandler: ((_ viewController: UIViewController, _ translucentNavBar: Bool, _ hidesBackBarButton: Bool) -> Void)?
+    var showModalController: ((UIViewController) -> Void)?
+
+    private let hermesSettingsViewModel: HermesSettingsViewModel
 
     init(factory: Factory, protocolService: ProtocolService, vpnGateway: VpnGatewayProtocol) {
         self.factory = factory
         self.protocolService = protocolService
         self.vpnGateway = vpnGateway
+
+        self.hermesSettingsViewModel = HermesSettingsViewModel(factory: factory)
 
         self.isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
 
@@ -110,6 +121,7 @@ final class SettingsViewModel {
         if isAccountRecoveryEnabled {
             self.accountRecoveryRepository = AccountRecoveryRepository(apiService: factory.makeNetworking().apiService)
         }
+
         startObserving()
     }
 
@@ -142,6 +154,16 @@ final class SettingsViewModel {
 
     var accountRecoveryImage: UIImage? {
         accountRecoveryStatus?.imageForSettingsItem
+    }
+
+    // MARK: - Action handling
+
+    private func push(
+        viewController: UIViewController,
+        hidesTranslucentNarBar: Bool = false,
+        hidesBackBarButton: Bool = false
+    ) {
+        pushHandler?(viewController, hidesTranslucentNarBar, hidesBackBarButton)
     }
 
     // MARK: - Header section
@@ -374,6 +396,49 @@ final class SettingsViewModel {
         ]
     }
 
+    private var hermesSection: [TableViewCellModel] {
+        let hermesStatusLabel = hermesClient.isEnabled().wrappedValue ?
+            Localizable.hermesSettingsIsOn :
+            Localizable.hermesSettingsIsOff
+        return [
+            .upsellablePushKeyValue(
+                title: Localizable.hermesFeatureTitle,
+                state: { [unowned self] in displayState(for: HermesFeature.self) },
+                value: hermesStatusLabel,
+                icon: nil,
+                upsell: { [weak self] in
+                    self?.alertService.push(alert: HermesUpsellAlert())
+                },
+                handler: { [weak self] in
+                    self?.pushHermesViewController()
+                }
+            ),
+
+            .attributedTooltip(
+                text: NSMutableAttributedString(
+                    attributedString: Localizable.hermesFeatureDescription
+                        .attributed(
+                            withColor: UIColor.weakTextColor(),
+                            fontSize: 13
+                        )
+                ).add(
+                    link: Localizable.learnMore,
+                    withUrl: VPNLink.hermes.urlString
+                )
+            ),
+        ]
+    }
+
+    private func pushHermesViewController() {
+        DispatchQueue.main.async {
+            let viewController = self.settingsService.makeHermesSettingsViewController(viewModel: self.hermesSettingsViewModel)
+            viewController.onDidDisappear = { [weak self] in
+                self?.showHermesReconnectionAlertIfNecessary()
+            }
+            self.push(viewController: viewController, hidesTranslucentNarBar: true, hidesBackBarButton: true)
+        }
+    }
+
     private var moderateNATState: PaidFeatureDisplayState {
         let canUse: () -> FeatureAuthorizationResult = featureAuthorizerProvider.authorizer(for: NATFeature.self)
         switch canUse() {
@@ -523,6 +588,10 @@ final class SettingsViewModel {
             cells.append(contentsOf: allowLanSection)
         }
 
+        if shouldShowCustomDNSSection {
+            cells.append(contentsOf: hermesSection)
+        }
+
         return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
     }
 
@@ -656,7 +725,7 @@ final class SettingsViewModel {
         guard let pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
             return
         }
-        pushHandler(accountViewController)
+        pushHandler(accountViewController, false, false)
     }
 
     private func pushSignInToAnotherDeviceViewController() {
@@ -682,7 +751,7 @@ final class SettingsViewModel {
 
             hostingController.hidesBottomBarWhenPushed = true
 
-            pushHandler(hostingController)
+            pushHandler(hostingController, false, false)
         }
     }
 
@@ -690,7 +759,7 @@ final class SettingsViewModel {
         assert(isAccountRecoveryEnabled, "This function shall only be called when AccountRecovery flag is true.")
         guard let pushHandler else { return }
         let accountRecoveryViewController = settingsService.makeAccountRecoveryViewController()
-        pushHandler(accountRecoveryViewController)
+        pushHandler(accountRecoveryViewController, false, false)
     }
 
     private func pushProtocolViewController() {
@@ -758,20 +827,20 @@ final class SettingsViewModel {
                 }
             }
         }
-        pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
+        push(viewController: protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }
 
     private func pushExtensionsViewController() {
-        pushHandler?(settingsService.makeExtensionsSettingsViewController())
+        push(viewController: settingsService.makeExtensionsSettingsViewController())
     }
 
     private func pushUsageStatisticsViewController() {
-        pushHandler?(settingsService.makeTelemetrySettingsViewController())
+        push(viewController: settingsService.makeTelemetrySettingsViewController())
     }
 
     private func pushLogSelectionViewController() {
         log.info("Build info: \(appInfo.debugInfoString)")
-        pushHandler?(settingsService.makeLogSelectionViewController())
+        push(viewController: settingsService.makeLogSelectionViewController())
     }
 
     private func pushNetshieldSelectionViewController() {
@@ -782,7 +851,7 @@ final class SettingsViewModel {
             factory: factory,
             onSelect: { [weak self] type, completion in self?.changeNetShieldType(to: type, completion: completion) }
         )
-        pushHandler?(NetShieldSelectionViewController(viewModel: viewModel))
+        push(viewController: NetShieldSelectionViewController(viewModel: viewModel))
     }
 
     private func changeNetShieldType(to type: NetShieldType, completion: @escaping (Bool) -> Void) {
@@ -801,14 +870,89 @@ final class SettingsViewModel {
                 log.assertionFailure("NetShield should never require a reconnect on iOS")
                 fallthrough
             case .withConnectionUpdate:
-                self?.netShieldPropertyProvider.netShieldType = type
-                self?.apply(agentFeatureChange: .netShield(type))
-                completion(true)
+                let setNetShieldValue = { [weak self] newValue in
+                    self?.netShieldPropertyProvider.netShieldType = newValue
+                    self?.apply(agentFeatureChange: .netShield(newValue))
+                }
+                if case .off = type {
+                    setNetShieldValue(type)
+                    completion(true)
+                } else {
+                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
+                        if enable {
+                            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
+                            setNetShieldValue(type)
+                            if shouldReconnect {
+                                self?.reconnect(with: .netShield, showStatusViewController: true)
+                            }
+                        }
+                        completion(enable)
+                    }
+                }
             case .immediate:
-                self?.netShieldPropertyProvider.netShieldType = type
-                completion(true)
+                if case .off = type {
+                    self?.netShieldPropertyProvider.netShieldType = type
+                    completion(true)
+                } else {
+                    self?.showHermesNetshieldOnConflictAlertIfNecessary { enable, shouldReconnect in
+                        if enable {
+                            self?.hermesSettingsViewModel.setIsEnabled(false, force: true)
+                            self?.netShieldPropertyProvider.netShieldType = type
+                            if shouldReconnect {
+                                self?.reconnect(with: .netShield, showStatusViewController: true)
+                            }
+                        }
+                        completion(enable)
+                    }
+                }
             }
         }
+    }
+
+    private func showHermesNetshieldOnConflictAlertIfNecessary(completionHandler: @escaping (_ shouldEnableNetShield: Bool, _ shouldReconnect: Bool) -> Void) {
+        guard hermesSettingsViewModel.isEnabled else {
+            completionHandler(true, false)
+            return
+        }
+
+        hermesSettingsViewModel.isReconnectionNecessaryFromNetShieldChange { [weak self] reconnectionIsNecessary in
+            guard let self else { return }
+            let alertController: UIAlertController = if reconnectionIsNecessary {
+                hermesSettingsViewModel.netShieldOnConflictAndShouldReconnectAlertController(completionHandler: completionHandler)
+            } else {
+                hermesSettingsViewModel.netShieldOnConflictAlertController { completionHandler($0, false) }
+            }
+            showModalController?(alertController)
+        }
+    }
+
+    private func showHermesReconnectionAlertIfNecessary() {
+        hermesSettingsViewModel.isReconnectionNecessaryFromHermesChange { [weak self] reconnectionIsNecessary in
+            guard reconnectionIsNecessary else {
+                return
+            }
+            self?.showReconnectionAlertController(hermesWillBeEnabled: true)
+        }
+    }
+
+    private func showNetShieldReconnectionAlertIfNecessary(cancelHandler: (() -> Void)? = nil) {
+        hermesSettingsViewModel.isReconnectionNecessaryFromNetShieldChange { [weak self] reconnectionIsNecessary in
+            guard reconnectionIsNecessary else {
+                return
+            }
+            self?.showReconnectionAlertController(hermesWillBeEnabled: false, cancelHandler: cancelHandler)
+        }
+    }
+
+    private func showReconnectionAlertController(hermesWillBeEnabled: Bool, cancelHandler: (() -> Void)? = nil) {
+        let alertController = hermesSettingsViewModel.reconnectionAlertController { [weak self] shouldReconnect in
+            if shouldReconnect {
+                self?.reconnect(with: .customDNS(hermesWillBeEnabled), showStatusViewController: true)
+            } else {
+                cancelHandler?()
+            }
+        }
+        showModalController?(alertController)
     }
 
     private var userTier: Int {
@@ -913,12 +1057,15 @@ final class SettingsViewModel {
         }
     }
 
-    private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature) {
+    private func reconnect(with tunnelFeatureChange: ConnectionFeatureChange.TunnelFeature, showStatusViewController: Bool = false) {
         // KS and LAN features are applied by the viewmodel.
         // We only need to worry about updating the protocol here.
         if FeatureFlagsRepository.isConnectionFeatureEnabled {
             if case let .connectionProtocol(connectionProtocol) = tunnelFeatureChange {
                 propertiesManager.connectionProtocol = connectionProtocol
+            }
+            if showStatusViewController {
+                connectionStatusService.presentStatusViewController()
             }
             Task {
                 do {
@@ -929,10 +1076,7 @@ final class SettingsViewModel {
             }
         } else {
             switch tunnelFeatureChange {
-            case .allowLAN:
-                vpnGateway.retryConnection()
-
-            case .killSwitch:
+            case .allowLAN, .killSwitch, .customDNS, .netShield:
                 vpnGateway.retryConnection()
 
             case let .connectionProtocol(value):

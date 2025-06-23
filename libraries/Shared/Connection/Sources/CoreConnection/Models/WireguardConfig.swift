@@ -43,7 +43,7 @@ public struct WireguardConfig: Codable, Equatable {
         25
     }
 
-    init(
+    package init(
         defaultUdpPorts: [Int]? = nil,
         defaultTcpPorts: [Int]? = nil,
         defaultTlsPorts: [Int]? = nil,

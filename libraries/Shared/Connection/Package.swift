@@ -77,6 +77,7 @@ let package = Package(
                 "Domain",
                 "ExtensionIPC",
                 "Localization",
+                "Hermes",
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
@@ -97,6 +98,7 @@ let package = Package(
         .target(
             name: "Hermes",
             dependencies: [
+                "Domain",
                 "Ergonomics",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]

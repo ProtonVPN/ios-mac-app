@@ -32,5 +32,7 @@ public enum ConnectionFeatureChange: Hashable, Sendable {
         case connectionProtocol(ConnectionProtocol)
         case killSwitch(Bool)
         case allowLAN(Bool)
+        case customDNS(Bool)
+        case netShield
     }
 }

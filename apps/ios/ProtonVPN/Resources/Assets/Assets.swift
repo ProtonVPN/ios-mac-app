@@ -27,6 +27,7 @@ internal enum Asset {
   internal static let fastest = ImageAsset(name: "Fastest")
   internal static let closeNavBar = ImageAsset(name: "close-nav-bar")
   internal static let connect = ImageAsset(name: "connect")
+  internal static let hermes = ImageAsset(name: "hermes")
   internal static let locked = ImageAsset(name: "locked")
   internal static let launchScreenVPNBackground = ColorAsset(name: "LaunchScreenVPNBackground")
   internal static let launchScreenVPNLogo = ImageAsset(name: "LaunchScreenVPNLogo")

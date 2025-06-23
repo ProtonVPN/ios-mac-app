@@ -46,6 +46,14 @@ enum TableViewCellModel {
         upsell: () -> Void,
         handler: ((Bool, @escaping (Bool) -> Void) -> Void)?
     )
+    case upsellablePushKeyValue(
+        title: String,
+        state: () -> PaidFeatureDisplayState,
+        value: String,
+        icon: UIImage? = nil,
+        upsell: () -> Void,
+        handler: () -> Void
+    )
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: () -> Void)
     case buttonWithLoadingIndicator(
         title: String,
@@ -98,6 +106,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         self.onSelectionChange = onSelectionChange
 
         tableView.register(StandardTableViewCell.nib, forCellReuseIdentifier: StandardTableViewCell.identifier)
+        tableView.register(UpsellStandardTableViewCell.nib, forCellReuseIdentifier: UpsellStandardTableViewCell.identifier)
         tableView.register(TitleTextFieldTableViewCell.nib, forCellReuseIdentifier: TitleTextFieldTableViewCell.identifier)
         tableView.register(KeyValueTableViewCell.nib, forCellReuseIdentifier: KeyValueTableViewCell.identifier)
         tableView.register(SwitchTableViewCell.nib, forCellReuseIdentifier: SwitchTableViewCell.identifier)
@@ -250,6 +259,20 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.switchControl.accessibilityLabel = title
 
             return cell
+        case let .upsellablePushKeyValue(key, state, value, icon, upsell, handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: UpsellStandardTableViewCell.identifier) as? UpsellStandardTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.icon = icon
+            cell.titleLabel.text = key
+            cell.accessibilityIdentifier = key
+            cell.subtitleLabel.text = value
+            cell.subtitleLabel.accessibilityIdentifier = value
+            cell.upsellTapped = upsell
+            cell.setup(with: state())
+            cell.completionHandler = handler
+
+            return cell
         case let .button(title: title, accessibilityIdentifier: accessibilityIdentifier, color: color, handler: handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.identifier) as? ButtonTableViewCell else {
                 return UITableViewCell()
@@ -382,42 +405,39 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         }
     }
 
-    // swiftlint:disable cyclomatic_complexity
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
 
         switch cellModel {
         case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
-            guard let cell = cell as? StandardTableViewCell else { return }
-
-            cell.select()
+            (cell as? StandardTableViewCell)?.select()
             onSelectionChange?()
+
+        case .upsellablePushKeyValue:
+            (cell as? UpsellStandardTableViewCell)?.select()
+            onSelectionChange?()
+
         case .checkmarkStandard:
-            guard let cell = cell as? CheckmarkTableViewCell else { return }
-
-            cell.select()
+            (cell as? CheckmarkTableViewCell)?.select()
             onSelectionChange?()
+
         case .staticPushKeyValue:
-            guard let cell = cell as? KeyValueTableViewCell else { return }
-
-            cell.select()
+            (cell as? KeyValueTableViewCell)?.select()
             onSelectionChange?()
+
         case .pushAccountDetails:
-            guard let cell = cell as? AccountDetailsTableViewCell else { return }
-
-            cell.select()
+            (cell as? AccountDetailsTableViewCell)?.select()
             onSelectionChange?()
+
         case .imageSubtitle:
-            guard let cell = cell as? ImageSubtitleTableViewCell else { return }
-
-            cell.select()
+            (cell as? ImageSubtitleTableViewCell)?.select()
             onSelectionChange?()
+
         case .imageSubtitleImage:
-            guard let cell = cell as? ImageSubtitleImageTableViewCell else { return }
-
-            cell.select()
+            (cell as? ImageSubtitleImageTableViewCell)?.select()
             onSelectionChange?()
+
         default:
             return
         }

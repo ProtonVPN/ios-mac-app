@@ -26,7 +26,8 @@ final class ConnectionConfigurationTests: XCTestCase {
         let config = ConnectionConfiguration(username: "Proton VPN", wireguardConfig: .init())
         XCTAssertFalse(config.wireguardConfig.dnsServers.isEmpty)
 
-        XCTAssertFalse(ConnectionConfigurationKey.testValue.wireguardConfig.dnsServers.isEmpty)
-        XCTAssertFalse(ConnectionConfigurationKey.liveValue.wireguardConfig.dnsServers.isEmpty)
+        @Dependency(\.connectionConfiguration) var provider
+
+        XCTAssertFalse(provider.configuration().wireguardConfig.dnsServers.isEmpty)
     }
 }
