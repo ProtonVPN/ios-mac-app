@@ -32,7 +32,6 @@ public struct HomeMapFeature {
     @ObservableState
     public struct State: Equatable {
         public internal(set) var mapState: MapState = .disconnected
-        public internal(set) var highlightedCountryCode: String?
         public internal(set) var pinMode: MapPin.Mode = .disconnected
 
         var shouldShowPin: Bool {
@@ -190,9 +189,8 @@ public struct HomeMapFeature {
             case let .newMapState(mapState):
                 state.pinMode = mapState.pinMode
                 state.mapState = mapState
-                SVGView.updateWith(code: state.highlightedCountryCode, highlighted: false)
-                state.highlightedCountryCode = mapState.code ?? state.userCountry
-                SVGView.updateWith(code: state.highlightedCountryCode, highlighted: true)
+                let highlightedCountryCode = mapState.code ?? state.userCountry
+                SVGView.updateWith(code: highlightedCountryCode)
 
                 return .none
 

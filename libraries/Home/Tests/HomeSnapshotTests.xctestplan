@@ -1,0 +1,31 @@
+{
+  "configurations" : [
+    {
+      "id" : "F706AC00-C135-49B7-AED4-F22C0F33DC32",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HomeFastSnapshotTests",
+        "name" : "HomeFastSnapshotTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HomeSlowSnapshotTests",
+        "name" : "HomeSlowSnapshotTests"
+      }
+    }
+  ],
+  "version" : 1
+}

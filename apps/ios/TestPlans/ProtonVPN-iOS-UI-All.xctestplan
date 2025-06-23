@@ -71,6 +71,13 @@
         "identifier" : "D5811D7C229BBD870087B63A",
         "name" : "ProtonVPNUITests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Home",
+        "identifier" : "HomeSlowSnapshotTests",
+        "name" : "HomeSlowSnapshotTests"
+      }
     }
   ],
   "version" : 1
