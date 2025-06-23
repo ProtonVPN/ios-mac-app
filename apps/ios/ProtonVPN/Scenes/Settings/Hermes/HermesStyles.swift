@@ -77,9 +77,9 @@ struct HermesTextFieldStyle: TextFieldStyle {
 
     private var backgroundBorderView: some View {
         switch validationState {
-        case .empty, .valid:
+        case .valid:
             RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .interactive))
-        case .invalid, .duplicate, .unexpectedError:
+        case .empty, .invalid, .duplicate, .unexpectedError:
             RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .danger))
         }
     }

@@ -2862,7 +2862,7 @@
 "_hermes_entities_copyAction" = "Double click to copy";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom ${HERMES_ENTITY} doesn’t work, the standard VPN ${HERMES_TECHNOLOGY} will be used.";
+"_hermes_entities_footnote_single" = "If your custom ${HERMES_ENTITY} doesn’t work, the default Proton VPN ${HERMES_TECHNOLOGY} will be used.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN ${HERMES_TECHNOLOGY} will be used.";

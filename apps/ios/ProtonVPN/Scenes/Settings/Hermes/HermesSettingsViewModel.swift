@@ -95,7 +95,7 @@ final class HermesSettingsViewModel {
     }
 
     func setIsEnabled(_ newValue: Bool, force: Bool = false) {
-        guard !force else {
+        if force {
             hermesClient.setIsEnabled(newValue)
             return
         }

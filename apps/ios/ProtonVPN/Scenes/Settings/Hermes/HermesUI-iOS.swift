@@ -62,19 +62,22 @@ struct HermesSettingsView: View {
             viewModel.onAppear()
         }
         .safeAreaInset(edge: .bottom) {
-            Group {
+            ZStack {
                 if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
                     Button(Localizable.hermesEntitiesFormAddButtonFull) {
-                        sheet = .insertion
                         if !viewModel.isEnabled {
                             isEnabledBinding.wrappedValue = true
                         }
+                        if viewModel.isEnabled {
+                            sheet = .insertion
+                        }
                     }
-                    .padding()
+                    .padding([.leading, .trailing, .bottom])
                     .buttonStyle(.hermesAddResolver(fillHorizontalSpace: true))
                     .transition(.opacity)
                 }
             }
+            .background(Color(.background, .strong))
             .animation(.bouncy, value: viewModel.isEnabled)
         }
         .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
@@ -87,6 +90,7 @@ struct HermesSettingsView: View {
                 }
                 Button(Localizable.enable) {
                     viewModel.userEnablingHermesConfirmation()
+                    sheet = .insertion
                 }
                 Button(Localizable.cancel, role: .cancel) {}
             } else {
@@ -123,7 +127,8 @@ private extension HermesSettingsView {
     private var listContentView: some View {
         hermesPresentationView(alignment: .leading)
             .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
             .frame(maxWidth: .infinity, alignment: .leading)
 
         Section {
@@ -136,10 +141,16 @@ private extension HermesSettingsView {
         .listRowBackground(Color(.background))
 
         if viewModel.isEnabled, resolversCount > 0 {
-            Section(Localizable.hermesEntitiesHeader(resolversCount)) {
+            Section {
                 hermesResolversContentView(resolversCount: resolversCount)
+            } header: {
+                Text(Localizable.hermesEntitiesHeader(resolversCount))
+                    .themeFont(.body2(emphasised: true))
+                    .foregroundStyle(Color(.text))
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: .themeSpacing8, trailing: 0))
             }
             .listRowBackground(Color(.background))
+            .textCase(nil)
 
             Text(resolversCount > 1 ? Localizable.hermesEntitiesFootnoteMultiple : Localizable.hermesEntitiesFootnoteSingle)
                 .themeFont(.body2(emphasised: false))
@@ -183,10 +194,11 @@ private extension HermesSettingsView {
                     linkText: Localizable.learnMore,
                     urlString: VPNLink.hermes.urlString
                 )
-                .themeFont(.body3(emphasised: false))
                 .foregroundStyle(Color(.text, .weak))
+                .multilineTextAlignment(alignment == .center ? .center : .leading)
             }
         }
+        .padding(.bottom, .themeSpacing2) // workaround for a cornerRadius clipping effect due to SwiftUI.List
     }
 }
 
@@ -235,7 +247,7 @@ private struct HermesSettingsInputView: View {
         NavigationView {
             VStack(alignment: .leading, spacing: .themeSpacing8) {
                 HStack {
-                    TextField(text: $resolverLocation) {
+                    TextField(text: $resolverLocation, prompt: Text(Localizable.hermesEntitiesFormPlaceholder)) {
                         EmptyView()
                     }
                     .controlSize(.large)
@@ -250,7 +262,6 @@ private struct HermesSettingsInputView: View {
                     Button(Localizable.hermesEntitiesFormAddButton) {
                         submitResolverLocation()
                     }
-                    .disabled(resolverLocationValidation == .empty)
                     .buttonStyle(.hermesAddResolver(addMinPadding: true))
                 }
 
@@ -275,9 +286,9 @@ private struct HermesSettingsInputView: View {
 
     private var resolverLocationOverlay: some View {
         switch resolverLocationValidation {
-        case .empty, .valid:
+        case .valid:
             RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .interactive))
-        case .invalid, .duplicate, .unexpectedError:
+        case .empty, .invalid, .duplicate, .unexpectedError:
             RoundedRectangle(cornerRadius: .themeSpacing8).stroke(Color(.border, .danger))
         }
     }
@@ -285,10 +296,14 @@ private struct HermesSettingsInputView: View {
     @ViewBuilder
     private var locationValidationView: some View {
         switch resolverLocationValidation {
-        case .valid, .empty:
-            Text(Localizable.hermesEntitiesFormValidationEnterAddress)
+        case .valid:
+            Text(Localizable.hermesEntitiesFormDescription)
                 .themeFont(.caption(emphasised: false))
                 .foregroundStyle(Color(.text, .weak))
+        case .empty:
+            Text(Localizable.hermesEntitiesFormValidationEnterAddress)
+                .themeFont(.caption(emphasised: false))
+                .foregroundStyle(Color(.text, .danger))
         case .invalid:
             Text(Localizable.hermesEntitiesFormValidationEnterValidAddress)
                 .themeFont(.caption(emphasised: false))
@@ -347,7 +362,15 @@ private extension View {
 
 private extension Text {
     init(base: some StringProtocol, linkText: some StringProtocol, urlString: String) {
-        let contents = base.replacingOccurrences(of: linkText, with: "[\(linkText)](\(urlString))")
-        self.init(.init(contents))
+        var attributedString = AttributedString(base)
+        attributedString.font = .themeFont(.body3(emphasised: false))
+
+        if let linkRange = attributedString.range(of: linkText) {
+            attributedString[linkRange].link = URL(string: urlString)!
+            attributedString[linkRange].font = Font.themeFont(.body3(emphasised: true))
+            attributedString[linkRange].foregroundColor = Color(.text, .interactive)
+        }
+
+        self.init(attributedString)
     }
 }
