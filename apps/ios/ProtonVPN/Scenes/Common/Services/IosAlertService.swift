@@ -354,7 +354,7 @@ extension IosAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let oneClickPayment: OneClickPayment
         do {
-            oneClickPayment = try OneClickPayment(alertService: self)
+            oneClickPayment = try OneClickPayment(alertService: self, windowService: windowService)
         } catch {
             log.error("Unexpected payments error: \(error)")
             return

@@ -185,6 +185,7 @@
 		A42F23CB2DE841EF0067A6E8 /* IapCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */; };
 		A486CC102DDF19AE00BA1444 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A486CC0F2DDF19AA00BA1444 /* PlanService.swift */; };
 		A486CC122DDF239300BA1444 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A486CC112DDF239300BA1444 /* ProtonCorePaymentsV2 */; };
+		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
@@ -677,6 +678,7 @@
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IapCachedStatus.swift; sourceTree = "<group>"; };
 		A486CC0F2DDF19AA00BA1444 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanService.swift; sourceTree = "<group>"; };
+		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
 		AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldStatsItemView.swift; sourceTree = "<group>"; };
@@ -2268,6 +2270,7 @@
 				A486CC0F2DDF19AA00BA1444 /* PlanService.swift */,
 				A42F23CA2DE841EF0067A6E8 /* IapCachedStatus.swift */,
 				E5BE14932BBE99A00093F30F /* OneClickPayment.swift */,
+				A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */,
 			);
 			path = Payments;
 			sourceTree = "<group>";
@@ -2979,6 +2982,7 @@
 				E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */,
 				D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */,
 				793ECF392148DCF900C186A7 /* KeyValueTableViewCell.swift in Sources */,
+				A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */,
 				F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */,
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				F34AC17D27F439B40007FF93 /* Review+Configuration.swift in Sources */,
