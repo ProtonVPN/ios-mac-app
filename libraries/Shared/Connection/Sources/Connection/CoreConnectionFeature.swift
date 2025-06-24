@@ -33,7 +33,6 @@ import Domain
 
 /// Low-level reducer that handles connection logic internals. Mainly responsible for commmunication between its three
 /// sub-features, as well as failing the connection whenever it times out.
-@available(iOS 16, *)
 public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.continuousClock) private var clock
     @Dependency(\.serverIdentifier) private var serverIdentifier
@@ -250,7 +249,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case let .certAuth(.loadingFinished(.failure(error))):
             log.error("Failed to load authentication data: \(error)")
             // We encountered an unrecoverable failure to load, fetch or refresh a certificate. Disconnect with the error
-            return .send(.disconnect(.connectionFailure(.certAuth(.unexpected(error)))))
+            return .send(.disconnect(.connectionFailure(.certAuth(error))))
 
         case .tunnel(.tunnelStatusChanged(.disconnected)):
             state.shouldDisconnectWhenAllowed = false

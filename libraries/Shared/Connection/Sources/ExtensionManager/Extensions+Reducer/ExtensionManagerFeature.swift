@@ -30,7 +30,6 @@ import Domain
 import Ergonomics
 import Strings
 
-@available(iOS 16, *)
 public struct ExtensionFeature: Reducer, Sendable {
     @Dependency(\.tunnelManager) var tunnelManager
 

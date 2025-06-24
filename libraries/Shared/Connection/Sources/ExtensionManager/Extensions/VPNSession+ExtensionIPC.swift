@@ -25,9 +25,11 @@ import Foundation
 import NetworkExtension
 
 extension VPNSession {
-    func send(_ message: WireguardProviderRequest, withRetries retries: Int, retryInterval: Duration) async throws -> Data {
-        @Dependency(\.continuousClock) var clock
-
+    func send(
+        _ message: WireguardProviderRequest,
+        withRetries retries: Int,
+        retryInterval: Duration
+    ) async throws(ProviderMessageError) -> Data {
         let messageData = message.asData
         // From documentation: "If this method can’t start sending the message it throws an error. If an error occurs
         // while sending the message or returning the result, `nil` should be sent to the response handler as
@@ -36,8 +38,9 @@ extension VPNSession {
         // nowhere, return an error.
         for attempt in 1 ... retries {
             log.debug("Sending provider message", category: .ipc, metadata: ["message": "\(message)", "attempt": "\(attempt)"])
-            let data: Data? = try await _sendProviderMessage(messageData)
-            try Task.checkCancellation()
+
+            let data = try await send(messageData: messageData)
+            try checkCancellation()
 
             if let data {
                 return data
@@ -49,24 +52,55 @@ extension VPNSession {
             }
 
             log.debug("No data received, retrying after: \(retryInterval)", category: .ipc, metadata: ["message": "\(message)"])
-            try await clock.sleep(for: retryInterval)
-
-            try Task.checkCancellation()
+            try await sleep(for: retryInterval)
+            try checkCancellation()
         }
 
         log.error("Retries exhausted, no data received", category: .ipc, metadata: ["message": "\(message)"])
-        throw ProviderMessageError.noDataReceived
+        throw .noDataReceived
+    }
+
+    private func send(messageData: Data) async throws(ProviderMessageError) -> Data? {
+        do {
+            return try await _sendProviderMessage(messageData)
+        } catch {
+            // Wrap internal errors.
+            // Check `internalSendFailed` or `NETunnelProviderSession.sendProviderMessage` for more information
+            throw .sendingError(.internalSendFailed(error))
+        }
+    }
+
+    private func sleep(for duration: Duration) async throws(ProviderMessageError) {
+        do {
+            @Dependency(\.continuousClock) var clock
+            try await clock.sleep(for: duration)
+        } catch {
+            assert(error is CancellationError)
+            throw .cancelled
+        }
+    }
+
+    private func checkCancellation() throws(ProviderMessageError) {
+        if Task.isCancelled {
+            throw .cancelled
+        }
     }
 }
 
-@available(iOS 16, *)
 extension TunnelMessageSender: DependencyKey {
-    public static let liveValue: TunnelMessageSender = {
-        @Dependency(\.tunnelManager) var tunnelManager
-        return TunnelMessageSender(
-            send: { message in
-                try await tunnelManager.session.send(message)
-            }
-        )
-    }()
+    private static func getSession() async throws(ProviderMessageError) -> VPNSession {
+        do {
+            @Dependency(\.tunnelManager) var tunnelManager
+            return try await tunnelManager.session
+        } catch {
+            log.debug("Failed to retrieve VPN session from tunnel", category: .ipc, metadata: ["error": "\(error)"])
+            throw .sendingError(.managerUnavailable(error))
+        }
+    }
+
+    public static let liveValue: TunnelMessageSender = .init(
+        send: { message throws(ProviderMessageError) in
+            try await getSession().send(message)
+        }
+    )
 }

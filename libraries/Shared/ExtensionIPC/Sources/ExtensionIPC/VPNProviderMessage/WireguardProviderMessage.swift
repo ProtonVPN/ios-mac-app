@@ -186,9 +186,9 @@ public enum WireguardProviderRequest: ProviderRequest {
             }
         }
 
-        public static func decode(data: Data) throws -> WireguardProviderRequest.Response {
+        public static func decode(data: Data) throws(ProviderMessageError) -> WireguardProviderRequest.Response {
             guard let byte = data.first else {
-                throw ProviderMessageError.decodingError
+                throw .decodingError
             }
 
             switch ResponseCode(rawValue: byte) {
@@ -207,7 +207,7 @@ public enum WireguardProviderRequest: ProviderRequest {
             case .tooManyCertRequests:
                 return .errorTooManyCertRequests(retryAfter: decodeInteger(Int.self, data: data))
             case nil:
-                throw ProviderMessageError.unknownResponse
+                throw .unknownResponse
             }
         }
     }

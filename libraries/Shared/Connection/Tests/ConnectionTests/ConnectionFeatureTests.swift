@@ -90,7 +90,7 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: {})
+                $0.certificateRefreshClient = .init(refreshCertificate: { _ in }, pushSelector: {})
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -231,7 +231,7 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: {})
+                $0.certificateRefreshClient = .init(refreshCertificate: { _ in }, pushSelector: {})
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
@@ -582,8 +582,9 @@
             let store = environment.createConnectionTestStore()
 
             // Set up a failure to occur while refreshing our certificate
-            let certRefreshResult = CertificateRefreshResult.ipcError(message: "No data received")
-            store.dependencies.certificateRefreshClient.refreshCertificate = { _ in certRefreshResult }
+            store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
+                throw .ipcError(.providerMessageError(.noDataReceived))
+            }
 
             store.exhaustivity = .off
             await store.send(.input(.onLaunch))
@@ -597,7 +598,7 @@
             await store.receive(stateChange(to: \.disconnecting))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.disconnected))
-            await store.receive(\.delegate.connectionFailed.certAuth.ipc)
+            await store.receive(\.delegate.connectionFailed.certAuth.refreshFailed.ipcError.providerMessageError.noDataReceived)
         }
 
         @MainActor
@@ -643,6 +644,35 @@
 
             await environment.clock.advance(by: .seconds(29))
             await store.receive(\.delegate.connectionFailed.timeout)
+            await store.receive(stateChange(to: \.disconnecting))
+            await environment.clock.advance(by: .seconds(1))
+            await store.receive(stateChange(to: \.disconnected))
+        }
+
+        @MainActor
+        func testFeatureSendsDelegateActionWhenSessionForkingFails() async {
+            let environment = ConnectionEnvironment.disconnected()
+            let store = environment.createConnectionTestStore()
+
+            environment.vpnAuthStorage.cert = nil
+            // Simulate the session forking request timing out
+            store.dependencies.certificateRefreshClient.refreshCertificate = { _ throws(CertificateRefreshError) in
+                // The internet connection appears to be offline
+                let genericNetworkError = NSError(domain: NSURLErrorDomain, code: -1009)
+                throw .sessionForkingFailed(genericNetworkError)
+            }
+
+            store.exhaustivity = .off
+            await store.send(.input(.onLaunch))
+            await store.receive(stateChange(to: \.disconnected))
+
+            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.receive(stateChange(to: \.connecting.unresolved))
+            await environment.clock.advance(by: .seconds(1))
+            await store.receive(stateChange(to: \.connecting.resolved))
+
+            await environment.clock.advance(by: .seconds(29))
+            await store.receive(\.delegate.connectionFailed.certAuth.refreshFailed.sessionForkingFailed)
             await store.receive(stateChange(to: \.disconnecting))
             await environment.clock.advance(by: .seconds(1))
             await store.receive(stateChange(to: \.disconnected))

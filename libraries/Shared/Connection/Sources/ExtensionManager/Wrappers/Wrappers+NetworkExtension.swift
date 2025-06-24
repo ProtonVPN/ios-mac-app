@@ -33,7 +33,7 @@ extension NETunnelProviderSession: VPNSession {
 
     public func send(
         _ message: WireguardProviderRequest
-    ) async throws -> WireguardProviderRequest.Response {
+    ) async throws(ProviderMessageError) -> WireguardProviderRequest.Response {
         let data = try await send(message, withRetries: Self.maxRetries, retryInterval: Self.retryInterval)
         return try WireguardProviderRequest.Response.decode(data: data)
     }

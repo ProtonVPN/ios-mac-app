@@ -32,13 +32,12 @@ import enum ExtensionIPC.WireguardProviderRequest
 public protocol VPNSession: AnyObject {
     var status: NEVPNStatus { get }
     var connectedDate: Date? { get }
-    @available(iOS 16, *)
     func fetchLastDisconnectError() async throws -> Error?
 
     func startTunnel() throws
     func stopTunnel()
 
-    func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+    func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
     /// Meant to be used internally only, for testing/mocking. Use `send(WireguardProviderRequest:)` instead.
     func _sendProviderMessage(_ messageData: Data) async throws -> Data?

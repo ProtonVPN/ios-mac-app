@@ -110,8 +110,8 @@ extension ConnectionError: ProtonVPNError {
                     "UXWS"
                 }
             }
-        case .certAuth:
-            "CRTA"
+        case let .certAuth(certAuthError):
+            certAuthError.charCode
         case .tunnel:
             "TUNN"
         case .agent:

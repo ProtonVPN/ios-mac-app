@@ -171,7 +171,7 @@ extension NETunnelProviderSessionWrapper {
             }
         } catch {
             log.error("Received error while attempting to send provider message: \(error)", category: .ipc)
-            completion?(.failure(.sendingError))
+            completion?(.failure(.sendingError(.internalSendFailed(error))))
         }
     }
 }

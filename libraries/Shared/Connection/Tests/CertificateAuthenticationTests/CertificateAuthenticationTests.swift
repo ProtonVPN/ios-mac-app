@@ -54,7 +54,7 @@ final class CertificateAuthenticationTests: XCTestCase {
 
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.keysMissing) {
-            $0 = .failed(.wontRefresh(.keysMissing))
+            $0 = .failed(.keysMissing)
         }
         await store.receive(\.loadingFinished.failure)
     }
@@ -123,7 +123,6 @@ final class CertificateAuthenticationTests: XCTestCase {
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with new features")
                     storageMock.cert = mockCertificate
                     storageMock.features = features
-                    return .ok
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -135,7 +134,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.loaded)
         await store.receive(\.refreshCertificate)
-        await store.receive(\.refreshFinished.success.ok) {
+        await store.receive(\.refreshFinished.success) {
             $0 = .loading(shouldRefreshIfNecessary: false)
         }
         await store.receive(\.loadFromStorage)
@@ -172,7 +171,6 @@ final class CertificateAuthenticationTests: XCTestCase {
                     XCTAssertEqual(features, expectedFeatures, "Certificate should be refreshed with current features")
                     storageMock.cert = mockCertificate
                     storageMock.features = features
-                    return .ok
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -184,7 +182,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.certificateMissing)
         await store.receive(\.refreshCertificate)
-        await store.receive(\.refreshFinished.success.ok) {
+        await store.receive(\.refreshFinished.success) {
             $0 = .loading(shouldRefreshIfNecessary: false)
         }
         await store.receive(\.loadFromStorage)
@@ -230,7 +228,6 @@ final class CertificateAuthenticationTests: XCTestCase {
                     XCTAssertEqual(features, newFeatures, "Certificate should be refreshed with current features")
                     storageMock.cert = mockCertificate
                     storageMock.features = features
-                    return .ok
                 },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
@@ -245,7 +242,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadingFromStorageFinished.loaded)
         // But the certificate should be immediately refreshed because the features are still mismatched
         await store.receive(\.refreshCertificate)
-        await store.receive(\.refreshFinished.success.ok) {
+        await store.receive(\.refreshFinished.success) {
             $0 = .loading(shouldRefreshIfNecessary: false)
         }
         await store.receive(\.loadFromStorage)
@@ -269,7 +266,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = storageMock
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { _ in .ok }, // Extension responds with .ok but doesn't actually update the certificate
+                refreshCertificate: { _ in }, // Extension doesn't throw an error but doesn't actually update the certificate
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }
@@ -280,12 +277,12 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.certificateMissing)
         await store.receive(\.refreshCertificate)
-        await store.receive(\.refreshFinished.success.ok) {
+        await store.receive(\.refreshFinished.success) {
             $0 = .loading(shouldRefreshIfNecessary: false)
         }
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.certificateMissing) {
-            $0 = .failed(.wontRefresh(.certificateMissing))
+            $0 = .failed(.certificateMissing)
         }
         await store.receive(\.loadingFinished.failure)
     }
@@ -306,7 +303,7 @@ final class CertificateAuthenticationTests: XCTestCase {
         } withDependencies: {
             $0.vpnAuthenticationStorage = storageMock
             $0.certificateRefreshClient = .init(
-                refreshCertificate: { _ in .requiresNewKeys }, // Extension responds with .ok but doesn't actually update the certificate
+                refreshCertificate: { _ throws(CertificateRefreshError) in throw .requiresNewKeys },
                 pushSelector: unimplemented("Unexpected session fork + selector push")
             )
         }
@@ -317,8 +314,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         await store.receive(\.loadFromStorage)
         await store.receive(\.loadingFromStorageFinished.certificateMissing)
         await store.receive(\.refreshCertificate)
-        await store.receive(\.refreshFinished.success.requiresNewKeys) {
-            $0 = .failed(.wontRefresh(.keysMissing))
+        await store.receive(\.refreshFinished.failure.requiresNewKeys) {
+            $0 = .failed(.refreshFailed(.requiresNewKeys))
         }
         await store.receive(\.loadingFinished.failure)
         await fulfillment(of: [keysDeleted], timeout: 0)

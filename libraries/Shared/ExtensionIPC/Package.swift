@@ -21,13 +21,19 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Strings"),
         .package(path: "../../Foundations/Ergonomics"),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", .upToNextMajor(from: "1.6.1")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "ExtensionIPC",
-            dependencies: ["Domain", "Ergonomics", "Strings"]
+            dependencies: [
+                "Domain",
+                "Ergonomics",
+                "Strings",
+                .product(name: "CasePaths", package: "swift-case-paths"),
+            ]
         ),
         .testTarget(
             name: "ExtensionIPCTests",

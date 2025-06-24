@@ -106,7 +106,8 @@ import VPNShared
         ) {
             guard let connectionProvider else {
                 log.error("Attempted to refresh certificate with no provider set. Check that the connection is active before refreshing.", category: .userCert)
-                completionHandler(.failure(ProviderMessageError.sendingError))
+                let sendError: ProviderMessageError = .sendingError(.managerUnavailable(ManagerUnavailable.connectionProviderNotSet))
+                completionHandler(.failure(sendError))
                 return
             }
 
@@ -397,6 +398,10 @@ import VPNShared
             }
 
             return false
+        }
+
+        enum ManagerUnavailable: Error {
+            case connectionProviderNotSet
         }
     }
 #endif

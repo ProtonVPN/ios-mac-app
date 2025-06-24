@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import CasePaths
 import Domain
 import Ergonomics
 import Foundation
@@ -46,14 +47,40 @@ public extension ProviderMessageSender {
     }
 }
 
+@CasePathable
 public enum ProviderMessageError: Error, Equatable {
-    case noDataReceived
     case cancelled
+    case sendingError(SendingError)
+    case noDataReceived
     case decodingError
-    case sendingError
     case unknownRequest
     case unknownResponse
     case remoteError(message: String)
+
+    @CasePathable
+    public enum SendingError: Error, Equatable {
+        /// We normally have the `TunnelManager` loaded.
+        /// If not, the method to retrieve it can throw while we are loading the manager from preferences.
+        case managerUnavailable(Error)
+
+        /// According to the Apple docs, possible errors include:
+        /// - NEVPNErrorConfigurationInvalid
+        /// - NEVPNErrorConfigurationDisabled
+        case internalSendFailed(Error)
+
+        public static func == (lhs: SendingError, rhs: SendingError) -> Bool {
+            switch (lhs, rhs) {
+            case (.managerUnavailable, .managerUnavailable):
+                true
+
+            case (.internalSendFailed, .internalSendFailed):
+                true
+
+            default:
+                false
+            }
+        }
+    }
 }
 
 extension ProviderMessageError: ProtonVPNError {

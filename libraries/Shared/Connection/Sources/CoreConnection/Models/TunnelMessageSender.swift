@@ -23,15 +23,15 @@ import enum ExtensionIPC.ProviderMessageError
 import enum ExtensionIPC.WireguardProviderRequest
 
 public struct TunnelMessageSender: TestDependencyKey {
-    public var send: (WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+    public var send: (WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
 
     public init(
-        send: @escaping (WireguardProviderRequest) async throws -> WireguardProviderRequest.Response
+        send: @escaping (WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response
     ) {
         self.send = send
     }
 
-    public static let testValue = TunnelMessageSender(send: unimplemented())
+    public static let testValue = TunnelMessageSender(send: unimplemented(throwing: .noDataReceived))
 }
 
 public extension DependencyValues {

@@ -45,7 +45,7 @@
         var disconnectionDuration: Duration? = .seconds(1)
         var disconnectionTask: Task<Void, Error>?
         var lastDisconnectError: Error?
-        var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response)?
+        var messageHandler: ((VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response)?
         var internalMessageSender: (Data) async throws -> Data?
 
         init(
@@ -105,7 +105,7 @@
 
         // MARK: ProviderMessageSender conformance
 
-        func send(_ message: WireguardProviderRequest) async throws -> WireguardProviderRequest.Response {
+        func send(_ message: WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response {
             guard let messageHandler else {
                 reportIssue("Unimplemented message handler")
                 return .error(message: "unimplemented message handler")
@@ -120,12 +120,16 @@
 
     @available(iOS 16, *)
     enum MessageHandler {
-        static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
+        static let usingInternalSend: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message throws(ProviderMessageError) in
             let data = try await session.send(message, withRetries: 5, retryInterval: .seconds(1))
-            return try WireguardProviderRequest.Response.decode(data: data)
+            do {
+                return try WireguardProviderRequest.Response.decode(data: data)
+            } catch {
+                throw ProviderMessageError.decodingError
+            }
         }
 
-        static let full: (VPNSessionMock, WireguardProviderRequest) async throws -> WireguardProviderRequest.Response = { session, message in
+        static let full: (VPNSessionMock, WireguardProviderRequest) async throws(ProviderMessageError) -> WireguardProviderRequest.Response = { session, message in
             switch message {
             case .getCurrentLogicalAndServerId:
                 return .ok(data: "\(session.connectedServer.logicalID);\(session.connectedServer.serverID)".data(using: .utf8)!)

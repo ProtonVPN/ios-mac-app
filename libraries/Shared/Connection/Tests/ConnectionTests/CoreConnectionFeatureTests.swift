@@ -189,7 +189,7 @@
                 $0.certificateRefreshClient = .liveValue
 
                 // Let's control the lower level tunnel message sender instead
-                $0.tunnelMessageSender.send = { message in
+                $0.tunnelMessageSender.send = { message throws(ProviderMessageError) in
                     XCTAssertEqual(message, .refreshCertificate(features: .mock), "Expected cert refresh client to ask for refresh")
 
                     // Let's model a scenario where the cert refresh takes a long time because of poor network conditions.
@@ -197,11 +197,15 @@
                     // still be invoked, so it's important to verify that the task is cancelled so we don't retry sending
                     // messages.
                     @Dependency(\.continuousClock) var clock
-                    try await clock.sleep(for: .seconds(45))
+                    do {
+                        try await clock.sleep(for: .seconds(45))
+                    } catch {
+                        throw .cancelled
+                    }
 
                     // After 45 seconds, the connection attempt should have been aborted, and therefore this task should have been cancelled.
                     if Task.isCancelled {
-                        throw ProviderMessageError.cancelled
+                        throw .cancelled
                     } else {
                         XCTFail("Expected task to have been cancelled")
                         return .ok(data: nil)
@@ -315,12 +319,15 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.certificateRefreshClient = .init(
-                    refreshCertificate: { _ in
+                    refreshCertificate: { _ throws(CertificateRefreshError) in
                         certRefreshStarted.fulfill()
                         @Dependency(\.continuousClock) var clock
-                        try await clock.sleep(for: .seconds(2))
+                        do {
+                            try await clock.sleep(for: .seconds(2))
+                        } catch {
+                            throw .cancelled
+                        }
                         mockStorage.cert = newCertificate
-                        return .ok
                     },
                     pushSelector: { unimplemented("Unexpected session fork + selector push") }
                 )
@@ -542,7 +549,9 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.certificateRefreshClient = .init(
-                    refreshCertificate: { _ in .requiresNewKeys }, // Simulate a 409 error (VPNAPPL-2757)
+                    refreshCertificate: { _ throws(CertificateRefreshError) in
+                        throw .requiresNewKeys // Simulates a 409 error (VPNAPPL-2757)
+                    },
                     pushSelector: { unimplemented("Unexpected session fork + selector push") }
                 )
             }
@@ -581,13 +590,13 @@
             await store.receive(\.certAuth.loadFromStorage)
             await store.receive(\.certAuth.loadingFromStorageFinished.certificateMissing)
             await store.receive(\.certAuth.refreshCertificate)
-            await store.receive(\.certAuth.refreshFinished.success.requiresNewKeys) {
-                $0.certAuth = .failed(.wontRefresh(.keysMissing))
+            await store.receive(\.certAuth.refreshFinished.failure.requiresNewKeys) {
+                $0.certAuth = .failed(.refreshFailed(.requiresNewKeys))
             }
-            await store.receive(\.certAuth.loadingFinished.failure)
+            await store.receive(\.certAuth.loadingFinished.failure.refreshFailed.requiresNewKeys)
 
-            await store.receive(\.disconnect.connectionFailure.certAuth.unexpected)
-            await store.receive(\.delegate.error.certAuth.unexpected)
+            await store.receive(\.disconnect.connectionFailure.certAuth.refreshFailed.requiresNewKeys)
+            await store.receive(\.delegate.error.certAuth.refreshFailed.requiresNewKeys)
             await store.receive(\.certAuth.cancelRefreshes)
             await store.receive(\.localAgent.disconnect)
             await store.receive(\.tunnel.disconnect) {
@@ -892,7 +901,6 @@
                     refreshCertificate: { features in
                         mockStorage.cert = refreshedCertificate
                         mockStorage.features = features
-                        return .ok
                     },
                     pushSelector: {}
                 )
@@ -1141,7 +1149,7 @@
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
                 $0.tunnelManager = mockManager
-                $0.certificateRefreshClient = .init(refreshCertificate: { _ in .ok }, pushSelector: {})
+                $0.certificateRefreshClient = .init(refreshCertificate: { _ in }, pushSelector: {})
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })

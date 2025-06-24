@@ -27,7 +27,6 @@ import Domain
 import LocalAgent
 import VPNAppCore
 
-@available(iOS 16, *)
 public struct ConnectionFeature: Reducer, Sendable {
     @Dependency(\.connectionBridge) private var connectionBridge
     @Dependency(\.connectionIntentStorage) private var intentStorage
