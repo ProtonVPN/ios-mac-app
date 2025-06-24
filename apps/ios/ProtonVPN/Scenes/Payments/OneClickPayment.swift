@@ -52,9 +52,10 @@ final class OneClickPayment {
     }
 
     private let alertService: CoreAlertService
+    private let windowService: WindowService
     @Dependency(\.planService) private var planService
 
-    init(alertService: CoreAlertService) throws {
+    init(alertService: CoreAlertService, windowService: WindowService) throws {
         let pushCantUpgradeAlert: (String?) -> Void = { localizedReason in
             Task {
                 @Dependency(\.sessionService) var sessionService
@@ -85,6 +86,7 @@ final class OneClickPayment {
         }
 
         self.alertService = alertService
+        self.windowService = windowService
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
     }
@@ -142,9 +144,25 @@ final class OneClickPayment {
             log.assertionFailure("Couldn't retrieve 2y plan session URL")
             return
         }
-        @Dependency(\.linkOpener) var linkOpener
-        linkOpener.open(url)
-        completionHandler()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWebView) {
+            let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
+                Task {
+                    await self?.planService.delegate?
+                        .paymentTransactionDidFinish(
+                            modalSource: nil,
+                            newPlanName: "vpn2024",
+                            offerReference: "VPNINTROPRICE2024",
+                            flowType: .external
+                        )
+                }
+                self?.completionHandler()
+            })
+            windowService.present(modal: paymentsWebViewController)
+        } else {
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url)
+            completionHandler()
+        }
     }
 
     @MainActor

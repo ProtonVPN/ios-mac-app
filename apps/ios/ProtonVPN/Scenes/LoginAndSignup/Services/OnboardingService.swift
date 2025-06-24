@@ -104,7 +104,7 @@ extension OnboardingModuleService: OnboardingService {
     func postOnboardingAction() {
         let oneClickPayment: OneClickPayment
         do {
-            oneClickPayment = try OneClickPayment(alertService: alertService)
+            oneClickPayment = try OneClickPayment(alertService: alertService, windowService: windowService)
         } catch {
             log.error("Encountered payments error: \(error)")
             windowService.dismissModal {

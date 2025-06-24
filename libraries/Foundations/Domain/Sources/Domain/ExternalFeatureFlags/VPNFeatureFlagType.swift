@@ -66,6 +66,9 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Enable web purchases for iOS users
     case iapToWeb = "IapToWeb"
+
+    /// Enable web purchases for iOS users in WebView
+    case iapToWebView = "IapToWebView"
 }
 
 /// These features are guarded by an additional condition, such as reliance on another flag or an OS version check.
