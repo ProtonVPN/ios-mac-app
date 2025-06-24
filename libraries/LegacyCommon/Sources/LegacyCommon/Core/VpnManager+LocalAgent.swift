@@ -32,7 +32,7 @@ import VPNShared
 import Domain
 import Ergonomics
 
-private let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
+let localAgentQueue = DispatchQueue(label: "ch.protonvpn.apple.local-agent")
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
