@@ -77,6 +77,9 @@
 "_enabled" = "Aktiverad";
 
 /* Common word */
+"_enable" = "Aktivera";
+
+/* Common word */
 "_disabled" = "Inaktiverad";
 
 /* Button in some alerts */
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Inga IP-adresser ännu";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Dela upp din trafik i VPN- och icke-VPN-tunnlar med split tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "Anpassad DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Anslut till VPN med ett egenhostat eller tredjeparts domännamnssystem (DNS).";
+"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servrar (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Lägg till";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Lägg till ny DNS-server";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Ange serverns IPv4-adress";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Dubbelklicka för att kopiera";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Om din anpassade DNS-server inte fungerar kommer standard-VPN DNS att användas.";
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Vi kommer att försöka ansluta till dessa servrar i ordning. Om ingen av dem fungerar kommer VPN DNS att användas.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Detta kommer inaktivera anpassad DNS.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Aktivera och anslut igen";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Ändra inställningar";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Ändra inställningar";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "På";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Av";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Din anslutning måste startas om för att tillämpa denna ändring.";

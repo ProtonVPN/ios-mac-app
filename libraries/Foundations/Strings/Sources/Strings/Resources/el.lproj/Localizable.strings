@@ -77,6 +77,9 @@
 "_enabled" = "Ενεργοποιημένο";
 
 /* Common word */
+"_enable" = "Ενεργοποίηση";
+
+/* Common word */
 "_disabled" = "Απενεργοποιημένο";
 
 /* Button in some alerts */
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Δεν υπάρχουν ακόμα διευθύνσεις IP";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Χωρίστε την κίνησή σας σε σήραγγες VPN και μη VPN με διαίρεση σήραγγας.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "Προσαρμοσμένος DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Συνδεθείτε στο VPN με ένα σύστημα ονομάτων τομέα (DNS) αυτο-φιλοξενούμενο ή τρίτου κατασκευαστή.";
+"_hermes_feature_description" = "Συνδεθείτε στο VPN με ένα σύστημα ονομάτων τομέα (DNS) αυτο-φιλοξενούμενο ή τρίτου κατασκευαστή. Μάθετε περισσότερα";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Διακομιστές (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Προσθήκη";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Προσθήκη νέου διακομιστή DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Εισαγάγετε τη διεύθυνση IPv4 του διακομιστή";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Διπλό κλικ για αντιγραφή";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Εάν ο προσαρμοσμένος διακομιστής DNS δε λειτουργεί, θα χρησιμοποιηθεί το τυπικό DNS VPN.";
+"_hermes_entities_footnote_single" = "Εάν ο προσαρμοσμένος διακομιστής DNS δε λειτουργεί, θα χρησιμοποιηθεί ο προεπιλεγμένος DNS του Proton VPN.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Θα προσπαθήσουμε να συνδεθούμε σε αυτούς τους διακομιστές στη σειρά. Εάν κανένας από αυτούς δε λειτουργεί, θα χρησιμοποιηθεί το DNS VPN.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Αυτό θα απενεργοποιήσει το Προσαρμοσμένο DNS.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Αυτό θα απενεργοποιήσει το Προσαρμοσμένο DNS. Για να εφαρμοστούν οι αλλαγές, απαιτείται επανασύνδεση.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Ενεργοποίηση και επανασύνδεση";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Αλλαγή ρυθμίσεων";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Αλλαγή ρυθμίσεων";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Ενεργό";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Ανενεργό";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Πρέπει να γίνει επανεκκίνηση της σύνδεσής σας για να εφαρμόσετε αυτήν την αλλαγή.";

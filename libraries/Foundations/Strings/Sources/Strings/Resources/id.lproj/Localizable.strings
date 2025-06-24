@@ -77,6 +77,9 @@
 "_enabled" = "Aktif";
 
 /* Common word */
+"_enable" = "Aktifkan";
+
+/* Common word */
 "_disabled" = "Dinonaktifkan";
 
 /* Button in some alerts */
@@ -1304,7 +1307,7 @@
 
 "_troubleshoot_item_other_title" = "Masih belum menemukan solusi";
 
-"_troubleshoot_item_other_description" = "Hubungin kami secara langsung melalui formulir layanan dukungan, email (%@), atau akun Twitter kami.";
+"_troubleshoot_item_other_description" = "Hubungi kami secara langsung melalui formulir layanan dukungan, email (%@), atau akun Twitter kami.";
 
 "_troubleshoot_item_other_link1" = "formulir dukungan";
 
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Belum ada alamat IP";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Pisahkan lalu lintas jaringan Anda ke dalam tunnel VPN dan non-VPN dengan split tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2520,7 +2523,7 @@
 "upsell_countries_even_higher_speed" = "Kecepatan VPN yang jauh lebih tinggi";
 
 /* Feature of Countries upsell modal */
-"upsell_countries_geoblocked_content" = "Akses konten yang terblokir wilayah";
+"upsell_countries_geoblocked_content" = "Akses konten yang terbatas wilayah";
 
 /* Feature of Country upsell modal */
 "upsell_countries_higher_speeds" = "Kecepatan VPN yang jauh lebih tinggi";
@@ -2691,7 +2694,7 @@
 "_br_2_title" = "Solusi kilat";
 
 /* ReportBug 2nd step (Quick fixes) subtitle */
-"_br_2_subtitle" = "Tips-tips berikut dapat membantu untuk menyelesaikan masalah Anda dengan lebih cepat.";
+"_br_2_subtitle" = "Tips berikut dapat membantu menyelesaikan masalah Anda dengan lebih cepat.";
 
 /* ReportBug 2nd step (Quick fixes) text under the list of suggestions */
 "_br_2_footer" = "Tidak membantu?";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "DNS khusus";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Hubungkan diri Anda ke VPN dengan nama domain (DNS) milik pihak ketiga atau yang dikelola secara mandiri.";
+"_hermes_feature_description" = "Hubungkan diri Anda ke VPN dengan nama domain (DNS) milik pihak ketiga atau yang dikelola secara mandiri. Pelajari lebih lanjut";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Server (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Tambah";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Tambah server DNS baru";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Masukkan alamat IPv4 server";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Tindakan ini akan menonaktifkan DNS khusus.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Pengaturan ini akan menonaktifkan DNS khusus. Untuk menerapkan perubahan, VPN akan perlu untuk dihubungkan ulang.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Aktifkan dan hubungkan ulang";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Ubah pengaturan";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Ubah pengaturan";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Aktif";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Nonaktif";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Sambungan Anda perlu dimuat ulang untuk menerapkan perubahan ini.";

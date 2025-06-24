@@ -418,7 +418,7 @@
     <key>upsell_countries_connect_to</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Connect to %#@num_countries@</string>
+      <string>與 %#@num_countries@ 連接</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatValueTypeKey</key>
@@ -454,7 +454,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>+ %d others</string>
+        <string>+ %d 其他人</string>
       </dict>
     </dict>
   </dict>

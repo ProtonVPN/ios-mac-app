@@ -77,6 +77,9 @@
 "_enabled" = "Уключана";
 
 /* Common word */
+"_enable" = "Уключыць";
+
+/* Common word */
 "_disabled" = "Адключана";
 
 /* Button in some alerts */
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Яшчэ няма IP-адрасоў";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "З функцыяй Split Tunneling вы зможаце дзяліць свой трафік на той, які будзе праходзіць праз тунэлі VPN і на той, які будзе абыходзіцца без іх.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "Карыстальніцкі DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Падключайцеся да VPN з уласнай або старонняй сістэмай даменных імён (DNS).";
+"_hermes_feature_description" = "Падключыцца да VPN з дапамогай уласнага вузла або старонняга сервера DNS. Даведацца больш";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Серверы (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Дадаць";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Дадаць новы сервер DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Увядзіце адрас сервера IPv4";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Двойчы націсніце, каб скапіяваць";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Будзе выкарыстоўвацца стандартны DNS ад VPN, калі ваш карыстальніцкі сервер DNS не працуе.";
+"_hermes_entities_footnote_single" = "Будзе выкарыстоўвацца прадвызначаны DNS ад Proton VPN, калі ваш карыстальніцкі сервер DNS не працуе.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Будзе зроблена спроба падключыцца да гэтых сервераў па парадку. Калі ніводны з іх працаваць не будзе, то будуць выкарыстоўвацца DNS ад VPN.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Гэта прывядзе да адключэння карыстальніцкага DNS.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Гэта адключыць карыстальніцкі DNS. Каб ужыць змены, патрабуецца перападключэнне.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Уключыць і перападключыцца";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Змяніць налады";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Змяніць налады";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Уключана";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Выключана";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Перазапусціце падключэнне, каб ужыць змены.";
