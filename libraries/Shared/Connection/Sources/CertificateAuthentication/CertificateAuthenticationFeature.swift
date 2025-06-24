@@ -166,7 +166,7 @@ public struct CertificateAuthenticationFeature: Reducer {
                 }
                 switch failureReason {
                 case .loaded:
-                    assertionFailure("This case should have been handled earlier in the switch")
+                    log.assertionFailure("Unexpected state after finishing loading from keychain", category: .connection)
                     return .none
 
                 case .keysMissing:
@@ -222,7 +222,7 @@ public struct CertificateAuthenticationFeature: Reducer {
                     return .none
 
                 case let .tooManyCertRequests(retryAfter):
-                    // TODO: Wait and retry
+                    // VPNAPPL-2893 - handle certificate refresh 429 gracefully
                     // Waiting for a retry could delay connection significantly, but this usually happens when we refresh
                     // certificates many times in a short period when changing features, not during the initial connection
                     log.info("Certificate refresh was rate limited, retry after \(optional: retryAfter)", category: .userCert)
