@@ -113,6 +113,7 @@ struct PlanOptionsView: View {
     }
 }
 
+#if DEBUG
 import CombineSchedulers
 
 #Preview("Classic") {
@@ -125,7 +126,7 @@ import CombineSchedulers
         },
         availableDiscount: { _ in 23 }
     )
-    return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
+    PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
 
 #Preview("Loading") {
@@ -141,5 +142,6 @@ import CombineSchedulers
         },
         availableDiscount: { _ in 49 }
     )
-    return PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
+    PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
 }
+#endif
