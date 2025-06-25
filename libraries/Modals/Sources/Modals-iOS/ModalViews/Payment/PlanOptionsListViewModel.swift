@@ -26,13 +26,13 @@ public struct PlansClient {
     var retrievePlans: () async throws -> [PlanOption]
     var validate: (PlanOption) async -> Void
     var availableDiscount: (PlanOption) -> Int?
-    var notNow: () -> Void
+    var notNow: (Error?) -> Void
 
     public init(
         retrievePlans: @escaping () async throws -> [PlanOption],
         validate: @escaping (PlanOption) async -> Void,
         availableDiscount: @escaping (PlanOption) -> Int?,
-        notNow: @escaping () -> Void = {}
+        notNow: @escaping (Error?) -> Void
     ) {
         self.retrievePlans = retrievePlans
         self.validate = validate
@@ -73,8 +73,7 @@ final class PlanOptionsListViewModel: ObservableObject {
             selectedPlan = plans.first
             isLoading = false
         } catch {
-            // TODO: VPNAPPL-2089 handle failed attempt to `retrievePlans`. Log the error message
-            client.notNow()
+            client.notNow(error)
         }
     }
 
@@ -93,7 +92,7 @@ final class PlanOptionsListViewModel: ObservableObject {
 
     @MainActor
     func notNow() {
-        client.notNow()
+        client.notNow(nil)
     }
 }
 
@@ -119,7 +118,7 @@ private extension DateFormatter {
                 availableDiscount: { _ in
                     66
                 },
-                notNow: {
+                notNow: { _ in
                     print("User wants to stay with free plan")
                 }
             )

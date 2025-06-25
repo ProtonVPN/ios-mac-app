@@ -150,7 +150,9 @@ final class PlanService {
         guard let protonPlansManager else {
             throw UnavailableError.noAuthDataPresent
         }
-        let composedPlans = try await protonPlansManager.getAvailablePlans()
+        let composedPlans = try await protonPlansManager.getAvailablePlans().filter {
+            $0.plan.name == "vpn2022"
+        }
 
         availablePlans = composedPlans
         return composedPlans.map {

@@ -120,7 +120,8 @@ final class OneClickPayment {
                         comparedPrice: mostExpensivePlan.storePricePerMonth
                     )
             },
-            notNow: { [weak self] in
+            notNow: { [weak self] error in
+                log.error("OneClickPayment notNow callback called", category: .iap, metadata: ["error": "\(error)"])
                 notNowHandler?()
                 self?.completionHandler()
             }
@@ -219,7 +220,9 @@ final class OneClickPayment {
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
-        let composedPlans = try await planService.getAvailablePlans()
+        let composedPlans = try await planService.getAvailablePlans().filter {
+            $0.plan.name == "vpn2022"
+        }
         if composedPlans.isEmpty, !shouldShowTwoYearsWebPlan {
             throw PurchaseError.defaultPlanNotFound
         }
