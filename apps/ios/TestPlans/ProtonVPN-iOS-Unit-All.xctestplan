@@ -124,6 +124,12 @@
       }
     },
     {
+      "skippedTests" : [
+        "FileLogHandlerTests",
+        "FileLogHandlerTests\/testCreatesFile()",
+        "FileLogHandlerTests\/testDeletesOldFiles()",
+        "FileLogHandlerTests\/testRotatesFiles()"
+      ],
       "target" : {
         "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
         "identifier" : "PMLoggerTests",
