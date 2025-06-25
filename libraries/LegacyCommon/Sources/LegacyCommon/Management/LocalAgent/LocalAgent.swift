@@ -36,6 +36,7 @@ import Ergonomics
 import Timer
 
 import NetShield
+import Combine
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
@@ -129,6 +130,38 @@ public final class LocalAgentConnectionFactoryImplementation: LocalAgentConnecti
     public init() {}
 }
 
+private final class NetworkPathMonitor {
+    let pathSubject: CurrentValueSubject<NWPath, Never>
+
+    var currentPath: NWPath {
+        networkMonitor.currentPath
+    }
+
+    private let networkMonitor: NWPathMonitor
+
+    init() {
+        let monitor = NWPathMonitor()
+        self.networkMonitor = monitor
+        self.pathSubject = .init(monitor.currentPath)
+    }
+
+    deinit {
+        stop()
+    }
+
+    func start(onQueue queue: DispatchQueue) {
+        networkMonitor.pathUpdateHandler = { [weak self] path in
+            self?.pathSubject.send(path)
+        }
+        networkMonitor.start(queue: queue)
+    }
+
+    func stop() {
+        pathSubject.send(completion: .finished)
+        networkMonitor.cancel()
+    }
+}
+
 final class LocalAgentImplementation: LocalAgent {
     private static let localAgentHostname = "10.2.0.1:65432"
     private static let refreshInterval: TimeInterval = 60.0
@@ -142,12 +175,13 @@ final class LocalAgentImplementation: LocalAgent {
 
     private var agent: LocalAgentConnectionWrapper?
     private let client: LocalAgentNativeClientImplementation
-    private let networkMonitor = NWPathMonitor()
+    private let networkMonitor = NetworkPathMonitor()
 
     private var lastReceivedStats: NetShieldModel?
     private var previousState: LocalAgentState?
     private var statusTimer: BackgroundTimer?
     private var notificationTokens = [NotificationToken]()
+    private var networkMonitorCancellable: AnyCancellable?
 
     var isMonitoringFeatureStatistics: Bool { statusTimer?.isValid == true }
     private var isNetShieldStatsEnabled: Bool { propertiesManager.featureFlags.netShieldStats }
@@ -160,21 +194,29 @@ final class LocalAgentImplementation: LocalAgent {
         client.delegate = self
 
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
-        networkMonitor.pathUpdateHandler = { [weak self] path in
-            switch path.status {
-            case .satisfied:
-                self?.agent?.setConnectivity(true)
-            case .unsatisfied:
-                self?.agent?.setConnectivity(false)
-            case .requiresConnection:
-                // The path is not currently available, but establishing a new connection may activate the path.
-                self?.agent?.setConnectivity(true)
-            @unknown default:
-                // let's hope for the best here :)
-                self?.agent?.setConnectivity(true)
+        networkMonitorCancellable = networkMonitor
+            .pathSubject
+            .map { path in
+                switch path.status {
+                case .satisfied:
+                    return true
+                case .unsatisfied:
+                    return false
+                case .requiresConnection:
+                    // The path is not currently available, but establishing a new connection may activate the path.
+                    return true
+                @unknown default:
+                    // let's hope for the best here :)
+                    return true
+                }
             }
-        }
-        networkMonitor.start(queue: Self.monitorQueue)
+            .removeDuplicates() // we only want toggles and not calling twice in a row `setConnectivity` with the same value
+            .receive(on: localAgentQueue)
+            .sink { [weak self] newConnectivityValue in
+                self?.setConnectivity(newConnectivityValue)
+            }
+
+        networkMonitor.start(onQueue: Self.monitorQueue)
 
         startObservingNetShieldCriteria()
     }
@@ -188,7 +230,7 @@ final class LocalAgentImplementation: LocalAgent {
 
     deinit {
         stopStatusMonitoringIfNecessary()
-        networkMonitor.cancel()
+        networkMonitor.stop()
         agent?.close()
     }
 
@@ -256,6 +298,14 @@ final class LocalAgentImplementation: LocalAgent {
     func update(safeMode: Bool) {
         let features = LocalAgentNewFeatures()?.with(safeMode: safeMode)
         agent?.setFeatures(features)
+    }
+
+    func setConnectivity(_ connectivity: Bool) {
+        // we want to make sure we're not in a disconnected state due to a previous `close()` otherwise Go might panic!
+        if let agent, LocalAgentState.from(string: agent.state) != .disconnected {
+            log.info("Sending connectivity update to \(connectivity)", category: .localAgent)
+            agent.setConnectivity(connectivity)
+        }
     }
 
     private func toggleStatusMonitoringIfNecessary() {
