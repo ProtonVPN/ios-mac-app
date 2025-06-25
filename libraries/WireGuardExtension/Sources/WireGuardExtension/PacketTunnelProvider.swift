@@ -257,11 +257,13 @@ open class WireGuardPacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPISe
             let message = try WireguardProviderRequest.decode(data: messageData)
 
             handleProviderMessage(message) { response in
+                wg_log(.info, message: "Responding to app request \(message) with \(response)")
                 completionHandler?(response.asData)
             }
         } catch {
-            wg_log(.error, message: "Failed to decode app message")
-            completionHandler?(nil)
+            wg_log(.info, message: "App message decode error: \(error)")
+            let response = WireguardProviderRequest.Response.error(message: "Unknown provider message.")
+            completionHandler?(response.asData)
         }
     }
 
