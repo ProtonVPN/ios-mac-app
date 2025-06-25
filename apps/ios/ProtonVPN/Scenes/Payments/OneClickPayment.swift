@@ -120,7 +120,8 @@ final class OneClickPayment {
                         comparedPrice: mostExpensivePlan.storePricePerMonth
                     )
             },
-            notNow: { [weak self] in
+            notNow: { [weak self] error in
+                log.error("OneClickPayment notNow callback called", category: .iap, metadata: ["error": "\(error)"])
                 notNowHandler?()
                 self?.completionHandler()
             }

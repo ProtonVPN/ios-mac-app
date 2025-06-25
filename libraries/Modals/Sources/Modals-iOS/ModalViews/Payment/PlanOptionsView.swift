@@ -114,34 +114,36 @@ struct PlanOptionsView: View {
 }
 
 #if DEBUG
-import CombineSchedulers
+    import CombineSchedulers
 
-#Preview("Classic") {
-    let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    let plans: [PlanOption] = [.oneYear, .oneMonth]
-    let client: PlansClient = .init(
-        retrievePlans: { plans },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-        },
-        availableDiscount: { _ in 23 }
-    )
-    PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
-}
+    #Preview("Classic") {
+        let scheduler: AnySchedulerOf<DispatchQueue> = .main
+        let plans: [PlanOption] = [.oneYear, .oneMonth]
+        let client: PlansClient = .init(
+            retrievePlans: { plans },
+            validate: { _ in
+                try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+            },
+            availableDiscount: { _ in 23 },
+            notNow: { _ in }
+        )
+        PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
+    }
 
-#Preview("Loading") {
-    let scheduler: AnySchedulerOf<DispatchQueue> = .main
-    let plans: [PlanOption] = [.oneYear, .oneMonth]
-    let client: PlansClient = .init(
-        retrievePlans: {
-            try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
-            return plans
-        },
-        validate: { _ in
-            try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
-        },
-        availableDiscount: { _ in 49 }
-    )
-    PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
-}
+    #Preview("Loading") {
+        let scheduler: AnySchedulerOf<DispatchQueue> = .main
+        let plans: [PlanOption] = [.oneYear, .oneMonth]
+        let client: PlansClient = .init(
+            retrievePlans: {
+                try? await scheduler.sleep(for: .milliseconds((500 ... 2000).randomElement()!))
+                return plans
+            },
+            validate: { _ in
+                try? await scheduler.sleep(for: .milliseconds((2000 ... 3000).randomElement()!))
+            },
+            availableDiscount: { _ in 49 },
+            notNow: { _ in }
+        )
+        PlanOptionsView(viewModel: .init(client: client), modalType: .subscription)
+    }
 #endif

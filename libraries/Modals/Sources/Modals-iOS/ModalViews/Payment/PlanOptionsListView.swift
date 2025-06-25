@@ -128,7 +128,7 @@ struct PlanOptionsListView: View {
 #if DEBUG
     #Preview("Classic") {
         let plans: [PlanOption] = [.oneYear, .oneMonth]
-        let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 })
+        let client: PlansClient = .init(retrievePlans: { plans }, validate: { _ in () }, availableDiscount: { _ in 55 }, notNow: { _ in })
         let viewModel = PlanOptionsListViewModel(client: client)
         return PlanOptionsListView(viewModel: viewModel)
     }
@@ -146,7 +146,8 @@ struct PlanOptionsListView: View {
             },
             availableDiscount: { _ in
                 33
-            }
+            },
+            notNow: { _ in }
         )
         let viewModel = PlanOptionsListViewModel(client: client)
         return PlanOptionsListView(viewModel: viewModel)
