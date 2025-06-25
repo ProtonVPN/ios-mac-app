@@ -35,8 +35,8 @@ import Domain
 import Ergonomics
 import Timer
 
-import NetShield
 import Combine
+import NetShield
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
@@ -194,7 +194,7 @@ final class LocalAgentImplementation: LocalAgent {
         client.delegate = self
 
         // giving the agent a hint when connectivity is restored in case it is stuck in a back off
-        networkMonitorCancellable = networkMonitor
+        self.networkMonitorCancellable = networkMonitor
             .pathSubject
             .map { path in
                 switch path.status {
