@@ -20,8 +20,7 @@ import Foundation
 import Testing
 
 import ComposableArchitecture
-@testable import Home
-@testable import Home_iOS
+@testable import HomeShared
 
 // MARK: - Definitions
 
@@ -202,7 +201,12 @@ func presentationRules() {
         guard item == .testingDelayItem else {
             return nil
         }
-        return WhatsNew.PresentationDataItem(amount: 3, firstRegistrationDate: .now, lastPresentationDate: .aprilFirst2025)
+        let firstRegistrationDate = Date(timeIntervalSince1970: Date.aprilFirst2025.timeIntervalSince1970 - 604_800)
+        return WhatsNew.PresentationDataItem(
+            amount: 3,
+            firstRegistrationDate: firstRegistrationDate,
+            lastPresentationDate: .aprilFirst2025
+        )
     }
     withDependencies {
         $0.evaluatorClient = basicEvaluatorClient
