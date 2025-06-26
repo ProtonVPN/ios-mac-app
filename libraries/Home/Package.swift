@@ -108,14 +108,6 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "HomeiOSTests",
-            dependencies: [
-                "Home",
-                "Home-iOS",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-            ]
-        ),
-        .testTarget(
             name: "HomeSnapshotTests",
             dependencies: [
                 "Home",
