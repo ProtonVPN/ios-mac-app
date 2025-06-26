@@ -42,25 +42,14 @@ public struct HomeView: View {
 
     private static let bottomGradientHeight: CGFloat = 100
 
-    // Sticky ProtectionStatus functionality on scroll.
     @State private var lastScrollOffset: CGFloat = .zero
-    private var protectionStatusStickToTopThreshold: CGFloat {
-        -(mapHeight - Self.bottomGradientHeight)
-    }
 
-    // Dynamic connection view position based on view height.
-    @State private var shouldUpdateViewHeight: Bool = true
     @State private var viewHeight: CGFloat = .zero
     @State private var connectionViewHeight: CGFloat = .zero
+    @State private var swapThreshold: CGFloat = .zero
+    @State private var mapHeight: CGFloat = .zero
 
     @SharedReader(.userTier) private var userTier: Int?
-
-    private var mapHeight: CGFloat {
-        let hasRecents = !store.recents.recentConnectionList.isEmpty
-        let isFree = (userTier ?? .freeTier).isFreeTier
-        let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
-        return max(0, viewHeight - (connectionViewHeight + recentPeek))
-    }
 
     @Namespace private var topID
 
@@ -76,9 +65,29 @@ public struct HomeView: View {
         case enabledConnectionStatus
     }
 
+    private func calculateMapHeight() {
+        let hasRecents = !store.recents.recentConnectionList.isEmpty
+        let isFree = (userTier ?? .freeTier).isFreeTier
+        let recentPeek: CGFloat = (hasRecents || isFree) ? .themeSpacing64 : 0
+        mapHeight = max(0, viewHeight - (connectionViewHeight + recentPeek))
+        swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
+    }
+
     public var body: some View {
         WithPerceptionTracking {
             contentWithSheets
+                .onChange(of: store.recents.recentConnectionList) { _ in
+                    calculateMapHeight()
+                }
+                .onChange(of: userTier) { _ in
+                    calculateMapHeight()
+                }
+                .onChange(of: connectionViewHeight) { _ in
+                    calculateMapHeight()
+                }
+                .onChange(of: viewHeight) { _ in
+                    calculateMapHeight()
+                }
         }
     }
 
@@ -178,20 +187,17 @@ public struct HomeView: View {
                                 scrollViewProxy.scrollTo(topID)
                             }
                         }
-                        .onAppear {
-                            viewHeight = proxy.size.height
-                        }
-                        .onChange(of: proxy.size.height) { height in
-                            guard shouldUpdateViewHeight else { return }
-                            viewHeight = height
-                            shouldUpdateViewHeight = false
-                        }
-                        .onReceive(NotificationCenter.default.publisher(for: UIDevice.orientationDidChangeNotification)) { _ in shouldUpdateViewHeight = true }
                     }
                 }
                 .zIndex(ZIndex.connectionCardAndRecents.rawValue)
             }
             .background(Color(.background))
+            .onAppear {
+                viewHeight = proxy.size.height
+            }
+            .onChange(of: proxy.size.height) { height in
+                viewHeight = height
+            }
         }
     }
 
@@ -206,18 +212,15 @@ public struct HomeView: View {
                 )
         }
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { scrollOffset in
-            if abs(lastScrollOffset - scrollOffset) < 10 { // Disregards sudden scrollOffset jumps when toggling the navigation bar visibility.
-                store.send(.connectionStatus(.stickToTop(scrollOffset < protectionStatusStickToTopThreshold)))
+            if abs(lastScrollOffset - scrollOffset) > Self.bottomGradientHeight {
+                updateConnectionStatusZIndex(scrollOffset)
             }
-            lastScrollOffset = scrollOffset
-
-            updateConnectionStatusZIndex(scrollOffset)
         }
     }
 
     /// Update the Z-index of the connection status view. This allows us to enable the user interaction of upsell banners and netshields stats.
     private func updateConnectionStatusZIndex(_ scrollOffset: Double) {
-        let swapThreshold = mapHeight - connectionViewHeight - Self.bottomGradientHeight
+        lastScrollOffset = scrollOffset
         if scrollOffset < -swapThreshold, connectionStatusZIndex == .enabledConnectionStatus {
             connectionStatusZIndex = ZIndex.disabledConnectionStatus
         } else if scrollOffset > -swapThreshold, connectionStatusZIndex == .disabledConnectionStatus {

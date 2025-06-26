@@ -32,70 +32,72 @@ struct FreeConnectionInfoModal: View {
     @State private var sheetHeight: CGFloat = .zero
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing16) {
-            HStack(spacing: .themeSpacing8) {
-                Text(Localizable.freeConnectionsModalTitle)
-                    .font(.themeFont(.body1(.semibold)))
-                    .foregroundColor(Color(.text))
-                Spacer()
-                Button {
-                    store.send(.dismissButtonTapped)
-                } label: {
-                    IconProvider.cross
-                        .foregroundColor(Color(.icon))
-                }
-            }
-            Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
-                .font(.themeFont(.body3(emphasised: false)))
-                .foregroundColor(Color(.text))
-                .fixedSize(horizontal: false, vertical: true)
-                .lineLimit(nil)
-            Text(Localizable.freeConnectionsModalSubtitle(store.countryCodes.count))
-                .font(.themeFont(.body2(emphasised: true)))
-                .foregroundColor(Color(.text))
-
-            WrappingHStack(horizontalSpacing: .themeSpacing16, verticalSpacing: .themeSpacing16) {
-                ForEach(store.countryCodes, id: \.self) { countryCode in
-                    HStack(spacing: .themeSpacing8) {
-                        IconProvider.flag(forCountryCode: countryCode)?
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 24, height: 16)
-                            .cornerRadius(4)
-                            .clipped()
-                        Text(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable)
-                            .font(.body3(emphasised: false))
-                            .foregroundColor(Color(.text))
+        WithPerceptionTracking {
+            VStack(alignment: .leading, spacing: .themeSpacing16) {
+                HStack(spacing: .themeSpacing8) {
+                    Text(Localizable.freeConnectionsModalTitle)
+                        .font(.themeFont(.body1(.semibold)))
+                        .foregroundColor(Color(.text))
+                    Spacer()
+                    Button {
+                        store.send(.dismissButtonTapped)
+                    } label: {
+                        IconProvider.cross
+                            .foregroundColor(Color(.icon))
                     }
                 }
+                Text(Localizable.freeConnectionsModalServersDescription(store.countryCodes.count))
+                    .font(.themeFont(.body3(emphasised: false)))
+                    .foregroundColor(Color(.text))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(nil)
+                Text(Localizable.freeConnectionsModalSubtitle(store.countryCodes.count))
+                    .font(.themeFont(.body2(emphasised: true)))
+                    .foregroundColor(Color(.text))
+
+                WrappingHStack(horizontalSpacing: .themeSpacing16, verticalSpacing: .themeSpacing16) {
+                    ForEach(store.countryCodes, id: \.self) { countryCode in
+                        HStack(spacing: .themeSpacing8) {
+                            IconProvider.flag(forCountryCode: countryCode)?
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 24, height: 16)
+                                .cornerRadius(4)
+                                .clipped()
+                            Text(LocalizationUtility.default.countryName(forCode: countryCode) ?? Localizable.unavailable)
+                                .font(.body3(emphasised: false))
+                                .foregroundColor(Color(.text))
+                        }
+                    }
+                }
+                .padding(.vertical, .themeSpacing8)
+                VStack {
+                    Spacer()
+                    Button {
+                        store.send(.upgradeButtonTapped)
+                    } label: {
+                        Text(Localizable.upgrade)
+                    }.buttonStyle(PrimaryButtonStyle())
+                }
             }
-            .padding(.vertical, .themeSpacing8)
-            VStack {
-                Spacer()
-                Button {
-                    store.send(.upgradeButtonTapped)
-                } label: {
-                    Text(Localizable.upgrade)
-                }.buttonStyle(PrimaryButtonStyle())
+            .padding(.horizontal, .themeSpacing16)
+            .padding(.top, .themeSpacing24)
+            .padding(.bottom, .themeSpacing16)
+            .overlay {
+                GeometryReader { geometry in
+                    Color.clear.preference(
+                        key: FreeConnectionHeightPreferenceKey.self,
+                        value: geometry.size.height
+                    )
+                }
             }
-        }
-        .padding(.horizontal, .themeSpacing16)
-        .padding(.top, .themeSpacing24)
-        .padding(.bottom, .themeSpacing16)
-        .overlay {
-            GeometryReader { geometry in
-                Color.clear.preference(
-                    key: FreeConnectionHeightPreferenceKey.self,
-                    value: geometry.size.height
-                )
+            .onPreferenceChange(FreeConnectionHeightPreferenceKey.self) { newHeight in
+                sheetHeight = newHeight
             }
+            .presentationDetents([.height(sheetHeight)])
+            .presentationDragIndicator(.visible)
+            .background(Color(.background, .normal))
         }
-        .onPreferenceChange(FreeConnectionHeightPreferenceKey.self) { newHeight in
-            sheetHeight = newHeight
-        }
-        .presentationDetents([.height(sheetHeight)])
-        .presentationDragIndicator(.visible)
-        .background(Color(.background, .normal))
     }
 }
 
