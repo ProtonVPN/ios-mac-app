@@ -98,6 +98,13 @@ let package = Package(
             ],
             resources: []
         ),
+        .target(
+            name: "SnapshotTestsSupport",
+            dependencies: [
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ]
+        ),
         .testTarget(
             name: "HomeTests",
             dependencies: [
@@ -108,9 +115,21 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "HomeSnapshotTests",
+            name: "HomeFastSnapshotTests",
             dependencies: [
                 "Home",
+                "SnapshotTestsSupport",
+                .product(name: "DomainTestSupport", package: "Domain"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
+            ]
+        ),
+        .testTarget(
+            name: "HomeSlowSnapshotTests",
+            dependencies: [
+                "Home",
+                "SnapshotTestsSupport",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),

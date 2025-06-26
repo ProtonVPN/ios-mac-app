@@ -50,7 +50,18 @@ extension SVGView {
 
     static let mapBounds: CGRect = mapSVG.bounds()
 
-    static func updateWith(code: String?, highlighted: Bool) {
+    private static var currentlyHighlighted: String?
+
+    static func updateWith(code: String?) {
+        if let currentlyHighlighted {
+            updateWith(code: currentlyHighlighted, highlighted: false)
+            self.currentlyHighlighted = nil
+        }
+        updateWith(code: code, highlighted: true)
+        currentlyHighlighted = code
+    }
+
+    private static func updateWith(code: String?, highlighted: Bool) {
         guard let code = code?.lowercased() else { return }
 
         guard let node = mapSVG.countryNode(code: code) else {

@@ -13,14 +13,6 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : false,
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "HomeSnapshotTests",
-        "name" : "HomeSnapshotTests"
-      }
-    },
-    {
       "target" : {
         "containerPath" : "container:",
         "identifier" : "HomeTests",
