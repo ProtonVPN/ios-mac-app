@@ -204,6 +204,7 @@
         public var atlasSecret: String?
         public var atlasSecretFetchURLString: String?
         public var featureFlagOverrides: [String: Bool]?
+        public var localValuesOverrides: [String: String]?
 
         private var customBools: [String: Bool] = [:]
         private var defaultCustomBoolValue = false

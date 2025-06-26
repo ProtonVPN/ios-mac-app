@@ -42,6 +42,19 @@ public struct DebugConfigurationFeature {
         }
     }
 
+    public struct LocalValueOverride: Equatable, Identifiable {
+        public let id = UUID()
+
+        /// - Note: this is sort of a hack to get accessibility identifiers working, don't rely on its value.
+        package var index: Int
+        public var name: String
+        public var value: String
+
+        public static func empty(index: Int = 0) -> Self {
+            Self(index: index, name: "", value: "")
+        }
+    }
+
     @ObservableState
     public struct State: Equatable {
         public static let defaultApiUrlString = "https://vpn-api.proton.me"
@@ -57,6 +70,7 @@ public struct DebugConfigurationFeature {
         public var atlasSecretFetchErrorDescription: String?
 
         public var overrides: [FeatureOverride]
+        public var localValuesOverrides: [LocalValueOverride]
 
         public var currentEnvironmentCaption: (AppTheme.Style, String) {
             @Dependency(\.dohConfiguration) var doh
@@ -114,13 +128,15 @@ public struct DebugConfigurationFeature {
             apiEndpoint: String,
             atlasSecret: String,
             atlasSecretFetchURLString: String,
-            overrides: [FeatureOverride]
+            overrides: [FeatureOverride],
+            localValuesOverrides: [LocalValueOverride]
         ) {
             self.apiEndpoint = apiEndpoint
             self.newApiEndpointURLString = apiEndpoint
             self.atlasSecret = atlasSecret
             self.atlasSecretFetchURLString = atlasSecretFetchURLString
             self.overrides = overrides
+            self.localValuesOverrides = localValuesOverrides
         }
 
         public init() {
@@ -137,6 +153,13 @@ public struct DebugConfigurationFeature {
                     let (index, item) = element
                     partialResult.append(.init(index: index, name: item.key, value: item.value))
                 } + [.empty(index: settings.featureFlagOverrides.count)]
+            self.localValuesOverrides = settings.localValuesOverrides
+                .sorted(by: { $0.key < $1.key })
+                .enumerated()
+                .reduce(into: Array()) { partialResult, element in
+                    let (index, item) = element
+                    partialResult.append(.init(index: index, name: item.key, value: item.value))
+                } + [.empty(index: settings.localValuesOverrides.count)]
         }
     }
 
@@ -151,6 +174,7 @@ public struct DebugConfigurationFeature {
         case changeAndKillAppButtonTapped
         case toggle(id: UUID)
         case overridesRemoved(IndexSet)
+        case localValuesOverridesRemoved(IndexSet)
         case binding(BindingAction<State>)
         case destination(PresentationAction<Destination.Action>)
 
@@ -217,7 +241,8 @@ public struct DebugConfigurationFeature {
                                 apiEndpoint: "",
                                 atlasSecret: "",
                                 atlasSecretFetchURLString: state.atlasSecretFetchURLString,
-                                featureFlagOverrides: [:]
+                                featureFlagOverrides: [:],
+                                localValuesOverrides: [:]
                             ))
                         }
                     },
@@ -237,6 +262,10 @@ public struct DebugConfigurationFeature {
                                 atlasSecret: state.atlasSecret,
                                 atlasSecretFetchURLString: state.atlasSecretFetchURLString,
                                 featureFlagOverrides: state.overrides.reduce(into: [:]) { partialResult, item in
+                                    guard !item.name.isEmpty else { return }
+                                    partialResult[item.name] = item.value
+                                },
+                                localValuesOverrides: state.localValuesOverrides.reduce(into: [:]) { partialResult, item in
                                     guard !item.name.isEmpty else { return }
                                     partialResult[item.name] = item.value
                                 }
@@ -276,6 +305,17 @@ public struct DebugConfigurationFeature {
             case .binding(\.overrides):
                 if state.overrides.isEmpty || state.overrides.allSatisfy({ !$0.name.isEmpty }) {
                     state.overrides.append(.empty(index: state.overrides.count))
+                }
+            case let .localValuesOverridesRemoved(indexSet):
+                state.localValuesOverrides.remove(atOffsets: indexSet)
+                // recompute the indices so that the text fields have the correct labels
+                for index in 0 ..< state.localValuesOverrides.count {
+                    state.localValuesOverrides[index].index = index
+                }
+            case .binding(\.localValuesOverrides):
+                if state.localValuesOverrides.isEmpty || state.localValuesOverrides
+                    .allSatisfy({ !$0.name.isEmpty && !$0.value.isEmpty }) {
+                    state.localValuesOverrides.append(.empty(index: state.localValuesOverrides.count))
                 }
             case .binding:
                 break
