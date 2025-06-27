@@ -5778,7 +5778,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Protejat"
+            "value" : "Conexiune protejată"
           }
         },
         "ru" : {
@@ -9464,7 +9464,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neprotejat"
+            "value" : "Conexiune neprotejată"
           }
         },
         "ru" : {
