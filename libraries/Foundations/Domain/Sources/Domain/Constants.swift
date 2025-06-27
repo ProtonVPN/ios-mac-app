@@ -24,7 +24,8 @@ public enum DomainConstants {
         #if os(iOS) || os(tvOS)
             public static let main = "group.ch.protonmail.vpn"
         #elseif os(macOS)
-            public static let main = "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)group.ch.protonvpn.mac"
+            static let appIdentifierPrefix: String = Bundle.main.infoDictionary?["AppIdentifierPrefix"] as? String ?? ""
+            public static let main = "\(appIdentifierPrefix)group.ch.protonvpn.mac"
         #endif
     }
 
