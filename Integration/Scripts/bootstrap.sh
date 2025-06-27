@@ -1,6 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-secrets_folder="protonvpn-secrets"
+scripts_folder="${PWD}/Integration/Scripts/"
+secrets_folder="$(dirname $PWD)/protonvpn-secrets"
+
+if [[ ! -d "ProtonVPN.xcworkspace" ]]; then
+    echo "This script must be launched from the root folder of the project (./Integrations/Scripts/bootstrap.sh)"
+    exit -1
+fi
+
 
 # Check if brew is installed
 echo "Looking for Brew..👀"
@@ -22,29 +29,28 @@ else
 fi
 
 # Obfuscated constants
-if credentials.sh checkout &>/dev/null; then
+if ! ${scripts_folder}credentials.sh checkout &> /dev/null; then
     echo "Credentials repo not found.."
-    echo "Clone to ../$secrets_folder and link credentials 🕵🏻.."
-    if ./scripts/credentials.sh setup -p ../$secrets_folder -r git@gitlab.protontech.ch:ProtonVPN/apple/secrets.git; then
+    echo -n "Clone to $secrets_folder and link credentials 🕵🏻.. "
+    if ${scripts_folder}credentials.sh setup -p $secrets_folder -r git@gitlab.protontech.ch:ProtonVPN/apple/secrets.git; then
         exit 1
     fi
-    # Updating .gitconfig
-    echo "Updating .gitconfig file.."
-    if grep -q credsdir = ../.gitconfig; then
-        Some Actions # SomeString was found
-    fi    
+    echo "done."
 else
     echo "Credentials repo found ✅"
 fi
 
 # Updating .gitconfig
 echo "Updating .gitconfig file.."
-if ! grep -q "credsdir =" ./.gitconfig; then
-    destinationPath="$(dirname "$PWD")"
-    printf "\n[vpn]\n    credsdir = $destinationPath/$secrets_folder" >> ./.gitconfig
-    echo "gitconfig updated successfully 🎊" 
+if ! grep -q "credsdir =" ./.gitconfig &> /dev/null; then
+    printf "\n[vpn]\n    credsdir = $secrets_folder\n" >> ./.gitconfig
+    echo "gitconfig updated successfully 🎊"
 else
-    echo "gitconfig: secrets path found 👍🏻" 
+    if ! grep -q $secrets_folder ./.gitconfig; then
+        echo "Something is wrong with the credentials config path. Sorry you have to fix manually"
+        exit -1
+    fi
+    echo "gitconfig: secrets path found 👍🏻"
 fi
 
 # Link submodule to the project
