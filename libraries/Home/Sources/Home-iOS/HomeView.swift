@@ -142,6 +142,7 @@ public struct HomeView: View {
                 )
                 .frame(width: proxy.size.width, height: mapHeight)
                 .zIndex(ZIndex.map.rawValue)
+                .allowsHitTesting(false) // without this line we experience bad scrolling stutter when using a magic trackpad
 
                 ConnectionStatusView(store: store.scope(state: \.connectionStatus, action: \.connectionStatus))
                     .zIndex(connectionStatusZIndex.rawValue)
