@@ -190,11 +190,7 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotification() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesViewModel(factory: HermesTestContainer())
-        }
+        let viewModel = HermesViewModel(factory: HermesTestContainer())
 
         let enabledExpectation = expectation(description: "Hermes AppEvent received when enabling/disabling")
         enabledExpectation.expectedFulfillmentCount = 2
@@ -235,13 +231,12 @@ final class HermesViewModelTests: XCTestCase {
         _ = viewModel.addResolver(with: "10.2.0.1")
         _ = viewModel.addResolver(with: "16.32.64.128")
 
-        guard let firstDiffElement = viewModel.activeHermesResolvers.first else { return }
-
         let movingResolverExpectation = expectation(description: "Hermes AppEvent received when moving around resolvers")
         movingResolverExpectation.expectedFulfillmentCount = 2
 
         AppEvent.hermes.publisher.sink { _ in movingResolverExpectation.fulfill() }.store(in: &cancellables)
 
+        let firstDiffElement = viewModel.activeHermesResolvers[0]
         let firstDiff: CollectionDifference<HermesResolver> = .init([
             .insert(offset: 1, element: firstDiffElement, associatedWith: nil),
             .remove(offset: 0, element: firstDiffElement, associatedWith: nil),
