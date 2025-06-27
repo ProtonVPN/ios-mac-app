@@ -289,6 +289,7 @@ public struct HomeFeature {
             case let .connection(.core(.localAgent(.event(.stats(message))))):
                 return .send(.connectionStatus(.newNetShieldStats(message.netShield.toNetShieldModel)))
             case let .connection(.delegate(.connectionFailed(error))):
+                SentryHelper.shared?.log(error: error)
                 return .run { _ in await alertService.feed(error) }
             case let .whatsNewChecker(.show(items)):
                 state.destination = .whatsNew(.init(item: items[0]))
@@ -306,6 +307,7 @@ public struct HomeFeature {
                     .send(.sharedProperties(.newConnectionStatus(status)))
                 )
             case let .connection(.delegate(.intentResolutionFailed(intent, resolutionError))):
+                SentryHelper.shared?.log(error: resolutionError)
                 return .run { [pushAlert] send in
                     let alert: SystemAlert = switch resolutionError {
                     case .secureCoreUnavailable:

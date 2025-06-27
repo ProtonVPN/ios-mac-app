@@ -58,3 +58,13 @@ public struct Server: Equatable, Sendable, Codable {
         logical.connectionSpecFeatures
     }
 }
+
+extension Server: CustomStringConvertible {
+    public var description: String {
+        "Server(logicalName: \(logical.name), endpointEntryIp: \(endpoint.entryIp ?? "nil"))"
+    }
+
+    public var fullDescription: String {
+        String(reflecting: self)
+    }
+}
