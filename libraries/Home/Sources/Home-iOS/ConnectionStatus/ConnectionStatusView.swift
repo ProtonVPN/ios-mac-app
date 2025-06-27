@@ -133,15 +133,13 @@ public struct ConnectionStatusView: View {
                 ).ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    if !store.stickToTop {
-                        titleView(protectionState: protectionState)
-                            .frame(height: Self.headerHeight)
-                        if let title = title(protectionState: protectionState) {
-                            Text(title)
-                                .font(.themeFont(.body1(.bold)))
-                            Spacer()
-                                .frame(height: .themeSpacing8)
-                        }
+                    titleView(protectionState: protectionState)
+                        .frame(height: Self.headerHeight)
+                    if let title = title(protectionState: protectionState) {
+                        Text(title)
+                            .font(.themeFont(.body1(.bold)))
+                        Spacer()
+                            .frame(height: .themeSpacing8)
                     }
                     ConnectionStatusBanner(store: store.scope(state: \.connectionStatusBanner, action: \.connectionStatusBanner))
                         .background(
@@ -171,7 +169,7 @@ public struct ConnectionStatusView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar(store.stickToTop ? .visible : .hidden, for: .navigationBar)
+            .toolbar(.hidden, for: .navigationBar)
             .task { await store.send(.watchConnectionStatus).finish() }
         }
     }

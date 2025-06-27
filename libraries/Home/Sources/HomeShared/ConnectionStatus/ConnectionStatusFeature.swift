@@ -37,8 +37,6 @@ public struct ConnectionStatusFeature {
 
         package var connectionStatusBanner: ConnectionStatusBannerFeature.State = .init()
 
-        package internal(set) var stickToTop: Bool = false
-
         fileprivate(set) var startingProtectionState: ProtectionState = .resolving
 
         fileprivate(set) var isUsingConnectionPackage: Bool = true
@@ -57,7 +55,6 @@ public struct ConnectionStatusFeature {
         case newConnectionStatus(VPNConnectionStatus)
         case newProtectionState(ProtectionState)
         case newNetShieldStats(NetShieldModel)
-        case stickToTop(Bool)
 
         case tearDown
 
@@ -169,12 +166,6 @@ public struct ConnectionStatusFeature {
                 withOptionalAnimation {
                     state.$protectionState.withLock { $0 = state.protectionState.copy(withNetShield: netShieldModel) }
                 }
-                return .none
-
-            case let .stickToTop(stickToTop):
-                return .none // Revisit sticking to top when possible to fix this issue VPNAPPL-2539
-                guard state.stickToTop != stickToTop else { return .none }
-                state.stickToTop = stickToTop
                 return .none
 
             case .connectionStatusBanner:
