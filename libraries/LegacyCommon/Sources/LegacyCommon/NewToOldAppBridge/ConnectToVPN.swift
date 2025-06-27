@@ -72,7 +72,7 @@ extension ConnectToVPNKey: @retroactive DependencyKey {
 
         @SharedReader(.userTier) var userTier: Int?
         let server = try serverSelector.select(spec, userTier ?? .freeTier, acceptableProtocols)
-        log.info("Server selected: \(server)", category: .connection)
+        log.info("Server selected: \(server.fullDescription)", category: .connection)
 
         if Task.isCancelled { throw ConnectionError.cancelled }
 

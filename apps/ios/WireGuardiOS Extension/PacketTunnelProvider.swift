@@ -365,7 +365,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
                 completionHandler?(response.asData)
             }
         } catch {
-            wg_log(.info, message: "App message decode error: \(error)")
+            wg_log(.error, message: "App message decode error: \(error)")
             let response = WireguardProviderRequest.Response.error(message: "Unknown provider message.")
             completionHandler?(response.asData)
         }
