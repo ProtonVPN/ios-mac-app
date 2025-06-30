@@ -215,8 +215,13 @@ final class OneClickPayment {
 
     @MainActor
     func planOptions() async throws -> [PlanOption] {
+        @Dependency(\.propertiesManager) var propertiesManager
         // check eligibility for 2Y web plan
-        let userAppStoreCountryCode = await planService.countryCode
+        let userAppStoreCountryCode: String? = if let countryCodeOverride = propertiesManager.localValuesOverrides?.first(where: { $0.key == "AppStoreCC" }) {
+            countryCodeOverride.value.lowercased()
+        } else {
+            await planService.countryCode
+        }
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 

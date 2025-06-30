@@ -111,7 +111,7 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testAddingRemovingReorderingResolversWithDoHDoT() throws {
-        XCTSkip("Skipped because of DoH/DoT. Enable again when this is supported")
+        throw XCTSkip("Skipped because of DoH/DoT. Enable again when this is supported")
 
         let viewModel = withDependencies {
             $0.hermesClient = .liveValue
@@ -190,11 +190,7 @@ final class HermesViewModelTests: XCTestCase {
     }
 
     func testHermesAppEventNotification() {
-        let viewModel = withDependencies {
-            $0.hermesClient = .liveValue
-        } operation: {
-            HermesViewModel(factory: HermesTestContainer())
-        }
+        let viewModel = HermesViewModel(factory: HermesTestContainer())
 
         let enabledExpectation = expectation(description: "Hermes AppEvent received when enabling/disabling")
         enabledExpectation.expectedFulfillmentCount = 2

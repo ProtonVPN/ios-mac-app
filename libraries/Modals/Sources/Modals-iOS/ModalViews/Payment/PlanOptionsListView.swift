@@ -69,6 +69,7 @@ struct PlanOptionsListView: View {
             .themeFont(.body2(emphasised: false))
             .foregroundColor(Color(.text, .weak))
             .frame(maxWidth: .infinity, alignment: .leading)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private var loadingView: some View {

@@ -125,6 +125,7 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var atlasSecret: String? { get set }
     var atlasSecretFetchURLString: String? { get set }
     var featureFlagOverrides: [String: Bool]? { get set }
+    var localValuesOverrides: [String: String]? { get set }
 
     func logoutCleanup()
 
@@ -249,6 +250,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         case atlasSecret = "AtlasSecret"
         case atlasSecretFetchURL = "AtlasSecretFetchURL"
         case featureFlagOverrides = "FeatureFlagOverrides"
+        case localValuesOverrides = "LocalValuesOverrides"
     }
 
     public var onAlternativeRoutingChange: ((Bool) -> Void)?
@@ -463,6 +465,7 @@ public final class PropertiesManager: PropertiesManagerProtocol {
     @StringProperty(.atlasSecret) public var atlasSecret: String?
     @StringProperty(.atlasSecretFetchURL) public var atlasSecretFetchURLString: String?
     @Property(.featureFlagOverrides) public var featureFlagOverrides: [String: Bool]?
+    @Property(.localValuesOverrides) public var localValuesOverrides: [String: String]?
 
     @Dependency(\.storage) var storage
 
@@ -743,7 +746,8 @@ extension SettingsStorageKey: @retroactive DependencyKey {
                 apiEndpoint: propertiesManager.apiEndpoint ?? Bundle.dynamicDomain ?? "",
                 atlasSecret: propertiesManager.atlasSecret ?? Bundle.atlasSecret ?? "",
                 atlasSecretFetchURLString: propertiesManager.atlasSecretFetchURLString ?? "",
-                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:]
+                featureFlagOverrides: propertiesManager.featureFlagOverrides ?? [:],
+                localValuesOverrides: propertiesManager.localValuesOverrides ?? [:]
             )
         },
         setEnvironment: {
@@ -752,6 +756,7 @@ extension SettingsStorageKey: @retroactive DependencyKey {
             propertiesManager.atlasSecret = $0.atlasSecret.valueIfNotEmpty
             propertiesManager.atlasSecretFetchURLString = $0.atlasSecretFetchURLString.valueIfNotEmpty
             propertiesManager.featureFlagOverrides = $0.featureFlagOverrides
+            propertiesManager.localValuesOverrides = $0.localValuesOverrides
         }
     )
 }

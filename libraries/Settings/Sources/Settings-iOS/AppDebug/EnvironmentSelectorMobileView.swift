@@ -132,6 +132,27 @@ public struct EnvironmentSelectorMobileView: View {
         .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 
+    @ViewBuilder
+    var localValuesOverridesSection: some View {
+        Section(header: Text("Local Values Overrides").font(.headline)) {
+            ForEach($store.localValuesOverrides, id: \.id) { $valueOverride in
+                HStack {
+                    TextField("Name \(valueOverride.index + 1)", text: $valueOverride.name)
+                        .autocorrectionDisabled()
+                    Spacer()
+                    TextField("Value \(valueOverride.index + 1)", text: $valueOverride.value)
+                        .autocorrectionDisabled()
+                }
+            }
+            .onDelete(perform: { indexSet in
+                store.send(.localValuesOverridesRemoved(indexSet))
+            })
+        }
+        .scrollContentBackground(.hidden)
+        .availabilitySafeContentMargins(.top, .init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+
     private var userDefaultsCell: some View {
         SettingsCell(
             icon: .init(systemName: "text.book.closed"),
@@ -189,6 +210,7 @@ public struct EnvironmentSelectorMobileView: View {
                     selectedEnvironmentSection
                     changeEnvironmentSection
                     featureOverridesSection
+                    localValuesOverridesSection
                     userDefaultsCell
                     keychainCell
                     bottomButtonsSection
@@ -257,7 +279,8 @@ extension View {
             apiEndpoint: "https://vpn-api.proton.me",
             atlasSecret: String((0 ..< 32).map { _ in "0123456789abcdefABCDEF".randomElement()! }),
             atlasSecretFetchURLString: "",
-            overrides: [.empty()]
+            overrides: [.empty()],
+            localValuesOverrides: [.empty()]
         ),
         reducer: { DebugConfigurationFeature() }
     ))
