@@ -77,6 +77,9 @@
 "_enabled" = "Activat";
 
 /* Common word */
+"_enable" = "Enable";
+
+/* Common word */
 "_disabled" = "Dezactivat";
 
 /* Button in some alerts */
@@ -947,7 +950,7 @@
 "_early_access_tooltip" = "Fiți primul care obține ultimele actualizări. Rețineți că versiunile timpurii pot fi mai puțin stabile.";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Notificare despre reţele neprotejate";
+"_unprotected_network" = "Notificare despre rețele neprotejate";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Primiți o notificare când Proton VPN detectează că v-ați conectat la o rețea neprotejată.";
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Încă nu există adrese IP";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -1807,7 +1810,7 @@
 "_settings_tab" = "Setări";
 
 /* The header shown at the top of the application in the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_header" = "Nu există protecție";
+"_home_unprotected_header" = "Conexiune neprotejată";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_label" = "Navigați fără protecție din %@.";
@@ -1927,13 +1930,13 @@
 "_secure_core_via_country" = "prin %@";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "Nu există protecție";
+"connection_status_unprotected" = "Conexiune neprotejată";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "Protejare identitate digitală";
 
 /* Connection status title when user is connected to a VPN [Redesign_2023] */
-"connection_status_protected" = "Protejată";
+"connection_status_protected" = "Conexiune protejată";
 
 /* Connection status title while VPN status is unknown */
 "connection_status_loading" = "Se încarcă";
@@ -2883,7 +2886,7 @@
 "_provider_message_error" = "A apărut o problemă cu conexiunea. (Eroare %@)";
 
 /* The connection status text for widget when unprotected. */
-"widget_unprotected_header" = "Neprotejată";
+"widget_unprotected_header" = "Conexiune neprotejată";
 
 /* Text that appears as subtitle to the widget when user is creating it */
 "widget_tray_description" = "Verificați dacă aveți conexiune la VPN și obțineți acces rapid la conexiunile favorite.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "DNS personal";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Conectare la VPN cu un sistem de nume de domenii (DNS) autogăzduit sau terță-parte. Detalii";
+"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servere (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Adăugare";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Add new DNS server";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Introduceți adresa IPv4 a serverului";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Dublu clic pentru copiere";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Dacă serverul DNS personal nu funcționează, va fi folosit DNS-ul standard din VPN.";
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Se va încerca accesarea în ordine a acestor servere. Dacă nu funcționează niciunul, va fi folosit DNS-ul din VPN.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Aceasta va dezactiva DNS-ul personal.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Modificare setări";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Change settings";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "On";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Off";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Conexiunea trebuie repornită pentru a se aplica această modificare.";

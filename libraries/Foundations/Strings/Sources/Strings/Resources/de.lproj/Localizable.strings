@@ -77,6 +77,9 @@
 "_enabled" = "Aktiviert";
 
 /* Common word */
+"_enable" = "Aktivieren";
+
+/* Common word */
 "_disabled" = "Deaktiviert";
 
 /* Button in some alerts */
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Noch keine IP-Adressen";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Unterteile deinen Datenverkehr in VPN- und Nicht-VPN-Tunnel mit Split-Tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "Benutzerdefinierte DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Über ein selbst gehostetes oder ein Drittanbieter-Domain-Namen-System (DNS) mit VPN verbinden.";
+"_hermes_feature_description" = "Verbindung zu VPN mit einem selbst gehosteten oder externen Domain Name System (DNS). Mehr erfahren";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Server (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Hinzufügen";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Neuen DNS-Server hinzufügen";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Gib die IPv4-Adresse des Servers ein";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Doppelklicken zum Kopieren";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Wenn der benutzerdefinierte DNS-Server nicht funktioniert, wird der Standard-VPN-DNS verwendet.";
+"_hermes_entities_footnote_single" = "Wenn der eigene DNS-Server nicht funktioniert, wird der Standard-VPN-DNS verwendet.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Es wird versucht, der Reihe nach eine Verbindung zu diesen Servern aufzubauen. Wenn keiner von ihnen funktioniert, wird der VPN-DNS verwendet.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Dadurch wird benutzerdefiniertes DNS deaktiviert.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Dadurch wird der eigene DNS deaktiviert. Um die Änderungen zu übernehmen, ist eine erneute Verbindung erforderlich.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Aktivieren und neu verbinden";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Einstellungen ändern";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Einstellungen ändern";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "Ein";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Aus";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Deine Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";

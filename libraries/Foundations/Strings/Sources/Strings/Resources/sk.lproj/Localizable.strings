@@ -77,6 +77,9 @@
 "_enabled" = "Povolené";
 
 /* Common word */
+"_enable" = "Enable";
+
+/* Common word */
 "_disabled" = "Zakázané";
 
 /* Button in some alerts */
@@ -1642,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Zatiaľ žiadne IP adresy";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2943,7 +2946,7 @@
 "_hermes_feature_description" = "Vlastné DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Pripojenie k VPN pomocou vlastného systému doménových názvov (DNS) alebo systému názvov domén tretích strán.";
+"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servery (%@)";
@@ -2954,8 +2957,11 @@
 /* Hermes entities Form placeholder within dedicated Hermes Settings view */
 "_hermes_entities_form_placeholder" = "192.0.2.0";
 
-/* Hermes entities Form main button title within dedicated Hermes Settings view */
+/* Hermes entities Form main button title within dedicated Hermes Settings view on macOS */
 "_hermes_entities_form_addButton" = "Pridať";
+
+/* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
+"_hermes_entities_form_addButton_full" = "Add new DNS server";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Zadajte IPv4 adresu servera";
@@ -2976,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Dvojitým kliknutím skopírujte";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Ak váš vlastný DNS server nefunguje, použije sa štandardný VPN DNS.";
+"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Pokúsime sa pripojiť k týmto serverom v uvedenom poradí. Ak žiadny z nich nebude fungovať, použije sa DNS siete VPN.";
@@ -2993,8 +2999,23 @@
 /* Hermes conflict notification description within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_description" = "Týmto deaktivujete vlastné DNS.";
 
-/* Hermes apply changes notification window title */
+/* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+
+/* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+
+/* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Zmeniť nastavenia";
+
+/* Hermes apply changes notification alert title on iOS */
+"_hermes_applyChanges_alertTitle" = "Change settings";
+
+/* Hermes settings cell client status is on */
+"_hermes_settings_isOn" = "On";
+
+/* Hermes settings cell client status is off */
+"_hermes_settings_isOff" = "Off";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Na uplatnenie tejto zmeny je potrebné reštartovať pripojenie.";
