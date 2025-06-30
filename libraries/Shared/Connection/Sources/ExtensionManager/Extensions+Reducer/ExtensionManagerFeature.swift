@@ -52,6 +52,7 @@ public struct ExtensionFeature: Reducer, Sendable {
     }
 
     @CasePathable
+    @DebugDescription
     public enum Action: Sendable {
         case startObservingStateChanges
         case stopObservingStateChanges
@@ -312,6 +313,29 @@ package extension ExtensionFeature.State {
 
         case .unknown, .preparingConnection, .disconnecting:
             false
+        }
+    }
+}
+
+extension ExtensionFeature.Action: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .startObservingStateChanges:
+            return ".startObservingStateChanges"
+        case .stopObservingStateChanges:
+            return ".stopObservingStateChanges"
+        case .connect(let serverConnectionIntent):
+            return ".connect(\(serverConnectionIntent))"
+        case .tunnelStartRequestFinished(let result):
+            return ".tunnelStartRequestFinished(\(result))"
+        case .connectionFinished(let result):
+            return ".connectionFinished(\(result))"
+        case .tunnelStatusChanged(let neVPNStatus):
+            return ".tunnelStatusChanged(\(neVPNStatus))"
+        case .disconnect(let tunnelConnectionError):
+            return ".disconnect(\(String(describing: tunnelConnectionError))"
+        case .removeManagers:
+            return ".removeManagers"
         }
     }
 }

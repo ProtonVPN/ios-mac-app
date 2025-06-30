@@ -53,6 +53,7 @@ public struct CertificateAuthenticationFeature: Reducer {
     }
 
     @CasePathable
+    @DebugDescription
     public enum Action: Sendable {
         /// Delete keys (and certificate if it exists), then regenerate keys
         case cancelRefreshes
@@ -319,6 +320,35 @@ public enum CertificateAuthenticationError: ProtonVPNError, Equatable {
 
         default:
             nil
+        }
+    }
+}
+
+extension CertificateAuthenticationFeature.Action: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .regenerateKeys:
+            ".regenerateKeys"
+        case .purgeCertificate:
+            ".purgeCertificate"
+        case .clearEverything:
+            ".clearEverything"
+        case .loadAuthenticationData:
+            ".loadAuthenticationData"
+        case .loadFromStorage:
+            ".loadFromStorage"
+        case let .loadingFromStorageFinished(certificateLoadingResult):
+            ".loadingFromStorageFinished(\(certificateLoadingResult))"
+        case .refreshCertificate:
+            ".refreshCertificate"
+        case let .selectorPushingFinished(result):
+            ".selectorPushingFinished(\(result))"
+        case let .refreshFinished(result):
+            ".refreshFinished(\(result))"
+        case let .loadingFinished(result):
+            ".loadingFinished(\(result))"
+        case .cancelRefreshes:
+            ".cancelRefreshes"
         }
     }
 }

@@ -57,6 +57,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
     }
 
+    @DebugDescription
     @CasePathable
     @dynamicMemberLookup
     public enum Action: Sendable {
@@ -68,6 +69,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         case stopObserving
 
         /// A subset of this reducer's actions suitable to be sent from outside
+        @DebugDescription
         @CasePathable
         public enum Input: Sendable {
             case onLaunch
@@ -78,6 +80,7 @@ public struct ConnectionFeature: Reducer, Sendable {
         }
 
         /// A subset of this reducer's actions that must be handled appropriately by its parent
+        @DebugDescription
         @CasePathable
         @dynamicMemberLookup
         public enum Delegate: Sendable {
@@ -380,6 +383,7 @@ extension ConnectionFeature.State {
 }
 
 // User-facing connection state
+@DebugDescription
 @CasePathable
 public enum ConnectionState: Equatable, Sendable {
     case resolving
@@ -388,6 +392,7 @@ public enum ConnectionState: Equatable, Sendable {
     case connecting(Intent)
     case connected(ServerConnectionIntent, Server, Date, ConnectionDetailsMessage?)
 
+    @DebugDescription
     @CasePathable
     public enum Intent: Equatable, Sendable {
         case unresolved(ConnectionPreparationIntent)
@@ -403,4 +408,81 @@ public extension ConnectionFeature.State {
         shouldRegisterServerChangeOnConnection: false,
         core: .initialCoreConnectionState
     )
+}
+
+extension ConnectionFeature.Action: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .prepare(let intent):
+            return ".prepare(\(intent))"
+        case .finishedPreparing(let result):
+            return ".finishedPreparing(\(result))"
+        case .core(let action):
+            return ".core(\(action.debugDescription))"
+        case .input(let input):
+            return ".input(\(input.debugDescription))"
+        case .delegate(let delegate):
+            return ".delegate(\(delegate.debugDescription))"
+        case .stopObserving:
+            return ".stopObserving"
+        }
+    }
+}
+
+extension ConnectionFeature.Action.Input: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .onLaunch:
+            return ".onLaunch"
+        case .onLogout:
+            return ".onLogout"
+        case .connect(let intent):
+            return ".connect(\(intent))"
+        case .applySettings(let settings):
+            return ".applySettings(\(settings))"
+        case .disconnect:
+            return ".disconnect"
+        }
+    }
+}
+
+extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .stateChanged(let connectionState):
+            return ".stateChanged(\(connectionState))"
+        case .connectionFailed(let connectionError):
+            return ".connectionFailed(\(connectionError))"
+        case .intentResolutionFailed(let intent, let resolutionError):
+            return ".intentResolutionFailed(\(intent), \(resolutionError))"
+        }
+    }
+}
+
+extension ConnectionState: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .resolving:
+            return ".resolving"
+        case .disconnected:
+            return ".disconnected"
+        case .disconnecting(let intent, let server):
+            return ".disconnecting(intent: \(intent), server: \(server))"
+        case .connecting(let intent):
+            return ".connecting(\(intent))"
+        case .connected(let intent, let server, let date, let message):
+            return ".connected(\(intent), \(server), \(date), \(String(describing: message)))"
+        }
+    }
+}
+
+extension ConnectionState.Intent: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case .unresolved(let intent):
+            return ".unresolved(\(intent))"
+        case .resolved(let intent, let server):
+            return ".resolved(\(intent), \(server))"
+        }
+    }
 }

@@ -97,6 +97,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case delegate(Delegate)
 
         /// A subset of actions expected to be handled by the parent
+        @DebugDescription
         @CasePathable
         @dynamicMemberLookup
         public enum Delegate: Sendable {
@@ -465,5 +466,43 @@ extension CoreConnectionFeature.State {
     /// either `.connected` or `disconnected` states following the call to `startTunnel `
     package var isInteractionAllowed: Bool {
         tunnel.isInteractionAllowed
+    }
+}
+
+extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case let .connect(serverConnectionIntent):
+            ".connect(\(serverConnectionIntent))"
+        case let .disconnect(disconnectReason):
+            ".disconnect(\(disconnectReason))"
+        case .timeout:
+            ".timeout"
+        case .startObserving:
+            ".startObserving"
+        case .stopObserving:
+            ".stopObserving"
+        case .handleLogout:
+            ".handleLogout"
+        case let .tunnel(action):
+            ".tunnel(\(action.debugDescription))"
+        case let .certAuth(action):
+            ".certAuth(\(action.debugDescription))"
+        case let .localAgent(action):
+            ".localAgent(\(action.debugDescription))"
+        case let .delegate(delegate):
+            ".delegate(\(delegate.debugDescription))"
+        }
+    }
+}
+
+extension CoreConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch self {
+        case let .error(connectionError):
+            ".error(\(connectionError))"
+        case let .stateChanged(previousState, newState):
+            ".stateChanged(\(previousState), \(newState))"
+        }
     }
 }
