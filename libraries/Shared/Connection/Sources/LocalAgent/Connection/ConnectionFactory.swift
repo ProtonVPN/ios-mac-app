@@ -77,7 +77,7 @@ extension ConnectionFactory {
                 connectionConfiguration.hostname,
                 client,
                 LocalAgentFeatures.from(connectionFeatures: connectionConfiguration.features),
-                true,
+                connectionConfiguration.connectivity,
                 &error
             )
 

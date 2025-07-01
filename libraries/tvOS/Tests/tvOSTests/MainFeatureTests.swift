@@ -19,6 +19,7 @@
 import ComposableArchitecture
 @testable import Connection
 @testable import ExtensionManager
+import Network
 @testable import tvOS
 import XCTest
 
@@ -80,6 +81,8 @@ final class MainFeatureTests: XCTestCase {
 
         var connectionFeatureState = ConnectionFeature.State.initialState
         connectionFeatureState.core = .init(tunnelState: .disconnected(nil))
+        let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
+
         // ServerListFeature.State uses ServerRepository in its constructor. It's not explicitly necessary to override
         // it here, since TestStore accepts an autoclosure argument which is executed with overridden dependencies.
         let store = TestStore(initialState: MainFeature.State(homeLoading: .loaded(.init()), connection: connectionFeatureState)) {
@@ -95,6 +98,7 @@ final class MainFeatureTests: XCTestCase {
                 getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
                 set: { _ in }
             )
+//            $0.nwPathStatus = { nwPathStream }
         }
         @Shared(.connectionState) var connectionState: ConnectionState
 

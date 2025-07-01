@@ -26,6 +26,7 @@
     import Domain
     @testable import ExtensionManager
     @testable import LocalAgent
+    import Network
     @testable import tvOS
     import VPNSharedTesting
     import XCTest
@@ -53,6 +54,7 @@
                 ),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
 
             let store = TestStore(initialState: state) {
                 AppFeature()._printChanges()
@@ -71,6 +73,7 @@
                     getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
                     set: { _ in }
                 )
+                $0.nwPathStatus = { nwPathStream }
             }
 
             store.exhaustivity = .off

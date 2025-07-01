@@ -23,6 +23,7 @@ import Foundation
 struct ConnectionConfiguration {
     let hostname: String
     let features: VPNConnectionFeatures
+    let connectivity: Bool
 
     init(
         hostname: String,
@@ -30,7 +31,8 @@ struct ConnectionConfiguration {
         vpnAccelerator: Bool,
         bouncing: String?,
         natType: NATType,
-        safeMode: Bool?
+        safeMode: Bool?,
+        connectivity: Bool
     ) {
         self.init(
             hostname: hostname,
@@ -40,17 +42,20 @@ struct ConnectionConfiguration {
                 bouncing: bouncing,
                 natType: natType,
                 safeMode: safeMode
-            )
+            ),
+            connectivity: connectivity
         )
     }
 
-    init(hostname: String, features: VPNConnectionFeatures) {
+    init(hostname: String, features: VPNConnectionFeatures, connectivity: Bool) {
         self.hostname = hostname
         self.features = features
+        self.connectivity = connectivity
     }
 
-    init(server: ServerEndpoint, features: VPNConnectionFeatures) {
+    init(server: ServerEndpoint, features: VPNConnectionFeatures, connectivity: Bool) {
         self.hostname = server.domain
         self.features = features.copyWithChanged(bouncing: server.label)
+        self.connectivity = connectivity
     }
 }

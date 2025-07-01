@@ -33,6 +33,7 @@ protocol LocalAgent {
     func connect(configuration: ConnectionConfiguration, data: VPNAuthenticationData) throws(LAConnectionCreationError)
     func set(features: LocalAgentFeatures)
     func disconnect()
+    func setConnectivity(_ connectivity: Bool)
 
     var netShieldType: NetShieldType { get }
 

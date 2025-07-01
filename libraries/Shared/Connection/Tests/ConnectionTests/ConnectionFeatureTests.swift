@@ -18,6 +18,7 @@
 
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
     import ComposableArchitecture
+    import Network
     import NetworkExtension
     import XCTest
 
@@ -83,6 +84,7 @@
                 core: coreState
             )
             initialState.$userTier = SharedReader(value: .paidTier)
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -101,6 +103,7 @@
                     return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
                 }
                 $0.defaultAppStorage = .testValue()
+                $0.nwPathStatus = { nwPathStream }
             }
 
             await store.send(.input(.onLaunch))
@@ -224,6 +227,7 @@
                 core: coreState
             )
             initialState.$userTier = SharedReader(value: .paidTier)
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -242,6 +246,7 @@
                     return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
                 }
                 $0.defaultAppStorage = .testValue()
+                $0.nwPathStatus = { nwPathStream }
             }
 
             // Let's skip repeating assertions we've covered in previous tests
@@ -437,12 +442,14 @@
             let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockAgent = LocalAgentMock(state: .disconnected)
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
                 $0.localAgent = mockAgent
+                $0.nwPathStatus = { nwPathStream }
             }
 
             store.exhaustivity = .off
@@ -466,6 +473,7 @@
             mockStorage.keys = keys
             mockStorage.cert = certificate
             mockStorage.features = .mock
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
@@ -478,6 +486,7 @@
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
+                $0.nwPathStatus = { nwPathStream }
             }
 
             store.exhaustivity = .off

@@ -70,7 +70,7 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
         case didBecomeActive
-        case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures)
+        case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures, Bool)
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
 
@@ -117,8 +117,12 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 localAgent.set(features: features)
                 return .none
 
-            case let .connect(server, authenticationData, features):
-                let connectionConfiguration = ConnectionConfiguration(server: server, features: features)
+            case let .connect(server, authenticationData, features, connectivity):
+                let connectionConfiguration = ConnectionConfiguration(
+                    server: server,
+                    features: features,
+                    connectivity: connectivity
+                )
                 do throws(LAConnectionCreationError) {
                     // Not a blocking call. Creates the connection to the Local Agent server
                     // If successful, will remain in the disconnected state until a reply is received,

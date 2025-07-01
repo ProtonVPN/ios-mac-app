@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Network
 import enum NetworkExtension.NEVPNStatus
 
 import Clocks
@@ -38,6 +39,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
     @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
+    @Dependency(\.nwPathStatus) private var nwPathStatus
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -54,6 +56,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         public internal(set) var localAgent: LocalAgentFeature.State
         public internal(set) var certAuth: CertificateAuthenticationFeature.State
         public internal(set) var shouldDisconnectWhenAllowed: Bool
+        public var currentNwStatus: NWPath.Status = .requiresConnection
 
         package init(
             tunnelState: ExtensionFeature.State = .unknown,
@@ -85,6 +88,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case startObserving
         /// Cancels observation effects started by `startObserving`
         case stopObserving
+        case connectivityChanged(NWPath.Status)
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
         /// Tunnel/NetworkExtension child reducer action
@@ -115,6 +119,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     private enum CancelID {
         case connectionTimeout
         case observation
+        case nwPathReachability
     }
 
     /// The order of reducers here is important.
@@ -144,15 +149,25 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .startObserving:
             return .merge(
                 .send(.tunnel(.startObservingStateChanges)),
-                .send(.localAgent(.startObservingEvents))
+                .send(.localAgent(.startObservingEvents)),
+                .run { send in
+                    for await status in await nwPathStatus() {
+                        await send(.connectivityChanged(status))
+                    }
+                }.cancellable(id: CancelID.nwPathReachability)
             )
             .cancellable(id: CancelID.observation, cancelInFlight: true)
+
+        case let .connectivityChanged(status):
+            state.currentNwStatus = status
+            return .none
 
         case .stopObserving:
             return .merge(
                 .send(.tunnel(.stopObservingStateChanges)),
                 .send(.localAgent(.stopAllObservations)),
-                .cancel(id: CancelID.connectionTimeout)
+                .cancel(id: CancelID.connectionTimeout),
+                .cancel(id: CancelID.nwPathReachability)
             )
 
         case let .connect(intent):
@@ -245,7 +260,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 metadata: ["certificateValidUntil": "\(authData.certificate.validUntil)"]
             )
             // The tunnel has been established, we know what server to connect to, and we have a valid certificate
-            return .send(.localAgent(.connect(server.endpoint, data, features)))
+            return .send(.localAgent(.connect(server.endpoint, data, features, state.currentNwStatus != .unsatisfied)))
 
         case let .certAuth(.loadingFinished(.failure(error))):
             log.error("Failed to load authentication data: \(error)")

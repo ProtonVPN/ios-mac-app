@@ -120,6 +120,8 @@
         }
 
         func set(features _: LocalAgentFeatures) {}
+
+        func setConnectivity(_: Bool) {}
     }
 
     enum NetShieldStatsBehaviour {
