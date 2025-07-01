@@ -59,6 +59,9 @@ public struct SettingsDimensions: Encodable {
         try container.encode(widgetCount, forKey: .widgetCount)
         try container.encode(firstWidgetSize, forKey: .firstWidgetSize)
         try container.encode(isIPv6Enabled, forKey: .isIPv6Enabled)
+        try container.encode(hermesCount, forKey: .hermesCount)
+        try container.encode(firstHermesAddressFamily, forKey: .firstHermesAddressFamily)
+        try container.encode(isSystemHermesEnabled, forKey: .isSystemHermesEnabled)
     }
 
     enum CodingKeys: String, CodingKey {
@@ -68,6 +71,9 @@ public struct SettingsDimensions: Encodable {
         case widgetCount = "widget_count"
         case firstWidgetSize = "first_widget_size"
         case isIPv6Enabled = "is_ipv6_enabled"
+        case hermesCount = "custom_dns_count"
+        case firstHermesAddressFamily = "first_custom_dns_address_family"
+        case isSystemHermesEnabled = "is_system_custom_dns_enabled"
     }
 
     public enum DefaultConnectionType: String, Encodable {
@@ -139,5 +145,15 @@ public struct SettingsDimensions: Encodable {
     public enum IsIPv6Enabled: String, Encodable {
         case `true`
         case `false`
+    }
+}
+
+extension SettingsDimensions: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted]
+        guard let encoded = try? encoder.encode(self),
+              let description = String(data: encoded, encoding: .utf8) else { return "Couldn't decode settings dimensions" }
+        return description
     }
 }
