@@ -38,13 +38,18 @@
             NSWorkspace.shared.icon(application: bundleIdentifier)
         }
 
+        public var plugins: [PlutoniumApp] {
+            FileManager.default.enumeratePluginsFolder(for: self)
+        }
+
         public init(bundleIdentifier: String, title: String) {
             self.bundleIdentifier = bundleIdentifier
             self.title = title
         }
 
         public init?(url: URL) {
-            guard let bundleIdentifier = Bundle(url: url)?.bundleIdentifier else { return nil }
+            guard let bundle = Bundle(url: url),
+                  let bundleIdentifier = bundle.bundleIdentifier else { return nil }
             self.bundleIdentifier = bundleIdentifier
             self.title = url.deletingPathExtension().lastPathComponent
         }
@@ -87,6 +92,23 @@
             }
 
             return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
+        }
+
+        func enumeratePluginsFolder(for app: PlutoniumApp) -> [PlutoniumApp] {
+            guard let bundle = Bundle(identifier: app.bundleIdentifier),
+                  let builtInPlugInsURL = bundle.builtInPlugInsURL else { return [] }
+            do {
+                let contents = try FileManager.default.contentsOfDirectory(
+                    at: builtInPlugInsURL,
+                    includingPropertiesForKeys: nil,
+                    options: .skipsSubdirectoryDescendants
+                )
+                return contents
+                    .compactMap(PlutoniumApp.init(url:))
+                    .uniqued
+            } catch {
+                return []
+            }
         }
     }
 

@@ -18,10 +18,12 @@
 
 import ComposableArchitecture
 
+import Foundation
 @preconcurrency import VPNAppCore
 
 struct PlutoniumInclusionHelper {
     private let appIDs: Set<String>
+    private let pluginIDs: Set<String>
     private let ipSet: Set<String>
     private let shouldInclude: Bool
 
@@ -37,19 +39,23 @@ struct PlutoniumInclusionHelper {
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
             self.appIDs = Set(exclusionActivated.apps.map(\.bundleIdentifier))
+            let plugins = exclusionActivated.apps.flatMap(\.plugins)
+            self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
             self.ipSet = Set(exclusionActivated.ips)
             self.shouldInclude = false
         case .inclusion:
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
             self.appIDs = Set(inclusionActivated.apps.map(\.bundleIdentifier))
+            let plugins = inclusionActivated.apps.flatMap(\.plugins)
+            self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
             self.ipSet = Set(inclusionActivated.ips)
             self.shouldInclude = true
         }
     }
 
     func appIncluded(withIdentifier identifier: String) -> Bool {
-        let found = appIDs.contains(identifier)
+        let found = appIDs.contains(identifier) || pluginIDs.contains(identifier)
         return shouldInclude ? found : !found
     }
 
