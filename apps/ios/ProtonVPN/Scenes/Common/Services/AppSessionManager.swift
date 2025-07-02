@@ -39,6 +39,7 @@ import Domain
 import Ergonomics
 import Review
 import Search
+import Strings
 
 enum SessionStatus {
     case notEstablished
@@ -103,7 +104,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
     @Dependency(\.planService) private var planService
 
-    var sessionStatus: SessionStatus = .notEstablished
+    var sessionStatus: SessionStatus = .notEstablished {
+        didSet {
+            log.info("Session status is now \(sessionStatus)", category: .app)
+        }
+    }
 
     private var refreshUserInfoTask: Task<Void, Error>?
 
@@ -412,6 +417,12 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             self?.loggedIn = false
             self?.logOutCleanup()
             self?.setAndNotify(for: .notEstablished, reason: reason)
+        }
+
+        // Defensive measure regarding VPNAPPL-2902
+        if !loggedIn, case .notEstablished = sessionStatus, reason == Localizable.invalidRefreshTokenPleaseLogin {
+            log.info("Preventing logOut procedure since user is not logged in")
+            return
         }
 
         @Dependency(\.settingsClient) var settingsClient

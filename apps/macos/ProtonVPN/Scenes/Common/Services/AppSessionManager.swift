@@ -92,7 +92,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
 
     var sessionStatus: SessionStatus = .notEstablished {
-        didSet { loggedIn = sessionStatus == .established }
+        didSet {
+            loggedIn = sessionStatus == .established
+            log.info("Session status is now \(sessionStatus)", category: .app)
+        }
     }
 
     init(factory: Factory) {

@@ -73,7 +73,7 @@ extension IosAlertService: CoreAlertService {
 
     // swiftlint:disable cyclomatic_complexity function_body_length
     func pushOnUIThread(alert: SystemAlert) {
-        log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
+        log.info("Showing alert: \(String(describing: type(of: alert)))", category: .ui)
 
         switch alert {
         case is AccountDeletionErrorAlert:
