@@ -16,52 +16,44 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Combine
 import Dependencies
-import Domain
 import Foundation
 import ModalsServices
 import ProtonCorePaymentsV2
 import StoreKit
 import VPNShared
 
+struct PaymentsFactory {
+    var payments: @Sendable () -> PlanService
+}
+
+extension PaymentsFactory: DependencyKey {
+    static let liveValue = PlanService()
+}
+
+extension DependencyValues {
+    var paymentsService: PlanService? {
+        get { self[PaymentsFactory.self] }
+        set { self[PaymentsFactory.self] = newValue }
+    }
+}
+
 final class PlanService {
-    private var cancellables: [AnyCancellable] = []
-    private var transactionSubscriptionCancellable: Cancellable?
-
-    @Dependency(\.dohConfiguration) private var doh
-    @Dependency(\.authKeychain) private var authKeychain
-
-    private lazy var paymentsAPIs = PaymentsAPIs(doh: doh)
-    private var remoteManager: RemoteManagerProviding?
-    private var plansComposer: PlansComposerProviding?
-    private var protonPlansManager: ProtonPlansManagerProviding?
-
+    let remoteManager: RemoteManagerProviding
+    let paymentsAPIs: PaymentsAPIs
+    let plansComposer: PlansComposerProviding
+    let protonPlansManager: ProtonPlansManagerProviding
     var iapSupportStatus: IAPSupportStatusV2 = .disabled(localizedReason: nil)
-
-    var transactionProgress: CurrentValueSubject<TransactionHandlerState, Never> = .init(.idle)
 
     // MARK: - Init
 
-    init() {
-        // initial setup; will create managers if auth credentials are present
-        let authCredentials: AuthCredentials? = authKeychain.fetch()
-        createPaymentsManagers(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
-
-        // setup subscription to react to auth credentials change
-        AppEvent.authCredentialsChanged.publisher
-            .sink { [weak self] _ in
-                self?.handleAuthCredentialsChanged()
-            }
-            .store(in: &cancellables)
-    }
-
-    private func createPaymentsManagers(authCredentials: AuthCredentials?) {
-        guard let authCredentials else {
-            log.info("No auth credentials to create payment managers", category: .iap)
-            return clear()
+    init?() {
+        @Dependency(\.authKeychain) var authKeychain
+        guard let authCredentials = authKeychain.fetch() else {
+            return nil
         }
+
+        @Dependency(\.dohConfiguration) var doh
         let appInfo = AppInfoImplementation(context: .mainApp)
 
         let remoteManager = RemoteManager(
@@ -71,41 +63,11 @@ final class PlanService {
             atlasSecret: doh.atlasSecret
         )
         self.remoteManager = remoteManager
+        let paymentsAPIs = PaymentsAPIs(doh: doh)
+        self.paymentsAPIs = paymentsAPIs
         let plansComposer = PlansComposer(remoteManager: remoteManager, paymentsAPIs: paymentsAPIs)
+        self.protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
         self.plansComposer = plansComposer
-        let protonPlansManager = ProtonPlansManager(doh: doh, remoteManager: remoteManager, plansComposer: plansComposer)
-        self.protonPlansManager = protonPlansManager
-    }
-
-    private func handleAuthCredentialsChanged() {
-        guard let authCredentials = authKeychain.fetch() else {
-            log.info("No auth credentials to create payment managers", category: .iap)
-            return clear()
-        }
-        updateRemoteManager(authCredentials: authCredentials)
-        recreateTransactionSubscription(authCredentials: authCredentials)
-    }
-
-    private func updateRemoteManager(authCredentials: AuthCredentials?) {
-        guard remoteManager != nil else {
-            return createPaymentsManagers(authCredentials: authCredentials)
-        }
-        guard let authCredentials else {
-            log.info("No auth credentials to update payment managers", category: .iap)
-            return clear()
-        }
-        remoteManager?.updateSession(sessionID: authCredentials.sessionId, authToken: authCredentials.accessToken)
-    }
-
-    private func recreateTransactionSubscription(authCredentials: AuthCredentials?) {
-        guard let authCredentials else {
-            log.info("No auth credentials to subscribe to transactions", category: .iap)
-            return clear()
-        }
-        // unsubscribe from previous subscriptions
-        transactionSubscriptionCancellable = nil
-
-        let appInfo = AppInfoImplementation(context: .mainApp)
 
         let transactionsObserverConfiguration = TransactionsObserverConfiguration(
             sessionID: authCredentials.sessionId,
@@ -115,47 +77,26 @@ final class PlanService {
         )
         TransactionsObserver.shared.setConfiguration(transactionsObserverConfiguration)
         Task {
-            do {
-                try await TransactionsObserver.shared.start()
-            } catch {
-                log.warning("Can't start payments transactions observer: \(error)", category: .iap)
-            }
+            try? await TransactionsObserver.shared.start()
         }
-
-        transactionSubscriptionCancellable = protonPlansManager?.transactionProgress
-            .sink { [weak self] transactionHandlerState in
-                self?.handleTransactionHandlerState(transactionHandlerState)
-            }
-    }
-
-    func clear() {
-        remoteManager = nil
-        plansComposer = nil
-        protonPlansManager = nil
-        transactionSubscriptionCancellable = nil
-        TransactionsObserver.shared.stop()
     }
 
     func fetchAppleStatus() async throws {
         let iapStatusRequest = try paymentsAPIs.url(for: .appleStatus)
-        let iapV6Response: IAPStatus? = try await remoteManager?.getFromURL(iapStatusRequest.url)
-        // if no remoteManager is present then we're in incorrect state => iAP disabled
-        iapSupportStatus = iapV6Response?.status ?? .disabled(localizedReason: nil)
+        let iapV6Response: IAPStatus = try await remoteManager.getFromURL(iapStatusRequest.url)
+        iapSupportStatus = iapV6Response.status
     }
 
     private var availablePlans: [ComposedPlan] = []
 
     @MainActor
     func planOptions() async throws -> [PlanOption] {
-        guard let protonPlansManager else {
-            throw UnavailableError.noAuthDataPresent
+        let composedPlans = try await protonPlansManager.getAvailablePlans()
+        let vpn2022 = composedPlans.filter { composedPlan in
+            composedPlan.plan.name == "vpn2022"
         }
-        let composedPlans = try await protonPlansManager.getAvailablePlans().filter {
-            $0.plan.name == "vpn2022"
-        }
-
-        availablePlans = composedPlans
-        return composedPlans.map {
+        availablePlans = vpn2022
+        return vpn2022.map {
             PlanOption(
                 id: $0.product.id,
                 storePricePerMonth: $0.storePricePerMonth,
@@ -168,9 +109,6 @@ final class PlanService {
     }
 
     func buyPlan(planOption: PlanOption) async throws -> ComposedPlan {
-        guard let protonPlansManager else {
-            throw UnavailableError.noAuthDataPresent
-        }
         guard let composedPlan = availablePlans.first(where: { $0.product.id == planOption.id }),
               let planName = composedPlan.plan.name,
               let product = composedPlan.product as? Product else {
@@ -179,32 +117,11 @@ final class PlanService {
 
         return try await protonPlansManager.purchase(product, planName: planName, planCycle: composedPlan.instance.cycle)
     }
-
-    private func handleTransactionHandlerState(_ transactionHandlerState: TransactionHandlerState) {
-        transactionProgress.send(transactionHandlerState)
-    }
 }
 
 extension PlanService {
-    enum UnavailableError: Error {
-        case noAuthDataPresent
-    }
-
     enum PurchaseError: Error, LocalizedError {
         case ffDisabled
         case planNotFound(String)
-    }
-}
-
-// MARK: - Dependencies
-
-private enum PlanServiceKey: DependencyKey {
-    static let liveValue: PlanService = .init()
-}
-
-extension DependencyValues {
-    var planService: PlanService {
-        get { self[PlanServiceKey.self] }
-        set { self[PlanServiceKey.self] = newValue }
     }
 }

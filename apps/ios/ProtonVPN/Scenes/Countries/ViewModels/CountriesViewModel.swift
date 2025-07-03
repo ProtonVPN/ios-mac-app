@@ -123,6 +123,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & CoreAlertServiceFactory
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
+        & PlanServiceFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & SearchStorageFactory
@@ -134,6 +135,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
+    private lazy var planService: PlanService? = factory.makePlanService()
 
     // Needed to create profile row
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -256,6 +258,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             alertService: alertService,
             connectionStatusService: connectionStatusService,
             propertiesManager: propertiesManager,
+            planService: planService,
             serversFilter: serversFilter,
             showCountryConnectButton: showCountryConnectButton,
             showFeatureIcons: showFeatureIcons,

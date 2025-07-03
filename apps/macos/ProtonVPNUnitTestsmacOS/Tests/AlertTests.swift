@@ -179,6 +179,10 @@ private class MacAlertServiceFactoryMock: MacAlertService.Factory {
         sessionService
     }
 
+    func makePlanService() -> PlanService {
+        PlanServiceMock()
+    }
+
     func makePropertiesManager() -> PropertiesManagerProtocol {
         PropertiesManagerMock()
     }

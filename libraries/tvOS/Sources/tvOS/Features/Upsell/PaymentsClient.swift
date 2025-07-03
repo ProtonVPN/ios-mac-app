@@ -55,13 +55,13 @@ struct PaymentsClient: Sendable, DependencyKey {
     let attemptPurchase: @Sendable (PlanOption) async throws -> ComposedPlan?
 
     static let liveValue: PaymentsClient = {
-        let planService = Dependency(\.planService).wrappedValue
+        let payments = Dependency(\.paymentsService).wrappedValue
 
         return .init(
             startObserving: {
                 var cancellable: AnyCancellable?
                 return AsyncStream { continuation in
-                    cancellable = planService.transactionProgress.sink { event in
+                    cancellable = payments?.protonPlansManager.transactionProgress.sink { event in
                         continuation.yield(event)
                     }
                     continuation.onTermination = { @Sendable _ in
@@ -72,14 +72,16 @@ struct PaymentsClient: Sendable, DependencyKey {
             getOptions: {
                 // IAP availability depends on currently logged in user account.
                 // Let's update it in case a different user is logged in than at app launch time.
-                try await planService.fetchAppleStatus()
-                guard planService.iapSupportStatus.isEnabled else {
+                try await payments?.fetchAppleStatus()
+                guard payments?.iapSupportStatus.isEnabled == true else {
                     throw PaymentsError.iapDisabled
                 }
-                return try await planService.planOptions()
+
+                let planOptions = try await payments?.planOptions()
+                return planOptions?.map { $0 } ?? []
             },
             attemptPurchase: { planOption in
-                try await planService.buyPlan(planOption: planOption)
+                try await payments?.buyPlan(planOption: planOption)
             }
         )
     }()
