@@ -48,7 +48,7 @@ final class OnboardingModuleService {
     typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
 
     private let windowService: WindowService
-    private let planService: PlanService?
+    private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
 
@@ -108,7 +108,8 @@ extension OnboardingModuleService: OnboardingService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: alertService,
-                planService: planService
+                planService: planService,
+                payments: planService.payments
             )
         } catch {
             log.error("Encountered payments error: \(error)")

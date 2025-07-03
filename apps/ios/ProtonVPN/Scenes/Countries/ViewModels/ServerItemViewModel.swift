@@ -46,7 +46,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
 
     private let alertService: AlertService
     private let connectionStatusService: ConnectionStatusService
-    private let planService: PlanService?
+    private let planService: PlanService
 
     var partnersIconsReceipts: [RequestReceipt] = []
 
@@ -135,7 +135,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
         alertService: AlertService,
         connectionStatusService: ConnectionStatusService,
         propertiesManager: PropertiesManagerProtocol,
-        planService: PlanService?
+        planService: PlanService
     ) {
         self.alertService = alertService
         self.connectionStatusService = connectionStatusService
@@ -160,9 +160,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            Task { [weak self] in
-                await self?.planService?.presentSubscriptionManagement()
-            }
+            planService.presentPlanSelection()
         } else if isConnected {
             AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.disconnect(.server))
             log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)

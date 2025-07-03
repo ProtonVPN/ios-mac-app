@@ -41,6 +41,7 @@ class ProfilesViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
+    private let planService: PlanService
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
 
@@ -52,7 +53,7 @@ class ProfilesViewModel {
         }
     }
 
-    init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
@@ -61,6 +62,7 @@ class ProfilesViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.planService = planService
         self.profileManager = profileManager
     }
 
@@ -132,6 +134,7 @@ class ProfilesViewModel {
                 natTypePropertyProvider: natTypePropertyProvider,
                 safeModePropertyProvider: safeModePropertyProvider,
                 connectionStatusService: connectionStatusService,
+                planService: planService,
                 propertiesManager: propertiesManager
             )
         }

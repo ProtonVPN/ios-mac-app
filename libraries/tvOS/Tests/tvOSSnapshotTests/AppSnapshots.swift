@@ -18,7 +18,6 @@
 
 @testable import CommonNetworking
 import ComposableArchitecture
-import ModalsServices
 import SnapshotTesting
 import SwiftUI
 @testable import tvOS
@@ -48,7 +47,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
                 getOptions: { [] },
-                attemptPurchase: { _ in nil }
+                attemptPurchase: { _ in .purchaseCancelled }
             )
 
             @Shared(.userTier) var userTier: Int?
@@ -60,7 +59,20 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
 
         snap(appView, caseName: "7 Upsell Loading", trait: trait)
 
-        store.send(.upsell(.finishedLoadingProducts(.success([PlanOption.oneMonth, .oneYear]))))
+        store.send(.upsell(.finishedLoadingProducts(.success([
+            PlanIAPTuple(
+                planOption: .init(
+                    duration: .oneMonth, price: .init(amount: 2, currency: "USD", locale: .en_US)
+                ),
+                iap: .freePlan
+            ),
+            PlanIAPTuple(
+                planOption: .init(
+                    duration: .oneYear, price: .init(amount: 12, currency: "USD", locale: .en_US)
+                ),
+                iap: .freePlan
+            ),
+        ]))))
         snap(appView, caseName: "8 Upsell Loaded", trait: trait)
     }
 
@@ -75,7 +87,7 @@ final class AppFeatureSnapshotTests: TVSnapshotTestCase {
             $0.paymentsClient = .init(
                 startObserving: unimplemented(),
                 getOptions: { [] },
-                attemptPurchase: { _ in nil }
+                attemptPurchase: { _ in .purchaseCancelled }
             )
         }
 

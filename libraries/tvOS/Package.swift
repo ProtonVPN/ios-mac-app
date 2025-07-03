@@ -41,7 +41,7 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .core(module: "ForceUpgrade"),
                 .core(module: "Networking"),
-                .core(module: "PaymentsV2"),
+                .core(module: "Payments"),
                 .core(module: "UIFoundations"),
                 .core(module: "Services"),
             ],

@@ -142,7 +142,7 @@ private class IosAlertServiceFactoryMock: IosAlertService.Factory {
         TroubleshootCoordinatorMock()
     }
 
-    func makePlanService() -> PlanService? {
+    func makePlanService() -> PlanService {
         PlanServiceMock()
     }
 }
