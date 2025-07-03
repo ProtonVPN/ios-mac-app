@@ -507,6 +507,8 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
             ".localAgent(\(action.debugDescription))"
         case let .delegate(delegate):
             ".delegate(\(delegate.debugDescription))"
+        case let .connectivityChanged(connectivity):
+            ".connectivityChanged\(connectivity)"
         }
     }
 }

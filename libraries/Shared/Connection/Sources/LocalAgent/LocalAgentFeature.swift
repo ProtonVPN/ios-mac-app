@@ -452,8 +452,8 @@ extension LocalAgentFeature.Action: CustomDebugStringConvertible {
             ".setFeatures(\(features))"
         case let .event(localAgentEvent):
             ".event(\(localAgentEvent.debugDescription))"
-        case let .connect(serverEndpoint, vpnAuthenticationData, vpnConnectionFeatures):
-            ".connect(\(serverEndpoint), \(vpnAuthenticationData), \(vpnConnectionFeatures))"
+        case let .connect(serverEndpoint, vpnAuthenticationData, vpnConnectionFeatures, connectivity):
+            ".connect(\(serverEndpoint), \(vpnAuthenticationData), \(vpnConnectionFeatures), '\(connectivity))"
         case let .disconnect(localAgentConnectionError):
             ".disconnect(\(String(describing: localAgentConnectionError)))"
         case let .delegate(delegateAction):
