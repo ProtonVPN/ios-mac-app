@@ -413,18 +413,18 @@ public extension ConnectionFeature.State {
 extension ConnectionFeature.Action: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .prepare(let intent):
-            return ".prepare(\(intent))"
-        case .finishedPreparing(let result):
-            return ".finishedPreparing(\(result))"
-        case .core(let action):
-            return ".core(\(action.debugDescription))"
-        case .input(let input):
-            return ".input(\(input.debugDescription))"
-        case .delegate(let delegate):
-            return ".delegate(\(delegate.debugDescription))"
+        case let .prepare(intent):
+            ".prepare(\(intent))"
+        case let .finishedPreparing(result):
+            ".finishedPreparing(\(result))"
+        case let .core(action):
+            ".core(\(action.debugDescription))"
+        case let .input(input):
+            ".input(\(input.debugDescription))"
+        case let .delegate(delegate):
+            ".delegate(\(delegate.debugDescription))"
         case .stopObserving:
-            return ".stopObserving"
+            ".stopObserving"
         }
     }
 }
@@ -433,15 +433,15 @@ extension ConnectionFeature.Action.Input: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case .onLaunch:
-            return ".onLaunch"
+            ".onLaunch"
         case .onLogout:
-            return ".onLogout"
-        case .connect(let intent):
-            return ".connect(\(intent))"
-        case .applySettings(let settings):
-            return ".applySettings(\(settings))"
+            ".onLogout"
+        case let .connect(intent):
+            ".connect(\(intent))"
+        case let .applySettings(settings):
+            ".applySettings(\(settings))"
         case .disconnect:
-            return ".disconnect"
+            ".disconnect"
         }
     }
 }
@@ -449,12 +449,12 @@ extension ConnectionFeature.Action.Input: CustomDebugStringConvertible {
 extension ConnectionFeature.Action.Delegate: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .stateChanged(let connectionState):
-            return ".stateChanged(\(connectionState))"
-        case .connectionFailed(let connectionError):
-            return ".connectionFailed(\(connectionError))"
-        case .intentResolutionFailed(let intent, let resolutionError):
-            return ".intentResolutionFailed(\(intent), \(resolutionError))"
+        case let .stateChanged(connectionState):
+            ".stateChanged(\(connectionState))"
+        case let .connectionFailed(connectionError):
+            ".connectionFailed(\(connectionError))"
+        case let .intentResolutionFailed(intent, resolutionError):
+            ".intentResolutionFailed(\(intent), \(resolutionError))"
         }
     }
 }
@@ -463,15 +463,15 @@ extension ConnectionState: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case .resolving:
-            return ".resolving"
+            ".resolving"
         case .disconnected:
-            return ".disconnected"
-        case .disconnecting(let intent, let server):
-            return ".disconnecting(intent: \(intent), server: \(server))"
-        case .connecting(let intent):
-            return ".connecting(\(intent))"
-        case .connected(let intent, let server, let date, let message):
-            return ".connected(\(intent), \(server), \(date), \(String(describing: message)))"
+            ".disconnected"
+        case let .disconnecting(intent, server):
+            ".disconnecting(intent: \(intent), server: \(server))"
+        case let .connecting(intent):
+            ".connecting(\(intent))"
+        case let .connected(intent, server, date, message):
+            ".connected(\(intent), \(server), \(date), \(String(describing: message)))"
         }
     }
 }
@@ -479,10 +479,10 @@ extension ConnectionState: CustomDebugStringConvertible {
 extension ConnectionState.Intent: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .unresolved(let intent):
-            return ".unresolved(\(intent))"
-        case .resolved(let intent, let server):
-            return ".resolved(\(intent), \(server))"
+        case let .unresolved(intent):
+            ".unresolved(\(intent))"
+        case let .resolved(intent, server):
+            ".resolved(\(intent), \(server))"
         }
     }
 }

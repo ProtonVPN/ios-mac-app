@@ -270,6 +270,9 @@ extension IosAlertService: CoreAlertService {
         case let alert as DomainErrorAlert:
             showDefaultSystemAlert(alert)
 
+        case let alert as HermesUpsellAlert:
+            show(alert: alert, modalType: .hermes)
+
         default:
             #if DEBUG
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -353,6 +356,7 @@ extension IosAlertService: CoreAlertService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: self,
+                windowService: windowService,
                 planService: planService,
                 payments: planService.payments
             )
@@ -372,7 +376,7 @@ extension IosAlertService: CoreAlertService {
                     let upsellData = UpsellData(
                         modalSource: alert.modalSource,
                         newPlanName: iapPlan?.protonName,
-                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : iapPlan?.offer,
+                        reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
                         flowType: planOption.purchaseType == .web ? .external : .oneClick
                     )
                     AppEvent.userEngagedWithUpsellAlert.post(upsellData)

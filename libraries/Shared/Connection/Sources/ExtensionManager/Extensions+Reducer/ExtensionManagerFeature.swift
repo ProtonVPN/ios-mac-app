@@ -321,21 +321,21 @@ extension ExtensionFeature.Action: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case .startObservingStateChanges:
-            return ".startObservingStateChanges"
+            ".startObservingStateChanges"
         case .stopObservingStateChanges:
-            return ".stopObservingStateChanges"
-        case .connect(let serverConnectionIntent):
-            return ".connect(\(serverConnectionIntent))"
-        case .tunnelStartRequestFinished(let result):
-            return ".tunnelStartRequestFinished(\(result))"
-        case .connectionFinished(let result):
-            return ".connectionFinished(\(result))"
-        case .tunnelStatusChanged(let neVPNStatus):
-            return ".tunnelStatusChanged(\(neVPNStatus))"
-        case .disconnect(let tunnelConnectionError):
-            return ".disconnect(\(String(describing: tunnelConnectionError))"
+            ".stopObservingStateChanges"
+        case let .connect(serverConnectionIntent):
+            ".connect(\(serverConnectionIntent))"
+        case let .tunnelStartRequestFinished(result):
+            ".tunnelStartRequestFinished(\(result))"
+        case let .connectionFinished(result):
+            ".connectionFinished(\(result))"
+        case let .tunnelStatusChanged(neVPNStatus):
+            ".tunnelStatusChanged(\(neVPNStatus))"
+        case let .disconnect(tunnelConnectionError):
+            ".disconnect(\(String(describing: tunnelConnectionError))"
         case .removeManagers:
-            return ".removeManagers"
+            ".removeManagers"
         }
     }
 }

@@ -78,16 +78,16 @@ package extension NetShieldType {
 extension LocalAgentEvent: CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
-        case .error(let localAgentError):
-            return ".error(\(localAgentError))"
-        case .state(let localAgentState):
-            return ".state(\(localAgentState))"
-        case .features(let features):
-            return ".features(\(features))"
-        case .connectionDetails(let connectionDetailsMessage):
-            return ".connectionDetails(\(connectionDetailsMessage))"
-        case .stats(let featureStatisticsMessage):
-            return ".stats(\(featureStatisticsMessage))"
+        case let .error(localAgentError):
+            ".error(\(localAgentError))"
+        case let .state(localAgentState):
+            ".state(\(localAgentState))"
+        case let .features(features):
+            ".features(\(features))"
+        case let .connectionDetails(connectionDetailsMessage):
+            ".connectionDetails(\(connectionDetailsMessage))"
+        case let .stats(featureStatisticsMessage):
+            ".stats(\(featureStatisticsMessage))"
         }
     }
 }

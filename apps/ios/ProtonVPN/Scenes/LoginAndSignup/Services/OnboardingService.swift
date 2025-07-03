@@ -108,6 +108,7 @@ extension OnboardingModuleService: OnboardingService {
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: alertService,
+                windowService: windowService,
                 planService: planService,
                 payments: planService.payments
             )

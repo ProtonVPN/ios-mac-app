@@ -184,14 +184,16 @@ public class AnnouncementManagerImplementation: AnnouncementManager {
     }
 #endif
 
-private extension Date {
+public extension Date {
     /// Check if this date represnt time in future
     var isFuture: Bool {
+        // TODO: rethink this implementation
         timeIntervalSinceNow > 0
     }
 
     /// Check if this date represnt time in future
     var isPast: Bool {
+        // TODO: rethink this implementation
         timeIntervalSinceNow < 0
     }
 }

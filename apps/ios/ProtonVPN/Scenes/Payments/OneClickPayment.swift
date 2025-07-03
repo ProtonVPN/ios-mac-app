@@ -72,6 +72,7 @@ final class OneClickPayment {
     }
 
     private let alertService: CoreAlertService
+    private let windowService: WindowService
     private let planService: PlanService
     private let payments: Payments
 
@@ -79,6 +80,7 @@ final class OneClickPayment {
 
     init(
         alertService: CoreAlertService,
+        windowService: WindowService,
         planService: PlanService,
         payments: Payments
     ) throws {
@@ -116,6 +118,7 @@ final class OneClickPayment {
 
         self.plansDataSource = plansDataSource
         self.alertService = alertService
+        self.windowService = windowService
         self.planService = planService
         self.payments = payments
 
@@ -166,9 +169,25 @@ final class OneClickPayment {
             log.assertionFailure("Couldn't retrieve 2y plan session URL")
             return
         }
-        @Dependency(\.linkOpener) var linkOpener
-        linkOpener.open(url)
-        completionHandler()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWebView) {
+            let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
+                Task {
+                    await self?.planService.delegate?
+                        .paymentTransactionDidFinish(
+                            modalSource: nil,
+                            newPlanName: "vpn2024",
+                            offerReference: "VPNINTROPRICE2024",
+                            flowType: .external
+                        )
+                }
+                self?.completionHandler()
+            })
+            windowService.present(modal: paymentsWebViewController)
+        } else {
+            @Dependency(\.linkOpener) var linkOpener
+            linkOpener.open(url)
+            completionHandler()
+        }
     }
 
     @MainActor
@@ -227,7 +246,15 @@ final class OneClickPayment {
         let vpn2022 = plansDataSource.availablePlans?.plans.filter { plan in
             plan.name == "vpn2022"
         }.first // it's only going to be one with this plan name
-        let shouldShowTwoYearsWebPlan = await plansDataSource.shouldShowTwoYearsWebPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+
+        @Dependency(\.propertiesManager) var propertiesManager
+        let userIsEligibleFor2YPlan: Bool = if let countryCodeOverride = propertiesManager.localValuesOverrides?.first(where: { $0.key == "AppStoreCC" }) {
+            countryCodeOverride.value.lowercased() == "usa"
+        } else {
+            await plansDataSource.shouldShowTwoYearsWebPlan
+        }
+
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
         if let vpn2022 {
             inAppPurchasePlans = vpn2022.instances

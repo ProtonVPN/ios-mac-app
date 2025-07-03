@@ -222,42 +222,44 @@ private extension DateComponents {
     }
 }
 
-#Preview("Unselected") {
-    let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
-    let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
-    return VStack {
-        PlanOptionView(
-            state: .loaded(option: planOptionMonth, isSelected: false, discount: planOptionMonth.discount(comparedTo: planOptionYear))
-        )
-        PlanOptionView(
-            state: .loaded(option: planOptionYear, isSelected: false, discount: planOptionYear.discount(comparedTo: planOptionMonth))
-        )
+#if DEBUG
+    #Preview("Unselected") {
+        let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
+        return VStack {
+            PlanOptionView(
+                state: .loaded(option: planOptionMonth, isSelected: false, discount: planOptionMonth.discount(comparedTo: planOptionYear))
+            )
+            PlanOptionView(
+                state: .loaded(option: planOptionYear, isSelected: false, discount: planOptionYear.discount(comparedTo: planOptionMonth))
+            )
+        }
     }
-}
 
-#Preview("Selected") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
-}
+    #Preview("Selected") {
+        let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
+    }
 
-#Preview("RTL") {
-    let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
-        .environment(\.layoutDirection, .rightToLeft)
-}
+    #Preview("RTL") {
+        let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
+            .environment(\.layoutDirection, .rightToLeft)
+    }
 
-#Preview("Loading") {
-    PlanOptionView(state: .loading)
-}
+    #Preview("Loading") {
+        PlanOptionView(state: .loading)
+    }
 
-#Preview("Annoying Duration") {
-    let planOption = PlanOption(
-        duration: .init(components: DateComponents(year: 2, month: 6))!,
-        price: .init(amount: 85, currency: "CHF")
-    )
-    return PlanOptionView(state: .loaded(option: planOption, isSelected: false, discount: 35))
-}
+    #Preview("Annoying Duration") {
+        let planOption = PlanOption(
+            duration: .init(components: DateComponents(year: 2, month: 6))!,
+            price: .init(amount: 85, currency: "CHF")
+        )
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: false, discount: 35))
+    }
 
-#Preview("Badge") {
-    PlanDiscountBadgeView(discount: 50)
-}
+    #Preview("Badge") {
+        PlanDiscountBadgeView(discount: 50)
+    }
+#endif
