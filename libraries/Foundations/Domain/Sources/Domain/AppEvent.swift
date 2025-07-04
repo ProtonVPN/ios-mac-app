@@ -76,8 +76,6 @@ public enum AppEvent: String {
     case hermes
     /// The Plutonium settings changed.
     case plutonium
-    /// The user's Auth credentials changed.
-    case authCredentialsChanged
 
     // MARK: API-Driven
 

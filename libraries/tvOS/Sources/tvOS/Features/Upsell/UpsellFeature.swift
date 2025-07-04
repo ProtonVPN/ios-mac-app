@@ -21,7 +21,8 @@ import Dependencies
 import Ergonomics
 import Foundation
 import ModalsServices // Borrow logic from iOS OneClick until we migrate to PaymentsNG/StoreKit2
-import ProtonCorePaymentsV2
+import enum ProtonCorePayments.ProcessCompletionResult
+import enum ProtonCorePayments.PurchaseResult
 
 @Reducer
 struct UpsellFeature {
@@ -37,10 +38,10 @@ struct UpsellFeature {
     @CasePathable
     enum Action {
         case loadProducts
-        case finishedLoadingProducts(Result<[PlanOption], Error>)
-        case event(TransactionHandlerState)
-        case attemptPurchase(PlanOption)
-        case finishedPurchasing(Result<ComposedPlan?, Error>)
+        case finishedLoadingProducts(Result<[PlanIAPTuple], Error>)
+        case event(ProcessCompletionResult)
+        case attemptPurchase(PlanIAPTuple)
+        case finishedPurchasing(PurchaseResult)
         case pollTierUpdate(remainingAttempts: Int)
         case finishedPollingTierUpdate(PollResult)
         case onExit
@@ -55,7 +56,7 @@ struct UpsellFeature {
     @ObservableState
     enum State: Equatable {
         case loading
-        case loaded(planOptions: [PlanOption], purchaseInProgress: Bool)
+        case loaded(planOptions: [PlanIAPTuple], purchaseInProgress: Bool)
     }
 
     var body: some Reducer<State, Action> {
@@ -67,7 +68,8 @@ struct UpsellFeature {
                 }
 
             case let .finishedLoadingProducts(.success(planOptions)):
-                let sortedPlanOptions = planOptions.sorted(by: { $0.amountOfMonths > $1.amountOfMonths })
+                let sortedPlanOptions = planOptions
+                    .sorted(by: { $0.planOption.duration.months > $1.planOption.duration.months })
                 state = .loaded(planOptions: sortedPlanOptions, purchaseInProgress: false)
                 return .none
 
@@ -78,59 +80,67 @@ struct UpsellFeature {
                 }
 
             case let .event(result):
-                log.info("Finished processing transaction with the result: \(result)")
+                log.info("Finished processing payment with result: \(result)")
 
-                switch result {
-                case .idle:
-                    return .none
-                case .generatingReceipt, .creatingTransactionToken, .createNewSubscription:
-                    return .none
-                case .transactionCompleted:
+                // Purchase results processed here are not user initiated,
+                // so we cannot assert the current loading state
+
+                switch result.upsellResult {
+                case .success(true):
                     // Let's block the user from purchasing while we check that the tier has updated
                     setPurchaseInProgress(true, state: &state, shouldAssertLoading: false)
                     return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
-                case .transactionCancelledByUser:
-                    return .none
-                case .mismatchTransactionIDs, .transactionProcessError, .unableToGetUserTransactionUUID, .unknownError:
+
+                case .success(false):
+                    // Subscription renewals, and other events that don't warrant user tier reload
                     setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
                     return .none
+
+                case let .failure(error):
+                    setPurchaseInProgress(false, state: &state, shouldAssertLoading: false)
+                    return .run { _ in await alertService.feed(error) }
                 }
 
             case let .attemptPurchase(option):
                 setPurchaseInProgress(true, state: &state)
                 return .run { send in
-                    await send(.finishedPurchasing(Result { try await client.attemptPurchase(option) }))
+                    await send(.finishedPurchasing(client.attemptPurchase(option)))
                 }
 
-            case let .finishedPurchasing(.success(composedPlan)):
-                log.debug("Purchased plan: \(String(describing: composedPlan?.plan.name))", category: .iap)
+            case let .finishedPurchasing(.purchasedPlan(plan)):
+                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
                 return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
 
-            case let .finishedPurchasing(.failure(purchaseError)):
+            case .finishedPurchasing(.purchaseCancelled):
+                log.debug("Purchase cancelled")
                 setPurchaseInProgress(false, state: &state)
-                guard let purchaseError = purchaseError as? ProtonPlansManagerError else {
-                    log.error("Purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
-                    return .run { _ in await alertService.feed(purchaseError) }
-                }
-                switch purchaseError {
-                case let .unableToMatchProtonPlanToStoreProduct(productId):
-                    log.error("Unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(purchaseError)"])
-                    return .run { _ in await alertService.feed(purchaseError) }
-                case .unableToGetUserTransactionUUID:
-                    return .none
-                case .unableToRestorePurchases:
-                    log.debug("Unable to restore purchases", category: .iap)
-                    return .none
-                case .transactionCancelledByUser:
-                    log.debug("Purchase cancelled")
-                    return .none
-                case .transactionPending:
-                    log.debug("Transaction pending", category: .iap)
-                    return .none
-                case .transactionUnknownError:
-                    log.error("Purchase failed", category: .iap, metadata: ["error": "\(purchaseError)"])
-                    return .run { _ in await alertService.feed(purchaseError) }
-                }
+                return .none
+
+            case let .finishedPurchasing(.planPurchaseProcessingInProgress(plan)):
+                log.debug("Purchasing \(plan.protonName)", category: .iap)
+                return .none
+
+            case let .finishedPurchasing(.purchaseError(error, _)):
+                log.error("Purchase failed: \(error)")
+                setPurchaseInProgress(false, state: &state)
+                return .run { _ in await alertService.feed(error) }
+
+            case let .finishedPurchasing(.apiMightBeBlocked(message, originalError, _)):
+                log.error("Purchase failed: \(message)")
+                setPurchaseInProgress(false, state: &state)
+                return .run { _ in await alertService.feed(originalError) }
+
+            case .finishedPurchasing(.renewalNotification):
+                log.debug("Notification of automatic renewal arrived", category: .iap)
+                return .send(.pollTierUpdate(remainingAttempts: Self.maxPollAttempts))
+
+            case .finishedPurchasing(.toppedUpCredits):
+                log.assertionFailure("Unsupported result: \(PurchaseResult.toppedUpCredits)")
+                return .none
+
+            case let .finishedPurchasing(.planAlreadyPurchased(error)):
+                log.error("Plan already purchased", category: .iap, metadata: ["error": "\(error)"])
+                return .none
 
             case let .pollTierUpdate(remainingAttempts):
                 guard remainingAttempts > 0 else {
@@ -178,5 +188,41 @@ struct UpsellFeature {
             assert(currentPurchaseInProgress != purchaseInProgress)
         }
         state = .loaded(planOptions: planOptions, purchaseInProgress: purchaseInProgress)
+    }
+}
+
+extension ProcessCompletionResult {
+    struct ProcessCompletionResultError: Swift.Error {
+        let localizedDescription: String
+
+        init(_ localizedDescription: String) {
+            self.localizedDescription = localizedDescription
+        }
+    }
+
+    /// Returns .success(true) if the purchase result warrants refreshing user account information.
+    var upsellResult: Result<Bool, Error> {
+        switch self {
+        case .finished(.autoRenewal), .finished(.cancelled):
+            return .success(false)
+
+        case .finished(.withoutObtainingToken),
+             .finished(.withoutExchangingToken),
+             .finished(.resolvingIAPToSubscription),
+             .finished(.withPurchaseAlreadyProcessed):
+            return .success(true)
+
+        case let .errored(error):
+            return .failure(error)
+
+        case let .erroredWithUnspecifiedError(error):
+            return .failure(error)
+
+        case .finished(.withoutIAP),
+             .finished(.resolvingIAPToCredits),
+             .finished(.resolvingIAPToCreditsCausedByError):
+            log.assertionFailure("Unexpected IAP purchase result: \(self)")
+            return .failure(ProcessCompletionResultError("Unexpected IAP purchase result: \(self)"))
+        }
     }
 }

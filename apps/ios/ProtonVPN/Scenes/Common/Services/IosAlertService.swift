@@ -40,6 +40,7 @@ import Strings
 final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
+        PlanServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory & UIAlertServiceFactory &
         WindowServiceFactory
@@ -51,13 +52,12 @@ final class IosAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
 
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
-
-    @Dependency(\.planService) private var planService
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -319,10 +319,7 @@ extension IosAlertService: CoreAlertService {
             return
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
-            Task {
-                guard let self else { return }
-                await self.planService.presentSubscriptionManagement(alertService: self)
-            }
+            self?.planService.presentPlanSelection()
         }
 
         let viewController = modalsFactory.userAccountUpdateViewController(
@@ -357,7 +354,12 @@ extension IosAlertService: CoreAlertService {
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let oneClickPayment: OneClickPayment
         do {
-            oneClickPayment = try OneClickPayment(alertService: self, windowService: windowService)
+            oneClickPayment = try OneClickPayment(
+                alertService: self,
+                windowService: windowService,
+                planService: planService,
+                payments: planService.payments
+            )
         } catch {
             log.error("Unexpected payments error: \(error)")
             return
@@ -370,10 +372,10 @@ extension IosAlertService: CoreAlertService {
         let viewController = modalsFactory.upsellViewController(
             modalType: modalType,
             client: oneClickPayment.plansClient(
-                validationHandler: { planOption, composedPlan in
+                validationHandler: { planOption, iapPlan in
                     let upsellData = UpsellData(
                         modalSource: alert.modalSource,
-                        newPlanName: composedPlan?.plan.name,
+                        newPlanName: iapPlan?.protonName,
                         reference: planOption.purchaseType == .web ? "VPNINTROPRICE2024" : nil,
                         flowType: planOption.purchaseType == .web ? .external : .oneClick
                     )
@@ -482,11 +484,8 @@ extension IosAlertService: CoreAlertService {
 
     private func show(_ alert: FreeConnectionsAlert) {
         let upgradeAction: (() -> Void) = { [weak self] in
-            guard let self else { return }
-            windowService.dismissModal {
-                Task {
-                    await self.planService.presentSubscriptionManagement(alertService: self)
-                }
+            self?.windowService.dismissModal {
+                self?.planService.presentPlanSelection()
             }
         }
 

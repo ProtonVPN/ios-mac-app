@@ -19,7 +19,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
 import Foundation
 import UIKit
 
@@ -43,6 +42,7 @@ final class SettingsAccountViewModel {
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         NetworkingFactory &
+        PlanServiceFactory &
         PropertiesManagerFactory &
         VpnKeychainFactory
 
@@ -51,12 +51,11 @@ final class SettingsAccountViewModel {
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var authKeychain: AuthKeychainHandle = factory.makeAuthKeychainHandle()
     private lazy var navigationService: NavigationService = factory.makeNavigationService()
-
-    @Dependency(\.planService) private var planService
 
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
@@ -103,7 +102,11 @@ final class SettingsAccountViewModel {
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
-                self?.manageSubscriptionAction()
+                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
+                    self?.manageSubscriptionAction()
+                } else {
+                    self?.buySubscriptionAction()
+                }
             }))
         }
         if allowPlanManagement {
@@ -184,11 +187,14 @@ final class SettingsAccountViewModel {
         return TableViewSection(title: "", cells: cells)
     }
 
+    /// Open modal with new plan selection (for free/trial users and non-renewing plans)
+    private func buySubscriptionAction() {
+        planService.presentPlanSelection()
+    }
+
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        Task { [weak self] in
-            await self?.planService.presentSubscriptionManagement(alertService: alertService)
-        }
+        planService.presentSubscriptionManagement()
     }
 
     private func deleteAccount() {

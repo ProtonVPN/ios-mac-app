@@ -54,6 +54,7 @@ final class SettingsViewModel {
         NetShieldPropertyProviderFactory &
         NetworkingFactory &
         PaymentsApiServiceFactory &
+        PlanServiceFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &

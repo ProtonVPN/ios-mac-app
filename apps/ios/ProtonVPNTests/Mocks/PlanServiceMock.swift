@@ -20,47 +20,47 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Ergonomics
 import Foundation
 import LegacyCommon
 import Modals
-import ProtonCorePaymentsV2
-import StoreKit
+import ProtonCorePayments
 import VPNAppCore
 
 @testable import ProtonVPN
 
 class PlanServiceMock: PlanService {
+    var iapStatus: IAPSupportStatus = .enabled
+
+    var plansDataSource: PlansDataSourceProtocol?
+
+    var payments: ProtonCorePayments.Payments {
+        fatalError("Should not invoke payments accessor")
+    }
+
     weak var delegate: PlanServiceDelegate?
 
-    var mostExpensivePlan: ComposedPlan? { nil }
-
-    var countryCode: String? { nil }
-
-    var iapStatus: IAPSupportStatusV2 { .enabled }
-
+    var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
 
     var countriesCount: Int {
         63
     }
 
-    func setDelegate(_ delegate: PlanServiceDelegate) {
-        self.delegate = delegate
+    var allowUpgrade: Bool {
+        true
     }
 
-    func presentSubscriptionManagement(alertService _: CoreAlertService) {
+    func updateServicePlans() async throws {}
+
+    func presentPlanSelection(modalSource _: UpsellModalSource?) {
+        callbackPresentPlanSelection?()
+    }
+
+    func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()
     }
 
-    func getAvailablePlans() async throws -> [ComposedPlan] {
-        []
-    }
-
-    func purchase(_: Product, planName _: String, planCycle _: Int) async throws -> ComposedPlan {
-        throw GenericError(message: "Just error")
-    }
-
-    func fetchAppleStatus() async throws {}
     func clear() {}
+
+    func createPlusPlanUI(completion _: @escaping () -> Void) {}
 }

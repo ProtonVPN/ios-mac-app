@@ -57,14 +57,23 @@ private struct PlanOptionLoadedView: View {
         static let planOptionAmount: String = "plan_option_amount"
     }
 
+    private static let dateComponentsFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        return formatter
+    }()
+
     let planOption: PlanOption
     let discount: Int?
 
     let isSelected: Bool
 
     var body: some View {
+        let planDuration = planOption.duration
+        let planPrice = planOption.price
+
         HStack(spacing: .themeSpacing8) {
-            let planDurationString: String = planOption.durationLabel ?? "" // if `durationLabel` is `nil` then it's one-time purchase that's not present now
+            let planDurationString = Self.dateComponentsFormatter.string(from: planDuration.components) ?? planDuration.components.fallbackDuration
             Text(planDurationString)
                 .themeFont(.body1(.regular))
                 .accessibilityIdentifier(AccessibilityIdentifier.planOptionDuration)
@@ -81,15 +90,17 @@ private struct PlanOptionLoadedView: View {
 
             VStack(alignment: .trailing) {
                 HStack(alignment: .bottom, spacing: .zero) {
-                    Text(planOption.displayPrice)
+                    Text(PriceFormatter.formatPlanPrice(price: planPrice.amount, locale: planPrice.locale))
                         .themeFont(.body1(.bold))
                         .accessibilityIdentifier(AccessibilityIdentifier.planOptionAmount)
                 }
                 .accessibilityElement(children: .combine)
 
-                if planOption.amountOfMonths > 1 {
+                if planDuration.components.isMoreThanOneMonth {
+                    let amountPerMonth = Double(planPrice.amount) / Double(planDuration.components.amountOfMonths)
+
                     HStack(spacing: .zero) {
-                        Text(planOption.pricePerMonth)
+                        Text(PriceFormatter.formatPlanPrice(price: amountPerMonth, locale: planPrice.locale))
                         Text(Localizable.upsellPlansListOptionAmountPerMonth)
                     }
                     .font(.body3())
@@ -184,33 +195,68 @@ private struct PlanWebOnlyTagView: View {
     }
 }
 
+// MARK: - Helpers
+
+private extension DateComponents {
+    var isMoreThanOneMonth: Bool {
+        amountOfMonths > 1
+    }
+
+    // This property is a fallback in case where DateComponentsFormatter returns `nil`
+    // Not ideal but should do the job
+    var fallbackDuration: String {
+        var duration = ""
+        if let year, year != 0 {
+            duration += Localizable.planDurationYear(year)
+        }
+        if let month, month != 0 {
+            if !duration.isEmpty {
+                duration += ", "
+            }
+            duration += Localizable.planDurationMonth(month)
+        }
+        if duration.isEmpty {
+            assertionFailure("This components receiver is invalid")
+        }
+        return duration
+    }
+}
+
 #if DEBUG
     #Preview("Unselected") {
-        let planOptionMonth = PlanOption.oneMonth
-        let planOptionYear = PlanOption.oneYear
+        let planOptionMonth = PlanOption(duration: .oneMonth, price: .init(amount: 11, currency: "CHF"))
+        let planOptionYear = PlanOption(duration: .oneYear, price: .init(amount: 100, currency: "CHF"))
         return VStack {
             PlanOptionView(
-                state: .loaded(option: planOptionMonth, isSelected: false, discount: nil)
+                state: .loaded(option: planOptionMonth, isSelected: false, discount: planOptionMonth.discount(comparedTo: planOptionYear))
             )
             PlanOptionView(
-                state: .loaded(option: planOptionYear, isSelected: false, discount: 33)
+                state: .loaded(option: planOptionYear, isSelected: false, discount: planOptionYear.discount(comparedTo: planOptionMonth))
             )
         }
     }
 
     #Preview("Selected") {
-        let planOption = PlanOption.oneYear
+        let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
         return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
     }
 
     #Preview("RTL") {
-        let planOption = PlanOption.oneYear
+        let planOption = PlanOption(duration: .oneYear, price: .init(amount: 85, currency: "CHF"))
         return PlanOptionView(state: .loaded(option: planOption, isSelected: true, discount: 35))
             .environment(\.layoutDirection, .rightToLeft)
     }
 
     #Preview("Loading") {
         PlanOptionView(state: .loading)
+    }
+
+    #Preview("Annoying Duration") {
+        let planOption = PlanOption(
+            duration: .init(components: DateComponents(year: 2, month: 6))!,
+            price: .init(amount: 85, currency: "CHF")
+        )
+        return PlanOptionView(state: .loaded(option: planOption, isSelected: false, discount: 35))
     }
 
     #Preview("Badge") {
