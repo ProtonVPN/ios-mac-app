@@ -21,7 +21,7 @@ set -u
 set -o pipefail
 
 script_name=$(basename "${BASH_SOURCE[0]}")
-files_to_format=$(mktemp)
+files_to_format="files_to_format"
 
 function cleanup() {
     rm -f files_to_format
@@ -84,20 +84,22 @@ file_count=$(echo "$staged_swift_files" | wc -l | tr -d ' ')
 print_info "Found $file_count Swift file(s) to format"
 
 # Write files to temporary file
-printf "%s\n" "${staged_swift_files[@]}" > files_to_format
+echo "$staged_swift_files" > "$files_to_format"
 
 # Run SwiftFormat
 print_info "Running SwiftFormat..."
 if [ -n "$config" ]; then
-    mint run swiftformat --quiet --config $config --filelist files_to_format
+    mint run swiftformat --quiet --config $config --filelist $files_to_format
 else
-    mint run swiftformat --quiet --filelist files_to_format
+    mint run swiftformat --quiet --filelist $files_to_format
 fi
 formatting_result=$?
 
 # Re-stage the formatted files
 if [ $formatting_result -eq 0 ]; then
-    git add $staged_swift_files
+    while IFS= read -r file; do
+        git add "$file"
+    done < "$files_to_format"
     
     print_success "Successfully formatted the following files:"
     printf "${MAGENTA}%s${ENDCOLOR}\n" "$staged_swift_files"
