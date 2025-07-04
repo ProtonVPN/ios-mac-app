@@ -39,7 +39,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
     @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
-    @Dependency(\.nwPathStatus) private var nwPathStatus
+    @Dependency(\.nwPathStream) private var nwPathStream
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -88,7 +88,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case startObserving
         /// Cancels observation effects started by `startObserving`
         case stopObserving
-        case connectivityChanged(NWPath.Status)
+        case connectivityChanged(NWPath)
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
         /// Tunnel/NetworkExtension child reducer action
@@ -118,7 +118,6 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
     private enum CancelID {
         case connectionTimeout
-        case observation
         case nwPathReachability
     }
 
@@ -151,15 +150,17 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.tunnel(.startObservingStateChanges)),
                 .send(.localAgent(.startObservingEvents)),
                 .run { send in
-                    for await status in await nwPathStatus() {
-                        await send(.connectivityChanged(status))
+                    for await nwPath in await nwPathStream() {
+                        await send(.connectivityChanged(nwPath))
                     }
                 }.cancellable(id: CancelID.nwPathReachability)
             )
-            .cancellable(id: CancelID.observation, cancelInFlight: true)
 
-        case let .connectivityChanged(status):
-            state.currentNwStatus = status
+        case let .connectivityChanged(nwPath):
+            guard state.currentNwStatus != nwPath.status else {
+                return .none
+            }
+            state.currentNwStatus = nwPath.status
             return .none
 
         case .stopObserving:

@@ -54,7 +54,7 @@
                 ),
                 networking: .authenticated(.auth(uid: "sessionID"))
             )
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: state) {
                 AppFeature()._printChanges()
@@ -73,7 +73,7 @@
                     getConnectionIntent: { .init(spec: .defaultFastest, server: .mock, tunnelSettings: .mock, features: .mock) },
                     set: { _ in }
                 )
-                $0.nwPathStatus = { nwPathStream }
+                $0.nwPathStream = { nwPathStream }
             }
 
             store.exhaustivity = .off
