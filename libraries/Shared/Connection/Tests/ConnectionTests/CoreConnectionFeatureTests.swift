@@ -19,6 +19,7 @@
 #if targetEnvironment(simulator) // MockTunnelManager is only built for the simulator
     import Clocks
     import ComposableArchitecture
+    import Network
     import XCTest
 
     import Domain
@@ -65,6 +66,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -76,6 +78,7 @@
                 $0.localAgent = mockAgent
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -174,6 +177,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -211,6 +215,7 @@
                         return .ok(data: nil)
                     }
                 }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -308,6 +313,7 @@
             let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -331,6 +337,7 @@
                     },
                     pushSelector: { unimplemented("Unexpected session fork + selector push") }
                 )
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -434,6 +441,7 @@
             let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -445,6 +453,7 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.connectionFeatureProvider.connectionFeatures = { features }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -538,6 +547,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -554,6 +564,7 @@
                     },
                     pushSelector: { unimplemented("Unexpected session fork + selector push") }
                 )
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -647,6 +658,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()._printChanges()
@@ -658,6 +670,7 @@
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -756,6 +769,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -767,6 +781,7 @@
                 $0.localAgent = mockAgent
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -886,6 +901,7 @@
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(nil)
             )
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -904,6 +920,7 @@
                     },
                     pushSelector: {}
                 )
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -1046,6 +1063,7 @@
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(nil)
             )
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -1057,6 +1075,7 @@
                 $0.tunnelManager = mockManager
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.localAgent = mockAgent
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -1142,6 +1161,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -1154,6 +1174,7 @@
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionFeatureProvider.connectionFeatures = { .mock }
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)
@@ -1242,6 +1263,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -1252,6 +1274,7 @@
                 $0.vpnKeysGenerator = VPNKeysGenerator(generateKeys: { .mock() })
                 $0.localAgent = mockAgent
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.startObserving)

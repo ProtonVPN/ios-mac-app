@@ -90,6 +90,14 @@ final class LocalAgentImplementation: LocalAgent {
         assert(connection != nil)
         connection?.close()
     }
+
+    func setConnectivity(_ connectivity: Bool) {
+        // we want to make sure we're not in a disconnected state due to a previous `close()` otherwise Go might panic!
+        if let connection, connection.currentState != .disconnected {
+            log.info("Sending connectivity update to \(connectivity)", category: .localAgent)
+            connection.setConnectivity(connectivity)
+        }
+    }
 }
 
 extension LocalAgentImplementation: LocalAgentClientDelegate {

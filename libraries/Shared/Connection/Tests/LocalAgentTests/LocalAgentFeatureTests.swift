@@ -55,7 +55,7 @@
             let defaultFeatures = connectionFeatureProvider.connectionFeatures()
 
             await store.send(.startObservingEvents)
-            await store.send(.connect(server, .empty, defaultFeatures))
+            await store.send(.connect(server, .empty, defaultFeatures, true))
             await store.receive(\.startNetShieldStatsObservation)
             await store.receive(\.event.state.connecting) {
                 $0 = .connecting(nil)
