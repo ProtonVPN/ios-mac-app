@@ -186,6 +186,12 @@
 		8BC65CDA2B97645D005F2533 /* ProtonCoreTelemetry in Frameworks */ = {isa = PBXBuildFile; productRef = 8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
+		A41E236A2E1C185900929868 /* OneClickPaymentV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E23692E1C185400929868 /* OneClickPaymentV2.swift */; };
+		A41E236C2E1C18DE00929868 /* PlanServiceV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236B2E1C18DD00929868 /* PlanServiceV2.swift */; };
+		A41E236E2E1C196F00929868 /* IapCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236D2E1C196400929868 /* IapCachedStatus.swift */; };
+		A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */; };
+		A41E23722E1C1AC300929868 /* ProtonCorePaymentsUIV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */; };
+		A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */ = {isa = PBXBuildFile; productRef = A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */; };
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
 		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
@@ -680,6 +686,10 @@
 		8B24D7AE2DC108FE008A1666 /* NewAccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountCardView.swift; sourceTree = "<group>"; };
 		8B930CED2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Extension.swift"; sourceTree = "<group>"; };
 		9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementDetailViewController.swift; path = ../../../../ios/ProtonVPN/Scenes/Announcements/AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		A41E23692E1C185400929868 /* OneClickPaymentV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneClickPaymentV2.swift; sourceTree = "<group>"; };
+		A41E236B2E1C18DD00929868 /* PlanServiceV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceV2.swift; sourceTree = "<group>"; };
+		A41E236D2E1C196400929868 /* IapCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IapCachedStatus.swift; sourceTree = "<group>"; };
+		A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMockV2.swift; sourceTree = "<group>"; };
 		A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsWebViewController.swift; sourceTree = "<group>"; };
 		AD1D1B8B2D41197700C185FD /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
 		AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetShieldStatsItemView.xib; sourceTree = "<group>"; };
@@ -936,7 +946,9 @@
 				E55B1A652B922031001EF2C6 /* PMLogger in Frameworks */,
 				4C05E5682A716995009102EB /* LegacyCommon in Frameworks */,
 				F348C9D627D8E54200622584 /* Search in Frameworks */,
+				A41E23742E1C1AC900929868 /* ProtonCorePaymentsV2 in Frameworks */,
 				4CAC4F552D6CDB200028C964 /* Ergonomics in Frameworks */,
+				A41E23722E1C1AC300929868 /* ProtonCorePaymentsUIV2 in Frameworks */,
 				E5C384642D96AA98003494D5 /* Settings in Frameworks */,
 				E53E5B2A2D4CF128002D88B2 /* CommonNetworking in Frameworks */,
 				4C7D40672A60289400ACDBED /* OHHTTPStubs in Frameworks */,
@@ -1531,6 +1543,7 @@
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
+				A41E236F2E1C1A8900929868 /* PlanServiceMockV2.swift */,
 				D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */,
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
 				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
@@ -2259,9 +2272,12 @@
 			isa = PBXGroup;
 			children = (
 				F316A06F26DFB05E00669386 /* UserCachedStatus.swift */,
+				A41E236D2E1C196400929868 /* IapCachedStatus.swift */,
 				F37EC5B0272FF2AD002A5B8E /* TokenStorage.swift */,
 				F316A07426DFBCB600669386 /* PlanService.swift */,
+				A41E236B2E1C18DD00929868 /* PlanServiceV2.swift */,
 				E5BE14932BBE99A00093F30F /* OneClickPayment.swift */,
+				A41E23692E1C185400929868 /* OneClickPaymentV2.swift */,
 				A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */,
 			);
 			path = Payments;
@@ -2345,6 +2361,8 @@
 				E5C3847B2D96B9D5003494D5 /* Modals */,
 				E5E39ED32D96DFED006E4978 /* Home */,
 				A48BE9B32E05AEA300B891DA /* Atlantis */,
+				A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */,
+				A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2936,6 +2954,7 @@
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
+				A41E236A2E1C185900929868 /* OneClickPaymentV2.swift in Sources */,
 				E5B2F4C02D37D7FD000D4F10 /* WidgetIntents.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
 				8B930CEE2BDFB3F000E81FB2 /* AuthCredentials+Extension.swift in Sources */,
@@ -2944,6 +2963,7 @@
 				791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */,
 				7995FCFC2090A4820030E1EB /* UIKitString+Extension.swift in Sources */,
 				66E34BBA27AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift in Sources */,
+				A41E236C2E1C18DE00929868 /* PlanServiceV2.swift in Sources */,
 				D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */,
 				7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */,
@@ -2952,6 +2972,7 @@
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */,
+				A41E236E2E1C196F00929868 /* IapCachedStatus.swift in Sources */,
 				7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */,
 				796BD1D121144D49003D6B8D /* ServersHeaderView.swift in Sources */,
 				E1D21AB121831039000C389B /* AnnotationView.swift in Sources */,
@@ -3052,6 +3073,7 @@
 				E5BBFED22B333B2200FA9CF8 /* TroubleshootCoordinatorMock.swift in Sources */,
 				E52508A42B3439E6006E6998 /* MapViewModelTests.swift in Sources */,
 				E5BBFED42B333B2200FA9CF8 /* ConnectionStatusServiceMock.swift in Sources */,
+				A41E23702E1C1A8B00929868 /* PlanServiceMockV2.swift in Sources */,
 				E5BBFED52B333B2200FA9CF8 /* ProtocolServiceMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4802,6 +4824,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */;
 			productName = Atlantis;
+		};
+		A41E23712E1C1AC300929868 /* ProtonCorePaymentsUIV2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCorePaymentsUIV2;
+		};
+		A41E23732E1C1AC900929868 /* ProtonCorePaymentsV2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ProtonCorePaymentsV2;
 		};
 		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
