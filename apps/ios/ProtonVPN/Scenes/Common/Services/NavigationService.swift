@@ -193,6 +193,8 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
+        // early release view controllers in case of logging out
+        tabBarController?.setViewControllers([], animated: false)
     }
 
     func switchTab(index: Int) {
