@@ -30,7 +30,8 @@ final actor UDPFlowHandler {
 
     private let udpFlow: NEAppProxyUDPFlow
     private let targetInterface: NWInterface
-    private var connections: [NWEndpoint: NWConnection] = [:]
+    private var connectionLifecycleTasks: [NWEndpoint: Task<Void, Never>] = [:]
+    private var sendChannels: [NWEndpoint: AsyncStream<Data>.Continuation] = [:]
 
     private var didCleanup = false
     private var onClose: (@Sendable () async -> Void)?
@@ -125,86 +126,128 @@ final actor UDPFlowHandler {
     // MARK: - Forwarding
 
     private func forwardDatagram(_ data: Data, to endpoint: NWEndpoint) async {
-        let interfaceToUse = endpoint.shouldUseWireguardInterface ? nil : targetInterface
-        let connection = await connectionForEndpoint(endpoint, interface: interfaceToUse)
+        // Ensure we have a connection task for this endpoint
+        await ensureConnectionTask(for: endpoint)
 
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            connection.send(content: data, completion: .contentProcessed { error in
-                if let error {
-                    log.error("Failed to send datagram to \(endpoint): \(error.localizedDescription)")
-                    // Consider: should this stop the handler or retry?
-                }
-                continuation.resume()
-            })
+        // Send the data to the connection task through the channel
+        if let sendChannel = sendChannels[endpoint] {
+            sendChannel.yield(data)
+        } else {
+            log.error("No send channel available for endpoint \(endpoint)")
         }
     }
 
     // MARK: - Connection management
 
-    private func connectionForEndpoint(_ endpoint: NWEndpoint, interface: NWInterface?) async -> NWConnection {
-        if let existing = connections[endpoint] {
-            return existing
+    private func ensureConnectionTask(for endpoint: NWEndpoint) async {
+        guard connectionLifecycleTasks[endpoint] == nil else { return }
+
+        let interfaceToUse = endpoint.shouldUseWireguardInterface ? nil : targetInterface
+
+        // Create the send channel for this connection
+        let (sendStream, sendContinuation) = AsyncStream<Data>.makeStream()
+        sendChannels[endpoint] = sendContinuation
+
+        // Create and store the main connection task
+        let connectionTask = Task {
+            await handleConnectionLifecycle(for: endpoint, interface: interfaceToUse, sendStream: sendStream)
         }
 
+        connectionLifecycleTasks[endpoint] = connectionTask
+        log.debug("Started connection lifecycle task for \(endpoint)")
+    }
+
+    private func handleConnectionLifecycle(for endpoint: NWEndpoint, interface: NWInterface?, sendStream: AsyncStream<Data>) async {
         let parameters = NWParameters.udp
         if let interface {
             parameters.requiredInterface = interface
         }
         parameters.allowLocalEndpointReuse = true
 
-        let connection = NWConnection(to: endpoint, using: parameters)
-
+        let connection = AsyncConnection(to: endpoint, using: parameters)
         let queue = DispatchQueue(
             label: "ch.protonvpn.plutonium.udp-\(id.uuidString)-\(endpoint)",
             qos: .userInitiated
         )
 
-        connection.stateUpdateHandler = { [weak self] state in
-            Task { [weak self] in
-                await self?.handleStateUpdate(state, connection: connection, endpoint: endpoint)
+        connection.start(queue: queue)
+
+        await monitorConnectionStates(connection: connection, endpoint: endpoint, sendStream: sendStream)
+
+        log.debug("Connection lifecycle ended for \(endpoint)")
+    }
+
+    /// State monitoring and data forwarding for a connection
+    private func monitorConnectionStates(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
+        for await state in connection.states {
+            switch state {
+            case .setup:
+                log.debug("UDP connection setup for \(endpoint)")
+            case .preparing:
+                log.debug("UDP connection preparing for \(endpoint)")
+            case let .waiting(error):
+                log.debug("UDP connection waiting for \(endpoint): \(error.localizedDescription)")
+            case .ready:
+                log.debug("UDP connection ready for \(endpoint)")
+                startDataForwarding(connection: connection, endpoint: endpoint, sendStream: sendStream)
+            case let .failed(error):
+                log.error("UDP connection failed for \(endpoint): \(error.localizedDescription)")
+                break
+            case .cancelled:
+                log.debug("UDP connection cancelled for \(endpoint)")
+                break
+            @unknown default:
+                log.debug("UDP connection for \(endpoint) entered an unknown state")
             }
         }
 
-        connection.start(queue: queue)
-        connections[endpoint] = connection
-        return connection
+        connection.cancel()
+        log.debug("State monitoring ended for \(endpoint)")
     }
 
-    /// Isolated handler for connection state changes.
-    private func handleStateUpdate(
-        _ state: NWConnection.State,
-        connection: NWConnection,
-        endpoint: NWEndpoint
-    ) async {
-        switch state {
-        case .setup:
-            log.debug("UDP connection setup for \(endpoint)")
-        case .preparing:
-            log.debug("UDP connection preparing for \(endpoint)")
-        case let .waiting(error):
-            log.debug("UDP connection waiting for \(endpoint): \(error.localizedDescription)")
-        case .ready:
-            log.debug("UDP connection ready for \(endpoint)")
-            await receiveLoop(from: connection, endpoint: endpoint)
-        case let .failed(error):
-            log.error("UDP connection failed for \(endpoint): \(error.localizedDescription)")
-            await cleanupConnection(for: endpoint)
-        case .cancelled:
-            log.debug("UDP connection cancelled for \(endpoint)")
-            await cleanupConnection(for: endpoint)
-        @unknown default:
-            log.debug("UDP connection for \(endpoint) entered an unknown state")
+    // MARK: - Data forwarding management
+
+    private func startDataForwarding(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) {
+        // Start sending and receiving tasks in parallel without blocking
+        Task {
+            await handleSending(connection: connection, endpoint: endpoint, sendStream: sendStream)
         }
+
+        Task {
+            await handleReceiving(connection: connection, endpoint: endpoint)
+        }
+
+        log.debug("Started parallel data forwarding tasks for \(endpoint)")
     }
 
-    // MARK: - Receiving responses
+    // MARK: - Connection handling
 
-    private func receiveLoop(from connection: NWConnection, endpoint: NWEndpoint) async {
+    private func handleSending(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
+        for await data in sendStream {
+            guard !Task.isCancelled else {
+                log.debug("Sending task cancelled for \(endpoint)")
+                break
+            }
+
+            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+                connection.send(content: data) { error in
+                    if let error {
+                        log.error("Failed to send datagram to \(endpoint): \(error.localizedDescription)")
+                    }
+                    continuation.resume()
+                }
+            }
+        }
+        log.debug("Send stream ended for \(endpoint)")
+    }
+
+    private func handleReceiving(connection: AsyncConnection, endpoint: NWEndpoint) async {
         while !Task.isCancelled {
             do {
                 let (data, isComplete) = try await connection.receiveMessageAsync()
                 guard let data, !data.isEmpty else { break }
 
+                // Send the received data back to the flow
                 await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
                     udpFlow.writeDatagramsUniversal([(data, endpoint)]) { error in
                         if let error {
@@ -220,6 +263,7 @@ final actor UDPFlowHandler {
                 break
             }
         }
+        log.debug("Receive loop ended for \(endpoint)")
     }
 
     // MARK: - Cleanup
@@ -228,13 +272,21 @@ final actor UDPFlowHandler {
         guard !didCleanup else { return }
         didCleanup = true
 
-        log.debug("Cleaning up \(connections.count) connections")
+        log.debug("Cleaning up \(connectionLifecycleTasks.count) connection lifecycle tasks")
 
-        for (endpoint, connection) in connections {
-            connection.cancel()
-            log.debug("Cleaned up connection for endpoint \(endpoint)")
+        // Finish all send channels first
+        for (endpoint, sendChannel) in sendChannels {
+            sendChannel.finish()
+            log.debug("Finished send channel for endpoint \(endpoint)")
         }
-        connections.removeAll()
+        sendChannels.removeAll()
+
+        // Cancel all connection lifecycle tasks
+        for (endpoint, task) in connectionLifecycleTasks {
+            task.cancel()
+            log.debug("Cancelled connection lifecycle task for endpoint \(endpoint)")
+        }
+        connectionLifecycleTasks.removeAll()
 
         udpFlow.closeReadWithError(nil)
         udpFlow.closeWriteWithError(nil)
@@ -246,26 +298,16 @@ final actor UDPFlowHandler {
     // MARK: - Helper methods
 
     private func cleanupConnection(for endpoint: NWEndpoint) async {
-        if let connection = connections.removeValue(forKey: endpoint) {
-            connection.cancel()
-            log.debug("Cleaned up connection for endpoint \(endpoint)")
+        // Clean up send channel
+        if let sendChannel = sendChannels.removeValue(forKey: endpoint) {
+            sendChannel.finish()
+            log.debug("Finished send channel for endpoint \(endpoint)")
         }
-    }
-}
 
-// MARK: - Small helpers
-
-private extension NWConnection {
-    /// Async wrapper around `receiveMessage`.
-    func receiveMessageAsync() async throws -> (Data?, Bool) {
-        try await withCheckedThrowingContinuation { cont in
-            receiveMessage { data, _, isComplete, error in
-                if let error {
-                    cont.resume(throwing: error)
-                } else {
-                    cont.resume(returning: (data, isComplete))
-                }
-            }
+        // Clean up main connection lifecycle task
+        if let task = connectionLifecycleTasks.removeValue(forKey: endpoint) {
+            task.cancel()
+            log.debug("Cleaned up connection lifecycle task for endpoint \(endpoint)")
         }
     }
 }
