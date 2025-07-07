@@ -18,6 +18,12 @@
         }
       ]
     },
+    "environmentVariableEntries" : [
+      {
+        "key" : "AppIdentifierPrefix",
+        "value" : "AppPrefix123456"
+      }
+    ],
     "targetForVariableExpansion" : {
       "containerPath" : "container:macOS.xcodeproj",
       "identifier" : "EED534801EEC112000013607",

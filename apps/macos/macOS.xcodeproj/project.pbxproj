@@ -59,7 +59,6 @@
 		4C8641B527D22A6900EEFB1D /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
 		4C8641C427D261FB00EEFB1D /* IPCServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */; };
-		4C8641C527D2620C00EEFB1D /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		4C8C31692A73CF50006AD628 /* WireguardConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8C31682A73CF50006AD628 /* WireguardConfig.swift */; };
 		4C93F57B2CDCDD4D006BFD77 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4C93F57A2CDCDD4D006BFD77 /* Ergonomics */; };
@@ -300,7 +299,6 @@
 		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470ECBEC78B00733301D477F /* UpgradeButton.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
-		E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		E93D023626A1C90A0098520D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E93D023126A1C90A0098520D /* Info.plist */; };
 		E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */; };
@@ -326,6 +324,8 @@
 		E9F88DE727B544E0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
+		EBA003142E03008B00A8CC06 /* WireguardNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */; };
+		EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
 		EBB751CD2DA7D4C900F79994 /* ProtonVPN Plutonium.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		EBB751D62DA94CD800F79994 /* PlutoniumExtension in Frameworks */ = {isa = PBXBuildFile; productRef = EBB751D52DA94CD800F79994 /* PlutoniumExtension */; };
@@ -844,7 +844,6 @@
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
 		E5FFC8992816AEFC00E355DA /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../macos/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
-		E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCBaseConnection.swift; sourceTree = "<group>"; };
 		E928092E26B42739008C9F2C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../macos/ExtensionsIPC/README.md; sourceTree = "<group>"; };
 		E928092F26B42B63008C9F2C /* IPCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCHelper.swift; path = ../../macos/ExtensionsIPC/IPCHelper.swift; sourceTree = "<group>"; };
 		E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.WireGuard-Extension.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -873,6 +872,7 @@
 		E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../../macos/ProtonVPN/Scenes/ReportBug/Colors+BugReport.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
+		EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardNetworkInterface.swift; sourceTree = "<group>"; };
 		EBB751C42DA7D4C800F79994 /* ProtonVPN Plutonium.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ProtonVPN Plutonium.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
 		EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCoreCircleButton.swift; sourceTree = "<group>"; };
@@ -1604,7 +1604,6 @@
 			children = (
 				4CB2A3D128913192002E839E /* vpncore */,
 				E928092E26B42739008C9F2C /* README.md */,
-				E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */,
 				4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */,
 				4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */,
 				4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */,
@@ -1617,6 +1616,7 @@
 		E93D023026A1C8960098520D /* ProtonVPN WireGuard */ = {
 			isa = PBXGroup;
 			children = (
+				EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */,
 				E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */,
 				E928092926B147C0008C9F2C /* IPC */,
 				E997998726A6FAA00083D61E /* WireguardExtension */,
@@ -3230,7 +3230,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CD1F77C2A72BD5600E8AB01 /* ExtensionInfo.swift in Sources */,
-				E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */,
 				4C8C31692A73CF50006AD628 /* WireguardConfig.swift in Sources */,
 				4C8641C627D2624400EEFB1D /* IPCHelper.swift in Sources */,
 				E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */,
@@ -3243,6 +3242,7 @@
 				4CD1F7782A72BCD600E8AB01 /* Data+JSONDictionary.swift in Sources */,
 				E99799BF26A6FFAC0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
 				E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */,
+				EBA003142E03008B00A8CC06 /* WireguardNetworkInterface.swift in Sources */,
 				E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */,
 				E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */,
 				4C8641BC27D25C5D00EEFB1D /* CodeSignatureComparitor.swift in Sources */,
@@ -3258,6 +3258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3471,7 +3472,6 @@
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
 				EECEF3CA1F164AEC00A16606 /* LoginButton.swift in Sources */,
-				4C8641C527D2620C00EEFB1D /* IPCBaseConnection.swift in Sources */,
 				EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */,
 				4CE2F42227ECA7B000B21A00 /* GIFView.swift in Sources */,
 				E5DA73C12DC4D1930057B273 /* ThemeToggleStyle.swift in Sources */,

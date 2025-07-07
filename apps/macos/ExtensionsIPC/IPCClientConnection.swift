@@ -22,6 +22,7 @@
 /// a symmetrical purpose.
 
 import Foundation
+import VPNAppCore
 
 /// Object to call inside the app that manages responses from XPC service.
 final class XPCServiceUser {
@@ -42,48 +43,44 @@ final class XPCServiceUser {
     }
 
     func getLogs(completionHandler: @escaping (Data?) -> Void) {
-        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")
-            self.currentConnection = nil
-            completionHandler(nil)
-        }) as? ProviderCommunication else {
-            log("Failed to create a remote object proxy for the provider: \(machServiceName)")
-            completionHandler(nil)
-            return
+        withProviderProxy(failureValue: nil, completionHandler: completionHandler) { providerProxy in
+            providerProxy.getLogs(completionHandler)
         }
-
-        providerProxy.getLogs(completionHandler)
     }
 
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
-        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")
-            self.currentConnection = nil
-            completionHandler(false)
-        }) as? ProviderCommunication else {
-            log("Failed to get remote object proxy: \(machServiceName)")
-            completionHandler(false)
-            return
+        withProviderProxy(failureValue: false, completionHandler: completionHandler) { providerProxy in
+            providerProxy.setCredentials(username: username, password: password, completionHandler: completionHandler)
         }
-
-        providerProxy.setCredentials(username: username, password: password, completionHandler: completionHandler)
     }
 
     func setConfigData(_ data: Data, completionHandler: @escaping (Bool) -> Void) {
-        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")
-            self.currentConnection = nil
-            completionHandler(false)
-        }) as? ProviderCommunication else {
-            log("Failed to get remote object proxy: \(machServiceName)")
-            completionHandler(false)
-            return
+        withProviderProxy(failureValue: false, completionHandler: completionHandler) { providerProxy in
+            providerProxy.setConfigData(data, completionHandler: completionHandler)
         }
+    }
 
-        providerProxy.setConfigData(data, completionHandler: completionHandler)
+    func getInterfaceName(completionHandler: @escaping (String?) -> Void) {
+        withProviderProxy(failureValue: nil, completionHandler: completionHandler) { providerProxy in
+            providerProxy.getInterfaceName(completionHandler)
+        }
     }
 
     // MARK: - Private
+
+    private func withProviderProxy<T>(failureValue: T, completionHandler: @escaping (T) -> Void, operation: (ProviderCommunication) -> Void) {
+        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
+            self.log("Failed to get remote object proxy \(self.machServiceName): \(String(describing: registerError))")
+            self.currentConnection = nil
+            completionHandler(failureValue)
+        }) as? ProviderCommunication else {
+            log("Failed to get remote object proxy: \(machServiceName)")
+            completionHandler(failureValue)
+            return
+        }
+
+        operation(providerProxy)
+    }
 
     private var connection: NSXPCConnection {
         guard currentConnection == nil else {

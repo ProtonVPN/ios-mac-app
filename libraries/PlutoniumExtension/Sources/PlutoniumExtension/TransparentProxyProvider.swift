@@ -19,6 +19,7 @@
 import ComposableArchitecture
 import Foundation
 import Logging
+import Network
 import NetworkExtension
 import os
 import PMLogger
@@ -32,14 +33,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
     }
 
     @SharedReader(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
-    private lazy var inclusionHelper: PlutoniumInclusionHelper? = {
-        do {
-            return try PlutoniumInclusionHelper()
-        } catch {
-            log.error("Failed to initialize PlutoniumInclusionHelper: \(error)")
-            return nil
-        }
-    }()
+    private var flowHandlingManager: FlowHandlingManager?
 
     override open func startProxy(options _: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
         log.info("Starting proxy provider.")
@@ -51,52 +45,94 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
 
         let settings = createNetworkSettings()
-        setTunnelNetworkSettings(settings) { error in
+        setTunnelNetworkSettings(settings) { [weak self] error in
             if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
+                completionHandler(error)
             } else {
                 log.info("Successfully set tunnel network settings.")
+                guard let self else {
+                    log.error("Cannot continue setting up the flow handling manager since self is nil.")
+                    completionHandler(PlutoniumError.unexpectedError)
+                    return
+                }
+                // Create a sendable wrapper for the completion handler
+                let sendableCompletion = SendableCompletion(completionHandler, provider: self)
+                Task { @Sendable in
+                    // Try to get the WireGuard interface name via XPC request
+                    let vpnNetworkInterfaceName: String
+                    do {
+                        vpnNetworkInterfaceName = try await Self.fetchVpnInterfaceName()
+                    } catch {
+                        log.error("Failed to fetch VPN interface name: \(error)")
+                        sendableCompletion.call(error)
+                        return
+                    }
+
+                    log.info("VPN interface name: \(vpnNetworkInterfaceName)")
+
+                    do {
+                        let manager = try await FlowHandlingManager(
+                            vpnNetworkInterfaceName: vpnNetworkInterfaceName
+                        )
+                        sendableCompletion.call(nil, manager: manager)
+                    } catch {
+                        log.error("Failed to initialize flow handling manager: \(error)")
+                        sendableCompletion.call(error)
+                    }
+                }
             }
-            completionHandler(error)
         }
     }
 
     override open func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
         log.debug("Stopping proxy provider with reason: \(reason)")
+
+        flowHandlingManager?.cleanupAllHandlers()
+        flowHandlingManager = nil
+
         completionHandler()
     }
 
     override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
 
-        guard let inclusionHelper else {
-            log.error("Inclusion helper is not available.")
+        guard let flowHandlingManager else {
+            log.error("Flow Handling helper is not available.")
             return false
         }
 
         if let tcpFlow = flow as? NEAppProxyTCPFlow {
-            log.debug("New TCP flow from: \(sourceAppIdentifier)")
+            // Use nonisolated(unsafe) to acknowledge that we're taking responsibility for thread safety
+            nonisolated(unsafe) let unsafeTcpFlow = tcpFlow
 
-            if inclusionHelper.appIncluded(withIdentifier: sourceAppIdentifier) {
-                log.debug("Blocking TCP connection from \(sourceAppIdentifier)")
-                blockFlow(tcpFlow)
+            switch flowHandlingManager.actionForApp(identifier: sourceAppIdentifier) {
+            case .dontHandle:
+                return false
+            case let .forward(to: networkInterface):
+                guard let handler = TCPFlowHandler(
+                    tcpFlow: unsafeTcpFlow,
+                    targetInterface: networkInterface
+                ) else { return false }
+                flowHandlingManager.register(handler)
                 return true
             }
-
-            log.debug("Ignoring non-blocked TCP flow.")
-            return false
 
         } else if let udpFlow = flow as? NEAppProxyUDPFlow {
-            log.debug("New UDP flow from: \(sourceAppIdentifier)")
+            // Use nonisolated(unsafe) to acknowledge that we're taking responsibility for thread safety
+            nonisolated(unsafe) let unsafeUdpFlow = udpFlow
 
-            if inclusionHelper.appIncluded(withIdentifier: sourceAppIdentifier) {
-                log.debug("Blocking UDP connection from \(sourceAppIdentifier)")
-                blockFlow(udpFlow)
+            switch flowHandlingManager.actionForApp(identifier: sourceAppIdentifier) {
+            case .dontHandle:
+                return false
+            case let .forward(to: networkInterface):
+                let handler = UDPFlowHandler(
+                    udpFlow: unsafeUdpFlow,
+                    targetInterface: networkInterface
+                )
+                flowHandlingManager.register(handler)
                 return true
             }
-
-            log.debug("Ignoring non-blocked UDP flow.")
-            return false
         }
 
         log.debug("Unknown flow type (neither TCP nor UDP) -> ignoring")
@@ -128,12 +164,6 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         return settings
     }
 
-    private func blockFlow(_ flow: NEAppProxyFlow) {
-        let err = NSError(domain: NSPOSIXErrorDomain, code: Int(ECONNREFUSED), userInfo: nil)
-        flow.closeReadWithError(err)
-        flow.closeWriteWithError(err)
-    }
-
     private func setupLogs() {
         // TODO: VPNAPPL-2789: Define dependency container for the logFileManager.
         let logFile = PMLogger.LogFileManagerImplementation().getFileUrl(named: "Proton-Plutonium.log")
@@ -143,5 +173,32 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
         LoggingSystem.bootstrap { _ in multiplexLogHandler }
+    }
+
+    // MARK: - Helpers
+
+    private static func fetchVpnInterfaceName() async throws -> String {
+        let xpcClient = WireguardXPCClient()
+        return try await xpcClient.getInterfaceName()
+    }
+
+    /// A sendable wrapper for completion handlers to safely pass across isolation boundaries
+    private struct SendableCompletion: Sendable {
+        private nonisolated(unsafe) let completion: (Error?) -> Void
+        private nonisolated(unsafe) weak var provider: PlutoniumTransparentProxyProvider?
+
+        init(_ completion: @escaping (Error?) -> Void, provider: PlutoniumTransparentProxyProvider) {
+            self.completion = completion
+            self.provider = provider
+        }
+
+        func call(_ error: Error?, manager: FlowHandlingManager? = nil) {
+            Task { @MainActor in
+                if let manager {
+                    provider?.flowHandlingManager = manager
+                }
+                completion(error)
+            }
+        }
     }
 }
