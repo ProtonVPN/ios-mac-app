@@ -37,7 +37,7 @@ class QuickSettingsDropdownOption: NSView {
 
     var action: SuccessCallback?
 
-    private var state: State = .blocked(business: false)
+    private var state: State = .blocked
     private var isHovered: Bool = false
 
     @IBAction
@@ -70,7 +70,7 @@ class QuickSettingsDropdownOption: NSView {
     private enum State {
         case selected
         case unselected
-        case blocked(business: Bool)
+        case blocked
     }
 
     func selectedStyle() {
@@ -84,9 +84,9 @@ class QuickSettingsDropdownOption: NSView {
         applyState()
     }
 
-    func blockedStyle(business: Bool) {
-        state = .blocked(business: business)
-        plusBox.isHidden = business
+    func blockedStyle() {
+        state = .blocked
+        plusBox.isHidden = false
         plusAndTitleConstraint.isActive = true
         applyState()
     }

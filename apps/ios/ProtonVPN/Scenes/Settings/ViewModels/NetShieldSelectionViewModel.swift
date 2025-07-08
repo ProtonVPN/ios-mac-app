@@ -83,25 +83,15 @@ final class NetShieldSelectionViewModel {
     }
 
     private var netShieldUpsellSection: TableViewSection {
-        @Dependency(\.credentialsProvider) var credentialsProvider
-        let upsellCell = if credentialsProvider.planName.isBusinessWithoutNetShield {
-            TableViewCellModel.imageSubtitleImage(
-                title: Localizable.netshieldBusinessUpsellTitle,
-                subtitle: Localizable.netshieldBusinessUpsellSubtitle,
-                leadingImage: Asset.netshieldSmall.image,
-                trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: {}
-            )
-        } else {
-            TableViewCellModel.imageSubtitle(
-                title: Localizable.netshieldUpsellTitle,
-                subtitle: Localizable.netshieldUpsellSubtitle,
-                image: Asset.netshieldSmall.image,
-                handler: { [weak self] in
-                    self?.alertService.push(alert: NetShieldUpsellAlert())
-                }
-            )
-        }
+        let upsellCell = TableViewCellModel.imageSubtitle(
+            title: Localizable.netshieldUpsellTitle,
+            subtitle: Localizable.netshieldUpsellSubtitle,
+            image: Asset.netshieldSmall.image,
+            handler: { [weak self] in
+                self?.alertService.push(alert: NetShieldUpsellAlert())
+            }
+        )
+
         return TableViewSection(title: "", showHeader: false, showSeparator: true, cells: [upsellCell])
     }
 

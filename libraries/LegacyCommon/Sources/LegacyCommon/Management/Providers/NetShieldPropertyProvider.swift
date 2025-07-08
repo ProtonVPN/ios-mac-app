@@ -142,10 +142,6 @@ extension NetShieldType: ModularAppFeature {
             return .failure(.featureDisabled)
         }
 
-        if plan.isBusinessWithoutNetShield {
-            return .failure(.requiresUpgrade)
-        }
-
         if isUserTierTooLow(userTier) {
             return .failure(.requiresUpgrade)
         }

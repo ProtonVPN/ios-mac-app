@@ -37,8 +37,6 @@ protocol QuickSettingsDropdownOptionPresenter: AnyObject {
     var active: Bool! { get }
     /// B2C users get upsell modals if their plan doesn't allow a feature.
     var requiresUpdate: Bool! { get }
-    /// B2B users should see a "business" badge for disabled features, but no upsell modals.
-    var requiresBusinessUpdate: Bool! { get }
 
     var selectCallback: SuccessConfirmationCallback { get }
 }
@@ -48,7 +46,6 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
     let active: Bool!
     let icon: NSImage!
     let requiresUpdate: Bool!
-    let requiresBusinessUpdate: Bool!
     let selectCallback: SuccessConfirmationCallback
 
     init(
@@ -56,14 +53,12 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
         icon: NSImage = AppTheme.Icon.brandTor,
         active: Bool,
         requiresUpdate: Bool = false,
-        requiresBusinessUpdate: Bool = false,
         selectCallback: @escaping SuccessConfirmationCallback
     ) {
         self.title = title
         self.active = active
         self.icon = icon
         self.requiresUpdate = requiresUpdate
-        self.requiresBusinessUpdate = requiresBusinessUpdate
         self.selectCallback = selectCallback
     }
 }
@@ -77,7 +72,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         vpnStateConfiguration: VpnStateConfiguration,
         isActive: Bool,
         currentUserTier: Int,
-        currentPlanName planName: String,
+        currentPlanName _: String,
         onPotentialHermesConflict: @escaping (@escaping () -> Void) -> Void,
         openUpgradeLink: @escaping () -> Void
     ) {
@@ -122,7 +117,6 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             icon: icon,
             active: isActive,
             requiresUpdate: level.isUserTierTooLow(currentUserTier),
-            requiresBusinessUpdate: level != .off && planName.isBusinessWithoutNetShield,
             selectCallback: { dismissCallback in
                 @Dependency(\.hermesClient) var hermesClient
 

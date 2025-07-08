@@ -584,17 +584,7 @@ class StatusViewModel {
     }
 
     private var netShieldV2UpsellBannerCell: TableViewCellModel {
-        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.planName.isBusinessWithoutNetShield {
-            return .imageSubtitleImage(
-                title: Localizable.netshieldBusinessUpsellTitle,
-                subtitle: Localizable.netshieldBusinessUpsellSubtitle,
-                leadingImage: Asset.netshieldSmall.image,
-                trailingImage: Theme.Asset.icVpnBusinessBadge.image,
-                handler: {}
-            )
-        }
-
-        return .imageSubtitle(
+        .imageSubtitle(
             title: Localizable.netshieldUpsellTitle,
             subtitle: Localizable.netshieldUpsellSubtitle,
             image: Asset.netshieldSmall.image,
