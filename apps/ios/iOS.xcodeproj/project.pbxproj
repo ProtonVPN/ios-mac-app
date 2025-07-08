@@ -59,7 +59,6 @@
 		4CEFB7632D3E6A5E00CE36FD /* ProtonCoreHumanVerification in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEFB7622D3E6A5E00CE36FD /* ProtonCoreHumanVerification */; };
 		4CF297FD2A7D39F700DEB23F /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */; };
 		4CF298172A7D3B8E00DEB23F /* id.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF297FE2A7D3B8D00DEB23F /* id.lproj */; };
-		4CF298182A7D3B8E00DEB23F /* es-ES.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF297FF2A7D3B8D00DEB23F /* es-ES.lproj */; };
 		4CF298192A7D3B8E00DEB23F /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298002A7D3B8D00DEB23F /* ja.lproj */; };
 		4CF2981A2A7D3B8E00DEB23F /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298012A7D3B8D00DEB23F /* nl.lproj */; };
 		4CF2981B2A7D3B8E00DEB23F /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4CF298022A7D3B8D00DEB23F /* pl.lproj */; };
@@ -561,7 +560,6 @@
 		4CDC8AB52A74554B004F2537 /* WireguardConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WireguardConfig.swift; path = "../../LegacyCommon/Sources/LegacyCommon/Core/Client Config/WireguardConfig.swift"; sourceTree = "<group>"; };
 		4CF297FC2A7D39F700DEB23F /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		4CF297FE2A7D3B8D00DEB23F /* id.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = id.lproj; sourceTree = "<group>"; };
-		4CF297FF2A7D3B8D00DEB23F /* es-ES.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "es-ES.lproj"; sourceTree = "<group>"; };
 		4CF298002A7D3B8D00DEB23F /* ja.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ja.lproj; sourceTree = "<group>"; };
 		4CF298012A7D3B8D00DEB23F /* nl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = nl.lproj; sourceTree = "<group>"; };
 		4CF298022A7D3B8D00DEB23F /* pl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; path = pl.lproj; sourceTree = "<group>"; };
@@ -1340,7 +1338,6 @@
 				4CF298122A7D3B8E00DEB23F /* el.lproj */,
 				4CF298082A7D3B8E00DEB23F /* en.lproj */,
 				4CF298102A7D3B8E00DEB23F /* es-419.lproj */,
-				4CF297FF2A7D3B8D00DEB23F /* es-ES.lproj */,
 				4CF298062A7D3B8E00DEB23F /* es.lproj */,
 				4CF298032A7D3B8D00DEB23F /* fa.lproj */,
 				4CF298162A7D3B8E00DEB23F /* fr.lproj */,
@@ -2773,7 +2770,6 @@
 				4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
 				D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */,
-				4CF298182A7D3B8E00DEB23F /* es-ES.lproj in Resources */,
 				4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */,
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
@@ -4923,11 +4919,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4C7D40652A60289400ACDBED /* XCRemoteSwiftPackageReference "OHHTTPStubs" */;
 			productName = OHHTTPStubsSwift;
-		};
-		E5A3DDEE2D9724D20081DD4C /* IssueReporting */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */;
-			productName = IssueReporting;
 		};
 		E5C384632D96AA98003494D5 /* Settings */ = {
 			isa = XCSwiftPackageProductDependency;
