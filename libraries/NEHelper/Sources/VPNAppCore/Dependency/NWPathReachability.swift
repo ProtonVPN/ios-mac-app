@@ -20,14 +20,14 @@ import ComposableArchitecture
 import Network
 
 public extension DependencyValues {
-    var nwPathStream: @Sendable () async -> AsyncStream<NWPath> {
+    var nwPathStream: @Sendable () -> AsyncStream<NWPath> {
         get { self[NwPathReachabilityKey.self] }
         set { self[NwPathReachabilityKey.self] = newValue }
     }
 }
 
 private enum NwPathReachabilityKey: DependencyKey {
-    static var liveValue: @Sendable () async -> AsyncStream<NWPath> = {
+    static var liveValue: @Sendable () -> AsyncStream<NWPath> = {
         AsyncStream { continuation in
             let pathMonitor = NWPathMonitor()
             pathMonitor.pathUpdateHandler = { path in
