@@ -32,7 +32,7 @@ import Foundation
 public typealias ProvidableFeature = AppFeature & DefaultableFeature & ModularAppFeature & StorableFeature
 
 public protocol DefaultableFeature {
-    static func defaultValue(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> Self
+    static func defaultValue(userTier: Int, featureFlags: FeatureFlags) -> Self
 }
 
 public protocol StorableFeature: Codable {

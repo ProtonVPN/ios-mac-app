@@ -53,7 +53,6 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 
     private func defaultValueForCurrentUser<T: ProvidableFeature>(for feature: T.Type) -> T {
         feature.defaultValue(
-            onPlan: credentialsProvider.planName,
             userTier: credentialsProvider.tier,
             featureFlags: featureFlagProvider.getFeatureFlags()
         )
@@ -179,11 +178,11 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
             let key = featureKey(for: feature)
             guard let storedValue = featureValueMap[key] else {
                 reportIssue("Value requested for feature '\(feature)', but no value was registered under key '\(key)'")
-                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+                return feature.defaultValue(userTier: 0, featureFlags: .allEnabled)
             }
             guard let value = storedValue as? T else {
                 reportIssue("Incorrect value type stored for feature '\(feature)': '\(storedValue)'")
-                return feature.defaultValue(onPlan: "free", userTier: 0, featureFlags: .allEnabled)
+                return feature.defaultValue(userTier: 0, featureFlags: .allEnabled)
             }
             return value
         }

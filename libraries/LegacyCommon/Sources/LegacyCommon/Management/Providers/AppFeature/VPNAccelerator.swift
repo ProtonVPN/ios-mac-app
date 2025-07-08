@@ -36,17 +36,13 @@ extension VPNAccelerator: PaidAppFeature {
 extension VPNAccelerator: ModularAppFeature, DefaultableFeature, StorableFeature {
     public static let event: AppEvent? = .vpnAccelerator
 
-    public static func defaultValue(
-        onPlan _: String,
-        userTier _: Int,
-        featureFlags _: FeatureFlags
-    ) -> VPNAccelerator {
+    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> VPNAccelerator {
         .on
     }
 
     public static let storageKey: String = "VpnAcceleratorEnabled"
 
-    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope

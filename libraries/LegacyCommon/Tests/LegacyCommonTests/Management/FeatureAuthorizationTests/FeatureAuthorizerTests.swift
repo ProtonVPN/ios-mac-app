@@ -23,11 +23,8 @@ import XCTest
 
 // Feature with no sub features
 enum TestB2BFeature: AppFeature {
-    static func canUse(onPlan plan: String, userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
-        if plan == "vpnbiz2023" {
-            return .success
-        }
-        return .failure(.requiresUpgrade)
+    static func canUse(userTier _: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+        .failure(.requiresUpgrade)
     }
 }
 
@@ -36,7 +33,7 @@ enum TestNetShieldType: ModularAppFeature {
     case level1
     case level2
 
-    func canUse(onPlan _: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         guard featureFlags.netShield else {
             return .failure(.featureDisabled)
         }
@@ -66,9 +63,9 @@ class FeatureAuthorizerProviderTests: XCTestCase {
         XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
 
         withDependencies {
-            $0.credentialsProvider = .constant(credentials: .tier(.freeTier, planName: "vpnbiz2023"))
+            $0.credentialsProvider = .constant(credentials: .tier(.freeTier))
         } operation: {
-            XCTAssertEqual(canUseB2B(), .success)
+            XCTAssertEqual(canUseB2B(), .failure(.requiresUpgrade))
         }
     }
 
