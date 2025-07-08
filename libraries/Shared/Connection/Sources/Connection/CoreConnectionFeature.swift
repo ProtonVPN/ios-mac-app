@@ -150,7 +150,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.tunnel(.startObservingStateChanges)),
                 .send(.localAgent(.startObservingEvents)),
                 .run { send in
-                    for await nwPath in await nwPathStream() {
+                    for await nwPath in nwPathStream() {
                         await send(.connectivityChanged(nwPath))
                     }
                 }.cancellable(id: CancelID.nwPathReachability)

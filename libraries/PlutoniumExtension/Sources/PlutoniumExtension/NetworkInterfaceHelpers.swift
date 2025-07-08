@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 import Foundation
 import Network
 import VPNAppCore
@@ -27,50 +28,45 @@ extension NWInterface {
         guard let interfaceName else {
             return nil
         }
+        @Dependency(\.nwPathStream) var nwPathStream
 
-        let monitor = NWPathMonitor()
+        let pathStream = nwPathStream()
 
-        return await withCheckedContinuation { continuation in
-            monitor.pathUpdateHandler = { path in
-                // Simply find the interface with the exact name
-                let wireguardInterface = path.availableInterfaces.first { interface in
-                    interface.name == interfaceName
-                }
-                monitor.cancel()
-                continuation.resume(returning: wireguardInterface)
+        return await pathStream
+            .compactMap { path in
+                path.availableInterfaces
+                    .first { $0.name == interfaceName }
             }
-            monitor.start(queue: .global(qos: .userInitiated))
-        }
+            .first { _ in true }
     }
 
     /// Find the internet interface (the interface after the VPN interface that has internet access)
-    static func findInternetInterface(vpnInterfaceName: String) async -> NWInterface? {
-        let monitor = NWPathMonitor()
+    /// The next network interface after WireGuard accommodates any potential network service reorderings
+    /// made by the user in macOS network preferences.
+    /// Returns an AsyncStream that continuously provides updates when the internet interface changes
+    static func findInternetInterface(vpnInterfaceName: String) async -> AsyncStream<NWInterface?> {
+        @Dependency(\.nwPathStream) var nwPathStream
 
-        return await withCheckedContinuation { continuation in
-            monitor.pathUpdateHandler = { path in
-                // Find the interface that comes after the VPN interface
-                var foundVPNInterface = false
-                var internetInterface: NWInterface?
+        let pathStream = nwPathStream()
 
-                for interface in path.availableInterfaces {
-                    if foundVPNInterface {
-                        // Check if this interface has internet access
-                        if interface.type != .loopback, path.status == .satisfied {
-                            internetInterface = interface
-                            break
-                        }
-                    }
+        return pathStream.map { path in
+            // Find the interface that comes after the VPN interface
+            var foundVPNInterface = false
 
-                    if interface.name == vpnInterfaceName {
-                        foundVPNInterface = true
+            for interface in path.availableInterfaces {
+                if foundVPNInterface {
+                    // Check if this interface has internet access
+                    if interface.type != .loopback, path.status == .satisfied {
+                        return interface
                     }
                 }
 
-                monitor.cancel()
-                continuation.resume(returning: internetInterface)
+                if interface.name == vpnInterfaceName {
+                    foundVPNInterface = true
+                }
             }
-            monitor.start(queue: .global(qos: .userInitiated))
+            return nil
         }
+        .eraseToStream()
     }
 }

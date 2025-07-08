@@ -179,7 +179,7 @@ final actor UDPFlowHandler {
 
     /// State monitoring and data forwarding for a connection
     private func monitorConnectionStates(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
-        for await state in connection.states {
+        stateLoop: for await state in connection.states {
             switch state {
             case .setup:
                 log.debug("UDP connection setup for \(endpoint)")
@@ -192,10 +192,10 @@ final actor UDPFlowHandler {
                 startDataForwarding(connection: connection, endpoint: endpoint, sendStream: sendStream)
             case let .failed(error):
                 log.error("UDP connection failed for \(endpoint): \(error.localizedDescription)")
-                break
+                break stateLoop
             case .cancelled:
                 log.debug("UDP connection cancelled for \(endpoint)")
-                break
+                break stateLoop
             @unknown default:
                 log.debug("UDP connection for \(endpoint) entered an unknown state")
             }
@@ -324,16 +324,22 @@ extension UDPFlowHandler: Hashable {
     }
 }
 
+private extension IPv4Address {
+    static let protonDNS = IPv4Address("10.2.0.1")
+}
+
 private extension NWEndpoint {
     var shouldUseWireguardInterface: Bool {
-        guard case let .hostPort(host, _) = self else { return false }
-
-        // TODO: VPNAPPL-2911 - Retrieve DNS settings from WG extension and use here.
-
-        // Traffic to WireGuard DNS server (10.2.0.1) should always go through WireGuard.
-        if case let .ipv4(address) = host, address == IPv4Address("10.2.0.1") {
-            return true
+        switch self {
+        case let .hostPort(.ipv4(address), _) where address == .protonDNS:
+            // TODO: VPNAPPL-2911 - Retrieve DNS settings from WG extension and use here.
+            // Traffic to WireGuard DNS server (10.2.0.1) should always go through WireGuard.
+            true
+        case .hostPort(_, 53):
+            // All DNS queries (port 53) should go through WireGuard
+            true
+        default:
+            false
         }
-        return false
     }
 }

@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Dependencies
 import NetworkExtension
 @preconcurrency import VPNAppCore
 
@@ -26,12 +27,18 @@ actor FlowHandlingManager {
     private let appIDs: Set<String>
     private let pluginIDs: Set<String>
     private let ipSet: Set<String>
-    private let networkInterface: NWInterface
+
+    /// Cached copy for internal sync access where async isn't possible.
+    /// Updated inside actor only. May be slightly stale.
+    private nonisolated(unsafe) var networkInterface: NWInterface?
 
     // Handler storage
 
     private var activeTCPHandlers: Set<TCPFlowHandler> = []
     private var activeUDPHandlers: Set<UDPFlowHandler> = []
+
+    // Internet network interface monitoring for exclusion mode
+    private var networkInterfaceMonitorTask: Task<Void, Never>?
 
     // MARK: Initialisation
 
@@ -52,12 +59,22 @@ actor FlowHandlingManager {
             self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
             self.ipSet = Set(exclusionActivated.ips)
 
-            guard let networkInterface = await NWInterface.findInternetInterface(vpnInterfaceName: vpnNetworkInterfaceName) else {
-                log.error("No internet interface found before VPN with interface name \(vpnNetworkInterfaceName).")
-                throw PlutoniumError.vpnInterfaceNotFound
+            // Start monitoring internet interface updates
+            let internetInterfaceStream = await NWInterface.findInternetInterface(vpnInterfaceName: vpnNetworkInterfaceName)
+            self.networkInterfaceMonitorTask = Task { [weak self] in
+                var hasInitialInterface = false
+                for await interface in internetInterfaceStream {
+                    await self?.updateNetworkInterface(interface)
+                    if !hasInitialInterface {
+                        if interface != nil {
+                            log.info("FlowHandlingManager initialised in exclusion mode with \(self?.appIDs.count ?? 0) excluded apps, \(self?.ipSet.count ?? 0) excluded IPs and internet interface \(interface?.debugDescription ?? "nil").")
+                            hasInitialInterface = true
+                        } else {
+                            log.error("No internet interface found before VPN with interface name \(vpnNetworkInterfaceName).")
+                        }
+                    }
+                }
             }
-            self.networkInterface = networkInterface
-            log.info("FlowHandlingManager initialised in exclusion mode with \(appIDs.count) excluded apps, \(ipSet.count) excluded IPs and internet interface \(networkInterface).")
 
         case .inclusion:
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
@@ -82,7 +99,7 @@ actor FlowHandlingManager {
         // Start with cleanup callback
         handler.start { [weak self] in
             guard let self else { return }
-            await self.remove(handler)
+            await remove(handler)
         }
     }
 
@@ -92,7 +109,7 @@ actor FlowHandlingManager {
         // Start with cleanup callback
         handler.start { [weak self] in
             guard let self else { return }
-            await self.remove(handler)
+            await remove(handler)
         }
     }
 
@@ -116,16 +133,32 @@ actor FlowHandlingManager {
             handler.stop()
         }
         activeUDPHandlers.removeAll()
+
+        // Cancel network interface monitoring
+        networkInterfaceMonitorTask?.cancel()
+        networkInterfaceMonitorTask = nil
+    }
+
+    private func updateNetworkInterface(_ interface: NWInterface?) {
+        guard let interface else {
+            log.warning("Internet interface is nil, ignoring update.")
+            return
+        }
+
+        networkInterface = interface
+        log.info("Internet interface set to \(interface)")
     }
 
     nonisolated func actionForApp(identifier: String) -> RouteAction {
         let found = appIDs.contains(identifier) || pluginIDs.contains(identifier)
-        return found ? .forward(to: networkInterface) : .dontHandle
+        guard found, let interface = networkInterface else { return .dontHandle }
+        return .forward(to: interface)
     }
 
     private nonisolated func routeForIP(_ ip: String) -> RouteAction {
         let found = ipSet.contains(ip)
-        return found ? .forward(to: networkInterface) : .dontHandle
+        guard found, let interface = networkInterface else { return .dontHandle }
+        return .forward(to: interface)
     }
 
     // MARK: - Public registration helpers
