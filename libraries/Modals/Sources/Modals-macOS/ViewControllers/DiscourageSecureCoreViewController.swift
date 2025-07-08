@@ -66,6 +66,7 @@ final class DiscourageSecureCoreViewController: NSViewController {
 
     func setupFeatures() {
         titleLabel.stringValue = feature.title
+        dontShowAgainLabel.stringValue = feature.dontShow
         descriptionLabel.stringValue = feature.subtitle
         imageView.image = feature.artImage
         learnMoreButton.attributedTitle = NSAttributedString(
