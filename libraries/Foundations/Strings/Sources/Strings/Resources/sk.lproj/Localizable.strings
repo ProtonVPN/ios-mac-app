@@ -77,7 +77,7 @@
 "_enabled" = "Povolené";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Povoliť";
 
 /* Common word */
 "_disabled" = "Zakázané";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "kontaktujte našu podporu, prosím. (Chyba %@)";
 
-"_vpnauth_certfail_title" = "Chyba overenia";
+"_vpnauth_certfail_title" = "Automatické pripojenie zlyhalo";
 
-"_vpnauth_certfail_description" = "Nepodarilo sa obnoviť certifikát VPN. Skontrolujte svoje pripojenie";
+"_vpnauth_certfail_description" = "Skúste sa pripojiť v aplikácii.";
 
 "_vpnauth_too_many_certs_title" = "Chyba overenia";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Zatiaľ žiadne IP adresy";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "Rozdeľte svoju prevádzku na VPN tunely a iné ako VPN pomocou rozdeleného tunelovania.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Vlastné DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Pripojenie k VPN pomocou vlastného systému doménových názvov (DNS) alebo systému názvov domén tretích strán. Zistiť viac";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Servery (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Pridať";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Pridať nový DNS server";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Zadajte IPv4 adresu servera";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Dvojitým kliknutím skopírujte";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Ak váš vlastný DNS server nefunguje, použije sa predvolené Proton VPN DNS.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Pokúsime sa pripojiť k týmto serverom v uvedenom poradí. Ak žiadny z nich nebude fungovať, použije sa DNS siete VPN.";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "Týmto deaktivujete vlastné DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Toto deaktivuje vlastné DNS. Pre použitie zmien je potrebné znova sa pripojiť.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Povoliť a opätovne sa pripojiť";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Zmeniť nastavenia";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Zmeniť nastavenia";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Zap.";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Vyp.";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Na uplatnenie tejto zmeny je potrebné reštartovať pripojenie.";

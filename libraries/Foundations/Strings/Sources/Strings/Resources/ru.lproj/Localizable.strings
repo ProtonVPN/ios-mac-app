@@ -77,7 +77,7 @@
 "_enabled" = "Включены";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Включить";
 
 /* Common word */
 "_disabled" = "Отключено";
@@ -592,22 +592,22 @@
 "_profile_edited_successfully" = "Профиль обновлен";
 
 /* MacOS menu item; MacOS Edit tab title; */
-"edit_menu_title" = "Edit";
+"edit_menu_title" = "Изменить";
 
 /* MacOS menu item; MacOS cut item title; */
 "cut_menu_title" = "Cut";
 
 /* MacOS menu item; MacOS copy item title; */
-"copy_menu_title" = "Copy";
+"copy_menu_title" = "Копировать";
 
 /* MacOS menu item; MacOS paste item title; */
-"paste_menu_title" = "Paste";
+"paste_menu_title" = "Вставить";
 
 /* MacOS menu item; MacOS delete item title; */
-"delete_menu_title" = "Delete";
+"delete_menu_title" = "Удалить";
 
 /* MacOS menu item; MacOS select item title; */
-"select_all_menu_title" = "Select All";
+"select_all_menu_title" = "Выбрать всё";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Обзор";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Пожалуйста, обратитесь в службу поддержки. (Ошибка %@)";
 
-"_vpnauth_certfail_title" = "Ошибка аутентификации";
+"_vpnauth_certfail_title" = "Auto-connect failed";
 
-"_vpnauth_certfail_description" = "Не удалось обновить сертификат VPN. Пожалуйста, проверьте свое подключение";
+"_vpnauth_certfail_description" = "Try connecting in the app.";
 
 "_vpnauth_too_many_certs_title" = "Ошибка аутентификации";
 
@@ -1639,7 +1639,7 @@
 "_plutonium_import_apps_subtitle_2" = "browse apps";
 
 /* Plutonium upsell view title */
-"_plutonium_upsell_title" = "Get the best of both worlds";
+"_plutonium_upsell_title" = "Получите лучшее из обоих миров";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "No IP addresses yet";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Пользовательская DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Подключайтесь к VPN с помощью собственной или сторонней системы доменных имен (DNS). Подробнее";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Серверы (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Добавить";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Добавить новый сервер DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Введите адрес IPv4 сервера";
@@ -3009,7 +3009,7 @@
 "_hermes_applyChanges_windowTitle" = "Изменить настройки";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Изменить настройки";
 
 /* Hermes settings cell client status is on */
 "_hermes_settings_isOn" = "On";

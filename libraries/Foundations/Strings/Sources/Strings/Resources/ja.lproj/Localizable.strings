@@ -77,7 +77,7 @@
 "_enabled" = "有効";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "有効化";
 
 /* Common word */
 "_disabled" = "無効";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "サポートにご連絡ください。（エラー %@）";
 
-"_vpnauth_certfail_title" = "認証エラー";
+"_vpnauth_certfail_title" = "自動接続ができません";
 
-"_vpnauth_certfail_description" = "VPN 証明書の再読み込みに失敗しました。接続を確認してください";
+"_vpnauth_certfail_description" = "アプリで接続してみてください。";
 
 "_vpnauth_too_many_certs_title" = "認証エラー";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "IPアドレスはまだありません";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "スプリットトンネルを使用すると、接続を VPN トンネルと非 VPN トンネルに分割できます。";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "カスタムDNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "セルフホストまたはサードパーティ製のドメインネームシステム(DNS)を使用してVPNに接続します。詳細はこちら";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "サーバー (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "追加";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "DNSサーバーを追加";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "サーバーの IPv4アドレスを入力してください";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "ダブルクリックしてコピー";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "カスタム DNS サーバーが機能しない場合は、既定の Proton VPN DNS が使用されます。";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "これらのサーバーに順番に接続しようとします。どれも動作しない場合は、VPN DNSが使用されます。";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "これによりカスタムDNSが無効化されます。";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "カスタム DNS が無効になります。再接続してください。";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "有効化・再接続";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "設定を変更";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "設定を変更";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "オン";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "オフ";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "変更を適用するには再接続する必要があります。";

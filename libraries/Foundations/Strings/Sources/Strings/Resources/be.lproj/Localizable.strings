@@ -607,7 +607,7 @@
 "delete_menu_title" = "Выдаліць";
 
 /* MacOS menu item; MacOS select item title; */
-"select_all_menu_title" = "Выбраць усё";
+"select_all_menu_title" = "Выбраць усе";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Агляд";
@@ -1091,7 +1091,7 @@
 "_web_only_feature" = "Толькі ў вэб-праграме";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Падпіска аўтаматычна падаўжаецца %1$@ за %2$@/год";
+"_subscription_renewal_date" = "Падпіска аўтаматычна падоўжыцца %1$@ за %2$@/год";
 
 /* iOS plan feature */
 "_feature_server_count" = "Падключыцца да сервераў у";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "звярніцеся ў нашу падтрымку (памылка: %@).";
 
-"_vpnauth_certfail_title" = "Памылка аўтэнтыфікацыі";
+"_vpnauth_certfail_title" = "Збой аўтаматычнага падключэння";
 
-"_vpnauth_certfail_description" = "Не ўдалося абнавіць сертыфікат VPN. Праверце сваё падключэнне";
+"_vpnauth_certfail_description" = "Паспрабуйце падключыцца ў праграме.";
 
 "_vpnauth_too_many_certs_title" = "Памылка аўтэнтыфікацыі";
 
@@ -3000,7 +3000,7 @@
 "_hermes_conflict_netshieldOn_description" = "Гэта прывядзе да адключэння карыстальніцкага DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Гэта адключыць карыстальніцкі DNS. Каб ужыць змены, патрабуецца перападключэнне.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Гэта адключыць карыстальніцкі DNS. Патрабуецца перападключэнне, каб ужыць змены.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Уключыць і перападключыцца";

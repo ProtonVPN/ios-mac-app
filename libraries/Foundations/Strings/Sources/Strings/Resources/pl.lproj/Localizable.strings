@@ -77,7 +77,7 @@
 "_enabled" = "Włączone";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Włącz";
 
 /* Common word */
 "_disabled" = "Wyłączone";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Skontaktuj się z naszym wsparciem (błąd %@).";
 
-"_vpnauth_certfail_title" = "Błąd uwierzytelniania";
+"_vpnauth_certfail_title" = "Automatyczne połączenie nie powiodło się";
 
-"_vpnauth_certfail_description" = "Nie udało się odświeżyć certyfikatu VPN. Sprawdź połączenie";
+"_vpnauth_certfail_description" = "Spróbuj połączyć się w aplikacji.";
 
 "_vpnauth_too_many_certs_title" = "Błąd uwierzytelniania";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Brak adresów IP";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "Podziel ruch sieciowy na częściowy tunel VPN dzięki funkcji Split Tunneling.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Niestandardowy serwer DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Połącz się z VPN za pomocą własnego serwera DNS. Dowiedz się więcej";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Serwery (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Dodaj";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Dodaj nowy serwer DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Wpisz adres IPv4 serwera";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Kliknij dwukrotnie, aby skopiować";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Jeśli niestandardowy serwer DNS nie działa, zostanie użyty domyślny serwer DNS Proton VPN.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Spróbujemy połączyć się z tymi serwerami według kolejności. Jeśli żaden nie będzie działać, zostanie użyty serwer DNS usługi VPN.";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "Spowoduje to wyłączenie niestandardowego serwera DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Spowoduje to wyłączenie niestandardowego serwera DNS. Aby zastosować zmiany, połącz się ponownie.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Włącz i połącz ponownie";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Zmień ustawienia";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Zmień ustawienia";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Włączone";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Wyłączone";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Aby zastosować zmiany, musisz ponownie nawiązać połączenie.";

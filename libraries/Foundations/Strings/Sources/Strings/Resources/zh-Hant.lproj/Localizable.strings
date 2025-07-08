@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "please contact our support. (Error %@)";
 
-"_vpnauth_certfail_title" = "認證錯誤";
+"_vpnauth_certfail_title" = "Auto-connect failed";
 
-"_vpnauth_certfail_description" = "無法重新整理 VPN 憑證。請檢查您的連線";
+"_vpnauth_certfail_description" = "Try connecting in the app.";
 
 "_vpnauth_too_many_certs_title" = "認證錯誤";
 

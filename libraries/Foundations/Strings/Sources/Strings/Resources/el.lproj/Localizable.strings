@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "παρακαλούμε επικοινωνήστε με την υποστήριξή μας (Σφάλμα %@)";
 
-"_vpnauth_certfail_title" = "Σφάλμα ταυτοποίησης";
+"_vpnauth_certfail_title" = "Η αυτόματη σύνδεση απέτυχε";
 
-"_vpnauth_certfail_description" = "Αποτυχία ανανέωσης πιστοποιητικού VPN. Ελέγξτε τη σύνδεσή σας";
+"_vpnauth_certfail_description" = "Δοκιμάστε να συνδεθείτε στην εφαρμογή.";
 
 "_vpnauth_too_many_certs_title" = "Σφάλμα ταυτοποίησης";
 

@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "silakan hubungi layanan dukungan kami. (Kesalahan %@)";
 
-"_vpnauth_certfail_title" = "Kesalahan autentikasi";
+"_vpnauth_certfail_title" = "Sambungan otomatis gagal";
 
-"_vpnauth_certfail_description" = "Gagal memuat ulang sertifikat VPN. Mohon periksa koneksi Anda";
+"_vpnauth_certfail_description" = "Cobalah untuk menghubungkan di aplikasi.";
 
 "_vpnauth_too_many_certs_title" = "Kesalahan autentikasi";
 
@@ -2346,7 +2346,7 @@
 "modals_upsell_secure_core_route" = "Alihkan lalu lintas jaringan Anda melalui berbagai server ultra aman di Swiss, Swedia, dan Islandia";
 
 /* Feature of the Secure Core upsell screen */
-"modals_upsell_secure_core_layer" = "Tambahkan lapisan enkripsi tambahan ke koneksi VPN Anda";
+"modals_upsell_secure_core_layer" = "Terapkan lapisan enkripsi tambahan ke koneksi VPN Anda";
 
 /* Feature of the Secure Core upsell screen */
 "modals_upsell_secure_core_attacks" = "Lindungi diri Anda dari serangan berbasis jaringan";
@@ -2823,7 +2823,7 @@
 "upsell_carousel_secure_core_title" = "Secure Core";
 
 /* Home upsell carousel card subtitle */
-"upsell_carousel_secure_core_subtitle" = "Tambahkan lapisan enkripsi tambahan ke koneksi VPN Anda";
+"upsell_carousel_secure_core_subtitle" = "Terapkan lapisan enkripsi tambahan ke koneksi VPN Anda";
 
 /* Home upsell carousel card title */
 "upsell_carousel_p2p_title" = "Dukungan P2P";

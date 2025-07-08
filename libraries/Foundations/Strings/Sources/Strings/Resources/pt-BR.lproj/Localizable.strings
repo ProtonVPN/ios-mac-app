@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "por favor, entre em contato com nosso suporte. (Erro %@)";
 
-"_vpnauth_certfail_title" = "Erro de autenticação";
+"_vpnauth_certfail_title" = "Falha na conexão automática";
 
-"_vpnauth_certfail_description" = "Erro ao atualizar o certificado VPN. Verifique sua conexão";
+"_vpnauth_certfail_description" = "Tente conectar no aplicativo.";
 
 "_vpnauth_too_many_certs_title" = "Erro de autenticação";
 
@@ -3000,7 +3000,7 @@
 "_hermes_conflict_netshieldOn_description" = "Isso desativará o DNS personalizado.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Isso desativará o DNS personalizado. Para aplicar as alterações, será necessária uma reconexão.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Ativar e reconectar";

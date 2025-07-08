@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "contacteu amb el nostre suport. (Error %@)";
 
-"_vpnauth_certfail_title" = "Error d'autenticació";
+"_vpnauth_certfail_title" = "La connexió automàtica ha fallat";
 
-"_vpnauth_certfail_description" = "No s'ha pogut actualitzar el certificat de la VPN. Reviseu la connexió.";
+"_vpnauth_certfail_description" = "Proveu de connectar-vos des de l'aplicació.";
 
 "_vpnauth_too_many_certs_title" = "Error d'autenticació";
 

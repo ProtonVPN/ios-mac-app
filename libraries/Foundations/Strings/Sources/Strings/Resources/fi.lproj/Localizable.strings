@@ -77,7 +77,7 @@
 "_enabled" = "Käytössä";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Ota käyttöön";
 
 /* Common word */
 "_disabled" = "Ei käytössä";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "please contact our support. (Error %@)";
 
-"_vpnauth_certfail_title" = "Todennusvirhe";
+"_vpnauth_certfail_title" = "Auto-connect failed";
 
-"_vpnauth_certfail_description" = "VPN-varmenteen päivitys epäonnistui. Tarkista yhteytesi";
+"_vpnauth_certfail_description" = "Try connecting in the app.";
 
 "_vpnauth_too_many_certs_title" = "Todennusvirhe";
 
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Lisää";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Lisää uusi DNS-palvelin";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Syötä palvelimen IPv4-osoite";
@@ -2988,7 +2988,7 @@
 "_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
-"_hermes_conflict_hermesOn_title" = "Enable Custom DNS?";
+"_hermes_conflict_hermesOn_title" = "Otetaanko mukautettu DNS käyttöön?";
 
 /* Hermes conflict notification description within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_description" = "Tämä poistaa NetShieldin käytöstä.";
@@ -3009,13 +3009,13 @@
 "_hermes_applyChanges_windowTitle" = "Muuta asetuksia";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Muuta asetuksia";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Käytössä";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Ei käytössä";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Your connection needs to be restarted to apply this change.";

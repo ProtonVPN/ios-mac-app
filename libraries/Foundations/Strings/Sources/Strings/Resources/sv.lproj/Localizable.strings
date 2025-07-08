@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "kontakta vår support. (Fel %@)";
 
-"_vpnauth_certfail_title" = "Autentiseringsfel";
+"_vpnauth_certfail_title" = "Automatisk anslutning misslyckades";
 
-"_vpnauth_certfail_description" = "Misslyckades att uppdatera VPN-certifikat. Kontrollera din anslutning";
+"_vpnauth_certfail_description" = "Prova ansluta i appen.";
 
 "_vpnauth_too_many_certs_title" = "Autentiseringsfel";
 
