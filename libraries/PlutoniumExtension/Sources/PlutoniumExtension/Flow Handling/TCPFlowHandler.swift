@@ -31,11 +31,12 @@ final actor TCPFlowHandler {
 
     // MARK: ‑ Stored properties
 
-    private let connection: NWConnection
+    private let connection: AsyncConnection
     private let tcpFlow: NEAppProxyTCPFlow
     private let connectionQueue: DispatchQueue
     private var isCancelled = false
     private var onClose: (@Sendable () async -> Void)?
+    private var connectionLifecycleTask: Task<Void, Never>?
 
     // MARK: ‑ Init
 
@@ -56,7 +57,7 @@ final actor TCPFlowHandler {
         )
 
         log.debug("TCP flow handler initialized for remote endpoint \(remoteEndpoint) on interface \(targetInterface)")
-        self.connection = NWConnection(to: remoteEndpoint, using: parameters)
+        self.connection = AsyncConnection(to: remoteEndpoint, using: parameters)
     }
 
     // MARK: ‑ Public
@@ -73,9 +74,13 @@ final actor TCPFlowHandler {
 
     private func startIsolated(onClose: @escaping @Sendable () async -> Void) async {
         self.onClose = onClose
-        connection.stateUpdateHandler = { [weak self] state in
+
+        let states = connection.states
+        connectionLifecycleTask = Task { [weak self] in
             guard let self else { return }
-            Task { await self.handleStateUpdate(state) }
+            for await state in states {
+                await handleStateUpdate(state)
+            }
         }
 
         connection.start(queue: connectionQueue)
@@ -88,6 +93,10 @@ final actor TCPFlowHandler {
         tcpFlow.closeWriteWithError(nil)
 
         connection.cancel()
+
+        // Cancel the connection lifecycle task
+        connectionLifecycleTask?.cancel()
+        connectionLifecycleTask = nil
 
         await onClose?()
         log.info("TCP tunnel connection closed")
@@ -137,8 +146,12 @@ final actor TCPFlowHandler {
         }
 
         log.debug("TCP flow opened successfully, starting bidirectional forwarding")
-        await forwardFromFlowToConnection()
-        await forwardFromConnectionToFlow()
+        Task {
+            await forwardFromFlowToConnection()
+        }
+        Task {
+            await forwardFromConnectionToFlow()
+        }
     }
 
     // MARK: Forward app flow → target network
@@ -168,10 +181,10 @@ final actor TCPFlowHandler {
             return
         }
 
-        connection.send(content: data, completion: .contentProcessed { [weak self] sendError in
+        connection.send(content: data) { [weak self] (sendError: NWError?) in
             guard let self else { return }
             Task { await self.handleSendResult(sendError) }
-        })
+        }
     }
 
     private func handleSendResult(_ error: NWError?) async {
@@ -218,7 +231,6 @@ final actor TCPFlowHandler {
         }
 
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            // Flow operations within actor isolation
             tcpFlow.write(data) { [weak self] writeError in
                 continuation.resume()
                 guard let self else { return }
