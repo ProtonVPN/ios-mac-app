@@ -77,7 +77,7 @@
 "_enabled" = "Elérhető";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Engedélyezés";
 
 /* Common word */
 "_disabled" = "Letiltva";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Kérjük, lépjen kapcsolatba a támogató csapatunkkal. (Hiba %@)";
 
-"_vpnauth_certfail_title" = "Hitelesítési hiba";
+"_vpnauth_certfail_title" = "Automatikus csatlakozás sikertelen";
 
-"_vpnauth_certfail_description" = "A VPN-tanúsítvány frissítése nem sikerült. Ellenőrizze a kapcsolatot";
+"_vpnauth_certfail_description" = "Próbáljon meg kapcsolódni az alkalmazásban.";
 
 "_vpnauth_too_many_certs_title" = "Hitelesítési hiba";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Még nincsenek IP-címek";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "Ossza meg a forgalmat VPN és nem VPN alagutakra az alagútkezeléssel.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Egyéni DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Csatlakozzon a VPN-hez saját üzemeltetésű vagy harmadik féltől származó domain név-rendszerrel (DNS). További információk";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Szerverek (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Hozzáadás";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Új DNS szerver hozzáadása";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Adja meg a szerver IPv4 címét";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Kattintson duplán a másoláshoz";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Ha az egyéni DNS-szerver nem működik, az alapértelmezett Proton VPN DNS lép életbe.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "A szerverekhez való csatlakozás a megadott sorrendben történik. Ha egyik sem működik, a VPN DNS-e lép életbe.";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "Ez letiltja az egyéni DNS-t.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Ez letiltja az egyéni DNS-t. A változtatások alkalmazásához újracsatlakozás szükséges.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Engedélyezés és újracsatlakozás";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Beállítások módosítása";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Beállítások módosítása";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Be";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Ki";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani.";

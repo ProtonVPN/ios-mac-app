@@ -77,7 +77,7 @@
 "_enabled" = "Увімкнено";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "Увімкнути";
 
 /* Common word */
 "_disabled" = "Вимкнено";
@@ -1269,7 +1269,7 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Усунення проблем";
 
-"_troubleshoot_item_alt_title" = "Дозволити альтернативну маршрутизацію";
+"_troubleshoot_item_alt_title" = "Альтернативна маршрутизація";
 
 "_troubleshoot_item_alt_description" = "У випадку блокування сайтів Proton, цей параметр дозволяє програмі спробувати альтернативний мережевий маршрут для доступу до Proton, що може бути корисним для обходу мережевих екранів чи мережевих проблем. Рекомендовано увімкнути цей параметр для більшої надійності. \nДокладніше";
 
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Зв'яжіться з нашою службою підтримки. (Помилка %@)";
 
-"_vpnauth_certfail_title" = "Помилка автентифікації";
+"_vpnauth_certfail_title" = "Збій автопід'єднання";
 
-"_vpnauth_certfail_description" = "Не вдалося оновити сертифікат VPN. Перевірте своє з'єднання";
+"_vpnauth_certfail_description" = "Спробуйте з'єднатися у програмі.";
 
 "_vpnauth_too_many_certs_title" = "Помилка автентифікації";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "Ще немає IP-адрес";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "Розділіть свій трафік – з VPN і без VPN – за допомогою роздільного тунелювання.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Власний DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Під'єднання до VPN з використанням власної або сторонньої системи доменних імен (DNS). Докладніше";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Сервери (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "Додати";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "Додати новий DNS-сервер";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Введіть адресу IPv4 сервера";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Натисніть двічі, щоб скопіювати";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Якщо ваш власний DNS-сервер не працює, використовуватиметься типовий VPN DNS.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Ми спробуємо з'єднатися з цими серверами у вказаному порядку. Якщо жоден з них не працюватиме, використовуватиметься VPN DNS.";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "Ця дія вимкне власний DNS.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Це призведе до вимкнення власного DNS. Щоб застосувати зміни, необхідно повторно під'єднатися.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Увімкнути й під'єднатися повторно";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Змінити налаштування";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "Змінити налаштування";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Увімкнено";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Вимкнено";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Для застосування змін необхідно перезапустити з'єднання.";

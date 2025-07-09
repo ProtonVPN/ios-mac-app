@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Bitte kontaktiere unseren Support (Fehler %@).";
 
-"_vpnauth_certfail_title" = "Authentifizierungsfehler";
+"_vpnauth_certfail_title" = "Automatisches Verbinden fehlgeschlagen";
 
-"_vpnauth_certfail_description" = "VPN-Zertifikat konnte nicht aktualisiert werden. Bitte überprüfe deine Internetverbindung.";
+"_vpnauth_certfail_description" = "Versuche, dich in der App zu verbinden.";
 
 "_vpnauth_too_many_certs_title" = "Authentifizierungsfehler";
 

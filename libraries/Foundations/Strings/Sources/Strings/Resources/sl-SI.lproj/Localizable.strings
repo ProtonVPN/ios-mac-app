@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "kontaktirajte našo podporo. (Napaka %@)";
 
-"_vpnauth_certfail_title" = "Napaka pri preverjanju pristnosti";
+"_vpnauth_certfail_title" = "Auto-connect failed";
 
-"_vpnauth_certfail_description" = "Potrdila VPN ni bilo mogoče osvežiti. Preverite povezavo.";
+"_vpnauth_certfail_description" = "Try connecting in the app.";
 
 "_vpnauth_too_many_certs_title" = "Napaka pri preverjanju pristnosti";
 

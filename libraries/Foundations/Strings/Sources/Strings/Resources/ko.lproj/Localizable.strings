@@ -77,7 +77,7 @@
 "_enabled" = "활성화됨";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "활성화";
 
 /* Common word */
 "_disabled" = "비활성화됨";
@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "자사 지원팀에 문희해 주세요. (오류 %@)";
 
-"_vpnauth_certfail_title" = "인증 오류";
+"_vpnauth_certfail_title" = "자동 연결 실패";
 
-"_vpnauth_certfail_description" = "VPN 인증서 새로고침 실패, 연결을 확인하십시오";
+"_vpnauth_certfail_description" = "앱에서 연결을 시도해 보세요.";
 
 "_vpnauth_too_many_certs_title" = "인증 오류";
 
@@ -1645,7 +1645,7 @@
 "_plutonium_empty_ip_list_content" = "IP 주소가 아직 없음";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "분할 터널링으로 VPN에 들어갈 트래픽을 분류하세요.";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "커스텀 DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "자체 호스팅 또는 타사 도메인 이름 시스템(DNS)을 사용하여 VPN에 연결합니다. 더 알아보기";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "서버 (%@)";
@@ -2961,7 +2961,7 @@
 "_hermes_entities_form_addButton" = "추가";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "새로운 DNS 서버 추가";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "서버의 IPv4 주소를 입력하세요";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "두 번 클릭하여 복사하세요";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "만일 커스텀 DNS 서버가 작동하지 않는 경우 기본 Proton VPN DNS가 대체되어 사용됩니다.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "이 서버들에 순서대로 연결하도록 시도합니다. 둘 중 어느 것도 작동하지 않는다면 VPN DNS가 사용됩니다.";
@@ -3000,22 +3000,22 @@
 "_hermes_conflict_netshieldOn_description" = "커스텀 DNS가 비활성화됩니다.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "커스텀 DNS가 비활성화됩니다. 변경 사항을 적용하려면 재연결이 필요합니다.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "활성화 및 재연결";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "설정 변경";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "설정 변경";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "켬";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "끔";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "이 변경을 적용하려면 다시 연결해야 합니다.";

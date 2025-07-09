@@ -1475,9 +1475,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Lütfen destek ekibimizle görüşün. (Hata %@)";
 
-"_vpnauth_certfail_title" = "Kimlik doğrulama sorunu";
+"_vpnauth_certfail_title" = "Otomatik bağlantı başarısız oldu";
 
-"_vpnauth_certfail_description" = "VPN sertifikası yenilenemedi. Lütfen bağlantınızı denetleyin";
+"_vpnauth_certfail_description" = "Uygulamada bağlantı kurmayı deneyin.";
 
 "_vpnauth_too_many_certs_title" = "Kimlik doğrulama sorunu";
 
@@ -2946,7 +2946,7 @@
 "_hermes_feature_description" = "Özel DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "Kendi barındırdığınız veya üçüncü taraf bir alan adı sistemi (DNS) ile VPN'e bağlanın. Daha fazla bilgi";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Sunucular (%@)";
@@ -2982,7 +2982,7 @@
 "_hermes_entities_copyAction" = "Kopyalamak için çift tıklayın";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "Özel DNS sunucunuz çalışmazsa, varsayılan Proton VPN DNS kullanılacaktır.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Sırayla bu sunuculara bağlanmaya çalışacağız. Hiçbiri işe yaramazsa, VPN DNS kullanılacak.";
@@ -3012,10 +3012,10 @@
 "_hermes_applyChanges_alertTitle" = "Ayarları değiştir";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "Açık";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "Kapalı";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerekiyor.";
