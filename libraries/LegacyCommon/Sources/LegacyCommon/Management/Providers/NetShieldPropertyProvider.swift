@@ -137,13 +137,9 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
 }
 
 extension NetShieldType: ModularAppFeature {
-    public func canUse(onPlan plan: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
-        }
-
-        if plan.isBusinessWithoutNetShield {
-            return .failure(.requiresUpgrade)
         }
 
         if isUserTierTooLow(userTier) {
@@ -155,7 +151,7 @@ extension NetShieldType: ModularAppFeature {
 }
 
 extension NetShieldType: PaidAppFeature {
-    public static func canUse(onPlan _: String, userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(userTier: Int, featureFlags: FeatureFlags) -> FeatureAuthorizationResult {
         if !featureFlags.netShield {
             return .failure(.featureDisabled)
         }

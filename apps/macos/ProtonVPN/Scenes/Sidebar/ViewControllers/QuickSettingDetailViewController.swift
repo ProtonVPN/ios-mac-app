@@ -37,7 +37,6 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     var dropdownDescription: NSTextField! { get }
     var dropdownLearnMore: InteractiveActionButton! { get }
     var dropdownUpgradeButton: PrimaryActionButton! { get }
-    var dropdownBusinessUpsell: NSImageView! { get }
     var dropdownNote: NSTextField! { get }
 
     func reloadOptions()
@@ -54,7 +53,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     @IBOutlet var dropdownDescription: NSTextField!
     @IBOutlet var dropdownLearnMore: InteractiveActionButton!
     @IBOutlet var dropdownUpgradeButton: PrimaryActionButton!
-    @IBOutlet var dropdownBusinessUpsell: NSImageView!
     @IBOutlet var dropdownNote: NSTextField!
 
     @IBOutlet var dropdownOptionsView: NSView!
@@ -128,10 +126,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         dropdownUpgradeButton.actionType = .confirmative
         dropdownUpgradeButton.fontSize = .paragraph
 
-        dropdownBusinessUpsell.image = Theme.Asset.icVpnBusinessBadge.image
-        dropdownBusinessUpsell.isHidden = true
-        dropdownBusinessUpsell.toolTip = Localizable.availableWithVpnBusinessTooltip
-
         dropdownLearnMore.fontSize = .small
         dropdownLearnMore.title = Localizable.learnMore
 
@@ -149,15 +143,14 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     func reloadOptions() {
         var needsUpgrade = false
         let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { _, presenter in
-            let thisNeedsUpgrade = presenter.requiresUpdate || presenter.requiresBusinessUpdate
+            let thisNeedsUpgrade = presenter.requiresUpdate ?? false
             defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
 
             let view: QuickSettingsDropdownOption? = QuickSettingsDropdownOption.loadViewFromNib()
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
-            if thisNeedsUpgrade {
-                dropdownBusinessUpsell.isHidden = !presenter.requiresBusinessUpdate
-                view?.blockedStyle(business: presenter.requiresBusinessUpdate)
+            if thisNeedsUpgrade == true {
+                view?.blockedStyle()
                 view?.action = { [weak self] in
                     presenter.selectCallback {
                         self?.presenter.dismiss?()

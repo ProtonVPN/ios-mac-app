@@ -36,7 +36,7 @@ extension Plutonium: PaidAppFeature {
 extension Plutonium: ToggleableFeature {}
 
 extension Plutonium: ModularAppFeature {
-    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             // This feature can only be turned off by paying users post-free rescope
@@ -51,7 +51,7 @@ extension Plutonium: ModularAppFeature {
 }
 
 extension Plutonium: DefaultableFeature {
-    public static func defaultValue(onPlan _: String, userTier _: Int, featureFlags _: FeatureFlags) -> Plutonium {
+    public static func defaultValue(userTier _: Int, featureFlags _: FeatureFlags) -> Plutonium {
         .defaultValue
     }
 }

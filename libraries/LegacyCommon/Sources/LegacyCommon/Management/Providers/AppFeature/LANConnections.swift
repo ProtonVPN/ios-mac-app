@@ -26,7 +26,7 @@ public enum ExcludeLocalNetworks: String, Codable, ToggleableFeature {
     /// LAN Traffic is 'allowed' to bypass tunnel: 'Allow LAN connections' is on in the UI.
     case on
 
-    public func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         switch self {
         case .off:
             return .success
@@ -44,7 +44,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
 
     public static let legacyConversion: ((Bool) -> Self)? = { $0 ? .on : .off }
 
-    public static func canUse(onPlan _: String, userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+    public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
         guard #available(iOS 14.2, *) else {
             return .failure(.featureDisabled)
         }
@@ -54,11 +54,7 @@ extension ExcludeLocalNetworks: ProvidableFeature {
         return .success
     }
 
-    public static func defaultValue(
-        onPlan _: String,
-        userTier: Int,
-        featureFlags _: FeatureFlags
-    ) -> ExcludeLocalNetworks {
+    public static func defaultValue(userTier: Int, featureFlags _: FeatureFlags) -> ExcludeLocalNetworks {
         if userTier.isFreeTier {
             return .off
         }

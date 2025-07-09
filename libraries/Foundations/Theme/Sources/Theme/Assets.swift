@@ -543,7 +543,6 @@ public enum Asset {
   public static let icAlertProAccount = ImageAsset(name: "ic-alert-pro-account")
   public static let icKillswitch = ImageAsset(name: "ic-killswitch")
   public static let icNetshield = ImageAsset(name: "ic-netshield")
-  public static let icVpnBusinessBadge = ImageAsset(name: "ic-vpn-business-badge")
   public static let icsBrandTor = SymbolAsset(name: "ics-brand-tor")
   public static let vpnSubscriptionBadgeHover = ImageAsset(name: "vpn-subscription-badge-hover")
   public static let vpnSubscriptionBadge = ImageAsset(name: "vpn-subscription-badge")

@@ -23,23 +23,16 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
     @Dependency(\.credentialsProvider) var credentialsProvider
     @Dependency(\.featureFlagProvider) var featureFlagProvider
 
-    private var accountDetails: (plan: String, tier: Int) {
-        let credentials = credentialsProvider.credentials
-        return (
-            credentials?.planName ?? "free",
-            credentials?.maxTier ?? .freeTier
-        )
+    private var maxTier: Int {
+        credentialsProvider.credentials?.maxTier ?? .freeTier
     }
 
     public func authorizer<Feature: AppFeature>(
         for _: Feature.Type
     ) -> () -> FeatureAuthorizationResult {
         {
-            let (plan, tier) = accountDetails
-
-            return Feature.canUse(
-                onPlan: plan,
-                userTier: tier,
+            Feature.canUse(
+                userTier: maxTier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         }
@@ -49,11 +42,8 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         forSubFeatureOf feature: Feature.Type
     ) -> (Feature) -> FeatureAuthorizationResult {
         { feature in
-            let (plan, tier) = accountDetails
-
-            return feature.canUse(
-                onPlan: plan,
-                userTier: tier,
+            feature.canUse(
+                userTier: maxTier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         }
@@ -63,11 +53,8 @@ public struct LiveFeatureAuthorizerProvider: FeatureAuthorizerProvider {
         for feature: Feature.Type
     ) -> Authorizer<Feature> {
         Authorizer(canUse: { feature in
-            let (plan, tier) = accountDetails
-
-            return feature.canUse(
-                onPlan: plan,
-                userTier: tier,
+            feature.canUse(
+                userTier: maxTier,
                 featureFlags: featureFlagProvider.getFeatureFlags()
             )
         })
