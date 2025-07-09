@@ -22,8 +22,8 @@ import NetworkExtension
 
 /// Handles TCP flow copying between network interfaces.
 /// One instance per `NEAppProxyTCPFlow`.
-final actor TCPFlowHandler {
-    let id = UUID()
+final actor TCPFlowHandler: FlowHandler {
+    private let id = UUID()
 
     // MARK: ‑ Constants
 

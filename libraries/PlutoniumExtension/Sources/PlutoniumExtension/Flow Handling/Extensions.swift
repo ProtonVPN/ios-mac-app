@@ -229,3 +229,28 @@ extension NEAppProxyFlow {
         }
     }
 }
+
+extension NWEndpoint {
+    var ipv4String: String? {
+        guard
+            case let .hostPort(host, _) = self,
+            case let .ipv4(addr) = host
+        else { return nil }
+
+        return addr.asString
+    }
+}
+
+extension IPv4Address {
+    var asString: String? {
+        var addr = rawValue.withUnsafeBytes { $0.load(as: in_addr.self) }
+        var buffer = [CChar](repeating: 0, count: Int(INET_ADDRSTRLEN))
+        guard inet_ntop(AF_INET, &addr, &buffer, socklen_t(INET_ADDRSTRLEN)) != nil else {
+            return nil
+        }
+        return String(cString: &buffer)
+    }
+}
+
+// we're taking responsibility for thread safety
+extension NEAppProxyFlow: @unchecked @retroactive Sendable {}
