@@ -22,7 +22,7 @@
 /// a symmetrical purpose.
 
 import Foundation
-import VPNAppCore
+import VPNShared
 
 /// Service part working on Extension side of the connection.
 class XPCBaseService: NSObject {

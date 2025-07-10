@@ -22,7 +22,7 @@
 /// a symmetrical purpose.
 
 import Foundation
-import VPNAppCore
+import VPNShared
 
 /// Object to call inside the app that manages responses from XPC service.
 final class XPCServiceUser {
