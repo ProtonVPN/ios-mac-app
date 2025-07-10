@@ -42,7 +42,6 @@ let package = Package(
                 "KeychainAccess",
                 "Ergonomics",
                 .product(name: "VPNShared", package: "NEHelper"),
-                .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "CoreConnection", package: "Connection"),
                 .product(name: "Dependencies", package: "swift-dependencies"),
             ],

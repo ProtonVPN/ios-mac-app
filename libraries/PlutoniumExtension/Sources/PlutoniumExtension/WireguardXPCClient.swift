@@ -18,7 +18,7 @@
 
 import Foundation
 import Logging
-import VPNAppCore
+import VPNShared
 
 /// XPC client for communicating with the WireGuard extension
 final class WireguardXPCClient {
