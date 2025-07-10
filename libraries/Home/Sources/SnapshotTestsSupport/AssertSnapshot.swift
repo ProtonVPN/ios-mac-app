@@ -38,20 +38,27 @@ public extension AssertSnapshot {
         line: UInt = #line,
         column: UInt = #column
     ) {
-        let failure = try verifySnapshot(
-            of: value(),
-            as: snapshotting,
-            named: name,
-            record: recording,
-            snapshotDirectory: snapshotDirectory(),
-            timeout: timeout,
-            fileID: fileID,
-            file: filePath,
-            testName: testName,
-            line: line,
-            column: column
-        )
-        guard let message = failure else { return }
-        reportIssue(message, fileID: fileID, filePath: filePath, line: line, column: column)
+        var failure: String?
+        do {
+            failure = try withSnapshotTesting(diffTool: .magick) {
+                try verifySnapshot(
+                    of: value(),
+                    as: snapshotting,
+                    named: name,
+                    record: recording,
+                    snapshotDirectory: snapshotDirectory(),
+                    timeout: timeout,
+                    fileID: fileID,
+                    file: filePath,
+                    testName: testName,
+                    line: line,
+                    column: column
+                )
+            }
+        } catch {
+            failure = error.localizedDescription
+        }
+        guard let failure else { return }
+        reportIssue(failure, fileID: fileID, filePath: filePath, line: line, column: column)
     }
 }
