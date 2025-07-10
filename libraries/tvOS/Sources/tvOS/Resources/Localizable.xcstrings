@@ -7045,7 +7045,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Escaneie o QR code ou vá para\n"
+            "value" : "Escaneie o código QR ou vá para\n"
           }
         },
         "ro" : {
@@ -8361,7 +8361,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Central de Ajuda"
+            "value" : "Central de ajuda"
           }
         },
         "ro" : {
