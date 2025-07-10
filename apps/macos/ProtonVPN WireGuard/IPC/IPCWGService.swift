@@ -8,7 +8,7 @@
 
 import Foundation
 import NEHelper
-import VPNAppCore
+import VPNShared
 
 class IPCWGService: XPCBaseService {
     private let logViewHelper = LogViewHelper(logFilePath: FileManager.logFileURL?.path)
