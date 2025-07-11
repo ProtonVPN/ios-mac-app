@@ -9,9 +9,11 @@
 import Foundation
 import NetworkExtension
 import ProtonCoreFeatureFlags
+import Sharing
 
 import Domain
 import ExtensionIPC
+import VPNAppCore
 import VPNShared
 
 public protocol WireguardProtocolFactoryCreator {
@@ -80,6 +82,19 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             protocolConfiguration.unleashFeatureFlagShouldForceConflictRefresh = true
         }
 
+        #if os(macOS)
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+                @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+
+                // The default value of `captureTrafficAutomatically` is true. so we need to set it to false only if we needed to.
+                if case .enabled(.inclusion) = feature {
+                    protocolConfiguration.providerConfiguration = [
+                        WireGuardProviderConfig.captureTrafficAutomatically(false),
+                    ].asDictionary
+                }
+            }
+        #endif
+
         return protocolConfiguration
     }
 
@@ -145,5 +160,30 @@ public extension StoredWireguardConfig {
             ports: vpnManagerConfig.ports,
             timestamp: Date()
         )
+    }
+}
+
+// Typed provider configurations for WireGuard
+enum WireGuardProviderConfig {
+    case captureTrafficAutomatically(Bool)
+
+    var key: String {
+        switch self {
+        case .captureTrafficAutomatically: "captureTrafficAutomatically"
+        }
+    }
+
+    var value: Any {
+        switch self {
+        case let .captureTrafficAutomatically(flag): flag
+        }
+    }
+}
+
+extension [WireGuardProviderConfig] {
+    var asDictionary: [String: Any] {
+        reduce(into: [String: Any]()) { dict, setting in
+            dict[setting.key] = setting.value
+        }
     }
 }

@@ -76,7 +76,7 @@ actor FlowHandlingManager {
                     await self?.updateNetworkInterface(interface)
                     if !hasInitialInterface {
                         if interface != nil {
-                            log.info("FlowHandlingManager initialised in exclusion mode with \(self?.appIDs.count ?? 0) excluded apps, \(self?.ipSet.count ?? 0) excluded IPs and internet interface \(interface?.debugDescription ?? "nil").")
+                            log.info("FlowHandlingManager initialised in exclusion mode with \(self?.appIDs.count ?? 0) excluded apps, \(self?.ipSet.count ?? 0) excluded IPs and internet interface \(interface?.name ?? "undefined").")
                             hasInitialInterface = true
                         } else {
                             log.error("No internet interface found before VPN with interface name \(vpnNetworkInterfaceName).")
@@ -94,7 +94,10 @@ actor FlowHandlingManager {
             self.ipSet = Set(inclusionActivated.ips)
 
             self.networkInterface = vpnInterface
-            log.info("FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface).")
+            log
+                .info(
+                    "FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface.name)."
+                )
         }
     }
 
