@@ -122,7 +122,7 @@ final class CoreLoginService {
             Task { @MainActor [weak self] in
                 do {
                     @Dependency(\.userSettingsClient) var userSettingsClient
-                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials)
+                    self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: authCredentials)
                     try await self?.appSessionManager.finishLogin(authCredentials: authCredentials)
                     completion(.success(()))
                 } catch {

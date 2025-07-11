@@ -101,7 +101,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
                     await self?.successfulConsecutiveSessionRefreshes.increment()
                     do {
                         @Dependency(\.userSettingsClient) var userSettingsClient
-                        self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(nil)
+                        self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
                     } catch {
                         log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
                     }

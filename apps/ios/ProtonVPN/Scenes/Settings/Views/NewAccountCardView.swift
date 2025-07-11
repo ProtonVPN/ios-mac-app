@@ -45,9 +45,7 @@ struct NewAccountCardView: View {
         }
     }
 
-    static var identifier: String {
-        String(describing: self)
-    }
+    static let identifier: String = "NewAccountCardView"
 
     let actionHandler: (Action) -> Void
 

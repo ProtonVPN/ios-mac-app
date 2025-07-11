@@ -29,7 +29,7 @@ import VPNShared
 public struct UserSettingsClient: Sendable {
     /// AuthCredentials need to be sent due to fetchUserSettings at login not having the most up-to-date credentials. Specially
     /// for credential-less, where the `isCredentialLess` is still false.
-    public internal(set) var fetchUserSettings: @Sendable (AuthCredentials?) async throws -> UserSettings
+    public internal(set) var fetchUserSettings: @Sendable (_ authCredentials: AuthCredentials?) async throws -> UserSettings
 }
 
 extension UserSettingsClient: DependencyKey {
