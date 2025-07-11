@@ -23,6 +23,7 @@ import Dependencies
 import CommonNetworking
 import ConnectionInventory
 import Ergonomics
+import Hermes
 import Timer
 import VPNShared
 import WidgetKit
@@ -107,7 +108,7 @@ final class TelemetrySettingsReporter {
             isIPv6Enabled: .false,
             hermesCount: hermesCount(),
             firstHermesAddressFamily: firstHermesAddressFamily(),
-            isSystemHermesEnabled: isSystemHermesEnabled()
+            isHermesEnabled: isHermesEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
@@ -149,15 +150,26 @@ final class TelemetrySettingsReporter {
     }
 
     private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
-        .ipv4
+        @Dependency(\.hermesClient) var hermesClient
+        guard await isHermesEnabled() == .true,
+              let ip = hermesClient.activeHermesResolvers().wrappedValue.first?.location
+        else {
+            return .none
+        }
+        if HermesResolverLocationValidator.isValidIPv4(ip) != nil {
+            return .ipv4
+        } else if HermesResolverLocationValidator.isValidIPv6(ip) != nil {
+            return .ipv6
+        }
+        return .none
     }
 
-    private func isSystemHermesEnabled() async -> SettingsDimensions.SystemHermesEnabled {
+    private func isHermesEnabled() async -> SettingsDimensions.HermesEnabled {
         @Dependency(\.hermesClient) var hermesClient
         return hermesClient.isEnabled().wrappedValue ? .true : .false
     }
 
-    private func widgetCount() async -> SettingsDimensions.WidgetCount? {
+    private func widgetCount() async -> SettingsDimensions.WidgetCount {
         if #available(iOS 18.0, macOS 15.0, *) {
             do {
                 let configurations = try await WidgetCenter.shared.currentConfigurations()
@@ -174,19 +186,19 @@ final class TelemetrySettingsReporter {
                 }
             } catch {
                 log.error("Error retrieving widget configurations: \(error)")
-                return nil
+                return .none
             }
         } else {
             return .zero
         }
     }
 
-    private func firstWidgetSize() async -> SettingsDimensions.WidgetSize? {
+    private func firstWidgetSize() async -> SettingsDimensions.WidgetSize {
         if #available(iOS 18.0, macOS 15.0, *) {
             do {
                 let configurations = try await WidgetCenter.shared.currentConfigurations()
                 guard let firstConfiguration = configurations.first else {
-                    return nil
+                    return .none
                 }
                 switch firstConfiguration.family {
                 case .systemSmall:
@@ -196,14 +208,14 @@ final class TelemetrySettingsReporter {
                 case .systemLarge:
                     return .large
                 default:
-                    return nil
+                    return .none
                 }
             } catch {
                 log.error("Error retrieving widget configurations: \(error)")
-                return nil
+                return .none
             }
         } else {
-            return nil
+            return .none
         }
     }
 }

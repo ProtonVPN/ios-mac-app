@@ -27,18 +27,18 @@ public struct SettingsDimensions: Encodable {
     let isIPv6Enabled: IsIPv6Enabled
     let hermesCount: HermesCount
     let firstHermesAddressFamily: HermesAddressFamily
-    let isSystemHermesEnabled: SystemHermesEnabled
+    let isHermesEnabled: HermesEnabled
 
     init(
         defaultConnectionType: DefaultConnectionType,
         appIcon: AppIcon,
         userTier: UserTier,
-        widgetCount: WidgetCount?,
-        firstWidgetSize: WidgetSize?,
+        widgetCount: WidgetCount,
+        firstWidgetSize: WidgetSize,
         isIPv6Enabled: IsIPv6Enabled,
         hermesCount: HermesCount,
         firstHermesAddressFamily: HermesAddressFamily,
-        isSystemHermesEnabled: SystemHermesEnabled
+        isHermesEnabled: HermesEnabled
     ) {
         self.defaultConnectionType = defaultConnectionType
         self.appIcon = appIcon
@@ -48,7 +48,7 @@ public struct SettingsDimensions: Encodable {
         self.isIPv6Enabled = isIPv6Enabled
         self.hermesCount = hermesCount
         self.firstHermesAddressFamily = firstHermesAddressFamily
-        self.isSystemHermesEnabled = isSystemHermesEnabled
+        self.isHermesEnabled = isHermesEnabled
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -61,7 +61,8 @@ public struct SettingsDimensions: Encodable {
         try container.encode(isIPv6Enabled, forKey: .isIPv6Enabled)
         try container.encode(hermesCount, forKey: .hermesCount)
         try container.encode(firstHermesAddressFamily, forKey: .firstHermesAddressFamily)
-        try container.encode(isSystemHermesEnabled, forKey: .isSystemHermesEnabled)
+        try container.encode(isHermesEnabled, forKey: .isHermesEnabled)
+        try container.encode("n/a", forKey: .isSystemCustomDNSEnabled) // we can't access this
     }
 
     enum CodingKeys: String, CodingKey {
@@ -73,7 +74,8 @@ public struct SettingsDimensions: Encodable {
         case isIPv6Enabled = "is_ipv6_enabled"
         case hermesCount = "custom_dns_count"
         case firstHermesAddressFamily = "first_custom_dns_address_family"
-        case isSystemHermesEnabled = "is_system_custom_dns_enabled"
+        case isHermesEnabled = "is_custom_dns_enabled"
+        case isSystemCustomDNSEnabled = "is_system_custom_dns_enabled"
     }
 
     public enum DefaultConnectionType: String, Encodable {
@@ -104,6 +106,7 @@ public struct SettingsDimensions: Encodable {
         case one = "1"
         case twoToFour = "2-4"
         case greaterOrEqualFive = ">=5"
+        case none = "n/a"
     }
 
     public enum HermesCount: String, Encodable {
@@ -129,9 +132,10 @@ public struct SettingsDimensions: Encodable {
     public enum HermesAddressFamily: String, Encodable {
         case ipv4
         case ipv6
+        case none = "n/a"
     }
 
-    public enum SystemHermesEnabled: String, Encodable {
+    public enum HermesEnabled: String, Encodable {
         case `true`
         case `false`
     }
@@ -140,11 +144,13 @@ public struct SettingsDimensions: Encodable {
         case small
         case medium
         case large
+        case none = "n/a"
     }
 
     public enum IsIPv6Enabled: String, Encodable {
         case `true`
         case `false`
+        case none = "n/a"
     }
 }
 

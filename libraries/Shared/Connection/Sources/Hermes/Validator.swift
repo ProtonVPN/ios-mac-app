@@ -26,7 +26,11 @@ public enum HermesResolverLocationValidator {
         case classic
     }
 
-    public static func isValid(_ location: String) -> Transport? {
+    public static func isValidIPv4(_ location: String) -> Transport? {
         IPv4Validator(location: location) == .valid ? .classic : nil
+    }
+
+    public static func isValidIPv6(_ location: String) -> Transport? {
+        IPv6Validator(location: location) == .valid ? .classic : nil
     }
 }
