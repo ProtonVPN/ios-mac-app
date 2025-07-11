@@ -32,8 +32,6 @@ import Domain
 import Strings
 
 final class OneClickPayment {
-    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory
-
     enum UnavailableError: Error {
         case featureFlagDisabled
         case isTestFlight
@@ -78,11 +76,16 @@ final class OneClickPayment {
 
     private var plansClientValue: PlansClient?
 
+    private var createAccountFirstClosure: (() -> Void)?
+
+    // MARK: - Init
+
     init(
         alertService: CoreAlertService,
         windowService: WindowService,
         planService: PlanService,
-        payments: Payments
+        payments: Payments,
+        createAccountFirstClosure: (() -> Void)? = nil
     ) throws {
         guard case let .right(plansDataSource) = payments.planService else {
             throw UnavailableError.featureFlagDisabled
@@ -120,6 +123,7 @@ final class OneClickPayment {
         self.alertService = alertService
         self.windowService = windowService
         self.planService = planService
+        self.createAccountFirstClosure = createAccountFirstClosure
         self.payments = payments
 
         AppEvent.userDismissedWelcomeScreen.subscribe(self, selector: #selector(userDidDismissWelcomeScreen))
@@ -192,6 +196,18 @@ final class OneClickPayment {
 
     @MainActor
     func validate(selectedPlan: PlanOption) async {
+        // first check if user is credentialless
+        @Dependency(\.authKeychain) var authKeychain
+        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        guard !userIsCredentialLess else {
+            // show modal "You need to create an account before you can upgrade" first
+            let createAccountFirstAlert = UpgradeCreateAccountAlert { [weak self] in
+                // show sign up
+                self?.createAccountFirstClosure?()
+            }
+            alertService.push(alert: createAccountFirstAlert)
+            return
+        }
         guard selectedPlan.purchaseType == .iap else {
             await redirectToWebPurchase()
             return

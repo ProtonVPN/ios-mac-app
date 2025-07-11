@@ -197,14 +197,18 @@ final class NavigationService {
         tabBarController?.setViewControllers([], animated: false)
     }
 
-    func presentLogin() {
+    func presentLogin(flow: LoginFlowType = .normal) {
         guard let tabBarController else { return }
-        loginService.presentLoginFlow(over: tabBarController)
+        loginService.presentLoginFlow(over: tabBarController, flow: flow)
     }
 
     func presentSignUp() {
         guard let tabBarController else { return }
-        loginService.presentSignUpFlow(over: tabBarController)
+        presentSignUp(over: tabBarController)
+    }
+
+    func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
+        loginService.presentSignUpFlow(over: uiViewController, flow: flow)
     }
 
     func switchTab(index: Int) {

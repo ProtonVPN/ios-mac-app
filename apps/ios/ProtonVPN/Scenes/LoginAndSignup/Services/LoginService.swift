@@ -21,15 +21,12 @@ import ProtonCorePayments
 import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
 
-import LegacyCommon
-
 import CommonNetworking
+import LegacyCommon
+import Settings
+import Strings
 import VPNAppCore
 import VPNShared
-
-import Settings
-
-import Strings
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -38,6 +35,11 @@ protocol LoginServiceFactory: AnyObject {
 enum SilentLoginResult {
     case loggedIn
     case notLoggedIn
+}
+
+enum LoginFlowType {
+    case normal
+    case credentiallessUpsell
 }
 
 protocol LoginServiceDelegate: AnyObject {
@@ -50,8 +52,8 @@ protocol LoginService: AnyObject {
 
     func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void)
     func showWelcome(initialError: String?, withOverlayViewController: UIViewController?)
-    func presentLoginFlow(over viewController: UIViewController)
-    func presentSignUpFlow(over viewController: UIViewController)
+    func presentLoginFlow(over viewController: UIViewController, flow: LoginFlowType)
+    func presentSignUpFlow(over viewController: UIViewController, flow: LoginFlowType)
 }
 
 // MARK: CoreLoginService
@@ -80,6 +82,7 @@ final class CoreLoginService {
     private let pushNotificationService: PushNotificationServiceProtocol
 
     private lazy var loginInterface: LoginAndSignupInterface = makeLoginInterface()
+    private var banner: PMBanner?
 
     weak var delegate: LoginServiceDelegate?
 
@@ -142,21 +145,29 @@ final class CoreLoginService {
         return result
     }
 
-    private func processLoginResult(result: LoginAndSignupResult) {
+    private func processLoginResult(result: LoginAndSignupResult, for flow: LoginFlowType) {
         // loginInterface should not be retained, but recreated after
         // each use. But not all LoginResults signal and end of the process,
         // so we only renew it in some cases
         switch result {
         case .dismissed:
-            windowService.dismissModal(nil)
-            // TODO: Login screen can be dismissed when signing in from a guest user
             loginInterface = makeLoginInterface()
-            show(initialError: nil, withOverlayViewController: nil)
         case .loginStateChanged(.loginFinished):
-            delegate?.userDidLogIn()
+            switch flow {
+            case .normal:
+                delegate?.userDidLogIn()
+            case .credentiallessUpsell:
+                break
+            }
             loginInterface = makeLoginInterface()
         case .signupStateChanged(.signupFinished):
-            delegate?.userDidSignUp()
+            switch flow {
+            case .normal:
+                delegate?.userDidSignUp()
+            case .credentiallessUpsell:
+                // show top green banner
+                showAccountCreatedBanner()
+            }
             loginInterface = makeLoginInterface()
         case let .loginStateChanged(.dataIsAvailable(loginData)), let .signupStateChanged(.dataIsAvailable(loginData)):
             log.debug("Login or signup process in progress", category: .app)
@@ -169,6 +180,17 @@ final class CoreLoginService {
         }
     }
 
+    private func showAccountCreatedBanner() {
+        if let topmostPresentedViewController = windowService.topmostPresentedViewController {
+            banner = PMBanner(
+                message: Localizable.accountCreatedTitle,
+                style: PMBannerNewStyle.success,
+                dismissDuration: 3.0
+            )
+            banner?.show(at: .top, on: topmostPresentedViewController)
+        }
+    }
+
     private func show(initialError: String?, withOverlayViewController: UIViewController?) {
         #if DEBUG
             if ProcessInfo.processInfo.environment["ExtAccountNotSupportedStub"] != nil {
@@ -177,7 +199,7 @@ final class CoreLoginService {
         #endif
 
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
-            self?.processLoginResult(result: result)
+            self?.processLoginResult(result: result, for: .normal)
         }
         let customization = LoginCustomizationOptions(
             username: nil,
@@ -315,8 +337,8 @@ extension CoreLoginService: LoginService {
         }
     }
 
-    func presentLoginFlow(over viewController: UIViewController) {
-        let setup = setupLoginInterface()
+    func presentLoginFlow(over viewController: UIViewController, flow: LoginFlowType) {
+        let setup = setupLoginInterface(flow: flow)
         loginInterface.presentLoginFlow(
             over: viewController,
             customization: setup.customization,
@@ -324,8 +346,8 @@ extension CoreLoginService: LoginService {
         )
     }
 
-    func presentSignUpFlow(over viewController: UIViewController) {
-        let setup = setupLoginInterface()
+    func presentSignUpFlow(over viewController: UIViewController, flow: LoginFlowType) {
+        let setup = setupLoginInterface(flow: flow)
         loginInterface.presentSignupFlow(
             over: viewController,
             customization: setup.customization,
@@ -333,14 +355,26 @@ extension CoreLoginService: LoginService {
         )
     }
 
-    private func setupLoginInterface() -> (completion: (LoginAndSignupResult) -> Void, customization: LoginCustomizationOptions) {
+    private func setupLoginInterface(flow: LoginFlowType) -> (
+        completion: (LoginAndSignupResult) -> Void,
+        customization: LoginCustomizationOptions
+    ) {
         let loginResultCompletion: (LoginAndSignupResult) -> Void = { [weak self] result in
-            self?.processLoginResult(result: result)
+            self?.processLoginResult(result: result, for: flow)
+        }
+        var closeSignupFlowAlertConfirmation: CloseSignupFlowAlertConfirmation?
+        if flow == .credentiallessUpsell {
+            closeSignupFlowAlertConfirmation = .init(
+                title: Localizable.createAccountIfCloseNoUpgrade,
+                cancelButtonTitle: Localizable.createAccountCancelUpgrade,
+                continueButtonTitle: Localizable.createAccountContinueCreating
+            )
         }
         let customization = LoginCustomizationOptions(
             performBeforeFlow: finishFlow(),
             customErrorPresenter: self,
-            helpDecorator: helpDecorator
+            helpDecorator: helpDecorator,
+            closeSignupFlowAlertConfirmation: closeSignupFlowAlertConfirmation
         )
 
         loginInterface = makeLoginInterface(isCloseButtonAvailable: true)

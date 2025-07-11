@@ -237,6 +237,18 @@ public final class UpgradeUnavailableAlert: SystemAlert {
     }
 }
 
+public final class UpgradeCreateAccountAlert: SystemAlert {
+    public var title: String? = Localizable.createAccountFirstBeforeUpgrade
+    public var message: String?
+    public var actions: [AlertAction] = []
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(handler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: Localizable.ok, style: .cancel, handler: handler))
+    }
+}
+
 public final class DelinquentUserAlert: SystemAlert {
     public var title: String? = Localizable.delinquentUserTitle
     public var message: String? = Localizable.delinquentUserDescription

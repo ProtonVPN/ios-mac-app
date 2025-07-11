@@ -37,6 +37,8 @@ protocol WindowService: AnyObject {
     func dismissModal(_ completion: (() -> Void)?)
 
     func present(message: String, type: PresentedMessageType, accessibilityIdentifier: String?)
+
+    var topmostPresentedViewController: UIViewController? { get }
 }
 
 /// GSMessageType wrapper
@@ -182,7 +184,7 @@ final class WindowServiceImplementation: WindowService {
 
     // MARK: - Private functions
 
-    private var topmostPresentedViewController: UIViewController? {
+    var topmostPresentedViewController: UIViewController? {
         guard let rootViewController = window.rootViewController else { return nil }
         var controller = rootViewController
         while let childController = controller.presentedViewController {

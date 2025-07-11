@@ -19,6 +19,8 @@ public enum Localizable {
   public static var about: String { return Localizable.tr("Localizable", "_about", fallback: "About") }
   /// Account tab button in settings window (MacOS and in several modals (both MacOS and iOS
   public static var account: String { return Localizable.tr("Localizable", "_account", fallback: "Account") }
+  /// iOS: Alert message after account creation in guest mode
+  public static var accountCreatedTitle: String { return Localizable.tr("Localizable", "_account_created_title", fallback: "Account created") }
   /// iOS: Message explaining that deleting account closes the VPN connection
   public static var accountDeletionConnectionWarning: String { return Localizable.tr("Localizable", "_account_deletion_connection_warning", fallback: "Deleting your account will end your VPN session.") }
   /// Alert title for account deletion error
@@ -369,6 +371,14 @@ public enum Localizable {
   }
   /// MacOS: button in login screen
   public static var createAccount: String { return Localizable.tr("Localizable", "_create_account", fallback: "Create Account") }
+  /// iOS: Cancel button on account creation flow
+  public static var createAccountCancelUpgrade: String { return Localizable.tr("Localizable", "_create_account_cancel_upgrade", fallback: "Cancel upgrade") }
+  /// iOS: Continue button on account creation flow
+  public static var createAccountContinueCreating: String { return Localizable.tr("Localizable", "_create_account_continue_creating", fallback: "Continue creating account") }
+  /// iOS: Alert title for purchase attempt in guest mode
+  public static var createAccountFirstBeforeUpgrade: String { return Localizable.tr("Localizable", "_create_account_first_before_upgrade", fallback: "You need to create an account before you can upgrade") }
+  /// iOS: Alert title for closing account creation flow
+  public static var createAccountIfCloseNoUpgrade: String { return Localizable.tr("Localizable", "_create_account_if_close_no_upgrade", fallback: "If you don’t create an account you won’t be able to upgrade to VPN Plus") }
   /// iOS: Action account button on settings account section in guest mode
   public static var createAccountSettingsTitle: String { return Localizable.tr("Localizable", "_create_account_settings_title", fallback: "Create account") }
   /// MacOS: Buttons in several places; iOS: profile creation screen title
