@@ -407,6 +407,10 @@
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
             await store.receive(\.localAgent.stopAllObservations)
+
+            // Possible TCA bug: We receive the `certAuth.cancelRefreshes` effect, so certificate refresh
+            // effects should have been cancelled. But they are not, and need to be explicitly skipped here.
+            await store.skipInFlightEffects()
         }
 
         /// In case the tunnel disconnects for some unexpected reason after we have successfully connected, make sure that
@@ -511,7 +515,7 @@
             }
             await store.receive(stateChange(from: \.connected, to: \.disconnected))
 
-            // Now, because the network extension was unexpectly stopped, we should disconnect from Agent as well
+            // Now, because the network extension was unexpectly stopped, we should disconnect from Local Agent too
             await store.receive(\.localAgent.disconnect) {
                 $0.localAgent = .disconnecting(nil)
             }
@@ -519,6 +523,7 @@
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
             await store.receive(\.localAgent.stopAllObservations)
+            await store.send(.certAuth(.cancelRefreshes))
         }
 
         /// Tests how we handle an edge case where the API refuses to refresh our certificate due to key conflict.
@@ -661,7 +666,7 @@
             let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: disconnected) {
-                CoreConnectionFeature()._printChanges()
+                CoreConnectionFeature()
             } withDependencies: {
                 $0.date = .constant(now)
                 $0.continuousClock = mockClock
@@ -741,6 +746,10 @@
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
             await store.receive(\.localAgent.stopAllObservations)
+
+            // Possible TCA bug: We receive the `certAuth.cancelRefreshes` effect, so certificate refresh
+            // effects should have been cancelled. But they are not, and need to be explicitly skipped here.
+            await store.skipInFlightEffects()
         }
 
         @MainActor
@@ -836,6 +845,7 @@
 
             await store.send(.localAgent(.event(.error(.policyViolationDelinquent)))) // Subscription ran out
             await store.receive(\.localAgent.delegate.errorReceived.policyViolationDelinquent)
+            await store.receive(\.certAuth.cancelRefreshes)
             await store.receive(\.localAgent.disconnect.agentError.policyViolationDelinquent) {
                 $0.localAgent = .disconnecting(.agentError(.policyViolationDelinquent))
             }
@@ -1027,6 +1037,10 @@
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
             await store.receive(\.localAgent.stopAllObservations)
+
+            // `.cancelRefreshes` is normally sent on disconnection, but we finish this test while still connected
+            // Let's manually send the action here to cancel the cert refresh effect to make the TCA test store happy
+            await store.send(.certAuth(.cancelRefreshes))
         }
 
         @MainActor
@@ -1225,6 +1239,7 @@
 
             await store.receive(\.localAgent.event.error.maxSessionsPro)
             await store.receive(\.localAgent.delegate.errorReceived.maxSessionsPro)
+            await store.receive(\.certAuth.cancelRefreshes)
             await store.receive(\.localAgent.disconnect) {
                 $0.localAgent = .disconnecting(.agentError(.maxSessionsPro))
             }

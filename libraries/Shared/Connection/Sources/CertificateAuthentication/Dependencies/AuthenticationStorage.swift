@@ -31,7 +31,7 @@ public extension VpnAuthenticationStorageSync {
         }
 
         @Dependency(\.date) var date
-        if date.now > certificate.refreshTime {
+        guard date.now < certificate.refreshTime else {
             return .certificateExpired
         }
 

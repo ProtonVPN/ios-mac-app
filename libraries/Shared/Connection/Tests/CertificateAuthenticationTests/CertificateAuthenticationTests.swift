@@ -63,6 +63,7 @@ final class CertificateAuthenticationTests: XCTestCase {
     @MainActor
     func testLoadsExistingCertificateIfNotExpired() async {
         let now = Date()
+        let clock = TestClock()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
@@ -76,6 +77,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
+            $0.continuousClock = clock
             $0.vpnAuthenticationStorage = storageMock
             $0.connectionFeatureProvider.connectionFeatures = { .mock }
             $0.certificateRefreshClient = .init(
@@ -92,12 +94,15 @@ final class CertificateAuthenticationTests: XCTestCase {
             $0 = .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: .mock))
         }
         await store.receive(\.loadingFinished.success)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
     }
 
     /// This asserts that we refresh the certificate if our stored certificate is valid, but features have since changed
     @MainActor
     func testRefreshesValidCertificateWithOldFeatures() async {
         let now = Date()
+        let clock = TestClock()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
@@ -115,6 +120,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
+            $0.continuousClock = clock
             $0.vpnAuthenticationStorage = storageMock
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
@@ -143,11 +149,14 @@ final class CertificateAuthenticationTests: XCTestCase {
         }
         await store.receive(\.loadingFinished.success)
         await fulfillment(of: [certRefreshRequested], timeout: 0)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
     }
 
     @MainActor
     func testRefreshesMissingOrExpiredCertificateWithFeatures() async {
         let now = Date()
+        let clock = TestClock()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
@@ -163,6 +172,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
+            $0.continuousClock = clock
             $0.vpnAuthenticationStorage = storageMock
             $0.connectionFeatureProvider.connectionFeatures = { expectedFeatures }
             $0.certificateRefreshClient = .init(
@@ -191,6 +201,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         }
         await store.receive(\.loadingFinished.success)
         await fulfillment(of: [certRefreshRequested], timeout: 0)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
     }
 
     /// Similar to `testRefreshesValidCertificateWithOldFeatures`. In this case, the certificate is comes from memory
@@ -198,6 +210,7 @@ final class CertificateAuthenticationTests: XCTestCase {
     @MainActor
     func testRefreshesValidCachedCertificateWithOldFeatures() async {
         let now = Date()
+        let clock = TestClock()
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
@@ -220,6 +233,7 @@ final class CertificateAuthenticationTests: XCTestCase {
             CertificateAuthenticationFeature()
         } withDependencies: {
             $0.date = .constant(now)
+            $0.continuousClock = clock
             $0.vpnAuthenticationStorage = storageMock
             $0.connectionFeatureProvider.connectionFeatures = { newFeatures }
             $0.certificateRefreshClient = .init(
@@ -251,6 +265,8 @@ final class CertificateAuthenticationTests: XCTestCase {
         }
         await store.receive(\.loadingFinished.success)
         await fulfillment(of: [certRefreshRequested], timeout: 0)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
     }
 
     @MainActor
@@ -319,5 +335,136 @@ final class CertificateAuthenticationTests: XCTestCase {
         }
         await store.receive(\.loadingFinished.failure)
         await fulfillment(of: [keysDeleted], timeout: 0)
+    }
+
+    @MainActor
+    func testReloadsRefreshedCertificateAfterExpiry() async {
+        let clock = TestClock()
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let nextWeek = tomorrow.addingTimeInterval(.days(6))
+
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let existingCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+
+        let storageMock = MockVpnAuthenticationStorage()
+        storageMock.keys = mockKeys
+        storageMock.cert = existingCertificate
+        storageMock.features = .mock
+
+        let keys = VPNKeys(fromLegacyKeys: mockKeys)
+        let authData = FullAuthenticationData(keys: keys, certificate: existingCertificate, features: .mock)
+        let loadedWithExistingCertificate: CertificateAuthenticationFeature.State = .loaded(authData)
+
+        let store = TestStore(initialState: .loading(shouldRefreshIfNecessary: false)) {
+            CertificateAuthenticationFeature()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = clock
+            $0.vpnAuthenticationStorage = storageMock
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
+        }
+
+        // Simulate first/existing certificate being loaded
+        await store.send(.loadingFromStorageFinished(.loaded(authData))) {
+            $0 = .loaded(authData)
+        }
+        await store.receive(\.loadingFinished.success)
+
+        // Advance clock past the refresh time of the loaded certificate
+        await clock.advance(by: .hours(20))
+
+        // Around this time, the extension should refresh the certificate in the background
+        // Let's model the extension has successfully refreshing the certificate and storing it in the keychain
+        let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: nextWeek, refreshTime: nextWeek)
+        let refreshedAuthData = FullAuthenticationData(keys: keys, certificate: refreshedCertificate, features: .mock)
+        storageMock.cert = refreshedCertificate
+
+        // Fast forward until the certificate expiry
+        store.dependencies.date = .constant(tomorrow)
+        await clock.advance(by: .hours(4))
+
+        await store.receive(\.loadAuthenticationData) {
+            $0 = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.loaded) {
+            $0 = .loaded(refreshedAuthData)
+        }
+        await store.receive(\.loadingFinished.success)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
+    }
+
+    /// This test is similar to the previous `testReloadsRefreshedCertificateAfterExpiry`, except when we go to load
+    /// the certificate from the keychain, we find that the extension hasn't been able to refresh it yet.
+    /// In the off-chance the extension hasn't been able to refresh the certificate in the background, we should load
+    /// the expiring certificate and proceed with certificate refresh as normal
+    @MainActor
+    func testPromptsExtensionForCertificateRefreshAfterExpiry() async {
+        let clock = TestClock()
+        let now = Date()
+        let tomorrow = now.addingTimeInterval(.days(1))
+        let nextWeek = tomorrow.addingTimeInterval(.days(6))
+
+        let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
+        let existingCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
+
+        let storageMock = MockVpnAuthenticationStorage()
+        storageMock.keys = mockKeys
+        storageMock.cert = existingCertificate
+        storageMock.features = .mock
+
+        let keys = VPNKeys(fromLegacyKeys: mockKeys)
+        let authData = FullAuthenticationData(keys: keys, certificate: existingCertificate, features: .mock)
+
+        let refreshedCertificate = VpnCertificate(certificate: "5678", validUntil: nextWeek, refreshTime: nextWeek)
+        let refreshedAuthData = FullAuthenticationData(keys: keys, certificate: refreshedCertificate, features: .mock)
+
+        let store = TestStore(initialState: .loading(shouldRefreshIfNecessary: false)) {
+            CertificateAuthenticationFeature()
+                ._printChanges()
+        } withDependencies: {
+            $0.date = .constant(now)
+            $0.continuousClock = clock
+            $0.vpnAuthenticationStorage = storageMock
+            $0.connectionFeatureProvider.connectionFeatures = { .mock }
+            $0.certificateRefreshClient = .init(
+                // Instant successful refresh
+                refreshCertificate: { _ in storageMock.cert = refreshedCertificate },
+                pushSelector: unimplemented("Unexpected session fork + selector push")
+            )
+        }
+
+        // Simulate first/existing certificate being loaded
+        await store.send(.loadingFromStorageFinished(.loaded(authData))) {
+            $0 = .loaded(authData)
+        }
+        await store.receive(\.loadingFinished.success)
+
+        // Advance clock past the refresh & expiry time of the loaded certificate
+        store.dependencies.date = .constant(tomorrow)
+        await clock.advance(by: .hours(24))
+
+        // Around this time, the extension should refresh the certificate in the background
+        // In this test, we will see what happens if the extension has not yet been able to refesh the certificate
+
+        await store.receive(\.loadAuthenticationData) {
+            $0 = .loading(shouldRefreshIfNecessary: true)
+        }
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.certificateExpired)
+        await store.receive(\.refreshCertificate)
+        await store.receive(\.refreshFinished.success) {
+            $0 = .loading(shouldRefreshIfNecessary: false)
+        }
+
+        await store.receive(\.loadFromStorage)
+        await store.receive(\.loadingFromStorageFinished.loaded) {
+            $0 = .loaded(refreshedAuthData)
+        }
+        await store.receive(\.loadingFinished.success)
+
+        await store.send(.cancelRefreshes) // cancel refresh queued for when the current certificate expires
     }
 }
