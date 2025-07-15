@@ -210,4 +210,13 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
         // Naive string comparison would result in DE#10 < DE#9
         XCTAssertEqual(serverNames, ["DE#9", "DE#10"])
     }
+
+    func testRecursiveUnderMaintenanceCheck() throws {
+        let results = repository.getServers(
+            filteredBy: [.kind(.country(code: "IR")), .isNotUnderMaintenance],
+            orderedBy: .nameAscending
+        )
+
+        XCTAssertEqual(results.count, 0)
+    }
 }

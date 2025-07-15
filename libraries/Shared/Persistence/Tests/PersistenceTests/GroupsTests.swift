@@ -36,7 +36,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
     func testStandardGroups() throws {
         let groups = repository.getGroups(filteredBy: [.features(.standard)])
 
-        XCTAssertEqual(groups.count, 9)
+        XCTAssertEqual(groups.count, 10)
 
         assert(
             groups[0],
@@ -62,7 +62,7 @@ final class GroupsTests: CaseIsolatedDatabaseTestCase {
         )
 
         assert(
-            groups[7],
+            groups[8],
             isOfKind: .country(code: "AE"),
             hasServerCount: 1,
             isUnderMaintenance: false,
