@@ -95,48 +95,18 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
     }
 
     override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
-        let sourceAppIdentifier = flow.metaData.sourceAppSigningIdentifier
-
         guard let flowHandlingManager else {
             log.error("Flow Handling helper is not available.")
             return false
         }
 
-        if let tcpFlow = flow as? NEAppProxyTCPFlow {
-            // Use nonisolated(unsafe) to acknowledge that we're taking responsibility for thread safety
-            nonisolated(unsafe) let unsafeTcpFlow = tcpFlow
-
-            switch flowHandlingManager.actionForApp(identifier: sourceAppIdentifier) {
-            case .dontHandle:
-                return false
-            case let .forward(to: networkInterface):
-                guard let handler = TCPFlowHandler(
-                    tcpFlow: unsafeTcpFlow,
-                    targetInterface: networkInterface
-                ) else { return false }
-                flowHandlingManager.register(handler)
-                return true
-            }
-
-        } else if let udpFlow = flow as? NEAppProxyUDPFlow {
-            // Use nonisolated(unsafe) to acknowledge that we're taking responsibility for thread safety
-            nonisolated(unsafe) let unsafeUdpFlow = udpFlow
-
-            switch flowHandlingManager.actionForApp(identifier: sourceAppIdentifier) {
-            case .dontHandle:
-                return false
-            case let .forward(to: networkInterface):
-                let handler = UDPFlowHandler(
-                    udpFlow: unsafeUdpFlow,
-                    targetInterface: networkInterface
-                )
-                flowHandlingManager.register(handler)
-                return true
-            }
+        switch flowHandlingManager.actionForFlow(flow) {
+        case .dontHandle:
+            return false
+        case let .forward(handler: handler):
+            flowHandlingManager.register(handler)
+            return true
         }
-
-        log.debug("Unknown flow type (neither TCP nor UDP) -> ignoring")
-        return false
     }
 
     private func createNetworkSettings() -> NETransparentProxyNetworkSettings {

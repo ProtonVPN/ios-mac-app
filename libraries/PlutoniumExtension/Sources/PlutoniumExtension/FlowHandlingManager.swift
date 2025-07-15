@@ -27,6 +27,7 @@ actor FlowHandlingManager {
     private let appIDs: Set<String>
     private let pluginIDs: Set<String>
     private let ipSet: Set<String>
+    private let vpnInterface: NWInterface
 
     /// Cached copy for internal sync access where async isn't possible.
     /// Updated inside actor only. May be slightly stale.
@@ -49,6 +50,14 @@ actor FlowHandlingManager {
             log.warning("Plutonium disabled. Should not reach here.")
             throw PlutoniumError.featureDisabled
         }
+
+        guard let vpnInterface = await NWInterface.findBy(name: vpnNetworkInterfaceName) else {
+            log.error("No VPN interface found with name \(vpnNetworkInterfaceName).")
+            throw PlutoniumError.vpnInterfaceNotFound
+        }
+
+        log.debug("VPN interface found: \(vpnInterface)")
+        self.vpnInterface = vpnInterface
 
         switch mode {
         case .exclusion:
@@ -84,12 +93,8 @@ actor FlowHandlingManager {
             self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
             self.ipSet = Set(inclusionActivated.ips)
 
-            guard let networkInterface = await NWInterface.findBy(name: vpnNetworkInterfaceName) else {
-                log.error("No VPN interface found with name \(vpnNetworkInterfaceName).")
-                throw PlutoniumError.vpnInterfaceNotFound
-            }
-            self.networkInterface = networkInterface
-            log.info("FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(networkInterface).")
+            self.networkInterface = vpnInterface
+            log.info("FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface).")
         }
     }
 
@@ -149,28 +154,43 @@ actor FlowHandlingManager {
         log.info("Internet interface set to \(interface)")
     }
 
-    nonisolated func actionForApp(identifier: String) -> RouteAction {
-        let found = appIDs.contains(identifier) || pluginIDs.contains(identifier)
-        guard found, let interface = networkInterface else { return .dontHandle }
-        return .forward(to: interface)
-    }
-
-    private nonisolated func routeForIP(_ ip: String) -> RouteAction {
-        let found = ipSet.contains(ip)
-        guard found, let interface = networkInterface else { return .dontHandle }
-        return .forward(to: interface)
+    nonisolated func actionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
+        guard let interface = networkInterface else {
+            return .dontHandle
+        }
+        if let tcpFlow = flow as? NEAppProxyTCPFlow {
+            guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(
+                tcpFlow.remoteEndpoint
+            ) else {
+                return .dontHandle
+            }
+            guard let handler = TCPFlowHandler(
+                tcpFlow: tcpFlow,
+                targetInterface: interface
+            ) else { return .dontHandle }
+            return .forward(handler: handler)
+        } else if let udpFlow = flow as? NEAppProxyUDPFlow {
+            let endpointForwardingMode = appIDExists(udpFlow.sourceAppIdentifier) ? EndpointForwardingMode.all : .only(ips: ipSet)
+            let handler = UDPFlowHandler(
+                udpFlow: udpFlow,
+                targetInterface: interface,
+                vpnInterface: vpnInterface,
+                endpointForwardingMode: endpointForwardingMode
+            )
+            return .forward(handler: handler)
+        }
+        return .dontHandle
     }
 
     // MARK: - Public registration helpers
 
-    /// Track a TCP flow handler.
-    nonisolated func register(_ handler: TCPFlowHandler) {
-        Task { await add(handler) }
-    }
-
-    /// Track a UDP flow handler.
-    nonisolated func register(_ handler: UDPFlowHandler) {
-        Task { await add(handler) }
+    /// Track flow handlers.
+    nonisolated func register(_ handler: FlowHandler) {
+        if let tcpFlowHandler = handler as? TCPFlowHandler {
+            Task { await add(tcpFlowHandler) }
+        } else if let udpFlowHandler = handler as? UDPFlowHandler {
+            Task { await add(udpFlowHandler) }
+        }
     }
 
     nonisolated func cleanupAllHandlers() {
@@ -181,6 +201,22 @@ actor FlowHandlingManager {
 
     enum RouteAction {
         case dontHandle
-        case forward(to: NWInterface)
+        case forward(handler: FlowHandler)
+    }
+
+    private nonisolated func appIDExists(_ appID: String?) -> Bool {
+        guard let appID else { return false }
+        return appIDs.contains(appID) || pluginIDs.contains(appID)
+    }
+
+    private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {
+        guard let endpoint, let ipString = endpoint.ipv4String else { return false }
+        return ipSet.contains(ipString)
+    }
+}
+
+extension NEAppProxyFlow {
+    var sourceAppIdentifier: String? {
+        metaData.sourceAppSigningIdentifier
     }
 }

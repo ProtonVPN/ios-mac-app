@@ -23,13 +23,15 @@ import NetworkExtension
 /// Handles UDP flow copying between network interfaces.
 /// One instance per `NEAppProxyUDPFlow`.
 /// There will be an individual connection with its own queue per endpoint in the flow, which will be reused throughout the handling of the UDP flow.
-final actor UDPFlowHandler {
-    let id = UUID()
+final actor UDPFlowHandler: FlowHandler {
+    private let id = UUID()
 
     // MARK: - Stored properties
 
     private let udpFlow: NEAppProxyUDPFlow
+    private let vpnInterface: NWInterface
     private let targetInterface: NWInterface
+    private let endpointForwardingMode: EndpointForwardingMode
     private var connectionLifecycleTasks: [NWEndpoint: Task<Void, Never>] = [:]
     private var sendChannels: [NWEndpoint: AsyncStream<Data>.Continuation] = [:]
 
@@ -40,9 +42,16 @@ final actor UDPFlowHandler {
 
     // MARK: - Init
 
-    init(udpFlow: NEAppProxyUDPFlow, targetInterface: NWInterface) {
+    init(
+        udpFlow: NEAppProxyUDPFlow,
+        targetInterface: NWInterface,
+        vpnInterface: NWInterface, // We always require the VPN interface to manage selective interface options for endpoints and DNS queries.
+        endpointForwardingMode: EndpointForwardingMode
+    ) {
         self.udpFlow = udpFlow
         self.targetInterface = targetInterface
+        self.vpnInterface = vpnInterface
+        self.endpointForwardingMode = endpointForwardingMode
         log.debug("UDP flow handler initialized for interface \(targetInterface.name)")
     }
 
@@ -142,7 +151,9 @@ final actor UDPFlowHandler {
     private func ensureConnectionTask(for endpoint: NWEndpoint) async {
         guard connectionLifecycleTasks[endpoint] == nil else { return }
 
-        let interfaceToUse = endpoint.shouldUseWireguardInterface ? nil : targetInterface
+        let interfaceToUse = interfaceFor(endpoint: endpoint)
+
+        log.debug("Using \(interfaceToUse?.name ?? "default") interface for \(endpoint)")
 
         // Create the send channel for this connection
         let (sendStream, sendContinuation) = AsyncStream<Data>.makeStream()
@@ -310,9 +321,27 @@ final actor UDPFlowHandler {
             log.debug("Cleaned up connection lifecycle task for endpoint \(endpoint)")
         }
     }
+
+    private func interfaceFor(endpoint: NWEndpoint) -> NWInterface? {
+        // If the endpoint needs to be forwarded through the Wireguard network, it goes always to VPN interface.
+        if endpoint.shouldUseWireguardInterfaceAnyway {
+            return vpnInterface
+        }
+        // If the connection to the endpoint should be forwarded, the target interface will be used.
+        if endpoint.shouldForward(endpointForwardingMode) {
+            return targetInterface
+        }
+        // Otherwise, the default interface that has already been set on the connection will be used.
+        return nil
+    }
 }
 
-// MARK: - Hashable & Equatable conformance
+enum EndpointForwardingMode {
+    case all
+    case only(ips: Set<String>)
+}
+
+// MARK: - Extensions
 
 extension UDPFlowHandler: Hashable {
     nonisolated static func == (lhs: UDPFlowHandler, rhs: UDPFlowHandler) -> Bool {
@@ -329,7 +358,7 @@ private extension IPv4Address {
 }
 
 private extension NWEndpoint {
-    var shouldUseWireguardInterface: Bool {
+    var shouldUseWireguardInterfaceAnyway: Bool {
         switch self {
         case let .hostPort(.ipv4(address), _) where address == .protonDNS:
             // TODO: VPNAPPL-2911 - Retrieve DNS settings from WG extension and use here.
@@ -340,6 +369,18 @@ private extension NWEndpoint {
             true
         default:
             false
+        }
+    }
+
+    func shouldForward(_ mode: EndpointForwardingMode) -> Bool {
+        switch mode {
+        case .all:
+            return true
+        case let .only(ips: ips):
+            guard let ipv4String else {
+                return false
+            }
+            return ips.contains(ipv4String)
         }
     }
 }
