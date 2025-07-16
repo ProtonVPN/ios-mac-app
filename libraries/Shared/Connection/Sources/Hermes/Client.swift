@@ -36,7 +36,7 @@ public struct HermesResolver: Hashable {
     public let location: String
 
     public init(ipAddress: String) throws(Error) {
-        guard HermesResolverLocationValidator.isValid(ipAddress) != nil else {
+        guard HermesResolverLocationValidator.isValidIPv4(ipAddress) != nil else {
             throw .invalidIPAddress
         }
         self.location = ipAddress
@@ -113,7 +113,7 @@ extension HermesClient: TestDependencyKey {
         } activeHermesResolvers: {
             SharedReader(wrappedValue: [], .hermesResolvers)
         } validateHermesLocation: { location in
-            HermesResolverLocationValidator.isValid(location) != nil
+            HermesResolverLocationValidator.isValidIPv4(location) != nil
         } addHermesResolver: { newResolver in
             @Shared(.hermesResolvers) var hermesResolvers
             let newResolvers = hermesResolvers + [newResolver]

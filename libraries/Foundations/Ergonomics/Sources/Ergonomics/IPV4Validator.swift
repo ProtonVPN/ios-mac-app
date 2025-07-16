@@ -35,3 +35,20 @@ public enum IPv4Validator {
         location.components(separatedBy: ".").count == 4 && IPv4Address(location) != nil
     }
 }
+
+public enum IPv6Validator {
+    case valid
+    case invalid
+
+    public init(location: String) {
+        if Self.isValidIPv6(location) {
+            self = .valid
+        } else {
+            self = .invalid
+        }
+    }
+
+    private static func isValidIPv6(_ location: String) -> Bool {
+        IPv6Address(location) != nil
+    }
+}

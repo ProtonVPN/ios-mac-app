@@ -23,6 +23,7 @@ import Dependencies
 import CommonNetworking
 import ConnectionInventory
 import Ergonomics
+import Hermes
 import Timer
 import VPNShared
 import WidgetKit
@@ -42,6 +43,8 @@ final class TelemetrySettingsReporter {
     private let lastHeartbeatKey = "telemetry_lastSettingsHeartbeatTimestamp"
 
     private var heartbeatTimer: BackgroundTimer?
+
+    @Dependency(\.hermesClient) var hermesClient
 
     // MARK: - Initialization
 
@@ -107,7 +110,7 @@ final class TelemetrySettingsReporter {
             isIPv6Enabled: .false,
             hermesCount: hermesCount(),
             firstHermesAddressFamily: firstHermesAddressFamily(),
-            isSystemHermesEnabled: isSystemHermesEnabled()
+            isHermesEnabled: isHermesEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
@@ -144,17 +147,24 @@ final class TelemetrySettingsReporter {
     }
 
     private func hermesCount() async -> SettingsDimensions.HermesCount {
-        @Dependency(\.hermesClient) var hermesClient
-        return .init(count: hermesClient.activeHermesResolvers().wrappedValue.count)
+        .init(count: hermesClient.activeHermesResolvers().wrappedValue.count)
     }
 
-    private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
-        .ipv4
+    private func firstHermesAddressFamily() -> SettingsDimensions.HermesAddressFamily? {
+        guard isHermesEnabled() == .true, let resolver = hermesClient.activeHermesResolvers().wrappedValue.first else {
+            return nil
+        }
+        if HermesResolverLocationValidator.isValidIPv4(resolver.location) != nil {
+            return .ipv4
+        }
+        if HermesResolverLocationValidator.isValidIPv6(resolver.location) != nil {
+            return .ipv6
+        }
+        return nil
     }
 
-    private func isSystemHermesEnabled() async -> SettingsDimensions.SystemHermesEnabled {
-        @Dependency(\.hermesClient) var hermesClient
-        return hermesClient.isEnabled().wrappedValue ? .true : .false
+    private func isHermesEnabled() -> SettingsDimensions.HermesEnabled {
+        hermesClient.isEnabled().wrappedValue ? .true : .false
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {

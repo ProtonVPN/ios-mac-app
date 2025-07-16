@@ -18,51 +18,20 @@
 
 import Foundation
 
+import Ergonomics
+
+/// Each optional value in this struct has to be marked with `NAEncodable` to ensure we don't send "null" as a value, but `n/a` instead.
 public struct SettingsDimensions: Encodable {
     let defaultConnectionType: DefaultConnectionType
     let appIcon: AppIcon
     let userTier: UserTier
-    let widgetCount: WidgetCount?
-    let firstWidgetSize: WidgetSize?
+    @NAEncodable var widgetCount: WidgetCount?
+    @NAEncodable var firstWidgetSize: WidgetSize?
     let isIPv6Enabled: IsIPv6Enabled
     let hermesCount: HermesCount
-    let firstHermesAddressFamily: HermesAddressFamily
-    let isSystemHermesEnabled: SystemHermesEnabled
-
-    init(
-        defaultConnectionType: DefaultConnectionType,
-        appIcon: AppIcon,
-        userTier: UserTier,
-        widgetCount: WidgetCount?,
-        firstWidgetSize: WidgetSize?,
-        isIPv6Enabled: IsIPv6Enabled,
-        hermesCount: HermesCount,
-        firstHermesAddressFamily: HermesAddressFamily,
-        isSystemHermesEnabled: SystemHermesEnabled
-    ) {
-        self.defaultConnectionType = defaultConnectionType
-        self.appIcon = appIcon
-        self.userTier = userTier
-        self.widgetCount = widgetCount
-        self.firstWidgetSize = firstWidgetSize
-        self.isIPv6Enabled = isIPv6Enabled
-        self.hermesCount = hermesCount
-        self.firstHermesAddressFamily = firstHermesAddressFamily
-        self.isSystemHermesEnabled = isSystemHermesEnabled
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(defaultConnectionType, forKey: .defaultConnectionType)
-        try container.encode(appIcon, forKey: .appIcon)
-        try container.encode(userTier, forKey: .userTier)
-        try container.encode(widgetCount, forKey: .widgetCount)
-        try container.encode(firstWidgetSize, forKey: .firstWidgetSize)
-        try container.encode(isIPv6Enabled, forKey: .isIPv6Enabled)
-        try container.encode(hermesCount, forKey: .hermesCount)
-        try container.encode(firstHermesAddressFamily, forKey: .firstHermesAddressFamily)
-        try container.encode(isSystemHermesEnabled, forKey: .isSystemHermesEnabled)
-    }
+    @NAEncodable var firstHermesAddressFamily: HermesAddressFamily?
+    let isHermesEnabled: HermesEnabled
+    @NAEncodable var isSystemCustomDNSEnabled: Bool?
 
     enum CodingKeys: String, CodingKey {
         case defaultConnectionType = "default_connection_type"
@@ -73,7 +42,8 @@ public struct SettingsDimensions: Encodable {
         case isIPv6Enabled = "is_ipv6_enabled"
         case hermesCount = "custom_dns_count"
         case firstHermesAddressFamily = "first_custom_dns_address_family"
-        case isSystemHermesEnabled = "is_system_custom_dns_enabled"
+        case isHermesEnabled = "is_custom_dns_enabled"
+        case isSystemCustomDNSEnabled = "is_system_custom_dns_enabled"
     }
 
     public enum DefaultConnectionType: String, Encodable {
@@ -131,7 +101,7 @@ public struct SettingsDimensions: Encodable {
         case ipv6
     }
 
-    public enum SystemHermesEnabled: String, Encodable {
+    public enum HermesEnabled: String, Encodable {
         case `true`
         case `false`
     }
