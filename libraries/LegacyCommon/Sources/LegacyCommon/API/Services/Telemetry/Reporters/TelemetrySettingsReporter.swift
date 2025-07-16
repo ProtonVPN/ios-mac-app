@@ -44,6 +44,8 @@ final class TelemetrySettingsReporter {
 
     private var heartbeatTimer: BackgroundTimer?
 
+    @Dependency(\.hermesClient) var hermesClient
+
     // MARK: - Initialization
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
@@ -145,31 +147,27 @@ final class TelemetrySettingsReporter {
     }
 
     private func hermesCount() async -> SettingsDimensions.HermesCount {
-        @Dependency(\.hermesClient) var hermesClient
-        return .init(count: hermesClient.activeHermesResolvers().wrappedValue.count)
+        .init(count: hermesClient.activeHermesResolvers().wrappedValue.count)
     }
 
-    private func firstHermesAddressFamily() async -> SettingsDimensions.HermesAddressFamily {
-        @Dependency(\.hermesClient) var hermesClient
-        guard await isHermesEnabled() == .true,
-              let ip = hermesClient.activeHermesResolvers().wrappedValue.first?.location
-        else {
-            return .none
+    private func firstHermesAddressFamily() -> SettingsDimensions.HermesAddressFamily? {
+        guard isHermesEnabled() == .true, let resolver = hermesClient.activeHermesResolvers().wrappedValue.first else {
+            return nil
         }
-        if HermesResolverLocationValidator.isValidIPv4(ip) != nil {
+        if HermesResolverLocationValidator.isValidIPv4(resolver.location) != nil {
             return .ipv4
-        } else if HermesResolverLocationValidator.isValidIPv6(ip) != nil {
+        }
+        if HermesResolverLocationValidator.isValidIPv6(resolver.location) != nil {
             return .ipv6
         }
-        return .none
+        return nil
     }
 
-    private func isHermesEnabled() async -> SettingsDimensions.HermesEnabled {
-        @Dependency(\.hermesClient) var hermesClient
-        return hermesClient.isEnabled().wrappedValue ? .true : .false
+    private func isHermesEnabled() -> SettingsDimensions.HermesEnabled {
+        hermesClient.isEnabled().wrappedValue ? .true : .false
     }
 
-    private func widgetCount() async -> SettingsDimensions.WidgetCount {
+    private func widgetCount() async -> SettingsDimensions.WidgetCount? {
         if #available(iOS 18.0, macOS 15.0, *) {
             do {
                 let configurations = try await WidgetCenter.shared.currentConfigurations()
@@ -186,19 +184,19 @@ final class TelemetrySettingsReporter {
                 }
             } catch {
                 log.error("Error retrieving widget configurations: \(error)")
-                return .none
+                return nil
             }
         } else {
             return .zero
         }
     }
 
-    private func firstWidgetSize() async -> SettingsDimensions.WidgetSize {
+    private func firstWidgetSize() async -> SettingsDimensions.WidgetSize? {
         if #available(iOS 18.0, macOS 15.0, *) {
             do {
                 let configurations = try await WidgetCenter.shared.currentConfigurations()
                 guard let firstConfiguration = configurations.first else {
-                    return .none
+                    return nil
                 }
                 switch firstConfiguration.family {
                 case .systemSmall:
@@ -208,14 +206,14 @@ final class TelemetrySettingsReporter {
                 case .systemLarge:
                     return .large
                 default:
-                    return .none
+                    return nil
                 }
             } catch {
                 log.error("Error retrieving widget configurations: \(error)")
-                return .none
+                return nil
             }
         } else {
-            return .none
+            return nil
         }
     }
 }
