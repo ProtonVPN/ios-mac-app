@@ -174,6 +174,7 @@
             await store.receive(\.core.stopObserving)
             await store.receive(\.core.tunnel.stopObservingStateChanges)
             await store.receive(\.core.localAgent.stopAllObservations)
+            await store.send(.core(.certAuth(.cancelRefreshes))) // usually cancelled implicitly on disconnection
         }
 
         /// Verifies that a connection can be queued up if the feature is in the connected state already, as well as

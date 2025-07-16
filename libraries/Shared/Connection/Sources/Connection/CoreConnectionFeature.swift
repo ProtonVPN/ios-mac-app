@@ -378,6 +378,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .disconnect(.immediately):
             .merge(
                 .cancel(id: CancelID.connectionTimeout),
+                certificateRefreshCancellation,
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil)))
             )
@@ -385,6 +386,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case .disconnect(.withNewKeys):
             .merge(
                 .cancel(id: CancelID.connectionTimeout),
+                certificateRefreshCancellation,
                 .send(.certAuth(.regenerateKeys)), // also removes the certificate
                 .send(.localAgent(.disconnect(.agentError(error)))),
                 .send(.tunnel(.disconnect(nil))) // VPNAPPL-2733: Don't disconnect until user acknowleges the alert.

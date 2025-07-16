@@ -238,7 +238,45 @@ public struct CertificateAuthenticationFeature: Reducer {
                 }
                 return finishWithError(&state, .refreshFailed(error))
 
-            case .loadingFinished:
+            case let .loadingFinished(.success(data)):
+                // End result of this feature.
+                // The next step in the connection process is to connect to the local agent server
+                // using `data`. This is coordinated by this feature's parent feature.
+
+                let expiry = data.certificate.validUntil
+                guard expiry > date.now else {
+                    log.error(
+                        "Loaded expired certificate; not scheduling refresh",
+                        category: .userCert,
+                        metadata: ["expiry": "\(expiry)"]
+                    )
+                    return .none
+                }
+
+                // Let's set a timer to reload the certificate by the time it expires
+                let timeIntervalUntilExpiry = Int(expiry.timeIntervalSince(date.now))
+                log.debug(
+                    "Scheduling certificate refresh",
+                    category: .userCert,
+                    metadata: ["timeInterval": "\(timeIntervalUntilExpiry)s"]
+                )
+
+                // We don't want this to fire while disconnected, since once the certificate is loaded, we
+                // automatically attempt to connect to the local agent server.
+                // Fortunately we already cancel refreshes via `certificateRefreshAndRetries` whenever we disconnect.
+                return .run { send in
+                    @Dependency(\.continuousClock) var clock
+                    try await clock.sleep(for: .seconds(timeIntervalUntilExpiry))
+                    try Task.checkCancellation()
+                    log.info(
+                        "Loaded certificate is nearing expiry, reloading",
+                        category: .userCert,
+                        metadata: ["expiry": "\(expiry)"]
+                    )
+                    return await send(.loadAuthenticationData)
+                }.cancellable(id: CancelID.certificateRefreshAndRetries, cancelInFlight: true)
+
+            case .loadingFinished(.failure):
                 // End result of this feature, to be handled by parent.
                 return .none
             }
@@ -254,7 +292,7 @@ public enum CertificateLoadingResult: Sendable, Equatable {
     case keysMissing
     /// The certificate is missing.
     case certificateMissing
-    /// The certificate is present, but expired.
+    /// The certificate is present, but expired, or close enough to expiry to warrant refreshing (past `refreshTime`).
     case certificateExpired
 }
 
