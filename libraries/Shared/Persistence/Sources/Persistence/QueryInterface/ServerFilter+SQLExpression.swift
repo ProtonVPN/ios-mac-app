@@ -52,7 +52,11 @@ extension VPNServerFilter {
             return hasAllRequiredFeatures && hasNoExcludedFeatures
 
         case .isNotUnderMaintenance:
-            return status[LogicalStatus.Columns.status] != 0
+            // Logical must not be under maintenance, and at least one endpoint must have status != 0
+            let existsExpression = SQL(
+                "EXISTS (SELECT 1 FROM endpoint WHERE logicalId = logical.id AND status != 0)"
+            ).sqlExpression
+            return status[LogicalStatus.Columns.status] != 0 && existsExpression
 
         case let .supports(protocolMask):
             return overrides[EndpointOverrides.Columns.endpointId] == nil

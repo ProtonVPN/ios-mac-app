@@ -519,5 +519,36 @@
                 },
             }
         ],
+    },
+    {
+        "logical": {
+            "latitude": 35.72,
+            "exitCountryCode": "IR",
+            "domain": "node-ir-2.protonvpn.net",
+            "status": 1,
+            "score": 0.475,
+            "load": 59,
+            "name": "IR#1",
+            "tier": 2,
+            "id": "IR1",
+            "kind": {"country": {}},
+            "city": "Tehran",
+            "feature": 14,
+            "longitude": 51.40
+        },
+        "endpoints": [
+            {
+                "domain": "node-ir-2.protonvpn.net",
+                "exitIp": "1.6.72.1",
+                "entryIp": "1.1.72.1",
+                "status": 0,
+                "id": "IR1s",
+                "protocolEntries": {
+                    "WireGuardTLS": {
+                        "Ports": [1234]
+                    }
+                },
+            }
+        ],
     }
 ]
