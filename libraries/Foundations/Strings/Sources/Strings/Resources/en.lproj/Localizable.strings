@@ -1426,6 +1426,9 @@
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "An error occurred while enabling System Extensions: %@";
 
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
+
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
 
