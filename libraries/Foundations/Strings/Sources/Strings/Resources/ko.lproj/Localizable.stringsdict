@@ -56,7 +56,7 @@
     <key>modals_upsell_all_countries_title</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>Access over %#@num_servers@ in %#@num_countries@</string>
+      <string>%#@num_countries@ 개 국가의 %#@num_servers@ 개 서버에 접근</string>
       <key>num_countries</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -130,7 +130,7 @@
     <key>maximum_device_plan_limit_part_2</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string> to get up to %#@num_devices@ connected at the same time.</string>
+      <string> 동시에 최대 %#@num_devices@ 개의 기기에서 연결하세요.</string>
       <key>num_devices</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -454,7 +454,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>+ %d others</string>
+        <string>+ 외 %d명</string>
       </dict>
     </dict>
   </dict>
