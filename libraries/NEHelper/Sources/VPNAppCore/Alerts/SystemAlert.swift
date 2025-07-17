@@ -911,6 +911,8 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
                 Localizable.sysexErrorDescriptionSubcaseForbiddenBySystemPolicy
             case .authorizationRequired:
                 Localizable.sysexErrorDescriptionSubcaseAuthorizationRequired
+            case .codeSignatureInvalid:
+                Localizable.sysexErrorDescriptionSubcaseCodeSignatureInvalid
             default:
                 Localizable.sysexErrorDescriptionSubcaseDefault(sysexError.code.errorCodeString)
             }

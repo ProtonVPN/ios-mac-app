@@ -1609,6 +1609,8 @@ public enum Localizable {
   public static var sysexErrorDescriptionSubcaseAuthorizationRequired: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_authorization_required", fallback: "your authorization is required to continue.") }
   /// This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder.
   public static var sysexErrorDescriptionSubcaseBadLocation: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_bad_location", fallback: "please make sure the application is correctly installed in the /Applications folder.") }
+  /// This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem.
+  public static var sysexErrorDescriptionSubcaseCodeSignatureInvalid: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_code_signature_invalid", fallback: "please reinstall the app and try again.") }
   /// This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD".
   public static func sysexErrorDescriptionSubcaseDefault(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "_sysex_error_description_subcase_default", String(describing: p1), fallback: "please contact our support. (Error %@)")
