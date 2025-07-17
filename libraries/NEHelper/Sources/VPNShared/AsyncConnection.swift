@@ -41,6 +41,10 @@ public final class AsyncConnection: Sendable {
         stateStream
     }
 
+    public var nwEndpoint: NWEndpoint {
+        connection.endpoint
+    }
+
     public func start(queue: DispatchQueue) {
         connection.start(queue: queue)
     }
