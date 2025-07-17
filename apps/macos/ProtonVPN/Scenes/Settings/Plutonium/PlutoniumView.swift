@@ -93,8 +93,8 @@ public struct PlutoniumView: View {
             get: {
                 if case .enabled = store.feature { return true }
                 return false
-            }, set: {
-                store.send(.toggleModeClicked($0))
+            }, set: { _ in
+                store.send(.toggleModeClicked)
             }
         )
     }

@@ -25,6 +25,7 @@ import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
+import Sharing
 import Strings
 import Theme
 import VPNAppCore
@@ -89,9 +90,12 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let text = Localizable.killSwitch + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.switchOn
 
-        let connect = {
+        @Shared(.plutoniumFeature) var plutonium: PlutoniumFeatureToggle
+
+        let confirmKillSwitchOn = {
             self.propertiesManager.killSwitch = true
             self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
+            $plutonium.withLock { $0 = .disabled(plutonium.mode) }
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 self.vpnGateway.retryConnection()
@@ -99,12 +103,11 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         }
 
         let connectAfterLocalNetworkWarning = {
-            guard self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on else {
-                connect()
+            if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off, case .disabled = plutonium {
+                confirmKillSwitchOn()
                 return
             }
-
-            self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: connect, cancelHandler: nil))
+            self.alertService.push(alert: KillSwitchConflictAlert(confirmHandler: confirmKillSwitchOn, cancelHandler: nil))
         }
 
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: { dismissCallback in

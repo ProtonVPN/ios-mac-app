@@ -160,10 +160,10 @@ extension IosAlertService: CoreAlertService {
         case is VpnServerSubscriptionErrorAlert:
             showDefaultSystemAlert(alert)
 
-        case is AllowLANConnectionsAlert:
+        case is LANConnectionsKillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 
-        case is TurnOnKillSwitchAlert:
+        case is KillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 
         case is ReconnectOnSettingsChangeAlert:

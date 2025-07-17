@@ -81,19 +81,33 @@ public struct PlutoniumFeature {
 
     @CasePathable
     public enum Action {
-        case toggleModeClicked(Bool)
+        case toggleModeClicked
+        case toggleModeConfirmed
         case modeSelectionClicked(PlutoniumFeatureToggle.Mode)
         case entryClicked(State.Entry, State.Operation, PlutoniumFeatureToggle.Mode)
         case inputFieldChanged(String)
         case onAppear // discover apps
     }
 
-    public init() {}
+    var shouldSwitchOn: () async -> Bool
+
+    public init(shouldSwitchOn: @escaping (() async -> Bool) = { true }) {
+        self.shouldSwitchOn = shouldSwitchOn
+    }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:
+                if case .enabled = state.feature {
+                    return .send(.toggleModeConfirmed)
+                }
+                return .run { send in
+                    if await shouldSwitchOn() {
+                        await send(.toggleModeConfirmed, animation: .default)
+                    }
+                }
+            case .toggleModeConfirmed:
                 switch state.feature {
                 case let .disabled(mode):
                     state.$feature.withLock {

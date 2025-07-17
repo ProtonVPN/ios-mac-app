@@ -238,10 +238,13 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
 
-        case is TurnOnKillSwitchAlert:
+        case is PlutoniumConflictAlert:
             showDefaultSystemAlert(alert)
 
-        case is AllowLANConnectionsAlert:
+        case is KillSwitchConflictAlert:
+            showDefaultSystemAlert(alert)
+
+        case is LANConnectionsKillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 
         case is VpnServerErrorAlert:

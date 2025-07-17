@@ -451,7 +451,7 @@ final class ConnectionSettingsViewModel {
         let newValue: ExcludeLocalNetworks = enabled ? .on : .off
 
         if propertiesManager.killSwitch {
-            let alert = AllowLANConnectionsAlert(connected: isConnected) {
+            let alert = LANConnectionsKillSwitchConflictAlert(connected: isConnected) {
                 self.featurePropertyProvider.setValue(newValue)
                 self.propertiesManager.killSwitch = false
                 if isConnected {

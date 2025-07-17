@@ -480,9 +480,9 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public final class TurnOnKillSwitchAlert: SystemAlert {
-    public var title: String? = Localizable.turnKsOnTitle
-    public var message: String? = Localizable.turnKsOnDescription
+public final class PlutoniumConflictAlert: SystemAlert {
+    public var title: String? = Localizable.turnSplitTunnelingOnTitle
+    public var message: String? = Localizable.turnSplitTunnelingOnDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -496,7 +496,27 @@ public final class TurnOnKillSwitchAlert: SystemAlert {
     }
 }
 
-public final class AllowLANConnectionsAlert: SystemAlert {
+public final class KillSwitchConflictAlert: SystemAlert {
+    public var title: String? = Localizable.turnKsOnTitle
+    #if os(iOS)
+        public var message: String? = Localizable.turnKsOnDescriptionIos
+    #else
+        public var message: String? = Localizable.turnKsOnDescriptionMacos
+    #endif
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
+            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
+            confirmHandler()
+        }))
+        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
     public var title: String? = Localizable.allowLanTitle
     public var message: String? = Localizable.allowLanDescription
     public var actions = [AlertAction]()

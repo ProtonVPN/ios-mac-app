@@ -36,7 +36,8 @@ struct PlutoniumFeatureTests {
             $0.discoveredApps = [.huzza]
         }
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.toggleModeConfirmed) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
@@ -50,7 +51,8 @@ struct PlutoniumFeatureTests {
         }
         #expect(store.state.requiresReconnection == false)
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.toggleModeConfirmed) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
@@ -64,11 +66,12 @@ struct PlutoniumFeatureTests {
         }
         #expect(store.state.requiresReconnection == true)
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .disabled(.inclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == false)
     }
 
@@ -88,11 +91,12 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         }
         #expect(store.state.requiresReconnection == false)
-        await store.send(.toggleModeClicked(false)) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .disabled(.exclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == true)
     }
 
