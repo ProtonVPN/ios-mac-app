@@ -54,21 +54,36 @@ class NATPortMappingClient {
         externalPort: UInt16 = 0,
         lifetime: UInt32 = 7200
     ) async throws -> PortMappingPacketResponse {
-        let connection = makeConnection()
-        connection.start(queue: queue)
-
         let portMappingRequestPacket = createPortMappingRequest(
             portProtocol: portProtocol,
             internalPort: internalPort,
             externalPort: externalPort,
             lifetime: lifetime
         )
-        return try await monitorConnectionStates(connection: connection, portMappingRequestPacket: portMappingRequestPacket)
+
+        for attempt in 0 ..< Self.MAX_RETRIES {
+            let connection = makeConnection()
+            connection.start(queue: queue)
+
+            do {
+                let response = try await monitorConnectionStates(connection: connection, portMappingRequestPacket: portMappingRequestPacket, attempt: attempt)
+                connection.cancel()
+                return response
+            } catch NATPortMappingError.timeoutError {
+                // retry on timeoutErrors given retries left
+                continue
+            } catch {
+                connection.cancel()
+                throw error
+            }
+        }
+
+        throw NATPortMappingError.timeoutError
     }
 
     // MARK: - Private
 
-    private func monitorConnectionStates(connection: AsyncConnection, portMappingRequestPacket: Data) async throws -> PortMappingPacketResponse {
+    private func monitorConnectionStates(connection: AsyncConnection, portMappingRequestPacket: Data, attempt: Int) async throws -> PortMappingPacketResponse {
         stateLoop: for await state in connection.states {
             switch state {
             case .setup:
@@ -79,17 +94,8 @@ class NATPortMappingClient {
                 log.debug("NAT-PMP connection waiting for \(connection.nwEndpoint): \(error.localizedDescription)")
             case .ready:
                 log.debug("NAT-PMP connection ready for \(connection.nwEndpoint)")
-                for attempt in 0 ..< Self.MAX_RETRIES {
-                    do {
-                        try await send(connection: connection, portMappingRequestPacket: portMappingRequestPacket)
-                        return try await receive(connection: connection, attempt: attempt)
-                    } catch (NATPortMappingError.timeoutError) {
-                        // retry on timeoutErrors given retries left
-                        continue
-                    } catch {
-                        throw error
-                    }
-                }
+                try await send(connection: connection, portMappingRequestPacket: portMappingRequestPacket)
+                return try await receive(connection: connection, attempt: attempt)
             case let .failed(error):
                 log.error("NAT-PMP connection failed for \(connection.nwEndpoint): \(error.localizedDescription)")
                 break stateLoop
@@ -101,7 +107,6 @@ class NATPortMappingClient {
             }
         }
 
-        connection.cancel()
         log.debug("NAT-PMP State monitoring ended for \(connection.nwEndpoint)")
         throw NATPortMappingError.connectionClosed
     }
@@ -119,29 +124,39 @@ class NATPortMappingClient {
     }
 
     private func receive(connection: AsyncConnection, attempt: Int) async throws -> PortMappingPacketResponse {
-        let receiveTask = Task {
-            let (data, _) = try await connection.receiveMessageAsync()
-            try Task.checkCancellation()
-            guard let data, !data.isEmpty else {
-                throw NATPortMappingError.invalidResponse
+        let retryDelay = Self.RETRY_DELAY * pow(2, Double(attempt))
+        let attemptStart = Date()
+        return try await withThrowingTaskGroup(of: PortMappingPacketResponse.self) { group in
+            // Add receive task
+            group.addTask {
+                let (data, _) = try await connection.receiveMessageAsync()
+                if Date() > attemptStart.addingTimeInterval(retryDelay) {
+                    // this might happen if timeout is reached
+                    connection.cancel()
+                    throw NATPortMappingError.timeoutError
+                }
+                guard let data, !data.isEmpty else {
+                    throw NATPortMappingError.invalidResponse
+                }
+                // TODO: map ICMP request?
+                return try PortMappingPacketResponse(from: data)
             }
-            // TODO: map ICMP request?
-            return try PortMappingPacketResponse(from: data)
-        }
 
-        // wait for the response for a predefined timeout
-        let retryDelay = pow(Self.RETRY_DELAY, Double(attempt + 1))
-        let timeoutTask = Task {
-            try await Task.sleep(for: .seconds(retryDelay))
-            receiveTask.cancel()
-            // if receive task was cancelled due to timeout, throw timeoutError
-            throw NATPortMappingError.timeoutError
-        }
+            // Add timeout task
+            group.addTask {
+                try await Task.sleep(for: .seconds(retryDelay))
+                connection.cancel()
+                throw NATPortMappingError.timeoutError
+            }
 
-        let response = try await receiveTask.value
-        // if we received a response before timeout, cancel timeout task
-        timeoutTask.cancel()
-        return response
+            // Return the first result (either success or timeout)
+            guard let result = try await group.next() else {
+                throw NATPortMappingError.timeoutError
+            }
+
+            group.cancelAll()
+            return result
+        }
     }
 
     private func createPortMappingRequest(
