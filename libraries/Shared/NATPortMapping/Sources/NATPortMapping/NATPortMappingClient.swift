@@ -66,18 +66,6 @@ class NATPortMappingClient {
         return try await monitorConnectionStates(connection: connection, portMappingRequestPacket: portMappingRequestPacket)
     }
 
-    func deletePortMapping(
-        internalPort: UInt16,
-        portProtocol: PortMappingProtocol
-    ) async throws {
-        // Send request with lifetime = 0 to delete
-        _ = try await requestPortMapping(
-            portProtocol: portProtocol,
-            internalPort: internalPort,
-            lifetime: 0
-        )
-    }
-
     // MARK: - Private
 
     private func monitorConnectionStates(connection: AsyncConnection, portMappingRequestPacket: Data) async throws -> PortMappingPacketResponse {
@@ -95,11 +83,10 @@ class NATPortMappingClient {
                     do {
                         try await send(connection: connection, portMappingRequestPacket: portMappingRequestPacket)
                         return try await receive(connection: connection, attempt: attempt)
+                    } catch (NATPortMappingError.timeoutError) {
+                        // retry on timeoutErrors given retries left
+                        continue
                     } catch {
-                        if error as? NATPortMappingError == .timeoutError {
-                            // retry on timeoutErrors given retries left
-                            continue
-                        }
                         throw error
                     }
                 }

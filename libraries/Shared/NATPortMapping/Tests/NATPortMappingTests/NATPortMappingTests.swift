@@ -13,7 +13,7 @@ func portMappingRequest() async throws {
 
     let packet = portMappingPacketRequest.serialize()
 
-    // version: 0, opcode: 1 (udp), reservied: 0 + 0 (UInt16)
+    // version: 0, opcode: 1 (udp), reserved: 0 + 0 (UInt16)
     // internal port: 1234 in binary 0000010011010010, in 2 UInt8: 00000100 11010010 = 4, 210
     // external port: 5678 in binary 0001011000101110, in 2 UInt8: 00010110 00101110 = 22, 46
     // lifetime: 666 in binary 0000001010011010, in 4 UInt8: 0 0 00000010 10011010 = 0, 0, 2, 154

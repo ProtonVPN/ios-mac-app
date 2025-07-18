@@ -18,23 +18,14 @@
 
 import Foundation
 
-private func convertToBytes(_ value: some Any, withCapacity capacity: Int) -> [UInt8] {
-    var mutableValue = value
-    return withUnsafePointer(to: &mutableValue) {
-        $0.withMemoryRebound(to: UInt8.self, capacity: capacity) {
-            Array(UnsafeBufferPointer(start: $0, count: capacity))
-        }
-    }
-}
-
 extension UInt16 {
     var bytes: [UInt8] {
-        convertToBytes(self, withCapacity: MemoryLayout<Self>.size)
+        withUnsafeBytes(of: self) { Array($0) }
     }
 }
 
 extension UInt32 {
     var bytes: [UInt8] {
-        convertToBytes(self, withCapacity: MemoryLayout<Self>.size)
+        withUnsafeBytes(of: self) { Array($0) }
     }
 }

@@ -50,8 +50,5 @@ extension NATPortMapCLI {
         )
         print("NAT-PMP response: result code: \(portResponse.mappedResultCode), internalPort: \(portResponse.internalPort), externalPort: \(portResponse.mappedExternalPort) lifetime \(portResponse.mappingLifetime)"
         )
-        while true {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-        }
     }
 }
