@@ -44,6 +44,7 @@ final class ProfileItemViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
+    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
     private let connectionStatusService: ConnectionStatusService
     private let planService: PlanService
     private let propertiesManager: PropertiesManagerProtocol
@@ -62,6 +63,7 @@ final class ProfileItemViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         }
@@ -74,6 +76,7 @@ final class ProfileItemViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         )
@@ -87,6 +90,7 @@ final class ProfileItemViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         }
@@ -99,6 +103,7 @@ final class ProfileItemViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         )
@@ -156,7 +161,19 @@ final class ProfileItemViewModel {
         isUsersTierTooLow ? 0.5 : 1.0
     }
 
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
+    init(
+        profile: Profile,
+        vpnGateway: VpnGatewayProtocol,
+        alertService: AlertService,
+        userTier: Int,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
+        connectionStatusService: ConnectionStatusService,
+        planService: PlanService,
+        propertiesManager: PropertiesManagerProtocol
+    ) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
@@ -164,6 +181,7 @@ final class ProfileItemViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.connectionStatusService = connectionStatusService
         self.planService = planService
         self.propertiesManager = propertiesManager

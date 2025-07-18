@@ -33,6 +33,7 @@ enum LocalAgentFeaturesKeys: String {
     case natType = "randomized-nat"
     case bouncing
     case safeMode = "safe-mode"
+    case portForwarding = "port-forwarding"
 }
 
 extension LocalAgentFeatures {
@@ -107,6 +108,10 @@ extension LocalAgentFeatures {
         getBool(key: .safeMode)
     }
 
+    var portForwarding: Bool? {
+        getBool(key: .portForwarding)
+    }
+
     // MARK: - Setters
 
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
@@ -143,11 +148,19 @@ extension LocalAgentFeatures {
         return self
     }
 
+    func with(portForwarding: Bool?) -> LocalAgentFeatures {
+        if let portForwarding {
+            set(.portForwarding, value: portForwarding)
+        }
+        return self
+    }
+
     func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
         with(netshield: configuration.features.netshield)
             .with(vpnAccelerator: configuration.features.vpnAccelerator)
             .with(bouncing: configuration.features.bouncing)
             .with(natType: configuration.features.natType)
             .with(safeMode: configuration.features.safeMode)
+            .with(portForwarding: configuration.features.portForwarding)
     }
 }

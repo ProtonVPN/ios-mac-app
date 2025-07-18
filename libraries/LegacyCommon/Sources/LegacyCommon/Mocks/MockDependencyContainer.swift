@@ -72,6 +72,7 @@
         public lazy var natProvider = NATTypePropertyProviderMock()
         public lazy var netShieldProvider = NetShieldPropertyProviderMock()
         public lazy var safeModeProvider = SafeModePropertyProviderMock()
+        public lazy var portForwardingProvider = PortForwardingPropertyProviderMock()
 
         public lazy var ikeFactory = IkeProtocolFactory(factory: MockFactory(container: self))
         public lazy var wireguardFactory = WireguardProtocolFactory(
@@ -123,7 +124,8 @@
             localAgentConnectionFactory: localAgentConnectionFactory,
             natTypePropertyProvider: natProvider,
             netShieldPropertyProvider: netShieldProvider,
-            safeModePropertyProvider: safeModeProvider
+            safeModePropertyProvider: safeModeProvider,
+            portForwardingPropertyProvider: portForwardingProvider
         )
 
         public lazy var vpnManagerConfigurationPreparer = VpnManagerConfigurationPreparer(
@@ -144,7 +146,8 @@
             vpnAuthentication: vpnAuthentication,
             natTypePropertyProvider: natProvider,
             netShieldPropertyProvider: netShieldProvider,
-            safeModePropertyProvider: safeModeProvider
+            safeModePropertyProvider: safeModeProvider,
+            portForwardingPropertyProvider: portForwardingProvider
         )
 
         public lazy var authKeychain = MockAuthKeychain(context: .mainApp)
@@ -171,6 +174,7 @@
             netShieldPropertyProvider: netShieldProvider,
             natTypePropertyProvider: natProvider,
             safeModePropertyProvider: safeModeProvider,
+            portForwardingPropertyProvider: portForwardingProvider,
             propertiesManager: propertiesManager,
             profileManager: profileManager,
             availabilityCheckerResolverFactory: availabilityCheckerResolverFactory

@@ -41,6 +41,7 @@ class ProfilesViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
+    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
     private let planService: PlanService
 
     private let sectionTitles = [Localizable.recommended, Localizable.myProfiles]
@@ -53,7 +54,19 @@ class ProfilesViewModel {
         }
     }
 
-    init(vpnGateway: VpnGatewayProtocol, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
+    init(
+        vpnGateway: VpnGatewayProtocol,
+        factory: Factory,
+        alertService: AlertService,
+        propertiesManager: PropertiesManagerProtocol,
+        connectionStatusService: ConnectionStatusService,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
+        planService: PlanService,
+        profileManager: ProfileManager
+    ) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
@@ -62,6 +75,7 @@ class ProfilesViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.planService = planService
         self.profileManager = profileManager
     }
@@ -119,7 +133,8 @@ class ProfilesViewModel {
             connectionStatusService: connectionStatusService,
             netShieldPropertyProvider: netShieldPropertyProvider,
             natTypePropertyProvider: natTypePropertyProvider,
-            safeModePropertyProvider: safeModePropertyProvider
+            safeModePropertyProvider: safeModePropertyProvider,
+            portForwardingPropertyProvider: portForwardingPropertyProvider
         )
     }
 
@@ -133,6 +148,7 @@ class ProfilesViewModel {
                 netShieldPropertyProvider: netShieldPropertyProvider,
                 natTypePropertyProvider: natTypePropertyProvider,
                 safeModePropertyProvider: safeModePropertyProvider,
+                portForwardingPropertyProvider: portForwardingPropertyProvider,
                 connectionStatusService: connectionStatusService,
                 planService: planService,
                 propertiesManager: propertiesManager

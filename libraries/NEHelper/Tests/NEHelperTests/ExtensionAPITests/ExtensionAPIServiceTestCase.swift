@@ -50,7 +50,8 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
         vpnAccelerator: true,
         bouncing: "bouncing",
         natType: .moderateNAT,
-        safeMode: true
+        safeMode: true,
+        portForwarding: false
     )
 
     /// All callbacks are set to this in `setUp()`

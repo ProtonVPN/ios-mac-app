@@ -23,7 +23,7 @@ import Foundation
 import VPNShared
 
 public protocol SafeModePropertyProvider: FeaturePropertyProvider {
-    /// Current Safe Mdde
+    /// Current Safe Mode
     var safeMode: Bool? { get set }
 }
 

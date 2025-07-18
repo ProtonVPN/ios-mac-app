@@ -124,6 +124,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
         & PlanServiceFactory
+        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & SearchStorageFactory
@@ -141,6 +142,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     @Dependency(\.announcementManager) private var announcementManager
     @Dependency(\.serverRepository) private var repository
@@ -393,6 +395,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             netShieldPropertyProvider: netShieldPropertyProvider,
             natTypePropertyProvider: natTypePropertyProvider,
             safeModePropertyProvider: safeModePropertyProvider,
+            portForwardingPropertyProvider: portForwardingPropertyProvider,
             isRedesign: isRedesign,
             extraMargin: userTier != .freeTier
         ))

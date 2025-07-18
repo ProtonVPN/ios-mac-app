@@ -47,6 +47,7 @@ class StateAlertTests: XCTestCase {
         safeMode: true,
         ports: [500],
         serverPublicKey: nil,
+        portForwarding: true,
         intent: .fastest
     )
     let networking = NetworkingMock()
@@ -82,7 +83,8 @@ class StateAlertTests: XCTestCase {
             vpnAuthentication: VpnAuthenticationMock(),
             natTypePropertyProvider: NATTypePropertyProviderMock(),
             netShieldPropertyProvider: NetShieldPropertyProviderMock(),
-            safeModePropertyProvider: SafeModePropertyProviderMock()
+            safeModePropertyProvider: SafeModePropertyProviderMock(),
+            portForwardingPropertyProvider: PortForwardingPropertyProviderMock()
         )
     }
 
@@ -166,6 +168,7 @@ extension ConnectionConfiguration {
             netShieldType: .off,
             natType: .default,
             safeMode: true,
+            portForwarding: true,
             ports: [500],
             intent: .fastest
         )
@@ -205,6 +208,7 @@ extension ConnectionConfiguration {
             netShieldType: .off,
             natType: .default,
             safeMode: true,
+            portForwarding: true,
             ports: [500],
             intent: .country("CZ", .fastest)
         )

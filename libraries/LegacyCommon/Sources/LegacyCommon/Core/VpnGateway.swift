@@ -147,6 +147,11 @@ public class VpnGateway: VpnGatewayProtocol {
         safeModePropertyProvider.safeMode
     }
 
+    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    private var portForwarding: Bool? {
+        portForwardingPropertyProvider.portForwarding
+    }
+
     private let connectionIntercepts: [VpnConnectionInterceptPolicyItem]
 
     var notificationCenter: NotificationCenter = .default
@@ -158,6 +163,7 @@ public class VpnGateway: VpnGatewayProtocol {
         CoreAlertServiceFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
+        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -176,6 +182,7 @@ public class VpnGateway: VpnGatewayProtocol {
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
             natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
+            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider(),
             propertiesManager: factory.makePropertiesManager(),
             profileManager: factory.makeProfileManager(),
             availabilityCheckerResolverFactory: factory,
@@ -193,6 +200,7 @@ public class VpnGateway: VpnGatewayProtocol {
         netShieldPropertyProvider: NetShieldPropertyProvider,
         natTypePropertyProvider: NATTypePropertyProvider,
         safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
         propertiesManager: PropertiesManagerProtocol,
         profileManager: ProfileManager,
         availabilityCheckerResolverFactory: AvailabilityCheckerResolverFactory,
@@ -207,6 +215,7 @@ public class VpnGateway: VpnGatewayProtocol {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.availabilityCheckerResolverFactory = availabilityCheckerResolverFactory
@@ -283,6 +292,7 @@ public class VpnGateway: VpnGatewayProtocol {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             profileId: nil,
             profileName: nil,
             trigger: trigger
@@ -302,6 +312,7 @@ public class VpnGateway: VpnGatewayProtocol {
             withDefaultNetshield: netShieldType,
             withDefaultNATType: natType,
             withDefaultSafeMode: safeMode,
+            withDefaultPortForwarding: portForwarding,
             trigger: trigger
         )
     }
@@ -313,19 +324,52 @@ public class VpnGateway: VpnGatewayProtocol {
         case let .gateway(name):
             .gateway(name: name)
         }
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: trigger)
+        let connectionRequest = ConnectionRequest(
+            serverType: serverTypeToggle,
+            connectionType: connectionType,
+            connectionProtocol: globalConnectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: nil,
+            profileName: nil,
+            trigger: trigger
+        )
         connect(with: connectionRequest)
     }
 
     public func connectTo(country countryCode: String, city: String) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .city(country: countryCode, city: city), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .countriesCity)
+        let connectionRequest = ConnectionRequest(
+            serverType: serverTypeToggle,
+            connectionType: .city(country: countryCode, city: city),
+            connectionProtocol: globalConnectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: nil,
+            profileName: nil,
+            trigger: .countriesCity
+        )
 
         connect(with: connectionRequest)
     }
 
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: nil, profileName: nil, trigger: .server)
+        let connectionRequest = ConnectionRequest(
+            serverType: serverTypeToggle,
+            connectionType: .country(server.countryCode, countryType),
+            connectionProtocol: globalConnectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: nil,
+            profileName: nil,
+            trigger: .server
+        )
 
         connect(with: connectionRequest)
     }
@@ -336,7 +380,13 @@ public class VpnGateway: VpnGatewayProtocol {
             profileManager.updateProfile(updatedProfile)
         }
 
-        let connectionRequest = profile.connectionRequest(withDefaultNetshield: netShieldType, withDefaultNATType: natType, withDefaultSafeMode: safeMode, trigger: .profile)
+        let connectionRequest = profile.connectionRequest(
+            withDefaultNetshield: netShieldType,
+            withDefaultNATType: natType,
+            withDefaultSafeMode: safeMode,
+            withDefaultPortForwarding: portForwarding,
+            trigger: .profile
+        )
         connect(with: connectionRequest)
     }
 
@@ -422,6 +472,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 netShieldType: netShieldType,
                 natType: natType,
                 safeMode: safeMode,
+                portForwarding: portForwarding,
                 intent: nil
             )
             return
@@ -461,6 +512,7 @@ public class VpnGateway: VpnGatewayProtocol {
             netShieldType: requestWithUpdatedServerType.netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             intent: requestWithUpdatedServerType.connectionType
         )
     }
@@ -598,6 +650,7 @@ public class VpnGateway: VpnGatewayProtocol {
         netShieldType: NetShieldType,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         intent: ConnectionRequestType?
     ) {
         guard let server else {
@@ -649,6 +702,7 @@ public class VpnGateway: VpnGatewayProtocol {
                     netShieldType: netShieldType,
                     natType: natType,
                     safeMode: safeMode,
+                    portForwarding: portForwarding,
                     intent: intent
                 )
             }
@@ -805,6 +859,7 @@ private extension VpnGateway {
             netShieldType: netShieldPropertyProvider.netShieldType,
             natType: natTypePropertyProvider.natType,
             safeMode: safeModePropertyProvider.safeMode,
+            portForwarding: portForwardingPropertyProvider.portForwarding,
             profileId: nil,
             profileName: nil,
             trigger: nil
@@ -819,6 +874,7 @@ private extension VpnGateway {
             netShieldType: request.netShieldType,
             natType: request.natType,
             safeMode: request.safeMode,
+            portForwarding: portForwarding,
             intent: request.connectionType
         )
         return ReconnectInfo(

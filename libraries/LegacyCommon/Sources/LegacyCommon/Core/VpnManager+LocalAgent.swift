@@ -47,7 +47,15 @@ extension VpnManager {
 
         let connect = { (data: VpnAuthenticationData) in
             localAgentQueue.sync { [unowned self] in
-                guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, natTypePropertyProvider: natTypePropertyProvider, netShieldPropertyProvider: netShieldPropertyProvider, safeModePropertyProvider: safeModePropertyProvider, vpnProtocol: currentVpnProtocol) else {
+                let configuration = LocalAgentConfiguration(
+                    propertiesManager: propertiesManager,
+                    natTypePropertyProvider: natTypePropertyProvider,
+                    netShieldPropertyProvider: netShieldPropertyProvider,
+                    safeModePropertyProvider: safeModePropertyProvider,
+                    portForwardingPropertyProvider: portForwardingPropertyProvider,
+                    vpnProtocol: currentVpnProtocol
+                )
+                guard let configuration else {
                     log.error("Cannot reconnect to the local agent with missing configuraton", category: .localAgent, event: .error)
                     return
                 }
@@ -226,6 +234,19 @@ extension VpnManager {
         updateActiveConnection {
             log.info("Safe mode was \(String(describing: $0?.safeMode)), updating to \(safeMode).", category: .connection)
             return $0?.withChanged(safeMode: safeMode)
+        }
+    }
+
+    func updateActiveConnection(portForwarding: Bool) {
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?
+            .withChanged(portForwarding: portForwarding)
+        updateActiveConnection {
+            log
+                .info(
+                    "Port Forwarding was \(String(describing: $0?.portForwarding)), updating to \(portForwarding).",
+                    category: .connection
+                )
+            return $0?.withChanged(portForwarding: portForwarding)
         }
     }
 

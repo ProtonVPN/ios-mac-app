@@ -65,6 +65,7 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         netShieldType: .level1,
         natType: .moderateNAT,
         safeMode: true,
+        portForwarding: false,
         profileId: nil,
         profileName: nil,
         trigger: nil

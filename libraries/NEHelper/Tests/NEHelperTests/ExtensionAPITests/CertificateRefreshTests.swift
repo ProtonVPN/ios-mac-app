@@ -280,7 +280,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             vpnAccelerator: true,
             bouncing: "bouncing",
             natType: .moderateNAT,
-            safeMode: true
+            safeMode: true,
+            portForwarding: true
         )
         let cert = VpnCertificate(fakeData: [
             \.certificate: "This is a certificate",
@@ -356,7 +357,8 @@ class CertificateRefreshTests: ExtensionAPIServiceTestCase {
             vpnAccelerator: true,
             bouncing: "bouncing",
             natType: .moderateNAT,
-            safeMode: true
+            safeMode: true,
+            portForwarding: true
         )
 
         authenticationStorage.cert = testData.currentCert

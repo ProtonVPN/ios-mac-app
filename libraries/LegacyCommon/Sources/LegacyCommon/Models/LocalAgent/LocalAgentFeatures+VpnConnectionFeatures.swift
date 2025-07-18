@@ -25,9 +25,16 @@ import VPNShared
 
 extension LocalAgentFeatures {
     var vpnFeatures: VPNConnectionFeatures? {
-        guard let netshield, let vpnAccelerator, let natType, let safeMode else {
+        guard let netshield, let vpnAccelerator, let natType, let safeMode, let portForwarding else {
             return nil
         }
-        return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
+        return VPNConnectionFeatures(
+            netshield: netshield,
+            vpnAccelerator: vpnAccelerator,
+            bouncing: bouncing,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding
+        )
     }
 }

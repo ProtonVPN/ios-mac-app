@@ -1054,6 +1054,9 @@ final class SettingsViewModel {
 
             case let .moderateNAT(value):
                 vpnManager.set(natType: value)
+
+            case let .portForwarding(value):
+                vpnManager.set(portForwarding: value)
             }
         }
     }

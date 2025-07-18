@@ -24,13 +24,15 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
     public private(set) var bouncing: String?
     public private(set) var natType: NATType
     public private(set) var safeMode: Bool?
+    public private(set) var portForwarding: Bool?
 
-    public init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
+    public init(netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?, portForwarding: Bool?) {
         self.netshield = netshield
         self.vpnAccelerator = vpnAccelerator
         self.bouncing = bouncing
         self.natType = natType
         self.safeMode = safeMode
+        self.portForwarding = portForwarding
     }
 
     /// Used for testing purposes.
@@ -44,6 +46,9 @@ public struct VPNConnectionFeatures: Equatable, Sendable {
         result[CodingKeys.natType.rawValue] = natType.flag
         if let safeMode {
             result[CodingKeys.safeMode.rawValue] = safeMode
+        }
+        if let portForwarding {
+            result[CodingKeys.portForwarding.rawValue] = portForwarding
         }
         return result
     }
@@ -66,6 +71,7 @@ extension VPNConnectionFeatures: Codable {
         case bouncing = "Bouncing"
         case natType = "RandomNAT"
         case safeMode = "SafeMode"
+        case portForwarding = "PortForwarding"
     }
 
     public init(from decoder: Decoder) throws {
@@ -79,6 +85,7 @@ extension VPNConnectionFeatures: Codable {
             self.natType = .default
         }
         self.safeMode = try values.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.portForwarding = try values.decodeIfPresent(Bool.self, forKey: .portForwarding)
     }
 }
 

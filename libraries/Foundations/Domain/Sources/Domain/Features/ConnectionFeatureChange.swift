@@ -26,6 +26,7 @@ public enum ConnectionFeatureChange: Hashable, Sendable {
         case netShield(NetShieldType)
         case vpnAccelerator(Bool)
         case moderateNAT(NATType)
+        case portForwarding(Bool)
     }
 
     public enum TunnelFeature: Hashable, Sendable {

@@ -56,6 +56,7 @@ protocol LocalAgent {
     func update(vpnAccelerator: Bool)
     func update(natType: NATType)
     func update(safeMode: Bool)
+    func update(portForwarding: Bool)
     func unjail()
     func requestStatus(withStats shouldRequestStats: Bool)
 }
@@ -297,6 +298,11 @@ final class LocalAgentImplementation: LocalAgent {
 
     func update(safeMode: Bool) {
         let features = LocalAgentNewFeatures()?.with(safeMode: safeMode)
+        agent?.setFeatures(features)
+    }
+
+    func update(portForwarding: Bool) {
+        let features = LocalAgentNewFeatures()?.with(portForwarding: portForwarding)
         agent?.setFeatures(features)
     }
 

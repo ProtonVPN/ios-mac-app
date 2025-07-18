@@ -24,6 +24,7 @@ public enum VpnManagerClientConfiguration {
     case label(String)
     case moderateNAT
     case safeMode(Bool)
+    case portForwarding(Bool)
 
     var usernameSuffix: String {
         switch self {
@@ -43,6 +44,8 @@ public enum VpnManagerClientConfiguration {
             "nr"
         case let .safeMode(enabled):
             enabled ? "sm" : "nsm"
+        case let .portForwarding(enabled):
+            enabled ? "pmp" : ""
         }
     }
 }
@@ -68,6 +71,7 @@ public struct VpnManagerConfiguration: Identifiable {
     public let serverPublicKey: String?
     public let natType: NATType
     public let safeMode: Bool?
+    public let portForwarding: Bool?
     public let intent: ConnectionRequestType?
 
     public init(
@@ -89,6 +93,7 @@ public struct VpnManagerConfiguration: Identifiable {
         safeMode: Bool?,
         ports: [Int],
         serverPublicKey: String?,
+        portForwarding: Bool?,
         intent: ConnectionRequestType?
     ) {
         self.id = id
@@ -109,6 +114,7 @@ public struct VpnManagerConfiguration: Identifiable {
         self.natType = natType
         self.safeMode = safeMode
         self.serverPublicKey = serverPublicKey
+        self.portForwarding = portForwarding
         self.intent = intent
     }
 }
@@ -174,6 +180,7 @@ public class VpnManagerConfigurationPreparer {
                 safeMode: connectionConfig.safeMode,
                 ports: connectionConfig.ports,
                 serverPublicKey: connectionConfig.serverIp.x25519PublicKey,
+                portForwarding: connectionConfig.portForwarding,
                 intent: connectionConfig.intent
             )
         } catch {
@@ -212,6 +219,10 @@ public class VpnManagerConfigurationPreparer {
 
         if propertiesManager.featureFlags.safeMode, let safeMode = connectionConfig.safeMode {
             extraConfiguration += [.safeMode(safeMode)]
+        }
+
+        if propertiesManager.featureFlags.portForwarding, let portForwarding = connectionConfig.portForwarding, portForwarding {
+            extraConfiguration += [.portForwarding(portForwarding)]
         }
 
         return extraConfiguration.reduce("") {

@@ -36,7 +36,8 @@
             vpnAccelerator: true,
             bouncing: nil, // This is set to the target server's `label` property during connection
             natType: .moderateNAT,
-            safeMode: false
+            safeMode: false,
+            portForwarding: false
         )
     }
 #endif

@@ -68,7 +68,8 @@ class AppStateManagerImplementationTests: XCTestCase {
             vpnAuthentication: VpnAuthenticationMock(),
             natTypePropertyProvider: NATTypePropertyProviderMock(),
             netShieldPropertyProvider: NetShieldPropertyProviderMock(),
-            safeModePropertyProvider: SafeModePropertyProviderMock()
+            safeModePropertyProvider: SafeModePropertyProviderMock(),
+            portForwardingPropertyProvider: PortForwardingPropertyProviderMock()
         )
 
         if case AppState.disconnected = appStateManager.state {} else { XCTFail("Wrong state") }
@@ -312,6 +313,7 @@ class AppStateManagerImplementationTests: XCTestCase {
                 netShieldType: connectionConfig.netShieldType,
                 natType: connectionConfig.natType,
                 safeMode: connectionConfig.safeMode,
+                portForwarding: connectionConfig.portForwarding,
                 ports: [],
                 intent: connectionConfig.intent
             )
@@ -336,6 +338,7 @@ class AppStateManagerImplementationTests: XCTestCase {
             netShieldType: .off,
             natType: .default,
             safeMode: true,
+            portForwarding: true,
             ports: [500],
             intent: .fastest
         )

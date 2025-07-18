@@ -296,7 +296,14 @@
             let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
             let oldCertificate = VpnCertificate(certificate: "1234", validUntil: yesterday, refreshTime: yesterday)
             let newCertificate = VpnCertificate(certificate: "5678", validUntil: tomorrow, refreshTime: tomorrow)
-            let features = VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: nil, natType: .moderateNAT, safeMode: false)
+            let features = VPNConnectionFeatures(
+                netshield: .off,
+                vpnAccelerator: false,
+                bouncing: nil,
+                natType: .moderateNAT,
+                safeMode: false,
+                portForwarding: false
+            )
             mockStorage.keys = mockKeys
             mockStorage.cert = oldCertificate
             mockStorage.features = features

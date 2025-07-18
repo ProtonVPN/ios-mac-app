@@ -31,13 +31,15 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             let netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
             let natTypePropertyProvider: any NATTypePropertyProvider = NATTypePropertyProviderImplementation()
             let safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
+            let portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
             return .init(
                 netshield: netShieldPropertyProvider.netShieldType,
                 vpnAccelerator: featurePropertyProvider.getValue(for: VPNAccelerator.self).isOn,
                 bouncing: nil, // VPNAPPL-2561: how to properly handle this?
                 natType: natTypePropertyProvider.natType,
-                safeMode: safeModePropertyProvider.safeMode
+                safeMode: safeModePropertyProvider.safeMode,
+                portForwarding: portForwardingPropertyProvider.portForwarding
             )
         },
         setConnectionFeatures: { newFeatures in

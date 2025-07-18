@@ -90,4 +90,6 @@ public final class NoOpVpnManager: VpnManagerProtocol {
     public func set(natType _: Domain.NATType) {}
 
     public func set(safeMode _: Bool) {}
+
+    public func set(portForwarding _: Bool) {}
 }

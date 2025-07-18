@@ -78,11 +78,12 @@ public struct ConnectionRequest: Identifiable {
     public let netShieldType: NetShieldType
     public let natType: NATType
     public let safeMode: Bool?
+    public let portForwarding: Bool?
     public let profileId: String?
     public let profileName: String?
     public let trigger: UserInitiatedVPNChange.VPNTrigger?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, profileId: String?, profileName: String?, trigger: UserInitiatedVPNChange.VPNTrigger?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, safeMode: Bool?, portForwarding: Bool?, profileId: String?, profileName: String?, trigger: UserInitiatedVPNChange.VPNTrigger?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
@@ -91,27 +92,98 @@ public struct ConnectionRequest: Identifiable {
         self.profileName = profileName
         self.natType = natType
         self.safeMode = safeMode
+        self.portForwarding = portForwarding
         self.trigger = trigger
     }
 
     public func withChanged(serverType: ServerType) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
     }
 
     public func withChanged(natType: NATType) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
     }
 
     public func withChanged(safeMode: Bool) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
+    }
+
+    public func withChanged(portForwarding: Bool) -> ConnectionRequest {
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShieldType, natType: natType, safeMode: safeMode, profileId: profileId, profileName: profileName, trigger: trigger)
+        ConnectionRequest(
+            serverType: serverType,
+            connectionType: connectionType,
+            connectionProtocol: connectionProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
+            profileId: profileId,
+            profileName: profileName,
+            trigger: trigger
+        )
     }
 
     private enum Keys: CodingKey {
@@ -124,6 +196,7 @@ public struct ConnectionRequest: Identifiable {
         case vpnProtocol
         case natType
         case safeMode
+        case portForwarding
         case trigger
     }
 }
@@ -152,6 +225,7 @@ extension ConnectionRequest: Codable {
         }
 
         self.safeMode = try container.decodeIfPresent(Bool.self, forKey: .safeMode)
+        self.portForwarding = try container.decodeIfPresent(Bool.self, forKey: .portForwarding)
         self.trigger = try container.decodeIfPresent(UserInitiatedVPNChange.VPNTrigger.self, forKey: .trigger)
     }
 }

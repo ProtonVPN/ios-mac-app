@@ -99,6 +99,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             netShieldType: .level1,
             natType: .moderateNAT,
             safeMode: true,
+            portForwarding: false,
             profileId: nil,
             profileName: nil,
             trigger: .country
@@ -149,6 +150,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             netShieldType: .level1,
             natType: .moderateNAT,
             safeMode: true,
+            portForwarding: false,
             profileId: nil,
             profileName: nil,
             trigger: .country
@@ -188,6 +190,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             netShieldType: .level1,
             natType: .moderateNAT,
             safeMode: true,
+            portForwarding: false,
             profileId: nil,
             profileName: nil,
             trigger: .country
@@ -271,6 +274,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             netShieldType: .level1,
             natType: .moderateNAT,
             safeMode: true,
+            portForwarding: true,
             profileId: nil,
             profileName: nil,
             trigger: .country
@@ -529,6 +533,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 netShieldType: .level1,
                 natType: .moderateNAT,
                 safeMode: true,
+                portForwarding: false,
                 profileId: nil,
                 profileName: nil,
                 trigger: .country
@@ -671,6 +676,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
             netShieldType: .level1,
             natType: .moderateNAT,
             safeMode: true,
+            portForwarding: false,
             profileId: nil,
             profileName: nil,
             trigger: .country
@@ -1101,6 +1107,7 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
                 netShieldType: .off,
                 natType: .moderateNAT,
                 safeMode: false,
+                portForwarding: false,
                 profileId: nil,
                 profileName: nil,
                 trigger: nil

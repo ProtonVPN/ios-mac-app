@@ -32,6 +32,7 @@ struct ConnectionConfiguration {
         bouncing: String?,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         connectivity: Bool
     ) {
         self.init(
@@ -41,7 +42,8 @@ struct ConnectionConfiguration {
                 vpnAccelerator: vpnAccelerator,
                 bouncing: bouncing,
                 natType: natType,
-                safeMode: safeMode
+                safeMode: safeMode,
+                portForwarding: portForwarding
             ),
             connectivity: connectivity
         )

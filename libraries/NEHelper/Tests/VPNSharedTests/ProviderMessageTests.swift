@@ -70,7 +70,8 @@ class ProviderMessageTests: XCTestCase {
                 vpnAccelerator: true,
                 bouncing: "bouncing",
                 natType: .moderateNAT,
-                safeMode: true
+                safeMode: true,
+                portForwarding: nil
             )),
             .refreshCertificate(features: nil),
             .flushLogsToFile,

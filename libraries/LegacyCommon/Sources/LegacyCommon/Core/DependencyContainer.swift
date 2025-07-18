@@ -33,7 +33,8 @@ import ProtonCorePushNotifications
 
 typealias PropertiesToOverride =
     CoreAlertServiceFactory &
-    LogContentProviderFactory & NetworkingDelegateFactory &
+    LogContentProviderFactory &
+    NetworkingDelegateFactory &
     UpdateCheckerFactory &
     VpnAuthenticationFactory &
     VpnConnectionInterceptDelegate &
@@ -293,6 +294,12 @@ extension Container: NATTypePropertyProviderFactory {
 extension Container: SafeModePropertyProviderFactory {
     public func makeSafeModePropertyProvider() -> SafeModePropertyProvider {
         SafeModePropertyProviderImplementation()
+    }
+}
+
+extension Container: PortForwardingPropertyProviderFactory {
+    public func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider {
+        PortForwardingPropertyProviderImplementation()
     }
 }
 

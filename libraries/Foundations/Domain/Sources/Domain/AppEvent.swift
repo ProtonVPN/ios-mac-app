@@ -76,6 +76,8 @@ public enum AppEvent: String {
     case hermes
     /// The Plutonium settings changed.
     case plutonium
+    /// The Port Forwarding setting changed
+    case portForwarding
 
     // MARK: API-Driven
 
