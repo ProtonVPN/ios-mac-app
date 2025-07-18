@@ -148,7 +148,6 @@ struct HermesView: ExplicitlySizedView {
             Button(Localizable.hermesEntitiesFormAddButton) {
                 submitResolverLocation()
             }
-            .disabled(resolverLocationValidation == .empty)
             .buttonStyle(ThemeButtonStyle(padding: .small, style: .primary))
         }
     }
