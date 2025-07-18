@@ -46,8 +46,6 @@ public enum AppEvent: String {
 
     // MARK: User settings
 
-    /// The user's kill switch setting has changed.
-    case killSwitch
     /// The user's "exclude local networks" setting has changed.
     case excludeLocalNetworks
     /// The user's VPN protocol setting has changed.

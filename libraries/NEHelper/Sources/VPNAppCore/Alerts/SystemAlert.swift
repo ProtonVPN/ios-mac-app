@@ -480,22 +480,6 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public final class PlutoniumConflictAlert: SystemAlert {
-    public var title: String? = Localizable.turnSplitTunnelingOnTitle
-    public var message: String? = Localizable.turnSplitTunnelingOnDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: Localizable.continue, style: .confirmative, handler: {
-            AppEvent.userInitiatedVPNChange.post(UserInitiatedVPNChange.settingsChange)
-            confirmHandler()
-        }))
-        actions.append(AlertAction(title: Localizable.notNow, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public final class KillSwitchConflictAlert: SystemAlert {
     public var title: String? = Localizable.turnKsOnTitle
     #if os(iOS)

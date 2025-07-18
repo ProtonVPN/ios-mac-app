@@ -238,9 +238,6 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
 
-        case is PlutoniumConflictAlert:
-            showDefaultSystemAlert(alert)
-
         case is KillSwitchConflictAlert:
             showDefaultSystemAlert(alert)
 

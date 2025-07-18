@@ -45,6 +45,25 @@ struct PlutoniumFeatureTests {
     }
 
     @Test
+    func toggleModeConflict() async {
+        @Shared(.killSwitch) var killSwitch = true
+        let store = TestStore(initialState: PlutoniumFeature.State()) {
+            PlutoniumFeature()
+        }
+
+        await store.send(.toggleModeClicked) {
+            $0.alert = PlutoniumFeature.confirmAlert
+        }
+        await store.send(.alert(.presented(.toggleModeConfirmed))) {
+            $0.alert = nil
+            $0.$feature.withLock {
+                $0 = .enabled(.exclusion)
+            }
+        }
+        await store.receive(\.toggleModeConfirmed)
+    }
+
+    @Test
     func toggleMode() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()

@@ -44,6 +44,12 @@ public extension SharedKey where Self == AppStorageKey<Int?> {
     }
 }
 
+public extension SharedKey where Self == AppStorageKey<Bool>.Default {
+    static var killSwitch: Self {
+        Self[.appStorage("Firewall"), default: false]
+    }
+}
+
 public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
     static var netShieldLevel: Self {
         @Dependency(\.authKeychain) var authKeychain

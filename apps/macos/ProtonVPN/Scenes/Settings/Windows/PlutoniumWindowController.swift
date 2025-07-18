@@ -20,18 +20,18 @@ import Cocoa
 
 import ComposableArchitecture
 
+import Domain
 import LegacyCommon
 import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-    typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
 
     let store: StoreOf<PlutoniumFeature>
 
     private let alertService: CoreAlertService
     private let vpnGateway: VpnGatewayProtocol
-    private let propertiesManager: PropertiesManagerProtocol
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -41,27 +41,10 @@ class PlutoniumWindowController: WindowController {
     required init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
         self.vpnGateway = factory.makeVpnGateway()
-        self.propertiesManager = factory.makePropertiesManager()
-
-        let shouldSwitchOn: (() async -> Bool) = { [propertiesManager, alertService] in
-            await withCheckedContinuation { continuation in
-                if !propertiesManager.killSwitch {
-                    continuation.resume(returning: true)
-                    return
-                }
-                let alert = PlutoniumConflictAlert {
-                    propertiesManager.killSwitch = false
-                    continuation.resume(returning: true)
-                } cancelHandler: {
-                    continuation.resume(returning: false)
-                }
-                alertService.push(alert: alert)
-            }
-        }
 
         let state = PlutoniumFeature.State()
         self.store = StoreOf<PlutoniumFeature>(initialState: state) {
-            PlutoniumFeature(shouldSwitchOn: shouldSwitchOn)
+            PlutoniumFeature()
         }
         let viewController: NSViewController = .plutonium(store: store)
         let window = NSWindow(contentViewController: viewController)
