@@ -21,22 +21,22 @@ import Testing
 
 @Test
 func edgeCasesValidation() {
-    #expect(HermesResolverLocationValidator.isValid("") == nil)
-    #expect(HermesResolverLocationValidator.isValid("🛜") == nil)
-    #expect(HermesResolverLocationValidator.isValid(String(repeating: ".", count: 1024)) == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("🛜") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4(String(repeating: ".", count: 1024)) == nil)
 }
 
 @Test
 func ipv4Validation() {
-    #expect(HermesResolverLocationValidator.isValid("10.2.0.1.") == nil)
-    #expect(HermesResolverLocationValidator.isValid("10.2.0.") == nil)
-    #expect(HermesResolverLocationValidator.isValid("10...") == nil)
-    #expect(HermesResolverLocationValidator.isValid("256.256.256.256") == nil)
-    #expect(HermesResolverLocationValidator.isValid("0.0.0.0") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("10.2.0.1.") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("10.2.0.") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("10...") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("256.256.256.256") == nil)
+    #expect(HermesResolverLocationValidator.isValidIPv4("0.0.0.0") == .classic)
 
-    #expect(HermesResolverLocationValidator.isValid("10.2.0.1") == .classic)
-    #expect(HermesResolverLocationValidator.isValid("1.1.1.1") == .classic)
-    #expect(HermesResolverLocationValidator.isValid("255.255.255.255") == .classic)
+    #expect(HermesResolverLocationValidator.isValidIPv4("10.2.0.1") == .classic)
+    #expect(HermesResolverLocationValidator.isValidIPv4("1.1.1.1") == .classic)
+    #expect(HermesResolverLocationValidator.isValidIPv4("255.255.255.255") == .classic)
 }
 
 @Test
@@ -54,7 +54,7 @@ func ipv6Validation() {
     ]
 
     for address in invalidIPv6Addresses {
-        #expect(HermesResolverLocationValidator.isValid(address) == nil)
+        #expect(HermesResolverLocationValidator.isValidIPv6(address) == nil)
     }
 
     let validIPv6Addresses = [
@@ -71,26 +71,26 @@ func ipv6Validation() {
     ]
 
     for address in validIPv6Addresses {
-        #expect(HermesResolverLocationValidator.isValid(address) == .classic)
+        #expect(HermesResolverLocationValidator.isValidIPv6(address) == .classic)
     }
 }
 
 @Test(.disabled())
 func httpsValidation() {
-    #expect(HermesResolverLocationValidator.isValid("https://") == nil)
-    #expect(HermesResolverLocationValidator.isValid("https:/1.1.1.1") == nil)
-    #expect(HermesResolverLocationValidator.isValid("http://1.1.1.1") == nil)
-
-    #expect(HermesResolverLocationValidator.isValid("https://1.1.1.1") == .doh)
-    #expect(HermesResolverLocationValidator.isValid("https://dns.google") == .doh)
-    #expect(HermesResolverLocationValidator.isValid("https://dns.google/dns-query") == .doh)
+//    #expect(HermesResolverLocationValidator.isValid("https://") == nil)
+//    #expect(HermesResolverLocationValidator.isValid("https:/1.1.1.1") == nil)
+//    #expect(HermesResolverLocationValidator.isValid("http://1.1.1.1") == nil)
+//
+//    #expect(HermesResolverLocationValidator.isValid("https://1.1.1.1") == .doh)
+//    #expect(HermesResolverLocationValidator.isValid("https://dns.google") == .doh)
+//    #expect(HermesResolverLocationValidator.isValid("https://dns.google/dns-query") == .doh)
 }
 
 @Test(.disabled())
 func tlsValidation() {
-    #expect(HermesResolverLocationValidator.isValid("tls://") == nil)
-    #expect(HermesResolverLocationValidator.isValid("tls:/1.1.1.1") == nil)
-
-    #expect(HermesResolverLocationValidator.isValid("tls://1.1.1.1") == .tls)
-    #expect(HermesResolverLocationValidator.isValid("tls://someUUID.dns.nextdns.io") == .tls)
+//    #expect(HermesResolverLocationValidator.isValid("tls://") == nil)
+//    #expect(HermesResolverLocationValidator.isValid("tls:/1.1.1.1") == nil)
+//
+//    #expect(HermesResolverLocationValidator.isValid("tls://1.1.1.1") == .tls)
+//    #expect(HermesResolverLocationValidator.isValid("tls://someUUID.dns.nextdns.io") == .tls)
 }

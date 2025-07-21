@@ -38,8 +38,15 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "CertificateAuthenticationTests",
-        "name" : "CertificateAuthenticationTests"
+        "identifier" : "LocalAgentTests",
+        "name" : "LocalAgentTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ConnectionTests",
+        "name" : "ConnectionTests"
       }
     },
     {
@@ -52,15 +59,15 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "LocalAgentTests",
-        "name" : "LocalAgentTests"
+        "identifier" : "CertificateAuthenticationTests",
+        "name" : "CertificateAuthenticationTests"
       }
     },
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "ConnectionTests",
-        "name" : "ConnectionTests"
+        "identifier" : "HermesTests",
+        "name" : "HermesTests"
       }
     }
   ],

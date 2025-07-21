@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "68DED108-96F1-4794-969E-CE6E52099D69",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SettingsTests",
+        "name" : "SettingsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

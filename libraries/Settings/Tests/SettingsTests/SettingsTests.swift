@@ -21,6 +21,7 @@ import XCTest
 import ComposableArchitecture
 
 @testable import Settings
+@testable import SettingsShared
 
 @MainActor
 final class SettingsTests: XCTestCase {
@@ -30,11 +31,11 @@ final class SettingsTests: XCTestCase {
                 destination: .none,
                 netShield: .off,
                 killSwitch: .on,
-                protocol: .init(protocol: .smartProtocol, reconnectionAlert: nil),
+                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
-            ),
-            reducer: SettingsFeature()
-        )
+            )) {
+                SettingsFeature()
+            }
 
         await store.send(.netShieldTapped, assert: { resultState in
             resultState.destination = .netShield
@@ -47,11 +48,11 @@ final class SettingsTests: XCTestCase {
                 destination: .netShield,
                 netShield: .on,
                 killSwitch: .on,
-                protocol: .init(protocol: .smartProtocol, reconnectionAlert: nil),
+                protocol: .init(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil),
                 theme: .auto
-            ),
-            reducer: SettingsFeature()
-        )
+            )) {
+                SettingsFeature()
+            }
 
         await store.send(.netShield(.set(value: .off)), assert: { resultState in
             resultState.netShield = .off

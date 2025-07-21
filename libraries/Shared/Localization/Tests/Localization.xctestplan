@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "95CD2A13-0DAE-43F5-991E-C9644EEB5166",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "LocalizationTests",
+        "name" : "LocalizationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

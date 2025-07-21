@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A921662A-71E9-40D1-B711-7D36F941C421",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "LegacyCommonTests",
+        "name" : "LegacyCommonTests"
+      }
+    }
+  ],
+  "version" : 1
+}

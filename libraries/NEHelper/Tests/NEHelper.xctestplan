@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "EE51DC3A-70D3-4FCF-BF24-AEE36D81A22A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NEHelperTests",
+        "name" : "NEHelperTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "321D6798-E139-44AD-959E-5B22D43A96E3",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ExtensionIPCTests",
+        "name" : "ExtensionIPCTests"
+      }
+    }
+  ],
+  "version" : 1
+}

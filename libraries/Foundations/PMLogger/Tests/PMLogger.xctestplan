@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "3338E100-94BF-4BC3-8182-D850EFAC1439",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
+      }
+    }
+  ],
+  "version" : 1
+}

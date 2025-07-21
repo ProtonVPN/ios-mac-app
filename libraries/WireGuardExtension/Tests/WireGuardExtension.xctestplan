@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A3AFBE27-CEFF-45A5-9359-25BBB8A662CF",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "WireGuardExtensionTests",
+        "name" : "WireGuardExtensionTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "34BCFE33-EB28-42D2-B55D-79931585D424",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
+      }
+    }
+  ],
+  "version" : 1
+}
