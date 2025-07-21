@@ -36,11 +36,31 @@ struct PlutoniumFeatureTests {
             $0.discoveredApps = [.huzza]
         }
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.toggleModeConfirmed) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
+    }
+
+    @Test
+    func toggleModeConflict() async {
+        @Shared(.killSwitch) var killSwitch = true
+        let store = TestStore(initialState: PlutoniumFeature.State()) {
+            PlutoniumFeature()
+        }
+
+        await store.send(.toggleModeClicked) {
+            $0.alert = PlutoniumFeature.confirmAlert
+        }
+        await store.send(.alert(.presented(.toggleModeConfirmed))) {
+            $0.alert = nil
+            $0.$feature.withLock {
+                $0 = .enabled(.exclusion)
+            }
+        }
+        await store.receive(\.toggleModeConfirmed)
     }
 
     @Test
@@ -50,7 +70,8 @@ struct PlutoniumFeatureTests {
         }
         #expect(store.state.requiresReconnection == false)
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.toggleModeConfirmed) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
@@ -64,11 +85,12 @@ struct PlutoniumFeatureTests {
         }
         #expect(store.state.requiresReconnection == true)
 
-        await store.send(.toggleModeClicked(true)) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .disabled(.inclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == false)
     }
 
@@ -88,11 +110,12 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature()
         }
         #expect(store.state.requiresReconnection == false)
-        await store.send(.toggleModeClicked(false)) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .disabled(.exclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == true)
     }
 

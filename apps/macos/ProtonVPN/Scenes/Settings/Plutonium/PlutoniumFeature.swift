@@ -17,16 +17,21 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import SwiftUI
 
 import ComposableArchitecture
 
+import Domain
 import Ergonomics
+import Strings
 import VPNAppCore
 
 @Reducer
 public struct PlutoniumFeature {
     @ObservableState
     public struct State: Equatable {
+        @Presents var alert: AlertState<Action.Alert>?
+
         enum ValidationError: Error {
             case alreadyExists
             case invalidIP
@@ -81,21 +86,58 @@ public struct PlutoniumFeature {
 
     @CasePathable
     public enum Action {
-        case toggleModeClicked(Bool)
+        case toggleModeClicked
+        case toggleModeConfirmed
         case modeSelectionClicked(PlutoniumFeatureToggle.Mode)
         case entryClicked(State.Entry, State.Operation, PlutoniumFeatureToggle.Mode)
         case inputFieldChanged(String)
         case onAppear // discover apps
+
+        case alert(PresentationAction<Alert>)
+        @CasePathable
+        public enum Alert {
+            case toggleModeConfirmed
+        }
     }
 
+    @Shared(.killSwitch) var killSwitch: Bool
+
     public init() {}
+
+    static let confirmAlert = AlertState<Action.Alert> {
+        TextState(Localizable.turnSplitTunnelingOnTitle)
+    } actions: {
+        SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
+            TextState(Localizable.continue)
+        }
+        SwiftNavigation.ButtonState(role: .cancel) {
+            TextState(Localizable.notNow)
+        }
+    } message: {
+        TextState(Localizable.turnSplitTunnelingOnDescription)
+    }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:
+                // disabling plutonium, all ok
+                if case .enabled = state.feature {
+                    return .send(.toggleModeConfirmed)
+                }
+                // kill switch is on, ask to switch it off
+                if killSwitch {
+                    state.alert = Self.confirmAlert
+                    return .none
+                }
+                // All ok, kill switch is off
+                return .send(.toggleModeConfirmed, animation: .default)
+            case .toggleModeConfirmed:
                 switch state.feature {
                 case let .disabled(mode):
+                    $killSwitch.withLock {
+                        $0 = false
+                    }
                     state.$feature.withLock {
                         $0 = .enabled(mode)
                     }
@@ -136,8 +178,13 @@ public struct PlutoniumFeature {
                     $0 = .enabled(mode)
                 }
                 return .none
+            case .alert(.presented(.toggleModeConfirmed)):
+                return .send(.toggleModeConfirmed)
+            case .alert:
+                return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
     }
 }
 

@@ -21,9 +21,11 @@
 //
 
 import AppKit
+import Combine
 import Foundation
 
 import Dependencies
+import Sharing
 
 import Announcement
 import Domain
@@ -162,6 +164,8 @@ class CountriesSectionViewModel {
 
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
+    private var cancellables: Set<AnyCancellable> = []
+
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
@@ -186,10 +190,14 @@ class CountriesSectionViewModel {
         let updateSettingsEvents: [AppEvent] = [
             .activeServerTypeChanged,
             .netShield,
-            .killSwitch,
             .vpnAccelerator,
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
+
+        @Shared(.killSwitch) var killSwitch: Bool
+        $killSwitch.publisher.receive(on: RunLoop.main).sink { [weak self] _ in
+            self?.updateSettings()
+        }.store(in: &cancellables)
 
         let reloadDataEvents: [AppEvent] = [
             .smartProtocol,

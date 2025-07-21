@@ -604,7 +604,7 @@ final class SettingsViewModel {
             var alert: SystemAlert
 
             if self.propertiesManager.killSwitch, excludeLAN == .off {
-                alert = AllowLANConnectionsAlert(connected: isActive) {
+                alert = LANConnectionsKillSwitchConflictAlert(connected: isActive) {
                     self.featurePropertyProvider.setValue(ExcludeLocalNetworks.on)
                     self.propertiesManager.killSwitch = false
                     if isActive {
@@ -642,7 +642,7 @@ final class SettingsViewModel {
             var alert: SystemAlert
 
             if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .on, !self.propertiesManager.killSwitch {
-                alert = TurnOnKillSwitchAlert {
+                alert = KillSwitchConflictAlert {
                     self.featurePropertyProvider.setValue(ExcludeLocalNetworks.off)
                     self.propertiesManager.killSwitch = true
                     if isActive {

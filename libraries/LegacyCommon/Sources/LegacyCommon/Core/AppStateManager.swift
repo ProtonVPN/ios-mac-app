@@ -23,8 +23,10 @@ import Foundation
 #if canImport(AppKit)
     import AppKit
 #endif
+import Combine
 
 import Reachability
+import Sharing
 
 import CommonNetworking
 import Domain
@@ -432,6 +434,8 @@ public class AppStateManagerImplementation: AppStateManager {
         }
     }
 
+    private var cancellables: Set<AnyCancellable> = []
+
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
             executeOnUIThread {
@@ -443,8 +447,10 @@ public class AppStateManagerImplementation: AppStateManager {
                 self?.computeDisplayState(with: localAgentConnectedState)
             }
         }
-
-        AppEvent.killSwitch.subscribe(self, selector: #selector(killSwitchChanged))
+        @Shared(.killSwitch) var killSwitch: Bool
+        $killSwitch.publisher.receive(on: RunLoop.main).sink { [weak self] _ in
+            self?.killSwitchChanged()
+        }.store(in: &cancellables)
     }
 
     private func vpnStateChanged() {

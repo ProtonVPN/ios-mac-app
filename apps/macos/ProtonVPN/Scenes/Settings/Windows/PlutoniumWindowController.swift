@@ -20,6 +20,7 @@ import Cocoa
 
 import ComposableArchitecture
 
+import Domain
 import LegacyCommon
 import Strings
 import VPNAppCore

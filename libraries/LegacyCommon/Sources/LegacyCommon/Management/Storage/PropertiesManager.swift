@@ -217,9 +217,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         // Show what's new modal
         case showWhatsNewModal = "ShowWhatsNewModal_Redesign_Phase_1"
 
-        // Kill Switch
-        case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
-
         // Features
         case featureFlags = "FeatureFlags"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
@@ -437,8 +434,11 @@ public final class PropertiesManager: PropertiesManagerProtocol {
 
     @BoolProperty(.showWhatsNewModal) public var showWhatsNewModal: Bool
 
-    @BoolProperty(.killSwitch, notifyChangesWith: .killSwitch)
-    public var killSwitch: Bool
+    @Shared(.killSwitch) private var sharedKillSwitch: Bool
+    public var killSwitch: Bool {
+        get { sharedKillSwitch }
+        set { $sharedKillSwitch.withLock { $0 = newValue } }
+    }
 
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 

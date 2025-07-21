@@ -21,7 +21,7 @@
     import Domain
     import Foundation
 
-    import ComposableArchitecture
+    import Sharing
 
     private enum PlutoniumFile: String {
         case excludeList = "plutoniumExcludeMode.json"

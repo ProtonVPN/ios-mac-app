@@ -21,13 +21,14 @@ import Domain
 import DomainTestSupport
 import Foundation
 @testable import LegacyCommon
+import Sharing
 import VPNShared
 import VPNSharedTesting
 import XCTest
 
 class PropertiesManagerTests: XCTestCase {
     var sut: PropertiesManagerProtocol!
-    private var userDefaults: UserDefaults!
+    private static let userDefaults: UserDefaults = .testValue(suiteName: #file)
 
     static let watershed = DomainConstants.WatershedEvent.telemetrySettingDefaultValue.timeIntervalSince1970
 
@@ -38,11 +39,10 @@ class PropertiesManagerTests: XCTestCase {
             let keychain = MockAuthKeychain()
             keychain.setMockUsername("user")
             values.authKeychain = keychain
-            values.defaultAppStorage = .testValue()
-            userDefaults = values.defaultAppStorage
-            userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
+            values.defaultAppStorage = Self.userDefaults
+            Self.userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
             values.defaultsProvider = DefaultsProvider(
-                getDefaults: { [self] in userDefaults }
+                getDefaults: { Self.userDefaults }
             )
         } operation: {
             super.invokeTest()
@@ -56,17 +56,17 @@ class PropertiesManagerTests: XCTestCase {
 
     override func tearDown() {
         super.tearDown()
-        userDefaults.removePersistentDomain(forName: #file)
+        Self.userDefaults.removePersistentDomain(forName: #file)
     }
 
     func testTelemetrySettingsDefaultValueIsTrueForNewerUsers() {
-        userDefaults.setValue(Self.watershed + 1, forKey: "UserAccountCreationDate")
+        Self.userDefaults.setValue(Self.watershed + 1, forKey: "UserAccountCreationDate")
         XCTAssertTrue(sut.getTelemetryUsageData())
         XCTAssertTrue(sut.getTelemetryCrashReports())
     }
 
     func testTelemetrySettingsDefaultValueIsFalseForOlderUsers() {
-        userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
+        Self.userDefaults.setValue(Self.watershed - 1, forKey: "UserAccountCreationDate")
         XCTAssertFalse(sut.getTelemetryUsageData())
         XCTAssertFalse(sut.getTelemetryCrashReports())
     }

@@ -135,11 +135,7 @@
             }
         }
 
-        public var killSwitch: Bool = false {
-            didSet {
-                AppEvent.killSwitch.post(killSwitch)
-            }
-        }
+        public var killSwitch: Bool = false
 
         public var humanValidationFailed: Bool = false
         public var alternativeRouting: Bool = false {

@@ -683,7 +683,7 @@ public enum Localizable {
   /// Button title for 'Enable Smart protocol'
   public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
   /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
-  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
+  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nSplit tunneling settings will be ignored when using IKEv2.") }
   /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
   public static var ikeDeprecationAlertMessageLinkText: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message_link_text", fallback: "Learn more") }
   /// Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol.
@@ -1716,10 +1716,12 @@ public enum Localizable {
   public static var tryAgain: String { return Localizable.tr("Localizable", "_try_again", fallback: "Try again") }
   /// Disable kill switch and retry
   public static var tryAgainWithoutKillswitch: String { return Localizable.tr("Localizable", "_try_again_without_killswitch", fallback: "Disable kill switch and retry") }
-  /// Description text of alert shown if user tries to enable both KillSwitch and Allow LAN
-  public static var turnKsOnDescription: String { return Localizable.tr("Localizable", "_turn_ks_on_description", fallback: "By activating kill switch, you won't be able to access devices on your local network. \n\nContinue?") }
-  /// Title of alert shown if user tries to enable both KillSwitch and Allow LAN
-  public static var turnKsOnTitle: String { return Localizable.tr("Localizable", "_turn_ks_on_title", fallback: "Turn kill switch on?") }
+  /// [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
+  public static var turnKsOnDescriptionIos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_ios", fallback: "You won't be able to access devices on your local network") }
+  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
+  public static var turnKsOnDescriptionMacos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos", fallback: "• This will disable split tunneling\n• You won't be able to access devices on your local network") }
+  /// Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
+  public static var turnKsOnTitle: String { return Localizable.tr("Localizable", "_turn_ks_on_title", fallback: "Enable kill switch?") }
   /// Turn on
   public static var turnOn: String { return Localizable.tr("Localizable", "_turn_on", fallback: "Turn on") }
   /// iOS Settings -> Protocol -> OpenVPN/WireGuard: UDP option
@@ -2184,6 +2186,10 @@ public enum Localizable {
   public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option2", p1, fallback: "Plural format key: \"Connect up to %#@num_devices@ at the same time\"")
   }
+  /// Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on
+  public static var turnSplitTunnelingOnDescription: String { return Localizable.tr("Localizable", "turn_split_tunneling_on_description", fallback: "This will disable kill switch.") }
+  /// Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on
+  public static var turnSplitTunnelingOnTitle: String { return Localizable.tr("Localizable", "turn_split_tunneling_on_title", fallback: "Enable split tunneling?") }
   /// Title for the Two-factor authentication screen
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }
   /// Placeholder for the Two Factor text field

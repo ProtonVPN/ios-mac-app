@@ -480,9 +480,13 @@ public final class ReconnectOnActionAlert: SystemAlert {
     }
 }
 
-public final class TurnOnKillSwitchAlert: SystemAlert {
+public final class KillSwitchConflictAlert: SystemAlert {
     public var title: String? = Localizable.turnKsOnTitle
-    public var message: String? = Localizable.turnKsOnDescription
+    #if os(iOS)
+        public var message: String? = Localizable.turnKsOnDescriptionIos
+    #else
+        public var message: String? = Localizable.turnKsOnDescriptionMacos
+    #endif
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
@@ -496,7 +500,7 @@ public final class TurnOnKillSwitchAlert: SystemAlert {
     }
 }
 
-public final class AllowLANConnectionsAlert: SystemAlert {
+public final class LANConnectionsKillSwitchConflictAlert: SystemAlert {
     public var title: String? = Localizable.allowLanTitle
     public var message: String? = Localizable.allowLanDescription
     public var actions = [AlertAction]()
