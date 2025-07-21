@@ -243,7 +243,7 @@ extension VpnManager {
         updateActiveConnection {
             log
                 .info(
-                    "Port Forwarding was \(String(describing: $0?.portForwarding)), updating to \(portForwarding).",
+                    "Port Forwarding was \(optional: $0?.portForwarding)), updating to \(portForwarding).",
                     category: .connection
                 )
             return $0?.withChanged(portForwarding: portForwarding)
