@@ -23,6 +23,7 @@ import Foundation
 public protocol AppFeaturePropertyProvider {
     func getValue<T: ProvidableFeature>(for feature: T.Type) -> T
     func setValue(_ value: some ProvidableFeature)
+    func stream<T: ProvidableFeature>(for feature: T.Type) -> AsyncStream<T>
 }
 
 public struct AppFeaturePropertyProviderKey: DependencyKey {
@@ -162,6 +163,17 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
             event.post(value)
         }
     }
+
+    func stream<T: ProvidableFeature>(for feature: T.Type) -> AsyncStream<T> {
+        UncheckedSendable(
+            NotificationCenter.default
+                .publisher(for: UserDefaults.didChangeNotification)
+                .compactMap { [weak self] _ in self?.getValue(for: feature) }
+                .eraseToAnyPublisher()
+                .values
+        )
+        .eraseToStream()
+    }
 }
 
 #if DEBUG
@@ -189,6 +201,10 @@ class AppFeaturePropertyProviderImplementation: AppFeaturePropertyProvider {
 
         public func setValue<T: ProvidableFeature>(_ value: T) {
             featureValueMap[featureKey(for: T.self)] = value
+        }
+
+        public func stream<T: ProvidableFeature>(for feature: T.Type) -> AsyncStream<T> {
+            AsyncStream { self.getValue(for: feature) }
         }
     }
 #endif

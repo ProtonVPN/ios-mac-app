@@ -131,7 +131,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
         let model = SettingsTickboxView.ViewModel(
             labelText: Localizable.hermesFeatureTitle,
             state: featureState,
-            liveSource: hermesClient.isEnabled().publisher
+            liveSource: hermesClient.isEnabled().publisher.eraseToAnyPublisher()
         )
         hermesView.setupItem(model: model, delegate: self)
 

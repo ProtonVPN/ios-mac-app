@@ -22,31 +22,29 @@ import Hermes
 import ProtonCoreFeatureFlags
 import Sharing
 
-private extension SharedKey where Self == AppStorageKey<Bool>.Default {
-    static var hermesEnabled: Self {
-        self[.appStorage("HermesFeatureEnabled"), default: false]
-    }
-}
-
 private extension SharedKey where Self == FileStorageKey<[HermesResolver]>.Default {
     static var hermesResolvers: Self {
         self[.fileStorage(.documentsDirectory.appending(component: HermesResolver.storagePathComponent)), default: []]
     }
 }
 
+private extension SharedKey where Self == FeatureSharedKey<HermesFeature> {
+    static var hermesEnabled: Self {
+        FeatureSharedKey(featureType: HermesFeature.self)
+    }
+}
+
 extension HermesClient: @retroactive DependencyKey {
     @Shared(.hermesResolvers) private static var hermesResolvers
+    @Shared(.hermesEnabled) private static var hermesEnabled = .defaultValue
 
     public static let liveValue: HermesClient = .init {
-        @SharedReader(.hermesEnabled) var hermesEnabled: Bool
-        return $hermesEnabled
+        $hermesEnabled.read { $0.boolValue }
     } setIsEnabled: { newValue in
-        @Shared(.hermesEnabled) var hermesEnabled: Bool
-        $hermesEnabled.withLock { $0 = newValue }
+        $hermesEnabled.withLock { $0 = .fromBoolValue(newValue) }
         AppEvent.hermes.post()
     } activeHermesResolvers: {
-        @SharedReader(.hermesResolvers) var hermesResolvers
-        return $hermesResolvers
+        $hermesResolvers.read { $0 }
     } validateHermesLocation: { location in
         HermesResolverLocationValidator.isValidIPv4(location) != nil
     } addHermesResolver: { newResolver in
@@ -65,5 +63,20 @@ extension HermesClient: @retroactive DependencyKey {
         copy = copy.applying(diff) ?? copy
         $hermesResolvers.withLock { $0 = copy }
         AppEvent.hermes.post()
+    }
+}
+
+private extension HermesFeature {
+    static func fromBoolValue(_ value: Bool) -> HermesFeature {
+        value ? .on : .off
+    }
+
+    var boolValue: Bool {
+        switch self {
+        case .off:
+            false
+        case .on:
+            true
+        }
     }
 }
