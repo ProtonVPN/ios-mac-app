@@ -73,7 +73,7 @@ extension DependencyContainer: CountriesSectionViewModelFactory {
 }
 
 protocol CountriesSettingsDelegate: AnyObject {
-    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool)
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool, portForwarding: Bool)
 }
 
 class CountriesSectionViewModel {
@@ -139,6 +139,10 @@ class CountriesSectionViewModel {
 
     var killSwitchPresenter: QuickSettingDropdownPresenter {
         KillSwitchDropdownPresenter(factory)
+    }
+
+    var portForwardingPresenter: QuickSettingDropdownPresenter {
+        PortForwardingDropdownPresenter(factory)
     }
 
     var notificationCenter: NotificationCenter = .default
@@ -447,7 +451,8 @@ class CountriesSectionViewModel {
         delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,
-            killSwitch: propertiesManager.killSwitch
+            killSwitch: propertiesManager.killSwitch,
+            portForwarding: propertiesManager.portForwarding
         )
     }
 

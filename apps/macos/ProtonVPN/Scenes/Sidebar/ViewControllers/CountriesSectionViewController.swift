@@ -64,6 +64,7 @@ final class CountriesSectionViewController: NSViewController {
         case secureCoreDisplay
         case netShieldDisplay
         case killSwitchDisplay
+        case portForwardingDisplay
     }
 
     @IBOutlet var searchIcon: NSImageView!
@@ -80,12 +81,14 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var secureCoreSectionView: NSView!
     @IBOutlet var netShieldSectionView: NSView!
     @IBOutlet var killSwitchSectionView: NSView!
+    @IBOutlet var portForwardingSectionView: NSView!
 
     @IBOutlet var netShieldBox: NSBox!
 
     @IBOutlet var secureCoreBtn: QuickSettingButton!
     @IBOutlet var netShieldBtn: QuickSettingButton!
     @IBOutlet var killSwitchBtn: QuickSettingButton!
+    @IBOutlet var portForwardingBtn: QuickSettingButton!
 
     @IBOutlet var listTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
@@ -93,6 +96,7 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var secureCoreContainer: NSBox!
     @IBOutlet var netshieldContainer: NSBox!
     @IBOutlet var killSwitchContainer: NSBox!
+    @IBOutlet var portForwardingContainer: NSBox!
     @IBOutlet var netShieldStatsLabel: NSTextField?
 
     fileprivate let viewModel: CountriesSectionViewModel
@@ -128,6 +132,7 @@ final class CountriesSectionViewController: NSViewController {
         secureCoreBtn.setAccessibilityChildren([secureCoreContainer as Any])
         netShieldBtn.setAccessibilityChildren([netshieldContainer as Any])
         killSwitchBtn.setAccessibilityChildren([killSwitchContainer as Any])
+        portForwardingBtn.setAccessibilityChildren([portForwardingContainer as Any])
     }
 
     func setupNetShieldBadge() {
@@ -200,6 +205,7 @@ final class CountriesSectionViewController: NSViewController {
         netShieldBtn.layoutSubtreeIfNeeded()
         secureCoreBtn.layoutSubtreeIfNeeded()
         killSwitchBtn.layoutSubtreeIfNeeded()
+        portForwardingBtn.layoutSubtreeIfNeeded()
     }
 
     private func setupView() {
@@ -287,6 +293,7 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
             (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
+            (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3),
         ].forEach { presenter, container, button, index in
             let vc = QuickSettingDetailViewController(presenter)
             vc.viewWillAppear()
@@ -329,9 +336,12 @@ final class CountriesSectionViewController: NSViewController {
         case 1:
             let finalValue = netshieldContainer.isHidden
             didDisplayQuickSetting(.netShieldDisplay, appear: finalValue)
-        default:
+        case 2:
             let finalValue = killSwitchContainer.isHidden
             didDisplayQuickSetting(.killSwitchDisplay, appear: finalValue)
+        default:
+            let finalValue = portForwardingContainer.isHidden
+            didDisplayQuickSetting(.portForwardingDisplay, appear: finalValue)
         }
     }
 
@@ -339,6 +349,7 @@ final class CountriesSectionViewController: NSViewController {
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
         let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear
+        let portForwardingDisplay = (quickSettingItem == .portForwardingDisplay) && appear
 
         searchTextField.isEnabled = !appear
 
@@ -362,12 +373,16 @@ final class CountriesSectionViewController: NSViewController {
         killSwitchBtn.detailOpened = killSwitchDisplay
         killSwitchContainer.isHidden = !killSwitchDisplay
 
+        portForwardingBtn.detailOpened = portForwardingDisplay
+        portForwardingContainer.isHidden = !portForwardingDisplay
+
         serverListScrollView.block = appear
         quickSettingDetailDisplayed = appear
 
         secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
         netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
         killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
+        portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
 
         serverListTableView.reloadData()
     }
@@ -485,10 +500,12 @@ extension CountriesSectionViewController: TextFieldFocusDelegate {
 }
 
 extension CountriesSectionViewController: CountriesSettingsDelegate {
-    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool) {
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool, portForwarding: Bool) {
         secureCoreBtn.switchState(secureCore ? AppTheme.Icon.locks : AppTheme.Icon.lock, enabled: secureCore)
         killSwitchBtn.switchState(killSwitch ? AppTheme.Icon.switchOn : AppTheme.Icon.switchOff, enabled: killSwitch)
         netShieldBtn.switchState(netshield == .off ? AppTheme.Icon.shield : (netshield == .level1 ? AppTheme.Icon.shieldHalfFilled : AppTheme.Icon.shieldFilled), enabled: netshield != .off)
+        portForwardingBtn
+            .switchState(portForwarding ? AppTheme.Icon.arrowsSwitch : AppTheme.Icon.arrowUpBounceLeft, enabled: portForwarding)
         children
             .compactMap { $0 as? QuickSettingsDetailViewControllerProtocol }
             .forEach { $0.reloadOptions() }
