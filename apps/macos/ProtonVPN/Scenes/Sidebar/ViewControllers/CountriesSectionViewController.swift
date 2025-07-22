@@ -98,6 +98,7 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var killSwitchContainer: NSBox!
     @IBOutlet var portForwardingContainer: NSBox!
     @IBOutlet var netShieldStatsLabel: NSTextField?
+    @IBOutlet var portForwardingWarningImage: NSImageView!
 
     fileprivate let viewModel: CountriesSectionViewModel
 
@@ -107,6 +108,8 @@ final class CountriesSectionViewController: NSViewController {
     weak var sidebarView: NSView?
 
     private var notificationTokens: [NotificationToken] = []
+
+    // MARK: - Life cycle
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -127,73 +130,13 @@ final class CountriesSectionViewController: NSViewController {
         setupQuickSettings()
         setupNetShieldBadge()
         addNetShieldObservers()
+        setupPortForwardingAlertBage()
         observeAppearance()
 
         secureCoreBtn.setAccessibilityChildren([secureCoreContainer as Any])
         netShieldBtn.setAccessibilityChildren([netshieldContainer as Any])
         killSwitchBtn.setAccessibilityChildren([killSwitchContainer as Any])
         portForwardingBtn.setAccessibilityChildren([portForwardingContainer as Any])
-    }
-
-    func setupNetShieldBadge() {
-        guard let netShieldPresenter = (viewModel.netShieldPresenter as? NetshieldDropdownPresenter) else {
-            return
-        }
-
-        guard netShieldPresenter.isNetShieldStatsEnabled else {
-            netShieldStatsLabel?.removeFromSuperview()
-            return
-        }
-        netShieldStatsLabel?.wantsLayer = true
-        netShieldStatsLabel?.layer?.cornerRadius = 4
-        netShieldStatsLabel?.backgroundColor = .color(.background)
-
-        DispatchQueue.main.async {
-            self.updateBadge()
-        }
-    }
-
-    func updateBadge() {
-        guard let presenter = viewModel.netShieldPresenter as? NetshieldDropdownPresenter else { return }
-
-        if presenter.appStateManager.displayState != .connected {
-            netShieldStatsLabel?.isHidden = true
-        } else {
-            netShieldStatsLabel?.isHidden = false
-        }
-
-        updateStats(stats: presenter.netShieldStats)
-        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
-            updateStats(stats: .zero(enabled: false))
-        }
-    }
-
-    func updateStats(stats: NetShieldModel) {
-        netShieldStatsLabel?.isEnabled = stats.enabled
-        let badge = (stats.adsCount + stats.trackersCount) >= 99 ? "99+" : "\(stats.adsCount + stats.trackersCount)"
-        netShieldStatsLabel?.stringValue = badge
-    }
-
-    func addNetShieldObservers() {
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: NetShieldStatsNotification.self,
-            object: nil
-        ) { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.updateBadge()
-            }
-        })
-
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: AppEvent.netShield.name,
-            object: nil
-        ) { [weak self] level in
-            DispatchQueue.main.async {
-                if (level.object as? NetShieldType) != .level2 {
-                    self?.updateStats(stats: .zero(enabled: false))
-                }
-            }
-        })
     }
 
     override func viewWillAppear() {
@@ -208,10 +151,6 @@ final class CountriesSectionViewController: NSViewController {
         portForwardingBtn.layoutSubtreeIfNeeded()
     }
 
-    private func setupView() {
-        view.wantsLayer = true
-    }
-
     var observer: Any?
 
     /// Appearance change doesn't get propagated normally, so we have to manually update the colors when user changes appearance
@@ -222,6 +161,12 @@ final class CountriesSectionViewController: NSViewController {
                 self?.setupColors()
             }
         }
+    }
+
+    // MARK: - Private
+
+    private func setupView() {
+        view.wantsLayer = true
     }
 
     private func setupColors() {
@@ -313,6 +258,90 @@ final class CountriesSectionViewController: NSViewController {
         }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
+    }
+
+    // MARK: - NetShield Badge
+
+    private func setupNetShieldBadge() {
+        guard let netShieldPresenter = (viewModel.netShieldPresenter as? NetshieldDropdownPresenter) else {
+            return
+        }
+
+        guard netShieldPresenter.isNetShieldStatsEnabled else {
+            netShieldStatsLabel?.removeFromSuperview()
+            return
+        }
+        netShieldStatsLabel?.wantsLayer = true
+        netShieldStatsLabel?.layer?.cornerRadius = 4
+        netShieldStatsLabel?.backgroundColor = .color(.background)
+
+        DispatchQueue.main.async {
+            self.updateNetShieldBadge()
+        }
+    }
+
+    private func updateNetShieldBadge() {
+        guard let presenter = viewModel.netShieldPresenter as? NetshieldDropdownPresenter else { return }
+
+        if presenter.appStateManager.displayState != .connected {
+            netShieldStatsLabel?.isHidden = true
+        } else {
+            netShieldStatsLabel?.isHidden = false
+        }
+
+        updateStats(stats: presenter.netShieldStats)
+        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
+            updateStats(stats: .zero(enabled: false))
+        }
+    }
+
+    private func updateStats(stats: NetShieldModel) {
+        netShieldStatsLabel?.isEnabled = stats.enabled
+        let badge = (stats.adsCount + stats.trackersCount) >= 99 ? "99+" : "\(stats.adsCount + stats.trackersCount)"
+        netShieldStatsLabel?.stringValue = badge
+    }
+
+    private func addNetShieldObservers() {
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: NetShieldStatsNotification.self,
+            object: nil
+        ) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.updateNetShieldBadge()
+            }
+        })
+
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: AppEvent.netShield.name,
+            object: nil
+        ) { [weak self] level in
+            DispatchQueue.main.async {
+                if (level.object as? NetShieldType) != .level2 {
+                    self?.updateStats(stats: .zero(enabled: false))
+                }
+            }
+        })
+    }
+
+    // MARK: - Port forwarding alert badge
+
+    private func setupPortForwardingAlertBage() {
+        portForwardingWarningImage?.wantsLayer = true
+        portForwardingWarningImage?.contentTintColor = .color(.icon, .warning)
+
+        DispatchQueue.main.async {
+            self.updatePortForwardingAlertBage()
+        }
+    }
+
+    private func updatePortForwardingAlertBage() {
+        // TODO: wire in wiring task
+        if false {
+            portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
+            portForwardingWarningImage?.isHidden = false
+        } else {
+            portForwardingWarningImage?.isHidden = true
+        }
     }
 
     @objc

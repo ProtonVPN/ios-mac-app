@@ -24,6 +24,7 @@
                 <outlet property="portForwardingBtn" destination="Rzy-Ia-icv" id="UOl-Tj-LcR"/>
                 <outlet property="portForwardingContainer" destination="70D-ga-Vzk" id="ItE-cQ-3JK"/>
                 <outlet property="portForwardingSectionView" destination="TZf-1B-kbr" id="l2D-k3-pMl"/>
+                <outlet property="portForwardingWarningImage" destination="mPu-VB-GXX" id="gXj-2Q-qTB"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
                 <outlet property="searchBox" destination="qf9-9Y-IsT" id="4Z6-q8-u8I"/>
                 <outlet property="searchIcon" destination="8u3-tX-dep" id="dSA-jo-Plh"/>
@@ -71,7 +72,7 @@
                                                 <rect key="frame" x="1" y="1" width="922" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
+                                                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
                                                         <rect key="frame" x="0.0" y="0.0" width="922" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O64-lx-a5C">
@@ -159,7 +160,7 @@
                                         </buttonCell>
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
+                                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
                                         <rect key="frame" x="115" y="32" width="20" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="939-Qe-cvS"/>
@@ -223,11 +224,22 @@
                                         </buttonCell>
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
+                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mPu-VB-GXX" userLabel="Warning">
+                                        <rect key="frame" x="112" y="31" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="NVo-0W-x00"/>
+                                            <constraint firstAttribute="width" constant="16" id="aD8-fA-scQ"/>
+                                        </constraints>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-exclamation-triangle-filled" id="lcc-E8-DnK"/>
+                                        <color key="contentTintColor" name="AtomicTangerine"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Rzy-Ia-icv" firstAttribute="leading" secondItem="TZf-1B-kbr" secondAttribute="leading" constant="8" id="4ld-6B-pkf"/>
                                     <constraint firstAttribute="trailing" secondItem="Rzy-Ia-icv" secondAttribute="trailing" constant="8" id="6nt-I5-fmR"/>
+                                    <constraint firstItem="mPu-VB-GXX" firstAttribute="centerX" secondItem="TZf-1B-kbr" secondAttribute="centerX" constant="8" id="JMa-md-9pi"/>
                                     <constraint firstAttribute="bottom" secondItem="Rzy-Ia-icv" secondAttribute="bottom" constant="12" id="M5e-b2-sr8"/>
+                                    <constraint firstItem="mPu-VB-GXX" firstAttribute="centerY" secondItem="TZf-1B-kbr" secondAttribute="centerY" constant="-12" id="tkD-Iu-U7Q"/>
                                     <constraint firstItem="Rzy-Ia-icv" firstAttribute="top" secondItem="TZf-1B-kbr" secondAttribute="top" constant="4" id="wZO-Am-rHa"/>
                                 </constraints>
                             </view>
@@ -264,7 +276,7 @@
                         <rect key="frame" x="1" y="1" width="883" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQG-nw-URT" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQG-nw-URT" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
                                 <rect key="frame" x="30" y="14" width="815" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="Rqr-HB-5ac">
                                     <font key="font" metaFont="system"/>
@@ -382,9 +394,13 @@
     <resources>
         <image name="ic-arrow-up-bounce-left" width="24" height="24"/>
         <image name="ic-cross-circle-filled" width="24" height="24"/>
+        <image name="ic-exclamation-triangle-filled" width="24" height="24"/>
         <image name="ic-lock" width="24" height="24"/>
         <image name="ic-shield" width="24" height="24"/>
         <image name="ic-switch-on" width="24" height="24"/>
+        <namedColor name="AtomicTangerine">
+            <color red="1" green="0.60784313725490191" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="MobileBrandLighten20">
             <color red="0.54117647058823526" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

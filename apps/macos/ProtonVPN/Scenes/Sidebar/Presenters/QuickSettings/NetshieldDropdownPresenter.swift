@@ -101,8 +101,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
 
         if isNetShieldStatsEnabled {
-            // (width - traling - leading) / button number
-            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 4
+            // (width - traling - leading) / number of buttons
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
         }
     }

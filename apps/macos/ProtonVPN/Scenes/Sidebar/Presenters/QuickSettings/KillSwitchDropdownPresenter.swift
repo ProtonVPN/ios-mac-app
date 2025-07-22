@@ -64,8 +64,8 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownUpgradeButton.isHidden = true
 
         if propertiesManager.featureFlags.netShield {
-            // (width - traling - leading) / button number
-            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 4
+            // (width - traling - leading) / number of buttons
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = oneButtonWidth / 2
         } else {
             // nothing, will point at the center

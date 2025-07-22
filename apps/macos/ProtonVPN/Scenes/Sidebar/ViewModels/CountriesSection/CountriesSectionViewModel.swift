@@ -195,6 +195,7 @@ class CountriesSectionViewModel {
             .activeServerTypeChanged,
             .netShield,
             .vpnAccelerator,
+            // .portForwarding or @Shared like killSwitch
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 
