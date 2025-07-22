@@ -99,6 +99,12 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownUpgradeButton.isHidden = true
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+
+        if isNetShieldStatsEnabled {
+            // (width - traling - leading) / button number
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 4
+            viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
+        }
     }
 
     private func contentChanged() {

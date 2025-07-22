@@ -58,10 +58,15 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsPortForwardingDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.stringValue = ""
         viewController?.dropdownUpgradeButton.isHidden = true
-        if propertiesManager.featureFlags.portForwarding {
-            viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
+
+        if propertiesManager.featureFlags.netShield {
+            // (width - traling - leading) / button number
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 4
+            viewController?.arrowHorizontalConstraint.constant = (oneButtonWidth + oneButtonWidth / 2)
         } else {
-            viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 5) + 12
+            // (width - traling - leading) / button number
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 3
+            viewController?.arrowHorizontalConstraint.constant = oneButtonWidth
         }
     }
 

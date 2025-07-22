@@ -60,10 +60,15 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsSecureCoreDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsSecureCoreNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+
         if propertiesManager.featureFlags.netShield {
-            viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 3) + 7
+            // (width - traling - leading) / button number
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 4
+            viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth + oneButtonWidth / 2)
         } else {
-            viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 5) - 12
+            // (width - traling - leading) / button number
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 36) / 3
+            viewController?.arrowHorizontalConstraint.constant = -oneButtonWidth
         }
     }
 
