@@ -69,4 +69,20 @@ extension NWInterface {
         }
         .eraseToStream()
     }
+
+    /// Monitor for a specific network interface by name
+    /// Returns an AsyncStream that continuously provides updates on the interface availability
+    /// When the interface is available, it returns the interface
+    /// When the interface is not available, it returns nil
+    static func monitorInterface(name interfaceName: String) async -> AsyncStream<NWInterface?> {
+        @Dependency(\.nwPathStream) var nwPathStream
+
+        let pathStream = nwPathStream()
+
+        return pathStream.map { path in
+            path.availableInterfaces
+                .first { $0.name == interfaceName }
+        }
+        .eraseToStream()
+    }
 }

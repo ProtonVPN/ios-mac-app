@@ -24,6 +24,8 @@ import NetworkExtension
 actor FlowHandlingManager {
     // MARK: Stored properties
 
+    private static let vpnUnavailableTimeout: Duration = .seconds(5)
+
     private let appIDs: Set<String>
     private let pluginIDs: Set<String>
     private let ipSet: Set<String>
@@ -33,17 +35,25 @@ actor FlowHandlingManager {
     /// Updated inside actor only. May be slightly stale.
     private nonisolated(unsafe) var networkInterface: NWInterface?
 
+    // Status management
+    private let onVpnUnavailable: @Sendable () -> Void
+
     // Handler storage
 
     private var activeTCPHandlers: Set<TCPFlowHandler> = []
     private var activeUDPHandlers: Set<UDPFlowHandler> = []
+
+    private var vpnNetworkInterfaceMonitorTask: Task<Void, Never>?
+    private var vpnUnavailableTimeoutTask: Task<Void, Never>?
 
     // Internet network interface monitoring for exclusion mode
     private var networkInterfaceMonitorTask: Task<Void, Never>?
 
     // MARK: Initialisation
 
-    init(vpnNetworkInterfaceName: String) async throws {
+    init(vpnNetworkInterfaceName: String, onVpnUnavailable: @escaping @Sendable () -> Void) async throws {
+        self.onVpnUnavailable = onVpnUnavailable
+
         @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
 
         guard case let .enabled(mode) = feature else {
@@ -80,6 +90,8 @@ actor FlowHandlingManager {
                             hasInitialInterface = true
                         } else {
                             log.error("No internet interface found before VPN with interface name \(vpnNetworkInterfaceName).")
+                            self?.onVpnUnavailable()
+                            return
                         }
                     }
                 }
@@ -99,15 +111,68 @@ actor FlowHandlingManager {
                     "FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface.name)."
                 )
         }
+
+        // Start monitoring VPN interface
+        startVPNInterfaceMonitoring(name: vpnNetworkInterfaceName)
+    }
+
+    private func startVPNInterfaceMonitoring(name vpnInterfaceName: String) {
+        vpnNetworkInterfaceMonitorTask?.cancel()
+
+        vpnNetworkInterfaceMonitorTask = Task { [weak self] in
+            guard let self else { return }
+
+            let vpnInterfaceStream = await NWInterface.monitorInterface(name: vpnInterfaceName)
+
+            // Monitor for interface disappearance
+            for await vpnInterface in vpnInterfaceStream {
+                if vpnInterface == nil {
+                    // Interface disappeared - start timeout
+                    log.warning("VPN interface \(vpnInterfaceName) is no longer available, starting \(Self.vpnUnavailableTimeout) seconds timeout...")
+                    await startVpnUnavailableTimeout()
+                } else {
+                    // Interface came back - cancel timeout
+                    log.info("VPN interface \(vpnInterfaceName) is back, cancelling timeout")
+                    await cancelVpnUnavailableTimeout()
+                }
+            }
+        }
+    }
+
+    private func startVpnUnavailableTimeout() {
+        guard vpnUnavailableTimeoutTask?.isCancelled != false else {
+            log.debug("VPN unavailable timeout already active, not restarting")
+            return
+        }
+
+        vpnUnavailableTimeoutTask = Task { [weak self] in
+            do {
+                try await Task.sleep(for: Self.vpnUnavailableTimeout)
+                guard !Task.isCancelled else { return }
+
+                // Timeout completed - interface still unavailable
+                log.warning("VPN interface timeout expired, calling onVpnUnavailable")
+                self?.onVpnUnavailable()
+            } catch {
+                log.error("VPN interface timeout task error: \(error)")
+            }
+        }
+    }
+
+    private func cancelVpnUnavailableTimeout() {
+        vpnUnavailableTimeoutTask?.cancel()
+        vpnUnavailableTimeoutTask = nil
     }
 
     private func add(_ handler: TCPFlowHandler) {
         activeTCPHandlers.insert(handler)
 
         // Start with cleanup callback
-        handler.start { [weak self] in
-            guard let self else { return }
-            await remove(handler)
+        Task {
+            await handler.start { [weak self] in
+                guard let self else { return }
+                await remove(handler)
+            }
         }
     }
 
@@ -115,9 +180,11 @@ actor FlowHandlingManager {
         activeUDPHandlers.insert(handler)
 
         // Start with cleanup callback
-        handler.start { [weak self] in
-            guard let self else { return }
-            await remove(handler)
+        Task {
+            await handler.start { [weak self] in
+                guard let self else { return }
+                await remove(handler)
+            }
         }
     }
 
@@ -131,20 +198,28 @@ actor FlowHandlingManager {
         activeUDPHandlers.remove(handler)
     }
 
-    private func cleanup() {
+    private func cleanup() async {
         for handler in activeTCPHandlers {
-            handler.stop()
+            await handler.stop()
         }
         activeTCPHandlers.removeAll()
 
         for handler in activeUDPHandlers {
-            handler.stop()
+            await handler.stop()
         }
         activeUDPHandlers.removeAll()
 
         // Cancel network interface monitoring
         networkInterfaceMonitorTask?.cancel()
         networkInterfaceMonitorTask = nil
+
+        // Cancel VPN monitoring as well
+        vpnNetworkInterfaceMonitorTask?.cancel()
+        vpnNetworkInterfaceMonitorTask = nil
+
+        // Cancel VPN unavailable timeout
+        vpnUnavailableTimeoutTask?.cancel()
+        vpnUnavailableTimeoutTask = nil
     }
 
     private func updateNetworkInterface(_ interface: NWInterface?) {
@@ -197,7 +272,9 @@ actor FlowHandlingManager {
     }
 
     nonisolated func cleanupAllHandlers() {
-        Task { await cleanup() }
+        Task {
+            await cleanup()
+        }
     }
 
     // MARK: Helper
