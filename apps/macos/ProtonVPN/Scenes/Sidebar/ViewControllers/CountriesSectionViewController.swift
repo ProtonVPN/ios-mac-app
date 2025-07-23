@@ -238,7 +238,7 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
             (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
-            (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3),
+//            (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3), // TODO: enable in the wiring
         ].forEach { presenter, container, button, index in
             let vc: NSViewController = if index == 1 {
                 QuickSettingDetailNetShieldViewController(presenter)
@@ -373,9 +373,11 @@ final class CountriesSectionViewController: NSViewController {
         case 2:
             let finalValue = killSwitchContainer.isHidden
             didDisplayQuickSetting(.killSwitchDisplay, appear: finalValue)
-        default:
+        case 3:
             let finalValue = portForwardingContainer.isHidden
             didDisplayQuickSetting(.portForwardingDisplay, appear: finalValue)
+        default:
+            return
         }
     }
 

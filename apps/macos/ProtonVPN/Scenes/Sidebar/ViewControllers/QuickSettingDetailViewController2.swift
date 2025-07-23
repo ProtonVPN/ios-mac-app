@@ -149,15 +149,13 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
 
     private var buttonsAndNoteView: NSStackView = .init().with {
         $0.orientation = .vertical
-        $0.alignment = .width
+        $0.alignment = .centerX
         $0.spacing = 16
         $0.distribution = .fillProportionally
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
     lazy var dropdownDescriptionTopViewConstraint: NSLayoutConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
-    private lazy var upgradeTopConstraint: NSLayoutConstraint = dropdownUpgradeButton.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16)
-    private lazy var upgradeBottomConstraint: NSLayoutConstraint = dropdownNoteStackView.topAnchor.constraint(equalTo: dropdownUpgradeButton.bottomAnchor, constant: 20)
 
     private var detailBox: NSBox = .init().with {
         $0.boxType = .custom
@@ -228,14 +226,11 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         // Learn more button
         contentBox.addSubview(dropdownLearnMore)
 
-        // Upgrade button
-        contentBox.addSubview(dropdownUpgradeButton)
-
         // Note text field
         [dropdownNoteImageView, dropdownNote].forEach(dropdownNoteStackView.addArrangedSubview)
 
         // Options view + note
-        [dropdownOptionsView, dropdownNoteStackView].forEach(buttonsAndNoteView.addArrangedSubview)
+        [dropdownOptionsView, dropdownUpgradeButton, dropdownNoteStackView].forEach(buttonsAndNoteView.addArrangedSubview)
         contentBox.addSubview(buttonsAndNoteView)
     }
 
@@ -282,7 +277,7 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
             buttonsAndNoteView.bottomAnchor.constraint(equalTo: contentBox.bottomAnchor, constant: -16),
 
             // Upgrade button constraints
-            dropdownUpgradeButton.centerXAnchor.constraint(equalTo: contentBox.centerXAnchor),
+            dropdownUpgradeButton.heightAnchor.constraint(equalToConstant: 33),
 
             dropdownOptionsView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor),
             dropdownNoteStackView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor),
@@ -332,12 +327,6 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
             return view!
         }
 
-        upgradeTopConstraint.isActive = needsUpgrade
-        upgradeBottomConstraint.isActive = needsUpgrade
-
-        dropdownNoteStackView.isHidden = dropdownNote.attributedStringValue.length < 1
-
-        dropdownUpgradeButton.isHidden = !needsUpgrade
         dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
         for view in views {
             dropdownOptionsView.addArrangedSubview(view)
@@ -345,6 +334,9 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
                 view.widthAnchor.constraint(equalTo: dropdownOptionsView.widthAnchor),
             ])
         }
+
+        dropdownUpgradeButton.isHidden = !needsUpgrade
+        dropdownNoteStackView.isHidden = dropdownNote.attributedStringValue.length < 1
     }
 }
 
