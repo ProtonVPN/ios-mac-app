@@ -118,15 +118,32 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         $0.setAccessibilityIdentifier("QSNote")
     }
 
+    var dropdownNoteImageView: NSImageView = .init().with {
+        $0.image = AppTheme.Icon.exclamationTriangleFilled
+        $0.wantsLayer = true
+        $0.contentTintColor = .color(.icon, .warning)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imageScaling = .scaleProportionallyUpOrDown
+        $0.isHidden = true
+        $0.setContentHuggingPriority(.required, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+
+    var dropdownNoteStackView: NSStackView = .init().with {
+        $0.orientation = .horizontal
+        $0.alignment = .top
+        $0.spacing = 8
+        $0.distribution = .fillProportionally
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
     private var dropdownOptionsView: NSView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
     lazy var dropdownOptionsTopViewConstraint: NSLayoutConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
-    private lazy var dropdownOptionsBottomViewConstraint: NSLayoutConstraint = dropdownOptionsView.bottomAnchor.constraint(greaterThanOrEqualTo: contentBox.bottomAnchor, constant: -16)
-    private lazy var noteTopConstraint: NSLayoutConstraint = dropdownNote.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16)
     private lazy var upgradeTopConstraint: NSLayoutConstraint = dropdownUpgradeButton.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16)
-    private lazy var upgradeBottomConstraint: NSLayoutConstraint = dropdownNote.topAnchor.constraint(equalTo: dropdownUpgradeButton.bottomAnchor, constant: 20)
+    private lazy var upgradeBottomConstraint: NSLayoutConstraint = dropdownNoteStackView.topAnchor.constraint(equalTo: dropdownUpgradeButton.bottomAnchor, constant: 20)
 
     private var detailBox: NSBox = .init().with {
         $0.boxType = .custom
@@ -204,7 +221,8 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         contentBox.addSubview(dropdownUpgradeButton)
 
         // Note text field
-        contentBox.addSubview(dropdownNote)
+        [dropdownNoteImageView, dropdownNote].forEach(dropdownNoteStackView.addArrangedSubview)
+        contentBox.addSubview(dropdownNoteStackView)
     }
 
     // MARK: - Setup Constraints
@@ -247,22 +265,19 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
             dropdownOptionsView.topAnchor.constraint(equalTo: dropdownLearnMore.bottomAnchor, constant: 12),
             dropdownOptionsView.leadingAnchor.constraint(equalTo: dropdownLearnMore.leadingAnchor),
             dropdownOptionsView.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
-            dropdownOptionsBottomViewConstraint,
 
             // Upgrade button constraints
             dropdownUpgradeButton.centerXAnchor.constraint(equalTo: contentBox.centerXAnchor),
 
             // Note text field constraints
-            dropdownNote.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
-            dropdownNote.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
-            dropdownNote.bottomAnchor.constraint(equalTo: contentBox.bottomAnchor, constant: -16),
+            dropdownNoteStackView.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16),
+            dropdownNoteStackView.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
+            dropdownNoteStackView.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
+            dropdownNoteStackView.bottomAnchor.constraint(equalTo: contentBox.bottomAnchor, constant: -16),
         ])
 
         // Arrow horizontal constraint
         arrowHorizontalConstraint.isActive = true
-
-        // Note top constraint
-        noteTopConstraint.priority = NSLayoutConstraint.Priority(750)
 
         // Alternative description constraint
         let alternativeDescriptionConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
@@ -308,8 +323,7 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         upgradeTopConstraint.isActive = needsUpgrade
         upgradeBottomConstraint.isActive = needsUpgrade
 
-        noteTopConstraint.isActive = dropdownNote.attributedStringValue.length > 0
-        dropdownOptionsBottomViewConstraint.isActive = dropdownNote.attributedStringValue.length < 1
+        dropdownNote.isHidden = dropdownNote.attributedStringValue.length < 1
 
         dropdownUpgradeButton.isHidden = !needsUpgrade
         dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
