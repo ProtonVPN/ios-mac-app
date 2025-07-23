@@ -39,13 +39,14 @@
 
         public static let liveValue = PlutoniumManager(
             start: {
-                let manager = try await makeOrGetManager()
+                @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                let manager = try await getManager(providerConfig: feature.toProviderConfigurationDictionary())
                 try manager.connection.startVPNTunnel()
                 log.info("Plutonium started")
             },
             stop: {
                 updateAppliedConfiguration()
-                let manager = try await makeOrGetManager()
+                let manager = try await getManager()
                 guard manager.connection.status == .connected else { return }
                 manager.connection.stopVPNTunnel()
                 log.info("Plutonium stopped")
@@ -57,40 +58,53 @@
             stop: {}
         )
 
-        private static func makeOrGetManager() async throws -> NETransparentProxyManager {
-            // 1. load everything
+        private static func getManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
+            // 1. load all saved managers
             let managers = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[NETransparentProxyManager], Error>) in
                 NETransparentProxyManager.loadAllFromPreferences { list, error in
-                    if let error { continuation.resume(throwing: error) }
-                    else { continuation.resume(returning: list ?? []) }
-                }
-            }
-
-            // 2. find an existing one
-            if let existing = managers.firstMatching(bundleId: bundleId) {
-                return existing
-            }
-
-            // 3. create + save + load a brand-new one
-            let newManager = NETransparentProxyManager()
-            let config = NETunnelProviderProtocol()
-            config.providerBundleIdentifier = bundleId
-            config.serverAddress = "127.0.0.1"
-            newManager.protocolConfiguration = config
-            newManager.localizedDescription = descriptionText
-            newManager.isEnabled = true
-
-            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-                newManager.saveToPreferences { saveError in
-                    if let saveError {
-                        continuation.resume(throwing: saveError)
-                        return
+                    if let error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: list ?? [])
                     }
-                    continuation.resume(returning: ())
                 }
             }
 
-            return newManager
+            // 2. find or create
+            let manager: NETransparentProxyManager
+            if let existing = managers.first(where: {
+                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
+                    .providerBundleIdentifier == bundleId
+            }) {
+                manager = existing
+                if let protocolConfig = manager.protocolConfiguration as? NETunnelProviderProtocol {
+                    protocolConfig.providerConfiguration = providerConfig
+                    manager.protocolConfiguration = protocolConfig
+                }
+            } else {
+                let newManager = NETransparentProxyManager()
+                let protocolConfig = NETunnelProviderProtocol()
+                protocolConfig.providerBundleIdentifier = bundleId
+                protocolConfig.serverAddress = "127.0.0.1"
+                protocolConfig.providerConfiguration = providerConfig
+                newManager.protocolConfiguration = protocolConfig
+                newManager.localizedDescription = descriptionText
+                newManager.isEnabled = true
+                manager = newManager
+            }
+
+            // 3. save the updated manager
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                manager.saveToPreferences { error in
+                    if let error {
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume(returning: ())
+                    }
+                }
+            }
+
+            return manager
         }
 
         private static func updateAppliedConfiguration() {

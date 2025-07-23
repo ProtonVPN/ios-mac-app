@@ -36,7 +36,7 @@
     }
 
     public enum PlutoniumFeatureToggle: Codable, Equatable {
-        public enum Mode: CaseIterable, Codable {
+        public enum Mode: String, CaseIterable, Codable {
             case exclusion
             case inclusion
         }

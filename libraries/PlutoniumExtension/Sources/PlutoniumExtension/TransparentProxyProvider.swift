@@ -24,24 +24,28 @@ import PMLogger
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
-    override public init() {
-        super.init()
-        setupLogs()
-    }
-
-    @SharedReader(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
     private var flowHandlingManager: FlowHandlingManager?
 
     override open func startProxy(options _: [String: Any]?, completionHandler: @escaping (Error?) -> Void) {
-        log.info("Starting proxy provider.")
-        guard case .enabled = feature else {
-            log.warning("Plutonium feature is not enabled. Should not have started proxy provider.")
-            completionHandler(PlutoniumError.featureDisabled)
-            stopProxy(with: .none, completionHandler: {})
+        guard
+            let tunnelProto = protocolConfiguration as? NETunnelProviderProtocol,
+            let rawConfig = tunnelProto.providerConfiguration,
+            let configuration: PlutoniumProviderConfiguration = {
+                do {
+                    return try PlutoniumProviderConfiguration(from: rawConfig)
+                } catch {
+                    log.error("Failed to parse provider configuration: \(error)")
+                    return nil
+                }
+            }()
+        else {
+            completionHandler(PlutoniumError.noConfigurationFound)
             return
         }
 
         let settings = Self.createNetworkSettings(capturingTraffic: true)
+        log.info("Starting proxy provider.")
+
         setTunnelNetworkSettings(settings) { [weak self] error in
             if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
@@ -74,6 +78,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                     do {
                         let manager = try await FlowHandlingManager(
                             vpnNetworkInterfaceName: vpnNetworkInterfaceName,
+                            plutoniumConfiguration: configuration,
                             onVpnUnavailable: sendableVpnUnavailableCallback.call
                         )
                         sendableCompletion.call(nil, manager: manager)
@@ -145,17 +150,6 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
 
         return settings
-    }
-
-    private func setupLogs() {
-        // TODO: VPNAPPL-2789: Define dependency container for the logFileManager.
-        let logFile = PMLogger.LogFileManagerImplementation().getFileUrl(named: "Proton-Plutonium.log")
-
-        let fileLogHandler = FileLogHandler(logFile)
-        let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
-        let multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
-
-        LoggingSystem.bootstrap { _ in multiplexLogHandler }
     }
 
     // MARK: - Helpers

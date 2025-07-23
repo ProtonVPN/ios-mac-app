@@ -17,6 +17,7 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 enum PlutoniumError: Error {
+    case noConfigurationFound
     case featureDisabled
     case vpnInterfaceNotFound
     case xpcConnectionError
