@@ -33,7 +33,7 @@ class QuickSettingDetailNetShieldViewController: QuickSettingDetailViewControlle
         // NetShield stats container
         contentBox.addSubview(netShieldStatsContainer)
 
-        dropdownOptionsTopViewConstraint.isActive = false
+        dropdownDescriptionTopViewConstraint.isActive = false
         NSLayoutConstraint.activate([
             // NetShield stats container constraints
             netShieldStatsContainer.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16),
