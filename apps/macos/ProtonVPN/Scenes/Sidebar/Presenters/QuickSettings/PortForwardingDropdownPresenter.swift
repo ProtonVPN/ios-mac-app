@@ -29,12 +29,11 @@ import VPNAppCore
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString
@@ -43,6 +42,10 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     override var title: String! {
         Localizable.portForwarding
     }
+
+//    override var alert: UpsellAlert {
+//        PortForwardingUpsellAlert()
+//    }
 
     init(_ factory: Factory) {
         self.factory = factory
