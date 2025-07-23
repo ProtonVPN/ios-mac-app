@@ -453,7 +453,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
         @Shared(.killSwitch) var killSwitch: Bool
-        $killSwitch.publisher.receive(on: RunLoop.main).sink { [weak self] _ in
+        $killSwitch.publisher.removeDuplicates().receive(on: RunLoop.main).sink { [weak self] _ in
             self?.killSwitchChanged()
         }.store(in: &cancellables)
     }
