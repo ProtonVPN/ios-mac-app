@@ -52,7 +52,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingsDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOptionPresenter] {
         [secureCoreOff, secureCoreOn]
     }
 

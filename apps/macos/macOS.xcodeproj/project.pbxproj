@@ -15,7 +15,7 @@
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
 		42082671256BC3B900A621EC /* BlockableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockableScrollView.swift */; };
 		421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */; };
-		42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */; };
+		42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */; };
 		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
 		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
 		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
@@ -113,6 +113,7 @@
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
+		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
 		AD6AE1522AA8AC2A0076B083 /* ClickthroughTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */; };
@@ -583,7 +584,7 @@
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
 		42082670256BC3B900A621EC /* BlockableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockableScrollView.swift; sourceTree = "<group>"; };
 		421E42612639788000AE6AF9 /* CountriesServersHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesServersHeaderViewModel.swift; sourceTree = "<group>"; };
-		42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsDropdownOptionPresenter.swift; sourceTree = "<group>"; };
+		42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDropdownOptionPresenter.swift; sourceTree = "<group>"; };
 		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
 		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
@@ -659,6 +660,7 @@
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
+		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
 		AD6AE1512AA8AC2A0076B083 /* ClickthroughTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickthroughTextField.swift; sourceTree = "<group>"; };
@@ -2339,11 +2341,12 @@
 			isa = PBXGroup;
 			children = (
 				42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */,
-				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
+				42314C69255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift */,
 				42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */,
+				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
+				A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */,
 				42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */,
 				A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */,
-				42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */,
 			);
 			path = QuickSettings;
 			sourceTree = "<group>";
@@ -3377,7 +3380,7 @@
 				E5DA73CB2DCCF4F50057B273 /* LinkPointer.swift in Sources */,
 				421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */,
 				E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */,
-				42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */,
+				42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */,
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
 				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
@@ -3434,6 +3437,7 @@
 				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
+				A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
 				66FC40D32DA94A7D0010CD8D /* HermesViewModel.swift in Sources */,

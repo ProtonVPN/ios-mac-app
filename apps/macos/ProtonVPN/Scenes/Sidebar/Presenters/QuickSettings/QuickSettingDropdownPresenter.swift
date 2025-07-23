@@ -31,7 +31,7 @@ protocol QuickSettingDropdownPresenterProtocol: AnyObject {
     var title: String! { get }
 
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
-    var options: [QuickSettingsDropdownOptionPresenter] { get }
+    var options: [QuickSettingDropdownOptionPresenter] { get }
     var dismiss: (() -> Void)? { get set }
 
     func viewDidLoad()
@@ -64,7 +64,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         AppEvent.planChanged.subscribe(self, selector: #selector(vpnPlanChanged))
     }
 
-    var options: [QuickSettingsDropdownOptionPresenter] {
+    var options: [QuickSettingDropdownOptionPresenter] {
         []
     }
 

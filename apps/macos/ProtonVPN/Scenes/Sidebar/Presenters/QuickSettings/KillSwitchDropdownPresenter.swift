@@ -53,7 +53,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingsDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOptionPresenter] {
         [killSwitchOff, killSwitchOn]
     }
 
