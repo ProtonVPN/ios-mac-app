@@ -57,23 +57,21 @@ class HoverDetectionButton: NSButton {
         }
     }
 
+    // MARK: - Life cycle
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        layer?.masksToBounds = false
-
-        isBordered = false
-        setButtonType(.momentaryChange)
-
-        addMouseTracking()
+        setupView()
     }
 
-    private func addMouseTracking() {
-        trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setupView()
     }
 
-    func trackingOptions() -> NSTrackingArea.Options {
-        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
 
     override func updateTrackingAreas() {
@@ -105,5 +103,24 @@ class HoverDetectionButton: NSButton {
 
     override func accessibilityRole() -> NSAccessibility.Role? {
         .button
+    }
+
+    // MARK: - Private
+
+    private func setupView() {
+        layer?.masksToBounds = false
+
+        isBordered = false
+        setButtonType(.momentaryChange)
+
+        addMouseTracking()
+    }
+
+    private func addMouseTracking() {
+        trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
+    }
+
+    func trackingOptions() -> NSTrackingArea.Options {
+        [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
 }

@@ -240,7 +240,7 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
             (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3),
         ].forEach { presenter, container, button, index in
-            let vc = QuickSettingDetailViewController(presenter)
+            let vc = QuickSettingDetailViewController2(presenter)
             vc.viewWillAppear()
             container?.addSubview(vc.view)
             container?.heightAnchor.constraint(equalTo: vc.view.heightAnchor).isActive = true
@@ -256,6 +256,7 @@ final class CountriesSectionViewController: NSViewController {
             }
             self.addChild(vc)
         }
+        // hides netshiled quick setting button
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
     }
@@ -335,7 +336,7 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingAlertBage() {
-        // TODO: wire in wiring task
+        // TODO: wire in the wiring task
         if false {
             portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
             portForwardingWarningImage?.isHidden = false
