@@ -21,7 +21,6 @@ import SwiftUI
 
 import Ergonomics
 import LegacyCommon
-import NetShield
 import Strings
 import Theme
 
@@ -46,9 +45,11 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.animates = true
         $0.cell?.setAccessibilityElement(false)
+        $0.imageScaling = .scaleAxesIndependently
     }
 
     lazy var arrowHorizontalConstraint: NSLayoutConstraint = arrowIV.centerXAnchor.constraint(equalTo: contentBox.centerXAnchor)
+
     var contentBox: NSBox = .init().with {
         $0.boxType = .custom
         $0.cornerRadius = 4
@@ -121,18 +122,11 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
+    lazy var dropdownOptionsTopViewConstraint: NSLayoutConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
     private lazy var dropdownOptionsBottomViewConstraint: NSLayoutConstraint = dropdownOptionsView.bottomAnchor.constraint(greaterThanOrEqualTo: contentBox.bottomAnchor, constant: -16)
     private lazy var noteTopConstraint: NSLayoutConstraint = dropdownNote.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16)
     private lazy var upgradeTopConstraint: NSLayoutConstraint = dropdownUpgradeButton.topAnchor.constraint(equalTo: dropdownOptionsView.bottomAnchor, constant: 16)
     private lazy var upgradeBottomConstraint: NSLayoutConstraint = dropdownNote.topAnchor.constraint(equalTo: dropdownUpgradeButton.bottomAnchor, constant: 20)
-
-    // Move to netshield class
-    private var netShieldStatsContainer: NSView = .init().with {
-        $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    let presenter: QuickSettingDropdownPresenterProtocol
-    var netShieldStatsView = NSHostingView(rootView: NetShieldStatsView())
 
     private var detailBox: NSBox = .init().with {
         $0.boxType = .custom
@@ -142,6 +136,8 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         $0.fillColor = NSColor(white: 1, alpha: 0.0)
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
+
+    let presenter: QuickSettingDropdownPresenterProtocol
 
     // MARK: - Life cycle
 
@@ -175,7 +171,6 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         super.viewDidLoad()
         setupViews()
         setupConstraints()
-        setupNetShieldStatsContainer() // TODO: move to netshield class controller
 
         presenter.viewDidLoad()
         reloadOptions()
@@ -195,9 +190,6 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
 
         // Title text field
         contentBox.addSubview(dropdownTitle)
-
-        // NetShield stats container
-        contentBox.addSubview(netShieldStatsContainer)
 
         // Description text field
         contentBox.addSubview(dropdownDescription)
@@ -241,14 +233,8 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
             dropdownTitle.leadingAnchor.constraint(equalTo: contentBox.leadingAnchor, constant: 16),
             dropdownTitle.trailingAnchor.constraint(equalTo: contentBox.trailingAnchor, constant: -16),
 
-            // NetShield stats container constraints
-            netShieldStatsContainer.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16),
-            netShieldStatsContainer.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
-            netShieldStatsContainer.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
-            netShieldStatsContainer.heightAnchor.constraint(equalToConstant: 72),
-
             // Description text field constraints
-            dropdownDescription.topAnchor.constraint(equalTo: netShieldStatsContainer.bottomAnchor, constant: 16),
+            dropdownOptionsTopViewConstraint,
             dropdownDescription.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
             dropdownDescription.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
 
@@ -286,27 +272,7 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
 
     // MARK: - Utils
 
-    private func setupNetShieldStatsContainer() {
-        guard let netShieldPresenter = presenter as? NetshieldDropdownPresenter,
-              netShieldPresenter.isNetShieldStatsEnabled else {
-            netShieldStatsContainer.removeFromSuperview()
-            return
-        }
-        netShieldStatsView.translatesAutoresizingMaskIntoConstraints = false
-        netShieldStatsContainer.addSubview(netShieldStatsView)
-        NSLayoutConstraint.activate([
-            netShieldStatsContainer.topAnchor.constraint(equalTo: netShieldStatsView.topAnchor),
-            netShieldStatsContainer.bottomAnchor.constraint(equalTo: netShieldStatsView.bottomAnchor),
-            netShieldStatsContainer.leadingAnchor.constraint(equalTo: netShieldStatsView.leadingAnchor),
-            netShieldStatsContainer.trailingAnchor.constraint(equalTo: netShieldStatsView.trailingAnchor),
-        ])
-    }
-
-    func updateNetshieldStats() {
-        if let model = (presenter as? NetshieldDropdownPresenter)?.netShieldViewModel {
-            netShieldStatsView.rootView.viewModel = model
-        }
-    }
+    func updateNetshieldStats() {}
 
     func reloadOptions() {
         var needsUpgrade = false

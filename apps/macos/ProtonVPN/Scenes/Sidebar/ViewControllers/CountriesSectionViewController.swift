@@ -240,7 +240,11 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
             (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3),
         ].forEach { presenter, container, button, index in
-            let vc = QuickSettingDetailViewController2(presenter)
+            let vc: NSViewController = if index == 1 {
+                QuickSettingDetailNetShieldViewController(presenter)
+            } else {
+                QuickSettingDetailViewController2(presenter)
+            }
             vc.viewWillAppear()
             container?.addSubview(vc.view)
             container?.heightAnchor.constraint(equalTo: vc.view.heightAnchor).isActive = true
