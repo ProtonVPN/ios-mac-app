@@ -51,6 +51,7 @@ final class SettingsViewModel {
         ConnectionStatusServiceFactory &
         CoreAlertServiceFactory &
         NATTypePropertyProviderFactory &
+        NavigationServiceFactory &
         NetShieldPropertyProviderFactory &
         NetworkingFactory &
         PaymentsApiServiceFactory &
@@ -75,6 +76,7 @@ final class SettingsViewModel {
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var natTypePropertyProvider: NATTypePropertyProvider = factory.makeNATTypePropertyProvider()
+    private lazy var navigationService: NavigationService = factory.makeNavigationService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
@@ -233,6 +235,17 @@ final class SettingsViewModel {
     }
 
     private var accountSection: TableViewSection {
+        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        guard !userIsCredentialLess else {
+            let newAccountCardCell = TableViewCellModel.newAccountCard(handler: { [weak self] action in
+                switch action {
+                case .signUp: self?.presentSignUpScreen()
+                case .signIn: self?.presentSignInScreen()
+                }
+            })
+            return TableViewSection(title: Localizable.account, cells: [newAccountCardCell])
+        }
+
         let username: String = authKeychain.username ?? Localizable.unavailable
         let accountPlanName: String = if let vpnCredentials = try? vpnKeychain.fetchCached() {
             vpnCredentials.planTitle
@@ -710,14 +723,19 @@ final class SettingsViewModel {
     }
 
     private var bottomSection: TableViewSection {
-        let cells: [TableViewCellModel] = [
-            .button(title: Localizable.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
+        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        var cells: [TableViewCellModel] = [
+            .button(title: Localizable.reportBug, accessibilityIdentifier: Localizable.reportBug, color: .normalTextColor(), handler: { [reportBug] in
                 reportBug()
             }),
-            .button(title: Localizable.logOut, accessibilityIdentifier: "Sign out", color: .notificationErrorColor(), handler: { [logOut] in
-                logOut()
-            }),
         ]
+        if !userIsCredentialLess {
+            cells.append(
+                .button(title: Localizable.logOut, accessibilityIdentifier: Localizable.logOut, color: .notificationErrorColor(), handler: { [logOut] in
+                    logOut()
+                })
+            )
+        }
 
         return TableViewSection(title: "", cells: cells)
     }
@@ -1084,6 +1102,14 @@ final class SettingsViewModel {
                 vpnGateway.reconnect(with: value)
             }
         }
+    }
+
+    private func presentSignUpScreen() {
+        navigationService.presentSignUp()
+    }
+
+    private func presentSignInScreen() {
+        navigationService.presentLogin()
     }
 }
 

@@ -197,6 +197,20 @@ final class NavigationService {
         tabBarController?.setViewControllers([], animated: false)
     }
 
+    func presentLogin(flow: LoginFlowType = .normal) {
+        guard let tabBarController else { return }
+        loginService.presentLoginFlow(over: tabBarController, flow: flow)
+    }
+
+    func presentSignUp() {
+        guard let tabBarController else { return }
+        presentSignUp(over: tabBarController)
+    }
+
+    func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
+        loginService.presentSignUpFlow(over: uiViewController, flow: flow)
+    }
+
     func switchTab(index: Int) {
         guard index >= 0, index < tabBarController?.viewControllers?.count ?? 0 else {
             return
@@ -457,7 +471,7 @@ extension NavigationService: SettingsService {
             return nil
         }
         userInfo.passwordMode = userSettings.password.mode.rawValue
-        userInfo.twoFactor = userSettings.twoFactor.type.rawValue
+        userInfo.twoFactor = userSettings._2FA.enabled.rawValue
         return PasswordChangeModule.makePasswordChangeViewController(
             mode: mode,
             apiService: networking.apiService,

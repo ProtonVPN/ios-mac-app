@@ -22,6 +22,7 @@
 
 import LegacyCommon
 import NetShield
+import SwiftUI
 import UIKit
 
 enum TableViewCellModel {
@@ -70,6 +71,7 @@ enum TableViewCellModel {
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
     case netShieldStats(viewModel: NetShieldModel)
+    case newAccountCard(handler: (NewAccountCardView.Action) -> Void)
 }
 
 protocol ButtonWithLoadingIndicatorController: AnyObject {
@@ -121,6 +123,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(ImageSubtitleTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleTableViewCell.identifier)
         tableView.register(ImageSubtitleImageTableViewCell.nib, forCellReuseIdentifier: ImageSubtitleImageTableViewCell.identifier)
         tableView.register(NetShieldStatsTableViewCell.nib, forCellReuseIdentifier: NetShieldStatsTableViewCell.identifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: NewAccountCardView.identifier)
     }
 
     public func update(rows: [IndexPath: TableViewCellModel]) {
@@ -367,6 +370,13 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.setup(with: viewModel)
 
             return cell
+        case let .newAccountCard(handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NewAccountCardView.identifier) else { return UITableViewCell() }
+            cell.contentConfiguration = UIHostingConfiguration { NewAccountCardView(actionHandler: handler) }
+            cell.backgroundColor = .backgroundColor()
+            cell.selectionStyle = .none
+
+            return cell
         }
     }
 
@@ -399,6 +409,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         case .imageSubtitleImage:
             -1
         case .netShieldStats:
+            UITableView.automaticDimension
+        case .newAccountCard:
             UITableView.automaticDimension
         default:
             UIConstants.cellHeight

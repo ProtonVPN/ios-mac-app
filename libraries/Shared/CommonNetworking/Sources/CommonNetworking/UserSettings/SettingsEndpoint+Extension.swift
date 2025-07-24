@@ -17,14 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreAPIClient
 import ProtonCoreNetworking
+import ProtonCoreServices
 
-final class UserSettingsRequest: Request {
-    var path: String {
-        "/core/v4/settings"
-    }
-
+extension SettingsEndpoint {
     var retryPolicy: ProtonRetryPolicy.RetryMode {
         .background
     }

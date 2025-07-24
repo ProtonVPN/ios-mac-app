@@ -117,6 +117,10 @@ private class WindowServiceMock: WindowService {
 }
 
 private class IosAlertServiceFactoryMock: IosAlertService.Factory {
+    func makeNavigationService() -> NavigationService {
+        NavigationService(DependencyContainer())
+    }
+
     func makeUIAlertService() -> UIAlertService {
         uiAlertService
     }

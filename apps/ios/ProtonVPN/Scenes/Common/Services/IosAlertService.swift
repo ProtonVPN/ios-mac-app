@@ -40,6 +40,7 @@ import Strings
 final class IosAlertService {
     typealias Factory =
         AppSessionManagerFactory &
+        NavigationServiceFactory &
         PlanServiceFactory &
         SettingsServiceFactory &
         TroubleshootCoordinatorFactory & UIAlertServiceFactory &
@@ -51,11 +52,13 @@ final class IosAlertService {
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
+    private lazy var navigationService: NavigationService = factory.makeNavigationService()
 
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var modalsFactory: ModalsFactory = .init()
 
     private var oneClickPayment: OneClickPayment?
+    private var oneClickIapVC: UIViewController?
 
     @ConcurrentlyReadable private var upsellAlerts: [UUID: UpsellAlert] = [:]
 
@@ -98,6 +101,9 @@ extension IosAlertService: CoreAlertService {
             show(refreshTokenExpiredAlert)
 
         case is UpgradeUnavailableAlert:
+            showDefaultSystemAlert(alert)
+
+        case is UpgradeCreateAccountAlert:
             showDefaultSystemAlert(alert)
 
         case is DelinquentUserAlert:
@@ -358,7 +364,11 @@ extension IosAlertService: CoreAlertService {
                 alertService: self,
                 windowService: windowService,
                 planService: planService,
-                payments: planService.payments
+                payments: planService.payments,
+                createAccountFirstClosure: { [weak self] in
+                    guard let oneClickIapVC = self?.oneClickIapVC else { return }
+                    self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+                }
             )
         } catch {
             log.error("Unexpected payments error: \(error)")
@@ -369,7 +379,7 @@ extension IosAlertService: CoreAlertService {
             self?.windowService.dismissModal(nil)
         }
 
-        let viewController = modalsFactory.upsellViewController(
+        let oneClickIapVC = modalsFactory.upsellViewController(
             modalType: modalType,
             client: oneClickPayment.plansClient(
                 validationHandler: { planOption, iapPlan in
@@ -386,10 +396,11 @@ extension IosAlertService: CoreAlertService {
                 }
             )
         )
-        viewController.modalPresentationStyle = .overFullScreen
+        oneClickIapVC.modalPresentationStyle = .overFullScreen
         self.oneClickPayment = oneClickPayment
+        self.oneClickIapVC = oneClickIapVC
 
-        windowService.present(modal: viewController)
+        windowService.present(modal: oneClickIapVC)
         AppEvent.upsellAlertWasDisplayed.post(alert.modalSource)
     }
 
