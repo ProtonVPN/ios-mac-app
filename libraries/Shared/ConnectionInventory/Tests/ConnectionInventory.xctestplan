@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "DB98C665-1945-4EE7-B648-4EA16DD304CD",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ConnectionInventoryTests",
+        "name" : "ConnectionInventoryTests"
+      }
+    }
+  ],
+  "version" : 1
+}

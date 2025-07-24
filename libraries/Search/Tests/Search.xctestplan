@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "974BD799-EAE6-46ED-AB9C-1FE82035AF8A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
+      }
+    }
+  ],
+  "version" : 1
+}

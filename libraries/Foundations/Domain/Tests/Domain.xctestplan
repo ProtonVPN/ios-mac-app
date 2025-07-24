@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "CA9BBC59-9E83-48A7-93AB-945A48418958",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    }
+  ],
+  "version" : 1
+}

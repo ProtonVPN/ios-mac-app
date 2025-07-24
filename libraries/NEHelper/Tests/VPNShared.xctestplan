@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "AFEF1DA8-3814-4FFB-9D40-86BAF099516D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
+      }
+    }
+  ],
+  "version" : 1
+}

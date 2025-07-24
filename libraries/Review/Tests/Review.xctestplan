@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "1D17A84F-EA24-455E-ABD9-66683C09597C",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ReviewTests",
+        "name" : "ReviewTests"
+      }
+    }
+  ],
+  "version" : 1
+}

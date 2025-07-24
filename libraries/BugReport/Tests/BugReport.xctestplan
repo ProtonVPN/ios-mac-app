@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "DB09A680-E77F-4B29-9F65-FA21476C8491",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
+      }
+    }
+  ],
+  "version" : 1
+}

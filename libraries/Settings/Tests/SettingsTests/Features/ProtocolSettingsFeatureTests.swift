@@ -21,16 +21,17 @@ import XCTest
 import ComposableArchitecture
 
 @testable import Settings
+@testable import SettingsShared
 
 @MainActor
 final class ProtocolSettingsTests: XCTestCase {
     func testProtocolSetWhenDisconnected() async throws {
         let store = TestStore(
-            initialState: ProtocolSettingsFeature.State(protocol: .smartProtocol, reconnectionAlert: nil)
+            initialState: ProtocolSettingsFeature
+                .State(protocol: .smartProtocol, vpnConnectionStatus: .disconnected, reconnectionAlert: nil)
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.vpnConnectionStatus = { .disconnected }
             $0.settingsStorage = .init(setConnectionProtocol: { _ in })
         }
 
@@ -43,11 +44,14 @@ final class ProtocolSettingsTests: XCTestCase {
 
     func testProtocolNotSetWhenStorageThrowsError() async throws {
         let store = TestStore(
-            initialState: ProtocolSettingsFeature.State(protocol: .smartProtocol, reconnectionAlert: nil)
+            initialState: ProtocolSettingsFeature.State(
+                protocol: .smartProtocol,
+                vpnConnectionStatus: .disconnected,
+                reconnectionAlert: nil
+            )
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.vpnConnectionStatus = { .disconnected }
             $0.settingsStorage = .init(setConnectionProtocol: { _ in throw "Something went wrong" })
         }
 
@@ -58,11 +62,14 @@ final class ProtocolSettingsTests: XCTestCase {
 
     func testAlertShownWhenConnected() async throws {
         let store = TestStore(
-            initialState: ProtocolSettingsFeature.State(protocol: .smartProtocol, reconnectionAlert: nil)
+            initialState: ProtocolSettingsFeature.State(
+                protocol: .smartProtocol,
+                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
+                reconnectionAlert: nil
+            )
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.vpnConnectionStatus = { .connected(.init(location: .fastest, features: Set())) }
             $0.settingsStorage = .init(setConnectionProtocol: { _ in })
         }
 
@@ -77,16 +84,16 @@ final class ProtocolSettingsTests: XCTestCase {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
+                vpnConnectionStatus: .connected(.init(location: .fastest, features: Set()), nil),
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {
             ProtocolSettingsFeature()
         } withDependencies: {
-            $0.vpnConnectionStatus = { .connected(.init(location: .fastest, features: Set())) }
             $0.settingsStorage = .init(setConnectionProtocol: { _ in })
         }
 
-        await store.send(.reconnectWith(.vpnProtocol(.ike)))
+        await store.send(.reconnectionAlert(.presented(.reconnectWith(.vpnProtocol(.ike)))))
 
         await store.receive(.setProtocol(.success(.vpnProtocol(.ike)))) { resultState in
             resultState.protocol = .vpnProtocol(.ike)
@@ -97,6 +104,7 @@ final class ProtocolSettingsTests: XCTestCase {
         let store = TestStore(
             initialState: ProtocolSettingsFeature.State(
                 protocol: .smartProtocol,
+                vpnConnectionStatus: .disconnected,
                 reconnectionAlert: SettingsAlert.reconnectionAlertState(for: .vpnProtocol(.ike))
             )
         ) {
@@ -105,7 +113,7 @@ final class ProtocolSettingsTests: XCTestCase {
             $0.settingsStorage = .init(setConnectionProtocol: { _ in })
         }
 
-        await store.send(.reconnectionAlertDismissed) { resultState in
+        await store.send(.reconnectionAlert(.dismiss)) { resultState in
             resultState.reconnectionAlert = nil
         }
     }

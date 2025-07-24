@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "78871C7D-B523-410F-8971-4AEFC38A0246",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "VPNCryptoTests",
+        "name" : "VPNCryptoTests"
+      }
+    }
+  ],
+  "version" : 1
+}

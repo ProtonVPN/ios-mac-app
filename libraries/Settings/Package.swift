@@ -53,6 +53,12 @@ let package = Package(
             name: "Settings-macOS",
             dependencies: ["SettingsShared"]
         ),
-        .testTarget(name: "SettingsTests", dependencies: ["Settings"]),
+        .testTarget(
+            name: "SettingsTests",
+            dependencies: [
+                "Settings",
+                "SettingsShared",
+            ]
+        ),
     ]
 )

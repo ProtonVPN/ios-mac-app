@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9A0968BD-74BA-4377-B141-A01C1F8F719D",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "TimerTests",
+        "name" : "TimerTests"
+      }
+    }
+  ],
+  "version" : 1
+}
