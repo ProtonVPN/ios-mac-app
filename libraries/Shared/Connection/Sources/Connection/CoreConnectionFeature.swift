@@ -39,7 +39,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.serverIdentifier) private var serverIdentifier
     @Dependency(\.tunnelKeychain) private var tunnelConfigKeychain
     @Dependency(\.connectionFeatureProvider) private var connectionFeatureProvider
-    @Dependency(\.nwPathStream) private var nwPathStream
+    @Dependency(\.nwStatusStream) private var nwStatusStream
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
 
@@ -88,7 +88,8 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         case startObserving
         /// Cancels observation effects started by `startObserving`
         case stopObserving
-        case connectivityChanged(NWPath)
+        /// Used to report connectivity changes to the reducer
+        case connectivityChanged(NWPath.Status)
         /// Starts the disconnection process and clears relevant keychains and configurations
         case handleLogout
         /// Tunnel/NetworkExtension child reducer action
@@ -118,7 +119,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
     private enum CancelID {
         case connectionTimeout
-        case nwPathReachability
+        case nwStatusReachability
     }
 
     /// The order of reducers here is important.
@@ -150,25 +151,25 @@ public struct CoreConnectionFeature: Reducer, Sendable {
                 .send(.tunnel(.startObservingStateChanges)),
                 .send(.localAgent(.startObservingEvents)),
                 .run { send in
-                    for await nwPath in nwPathStream() {
-                        await send(.connectivityChanged(nwPath))
+                    for await status in nwStatusStream() {
+                        await send(.connectivityChanged(status))
                     }
-                }.cancellable(id: CancelID.nwPathReachability)
+                }.cancellable(id: CancelID.nwStatusReachability)
             )
 
-        case let .connectivityChanged(nwPath):
-            guard state.currentNwStatus != nwPath.status else {
+        case let .connectivityChanged(nwStatus):
+            guard state.currentNwStatus != nwStatus else {
                 return .none
             }
-            state.currentNwStatus = nwPath.status
-            return .none
+            state.currentNwStatus = nwStatus
+            return .send(.localAgent(.connectivityChanged(nwStatus == .satisfied)))
 
         case .stopObserving:
             return .merge(
                 .send(.tunnel(.stopObservingStateChanges)),
                 .send(.localAgent(.stopAllObservations)),
                 .cancel(id: CancelID.connectionTimeout),
-                .cancel(id: CancelID.nwPathReachability)
+                .cancel(id: CancelID.nwStatusReachability)
             )
 
         case let .connect(intent):

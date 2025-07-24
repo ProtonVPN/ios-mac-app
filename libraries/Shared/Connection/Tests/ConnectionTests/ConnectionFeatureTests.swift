@@ -84,7 +84,6 @@
                 core: coreState
             )
             initialState.$userTier = SharedReader(value: .paidTier)
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -103,7 +102,6 @@
                     return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
                 }
                 $0.defaultAppStorage = .testValue()
-                $0.nwPathStream = { nwPathStream }
             }
 
             await store.send(.input(.onLaunch))
@@ -228,7 +226,6 @@
                 core: coreState
             )
             initialState.$userTier = SharedReader(value: .paidTier)
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: initialState) {
                 ConnectionFeature()
@@ -247,7 +244,6 @@
                     return ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tls), ports: [420])
                 }
                 $0.defaultAppStorage = .testValue()
-                $0.nwPathStream = { nwPathStream }
             }
 
             // Let's skip repeating assertions we've covered in previous tests
@@ -443,14 +439,12 @@
             let mockVPNSession = VPNSessionMock(status: .disconnected, connectedDate: nil, lastDisconnectError: nil)
             let mockManager = MockTunnelManager(connection: mockVPNSession)
             let mockAgent = LocalAgentMock(state: .disconnected)
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
                 $0.localAgent = mockAgent
-                $0.nwPathStream = { nwPathStream }
             }
 
             store.exhaustivity = .off
@@ -474,7 +468,6 @@
             mockStorage.keys = keys
             mockStorage.cert = certificate
             mockStorage.features = .mock
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
 
             let store = TestStore(initialState: .initialState) {
                 ConnectionFeature()
@@ -487,7 +480,6 @@
                 $0.vpnAuthenticationStorage = mockStorage
                 $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
                 $0.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
-                $0.nwPathStream = { nwPathStream }
             }
 
             store.exhaustivity = .off
@@ -834,6 +826,68 @@
 
             // Let's fast forward to when we would have timed out, had the server not unjailed us
             await environment.clock.advance(by: .seconds(15))
+        }
+
+        /// This test verifies that if we have no connectivity as certificate authentication is completed, the local
+        /// agent connection is created, and once connectivity is back, connectivity is updated, allowing the
+        /// connection to the local agent to continue instead of timing out with a TOLA error.
+        @MainActor
+        func testLocalAgentConnectionDelayedUntilConnectivityRestored() async throws {
+            let environment = ConnectionEnvironment.disconnected()
+            let store = environment.createConnectionTestStore()
+
+            let (nwStatusStream, nwStatusContinuation) = AsyncStream.makeStream(of: Network.NWPath.Status.self)
+            store.dependencies.nwStatusStream = { nwStatusStream }
+
+            environment.vpnSession.onConnection = {
+                // We lose connectivity as the tunnel is connecting
+                nwStatusContinuation.yield(.unsatisfied)
+            }
+
+            store.exhaustivity = .off
+
+            await store.send(.input(.onLaunch))
+            await store.receive(stateChange(to: \.disconnected))
+
+            // We normally have connectivity at the time we initiate a connection attempt
+            nwStatusContinuation.yield(.satisfied)
+            await store.receive(\.core.connectivityChanged.satisfied) {
+                $0.core.currentNwStatus = .satisfied
+            }
+
+            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.receive(stateChange(to: \.connecting.unresolved))
+            await environment.clock.advance(by: .seconds(1))
+            await store.receive(stateChange(to: \.connecting.resolved))
+            await environment.clock.advance(by: .seconds(1))
+
+            // Let's make sure we got the mock `NWPath.Status` update after the tunnel started connecting
+            await store.receive(\.core.connectivityChanged.unsatisfied) {
+                $0.core.currentNwStatus = .unsatisfied
+            }
+
+            // We don't yet have connectivity, but we should at least create the Local Agent connection
+            await store.receive(\.core.localAgent.connect)
+
+            // Set up an expectation verifying Local Agent was updated with the connectivity change
+            let connectivitySet = XCTestExpectation(description: "We should've alerted LA to the connectivity change")
+            environment.localAgent.onConnectivityUpdate = { connectivity in
+                XCTAssertTrue(connectivity)
+                connectivitySet.fulfill()
+            }
+
+            // Let's make sure that if connectivity is only regained after a long time, we still finish connecting
+            await environment.clock.advance(by: .seconds(5))
+            nwStatusContinuation.yield(.satisfied)
+            await store.receive(\.core.connectivityChanged.satisfied) {
+                $0.core.currentNwStatus = .satisfied
+            }
+
+            // After the status has been reported as satisfied again, local agent should finish the connection process
+            await environment.clock.advance(by: .seconds(1))
+            await store.receive(stateChange(to: \.connected))
+
+            await fulfillment(of: [connectivitySet], timeout: 0)
         }
 
         private func stateChange(

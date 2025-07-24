@@ -70,6 +70,8 @@ public struct LocalAgentFeature: Reducer, Sendable {
         case setFeatures(Set<ConnectionFeatureChange.AgentFeature>)
         case event(LocalAgentEvent)
         case didBecomeActive
+        /// Sent by the parent feature, indicating whether we have connectivity or not
+        case connectivityChanged(Bool)
         case connect(ServerEndpoint, VPNAuthenticationData, VPNConnectionFeatures, Bool)
         case disconnect(LocalAgentConnectionError?)
         case delegate(DelegateAction)
@@ -141,6 +143,10 @@ public struct LocalAgentFeature: Reducer, Sendable {
                 guard state.shouldTransitionToDisconnecting else { return .none }
                 state = .disconnecting(error)
                 localAgent.disconnect()
+                return .none
+
+            case let .connectivityChanged(hasConnectivity):
+                localAgent.setConnectivity(hasConnectivity)
                 return .none
 
             case .event(.state(.disconnected)):
@@ -452,6 +458,8 @@ extension LocalAgentFeature.Action: CustomDebugStringConvertible {
             ".setFeatures(\(features))"
         case let .event(localAgentEvent):
             ".event(\(localAgentEvent.debugDescription))"
+        case let .connectivityChanged(connectivity):
+            ".connectivityChanged(\(connectivity))"
         case let .connect(serverEndpoint, vpnAuthenticationData, vpnConnectionFeatures, connectivity):
             ".connect(\(serverEndpoint), \(vpnAuthenticationData), \(vpnConnectionFeatures), '\(connectivity))"
         case let .disconnect(localAgentConnectionError):

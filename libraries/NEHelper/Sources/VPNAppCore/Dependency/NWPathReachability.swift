@@ -24,6 +24,25 @@ public extension DependencyValues {
         get { self[NwPathReachabilityKey.self] }
         set { self[NwPathReachabilityKey.self] = newValue }
     }
+
+    var nwStatusStream: @Sendable () -> AsyncStream<NWPath.Status> {
+        get { self[NWPathStatusKey.self] }
+        set { self[NWPathStatusKey.self] = newValue }
+    }
+}
+
+private enum NWPathStatusKey: DependencyKey {
+    static let testValue: @Sendable () -> AsyncStream<NWPath.Status> = { .finished }
+
+    static let liveValue: @Sendable () -> AsyncStream<NWPath.Status> = {
+        AsyncStream {
+            @Dependency(\.nwPathStream) var pathStream
+            for await path in pathStream() {
+                return path.status
+            }
+            return .satisfied
+        }
+    }
 }
 
 private enum NwPathReachabilityKey: DependencyKey {
