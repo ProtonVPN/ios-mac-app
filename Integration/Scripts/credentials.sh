@@ -69,7 +69,7 @@ function cleanup() {
 	local dir=$(directory)
 
 	if [ ! -z "$dir" ] && [ -d "$dir" ]; then
-		if [[ "$dir" == "$PWD"* ]]; then
+		if [[ "$dir" == "$PWD" ]]; then
 			echo "Error: not removing repo directory $dir since PWD is $PWD." > /dev/stderr
 			exit 1
 		fi
