@@ -47,6 +47,7 @@ class StatusViewModel {
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
         PlanServiceFactory &
+        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
@@ -70,6 +71,7 @@ class StatusViewModel {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -286,6 +288,7 @@ class StatusViewModel {
             withDefaultNetshield: netShieldPropertyProvider.netShieldType,
             withDefaultNATType: natTypePropertyProvider.natType,
             withDefaultSafeMode: safeModePropertyProvider.safeMode,
+            withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
             trigger: nil
         )
     }

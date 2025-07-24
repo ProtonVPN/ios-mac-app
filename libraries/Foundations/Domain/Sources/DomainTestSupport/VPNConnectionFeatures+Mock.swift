@@ -25,6 +25,7 @@ public extension VPNConnectionFeatures {
         vpnAccelerator: true,
         bouncing: "1",
         natType: .moderateNAT,
-        safeMode: false
+        safeMode: false,
+        portForwarding: false
     )
 }

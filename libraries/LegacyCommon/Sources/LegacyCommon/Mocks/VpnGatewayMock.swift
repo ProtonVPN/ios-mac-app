@@ -75,7 +75,18 @@
         public func quickConnect(trigger _: UserInitiatedVPNChange.VPNTrigger) {}
 
         public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
-            ConnectionRequest(serverType: .standard, connectionType: .fastest, connectionProtocol: .smartProtocol, netShieldType: .off, natType: .default, safeMode: true, profileId: nil, profileName: nil, trigger: trigger)
+            ConnectionRequest(
+                serverType: .standard,
+                connectionType: .fastest,
+                connectionProtocol: .smartProtocol,
+                netShieldType: .off,
+                natType: .default,
+                safeMode: true,
+                portForwarding: nil,
+                profileId: nil,
+                profileName: nil,
+                trigger: trigger
+            )
         }
 
         public func connectTo(serverGroup _: ServerGroupInfo.Kind, ofType _: ServerType, trigger _: UserInitiatedVPNChange.VPNTrigger) {}

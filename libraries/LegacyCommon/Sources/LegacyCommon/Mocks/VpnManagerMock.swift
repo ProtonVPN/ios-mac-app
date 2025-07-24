@@ -89,6 +89,8 @@
 
         public func set(safeMode _: Bool) {}
 
+        public func set(portForwarding _: Bool) {}
+
         public private(set) var isLocalAgentConnected: Bool?
         public var localAgentStateChanged: ((Bool?) -> Void)?
     }

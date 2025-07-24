@@ -186,6 +186,7 @@ class DependencyFactory: CountriesViewModel.Factory {
     func makeConnectionStatusService() -> ConnectionStatusService { ConnectionStatusServiceMock() }
     func makePlanService() -> PlanService { PlanServiceMock() }
     func makeSearchStorage() -> SearchStorage { SearchModuleStorage() }
+    func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider { PortForwardingPropertyProviderMock() }
 }
 
 struct AnnouncementManagerMock: AnnouncementManager {

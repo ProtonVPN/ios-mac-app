@@ -110,6 +110,7 @@ extension LocalAgentFeatures {
         case natType = "randomized-nat"
         case bouncing
         case safeMode = "safe-mode"
+        case portForwarding = "port-forwarding"
     }
 
     func set(feature: ConnectionFeatureChange.AgentFeature) {
@@ -120,6 +121,8 @@ extension LocalAgentFeatures {
             setInt(Keys.netShield.rawValue, value: Int64(netShieldType.rawValue))
         case let .vpnAccelerator(value):
             setBool(Keys.vpnAccelerator.rawValue, value: value)
+        case let .portForwarding(value):
+            setBool(Keys.portForwarding.rawValue, value: value)
         }
     }
 
@@ -138,6 +141,7 @@ extension LocalAgentFeatures {
         connectionFeatures.bouncing.map { featuresObject?.setString(Keys.bouncing.rawValue, value: $0) }
         featuresObject?.setBool(Keys.natType.rawValue, value: connectionFeatures.natType.flag)
         connectionFeatures.safeMode.map { featuresObject?.setBool(Keys.safeMode.rawValue, value: $0) }
+        connectionFeatures.portForwarding.map { featuresObject?.setBool(Keys.portForwarding.rawValue, value: $0) }
         return featuresObject
     }
 }

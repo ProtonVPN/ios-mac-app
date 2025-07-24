@@ -56,6 +56,7 @@ class VpnConnectionPreparer {
         netShieldType: NetShieldType,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         intent: ConnectionRequestType?
     ) {
         guard let serverIp = selectServerIp(server: server, connectionProtocol: connectionProtocol) else {
@@ -76,6 +77,7 @@ class VpnConnectionPreparer {
                 netShieldType: netShieldType,
                 natType: natType,
                 safeMode: safeMode,
+                portForwarding: portForwarding,
                 ports: ports,
                 intent: intent
             )
@@ -93,6 +95,7 @@ class VpnConnectionPreparer {
         netShieldType: NetShieldType,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         ports: [Int],
         intent: ConnectionRequestType?
     ) {
@@ -104,6 +107,7 @@ class VpnConnectionPreparer {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         ) else {
@@ -166,6 +170,7 @@ class VpnConnectionPreparer {
         netShieldType: NetShieldType,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         ports: [Int],
         intent: ConnectionRequestType?
     ) -> ConnectionConfiguration? {
@@ -181,6 +186,7 @@ class VpnConnectionPreparer {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )

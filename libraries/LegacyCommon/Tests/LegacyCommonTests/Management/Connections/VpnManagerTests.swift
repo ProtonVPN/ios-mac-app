@@ -69,6 +69,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             safeMode: true,
             ports: [15213],
             serverPublicKey: "serverPublicKey",
+            portForwarding: false,
             intent: .fastest
         )
 
@@ -180,6 +181,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             safeMode: true,
             ports: [15112],
             serverPublicKey: "",
+            portForwarding: true,
             intent: .fastest
         )
 

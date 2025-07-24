@@ -60,6 +60,7 @@ class DefaultProfileViewModel {
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let natTypePropertyProvider: NATTypePropertyProvider
     private let safeModePropertyProvider: SafeModePropertyProvider
+    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
 
     private let defaultAccessTier: Int
 
@@ -103,6 +104,7 @@ class DefaultProfileViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         }
@@ -116,6 +118,7 @@ class DefaultProfileViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         )
@@ -129,6 +132,7 @@ class DefaultProfileViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         }
@@ -142,6 +146,7 @@ class DefaultProfileViewModel {
                 withDefaultNetshield: netShieldPropertyProvider.netShieldType,
                 withDefaultNATType: natTypePropertyProvider.natType,
                 withDefaultSafeMode: safeModePropertyProvider.safeMode,
+                withDefaultPortForwarding: portForwardingPropertyProvider.portForwarding,
                 trigger: .profile
             )
         )
@@ -193,7 +198,19 @@ class DefaultProfileViewModel {
         extraMargin ? 32 : 0
     }
 
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, isRedesign: Bool = false, extraMargin: Bool = false) {
+    init(
+        serverOffering: ServerOffering,
+        vpnGateway: VpnGatewayProtocol,
+        alertService: AlertService,
+        propertiesManager: PropertiesManagerProtocol,
+        connectionStatusService: ConnectionStatusService,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
+        isRedesign: Bool = false,
+        extraMargin: Bool = false
+    ) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
@@ -202,6 +219,7 @@ class DefaultProfileViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.natTypePropertyProvider = natTypePropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.portForwardingPropertyProvider = portForwardingPropertyProvider
         self.defaultAccessTier = .paidTier
         self.isRedesign = isRedesign
         self.extraMargin = extraMargin

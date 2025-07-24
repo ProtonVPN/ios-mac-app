@@ -110,7 +110,14 @@ private extension VpnAuthenticationData {
 
 private extension VPNConnectionFeatures {
     static var base: Self {
-        VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .strictNAT, safeMode: false)
+        VPNConnectionFeatures(
+            netshield: .off,
+            vpnAccelerator: false,
+            bouncing: "0",
+            natType: .strictNAT,
+            safeMode: false,
+            portForwarding: false
+        )
     }
 
     func withNetShieldLevel(_ level: NetShieldType) -> Self {
@@ -119,18 +126,34 @@ private extension VPNConnectionFeatures {
             vpnAccelerator: vpnAccelerator,
             bouncing: bouncing,
             natType: natType,
-            safeMode: safeMode
+            safeMode: safeMode,
+            portForwarding: portForwarding
         )
     }
 }
 
 private extension LocalAgentConfiguration {
     static func mocked(withFeatures features: VPNConnectionFeatures) -> Self {
-        LocalAgentConfiguration(hostname: "10.2.0.1:65432", netshield: features.netshield, vpnAccelerator: features.vpnAccelerator, bouncing: features.bouncing, natType: features.natType, safeMode: features.safeMode)
+        LocalAgentConfiguration(
+            hostname: "10.2.0.1:65432",
+            netshield: features.netshield,
+            vpnAccelerator: features.vpnAccelerator,
+            bouncing: features.bouncing,
+            natType: features.natType,
+            safeMode: features.safeMode,
+            portForwarding: features.portForwarding
+        )
     }
 
     static func mocked(withNetShieldType netShieldType: NetShieldType) -> Self {
-        let features = VPNConnectionFeatures(netshield: netShieldType, vpnAccelerator: true, bouncing: "0", natType: .strictNAT, safeMode: false)
+        let features = VPNConnectionFeatures(
+            netshield: netShieldType,
+            vpnAccelerator: true,
+            bouncing: "0",
+            natType: .strictNAT,
+            safeMode: false,
+            portForwarding: false
+        )
         return .mocked(withFeatures: features)
     }
 }

@@ -106,8 +106,22 @@ final class CertificateAuthenticationTests: XCTestCase {
         let tomorrow = now.addingTimeInterval(.days(1))
         let mockKeys = VpnKeys.mock(privateKey: "abcd", publicKey: "efgh")
         let mockCertificate = VpnCertificate(certificate: "1234", validUntil: tomorrow, refreshTime: tomorrow)
-        let storedFeatures = VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .moderateNAT, safeMode: false)
-        let newFeatures = VPNConnectionFeatures(netshield: .level2, vpnAccelerator: true, bouncing: "1", natType: .strictNAT, safeMode: true)
+        let storedFeatures = VPNConnectionFeatures(
+            netshield: .off,
+            vpnAccelerator: false,
+            bouncing: "0",
+            natType: .moderateNAT,
+            safeMode: false,
+            portForwarding: false
+        )
+        let newFeatures = VPNConnectionFeatures(
+            netshield: .level2,
+            vpnAccelerator: true,
+            bouncing: "1",
+            natType: .strictNAT,
+            safeMode: true,
+            portForwarding: false
+        )
 
         let storageMock = MockVpnAuthenticationStorage()
         storageMock.keys = mockKeys
@@ -165,7 +179,14 @@ final class CertificateAuthenticationTests: XCTestCase {
         storageMock.keys = mockKeys
         storageMock.cert = nil
 
-        let expectedFeatures = VPNConnectionFeatures(netshield: .level1, vpnAccelerator: false, bouncing: nil, natType: .strictNAT, safeMode: nil)
+        let expectedFeatures = VPNConnectionFeatures(
+            netshield: .level1,
+            vpnAccelerator: false,
+            bouncing: nil,
+            natType: .strictNAT,
+            safeMode: nil,
+            portForwarding: false
+        )
         let certRefreshRequested = XCTestExpectation(description: "Feature should request refresh using the client")
 
         let store = TestStore(initialState: .idle) {
@@ -219,15 +240,23 @@ final class CertificateAuthenticationTests: XCTestCase {
         storageMock.keys = mockKeys
         storageMock.cert = mockCertificate
 
-        let storedFeatures = VPNConnectionFeatures(netshield: .off, vpnAccelerator: false, bouncing: "0", natType: .moderateNAT, safeMode: false)
-        let newFeatures = VPNConnectionFeatures(netshield: .level2, vpnAccelerator: true, bouncing: "1", natType: .strictNAT, safeMode: true)
-        let certRefreshRequested = XCTestExpectation(description: "Feature should request refresh using the client")
-
-        let loadedAuthenticationData = FullAuthenticationData(
-            keys: .init(fromLegacyKeys: mockKeys),
-            certificate: mockCertificate,
-            features: storedFeatures
+        let storedFeatures = VPNConnectionFeatures(
+            netshield: .off,
+            vpnAccelerator: false,
+            bouncing: "0",
+            natType: .moderateNAT,
+            safeMode: false,
+            portForwarding: false
         )
+        let newFeatures = VPNConnectionFeatures(
+            netshield: .level2,
+            vpnAccelerator: true,
+            bouncing: "1",
+            natType: .strictNAT,
+            safeMode: true,
+            portForwarding: true
+        )
+        let certRefreshRequested = XCTestExpectation(description: "Feature should request refresh using the client")
 
         let store = TestStore(initialState: .idle) {
             CertificateAuthenticationFeature()

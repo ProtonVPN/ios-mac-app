@@ -48,6 +48,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         AvailabilityCheckerResolverFactory &
         NATTypePropertyProviderFactory &
         NetShieldPropertyProviderFactory &
+        PortForwardingPropertyProviderFactory &
         PropertiesManagerFactory &
         SafeModePropertyProviderFactory &
         ServerTierCheckerFactory &
@@ -61,6 +62,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
         self.natTypePropertyProvider = factory.makeNATTypePropertyProvider()
         self.safeModePropertyProvider = factory.makeSafeModePropertyProvider()
+        self.portForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
     }
 
     public func connect(withIntent intent: ConnectionSpec) async throws {
@@ -98,6 +100,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
                 netShieldType: self.netShieldType,
                 natType: self.natType,
                 safeMode: self.safeMode,
+                portForwarding: self.portForwarding,
                 intent: intent.connectionRequestType
             )
         }
@@ -126,6 +129,11 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     private let safeModePropertyProvider: SafeModePropertyProvider
     private var safeMode: Bool? {
         safeModePropertyProvider.safeMode
+    }
+
+    private let portForwardingPropertyProvider: PortForwardingPropertyProvider
+    private var portForwarding: Bool? {
+        portForwardingPropertyProvider.portForwarding
     }
 
     // MARK: - Server select
@@ -211,6 +219,7 @@ private extension ConnectionSpec {
             netShieldType: .off,
             natType: .default,
             safeMode: nil,
+            portForwarding: nil,
             profileId: nil,
             profileName: nil,
             trigger: nil

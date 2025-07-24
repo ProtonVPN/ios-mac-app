@@ -78,6 +78,7 @@ extension ConnectionIntentStorage: @retroactive DependencyKey {
             netShieldType: newIntent.features.netshield,
             natType: newIntent.features.natType,
             safeMode: nil,
+            portForwarding: nil,
             ports: newIntent.tunnelSettings.ports,
             intent: .none
         )

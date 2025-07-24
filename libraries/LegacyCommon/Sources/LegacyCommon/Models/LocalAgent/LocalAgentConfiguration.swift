@@ -31,18 +31,48 @@ public struct LocalAgentConfiguration {
     let hostname: String
     let features: VPNConnectionFeatures
 
-    init(hostname: String, netshield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, natType: NATType, safeMode: Bool?) {
+    init(
+        hostname: String,
+        netshield: NetShieldType,
+        vpnAccelerator: Bool,
+        bouncing: String?,
+        natType: NATType,
+        safeMode: Bool?,
+        portForwarding: Bool?
+    ) {
         self.hostname = hostname
-        self.features = VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType, safeMode: safeMode)
+        self.features = VPNConnectionFeatures(
+            netshield: netshield,
+            vpnAccelerator: vpnAccelerator,
+            bouncing: bouncing,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding
+        )
     }
 }
 
 extension LocalAgentConfiguration {
     init(configuration: VpnManagerConfiguration) {
-        self.init(hostname: configuration.hostname, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, bouncing: configuration.bouncing, natType: configuration.natType, safeMode: configuration.safeMode)
+        self.init(
+            hostname: configuration.hostname,
+            netshield: configuration.netShield,
+            vpnAccelerator: configuration.vpnAccelerator,
+            bouncing: configuration.bouncing,
+            natType: configuration.natType,
+            safeMode: configuration.safeMode,
+            portForwarding: configuration.portForwarding
+        )
     }
 
-    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
+    init?(
+        propertiesManager: PropertiesManagerProtocol,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
+        vpnProtocol: VpnProtocol?
+    ) {
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
@@ -55,7 +85,8 @@ extension LocalAgentConfiguration {
             vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
             bouncing: connectionConfiguration.serverIp.label,
             natType: natTypePropertyProvider.natType,
-            safeMode: safeModePropertyProvider.safeMode
+            safeMode: safeModePropertyProvider.safeMode,
+            portForwarding: portForwardingPropertyProvider.portForwarding
         )
     }
 }
@@ -63,7 +94,14 @@ extension LocalAgentConfiguration {
 // MARK: - LocalAgentConfiguration.Features
 
 extension VPNConnectionFeatures {
-    init?(propertiesManager: PropertiesManagerProtocol, natTypePropertyProvider: NATTypePropertyProvider, netShieldPropertyProvider: NetShieldPropertyProvider, safeModePropertyProvider: SafeModePropertyProvider, vpnProtocol: VpnProtocol?) {
+    init?(
+        propertiesManager: PropertiesManagerProtocol,
+        natTypePropertyProvider: NATTypePropertyProvider,
+        netShieldPropertyProvider: NetShieldPropertyProvider,
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider,
+        vpnProtocol: VpnProtocol?
+    ) {
         guard let vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
@@ -75,7 +113,8 @@ extension VPNConnectionFeatures {
             vpnAccelerator: appFeaturePropertyProvider.getValue(for: VPNAccelerator.self) == .on,
             bouncing: connectionConfiguration.serverIp.label,
             natType: natTypePropertyProvider.natType,
-            safeMode: safeModePropertyProvider.safeMode
+            safeMode: safeModePropertyProvider.safeMode,
+            portForwarding: portForwardingPropertyProvider.portForwarding
         )
     }
 }

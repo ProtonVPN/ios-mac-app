@@ -66,6 +66,7 @@ public protocol VpnManagerProtocol {
     func set(netShieldType: NetShieldType)
     func set(natType: NATType)
     func set(safeMode: Bool)
+    func set(portForwarding: Bool)
 }
 
 public protocol VpnManagerFactory {
@@ -169,6 +170,7 @@ public final class VpnManager: VpnManagerProtocol {
     var natTypePropertyProvider: NATTypePropertyProvider
     var netShieldPropertyProvider: NetShieldPropertyProvider
     var safeModePropertyProvider: SafeModePropertyProvider
+    var portForwardingPropertyProvider: PortForwardingPropertyProvider
 
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
@@ -192,6 +194,7 @@ public final class VpnManager: VpnManagerProtocol {
         & LocalAgentConnectionFactoryCreator
         & NATTypePropertyProviderFactory
         & NetShieldPropertyProviderFactory
+        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SafeModePropertyProviderFactory
         & VpnAuthenticationFactory
@@ -216,7 +219,8 @@ public final class VpnManager: VpnManagerProtocol {
             localAgentConnectionFactory: factory.makeLocalAgentConnectionFactory(),
             natTypePropertyProvider: factory.makeNATTypePropertyProvider(),
             netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(),
-            safeModePropertyProvider: factory.makeSafeModePropertyProvider()
+            safeModePropertyProvider: factory.makeSafeModePropertyProvider(),
+            portForwardingPropertyProvider: factory.makePortForwardingPropertyProvider()
         )
     }
 
@@ -234,7 +238,8 @@ public final class VpnManager: VpnManagerProtocol {
         localAgentConnectionFactory: LocalAgentConnectionFactory,
         natTypePropertyProvider: NATTypePropertyProvider,
         netShieldPropertyProvider: NetShieldPropertyProvider,
-        safeModePropertyProvider: SafeModePropertyProvider
+        safeModePropertyProvider: SafeModePropertyProvider,
+        portForwardingPropertyProvider: PortForwardingPropertyProvider
     ) {
         if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             readyGroup?.enter()
@@ -254,6 +259,7 @@ public final class VpnManager: VpnManagerProtocol {
         self.natTypePropertyProvider = natTypePropertyProvider
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.safeModePropertyProvider = safeModePropertyProvider
+        self.portForwardingPropertyProvider = portForwardingPropertyProvider
 
         if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
             self.prepareManagersTask = Task {
@@ -451,6 +457,16 @@ public final class VpnManager: VpnManagerProtocol {
 
         updateActiveConnection(safeMode: safeMode)
         localAgent.update(safeMode: safeMode)
+    }
+
+    public func set(portForwarding: Bool) {
+        guard let localAgent else {
+            log.error("Trying to change Port Forwarding via local agent when local agent instance does not exist", category: .settings)
+            return
+        }
+
+        updateActiveConnection(portForwarding: portForwarding)
+        localAgent.update(portForwarding: portForwarding)
     }
 
     // MARK: - Private functions

@@ -127,7 +127,8 @@
                 vpnAccelerator: true,
                 bouncing: nil,
                 natType: .moderateNAT,
-                safeMode: nil
+                safeMode: nil,
+                portForwarding: nil
             )
 
             let statsMessage = FeatureStatisticsMessage.NetShieldStats(

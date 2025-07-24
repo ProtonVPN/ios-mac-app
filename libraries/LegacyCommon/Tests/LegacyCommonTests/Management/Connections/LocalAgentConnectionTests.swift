@@ -195,7 +195,8 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             vpnAccelerator: true,
             bouncing: "0",
             natType: .strictNAT,
-            safeMode: false
+            safeMode: false,
+            portForwarding: false
         )
         let localAgentConfiguration = LocalAgentConfiguration(
             hostname: "10.2.0.1:65432",
@@ -203,7 +204,8 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
             vpnAccelerator: features.vpnAccelerator,
             bouncing: features.bouncing,
             natType: features.natType,
-            safeMode: features.safeMode
+            safeMode: features.safeMode,
+            portForwarding: features.portForwarding
         )
 
         let localAgentFeatures = LocalAgentNewFeatures()!.with(configuration: localAgentConfiguration)

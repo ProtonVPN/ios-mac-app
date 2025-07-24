@@ -22,6 +22,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
     public let netShieldType: NetShieldType
     public let natType: NATType
     public let safeMode: Bool?
+    public let portForwarding: Bool?
     public let ports: [Int]
     public let intent: ConnectionRequestType?
 
@@ -34,6 +35,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
         self.netShieldType = try container.decode(NetShieldType.self, forKey: CodingKeys.netShieldType)
         self.ports = try container.decode([Int].self, forKey: CodingKeys.ports)
         self.safeMode = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.safeMode)
+        self.portForwarding = try container.decodeIfPresent(Bool.self, forKey: CodingKeys.portForwarding)
         // This can be missing from JSON if config was saved with older app version. Set it to default in that case.
         self.id = try (container.decodeIfPresent(UUID.self, forKey: CodingKeys.id)) ?? UUID()
         self.natType = try container.decodeIfPresent(NATType.self, forKey: .natType) ?? NATType.default
@@ -48,6 +50,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
         netShieldType: NetShieldType,
         natType: NATType,
         safeMode: Bool?,
+        portForwarding: Bool?,
         ports: [Int],
         intent: ConnectionRequestType?
     ) {
@@ -59,6 +62,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
         self.ports = ports
         self.natType = natType
         self.safeMode = safeMode
+        self.portForwarding = portForwarding
         self.intent = intent
     }
 
@@ -71,6 +75,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )
@@ -85,6 +90,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )
@@ -99,6 +105,22 @@ public struct ConnectionConfiguration: Codable, Identifiable {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
+            ports: ports,
+            intent: intent
+        )
+    }
+
+    public func withChanged(portForwarding: Bool) -> ConnectionConfiguration {
+        ConnectionConfiguration(
+            id: id,
+            server: server,
+            serverIp: serverIp,
+            vpnProtocol: vpnProtocol,
+            netShieldType: netShieldType,
+            natType: natType,
+            safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )
@@ -119,6 +141,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )
@@ -133,6 +156,7 @@ public struct ConnectionConfiguration: Codable, Identifiable {
             netShieldType: netShieldType,
             natType: natType,
             safeMode: safeMode,
+            portForwarding: portForwarding,
             ports: ports,
             intent: intent
         )
