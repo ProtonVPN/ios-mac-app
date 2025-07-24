@@ -57,7 +57,11 @@ class CountryListRobot: ConnectionBaseRobot {
         let serverCount = app.buttons.matching(
             identifier: buttonConnectDisconnect
         ).count
-        let randomIndex = Int.random(in: 1 ..< serverCount)
+        let randomIndex = if serverCount > 1 {
+            Int.random(in: 1 ..< serverCount)
+        } else {
+            1
+        }
         return cell()
             .byIndex(randomIndex)
             .onChild(staticText().firstMatch())

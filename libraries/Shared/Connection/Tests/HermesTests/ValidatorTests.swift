@@ -74,23 +74,3 @@ func ipv6Validation() {
         #expect(HermesResolverLocationValidator.isValidIPv6(address) == .classic)
     }
 }
-
-@Test(.disabled())
-func httpsValidation() {
-//    #expect(HermesResolverLocationValidator.isValid("https://") == nil)
-//    #expect(HermesResolverLocationValidator.isValid("https:/1.1.1.1") == nil)
-//    #expect(HermesResolverLocationValidator.isValid("http://1.1.1.1") == nil)
-//
-//    #expect(HermesResolverLocationValidator.isValid("https://1.1.1.1") == .doh)
-//    #expect(HermesResolverLocationValidator.isValid("https://dns.google") == .doh)
-//    #expect(HermesResolverLocationValidator.isValid("https://dns.google/dns-query") == .doh)
-}
-
-@Test(.disabled())
-func tlsValidation() {
-//    #expect(HermesResolverLocationValidator.isValid("tls://") == nil)
-//    #expect(HermesResolverLocationValidator.isValid("tls:/1.1.1.1") == nil)
-//
-//    #expect(HermesResolverLocationValidator.isValid("tls://1.1.1.1") == .tls)
-//    #expect(HermesResolverLocationValidator.isValid("tls://someUUID.dns.nextdns.io") == .tls)
-}

@@ -25,7 +25,8 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     @MainActor
-    func testCreateAndDeleteProfile() {
+    func testCreateAndDeleteProfile() throws {
+        throw XCTSkip("Disabled due to incorrect testing logic and broken test account")
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         loginRobot
             .enterCredentials(UserType.Plus.credentials)
@@ -47,7 +48,8 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     @MainActor
-    func testCreateProfileWithTheSameName() {
+    func testCreateProfileWithTheSameName() throws {
+        throw XCTSkip("Disabled due to incorrect testing logic and broken test account")
         let profileName = StringUtils.randomAlphanumericString(length: 10)
 
         loginRobot
@@ -72,7 +74,8 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     @MainActor
-    func testEditProfile() {
+    func testEditProfile() throws {
+        throw XCTSkip("Disabled due to incorrect testing logic and broken test account")
         let profileName = StringUtils.randomAlphanumericString(length: 10)
         let newProfileName = StringUtils.randomAlphanumericString(length: 10)
 
