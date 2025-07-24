@@ -102,7 +102,9 @@ public struct PlutoniumFeature {
 
     @Shared(.killSwitch) var killSwitch: Bool
 
-    public init() {}
+    public init() {
+        PlutoniumScanner.shared
+    }
 
     static let confirmAlert = AlertState<Action.Alert> {
         TextState(Localizable.turnSplitTunnelingOnTitle)

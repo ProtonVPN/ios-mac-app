@@ -38,10 +38,6 @@
             NSWorkspace.shared.icon(application: bundleIdentifier)
         }
 
-        public var plugins: [PlutoniumApp] {
-            FileManager.default.enumerateChildApplications(for: self)
-        }
-
         public init(bundleIdentifier: String, title: String) {
             self.bundleIdentifier = bundleIdentifier
             self.title = title

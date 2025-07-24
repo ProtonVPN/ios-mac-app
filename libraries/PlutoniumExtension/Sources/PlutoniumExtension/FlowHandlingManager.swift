@@ -69,13 +69,18 @@ actor FlowHandlingManager {
         log.debug("VPN interface found: \(vpnInterface)")
         self.vpnInterface = vpnInterface
 
+        @SharedReader(.childBundles) var childBundles: [String: ChildBundle]
+
         switch mode {
         case .exclusion:
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
 
-            self.appIDs = Set(exclusionActivated.apps.map(\.bundleIdentifier))
-            let plugins = exclusionActivated.apps.flatMap(\.plugins)
-            self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
+            let appBundleIDs = exclusionActivated.apps.map(\.bundleIdentifier)
+            self.appIDs = Set(appBundleIDs)
+            let plugins = appBundleIDs.reduce(into: [String]()) { partialResult, element in
+                partialResult += childBundles[element].map((\.bundleIdentifiers)) ?? []
+            }
+            self.pluginIDs = Set(plugins)
             self.ipSet = Set(exclusionActivated.ips)
 
             // Start monitoring internet interface updates
@@ -100,9 +105,12 @@ actor FlowHandlingManager {
         case .inclusion:
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
-            self.appIDs = Set(inclusionActivated.apps.map(\.bundleIdentifier))
-            let plugins = inclusionActivated.apps.flatMap(\.plugins)
-            self.pluginIDs = Set(plugins.map(\.bundleIdentifier))
+            let appBundleIDs = inclusionActivated.apps.map(\.bundleIdentifier)
+            self.appIDs = Set(appBundleIDs)
+            let plugins = appBundleIDs.reduce(into: [String]()) { partialResult, element in
+                partialResult += childBundles[element].map((\.bundleIdentifiers)) ?? []
+            }
+            self.pluginIDs = Set(plugins)
             self.ipSet = Set(inclusionActivated.ips)
 
             self.networkInterface = vpnInterface

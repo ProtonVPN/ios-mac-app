@@ -31,6 +31,8 @@
         case excludeListApplied = "plutoniumExcludeModeApplied.json"
         case includeListApplied = "plutoniumIncludeModeApplied.json"
         case plutoniumFeatureApplied = "plutoniumFeatureApplied.json"
+
+        case childBundles = "plutoniumChildBundles.json"
     }
 
     public enum PlutoniumFeatureToggle: Codable, Equatable {
@@ -95,6 +97,10 @@
         static var plutoniumFeatureURLApplied: URL {
             .plutoniumDirectory(for: .plutoniumFeatureApplied)
         }
+
+        static var childBundlesURL: URL {
+            .plutoniumDirectory(for: .childBundles)
+        }
     }
 
     public extension SharedKey where Self == FileStorageKey<PlutoniumActivated>.Default {
@@ -124,6 +130,17 @@
 
         static var plutoniumFeatureApplied: Self {
             self[.fileStorage(.plutoniumFeatureURLApplied), default: .disabled(.exclusion)]
+        }
+    }
+
+    public struct ChildBundle: Codable {
+        public let bundleIdentifiers: [String]
+        let lastTimeChecked: Date
+    }
+
+    public extension SharedKey where Self == FileStorageKey<[String: ChildBundle]>.Default {
+        static var childBundles: Self {
+            self[.fileStorage(.childBundlesURL), default: [String: ChildBundle]()]
         }
     }
 
