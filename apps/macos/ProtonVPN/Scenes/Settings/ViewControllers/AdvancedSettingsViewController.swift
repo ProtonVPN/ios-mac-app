@@ -124,7 +124,7 @@ final class AdvancedSettingsViewController: NSViewController, ReloadableViewCont
     }
 
     private func setupHermesItem() {
-        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS) {
+        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS, reloadValue: true) {
             hermesView.isHidden = true
             return
         }
