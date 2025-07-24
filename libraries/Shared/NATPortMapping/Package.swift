@@ -11,14 +11,15 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "NATPortMapping",
-            targets: ["NATPortMapping"]
+            name: "NATPMPUI",
+            targets: ["NATPMPUI"]
         ),
     ],
     dependencies: [
         .package(path: "../../NEHelper"),
         .package(path: "../../Foundations/PMLogger"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -28,6 +29,7 @@ let package = Package(
             dependencies: [
                 "PMLogger",
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             path: "Sources/NATPortMapping"
         ),
@@ -38,6 +40,13 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ],
             path: "Sources/CLI"
+        ),
+        .target(
+            name: "NATPMPUI",
+            dependencies: [
+                "NATPortMapping",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         ),
         .testTarget(
             name: "NATPortMappingTests",
