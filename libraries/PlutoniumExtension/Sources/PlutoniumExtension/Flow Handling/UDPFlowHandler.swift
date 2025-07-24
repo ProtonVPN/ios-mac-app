@@ -19,6 +19,7 @@
 import Foundation
 import Network
 import NetworkExtension
+import VPNShared
 
 /// Handles UDP flow copying between network interfaces.
 /// One instance per `NEAppProxyUDPFlow`.

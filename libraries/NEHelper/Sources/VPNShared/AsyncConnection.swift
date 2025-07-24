@@ -20,12 +20,12 @@ import Foundation
 import Network
 
 /// Async wrapper around NWConnection
-final class AsyncConnection: Sendable {
+public final class AsyncConnection: Sendable {
     private let connection: NWConnection
     private let stateStream: AsyncStream<NWConnection.State>
     private let stateContinuation: AsyncStream<NWConnection.State>.Continuation
 
-    init(to endpoint: NWEndpoint, using parameters: NWParameters) {
+    public init(to endpoint: NWEndpoint, using parameters: NWParameters) {
         self.connection = NWConnection(to: endpoint, using: parameters)
 
         let (stream, continuation) = AsyncStream<NWConnection.State>.makeStream()
@@ -37,19 +37,23 @@ final class AsyncConnection: Sendable {
         }
     }
 
-    var states: AsyncStream<NWConnection.State> {
+    public var states: AsyncStream<NWConnection.State> {
         stateStream
     }
 
-    func start(queue: DispatchQueue) {
+    public var nwEndpoint: NWEndpoint {
+        connection.endpoint
+    }
+
+    public func start(queue: DispatchQueue) {
         connection.start(queue: queue)
     }
 
-    func send(content: Data, completion: @escaping @Sendable (NWError?) -> Void) {
+    public func send(content: Data, completion: @escaping @Sendable (NWError?) -> Void) {
         connection.send(content: content, completion: .contentProcessed(completion))
     }
 
-    func receive(
+    public func receive(
         minimumIncompleteLength: Int,
         maximumLength: Int,
         completion: @Sendable @escaping (Data?, NWConnection.ContentContext?, Bool, NWError?) -> Void
@@ -58,7 +62,7 @@ final class AsyncConnection: Sendable {
     }
 
     /// Async wrapper around `receiveMessage` for UDP connections.
-    func receiveMessageAsync() async throws -> (Data?, Bool) {
+    public func receiveMessageAsync() async throws -> (Data?, Bool) {
         try await withCheckedThrowingContinuation { continuation in
             connection.receiveMessage { data, _, isComplete, error in
                 if let error {
@@ -70,7 +74,7 @@ final class AsyncConnection: Sendable {
         }
     }
 
-    func cancel() {
+    public func cancel() {
         connection.cancel()
         stateContinuation.finish()
     }

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "46F2B05E-7A32-4D9F-ADF1-BECA1BE18555",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NATPortMappingTests",
+        "name" : "NATPortMappingTests"
+      }
+    }
+  ],
+  "version" : 1
+}
