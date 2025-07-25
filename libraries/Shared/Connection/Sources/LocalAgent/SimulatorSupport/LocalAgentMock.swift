@@ -44,6 +44,12 @@
         var disconnectionTask: Task<Void, Error>?
         var disconnectionDuration: Duration = .milliseconds(250)
 
+        // For mocking delayed connections initiated when there was no connectivity
+        var configurationToConnectWithAfterConnectivityRestored: ConnectionConfiguration?
+
+        // Invoked when connectivity is set externally
+        var onConnectivityUpdate: ((Bool) -> Void)?
+
         var didRequestStats: (() -> Void)?
 
         var streamTuple: (stream: AsyncStream<LocalAgentEvent>, continuation: AsyncStream<LocalAgentEvent>.Continuation)?
@@ -73,17 +79,17 @@
 
             state = .connecting
 
-            connectionTask = Task { [weak self] in
-                try await self?.clock.sleep(for: connectionDuration)
-                try Task.checkCancellation()
-                log.debug("LocalAgentMock finished connecting")
-
-                self?.state = connectionResult.state
-                self?.netShieldType = configuration.features.netshield
-                if let error = connectionResult.error {
-                    self?.simulate(event: .error(error))
-                }
+            if !configuration.connectivity {
+                log.info("Connectivity set to false, waiting for network")
+                configurationToConnectWithAfterConnectivityRestored = configuration
+                return
             }
+
+            connectionTask = startConnectionTask(
+                duration: connectionDuration,
+                configuration: configuration,
+                result: connectionResult
+            )
         }
 
         /// Simulate receiving an `event` - yielding the corresponding value in the `AsyncStream`
@@ -121,7 +127,37 @@
 
         func set(features _: LocalAgentFeatures) {}
 
-        func setConnectivity(_: Bool) {}
+        func setConnectivity(_ hasConnectivity: Bool) {
+            onConnectivityUpdate?(hasConnectivity)
+            guard hasConnectivity else { return }
+            if let configurationToConnectWithAfterConnectivityRestored {
+                self.configurationToConnectWithAfterConnectivityRestored = nil
+                connectionTask = startConnectionTask(
+                    duration: connectionDuration,
+                    configuration: configurationToConnectWithAfterConnectivityRestored,
+                    result: connectionResult
+                )
+            }
+        }
+
+        private func startConnectionTask(
+            duration _: Duration,
+            configuration: ConnectionConfiguration,
+            result: ConnectionResult
+        ) -> Task<Void, Error> {
+            Task {
+                @Dependency(\.continuousClock) var clock
+                try await clock.sleep(for: connectionDuration)
+                try Task.checkCancellation()
+                log.debug("LocalAgentMock finished connecting")
+
+                state = result.state
+                netShieldType = configuration.features.netshield
+                if let error = result.error {
+                    simulate(event: .error(error))
+                }
+            }
+        }
     }
 
     enum NetShieldStatsBehaviour {

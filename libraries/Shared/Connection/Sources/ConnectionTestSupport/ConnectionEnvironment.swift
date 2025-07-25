@@ -104,8 +104,7 @@
         }
 
         public func createConnectionTestStore() -> TestStore<ConnectionFeature.State, ConnectionFeature.Action> {
-            let (nwPathStream, _) = AsyncStream.makeStream(of: Network.NWPath.self)
-            return TestStore(initialState: initialState) {
+            TestStore(initialState: initialState) {
                 ConnectionFeature()
             } withDependencies: {
                 $0.date = .constant(startDate)
@@ -132,7 +131,6 @@
                 $0.smartPortSelector = .init(select: { _, _ in
                     ServerEndpointPortResolution(chosenProtocol: .wireGuard(.tcp), ports: [80])
                 })
-                $0.nwPathStream = { nwPathStream }
             }
         }
 

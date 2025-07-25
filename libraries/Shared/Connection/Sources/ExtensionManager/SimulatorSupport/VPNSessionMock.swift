@@ -36,6 +36,9 @@
             }
         }
 
+        /// Action that will be executed as the tunnel starts connecting
+        var onConnection: (() -> Void)?
+
         /// Time taken to enter the `.connecting` state. If `nil`, the transition should be performed manually
         var startupDuration: Duration? = .seconds(0)
         /// Time taken to enter the `.connected` state. If `nil`, the transition needs to be performed manually
@@ -66,6 +69,8 @@
         func fetchLastDisconnectError() async throws -> Error? { lastDisconnectError }
 
         func startTunnel() throws {
+            onConnection?()
+
             guard let startupDuration else { return }
             let shouldTransitionToConnectingImmediately = startupDuration == .zero
             if shouldTransitionToConnectingImmediately {
