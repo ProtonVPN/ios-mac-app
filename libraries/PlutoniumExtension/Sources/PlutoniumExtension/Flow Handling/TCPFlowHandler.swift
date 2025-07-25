@@ -63,17 +63,7 @@ final actor TCPFlowHandler: FlowHandler {
 
     // MARK: ‑ Public
 
-    nonisolated func start(onClose: @escaping @Sendable () async -> Void) {
-        Task { await startIsolated(onClose: onClose) }
-    }
-
-    nonisolated func stop() {
-        Task { await stopIsolated() }
-    }
-
-    // MARK: ‑ Private isolated helpers
-
-    private func startIsolated(onClose: @escaping @Sendable () async -> Void) async {
+    func start(onClose: @escaping @Sendable () async -> Void) async {
         self.onClose = onClose
 
         let states = connection.states
@@ -87,10 +77,11 @@ final actor TCPFlowHandler: FlowHandler {
         connection.start(queue: connectionQueue)
     }
 
-    private func stopIsolated() async {
+    func stop() async {
         guard !isCancelled else { return }
         isCancelled = true
 
+        tcpFlow.closeReadWithError(nil)
         tcpFlow.closeWriteWithError(nil)
 
         connection.cancel()
@@ -118,10 +109,10 @@ final actor TCPFlowHandler: FlowHandler {
             await startDataForwarding()
         case let .failed(error):
             log.error("TCP flow handler connection failed: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
         case .cancelled:
             log.debug("TCP connection cancelled")
-            await stopIsolated()
+            await stop()
         @unknown default:
             log.debug("TCP connection entered an unknown state")
         }
@@ -142,7 +133,7 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleFlowOpened(_ error: Error?) async {
         if let error {
             log.error("Failed to open TCP flow: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
             return
         }
 
@@ -172,13 +163,13 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleFlowRead(data: Data?, error: Error?) async {
         if let error {
             log.error("Error reading from TCP flow: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
             return
         }
 
         guard let data, !data.isEmpty else {
             log.info("TCP flow closed by client")
-            await stopIsolated()
+            await stop()
             return
         }
 
@@ -191,7 +182,7 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleSendResult(_ error: NWError?) async {
         if let error {
             log.error("Error sending to tunnel: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
         } else {
             await forwardFromFlowToConnection()
         }
@@ -222,12 +213,12 @@ final actor TCPFlowHandler: FlowHandler {
     ) async {
         if let error {
             log.error("Error receiving from tunnel: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
             return
         }
 
         guard let data, !data.isEmpty else {
-            if isDone { await stopIsolated() }
+            if isDone { await stop() }
             return
         }
 
@@ -243,12 +234,12 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleFlowWriteResult(_ error: Error?, isDone: Bool) async {
         if let error {
             log.error("Error writing to TCP flow: \(error.localizedDescription)")
-            await stopIsolated()
+            await stop()
             return
         }
 
         if isDone {
-            await stopIsolated()
+            await stop()
         } else {
             await forwardFromConnectionToFlow()
         }

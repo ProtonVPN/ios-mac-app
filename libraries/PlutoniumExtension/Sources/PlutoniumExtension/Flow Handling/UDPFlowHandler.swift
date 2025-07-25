@@ -56,17 +56,9 @@ final actor UDPFlowHandler: FlowHandler {
         log.debug("UDP flow handler initialized for interface \(targetInterface.name)")
     }
 
-    // MARK: - Public control
+    // MARK: - Public
 
-    nonisolated func start(onClose: @escaping @Sendable () async -> Void) {
-        Task { await self.startIsolated(onClose: onClose) }
-    }
-
-    nonisolated func stop() {
-        Task { await self.stopIsolated() }
-    }
-
-    private func startIsolated(onClose: @escaping @Sendable () async -> Void) async {
+    func start(onClose: @escaping @Sendable () async -> Void) async {
         guard handlerTask == nil else { return }
 
         self.onClose = onClose
@@ -75,7 +67,7 @@ final actor UDPFlowHandler: FlowHandler {
         }
     }
 
-    private func stopIsolated() async {
+    func stop() async {
         if let task = handlerTask {
             task.cancel()
             await task.value // wait until `run()` exits

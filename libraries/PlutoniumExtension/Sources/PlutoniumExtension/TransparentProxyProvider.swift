@@ -19,11 +19,8 @@
 import ComposableArchitecture
 import Foundation
 import Logging
-import Network
 import NetworkExtension
-import os
 import PMLogger
-
 @preconcurrency import VPNAppCore
 
 open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
@@ -44,7 +41,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
             return
         }
 
-        let settings = createNetworkSettings()
+        let settings = Self.createNetworkSettings(capturingTraffic: true)
         setTunnelNetworkSettings(settings) { [weak self] error in
             if let error {
                 log.error("Failed to set tunnel network settings: \(error)")
@@ -58,6 +55,9 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                 }
                 // Create a sendable wrapper for the completion handler
                 let sendableCompletion = SendableCompletion(completionHandler, provider: self)
+                // Create callback for when FlowHandlingManager stops
+                let sendableVpnUnavailableCallback = SendableVpnUnavailableCallback(provider: self)
+
                 Task { @Sendable in
                     // Try to get the WireGuard interface name via XPC request
                     let vpnNetworkInterfaceName: String
@@ -73,7 +73,8 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
 
                     do {
                         let manager = try await FlowHandlingManager(
-                            vpnNetworkInterfaceName: vpnNetworkInterfaceName
+                            vpnNetworkInterfaceName: vpnNetworkInterfaceName,
+                            onVpnUnavailable: sendableVpnUnavailableCallback.call
                         )
                         sendableCompletion.call(nil, manager: manager)
                     } catch {
@@ -85,12 +86,17 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }
 
+    private var isStopping = false
     override open func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        guard isStopping == false else {
+            return
+        }
+        isStopping = true
+
         log.debug("Stopping proxy provider with reason: \(reason)")
 
         flowHandlingManager?.cleanupAllHandlers()
         flowHandlingManager = nil
-
         completionHandler()
     }
 
@@ -109,7 +115,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         }
     }
 
-    private func createNetworkSettings() -> NETransparentProxyNetworkSettings {
+    private static func createNetworkSettings(capturingTraffic: Bool = true) -> NETransparentProxyNetworkSettings {
         let settings = NETransparentProxyNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
 
         let allTCPRule = NENetworkRule(
@@ -130,7 +136,14 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
             direction: .outbound
         )
 
-        settings.includedNetworkRules = [allTCPRule, allUDPRule]
+        if capturingTraffic {
+            settings.includedNetworkRules = [allTCPRule, allUDPRule]
+            settings.excludedNetworkRules = []
+        } else {
+            settings.includedNetworkRules = []
+            settings.excludedNetworkRules = [allTCPRule, allUDPRule]
+        }
+
         return settings
     }
 
@@ -152,7 +165,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         return try await xpcClient.getInterfaceName()
     }
 
-    /// A sendable wrapper for completion handlers to safely pass across isolation boundaries
+    /// Specific sendable completion for manager creation
     private struct SendableCompletion: Sendable {
         private nonisolated(unsafe) let completion: (Error?) -> Void
         private nonisolated(unsafe) weak var provider: PlutoniumTransparentProxyProvider?
@@ -168,6 +181,27 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                     provider?.flowHandlingManager = manager
                 }
                 completion(error)
+            }
+        }
+    }
+
+    /// Specific sendable callback for stopping the proxy
+    private struct SendableVpnUnavailableCallback: Sendable {
+        private nonisolated(unsafe) weak var provider: PlutoniumTransparentProxyProvider?
+
+        init(provider: PlutoniumTransparentProxyProvider) {
+            self.provider = provider
+        }
+
+        func call() {
+            Task { @MainActor in
+                let settings = PlutoniumTransparentProxyProvider.createNetworkSettings(capturingTraffic: false)
+                provider?.setTunnelNetworkSettings(settings) { error in
+                    if let error {
+                        log.error("Failed to set tunnel network settings before stopping: \(error)")
+                    }
+                    provider?.stopProxy(with: .providerFailed) {}
+                }
             }
         }
     }
