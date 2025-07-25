@@ -20,39 +20,24 @@ import Foundation
 import Network
 import VPNShared
 
-class NATPortMappingClient {
+final class NATPortMappingClient: Sendable {
     static let NAT_PMP_PORT: UInt16 = 5351
     static let MAX_RETRIES: Int = 9 // per RFC: 250ms, 500ms, 1s, 2s, 4s, 8s, 16s, 32s, 64s
     static let RETRY_DELAY: TimeInterval = 0.25
 
-    private var gatewayAddress: String
     private let queue = DispatchQueue(label: "ch.proton.nat-pmp-client")
 
     // MARK: - Init
 
-    init(gatewayAddress: String) {
-        self.gatewayAddress = gatewayAddress
-    }
-
-    func setGatewayAddress(_ gatewayAddress: String) {
-        self.gatewayAddress = gatewayAddress
-    }
-
-    func makeConnection() -> AsyncConnection {
-        // Create UDP connection to gateway:5351
-        let endpoint = NWEndpoint.hostPort(
-            host: NWEndpoint.Host(gatewayAddress),
-            port: NWEndpoint.Port(integerLiteral: Self.NAT_PMP_PORT)
-        )
-
-        return AsyncConnection(to: endpoint, using: .udp)
-    }
+    init() {}
 
     func requestPortMapping(
+        gatewayAddress: String,
         portProtocol: PortMappingProtocol = .udp,
         internalPort: UInt16,
         externalPort: UInt16 = 0,
-        lifetime: UInt32 = 7200
+        lifetime: UInt32 = 7200,
+        currentMappingExpirationDate: Date? = nil
     ) async throws -> PortMappingPacketResponse {
         let portMappingRequestPacket = createPortMappingRequest(
             portProtocol: portProtocol,
@@ -62,11 +47,20 @@ class NATPortMappingClient {
         )
 
         for attempt in 0 ..< Self.MAX_RETRIES {
-            let connection = makeConnection()
+            // if mapping expired throw
+            if let currentMappingExpirationDate, Date() > currentMappingExpirationDate {
+                throw NATPortMappingError.mappingFailed
+            }
+
+            let connection = Self.makeConnection(gatewayAddress: gatewayAddress)
             connection.start(queue: queue)
 
             do {
-                let response = try await monitorConnectionStates(connection: connection, portMappingRequestPacket: portMappingRequestPacket, attempt: attempt)
+                let response = try await monitorConnectionStates(
+                    connection: connection,
+                    portMappingRequestPacket: portMappingRequestPacket,
+                    attempt: attempt
+                )
                 connection.cancel()
                 return response
             } catch NATPortMappingError.timeoutError {
@@ -78,10 +72,20 @@ class NATPortMappingClient {
             }
         }
 
-        throw NATPortMappingError.timeoutError
+        throw NATPortMappingError.mappingFailed
     }
 
     // MARK: - Private
+
+    private static func makeConnection(gatewayAddress: String) -> AsyncConnection {
+        // Create UDP connection to gateway:5351
+        let endpoint = NWEndpoint.hostPort(
+            host: NWEndpoint.Host(gatewayAddress),
+            port: NWEndpoint.Port(integerLiteral: Self.NAT_PMP_PORT)
+        )
+
+        return AsyncConnection(to: endpoint, using: .udp)
+    }
 
     private func monitorConnectionStates(connection: AsyncConnection, portMappingRequestPacket: Data, attempt: Int) async throws -> PortMappingPacketResponse {
         stateLoop: for await state in connection.states {
@@ -138,7 +142,6 @@ class NATPortMappingClient {
                 guard let data, !data.isEmpty else {
                     throw NATPortMappingError.invalidResponse
                 }
-                // TODO: map ICMP request?
                 return try PortMappingPacketResponse(from: data)
             }
 
@@ -175,7 +178,7 @@ class NATPortMappingClient {
     }
 }
 
-enum NATPortMappingError: Error {
+public enum NATPortMappingError: Error {
     case invalidResponse
     case malformedPacket
     case timeoutError

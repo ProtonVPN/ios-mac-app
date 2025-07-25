@@ -18,7 +18,7 @@
 
 import Foundation
 
-struct PortMappingPacketResponse {
+public struct PortMappingPacketResponse: Sendable {
     // Header
     /// Always 0 for NAT-PMP
     let version: UInt8
@@ -34,6 +34,11 @@ struct PortMappingPacketResponse {
     let mappedExternalPort: UInt16
     /// Port mapping lifetime in seconds
     let mappingLifetime: UInt32
+
+    var mappedProtocol: PortMappingProtocol {
+        let protocolValue = opcode - 128
+        return PortMappingProtocol(rawValue: protocolValue) ?? .udp
+    }
 
     var mappedResultCode: MappingResultCode {
         MappingResultCode(rawValue: resultCode) ?? .unsupportedOpcode
