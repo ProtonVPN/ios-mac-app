@@ -769,7 +769,7 @@ public final class VpnManager: VpnManagerProtocol {
 
         #if os(macOS)
             // Prevents creating a plutonium tunnel config if the FF is disabled.
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS) {
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true) {
                 Task {
                     do {
                         try await updatePlutoniumStateIfNeeded()
@@ -935,7 +935,7 @@ public final class VpnManager: VpnManagerProtocol {
             @Dependency(\.plutoniumManager) var plutoniumManager: PlutoniumManager
             @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
             guard FeatureFlagsRepository.shared
-                .isEnabled(VPNFeatureFlagType.plutoniumMacOS), case .enabled = feature else {
+                .isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true), case .enabled = feature else {
                 try await plutoniumManager.stop()
                 return
             }

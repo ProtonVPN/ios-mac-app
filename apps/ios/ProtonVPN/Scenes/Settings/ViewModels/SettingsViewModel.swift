@@ -100,7 +100,7 @@ final class SettingsViewModel {
     private let isAccountRecoveryEnabled: Bool
 
     private var shouldShowCustomDNSSection: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS)
+        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS, reloadValue: true)
     }
 
     var pushHandler: ((_ viewController: UIViewController, _ translucentNavBar: Bool, _ hidesBackBarButton: Bool) -> Void)?
