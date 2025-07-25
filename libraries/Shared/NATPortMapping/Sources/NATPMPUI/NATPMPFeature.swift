@@ -17,26 +17,71 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import ComposableArchitecture
+import Foundation
+import NATPortMapping
 
 @Reducer
-public struct NATPMPFeature {
+public struct NATPMPFeature: Sendable {
     @ObservableState
-    public enum State: Equatable {
-        case loading
-        case loaded
-        case error
+    public struct State: Equatable {
+        var isLoading: Bool = false
+        var externalPortNumber: UInt16?
+        var updateDate: Date?
     }
 
     public enum Action {
-        case fetch
+        case startPortMapping
+        case portMapped(externalPortNumber: UInt16, updateDate: Date)
+        case portMappingFailed
+        case stopPortMapping
     }
 
+    @Dependency(\.natPortMappingService) private var natPortMappingService
+    @Dependency(\.date.now) private var now
+
     public var body: some ReducerOf<Self> {
-        Reduce { _, action in
+        Reduce { state, action in
             switch action {
-            case .fetch:
-                .none
+            case .startPortMapping:
+                state.isLoading = true
+                return .merge(
+                    .run { send in
+                        for try await portMapping in natPortMappingService.portMappingStream {
+                            await send(
+                                .portMapped(externalPortNumber: portMapping.mappedExternalPort, updateDate: now)
+                            )
+                        }
+                    } catch: { _, send in
+                        await send(.portMappingFailed)
+                    }.cancellable(id: CancelID.portMappingStream)
+                )
+
+            case let .portMapped(externalPortNumber, updateDate):
+                state.isLoading = false
+                if state.externalPortNumber != externalPortNumber {
+                    state.externalPortNumber = externalPortNumber
+                    state.updateDate = updateDate
+                }
+                return .none
+
+            case .portMappingFailed:
+                state.isLoading = false
+                state.externalPortNumber = nil
+                state.updateDate = nil
+                return .none
+
+            case .stopPortMapping:
+                return .merge(
+                    .run { _ in
+                        await natPortMappingService.cancelPortMapping()
+                    },
+                    .cancel(id: CancelID.portMappingStream)
+                )
             }
         }
     }
+}
+
+private enum CancelID {
+    case portMappingStream
 }

@@ -19,7 +19,7 @@
 import Dependencies
 import Foundation
 
-protocol NATPortMappingService: Sendable {
+public protocol NATPortMappingService: Sendable {
     var portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error> { get }
     func createPortMapping(
         gatewayAddress: String,
@@ -31,7 +31,7 @@ protocol NATPortMappingService: Sendable {
     func cancelPortMapping() async
 }
 
-extension NATPortMappingService {
+public extension NATPortMappingService {
     func startPortMapping(gatewayAddress: String) {
         createPortMapping(
             gatewayAddress: gatewayAddress,
@@ -185,7 +185,7 @@ enum NATPortMappingServiceKey: DependencyKey {
     #endif
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var natPortMappingService: NATPortMappingService {
         get { self[NATPortMappingServiceKey.self] }
         set { self[NATPortMappingServiceKey.self] = newValue }

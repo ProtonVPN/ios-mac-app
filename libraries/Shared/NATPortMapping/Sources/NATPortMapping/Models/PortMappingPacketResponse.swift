@@ -31,7 +31,7 @@ public struct PortMappingPacketResponse: Sendable {
 
     // payload
     let internalPort: UInt16
-    let mappedExternalPort: UInt16
+    public let mappedExternalPort: UInt16
     /// Port mapping lifetime in seconds
     let mappingLifetime: UInt32
 
