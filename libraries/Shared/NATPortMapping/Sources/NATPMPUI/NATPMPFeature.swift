@@ -27,6 +27,12 @@ public struct NATPMPFeature: Sendable {
         var isLoading: Bool = false
         var externalPortNumber: UInt16?
         var updateDate: Date?
+
+        init(isLoading: Bool, externalPortNumber: UInt16? = nil, updateDate: Date? = nil) {
+            self.isLoading = isLoading
+            self.externalPortNumber = externalPortNumber
+            self.updateDate = updateDate
+        }
     }
 
     public enum Action {

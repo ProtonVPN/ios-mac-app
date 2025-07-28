@@ -48,7 +48,7 @@ public struct NATPMPPortView: View {
 
 // MARK: - Active Port View
 
-private struct ActivePortView: View {
+struct ActivePortView: View {
     let portNumber: UInt16
     let updateDate: Date?
 
@@ -126,7 +126,7 @@ private struct ActivePortView: View {
 
 // MARK: - Loading Port View
 
-private struct LoadingPortView: View {
+struct LoadingPortView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.spacing8.rawValue) {
             Text(Localizable.pfActivePortNumber)
@@ -150,7 +150,7 @@ private struct LoadingPortView: View {
 
 // MARK: - Status Port View
 
-private struct StatusPortView: View {
+struct StatusPortView: View {
     let portNumber: UInt16
 
     var body: some View {

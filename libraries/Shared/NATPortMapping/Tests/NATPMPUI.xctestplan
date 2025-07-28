@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "D899007B-7424-4830-980B-B5E9BD9E0BF8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "NATPMPUITests",
+        "name" : "NATPMPUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
