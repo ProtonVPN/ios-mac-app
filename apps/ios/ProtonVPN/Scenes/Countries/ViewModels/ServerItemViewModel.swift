@@ -218,10 +218,6 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
     override var viaCountry: (name: String, code: String)? {
         isSecureCoreEnabled ? (serverModel.logical.entryCountry, serverModel.logical.entryCountryCode) : nil
     }
-
-    override fileprivate func startObserving() {
-        AppEvent.connectionStateChanged.subscribe(self, selector: #selector(stateChanged))
-    }
 }
 
 // MARK: - Search
