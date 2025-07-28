@@ -64,8 +64,10 @@ class AppSessionManagerMock: AppSessionManager {
 
     func finishLogin(authCredentials _: AuthCredentials) async throws {}
 
-    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
-        callbackAttemptDataRefreshWithoutLogin?({ completion(.success) }, { error in completion(.failure(error)) })
+    func attemptSilentLogIn() async throws {
+        try await withCheckedThrowingContinuation { c in
+            callbackAttemptDataRefreshWithoutLogin?({ c.resume(with: .success(())) }, { error in c.resume(throwing: error) })
+        }
     }
 
     func loadDataWithoutFetching() -> Bool {

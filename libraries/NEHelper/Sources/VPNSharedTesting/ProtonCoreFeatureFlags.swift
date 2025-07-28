@@ -33,42 +33,12 @@ public extension ProtonCoreFeatureFlags.FeatureFlag {
         VPNFeatureFlagType.certificateRefreshForceRenew.featureFlag
     }
 
-    static var noDefaultToIke: Self {
-        VPNFeatureFlagType.noDefaultToIke.featureFlag
-    }
-
     static var removeConnectionDelay: Self {
         VPNFeatureFlagType.removeConnectionDelay.featureFlag
     }
-
-    static var asyncVPNManager: Self {
-        VPNFeatureFlagType.asyncVPNManager.featureFlag
-    }
-
-    static var redesignKillSwitch: Self {
-        TestFeatureFlagType.redesigniOSKillSwitch.featureFlag
-    }
-
-    static var connectionKillSwitch: Self {
-        TestFeatureFlagType.useConnectionFeatureKillSwitch.featureFlag
-    }
-}
-
-/// These duplicate feature flags we don't want to expose publicly because they are guarded by additional conditions.
-public enum TestFeatureFlagType: String, FeatureFlagTypeProtocol {
-    case redesigniOS = "IOSRedesignedUI"
-    case useConnectionFeature = "UseConnectionFeature"
-    case redesigniOSKillSwitch = "IOSRedesignedUIKillSwitch"
-    case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
 }
 
 public extension VPNFeatureFlagType {
-    var featureFlag: ProtonCoreFeatureFlags.FeatureFlag {
-        .init(name: rawValue, enabled: true, variant: nil)
-    }
-}
-
-extension TestFeatureFlagType {
     var featureFlag: ProtonCoreFeatureFlags.FeatureFlag {
         .init(name: rawValue, enabled: true, variant: nil)
     }

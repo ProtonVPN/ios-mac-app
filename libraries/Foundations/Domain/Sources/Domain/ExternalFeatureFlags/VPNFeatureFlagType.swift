@@ -43,14 +43,8 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// evict the previous session UID and associate the key with the current one.
     case certificateRefreshForceRenew = "CertificateRefreshForceRenew"
 
-    /// Don't default to IKEv2 during VPN configuration when no VPN provider is available
-    case noDefaultToIke = "AppleVPNNoDefaultToIKE"
-
     /// Remove connection delay
     case removeConnectionDelay = "RemoveConnectionDelay"
-
-    /// Async VPNManager
-    case asyncVPNManager = "AsyncVPNManager"
 
     /// Plutonium flag for macOS
     case plutoniumMacOS = "Plutonium"
@@ -71,46 +65,23 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     case iapToWebView = "IapToWebView"
 }
 
-/// These features are guarded by an additional condition, such as reliance on another flag or an OS version check.
-private enum PrivateFeatureFlag: String, FeatureFlagTypeProtocol {
-    /// Redesign flag for iOS
-    case redesigniOS = "IOSRedesignedUI"
-
-    /// KillSwitch for iOS Redesign UI.
-    case redesigniOSKillSwitch = "IOSRedesignedUIKillSwitch"
-
-    /// Use ConnectionFeature reducer from ConnectionPackage
-    case useConnectionFeature = "UseConnectionFeature"
-
-    /// KillSwitch for ConnectionFeature reducer usage.
-    case useConnectionFeatureKillSwitch = "UseConnectionFeatureKillSwitch"
-}
-
 public extension FeatureFlagsRepository {
     @available(tvOS, unavailable)
     @available(macOS, unavailable)
-    static let isRedesigniOSEnabled: Bool = {
-        if !isFlagEnabled(.redesigniOSKillSwitch) || isFlagEnabled(.redesigniOS), #available(iOS 17, *) {
+    static var isRedesigniOSEnabled: Bool = {
+        #if os(iOS)
+        if #available(iOS 17, *) {
             return true
         }
+        #endif
         return false
     }()
 
-    static let isConnectionFeatureEnabled: Bool = {
+    static var isConnectionFeatureEnabled: Bool = {
         #if os(iOS)
-            guard isRedesigniOSEnabled else {
-                // ConnectionFeature requires redesign to function since the feature currently lives as a child of the
-                // HomeFeature. In addition, parts of the legacy UI (Connection Status, old Map) are not hooked up to
-                // the new connection layer.
-                return false
-            }
-            return !isFlagEnabled(.useConnectionFeatureKillSwitch)
+            return isRedesigniOSEnabled
         #else
             return false
         #endif
     }()
-
-    private static func isFlagEnabled(_ flag: PrivateFeatureFlag) -> Bool {
-        FeatureFlagsRepository.shared.isEnabled(flag)
-    }
 }

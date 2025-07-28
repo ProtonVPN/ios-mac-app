@@ -130,17 +130,15 @@ extension AppDelegate: NSApplicationDelegate {
             self.setNSCodingModuleName()
             self.setupDebugHelpers()
 
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry) {
-                SentryHelper.setupSentry(
-                    dsn: ObfuscatedConstants.sentryDsnmacOS,
-                    isEnabled: { [weak self] in
-                        self?.isTelemetryAllowed() ?? false
-                    },
-                    getUserId: { [weak self] in
-                        self?.container.makeAuthKeychainHandle().userId
-                    }
-                )
-            }
+            SentryHelper.setupSentry(
+                dsn: ObfuscatedConstants.sentryDsnmacOS,
+                isEnabled: { [weak self] in
+                    self?.isTelemetryAllowed() ?? false
+                },
+                getUserId: { [weak self] in
+                    self?.container.makeAuthKeychainHandle().userId
+                }
+            )
 
             AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
             #if !REDESIGN
@@ -164,15 +162,9 @@ extension AppDelegate: NSApplicationDelegate {
                 self.checkSysexAndAdjustGlobalProtocol()
             }
 
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-                Task { @MainActor in
-                    await self.container.makeVpnManager().prepareManagersTask?.value
-                    self.navigationService.launched()
-                }
-            } else {
-                self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
-                    self.navigationService.launched()
-                }
+            Task { @MainActor in
+                await self.container.makeVpnManager().prepareManagersTask?.value
+                await self.navigationService.launched()
             }
 
             self.registerForTelemetryChanges()
@@ -196,17 +188,17 @@ extension AppDelegate: NSApplicationDelegate {
             return
         }
 
-        log.debug("User is logged in, refreshing user data", category: .app)
-        container.makeAppSessionManager().attemptSilentLogIn { result in
-            switch result {
-            case .success:
+        Task {
+            log.debug("User is logged in, refreshing user data", category: .app)
+            do {
+                try await container.makeAppSessionManager().attemptSilentLogIn()
                 log.debug("User data refreshed after url activation", category: .app)
-            case let .failure(error):
+            } catch {
                 log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
             }
+            
+            AppEvent.urlActivationRefresh.post()
         }
-
-        AppEvent.urlActivationRefresh.post()
     }
 
     private func setupDebugHelpers() {
@@ -417,33 +409,37 @@ extension AppDelegate {
             }
         }
 
-        let apiService = container.makeNetworking().apiService
-        apiService.acquireSessionIfNeeded { [unowned apiService, unowned self] result in
-            switch result {
-            case let .success(.sessionAlreadyPresent(authCredential)), let .success(.sessionFetchedAndAvailable(authCredential)):
-                FeatureFlagsRepository.shared.setApiService(apiService)
-                if !authCredential.userID.isEmpty {
-                    FeatureFlagsRepository.shared.setUserId(authCredential.userID)
-                }
+        Task {
+            let apiService = container.makeNetworking().apiService
+            do {
+                let session = try await apiService.acquireSessionIfNeeded().get()
+                switch session {
+                case let .sessionAlreadyPresent(authCredential), let .sessionFetchedAndAvailable(authCredential):
+                    FeatureFlagsRepository.shared.setApiService(apiService)
+                    if !authCredential.userID.isEmpty {
+                        FeatureFlagsRepository.shared.setUserId(authCredential.userID)
+                    }
 
-                Task {
-                    try await FeatureFlagsRepository.shared.fetchFlags()
-                }
+                    await CheckedFeatureFlagsRepository.shared.fetchFlags()
 
-                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
+                    let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
 
-                if isTelemetryEnabled {
-                    enableExternalLogging()
-                } else {
-                    disableExternalLogging()
+                    if isTelemetryEnabled {
+                        enableExternalLogging()
+                    } else {
+                        disableExternalLogging()
+                    }
+                default:
+                    break
                 }
-            case let .failure(error):
-                log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
-            default:
-                break
+            } catch {
+                log.error(
+                    "acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched",
+                    category: .api, event: .response, metadata: ["error": "\(error)"]
+                )
             }
+            ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
         }
-        ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 
     private func registerForTelemetryChanges() {

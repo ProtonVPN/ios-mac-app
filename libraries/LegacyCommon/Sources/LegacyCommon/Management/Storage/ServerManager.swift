@@ -60,7 +60,7 @@ public struct ServerManager: DependencyKey {
 
             // Store the last modified value, so we can use it when making subsequent logicals requests, to take
             // advantage of the `If-Modified-Since` header
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals), let lastModified {
+            if VPNFeatureFlagType.timestampedLogicals.enabled, let lastModified {
                 repository.setMetadata(lastModified, for: .lastModifiedFree)
                 if !freeServersOnly {
                     repository.setMetadata(lastModified, for: .lastModifiedAll)

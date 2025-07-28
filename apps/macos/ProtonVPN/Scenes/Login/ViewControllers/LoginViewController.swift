@@ -201,7 +201,9 @@ final class LoginViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
 
-        viewModel.logInAppeared()
+        Task { @MainActor in
+            await viewModel.logInAppeared()
+        }
     }
 
     // MARK: - Private functions

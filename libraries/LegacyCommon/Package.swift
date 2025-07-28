@@ -169,6 +169,7 @@ let package = Package(
             dependencies: [
                 "LegacyCommon",
                 "CommonNetworking",
+                "Ergonomics",
                 .product(name: "DomainTestSupport", package: "Domain"),
                 .product(name: "Persistence", package: "Persistence"),
                 .product(name: "PersistenceTestSupport", package: "Persistence"),
@@ -176,6 +177,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNSharedTesting", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
+                .core(module: "FeatureFlags"),
                 .core(module: "TestingToolkitUnitTestsCore"),
                 .core(module: "TestingToolkitUnitTestsFeatureFlag"),
                 .product(name: "CommonNetworkingTestSupport", package: "CommonNetworking"),

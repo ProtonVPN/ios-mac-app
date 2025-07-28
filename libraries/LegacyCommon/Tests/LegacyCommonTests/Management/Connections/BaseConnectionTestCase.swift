@@ -19,6 +19,8 @@
 import NetworkExtension
 import XCTest
 
+import ProtonCoreFeatureFlags
+
 import Dependencies
 
 import GoLibs
@@ -81,6 +83,20 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
         withDependencies { $0.serverRepository = repository } operation: {
             container.vpnGateway.connect(with: request)
         }
+    }
+
+    override func invokeTest() {
+        #if os(macOS)
+        super.invokeTest()
+        #else
+        let redesign = FeatureFlagsRepository.isRedesigniOSEnabled
+        let connection = FeatureFlagsRepository.isConnectionFeatureEnabled
+        FeatureFlagsRepository.isRedesigniOSEnabled = false
+        FeatureFlagsRepository.isConnectionFeatureEnabled = false
+        super.invokeTest()
+        FeatureFlagsRepository.isRedesigniOSEnabled = redesign
+        FeatureFlagsRepository.isConnectionFeatureEnabled = connection
+        #endif
     }
 
     override func setUpWithError() throws {

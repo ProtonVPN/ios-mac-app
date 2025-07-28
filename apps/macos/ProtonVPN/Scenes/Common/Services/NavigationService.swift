@@ -92,7 +92,8 @@ class NavigationService {
         self.factory = factory
     }
 
-    func launched() {
+    @MainActor
+    func launched() async {
         notificationTokens.append(
             NotificationCenter.default.addObserver(
                 for: SessionChanged.self,
@@ -128,7 +129,7 @@ class NavigationService {
         )
 
         if propertiesManager.startMinimized {
-            attemptSilentLogIn()
+            await attemptSilentLogIn()
         } else {
             showLogIn()
         }
@@ -224,9 +225,9 @@ class NavigationService {
         #endif
     }
 
-    private func attemptSilentLogIn() {
+    private func attemptSilentLogIn() async {
         let viewModel = LoginViewModel(factory: factory)
-        viewModel.logInSilently()
+        await viewModel.logInSilently()
     }
 
     private func showSidebar() {

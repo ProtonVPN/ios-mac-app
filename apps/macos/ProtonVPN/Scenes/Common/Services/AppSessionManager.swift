@@ -49,7 +49,7 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
+    func attemptSilentLogIn() async throws
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool, reason: String?)
@@ -107,14 +107,13 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: public log in interface (completion handlers)
-
-    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
-        // Invoke async implementation
-        executeOnUIThread(
-            attemptLogin,
-            success: { completion(.success) },
-            failure: { completion(.failure($0)) }
-        )
+    @MainActor
+    override func attemptSilentLogIn() async throws {
+        log.debug("Attempt silent login", category: .app)
+        guard authKeychain.fetch() != nil else {
+            throw CommonVpnError.userCredentialsMissing
+        }
+        try await finishLogin()
     }
 
     func finishLogin(authCredentials: AuthCredentials, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -123,15 +122,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: private log in implementation (async)
-
-    private func attemptLogin() async throws {
-        log.debug("Attempt silent login", category: .app)
-        guard authKeychain.fetch() != nil else {
-            throw CommonVpnError.userCredentialsMissing
-        }
-        try await finishLogin()
-    }
-
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
             try authKeychain.store(authCredentials)

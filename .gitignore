@@ -26,6 +26,7 @@ libraries/Foundations/Domain/Sources/DomainTestSupport/UserDefaults+Mock.swift_*
 build/
 .DerivedData
 output_directory/
+libraries/**/Package.resolved
 
 fastlane/coverage.json
 fastlane/ios/metadata

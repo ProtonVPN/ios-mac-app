@@ -40,6 +40,7 @@ import VPNAppCore
 import VPNShared
 
 import Domain
+import Ergonomics
 import Strings
 
 // TODO: Migrate to @MainActor once overall codebase is ready for it
@@ -100,10 +101,6 @@ final class SettingsViewModel {
     private var accountRecoveryRepository: AccountRecoveryRepositoryProtocol?
     private let isAccountRecoveryEnabled: Bool
 
-    private var shouldShowCustomDNSSection: Bool {
-        FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS, reloadValue: true)
-    }
-
     var pushHandler: ((_ viewController: UIViewController, _ translucentNavBar: Bool, _ hidesBackBarButton: Bool) -> Void)?
     var showModalController: ((UIViewController) -> Void)?
 
@@ -116,7 +113,7 @@ final class SettingsViewModel {
 
         self.hermesSettingsViewModel = HermesSettingsViewModel(factory: factory)
 
-        self.isAccountRecoveryEnabled = FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature)
+        self.isAccountRecoveryEnabled = AccountRecoveryModule.feature.enabled
 
         if appSessionManager.sessionStatus == .established {
             sessionEstablished(vpnGateway: vpnGateway)
@@ -295,7 +292,7 @@ final class SettingsViewModel {
         }
 
         let qrLoginOptedOut = propertiesManager.userInfo?.edmOptOut == 1
-        let qrLoginFeatureDisabled = FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.easyDeviceMigrationDisabled)
+        let qrLoginFeatureDisabled = CoreFeatureFlagType.easyDeviceMigrationDisabled.enabled
         let isDeviceSecured: Bool = {
             #if targetEnvironment(simulator)
                 return true
@@ -625,9 +622,7 @@ final class SettingsViewModel {
             cells.append(contentsOf: allowLanSection)
         }
 
-        if shouldShowCustomDNSSection {
-            cells.append(contentsOf: hermesSection)
-        }
+        cells.append(contentsOf: hermesSection)
 
         return cells.isEmpty ? nil : TableViewSection(title: Localizable.connection, cells: cells)
     }

@@ -33,6 +33,7 @@ import ProtonCoreFeatureFlags
 import ProtonCoreLoginUI
 import ProtonCoreNetworking
 import ProtonCorePasswordChange
+import ProtonCorePushNotifications
 
 import CommonNetworking
 import LegacyCommon
@@ -41,6 +42,7 @@ import VPNShared
 
 import BugReport
 import Domain
+import Ergonomics
 import Home
 import Modals
 import Strings
@@ -144,6 +146,8 @@ final class NavigationService {
         return loginService
     }()
 
+    private lazy var pushNotificationService = factory.makePushNotificationService()
+
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
@@ -173,7 +177,8 @@ final class NavigationService {
         self.factory = factory
     }
 
-    func launched() {
+    @MainActor
+    func launched() async {
         AppEvent.sessionManagerSessionChanged.subscribe(self, selector: #selector(sessionChanged))
         NotificationCenter.default.addObserver(self, selector: #selector(refreshVpnManager(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
 
@@ -181,13 +186,13 @@ final class NavigationService {
             windowService.show(viewController: launchViewController)
         }
 
-        loginService.attemptSilentLogIn { [weak self] result in
-            switch result {
-            case .loggedIn:
-                self?.presentMainInterface()
-            case .notLoggedIn:
-                self?.presentWelcome(initialError: nil)
-            }
+        registerForPushNotificationsIfNeeded()
+
+        switch await loginService.attemptSilentLogIn() {
+        case .loggedIn:
+            presentMainInterface()
+        case .notLoggedIn:
+            presentWelcome(initialError: nil)
         }
     }
 
@@ -223,6 +228,25 @@ final class NavigationService {
         showInitialModals()
     }
 
+    private func registerForPushNotificationsIfNeeded() {
+        if CoreFeatureFlagType.pushNotifications.enabled {
+            pushNotificationService.setup()
+
+            if CoreFeatureFlagType.accountRecovery.enabled {
+                let vpnHandler = AccountRecoveryHandler()
+                vpnHandler.handler = { [weak self] _ in
+                    // for now, for all notification types, we take the same action
+                    self?.presentAccountRecoveryViewController()
+                    return .success(())
+                }
+
+                for accountRecoveryType in NotificationType.allAccountRecoveryTypes {
+                    pushNotificationService.registerHandler(vpnHandler, forType: accountRecoveryType)
+                }
+            }
+        }
+    }
+
     func showInitialModals() {
         guard propertiesManager.showWhatsNewModal, FeatureFlagsRepository.isRedesigniOSEnabled else {
             return
@@ -254,12 +278,8 @@ final class NavigationService {
 
     @objc
     private func refreshVpnManager(_: Notification) {
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-            Task { @MainActor in
-                await self.vpnManager.refreshManagers()
-            }
-        } else {
-            vpnManager.refreshManagers()
+        Task { @MainActor in
+            await self.vpnManager.refreshManagers()
         }
     }
 
@@ -558,7 +578,7 @@ extension NavigationService: ConnectionStatusService {
 
 extension NavigationService {
     func presentAccountRecoveryViewController() {
-        guard FeatureFlagsRepository.shared.isEnabled(AccountRecoveryModule.feature) else { return }
+        guard AccountRecoveryModule.feature.enabled else { return }
 
         let viewController = makeAccountRecoveryViewController()
         windowService.addToStack(viewController, checkForDuplicates: true)

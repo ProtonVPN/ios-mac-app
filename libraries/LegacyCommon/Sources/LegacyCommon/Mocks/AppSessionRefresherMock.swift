@@ -27,53 +27,35 @@ class AppSessionRefresherMock: AppSessionRefresherImplementation {
     var didAttemptLogin: (() -> Void)?
     var loginError: Error?
 
-    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
+    override func attemptSilentLogIn() async throws {
         defer { didAttemptLogin?() }
 
         if let loginError {
-            completion(.failure(loginError))
-            return
+            throw loginError
         }
 
-        let isFreeTier: Bool
-        do {
-            isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
-        } catch {
-            completion(.failure(error))
-            return
-        }
+        let isFreeTier = try vpnKeychain.fetchCached().maxTier.isFreeTier
 
-        // The completion handler of vpnApiService.refreshServerInfo is escaping, so it's necessary to manually
-        // propagate dependencies here
-        withEscapedDependencies { dependencies in
-            vpnApiService.refreshServerInfo(freeTier: isFreeTier) { result in
-                // Inside this closure, dependencies defined on this object are now not guaranteed to be what we expect
-                dependencies.yield {
-                    // Access correct dependencies (e.g. those applied with withDependencies inside tests)
-                    switch result {
-                    case let .success(properties):
-                        guard let properties else {
-                            completion(.success)
-                            return
-                        }
-                        if let userLocation = properties.location {
-                            self.propertiesManager.userLocation = userLocation
-                        }
-                        if let services = properties.streamingServices {
-                            self.propertiesManager.streamingServices = services.streamingServices
-                        }
-                        @Dependency(\.serverManager) var serverManager
-                        if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
-                            serverManager.update(
-                                servers: servers.map { VPNServer(legacyModel: $0) },
-                                freeServersOnly: isFreeTier,
-                                lastModifiedAt: modifiedAt
-                            )
-                        }
-                        completion(.success)
-                    case let .failure(error):
-                        completion(.failure(error))
-                    }
+        try await withEscapedDependencies { dependencies in
+            guard let properties = try await vpnApiService.refreshServerInfo(freeTier: isFreeTier) else {
+                return
+            }
+
+            dependencies.yield {
+                if let userLocation = properties.location {
+                    propertiesManager.userLocation = userLocation
+                }
+                if let services = properties.streamingServices {
+                    propertiesManager.streamingServices = services.streamingServices
+                }
+
+                @Dependency(\.serverManager) var serverManager
+                if case let .modified(modifiedAt, servers, isFreeTier) = properties.serverInfo {
+                    serverManager.update(
+                        servers: servers.map { VPNServer(legacyModel: $0) },
+                        freeServersOnly: isFreeTier,
+                        lastModifiedAt: modifiedAt
+                    )
                 }
             }
         }
