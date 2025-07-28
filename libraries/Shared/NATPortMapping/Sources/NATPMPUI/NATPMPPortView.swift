@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import ProtonCoreUIFoundations
+import Strings
 import SwiftUI
 import Theme
 
@@ -54,7 +55,7 @@ private struct ActivePortView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // Header with status indicator
-            Text("Active port number")
+            Text(Localizable.pfActivePortNumber)
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
@@ -79,7 +80,7 @@ private struct ActivePortView: View {
                                 .frame(width: 16, height: 16)
                         }
                         .buttonStyle(.plain)
-                        .help("Copy port number")
+                        .help(Localizable.pfCopyPortNumber)
 
                         Spacer()
                     }
@@ -119,7 +120,7 @@ private struct ActivePortView: View {
     private func formatUpdateTime(_ date: Date) -> String {
         @Dependency(\.date.now) var now
         let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: now)
-        return "Updated \(timeAgo)"
+        return Localizable.pfUpdated(timeAgo)
     }
 }
 
@@ -128,7 +129,7 @@ private struct ActivePortView: View {
 private struct LoadingPortView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.spacing8.rawValue) {
-            Text("Active port number")
+            Text(Localizable.pfActivePortNumber)
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
@@ -136,7 +137,7 @@ private struct LoadingPortView: View {
                 ProgressView()
                     .scaleEffect(0.8)
 
-                Text("Loading...")
+                Text(Localizable.pfLoading)
                     .foregroundColor(Color(.text))
                     .font(.system(size: 18, weight: .semibold))
             }
@@ -154,7 +155,7 @@ private struct StatusPortView: View {
 
     var body: some View {
         HStack(spacing: AppTheme.Spacing.spacing4.rawValue) {
-            Text("Active port:")
+            Text("\(Localizable.pfActivePortStatus):")
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
@@ -174,7 +175,7 @@ private struct StatusPortView: View {
                     .frame(width: 12, height: 12)
             }
             .buttonStyle(.plain)
-            .help("Copy port number")
+            .help(Localizable.pfCopyPortNumber)
         }
         .padding(16)
         .background(Color(.background, .weak))

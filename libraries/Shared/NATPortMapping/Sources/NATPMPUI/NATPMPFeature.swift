@@ -31,7 +31,7 @@ public struct NATPMPFeature: Sendable {
 
     public enum Action {
         case startPortMapping
-        case portMapped(externalPortNumber: UInt16, updateDate: Date)
+        case portMapped(externalPortNumber: UInt16)
         case portMappingFailed
         case stopPortMapping
     }
@@ -48,7 +48,7 @@ public struct NATPMPFeature: Sendable {
                     .run { send in
                         for try await portMapping in natPortMappingService.portMappingStream {
                             await send(
-                                .portMapped(externalPortNumber: portMapping.mappedExternalPort, updateDate: now)
+                                .portMapped(externalPortNumber: portMapping.mappedExternalPort)
                             )
                         }
                     } catch: { _, send in
@@ -56,11 +56,12 @@ public struct NATPMPFeature: Sendable {
                     }.cancellable(id: CancelID.portMappingStream)
                 )
 
-            case let .portMapped(externalPortNumber, updateDate):
+            case let .portMapped(externalPortNumber):
                 state.isLoading = false
                 if state.externalPortNumber != externalPortNumber {
                     state.externalPortNumber = externalPortNumber
-                    state.updateDate = updateDate
+                    // the date will be updated only on port change; otherwise it will be always < 2 min
+                    state.updateDate = now
                 }
                 return .none
 

@@ -83,7 +83,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
                         currentMappingExpirationDate: currentMappingExpirationDate
                     )
 
-                // ensure that BE send success mapping
+                // ensure that BE sent success mapping
                 guard portMappingResponse.mappedResultCode == .success else {
                     portMappingContinuation.yield(with: .failure(NATPortMappingError.mappingFailed))
                     return

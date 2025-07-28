@@ -19,6 +19,7 @@ let package = Package(
         .package(path: "../../NEHelper"),
         .package(path: "../../Foundations/PMLogger"),
         .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
         .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
@@ -48,9 +49,11 @@ let package = Package(
             dependencies: [
                 "NATPortMapping",
                 "Theme",
+                "Strings",
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
+            path: "Sources/NATPMPUI",
             resources: [.process("Resources")]
         ),
         .testTarget(
