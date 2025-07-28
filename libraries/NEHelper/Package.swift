@@ -31,6 +31,7 @@ let package = Package(
         .package(path: "../Shared/ExtensionIPC"),
 
         .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
@@ -80,6 +81,7 @@ let package = Package(
                 "VPNCrypto",
                 "Strings",
                 "Localization",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "ProtonCoreUtilities", package: "protoncore"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
                 .product(name: "ProtonCoreNetworking", package: "protoncore"), // AuthCredential

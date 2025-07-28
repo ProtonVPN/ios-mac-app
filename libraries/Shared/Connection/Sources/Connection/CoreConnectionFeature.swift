@@ -512,7 +512,7 @@ extension CoreConnectionFeature.Action: CustomDebugStringConvertible {
         case let .delegate(delegate):
             ".delegate(\(delegate.debugDescription))"
         case let .connectivityChanged(connectivity):
-            ".connectivityChanged\(connectivity)"
+            ".connectivityChanged(.\(connectivity))"
         }
     }
 }
