@@ -72,6 +72,7 @@ class HoverDetectionButton: NSButton {
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        setupView()
     }
 
     override func updateTrackingAreas() {
