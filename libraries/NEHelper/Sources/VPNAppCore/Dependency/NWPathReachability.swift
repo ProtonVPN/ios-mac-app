@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import AsyncAlgorithms
 import ComposableArchitecture
 import Network
 
@@ -35,13 +36,11 @@ private enum NWPathStatusKey: DependencyKey {
     static let testValue: @Sendable () -> AsyncStream<NWPath.Status> = { .finished }
 
     static let liveValue: @Sendable () -> AsyncStream<NWPath.Status> = {
-        AsyncStream {
-            @Dependency(\.nwPathStream) var pathStream
-            for await path in pathStream() {
-                return path.status
-            }
-            return .satisfied
-        }
+        @Dependency(\.nwPathStream) var pathStream
+        return pathStream()
+            .map(\.status)
+            .removeDuplicates()
+            .eraseToStream()
     }
 }
 
