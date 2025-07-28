@@ -160,10 +160,16 @@ private actor RenewalTaskManager {
 
 #if DEBUG
     final class NATPortMappingServiceMock: NATPortMappingService {
-        init() {}
+        public let portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error>
+        public let portMappingContinuation: AsyncThrowingStream<PortMappingPacketResponse, Error>.Continuation
 
-        var portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error> {
-            fatalError()
+        init() {
+            let (stream, continuation) = AsyncThrowingStream<PortMappingPacketResponse, Error>.makeStream()
+            self.portMappingStream = stream
+            self.portMappingContinuation = continuation
+
+            // Ensure continuation finishes when deallocated
+            continuation.onTermination = { _ in }
         }
 
         func createPortMapping(
