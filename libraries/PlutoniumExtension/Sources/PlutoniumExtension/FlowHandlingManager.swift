@@ -74,6 +74,7 @@ actor FlowHandlingManager {
         switch mode {
         case .exclusion:
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+            await PlutoniumScanner.shared.waitForScanToComplete()
 
             let appBundleIDs = exclusionActivated.apps.map(\.bundleIdentifier)
             self.appIDs = Set(appBundleIDs)
@@ -104,6 +105,7 @@ actor FlowHandlingManager {
 
         case .inclusion:
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+            await PlutoniumScanner.shared.waitForScanToComplete()
 
             let appBundleIDs = inclusionActivated.apps.map(\.bundleIdentifier)
             self.appIDs = Set(appBundleIDs)

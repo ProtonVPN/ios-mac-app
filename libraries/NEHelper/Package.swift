@@ -106,6 +106,7 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
             ]
         ),
+        .testTarget(name: "VPNAppCoreTests", dependencies: ["VPNAppCore"]),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
         .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),

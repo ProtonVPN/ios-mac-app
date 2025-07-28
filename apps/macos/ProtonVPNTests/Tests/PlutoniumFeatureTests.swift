@@ -25,6 +25,12 @@ import ComposableArchitecture
 
 @MainActor
 struct PlutoniumFeatureTests {
+    @Shared(.killSwitch) var killSwitch
+
+    init() {
+        $killSwitch.withLock { $0 = false }
+    }
+
     @Test
     func onAppear() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
@@ -36,17 +42,19 @@ struct PlutoniumFeatureTests {
             $0.discoveredApps = [.huzza]
         }
 
-        await store.send(.toggleModeClicked)
-        await store.receive(\.toggleModeConfirmed) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
     }
 
     @Test
     func toggleModeConflict() async {
-        @Shared(.killSwitch) var killSwitch = true
+        $killSwitch.withLock {
+            $0 = true
+        }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature()
         }
@@ -70,12 +78,12 @@ struct PlutoniumFeatureTests {
         }
         #expect(store.state.requiresReconnection == false)
 
-        await store.send(.toggleModeClicked)
-        await store.receive(\.toggleModeConfirmed) {
+        await store.send(.toggleModeClicked) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
+        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == true)
 
         await store.send(.modeSelectionClicked(.inclusion)) {

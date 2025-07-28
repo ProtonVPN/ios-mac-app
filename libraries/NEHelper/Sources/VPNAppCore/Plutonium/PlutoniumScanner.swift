@@ -16,68 +16,106 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-// singleton
-// when created, open plutonium configuration AND for each app present discover all child bundles, update if changed
-// scan once a day at most or when a new app is added?
+#if canImport(AppKit)
 
-import Combine
-import Foundation
-import Sharing
+    import Combine
+    import Foundation
+    import Sharing
 
-import CombineSchedulers
-import SwiftNavigation
+    import CombineSchedulers
+    import SwiftNavigation
 
-public class PlutoniumScanner {
-    public static let shared: PlutoniumScanner = .init()
+    public final class PlutoniumScanner {
+        public static let shared: PlutoniumScanner = .init()
 
-    @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
-    @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+        @SharedReader(.exclusionActivated) private var exclusionActivated: PlutoniumActivated
+        @SharedReader(.inclusionActivated) private var inclusionActivated: PlutoniumActivated
 
-    @Shared(.childBundles) static var childBundles: [String: ChildBundle]
+        @Shared(.childBundles) var childBundles: [String: ChildBundle]
 
-    let scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: #file, qos: .utility).eraseToAnyScheduler()
+        private static let scanInterval = TimeInterval.days(1)
 
-    var cancellables: Set<AnyCancellable> = []
+        private var cancellables: Set<AnyCancellable> = []
 
-    var task: Task<Void, any Error>?
+        private var task: Task<Void, any Error>?
 
-    init() {
-        Publishers.MergeMany(
-            $exclusionActivated.apps.publisher,
-            $inclusionActivated.apps.publisher
-        )
-        .debounce(for: .seconds(0.5), scheduler: scheduler)
-        .sink { [weak self] apps in
-            self?.startScanning(apps)
-        }.store(in: &cancellables)
-    }
+        var workGroup: ThrowingTaskGroup<(String, ChildBundle), any Error>?
 
-    private func startScanning(_ apps: [PlutoniumApp]) {
-        task?.cancel()
-        task = Task {
-            try await withThrowingTaskGroup(of: Void.self) { group in
-                for app in apps {
-                    let childBundle = Self.childBundles[app.bundleIdentifier]
-                    let shouldCheckAgain = if let lastTimeChecked = childBundle?.lastTimeChecked {
-                        -lastTimeChecked.timeIntervalSinceNow > TimeInterval.days(1)
-                    } else {
-                        true
-                    }
-                    guard shouldCheckAgain else {
-                        continue
-                    }
+        init(
+            debounce: Int = 1,
+            scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: #file, qos: .utility).eraseToAnyScheduler()
+        ) {
+            let debounceAmount: DispatchQueue.SchedulerTimeType.Stride = .seconds(debounce)
 
-                    group.addTask(priority: .background) {
-                        try Task.checkCancellation()
-                        let plugins = FileManager.default.enumerateChildApplications(for: app)
-                        let ids = plugins.map(\.bundleIdentifier)
-                        Self.$childBundles.withLock {
-                            $0[app.bundleIdentifier] = .init(bundleIdentifiers: ids, lastTimeChecked: .now)
-                        }
+            Publishers.CombineLatest(
+                $exclusionActivated.apps.publisher,
+                $inclusionActivated.apps.publisher
+            )
+            .debounce(for: debounceAmount, scheduler: scheduler)
+            .map { $0.0 + $0.1 }
+            .sink { [weak self] apps in
+                self?.startScanning(apps)
+            }.store(in: &cancellables)
+        }
+
+        public func waitForScanToComplete() async {
+            try? await workGroup?.waitForAll()
+            _ = await task?.result
+        }
+
+        private func shouldScan(child: ChildBundle?) -> Bool {
+            if let lastTimeChecked = child?.lastTimeChecked {
+                -lastTimeChecked.timeIntervalSinceNow > Self.scanInterval
+            } else {
+                true
+            }
+        }
+
+        private func enumerationOperation(_ app: PlutoniumApp) -> () async throws -> (String, ChildBundle) {
+            {
+                try Task.checkCancellation()
+                let plugins = FileManager.default.enumerateChildApplications(for: app)
+                let ids = plugins.map(\.bundleIdentifier)
+                return (app.bundleIdentifier, ChildBundle(bundleIdentifiers: ids, lastTimeChecked: .now))
+            }
+        }
+
+        private func collect(from group: ThrowingTaskGroup<(String, ChildBundle), any Error>) async {
+            var collected = [String: ChildBundle]()
+            do {
+                for try await value in group {
+                    collected[value.0] = value.1
+                }
+                $childBundles.withLock {
+                    $0.merge(collected) {
+                        $1 // the new
                     }
                 }
-                try await group.waitForAll()
+            } catch { // update anyway
+                $childBundles.withLock {
+                    $0.merge(collected) {
+                        $1 // the new
+                    }
+                }
+            }
+        }
+
+        private func startScanning(_ apps: [PlutoniumApp]) {
+            @Shared(.childBundles) var childBundles: [String: ChildBundle]
+            task?.cancel()
+            task = Task {
+                await Task.yield() // allow time for childBundles to update from the last scan
+                await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
+                    self.workGroup = group
+                    apps
+                        .uniques(by: \.bundleIdentifier)
+                        .filter { shouldScan(child: childBundles[$0.bundleIdentifier]) }
+                        .map(enumerationOperation)
+                        .forEach { group.addTask(priority: .utility, operation: $0) }
+
+                    await collect(from: group)
+                }
             }
         }
     }
-}
+#endif

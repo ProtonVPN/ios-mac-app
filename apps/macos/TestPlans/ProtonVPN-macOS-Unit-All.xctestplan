@@ -33,6 +33,20 @@
   "testTargets" : [
     {
       "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Shared\/NATPortMapping",
+        "identifier" : "NATPortMappingTests",
+        "name" : "NATPortMappingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/Modals",
+        "identifier" : "ModalsTests",
+        "name" : "ModalsTests"
+      }
+    },
+    {
+      "target" : {
         "containerPath" : "container:..\/..\/libraries\/Foundations\/Timer",
         "identifier" : "TimerTests",
         "name" : "TimerTests"
@@ -40,16 +54,16 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "VPNSharedTests",
-        "name" : "VPNSharedTests"
+        "containerPath" : "container:..\/..\/libraries\/BugReport",
+        "identifier" : "BugReportTests",
+        "name" : "BugReportTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
-        "identifier" : "AnnouncementTests",
-        "name" : "AnnouncementTests"
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "VPNAppCoreTests",
+        "name" : "VPNAppCoreTests"
       }
     },
     {
@@ -68,16 +82,9 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
-        "identifier" : "LegacyCommonTests",
-        "name" : "LegacyCommonTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "VPNCryptoTests",
-        "name" : "VPNCryptoTests"
+        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
+        "identifier" : "ConnectionDetailsTests",
+        "name" : "ConnectionDetailsTests"
       }
     },
     {
@@ -89,23 +96,16 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
-        "identifier" : "PMLoggerTests",
-        "name" : "PMLoggerTests"
-      }
-    },
-    {
-      "target" : {
         "containerPath" : "container:..\/..\/libraries\/NEHelper",
-        "identifier" : "NEHelperTests",
-        "name" : "NEHelperTests"
+        "identifier" : "VPNSharedTests",
+        "name" : "VPNSharedTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/BugReport",
-        "identifier" : "BugReportTests",
-        "name" : "BugReportTests"
+        "containerPath" : "container:..\/..\/libraries\/Features\/Announcement",
+        "identifier" : "AnnouncementTests",
+        "name" : "AnnouncementTests"
       }
     },
     {
@@ -117,16 +117,23 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Shared\/NATPortMapping",
-        "identifier" : "NATPortMappingTests",
-        "name" : "NATPortMappingTests"
+        "containerPath" : "container:..\/..\/libraries\/LegacyCommon",
+        "identifier" : "LegacyCommonTests",
+        "name" : "LegacyCommonTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/ConnectionDetails",
-        "identifier" : "ConnectionDetailsTests",
-        "name" : "ConnectionDetailsTests"
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "NEHelperTests",
+        "name" : "NEHelperTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:..\/..\/libraries\/NEHelper",
+        "identifier" : "VPNCryptoTests",
+        "name" : "VPNCryptoTests"
       }
     },
     {
@@ -138,16 +145,16 @@
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
-        "identifier" : "ErgonomicsTests",
-        "name" : "ErgonomicsTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/PMLogger",
+        "identifier" : "PMLoggerTests",
+        "name" : "PMLoggerTests"
       }
     },
     {
       "target" : {
-        "containerPath" : "container:..\/..\/libraries\/Modals",
-        "identifier" : "ModalsTests",
-        "name" : "ModalsTests"
+        "containerPath" : "container:..\/..\/libraries\/Foundations\/Ergonomics",
+        "identifier" : "ErgonomicsTests",
+        "name" : "ErgonomicsTests"
       }
     },
     {
