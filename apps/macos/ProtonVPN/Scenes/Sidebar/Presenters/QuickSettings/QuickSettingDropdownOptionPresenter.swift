@@ -26,20 +26,20 @@ import CommonNetworking
 import Theme
 
 protocol QuickSettingDropdownOptionPresenter: AnyObject {
-    var title: String! { get }
-    var icon: NSImage! { get }
-    var active: Bool! { get }
+    var title: String { get }
+    var icon: NSImage { get }
+    var active: Bool { get }
     /// B2C users get upsell modals if their plan doesn't allow a feature.
-    var requiresUpdate: Bool! { get }
+    var requiresUpdate: Bool { get }
 
     var selectCallback: SuccessConfirmationCallback { get }
 }
 
 class QuickSettingGenericOption: QuickSettingDropdownOptionPresenter {
-    let title: String!
-    let active: Bool!
-    let icon: NSImage!
-    let requiresUpdate: Bool!
+    let title: String
+    let active: Bool
+    let icon: NSImage
+    let requiresUpdate: Bool
     let selectCallback: SuccessConfirmationCallback
 
     init(

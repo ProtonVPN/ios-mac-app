@@ -48,7 +48,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
 
-    override var title: String! {
+    override var title: String {
         Localizable.netshieldTitle
     }
 

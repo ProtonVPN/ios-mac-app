@@ -39,7 +39,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         VPNLink.portForwardingSupport.urlString
     }
 
-    override var title: String! {
+    override var title: String {
         Localizable.portForwarding
     }
 

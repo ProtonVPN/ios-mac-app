@@ -260,7 +260,7 @@ final class CountriesSectionViewController: NSViewController {
             }
             self.addChild(vc)
         }
-        // hides netshiled quick setting button
+        // hides netshield quick setting button
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
     }

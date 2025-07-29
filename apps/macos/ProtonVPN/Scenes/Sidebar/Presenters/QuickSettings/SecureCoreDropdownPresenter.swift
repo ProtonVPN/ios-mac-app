@@ -39,7 +39,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         SecureCoreUpsellAlert()
     }
 
-    override var title: String! {
+    override var title: String {
         Localizable.secureCore
     }
 

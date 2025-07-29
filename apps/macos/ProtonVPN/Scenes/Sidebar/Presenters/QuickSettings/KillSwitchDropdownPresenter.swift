@@ -44,7 +44,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         VPNLink.killSwitchSupport.urlString
     }
 
-    override var title: String! {
+    override var title: String {
         Localizable.killSwitch
     }
 

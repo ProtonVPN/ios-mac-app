@@ -1360,6 +1360,7 @@
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
+/* Text for Port forwarding quick setting in the app */
 "_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";

@@ -1208,7 +1208,7 @@ public enum Localizable {
   public static var quickSettingsNetshieldOptionLevel2: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_level2", fallback: "Block malware, ads, & trackers") }
   /// Don't block
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
-  /// Bypass firewalls to connect to P2P servers and devices in your local network.
+  /// Text for Port forwarding quick setting in the app
   public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Bypass firewalls to connect to P2P servers and devices in your local network.") }
   /// Route your most sensitive data through our safest servers in privacy-friendly countries.
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
