@@ -271,6 +271,7 @@ import VPNShared
                 features = self?.authenticationStorage.getStoredCertificateFeatures() // save the old features before clearing them
                 self?.authenticationStorage.deleteKeys()
                 self?.authenticationStorage.deleteCertificate()
+                _ = self?.authenticationStorage.getKeys() // generate new keys
 
                 // VPNAPPL-2766: If we are connected at this point, we should reconnect with new keys.
                 // This could be disruptive to the user - and reconnection with new keys will become much easier
@@ -278,7 +279,6 @@ import VPNShared
                 // There is a workaround in place on the backend which temporarily alleviates this problem if we
                 // include `renew: true` during certificate refresh.
             } finished: { [weak self] in
-                _ = self?.authenticationStorage.getKeys() // generate new keys
                 self?.refreshCertificates(features: features) { _ in }
             }
         }
