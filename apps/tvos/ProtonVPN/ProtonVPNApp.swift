@@ -28,8 +28,18 @@ import VPNShared
 
 import tvOS
 
+#if DEBUG
+    import Atlantis
+#endif
+
 @main
 struct ProtonVPNApp: App {
+    init() {
+        #if DEBUG
+            Atlantis.start()
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             AppView()
