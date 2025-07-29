@@ -27,6 +27,9 @@ import Cocoa
 import ServiceManagement
 
 // Third-party dependencies
+#if DEBUG
+    import Atlantis
+#endif
 import Dependencies
 import TrustKit
 
@@ -94,6 +97,10 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_: Notification) {
         NSApp.appearance = .init(named: .darkAqua)
         injectDefaultCryptoImplementation()
+
+        #if DEBUG
+            Atlantis.start()
+        #endif
 
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()

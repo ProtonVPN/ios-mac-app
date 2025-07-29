@@ -25,6 +25,9 @@ import Foundation
 import UIKit
 
 // Third-party dependencies
+#if DEBUG
+    import Atlantis
+#endif
 import Dependencies
 import TrustKit
 
@@ -96,6 +99,10 @@ extension AppDelegate: UIApplicationDelegate {
                     appSessionManager.logOut(force: false, reason: "UI tests")
                 }
             #endif
+        #endif
+
+        #if DEBUG
+            Atlantis.start()
         #endif
 
         // Clear out any overrides that may have been present in previous builds
