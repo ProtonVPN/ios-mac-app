@@ -102,7 +102,10 @@ public struct PlutoniumFeature {
 
     @Shared(.killSwitch) var killSwitch: Bool
 
-    public init() {}
+    public init() {
+        // It doesn't make sense to start the scanner before the user starts making changes to the plutonium app lists
+        _ = PlutoniumScanner.shared
+    }
 
     static let confirmAlert = AlertState<Action.Alert> {
         TextState(Localizable.turnSplitTunnelingOnTitle)

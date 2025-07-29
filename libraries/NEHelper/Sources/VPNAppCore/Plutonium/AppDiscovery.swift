@@ -38,10 +38,6 @@
             NSWorkspace.shared.icon(application: bundleIdentifier)
         }
 
-        public var plugins: [PlutoniumApp] {
-            FileManager.default.enumeratePluginsFolder(for: self)
-        }
-
         public init(bundleIdentifier: String, title: String) {
             self.bundleIdentifier = bundleIdentifier
             self.title = title
@@ -94,21 +90,24 @@
             return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
         }
 
-        func enumeratePluginsFolder(for app: PlutoniumApp) -> [PlutoniumApp] {
-            guard let bundle = Bundle(identifier: app.bundleIdentifier),
-                  let builtInPlugInsURL = bundle.builtInPlugInsURL else { return [] }
-            do {
-                let contents = try FileManager.default.contentsOfDirectory(
-                    at: builtInPlugInsURL,
-                    includingPropertiesForKeys: nil,
-                    options: .skipsSubdirectoryDescendants
-                )
-                return contents
-                    .compactMap(PlutoniumApp.init(url:))
-                    .uniqued
-            } catch {
-                return []
+        func enumerateChildApplications(for app: PlutoniumApp) -> [PlutoniumApp] {
+            guard let bundle = Bundle(identifier: app.bundleIdentifier) else { return [] }
+            var files: [URL] = []
+            if let enumerator = FileManager.default.enumerator(
+                at: bundle.bundleURL,
+                includingPropertiesForKeys: [.isApplicationKey],
+                options: []
+            ) {
+                for case let fileURL as URL in enumerator {
+                    if let fileAttributes = try? fileURL.resourceValues(forKeys: [.isApplicationKey]),
+                       fileAttributes.isApplication ?? false {
+                        files.append(fileURL)
+                    }
+                }
             }
+            return files
+                .compactMap(PlutoniumApp.init(url:))
+                .uniqued
         }
     }
 
