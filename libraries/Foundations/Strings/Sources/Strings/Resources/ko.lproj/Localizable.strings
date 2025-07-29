@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "이 설정을 적용하려면 다시 연결해야 합니다";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "킬 스위치 켜기?";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "킬 스위치를 비활성화하시겠어요?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "킬 스위치를 활성화 하면, 로컬 네트워크에 연결하지 못할 수 있습니다. \n\n계속 하시겠습니까?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• 이로 인해 분할 터널링이 비활성화됩니다.\n• 사용자의 로컬 네트워크에 있는 장치에 접근할 수 없게 됩니다.";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "분할 터널링을 활성화하시겠어요?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "킬 스위치가 비활성화됩니다.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ 플랜 얻기";
@@ -1463,8 +1472,11 @@
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "시스템 확장 프로그램을 활성화하는 도중에 오류가 발생했습니다: %@";
 
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "앱을 재설치한 후 다시 시도해주세요.";
+
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
-"_sysex_error_description_subcase_bad_location" = "어플리케이션에 /Applications 폴더에 올바르게 설치되었는지 확인하세요.";
+"_sysex_error_description_subcase_bad_location" = "어플리케이션이 /Applications 폴더에 올바르게 설치되었는지 확인하세요.";
 
 /* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
 "_sysex_error_description_subcase_forbidden_by_system_policy" = "현재 시스템 정책에서는 사용자의 기기에서 확장 기능 활성화가 차단되어 있습니다.";
@@ -1473,7 +1485,7 @@
 "_sysex_error_description_subcase_authorization_required" = "계속하려면 사용자의 승인이 필요합니다.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "자사 지원팀에 문희해 주세요. (오류 %@)";
+"_sysex_error_description_subcase_default" = "지원팀에 문의해주세요. (오류 %@)";
 
 "_vpnauth_certfail_title" = "자동 연결 실패";
 
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "IKEv2를 활성화하시겠습니까?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "이 프로토콜은 곧 제거됩니다. 스마트 프로토콜로 전환하는 것을 고려해 보세요. 더 알아보기";
+"_ike_deprecation_alert_message" = "이 프로토콜은 곧 삭제될 예정입니다. Smart 프로토콜로 전환을 고려해 보십시오. 더 알아보기\n\nIKEv2를 사용할 때 분할 터널링 설정은 무시됩니다.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "더 알아보기";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "확인";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "프라이버시를 향한 첫 걸음";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Proton 계정으로 비밀번호 관리자, 암호화된 메일 및 캘린더, 1 GB 클라우드 스토리지를 무료로 사용할 수 있습니다.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "계정 생성";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "플랜 업그레이드 전에 계정을 먼저 생성해야 합니다.";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "계정을 생성하지 않으면 VPN Plus로 업그레이드할 수 없습니다.";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "업그레이드 취소";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "계속 계정 생성";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "계정 생성됨";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "향상된 VPN 사용자화";

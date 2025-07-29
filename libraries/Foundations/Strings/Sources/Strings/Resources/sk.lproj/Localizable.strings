@@ -100,7 +100,7 @@
 "_network_unreachable" = "Sieť je nedostupná";
 
 /* Title in no internet alert */
-"_not_connected_to_the_internet" = "Nie je možné vytvoriť pripojenie VPN. Nie ste pripojený k internetu.";
+"_not_connected_to_the_internet" = "Nie je možné vytvoriť VPN pripojenie. Nemáte pripojenie na internet.";
 
 /* MacOS: alert before disconnection on protocol and/or SecureCore state change */
 "_vpn_connection_active" = "VPN pripojenie je aktívne";
@@ -231,7 +231,7 @@
 "_not_connected" = "Nepripojené";
 
 /* MacOS: text in main window */
-"_you_are_not_connected" = "Nie ste pripojení";
+"_you_are_not_connected" = "Bez pripojenia";
 
 /* MacOS: button in connecting overlay */
 "_try_again" = "Skúsiť znova";
@@ -953,7 +953,7 @@
 "_unprotected_network" = "Upozornenie na nechránené siete";
 
 /* MacOS: Settings -> General: description */
-"_unprotected_network_tooltip" = "Pri detekcii pripojenia cez nezabezpečenú sieť vám Proton VPN pošle notifikáciu.";
+"_unprotected_network_tooltip" = "Dostávajte upozornenia, keď Proton VPN zistí, že ste sa pripojili k nechránenej sieti.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_dns_leak_protection" = "Ochrana proti úniku DNS";
@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Pamätajte, že na uplatnenie tejto zmeny je potrebné reštartovať pripojenie.";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Zapnúť kill switch?";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "Zapnúť Kill Switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Zapnutím Kill Switch nebudete mať prístup k zariadeniam v lokálnej sieti. \n\nPokračovať?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Toto deaktivuje rozdelené tunelovanie\n• Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti.";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Zapnúť rozdelené tunelovanie?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Toto vypne kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Získajte plán %@";
@@ -1463,6 +1472,9 @@
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Vyskytla sa chyba počas povoľovania rozšírení systému: %@";
 
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "Preinštalujte aplikáciu a skúste to znova, prosím.";
+
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "uistite sa, prosím, že je aplikácia správne nainštalovaná v priečinku /Aplikácie.";
 
@@ -1813,7 +1825,7 @@
 "_home_unprotected_header" = "Nie ste chránení";
 
 /* The accessibility label given for the header at the top of the home tab when the VPN is not connected to any server. [Redesign_2023] */
-"_home_unprotected_accessibility_label" = "Prezeráte nechránené stránky z %@.";
+"_home_unprotected_accessibility_label" = "Surfujete bez ochrany z %@.";
 
 /* The hint that the screen reader will provide to voiceover users for the header in the home tab when the VPN is not connected to any server. [Redesign_2023] */
 "_home_unprotected_accessibility_hint" = "VPN je odpojená. Pripojte sa k serveru a surfujte na internete bezpečne.";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Zapnúť IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Tento protokol bude čoskoro odstránený. Zvážte prechod na Smart protocol. Zistite viac";
+"_ike_deprecation_alert_message" = "Tento protokol bude čoskoro odstránený. Zvážte prechod na Inteligentný protokol. Zistiť viac\n\nNastavenia rozdeleného tunelovania budú ignorované pri použití IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Zistiť viac";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Rozumiem";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Prejdite na súkromie";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Získajte správcu hesiel, šifrovaný Mail a Calendar, a 1 GB cloudového úložiska zdarma s Proton účtom.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Vytvoriť účet";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Pred zvýšením úrovne si musíte vytvoriť účet.";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Ak si nevytvoríte účet, nebudete môcť zvýšiť úroveň na VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Zrušiť zvýšenie úrovne";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Pokračovať vo vytváraní účtu";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Účet vytvorený";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Pokročilé prispôsobenie VPN";

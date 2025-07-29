@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Cal reiniciar la connexió per a fer efectiu el canvi.";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Voleu activar el Kill switch?";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "Voleu activar el kill switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Activant el Kill switch no podreu accedir als dispositius de la vostra xarxa local. \n\nVoleu continuar?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Això desactivarà la tunelització dividida\n• No podreu accedir als dispositius de la vostra xarxa local";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "No podreu accedir als dispositius de la vostra xarxa local";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Voleu activar la tunelització dividida?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Això desactivarà el kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Obteniu el pla %@";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "S'ha produït un error en habilitar les extensions del sistema: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "instal·leu de nou l'aplicació i torneu-ho a provar.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "assegureu-vos que l'aplicació estigui instal·lada correctament a la carpeta /Aplicacions.";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Voleu activar IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Aquest protocol s'esborrarà aviat. Penseu a canviar al protocol intel·ligent. Saber-ne més";
+"_ike_deprecation_alert_message" = "Aquest protocol s'eliminarà aviat. Considereu canviar al protocol Smart. Per saber-ne més \n\n.Les preferències de tunelització dividida s'ignoraran quan utilitzeu IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Saber-ne més";
@@ -2924,6 +2936,30 @@
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "D'acord";
 
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Feu el pas cap a la privacitat";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Obtingueu un gestor de contrasenyes, un correu electrònic i un calendari xifrats, i 1 GB d'emmagatzematge al núvol de forma gratuïta amb un compte de Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Creeu un compte";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Cal que creeu un compte abans de poder accedir a millores.";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Cal que creeu un compte per poder millorar a VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Cancel·leu la millora";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Continueu creant el compte";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "S'ha creat el compte";
+
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Personalització avançada de la VPN";
 
@@ -3000,13 +3036,13 @@
 "_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Això desactivarà el DNS personalitzat. Per aplicar els canvis, cal que us torneu a connectar.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Habiliteu-ho i torneu-vos a connectar";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "Habilita i torna a connectar";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "Canvia les preferències";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Canvieu les preferències";
+"_hermes_applyChanges_alertTitle" = "Canvia les preferències";
 
 /* Hermes settings cell client status is on */
 "_hermes_settings_isOn" = "Activat";
