@@ -1871,6 +1871,12 @@
             "state" : "translated",
             "value" : "连接到世界各地的高速服务器，并用 VPN 保护来播放您最喜欢的节目。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "連接全球各地的高速伺服器，並搭配 VPN 保護，影音串流您喜愛的節目。"
+          }
         }
       }
     },
@@ -4527,6 +4533,12 @@
             "state" : "translated",
             "value" : "如果您在使用 Proton VPN 时遇到问题，我们的客户支持团队很乐意为您提供帮助。\n\n只需扫描二维码或访问"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若您在使用 Proton VPN 時遇到問題，我們的客戶支援團隊很樂意協助。\n\n只要掃描 QR 碼或前往"
+          }
         }
       }
     },
@@ -4698,6 +4710,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "包括针对手机和电脑的高级 VPN 保护（最多可同时连接 10 台设备）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "內含適用於行動裝置與桌上型電腦的頂級 VPN 保護 (可同時連接最多 10 個裝置)"
           }
         }
       }
@@ -6008,6 +6026,12 @@
             "state" : "translated",
             "value" : "Apple TV 的 Proton VPN 适用于所有付费计划。您可以在我们的网站上查看和管理您的订阅。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN 適用於 Apple TV，並適用於所有付費方案。您可以在我們的網站上查看並管理您的訂閱。"
+          }
         }
       }
     },
@@ -6186,6 +6210,12 @@
             "state" : "translated",
             "value" : "Apple TV 的 Proton VPN 在免费计划中不可用"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN 適用於 Apple TV，但不適用於免費方案"
+          }
         }
       }
     },
@@ -6357,6 +6387,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proton VPN 严格的无日志政策已通过外部审计认证。我们绝不会在线跟踪您、记录您的 IP 地址或与第三方共享您的信息。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Proton VPN 嚴格的無日誌政策經外部稽核認證。我們絕不會線上追蹤您、記錄您的 IP 位址或將您的資訊與第三方共享。"
           }
         }
       }
@@ -7088,6 +7124,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "扫描二维码或转到\n"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "掃描 QR 碼或前往\n"
           }
         }
       }
@@ -9150,6 +9192,12 @@
             "state" : "translated",
             "value" : "若要阅读我们的隐私政策，请扫描二维码或转至"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要閱讀我們的隱私政策，請掃描 QR 碼或前往"
+          }
         }
       }
     },
@@ -9321,6 +9369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "要通过遍布 100 多个国家/地区的服务器获得快如闪电的流媒体服务，请订阅 VPN Plus。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若要解鎖閃電般的影音串流，並使用 100 多個國家/地區的伺服器，請訂閱 VPN Plus。"
           }
         }
       }
@@ -9686,6 +9740,12 @@
             "state" : "translated",
             "value" : "现在升级即可使用该应用程序，如果您已经拥有 Proton VPN Plus，请使用该账户登录"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即升級以使用應用程式，或者若您已擁有 Proton VPN Plus，請以不同帳號登入"
+          }
         }
       }
     },
@@ -10050,6 +10110,12 @@
             "state" : "translated",
             "value" : "使用另一台设备，跳转至"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用另一個裝置，前往"
+          }
         }
       }
     },
@@ -10408,6 +10474,12 @@
             "state" : "translated",
             "value" : "访问我们的在线支持中心查看故障排除提示、设置指南和常见问题解答。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請造訪我們的線上支援中心，以取得疑難排解提示、設定指南以及常見問題的解答。"
+          }
         }
       }
     },
@@ -10581,6 +10653,12 @@
             "state" : "translated",
             "value" : "不受监视地观看。"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "觀看而不被監視。"
+          }
         }
       }
     },
@@ -10752,6 +10830,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在任何主要流媒体平台上观看您最喜欢的电影和电视节目"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在任何主要影音串流平台觀看您喜愛的電影和電視節目"
           }
         }
       }
@@ -10926,6 +11010,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "当被要求验证码时，请输入"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "當系統要求您輸入驗證碼時，請輸入"
           }
         }
       }
@@ -11107,6 +11197,12 @@
             "state" : "translated",
             "value" : "当要求您输入验证码时，请输入（检索中...）"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "當系統要求您輸入驗證碼時，請輸入 (正在擷取...)"
+          }
         }
       }
     },
@@ -11285,6 +11381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "验证码已过期"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的驗證碼已過期"
           }
         }
       }
