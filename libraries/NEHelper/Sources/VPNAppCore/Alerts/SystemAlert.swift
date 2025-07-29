@@ -897,6 +897,20 @@ public final class MaxSessionsAlert: UserAccountUpdateAlert {
     }
 }
 
+/// Warns the user the signing in while connected requires them to be disconnected first.
+public final class DisconnectToSignInAlert: SystemAlert {
+    public var title: String? = Localizable.disconnectRequired
+    public var message: String? = Localizable.disconnectToSignInDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: Localizable.actionDisconnect, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: Localizable.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
 #if canImport(SystemExtensions)
     public final class SysexEnabledAlert: SystemAlert {
         public var title: String? = Localizable.sysexEnabledTitle

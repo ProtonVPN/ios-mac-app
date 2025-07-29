@@ -195,7 +195,7 @@ extension AuthKeychain: AuthKeychainHandle {
         if let context, let contextKey = storageKey(forContext: context) {
             key = contextKey
         }
-        log.debug("Storing auth credentials", category: .keychain, metadata: ["context": "\(key)"])
+        log.debug("Storing auth credentials", category: .keychain, metadata: ["key": "\(key)"])
 
         do {
             let data = try JSONEncoder().encode(credentials)
