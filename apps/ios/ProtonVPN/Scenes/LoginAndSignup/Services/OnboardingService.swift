@@ -42,17 +42,22 @@ protocol OnboardingService: AnyObject {
 
     @MainActor
     func showOnboarding()
+
+    @MainActor
+    func showPaywall()
 }
 
 final class OnboardingModuleService {
-    typealias Factory = CoreAlertServiceFactory & PlanServiceFactory & WindowServiceFactory
+    typealias Factory = CoreAlertServiceFactory & NavigationServiceFactory & PlanServiceFactory & WindowServiceFactory
 
     private let windowService: WindowService
     private let planService: PlanService
     private let alertService: CoreAlertService
     private let modalsFactory: ModalsFactory
+    private let navigationService: NavigationService
 
     private var oneClickPayment: OneClickPayment?
+    private var oneClickIapVC: UIViewController?
 
     weak var delegate: OnboardingServiceDelegate?
 
@@ -61,6 +66,7 @@ final class OnboardingModuleService {
         self.planService = factory.makePlanService()
         self.alertService = factory.makeCoreAlertService()
         self.modalsFactory = ModalsFactory()
+        self.navigationService = factory.makeNavigationService()
     }
 }
 
@@ -69,6 +75,17 @@ extension OnboardingModuleService: OnboardingService {
     func showOnboarding() {
         log.debug("Starting onboarding", category: .app)
         let navigationController = UINavigationController(rootViewController: welcomeToProtonViewController())
+        navigationController.setNavigationBarHidden(true, animated: false)
+        windowService.show(viewController: navigationController)
+    }
+
+    func showPaywall() {
+        log.debug("Starting paywall", category: .app)
+        guard let oneClickIapVC = createOneClickIapVC() else {
+            // if for any reason we didn't show oneClick, we should present main interface
+            return onboardingCoordinatorDidFinish()
+        }
+        let navigationController = UINavigationController(rootViewController: oneClickIapVC)
         navigationController.setNavigationBarHidden(true, animated: false)
         windowService.show(viewController: navigationController)
     }
@@ -104,33 +121,47 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     func postOnboardingAction() {
+        guard let oneClickIapVC = createOneClickIapVC() else {
+            // if for any reason we didn't show oneClick, we should present main interface
+            return onboardingCoordinatorDidFinish()
+        }
+        windowService.addToStack(oneClickIapVC, checkForDuplicates: false)
+    }
+
+    private func createOneClickIapVC() -> UIViewController? {
         let oneClickPayment: OneClickPayment
         do {
             oneClickPayment = try OneClickPayment(
                 alertService: alertService,
                 windowService: windowService,
                 planService: planService,
-                payments: planService.payments
+                payments: planService.payments,
+                createAccountFirstClosure: { [weak self] in
+                    guard let oneClickIapVC = self?.oneClickIapVC else { return }
+                    self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+                }
             )
         } catch {
             log.error("Encountered payments error: \(error)")
             windowService.dismissModal {
                 self.onboardingCoordinatorDidFinish()
             }
-            return
+            return nil
         }
 
         oneClickPayment.completionHandler = { [weak self] in
             self?.onboardingCoordinatorDidFinish()
         }
 
-        let viewController = oneClickPayment.oneClickIAPViewController(dismissAction: {
+        let oneClickIapVC = oneClickPayment.oneClickIAPViewController(dismissAction: {
             self.windowService.dismissModal {
                 self.onboardingCoordinatorDidFinish()
             }
         })
         self.oneClickPayment = oneClickPayment
-        windowService.addToStack(viewController, checkForDuplicates: false)
+        self.oneClickIapVC = oneClickIapVC
+
+        return oneClickIapVC
     }
 }
 

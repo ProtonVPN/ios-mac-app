@@ -581,6 +581,16 @@ extension NavigationService: LoginServiceDelegate {
             try await service.onboardingEvent(.onboardingStart)
         }
     }
+
+    @MainActor
+    func userDidLogInCredentialless() {
+        onboardingService.showPaywall()
+        propertiesManager.isOnboardingInProgress = true
+        Task {
+            let service = await factory.makeTelemetryService()
+            try await service.onboardingEvent(.onboardingStart)
+        }
+    }
 }
 
 // MARK: Onboarding delegate

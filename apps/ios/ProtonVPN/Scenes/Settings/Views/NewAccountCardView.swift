@@ -83,7 +83,7 @@ struct NewAccountCardView: View {
                 content: .constant(.init(title: Localizable.logIn, action: { actionHandler(.signIn) }))
             )
         }
-        .padding(.themeSpacing8)
+        .padding(.themeSpacing16)
         .background(Color(.background, .weak))
         .cornerRadius(.themeRadius12)
     }

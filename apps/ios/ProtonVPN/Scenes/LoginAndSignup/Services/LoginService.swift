@@ -44,6 +44,7 @@ enum LoginFlowType {
 
 protocol LoginServiceDelegate: AnyObject {
     func userDidLogIn()
+    func userDidLogInCredentialless()
     func userDidSignUp()
 }
 
@@ -155,7 +156,14 @@ final class CoreLoginService {
         case .loginStateChanged(.loginFinished):
             switch flow {
             case .normal:
-                delegate?.userDidLogIn()
+                @Dependency(\.authKeychain) var authKeychain
+                let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+                if userIsCredentialLess {
+                    // on credentialless login we will show onboarding
+                    delegate?.userDidLogInCredentialless()
+                } else {
+                    delegate?.userDidLogIn()
+                }
             case .credentiallessUpsell:
                 break
             }
