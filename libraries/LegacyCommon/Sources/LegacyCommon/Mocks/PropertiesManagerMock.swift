@@ -137,6 +137,7 @@
         }
 
         public var killSwitch: Bool = false
+        public var portForwarding: Bool = false
 
         public var humanValidationFailed: Bool = false
         public var alternativeRouting: Bool = false {

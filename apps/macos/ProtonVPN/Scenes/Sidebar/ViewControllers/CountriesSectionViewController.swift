@@ -64,6 +64,7 @@ final class CountriesSectionViewController: NSViewController {
         case secureCoreDisplay
         case netShieldDisplay
         case killSwitchDisplay
+        case portForwardingDisplay
     }
 
     @IBOutlet var searchIcon: NSImageView!
@@ -80,12 +81,14 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var secureCoreSectionView: NSView!
     @IBOutlet var netShieldSectionView: NSView!
     @IBOutlet var killSwitchSectionView: NSView!
+    @IBOutlet var portForwardingSectionView: NSView!
 
     @IBOutlet var netShieldBox: NSBox!
 
     @IBOutlet var secureCoreBtn: QuickSettingButton!
     @IBOutlet var netShieldBtn: QuickSettingButton!
     @IBOutlet var killSwitchBtn: QuickSettingButton!
+    @IBOutlet var portForwardingBtn: QuickSettingButton!
 
     @IBOutlet var listTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
@@ -93,7 +96,9 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var secureCoreContainer: NSBox!
     @IBOutlet var netshieldContainer: NSBox!
     @IBOutlet var killSwitchContainer: NSBox!
+    @IBOutlet var portForwardingContainer: NSBox!
     @IBOutlet var netShieldStatsLabel: NSTextField?
+    @IBOutlet var portForwardingWarningImage: NSImageView!
 
     fileprivate let viewModel: CountriesSectionViewModel
 
@@ -103,6 +108,8 @@ final class CountriesSectionViewController: NSViewController {
     weak var sidebarView: NSView?
 
     private var notificationTokens: [NotificationToken] = []
+
+    // MARK: - Life cycle
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -123,72 +130,13 @@ final class CountriesSectionViewController: NSViewController {
         setupQuickSettings()
         setupNetShieldBadge()
         addNetShieldObservers()
+        setupPortForwardingAlertBage()
         observeAppearance()
 
         secureCoreBtn.setAccessibilityChildren([secureCoreContainer as Any])
         netShieldBtn.setAccessibilityChildren([netshieldContainer as Any])
         killSwitchBtn.setAccessibilityChildren([killSwitchContainer as Any])
-    }
-
-    func setupNetShieldBadge() {
-        guard let netShieldPresenter = (viewModel.netShieldPresenter as? NetshieldDropdownPresenter) else {
-            return
-        }
-
-        guard netShieldPresenter.isNetShieldStatsEnabled else {
-            netShieldStatsLabel?.removeFromSuperview()
-            return
-        }
-        netShieldStatsLabel?.wantsLayer = true
-        netShieldStatsLabel?.layer?.cornerRadius = 4
-        netShieldStatsLabel?.backgroundColor = .color(.background)
-
-        DispatchQueue.main.async {
-            self.updateBadge()
-        }
-    }
-
-    func updateBadge() {
-        guard let presenter = viewModel.netShieldPresenter as? NetshieldDropdownPresenter else { return }
-
-        if presenter.appStateManager.displayState != .connected {
-            netShieldStatsLabel?.isHidden = true
-        } else {
-            netShieldStatsLabel?.isHidden = false
-        }
-
-        updateStats(stats: presenter.netShieldStats)
-        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
-            updateStats(stats: .zero(enabled: false))
-        }
-    }
-
-    func updateStats(stats: NetShieldModel) {
-        netShieldStatsLabel?.isEnabled = stats.enabled
-        let badge = (stats.adsCount + stats.trackersCount) >= 99 ? "99+" : "\(stats.adsCount + stats.trackersCount)"
-        netShieldStatsLabel?.stringValue = badge
-    }
-
-    func addNetShieldObservers() {
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: NetShieldStatsNotification.self,
-            object: nil
-        ) { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.updateBadge()
-            }
-        })
-
-        notificationTokens.append(NotificationCenter.default.addObserver(
-            for: AppEvent.netShield.name,
-            object: nil
-        ) { [weak self] level in
-            DispatchQueue.main.async {
-                if (level.object as? NetShieldType) != .level2 {
-                    self?.updateStats(stats: .zero(enabled: false))
-                }
-            }
-        })
+        portForwardingBtn.setAccessibilityChildren([portForwardingContainer as Any])
     }
 
     override func viewWillAppear() {
@@ -200,10 +148,7 @@ final class CountriesSectionViewController: NSViewController {
         netShieldBtn.layoutSubtreeIfNeeded()
         secureCoreBtn.layoutSubtreeIfNeeded()
         killSwitchBtn.layoutSubtreeIfNeeded()
-    }
-
-    private func setupView() {
-        view.wantsLayer = true
+        portForwardingBtn.layoutSubtreeIfNeeded()
     }
 
     var observer: Any?
@@ -216,6 +161,12 @@ final class CountriesSectionViewController: NSViewController {
                 self?.setupColors()
             }
         }
+    }
+
+    // MARK: - Private
+
+    private func setupView() {
+        view.wantsLayer = true
     }
 
     private func setupColors() {
@@ -287,8 +238,13 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
             (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
+//            (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3), // TODO: enable in the wiring
         ].forEach { presenter, container, button, index in
-            let vc = QuickSettingDetailViewController(presenter)
+            let vc: NSViewController = if index == 1 {
+                QuickSettingDetailNetShieldViewController(presenter)
+            } else {
+                QuickSettingDetailViewController(presenter)
+            }
             vc.viewWillAppear()
             container?.addSubview(vc.view)
             container?.heightAnchor.constraint(equalTo: vc.view.heightAnchor).isActive = true
@@ -304,8 +260,93 @@ final class CountriesSectionViewController: NSViewController {
             }
             self.addChild(vc)
         }
+        // hides netshield quick setting button
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
+    }
+
+    // MARK: - NetShield Badge
+
+    private func setupNetShieldBadge() {
+        guard let netShieldPresenter = (viewModel.netShieldPresenter as? NetshieldDropdownPresenter) else {
+            return
+        }
+
+        guard netShieldPresenter.isNetShieldStatsEnabled else {
+            netShieldStatsLabel?.removeFromSuperview()
+            return
+        }
+        netShieldStatsLabel?.wantsLayer = true
+        netShieldStatsLabel?.layer?.cornerRadius = 4
+        netShieldStatsLabel?.backgroundColor = .color(.background)
+
+        DispatchQueue.main.async {
+            self.updateNetShieldBadge()
+        }
+    }
+
+    private func updateNetShieldBadge() {
+        guard let presenter = viewModel.netShieldPresenter as? NetshieldDropdownPresenter else { return }
+
+        if presenter.appStateManager.displayState != .connected {
+            netShieldStatsLabel?.isHidden = true
+        } else {
+            netShieldStatsLabel?.isHidden = false
+        }
+
+        updateStats(stats: presenter.netShieldStats)
+        if presenter.netShieldPropertyProvider.netShieldType != .level2 {
+            updateStats(stats: .zero(enabled: false))
+        }
+    }
+
+    private func updateStats(stats: NetShieldModel) {
+        netShieldStatsLabel?.isEnabled = stats.enabled
+        let badge = (stats.adsCount + stats.trackersCount) >= 99 ? "99+" : "\(stats.adsCount + stats.trackersCount)"
+        netShieldStatsLabel?.stringValue = badge
+    }
+
+    private func addNetShieldObservers() {
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: NetShieldStatsNotification.self,
+            object: nil
+        ) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.updateNetShieldBadge()
+            }
+        })
+
+        notificationTokens.append(NotificationCenter.default.addObserver(
+            for: AppEvent.netShield.name,
+            object: nil
+        ) { [weak self] level in
+            DispatchQueue.main.async {
+                if (level.object as? NetShieldType) != .level2 {
+                    self?.updateStats(stats: .zero(enabled: false))
+                }
+            }
+        })
+    }
+
+    // MARK: - Port forwarding alert badge
+
+    private func setupPortForwardingAlertBage() {
+        portForwardingWarningImage?.wantsLayer = true
+        portForwardingWarningImage?.contentTintColor = .color(.icon, .warning)
+
+        DispatchQueue.main.async {
+            self.updatePortForwardingAlertBage()
+        }
+    }
+
+    private func updatePortForwardingAlertBage() {
+        // TODO: wire in the wiring task
+        if false {
+            portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
+            portForwardingWarningImage?.isHidden = false
+        } else {
+            portForwardingWarningImage?.isHidden = true
+        }
     }
 
     @objc
@@ -329,9 +370,14 @@ final class CountriesSectionViewController: NSViewController {
         case 1:
             let finalValue = netshieldContainer.isHidden
             didDisplayQuickSetting(.netShieldDisplay, appear: finalValue)
-        default:
+        case 2:
             let finalValue = killSwitchContainer.isHidden
             didDisplayQuickSetting(.killSwitchDisplay, appear: finalValue)
+        case 3:
+            let finalValue = portForwardingContainer.isHidden
+            didDisplayQuickSetting(.portForwardingDisplay, appear: finalValue)
+        default:
+            return
         }
     }
 
@@ -339,6 +385,7 @@ final class CountriesSectionViewController: NSViewController {
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
         let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear
+        let portForwardingDisplay = (quickSettingItem == .portForwardingDisplay) && appear
 
         searchTextField.isEnabled = !appear
 
@@ -362,12 +409,16 @@ final class CountriesSectionViewController: NSViewController {
         killSwitchBtn.detailOpened = killSwitchDisplay
         killSwitchContainer.isHidden = !killSwitchDisplay
 
+        portForwardingBtn.detailOpened = portForwardingDisplay
+        portForwardingContainer.isHidden = !portForwardingDisplay
+
         serverListScrollView.block = appear
         quickSettingDetailDisplayed = appear
 
         secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
         netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
         killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
+        portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
 
         serverListTableView.reloadData()
     }
@@ -485,10 +536,12 @@ extension CountriesSectionViewController: TextFieldFocusDelegate {
 }
 
 extension CountriesSectionViewController: CountriesSettingsDelegate {
-    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool) {
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool, portForwarding: Bool) {
         secureCoreBtn.switchState(secureCore ? AppTheme.Icon.locks : AppTheme.Icon.lock, enabled: secureCore)
         killSwitchBtn.switchState(killSwitch ? AppTheme.Icon.switchOn : AppTheme.Icon.switchOff, enabled: killSwitch)
         netShieldBtn.switchState(netshield == .off ? AppTheme.Icon.shield : (netshield == .level1 ? AppTheme.Icon.shieldHalfFilled : AppTheme.Icon.shieldFilled), enabled: netshield != .off)
+        portForwardingBtn
+            .switchState(portForwarding ? AppTheme.Icon.arrowsSwitch : AppTheme.Icon.arrowUpBounceLeft, enabled: portForwarding)
         children
             .compactMap { $0 as? QuickSettingsDetailViewControllerProtocol }
             .forEach { $0.reloadOptions() }

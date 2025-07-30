@@ -915,6 +915,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Port forwarding";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Always-on VPN";
 
@@ -1357,6 +1360,8 @@
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
 "_quick_settings_netShield_description" = "Browse the internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables internet if the VPN connection drops to prevent accidental IP leak.";
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
 "_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling kill switch.";

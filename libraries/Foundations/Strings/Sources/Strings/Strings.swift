@@ -1138,6 +1138,8 @@ public enum Localizable {
   public static var plutoniumUpsellTitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_title", fallback: "Get the best of both worlds") }
   /// IP entry validation error
   public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
+  /// MacOS: Settings -> Port forwarding: name of field.
+  public static var portForwarding: String { return Localizable.tr("Localizable", "_port_forwarding", fallback: "Port forwarding") }
   /// MacOS: Settings screen title
   public static var preferences: String { return Localizable.tr("Localizable", "_preferences", fallback: "Preferences") }
   /// Description shown together with server info icon
@@ -1206,6 +1208,8 @@ public enum Localizable {
   public static var quickSettingsNetshieldOptionLevel2: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_level2", fallback: "Block malware, ads, & trackers") }
   /// Don't block
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
+  /// Text for Port forwarding quick setting in the app
+  public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Bypass firewalls to connect to P2P servers and devices in your local network.") }
   /// Route your most sensitive data through our safest servers in privacy-friendly countries.
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed

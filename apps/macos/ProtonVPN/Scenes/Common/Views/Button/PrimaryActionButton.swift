@@ -45,6 +45,11 @@ class PrimaryActionButton: HoverDetectionButton {
         }
     }
 
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        configureButton()
+    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         configureButton()

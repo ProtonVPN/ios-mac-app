@@ -42,12 +42,13 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
 
-    public private(set) lazy var isNetShieldStatsEnabled = factory.makePropertiesManager().featureFlags.netShieldStats
+    public private(set) lazy var isNetShieldStatsEnabled = propertiesManager.featureFlags.netShieldStats
     var netShieldStats: NetShieldModel = .zero(enabled: false)
     private var notificationTokens: [NotificationToken] = []
 
-    override var title: String! {
+    override var title: String {
         Localizable.netshieldTitle
     }
 
@@ -90,7 +91,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         return netShieldStats
     }
 
-    override var options: [QuickSettingsDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOptionPresenter] {
         [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map { self.createNetshieldOption(level: $0) }
     }
 
@@ -99,6 +100,12 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownUpgradeButton.isHidden = true
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
+
+        if propertiesManager.featureFlags.netShield {
+            // (width - traling - leading) / number of buttons
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
+            viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
+        }
     }
 
     private func contentChanged() {

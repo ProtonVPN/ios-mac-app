@@ -44,7 +44,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         VPNLink.killSwitchSupport.urlString
     }
 
-    override var title: String! {
+    override var title: String {
         Localizable.killSwitch
     }
 
@@ -53,7 +53,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager(), alertService: factory.makeCoreAlertService())
     }
 
-    override var options: [QuickSettingsDropdownOptionPresenter] {
+    override var options: [QuickSettingDropdownOptionPresenter] {
         [killSwitchOff, killSwitchOn]
     }
 
@@ -62,10 +62,13 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsKillSwitchDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         viewController?.dropdownUpgradeButton.isHidden = true
+
         if propertiesManager.featureFlags.netShield {
-            viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
+            // (width - traling - leading) / number of buttons
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
+            viewController?.arrowHorizontalConstraint.constant = oneButtonWidth / 2
         } else {
-            viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 5) + 12
+            // nothing, will point at the center
         }
     }
 

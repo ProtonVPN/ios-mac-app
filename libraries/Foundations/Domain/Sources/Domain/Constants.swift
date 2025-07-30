@@ -54,6 +54,7 @@ public enum VPNLink: String, CaseIterable {
     case accountDashboard = "https://account.protonvpn.com/dashboard"
     case learnMore = "https://protonvpn.com/support/secure-core-vpn"
     case killSwitchSupport = "https://protonvpn.com/support/what-is-kill-switch"
+    case portForwardingSupport = "https://protonvpn.com/support/port-forwarding"
     case netshieldSupport = "https://protonvpn.com/support/netshield"
     case support = "https://protonvpn.com/support"
     case supportForm = "https://protonvpn.com/support-form"

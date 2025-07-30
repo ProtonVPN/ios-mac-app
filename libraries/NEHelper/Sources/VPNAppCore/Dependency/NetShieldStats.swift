@@ -40,7 +40,6 @@ public extension DependencyValues {
     }
 }
 
-@available(macOS 12, *)
 extension NetShieldStatsProvider: DependencyKey {
     public static let liveValue: NetShieldStatsProvider = {
         let actor = NetShieldStatsProviderImplementation()
@@ -52,7 +51,6 @@ extension NetShieldStatsProvider: DependencyKey {
     }()
 }
 
-@available(macOS 12, *)
 actor NetShieldStatsProviderImplementation {
     private(set) var stats: NetShieldModel = .zero(enabled: false)
 

@@ -73,7 +73,7 @@ extension DependencyContainer: CountriesSectionViewModelFactory {
 }
 
 protocol CountriesSettingsDelegate: AnyObject {
-    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool)
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool, portForwarding: Bool)
 }
 
 class CountriesSectionViewModel {
@@ -141,6 +141,10 @@ class CountriesSectionViewModel {
         KillSwitchDropdownPresenter(factory)
     }
 
+    var portForwardingPresenter: QuickSettingDropdownPresenter {
+        PortForwardingDropdownPresenter(factory)
+    }
+
     var notificationCenter: NotificationCenter = .default
     private var secureCoreState: Bool
     private var serverGroups: [ServerGroupInfo]? // cache containing summaries about each gateway or country
@@ -191,6 +195,7 @@ class CountriesSectionViewModel {
             .activeServerTypeChanged,
             .netShield,
             .vpnAccelerator,
+            // .portForwarding or @Shared like killSwitch https://protonag.atlassian.net/browse/VPNAPPL-2934
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 
@@ -447,7 +452,8 @@ class CountriesSectionViewModel {
         delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,
-            killSwitch: propertiesManager.killSwitch
+            killSwitch: propertiesManager.killSwitch,
+            portForwarding: propertiesManager.portForwarding
         )
     }
 

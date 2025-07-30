@@ -28,10 +28,10 @@ import LegacyCommon
 import VPNAppCore
 
 protocol QuickSettingDropdownPresenterProtocol: AnyObject {
-    var title: String! { get }
+    var title: String { get }
 
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
-    var options: [QuickSettingsDropdownOptionPresenter] { get }
+    var options: [QuickSettingDropdownOptionPresenter] { get }
     var dismiss: (() -> Void)? { get set }
 
     func viewDidLoad()
@@ -41,7 +41,7 @@ protocol QuickSettingDropdownPresenterProtocol: AnyObject {
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
     weak var viewController: QuickSettingsDetailViewControllerProtocol?
 
-    var title: String! {
+    var title: String {
         ""
     }
 
@@ -64,7 +64,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         AppEvent.planChanged.subscribe(self, selector: #selector(vpnPlanChanged))
     }
 
-    var options: [QuickSettingsDropdownOptionPresenter] {
+    var options: [QuickSettingDropdownOptionPresenter] {
         []
     }
 
