@@ -42,6 +42,21 @@ struct NATPMPPortViewTests {
     }
 
     @Test
+    func loadedViewDark() {
+        withDependencies {
+            $0.date.now = .init()
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+            ).environment(\.colorScheme, .dark)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 84)))
+        }
+    }
+
+    @Test
     func loadingView() {
         withDependencies {
             $0.date.now = .init()
@@ -54,11 +69,35 @@ struct NATPMPPortViewTests {
     }
 
     @Test
+    func loadingViewDark() {
+        withDependencies {
+            $0.date.now = .init()
+        } operation: {
+            let view = LoadingPortView().environment(\.colorScheme, .dark)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+        }
+    }
+
+    @Test
     func statusView() {
         withDependencies {
             $0.date.now = .init()
         } operation: {
             let view = StatusPortView(portNumber: 36528)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
+        }
+    }
+
+    @Test
+    func statusViewDark() {
+        withDependencies {
+            $0.date.now = .init()
+        } operation: {
+            let view = StatusPortView(portNumber: 36528).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))

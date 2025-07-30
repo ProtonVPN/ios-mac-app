@@ -49,7 +49,7 @@ public struct NATPMPPortView: View {
 
 struct ActivePortView: View {
     let portNumber: UInt16
-    let updateDate: Date?
+    let updateDate: Date
 
     var body: some View {
         VStack(alignment: .leading, spacing: .themeSpacing12) {
@@ -59,15 +59,15 @@ struct ActivePortView: View {
                 .themeFont(.callout(emphasised: true))
 
             // Port number with copy button
-            HStack(alignment: .firstTextBaseline, spacing: AppTheme.Spacing.spacing8.rawValue) {
+            HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
                 // Green status indicator
                 Image(nsImage: Asset.pfIndicator.image)
                     .resizable()
-                    .frame(width: 16, height: 16)
+                    .frame(.square(.themeSpacing16))
 
                 VStack(alignment: .leading, spacing: .themeSpacing8) {
-                    HStack(spacing: AppTheme.Spacing.spacing4.rawValue) {
-                        Text("\(String(portNumber))")
+                    HStack(spacing: .themeSpacing4) {
+                        Text(String(portNumber))
                             .foregroundColor(Color(.text))
                             .font(.title2(emphasised: false))
 
@@ -85,11 +85,9 @@ struct ActivePortView: View {
                     }
                     HStack {
                         // Update timestamp
-                        if let updateDate {
-                            Text(formatUpdateTime(updateDate))
-                                .foregroundColor(Color(.text, .weak))
-                                .themeFont(.callout(emphasised: false))
-                        }
+                        Text(formatUpdateTime(updateDate))
+                            .foregroundColor(Color(.text, .weak))
+                            .themeFont(.callout(emphasised: false))
                         Spacer()
                     }
                 }
@@ -120,12 +118,12 @@ struct ActivePortView: View {
 
 struct LoadingPortView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: AppTheme.Spacing.spacing8.rawValue) {
+        VStack(alignment: .leading, spacing: .themeSpacing8) {
             Text(Localizable.pfActivePortNumber)
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
-            HStack(spacing: AppTheme.Spacing.spacing8.rawValue) {
+            HStack(spacing: .themeSpacing8) {
                 ProgressView()
                     .scaleEffect(0.8)
 
@@ -146,8 +144,8 @@ struct StatusPortView: View {
     let portNumber: UInt16
 
     var body: some View {
-        HStack(spacing: AppTheme.Spacing.spacing4.rawValue) {
-            Text("\(Localizable.pfActivePortStatus):")
+        HStack(spacing: .themeSpacing4) {
+            Text(Localizable.pfActivePortStatus)
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
@@ -155,7 +153,7 @@ struct StatusPortView: View {
                 .resizable()
                 .frame(.square(.themeSpacing12))
 
-            Text("\(String(portNumber))")
+            Text(String(portNumber))
                 .foregroundColor(Color(.text))
                 .font(.title3(emphasised: false))
 

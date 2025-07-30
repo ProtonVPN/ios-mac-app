@@ -25,11 +25,15 @@ public typealias AssetImageTypeAlias = ImageAsset.Image
 // swiftlint:disable identifier_name line_length nesting type_body_length type_name
 public enum Asset {
   public static let wrongCountry = ImageAsset(name: "wrong-country")
+  public static let vpnCarbonBackgroundNorm = ColorAsset(name: "VpnCarbonBackgroundNorm")
+  public static let vpnCarbonBackgroundWeak = ColorAsset(name: "VpnCarbonBackgroundWeak")
   public static let offerBannerGradientLeft = ColorAsset(name: "OfferBannerGradientLeft")
   public static let offerBannerGradientRight = ColorAsset(name: "OfferBannerGradientRight")
   public static let onboardingGradientBottom = ColorAsset(name: "OnboardingGradientBottom")
   public static let onboardingGradientTop = ColorAsset(name: "OnboardingGradientTop")
   public static let onboardingTint = ColorAsset(name: "OnboardingTint")
+  public static let vpnCarbonTextNorm = ColorAsset(name: "VpnCarbonTextNorm")
+  public static let vpnCarbonTextWeak = ColorAsset(name: "VpnCarbonTextWeak")
   public static let upsellGradientBottom = ColorAsset(name: "UpsellGradientBottom")
   public static let upsellGradientTop = ColorAsset(name: "UpsellGradientTop")
   public static let vpnGreen = ColorAsset(name: "VpnGreen")

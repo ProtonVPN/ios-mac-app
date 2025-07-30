@@ -25,7 +25,7 @@ public struct NATPMPFeature: Sendable {
     @ObservableState
     public enum State: Equatable {
         case loading
-        case loaded(externalPortNumber: UInt16, updateDate: Date?)
+        case loaded(externalPortNumber: UInt16, updateDate: Date)
         case error
     }
 

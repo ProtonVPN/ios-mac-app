@@ -1357,7 +1357,7 @@
 
 // MARK: NAT-PMP
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port";
+"_pf_active_port_status" = "Active port:";
 
 /* Text appears in port forwarding view with the assigned port */
 "_pf_active_port_number" = "Active port number";

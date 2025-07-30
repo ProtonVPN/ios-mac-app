@@ -1067,7 +1067,7 @@ public enum Localizable {
   /// Text appears in port forwarding view with the assigned port
   public static var pfActivePortNumber: String { return Localizable.tr("Localizable", "_pf_active_port_number", fallback: "Active port number") }
   /// Text appears in main view with the assigned port
-  public static var pfActivePortStatus: String { return Localizable.tr("Localizable", "_pf_active_port_status", fallback: "Active port") }
+  public static var pfActivePortStatus: String { return Localizable.tr("Localizable", "_pf_active_port_status", fallback: "Active port:") }
   /// Text appears as hint when hovering mouse over the assigned port number
   public static var pfCopyPortNumber: String { return Localizable.tr("Localizable", "_pf_copy_port_number", fallback: "Copy port number") }
   /// Text appears in port forwarding view during loading
