@@ -55,7 +55,7 @@ struct ActivePortView: View {
         VStack(alignment: .leading, spacing: .themeSpacing12) {
             // Header with status indicator
             Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text))
+                .foregroundColor(Color(.text, .weak))
                 .themeFont(.callout(emphasised: true))
 
             // Port number with copy button
@@ -120,7 +120,7 @@ struct LoadingPortView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: .themeSpacing8) {
             Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text))
+                .foregroundColor(Color(.text, .weak))
                 .themeFont(.callout(emphasised: true))
 
             HStack(spacing: .themeSpacing8) {
