@@ -189,6 +189,7 @@
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		A48BE9B12E05AE0000B891DA /* PaymentsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE9B02E05ADFC00B891DA /* PaymentsWebViewController.swift */; };
+		A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A48BE9B32E05AEA300B891DA /* Atlantis */; };
 		AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1D1B8B2D41197700C185FD /* SettingsClient.swift */; };
 		AD37FAC329B63E1100D4DE4E /* NetShieldStatsItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AD37FAC229B63E1100D4DE4E /* NetShieldStatsItemView.xib */; };
 		AD37FAC529B7310200D4DE4E /* NetShieldStatsItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD37FAC429B7310200D4DE4E /* NetShieldStatsItemView.swift */; };
@@ -937,6 +938,7 @@
 				66FCA5812D79F99900F470C3 /* Sharing in Frameworks */,
 				4C8C31542A73BA36006AD628 /* ProtonCoreLoginUI in Frameworks */,
 				4C8C31582A73BAB9006AD628 /* ProtonCoreCryptoVPNPatchedGoImplementation in Frameworks */,
+				A48BE9B42E05AEA300B891DA /* Atlantis in Frameworks */,
 				E589747A2A812A870017987D /* OHHTTPStubsSwift in Frameworks */,
 				4CF361FF2D6E21A60088CEB3 /* Perception in Frameworks */,
 				4C7D404E2A60244C00ACDBED /* Alamofire in Frameworks */,
@@ -2383,6 +2385,7 @@
 				E5C384632D96AA98003494D5 /* Settings */,
 				E5C3847B2D96B9D5003494D5 /* Modals */,
 				E5E39ED32D96DFED006E4978 /* Home */,
+				A48BE9B32E05AEA300B891DA /* Atlantis */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2690,6 +2693,7 @@
 				E59B79FE2CAFE36200CE3515 /* XCRemoteSwiftPackageReference "xctest-dynamic-overlay" */,
 				4CF361FD2D6E21A60088CEB3 /* XCRemoteSwiftPackageReference "swift-perception" */,
 				66FCA57F2D79F99900F470C3 /* XCRemoteSwiftPackageReference "swift-sharing" */,
+				A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -4651,6 +4655,14 @@
 				minimumVersion = 2.3.3;
 			};
 		};
+		A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ProxymanApp/atlantis";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.29.2;
+			};
+		};
 		ADB109C92B63144800B3F4D3 /* XCRemoteSwiftPackageReference "TrustKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ProtonMail/TrustKit";
@@ -4837,6 +4849,11 @@
 		8BC65CD92B97645D005F2533 /* ProtonCoreTelemetry */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ProtonCoreTelemetry;
+		};
+		A48BE9B32E05AEA300B891DA /* Atlantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A48BE9B22E05AEA300B891DA /* XCRemoteSwiftPackageReference "atlantis" */;
+			productName = Atlantis;
 		};
 		AD51BE492B907FDB002E40FD /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -112,6 +112,7 @@
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
+		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
 		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
 		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */; };
@@ -1126,6 +1127,7 @@
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
 				E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */,
 				4CD1F7972A72DF2700E8AB01 /* DictionaryCoder in Frameworks */,
+				A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
@@ -2877,6 +2879,7 @@
 				4C9FF4892D64967A004DBF89 /* Announcement */,
 				E5C384652D96AAA5003494D5 /* Settings */,
 				E5C3847D2D96B9DE003494D5 /* Modals */,
+				A4B9A7352E38FC2600A21B35 /* Atlantis */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -3000,6 +3003,7 @@
 				4C8571DA2A7CEC5B0057FED6 /* XCRemoteSwiftPackageReference "TrustKit" */,
 				4C660DB22CCA810300780D42 /* XCRemoteSwiftPackageReference "Version" */,
 				4CEBB4072CDA68DE00AB5556 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -5049,6 +5053,14 @@
 				minimumVersion = 2.4.2;
 			};
 		};
+		A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ProxymanApp/atlantis/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.29.2;
+			};
+		};
 		E555DF752A4F194B00FD15C8 /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies.git";
@@ -5166,6 +5178,11 @@
 		77DA78732CB7F83800E12F5C /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Localization;
+		};
+		A4B9A7352E38FC2600A21B35 /* Atlantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4B9A7342E38FC2600A21B35 /* XCRemoteSwiftPackageReference "atlantis" */;
+			productName = Atlantis;
 		};
 		AD9F194F2B55D6770034F329 /* Persistence */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -16,6 +16,7 @@
 		4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
+		A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7442E3903C400A21B35 /* Atlantis */; };
 		AD3BF61A2C259D6000441E27 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8FA9062BEB9DBB00E751F6 /* Client.plist */; };
 		AD6253FE2C3C021D00A38AF9 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */; };
 		AD6253FF2C3C023F00A38AF9 /* SharedDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6253FD2C3C021D00A38AF9 /* SharedDependencies+Live.swift */; };
@@ -95,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */,
 				E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */,
 				E53729F72BFDF777003D7409 /* tvOS in Frameworks */,
 				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
@@ -252,6 +254,7 @@
 				E53729F62BFDF777003D7409 /* tvOS */,
 				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
 				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
+				A4B9A7442E3903C400A21B35 /* Atlantis */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */;
@@ -360,6 +363,9 @@
 				"zh-Hans",
 			);
 			mainGroup = 4C54B00E2BC027FD00315A3B;
+			packageReferences = (
+				A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */,
+			);
 			productRefGroup = 4C54B0182BC027FD00315A3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -824,10 +830,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ProxymanApp/atlantis/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.29.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		667C97BD2C08848F001AB9D6 /* WireGuardExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WireGuardExtension;
+		};
+		A4B9A7442E3903C400A21B35 /* Atlantis */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A4B9A7432E3903C400A21B35 /* XCRemoteSwiftPackageReference "atlantis" */;
+			productName = Atlantis;
 		};
 		E53729F62BFDF777003D7409 /* tvOS */ = {
 			isa = XCSwiftPackageProductDependency;
