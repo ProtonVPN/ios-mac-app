@@ -122,13 +122,13 @@
                     <rect key="frame" x="14" y="445" width="897" height="54"/>
                     <subviews>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="ouP-mR-rPp" userLabel="Secure Core">
-                            <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
+                            <rect key="frame" x="0.0" y="0.0" width="299" height="54"/>
                             <view key="contentView" id="vbU-RU-3aG">
-                                <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="299" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="JrW-be-2tC" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="208" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="283" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-lock" imagePosition="only" alignment="center" inset="2" id="Ahl-H6-ZXc">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -147,13 +147,13 @@
                             <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </box>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="AVF-NI-b29" userLabel="Netshield">
-                            <rect key="frame" x="224" y="0.0" width="225" height="54"/>
+                            <rect key="frame" x="299" y="0.0" width="299" height="54"/>
                             <view key="contentView" id="Uag-7s-udL">
-                                <rect key="frame" x="0.0" y="0.0" width="225" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="299" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button imageHugsTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="COp-Cy-iCa" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="209" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="283" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-shield" imagePosition="only" alignment="center" inset="2" id="fea-44-fJR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -161,7 +161,7 @@
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
                                     <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
-                                        <rect key="frame" x="115" y="32" width="20" height="14"/>
+                                        <rect key="frame" x="152" y="32" width="20" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="939-Qe-cvS"/>
                                             <constraint firstAttribute="height" constant="14" id="qs5-Ea-M4k"/>
@@ -186,13 +186,13 @@
                             <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </box>
                         <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Jel-VH-8db" userLabel="KillSwitch">
-                            <rect key="frame" x="449" y="0.0" width="224" height="54"/>
+                            <rect key="frame" x="598" y="0.0" width="299" height="54"/>
                             <view key="contentView" id="Jr2-NA-2AB">
-                                <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
+                                <rect key="frame" x="0.0" y="0.0" width="299" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="1zu-fE-s41" userLabel="Dropdown" customClass="QuickSettingButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="8" y="12" width="208" height="38"/>
+                                        <rect key="frame" x="8" y="12" width="283" height="38"/>
                                         <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic-switch-on" imagePosition="only" alignment="center" inset="2" id="kiH-9O-UGS">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -210,8 +210,8 @@
                             <color key="borderColor" red="0.1647058824" green="0.1647058824" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </box>
-                        <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="GDw-dz-hFz" userLabel="PortForwarding">
-                            <rect key="frame" x="673" y="0.0" width="224" height="54"/>
+                        <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="GDw-dz-hFz" userLabel="PortForwarding">
+                            <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
                             <view key="contentView" id="TZf-1B-kbr">
                                 <rect key="frame" x="0.0" y="0.0" width="224" height="54"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

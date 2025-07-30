@@ -243,7 +243,7 @@ final class CountriesSectionViewController: NSViewController {
             let vc: NSViewController = if index == 1 {
                 QuickSettingDetailNetShieldViewController(presenter)
             } else {
-                QuickSettingDetailViewController2(presenter)
+                QuickSettingDetailViewController(presenter)
             }
             vc.viewWillAppear()
             container?.addSubview(vc.view)

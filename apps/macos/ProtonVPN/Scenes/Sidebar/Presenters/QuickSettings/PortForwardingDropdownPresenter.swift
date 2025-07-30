@@ -43,6 +43,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.portForwarding
     }
 
+    // https://protonag.atlassian.net/browse/VPNAPPL-2931
 //    override var alert: UpsellAlert {
 //        PortForwardingUpsellAlert()
 //    }
@@ -83,6 +84,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
             self.propertiesManager.portForwarding = false
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                // https://protonag.atlassian.net/browse/VPNAPPL-2934
 //                self.vpnGateway.retryConnection()
             }
 //            dismissCallback()

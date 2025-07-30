@@ -38,7 +38,7 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     func updateNetshieldStats()
 }
 
-class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailViewControllerProtocol {
+class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
     var arrowIV: NSImageView = .init().with {
         $0.image = Asset.qsDetailTriangle.image
         $0.contentTintColor = NSColor(rgbHex: 0x43444D)
@@ -339,5 +339,3 @@ class QuickSettingDetailViewController2: NSViewController, QuickSettingsDetailVi
         dropdownNoteStackView.isHidden = dropdownNote.attributedStringValue.length < 1
     }
 }
-
-extension NSObject: With {}

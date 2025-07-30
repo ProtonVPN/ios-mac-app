@@ -195,7 +195,7 @@ class CountriesSectionViewModel {
             .activeServerTypeChanged,
             .netShield,
             .vpnAccelerator,
-            // .portForwarding or @Shared like killSwitch
+            // .portForwarding or @Shared like killSwitch https://protonag.atlassian.net/browse/VPNAPPL-2934
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 

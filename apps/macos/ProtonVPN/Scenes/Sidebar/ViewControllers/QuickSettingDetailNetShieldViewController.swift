@@ -20,7 +20,7 @@ import Cocoa
 import NetShield
 import SwiftUI
 
-class QuickSettingDetailNetShieldViewController: QuickSettingDetailViewController2 {
+class QuickSettingDetailNetShieldViewController: QuickSettingDetailViewController {
     private var netShieldStatsContainer: NSView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
     }

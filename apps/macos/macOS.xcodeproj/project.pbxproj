@@ -111,8 +111,9 @@
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
+		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
-		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController2.swift */; };
+		A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */; };
 		A4F2B97A2E312E3100B807B8 /* QuickSettingDetailNetShieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */; };
 		AD4770B92BBED62A005575BC /* AppDependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */; };
 		AD5EB4152AA1298100432BCE /* ChangeServerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */; };
@@ -658,8 +659,9 @@
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
+		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
-		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController2.swift; sourceTree = "<group>"; };
+		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
 		A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailNetShieldViewController.swift; sourceTree = "<group>"; };
 		AD4770B82BBED62A005575BC /* AppDependencies+Live.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDependencies+Live.swift"; sourceTree = "<group>"; };
 		AD5EB4142AA1298100432BCE /* ChangeServerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeServerButton.swift; sourceTree = "<group>"; };
@@ -2270,7 +2272,7 @@
 				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
-				A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController2.swift */,
+				A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */,
 				A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */,
 			);
 			path = ViewControllers;
@@ -2411,6 +2413,7 @@
 				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
 				EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
+				A4B9949C2E3A1B04007C110B /* NSObject+With.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
@@ -3376,7 +3379,7 @@
 				E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */,
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
 				F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */,
-				A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController2.swift in Sources */,
+				A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */,
 				E5DA73CB2DCCF4F50057B273 /* LinkPointer.swift in Sources */,
 				421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */,
 				E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */,
@@ -3459,6 +3462,7 @@
 				ADE590CC2A616E4B00089165 /* ProtocolDeprecatedViewController.swift in Sources */,
 				EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */,
 				E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */,
+				A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
