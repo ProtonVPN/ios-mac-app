@@ -431,6 +431,10 @@ public enum Localizable {
   public static var disabled: String { return Localizable.tr("Localizable", "_disabled", fallback: "Disabled") }
   /// Common word
   public static var disconnect: String { return Localizable.tr("Localizable", "_disconnect", fallback: "Disconnect") }
+  /// Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN.
+  public static var disconnectRequired: String { return Localizable.tr("Localizable", "_disconnect_required", fallback: "Disconnect to continue") }
+  /// Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN.
+  public static var disconnectToSignInDescription: String { return Localizable.tr("Localizable", "_disconnect_to_sign_in_description", fallback: "To sign in or create an account, you need to be disconnected from VPN.") }
   /// Common word
   public static var disconnected: String { return Localizable.tr("Localizable", "_disconnected", fallback: "Disconnected") }
   /// Status of VPN connection reported by Siri

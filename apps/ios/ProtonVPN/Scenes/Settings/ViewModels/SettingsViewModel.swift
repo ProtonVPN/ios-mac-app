@@ -23,6 +23,7 @@
 import UIKit
 
 import Dependencies
+import Sharing
 
 import ProtonCoreAccountRecovery
 import ProtonCoreDataModel
@@ -237,12 +238,34 @@ final class SettingsViewModel {
     private var accountSection: TableViewSection {
         let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
         guard !userIsCredentialLess else {
-            let newAccountCardCell = TableViewCellModel.newAccountCard(handler: { [weak self] action in
-                switch action {
-                case .signUp: self?.presentSignUpScreen()
-                case .signIn: self?.presentSignInScreen()
+            let handler: (NewAccountCardView.Action) -> Void = { [weak self] action in
+                let presentScreen: (NewAccountCardView.Action) -> Void = { [weak self] action in
+                    switch action {
+                    case .signUp: self?.presentSignUpScreen()
+                    case .signIn: self?.presentSignInScreen()
+                    }
                 }
-            })
+
+                // Check if we are connected. Changing the user's session means we will need to reconnect them.
+                // Let the user know they will be disconnected if they proceed
+                @Shared(.connectionState) var state
+                if state.is(\.disconnected) {
+                    presentScreen(action)
+                } else {
+                    let reconnectionAlert = DisconnectToSignInAlert(
+                        continueHandler: {
+                            Task { @MainActor in
+                                @Dependency(\.disconnectVPN) var disconnectVPN
+                                try await disconnectVPN(.signout)
+                                presentScreen(action)
+                            }
+                        },
+                        cancelHandler: { log.debug("User cancelled sign in/sign up", category: .settings) }
+                    )
+                    self?.alertService.push(alert: reconnectionAlert)
+                }
+            }
+            let newAccountCardCell = TableViewCellModel.newAccountCard(handler: handler)
             return TableViewSection(title: Localizable.account, cells: [newAccountCardCell])
         }
 

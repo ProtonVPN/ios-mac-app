@@ -279,6 +279,9 @@ extension IosAlertService: CoreAlertService {
         case let alert as HermesUpsellAlert:
             show(alert: alert, modalType: .hermes)
 
+        case let alert as DisconnectToSignInAlert:
+            showDefaultSystemAlert(alert)
+
         default:
             #if DEBUG
                 fatalError("Alert type handling not implemented: \(String(describing: alert))")

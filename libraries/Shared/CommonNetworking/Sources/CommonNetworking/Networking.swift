@@ -398,8 +398,10 @@ extension CoreNetworking: AuthDelegate {
             if credential.isForUnauthenticatedSession {
                 unauthKeychain.store(AuthCredential(credential))
             } else {
-                try authKeychain.store(AuthCredentials(credential))
+                // Clear the whole keychain to ensure credentials for guest user are cleared for WG context
+                authKeychain.clear()
                 unauthKeychain.clear()
+                try authKeychain.store(AuthCredentials(credential))
             }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)

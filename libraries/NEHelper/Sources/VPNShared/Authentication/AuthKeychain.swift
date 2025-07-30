@@ -195,6 +195,7 @@ extension AuthKeychain: AuthKeychainHandle {
         if let context, let contextKey = storageKey(forContext: context) {
             key = contextKey
         }
+        log.debug("Storing auth credentials", category: .keychain, metadata: ["key": "\(key)"])
 
         do {
             let data = try JSONEncoder().encode(credentials)
@@ -228,6 +229,7 @@ extension AuthKeychain: AuthKeychainHandle {
     }
 
     public func clear() {
+        log.debug("Clearing auth credentials from keychain", category: .keychain)
         keychain.clear(contextValues: [String](StorageKey.contextKeys.values))
         saveToCache(nil)
     }
