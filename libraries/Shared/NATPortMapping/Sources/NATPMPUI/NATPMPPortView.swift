@@ -53,7 +53,7 @@ struct ActivePortView: View {
     let updateDate: Date?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: .themeSpacing12) {
             // Header with status indicator
             Text(Localizable.pfActivePortNumber)
                 .foregroundColor(Color(.text))
@@ -66,18 +66,18 @@ struct ActivePortView: View {
                     .resizable()
                     .frame(width: 16, height: 16)
 
-                VStack(alignment: .leading, spacing: AppTheme.Spacing.spacing8.rawValue) {
+                VStack(alignment: .leading, spacing: .themeSpacing8) {
                     HStack(spacing: AppTheme.Spacing.spacing4.rawValue) {
                         Text("\(String(portNumber))")
                             .foregroundColor(Color(.text))
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(.title2(emphasised: false))
 
                         Button(action: {
                             copyPortNumber()
                         }) {
                             IconProvider.squares
                                 .resizable()
-                                .frame(width: 16, height: 16)
+                                .frame(.square(.themeSpacing16))
                         }
                         .buttonStyle(.plain)
                         .help(Localizable.pfCopyPortNumber)
@@ -96,9 +96,9 @@ struct ActivePortView: View {
                 }
             }
         }
-        .padding(16)
+        .padding(.themeSpacing16)
         .background(Color(.background, .weak))
-        .cornerRadius(8)
+        .cornerRadius(.themeRadius8)
     }
 
     private func copyPortNumber() {
@@ -139,12 +139,12 @@ struct LoadingPortView: View {
 
                 Text(Localizable.pfLoading)
                     .foregroundColor(Color(.text))
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.title2(emphasised: false))
             }
         }
-        .padding(16)
+        .padding(.themeSpacing16)
         .background(Color(.background, .weak))
-        .cornerRadius(8)
+        .cornerRadius(.themeRadius8)
     }
 }
 
@@ -161,25 +161,25 @@ struct StatusPortView: View {
 
             Image("pf_indicator", bundle: .module)
                 .resizable()
-                .frame(width: 12, height: 12)
+                .frame(.square(.themeSpacing12))
 
             Text("\(String(portNumber))")
                 .foregroundColor(Color(.text))
-                .font(.system(size: 14, weight: .medium))
+                .font(.title3(emphasised: false))
 
             Button(action: {
                 copyPortNumber()
             }) {
                 IconProvider.squares
                     .resizable()
-                    .frame(width: 12, height: 12)
+                    .frame(.square(.themeSpacing12))
             }
             .buttonStyle(.plain)
             .help(Localizable.pfCopyPortNumber)
         }
-        .padding(16)
+        .padding(.themeSpacing16)
         .background(Color(.background, .weak))
-        .cornerRadius(8)
+        .cornerRadius(.themeRadius8)
     }
 
     private func copyPortNumber() {

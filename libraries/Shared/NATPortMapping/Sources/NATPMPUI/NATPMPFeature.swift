@@ -50,17 +50,15 @@ public struct NATPMPFeature: Sendable {
             switch action {
             case .startPortMapping:
                 state.isLoading = true
-                return .merge(
-                    .run { send in
-                        for try await portMapping in natPortMappingService.portMappingStream {
-                            await send(
-                                .portMapped(externalPortNumber: portMapping.mappedExternalPort)
-                            )
-                        }
-                    } catch: { _, send in
-                        await send(.portMappingFailed)
-                    }.cancellable(id: CancelID.portMappingStream)
-                )
+                return .run { send in
+                    for try await portMapping in natPortMappingService.portMappingStream {
+                        await send(
+                            .portMapped(externalPortNumber: portMapping.mappedExternalPort)
+                        )
+                    }
+                } catch: { _, send in
+                    await send(.portMappingFailed)
+                }.cancellable(id: CancelID.portMappingStream)
 
             case let .portMapped(externalPortNumber):
                 state.isLoading = false
