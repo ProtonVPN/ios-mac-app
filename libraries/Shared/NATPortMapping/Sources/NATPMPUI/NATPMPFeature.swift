@@ -23,16 +23,10 @@ import NATPortMapping
 @Reducer
 public struct NATPMPFeature: Sendable {
     @ObservableState
-    public struct State: Equatable {
-        var isLoading: Bool = false
-        var externalPortNumber: UInt16?
-        var updateDate: Date?
-
-        init(isLoading: Bool, externalPortNumber: UInt16? = nil, updateDate: Date? = nil) {
-            self.isLoading = isLoading
-            self.externalPortNumber = externalPortNumber
-            self.updateDate = updateDate
-        }
+    public enum State: Equatable {
+        case loading
+        case loaded(externalPortNumber: UInt16, updateDate: Date?)
+        case error
     }
 
     public enum Action {
@@ -49,7 +43,7 @@ public struct NATPMPFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .startPortMapping:
-                state.isLoading = true
+                state = .loading
                 return .run { send in
                     for try await portMapping in natPortMappingService.portMappingStream {
                         await send(
@@ -61,18 +55,14 @@ public struct NATPMPFeature: Sendable {
                 }.cancellable(id: CancelID.portMappingStream)
 
             case let .portMapped(externalPortNumber):
-                state.isLoading = false
                 if state.externalPortNumber != externalPortNumber {
-                    state.externalPortNumber = externalPortNumber
                     // the date will be updated only on port change; otherwise it will be always < 2 min
-                    state.updateDate = now
+                    state = .loaded(externalPortNumber: externalPortNumber, updateDate: now)
                 }
                 return .none
 
             case .portMappingFailed:
-                state.isLoading = false
-                state.externalPortNumber = nil
-                state.updateDate = nil
+                state = .error
                 return .none
 
             case .stopPortMapping:
@@ -89,4 +79,24 @@ public struct NATPMPFeature: Sendable {
 
 private enum CancelID {
     case portMappingStream
+}
+
+extension NATPMPFeature.State {
+    var externalPortNumber: UInt16? {
+        switch self {
+        case let .loaded(portNumber, _):
+            portNumber
+        case .loading, .error:
+            nil
+        }
+    }
+
+    var updateDate: Date? {
+        switch self {
+        case let .loaded(_, date):
+            date
+        case .loading, .error:
+            nil
+        }
+    }
 }

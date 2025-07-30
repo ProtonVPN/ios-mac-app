@@ -60,9 +60,6 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
         self.portMappingStream = stream
         self.portMappingContinuation = continuation
         self.renewalTask = RenewalTaskManager()
-
-        // Ensure continuation finishes when deallocated
-        continuation.onTermination = { _ in }
     }
 
     func createPortMapping(

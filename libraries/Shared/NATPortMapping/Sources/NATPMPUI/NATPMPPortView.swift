@@ -30,18 +30,17 @@ public struct NATPMPPortView: View {
     }
 
     public var body: some View {
-        WithPerceptionTracking {
-            if let portNumber = store.externalPortNumber {
-                ActivePortView(
-                    portNumber: portNumber,
-                    updateDate: store.updateDate
-                )
-            } else if store.isLoading {
-                LoadingPortView()
-            } else {
-                // will not be used
-                EmptyView()
-            }
+        switch store.state {
+        case .loading:
+            LoadingPortView()
+        case let .loaded(externalPortNumber, updateDate):
+            ActivePortView(
+                portNumber: externalPortNumber,
+                updateDate: updateDate
+            )
+        // will not be used
+        case .error:
+            EmptyView()
         }
     }
 }
@@ -62,7 +61,7 @@ struct ActivePortView: View {
             // Port number with copy button
             HStack(alignment: .firstTextBaseline, spacing: AppTheme.Spacing.spacing8.rawValue) {
                 // Green status indicator
-                Image("pf_indicator", bundle: .module)
+                Image(nsImage: Asset.pfIndicator.image)
                     .resizable()
                     .frame(width: 16, height: 16)
 
@@ -73,7 +72,7 @@ struct ActivePortView: View {
                             .font(.title2(emphasised: false))
 
                         Button(action: {
-                            copyPortNumber()
+                            copyPortNumber(portNumber)
                         }) {
                             IconProvider.squares
                                 .resizable()
@@ -99,13 +98,6 @@ struct ActivePortView: View {
         .padding(.themeSpacing16)
         .background(Color(.background, .weak))
         .cornerRadius(.themeRadius8)
-    }
-
-    private func copyPortNumber() {
-        let portString = String(portNumber)
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(portString, forType: .string)
     }
 
     // MARK: - Sate
@@ -159,7 +151,7 @@ struct StatusPortView: View {
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
-            Image("pf_indicator", bundle: .module)
+            Image(nsImage: Asset.pfIndicator.image)
                 .resizable()
                 .frame(.square(.themeSpacing12))
 
@@ -168,7 +160,7 @@ struct StatusPortView: View {
                 .font(.title3(emphasised: false))
 
             Button(action: {
-                copyPortNumber()
+                copyPortNumber(portNumber)
             }) {
                 IconProvider.squares
                     .resizable()
@@ -181,13 +173,13 @@ struct StatusPortView: View {
         .background(Color(.background, .weak))
         .cornerRadius(.themeRadius8)
     }
+}
 
-    private func copyPortNumber() {
-        let portString = String(portNumber)
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(portString, forType: .string)
-    }
+private func copyPortNumber(_ portNumber: UInt16) {
+    let portString = String(portNumber)
+    let pasteboard = NSPasteboard.general
+    pasteboard.clearContents()
+    pasteboard.setString(portString, forType: .string)
 }
 
 // MARK: - Preview

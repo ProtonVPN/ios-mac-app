@@ -54,8 +54,7 @@ let package = Package(
                 .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
-            path: "Sources/NATPMPUI",
-            resources: [.process("Resources")]
+            path: "Sources/NATPMPUI"
         ),
         .testTarget(
             name: "NATPortMappingTests",

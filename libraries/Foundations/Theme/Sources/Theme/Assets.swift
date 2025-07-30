@@ -558,6 +558,7 @@ public enum Asset {
   public static let disconnected = ImageAsset(name: "disconnected")
   public static let emptyIcon = ImageAsset(name: "empty_icon")
   public static let idle = ImageAsset(name: "idle")
+  public static let pfIndicator = ImageAsset(name: "pf_indicator")
   public static let plutonium = ImageAsset(name: "plutonium")
   public static let stars = ImageAsset(name: "stars")
   public static let welcomeToProtonVpn = ImageAsset(name: "welcome-to-proton-vpn")

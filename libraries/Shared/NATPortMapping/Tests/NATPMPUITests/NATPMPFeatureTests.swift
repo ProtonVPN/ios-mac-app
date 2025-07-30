@@ -28,7 +28,7 @@ struct NATPMPFeatureTests {
     func startPortMappingReceiveAndStop() async {
         let mockService = NATPortMappingServiceMock()
 
-        let store = TestStore(initialState: NATPMPFeature.State(isLoading: false)) {
+        let store = TestStore(initialState: NATPMPFeature.State.loading) {
             NATPMPFeature()
         } withDependencies: {
             $0.natPortMappingService = mockService
@@ -36,18 +36,14 @@ struct NATPMPFeatureTests {
         }
 
         // Start port mapping
-        await store.send(.startPortMapping) {
-            $0.isLoading = true
-        }
+        await store.send(.startPortMapping)
 
         // Send first port mapping response
         let firstResponse = createPortMappingResponse(externalPort: 8080)
         mockService.portMappingContinuation.yield(firstResponse)
 
         await store.receive(\.portMapped) {
-            $0.isLoading = false
-            $0.externalPortNumber = 8080
-            $0.updateDate = Date(timeIntervalSince1970: 1000)
+            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000))
         }
 
         // Send second port mapping response with different port
@@ -57,8 +53,7 @@ struct NATPMPFeatureTests {
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 2000) }
 
         await store.receive(\.portMapped) {
-            $0.externalPortNumber = 9090
-            $0.updateDate = Date(timeIntervalSince1970: 2000)
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000))
         }
 
         // Send third response with same port (should not update anything)
@@ -78,7 +73,7 @@ struct NATPMPFeatureTests {
     func startPortMappingReceiveError() async {
         let mockService = NATPortMappingServiceMock()
 
-        let store = TestStore(initialState: NATPMPFeature.State(isLoading: false)) {
+        let store = TestStore(initialState: NATPMPFeature.State.loading) {
             NATPMPFeature()
         } withDependencies: {
             $0.natPortMappingService = mockService
@@ -86,9 +81,7 @@ struct NATPMPFeatureTests {
         }
 
         // Start port mapping
-        await store.send(.startPortMapping) {
-            $0.isLoading = true
-        }
+        await store.send(.startPortMapping)
 
         // Send an error to the stream
         struct TestError: Error {}
@@ -96,9 +89,7 @@ struct NATPMPFeatureTests {
 
         // Should receive portMappingFailed action
         await store.receive(\.portMappingFailed) {
-            $0.isLoading = false
-            $0.externalPortNumber = nil
-            $0.updateDate = nil
+            $0 = .error
         }
     }
 
