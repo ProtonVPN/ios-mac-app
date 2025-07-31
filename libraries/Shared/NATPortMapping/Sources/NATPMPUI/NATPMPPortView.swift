@@ -61,7 +61,7 @@ struct ActivePortView: View {
             // Port number with copy button
             HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
                 // Green status indicator
-                Image(nsImage: Asset.pfIndicator.image)
+                Asset.pfIndicator.swiftUIImage
                     .resizable()
                     .frame(.square(.themeSpacing16))
 
@@ -149,7 +149,7 @@ struct StatusPortView: View {
                 .foregroundColor(Color(.text))
                 .themeFont(.callout(emphasised: true))
 
-            Image(nsImage: Asset.pfIndicator.image)
+            Asset.pfIndicator.swiftUIImage
                 .resizable()
                 .frame(.square(.themeSpacing12))
 
