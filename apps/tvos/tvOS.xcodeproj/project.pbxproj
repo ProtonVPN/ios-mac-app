@@ -13,6 +13,7 @@
 		4C54B04C2BC02AB200315A3B /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C54B04B2BC02AB200315A3B /* NetworkExtension.framework */; };
 		4C54B04F2BC02AB200315A3B /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C54B04E2BC02AB200315A3B /* PacketTunnelProvider.swift */; };
 		4CB43D6B2C40661600B73031 /* ProtonVPN-TV-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD8181682C10C6D200E59BD4 /* ProtonVPN-TV-Info.plist */; };
+		4CEC76822E37708400877B55 /* Ergonomics in Frameworks */ = {isa = PBXBuildFile; productRef = 4CEC76812E37708400877B55 /* Ergonomics */; };
 		4CF89A372C21A6F700D12128 /* Dependencies+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8181652C10C5D000E59BD4 /* Dependencies+Live.swift */; };
 		66465B782BFF9112002232B3 /* WireGuard-tvOS.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4C54B0492BC02AB200315A3B /* WireGuard-tvOS.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		667C97BE2C08848F001AB9D6 /* WireGuardExtension in Frameworks */ = {isa = PBXBuildFile; productRef = 667C97BD2C08848F001AB9D6 /* WireGuardExtension */; };
@@ -97,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A4B9A7452E3903C400A21B35 /* Atlantis in Frameworks */,
+				4CEC76822E37708400877B55 /* Ergonomics in Frameworks */,
 				E53729FB2BFDFBE9003D7409 /* ProtonCoreLog in Frameworks */,
 				E53729F72BFDF777003D7409 /* tvOS in Frameworks */,
 				E53729FD2BFDFBF4003D7409 /* CommonNetworking in Frameworks */,
@@ -255,6 +257,7 @@
 				E53729FA2BFDFBE9003D7409 /* ProtonCoreLog */,
 				E53729FC2BFDFBF4003D7409 /* CommonNetworking */,
 				A4B9A7442E3903C400A21B35 /* Atlantis */,
+				4CEC76812E37708400877B55 /* Ergonomics */,
 			);
 			productName = ProtonVPN;
 			productReference = 4C54B0172BC027FD00315A3B /* ProtonVPN-tvOS.app */;
@@ -842,6 +845,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4CEC76812E37708400877B55 /* Ergonomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Ergonomics;
+		};
 		667C97BD2C08848F001AB9D6 /* WireGuardExtension */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WireGuardExtension;

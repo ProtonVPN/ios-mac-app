@@ -73,7 +73,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     public typealias Factory =
         CoreAlertServiceFactory &
         PropertiesManagerFactory &
-        UpdateCheckerFactory & VpnApiServiceFactory &
+        UpdateCheckerFactory &
+        VpnApiServiceFactory &
         VpnKeychainFactory
 
     public init(factory: Factory) {
@@ -94,30 +95,24 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
 
     @objc
     public func refreshData() {
-        attemptSilentLogIn { [weak self] result in
-            switch result {
-            case .success:
-                Task { [weak self] in
-                    await self?.successfulConsecutiveSessionRefreshes.increment()
-                    do {
-                        @Dependency(\.userSettingsClient) var userSettingsClient
-                        self?.propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
-                    } catch {
-                        log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
-                    }
-                }
-            case let .failure(error):
+        Task { @MainActor in
+            @Dependency(\.userSettingsClient) var userSettingsClient
+            do {
+                try await attemptSilentLogIn()
+                async let _ = successfulConsecutiveSessionRefreshes.increment()
+                async let _ = CheckedFeatureFlagsRepository.shared.fetchFlags()
+                propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
+            } catch {
                 log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
                 switch error.responseCode {
                 case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                    self?.alertService.push(alert: AppUpdateRequiredAlert(error))
+                    alertService.push(alert: AppUpdateRequiredAlert(error))
                 default:
                     break // ignore failures
                 }
-                Task { [weak self] in
-                    await self?.successfulConsecutiveSessionRefreshes.reset()
-                }
+
+                await successfulConsecutiveSessionRefreshes.reset()
             }
         }
     }
@@ -201,8 +196,8 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 
     // MARK: - Override
-
-    open func attemptSilentLogIn(completion _: @escaping (Result<Void, Error>) -> Void) {
+    @MainActor
+    open func attemptSilentLogIn() async throws {
         fatalError("This method should be overridden, but it is not")
     }
 }

@@ -85,21 +85,6 @@ final class AppDelegate: UIResponder {
         // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
-    }
-}
-
-// MARK: - UIApplicationDelegate
-
-extension AppDelegate: UIApplicationDelegate {
-    func application(_: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        #if DEBUG
-            #if targetEnvironment(simulator)
-                // Force log out if running UI tests
-                if ProcessInfo.processInfo.arguments.contains("UITests") {
-                    appSessionManager.logOut(force: false, reason: "UI tests")
-                }
-            #endif
-        #endif
 
         #if DEBUG
             Atlantis.start()
@@ -115,45 +100,57 @@ extension AppDelegate: UIApplicationDelegate {
             guard let feature = ManuallySpecifiedFeatureFlag(rawValue: name) else { continue }
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
+    }
+}
 
-        setupCoreIntegration(launchOptions: launchOptions)
-        setupLogsForApp()
-        setupDebugHelpers()
+// MARK: - UIApplicationDelegate
 
-        // Make sure AppStateManager is ready and is created on the main thread
-        _ = appStateManager
-
-        SiriHelper.quickConnectIntent = QuickConnectIntent()
-        SiriHelper.disconnectIntent = DisconnectIntent()
-        LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
-
-        // Protocol check is placed here for parity with MacOS
-        adjustGlobalProtocolIfNecessary()
-
-        // Sentry turned off, because https://github.com/getsentry/sentry-cocoa/issues/1892
-        // is still not fixed.
-//        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry) {
-//            SentryHelper.setupSentry(
-//                dsn: ObfuscatedConstants.sentryDsniOS,
-//                isEnabled: { [weak self] in
-//                    self?.isTelemetryAllowed() ?? false
-//                },
-//                getUserId: { [weak self] in
-//                    self?.container.makeAuthKeychainHandle().userId
-//                }
-//            )
-//        }
+extension AppDelegate: UIApplicationDelegate {
+    func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        #if DEBUG
+            #if targetEnvironment(simulator)
+                // Force log out if running UI tests
+                if ProcessInfo.processInfo.arguments.contains("UITests") {
+                    appSessionManager.logOut(force: false, reason: "UI tests")
+                }
+            #endif
+        #endif
 
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.asyncVPNManager) {
-            Task { @MainActor in
-                await vpnManager.prepareManagersTask?.value
-                self.navigationService.launched()
-            }
-        } else {
-            vpnManager.whenReady(queue: DispatchQueue.main) {
-                self.navigationService.launched()
-            }
+        Task { @MainActor in
+            setupLogsForApp()
+            setupDebugHelpers()
+
+            await setupCoreIntegration()
+
+            // Make sure AppStateManager is ready and is created on the main thread
+            _ = appStateManager
+
+            SiriHelper.quickConnectIntent = QuickConnectIntent()
+            SiriHelper.disconnectIntent = DisconnectIntent()
+            LegacyDefaultsMigration.migrateLargeData(from: defaultsProvider.getDefaults())
+
+            // Protocol check is placed here for parity with MacOS
+            adjustGlobalProtocolIfNecessary()
+
+            // Sentry turned off, because https://github.com/getsentry/sentry-cocoa/issues/1892
+            // is still not fixed.
+            // ```
+            //  if VPNFeatureFlagType.sentry.enabled {
+            //      SentryHelper.setupSentry(
+            //          dsn: ObfuscatedConstants.sentryDsniOS,
+            //          isEnabled: { [weak self] in
+            //              self?.isTelemetryAllowed() ?? false
+            //          },
+            //          getUserId: { [weak self] in
+            //              self?.container.makeAuthKeychainHandle().userId
+            //          }
+            //      )
+            //  }
+            // ```
+
+            await vpnManager.prepareManagersTask?.value
+            await self.navigationService.launched()
         }
 
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
@@ -316,16 +313,16 @@ private extension AppDelegate {
             }
 
             log.debug("App activated with the refresh url, refreshing data", category: .app)
-            container.makeAppSessionManager().attemptSilentLogIn { result in
-                switch result {
-                case .success:
+            Task { @MainActor in
+                do {
+                    try await container.makeAppSessionManager().attemptSilentLogIn()
                     log.debug("User data refreshed after url activation", category: .app)
-                case let .failure(error):
+                } catch {
                     log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
                 }
-            }
 
-            AppEvent.urlActivationRefresh.post()
+                AppEvent.urlActivationRefresh.post()
+            }
 
         default:
             log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
@@ -384,7 +381,7 @@ extension AppDelegate {
         PMLog.disableExternalLogging()
     }
 
-    private func setupCoreIntegration(launchOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil) {
+    private func setupCoreIntegration() async {
         injectDefaultCryptoImplementation()
 
         ProtonCoreLog.PMLog.callback = { message, level in
@@ -397,22 +394,12 @@ extension AppDelegate {
         }
 
         let apiService = container.makeNetworking().apiService
-        apiService.acquireSessionIfNeeded { [unowned apiService, unowned self] result in
-            switch result {
-            case let .success(.sessionAlreadyPresent(authCredential)), let .success(.sessionFetchedAndAvailable(authCredential)):
-                FeatureFlagsRepository.shared.setApiService(apiService)
-
-                if !authCredential.userID.isEmpty {
-                    FeatureFlagsRepository.shared.setUserId(authCredential.userID)
-                }
-
-                Task { [self] in
-                    do {
-                        try await FeatureFlagsRepository.shared.fetchFlags()
-                        registerForPushNotificationsIfNeeded()
-                    } catch {
-                        log.error("Could not retrieve feature flags: \(error)", category: .core, event: .error)
-                    }
+        do {
+            let session = try await apiService.acquireSessionIfNeeded().get()
+            switch session {
+            case let .sessionAlreadyPresent(credential), let .sessionFetchedAndAvailable(credential):
+                if !credential.userID.isEmpty {
+                    FeatureFlagsRepository.shared.setUserId(credential.userID)
                 }
 
                 TelemetryService.shared.setApiService(apiService: apiService)
@@ -425,12 +412,16 @@ extension AppDelegate {
                 } else {
                     disableExternalLogging()
                 }
-            case let .failure(error):
-                log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
-            default:
-                break
+            case .sessionUnavailableAndNotFetched:
+                log.error("acquireSessionIfNeeded didn't fetch a session, flag fetch may fail", category: .api, event: .response)
             }
+
+            CheckedFeatureFlagsRepository.shared.setApiService(apiService)
+        } catch {
+            log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
         }
+
+        await CheckedFeatureFlagsRepository.shared.fetchFlags()
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 
@@ -449,24 +440,5 @@ extension AppDelegate {
                 }
             }
         )
-    }
-
-    private func registerForPushNotificationsIfNeeded() {
-        if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
-            pushNotificationService.setup()
-
-            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.accountRecovery) {
-                let vpnHandler = AccountRecoveryHandler()
-                vpnHandler.handler = { [weak self] _ in
-                    // for now, for all notification types, we take the same action
-                    self?.navigationService.presentAccountRecoveryViewController()
-                    return .success(())
-                }
-
-                for accountRecoveryType in NotificationType.allAccountRecoveryTypes {
-                    pushNotificationService.registerHandler(vpnHandler, forType: accountRecoveryType)
-                }
-            }
-        }
     }
 }

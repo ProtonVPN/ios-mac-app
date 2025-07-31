@@ -27,6 +27,7 @@ import VPNAppCore
 import VPNShared
 
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
+import ProtonCoreFeatureFlags
 
 @testable import LegacyCommon
 
@@ -41,12 +42,6 @@ class LocalAgentConnectionTests: ConnectionTestCaseDriver {
 
     func simpleErrorCase(_ code: Int) -> (() -> Void) {
         { [unowned self] in laError(code, nil) }
-    }
-
-    override func invokeTest() {
-        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
-            super.invokeTest()
-        }
     }
 
     func testLocalAgentRekeyReconnectionCases() {

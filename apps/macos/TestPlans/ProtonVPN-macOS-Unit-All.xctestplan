@@ -24,6 +24,12 @@
         "value" : "AppPrefix123456"
       }
     ],
+    "language" : "en",
+    "locationScenario" : {
+      "identifier" : "San Francisco, CA, USA",
+      "referenceType" : "built-in"
+    },
+    "region" : "US",
     "targetForVariableExpansion" : {
       "containerPath" : "container:macOS.xcodeproj",
       "identifier" : "EED534801EEC112000013607",

@@ -127,7 +127,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 
     private func setupPlutoniumItem() {
-        if !FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true) {
+        if !VPNFeatureFlagType.plutoniumMacOS.enabled {
             plutoniumView.isHidden = true
             return
         }

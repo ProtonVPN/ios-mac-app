@@ -100,19 +100,22 @@ final class SettingsAccountViewModel {
             .staticKeyValue(key: Localizable.username, value: username),
             .staticKeyValue(key: Localizable.subscriptionPlan, value: accountPlanName),
         ]
+
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: Localizable.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [weak self] in
-                if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.dynamicPlan) {
-                    self?.manageSubscriptionAction()
-                } else {
-                    self?.buySubscriptionAction()
-                }
-            }))
+            cells.append(TableViewCellModel.button(
+                title: Localizable.upgradeSubscription,
+                accessibilityIdentifier: "Upgrade Subscription",
+                color: .brandColor(),
+                handler: { [weak self] in self?.manageSubscriptionAction() }
+            ))
         }
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: Localizable.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .brandColor(), handler: { [weak self] in
-                self?.manageSubscriptionAction()
-            }))
+            cells.append(TableViewCellModel.button(
+                title: Localizable.manageSubscription,
+                accessibilityIdentifier: "Manage subscription",
+                color: .brandColor(),
+                handler: { [weak self] in self?.manageSubscriptionAction() }
+            ))
         }
 
         return TableViewSection(title: Localizable.account.uppercased(), cells: cells)

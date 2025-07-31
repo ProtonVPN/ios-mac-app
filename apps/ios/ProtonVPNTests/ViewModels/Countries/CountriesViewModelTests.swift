@@ -33,11 +33,16 @@ import VPNSharedTesting
 final class CountriesViewModelTests: XCTestCase {
     var mockPropertiesManager: PropertiesManagerMock!
 
+    override func invokeTest() {
+        FeatureFlagsRepository.isRedesigniOSEnabled = false
+        FeatureFlagsRepository.isConnectionFeatureEnabled = false
+        super.invokeTest()
+        FeatureFlagsRepository.isRedesigniOSEnabled = true
+        FeatureFlagsRepository.isConnectionFeatureEnabled = true
+    }
+
     override func setUp() {
         super.setUp()
-
-        FeatureFlagsRepository.shared.setFlagOverride(TestFeatureFlagType.redesigniOSKillSwitch, true)
-        FeatureFlagsRepository.shared.setFlagOverride(TestFeatureFlagType.useConnectionFeatureKillSwitch, true)
 
         mockPropertiesManager = PropertiesManagerMock()
         mockPropertiesManager.smartProtocolConfig = .init(openVPN: true, iKEv2: true, wireGuardUdp: true, wireGuardTcp: true, wireGuardTls: true)
@@ -87,7 +92,8 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToTrue() throws {
-        try XCTSkipIf(!FeatureFlagsRepository.shared.isEnabled(TestFeatureFlagType.redesigniOS))
+        FeatureFlagsRepository.isRedesigniOSEnabled = true
+        FeatureFlagsRepository.isConnectionFeatureEnabled = true
 
         // Start off with smart protocol enabled and all protocols supported
         mockPropertiesManager.connectionProtocol = .smartProtocol
@@ -123,8 +129,6 @@ final class CountriesViewModelTests: XCTestCase {
     }
 
     func testConnectionProtocolChangedUpdatesCountryItemsWithRedesignFFSetToFalse() throws {
-        try XCTSkipIf(FeatureFlagsRepository.shared.isEnabled(TestFeatureFlagType.redesigniOS))
-
         // Start off with smart protocol enabled and all protocols supported
         mockPropertiesManager.connectionProtocol = .smartProtocol
         serverGroups = [MockServerGroup.dev, MockServerGroup.sweden, MockServerGroup.switzerland]
@@ -156,6 +160,8 @@ final class CountriesViewModelTests: XCTestCase {
 
         // Dev gateway should be placed under maintenance as well - it doesn't support stealth
         assert(sut.cellModel(for: 0, in: 0), isServerGroupOfKind: .gateway(name: "Dev"), isUnderMaintenance: true)
+
+        FeatureFlagsRepository.isRedesigniOSEnabled = true
     }
 
     private func assert(_ rowVM: RowViewModel, isServerGroupOfKind kind: ServerGroupInfo.Kind, isUnderMaintenance: Bool) {

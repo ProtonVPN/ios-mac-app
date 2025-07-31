@@ -25,9 +25,11 @@ import Dependencies
 import GoLibs
 import ProtonCoreNetworking
 import ProtonCoreServices
+import ProtonCoreFeatureFlags
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 import Domain
+import Ergonomics
 import VPNAppCore
 import VPNShared
 import VPNSharedTesting
@@ -35,18 +37,17 @@ import VPNSharedTesting
 @testable import LegacyCommon
 
 final class ConnectionSwitchingTests: BaseConnectionTestCase {
-    override func setUpWithError() throws {
+    override func setUp() async throws {
         #if os(macOS)
             throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
-        #endif
+        #else
         try super.setUpWithError()
+
+        CheckedFeatureFlagsRepository.shared.setApiService(container.networking.apiService)
+        await CheckedFeatureFlagsRepository.shared.fetchFlags()
+        #endif
     }
 
-    override func invokeTest() {
-        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
-            super.invokeTest()
-        }
-    }
 
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
         withEscapedDependencies { dependencies in

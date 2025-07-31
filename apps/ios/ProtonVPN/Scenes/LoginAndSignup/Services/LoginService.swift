@@ -27,6 +27,8 @@ import Settings
 import Strings
 import VPNAppCore
 import VPNShared
+import Ergonomics
+import Domain
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -51,7 +53,7 @@ protocol LoginServiceDelegate: AnyObject {
 protocol LoginService: AnyObject {
     var delegate: LoginServiceDelegate? { get set }
 
-    func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void)
+    func attemptSilentLogIn() async -> SilentLoginResult
     func showWelcome(initialError: String?, withOverlayViewController: UIViewController?)
     func presentLoginFlow(over viewController: UIViewController, flow: LoginFlowType)
     func presentSignUpFlow(over viewController: UIViewController, flow: LoginFlowType)
@@ -182,7 +184,7 @@ final class CoreLoginService {
             // Update the session id in the networking stack after login
             let uid = loginData.getCredential.UID
             networking.apiService.setSessionUID(uid: uid)
-            if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.pushNotifications) {
+            if CoreFeatureFlagType.pushNotifications.enabled {
                 pushNotificationService.registerForRemoteNotifications(uid: uid)
             }
         }
@@ -313,25 +315,20 @@ extension CoreLoginService: LoginErrorPresenter {
 // MARK: LoginService
 
 extension CoreLoginService: LoginService {
-    func attemptSilentLogIn(completion: @escaping (SilentLoginResult) -> Void) {
+    @MainActor
+    func attemptSilentLogIn() async -> SilentLoginResult {
         if appSessionManager.loadDataWithoutFetching() {
             appSessionRefresher.refreshData()
-        } else { // if no data is stored already, then show spinner and wait for data from the api
-            appSessionManager.attemptSilentLogIn { [appSessionManager] result in
-                switch result {
-                case .success:
-                    completion(.loggedIn)
-                case .failure:
-                    Task { @MainActor in
-                        try? await appSessionManager.loadDataWithoutLogin()
-                        completion(.notLoggedIn)
-                    }
-                }
-            }
+
+            return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn
         }
 
-        if appSessionManager.sessionStatus == .established {
-            completion(.loggedIn)
+        do {
+            try await appSessionManager.attemptSilentLogIn()
+            return .loggedIn
+        } catch {
+            try? await appSessionManager.loadDataWithoutLogin()
+            return .notLoggedIn
         }
     }
 

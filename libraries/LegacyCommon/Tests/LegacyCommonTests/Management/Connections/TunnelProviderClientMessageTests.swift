@@ -29,7 +29,10 @@ import VPNSharedTesting
 import CommonNetworking
 import CommonNetworkingTestSupport
 
+import ProtonCoreFeatureFlags
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
+
+import Domain
 
 @testable import LegacyCommon
 
@@ -54,12 +57,6 @@ class TunnelProviderClientMessageTests: ConnectionTestCaseDriver {
                 fulfillExpectationCategory(pushSelector)
             }
         #endif
-    }
-
-    override func invokeTest() {
-        withFeatureFlags([.asyncVPNManager, .redesignKillSwitch, .connectionKillSwitch]) {
-            super.invokeTest()
-        }
     }
 
     func testSessionExpiredMessage() {

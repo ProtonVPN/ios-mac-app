@@ -8,6 +8,7 @@ let package = Package(
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
+        .tvOS(.v17),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
@@ -31,6 +32,8 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
+                .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
+                .product(name: "ProtonCoreServices", package: "protoncore"),
             ]
         ),
         .testTarget(

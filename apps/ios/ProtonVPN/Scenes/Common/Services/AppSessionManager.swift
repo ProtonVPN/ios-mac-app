@@ -55,7 +55,7 @@ protocol AppSessionManager {
     var sessionStatus: SessionStatus { get set }
     var loggedIn: Bool { get }
 
-    func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void)
+    func attemptSilentLogIn() async throws
     func refreshVpnAuthCertificate() async throws
     func finishLogin(authCredentials: AuthCredentials) async throws
     func logOut(force: Bool, reason: String?)
@@ -126,26 +126,18 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     // MARK: - Beginning of the login logic.
 
-    override func attemptSilentLogIn(completion: @escaping (Result<Void, Error>) -> Void) {
+    @MainActor
+    override func attemptSilentLogIn() async throws {
         guard authKeychain.fetch()?.username != nil else {
-            completion(.failure(CommonVpnError.userCredentialsMissing))
-            return
+            throw CommonVpnError.userCredentialsMissing
         }
-        Task {
-            let completeOnMain = { result in await MainActor.run { completion(result) } }
-            do {
-                do {
-                    @Dependency(\.userSettingsClient) var userSettingsClient
-                    propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
-                } catch {
-                    log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
-                }
-                try await retrievePropertiesAndLogIn()
-                await completeOnMain(.success)
-            } catch {
-                await completeOnMain(.failure(error))
-            }
+        do {
+            @Dependency(\.userSettingsClient) var userSettingsClient
+            propertiesManager.userSettings = try await userSettingsClient.fetchUserSettings(authCredentials: nil)
+        } catch {
+            log.error("UserSettings error", category: .app, metadata: ["error": "\(error)"])
         }
+        try await retrievePropertiesAndLogIn()
     }
 
     @MainActor

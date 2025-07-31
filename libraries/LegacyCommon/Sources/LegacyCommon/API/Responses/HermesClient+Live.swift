@@ -38,8 +38,6 @@ extension HermesClient: @retroactive DependencyKey {
     @Shared(.hermesResolvers) private static var hermesResolvers
 
     public static let liveValue: HermesClient = .init {
-        let isFFEnabled = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.customDNS, reloadValue: true)
-        guard isFFEnabled else { return .init(value: false) }
         @SharedReader(.hermesEnabled) var hermesEnabled: Bool
         return $hermesEnabled
     } setIsEnabled: { newValue in

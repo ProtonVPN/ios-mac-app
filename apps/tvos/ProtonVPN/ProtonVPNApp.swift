@@ -25,6 +25,7 @@ import ProtonCoreLog
 import SwiftUI
 import VPNAppCore
 import VPNShared
+import Ergonomics
 
 import tvOS
 
@@ -43,24 +44,40 @@ struct ProtonVPNApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()
-                .onAppear { startup() }
+                .task { await startup() }
         }
     }
 }
 
 extension ProtonVPNApp {
-    private func startup() {
+    @MainActor
+    private func startup() async {
         // Clear out any overrides that may have been present in previous builds
         FeatureFlagsRepository.shared.resetOverrides()
 
+        @Dependency(\.networking) var networking
+        do {
+            let session = try await networking.apiService.acquireSessionIfNeeded().get()
+            switch session {
+            case let .sessionAlreadyPresent(authCredential), let .sessionFetchedAndAvailable(authCredential):
+                FeatureFlagsRepository.shared.setApiService(networking.apiService)
+                if !authCredential.userID.isEmpty {
+                    FeatureFlagsRepository.shared.setUserId(authCredential.userID)
+                }
+
+                await CheckedFeatureFlagsRepository.shared.fetchFlags()
+            default:
+                break
+            }
+        } catch {
+            PMLog.error("acquireSessionIfNeeded didn't succeed and therefore flags didn't get fetched: \(error)")
+        }
+
         SentryHelper.setupSentry(
             dsn: ObfuscatedConstants.sentryDsntvOS,
-            isEnabled: {
-                FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.sentry)
-            },
+            isEnabled: { true },
             getUserId: {
                 @Dependency(\.authKeychain) var authKeychain
-
                 return authKeychain.userId
             }
         )

@@ -180,7 +180,7 @@ public class VpnApiService {
             .appending(countryCodeProvider.countryCodes) // local guesses at appropriate country codes
             .uniqued
 
-        let shouldSendLastModifiedValue = FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals)
+        let shouldSendLastModifiedValue = VPNFeatureFlagType.timestampedLogicals.enabled
         let lastModifiedMetadataKey: DatabaseMetadata.Key = freeTier ? .lastModifiedFree : .lastModifiedAll
         let lastModified = serverRepository.getMetadata(lastModifiedMetadataKey)
 

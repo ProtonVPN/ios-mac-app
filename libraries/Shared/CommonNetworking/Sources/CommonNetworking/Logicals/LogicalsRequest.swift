@@ -47,7 +47,7 @@ public struct LogicalsRequest: ConditionalRequest {
         self.countryCodes = countryCodes
         self.freeTier = freeTier
 
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.timestampedLogicals) {
+        if VPNFeatureFlagType.timestampedLogicals.enabled {
             let lastModifiedIMFString = lastModified ?? DateFormatter.imf.string(from: Date(timeIntervalSince1970: 0))
             self.condition = .ifModifiedSince(date: lastModifiedIMFString)
         } else {

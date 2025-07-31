@@ -51,7 +51,7 @@ final class OneClickPayment {
 
     static var allowPayments: Bool {
         if Bundle.isTestflight {
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.allowSandboxPurchases) {
+            if VPNFeatureFlagType.allowSandboxPurchases.enabled {
                 log.info("Allowing Sandbox purchases (feature flag enabled)")
                 return true
             } else {
@@ -173,7 +173,7 @@ final class OneClickPayment {
             log.assertionFailure("Couldn't retrieve 2y plan session URL")
             return
         }
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWebView) {
+        if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
                 Task {
                     await self?.planService.delegate?
@@ -270,7 +270,7 @@ final class OneClickPayment {
             await plansDataSource.shouldShowTwoYearsWebPlan
         }
 
-        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
+        let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && VPNFeatureFlagType.iapToWeb.enabled
 
         if let vpn2022 {
             inAppPurchasePlans = vpn2022.instances

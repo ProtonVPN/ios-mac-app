@@ -22,12 +22,14 @@ import XCTest
 import Dependencies
 
 import ProtonCoreNetworking
+import ProtonCoreFeatureFlags
 import ProtonCoreTestingToolkitUnitTestsCore
 
 import CommonNetworkingTestSupport
 import Domain
 @testable import LegacyCommon
 import Localization
+import Ergonomics
 import Persistence
 import PersistenceTestSupport
 import Timer
@@ -52,8 +54,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
     let testData = MockTestData()
     let location: MockTestData.VPNLocationResponse = .mock
 
-    override func setUpWithError() throws {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         alertService = CoreAlertServiceDummy()
         propertiesManager = PropertiesManagerMock()
         networking = NetworkingMock()
@@ -65,7 +67,12 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
         networking.delegate = networkingDelegate
         vpnKeychain = VpnKeychainMock()
         authKeychain = MockAuthKeychain()
-        apiService = VpnApiService(networking: networking, vpnKeychain: vpnKeychain, countryCodeProvider: CountryCodeProviderImplementation(), authKeychain: authKeychain)
+        apiService = VpnApiService(
+            networking: networking,
+            vpnKeychain: vpnKeychain,
+            countryCodeProvider: CountryCodeProviderImplementation(),
+            authKeychain: authKeychain
+        )
         updateChecker = UpdateCheckerMock()
         appSessionRefresher = withDependencies {
             $0.serverRepository = .wrapped(wrappedWith: repositoryWrapper)
@@ -78,6 +85,8 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             refreshIntervals: (full: 30, loads: 20, account: 10, streaming: 60, partners: 60),
             delegate: self
         )
+        CheckedFeatureFlagsRepository.shared.setApiService(networking.apiService)
+        await CheckedFeatureFlagsRepository.shared.fetchFlags()
     }
 
     override func tearDown() {

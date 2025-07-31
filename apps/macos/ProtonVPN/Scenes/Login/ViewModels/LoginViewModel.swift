@@ -94,43 +94,41 @@ final class LoginViewModel {
         propertiesManager.startOnBoot = enabled
     }
 
-    func logInSilently() {
+    @MainActor
+    func logInSilently() async {
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn { result in
-            switch result {
-            case .success:
-                NSApp.setActivationPolicy(.accessory)
-                self.checkForUpdatesInBackground()
-                // Don't switch to smart protocol or show sysex tour if we are launching minimised
-                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
-            case let .failure(error):
-                self.specialErrorCaseNotification(error)
-                self.navService.handleSilentLoginFailure()
-            }
+
+        do {
+            try await appSessionManager.attemptSilentLogIn()
+            NSApp.setActivationPolicy(.accessory)
+            self.checkForUpdatesInBackground()
+            // Don't switch to smart protocol or show sysex tour if we are launching minimised
+            self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
+        } catch {
+            self.specialErrorCaseNotification(error)
+            self.navService.handleSilentLoginFailure()
         }
     }
 
-    func logInAppeared() {
+    @MainActor
+    func logInAppeared() async {
         guard initialError == nil else {
             logInFailure?(initialError, nil)
             return
         }
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn { result in
-            switch result {
-            case .success:
-                self.checkForUpdatesInBackground()
-                // Don't switch to smart protocol or show sysex tour if we are logging in automatically
-                self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
-            case let .failure(error):
-                self.specialErrorCaseNotification(error)
 
-                if case CommonVpnError.userCredentialsMissing = error {
-                    self.logInFailure?(nil, nil)
-                    return
-                }
-                self.logInFailure?(error.localizedDescription, nil)
-            }
+        do {
+            try await appSessionManager.attemptSilentLogIn()
+            self.checkForUpdatesInBackground()
+            // Don't switch to smart protocol or show sysex tour if we are logging in automatically
+            self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
+        } catch let error as CommonVpnError where error == .userCredentialsMissing {
+            self.specialErrorCaseNotification(error)
+            self.logInFailure?(nil, nil)
+        } catch {
+            self.specialErrorCaseNotification(error)
+            self.logInFailure?(error.localizedDescription, nil)
         }
     }
 

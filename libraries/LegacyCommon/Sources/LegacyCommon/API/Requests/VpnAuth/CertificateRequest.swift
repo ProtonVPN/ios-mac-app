@@ -71,7 +71,7 @@ final class CertificateRequest: Request {
         }
 
         // Prevents 409 conflict errors
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.certificateRefreshForceRenew) {
+        if VPNFeatureFlagType.certificateRefreshForceRenew.enabled {
             params["Renew"] = true
         }
 
