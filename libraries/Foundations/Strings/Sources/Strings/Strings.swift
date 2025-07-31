@@ -1068,6 +1068,18 @@ public enum Localizable {
   public static var performanceLoadMedium: String { return Localizable.tr("Localizable", "_performance_load_medium", fallback: "Medium") }
   /// Performance
   public static var performanceTitle: String { return Localizable.tr("Localizable", "_performance_title", fallback: "Performance") }
+  /// Text appears in port forwarding view with the assigned port
+  public static var pfActivePortNumber: String { return Localizable.tr("Localizable", "_pf_active_port_number", fallback: "Active port number") }
+  /// Text appears in main view with the assigned port
+  public static var pfActivePortStatus: String { return Localizable.tr("Localizable", "_pf_active_port_status", fallback: "Active port:") }
+  /// Text appears as hint when hovering mouse over the assigned port number
+  public static var pfCopyPortNumber: String { return Localizable.tr("Localizable", "_pf_copy_port_number", fallback: "Copy port number") }
+  /// Text appears in port forwarding view during loading
+  public static var pfLoading: String { return Localizable.tr("Localizable", "_pf_loading", fallback: "Loading...") }
+  /// Text appears under active port number indicating relative date
+  public static func pfUpdated(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_pf_updated", String(describing: p1), fallback: "Updated %@")
+  }
   /// iOS: placeholder in phone verification screen
   public static var phoneCountryCodePlaceholder: String { return Localizable.tr("Localizable", "_phone_country_code_placeholder", fallback: "Code") }
   /// iOS: placeholder in phone verification screen

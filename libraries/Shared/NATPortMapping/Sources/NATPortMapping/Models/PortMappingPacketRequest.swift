@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum PortMappingProtocol: UInt8 {
+public enum PortMappingProtocol: UInt8, Sendable {
     case udp = 1
     case tcp = 2
 }
@@ -60,7 +60,12 @@ struct PortMappingPacketRequest {
     ///   - internalPort: internal port requested for mapping
     ///   - externalPort: external port requested for mapping;  pass `0` for high-numbered "anonymous" port
     ///   - lifetime: requested lifetime in seconds; our BE will return some predefined value regardless of this parameter
-    init(portProtocol: PortMappingProtocol, internalPort: UInt16, externalPort: UInt16, lifetime: UInt32 = 7200) {
+    init(
+        portProtocol: PortMappingProtocol,
+        internalPort: UInt16,
+        externalPort: UInt16,
+        lifetime: UInt32 = 7200
+    ) {
         self.init(
             opcode: portProtocol.rawValue,
             internalPort: internalPort,

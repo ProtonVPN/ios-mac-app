@@ -1361,6 +1361,22 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Ending %@";
 
+// MARK: NAT-PMP
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Active port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Active port number";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Copy port number";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Loading...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Updated %@";
+
 // MARK: Quick Settings
 "_quick_settings_title" = "Quick Settings";
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";

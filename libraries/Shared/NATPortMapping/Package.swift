@@ -11,14 +11,19 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "NATPortMapping",
-            targets: ["NATPortMapping"]
+            name: "NATPMPUI",
+            targets: ["NATPMPUI"]
         ),
     ],
     dependencies: [
         .package(path: "../../NEHelper"),
         .package(path: "../../Foundations/PMLogger"),
+        .package(path: "../../Foundations/Theme"),
+        .package(path: "../../Foundations/Strings"),
+        .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -28,6 +33,7 @@ let package = Package(
             dependencies: [
                 "PMLogger",
                 .product(name: "VPNShared", package: "NEHelper"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ],
             path: "Sources/NATPortMapping"
         ),
@@ -39,9 +45,27 @@ let package = Package(
             ],
             path: "Sources/CLI"
         ),
+        .target(
+            name: "NATPMPUI",
+            dependencies: [
+                "NATPortMapping",
+                "Theme",
+                "Strings",
+                .product(name: "ProtonCoreUIFoundations", package: "protoncore"),
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ],
+            path: "Sources/NATPMPUI"
+        ),
         .testTarget(
             name: "NATPortMappingTests",
             dependencies: ["NATPortMapping"]
+        ),
+        .testTarget(
+            name: "NATPMPUITests",
+            dependencies: [
+                "NATPMPUI",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ]
         ),
     ]
 )

@@ -116,11 +116,11 @@ import SwiftUI
             } else if contains(.hovered) {
                 CP.InteractionWeakHover
             } else if contains(.weak) {
-                CP.BackgroundWeak
+                Asset.vpnCarbonBackgroundWeak.color
             } else if contains(.strong) {
                 CP.BackgroundStrong
             } else {
-                CP.BackgroundNorm
+                Asset.vpnCarbonBackgroundNorm.color
             }
         }
 
@@ -148,7 +148,7 @@ import SwiftUI
             if contains(.primary) {
                 CP.White
             } else if contains(.weak) {
-                CP.TextWeak
+                Asset.vpnCarbonTextWeak.color
             } else if contains(.hint) {
                 CP.TextHint
             } else if contains(.disabled) {
@@ -163,7 +163,7 @@ import SwiftUI
                    CP.TextNorm.greenComponent == 1 {
                     .init(red: 255, green: 255, blue: 254)
                 } else {
-                    CP.TextNorm
+                    Asset.vpnCarbonTextNorm.color
                 }
             }
         }
