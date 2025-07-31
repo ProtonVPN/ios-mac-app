@@ -497,7 +497,16 @@ public final class KillSwitchConflictAlert: SystemAlert {
     #if os(iOS)
         public var message: String? = Localizable.turnKsOnDescriptionIos
     #else
-        public var message: String? = Localizable.turnKsOnDescriptionMacos
+        public var message: String? {
+            get {
+                if VPNFeatureFlagType.plutoniumMacOS.enabled {
+                    Localizable.turnKsOnDescriptionMacosStConflict + "\n" + Localizable.turnKsOnDescriptionMacosLanConflict
+                } else {
+                    Localizable.turnKsOnDescriptionMacosLanConflict
+                }
+            }
+            set {}
+        }
     #endif
     public var actions = [AlertAction]()
     public let isError: Bool = true
