@@ -22,13 +22,13 @@ import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
 
 import CommonNetworking
+import Domain
+import Ergonomics
 import LegacyCommon
 import Settings
 import Strings
 import VPNAppCore
 import VPNShared
-import Ergonomics
-import Domain
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService

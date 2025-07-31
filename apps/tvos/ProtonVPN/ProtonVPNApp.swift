@@ -19,13 +19,13 @@
 import CommonNetworking
 import Dependencies
 import Domain
+import Ergonomics
 import PMLogger
 import ProtonCoreFeatureFlags
 import ProtonCoreLog
 import SwiftUI
 import VPNAppCore
 import VPNShared
-import Ergonomics
 
 import tvOS
 

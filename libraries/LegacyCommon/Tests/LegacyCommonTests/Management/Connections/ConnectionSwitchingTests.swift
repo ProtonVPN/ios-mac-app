@@ -23,9 +23,9 @@ import XCTest
 import Dependencies
 
 import GoLibs
+import ProtonCoreFeatureFlags
 import ProtonCoreNetworking
 import ProtonCoreServices
-import ProtonCoreFeatureFlags
 import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 import Domain
@@ -41,13 +41,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         #if os(macOS)
             throw XCTSkip("Connection switching tests are skipped on macOS, since there is no cert refresh provider.")
         #else
-        try super.setUpWithError()
+            try super.setUpWithError()
 
-        CheckedFeatureFlagsRepository.shared.setApiService(container.networking.apiService)
-        await CheckedFeatureFlagsRepository.shared.fetchFlags()
+            CheckedFeatureFlagsRepository.shared.setApiService(container.networking.apiService)
+            await CheckedFeatureFlagsRepository.shared.fetchFlags()
         #endif
     }
-
 
     private func dispatchToMainWithEscapedDependencies(closure: @escaping () -> Void) {
         withEscapedDependencies { dependencies in

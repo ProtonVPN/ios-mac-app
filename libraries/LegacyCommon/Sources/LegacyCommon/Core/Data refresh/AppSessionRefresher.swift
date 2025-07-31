@@ -196,6 +196,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     }
 
     // MARK: - Override
+
     @MainActor
     open func attemptSilentLogIn() async throws {
         fatalError("This method should be overridden, but it is not")

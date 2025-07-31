@@ -26,8 +26,8 @@ import Domain
 import VPNAppCore
 import VPNShared
 
-import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 import ProtonCoreFeatureFlags
+import ProtonCoreTestingToolkitUnitTestsFeatureFlag
 
 @testable import LegacyCommon
 

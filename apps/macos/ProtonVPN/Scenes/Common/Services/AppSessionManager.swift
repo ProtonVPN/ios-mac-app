@@ -107,6 +107,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: public log in interface (completion handlers)
+
     @MainActor
     override func attemptSilentLogIn() async throws {
         log.debug("Attempt silent login", category: .app)
@@ -122,6 +123,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     // MARK: private log in implementation (async)
+
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
             try authKeychain.store(authCredentials)
