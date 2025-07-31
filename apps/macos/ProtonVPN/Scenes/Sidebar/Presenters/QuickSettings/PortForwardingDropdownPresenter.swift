@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
@@ -27,8 +26,6 @@ import Theme
 import VPNAppCore
 
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-
     typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
@@ -85,7 +82,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                 // https://protonag.atlassian.net/browse/VPNAPPL-2934
-//                self.vpnGateway.retryConnection()
+                self.vpnGateway.retryConnection()
             }
 //            dismissCallback()
         })

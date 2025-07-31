@@ -110,6 +110,8 @@
 		79DAC5E0FFC36981E0DC7FC5 /* BannerCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE3F63494AD347F2FCD626D /* BannerCellView.swift */; };
 		7F4D7594012E990A84895535 /* BannerCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E93E4DC7EC79388198005F1 /* BannerCellView.xib */; };
 		85B52BBDF014973A4197164A /* BannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27AA91B78C375F475C3F8608 /* BannerViewModel.swift */; };
+		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
+		A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
@@ -649,6 +651,7 @@
 		9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
 		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
+		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
@@ -1132,6 +1135,7 @@
 				4CD1F78B2A72BF0100E8AB01 /* LegacyCommon in Frameworks */,
 				4C8571DC2A7CEC5B0057FED6 /* TrustKit in Frameworks */,
 				E5867D7D2C4E7D55009FB802 /* NetShield in Frameworks */,
+				A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */,
 				E5E48D012A4C37F000B09111 /* PMLogger in Frameworks */,
 				4C9FF48A2D64967A004DBF89 /* Announcement in Frameworks */,
 				4CD1F7932A72DCAD00E8AB01 /* GoLibsCryptoVPNPatchedGo in Frameworks */,
@@ -2266,6 +2270,7 @@
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
 				A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */,
 				A4F2B9792E312E2900B807B8 /* QuickSettingDetailNetShieldViewController.swift */,
+				A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2869,6 +2874,7 @@
 				E5C384652D96AAA5003494D5 /* Settings */,
 				E5C3847D2D96B9DE003494D5 /* Modals */,
 				A4B9A7352E38FC2600A21B35 /* Atlantis */,
+				A443C5722E3B76BC003D91FA /* NATPMPUI */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -3392,6 +3398,7 @@
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				F315847527C7939400D1F6CC /* AdvancedSettingsViewController.swift in Sources */,
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
+				A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */,
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
 				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
 				42BEF97826319E39009180A7 /* StreamingServicesOverlayViewModel.swift in Sources */,
@@ -5163,6 +5170,10 @@
 		77DA78732CB7F83800E12F5C /* Localization */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Localization;
+		};
+		A443C5722E3B76BC003D91FA /* NATPMPUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NATPMPUI;
 		};
 		A4B9A7352E38FC2600A21B35 /* Atlantis */ = {
 			isa = XCSwiftPackageProductDependency;

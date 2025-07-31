@@ -25,6 +25,13 @@ import Theme
 public struct NATPMPPortView: View {
     @Perception.Bindable var store: StoreOf<NATPMPFeature>
 
+    public init() {
+        let store = Store(initialState: .loading) {
+            NATPMPFeature()
+        }
+        self.init(store: store)
+    }
+
     public init(store: StoreOf<NATPMPFeature>) {
         self.store = store
     }
@@ -33,6 +40,9 @@ public struct NATPMPPortView: View {
         switch store.state {
         case .loading:
             LoadingPortView()
+                .task {
+                    store.send(.startPortMapping)
+                }
         case let .loaded(externalPortNumber, updateDate):
             ActivePortView(
                 portNumber: externalPortNumber,

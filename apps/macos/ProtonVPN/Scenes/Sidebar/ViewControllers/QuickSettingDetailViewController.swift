@@ -52,7 +52,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     var contentBox: NSBox = .init().with {
         $0.boxType = .custom
-        $0.cornerRadius = 4
+        $0.cornerRadius = .themeRadius4
         $0.titlePosition = .noTitle
         $0.borderColor = .color(.border, .weak)
         $0.fillColor = .color(.background)
@@ -132,7 +132,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     var dropdownNoteStackView: NSStackView = .init().with {
         $0.orientation = .horizontal
         $0.alignment = .top
-        $0.spacing = 8
+        $0.spacing = .themeSpacing8
         $0.distribution = .fillProportionally
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -140,17 +140,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     private var dropdownOptionsView: NSStackView = .init().with {
         $0.orientation = .vertical
         $0.alignment = .width
-        $0.spacing = 8
+        $0.spacing = .themeSpacing8
         $0.distribution = .fillEqually
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.wantsLayer = true
         $0.layer?.masksToBounds = false
     }
 
-    private var buttonsAndNoteView: NSStackView = .init().with {
+    var buttonsAndNoteView: NSStackView = .init().with {
         $0.orientation = .vertical
         $0.alignment = .centerX
-        $0.spacing = 16
+        $0.spacing = .themeSpacing16
         $0.distribution = .fillProportionally
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
@@ -160,7 +160,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     private var detailBox: NSBox = .init().with {
         $0.boxType = .custom
         $0.borderType = .noBorder
-        $0.cornerRadius = 4
+        $0.cornerRadius = .themeRadius4
         $0.titlePosition = .noTitle
         $0.fillColor = NSColor(white: 1, alpha: 0.0)
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -181,7 +181,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         // Main view
         let shadow = NSShadow()
         shadow.shadowColor = .color(.background)
-        shadow.shadowBlurRadius = 8
+        shadow.shadowBlurRadius = .themeRadius8
 
         view = NSView()
         view.frame = NSRect(x: 0, y: 0, width: 400, height: 414)
@@ -299,7 +299,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     func reloadOptions() {
         var needsUpgrade = false
         let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { _, presenter in
-            let thisNeedsUpgrade = presenter.requiresUpdate ?? false
+            let thisNeedsUpgrade = presenter.requiresUpdate
             defer { needsUpgrade = thisNeedsUpgrade || needsUpgrade }
 
             let view: QuickSettingsDropdownOption? = QuickSettingsDropdownOption.loadViewFromNib()
