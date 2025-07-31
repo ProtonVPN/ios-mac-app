@@ -38,11 +38,6 @@ public final class SentryHelper {
                     return nil
                 }
 
-                // Remove heaviest part of event to make sure event doesn't reach max request size. Can be removed after the issue is fixed on the infra side (INFSUP-682).
-                if VPNFeatureFlagType.sentryExcludeMetadata.enabled {
-                    event.debugMeta = nil
-                }
-
                 return event
             }
 
