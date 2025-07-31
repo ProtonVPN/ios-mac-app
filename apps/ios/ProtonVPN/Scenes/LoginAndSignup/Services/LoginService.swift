@@ -22,13 +22,13 @@ import ProtonCorePushNotifications
 import ProtonCoreUIFoundations
 
 import CommonNetworking
+import Domain
+import Ergonomics
 import LegacyCommon
 import Settings
 import Strings
 import VPNAppCore
 import VPNShared
-import Ergonomics
-import Domain
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -218,10 +218,10 @@ final class CoreLoginService {
             initialError: initialError,
             helpDecorator: helpDecorator
         )
-        let variant: WelcomeScreenVariant = if FeatureFlagsRepository.shared.isEnabled(CoreFeatureFlagType.credentialLessDisabled, reloadValue: true) {
-            .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
-        } else {
+        let variant: WelcomeScreenVariant = if CoreFeatureFlagType.credentialLessAccount.enabled {
             .vpnV2(WelcomeScreenTexts(body: Localizable.welcomeBody))
+        } else {
+            .vpn(WelcomeScreenTexts(body: Localizable.welcomeBody))
         }
         let welcomeViewController = loginInterface.welcomeScreenForPresentingFlow(
             variant: variant,
