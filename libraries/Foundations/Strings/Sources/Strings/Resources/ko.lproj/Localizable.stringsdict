@@ -250,7 +250,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 일</string>
+        <string>%d일</string>
       </dict>
     </dict>
     <key>_session_length_days_and_hours</key>
@@ -264,7 +264,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 일</string>
+        <string>%d일</string>
       </dict>
       <key>HOURS</key>
       <dict>
@@ -384,7 +384,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d 단계</string>
+        <string>%d단계</string>
       </dict>
     </dict>
     <key>free_connections_modal_subtitle</key>

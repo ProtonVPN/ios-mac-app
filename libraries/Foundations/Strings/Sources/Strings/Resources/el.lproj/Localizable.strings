@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Υπόψιν ότι η εφαρμογή αυτής της αλλαγής απαιτεί επανεκκίνηση της σύνδεσής σας";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Ενεργοποίηση kill switch;";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Ενεργοποιώντας τη λειτουργία kill switch, δε θα μπορείτε να έχετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο. \n\nΣυνέχεια;";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Αυτό θα απενεργοποιήσει τη διαίρεση σήραγγας\n• Δε θα μπορείτε να αποκτήσετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο.";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Δε θα μπορείτε να αποκτήσετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο.";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Ενεργοποίηση διαίρεσης σήραγγας;";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Αυτό θα απενεργοποιήσει το kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Αποκτήστε το πλάνο %@";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Παρουσιάστηκε σφάλμα κατά την ενεργοποίηση των Επεκτάσεων Συστήματος: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "παρακαλούμε επανεγκαταστήστε την εφαρμογή και προσπαθήστε ξανά.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "παρακαλούμε όπως βεβαιωθείτε ότι η εφαρμογή έχει εγκατασταθεί σωστά στον φάκελο /Applications.";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Ενεργοποίηση IKEv2;";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Αυτό το πρωτόκολλο θα καταργηθεί σύντομα. Εξετάστε το ενδεχόμενο μετάβασης στο Smart πρωτόκολλο. Μάθετε περισσότερα";
+"_ike_deprecation_alert_message" = "Αυτό το πρωτόκολλο θα αφαιρεθεί σύντομα. Σκεφτείτε να μεταβείτε στο πρωτόκολλο Smart. Μάθετε περισσότερα\n\nΟι ρυθμίσεις του διαχωρισμένης σήραγγας θα αγνοηθούν όταν χρησιμοποιείτε το IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Μάθετε περισσότερα";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Το κατάλαβα";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Κάντε τη μετάβαση στο απόρρητο";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Αποκτήστε έναν διαχειριστή κωδικών πρόσβασης, κρυπτογραφημένη αλληλογραφία και ημερολόγιο και 1 GB αποθηκευτικού χώρου στο cloud δωρεάν με έναν λογαριασμό Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Δημιουργία Λογαριασμού";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Πρέπει να δημιουργήσετε έναν λογαριασμό πριν μπορέσετε να αναβαθμίσετε";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Εάν δεν δημιουργήσετε έναν λογαριασμό, δεν θα μπορείτε να αναβαθμίσετε σε VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Ακύρωση αναβάθμισης";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Συνέχεια δημιουργίας λογαριασμού";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Ο λογαριασμός δημιουργήθηκε";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Προηγμένη προσαρμογή VPN";

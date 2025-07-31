@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Bu değişikliği uygulamak için bağlantınızın yeniden başlatılması gerektiğini unutmayın";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Bağlantı kesici özelliği açılsın mı?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Bağlantı kesici özelliğini açtığınızda yerel ağınızdaki aygıtlara erişemeyeceksiniz. \n\nİlerlemek istiyor musunuz?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Bu, ayrılmış tünellemeyi kapatacaktır.\n• Yerel ağınızdaki aygıtlara erişim mümkün olmayacaktır.";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Yerel ağınızdaki aygıtlara erişemeyeceksiniz.";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Ayrılmış tünelleme açılsın mı?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Bu işlem bağlantı kesici özelliğini kapatacak.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ tarifesine geçin";
@@ -1463,6 +1472,9 @@
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Sistem eklentileri kullanıma alınırken bir sorun çıktı: %@";
 
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "Lütfen uygulamayı yeniden yükleyip tekrar deneyin.";
+
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "Lütfen uygulamanın /Applications klasörüne doğru şekilde kurulduğundan emin olun.";
 
@@ -1475,9 +1487,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "Lütfen destek ekibimizle görüşün. (Hata %@)";
 
-"_vpnauth_certfail_title" = "Otomatik bağlantı başarısız oldu";
+"_vpnauth_certfail_title" = "Otomatik bağlantı kurulamadı";
 
-"_vpnauth_certfail_description" = "Uygulamada bağlantı kurmayı deneyin.";
+"_vpnauth_certfail_description" = "Uygulamadan bağlantı kurmayı deneyin.";
 
 "_vpnauth_too_many_certs_title" = "Kimlik doğrulama sorunu";
 
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "IKEv2 kullanıma alınsın mı?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Bu iletişim kuralı yakında kullanımdan kaldırılacak. Smart protocol kullanmaya geçmeyi değerlendirin. Ayrıntılı bilgi alın";
+"_ike_deprecation_alert_message" = "Bu iletişim kuralı yakında kaldırılacak. Smart iletişim kuralına geçmeyi değerlendirin. Ayrıntılı bilgi alın\n\n Ayrılmış tünelleme ayarları IKEv2 kullanırken görmezden gelinecek.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Ayrıntılı bilgi alın";
@@ -2924,6 +2936,30 @@
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Anladım";
 
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Gizliliğe geçin";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Proton hesabı ile ücretsiz olarak parola yöneticisi, şifrelenmiş e-posta, takvim ve 1 GB bulut depolama alanı edinin.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Hesap aç";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Yükseltmeden önce bir hesap oluşturmanız gerekiyor.";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Bir hesap oluşturmazsanız VPN Plus'a yükseltemezsiniz.";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Yükseltmeyi iptal et";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Hesap oluşturmaya devam et";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Hesap oluşturuldu";
+
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Gelişmiş VPN özelleştirmeleri";
 
@@ -2943,7 +2979,7 @@
 "_hermes_feature_description" = "Özel DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Kendi barındırdığınız veya üçüncü taraf bir alan adı sistemi (DNS) ile VPN'e bağlanın. Daha fazla bilgi";
+"_hermes_feature_description" = "Kendinizin barındırdığı veya üçüncü taraf bir etki alanı adı sistemi (DNS) ile VPN hizmetine bağlanın. Ayrıntılı bilgi alın";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "Sunucular (%@)";
@@ -2979,7 +3015,7 @@
 "_hermes_entities_copyAction" = "Kopyalamak için çift tıklayın";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "Özel DNS sunucunuz çalışmazsa, varsayılan Proton VPN DNS kullanılacaktır.";
+"_hermes_entities_footnote_single" = "Özel DNS sunucunuz çalışmıyorsa, varsayılan Proton VPN DNS kullanılır.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "Sırayla bu sunuculara bağlanmaya çalışacağız. Hiçbiri işe yaramazsa, VPN DNS kullanılacak.";
@@ -2997,7 +3033,7 @@
 "_hermes_conflict_netshieldOn_description" = "Bu işlem, Özel DNS özelliğini kapatacak.";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Bu özel DNS'i devre dışı bırakacaktır, değişiklikleri uygulamak için yeniden bağlanmanız gerek.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "Bu işlem özel DNS kullanımını kapatır. Değişiklikleri uygulamak için yeniden bağlantı kurulması gerekir.";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
 "_hermes_conflict_netshieldOn_enableAndReconnect" = "Aç ve yeniden bağlan";

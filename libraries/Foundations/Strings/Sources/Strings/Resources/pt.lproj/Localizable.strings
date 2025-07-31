@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Note que a extensão tem de ser reiniciada para aplicar a alteração";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Ativar o Kill switch?";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "Ativar o kill switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Se ativar o Kill switch, não poderá aceder a dispositivos na rede local. \n\nContinuar?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Isto irá desativar o tunelamento dividido\n• Não conseguirá aceder a dispositivos na sua rede local";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Não será possível aceder a dispositivos na sua rede local.";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Ativar o tunelamento dividido?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Isto desativará o kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Obter o plano %@";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Ocorreu um erro ao ativar as extensões do sistema: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "reinstale a aplicação e tente novamente.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "certifique-se de que a aplicação está corretamente instalada na pasta /Aplicações.";
@@ -2304,7 +2316,7 @@
 "modals_upsell_safe_mode_title" = "Permitir tráfego em portas incomuns";
 
 /* Title of the Moderate NAT upsell screen */
-"modals_upsell_moderate_nat_title" = "Suba de nível a sua experiência \"gaming\"";
+"modals_upsell_moderate_nat_title" = "Suba de nível a sua experiência \"gaming\";
 
 /* Subtitle of Moderate NAT upsell screens */
 "modals_upsell_moderate_nat_subtitle" = "Desbloqueie o  NAT tipo 2  com a VPN Plus";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Ativar IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Este protocolo será removido em breve. Considere alternar para o Smart Protocol. Saiba mais.";
+"_ike_deprecation_alert_message" = "Este protocolo será removido em breve. Considere mudar para o protocolo Smart. Saiba mais\n\nAs definições de tunelamento dividido serão ignoradas ao usar IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Mais informação";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Entendido";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Faça a mudança para a privacidade";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Obtenha um gestor de palavras-passe, Mail e Calendar encriptados e 1 GB de armazenamento na nuvem gratuitamente com uma Conta Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Criar uma conta";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "É necessário criar uma conta antes de poder atualizar";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Se não criar uma conta, não poderá atualizar para o VPN Plus.";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Cancelar atualização";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Continuar a criar conta";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Conta criada";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Personalização avançada da VPN";

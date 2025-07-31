@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Upoštevajte, da morate za uveljavitev te spremembe znova zagnati povezavo";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Vklopiti stikalo za izklop?";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "Enable kill switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Če aktivirate stikalo za izklop, ne boste mogli dostopati do naprav v lokalnem omrežju. \n\nNadaljuj?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• This will disable split tunneling\n• You won't be able to access devices on your local network";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Enable split tunneling?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "This will disable kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Pridobite paket %@.";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Prišlo je do napake pri omogočanju razširitev sistema: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Omogoči IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Ta protokol bo kmalu odstranjen. Razmislite o prehodu na protokol Smart. Izvedi več";
+"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nSplit tunneling settings will be ignored when using IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Več informacij";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Razumem";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Make the move to privacy";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Create account";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "If you don’t create an account you won’t be able to upgrade to VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Cancel upgrade";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Continue creating account";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Account created";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Napredno prilagoditev VPN";

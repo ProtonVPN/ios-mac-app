@@ -77,7 +77,7 @@
 "_enabled" = "已启用";
 
 /* Common word */
-"_enable" = "Enable";
+"_enable" = "启用";
 
 /* Common word */
 "_disabled" = "关闭";
@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "您需要重新启动连接才能应用此更改。";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "打开 Kill Switch ？";
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_title" = "启用 Kill Switch？";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "激活 Kill Switch 后，您就无法访问本地网络上的设备了。\n\n是否继续？";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• 这将禁用拆分隧道\n• 您将无法访问本地网络上的设备";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "您将无法访问本地网络上的设备";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "启用拆分隧道？";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "这将禁用 Kill Switch。";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "订阅“%@”套餐";
@@ -1463,6 +1472,9 @@
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "启用系统扩展时发生错误：%@";
 
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "请重新安装该应用并重试。";
+
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "请确保应用程序已正确安装在 /Applications 文件夹中。";
 
@@ -1475,9 +1487,9 @@
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_sysex_error_description_subcase_default" = "请联系我们的客服。（错误 %@）";
 
-"_vpnauth_certfail_title" = "Auto-connect failed";
+"_vpnauth_certfail_title" = "自动连接失败";
 
-"_vpnauth_certfail_description" = "Try connecting in the app.";
+"_vpnauth_certfail_description" = "尝试在应用中连接。";
 
 "_vpnauth_too_many_certs_title" = "认证错误";
 
@@ -1645,7 +1657,7 @@
 "_plutonium_empty_ip_list_content" = "暂无 IP 地址";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
+"_plutonium_upsell_subtitle" = "隧道拆分功能，自定义经 VPN 和绕过 VPN 的流量。";
 
 /* Plutonium feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
@@ -1837,7 +1849,7 @@
 "_connection_card_default_connection" = "默认连接";
 
 /* Connection card in home tab: "Safely browsing from... <country name>" [Redesign_2023] */
-"_connection_card_safely_browsing_from" = "安全浏览";
+"_connection_card_safely_browsing_from" = "从以下位置安全浏览";
 
 /* Connection card in home tab: "Last connected to... <country name>" [Redesign_2023] */
 "_connection_card_last_connected_to" = "最后连接至";
@@ -1930,7 +1942,7 @@
 "_secure_core_via_country" = "经 %@ 中转";
 
 /* Connection status title when user is not connected to a VPN [Redesign_2023] */
-"connection_status_unprotected" = "您不受保护";
+"connection_status_unprotected" = "您没有受到保护";
 
 /* Connection status title when user is initiating connection to a VPN [Redesign_2023] */
 "connection_status_protecting" = "保护您的数字身份";
@@ -1974,7 +1986,7 @@
 "_netshield_stats_blocked_E" = "%@ E";
 
 /* Connection details screen: Title before connection details table (macOS and iOS) [Redesign_2023] */
-"_connection_details_title" = "节点连接信息";
+"_connection_details_title" = "节点详情";
 
 /* Connection details screen: Connected for (macOS and iOS) [Redesign_2023] */
 "_connection_details_connected_for" = "已连接时长";
@@ -2007,19 +2019,19 @@
 "_connection_details_feature_title_tor" = "Tor";
 
 /* Connection details screen: Tor feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_tor" = "您可以连接洋葱路由，使用至常规浏览器。";
+"_connection_details_feature_description_tor" = "您可以使用常规浏览器连接到.onion网站。";
 
 /* Connection details screen: P2P feature title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_p2p" = "P2P";
 
 /* Connection details screen: P2P feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_p2p" = "该服务器使用点对点技术可享用较高速率";
+"_connection_details_feature_description_p2p" = "此服务器支持点对点(P2P)文件共享。";
 
 /* Connection details screen: Smart Routing title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
 /* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
-"_connection_details_feature_description_smart_routing" = "服务器实际位于 %1$@，但您似乎是从 %2$@ 进行浏览。";
+"_connection_details_feature_description_smart_routing" = "服务器实际位于 %1$@，但您似乎是在 %2$@ 进行浏览。";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2031,7 +2043,7 @@
 "_connection_details_feature_title_streaming" = "串流中";
 
 /* Connection details screen: Streaming feature description (macOS and iOS) [Redesign_2023] */
-"_connection_details_feature_description_streaming" = "该服务器有以下流媒体解锁。";
+"_connection_details_feature_description_streaming" = "该服务器对电视及影视回放进行了优化。";
 
 /* Connection details screen: Title of the section that lists VPN connection features (like P2P, Tor, etc.) (macOS and iOS) [Redesign_2023] */
 "_connection_details_features_title" = "功能";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "启用 IKEv2？";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "此协议将很快被删除。考虑切换到智能协议。了解详情";
+"_ike_deprecation_alert_message" = "该协议即将被删除，请考虑改用智能协议。了解详情\n\n使用 IKEv2 时将忽略拆分隧道设置。";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "了解详情";
@@ -2924,6 +2936,30 @@
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "了解";
 
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "踏上通往隐私的道路";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "免费注册 Proton 账户即可获取密码管理器、加密的邮箱和日历，以及 1 GB 云存储空间。";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "创建账户";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "您需要先创建账户才能升级。";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "如果您不创建账户，您将无法升级到 VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "取消升级";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "继续创建账户";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "帐户已创建";
+
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "高级 VPN 定制功能";
 
@@ -2943,7 +2979,7 @@
 "_hermes_feature_description" = "自定义 DNS";
 
 /* Hermes Feature Description within dedicated Hermes Settings view */
-"_hermes_feature_description" = "Connect to VPN with a self-hosted or third-party domain name system (DNS). Learn more";
+"_hermes_feature_description" = "通过自托管或第三方域名系统（DNS）连接VPN。了解详情";
 
 /* Hermes entities header within dedicated Hermes Settings view */
 "_hermes_entities_header" = "服务器 (%@)";
@@ -2958,7 +2994,7 @@
 "_hermes_entities_form_addButton" = "添加";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Add new DNS server";
+"_hermes_entities_form_addButton_full" = "添加新的 DNS 服务器";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "请输入服务器的 IPv4 地址";
@@ -2979,7 +3015,7 @@
 "_hermes_entities_copyAction" = "双击复制";
 
 /* Hermes entities footnote with single entity within dedicated Hermes Settings view */
-"_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
+"_hermes_entities_footnote_single" = "如果自定义 DNS 服务器无法正常工作，系统将自动使用 Proton VPN 的默认 DNS。";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
 "_hermes_entities_footnote_multiple" = "我们将依次尝试连接这些服务器。如果都无法正常工作，则将使用 VPN DNS。";
@@ -2997,22 +3033,22 @@
 "_hermes_conflict_netshieldOn_description" = "这将停用自定义 DNS。";
 
 /* Hermes conflict notification description within alert when enabling NetShield and should reconnect */
-"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "This will disable Custom DNS. To apply changes, reconnection is required.";
+"_hermes_conflict_netshieldOnAndShouldReconnect_description" = "这将停用自定义 DNS。如要应用更改，需要重新连接。";
 
 /* Hermes conflict notification 'enable and reconnect' action within alert when enabling NetShield */
-"_hermes_conflict_netshieldOn_enableAndReconnect" = "Enable and reconnect";
+"_hermes_conflict_netshieldOn_enableAndReconnect" = "启用并重新连接";
 
 /* Hermes apply changes notification window title on macOS */
 "_hermes_applyChanges_windowTitle" = "更改设置";
 
 /* Hermes apply changes notification alert title on iOS */
-"_hermes_applyChanges_alertTitle" = "Change settings";
+"_hermes_applyChanges_alertTitle" = "更改设置";
 
 /* Hermes settings cell client status is on */
-"_hermes_settings_isOn" = "On";
+"_hermes_settings_isOn" = "启用";
 
 /* Hermes settings cell client status is off */
-"_hermes_settings_isOff" = "Off";
+"_hermes_settings_isOff" = "关闭";
 
 /* Hermes apply changes notification window title */
 "_hermes_applyChanges_description" = "您的连接需要重新启动才能应用此更改。";

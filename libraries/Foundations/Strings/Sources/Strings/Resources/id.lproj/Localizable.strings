@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Mohon diperhatikan bahwa koneksi Anda harus dimulai ulang untuk menerapkan perubahan ini";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Aktifkan kill switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Selama kill switch aktif, Anda tidak akan dapat mengakses berbagai perangkat yang terhubung pada jaringan lokal Anda. \n\nApakah Anda tetap ingin lanjut?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Hal ini akan menonaktifkan split tunneling\n• Anda tidak akan dapat mengakses perangkat yang terdapat pada jaringan lokal Anda";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Anda tidak akan dapat mengakses perangkat yang terdapat pada jaringan lokal Anda";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Aktifkan split tunneling?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Tindakan ini akan menonaktifkan kill switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Dapatkan Paket %@";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Terjadi kesalahan saat mengaktifkan Ekstensi Sistem: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "silakan pasang ulang aplikasi dan coba lagi.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "pastikan aplikasi terinstal dengan benar di folder /Applications.";
@@ -2676,10 +2688,10 @@
 "_wrong_country_banner_title" = "Bukan negara yang Anda inginkan?";
 
 /* Subtitle of banner shown on iOS apps to upsell users who want to select a country */
-"_wrong_country_banner_subtitle" = "Tingkatkan untuk memilih server mana pun";
+"_wrong_country_banner_subtitle" = "Tingkatkan untuk bebas memilih server mana saja";
 
 /* Text of banner shown on macOS apps to upsell users who want to select a country */
-"_wrong_country_banner_text" = "Bukan negara yang Anda inginkan? Tingkatkan akun Anda untuk bebas memilih server mana pun";
+"_wrong_country_banner_text" = "Bukan negara yang Anda inginkan? Tingkatkan akun Anda untuk bebas memilih server mana saja";
 
 /* ReportBugwindow title */
 "_br_window_title" = "Laporkan masalah";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Aktifkan IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Protokol ini akan segera dihapus. Pertimbangkan untuk beralih ke protokol Smart. Pelajari lebih lanjut";
+"_ike_deprecation_alert_message" = "Protokol ini akan segera dihapus. Pertimbangkan untuk beralih ke protokol Smart. Pelajari lebih lanjut\n\nPengaturan split tunneling akan diabaikan pada saat Anda menggunakan IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Pelajari lebih lanjut";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Mengerti";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Berpindahlah ke privasi";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Dapatkan pengelola kata sandi, Mail dan Calendar yang terenkripsi, serta penyimpanan cloud sebesar 1 GB secara cuma-cuma dengan Akun Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Buat akun";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Anda perlu untuk membuat akun sebelum Anda dapat meningkatkan layanan";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Apabila Anda tidak membuat akun, Anda tidak akan dapat meningkatkan ke VPN Plus";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Batal tingkatkan";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Lanjut membuat akun";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Akun dibuat";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Kustomisasi VPN lanjutan";

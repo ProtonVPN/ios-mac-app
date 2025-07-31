@@ -1033,11 +1033,20 @@
 
 "_allow_lan_note" = "Зверніть увагу, що для застосування змін необхідно перезапустити з'єднання";
 
-/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Увімкнути Kill Switch?";
 
-/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "Активувавши Kill Switch, ви не зможете отримати доступ до пристроїв у вашій локальній мережі. \n\nПродовжити?";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_macos" = "• Це вимкне роздільне тунелювання\n• Ви не матимете доступу до пристроїв у своїй локальній мережі";
+
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+"_turn_ks_on_description_ios" = "Ви не матимете доступу до пристроїв у своїй локальній мережі";
+
+/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_title" = "Увімкнути роздільне тунелювання?";
+
+/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+"turn_split_tunneling_on_description" = "Ця дія призведе до вимкнення Kill Switch.";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Отримати %@";
@@ -1462,6 +1471,9 @@
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
 "_sysex_error_description" = "Виникла помилка під час увімкнення системних розширень: %@";
+
+/* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
+"_sysex_error_description_subcase_code_signature_invalid" = "Перевстановіть програму і повторіть спробу.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "Переконайтеся, що програму правильно встановлено у теці /Applications.";
@@ -2763,7 +2775,7 @@
 "_ike_deprecation_alert_title" = "Увімкнути IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Цей протокол буде невдовзі вилучено. Рекомендуємо перейти на протокол Smart. Докладніше";
+"_ike_deprecation_alert_message" = "Цей протокол невдовзі буде вилучено. Перемкніться на протокол Smart. Докладніше\n\nНалаштування роздільного тунелювання ігноруватимуться під час використання IKEv2.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Докладніше";
@@ -2923,6 +2935,30 @@
 
 /* Widget adoption modal CTA. */
 "_widgetAdoption_modal_instruction_button" = "Зрозуміло";
+
+/* iOS: Settings account section card title for guest mode */
+"_make_the_move_to_privacy" = "Зробіть крок назустріч приватності";
+
+/* iOS: Settings account section card description for guest mode */
+"_settings_new_account_card_description" = "Отримайте менеджер паролів, зашифровані пошту і календар, а також 1 ГБ хмарного сховища безплатно з обліковим записом Proton.";
+
+/* iOS: Action account button on settings account section in guest mode */
+"_create_account_settings_title" = "Зареєструватися";
+
+/* iOS: Alert title for purchase attempt in guest mode */
+"_create_account_first_before_upgrade" = "Щоб покращити, вам потрібно створити обліковий запис";
+
+/* iOS: Alert title for closing account creation flow */
+"_create_account_if_close_no_upgrade" = "Не створивши обліковий запис, ви не зможете покращити до VPN Plus.";
+
+/* iOS: Cancel button on account creation flow */
+"_create_account_cancel_upgrade" = "Скасувати покращення";
+
+/* iOS: Continue button on account creation flow */
+"_create_account_continue_creating" = "Зареєструватися";
+
+/* iOS: Alert message after account creation in guest mode */
+"_account_created_title" = "Обліковий запис створено";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Розширені налаштування VPN";

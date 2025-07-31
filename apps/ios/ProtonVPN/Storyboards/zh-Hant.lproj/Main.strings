@@ -3,7 +3,7 @@
 "2pk-oe-F9k.text" = "標籤";
 
 /* Class = "UILabel"; text = "CREATE NEW PROFILE"; ObjectID = "EEL-5z-u8K"; */
-"EEL-5z-u8K.text" = "CREATE NEW PROFILE";
+"EEL-5z-u8K.text" = "建立新個人檔案";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "Nwg-Ka-w8D"; */
 "Nwg-Ka-w8D.text" = "標籤";
@@ -18,7 +18,7 @@
 "UAc-dg-fCP.text" = "標籤";
 
 /* Class = "UILabel"; text = "USE SECURE CORE"; ObjectID = "UZF-8E-T8i"; */
-"UZF-8E-T8i.text" = "USE SECURE CORE";
+"UZF-8E-T8i.text" = "使用安全核心";
 
 /* Class = "UINavigationItem"; title = "ProtonVPN"; ObjectID = "Wh4-tZ-Tb9"; */
 "Wh4-tZ-Tb9.title" = "Proton VPN";
