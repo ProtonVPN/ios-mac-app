@@ -1754,8 +1754,10 @@ public enum Localizable {
   public static var tryAgainWithoutKillswitch: String { return Localizable.tr("Localizable", "_try_again_without_killswitch", fallback: "Disable kill switch and retry") }
   /// [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
   public static var turnKsOnDescriptionIos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_ios", fallback: "You won't be able to access devices on your local network") }
-  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
-  public static var turnKsOnDescriptionMacos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos", fallback: "• This will disable split tunneling\n• You won't be able to access devices on your local network") }
+  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on
+  public static var turnKsOnDescriptionMacosLanConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_lan_conflict", fallback: "• You won't be able to access devices on your local network") }
+  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on
+  public static var turnKsOnDescriptionMacosStConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_st_conflict", fallback: "• This will disable split tunneling") }
   /// Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
   public static var turnKsOnTitle: String { return Localizable.tr("Localizable", "_turn_ks_on_title", fallback: "Enable kill switch?") }
   /// Turn on
