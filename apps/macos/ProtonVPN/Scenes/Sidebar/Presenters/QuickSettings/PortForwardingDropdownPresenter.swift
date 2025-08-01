@@ -40,10 +40,9 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.portForwarding
     }
 
-    // https://protonag.atlassian.net/browse/VPNAPPL-2931
-//    override var alert: UpsellAlert {
-//        PortForwardingUpsellAlert()
-//    }
+    override var alert: UpsellAlert {
+        PortForwardingUpsellAlert()
+    }
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -77,14 +76,13 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         let active = propertiesManager.portForwarding
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { _ in
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { dismissCallback in
             self.propertiesManager.portForwarding = false
             if self.vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                // https://protonag.atlassian.net/browse/VPNAPPL-2934
                 self.vpnGateway.retryConnection()
             }
-//            dismissCallback()
+            dismissCallback()
         })
     }
 

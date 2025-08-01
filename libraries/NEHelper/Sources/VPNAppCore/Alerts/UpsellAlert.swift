@@ -88,6 +88,10 @@ public final class P2PUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource? { .p2p }
 }
 
+public final class PortForwardingUpsellAlert: UpsellAlert {
+    override public var modalSource: UpsellModalSource? { .portForwarding }
+}
+
 public final class DevicesUpsellAlert: UpsellAlert {
     override public var modalSource: UpsellModalSource? { .devices }
 }

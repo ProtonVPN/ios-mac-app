@@ -2312,6 +2312,10 @@ public enum Localizable {
   public static var upsellP2pSupportSubtitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_subtitle", fallback: "Improve your upload and download speeds while hiding your IP address.") }
   /// Title of p2p support upsell modal
   public static var upsellP2pSupportTitle: String { return Localizable.tr("Localizable", "upsell_p2pSupport_title", fallback: "Unlock peer-to-peer (P2P) downloads and file sharing") }
+  /// Subtitle of port forwarding support upsell modal
+  public static var upsellPfSupportSubtitle: String { return Localizable.tr("Localizable", "upsell_pfSupport_subtitle", fallback: "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.") }
+  /// Title of port forwarding upsell modal
+  public static var upsellPfSupportTitle: String { return Localizable.tr("Localizable", "upsell_pfSupport_title", fallback: "Improve P2P speed") }
   /// Trailing text of the paid plan option amount indicating the amount per month. The leading space is here on purpose. Please keep so the price is separated from the duration and place it accordingly.
   public static var upsellPlansListOptionAmountPerMonth: String { return Localizable.tr("Localizable", "upsell_plans_list_option_amountPerMonth", fallback: " /month") }
   /// Header of paid plans list where there are more than 1 plan option to pick from.

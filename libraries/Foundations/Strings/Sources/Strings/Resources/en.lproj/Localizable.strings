@@ -2371,6 +2371,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Improve your upload and download speeds while hiding your IP address.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Improve P2P speed";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Protect 10 devices at once";
 

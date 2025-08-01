@@ -140,6 +140,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as NetShieldUpsellAlert:
             show(alert: alert, modalType: .netShield)
 
+        case let alert as PortForwardingUpsellAlert:
+            show(alert: alert, modalType: .portForwarding)
+
         case let alert as ProfilesUpsellAlert:
             show(alert: alert, modalType: .profiles)
 
