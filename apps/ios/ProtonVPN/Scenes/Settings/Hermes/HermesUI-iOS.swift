@@ -51,56 +51,58 @@ struct HermesSettingsView: View {
     }
 
     var body: some View {
-        ZStack {
-            Color(.background, .strong)
-                .ignoresSafeArea()
-
-            contentView
-                .animation(.bouncy, value: viewModel.isEnabled)
-        }
-        .onAppear {
-            viewModel.onAppear()
-        }
-        .safeAreaInset(edge: .bottom) {
+        WithPerceptionTracking {
             ZStack {
-                if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
-                    Button(Localizable.hermesEntitiesFormAddButtonFull) {
-                        if !viewModel.isEnabled {
-                            isEnabledBinding.wrappedValue = true
+                Color(.background, .strong)
+                    .ignoresSafeArea()
+
+                contentView
+                    .animation(.bouncy, value: viewModel.isEnabled)
+            }
+            .onAppear {
+                viewModel.onAppear()
+            }
+            .safeAreaInset(edge: .bottom) {
+                ZStack {
+                    if resolversCount == 0 || (viewModel.isEnabled && resolversCount > 0) {
+                        Button(Localizable.hermesEntitiesFormAddButtonFull) {
+                            if !viewModel.isEnabled {
+                                isEnabledBinding.wrappedValue = true
+                            }
+                            if viewModel.isEnabled {
+                                sheet = .insertion
+                            }
                         }
-                        if viewModel.isEnabled {
-                            sheet = .insertion
-                        }
+                        .padding([.leading, .trailing, .bottom])
+                        .buttonStyle(.hermesAddResolver(fillHorizontalSpace: true))
+                        .transition(.opacity)
                     }
-                    .padding([.leading, .trailing, .bottom])
-                    .buttonStyle(.hermesAddResolver(fillHorizontalSpace: true))
-                    .transition(.opacity)
                 }
+                .background(Color(.background, .strong))
+                .animation(.bouncy, value: viewModel.isEnabled)
             }
-            .background(Color(.background, .strong))
-            .animation(.bouncy, value: viewModel.isEnabled)
-        }
-        .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
-        .alert(item: $viewModel.alert) { alert in
-            Text(alert.title)
-        } actions: { alert in
-            if case .hermesOnConflict = alert {
-                Button(Localizable.learnMore) {
-                    viewModel.openLearnMore()
+            .navigationTitle(canScroll ? Localizable.hermesFeatureTitle : "")
+            .alert(item: $viewModel.alert) { alert in
+                Text(alert.title)
+            } actions: { alert in
+                if case .hermesOnConflict = alert {
+                    Button(Localizable.learnMore) {
+                        viewModel.openLearnMore()
+                    }
+                    Button(Localizable.enable) {
+                        viewModel.userEnablingHermesConfirmation()
+                        sheet = .insertion
+                    }
+                    Button(Localizable.cancel, role: .cancel) {}
+                } else {
+                    Button(Localizable.ok) {}
                 }
-                Button(Localizable.enable) {
-                    viewModel.userEnablingHermesConfirmation()
-                    sheet = .insertion
-                }
-                Button(Localizable.cancel, role: .cancel) {}
-            } else {
-                Button(Localizable.ok) {}
+            } message: { alert in
+                Text(alert.message)
             }
-        } message: { alert in
-            Text(alert.message)
-        }
-        .sheet(item: $sheet, id: \.self) { _ in
-            HermesSettingsInputView(viewModel: viewModel)
+            .sheet(item: $sheet, id: \.self) { _ in
+                HermesSettingsInputView(viewModel: viewModel)
+            }
         }
     }
 }
