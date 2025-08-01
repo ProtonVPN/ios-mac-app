@@ -245,15 +245,28 @@ final class SettingsViewModel {
 
                 // Check if we are connected. Changing the user's session means we will need to reconnect them.
                 // Let the user know they will be disconnected if they proceed
-                @Shared(.connectionState) var state
-                if state.is(\.disconnected) {
+                let isConnectionFeatureEnabled = FeatureFlagsRepository.isConnectionFeatureEnabled
+
+                let isDisconnected: Bool
+                if isConnectionFeatureEnabled {
+                    @Shared(.connectionState) var connectionState
+                    isDisconnected = connectionState.is(\.disconnected)
+                } else {
+                    isDisconnected = self?.appStateManager.state.isSafeToEnd ?? true
+                }
+
+                if isDisconnected {
                     presentScreen(action)
                 } else {
                     let reconnectionAlert = DisconnectToSignInAlert(
                         continueHandler: {
                             Task { @MainActor in
-                                @Dependency(\.disconnectVPN) var disconnectVPN
-                                try await disconnectVPN(.signout)
+                                if isConnectionFeatureEnabled {
+                                    @Dependency(\.disconnectVPN) var disconnectVPN
+                                    try await disconnectVPN(.signout)
+                                } else {
+                                    self?.appStateManager.disconnect {}
+                                }
                                 presentScreen(action)
                             }
                         },
