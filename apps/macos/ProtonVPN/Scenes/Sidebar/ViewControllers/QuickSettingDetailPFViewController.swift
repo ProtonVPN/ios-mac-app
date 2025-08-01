@@ -30,17 +30,23 @@ final class QuickSettingDetailPFViewController: QuickSettingDetailViewController
         super.viewDidLoad()
 
         // Port forwarding view to the stack
-        buttonsAndNoteView.insertArrangedSubview(portView, at: 1) // TODO: add check to show/hide
+        buttonsAndNoteView.insertArrangedSubview(portView, at: 1)
         portView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor).isActive = true
 
-        setupPortViewContainer()
+        setupPFContainer()
     }
 
-    private func setupPortViewContainer() {
-        guard let pfPresenter = presenter as? PortForwardingDropdownPresenter /* ,
-         pfPresenter.isPFEnabled */ else {
-//            portView.removeFromSuperview()
+    override func updatePortForwardingContainer() {
+        setupPFContainer()
+    }
+
+    // MARK: - Private
+
+    private func setupPFContainer() {
+        guard let pfPresenter = presenter as? PortForwardingDropdownPresenter else {
+            portView.isHidden = true
             return
         }
+        portView.isHidden = !pfPresenter.portForwardingViewVisible
     }
 }

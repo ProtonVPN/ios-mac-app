@@ -48,10 +48,12 @@ extension ConnectionFeatureProvider: @retroactive DependencyKey {
             var netShieldPropertyProvider: any NetShieldPropertyProvider = NetShieldPropertyProviderImplementation()
             var natTypePropertyProvider: any NATTypePropertyProvider = NATTypePropertyProviderImplementation()
             var safeModePropertyProvider: any SafeModePropertyProvider = SafeModePropertyProviderImplementation()
+            var portForwardingPropertyProvider: any PortForwardingPropertyProvider = PortForwardingPropertyProviderImplementation()
 
             netShieldPropertyProvider.netShieldType = newFeatures.netshield
             natTypePropertyProvider.natType = newFeatures.natType
             safeModePropertyProvider.safeMode = newFeatures.safeMode
+            portForwardingPropertyProvider.portForwarding = newFeatures.portForwarding
         },
         tunnelFeatures: {
             @Dependency(\.propertiesManager) var propertiesManager

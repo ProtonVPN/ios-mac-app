@@ -36,6 +36,7 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
 
     func reloadOptions()
     func updateNetshieldStats()
+    func updatePortForwardingContainer()
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
@@ -295,6 +296,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     // MARK: - Utils
 
     func updateNetshieldStats() {}
+
+    func updatePortForwardingContainer() {}
 
     func reloadOptions() {
         var needsUpgrade = false

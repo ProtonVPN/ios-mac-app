@@ -26,11 +26,12 @@ import Theme
 import VPNAppCore
 
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString
@@ -43,6 +44,12 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     override var alert: UpsellAlert {
         PortForwardingUpsellAlert()
     }
+
+    var portForwardingViewVisible: Bool {
+        portForwardingPropertyProvider.portForwarding == true
+    }
+
+    // MARK: - Init
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -73,21 +80,23 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private var portForwardingOff: QuickSettingGenericOption {
-        let active = propertiesManager.portForwarding
+        let active = portForwardingPropertyProvider.portForwarding ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { dismissCallback in
-            self.propertiesManager.portForwarding = false
-            if self.vpnGateway.connection == .connected {
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] _ in
+            guard let self else { return }
+            portForwardingPropertyProvider.portForwarding = false
+            viewController?.updatePortForwardingContainer()
+            if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                self.vpnGateway.retryConnection()
+                vpnGateway.retryConnection()
             }
-            dismissCallback()
+//            dismissCallback()
         })
     }
 
     private var portForwardingOn: QuickSettingGenericOption {
-        let active = propertiesManager.portForwarding
+        let active = portForwardingPropertyProvider.portForwarding ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.arrowsSwitch
         return QuickSettingGenericOption(
@@ -95,13 +104,20 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
             icon: icon,
             active: active,
             requiresUpdate: requiresUpdate(portForwarding: true),
-            selectCallback: { dismissCallback in
-                guard !self.requiresUpdate(portForwarding: true) else {
-                    self.presentUpsellAlert()
+            selectCallback: { [weak self] dismissCallback in
+                guard let self else { return }
+                guard !requiresUpdate(portForwarding: true) else {
+                    presentUpsellAlert()
                     dismissCallback()
                     return
                 }
-                self.propertiesManager.portForwarding = true
+                portForwardingPropertyProvider.portForwarding = true
+                viewController?.updatePortForwardingContainer()
+                if vpnGateway.connection == .connected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                    vpnGateway.retryConnection()
+                }
+//                dismissCallback()
             }
         )
     }

@@ -62,17 +62,6 @@ public extension SharedKey where Self == AppStorageKey<NetShieldType?>.Default {
 }
 
 public extension SharedKey where Self == AppStorageKey<Bool>.Default {
-    static var portForwarding: Self {
-        @Dependency(\.authKeychain) var authKeychain
-        // Key is defined in PortForwardingPropertyProviderImplementation in LegacyCommon.
-        // Username is normally added via an extension of UserDefaults in VPNShared
-        // Here we only want to pass the domain user defaults
-        let key = "PortForwarding_" + (authKeychain.username ?? "")
-        return Self[.appStorage(key, store: .domainUserDefaults), default: false]
-    }
-}
-
-public extension SharedKey where Self == AppStorageKey<Bool>.Default {
     static var secureCoreToggle: Self {
         @Dependency(\.authKeychain) var authKeychain
         if authKeychain.username == nil {

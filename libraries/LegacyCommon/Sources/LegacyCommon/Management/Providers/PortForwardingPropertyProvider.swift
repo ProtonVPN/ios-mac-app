@@ -32,7 +32,7 @@ public protocol PortForwardingPropertyProviderFactory {
 }
 
 public class PortForwardingPropertyProviderImplementation: PortForwardingPropertyProvider {
-    private let key = "PortForwarding"
+    private let key = "PortForwarding_"
 
     @Dependency(\.featureAuthorizerProvider) private var featureAuthorizerProvider
     private var canUse: Bool {
@@ -55,7 +55,7 @@ public class PortForwardingPropertyProviderImplementation: PortForwardingPropert
             @Dependency(\.defaultsProvider) var provider
             provider.getDefaults().setUserValue(newValue, forKey: key)
             executeOnUIThread {
-                AppEvent.safeMode.post(newValue)
+                AppEvent.portForwarding.post(newValue)
             }
         }
     }

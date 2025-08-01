@@ -157,6 +157,7 @@ class CountriesSectionViewModel {
         & CoreAlertServiceFactory
         & ModelIdCheckerFactory
         & NetShieldPropertyProviderFactory
+        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
@@ -167,6 +168,7 @@ class CountriesSectionViewModel {
     private let factory: Factory
 
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -195,7 +197,7 @@ class CountriesSectionViewModel {
             .activeServerTypeChanged,
             .netShield,
             .vpnAccelerator,
-            // .portForwarding or @Shared like killSwitch https://protonag.atlassian.net/browse/VPNAPPL-2934
+            .portForwarding,
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 
@@ -453,7 +455,7 @@ class CountriesSectionViewModel {
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,
             killSwitch: propertiesManager.killSwitch,
-            portForwarding: propertiesManager.portForwarding
+            portForwarding: portForwardingPropertyProvider.portForwarding ?? false
         )
     }
 
