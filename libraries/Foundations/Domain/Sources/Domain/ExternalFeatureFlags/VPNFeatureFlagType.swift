@@ -35,10 +35,6 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     /// will be nil, thus calls to it will do nothing.
     case sentry = "Sentry"
 
-    /// Defines if we should exclude full sentry event metadata. Should be disabled
-    /// (and can be deleted completely) only after INFSUP-682 is done.
-    case sentryExcludeMetadata = "SentryExcludeMetadata"
-
     /// If we're using a public key that was associated with a previous session UID, tell the backend that it's okay to
     /// evict the previous session UID and associate the key with the current one.
     case certificateRefreshForceRenew = "CertificateRefreshForceRenew"
@@ -70,9 +66,9 @@ public extension FeatureFlagsRepository {
     @available(macOS, unavailable)
     static var isRedesigniOSEnabled: Bool = {
         #if os(iOS)
-        if #available(iOS 17, *) {
-            return true
-        }
+            if #available(iOS 17, *) {
+                return true
+            }
         #endif
         return false
     }()

@@ -817,7 +817,7 @@ public final class VpnManager: VpnManagerProtocol {
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
-    private func prepareManagers(forSetup: Bool = false) {
+    private func prepareManagers(forSetup _: Bool = false) {
         vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
             guard let self else {
                 return

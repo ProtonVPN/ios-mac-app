@@ -101,12 +101,12 @@ final class LoginViewModel {
         do {
             try await appSessionManager.attemptSilentLogIn()
             NSApp.setActivationPolicy(.accessory)
-            self.checkForUpdatesInBackground()
+            checkForUpdatesInBackground()
             // Don't switch to smart protocol or show sysex tour if we are launching minimised
-            self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
+            checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
         } catch {
-            self.specialErrorCaseNotification(error)
-            self.navService.handleSilentLoginFailure()
+            specialErrorCaseNotification(error)
+            navService.handleSilentLoginFailure()
         }
     }
 
@@ -120,15 +120,15 @@ final class LoginViewModel {
 
         do {
             try await appSessionManager.attemptSilentLogIn()
-            self.checkForUpdatesInBackground()
+            checkForUpdatesInBackground()
             // Don't switch to smart protocol or show sysex tour if we are logging in automatically
-            self.checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
+            checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: false, shouldStartTour: false)
         } catch let error as CommonVpnError where error == .userCredentialsMissing {
-            self.specialErrorCaseNotification(error)
-            self.logInFailure?(nil, nil)
+            specialErrorCaseNotification(error)
+            logInFailure?(nil, nil)
         } catch {
-            self.specialErrorCaseNotification(error)
-            self.logInFailure?(error.localizedDescription, nil)
+            specialErrorCaseNotification(error)
+            logInFailure?(error.localizedDescription, nil)
         }
     }
 

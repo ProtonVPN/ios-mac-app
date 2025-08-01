@@ -87,15 +87,15 @@ class BaseConnectionTestCase: TestIsolatedDatabaseTestCase {
 
     override func invokeTest() {
         #if os(macOS)
-        super.invokeTest()
+            super.invokeTest()
         #else
-        let redesign = FeatureFlagsRepository.isRedesigniOSEnabled
-        let connection = FeatureFlagsRepository.isConnectionFeatureEnabled
-        FeatureFlagsRepository.isRedesigniOSEnabled = false
-        FeatureFlagsRepository.isConnectionFeatureEnabled = false
-        super.invokeTest()
-        FeatureFlagsRepository.isRedesigniOSEnabled = redesign
-        FeatureFlagsRepository.isConnectionFeatureEnabled = connection
+            let redesign = FeatureFlagsRepository.isRedesigniOSEnabled
+            let connection = FeatureFlagsRepository.isConnectionFeatureEnabled
+            FeatureFlagsRepository.isRedesigniOSEnabled = false
+            FeatureFlagsRepository.isConnectionFeatureEnabled = false
+            super.invokeTest()
+            FeatureFlagsRepository.isRedesigniOSEnabled = redesign
+            FeatureFlagsRepository.isConnectionFeatureEnabled = connection
         #endif
     }
 

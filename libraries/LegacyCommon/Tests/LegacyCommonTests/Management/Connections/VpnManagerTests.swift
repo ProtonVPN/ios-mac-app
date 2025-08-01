@@ -121,7 +121,7 @@ class VpnManagerTests: BaseConnectionTestCase {
             expectations.wireguardTunnelStarted.fulfill()
         }
 
-        self.container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: wgConfig) {
+        container.vpnManager.disconnectAnyExistingConnectionAndPrepareToConnect(with: wgConfig) {
             expectations.vpnManagerWireguardConnect.fulfill()
         }
 

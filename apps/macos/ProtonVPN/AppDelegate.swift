@@ -196,7 +196,7 @@ extension AppDelegate: NSApplicationDelegate {
             } catch {
                 log.error("User data failed to refresh after url activation", category: .app, metadata: ["error": "\(error)"])
             }
-            
+
             AppEvent.urlActivationRefresh.post()
         }
     }

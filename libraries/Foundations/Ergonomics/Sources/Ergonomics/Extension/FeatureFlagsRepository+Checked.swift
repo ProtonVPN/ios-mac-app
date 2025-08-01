@@ -17,8 +17,8 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import ProtonCoreServices
 import ProtonCoreFeatureFlags
+import ProtonCoreServices
 
 /// A wrapper around FeatureFlagsRepository that tracks whether fetchFlags() has been called
 /// and asserts if isEnabled() is used before initialization.
@@ -40,7 +40,7 @@ public class CheckedFeatureFlagsRepository {
     }
 
     private var hasFetchedFlags: Bool {
-        return OSAtomicCompareAndSwap32(1, 1, &_hasFetchedFlags)
+        OSAtomicCompareAndSwap32(1, 1, &_hasFetchedFlags)
     }
 
     /// Safe wrapper around FeatureFlagsRepository.shared.isEnabled() that asserts if called before fetchFlags()
@@ -50,8 +50,8 @@ public class CheckedFeatureFlagsRepository {
     }
 }
 
-extension FeatureFlagTypeProtocol {
-    public var enabled: Bool {
+public extension FeatureFlagTypeProtocol {
+    var enabled: Bool {
         CheckedFeatureFlagsRepository.shared.isEnabled(self)
     }
 }

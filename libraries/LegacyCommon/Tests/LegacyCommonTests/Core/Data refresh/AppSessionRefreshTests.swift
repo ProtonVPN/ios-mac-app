@@ -21,15 +21,15 @@ import XCTest
 
 import Dependencies
 
-import ProtonCoreNetworking
 import ProtonCoreFeatureFlags
+import ProtonCoreNetworking
 import ProtonCoreTestingToolkitUnitTestsCore
 
 import CommonNetworkingTestSupport
 import Domain
+import Ergonomics
 @testable import LegacyCommon
 import Localization
-import Ergonomics
 import Persistence
 import PersistenceTestSupport
 import Timer

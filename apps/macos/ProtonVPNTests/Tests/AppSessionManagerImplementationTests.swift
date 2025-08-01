@@ -161,7 +161,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
         authKeychain.credentials = testAuthCredentials
 
         try await manager.attemptSilentLogIn()
-        XCTAssertTrue(self.manager.loggedIn)
+        XCTAssertTrue(manager.loggedIn)
     }
 
     func testSilentLoginWithMissingCredentialsFails() async throws {
@@ -177,7 +177,7 @@ final class AppSessionManagerImplementationTests: XCTestCase {
                 XCTFail("Expected missing credentials error but got \(error)")
                 return
             }
-            XCTAssertFalse(self.manager.loggedIn)
+            XCTAssertFalse(manager.loggedIn)
         }
     }
 
