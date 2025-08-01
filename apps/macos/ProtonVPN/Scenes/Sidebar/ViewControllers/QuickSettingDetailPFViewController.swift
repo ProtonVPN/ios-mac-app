@@ -23,13 +23,15 @@ import SwiftUI
 final class QuickSettingDetailPFViewController: QuickSettingDetailViewController {
     var portView = NSHostingView(rootView: NATPMPPortView()).with {
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isHidden = true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Port forwarding view to the stack
-        buttonsAndNoteView.insertArrangedSubview(portView, at: 1) // TODO: add check
+        buttonsAndNoteView.insertArrangedSubview(portView, at: 1) // TODO: add check to show/hide
+        portView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor).isActive = true
 
         setupPortViewContainer()
     }

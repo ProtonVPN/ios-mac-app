@@ -40,7 +40,7 @@ public struct NATPMPPortView: View {
         switch store.state {
         case .loading:
             LoadingPortView()
-                .task {
+                .onAppear {
                     store.send(.startPortMapping)
                 }
         case let .loaded(externalPortNumber, updateDate):
@@ -128,19 +128,22 @@ struct ActivePortView: View {
 
 struct LoadingPortView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing8) {
-            Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text, .weak))
-                .themeFont(.callout(emphasised: true))
+        HStack {
+            VStack(alignment: .leading, spacing: .themeSpacing8) {
+                Text(Localizable.pfActivePortNumber)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.callout(emphasised: true))
 
-            HStack(spacing: .themeSpacing8) {
-                ProgressView()
-                    .scaleEffect(0.8)
+                HStack(spacing: .themeSpacing8) {
+                    ProgressView()
+                        .scaleEffect(0.8)
 
-                Text(Localizable.pfLoading)
-                    .foregroundColor(Color(.text))
-                    .font(.title2(emphasised: false))
+                    Text(Localizable.pfLoading)
+                        .foregroundColor(Color(.text))
+                        .font(.title2(emphasised: false))
+                }
             }
+            Spacer()
         }
         .padding(.themeSpacing16)
         .background(Color(.background, .weak))

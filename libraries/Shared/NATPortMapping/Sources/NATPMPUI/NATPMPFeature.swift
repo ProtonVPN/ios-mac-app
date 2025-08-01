@@ -52,7 +52,7 @@ public struct NATPMPFeature: Sendable {
                     }
                 } catch: { _, send in
                     await send(.portMappingFailed)
-                }.cancellable(id: CancelID.portMappingStream)
+                }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
             case let .portMapped(externalPortNumber):
                 if state.externalPortNumber != externalPortNumber {
