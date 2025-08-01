@@ -83,7 +83,7 @@ private struct HeaderView: View {
         HStack(alignment: .center) {
             if widgetFamily == .systemSmall {
                 // We show server flag if available
-                if let location = entry.connectionSpec?.location {
+                if let location = entry.currentLocation {
                     FlagView(location: location, flagSize: .defaultSize)
                     Spacer()
                 }
@@ -132,17 +132,16 @@ private struct ServerInfoView: View {
 
     var body: some View {
         Group {
-            if let location = entry.connectionSpec?.location {
+            if let location = entry.currentLocation {
                 HStack(alignment: .top, spacing: .themeSpacing12) {
                     if widgetFamily != .systemSmall {
                         FlagView(location: location, flagSize: .defaultSize)
                     }
                     VStack(alignment: .leading, spacing: .zero) {
-                        if let headerText = location.headerText(locale: .current) {
-                            Text(headerText)
-                                .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
-                                .foregroundStyle(Color(.text, .normal))
-                        }
+                        Text(location.text(locale: .current))
+                            .themeFont(widgetFamily == .systemLarge ? .body1(.semibold) : .body2(emphasised: true))
+                            .foregroundStyle(Color(.text, .normal))
+
                         if let subtext = location.subtext(locale: .current) {
                             Text(subtext)
                                 .themeFont(widgetFamily == .systemLarge ? .body2(emphasised: false) : .caption(emphasised: false))
@@ -193,11 +192,10 @@ private struct RecentsView: View {
                     FlagView(location: location, flagSize: .widgetRecentsSize)
                 }
                 VStack(spacing: .themeSpacing2) {
-                    if let headerText = location.headerText(locale: .current) {
-                        Text(headerText)
-                            .themeFont(.caption(emphasised: true))
-                            .foregroundStyle(Color(.text, .normal))
-                    }
+                    Text(location.text(locale: .current))
+                        .themeFont(.caption(emphasised: true))
+                        .foregroundStyle(Color(.text, .normal))
+
                     if let subtext = location.subtext(locale: .current) {
                         Text(subtext)
                             .themeFont(.overline(emphasised: false))

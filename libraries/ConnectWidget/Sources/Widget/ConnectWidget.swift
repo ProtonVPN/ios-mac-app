@@ -39,5 +39,11 @@ public struct ConnectWidget: Widget {
 #Preview(as: .systemSmall) {
     ConnectWidget()
 } timeline: {
-    ConnectWidgetEntry(date: .now, connectionSpec: .defaultFastest, protectionState: .protected, recentServers: [])
+    ConnectWidgetEntry(
+        date: .now,
+        connectionSpec: .defaultFastest,
+        currentServer: nil,
+        protectionState: .protected,
+        recentServers: []
+    )
 }

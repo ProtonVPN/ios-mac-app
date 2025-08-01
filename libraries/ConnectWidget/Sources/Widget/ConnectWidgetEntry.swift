@@ -24,6 +24,7 @@ import WidgetKit
 public struct ConnectWidgetEntry: TimelineEntry {
     public let date: Date
     public let connectionSpec: ConnectionSpec?
+    public let currentServer: Server?
     public let protectionState: ProtectionState
     public let recentServers: [RecentConnection]
 
@@ -32,5 +33,26 @@ public struct ConnectWidgetEntry: TimelineEntry {
         case protected
         case unprotected
         case protecting
+    }
+}
+
+extension ConnectWidgetEntry {
+    var currentLocation: ConnectionSpec.Location? {
+        switch protectionState {
+        case .protected, .protecting:
+            // For `random` connections, when connecting/connected, we show the resolved server.
+            if connectionSpec?.location == .random, let currentServer {
+                return ConnectionSpec.Location.exact(
+                    currentServer.logical.tier.isPaidTier ? .paid : .free,
+                    logicalID: currentServer.logical.id,
+                    number: currentServer.logical.serverNameComponents.sequence,
+                    subregion: currentServer.logical.city,
+                    regionCode: currentServer.logical.exitCountryCode
+                )
+            }
+        case .signedOut, .unprotected:
+            break
+        }
+        return connectionSpec?.location
     }
 }

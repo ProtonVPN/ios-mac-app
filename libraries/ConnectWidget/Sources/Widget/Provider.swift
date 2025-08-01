@@ -47,6 +47,7 @@ struct Provider: TimelineProvider {
         .init(
             date: .now,
             connectionSpec: .defaultFastest,
+            currentServer: nil,
             protectionState: .protected,
             recentServers: []
         )
@@ -80,6 +81,7 @@ struct Provider: TimelineProvider {
             return ConnectWidgetEntry(
                 date: .now,
                 connectionSpec: nil,
+                currentServer: nil,
                 protectionState: .signedOut,
                 recentServers: []
             )
@@ -90,6 +92,7 @@ struct Provider: TimelineProvider {
         return ConnectWidgetEntry(
             date: .now,
             connectionSpec: vpnConnectionStatus.connectionSpec ?? connectionSpec(),
+            currentServer: vpnConnectionStatus.server,
             protectionState: vpnConnectionStatus.protectionState,
             recentServers: recents
         )
