@@ -408,6 +408,42 @@ public final class LocationNotAvailableAlert: SystemAlert {
     }
 }
 
+public final class IKEPlutoniumConflictAlert: SystemAlert {
+    public var title: String? {
+        get {
+            if let name = profileName {
+                Localizable.splitTunnelingConnectToProfileNameAlertTitle(name)
+            } else {
+                Localizable.splitTunnelingConnectToProfileAlertTitle
+            }
+        }
+        set {}
+    }
+
+    var profileName: String?
+    public var message: String? = Localizable.splitTunnelingConnectToProfileAlertDescription
+    public var actions: [AlertAction] = []
+    public var isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public let disablePlutoniumHandler: () -> Void
+
+    public init(profileName: String?, disablePlutoniumHandler: @escaping (() -> Void)) {
+        self.profileName = profileName
+        self.disablePlutoniumHandler = disablePlutoniumHandler
+        actions.append(AlertAction(
+            title: Localizable.connect,
+            style: .confirmative,
+            handler: disablePlutoniumHandler
+        ))
+        actions.append(AlertAction(
+            title: Localizable.cancel,
+            style: .cancel,
+            handler: {}
+        ))
+    }
+}
+
 public final class ProtocolDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.alertProtocolDeprecatedTitle
     public let linkText: String = Localizable.alertProtocolDeprecatedLinkText

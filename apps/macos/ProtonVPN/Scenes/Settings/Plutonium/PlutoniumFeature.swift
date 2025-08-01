@@ -23,6 +23,7 @@ import ComposableArchitecture
 
 import Domain
 import Ergonomics
+import LegacyCommon
 import Strings
 import VPNAppCore
 
@@ -102,8 +103,14 @@ public struct PlutoniumFeature {
 
     @Shared(.killSwitch) var killSwitch: Bool
 
-    public init() {
-        // It doesn't make sense to start the scanner before the user starts making changes to the plutonium app lists
+    private var appStateManager: AppStateManager
+    private var vpnGateway: VpnGatewayProtocol
+
+    public init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+        self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
+
+        // Start the scanner when user first enters plutonium settings.
         _ = PlutoniumScanner.shared
     }
 
@@ -111,29 +118,63 @@ public struct PlutoniumFeature {
         TextState(Localizable.turnSplitTunnelingOnTitle)
     } actions: {
         SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
-            TextState(Localizable.continue)
+            TextState(Localizable.enable)
         }
         SwiftNavigation.ButtonState(role: .cancel) {
-            TextState(Localizable.notNow)
+            TextState(Localizable.cancel)
         }
     } message: {
         TextState(Localizable.turnSplitTunnelingOnDescription)
+    }
+
+    private static let errorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingAlertDescription)
+    }
+
+    private static let profileErrorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingProfileAlertDescription)
     }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:
-                // disabling plutonium, all ok
+                // Is plutonium currently enabled? Ok, disable
                 if case .enabled = state.feature {
                     return .send(.toggleModeConfirmed)
                 }
-                // kill switch is on, ask to switch it off
+
+                // is IKEv2 selected in general settings? We need to disable it
+                @Dependency(\.propertiesManager) var propertiesManager
+                if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
+                    state.alert = Self.errorAlert
+                    return .none
+                }
+                // Are we connected to vpn with an IKE profile? Can't enable Plutonium
+                if [.connecting, .connected].contains(vpnGateway.connection),
+                   let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol,
+                   vpnProtocol == .ike {
+                    state.alert = Self.profileErrorAlert
+                    return .none
+                }
+                // Is kill switch is on? Ask to switch it off
                 if killSwitch {
                     state.alert = Self.confirmAlert
                     return .none
                 }
-                // All ok, kill switch is off
+
                 return .send(.toggleModeConfirmed, animation: .default)
             case .toggleModeConfirmed:
                 switch state.feature {
@@ -144,9 +185,9 @@ public struct PlutoniumFeature {
                     state.$feature.withLock {
                         $0 = .enabled(mode)
                     }
-                case let .enabled(mode):
+                case .enabled:
                     state.$feature.withLock {
-                        $0 = .disabled(mode)
+                        $0.disable()
                     }
                 }
                 return .none

@@ -280,6 +280,9 @@ extension MacAlertService: CoreAlertService {
         case let alert as ProtocolDeprecatedAlert:
             show(alert)
 
+        case let alert as IKEPlutoniumConflictAlert:
+            showDefaultSystemAlert(alert)
+
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
 

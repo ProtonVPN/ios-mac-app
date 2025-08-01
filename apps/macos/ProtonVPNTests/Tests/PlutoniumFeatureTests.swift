@@ -20,6 +20,8 @@ import Testing
 
 import ComposableArchitecture
 
+import LegacyCommon
+
 @testable import ProtonVPN
 @testable import VPNAppCore
 
@@ -34,7 +36,7 @@ struct PlutoniumFeatureTests {
     @Test
     func onAppear() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -56,7 +58,7 @@ struct PlutoniumFeatureTests {
             $0 = true
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
 
         await store.send(.toggleModeClicked) {
@@ -74,7 +76,7 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleMode() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -115,7 +117,7 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         $feature.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         await store.send(.toggleModeClicked) {
@@ -133,7 +135,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.exclusion) }
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -155,7 +157,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.inclusion) }
         $featureApplied.withLock { $0 = .enabled(.inclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -173,7 +175,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyIPsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         await store.send(.entryClicked(.ip("1.1.1.1"), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.ips = ["1.1.1.1"] }
@@ -197,7 +199,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyAppsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         await store.send(.entryClicked(.app(.huzza), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [.huzza] }

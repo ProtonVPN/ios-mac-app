@@ -26,7 +26,7 @@ import Strings
 import VPNAppCore
 
 class PlutoniumWindowController: WindowController {
-    typealias Factory = CoreAlertServiceFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & VpnGatewayFactory
 
     let store: StoreOf<PlutoniumFeature>
 
@@ -40,11 +40,11 @@ class PlutoniumWindowController: WindowController {
 
     required init(factory: Factory) {
         self.alertService = factory.makeCoreAlertService()
-        self.vpnGateway = factory.makeVpnGateway()
-
+        let vpnGateway = factory.makeVpnGateway()
+        self.vpnGateway = vpnGateway
         let state = PlutoniumFeature.State()
         self.store = StoreOf<PlutoniumFeature>(initialState: state) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: factory.makeAppStateManager(), vpnGateway: vpnGateway)
         }
         let viewController: NSViewController = .plutonium(store: store)
         let window = NSWindow(contentViewController: viewController)
