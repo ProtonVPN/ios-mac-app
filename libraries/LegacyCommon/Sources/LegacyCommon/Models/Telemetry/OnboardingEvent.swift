@@ -35,10 +35,14 @@ public struct OnboardingEvent: TelemetryEvent, Encodable {
         public enum CodingKeys: String, CodingKey {
             case userCountry = "user_country"
             case userPlan = "user_plan"
+            case userTier = "user_tier"
+            case isCredentiallessEnabled = "is_credential_less_enabled"
         }
 
         public let userCountry: String
         public let userPlan: String
+        public let userTier: CommonTelemetryDimensions.UserTier
+        public let isCredentiallessEnabled: String
     }
 
     public var values: Values { Values() }

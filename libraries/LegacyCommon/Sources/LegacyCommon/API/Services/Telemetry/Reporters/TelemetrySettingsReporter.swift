@@ -104,7 +104,7 @@ final class TelemetrySettingsReporter {
         let dimensions = await SettingsDimensions(
             defaultConnectionType: defaultConnectionType(),
             appIcon: .default,
-            userTier: userTier(),
+            userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
             widgetCount: widgetCount(),
             firstWidgetSize: firstWidgetSize(),
             isIPv6Enabled: .false,
@@ -118,15 +118,6 @@ final class TelemetrySettingsReporter {
     }
 
     // Dimensions helpers
-
-    private func userTier() -> SettingsDimensions.UserTier {
-        let cached: CachedVpnCredentials? = vpnKeychain.fetchCached()
-        let tier = cached?.maxTier ?? .freeTier
-        if tier == .internalTier {
-            return .internalTier
-        }
-        return tier.isFreeTier ? .free : .paid
-    }
 
     private func defaultConnectionType() -> SettingsDimensions.DefaultConnectionType {
         @Dependency(\.defaultConnectionStorage) var defaultConnectionStorage

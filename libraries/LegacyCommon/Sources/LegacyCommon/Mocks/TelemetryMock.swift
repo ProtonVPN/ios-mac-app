@@ -79,23 +79,27 @@
         static let upsellEventDimensionsMock1: Self = .init(
             modalSource: .changeServer,
             userPlan: "free",
+            userTier: .free,
             vpnStatus: .off,
             userCountry: "ZZ",
             daysSinceAccountCreation: 12,
             upgradedUserPlan: nil,
             reference: nil,
-            flowType: nil
+            flowType: nil,
+            isCredentiallessEnabled: "no"
         )
 
         static let upsellEventDimensionsMock2: Self = .init(
             modalSource: .changeServer,
             userPlan: "free",
+            userTier: .paid,
             vpnStatus: .off,
             userCountry: "ZZ",
             daysSinceAccountCreation: 12,
             upgradedUserPlan: "plus",
             reference: nil,
-            flowType: nil
+            flowType: nil,
+            isCredentiallessEnabled: "no"
         )
     }
 #endif
