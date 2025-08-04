@@ -122,6 +122,7 @@ public extension ServerRepository {
                     }, by: \.kind)
                         .compactMap { key, values in
                             guard let first = values.first else { return nil }
+                            let isUnderMaintenance: Bool = values.allSatisfy(\.isUnderMaintenance)
                             return .init(
                                 kind: key,
                                 featureIntersection: first.featureIntersection,
@@ -133,7 +134,7 @@ public extension ServerRepository {
                                 latitude: first.latitude,
                                 longitude: first.longitude,
                                 supportsSmartRouting: first.supportsSmartRouting,
-                                isUnderMaintenance: first.isUnderMaintenance,
+                                isUnderMaintenance: isUnderMaintenance,
                                 protocolSupport: first.protocolSupport
                             )
                         } // We group gateways by gateway name.
