@@ -24,7 +24,7 @@ import Ergonomics
 public struct SettingsDimensions: Encodable {
     let defaultConnectionType: DefaultConnectionType
     let appIcon: AppIcon
-    let userTier: UserTier
+    let userTier: CommonTelemetryDimensions.UserTier
     @NAEncodable var widgetCount: WidgetCount?
     @NAEncodable var firstWidgetSize: WidgetSize?
     let isIPv6Enabled: IsIPv6Enabled
@@ -59,14 +59,6 @@ public struct SettingsDimensions: Encodable {
         case weather
         case notes
         case calculator
-    }
-
-    public enum UserTier: String, Encodable {
-        case nonUser = "non-user"
-        case free
-        case paid
-        case internalTier = "internal"
-        case credentialLess = "credential-less"
     }
 
     public enum WidgetCount: String, Encodable {

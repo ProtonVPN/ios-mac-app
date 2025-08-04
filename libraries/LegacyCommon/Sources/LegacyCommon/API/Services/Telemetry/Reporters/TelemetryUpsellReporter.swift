@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import Dependencies
 import Ergonomics
 import Foundation
 import VPNAppCore
@@ -81,17 +82,22 @@ class TelemetryUpsellReporter {
 
         let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
 
+        @Dependency(\.authKeychain) var authKeychain
+        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+
         let event = UpsellEvent(
             event: event,
             dimensions: .init(
                 modalSource: modalSource,
                 userPlan: planName,
+                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
                 vpnStatus: vpnStatus,
                 userCountry: propertiesManager.userLocation?.country ?? "",
                 daysSinceAccountCreation: Int(daysSinceAccountCreation),
                 upgradedUserPlan: newPlanName,
                 reference: offerReference,
-                flowType: flowType
+                flowType: flowType,
+                isCredentiallessEnabled: userIsCredentialLess ? "yes" : "no"
             )
         )
         try await telemetryEventScheduler.report(event: event)

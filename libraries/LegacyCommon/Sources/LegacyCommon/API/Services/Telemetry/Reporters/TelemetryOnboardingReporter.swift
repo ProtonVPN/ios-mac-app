@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import CommonNetworking
+import Dependencies
 import Ergonomics
 import Foundation
 
@@ -42,11 +43,16 @@ class TelemetryOnboardingReporter {
         }
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
+        @Dependency(\.authKeychain) var authKeychain
+        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+
         let event = OnboardingEvent(
             event: event,
             dimensions: .init(
                 userCountry: propertiesManager.userLocation?.country ?? "",
-                userPlan: planName
+                userPlan: planName,
+                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                isCredentiallessEnabled: userIsCredentialLess ? "yes" : "no"
             )
         )
         try await telemetryEventScheduler.report(event: event)

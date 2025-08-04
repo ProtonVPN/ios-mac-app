@@ -54,22 +54,26 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
         public enum CodingKeys: String, CodingKey {
             case modalSource = "modal_source"
             case userPlan = "user_plan"
+            case userTier = "user_tier"
             case vpnStatus = "vpn_status"
             case userCountry = "user_country"
             case daysSinceAccountCreation = "days_since_account_creation"
             case upgradedUserPlan = "upgraded_user_plan"
             case reference
             case flowType = "flow_type"
+            case isCredentiallessEnabled = "is_credential_less_enabled"
         }
 
         public let modalSource: UpsellModalSource
         public let userPlan: String
+        public let userTier: CommonTelemetryDimensions.UserTier
         public let vpnStatus: VPNStatus
         public let userCountry: String
         public let daysSinceAccountCreation: Int
         public let upgradedUserPlan: String?
         public let reference: String?
         public let flowType: FlowType?
+        public let isCredentiallessEnabled: String
 
         var daysSinceAccountCreationEncodedValue: String {
             AccountCreationRangeBucket(intValue: daysSinceAccountCreation)?.rawValue ?? "n/a"
@@ -79,11 +83,13 @@ public struct UpsellEvent: TelemetryEvent, Encodable {
             var container: KeyedEncodingContainer<UpsellEvent.Dimensions.CodingKeys> = encoder.container(keyedBy: UpsellEvent.Dimensions.CodingKeys.self)
             try container.encode(modalSource, forKey: .modalSource)
             try container.encode(userPlan, forKey: .userPlan)
+            try container.encode(userTier, forKey: .userTier)
             try container.encode(vpnStatus, forKey: .vpnStatus)
             try container.encode(userCountry, forKey: .userCountry)
             try container.encodeIfPresent(upgradedUserPlan, forKey: .upgradedUserPlan)
             try container.encodeIfPresent(reference, forKey: .reference)
             try container.encodeIfPresent(flowType, forKey: .flowType)
+            try container.encode(isCredentiallessEnabled, forKey: .isCredentiallessEnabled)
 
             // Custom encoded values:
             try container.encode(daysSinceAccountCreationEncodedValue, forKey: .daysSinceAccountCreation)
