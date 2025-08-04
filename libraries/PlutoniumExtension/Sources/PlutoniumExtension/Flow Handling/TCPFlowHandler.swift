@@ -121,7 +121,7 @@ final actor TCPFlowHandler: FlowHandler {
     // MARK: ‑ Data forwarding
 
     private func startDataForwarding() async {
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+        await withCheckedContinuation { continuation in
             tcpFlow.open(withLocalEndpoint: nil) { [weak self] error in
                 continuation.resume()
                 guard let self else { return }
@@ -138,71 +138,87 @@ final actor TCPFlowHandler: FlowHandler {
         }
 
         log.debug("TCP flow opened successfully, starting bidirectional forwarding")
-        Task {
-            await forwardFromFlowToConnection()
-        }
-        Task {
-            await forwardFromConnectionToFlow()
-        }
+
+        async let flowToConnection: Void = forwardFromFlowToConnection()
+        async let connectionToFlow: Void = forwardFromConnectionToFlow()
+
+        _ = await (flowToConnection, connectionToFlow)
     }
 
     // MARK: Forward app flow → target network
 
     private func forwardFromFlowToConnection() async {
-        guard !isCancelled else { return }
+        while !isCancelled {
+            // Read data from the flow
+            let (data, error) = await withCheckedContinuation { continuation in
+                tcpFlow.readData { data, error in
+                    continuation.resume(returning: (data, error))
+                }
+            }
 
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            tcpFlow.readData { [weak self] data, error in
-                continuation.resume()
-                guard let self else { return }
-                Task { await self.handleFlowRead(data: data, error: error) }
+            // Handle the read result
+            let shouldContinue = await handleFlowRead(data: data, error: error)
+            if !shouldContinue {
+                break
             }
         }
     }
 
-    private func handleFlowRead(data: Data?, error: Error?) async {
+    private func handleFlowRead(data: Data?, error: Error?) async -> Bool {
         if let error {
             log.error("Error reading from TCP flow: \(error.localizedDescription)")
             await stop()
-            return
+            return false
         }
 
         guard let data, !data.isEmpty else {
             log.info("TCP flow closed by client")
             await stop()
-            return
+            return false
         }
 
-        connection.send(content: data) { [weak self] (sendError: NWError?) in
-            guard let self else { return }
-            Task { await self.handleSendResult(sendError) }
+        // Send data and wait for completion
+        let sendError = await withCheckedContinuation { continuation in
+            connection.send(content: data) { sendError in
+                continuation.resume(returning: sendError)
+            }
         }
+
+        return await handleSendResult(sendError)
     }
 
-    private func handleSendResult(_ error: NWError?) async {
+    private func handleSendResult(_ error: NWError?) async -> Bool {
         if let error {
             log.error("Error sending to tunnel: \(error.localizedDescription)")
             await stop()
-        } else {
-            await forwardFromFlowToConnection()
+            return false
         }
+        return true // Continue the loop
     }
 
     // MARK: Forward network response → app
 
     private func forwardFromConnectionToFlow() async {
-        guard !isCancelled else { return }
+        while !isCancelled {
+            // Receive data from the connection
+            let (data, isDone, error) = await withCheckedContinuation { continuation in
+                connection.receive(
+                    minimumIncompleteLength: 1,
+                    maximumLength: Self.maxBufferSize
+                ) { data, _, isDone, error in
+                    continuation.resume(returning: (data, isDone, error))
+                }
+            }
 
-        connection.receive(
-            minimumIncompleteLength: 1,
-            maximumLength: Self.maxBufferSize
-        ) { [weak self] data, _, isDone, error in
-            guard let self else { return }
-            Task { await self.handleConnectionReceive(
+            // Handle the received data
+            let shouldContinue = await handleConnectionReceive(
                 data: data,
                 isDone: isDone,
                 error: error
-            ) }
+            )
+            if !shouldContinue {
+                break
+            }
         }
     }
 
@@ -210,39 +226,44 @@ final actor TCPFlowHandler: FlowHandler {
         data: Data?,
         isDone: Bool,
         error: NWError?
-    ) async {
+    ) async -> Bool {
         if let error {
             log.error("Error receiving from tunnel: \(error.localizedDescription)")
             await stop()
-            return
+            return false
         }
 
         guard let data, !data.isEmpty else {
-            if isDone { await stop() }
-            return
+            if isDone {
+                await stop()
+                return false
+            }
+            return true
         }
 
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            tcpFlow.write(data) { [weak self] writeError in
-                continuation.resume()
-                guard let self else { return }
-                Task { await self.handleFlowWriteResult(writeError, isDone: isDone) }
+        // Write data to flow and wait for completion
+        let writeError = await withCheckedContinuation { continuation in
+            tcpFlow.write(data) { writeError in
+                continuation.resume(returning: writeError)
             }
         }
+
+        return await handleFlowWriteResult(writeError, isDone: isDone)
     }
 
-    private func handleFlowWriteResult(_ error: Error?, isDone: Bool) async {
+    private func handleFlowWriteResult(_ error: Error?, isDone: Bool) async -> Bool {
         if let error {
             log.error("Error writing to TCP flow: \(error.localizedDescription)")
             await stop()
-            return
+            return false
         }
 
         if isDone {
             await stop()
-        } else {
-            await forwardFromConnectionToFlow()
+            return false
         }
+
+        return true
     }
 }
 

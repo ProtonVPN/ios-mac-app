@@ -83,7 +83,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         }
 
         #if os(macOS)
-            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.plutoniumMacOS, reloadValue: true) {
+            if VPNFeatureFlagType.plutoniumMacOS.enabled {
                 @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
 
                 // The default value of `captureTrafficAutomatically` is true. so we need to set it to false only if we needed to.

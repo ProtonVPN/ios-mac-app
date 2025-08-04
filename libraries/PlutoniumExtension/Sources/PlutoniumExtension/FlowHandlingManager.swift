@@ -27,7 +27,6 @@ actor FlowHandlingManager {
     private static let vpnUnavailableTimeout: Duration = .seconds(5)
 
     private let appIDs: Set<String>
-    private let pluginIDs: Set<String>
     private let ipSet: Set<String>
     private let vpnInterface: NWInterface
 
@@ -51,39 +50,21 @@ actor FlowHandlingManager {
 
     // MARK: Initialisation
 
-    init(vpnNetworkInterfaceName: String, onVpnUnavailable: @escaping @Sendable () -> Void) async throws {
-        self.onVpnUnavailable = onVpnUnavailable
-
-        @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-
-        guard case let .enabled(mode) = feature else {
-            log.warning("Plutonium disabled. Should not reach here.")
-            throw PlutoniumError.featureDisabled
-        }
-
+    init(vpnNetworkInterfaceName: String, plutoniumConfiguration: PlutoniumProviderConfiguration, onVpnUnavailable: @escaping @Sendable () -> Void) async throws {
         guard let vpnInterface = await NWInterface.findBy(name: vpnNetworkInterfaceName) else {
             log.error("No VPN interface found with name \(vpnNetworkInterfaceName).")
             throw PlutoniumError.vpnInterfaceNotFound
         }
+        self.onVpnUnavailable = onVpnUnavailable
 
         log.debug("VPN interface found: \(vpnInterface)")
         self.vpnInterface = vpnInterface
 
-        @SharedReader(.childBundles) var childBundles: [String: ChildBundle]
+        self.appIDs = plutoniumConfiguration.appIDs
+        self.ipSet = plutoniumConfiguration.ips
 
-        switch mode {
+        switch plutoniumConfiguration.plutoniumMode {
         case .exclusion:
-            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
-            await PlutoniumScanner.shared.waitForScanToComplete()
-
-            let appBundleIDs = exclusionActivated.apps.map(\.bundleIdentifier)
-            self.appIDs = Set(appBundleIDs)
-            let plugins = appBundleIDs.reduce(into: [String]()) { partialResult, element in
-                partialResult += childBundles[element].map((\.bundleIdentifiers)) ?? []
-            }
-            self.pluginIDs = Set(plugins)
-            self.ipSet = Set(exclusionActivated.ips)
-
             // Start monitoring internet interface updates
             let internetInterfaceStream = await NWInterface.findInternetInterface(vpnInterfaceName: vpnNetworkInterfaceName)
             self.networkInterfaceMonitorTask = Task { [weak self] in
@@ -104,17 +85,6 @@ actor FlowHandlingManager {
             }
 
         case .inclusion:
-            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
-            await PlutoniumScanner.shared.waitForScanToComplete()
-
-            let appBundleIDs = inclusionActivated.apps.map(\.bundleIdentifier)
-            self.appIDs = Set(appBundleIDs)
-            let plugins = appBundleIDs.reduce(into: [String]()) { partialResult, element in
-                partialResult += childBundles[element].map((\.bundleIdentifiers)) ?? []
-            }
-            self.pluginIDs = Set(plugins)
-            self.ipSet = Set(inclusionActivated.ips)
-
             self.networkInterface = vpnInterface
             log
                 .info(
@@ -296,7 +266,7 @@ actor FlowHandlingManager {
 
     private nonisolated func appIDExists(_ appID: String?) -> Bool {
         guard let appID else { return false }
-        return appIDs.contains(appID) || pluginIDs.contains(appID)
+        return appIDs.contains(appID)
     }
 
     private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {

@@ -23,6 +23,7 @@
 #if os(macOS)
     import Domain
     import Foundation
+    import ProtonCoreFeatureFlags
     import SystemExtensions
     import VPNAppCore
 
@@ -32,10 +33,20 @@
 
     public enum SystemExtensionType: String, CaseIterable {
         case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
+        case plutonium = "ch.protonvpn.mac.Transparent-Proxy"
 
         public var machServiceName: String {
             let teamId = Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
             return "\(teamId)group.\(rawValue)"
+        }
+
+        public var featureEnabled: Bool {
+            switch self {
+            case .wireGuard:
+                true
+            case .plutonium:
+                VPNFeatureFlagType.plutoniumMacOS.enabled
+            }
         }
     }
 
@@ -151,7 +162,7 @@
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
 
-            for type in SystemExtensionType.allCases {
+            for type in SystemExtensionType.allCases where type.featureEnabled {
                 finishedInstalling.enter()
                 installStatesKnown.enter()
 

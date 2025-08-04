@@ -20,4 +20,12 @@ import Foundation
 import Logging
 import PMLogger
 
-package let log = Logging.Logger(label: "ProtonVPN.PlutoniumExtension.logger")
+package let log: Logger = {
+    // TODO: VPNAPPL-2789: Introduce correct logging system.
+
+    let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
+    let multiplexLogHandler = MultiplexLogHandler([osLogHandler])
+    LoggingSystem.bootstrap { _ in multiplexLogHandler }
+
+    return Logger(label: "ProtonVPN.PlutoniumExtension.logger")
+}()

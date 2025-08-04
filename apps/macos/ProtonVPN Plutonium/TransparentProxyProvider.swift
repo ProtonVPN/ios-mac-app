@@ -19,10 +19,6 @@
 import NetworkExtension
 import PlutoniumExtension
 
-#if DEBUG
-    final class TransparentProxyProvider: PlutoniumTransparentProxyProvider {
-        // we define the transparent proxy here as a subclass of PlutoniumTransparentProxyProvider
-    }
-#else
-    final class TransparentProxyProvider: NETransparentProxyProvider {}
-#endif
+final class TransparentProxyProvider: PlutoniumTransparentProxyProvider {
+    // System extension implementation - inherits all functionality from PlutoniumTransparentProxyProvider
+}

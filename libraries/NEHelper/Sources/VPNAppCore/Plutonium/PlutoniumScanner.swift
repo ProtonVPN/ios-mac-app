@@ -98,6 +98,7 @@
                     }
                 }
             }
+            workGroup = nil
         }
 
         private func startScanning(_ apps: [PlutoniumApp]) {

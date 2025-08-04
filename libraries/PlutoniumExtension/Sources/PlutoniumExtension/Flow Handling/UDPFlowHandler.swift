@@ -34,6 +34,7 @@ final actor UDPFlowHandler: FlowHandler {
     private let targetInterface: NWInterface
     private let endpointForwardingMode: EndpointForwardingMode
     private var connectionLifecycleTasks: [NWEndpoint: Task<Void, Never>] = [:]
+    private var dataForwardingTasks: [NWEndpoint: (sendTask: Task<Void, Never>, receiveTask: Task<Void, Never>)] = [:]
     private var sendChannels: [NWEndpoint: AsyncStream<Data>.Continuation] = [:]
 
     private var didCleanup = false
@@ -212,15 +213,16 @@ final actor UDPFlowHandler: FlowHandler {
     // MARK: - Data forwarding management
 
     private func startDataForwarding(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) {
-        // Start sending and receiving tasks in parallel without blocking
-        Task {
+        // Start sending and receiving tasks in parallel, tracking them for proper cleanup
+        let sendTask = Task {
             await handleSending(connection: connection, endpoint: endpoint, sendStream: sendStream)
         }
 
-        Task {
+        let receiveTask = Task {
             await handleReceiving(connection: connection, endpoint: endpoint)
         }
 
+        dataForwardingTasks[endpoint] = (sendTask, receiveTask)
         log.debug("Started parallel data forwarding tasks for \(endpoint)")
     }
 
@@ -276,9 +278,17 @@ final actor UDPFlowHandler: FlowHandler {
         guard !didCleanup else { return }
         didCleanup = true
 
-        log.debug("Cleaning up \(connectionLifecycleTasks.count) connection lifecycle tasks")
+        log.debug("Cleaning up \(connectionLifecycleTasks.count) connection lifecycle tasks and \(dataForwardingTasks.count) data forwarding task pairs")
 
-        // Finish all send channels first
+        // Cancel all data forwarding tasks first
+        for (endpoint, tasks) in dataForwardingTasks {
+            tasks.sendTask.cancel()
+            tasks.receiveTask.cancel()
+            log.debug("Cancelled data forwarding tasks for endpoint \(endpoint)")
+        }
+        dataForwardingTasks.removeAll()
+
+        // Finish all send channels
         for (endpoint, sendChannel) in sendChannels {
             sendChannel.finish()
             log.debug("Finished send channel for endpoint \(endpoint)")
@@ -302,6 +312,13 @@ final actor UDPFlowHandler: FlowHandler {
     // MARK: - Helper methods
 
     private func cleanupConnection(for endpoint: NWEndpoint) async {
+        // Cancel data forwarding tasks
+        if let tasks = dataForwardingTasks.removeValue(forKey: endpoint) {
+            tasks.sendTask.cancel()
+            tasks.receiveTask.cancel()
+            log.debug("Cancelled data forwarding tasks for endpoint \(endpoint)")
+        }
+
         // Clean up send channel
         if let sendChannel = sendChannels.removeValue(forKey: endpoint) {
             sendChannel.finish()
