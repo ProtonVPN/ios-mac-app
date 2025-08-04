@@ -162,9 +162,7 @@
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
 
-            for type in SystemExtensionType.allCases {
-                guard type.featureEnabled else { continue }
-
+            for type in SystemExtensionType.allCases where type.featureEnabled {
                 finishedInstalling.enter()
                 installStatesKnown.enter()
 
