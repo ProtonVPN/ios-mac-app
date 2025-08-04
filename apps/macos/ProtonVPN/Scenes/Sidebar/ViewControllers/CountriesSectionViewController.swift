@@ -343,8 +343,7 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingAlertBage() {
-        // TODO: wire in the wiring task
-        if false {
+        if viewModel.shouldShowP2PWarning {
             portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
             portForwardingWarningImage?.isHidden = false
         } else {
@@ -427,6 +426,8 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func contentChanged(_ contentChange: ContentChange) {
+        updatePortForwardingAlertBage()
+
         if contentChange.reset {
             serverListTableView.reloadData()
             return

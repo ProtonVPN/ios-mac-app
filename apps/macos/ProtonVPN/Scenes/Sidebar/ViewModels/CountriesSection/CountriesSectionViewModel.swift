@@ -110,6 +110,10 @@ class CountriesSectionViewModel {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
+    var shouldShowP2PWarning: Bool {
+        portForwardingPropertyProvider.portForwarding == true && connectedServer?.supportsP2P == false
+    }
+
     private var freeCountries: [(String, NSImage?)] {
         serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
