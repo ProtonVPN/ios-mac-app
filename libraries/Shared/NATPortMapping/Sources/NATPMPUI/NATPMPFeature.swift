@@ -37,7 +37,7 @@ public struct NATPMPFeature: Sendable {
     }
 
     @Dependency(\.natPortMappingService) private var natPortMappingService
-    @Dependency(\.date.now) private var now
+    @Dependency(\.date) private var date
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -57,7 +57,7 @@ public struct NATPMPFeature: Sendable {
             case let .portMapped(externalPortNumber):
                 if state.externalPortNumber != externalPortNumber {
                     // the date will be updated only on port change; otherwise it will be always < 2 min
-                    state = .loaded(externalPortNumber: externalPortNumber, updateDate: now)
+                    state = .loaded(externalPortNumber: externalPortNumber, updateDate: date.now)
                 }
                 return .none
 

@@ -48,6 +48,7 @@ let package = Package(
         .package(path: "../Shared/ExtensionIPC"),
         .package(path: "../Shared/Localization"),
         .package(path: "../Shared/Persistence"),
+        .package(path: "../Shared/NATPortMapping"),
 
         .package(path: "../BugReport"),
         .package(path: "../Modals"),
@@ -91,6 +92,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNCrypto", package: "NEHelper"),
+                .product(name: "NATPMPUI", package: "NATPortMapping"),
 
                 "NetShield",
                 "Modals",
