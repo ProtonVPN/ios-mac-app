@@ -25,7 +25,7 @@ public struct NATPMPFeature: Sendable {
     @ObservableState
     public enum State: Equatable {
         case loading
-        case loaded(externalPortNumber: UInt16, updateDate: Date)
+        case loaded(externalPortNumber: UInt16, updateDate: Date, responseDate: Date)
         case error
     }
 
@@ -55,10 +55,8 @@ public struct NATPMPFeature: Sendable {
                 }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
             case let .portMapped(externalPortNumber):
-                if state.externalPortNumber != externalPortNumber {
-                    // the date will be updated only on port change; otherwise it will be always < 2 min
-                    state = .loaded(externalPortNumber: externalPortNumber, updateDate: date.now)
-                }
+                let updateDate: Date = (state.externalPortNumber != externalPortNumber ? date.now : state.updateDate) ?? date.now
+                state = .loaded(externalPortNumber: externalPortNumber, updateDate: updateDate, responseDate: date.now)
                 return .none
 
             case .portMappingFailed:
@@ -84,7 +82,7 @@ private enum CancelID {
 extension NATPMPFeature.State {
     var externalPortNumber: UInt16? {
         switch self {
-        case let .loaded(portNumber, _):
+        case let .loaded(portNumber, _, _):
             portNumber
         case .loading, .error:
             nil
@@ -93,7 +91,7 @@ extension NATPMPFeature.State {
 
     var updateDate: Date? {
         switch self {
-        case let .loaded(_, date):
+        case let .loaded(_, date, _):
             date
         case .loading, .error:
             nil

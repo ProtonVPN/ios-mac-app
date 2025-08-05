@@ -34,19 +34,18 @@ public struct NATPMPPortView: View {
 
     public init(store: StoreOf<NATPMPFeature>) {
         self.store = store
+        store.send(.startPortMapping)
     }
 
     public var body: some View {
         switch store.state {
         case .loading:
             LoadingPortView()
-                .onAppear {
-                    store.send(.startPortMapping)
-                }
-        case let .loaded(externalPortNumber, updateDate):
+        case let .loaded(externalPortNumber, updateDate, responseDate):
             ActivePortView(
                 portNumber: externalPortNumber,
-                updateDate: updateDate
+                updateDate: updateDate,
+                responseDate: responseDate
             )
         // will not be used
         case .error:
@@ -60,52 +59,61 @@ public struct NATPMPPortView: View {
 struct ActivePortView: View {
     let portNumber: UInt16
     let updateDate: Date
+    let responseDate: Date
+
+    @State private var hovered = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing12) {
-            // Header with status indicator
-            Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text, .weak))
-                .themeFont(.callout(emphasised: true))
+        Button(action: {
+            copyPortNumber(portNumber)
+        }) {
+            VStack(alignment: .leading, spacing: .themeSpacing12) {
+                // Header with status indicator
+                Text(Localizable.pfActivePortNumber)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.callout(emphasised: true))
 
-            // Port number with copy button
-            HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
-                // Green status indicator
-                Asset.pfIndicator.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
+                // Port number with copy button
+                HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
+                    // Green status indicator
+                    Asset.pfIndicator.swiftUIImage
+                        .resizable()
+                        .frame(.square(.themeSpacing16))
 
-                VStack(alignment: .leading, spacing: .themeSpacing8) {
-                    HStack(spacing: .themeSpacing4) {
-                        Text(String(portNumber))
-                            .foregroundColor(Color(.text))
-                            .font(.title2(emphasised: false))
+                    VStack(alignment: .leading, spacing: .themeSpacing8) {
+                        HStack(spacing: .themeSpacing4) {
+                            Text(String(portNumber))
+                                .foregroundColor(Color(.text))
+                                .font(.title2(emphasised: false))
 
-                        Button(action: {
-                            copyPortNumber(portNumber)
-                        }) {
                             IconProvider.squares
                                 .resizable()
                                 .frame(.square(.themeSpacing16))
-                        }
-                        .buttonStyle(.plain)
-                        .help(Localizable.pfCopyPortNumber)
 
-                        Spacer()
-                    }
-                    HStack {
-                        // Update timestamp
-                        Text(formatUpdateTime(updateDate))
-                            .foregroundColor(Color(.text, .weak))
-                            .themeFont(.callout(emphasised: false))
-                        Spacer()
+                            Spacer()
+                        }
+                        HStack {
+                            // Update timestamp
+                            Text(formatUpdateTime(updateDate))
+                                .foregroundColor(Color(.text, .weak))
+                                .themeFont(.callout(emphasised: false))
+                            Spacer()
+                        }
                     }
                 }
             }
+            .padding(.themeSpacing16)
+            .background(hovered ? Color(.background, .strong) : Color(.background, .weak))
+            .cornerRadius(.themeRadius8)
+            .overlay {
+                CursorAreaViewRepresentable()
+            }
         }
-        .padding(.themeSpacing16)
-        .background(Color(.background, .weak))
-        .cornerRadius(.themeRadius8)
+        .onHover { isHovered in
+            hovered = isHovered
+        }
+        .buttonStyle(.plain)
+        .help(Localizable.pfCopyPortNumber)
     }
 
     // MARK: - Sate
@@ -201,7 +209,8 @@ private func copyPortNumber(_ portNumber: UInt16) {
             // Active state
             ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
+                responseDate: Date()
             )
 
             // Loading state
@@ -214,3 +223,41 @@ private func copyPortNumber(_ portNumber: UInt16) {
         .background(Color(.background))
     }
 #endif
+
+private class CursorAreaView: NSView {
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+    }
+
+    override func updateTrackingAreas() {
+        addTrackingArea(NSTrackingArea(
+            rect: bounds,
+            options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
+            owner: self
+        )
+        )
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        event.window?.invalidateCursorRects(for: self)
+    }
+
+    override func resetCursorRects() {
+        discardCursorRects()
+        addCursorRect(visibleRect, cursor: NSCursor.pointingHand)
+    }
+}
+
+private struct CursorAreaViewRepresentable: NSViewRepresentable {
+    func updateNSView(_: CursorAreaView, context _: Context) {}
+
+    func makeNSView(context _: Context) -> CursorAreaView {
+        let view = CursorAreaView()
+        return view
+    }
+}

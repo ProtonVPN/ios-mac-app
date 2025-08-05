@@ -31,7 +31,9 @@ enum PortForwardingVCState {
 }
 
 final class QuickSettingDetailPFViewController: QuickSettingDetailViewController {
-    var portView = NSHostingView(rootView: NATPMPPortView()).with {
+    private var natPmpPortView = NATPMPPortView()
+
+    private lazy var portView = NSHostingView(rootView: natPmpPortView).with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isHidden = true
     }
