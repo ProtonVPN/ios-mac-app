@@ -105,6 +105,8 @@ final class CountriesSectionViewController: NSViewController {
     private var infoButtonRowSelected: Int?
     private var quickSettingDetailDisplayed = false
 
+    private var quickSettingDetailPFViewController: QuickSettingDetailPFViewController?
+
     weak var sidebarView: NSView?
 
     private var notificationTokens: [NotificationToken] = []
@@ -240,13 +242,16 @@ final class CountriesSectionViewController: NSViewController {
             (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
             (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3),
         ].forEach { presenter, container, button, index in
-            let vc: NSViewController = switch index {
+            let vc: QuickSettingDetailViewController
+            switch index {
             case 1:
-                QuickSettingDetailNetShieldViewController(presenter)
+                vc = QuickSettingDetailNetShieldViewController(presenter)
             case 3:
-                QuickSettingDetailPFViewController(presenter)
+                let pfVC = QuickSettingDetailPFViewController(presenter)
+                self.quickSettingDetailPFViewController = pfVC
+                vc = pfVC
             default:
-                QuickSettingDetailViewController(presenter)
+                vc = QuickSettingDetailViewController(presenter)
             }
             vc.viewWillAppear()
             container?.addSubview(vc.view)
@@ -343,11 +348,26 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingAlertBage() {
-        if viewModel.shouldShowP2PWarning {
+        if viewModel.isConnected, viewModel.portForwardingIsOn, !viewModel.connectedServerSupportsP2P {
             portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
             portForwardingWarningImage?.isHidden = false
         } else {
             portForwardingWarningImage?.isHidden = true
+        }
+    }
+
+    private func updatePortForwardingView() {
+        switch (viewModel.isConnected, viewModel.portForwardingIsOn, viewModel.connectedServerSupportsP2P) {
+        case (true, true, true):
+            quickSettingDetailPFViewController?.updatePortForwardingContainer(with: .connectedToP2P)
+        case (true, true, false):
+            quickSettingDetailPFViewController?.updatePortForwardingContainer(with: .connectedNotToP2P)
+        case (true, false, _):
+            quickSettingDetailPFViewController?.updatePortForwardingContainer(with: .connectedNoPf)
+        case (false, true, _):
+            quickSettingDetailPFViewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: true))
+        case (false, false, _):
+            quickSettingDetailPFViewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: false))
         }
     }
 
@@ -427,6 +447,7 @@ final class CountriesSectionViewController: NSViewController {
 
     private func contentChanged(_ contentChange: ContentChange) {
         updatePortForwardingAlertBage()
+        updatePortForwardingView()
 
         if contentChange.reset {
             serverListTableView.reloadData()

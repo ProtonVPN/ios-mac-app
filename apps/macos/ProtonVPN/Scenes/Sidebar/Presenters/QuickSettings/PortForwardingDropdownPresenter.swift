@@ -45,10 +45,6 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         PortForwardingUpsellAlert()
     }
 
-    var portForwardingViewVisible: Bool {
-        portForwardingPropertyProvider.portForwarding == true
-    }
-
     // MARK: - Init
 
     init(_ factory: Factory) {
@@ -83,15 +79,15 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         let active = portForwardingPropertyProvider.portForwarding ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] _ in
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
             portForwardingPropertyProvider.portForwarding = false
-            viewController?.updatePortForwardingContainer()
+            viewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: false))
             if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                 vpnGateway.retryConnection()
             }
-//            dismissCallback()
+            dismissCallback()
         })
     }
 
@@ -112,10 +108,12 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                     return
                 }
                 portForwardingPropertyProvider.portForwarding = true
-                viewController?.updatePortForwardingContainer()
                 if vpnGateway.connection == .connected {
+                    viewController?.updatePortForwardingContainer(with: .loading)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                     vpnGateway.retryConnection()
+                } else {
+                    viewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: true))
                 }
 //                dismissCallback()
             }

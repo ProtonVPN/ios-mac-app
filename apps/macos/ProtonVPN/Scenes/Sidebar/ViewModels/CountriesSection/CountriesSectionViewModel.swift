@@ -110,8 +110,16 @@ class CountriesSectionViewModel {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
-    var shouldShowP2PWarning: Bool {
-        portForwardingPropertyProvider.portForwarding == true && connectedServer?.supportsP2P == false
+    var isConnected: Bool {
+        vpnGateway.connection == .connected
+    }
+
+    var portForwardingIsOn: Bool {
+        portForwardingPropertyProvider.portForwarding == true
+    }
+
+    var connectedServerSupportsP2P: Bool {
+        connectedServer?.supportsP2P == true
     }
 
     private var freeCountries: [(String, NSImage?)] {
@@ -508,10 +516,6 @@ class CountriesSectionViewModel {
         if let bannerIndex = freeUserBannerIndex {
             contentChanged?(ContentChange(reload: [bannerIndex]))
         }
-    }
-
-    private var isConnected: Bool {
-        vpnGateway.connection == .connected
     }
 
     private var freeUserBannerIndex: Int? {

@@ -33,10 +33,12 @@ protocol QuickSettingsDetailViewControllerProtocol: AnyObject {
     var dropdownLearnMore: InteractiveActionButton { get }
     var dropdownUpgradeButton: PrimaryActionButton { get }
     var dropdownNote: NSTextField { get }
+    var dropdownNoteImageView: NSImageView { get }
+    var dropdownNoteStackView: NSStackView { get }
 
     func reloadOptions()
     func updateNetshieldStats()
-    func updatePortForwardingContainer()
+    func updatePortForwardingContainer(with state: PortForwardingVCState)
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
@@ -107,6 +109,16 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.setAccessibilityIdentifier("UpgradeButton")
     }
 
+    var dropdownNoteImageView: NSImageView = .init().with {
+        $0.image = AppTheme.Icon.infoCircleFilled
+        $0.wantsLayer = true
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.imageScaling = .scaleProportionallyUpOrDown
+        $0.isHidden = true
+        $0.setContentHuggingPriority(.required, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+
     var dropdownNote: NSTextField = .init().with {
         $0.isEditable = false
         $0.isSelectable = false
@@ -117,17 +129,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.cell?.wraps = true
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setAccessibilityIdentifier("QSNote")
-    }
-
-    var dropdownNoteImageView: NSImageView = .init().with {
-        $0.image = AppTheme.Icon.exclamationTriangleFilled
-        $0.wantsLayer = true
-        $0.contentTintColor = .color(.icon, .warning)
-        $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.imageScaling = .scaleProportionallyUpOrDown
-        $0.isHidden = true
-        $0.setContentHuggingPriority(.required, for: .horizontal)
-        $0.setContentCompressionResistancePriority(.required, for: .horizontal)
     }
 
     var dropdownNoteStackView: NSStackView = .init().with {
@@ -297,7 +298,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     func updateNetshieldStats() {}
 
-    func updatePortForwardingContainer() {}
+    func updatePortForwardingContainer(with _: PortForwardingVCState) {}
 
     func reloadOptions() {
         var needsUpgrade = false

@@ -1226,6 +1226,10 @@ public enum Localizable {
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
   /// Text for Port forwarding quick setting in the app
   public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Bypass firewalls to connect to P2P servers and devices in your local network.") }
+  /// Enter the active port number into your BitTorrent app to improve your P2P speeds
+  public static var quickSettingsPortForwardingNote: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_note", fallback: "Enter the active port number into your BitTorrent app to improve your P2P speeds") }
+  /// To use port forwarding, connect to a P2P server
+  public static var quickSettingsPortForwardingWarningNote: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_warningNote", fallback: "To use port forwarding, connect to a P2P server") }
   /// Route your most sensitive data through our safest servers in privacy-friendly countries.
   public static var quickSettingsSecureCoreDescription: String { return Localizable.tr("Localizable", "_quick_settings_secureCore_description", fallback: "Route your most sensitive data through our safest servers in privacy-friendly countries.") }
   /// Secure Core may reduce VPN speed
