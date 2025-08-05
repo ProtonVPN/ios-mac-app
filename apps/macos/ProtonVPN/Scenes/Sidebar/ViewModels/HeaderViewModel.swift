@@ -37,6 +37,7 @@ import Theme
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)
     func changeServerStateUpdated(to state: ServerChangeViewState)
+    func mappedPortChanged(to mappedPort: UInt16?)
 }
 
 protocol HeaderViewModelFactory {
@@ -48,7 +49,8 @@ final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
 
     public typealias Factory =
-        AnnouncementsViewModelFactory & AppStateManagerFactory &
+        AnnouncementsViewModelFactory &
+        AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
         ProfileManagerFactory &
@@ -94,11 +96,14 @@ final class HeaderViewModel {
         return freshState
     }
 
+    private var natPmpTask: Task<Void, Error>?
+
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
         didSet {
             if delegate != nil, isConnected {
                 startBitrateStatistics()
+                startNatPmpObservation()
             }
         }
     }
@@ -149,10 +154,13 @@ final class HeaderViewModel {
             guard isVisible else {
                 statistics?.stopGathering()
                 statistics = nil
+                natPmpTask?.cancel()
+                natPmpTask = nil
                 return
             }
 
             startBitrateStatistics()
+            startNatPmpObservation()
         }
     }
 
@@ -250,9 +258,12 @@ final class HeaderViewModel {
 
         if isConnected {
             startBitrateStatistics()
+            startNatPmpObservation()
         } else {
             statistics?.stopGathering()
             statistics = nil
+            natPmpTask?.cancel()
+            natPmpTask = nil
         }
 
         contentChanged?()
@@ -284,6 +295,15 @@ final class HeaderViewModel {
             }
 
             delegate?.bitrateUpdated(with: formBitrateLabel(with: bitrate))
+        }
+    }
+
+    private func startNatPmpObservation() {
+        @Dependency(\.natPortMappingService) var natPortMappingService
+        natPmpTask = Task { [weak self] in
+            for try await portMapping in natPortMappingService.portMappingStream {
+                self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+            }
         }
     }
 

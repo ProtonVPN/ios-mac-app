@@ -161,36 +161,56 @@ struct LoadingPortView: View {
 
 // MARK: - Status Port View
 
-struct StatusPortView: View {
-    let portNumber: UInt16
+public struct StatusPortView: View {
+    public var portNumber: UInt16?
 
-    var body: some View {
-        HStack(spacing: .themeSpacing4) {
-            Text(Localizable.pfActivePortStatus)
-                .foregroundColor(Color(.text))
-                .themeFont(.callout(emphasised: true))
+    public init(portNumber: UInt16? = nil) {
+        self.portNumber = portNumber
+    }
 
-            Asset.pfIndicator.swiftUIImage
-                .resizable()
-                .frame(.square(.themeSpacing12))
+    @State private var hovered = false
 
-            Text(String(portNumber))
-                .foregroundColor(Color(.text))
-                .font(.title3(emphasised: false))
+    public var body: some View {
+        if let portNumber {
+            HStack {
+                Button(action: {
+                    copyPortNumber(portNumber)
+                }) {
+                    HStack(spacing: .themeSpacing4) {
+                        Text(Localizable.pfActivePortStatus)
+                            .foregroundColor(Color(.text))
+                            .themeFont(.body(emphasised: true))
 
-            Button(action: {
-                copyPortNumber(portNumber)
-            }) {
-                IconProvider.squares
-                    .resizable()
-                    .frame(.square(.themeSpacing12))
+                        Asset.pfIndicator.swiftUIImage
+                            .resizable()
+                            .frame(.square(.themeSpacing12))
+
+                        Text(String(portNumber))
+                            .foregroundColor(Color(.text))
+                            .font(.title3(emphasised: false))
+
+                        IconProvider.squares
+                            .resizable()
+                            .frame(.square(.themeSpacing12))
+                    }
+                    .overlay {
+                        CursorAreaViewRepresentable()
+                    }
+                    .padding(.themeSpacing2)
+                    .background(hovered ? Color(.background, .strong) : Color(.background, .weak))
+                    .cornerRadius(.themeRadius4)
+                }
+                .onHover { isHovered in
+                    hovered = isHovered
+                }
+                .buttonStyle(.plain)
+                .help(Localizable.pfCopyPortNumber)
+
+                Spacer()
             }
-            .buttonStyle(.plain)
-            .help(Localizable.pfCopyPortNumber)
+        } else {
+            EmptyView()
         }
-        .padding(.themeSpacing16)
-        .background(Color(.background, .weak))
-        .cornerRadius(.themeRadius8)
     }
 }
 

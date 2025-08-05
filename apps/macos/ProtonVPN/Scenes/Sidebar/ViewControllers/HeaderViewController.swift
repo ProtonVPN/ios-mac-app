@@ -25,10 +25,11 @@ import Cocoa
 import SDWebImage
 
 import Announcement
-import LegacyCommon
-
 import Domain
 import Ergonomics
+import LegacyCommon
+import NATPMPUI
+import SwiftUI
 import Theme
 
 final class HeaderViewController: NSViewController {
@@ -55,6 +56,14 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private var loadLabelLoadCircleHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet private var ipLabelLoadLabelHorizontalSpacing: NSLayoutConstraint!
     @IBOutlet private var ipLoadRowContainer: NSView!
+    @IBOutlet private var infoStackView: NSStackView!
+
+    private var statusNatPmpPortView = StatusPortView()
+
+    private lazy var statusPortForwardingView = NSHostingView(rootView: statusNatPmpPortView).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+//        $0.isHidden = true
+    }
 
     var announcementsButtonPressed: (() -> Void)?
 
@@ -120,6 +129,7 @@ final class HeaderViewController: NSViewController {
         setupBitrate()
 
         setupButtons()
+        setupPFView()
     }
 
     private func setupFlagView() {
@@ -185,6 +195,11 @@ final class HeaderViewController: NSViewController {
         }
 
         changeServerView.isHidden = !shouldShowChangeServer
+    }
+
+    private func setupPFView() {
+        infoStackView.addArrangedSubview(statusPortForwardingView)
+        statusPortForwardingView.widthAnchor.constraint(equalTo: infoStackView.widthAnchor).isActive = true
     }
 
     @objc
@@ -268,5 +283,13 @@ extension HeaderViewController: HeaderViewModelDelegate {
 
     func bitrateUpdated(with attributedString: NSAttributedString) {
         speedLabel.attributedStringValue = attributedString
+    }
+
+    func mappedPortChanged(to mappedPort: UInt16?) {
+        guard let mappedPort else {
+            // hide
+            return
+        }
+        statusNatPmpPortView.portNumber = mappedPort
     }
 }
