@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
 import NATPortMapping
@@ -39,19 +40,19 @@ public struct NATPMPFeature: Sendable {
     @Dependency(\.natPortMappingService) private var natPortMappingService
     @Dependency(\.date) private var date
 
+    private var cancellables: [AnyCancellable] = []
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .startPortMapping:
                 state = .loading
-                return .run { send in
-                    for try await portMapping in natPortMappingService.portMappingStream {
-                        await send(
+                return .publisher {
+                    natPortMappingService.portMappingStream
+                        .map { portMapping in
                             .portMapped(externalPortNumber: portMapping.mappedExternalPort)
-                        )
-                    }
-                } catch: { _, send in
-                    await send(.portMappingFailed)
+                        }
+                        .replaceError(with: .portMappingFailed)
                 }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
             case let .portMapped(externalPortNumber):

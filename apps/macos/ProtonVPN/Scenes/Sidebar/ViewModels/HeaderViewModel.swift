@@ -29,6 +29,7 @@ import LegacyCommon
 import VPNAppCore
 import VPNShared
 
+import Combine
 import Domain
 import Ergonomics
 import Strings
@@ -96,7 +97,7 @@ final class HeaderViewModel {
         return freshState
     }
 
-    private var natPmpTask: Task<Void, Error>?
+    private var natPmpCancellable: AnyCancellable?
 
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
@@ -154,8 +155,8 @@ final class HeaderViewModel {
             guard isVisible else {
                 statistics?.stopGathering()
                 statistics = nil
-                natPmpTask?.cancel()
-                natPmpTask = nil
+                natPmpCancellable = nil
+                delegate?.mappedPortChanged(to: nil)
                 return
             }
 
@@ -262,8 +263,8 @@ final class HeaderViewModel {
         } else {
             statistics?.stopGathering()
             statistics = nil
-            natPmpTask?.cancel()
-            natPmpTask = nil
+            natPmpCancellable = nil
+            delegate?.mappedPortChanged(to: nil)
         }
 
         contentChanged?()
@@ -300,11 +301,9 @@ final class HeaderViewModel {
 
     private func startNatPmpObservation() {
         @Dependency(\.natPortMappingService) var natPortMappingService
-        natPmpTask = Task { [weak self] in
-            for try await portMapping in natPortMappingService.portMappingStream {
-                self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
-            }
-        }
+        natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
+            self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+        })
     }
 
     private func rateString(for rate: UInt32) -> String {

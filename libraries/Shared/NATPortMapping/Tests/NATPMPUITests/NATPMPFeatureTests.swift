@@ -40,25 +40,25 @@ struct NATPMPFeatureTests {
 
         // Send first port mapping response
         let firstResponse = createPortMappingResponse(externalPort: 8080)
-        mockService.portMappingContinuation.yield(firstResponse)
+        mockService.portMappingSubject.send(firstResponse)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000))
+            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
         }
-
-        // Send second port mapping response with different port
-        let secondResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingContinuation.yield(secondResponse)
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 2000) }
 
+        // Send second port mapping response with different port
+        let secondResponse = createPortMappingResponse(externalPort: 9090)
+        mockService.portMappingSubject.send(secondResponse)
+
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000))
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 2000))
         }
 
         // Send third response with same port (should not update anything)
         let thirdResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingContinuation.yield(thirdResponse)
+        mockService.portMappingSubject.send(thirdResponse)
 
         await store.receive(\.portMapped)
 
@@ -66,7 +66,7 @@ struct NATPMPFeatureTests {
         await store.send(.stopPortMapping)
 
         // Finish the stream
-        mockService.portMappingContinuation.finish()
+        mockService.portMappingSubject.send(completion: .finished)
     }
 
     @Test
@@ -85,7 +85,7 @@ struct NATPMPFeatureTests {
 
         // Send an error to the stream
         struct TestError: Error {}
-        mockService.portMappingContinuation.finish(throwing: TestError())
+        mockService.portMappingSubject.send(completion: .failure(TestError()))
 
         // Should receive portMappingFailed action
         await store.receive(\.portMappingFailed) {

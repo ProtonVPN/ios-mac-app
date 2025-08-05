@@ -16,11 +16,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@preconcurrency import Combine
 import Dependencies
 import Foundation
 
 public protocol NATPortMappingService: Sendable {
-    var portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error> { get }
+    var portMappingStream: AnyPublisher<PortMappingPacketResponse, Error> { get }
     func createPortMapping(
         gatewayAddress: String,
         portProtocol: PortMappingProtocol,
@@ -49,16 +50,15 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
     private let natPmpClient: NATPortMappingClient
     private let renewalTask: RenewalTaskManager
 
-    public let portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error>
-    private let portMappingContinuation: AsyncThrowingStream<PortMappingPacketResponse, Error>.Continuation
+    public let portMappingStream: AnyPublisher<PortMappingPacketResponse, Error>
+    private let portMappingSubject: PassthroughSubject<PortMappingPacketResponse, Error>
 
     // MARK: - Init
 
     init() {
         self.natPmpClient = NATPortMappingClient()
-        let (stream, continuation) = AsyncThrowingStream<PortMappingPacketResponse, Error>.makeStream()
-        self.portMappingStream = stream
-        self.portMappingContinuation = continuation
+        self.portMappingSubject = PassthroughSubject<PortMappingPacketResponse, Error>()
+        self.portMappingStream = portMappingSubject.eraseToAnyPublisher()
         self.renewalTask = RenewalTaskManager()
     }
 
@@ -82,12 +82,12 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
 
                 // ensure that BE sent success mapping
                 guard portMappingResponse.mappedResultCode == .success else {
-                    portMappingContinuation.yield(with: .failure(NATPortMappingError.mappingFailed))
+                    portMappingSubject.send(completion: .failure(NATPortMappingError.mappingFailed))
                     return
                 }
 
                 // Send response to stream
-                portMappingContinuation.yield(portMappingResponse)
+                portMappingSubject.send(portMappingResponse)
 
                 // Schedule next renewal if successful
                 await scheduleNextRenewal(
@@ -95,7 +95,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
                     response: portMappingResponse
                 )
             } catch {
-                portMappingContinuation.yield(with: .failure(error))
+                portMappingSubject.send(completion: .failure(error))
             }
         }
     }
@@ -157,16 +157,12 @@ private actor RenewalTaskManager {
 
 #if DEBUG
     final class NATPortMappingServiceMock: NATPortMappingService {
-        public let portMappingStream: AsyncThrowingStream<PortMappingPacketResponse, Error>
-        public let portMappingContinuation: AsyncThrowingStream<PortMappingPacketResponse, Error>.Continuation
+        public let portMappingStream: AnyPublisher<PortMappingPacketResponse, Error>
+        public let portMappingSubject: PassthroughSubject<PortMappingPacketResponse, Error>
 
         init() {
-            let (stream, continuation) = AsyncThrowingStream<PortMappingPacketResponse, Error>.makeStream()
-            self.portMappingStream = stream
-            self.portMappingContinuation = continuation
-
-            // Ensure continuation finishes when deallocated
-            continuation.onTermination = { _ in }
+            self.portMappingSubject = PassthroughSubject<PortMappingPacketResponse, Error>()
+            self.portMappingStream = portMappingSubject.eraseToAnyPublisher()
         }
 
         func createPortMapping(

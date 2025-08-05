@@ -58,11 +58,11 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private var ipLoadRowContainer: NSView!
     @IBOutlet private var infoStackView: NSStackView!
 
-    private var statusNatPmpPortView = StatusPortView()
-
+    private var mappedPortModel = MappedPort()
+    private lazy var statusNatPmpPortView = StatusPortView(portModel: mappedPortModel)
     private lazy var statusPortForwardingView = NSHostingView(rootView: statusNatPmpPortView).with {
         $0.translatesAutoresizingMaskIntoConstraints = false
-//        $0.isHidden = true
+        $0.isHidden = true
     }
 
     var announcementsButtonPressed: (() -> Void)?
@@ -287,9 +287,13 @@ extension HeaderViewController: HeaderViewModelDelegate {
 
     func mappedPortChanged(to mappedPort: UInt16?) {
         guard let mappedPort else {
-            // hide
+            // hide port view on nil
+            statusPortForwardingView.isHidden = true
             return
         }
-        statusNatPmpPortView.portNumber = mappedPort
+        statusPortForwardingView.isHidden = false
+        DispatchQueue.main.async {
+            self.mappedPortModel.portNumber = mappedPort
+        }
     }
 }

@@ -161,17 +161,26 @@ struct LoadingPortView: View {
 
 // MARK: - Status Port View
 
-public struct StatusPortView: View {
-    public var portNumber: UInt16?
+public class MappedPort: ObservableObject {
+    @Published public var portNumber: UInt16?
 
-    public init(portNumber: UInt16? = nil) {
+    public init() {}
+
+    init(portNumber: UInt16?) {
         self.portNumber = portNumber
     }
+}
 
+public struct StatusPortView: View {
+    @ObservedObject public var portModel: MappedPort = .init()
     @State private var hovered = false
 
+    public init(portModel: MappedPort) {
+        self.portModel = portModel
+    }
+
     public var body: some View {
-        if let portNumber {
+        if let portNumber = portModel.portNumber {
             HStack {
                 Button(action: {
                     copyPortNumber(portNumber)
@@ -237,7 +246,7 @@ private func copyPortNumber(_ portNumber: UInt16) {
             LoadingPortView()
 
             // Status view
-            StatusPortView(portNumber: 36528)
+            StatusPortView(portModel: MappedPort(portNumber: 36528))
         }
         .padding()
         .background(Color(.background))
