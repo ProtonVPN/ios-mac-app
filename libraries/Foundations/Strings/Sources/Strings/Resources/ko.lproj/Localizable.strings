@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "재연결 권장됨";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "계속하려면 연결 해제";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "로그인하거나 계정을 생성하려면 VPN에서 연결을 해제해야 합니다.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "유지 보수";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "VPN 터널이 끊기면 모든 네트워크 트래픽을 차단합니다.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "포트 포워딩";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "VPN 항상 켜기";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "킬 스위치를 비활성화하시겠어요?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• 이로 인해 분할 터널링이 비활성화됩니다.\n• 사용자의 로컬 네트워크에 있는 장치에 접근할 수 없게 됩니다.";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• 이 작업은 분할 터널링을 비활성화합니다";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• 사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "사용자의 로컬 네트워크에 있는 장치에 접속할 수 없게 됩니다";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "%@내에 종료";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "활성 포트:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "활성 포트 번호";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "포트 번호 복사";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "불러오는 중...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "%@ 업데이트됨";
+
 "_quick_settings_title" = "간편 설정";
 
 "_quick_settings_secureCore_description" = "개인 정보 보호 친화적인 국가에 있는 가장 안전한 서버를 통해 가장 민감한 데이터를 라우팅하세요.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "광고와 멀웨어 없이 인터넷을 즐겨보세요.";
 
 "_quick_settings_killSwitch_description" = "VPN 연결이 해제된 경우 IP 노출을 방지하기 위해 인터넷을 비활성화합니다.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "방화벽을 우회하여 P2P 서버와 로컬 네트워크의 장치에 연결하세요.";
 
 "_quick_settings_secureCore_note" = "Secure Core는 VPN 속도를 느리게 할 수 있습니다";
 

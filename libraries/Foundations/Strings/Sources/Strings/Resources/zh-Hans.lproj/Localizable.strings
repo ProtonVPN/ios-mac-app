@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "需要重新连接";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Disconnect to continue";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "维护";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "当 VPN 隧道丢失时阻止所有网络流量。";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Port forwarding";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "始终开启 VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "启用 Kill Switch？";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• 这将禁用拆分隧道\n• 您将无法访问本地网络上的设备";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "您将无法访问本地网络上的设备";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "正在结束 %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Active port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Active port number";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Copy port number";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Loading...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Updated %@";
+
 "_quick_settings_title" = "快捷设置";
 
 "_quick_settings_secureCore_description" = "通过我们最安全的服务器在隐私友好的国家中传输您最敏感的数据。";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "浏览没有广告和恶意软件的互联网。";
 
 "_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
 
 "_quick_settings_secureCore_note" = "Secure Core 可能会降低 VPN 速度";
 

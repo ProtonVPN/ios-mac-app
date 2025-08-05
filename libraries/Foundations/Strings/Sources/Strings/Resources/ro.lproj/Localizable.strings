@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconectare necesară";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Deconectați-vă pentru a continua";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Pentru a vă conecta sau a crea un cont, conexiunea la VPN nu trebuie să fie activă.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Întreținere";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blochează tot traficul din rețea când tunelul VPN este pierdut.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Redirecționare port";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "VPN permanent";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Activați întrerupătorul de conexiune?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Aceasta va dezactiva divizarea traficului.\n• Nu veți putea accesa dispozitivele din rețeaua locală.";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Aceasta va dezactiva divizarea traficului";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Nu veți putea accesa dispozitivele din rețeaua locală.";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Nu veți putea accesa dispozitivele din rețeaua locală.";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Terminare %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Port activ:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Număr port activ";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Copier număr port";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Se încarcă…";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Actualizat %@";
+
 "_quick_settings_title" = "Setări rapide";
 
 "_quick_settings_secureCore_description" = "Direcționați-vă cele mai importante date prin serverele noastre sigure din țările care respectă intimitatea.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Navigați pe internet fără reclame și malware.";
 
 "_quick_settings_killSwitch_description" = "Dezactivează accesul la internet când cade conexiunea VPN pentru a preveni divulgarea accidentală a adresei IP.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Depășiți paravanele de protecție pentru a vă conecta la serverele P2P și dispozitivele din rețeaua locală.";
 
 "_quick_settings_secureCore_note" = "Secure Core ar putea reduce viteza prin VPN.";
 
@@ -2937,28 +2967,28 @@
 "_widgetAdoption_modal_instruction_button" = "Am înțeles";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "Faceți pasul spre intimitate";
 
 /* iOS: Settings account section card description for guest mode */
-"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+"_settings_new_account_card_description" = "Cu un cont Proton obțineți gratuit un manager de parole, e-mail și calendar criptat și 1 GiB de spațiu de stocare în cloud.";
 
 /* iOS: Action account button on settings account section in guest mode */
-"_create_account_settings_title" = "Create account";
+"_create_account_settings_title" = "Creare cont";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
+"_create_account_first_before_upgrade" = "Este necesar să creați un cont înainte de a putea trece la alt plan.";
 
 /* iOS: Alert title for closing account creation flow */
-"_create_account_if_close_no_upgrade" = "If you don’t create an account you won’t be able to upgrade to VPN Plus";
+"_create_account_if_close_no_upgrade" = "Dacă nu vă creați un cont, nu veți putea face trecerea la VPN Plus";
 
 /* iOS: Cancel button on account creation flow */
-"_create_account_cancel_upgrade" = "Cancel upgrade";
+"_create_account_cancel_upgrade" = "Anulare modernizare";
 
 /* iOS: Continue button on account creation flow */
-"_create_account_continue_creating" = "Continue creating account";
+"_create_account_continue_creating" = "Continuare creare cont";
 
 /* iOS: Alert message after account creation in guest mode */
-"_account_created_title" = "Account created";
+"_account_created_title" = "Contul a fost creat.";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Personalizare avansată VPN";

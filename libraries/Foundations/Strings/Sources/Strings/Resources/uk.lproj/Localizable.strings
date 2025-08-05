@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Необхідне перепідключення";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Disconnect to continue";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Обслуговування";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Port forwarding";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Постійна VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Увімкнути Kill Switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Це вимкне роздільне тунелювання\n• Ви не матимете доступу до пристроїв у своїй локальній мережі";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Ви не матимете доступу до пристроїв у своїй локальній мережі";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Завершується %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Active port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Active port number";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Copy port number";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Loading...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Updated %@";
+
 "_quick_settings_title" = "Швидкі налаштування";
 
 "_quick_settings_secureCore_description" = "Спрямовуйте свої найвразливіші дані через наші найзахищеніші сервери в країнах, що цінують приватність.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Користуйтеся інтернетом без реклами та зловмисних програм.";
 
 "_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
 
 "_quick_settings_secureCore_note" = "Secure Core може знижувати швидкість VPN";
 

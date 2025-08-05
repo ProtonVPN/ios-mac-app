@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Je nutné opětovné připojení";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Pro pokračování se odpojte";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Chcete-li se přihlásit nebo vytvořit účet, musíte být odpojeni od VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Údržba";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Zablokuje veškerý síťový provoz při uzavření VPN tunelu.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Přesměrování portů";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Trvalá síť VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Povolit Kill Switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Tím deaktivujete split tunneling\n• Nebudete moci přistupovat k zařízením v místní síti";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Tímto deaktivujete Split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Nebudete moci přistupovat k zařízením v místní síti";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Nebudete moci přistupovat k zařízením v místní síti";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Končí za %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Aktivní port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Číslo aktivního portu";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Kopírovat číslo portu";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Načítání...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Aktualizováno %@";
+
 "_quick_settings_title" = "Rychlá nastavení";
 
 "_quick_settings_secureCore_description" = "Směrujte vaše nejcitlivější data skrz naše nejbezpečnější servery v zemích respektujících soukromí.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Procházení internetu bez reklam a malware.";
 
 "_quick_settings_killSwitch_description" = "Zakáže internet při přerušení VPN spojení, čímž zabrání úniku IP adresy.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Obejděte firewally a připojte se k P2P serverům a zařízením ve vaší místní síti.";
 
 "_quick_settings_secureCore_note" = "Secure Core může snížit rychlost VPN";
 
@@ -1758,7 +1788,7 @@
 "_onboarding_mac_crash_reports" = "Sdílejte anonymní hlášení o pádech. To nám pomáhá opravovat chyby, detekovat firewally a vyhnout se blokování VPN.";
 
 /* Telemetry label in the settings window for mac */
-"_settings_mac_usage_stats_title" = "Sdílejte anonymní statistiky o používání";
+"_settings_mac_usage_stats_title" = "Sdílet anonymní statistiky o používání";
 
 /* Telemetry tooltip in the settings window for mac */
 "_settings_mac_usage_stats_tooltip" = "Údaje o používání nám pomáhají obcházet blokování VPN a vylepšovat výkon aplikace.";
