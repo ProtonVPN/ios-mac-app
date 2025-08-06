@@ -92,7 +92,7 @@ let package = Package(
                 .product(name: "VPNShared", package: "NEHelper"),
                 .product(name: "VPNAppCore", package: "NEHelper"),
                 .product(name: "VPNCrypto", package: "NEHelper"),
-                .product(name: "NATPMPUI", package: "NATPortMapping"),
+                .product(name: "NATPMPUI", package: "NATPortMapping", condition: .when(platforms: [.macOS])),
 
                 "NetShield",
                 "Modals",

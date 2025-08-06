@@ -16,64 +16,66 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Dependencies
-import NATPMPUI
+#if os(macOS)
+    import Dependencies
+    import NATPMPUI
 
-extension VpnManager {
-    func startNATPortMappingService() {
-        guard portForwardingPropertyProvider.portForwarding == true else { return }
-        guard let gatewayAddress = getVPNGatewayAddress() else {
-            log.error("Cannot start NAT port mapping - unable to determine gateway address", category: .connection)
-            return
+    extension VpnManager {
+        func startNATPortMappingService() {
+            guard portForwardingPropertyProvider.portForwarding == true else { return }
+            guard let gatewayAddress = getVPNGatewayAddress() else {
+                log.error("Cannot start NAT port mapping - unable to determine gateway address", category: .connection)
+                return
+            }
+            @Dependency(\.natPortMappingService) var natPortMappingService
+            // Start your service
+            natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
+            log.info("NAT port mapping service started", category: .connection)
         }
-        @Dependency(\.natPortMappingService) var natPortMappingService
-        // Start your service
-        natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
-        log.info("NAT port mapping service started", category: .connection)
+
+        func stopNATPortMappingService() {
+            @Dependency(\.natPortMappingService) var natPortMappingService
+            Task {
+                await natPortMappingService.cancelPortMapping()
+                log.info("NAT port mapping service stopped", category: .connection)
+            }
+        }
+
+        // MARK: - Private
+
+        private func getVPNGatewayAddress() -> String? {
+            guard let currentVpnProtocol else {
+                log.error("Cannot determine gateway address - no current VPN protocol", category: .connection)
+                return nil
+            }
+
+            switch currentVpnProtocol {
+            case .ike:
+                return "10.1.0.1" // IKEv2 gateway
+            case .wireGuard:
+                return getWireGuardConfiguredGateway()
+            case .openVpn:
+                // OpenVPN is deprecated, but if needed, could use 10.1.0.1
+                return "10.1.0.1"
+            }
+        }
+
+        private func getWireGuardConfiguredGateway() -> String? {
+            guard let currentVpnProtocol,
+                  case .wireGuard = currentVpnProtocol else {
+                return getVPNGatewayAddress()
+            }
+
+            // Access the stored WireGuard config
+            @Dependency(\.propertiesManager) var propertiesManager
+
+            let wgConfig = propertiesManager.wireguardConfig
+            // Extract DNS servers (which act as gateways)
+            let dnsServers = wgConfig.dnsServers ?? ["10.2.0.1"]
+            let gateway = dnsServers.first ?? "10.2.0.1"
+
+            log.info("Using WireGuard DNS/gateway: \(gateway)", category: .connection)
+            return gateway
+        }
     }
-
-    func stopNATPortMappingService() {
-        @Dependency(\.natPortMappingService) var natPortMappingService
-        Task {
-            await natPortMappingService.cancelPortMapping()
-            log.info("NAT port mapping service stopped", category: .connection)
-        }
-    }
-
-    // MARK: - Private
-
-    private func getVPNGatewayAddress() -> String? {
-        guard let currentVpnProtocol else {
-            log.error("Cannot determine gateway address - no current VPN protocol", category: .connection)
-            return nil
-        }
-
-        switch currentVpnProtocol {
-        case .ike:
-            return "10.1.0.1" // IKEv2 gateway
-        case .wireGuard:
-            return getWireGuardConfiguredGateway()
-        case .openVpn:
-            // OpenVPN is deprecated, but if needed, could use 10.1.0.1
-            return "10.1.0.1"
-        }
-    }
-
-    private func getWireGuardConfiguredGateway() -> String? {
-        guard let currentVpnProtocol,
-              case .wireGuard = currentVpnProtocol else {
-            return getVPNGatewayAddress()
-        }
-
-        // Access the stored WireGuard config
-        @Dependency(\.propertiesManager) var propertiesManager
-
-        let wgConfig = propertiesManager.wireguardConfig
-        // Extract DNS servers (which act as gateways)
-        let dnsServers = wgConfig.dnsServers ?? ["10.2.0.1"]
-        let gateway = dnsServers.first ?? "10.2.0.1"
-
-        log.info("Using WireGuard DNS/gateway: \(gateway)", category: .connection)
-        return gateway
-    }
-}
+#endif

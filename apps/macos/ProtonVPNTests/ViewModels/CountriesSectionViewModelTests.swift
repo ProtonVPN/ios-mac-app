@@ -149,6 +149,7 @@ class DependencyFactory: CountriesSectionViewModel.Factory, ProfileManagerFactor
     func makeModelIdChecker() -> ProtonVPN.ModelIdCheckerProtocol { fatalError() }
     func makePropertiesManager() -> PropertiesManagerProtocol { propertiesManager }
     func makeVpnKeychain() -> VpnKeychainProtocol { VpnKeychainMock(maxTier: .paidTier) }
+    func makePortForwardingPropertyProvider() -> PortForwardingPropertyProvider { PortForwardingPropertyProviderMock() }
 }
 
 struct AnnouncementManagerMock: AnnouncementManager {
