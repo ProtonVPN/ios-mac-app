@@ -82,7 +82,6 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
             portForwardingPropertyProvider.portForwarding = false
-            viewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: false))
             if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                 vpnGateway.retryConnection()
@@ -109,13 +108,10 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                 }
                 portForwardingPropertyProvider.portForwarding = true
                 if vpnGateway.connection == .connected {
-                    viewController?.updatePortForwardingContainer(with: .loading)
                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
                     vpnGateway.retryConnection()
-                } else {
-                    viewController?.updatePortForwardingContainer(with: .notConnected(pfEnabled: true))
                 }
-//                dismissCallback()
+                dismissCallback()
             }
         )
     }

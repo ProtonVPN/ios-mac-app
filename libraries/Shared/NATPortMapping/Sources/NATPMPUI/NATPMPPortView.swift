@@ -213,7 +213,7 @@ public struct StatusPortView: View {
                         CursorAreaViewRepresentable()
                     }
                     .padding(.themeSpacing2)
-                    .background(hovered ? Color(.background, .strong) : Color(.background, .weak))
+                    .background(hovered ? .white.opacity(0.15) : .clear)
                     .cornerRadius(.themeRadius4)
                 }
                 .onHover { isHovered in

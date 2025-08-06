@@ -54,6 +54,7 @@ final class HeaderViewModel {
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
+        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         VpnGatewayFactory
@@ -67,6 +68,8 @@ final class HeaderViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+
+    private lazy var porftForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     var contentChanged: (() -> Void)?
     /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect
@@ -155,13 +158,10 @@ final class HeaderViewModel {
             guard isVisible else {
                 statistics?.stopGathering()
                 statistics = nil
-                natPmpCancellable = nil
-                delegate?.mappedPortChanged(to: nil)
                 return
             }
 
             startBitrateStatistics()
-            startNatPmpObservation()
         }
     }
 
@@ -253,18 +253,22 @@ final class HeaderViewModel {
 
     @objc
     private func vpnConnectionChanged() {
+        if isConnected {
+            startNatPmpObservation()
+        } else {
+            natPmpCancellable = nil
+            delegate?.mappedPortChanged(to: nil)
+        }
+
         guard isVisible else {
             return
         }
 
         if isConnected {
             startBitrateStatistics()
-            startNatPmpObservation()
         } else {
             statistics?.stopGathering()
             statistics = nil
-            natPmpCancellable = nil
-            delegate?.mappedPortChanged(to: nil)
         }
 
         contentChanged?()
@@ -300,6 +304,11 @@ final class HeaderViewModel {
     }
 
     private func startNatPmpObservation() {
+        natPmpCancellable = nil
+        guard porftForwardingPropertyProvider.portForwarding == true else {
+            delegate?.mappedPortChanged(to: nil)
+            return
+        }
         @Dependency(\.natPortMappingService) var natPortMappingService
         natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
             guard let portMapping, portMapping.deadlineDate > Date() else { return }
