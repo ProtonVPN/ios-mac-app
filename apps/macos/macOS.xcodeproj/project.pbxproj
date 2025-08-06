@@ -113,6 +113,9 @@
 		A443C5732E3B76BC003D91FA /* NATPMPUI in Frameworks */ = {isa = PBXBuildFile; productRef = A443C5722E3B76BC003D91FA /* NATPMPUI */; };
 		A443C5752E3B76D2003D91FA /* QuickSettingDetailPFViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */; };
 		A47CF3EC2E2FBEA0006FB2C1 /* PortForwardingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */; };
+		A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */; };
+		A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */; };
+		A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4A7C7662E437F66002652F2 /* QuickSettingType.swift */; };
 		A4B9949D2E3A1B04007C110B /* NSObject+With.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B9949C2E3A1B04007C110B /* NSObject+With.swift */; };
 		A4B9A7362E38FC2600A21B35 /* Atlantis in Frameworks */ = {isa = PBXBuildFile; productRef = A4B9A7352E38FC2600A21B35 /* Atlantis */; };
 		A4F2B9742E30EE9000B807B8 /* QuickSettingNetshieldOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */; };
@@ -653,6 +656,9 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A443C5742E3B76C6003D91FA /* QuickSettingDetailPFViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailPFViewController.swift; sourceTree = "<group>"; };
 		A47CF3EB2E2FBE97006FB2C1 /* PortForwardingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortForwardingDropdownPresenter.swift; sourceTree = "<group>"; };
+		A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsManager.swift; sourceTree = "<group>"; };
+		A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingFactory.swift; sourceTree = "<group>"; };
+		A4A7C7662E437F66002652F2 /* QuickSettingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingType.swift; sourceTree = "<group>"; };
 		A4B9949C2E3A1B04007C110B /* NSObject+With.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+With.swift"; sourceTree = "<group>"; };
 		A4F2B9732E30EE8C00B807B8 /* QuickSettingNetshieldOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingNetshieldOption.swift; sourceTree = "<group>"; };
 		A4F2B9772E31070C00B807B8 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
@@ -1349,6 +1355,16 @@
 				E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A4A7C75D2E437F18002652F2 /* QuickSettings */ = {
+			isa = PBXGroup;
+			children = (
+				A4A7C7662E437F66002652F2 /* QuickSettingType.swift */,
+				A4A7C7632E437F4E002652F2 /* QuickSettingFactory.swift */,
+				A4A7C7612E437F39002652F2 /* QuickSettingsManager.swift */,
+			);
+			path = QuickSettings;
 			sourceTree = "<group>";
 		};
 		B22F32FD278DC40E00DBB8CA /* Robots */ = {
@@ -2249,6 +2265,7 @@
 			isa = PBXGroup;
 			children = (
 				F36ECE522611E3390089B898 /* Models */,
+				A4A7C75D2E437F18002652F2 /* QuickSettings */,
 				F36ECE212611DEED0089B898 /* Presenters */,
 				F36ECE1C2611DE9B0089B898 /* ViewControllers */,
 				F36ECE1D2611DEAC0089B898 /* ViewModels */,
@@ -3296,6 +3313,7 @@
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D5C7C8B12B0B87FD00641808 /* main.m in Sources */,
+				A4A7C7642E437F4E002652F2 /* QuickSettingFactory.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
@@ -3373,6 +3391,7 @@
 				EE5B17451F39CDF700879BE0 /* HeaderViewModel.swift in Sources */,
 				EE4E7DF71F62909A000F7D5E /* ProfilesWindowController.swift in Sources */,
 				E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */,
+				A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */,
 				E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */,
 				E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */,
 				E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */,
@@ -3516,6 +3535,7 @@
 				E13464AD20342D2A00C0DB7D /* FeatureIcon.swift in Sources */,
 				E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */,
 				EECEF3DE1F169B4800A16606 /* CountryItemCellView.swift in Sources */,
+				A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */,
 				EEFE81CC1F3F361A0052A7A6 /* MapHeaderViewController.swift in Sources */,
 				EEF781431F1A4ED000E77B59 /* TextFieldFocusDelegate.swift in Sources */,
 				EE4E7DF51F6276C9000F7D5E /* WindowService.swift in Sources */,
