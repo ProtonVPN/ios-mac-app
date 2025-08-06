@@ -34,22 +34,29 @@ public struct NATPMPPortView: View {
 
     public init(store: StoreOf<NATPMPFeature>) {
         self.store = store
-        store.send(.startPortMapping)
     }
 
     public var body: some View {
-        switch store.state {
-        case .loading:
-            LoadingPortView()
-        case let .loaded(externalPortNumber, updateDate, responseDate):
-            ActivePortView(
-                portNumber: externalPortNumber,
-                updateDate: updateDate,
-                responseDate: responseDate
-            )
-        // will not be used
-        case .error:
-            EmptyView()
+        HStack {
+            switch store.state {
+            case .loading:
+                LoadingPortView()
+            case let .loaded(externalPortNumber, updateDate, responseDate):
+                ActivePortView(
+                    portNumber: externalPortNumber,
+                    updateDate: updateDate,
+                    responseDate: responseDate
+                )
+            // will not be used
+            case .error:
+                EmptyView()
+            }
+        }
+        .onAppear {
+            store.send(.startPortMappingObservation)
+        }
+        .onDisappear {
+            store.send(.stopPortMappingObservation)
         }
     }
 }

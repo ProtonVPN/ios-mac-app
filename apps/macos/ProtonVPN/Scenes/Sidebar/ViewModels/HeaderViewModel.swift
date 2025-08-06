@@ -302,6 +302,7 @@ final class HeaderViewModel {
     private func startNatPmpObservation() {
         @Dependency(\.natPortMappingService) var natPortMappingService
         natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
+            guard let portMapping, portMapping.deadlineDate > Date() else { return }
             self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
         })
     }

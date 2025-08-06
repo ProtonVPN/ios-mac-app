@@ -31,10 +31,10 @@ public struct NATPMPFeature: Sendable {
     }
 
     public enum Action {
-        case startPortMapping
-        case portMapped(externalPortNumber: UInt16)
+        case startPortMappingObservation
+        case portMapped(PortMappingPacketResponse)
         case portMappingFailed
-        case stopPortMapping
+        case stopPortMappingObservation
     }
 
     @Dependency(\.natPortMappingService) private var natPortMappingService
@@ -45,17 +45,22 @@ public struct NATPMPFeature: Sendable {
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .startPortMapping:
+            case .startPortMappingObservation:
                 state = .loading
                 return .publisher {
                     natPortMappingService.portMappingStream
-                        .map { portMapping in
-                            .portMapped(externalPortNumber: portMapping.mappedExternalPort)
+                        .compactMap { portMapping in
+                            guard let portMapping else { return nil }
+                            return .portMapped(portMapping)
                         }
                         .replaceError(with: .portMappingFailed)
                 }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
-            case let .portMapped(externalPortNumber):
+            case let .portMapped(portMappingResponse):
+                // check if the last value is not yet expired
+                guard portMappingResponse.deadlineDate > date.now else { return .none }
+
+                let externalPortNumber = portMappingResponse.mappedExternalPort
                 let updateDate: Date = (state.externalPortNumber != externalPortNumber ? date.now : state.updateDate) ?? date.now
                 state = .loaded(externalPortNumber: externalPortNumber, updateDate: updateDate, responseDate: date.now)
                 return .none
@@ -64,13 +69,8 @@ public struct NATPMPFeature: Sendable {
                 state = .error
                 return .none
 
-            case .stopPortMapping:
-                return .merge(
-                    .run { _ in
-                        await natPortMappingService.cancelPortMapping()
-                    },
-                    .cancel(id: CancelID.portMappingStream)
-                )
+            case .stopPortMappingObservation:
+                return .cancel(id: CancelID.portMappingStream)
             }
         }
     }

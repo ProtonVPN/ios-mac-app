@@ -288,11 +288,13 @@ extension HeaderViewController: HeaderViewModelDelegate {
     func mappedPortChanged(to mappedPort: UInt16?) {
         guard let mappedPort else {
             // hide port view on nil
-            statusPortForwardingView.isHidden = true
+            DispatchQueue.main.async {
+                self.statusPortForwardingView.isHidden = true
+            }
             return
         }
-        statusPortForwardingView.isHidden = false
         DispatchQueue.main.async {
+            self.statusPortForwardingView.isHidden = false
             self.mappedPortModel.portNumber = mappedPort
         }
     }
