@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Ponowne połączenie jest wymagane";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Rozłącz, aby kontynuować";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Aby zalogować się lub utworzyć konto, musisz rozłączyć się z VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Przerwa techniczna";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokuje cały ruch sieciowy, gdy połączenie VPN zostanie przerwane.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Przekierowanie portów";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Stale aktywny VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Włączyć Kill Switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Spowoduje to wyłączenie funkcji Kill Switch.\n• Nie będziesz mógł uzyskać dostępu do urządzeń w sieci lokalnej";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Spowoduje to wyłączenie funkcji Split Tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Nie będziesz mógł uzyskać dostępu do urządzeń w sieci lokalnej";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Nie będziesz mógł uzyskać dostępu do urządzeń w sieci lokalnej";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Koniec za: %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Aktywny port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Numer aktywnego portu";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Kopiuj numer portu";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Ładowanie…";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Zaktualizowano %@";
+
 "_quick_settings_title" = "Szybkie ustawienia";
 
 "_quick_settings_secureCore_description" = "Przekieruj swoje najbardziej poufne dane przez nasze najbezpieczniejsze serwery ulokowane w krajach szanujących prywatność.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania.";
 
 "_quick_settings_killSwitch_description" = "Blokuje połączenie z Internetem, aby zapobiec wyciekowi adresu IP, gdy połączenie VPN zostanie rozłączone.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Omiń zapory sieciowe, aby połączyć się z serwerami i urządzeniami P2P w sieci lokalnej.";
 
 "_quick_settings_secureCore_note" = "Funkcja Secure Core może zmniejszyć prędkość połączenia VPN";
 

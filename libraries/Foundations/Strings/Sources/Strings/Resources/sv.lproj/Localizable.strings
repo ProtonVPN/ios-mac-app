@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Återanslutning krävs";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Koppla från för att fortsätta";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "För att logga in eller skapa ett konto måste du vara frånkopplad från VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Underhåll";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blockerar all nätverkstrafik när VPN-tunneln tappas.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Vidarebefordring av port";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Alltid-på VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Aktivera kill switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• This will disable split tunneling\n• You won't be able to access devices on your local network";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Detta kommer inaktivera split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Du kommer inte att kunna komma åt enheter på ditt lokala nätverk";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Du kommer inte att kunna komma åt enheter på ditt lokala nätverk";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Upphör om %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Aktiv port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Aktivt portnummer";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Kopiera portnummer";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Laddar in …";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Uppdaterad %@";
+
 "_quick_settings_title" = "Snabbinställningar";
 
 "_quick_settings_secureCore_description" = "Dirigera dina mest känsliga data genom våra säkraste servrar i integritetsvänliga länder.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Surfa på Internet utan annonser och skadlig kod.";
 
 "_quick_settings_killSwitch_description" = "Inaktiverar internet om VPN-anslutningen avbryts för att förhindra oavsiktlig IP-läcka.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Kringgå brandväggar för att ansluta till P2P-servrar och enheter i ditt lokala nätverk.";
 
 "_quick_settings_secureCore_note" = "Secure Core kan minska VPN-hastighet";
 

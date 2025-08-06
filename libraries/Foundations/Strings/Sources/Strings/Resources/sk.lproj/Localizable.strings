@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Je potrebné opätovné pripojenie";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Odpojte sa pre pokračovanie";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Ak sa chcete prihlásiť alebo si vytvoriť účet, musíte byť odpojený od siete VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Údržba";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Zablokuje všetku sieťovú prevádzku, keď sa stratí tunel VPN.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Presmerovanie portu";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Trvalá sieť VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Zapnúť Kill Switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Toto deaktivuje rozdelené tunelovanie\n• Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Týmto zakážete split tunneling";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti.";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Nebudete mať prístup k zariadeniam vo vašej lokálnej sieti.";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Končí o %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Aktívny port:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Číslo aktívneho portu";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Kopírovať číslo portu";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Načítavanie...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Aktualizované %@";
+
 "_quick_settings_title" = "Rýchle nastavenia";
 
 "_quick_settings_secureCore_description" = "Smerujte vaše najcitlivejšie dáta cez naše najbezpečnejšie servery v krajinách rešpektujúcich súkromie.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Prehliadajte internet bez reklám a malvéru";
 
 "_quick_settings_killSwitch_description" = "Aby sa zabránilo náhodnému úniku IP zakáže internet, ak sa pripojenie VPN preruší.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Obíďte firewally a pripojte sa k P2P serverom a zariadeniam vo vašej miestnej sieti.";
 
 "_quick_settings_secureCore_note" = "Secure Core môže znížiť rýchlosť VPN";
 

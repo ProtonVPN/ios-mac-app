@@ -64,6 +64,12 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Απαιτείται επανασύνδεση";
 
+/* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_required" = "Αποσυνδεθείτε για να συνεχίσετε";
+
+/* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
+"_disconnect_to_sign_in_description" = "Για είσοδο ή δημιουργία λογαριασμού, πρέπει να αποσυνδεθείτε από το VPN.";
+
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Συντήρηση";
 
@@ -922,6 +928,9 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Αποκλείει όλη την κίνηση δικτύου όταν χαθεί η σήραγγα VPN.";
 
+/* MacOS: Settings -> Port forwarding: name of field. */
+"_port_forwarding" = "Προώθηση θυρών";
+
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Πάντα-ενεργό VPN";
 
@@ -1036,8 +1045,11 @@
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_title" = "Ενεργοποίηση kill switch;";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_macos" = "• Αυτό θα απενεργοποιήσει τη διαίρεση σήραγγας\n• Δε θα μπορείτε να αποκτήσετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο.";
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+"_turn_ks_on_description_macos_st_conflict" = "• Αυτό θα απενεργοποιήσει τη διαίρεση σήραγγας";
+
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
+"_turn_ks_on_description_macos_lan_conflict" = "• Δε θα μπορείτε να αποκτήσετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Δε θα μπορείτε να αποκτήσετε πρόσβαση σε συσκευές στο τοπικό σας δίκτυο.";
@@ -1377,6 +1389,21 @@
 /* Text appears in the welcome offer banner. Indicates the time left before offer expires. Examples: "Ending in 34 minutes", "Ending in 4 days", "Ending in 1 hour" */
 "_offer_ending_" = "Τελειώνει σε %@";
 
+/* Text appears in main view with the assigned port */
+"_pf_active_port_status" = "Ενεργή θύρα:";
+
+/* Text appears in port forwarding view with the assigned port */
+"_pf_active_port_number" = "Ενεργός αριθμός θύρας";
+
+/* Text appears as hint when hovering mouse over the assigned port number */
+"_pf_copy_port_number" = "Αντιγραφή αριθμού θύρας";
+
+/* Text appears in port forwarding view during loading */
+"_pf_loading" = "Φόρτωση...";
+
+/* Text appears under active port number indicating relative date */
+"_pf_updated" = "Ενημερώθηκε %@";
+
 "_quick_settings_title" = "Γρήγορες Ρυθμίσεις";
 
 "_quick_settings_secureCore_description" = "Δρομολογήστε τα πιο ευαίσθητα δεδομένα σας μέσω των ασφαλέστερων διακομιστών μας σε χώρες φιλικές με την προστασία προσωπικών δεδομένων.";
@@ -1384,6 +1411,9 @@
 "_quick_settings_netShield_description" = "Περιηγηθείτε στο Διαδίκτυο χωρίς διαφημίσεις και κακόβουλα προγράμματα.";
 
 "_quick_settings_killSwitch_description" = "Απενεργοποιεί το Διαδίκτυο εάν διακοπεί η σύνδεση VPN για να αποφευχθεί η διαρροή IP.";
+
+/* Text for Port forwarding quick setting in the app */
+"_quick_settings_portForwarding_description" = "Παρακάμψτε τα τείχη προστασίας για να συνδεθείτε σε διακομιστές και συσκευές P2P στο τοπικό σας δίκτυο.";
 
 "_quick_settings_secureCore_note" = "Το Secure Core μπορεί να μειώσει την ταχύτητα του VPN";
 
