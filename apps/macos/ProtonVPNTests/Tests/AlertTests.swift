@@ -227,4 +227,5 @@ private class AppSessionManagerMock: AppSessionManager {
 
 private class NotificationManagerMock: NotificationManagerProtocol {
     func displayServerGoingOnMaintenance() {}
+    func displayPFChange(portNumber _: UInt16) {}
 }

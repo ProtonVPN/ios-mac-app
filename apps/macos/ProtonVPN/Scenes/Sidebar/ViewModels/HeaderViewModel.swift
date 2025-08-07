@@ -316,11 +316,18 @@ final class HeaderViewModel {
             .removeDuplicates(by: { $0?.mappedExternalPort == $1?.mappedExternalPort })
             .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
                 guard let portMapping, portMapping.deadlineDate > Date() else { return }
-                DispatchQueue.main.async {
-                    self?.notificationManager.displayPFChange(portNumber: portMapping.mappedExternalPort)
-                }
+                self?.sendPortForwardingNotificationIfNeeded(portNumber: portMapping.mappedExternalPort)
                 self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
             })
+    }
+
+    private func sendPortForwardingNotificationIfNeeded(portNumber: UInt16) {
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+            DispatchQueue.main.async {
+                self.notificationManager.displayPFChange(portNumber: portNumber)
+            }
+        }
     }
 
     private func rateString(for rate: UInt32) -> String {

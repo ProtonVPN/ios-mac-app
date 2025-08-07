@@ -76,6 +76,8 @@ public enum AppEvent: String {
     case plutonium
     /// The Port Forwarding setting changed
     case portForwarding
+    /// The Port Forwarding Notification setting changed
+    case portForwardingNotifications
 
     // MARK: API-Driven
 

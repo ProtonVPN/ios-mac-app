@@ -1436,6 +1436,10 @@ public enum Localizable {
   public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
   /// iOS: Settings account section card description for guest mode
   public static var settingsNewAccountCardDescription: String { return Localizable.tr("Localizable", "_settings_new_account_card_description", fallback: "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.") }
+  /// MacOS: Settings -> Port forwarding notifications settings explained
+  public static var settingsPortForwardingNotificationsInfo: String { return Localizable.tr("Localizable", "_settings_port_forwarding_notifications_info", fallback: "Get notified when your active port number changes") }
+  /// MacOS: Settings -> Port forwarding notifications
+  public static var settingsPortForwardingNotificationsTitle: String { return Localizable.tr("Localizable", "_settings_port_forwarding_notifications_title", fallback: "Port forwarding notifications") }
   /// Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]
   public static var settingsProtocolAlertBody: String { return Localizable.tr("Localizable", "_settings_protocol_alert_body", fallback: "Changing protocols will end your current VPN session.") }
   /// Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]

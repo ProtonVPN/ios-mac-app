@@ -43,6 +43,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private var plutoniumView: SettingsTickboxView!
     @IBOutlet private var dnsLeakProtectionView: SettingsTickboxView!
     @IBOutlet private var allowLANView: SettingsTickboxView!
+    @IBOutlet private var portForwardingView: SettingsTickboxView!
     private var viewModel: ConnectionSettingsViewModel
 
     @available(*, unavailable)
@@ -180,6 +181,16 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         dnsLeakProtectionView.setupItem(model: model, delegate: self)
     }
 
+    private func setupPortForwardingNotificationsItem() {
+        let featureState = viewModel.displayState(for: PortForwardingNotifications.self)
+        let model = SettingsTickboxView.ViewModel(
+            labelText: Localizable.settingsPortForwardingNotificationsTitle,
+            state: featureState,
+            toolTip: Localizable.settingsPortForwardingNotificationsInfo
+        )
+        portForwardingView.setupItem(model: model, delegate: self)
+    }
+
     private func setupAllowLANItem() {
         let featureState = viewModel.displayState(for: ExcludeLocalNetworks.self)
         let model = SettingsTickboxView.ViewModel(
@@ -209,6 +220,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAllowLANItem()
+        setupPortForwardingNotificationsItem()
     }
 
     // MARK: - Actions
@@ -256,6 +268,10 @@ extension ConnectionSettingsViewController: TickboxViewDelegate {
             viewModel.setVpnAccelerator(value == .on, completion: { [weak self] _ in
                 self?.setupVpnAcceleratorItem()
             })
+        case portForwardingView:
+            viewModel.setPortForwardingNotifications(value == .on, completion: { [weak self] _ in
+                self?.setupPortForwardingNotificationsItem()
+            })
         default:
             break
         }
@@ -269,6 +285,8 @@ extension ConnectionSettingsViewController: TickboxViewDelegate {
             viewModel.showVPNAcceleratorUpsell()
         case plutoniumView:
             viewModel.showPlutoniumUpsell()
+        case portForwardingView:
+            viewModel.showPortForwardingUpsell()
         default:
             break
         }
