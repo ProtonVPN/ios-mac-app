@@ -304,6 +304,15 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Always-on VPN will reconnect you automatically";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
 // MARK: About
 
 /* MacOS: About window title */

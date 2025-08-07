@@ -20,11 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import AppKit
 import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
 import Strings
+import UserNotifications
 import VPNShared
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
@@ -49,7 +51,31 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
 
         setNonTransientState(state: appStateManager.state)
         NSUserNotificationCenter.default.delegate = self
+        UNUserNotificationCenter.current().delegate = self
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(appStateChanged))
+        setupActions()
+    }
+
+    // MARK: - Private
+
+    private func setupActions() {
+        // Define the custom actions.
+        let copyPortAction = UNNotificationAction(
+            identifier: NotificationConstants.PortForwarding.copyPortActionIdentifier,
+            title: Localizable.portForwardingInfoCopyButton,
+            options: []
+        )
+        // Define the notification type
+        let portForwardingCategory =
+            UNNotificationCategory(
+                identifier: NotificationConstants.PortForwarding.portForwardingCategory,
+                actions: [copyPortAction],
+                intentIdentifiers: [],
+                hiddenPreviewsBodyPlaceholder: "",
+                options: .customDismissAction
+            )
+        // Register the notification type.
+        UNUserNotificationCenter.current().setNotificationCategories([portForwardingCategory])
     }
 
     @objc
@@ -119,5 +145,61 @@ extension NotificationManager {
         notification.informativeText = Localizable.maintenanceOnServerDetectedSubtitle
         notification.hasActionButton = false
         fire(notification)
+    }
+
+    func displayPFChange(portNumber: UInt16) {
+        let portString = String(portNumber)
+        let content = UNMutableNotificationContent()
+        content.title = "ProtonVPN"
+        content.subtitle = Localizable.portForwardingInfoSubtitle(portString)
+        content.body = Localizable.portForwardingInfoBody
+        content.userInfo = [NotificationConstants.PortForwarding.portNumberUserInfoKey: portString]
+        content.categoryIdentifier = NotificationConstants.PortForwarding.portForwardingCategory
+        let request = UNNotificationRequest(identifier: portString, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
+}
+
+extension NotificationManager: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        willPresent _: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .list])
+    }
+
+    func userNotificationCenter(
+        _: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let userInfo = response.notification.request.content.userInfo
+
+        switch response.actionIdentifier {
+        case NotificationConstants.PortForwarding.copyPortActionIdentifier:
+            guard let portNumber = userInfo[NotificationConstants.PortForwarding.portNumberUserInfoKey] as? String else {
+                break
+            }
+            Self.copyPortNumber(portNumber)
+        default:
+            break
+        }
+
+        completionHandler()
+    }
+
+    private static func copyPortNumber(_ portString: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(portString, forType: .string)
+    }
+}
+
+private enum NotificationConstants {
+    enum PortForwarding {
+        static let portForwardingCategory: String = "PORT_FORWARDING"
+        static let portNumberUserInfoKey: String = "PORT_NUMBER"
+        static let copyPortActionIdentifier: String = "COPY_PORT_ACTION"
     }
 }

@@ -1156,6 +1156,14 @@ public enum Localizable {
   public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
   /// MacOS: Settings -> Port forwarding: name of field.
   public static var portForwarding: String { return Localizable.tr("Localizable", "_port_forwarding", fallback: "Port forwarding") }
+  /// Explanation of the Notification about port forwarding
+  public static var portForwardingInfoBody: String { return Localizable.tr("Localizable", "_port_forwarding_info_body", fallback: "Go to your torrent client or P2P app and enter this number.") }
+  /// Copy button in the Notification about port forwarding
+  public static var portForwardingInfoCopyButton: String { return Localizable.tr("Localizable", "_port_forwarding_info_copy_button", fallback: "Copy") }
+  /// Subtitle of the Notification shown with the port number
+  public static func portForwardingInfoSubtitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_port_forwarding_info_subtitle", String(describing: p1), fallback: "Active port number: %@")
+  }
   /// MacOS: Settings screen title
   public static var preferences: String { return Localizable.tr("Localizable", "_preferences", fallback: "Preferences") }
   /// Description shown together with server info icon

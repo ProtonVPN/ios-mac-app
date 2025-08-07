@@ -54,6 +54,7 @@ final class HeaderViewModel {
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
+        NotificationManagerFactory &
         PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
@@ -68,6 +69,7 @@ final class HeaderViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+    private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
 
     private lazy var porftForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
@@ -310,10 +312,15 @@ final class HeaderViewModel {
             return
         }
         @Dependency(\.natPortMappingService) var natPortMappingService
-        natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
-            guard let portMapping, portMapping.deadlineDate > Date() else { return }
-            self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
-        })
+        natPmpCancellable = natPortMappingService.portMappingStream
+            .removeDuplicates(by: { $0?.mappedExternalPort == $1?.mappedExternalPort })
+            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
+                guard let portMapping, portMapping.deadlineDate > Date() else { return }
+                DispatchQueue.main.async {
+                    self?.notificationManager.displayPFChange(portNumber: portMapping.mappedExternalPort)
+                }
+                self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+            })
     }
 
     private func rateString(for rate: UInt32) -> String {
