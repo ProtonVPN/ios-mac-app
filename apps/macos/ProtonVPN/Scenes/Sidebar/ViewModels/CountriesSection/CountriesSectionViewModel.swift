@@ -693,8 +693,10 @@ class CountriesSectionViewModel {
     }
 
     /// Includes upsell banner
-    private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
+    private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection? {
         let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true })
+        guard !cellModels.isEmpty else { return nil }
+
         return ServerSection(
             header: allLocationsHeader(locationCount: cellModels.count),
             cells: [offerBannerCellModel].compactMap { $0 } + cellModels
@@ -712,7 +714,7 @@ class CountriesSectionViewModel {
 
     private func gatewaysSection(for groups: [ServerGroupInfo]) -> ServerSection? {
         let gateways = groups.filter(\.isGateway)
-        if gateways.isEmpty { return nil }
+        guard !gateways.isEmpty else { return nil }
 
         return ServerSection(
             header: gatewaysSectionHeader,
