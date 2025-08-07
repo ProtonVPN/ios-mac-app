@@ -157,8 +157,7 @@ import SwiftUI
                 CP.TextInvert
             } else {
                 // workaround for a macos bug, where the pure white color in a dropdown text would appear grayed-out
-                if contains(.dropdown),
-                   CP.TextNorm.redComponent == 1,
+                if CP.TextNorm.redComponent == 1,
                    CP.TextNorm.blueComponent == 1,
                    CP.TextNorm.greenComponent == 1 {
                     .init(red: 255, green: 255, blue: 254)
