@@ -99,6 +99,8 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
     }
 
     func cancelPortMapping() async {
+        // since we cancelled port mapping for any reason the current value is invalid
+        portMappingStream.value = nil
         await renewalTask.cancelRenewal()
     }
 

@@ -34,6 +34,7 @@ public struct NATPMPFeature: Sendable {
         case startPortMappingObservation
         case portMapped(PortMappingPacketResponse)
         case portMappingFailed
+        case portMappingReceivedNil
         case stopPortMappingObservation
     }
 
@@ -50,7 +51,7 @@ public struct NATPMPFeature: Sendable {
                 return .publisher {
                     natPortMappingService.portMappingStream
                         .compactMap { portMapping in
-                            guard let portMapping else { return nil }
+                            guard let portMapping else { return .portMappingReceivedNil }
                             return .portMapped(portMapping)
                         }
                         .replaceError(with: .portMappingFailed)
@@ -63,6 +64,11 @@ public struct NATPMPFeature: Sendable {
                 let externalPortNumber = portMappingResponse.mappedExternalPort
                 let updateDate: Date = (state.externalPortNumber != externalPortNumber ? date.now : state.updateDate) ?? date.now
                 state = .loaded(externalPortNumber: externalPortNumber, updateDate: updateDate, responseDate: date.now)
+                return .none
+
+            // if nat pmp service returned `nil`
+            case .portMappingReceivedNil:
+                state = .loading
                 return .none
 
             case .portMappingFailed:

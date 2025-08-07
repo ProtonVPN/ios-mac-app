@@ -42,6 +42,9 @@ struct NATPMPFeatureTests {
         let firstResponse = createPortMappingResponse(externalPort: 8080)
         mockService.portMappingStream.value = firstResponse
 
+        // observation started before first response; current value subject holds `nil`
+        await store.receive(\.portMappingReceivedNil)
+
         await store.receive(\.portMapped) {
             $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
         }
@@ -122,6 +125,8 @@ struct NATPMPFeatureTests {
 
         // Start port mapping
         await store.send(.startPortMappingObservation)
+
+        await store.receive(\.portMappingReceivedNil)
 
         // Send an error to the stream
         struct TestError: Error {}
