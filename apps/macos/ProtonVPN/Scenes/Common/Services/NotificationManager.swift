@@ -158,6 +158,15 @@ extension NotificationManager {
         let request = UNNotificationRequest(identifier: portString, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
     }
+
+    func displayPFError() {
+        let content = UNMutableNotificationContent()
+        content.title = "ProtonVPN"
+        content.subtitle = Localizable.portForwardingErrorSubtitle
+        content.body = Localizable.portForwardingErrorBody
+        let request = UNNotificationRequest(identifier: Localizable.portForwardingErrorBody, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+    }
 }
 
 extension NotificationManager: UNUserNotificationCenterDelegate {

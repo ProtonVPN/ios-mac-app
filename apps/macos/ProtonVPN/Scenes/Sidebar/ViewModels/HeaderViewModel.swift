@@ -313,11 +313,43 @@ final class HeaderViewModel {
         }
         @Dependency(\.natPortMappingService) var natPortMappingService
         natPmpCancellable = natPortMappingService.portMappingStream
-            .removeDuplicates(by: { $0?.mappedExternalPort == $1?.mappedExternalPort })
-            .sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
-                guard let portMapping, portMapping.deadlineDate > Date() else { return }
-                self?.sendPortForwardingNotificationIfNeeded(portNumber: portMapping.mappedExternalPort)
-                self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+            .removeDuplicates(by: { prev, next in
+                switch (prev, next) {
+                case let (.some(prevResult), .some(nextResult)):
+                    switch (prevResult, nextResult) {
+                    case let (.success(prevPortMapping), .success(nextPortMapping)):
+                        // consume next value only if mapped ports are the same
+                        prevPortMapping?.mappedExternalPort == nextPortMapping?.mappedExternalPort
+                    default:
+                        // we don't differentiate errors; thus all subsequent errors are "equal"
+                        true
+                    }
+                case (.none, .none):
+                    true
+                default:
+                    false
+                }
+            })
+            .sink(receiveCompletion: { [weak self] _ in
+                self?.delegate?.mappedPortChanged(to: nil)
+            }, receiveValue: { [weak self] portMappingResult in
+                guard let portMappingResult else {
+                    self?.delegate?.mappedPortChanged(to: nil)
+                    return
+                }
+                switch portMappingResult {
+                case let .success(portMapping):
+                    guard let portMapping, portMapping.deadlineDate > Date() else {
+                        // not valid port mapping, hide it
+                        self?.delegate?.mappedPortChanged(to: nil)
+                        return
+                    }
+                    self?.sendPortForwardingNotificationIfNeeded(portNumber: portMapping.mappedExternalPort)
+                    self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+
+                case .failure:
+                    self?.sendPortForwardingNotificationErrorIfNeeded()
+                }
             })
     }
 
@@ -326,6 +358,15 @@ final class HeaderViewModel {
         if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
             DispatchQueue.main.async {
                 self.notificationManager.displayPFChange(portNumber: portNumber)
+            }
+        }
+    }
+
+    private func sendPortForwardingNotificationErrorIfNeeded() {
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+            DispatchQueue.main.async {
+                self.notificationManager.displayPFError()
             }
         }
     }

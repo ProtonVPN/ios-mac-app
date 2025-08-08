@@ -47,9 +47,8 @@ public struct NATPMPPortView: View {
                     updateDate: updateDate,
                     responseDate: responseDate
                 )
-            // will not be used
             case .error:
-                EmptyView()
+                PortErrorView()
             }
         }
         .onAppear {
@@ -166,6 +165,34 @@ struct LoadingPortView: View {
     }
 }
 
+// MARK: - Port Error View
+
+struct PortErrorView: View {
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: .themeSpacing8) {
+                Text(Localizable.pfActivePortNumber)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.callout(emphasised: true))
+
+                HStack(spacing: .themeSpacing8) {
+                    IconProvider.circleSlash
+                        .resizable()
+                        .frame(.square(.themeSpacing16))
+
+                    Text(Localizable.pfError)
+                        .foregroundColor(Color(.text))
+                        .font(.title2(emphasised: false))
+                }
+            }
+            Spacer()
+        }
+        .padding(.themeSpacing16)
+        .background(Color(.background, .weak))
+        .cornerRadius(.themeRadius8)
+    }
+}
+
 // MARK: - Status Port View
 
 public class MappedPort: ObservableObject {
@@ -251,6 +278,9 @@ private func copyPortNumber(_ portNumber: UInt16) {
 
             // Loading state
             LoadingPortView()
+
+            // Error state
+            PortErrorView()
 
             // Status view
             StatusPortView(portModel: MappedPort(portNumber: 36528))

@@ -34,10 +34,18 @@ enum QuickSettingState {
     case portForwarding(PortForwardingVCState)
 }
 
-struct ConnectionInfo {
-    let portForwardingEnabled: Bool
-    let supportsP2P: Bool
-    let isConnected: Bool
+enum ConnectionInfo {
+    case connected(portForwardingEnabled: Bool, supportsP2P: Bool, isConnected: Bool)
+    case pfError(isConnected: Bool)
+
+    var isConnected: Bool {
+        switch self {
+        case let .connected(_, _, isConnected):
+            isConnected
+        case let .pfError(isConnected):
+            isConnected
+        }
+    }
 }
 
 // MARK: - Configuration Protocol
@@ -49,7 +57,7 @@ protocol QuickSettingConfiguration {
     var container: NSBox { get }
 
     func createViewController() -> QuickSettingDetailViewController
-    func handleStateUpdate(connectionInfo: ConnectionInfo?) -> QuickSettingState
+    func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState
 }
 
 // MARK: - Generic Configuration
@@ -64,7 +72,7 @@ struct GenericQuickSettingConfiguration: QuickSettingConfiguration {
         QuickSettingDetailViewController(presenter)
     }
 
-    func handleStateUpdate(connectionInfo _: ConnectionInfo?) -> QuickSettingState {
+    func handleStateUpdate(connectionInfo _: ConnectionInfo) -> QuickSettingState {
         .standard
     }
 }
@@ -81,8 +89,8 @@ struct NetShieldQuickSettingConfiguration: QuickSettingConfiguration {
         QuickSettingDetailNetShieldViewController(presenter)
     }
 
-    func handleStateUpdate(connectionInfo: ConnectionInfo?) -> QuickSettingState {
-        .netShield(statsEnabled: connectionInfo?.isConnected ?? false)
+    func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState {
+        .netShield(statsEnabled: connectionInfo.isConnected)
     }
 }
 
@@ -98,22 +106,23 @@ struct PortForwardingQuickSettingConfiguration: QuickSettingConfiguration {
         QuickSettingDetailPFViewController(presenter)
     }
 
-    func handleStateUpdate(connectionInfo: ConnectionInfo?) -> QuickSettingState {
-        guard let connectionInfo else {
-            return .portForwarding(.notConnected(pfEnabled: false))
-        }
-
-        switch (connectionInfo.isConnected, connectionInfo.portForwardingEnabled, connectionInfo.supportsP2P) {
-        case (true, true, true):
-            return .portForwarding(.connectedToP2P)
-        case (true, true, false):
-            return .portForwarding(.connectedNotToP2P)
-        case (true, false, _):
-            return .portForwarding(.connectedNoPf)
-        case (false, true, _):
-            return .portForwarding(.notConnected(pfEnabled: true))
-        case (false, false, _):
-            return .portForwarding(.notConnected(pfEnabled: false))
+    func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState {
+        switch connectionInfo {
+        case let .connected(portForwardingEnabled, supportsP2P, isConnected):
+            switch (isConnected, portForwardingEnabled, supportsP2P) {
+            case (true, true, true):
+                .portForwarding(.connectedToP2P)
+            case (true, true, false):
+                .portForwarding(.connectedNotToP2P)
+            case (true, false, _):
+                .portForwarding(.connectedNoPf)
+            case (false, true, _):
+                .portForwarding(.notConnected(pfEnabled: true))
+            case (false, false, _):
+                .portForwarding(.notConnected(pfEnabled: false))
+            }
+        case .pfError:
+            .portForwarding(.error)
         }
     }
 }

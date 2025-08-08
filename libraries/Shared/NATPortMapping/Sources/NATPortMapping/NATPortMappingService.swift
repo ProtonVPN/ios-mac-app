@@ -21,7 +21,7 @@ import Dependencies
 import Foundation
 
 public protocol NATPortMappingService: Sendable {
-    var portMappingStream: CurrentValueSubject<PortMappingPacketResponse?, Error> { get }
+    var portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never> { get }
     func createPortMapping(
         gatewayAddress: String,
         portProtocol: PortMappingProtocol,
@@ -50,13 +50,13 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
     private let natPmpClient: NATPortMappingClient
     private let renewalTask: RenewalTaskManager
 
-    public let portMappingStream: CurrentValueSubject<PortMappingPacketResponse?, Error>
+    public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>
 
     // MARK: - Init
 
     init() {
         self.natPmpClient = NATPortMappingClient()
-        self.portMappingStream = CurrentValueSubject<PortMappingPacketResponse?, Error>(nil)
+        self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>(nil)
         self.renewalTask = RenewalTaskManager()
     }
 
@@ -80,12 +80,12 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
 
                 // ensure that BE sent success mapping
                 guard portMappingResponse.mappedResultCode == .success else {
-                    portMappingStream.send(completion: .failure(NATPortMappingError.mappingFailed))
+                    portMappingStream.send(.failure(NATPortMappingError.mappingFailed))
                     return
                 }
 
                 // Send response to stream
-                portMappingStream.value = portMappingResponse
+                portMappingStream.value = .success(portMappingResponse)
 
                 // Schedule next renewal if successful
                 await scheduleNextRenewal(
@@ -93,7 +93,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
                     response: portMappingResponse
                 )
             } catch {
-                portMappingStream.send(completion: .failure(error))
+                portMappingStream.send(.failure(error))
             }
         }
     }
@@ -157,10 +157,10 @@ private actor RenewalTaskManager {
 
 #if DEBUG
     final class NATPortMappingServiceMock: NATPortMappingService {
-        public let portMappingStream: CurrentValueSubject<PortMappingPacketResponse?, Error>
+        public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>
 
         init() {
-            self.portMappingStream = CurrentValueSubject<PortMappingPacketResponse?, Error>(nil)
+            self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>(nil)
         }
 
         func createPortMapping(

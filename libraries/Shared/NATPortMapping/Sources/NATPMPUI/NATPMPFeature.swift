@@ -50,9 +50,15 @@ public struct NATPMPFeature: Sendable {
                 state = .loading
                 return .publisher {
                     natPortMappingService.portMappingStream
-                        .compactMap { portMapping in
-                            guard let portMapping else { return .portMappingReceivedNil }
-                            return .portMapped(portMapping)
+                        .compactMap { portMappingResult in
+                            guard let portMappingResult else { return .portMappingReceivedNil }
+                            switch portMappingResult {
+                            case let .success(portMapping):
+                                guard let portMapping else { return .portMappingReceivedNil }
+                                return .portMapped(portMapping)
+                            case .failure:
+                                return .portMappingFailed
+                            }
                         }
                         .replaceError(with: .portMappingFailed)
                 }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
