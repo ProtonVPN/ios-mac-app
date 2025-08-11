@@ -82,8 +82,8 @@ extension OnboardingModuleService: OnboardingService {
     func showPaywall() {
         log.debug("Starting paywall", category: .app)
         guard let oneClickIapVC = createOneClickIapVC() else {
-            // if for any reason we didn't show oneClick, we should present main interface
-            return onboardingCoordinatorDidFinish()
+            // if for any reason we didn't show oneClick, `createOneClickIapVC` will present the main interface instead
+            return
         }
         let navigationController = UINavigationController(rootViewController: oneClickIapVC)
         navigationController.setNavigationBarHidden(true, animated: false)
