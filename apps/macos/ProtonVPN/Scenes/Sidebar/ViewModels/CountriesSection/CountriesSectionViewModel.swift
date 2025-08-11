@@ -110,6 +110,18 @@ class CountriesSectionViewModel {
         alertService.push(alert: FreeConnectionsAlert(countries: freeCountries))
     }
 
+    var isConnected: Bool {
+        vpnGateway.connection == .connected
+    }
+
+    var portForwardingIsOn: Bool {
+        portForwardingPropertyProvider.portForwarding == true
+    }
+
+    var connectedServerSupportsP2P: Bool {
+        connectedServer?.supportsP2P == true
+    }
+
     private var freeCountries: [(String, NSImage?)] {
         serverGroups?.compactMap { (serverGroup: ServerGroupInfo) -> (String, NSImage?)? in
             switch serverGroup.kind {
@@ -157,6 +169,7 @@ class CountriesSectionViewModel {
         & CoreAlertServiceFactory
         & ModelIdCheckerFactory
         & NetShieldPropertyProviderFactory
+        & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
@@ -167,6 +180,7 @@ class CountriesSectionViewModel {
     private let factory: Factory
 
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -183,7 +197,11 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
-        AppEvent.activeServerTypeChanged.subscribe(self, selector: #selector(vpnConnectionChanged))
+        let vpnConnectionChangedEvents: [AppEvent] = [
+            .activeServerTypeChanged,
+            .connectionStateChanged,
+        ]
+        vpnConnectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
 
         let reloadConnectionEvents: [AppEvent] = [
             .activeServerTypeChanged,
@@ -195,7 +213,7 @@ class CountriesSectionViewModel {
             .activeServerTypeChanged,
             .netShield,
             .vpnAccelerator,
-            // .portForwarding or @Shared like killSwitch https://protonag.atlassian.net/browse/VPNAPPL-2934
+            .portForwarding,
         ]
         updateSettingsEvents.subscribe(self, selector: #selector(updateSettings))
 
@@ -453,7 +471,7 @@ class CountriesSectionViewModel {
             secureCore: propertiesManager.secureCoreToggle,
             netshield: netShieldPropertyProvider.netShieldType,
             killSwitch: propertiesManager.killSwitch,
-            portForwarding: propertiesManager.portForwarding
+            portForwarding: portForwardingPropertyProvider.portForwarding ?? false
         )
     }
 
@@ -502,10 +520,6 @@ class CountriesSectionViewModel {
         if let bannerIndex = freeUserBannerIndex {
             contentChanged?(ContentChange(reload: [bannerIndex]))
         }
-    }
-
-    private var isConnected: Bool {
-        vpnGateway.connection == .connected
     }
 
     private var freeUserBannerIndex: Int? {

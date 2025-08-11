@@ -92,7 +92,6 @@ public protocol PropertiesManagerProtocol: AnyObject {
     var featureFlags: FeatureFlags { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
-    var portForwarding: Bool { get set }
 
     // Development properties
     var apiEndpoint: String? { get set }
@@ -441,8 +440,6 @@ public final class PropertiesManager: PropertiesManagerProtocol {
         get { sharedKillSwitch }
         set { $sharedKillSwitch.withLock { $0 = newValue } }
     }
-
-    @Shared(.portForwarding) public var portForwarding: Bool
 
     @BoolProperty(.humanValidationFailed) public var humanValidationFailed: Bool
 

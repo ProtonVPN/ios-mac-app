@@ -35,38 +35,78 @@ struct NATPMPFeatureTests {
             $0.date = DateGenerator { Date(timeIntervalSince1970: 1000) }
         }
 
-        // Start port mapping
-        await store.send(.startPortMapping)
+        // Start port mapping observation
+        await store.send(.startPortMappingObservation)
 
         // Send first port mapping response
         let firstResponse = createPortMappingResponse(externalPort: 8080)
-        mockService.portMappingContinuation.yield(firstResponse)
+        mockService.portMappingStream.value = firstResponse
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000))
+            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
         }
-
-        // Send second port mapping response with different port
-        let secondResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingContinuation.yield(secondResponse)
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 2000) }
 
+        // Send second port mapping response with different port
+        let secondResponse = createPortMappingResponse(externalPort: 9090)
+        mockService.portMappingStream.value = secondResponse
+
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000))
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 2000))
         }
 
-        // Send third response with same port (should not update anything)
+        store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 3000) }
+
+        // Send third response with same port (should update responseDate)
         let thirdResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingContinuation.yield(thirdResponse)
+        mockService.portMappingStream.value = thirdResponse
+
+        await store.receive(\.portMapped) {
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 3000))
+        }
+
+        // Stop port mapping observation
+        await store.send(.stopPortMappingObservation)
+
+        // send fourth response; no active subscription
+        let fourthResponseCreateDate = Date()
+        let fourthResponse = createPortMappingResponse(externalPort: 6666)
+        store.dependencies.date = DateGenerator { fourthResponseCreateDate.addingTimeInterval(161) }
+
+        mockService.portMappingStream.value = fourthResponse
+
+        // Restart port mapping observation
+        await store.send(.startPortMappingObservation) {
+            $0 = .loading
+        }
 
         await store.receive(\.portMapped)
 
-        // Stop port mapping
-        await store.send(.stopPortMapping)
+        // Stop port mapping observation
+        await store.send(.stopPortMappingObservation)
+
+        // send fifth response; no active subscription
+        let fifthResponseCreateDate = Date()
+        let fifthResponse = createPortMappingResponse(externalPort: 7777)
+        let nowDate = fifthResponseCreateDate.addingTimeInterval(5)
+        store.dependencies.date = DateGenerator { nowDate }
+
+        mockService.portMappingStream.value = fifthResponse
+
+        // Restart port mapping observation
+        await store.send(.startPortMappingObservation)
+
+        // still valid mapping from before there was no observation
+        await store.receive(\.portMapped) {
+            $0 = .loaded(externalPortNumber: 7777, updateDate: nowDate, responseDate: nowDate)
+        }
+
+        // Stop port mapping observation
+        await store.send(.stopPortMappingObservation)
 
         // Finish the stream
-        mockService.portMappingContinuation.finish()
+        mockService.portMappingStream.send(completion: .finished)
     }
 
     @Test
@@ -81,11 +121,11 @@ struct NATPMPFeatureTests {
         }
 
         // Start port mapping
-        await store.send(.startPortMapping)
+        await store.send(.startPortMappingObservation)
 
         // Send an error to the stream
         struct TestError: Error {}
-        mockService.portMappingContinuation.finish(throwing: TestError())
+        mockService.portMappingStream.send(completion: .failure(TestError()))
 
         // Should receive portMappingFailed action
         await store.receive(\.portMappingFailed) {
@@ -110,7 +150,7 @@ struct NATPMPFeatureTests {
         data.append(contentsOf: UInt32(1000).bigEndian.bytes) // epoch time
         data.append(contentsOf: UInt16(1234).bigEndian.bytes) // internal port
         data.append(contentsOf: externalPort.bigEndian.bytes) // external port
-        data.append(contentsOf: UInt32(7200).bigEndian.bytes) // lifetime
+        data.append(contentsOf: UInt32(60).bigEndian.bytes) // lifetime
 
         do {
             return try PortMappingPacketResponse(from: data)

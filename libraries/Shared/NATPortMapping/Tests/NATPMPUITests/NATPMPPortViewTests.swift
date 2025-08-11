@@ -33,7 +33,8 @@ struct NATPMPPortViewTests {
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
+                responseDate: Date()
             )
             let nsView = NSHostingView(rootView: view)
 
@@ -48,7 +49,8 @@ struct NATPMPPortViewTests {
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
+                responseDate: Date()
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
@@ -85,7 +87,7 @@ struct NATPMPPortViewTests {
         withDependencies {
             $0.date.now = .init()
         } operation: {
-            let view = StatusPortView(portNumber: 36528)
+            let view = StatusPortView(portModel: MappedPort(portNumber: 36528))
             let nsView = NSHostingView(rootView: view)
 
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
@@ -97,7 +99,7 @@ struct NATPMPPortViewTests {
         withDependencies {
             $0.date.now = .init()
         } operation: {
-            let view = StatusPortView(portNumber: 36528).environment(\.colorScheme, .dark)
+            let view = StatusPortView(portModel: MappedPort(portNumber: 36528)).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))

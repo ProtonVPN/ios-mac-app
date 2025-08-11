@@ -60,13 +60,6 @@ final class CountriesSectionViewController: NSViewController {
         var nib: NSNib? { NSNib(nibNamed: NSNib.Name(rawValue), bundle: nil) }
     }
 
-    enum QuickSettingType {
-        case secureCoreDisplay
-        case netShieldDisplay
-        case killSwitchDisplay
-        case portForwardingDisplay
-    }
-
     @IBOutlet var searchIcon: NSImageView!
     @IBOutlet var searchTextField: TextFieldWithFocus!
     @IBOutlet var searchBox: NSBox!
@@ -103,7 +96,7 @@ final class CountriesSectionViewController: NSViewController {
     fileprivate let viewModel: CountriesSectionViewModel
 
     private var infoButtonRowSelected: Int?
-    private var quickSettingDetailDisplayed = false
+    private lazy var quickSettingsManager = QuickSettingsManager()
 
     weak var sidebarView: NSView?
 
@@ -141,7 +134,7 @@ final class CountriesSectionViewController: NSViewController {
 
     override func viewWillAppear() {
         super.viewWillAppear()
-        didDisplayQuickSetting(appear: false)
+        quickSettingsManager.hideAllSettings()
     }
 
     override func viewDidLayout() {
@@ -234,32 +227,9 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func setupQuickSettings() {
-        [
-            (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
-            (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
-            (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2),
-//            (viewModel.portForwardingPresenter, portForwardingContainer, portForwardingBtn, 3), // TODO: enable in the wiring
-        ].forEach { presenter, container, button, index in
-            let vc: NSViewController = if index == 1 {
-                QuickSettingDetailNetShieldViewController(presenter)
-            } else {
-                QuickSettingDetailViewController(presenter)
-            }
-            vc.viewWillAppear()
-            container?.addSubview(vc.view)
-            container?.heightAnchor.constraint(equalTo: vc.view.heightAnchor).isActive = true
-            container?.widthAnchor.constraint(equalTo: vc.view.widthAnchor).isActive = true
-            vc.view.translatesAutoresizingMaskIntoConstraints = false
-            button?.toolTip = presenter.title
-            button?.callback = { [weak self] _ in self?.didTapSettingButton(index) }
-            button?.detailOpened = false
-            presenter.dismiss = { [weak self] in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self?.didDisplayQuickSetting(appear: false)
-                }
-            }
-            self.addChild(vc)
-        }
+        quickSettingsManager.delegate = self
+        quickSettingsManager.setup(with: viewModel, in: self)
+
         // hides netshield quick setting button
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
@@ -340,13 +310,21 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingAlertBage() {
-        // TODO: wire in the wiring task
-        if false {
+        if viewModel.isConnected, viewModel.portForwardingIsOn, !viewModel.connectedServerSupportsP2P {
             portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
             portForwardingWarningImage?.isHidden = false
         } else {
             portForwardingWarningImage?.isHidden = true
         }
+    }
+
+    private func updatePortForwardingView() {
+        let connectionInfo = ConnectionInfo(
+            portForwardingEnabled: viewModel.portForwardingIsOn,
+            supportsP2P: viewModel.connectedServerSupportsP2P,
+            isConnected: viewModel.isConnected
+        )
+        quickSettingsManager.updateState(connectionInfo: connectionInfo)
     }
 
     @objc
@@ -362,68 +340,10 @@ final class CountriesSectionViewController: NSViewController {
         viewModel.filterContent(forQuery: "")
     }
 
-    private func didTapSettingButton(_ index: Int) {
-        switch index {
-        case 0:
-            let finalValue = secureCoreContainer.isHidden
-            didDisplayQuickSetting(.secureCoreDisplay, appear: finalValue)
-        case 1:
-            let finalValue = netshieldContainer.isHidden
-            didDisplayQuickSetting(.netShieldDisplay, appear: finalValue)
-        case 2:
-            let finalValue = killSwitchContainer.isHidden
-            didDisplayQuickSetting(.killSwitchDisplay, appear: finalValue)
-        case 3:
-            let finalValue = portForwardingContainer.isHidden
-            didDisplayQuickSetting(.portForwardingDisplay, appear: finalValue)
-        default:
-            return
-        }
-    }
-
-    private func didDisplayQuickSetting(_ quickSettingItem: QuickSettingType? = nil, appear: Bool) {
-        let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
-        let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
-        let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear
-        let portForwardingDisplay = (quickSettingItem == .portForwardingDisplay) && appear
-
-        searchTextField.isEnabled = !appear
-
-        secureCoreBtn.detailOpened = secureCoreDisplay
-        secureCoreContainer.isHidden = !secureCoreDisplay
-
-        netShieldBtn.detailOpened = netShieldDisplay
-        netshieldContainer.isHidden = !netShieldDisplay
-
-        let expectedHeight = 784.0 // determined experimentally, not worth finding a "right" solution given the imminent changes
-
-        if netShieldDisplay,
-           let window = view.window,
-           window.frame.height < expectedHeight {
-            var newFrame = window.frame
-            newFrame.size.height = expectedHeight
-            newFrame.origin.y -= expectedHeight - window.frame.height // the window should gain size towards the bottom.
-            view.window?.setFrame(newFrame, display: true)
-        }
-
-        killSwitchBtn.detailOpened = killSwitchDisplay
-        killSwitchContainer.isHidden = !killSwitchDisplay
-
-        portForwardingBtn.detailOpened = portForwardingDisplay
-        portForwardingContainer.isHidden = !portForwardingDisplay
-
-        serverListScrollView.block = appear
-        quickSettingDetailDisplayed = appear
-
-        secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
-        netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
-        killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
-        portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
-
-        serverListTableView.reloadData()
-    }
-
     private func contentChanged(_ contentChange: ContentChange) {
+        updatePortForwardingAlertBage()
+        updatePortForwardingView()
+
         if contentChange.reset {
             serverListTableView.reloadData()
             return
@@ -480,12 +400,12 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         switch cellWrapper {
         case let .country(model):
             let cell = tableView.makeView(withIdentifier: Cell.country.identifier, owner: self) as! CountryItemCellView
-            cell.disabled = quickSettingDetailDisplayed
+            cell.disabled = quickSettingsManager.isAnySettingDisplayed
             cell.updateView(withModel: model)
             return cell
         case let .server(model):
             let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView
-            cell.disabled = quickSettingDetailDisplayed
+            cell.disabled = quickSettingsManager.isAnySettingDisplayed
             cell.updateView(withModel: model)
             cell.delegate = self
             return cell
@@ -542,14 +462,48 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
         netShieldBtn.switchState(netshield == .off ? AppTheme.Icon.shield : (netshield == .level1 ? AppTheme.Icon.shieldHalfFilled : AppTheme.Icon.shieldFilled), enabled: netshield != .off)
         portForwardingBtn
             .switchState(portForwarding ? AppTheme.Icon.arrowsSwitch : AppTheme.Icon.arrowUpBounceLeft, enabled: portForwarding)
-        children
-            .compactMap { $0 as? QuickSettingsDetailViewControllerProtocol }
-            .forEach { $0.reloadOptions() }
+        quickSettingsManager.reloadAllOptions()
     }
 }
 
 extension CountriesSectionViewController: ServerItemCellViewDelegate {
     func userDidRequestStreamingInfo(server: ServerItemViewModel) {
         viewModel.showStreamingServices(server: server)
+    }
+}
+
+extension CountriesSectionViewController: QuickSettingsManagerDelegate {
+    func quickSettingsManager(_: QuickSettingsManager, didShowSetting _: QuickSettingType) {
+        searchTextField.isEnabled = false
+        serverListScrollView.block = true
+
+        // Set accessibility identifiers
+        secureCoreBtn.setAccessibilityIdentifier("SecureCoreButton")
+        netShieldBtn.setAccessibilityIdentifier("NetShieldButton")
+        killSwitchBtn.setAccessibilityIdentifier("KillSwitchButton")
+        portForwardingBtn.setAccessibilityIdentifier("PortForwardingButton")
+
+        serverListTableView.reloadData()
+    }
+
+    func quickSettingsManagerDidHideAllSettings(_: QuickSettingsManager) {
+        searchTextField.isEnabled = true
+        serverListScrollView.block = false
+
+        serverListTableView.reloadData()
+    }
+
+    func quickSettingsManager(_: QuickSettingsManager, needsWindowResize: Bool) {
+        guard needsWindowResize else { return }
+
+        let expectedHeight = 784.0 // determined experimentally, not worth finding a "right" solution given the imminent changes
+
+        if let window = view.window,
+           window.frame.height < expectedHeight {
+            var newFrame = window.frame
+            newFrame.size.height = expectedHeight
+            newFrame.origin.y -= expectedHeight - window.frame.height // the window should gain size towards the bottom.
+            view.window?.setFrame(newFrame, display: true)
+        }
     }
 }

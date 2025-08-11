@@ -16,6 +16,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
+@preconcurrency import Combine
 import ComposableArchitecture
 import Foundation
 import NATPortMapping
@@ -25,53 +26,51 @@ public struct NATPMPFeature: Sendable {
     @ObservableState
     public enum State: Equatable {
         case loading
-        case loaded(externalPortNumber: UInt16, updateDate: Date)
+        case loaded(externalPortNumber: UInt16, updateDate: Date, responseDate: Date)
         case error
     }
 
     public enum Action {
-        case startPortMapping
-        case portMapped(externalPortNumber: UInt16)
+        case startPortMappingObservation
+        case portMapped(PortMappingPacketResponse)
         case portMappingFailed
-        case stopPortMapping
+        case stopPortMappingObservation
     }
 
     @Dependency(\.natPortMappingService) private var natPortMappingService
-    @Dependency(\.date.now) private var now
+    @Dependency(\.date) private var date
+
+    private var cancellables: [AnyCancellable] = []
 
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .startPortMapping:
+            case .startPortMappingObservation:
                 state = .loading
-                return .run { send in
-                    for try await portMapping in natPortMappingService.portMappingStream {
-                        await send(
-                            .portMapped(externalPortNumber: portMapping.mappedExternalPort)
-                        )
-                    }
-                } catch: { _, send in
-                    await send(.portMappingFailed)
-                }.cancellable(id: CancelID.portMappingStream)
+                return .publisher {
+                    natPortMappingService.portMappingStream
+                        .compactMap { portMapping in
+                            guard let portMapping else { return nil }
+                            return .portMapped(portMapping)
+                        }
+                        .replaceError(with: .portMappingFailed)
+                }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
-            case let .portMapped(externalPortNumber):
-                if state.externalPortNumber != externalPortNumber {
-                    // the date will be updated only on port change; otherwise it will be always < 2 min
-                    state = .loaded(externalPortNumber: externalPortNumber, updateDate: now)
-                }
+            case let .portMapped(portMappingResponse):
+                // check if the last value is not yet expired
+                guard portMappingResponse.deadlineDate > date.now else { return .none }
+
+                let externalPortNumber = portMappingResponse.mappedExternalPort
+                let updateDate: Date = (state.externalPortNumber != externalPortNumber ? date.now : state.updateDate) ?? date.now
+                state = .loaded(externalPortNumber: externalPortNumber, updateDate: updateDate, responseDate: date.now)
                 return .none
 
             case .portMappingFailed:
                 state = .error
                 return .none
 
-            case .stopPortMapping:
-                return .merge(
-                    .run { _ in
-                        await natPortMappingService.cancelPortMapping()
-                    },
-                    .cancel(id: CancelID.portMappingStream)
-                )
+            case .stopPortMappingObservation:
+                return .cancel(id: CancelID.portMappingStream)
             }
         }
     }
@@ -84,7 +83,7 @@ private enum CancelID {
 extension NATPMPFeature.State {
     var externalPortNumber: UInt16? {
         switch self {
-        case let .loaded(portNumber, _):
+        case let .loaded(portNumber, _, _):
             portNumber
         case .loading, .error:
             nil
@@ -93,7 +92,7 @@ extension NATPMPFeature.State {
 
     var updateDate: Date? {
         switch self {
-        case let .loaded(_, date):
+        case let .loaded(_, date, _):
             date
         case .loading, .error:
             nil

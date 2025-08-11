@@ -44,6 +44,11 @@ public struct PortMappingPacketResponse: Sendable {
         MappingResultCode(rawValue: resultCode) ?? .unsupportedOpcode
     }
 
+    let createDate: Date
+    public var deadlineDate: Date {
+        createDate.addingTimeInterval(TimeInterval(mappingLifetime))
+    }
+
     // MARK: - Init
 
     init(from data: Data) throws {
@@ -59,6 +64,8 @@ public struct PortMappingPacketResponse: Sendable {
         self.internalPort = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: 8, as: UInt16.self).bigEndian }
         self.mappedExternalPort = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: 10, as: UInt16.self).bigEndian }
         self.mappingLifetime = data.withUnsafeBytes { $0.loadUnaligned(fromByteOffset: 12, as: UInt32.self).bigEndian }
+
+        self.createDate = Date()
     }
 }
 

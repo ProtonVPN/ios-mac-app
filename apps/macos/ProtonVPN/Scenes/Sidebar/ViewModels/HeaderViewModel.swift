@@ -29,6 +29,7 @@ import LegacyCommon
 import VPNAppCore
 import VPNShared
 
+import Combine
 import Domain
 import Ergonomics
 import Strings
@@ -37,6 +38,7 @@ import Theme
 protocol HeaderViewModelDelegate: AnyObject {
     func bitrateUpdated(with attributedString: NSAttributedString)
     func changeServerStateUpdated(to state: ServerChangeViewState)
+    func mappedPortChanged(to mappedPort: UInt16?)
 }
 
 protocol HeaderViewModelFactory {
@@ -48,9 +50,11 @@ final class HeaderViewModel {
     @Dependency(\.credentialsProvider) var credentials
 
     public typealias Factory =
-        AnnouncementsViewModelFactory & AppStateManagerFactory &
+        AnnouncementsViewModelFactory &
+        AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
+        PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
         VpnGatewayFactory
@@ -64,6 +68,8 @@ final class HeaderViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     var contentChanged: (() -> Void)?
     /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect
@@ -94,11 +100,14 @@ final class HeaderViewModel {
         return freshState
     }
 
+    private var natPmpCancellable: AnyCancellable?
+
     var statistics: NetworkStatistics?
     weak var delegate: HeaderViewModelDelegate? {
         didSet {
             if delegate != nil, isConnected {
                 startBitrateStatistics()
+                startNatPmpObservation()
             }
         }
     }
@@ -244,6 +253,13 @@ final class HeaderViewModel {
 
     @objc
     private func vpnConnectionChanged() {
+        if isConnected {
+            startNatPmpObservation()
+        } else {
+            natPmpCancellable = nil
+            delegate?.mappedPortChanged(to: nil)
+        }
+
         guard isVisible else {
             return
         }
@@ -285,6 +301,19 @@ final class HeaderViewModel {
 
             delegate?.bitrateUpdated(with: formBitrateLabel(with: bitrate))
         }
+    }
+
+    private func startNatPmpObservation() {
+        natPmpCancellable = nil
+        guard portForwardingPropertyProvider.portForwarding == true else {
+            delegate?.mappedPortChanged(to: nil)
+            return
+        }
+        @Dependency(\.natPortMappingService) var natPortMappingService
+        natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
+            guard let portMapping, portMapping.deadlineDate > Date() else { return }
+            self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+        })
     }
 
     private func rateString(for rate: UInt32) -> String {

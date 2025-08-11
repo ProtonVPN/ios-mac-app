@@ -26,13 +26,12 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Domain
+import Ergonomics
 import ExtensionIPC
 import NetShield
 import VPNAppCore
 import VPNShared
-
-import Domain
-import Ergonomics
 
 public protocol VpnManagerProtocol {
     var stateChanged: (() -> Void)? { get set }
@@ -789,9 +788,15 @@ public final class VpnManager: VpnManagerProtocol {
             disconnectCompletion = nil
             setRemoteAuthenticationEndpoint(provider: nil)
             disconnectLocalAgent()
+            #if os(macOS)
+                stopNATPortMappingService()
+            #endif
         case .connected:
             setRemoteAuthenticationEndpoint(provider: vpnManager.vpnConnection as? ProviderMessageSender)
             connectLocalAgent()
+            #if os(macOS)
+                startNATPortMappingService()
+            #endif
         default:
             break
         }

@@ -355,6 +355,7 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(vpnAccelerator: features.vpnAccelerator)
         didReceiveFeature(natType: features.natType)
         didReceiveFeature(safeMode: features.safeMode)
+        didReceiveFeature(portForwarding: features.portForwarding)
 
         if vpnAuthentication.shouldIgnoreFeatureChanges {
             return // Don't try (and fail) to retrieve stored features if we don't have to
@@ -447,5 +448,19 @@ extension VpnManager: LocalAgentDelegate {
 
         log.debug("NAT type was set to \(natTypePropertyProvider.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
         natTypePropertyProvider.natType = natType
+    }
+
+    private func didReceiveFeature(portForwarding: Bool?) {
+        guard portForwardingPropertyProvider.portForwarding != portForwarding else {
+            return
+        }
+
+        log
+            .debug(
+                "Port Forwarding was set to \(portForwardingPropertyProvider.portForwarding.stringForLog), changing to \(portForwarding.stringForLog) received from local agent",
+                category: .localAgent,
+                event: .stateChange
+            )
+        portForwardingPropertyProvider.portForwarding = portForwarding
     }
 }

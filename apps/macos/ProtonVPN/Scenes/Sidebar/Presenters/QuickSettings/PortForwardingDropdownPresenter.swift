@@ -17,7 +17,6 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import AppKit
-import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
@@ -27,13 +26,12 @@ import Theme
 import VPNAppCore
 
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
-
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString
@@ -43,10 +41,11 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         Localizable.portForwarding
     }
 
-    // https://protonag.atlassian.net/browse/VPNAPPL-2931
-//    override var alert: UpsellAlert {
-//        PortForwardingUpsellAlert()
-//    }
+    override var alert: UpsellAlert {
+        PortForwardingUpsellAlert()
+    }
+
+    // MARK: - Init
 
     init(_ factory: Factory) {
         self.factory = factory
@@ -77,22 +76,22 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private var portForwardingOff: QuickSettingGenericOption {
-        let active = propertiesManager.portForwarding
+        let active = portForwardingPropertyProvider.portForwarding ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOff.capitalized
         let icon = AppTheme.Icon.arrowUpBounceLeft
-        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { _ in
-            self.propertiesManager.portForwarding = false
-            if self.vpnGateway.connection == .connected {
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
+            guard let self else { return }
+            portForwardingPropertyProvider.portForwarding = false
+            if vpnGateway.connection == .connected {
                 log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                // https://protonag.atlassian.net/browse/VPNAPPL-2934
-//                self.vpnGateway.retryConnection()
+                vpnGateway.retryConnection()
             }
-//            dismissCallback()
+            dismissCallback()
         })
     }
 
     private var portForwardingOn: QuickSettingGenericOption {
-        let active = propertiesManager.portForwarding
+        let active = portForwardingPropertyProvider.portForwarding ?? false
         let text = Localizable.portForwarding + " " + Localizable.switchSideButtonOn.capitalized
         let icon = AppTheme.Icon.arrowsSwitch
         return QuickSettingGenericOption(
@@ -100,13 +99,19 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
             icon: icon,
             active: active,
             requiresUpdate: requiresUpdate(portForwarding: true),
-            selectCallback: { dismissCallback in
-                guard !self.requiresUpdate(portForwarding: true) else {
-                    self.presentUpsellAlert()
+            selectCallback: { [weak self] dismissCallback in
+                guard let self else { return }
+                guard !requiresUpdate(portForwarding: true) else {
+                    presentUpsellAlert()
                     dismissCallback()
                     return
                 }
-                self.propertiesManager.portForwarding = true
+                portForwardingPropertyProvider.portForwarding = true
+                if vpnGateway.connection == .connected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                    vpnGateway.retryConnection()
+                }
+                dismissCallback()
             }
         )
     }

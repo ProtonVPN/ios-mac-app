@@ -37,6 +37,7 @@ public enum ModalType {
     case customization
     case streaming
     case p2pSupport
+    case portForwarding
     case devices
     case torOverVPN
     case profiles
@@ -129,6 +130,10 @@ public extension ModalType {
             Asset.p2p.swiftUIImage
                 .resizable()
                 .aspectRatio(contentMode: .fit)
+        case .portForwarding:
+            Asset.portForwarding.swiftUIImage
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         case .devices:
             Asset.devices.swiftUIImage
                 .resizable()
@@ -170,7 +175,7 @@ public extension ModalType {
 
     var hasNewUpsellScreen: Bool {
         switch self {
-        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .devices, .torOverVPN, .hermes, .plutonium:
+        case .profiles, .country, .netShield, .vpnAccelerator, .moderateNAT, .customization, .allCountries, .secureCore, .subscription, .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN, .hermes, .plutonium:
             true
         case .welcomePlus, .welcomeUnlimited, .welcomeFallback, .welcomeToProton, .onboardingWelcome, .onboardingGetStarted, .safeMode, .cantSkip:
             false
@@ -259,6 +264,8 @@ private extension ModalType {
             return Localizable.upsellPlansListTitle
         case .p2pSupport:
             return Localizable.upsellP2pSupportTitle
+        case .portForwarding:
+            return Localizable.upsellPfSupportTitle
         case .devices:
             return Localizable.upsellDevicesTitle
         case .torOverVPN:
@@ -341,6 +348,8 @@ private extension ModalType {
             return .init(text: Localizable.upsellStreamingSubtitle)
         case .p2pSupport:
             return .init(text: Localizable.upsellP2pSupportSubtitle)
+        case .portForwarding:
+            return .init(text: Localizable.upsellPfSupportSubtitle)
         case .devices:
             return .init(text: Localizable.upsellDevicesSubtitle)
         case .torOverVPN:
@@ -409,7 +418,7 @@ private extension ModalType {
             ]
         case .subscription:
             []
-        case .streaming, .p2pSupport, .devices, .torOverVPN:
+        case .streaming, .p2pSupport, .portForwarding, .devices, .torOverVPN:
             []
         case .hermes:
             []

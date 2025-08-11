@@ -25,22 +25,38 @@ import Theme
 public struct NATPMPPortView: View {
     @Perception.Bindable var store: StoreOf<NATPMPFeature>
 
+    public init() {
+        let store = Store(initialState: .loading) {
+            NATPMPFeature()
+        }
+        self.init(store: store)
+    }
+
     public init(store: StoreOf<NATPMPFeature>) {
         self.store = store
     }
 
     public var body: some View {
-        switch store.state {
-        case .loading:
-            LoadingPortView()
-        case let .loaded(externalPortNumber, updateDate):
-            ActivePortView(
-                portNumber: externalPortNumber,
-                updateDate: updateDate
-            )
-        // will not be used
-        case .error:
-            EmptyView()
+        HStack {
+            switch store.state {
+            case .loading:
+                LoadingPortView()
+            case let .loaded(externalPortNumber, updateDate, responseDate):
+                ActivePortView(
+                    portNumber: externalPortNumber,
+                    updateDate: updateDate,
+                    responseDate: responseDate
+                )
+            // will not be used
+            case .error:
+                EmptyView()
+            }
+        }
+        .onAppear {
+            store.send(.startPortMappingObservation)
+        }
+        .onDisappear {
+            store.send(.stopPortMappingObservation)
         }
     }
 }
@@ -50,52 +66,61 @@ public struct NATPMPPortView: View {
 struct ActivePortView: View {
     let portNumber: UInt16
     let updateDate: Date
+    let responseDate: Date
+
+    @State private var hovered = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing12) {
-            // Header with status indicator
-            Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text, .weak))
-                .themeFont(.callout(emphasised: true))
+        Button(action: {
+            copyPortNumber(portNumber)
+        }) {
+            VStack(alignment: .leading, spacing: .themeSpacing12) {
+                // Header with status indicator
+                Text(Localizable.pfActivePortNumber)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.callout(emphasised: true))
 
-            // Port number with copy button
-            HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
-                // Green status indicator
-                Asset.pfIndicator.swiftUIImage
-                    .resizable()
-                    .frame(.square(.themeSpacing16))
+                // Port number with copy button
+                HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
+                    // Green status indicator
+                    Asset.pfIndicator.swiftUIImage
+                        .resizable()
+                        .frame(.square(.themeSpacing16))
 
-                VStack(alignment: .leading, spacing: .themeSpacing8) {
-                    HStack(spacing: .themeSpacing4) {
-                        Text(String(portNumber))
-                            .foregroundColor(Color(.text))
-                            .font(.title2(emphasised: false))
+                    VStack(alignment: .leading, spacing: .themeSpacing8) {
+                        HStack(spacing: .themeSpacing4) {
+                            Text(String(portNumber))
+                                .foregroundColor(Color(.text))
+                                .font(.title2(emphasised: false))
 
-                        Button(action: {
-                            copyPortNumber(portNumber)
-                        }) {
                             IconProvider.squares
                                 .resizable()
                                 .frame(.square(.themeSpacing16))
-                        }
-                        .buttonStyle(.plain)
-                        .help(Localizable.pfCopyPortNumber)
 
-                        Spacer()
-                    }
-                    HStack {
-                        // Update timestamp
-                        Text(formatUpdateTime(updateDate))
-                            .foregroundColor(Color(.text, .weak))
-                            .themeFont(.callout(emphasised: false))
-                        Spacer()
+                            Spacer()
+                        }
+                        HStack {
+                            // Update timestamp
+                            Text(formatUpdateTime(updateDate))
+                                .foregroundColor(Color(.text, .weak))
+                                .themeFont(.callout(emphasised: false))
+                            Spacer()
+                        }
                     }
                 }
             }
+            .padding(.themeSpacing16)
+            .background(hovered ? Color(.background, .strong) : Color(.background, .weak))
+            .cornerRadius(.themeRadius8)
+            .overlay {
+                CursorAreaViewRepresentable()
+            }
         }
-        .padding(.themeSpacing16)
-        .background(Color(.background, .weak))
-        .cornerRadius(.themeRadius8)
+        .onHover { isHovered in
+            hovered = isHovered
+        }
+        .buttonStyle(.plain)
+        .help(Localizable.pfCopyPortNumber)
     }
 
     // MARK: - Sate
@@ -118,19 +143,22 @@ struct ActivePortView: View {
 
 struct LoadingPortView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: .themeSpacing8) {
-            Text(Localizable.pfActivePortNumber)
-                .foregroundColor(Color(.text, .weak))
-                .themeFont(.callout(emphasised: true))
+        HStack {
+            VStack(alignment: .leading, spacing: .themeSpacing8) {
+                Text(Localizable.pfActivePortNumber)
+                    .foregroundColor(Color(.text, .weak))
+                    .themeFont(.callout(emphasised: true))
 
-            HStack(spacing: .themeSpacing8) {
-                ProgressView()
-                    .scaleEffect(0.8)
+                HStack(spacing: .themeSpacing8) {
+                    ProgressView()
+                        .scaleEffect(0.8)
 
-                Text(Localizable.pfLoading)
-                    .foregroundColor(Color(.text))
-                    .font(.title2(emphasised: false))
+                    Text(Localizable.pfLoading)
+                        .foregroundColor(Color(.text))
+                        .font(.title2(emphasised: false))
+                }
             }
+            Spacer()
         }
         .padding(.themeSpacing16)
         .background(Color(.background, .weak))
@@ -140,36 +168,65 @@ struct LoadingPortView: View {
 
 // MARK: - Status Port View
 
-struct StatusPortView: View {
-    let portNumber: UInt16
+public class MappedPort: ObservableObject {
+    @Published public var portNumber: UInt16?
 
-    var body: some View {
-        HStack(spacing: .themeSpacing4) {
-            Text(Localizable.pfActivePortStatus)
-                .foregroundColor(Color(.text))
-                .themeFont(.callout(emphasised: true))
+    public init() {}
 
-            Asset.pfIndicator.swiftUIImage
-                .resizable()
-                .frame(.square(.themeSpacing12))
+    init(portNumber: UInt16?) {
+        self.portNumber = portNumber
+    }
+}
 
-            Text(String(portNumber))
-                .foregroundColor(Color(.text))
-                .font(.title3(emphasised: false))
+public struct StatusPortView: View {
+    @ObservedObject public var portModel: MappedPort = .init()
+    @State private var hovered = false
 
-            Button(action: {
-                copyPortNumber(portNumber)
-            }) {
-                IconProvider.squares
-                    .resizable()
-                    .frame(.square(.themeSpacing12))
+    public init(portModel: MappedPort) {
+        self.portModel = portModel
+    }
+
+    public var body: some View {
+        if let portNumber = portModel.portNumber {
+            HStack {
+                Button(action: {
+                    copyPortNumber(portNumber)
+                }) {
+                    HStack(spacing: .themeSpacing4) {
+                        Text(Localizable.pfActivePortStatus)
+                            .foregroundColor(Color(.text))
+                            .themeFont(.body(emphasised: true))
+
+                        Asset.pfIndicator.swiftUIImage
+                            .resizable()
+                            .frame(.square(.themeSpacing12))
+
+                        Text(String(portNumber))
+                            .foregroundColor(Color(.text))
+                            .font(.title3(emphasised: false))
+
+                        IconProvider.squares
+                            .resizable()
+                            .frame(.square(.themeSpacing12))
+                    }
+                    .overlay {
+                        CursorAreaViewRepresentable()
+                    }
+                    .padding(.themeSpacing2)
+                    .background(hovered ? .white.opacity(0.15) : .clear)
+                    .cornerRadius(.themeRadius4)
+                }
+                .onHover { isHovered in
+                    hovered = isHovered
+                }
+                .buttonStyle(.plain)
+                .help(Localizable.pfCopyPortNumber)
+
+                Spacer()
             }
-            .buttonStyle(.plain)
-            .help(Localizable.pfCopyPortNumber)
+        } else {
+            EmptyView()
         }
-        .padding(.themeSpacing16)
-        .background(Color(.background, .weak))
-        .cornerRadius(.themeRadius8)
     }
 }
 
@@ -188,16 +245,55 @@ private func copyPortNumber(_ portNumber: UInt16) {
             // Active state
             ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
+                responseDate: Date()
             )
 
             // Loading state
             LoadingPortView()
 
             // Status view
-            StatusPortView(portNumber: 36528)
+            StatusPortView(portModel: MappedPort(portNumber: 36528))
         }
         .padding()
         .background(Color(.background))
     }
 #endif
+
+private class CursorAreaView: NSView {
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+    }
+
+    override func updateTrackingAreas() {
+        addTrackingArea(NSTrackingArea(
+            rect: bounds,
+            options: [.mouseEnteredAndExited, .activeInKeyWindow, .inVisibleRect],
+            owner: self
+        )
+        )
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func mouseEntered(with event: NSEvent) {
+        event.window?.invalidateCursorRects(for: self)
+    }
+
+    override func resetCursorRects() {
+        discardCursorRects()
+        addCursorRect(visibleRect, cursor: NSCursor.pointingHand)
+    }
+}
+
+private struct CursorAreaViewRepresentable: NSViewRepresentable {
+    func updateNSView(_: CursorAreaView, context _: Context) {}
+
+    func makeNSView(context _: Context) -> CursorAreaView {
+        let view = CursorAreaView()
+        return view
+    }
+}
