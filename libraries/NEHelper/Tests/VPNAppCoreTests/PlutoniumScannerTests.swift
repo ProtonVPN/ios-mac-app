@@ -31,11 +31,10 @@
 
         @Test
         func exclusionTriggersScanner() async throws {
-            let scanner = PlutoniumScanner(
+            let scanner = await PlutoniumScanner(
                 debounce: 0,
                 scheduler: .immediate
             )
-            await scanner.startObservation()
 
             #expect(childBundles.isEmpty)
 
@@ -49,11 +48,10 @@
 
         @Test
         func inclusionTriggersScanner() async throws {
-            let scanner = PlutoniumScanner(
+            let scanner = await PlutoniumScanner(
                 debounce: 0,
                 scheduler: .immediate
             )
-            await scanner.startObservation()
 
             #expect(childBundles.isEmpty)
 

@@ -43,9 +43,12 @@
             self.title = title
         }
 
+        private static let mainAppBundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
+
         public init?(url: URL) {
             guard let bundle = Bundle(url: url),
-                  let bundleIdentifier = bundle.bundleIdentifier else { return nil }
+                  let bundleIdentifier = bundle.bundleIdentifier,
+                  Self.mainAppBundleIdentifier != bundleIdentifier else { return nil }
             self.bundleIdentifier = bundleIdentifier
             self.title = url.deletingPathExtension().lastPathComponent
         }

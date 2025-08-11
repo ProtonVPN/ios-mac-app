@@ -26,7 +26,15 @@
     import SwiftNavigation
 
     public final actor PlutoniumScanner {
-        public static let shared: PlutoniumScanner = .init()
+        private static var task: Task<PlutoniumScanner, Never>?
+
+        public static var shared: PlutoniumScanner {
+            get async {
+                if let task { return await task.value }
+                task = Task { await PlutoniumScanner() }
+                return await task!.value
+            }
+        }
 
         @Shared(.childBundles) var childBundles: [String: ChildBundle]
 
@@ -41,29 +49,34 @@
 
         init(
             debounce: Int = 1,
-            scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: #file, qos: .utility).eraseToAnyScheduler()
-        ) {
+            scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: "ch.proton.mac.plutonium_scanner").eraseToAnyScheduler()
+        ) async {
             self.debounceAmount = .seconds(debounce)
             self.scheduler = scheduler
+            startObservation()
         }
 
-        public func startObservation() {
+        private func startObservation() {
             cancellables.removeAll()
 
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
 
-            Publishers.MergeMany(
+            let (asyncStream, continuation) = AsyncStream<[PlutoniumApp]>.makeStream()
+            Publishers.Merge(
                 $exclusionActivated.apps.publisher,
                 $inclusionActivated.apps.publisher
             )
             .debounce(for: debounceAmount, scheduler: scheduler)
-            .sink { [weak self] apps in
-                Task {
-                    await self?.startScanning(apps)
+            .sink {
+                continuation.yield($0)
+            }.store(in: &cancellables)
+
+            Task {
+                for await apps in asyncStream {
+                    startScanning(apps)
                 }
             }
-            .store(in: &cancellables)
         }
 
         public func waitForScanToComplete() async {
@@ -94,7 +107,6 @@
                         $0[value.0] = value.1
                     }
                     try Task.checkCancellation()
-                    await Task.yield()
                 }
             } catch {}
         }
@@ -109,7 +121,7 @@
                         .uniques(by: \.bundleIdentifier)
                         .filter { shouldScan(child: childBundles[$0.bundleIdentifier]) }
                         .map(enumerationOperation)
-                        .forEach { group.addTask(priority: .utility, operation: $0) }
+                        .forEach { group.addTask(operation: $0) }
 
                     await collect(from: group)
                 }
