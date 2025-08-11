@@ -189,6 +189,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             toolTip: Localizable.settingsPortForwardingNotificationsInfo
         )
         portForwardingView.setupItem(model: model, delegate: self)
+        portForwardingView.isHidden = !viewModel.shouldShowPFNotifications
     }
 
     private func setupAllowLANItem() {
