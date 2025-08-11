@@ -382,6 +382,7 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onAuthenticatedSessionInvalidated(sessionUID _: String) {
+        log.debug("Authenticated session invalidated", category: .net)
         // invalidating authenticated session should clear the unauth session as well,
         // because we should fetch a new unauth session afterwards
         unauthKeychain.clear()
@@ -394,6 +395,7 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onSessionObtaining(credential: Credential) {
+        log.debug("Session obtained", category: .net, metadata: ["guest": "\(credential.isForUnauthenticatedSession)"])
         do {
             if credential.isForUnauthenticatedSession {
                 unauthKeychain.store(AuthCredential(credential))
@@ -449,6 +451,7 @@ extension CoreNetworking: AuthDelegate {
 
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
     public func sessionWasInvalidated(for _: String, isAuthenticatedSession: Bool) {
+        log.debug("Session invalidated", category: .net, metadata: ["isAuth": "\(isAuthenticatedSession)"])
         authKeychain.clear()
         if isAuthenticatedSession {
             delegate.onLogout()

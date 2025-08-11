@@ -155,6 +155,7 @@ final class PacketTunnelManager: TunnelManager {
 
     var statusStream: AsyncStream<NEVPNStatus> {
         get async throws {
+            log.debug("Creating NEVPNStatus stream for tunnel observation", category: .connection)
             let session = try await loadedManager.session
             let statusChangedNotifications = NotificationCenter.default
                 .notifications(named: Notification.Name.NEVPNStatusDidChange, object: session)

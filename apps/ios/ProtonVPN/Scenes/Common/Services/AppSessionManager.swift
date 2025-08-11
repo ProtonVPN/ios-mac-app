@@ -145,6 +145,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         do {
             try authKeychain.store(authCredentials)
             unauthKeychain.clear()
+            vpnKeychain.clear()
+            propertiesManager.logoutCleanup()
         } catch {
             throw CommonVpnError.keychainWriteFailed
         }

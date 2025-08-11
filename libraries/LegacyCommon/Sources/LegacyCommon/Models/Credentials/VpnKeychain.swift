@@ -172,6 +172,16 @@ public class VpnKeychain: VpnKeychainProtocol {
         // TODO: Refactor to make it obvious that code posting notifications is
         // being run AFTER storing credentials to the keychain.
         if let currentCredentials = fetch() {
+            log.debug(
+                "Comparing vpn credentials to detect possible plan change",
+                category: .keychain,
+                metadata: [
+                    "wasDelinquent": "\(currentCredentials.isDelinquent)",
+                    "isDelinquent": "\(vpnCredentials.isDelinquent)",
+                    "oldTier": "\(currentCredentials.maxTier)",
+                    "newTier": "\(vpnCredentials.maxTier)",
+                ]
+            )
             DispatchQueue.main.async {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
                 if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
@@ -207,6 +217,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     public func clear() {
+        log.debug("Clearing vpn credentials from keychain", category: .keychain)
         cached = nil
         appKeychain[data: StorageKey.vpnCredentials] = nil
         appKeychain[data: StorageKey.widgetPublicKey] = nil
