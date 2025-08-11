@@ -320,8 +320,7 @@ final class CountriesSectionViewController: NSViewController {
 
     private func updatePortForwardingView() {
         @Dependency(\.natPortMappingService) var natPortMappingService
-        if let lastMappingResult = natPortMappingService.portMappingStream.value,
-           case .failure = lastMappingResult {
+        if case .failure = natPortMappingService.portMappingStream.value {
             quickSettingsManager.updateState(connectionInfo: .pfError(isConnected: viewModel.isConnected))
             return
         }

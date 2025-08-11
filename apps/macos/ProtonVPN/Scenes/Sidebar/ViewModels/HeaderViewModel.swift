@@ -313,30 +313,21 @@ final class HeaderViewModel {
         }
         @Dependency(\.natPortMappingService) var natPortMappingService
         natPmpCancellable = natPortMappingService.portMappingStream
-            .removeDuplicates(by: { prev, next in
-                switch (prev, next) {
-                case let (.some(prevResult), .some(nextResult)):
-                    switch (prevResult, nextResult) {
-                    case let (.success(prevPortMapping), .success(nextPortMapping)):
-                        // consume next value only if mapped ports are the same
-                        prevPortMapping?.mappedExternalPort == nextPortMapping?.mappedExternalPort
-                    default:
-                        // we don't differentiate errors; thus all subsequent errors are "equal"
-                        true
-                    }
-                case (.none, .none):
-                    true
-                default:
+            .removeDuplicates(by: { prevResult, nextResult in
+                switch (prevResult, nextResult) {
+                case let (.success(prevPortMapping), .success(nextPortMapping)):
+                    // consume next value only if mapped ports are not the same
+                    prevPortMapping?.mappedExternalPort == nextPortMapping?.mappedExternalPort
+                case (.success, .failure), (.failure, .success):
                     false
+                case (.failure, .failure):
+                    // we don't differentiate errors; thus all subsequent errors are "equal"
+                    true
                 }
             })
             .sink(receiveCompletion: { [weak self] _ in
                 self?.delegate?.mappedPortChanged(to: nil)
             }, receiveValue: { [weak self] portMappingResult in
-                guard let portMappingResult else {
-                    self?.delegate?.mappedPortChanged(to: nil)
-                    return
-                }
                 switch portMappingResult {
                 case let .success(portMapping):
                     guard let portMapping, portMapping.deadlineDate > Date() else {

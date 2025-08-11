@@ -51,7 +51,6 @@ public struct NATPMPFeature: Sendable {
                 return .publisher {
                     natPortMappingService.portMappingStream
                         .compactMap { portMappingResult in
-                            guard let portMappingResult else { return .portMappingReceivedNil }
                             switch portMappingResult {
                             case let .success(portMapping):
                                 guard let portMapping else { return .portMappingReceivedNil }

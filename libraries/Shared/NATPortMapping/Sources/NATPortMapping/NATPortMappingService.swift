@@ -21,7 +21,7 @@ import Dependencies
 import Foundation
 
 public protocol NATPortMappingService: Sendable {
-    var portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never> { get }
+    var portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never> { get }
     func createPortMapping(
         gatewayAddress: String,
         portProtocol: PortMappingProtocol,
@@ -50,13 +50,13 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
     private let natPmpClient: NATPortMappingClient
     private let renewalTask: RenewalTaskManager
 
-    public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>
+    public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
 
     // MARK: - Init
 
     init() {
         self.natPmpClient = NATPortMappingClient()
-        self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>(nil)
+        self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>(.success(nil))
         self.renewalTask = RenewalTaskManager()
     }
 
@@ -100,7 +100,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
 
     func cancelPortMapping() async {
         // since we cancelled port mapping for any reason the current value is invalid
-        portMappingStream.value = nil
+        portMappingStream.value = .success(nil)
         await renewalTask.cancelRenewal()
     }
 
@@ -157,10 +157,10 @@ private actor RenewalTaskManager {
 
 #if DEBUG
     final class NATPortMappingServiceMock: NATPortMappingService {
-        public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>
+        public let portMappingStream: CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>
 
         init() {
-            self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>?, Never>(nil)
+            self.portMappingStream = CurrentValueSubject<Result<PortMappingPacketResponse?, Error>, Never>(.success(nil))
         }
 
         func createPortMapping(
