@@ -31,9 +31,7 @@ class QuickSettingsDropdownOption: NSView {
     @IBOutlet var titleLabel: NSTextField!
     @IBOutlet var containerView: NSView!
     @IBOutlet var optionIconIV: NSImageView!
-    @IBOutlet var plusBox: NSBox!
-    @IBOutlet var plusText: NSTextField!
-    @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
+    @IBOutlet var plusIconView: NSImageView!
 
     var action: SuccessCallback?
 
@@ -58,9 +56,7 @@ class QuickSettingsDropdownOption: NSView {
         containerView.layer?.cornerRadius = AppTheme.ButtonConstants.cornerRadius
         setBackground()
 
-        plusBox.cornerRadius = AppTheme.ButtonConstants.cornerRadius
-        plusText.stringValue = Localizable.plus
-        plusAndTitleConstraint.isActive = false
+        plusIconView.image = Theme.Asset.vpnSubscriptionBadge.image
 
         optionIconIV.cell?.setAccessibilityElement(false)
     }
@@ -86,8 +82,7 @@ class QuickSettingsDropdownOption: NSView {
 
     func blockedStyle() {
         state = .blocked
-        plusBox.isHidden = false
-        plusAndTitleConstraint.isActive = true
+        plusIconView.isHidden = false
         applyState()
     }
 
