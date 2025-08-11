@@ -45,7 +45,8 @@ enum HomeFeatureCreator {
 
     static func homeViewController() -> UINavigationController {
         let homeStore = StoreOf<HomeFeature>(initialState: loadInitialState()) {
-            HomeFeature()
+            log.info("Creating HomeFeature", category: .app)
+            return HomeFeature()
         }
 
         let hostingController = UIHostingController(rootView: HomeView(store: homeStore))
