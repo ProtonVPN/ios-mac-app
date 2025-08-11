@@ -138,9 +138,7 @@ private actor RenewalTaskManager {
         currentTask = Task {
             do {
                 try await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
-                if !Task.isCancelled {
-                    action()
-                }
+                action()
             } catch {
                 // Task was cancelled, ignore
             }

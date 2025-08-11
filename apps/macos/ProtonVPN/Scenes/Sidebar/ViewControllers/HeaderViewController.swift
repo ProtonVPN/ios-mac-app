@@ -287,15 +287,35 @@ extension HeaderViewController: HeaderViewModelDelegate {
 
     func mappedPortChanged(to mappedPort: UInt16?) {
         guard let mappedPort else {
-            // hide port view on nil
+            // hide port view on nil with animation
             DispatchQueue.main.async {
-                self.statusPortForwardingView.isHidden = true
+                self.animatePortView(show: false) {
+                    self.statusPortForwardingView.isHidden = true
+                }
             }
             return
         }
         DispatchQueue.main.async {
+            // Show port view with animation
             self.statusPortForwardingView.isHidden = false
-            self.mappedPortModel.portNumber = mappedPort
+            self.statusPortForwardingView.alphaValue = 0.0
+
+            self.animatePortView(show: true) {
+                self.mappedPortModel.portNumber = mappedPort
+            }
+        }
+    }
+
+    private func animatePortView(show: Bool, completion: @escaping () -> Void) {
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = 0.3
+            context.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+            self.statusPortForwardingView.animator().alphaValue = show ? 1.0 : 0.0
+        } completionHandler: {
+            completion()
+            if !show {
+                self.statusPortForwardingView.alphaValue = 1.0
+            }
         }
     }
 }

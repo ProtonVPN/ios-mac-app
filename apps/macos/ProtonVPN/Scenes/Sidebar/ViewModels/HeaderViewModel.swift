@@ -69,7 +69,7 @@ final class HeaderViewModel {
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
 
-    private lazy var porftForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
+    private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
     var contentChanged: (() -> Void)?
     /// It's the same as delegates `changeServerStateUpdated(to:)` method, but is used by a parent view, to connect
@@ -305,7 +305,7 @@ final class HeaderViewModel {
 
     private func startNatPmpObservation() {
         natPmpCancellable = nil
-        guard porftForwardingPropertyProvider.portForwarding == true else {
+        guard portForwardingPropertyProvider.portForwarding == true else {
             delegate?.mappedPortChanged(to: nil)
             return
         }
