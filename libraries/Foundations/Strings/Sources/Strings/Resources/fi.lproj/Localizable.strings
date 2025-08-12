@@ -219,7 +219,7 @@
 
 "_reconnecting_to" = "Uudelleenyhdistetään palvelimeen %@";
 
-"_reconnecting" = "Setting up a new VPN connection to protect your IP";
+"_reconnecting" = "Määritetään uutta VPN-yhteyttä IP-osoitteesi suojaamiseksi.";
 
 /* iOS status view */
 "_connected_to" = "Yhdistetty palvelimeen";
@@ -310,6 +310,21 @@
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Jatkuvatoiminen VPN muodostaa yhteytesi uudelleen automaattisesti";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
 
 /* MacOS: About window title */
 "_about" = "Tietoja";
@@ -882,7 +897,7 @@
 "_upgrade_unavailable_body" = "Proton VPN -tilaustasi ei voida päivittää sovelluksesta, vaan se on tehtävä osoitteessa account.protonvpn.com.";
 
 /* Plan upgrade unavailable alert, with an attached reason. */
-"_upgrade_unavailable_on_testflight" = "Your Proton VPN subscription cannot be upgraded from the TestFlight version of the app, please visit account.protonvpn.com to upgrade.";
+"_upgrade_unavailable_on_testflight" = "Proton VPN -tilaustasi ei voida päivittää sovelluksen TestFlight-versiosta, vaan se on tehtävä osoitteessa account.protonvpn.com.";
 
 /* MacOS: clear application data alert */
 "_delete_application_data_popup_title" = "Tyhjennä sovelluksen tiedot";
@@ -969,6 +984,12 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Estä DNS-kyselyitä vuotamasta ulkopuolisille. Aina käytössä.";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Suojausavaimet";
@@ -1109,10 +1130,10 @@
 "_per_year_short" = "/ vuosi";
 
 /* Text, that appears next to a subscription payment option which is only valid for web purchase. */
-"_web_only_feature" = "Web only";
+"_web_only_feature" = "Vain verkkoon";
 
 /* %@1 is the next payment date; %@2 price per year from that date and so on. */
-"_subscription_renewal_date" = "Subscription auto-renews on %1$@ at %2$@/year";
+"_subscription_renewal_date" = "Tilaus jatkuu automaattisesti %1$@ hintaan %2$@/vuosi";
 
 /* iOS plan feature */
 "_feature_server_count" = "Yhdistä palvelimiin";
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Updated %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
+
 "_quick_settings_title" = "Pika-asetukset";
 
 "_quick_settings_secureCore_description" = "Ohjaa arkaluonteisimmat tietosi tietosuojaa kunnioittavissa maissa sijaitsevien turvallisimpien palvelintemme kautta.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Jos verkkosivustot eivät lataudu, kokeile poistaa NetShield käytöstä";
 
 "_quick_settings_killSwitch_note" = "Jos et saa yhteyttä lähiverkkosi muihin laitteisiin, kokeile poistaa tappokytkin käytöstä.";
+
+"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+
+"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "Hanki Plus";
 
@@ -1500,22 +1530,22 @@
 "_sysex_cannot_enable" = "Järjestelmälaajennusta ei voida ottaa käyttöön";
 
 /* This is the main description for an error message involving system extension installation. System extensions are required for connecting using WireGuard, Stealth, and other protocols. The second half of the string is a more specific description according to the kind of error that occurred. */
-"_sysex_error_description" = "An error occurred while enabling System Extensions: %@";
+"_sysex_error_description" = "Virhe järjestelmälaajennuksia käyttöön otettaessa: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
 "_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
-"_sysex_error_description_subcase_bad_location" = "please make sure the application is correctly installed in the /Applications folder.";
+"_sysex_error_description_subcase_bad_location" = "Varmistathan, että sovellus on asennettu oikein /Applications-kansioon.";
 
 /* This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type. */
-"_sysex_error_description_subcase_forbidden_by_system_policy" = "the current system policy prohibits activating extensions on your device.";
+"_sysex_error_description_subcase_forbidden_by_system_policy" = "Nykyinen järjestelmäkäytäntö estää laajennusten aktivoimisen laitteellasi.";
 
 /* This error subcase when installing system extensions means that the user was asked to allow system extension installation and either denied or ignored the prompt. */
-"_sysex_error_description_subcase_authorization_required" = "your authorization is required to continue.";
+"_sysex_error_description_subcase_authorization_required" = "Jatkamiseen vaaditaan valtuutuksesi.";
 
 /* This error subcase when installing system extensions is for all other unexpected/uncommon cases. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_sysex_error_description_subcase_default" = "please contact our support. (Error %@)";
+"_sysex_error_description_subcase_default" = "Otathan yhteyttä tukeemme. (Virhe %@)";
 
 "_vpnauth_certfail_title" = "Auto-connect failed";
 
@@ -1672,19 +1702,19 @@
 "_plutonium_reconnection_notice" = "Muutokset tulevat voimaan, kun yhdistät uudelleen";
 
 /* Title of a button that opens a panel for file selection */
-"_plutonium_import_apps_title" = "Import apps";
+"_plutonium_import_apps_title" = "Tuo sovellukset";
 
 /* Subtitle of a button that opens a panel for file selection. Part 1 of 2. The whole string reads: "Drag and drop here or browse apps". Remember to leave an space at the end of string */
-"_plutonium_import_apps_subtitle_1" = "Drag and drop here or ";
+"_plutonium_import_apps_subtitle_1" = "Vedä ja pudota tähän tai ";
 
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
-"_plutonium_import_apps_subtitle_2" = "browse apps";
+"_plutonium_import_apps_subtitle_2" = "selaa sovelluksia";
 
 /* Plutonium upsell view title */
-"_plutonium_upsell_title" = "Get the best of both worlds";
+"_plutonium_upsell_title" = "Hanki molempien parhaat puolet";
 
 /* Description of an empty list of IPs */
-"_plutonium_empty_ip_list_content" = "No IP addresses yet";
+"_plutonium_empty_ip_list_content" = "Ei IP-osoitteita vielä";
 
 /* Plutonium upsell view subtitle */
 "_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
@@ -1900,7 +1930,7 @@
 "_connection_card_accessibility_browsing_from" = "Selaat turvallisesti maasta %@.";
 
 /* Connection card in home tab, VoiceOver label for accessibility users. 1st %@ is a country name, second %@ is Server Number and last %@ is used protocol. [Redesign_2023] */
-"_connection_card_accessibility_browsing_from_fullDetails" = "You are safely browsing from %1$@ Server %2$@ using %3$@.";
+"_connection_card_accessibility_browsing_from_fullDetails" = "Selaat turvallisesti kohteesta %1$@ palvelimen %2$@ kautta käyttäen %3$@.";
 
 /* Connection card in home tab. VoiceOver connection label for accessibility users. Shown while the app determines what state the VPN is in. */
 "_connection_card_accessibility_loading" = "Ladataan";
@@ -2061,7 +2091,7 @@
 "_connection_details_feature_title_smart_routing" = "Smart Routing";
 
 /* Connection details screen: Smart routing description (macOS and iOS). %@1 is the hosting country of the server, and %@2 is where the traffic will appear to be originating from. */
-"_connection_details_feature_description_smart_routing" = "Servers are physically located in %1$@, but you’ll appear to be browsing from %2$@.";
+"_connection_details_feature_description_smart_routing" = "Palvelimien fyysinen sijainti on %1$@, mutta näytät selaavan sijainnista %2$@.";
 
 /* Connection details screen: Secure core title (macOS and iOS) [Redesign_2023] */
 "_connection_details_feature_title_secure_core" = "Secure Core";
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Paranna lähetys- ja latausnopeuksiasi samalla kun piilotat IP-osoitteesi.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Improve P2P speed";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Suojaa 10 laitetta samanaikaisesti";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Nauti laajemmista yksityisyysominaisuuksista, turboahdetusta suorituskyvystä ja seuraavan tason VPN-mukautuksesta.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Onnittelut! Avasit kaikkien Proton-palveluiden premium-tason suojaus- ja suorituskykyominaisuudet, sekä 500 gigatavun kokonaistallennustilan. \n\nNauti Proton-yksityisyyden parhaista puolista.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Onnittelut! Avasit kaikkien Proton-palveluiden premium-tason suojaus- ja suorituskykyominaisuudet, sekä **500** gigatavun kokonaistallennustilan. \n\nNauti Proton-yksityisyyden parhaista puolista.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 Gt";
@@ -2898,10 +2934,10 @@
 "_connection_error_title" = "Yhteysvirhe";
 
 /* Error message: the user chose a server using a protocol that we no longer support, for example, by using an old connection profile. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_unexpected_protocol" = "The connection you have chosen uses a protocol (%@) that is no longer supported by this application. Please choose a different connection. (Error %@)";
+"_connection_error_unexpected_protocol" = "Valitsemanne yhteys käyttää protokollaa (%@), jota tämä sovellus ei enää tue. Valitkaa toinen yhteys. (Virhe %@)";
 
 /* Error message: a problem occurred with certificate authentication, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_certificate_authentication" = "An issue occurred authenticating with the server. (Error %@)";
+"_connection_error_certificate_authentication" = "Palvelimen kanssa todentamisessa ilmeni ongelma. (Virhe %@)";
 
 /* Error message: a problem occurred while starting the VPN connection, with a number of sub-errors that can occur. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_connection_error_tunnel_connection" = "Ongelma VPN:n käynnistämisessä. (Virhe %@)";
@@ -2916,10 +2952,10 @@
 "_connection_error_preparation" = "Ongelma yhteyttä valmistellessa (Virhe %@)";
 
 /* Error message: the chosen server isn't available anymore. It could have been deleted from the list or gone into maintenance. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_server_missing" = "The server you have chosen is no longer available. Please choose a different server. (Error %@)";
+"_connection_error_server_missing" = "Valitsemasi palvelin ei ole enää saatavilla. Valitse toinen palvelin. (Virhe %@)";
 
 /* Error message: we tried to connect, but something took too long. The error code is included in the second part of the string, in the format "0x1234ABCD". */
-"_connection_error_timeout" = "We encountered an error when trying to connect: the server did not respond in time. Please try again. (Error %@)";
+"_connection_error_timeout" = "Kohtasimme virheen yritettäessä yhdistää: palvelin ei vastannut ajoissa. Yritä uudelleen. (Virhe %@)";
 
 /* Error message: we tried sending a message to the connection provider, but it responded with an error. The error code is included in the second part of the string, in the format "0x1234ABCD". */
 "_provider_message_error" = "Yhteysvirhe. (Virhe %@)";
@@ -2928,7 +2964,7 @@
 "widget_unprotected_header" = "Suojaamaton";
 
 /* Text that appears as subtitle to the widget when user is creating it */
-"widget_tray_description" = "Check if you’re connected to VPN and get quick access to your favorite connections.";
+"widget_tray_description" = "Tarkista, oletko yhdistettynä VPN:ään, ja saat nopean pääsyn suosikkiyhteyksiisi.";
 
 /* Recents section title */
 "widget_recents_title" = "Viimeisimmät";
@@ -2991,10 +3027,10 @@
 "_account_created_title" = "Account created";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
-"_hermes_upsell_title" = "Advanced VPN customization";
+"_hermes_upsell_title" = "Edistynyt VPN-mukautus";
 
 /* Hermes Feature Upsell description within dedicated upsell screen */
-"_hermes_upsell_description" = "Connect using a custom DNS server with VPN Plus.";
+"_hermes_upsell_description" = "Yhdistä mukautetun DNS-palvelimen avulla VPN Plus -palvelun kanssa.";
 
 /* Hermes Feature Upsell button content within dedicated upsell screen */
 "_hermes_upsell_button" = "Päivitä";

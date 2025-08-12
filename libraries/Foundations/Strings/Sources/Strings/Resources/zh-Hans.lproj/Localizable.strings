@@ -65,10 +65,10 @@
 "_reconnection_required" = "需要重新连接";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "断开连接以继续";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "要登录或创建帐户，您需要断开 VPN 连接。";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "维护";
@@ -310,6 +310,21 @@
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "“始终开启的 VPN”将自动重连";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
 
 /* MacOS: About window title */
 "_about" = "关于";
@@ -929,7 +944,7 @@
 "_kill_switch_tooltip" = "当 VPN 隧道丢失时阻止所有网络流量。";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "端口转发";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "始终开启 VPN";
@@ -969,6 +984,12 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "防止 DNS 查询的内容泄露给第三方。此选项不能关闭。";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "安全密钥";
@@ -1046,10 +1067,10 @@
 "_turn_ks_on_title" = "启用 Kill Switch？";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• 这将禁用拆分隧道";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• 您将无法访问本地网络上的设备";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "您将无法访问本地网络上的设备";
@@ -1390,19 +1411,22 @@
 "_offer_ending_" = "正在结束 %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "当前端口：";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "使用中的端口号";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "复制端口号";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "加载中...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "更新 %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
 
 "_quick_settings_title" = "快捷设置";
 
@@ -1413,13 +1437,19 @@
 "_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "绕过防火墙连接到本地网络中的 P2P 服务器和设备。";
 
 "_quick_settings_secureCore_note" = "Secure Core 可能会降低 VPN 速度";
 
 "_quick_settings_netShield_note" = "若网页未载入，尝试停用 NetShield";
 
 "_quick_settings_killSwitch_note" = "如果您无法连接到本地网络上的设备，请尝试禁用 Kill Switch 。";
+
+"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+
+"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "获取 Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "隐藏 IP 地址的情况下，提高上传下载速度。";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Improve P2P speed";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "可同时保护 10 台设备";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "享受额外的隐私功能、超强的性能和更高级别的 VPN 定制。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "恭喜！ 您解锁了所有 Proton 服务的高级安全性和功能，以及 500 GB 的总存储空间。\n\n享受最佳的Proton隐私。";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "恭喜！ 您解锁了所有 Proton 服务的高级安全性和功能，以及**500 GB**的总存储空间。\n\n享受最佳的Proton隐私。";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

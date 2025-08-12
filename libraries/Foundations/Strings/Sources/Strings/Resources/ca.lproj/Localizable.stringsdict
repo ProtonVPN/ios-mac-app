@@ -42,7 +42,7 @@
         <key>one</key>
         <string>%d nou servidor</string>
         <key>other</key>
-        <string>Més de %d nous servidors</string>
+        <string>%d nous servidors</string>
       </dict>
     </dict>
     <key>modals_upsell_all_countries_feature_multipleDevices</key>

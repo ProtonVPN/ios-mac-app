@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Altijd-actieve VPN zal u automatisch opnieuw verbinden";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Actief poortnummer: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Ga naar uw torrent-client of P2P-app en voer dit nummer in.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Kopieer";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Kan actief poortnummer niet ophalen";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Herstart uw verbinding en probeer het opnieuw. Als dat niet werkt, probeer dan een andere server.";
+
 /* MacOS: About window title */
 "_about" = "Over ons";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Voorkomt dat er informatie vanuit uw DNS-queries naar derden lekt. Altijd actief.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding meldingen";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Krijg een melding wanneer uw actieve poortnummer wijzigt";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Beveiligingssleutels";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Bijgewerkt %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Niet beschikbaar";
+
 "_quick_settings_title" = "Snelle Instellingen";
 
 "_quick_settings_secureCore_description" = "Stuur uw meest gevoelige gegevens door onze veiligste servers in privacy-vriendelijke landen.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Als websites niet laden, probeer NetShield dan uit te schakelen";
 
 "_quick_settings_killSwitch_note" = "Als u geen verbinding kunt maken met apparaten op uw lokale netwerk, probeer dan de Kill Switch uit te schakelen.";
+
+"_quick_settings_portForwarding_note" = "Voer het actieve poortnummer in op uw BitTorrent-app in om uw P2P-snelheid te verbeteren";
+
+"_quick_settings_portForwarding_warningNote" = "Om port forwarding te gebruiken, verbindt u met een P2P-server";
+
+"_quick_settings_portForwarding_errorNote" = "Kan geen actief poortnummer ophalen. Herstart uw verbinding en probeer het opnieuw.";
 
 "_quick_settings_get_plus" = "Neem Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Verbeter uw upload- en downloadsnelheden terwijl uw IP-adres verborgen is.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Verbeter P2P-snelheid";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Boost bestanden delen via peer-to-peer (P2P) met VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Bescherm 10 apparaten tegelijkertijd";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Geniet van de extra privacyfuncties, verhoogde prestaties en geoptimaliseerde VPN-aanpassingen.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Gefeliciteerd! U heeft premiumbeveiliging en prestatiefuncties op alle Proton-diensten, plus een totale opslag van 500 GB.\n\nGeniet van het beste van Proton privacy.";
+"welcome_upgrade_subtitle_Unlimited" = "U hebt alle premium Proton VPN-, Mail-, agenda-, drive- en Pass-functies ontgrendeld — en 500 GB totale Opslag.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Gefeliciteerd! U heeft premiumbeveiliging en prestatiefuncties op alle Proton-diensten ontgrendeld, plus **500**GB totale opslag. \n\nGeniet van het beste van Proton-privacy.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "U hebt alle premium Proton VPN-, Mail-, agenda-, drive- en Pass-functies ontgrendeld — en **500 GB** totale Opslag.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

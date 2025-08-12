@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "A VPN sempre ativa irá reconectá-lo automaticamente";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Número de porta ativo: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copiar";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+
 /* MacOS: About window title */
 "_about" = "Sobre";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Prevenir o vazamento de detalhes de consultas DNS por terceiros. Sempre ativo.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Notificações de encaminhamento de porta";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Chaves de segurança";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Atualizado %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Indisponível";
+
 "_quick_settings_title" = "Configurações rápidas";
 
 "_quick_settings_secureCore_description" = "Encaminhe os seus dados mais sensíveis através dos nossos servidores mais seguros em países amigos da privacidade.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Se os sites não carregarem, tente desativar o NetShield";
 
 "_quick_settings_killSwitch_note" = "Se você não pode se conectar a dispositivos na sua rede local, tente desabilitar o kill switch.";
+
+"_quick_settings_portForwarding_note" = "Insira o número da porta ativa em seu aplicativo BitTorrent para melhorar suas velocidades de P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Para usar encaminhamento de porta, conecte a um servidor P2P";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "Obter Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Melhore suas velocidades de upload e download enquanto oculta seu endereço IP.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Melhore a velocidade P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Maximize o desempenho de compartilhamento peer-to-peer (P2P) de arquivos com o VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Proteja 10 dispositivos de uma só vez";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Aproveite recursos extras de privacidade, desempenho aprimorado e customização de VPN de próximo nível.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Parabéns! Você desbloqueou recursos premium de segurança e desempenho em todos os serviços da Proton, além de 500 GB de armazenamento total.\n\nAproveite o melhor da privacidade da Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Parabéns! Você desbloqueou recursos premium de segurança e desempenho em todos os serviços da Proton, além de **500 GB** de armazenamento total.\n\nAproveite o melhor da privacidade da Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

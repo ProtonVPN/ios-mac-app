@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Hep açık VPN bağlantınızı otomatik olarak yeniden kuracak";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Etkin bağlantı noktası: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Torrent istemcinize veya P2P uygulamasına gidip bu numarayı yazın.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Kopyala";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Etkin bağlantı noktası numarası alınamadı";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Bağlantınızı yeniden başlatıp yeniden deneyin. Bu işe yaramazsa, farklı bir sunucu kullanmayı deneyin.";
+
 /* MacOS: About window title */
 "_about" = "Hakkında";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "DNS sorgularının üçüncü taraflara sızdırılmasını önler. Her zaman açıktır.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Bağlantı noktası yönlendirme bildirimleri";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Etkin bağlantı noktası numaranız değiştiğinde bildirim alın";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Güvenlik anahtarları";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Güncellendi %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Kullanılamıyor";
+
 "_quick_settings_title" = "Hızlı ayarlar";
 
 "_quick_settings_secureCore_description" = "En hassas verilerinizi gizliliğe saygı gösteren ülkelerdeki en güvenli sunucularımız üzerinden yöneltin.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Siteler yüklenmiyorsa, NetShield özelliğini kapatmayı deneyin";
 
 "_quick_settings_killSwitch_note" = "Yerel ağınızdaki aygıtlara bağlanamıyorsanız, bağlantı kesici özelliğini kapatmayı deneyin.";
+
+"_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza etkin bağlantı noktası numaranızı yazın";
+
+"_quick_settings_portForwarding_warningNote" = "Bağlantı noktası yönlendirmeyi kullanmak için bir P2P sunucusuna bağlanın";
+
+"_quick_settings_portForwarding_errorNote" = "Etkin bağlantı noktası numarası bulunamadı. Bağlantınızı yeniden başlatıp yeniden deneyin.";
 
 "_quick_settings_get_plus" = "Plus edinin";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "IP adresinizi gizlerken yükleme ve indirme hızlarınızı iyileştirin.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "P2P hızını iyileştirin";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "VPN Plus ile eşler arası (P2P) dosya paylaşımı başarımını artırın.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Aynı anda 10 aygıtı koruyun";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Ek gizlilik özelliklerinin, güçlendirilmiş başarımın ve üst düzey VPN özelleştirmenin tadını çıkarın.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Tebrikler! Tüm Proton hizmetlerinin ücretli güvenlik ve başarım özelliklerini ve ek olarak 500 GB depolama alanını kullanabilirsiniz.\n\nEn iyi Proton gizliliğinin tadını çıkarın.";
+"welcome_upgrade_subtitle_Unlimited" = "Tüm ücretli Proton VPN, Mail, Calendar, Drive ve Pass özellikleri ile toplam 500 GB depolama alanına erişim kazandınız.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Tebrikler! Tüm Proton hizmetlerinin ücretli güvenlik ve başarım özelliklerini ve ek olarak **500 GB** depolama alanını kullanabilirsiniz.\n\nEn iyi Proton gizliliğinin tadını çıkarın.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Tüm ücretli Proton VPN, Mail, Calendar, Drive ve Pass özellikleri ile toplam **500 GB** depolama alanına erişim kazandınız.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
