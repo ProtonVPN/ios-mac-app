@@ -304,6 +304,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Always-on VPN will reconnect you automatically";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+
 // MARK: About
 
 /* MacOS: About window title */
@@ -963,6 +978,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Prevent leaking details of DNS queries to third parties. Always on.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Security Keys";
 
@@ -1379,6 +1400,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Updated %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
+
 // MARK: Quick Settings
 "_quick_settings_title" = "Quick Settings";
 "_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
@@ -1391,6 +1415,7 @@
 "_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling kill switch.";
 "_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
 "_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 "_quick_settings_get_plus" = "Get Plus";
 "_applying_settings_" = "Applying settings";
 "_reestablish_vpn_connection_" = "Re-establishing VPN connection.";

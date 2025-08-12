@@ -101,6 +101,7 @@ final class ConnectionSettingsViewModel {
             .vpnProtocol,
             .excludeLocalNetworks,
             .vpnAccelerator,
+            .portForwardingNotifications,
         ]
         settingsChangedEvents.subscribe(self, selector: #selector(settingsChanged))
 
@@ -415,7 +416,7 @@ final class ConnectionSettingsViewModel {
         sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
             guard let self else { return }
             sysexPending = false
-            if case let .failure(error) = result {
+            if case .failure = result {
                 selectedProtocol = .vpnProtocol(.ike)
             }
         }
@@ -444,6 +445,12 @@ final class ConnectionSettingsViewModel {
                 completion(true)
             }
         }
+    }
+
+    func setPortForwardingNotifications(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+        let newValue: PortForwardingNotifications = enabled ? .on : .off
+        featurePropertyProvider.setValue(newValue)
+        completion(true)
     }
 
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
@@ -497,6 +504,10 @@ final class ConnectionSettingsViewModel {
         alertService.push(alert: PlutoniumUpsellAlert())
     }
 
+    func showPortForwardingUpsell() {
+        alertService.push(alert: PortForwardingUpsellAlert())
+    }
+
     // MARK: - Item
 
     func autoConnectItem(for index: Int) -> NSAttributedString {
@@ -510,6 +521,8 @@ final class ConnectionSettingsViewModel {
 
     // Don't show quick connect customisation if user is not authorized to use profiles
     var shouldShowQuickConnect: Bool { profileAuthorizer.canUseProfiles }
+
+    var shouldShowPFNotifications: Bool { userTier != .freeTier }
 
     func quickConnectItem(for index: Int) -> NSAttributedString {
         profileString(for: index)

@@ -32,6 +32,7 @@ public struct SettingsDimensions: Encodable {
     @NAEncodable var firstHermesAddressFamily: HermesAddressFamily?
     let isHermesEnabled: HermesEnabled
     @NAEncodable var isSystemCustomDNSEnabled: Bool?
+    let isPortForwardingEnabled: IsPortForwardingEnabled
 
     enum CodingKeys: String, CodingKey {
         case defaultConnectionType = "default_connection_type"
@@ -44,6 +45,7 @@ public struct SettingsDimensions: Encodable {
         case firstHermesAddressFamily = "first_custom_dns_address_family"
         case isHermesEnabled = "is_custom_dns_enabled"
         case isSystemCustomDNSEnabled = "is_system_custom_dns_enabled"
+        case isPortForwardingEnabled = "is_port_forwarding_enabled"
     }
 
     public enum DefaultConnectionType: String, Encodable {
@@ -105,6 +107,11 @@ public struct SettingsDimensions: Encodable {
     }
 
     public enum IsIPv6Enabled: String, Encodable {
+        case `true`
+        case `false`
+    }
+
+    public enum IsPortForwardingEnabled: String, Encodable {
         case `true`
         case `false`
     }

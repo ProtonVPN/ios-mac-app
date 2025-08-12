@@ -54,6 +54,7 @@ final class HeaderViewModel {
         AppStateManagerFactory &
         CoreAlertServiceFactory &
         NavigationServiceFactory &
+        NotificationManagerFactory &
         PortForwardingPropertyProviderFactory &
         ProfileManagerFactory &
         PropertiesManagerFactory &
@@ -68,6 +69,7 @@ final class HeaderViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     @Dependency(\.announcementManager) var announcementManager
     private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
+    private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
 
     private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
 
@@ -310,10 +312,54 @@ final class HeaderViewModel {
             return
         }
         @Dependency(\.natPortMappingService) var natPortMappingService
-        natPmpCancellable = natPortMappingService.portMappingStream.sink(receiveCompletion: { _ in }, receiveValue: { [weak self] portMapping in
-            guard let portMapping, portMapping.deadlineDate > Date() else { return }
-            self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
-        })
+        natPmpCancellable = natPortMappingService.portMappingStream
+            .removeDuplicates(by: { prevResult, nextResult in
+                switch (prevResult, nextResult) {
+                case let (.success(prevPortMapping), .success(nextPortMapping)):
+                    // consume next value only if mapped ports are not the same
+                    prevPortMapping?.mappedExternalPort == nextPortMapping?.mappedExternalPort
+                case (.success, .failure), (.failure, .success):
+                    false
+                case (.failure, .failure):
+                    // we don't differentiate errors; thus all subsequent errors are "equal"
+                    true
+                }
+            })
+            .sink(receiveCompletion: { [weak self] _ in
+                self?.delegate?.mappedPortChanged(to: nil)
+            }, receiveValue: { [weak self] portMappingResult in
+                switch portMappingResult {
+                case let .success(portMapping):
+                    guard let portMapping, portMapping.deadlineDate > Date() else {
+                        // not valid port mapping, hide it
+                        self?.delegate?.mappedPortChanged(to: nil)
+                        return
+                    }
+                    self?.sendPortForwardingNotificationIfNeeded(portNumber: portMapping.mappedExternalPort)
+                    self?.delegate?.mappedPortChanged(to: portMapping.mappedExternalPort)
+
+                case .failure:
+                    self?.sendPortForwardingNotificationErrorIfNeeded()
+                }
+            })
+    }
+
+    private func sendPortForwardingNotificationIfNeeded(portNumber: UInt16) {
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+            DispatchQueue.main.async {
+                self.notificationManager.displayPFChange(portNumber: portNumber)
+            }
+        }
+    }
+
+    private func sendPortForwardingNotificationErrorIfNeeded() {
+        @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
+        if featurePropertyProvider.getValue(for: PortForwardingNotifications.self) == .on {
+            DispatchQueue.main.async {
+                self.notificationManager.displayPFError()
+            }
+        }
     }
 
     private func rateString(for rate: UInt32) -> String {

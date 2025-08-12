@@ -319,7 +319,12 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingView() {
-        let connectionInfo = ConnectionInfo(
+        @Dependency(\.natPortMappingService) var natPortMappingService
+        if case .failure = natPortMappingService.portMappingStream.value {
+            quickSettingsManager.updateState(connectionInfo: .pfError(isConnected: viewModel.isConnected))
+            return
+        }
+        let connectionInfo = ConnectionInfo.connected(
             portForwardingEnabled: viewModel.portForwardingIsOn,
             supportsP2P: viewModel.connectedServerSupportsP2P,
             isConnected: viewModel.isConnected

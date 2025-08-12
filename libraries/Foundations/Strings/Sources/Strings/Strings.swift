@@ -1074,6 +1074,8 @@ public enum Localizable {
   public static var pfActivePortStatus: String { return Localizable.tr("Localizable", "_pf_active_port_status", fallback: "Active port:") }
   /// Text appears as hint when hovering mouse over the assigned port number
   public static var pfCopyPortNumber: String { return Localizable.tr("Localizable", "_pf_copy_port_number", fallback: "Copy port number") }
+  /// Text appears in port forwarding view when any error is present
+  public static var pfError: String { return Localizable.tr("Localizable", "_pf_error", fallback: "Unavailable") }
   /// Text appears in port forwarding view during loading
   public static var pfLoading: String { return Localizable.tr("Localizable", "_pf_loading", fallback: "Loading...") }
   /// Text appears under active port number indicating relative date
@@ -1156,6 +1158,18 @@ public enum Localizable {
   public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
   /// MacOS: Settings -> Port forwarding: name of field.
   public static var portForwarding: String { return Localizable.tr("Localizable", "_port_forwarding", fallback: "Port forwarding") }
+  /// Explanation of the Notification about a failed port mapping request
+  public static var portForwardingErrorBody: String { return Localizable.tr("Localizable", "_port_forwarding_error_body", fallback: "Restart your connection and try again. If that doesn’t work, try a different server.") }
+  /// Subtitle of the Notification shown when a port mapping request failed
+  public static var portForwardingErrorSubtitle: String { return Localizable.tr("Localizable", "_port_forwarding_error_subtitle", fallback: "Cannot retrieve active port number") }
+  /// Explanation of the Notification about port forwarding
+  public static var portForwardingInfoBody: String { return Localizable.tr("Localizable", "_port_forwarding_info_body", fallback: "Go to your torrent client or P2P app and enter this number.") }
+  /// Copy button in the Notification about port forwarding
+  public static var portForwardingInfoCopyButton: String { return Localizable.tr("Localizable", "_port_forwarding_info_copy_button", fallback: "Copy") }
+  /// Subtitle of the Notification shown with the port number
+  public static func portForwardingInfoSubtitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_port_forwarding_info_subtitle", String(describing: p1), fallback: "Active port number: %@")
+  }
   /// MacOS: Settings screen title
   public static var preferences: String { return Localizable.tr("Localizable", "_preferences", fallback: "Preferences") }
   /// Description shown together with server info icon
@@ -1226,6 +1240,8 @@ public enum Localizable {
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
   /// Text for Port forwarding quick setting in the app
   public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Bypass firewalls to connect to P2P servers and devices in your local network.") }
+  /// Cannot retrieve active port number. Restart your connection and try again.
+  public static var quickSettingsPortForwardingErrorNote: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_errorNote", fallback: "Cannot retrieve active port number. Restart your connection and try again.") }
   /// Enter the active port number into your BitTorrent app to improve your P2P speeds
   public static var quickSettingsPortForwardingNote: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_note", fallback: "Enter the active port number into your BitTorrent app to improve your P2P speeds") }
   /// To use port forwarding, connect to a P2P server
@@ -1428,6 +1444,10 @@ public enum Localizable {
   public static var settingsNetshieldOn: String { return Localizable.tr("Localizable", "_settings_netshield_on", fallback: "On") }
   /// iOS: Settings account section card description for guest mode
   public static var settingsNewAccountCardDescription: String { return Localizable.tr("Localizable", "_settings_new_account_card_description", fallback: "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.") }
+  /// MacOS: Settings -> Port forwarding notifications settings explained
+  public static var settingsPortForwardingNotificationsInfo: String { return Localizable.tr("Localizable", "_settings_port_forwarding_notifications_info", fallback: "Get notified when your active port number changes") }
+  /// MacOS: Settings -> Port forwarding notifications
+  public static var settingsPortForwardingNotificationsTitle: String { return Localizable.tr("Localizable", "_settings_port_forwarding_notifications_title", fallback: "Port forwarding notifications") }
   /// Body of an alert shown in Protocol Settings, when the user attempts to select a different protocol, while a VPN Connection is active. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]
   public static var settingsProtocolAlertBody: String { return Localizable.tr("Localizable", "_settings_protocol_alert_body", fallback: "Changing protocols will end your current VPN session.") }
   /// Cancel button text for the protocol change reconnection alert in Protocol Settings. The alert warns the user that changing the VPN protocol will require the current VPN session to be disconnected. [Redesign_2023]

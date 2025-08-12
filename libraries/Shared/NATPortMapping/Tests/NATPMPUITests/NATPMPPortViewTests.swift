@@ -105,4 +105,28 @@ struct NATPMPPortViewTests {
             assertSnapshot(of: nsView, as: .image(size: .init(width: 188, height: 25)))
         }
     }
+
+    @Test
+    func errorView() {
+        withDependencies {
+            $0.date.now = .init()
+        } operation: {
+            let view = PortErrorView()
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+        }
+    }
+
+    @Test
+    func errorViewDark() {
+        withDependencies {
+            $0.date.now = .init()
+        } operation: {
+            let view = PortErrorView().environment(\.colorScheme, .dark)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 66)))
+        }
+    }
 }

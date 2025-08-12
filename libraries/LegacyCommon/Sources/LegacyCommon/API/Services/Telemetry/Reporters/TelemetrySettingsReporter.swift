@@ -31,11 +31,12 @@ import WidgetKit
 import Sharing
 
 final class TelemetrySettingsReporter {
-    public typealias Factory = NetworkingFactory & TimerFactoryCreator & VpnKeychainFactory
+    public typealias Factory = NetworkingFactory & PortForwardingPropertyProviderFactory & TimerFactoryCreator & VpnKeychainFactory
 
     private var telemetryEventScheduler: TelemetryEventScheduler
     private let timerFactory: TimerFactory
     private var vpnKeychain: VpnKeychainProtocol
+    private var portForwardingPropertyProvider: PortForwardingPropertyProvider
 
     private let heartbeatInterval: TimeInterval = 24 * 60 * 60 // 24 hours
 
@@ -50,7 +51,7 @@ final class TelemetrySettingsReporter {
 
     init(factory: Factory, telemetryEventScheduler: TelemetryEventScheduler) {
         self.vpnKeychain = factory.makeVpnKeychain()
-
+        self.portForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
         self.telemetryEventScheduler = telemetryEventScheduler
         self.timerFactory = factory.makeTimerFactory()
     }
@@ -110,7 +111,8 @@ final class TelemetrySettingsReporter {
             isIPv6Enabled: .false,
             hermesCount: hermesCount(),
             firstHermesAddressFamily: firstHermesAddressFamily(),
-            isHermesEnabled: isHermesEnabled()
+            isHermesEnabled: isHermesEnabled(),
+            isPortForwardingEnabled: isPortForwardingEnabled()
         )
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
@@ -156,6 +158,10 @@ final class TelemetrySettingsReporter {
 
     private func isHermesEnabled() -> SettingsDimensions.HermesEnabled {
         hermesClient.isEnabled().wrappedValue ? .true : .false
+    }
+
+    private func isPortForwardingEnabled() -> SettingsDimensions.IsPortForwardingEnabled {
+        portForwardingPropertyProvider.portForwarding == true ? .true : .false
     }
 
     private func widgetCount() async -> SettingsDimensions.WidgetCount? {

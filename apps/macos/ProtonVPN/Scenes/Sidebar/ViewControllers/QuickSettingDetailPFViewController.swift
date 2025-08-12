@@ -28,6 +28,7 @@ enum PortForwardingVCState {
     case connectedNoPf
     case connectedToP2P
     case connectedNotToP2P
+    case error
 }
 
 final class QuickSettingDetailPFViewController: QuickSettingDetailViewController {
@@ -74,6 +75,14 @@ final class QuickSettingDetailPFViewController: QuickSettingDetailViewController
             dropdownNoteImageView.contentTintColor = .color(.icon, .warning)
             dropdownNote.attributedStringValue = Localizable.quickSettingsPortForwardingWarningNote
                 .styled(.weak, font: .themeFont(.small), alignment: .left)
+        case .error:
+            // show error
+            portView.isHidden = false
+            dropdownNoteStackView.isHidden = false
+            dropdownNoteImageView.isHidden = false
+            dropdownNoteImageView.image = AppTheme.Icon.exclamationTriangleFilled
+            dropdownNoteImageView.contentTintColor = .color(.icon, .warning)
+            dropdownNote.attributedStringValue = Localizable.quickSettingsPortForwardingErrorNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         }
     }
 }

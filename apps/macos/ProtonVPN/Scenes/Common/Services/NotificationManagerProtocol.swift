@@ -28,4 +28,6 @@ protocol NotificationManagerFactory {
 
 protocol NotificationManagerProtocol {
     func displayServerGoingOnMaintenance()
+    func displayPFChange(portNumber: UInt16)
+    func displayPFError()
 }

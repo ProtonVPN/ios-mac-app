@@ -40,7 +40,10 @@ struct NATPMPFeatureTests {
 
         // Send first port mapping response
         let firstResponse = createPortMappingResponse(externalPort: 8080)
-        mockService.portMappingStream.value = firstResponse
+        mockService.portMappingStream.value = .success(firstResponse)
+
+        // observation started before first response; current value subject holds `nil`
+        await store.receive(\.portMappingReceivedNil)
 
         await store.receive(\.portMapped) {
             $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
@@ -50,7 +53,7 @@ struct NATPMPFeatureTests {
 
         // Send second port mapping response with different port
         let secondResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingStream.value = secondResponse
+        mockService.portMappingStream.value = .success(secondResponse)
 
         await store.receive(\.portMapped) {
             $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 2000))
@@ -60,7 +63,7 @@ struct NATPMPFeatureTests {
 
         // Send third response with same port (should update responseDate)
         let thirdResponse = createPortMappingResponse(externalPort: 9090)
-        mockService.portMappingStream.value = thirdResponse
+        mockService.portMappingStream.value = .success(thirdResponse)
 
         await store.receive(\.portMapped) {
             $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 3000))
@@ -74,7 +77,7 @@ struct NATPMPFeatureTests {
         let fourthResponse = createPortMappingResponse(externalPort: 6666)
         store.dependencies.date = DateGenerator { fourthResponseCreateDate.addingTimeInterval(161) }
 
-        mockService.portMappingStream.value = fourthResponse
+        mockService.portMappingStream.value = .success(fourthResponse)
 
         // Restart port mapping observation
         await store.send(.startPortMappingObservation) {
@@ -92,7 +95,7 @@ struct NATPMPFeatureTests {
         let nowDate = fifthResponseCreateDate.addingTimeInterval(5)
         store.dependencies.date = DateGenerator { nowDate }
 
-        mockService.portMappingStream.value = fifthResponse
+        mockService.portMappingStream.value = .success(fifthResponse)
 
         // Restart port mapping observation
         await store.send(.startPortMappingObservation)
@@ -123,14 +126,19 @@ struct NATPMPFeatureTests {
         // Start port mapping
         await store.send(.startPortMappingObservation)
 
+        await store.receive(\.portMappingReceivedNil)
+
         // Send an error to the stream
         struct TestError: Error {}
-        mockService.portMappingStream.send(completion: .failure(TestError()))
+        mockService.portMappingStream.send(.failure(TestError()))
 
         // Should receive portMappingFailed action
         await store.receive(\.portMappingFailed) {
             $0 = .error
         }
+
+        // Finish the stream
+        mockService.portMappingStream.send(completion: .finished)
     }
 
     // MARK: - Helper functions

@@ -147,7 +147,7 @@ final class QuickSettingsManager {
 
     // MARK: - State Updates
 
-    func updateState(connectionInfo: ConnectionInfo?) {
+    func updateState(connectionInfo: ConnectionInfo) {
         for config in configurations {
             let state = config.handleStateUpdate(connectionInfo: connectionInfo)
             updateViewController(for: config.type, with: state)
