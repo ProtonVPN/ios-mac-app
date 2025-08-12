@@ -2423,11 +2423,11 @@ public enum Localizable {
   /// The subtitle of the Welcome screen when user upgrades to VPN Plus
   public static var welcomeUpgradeSubtitlePlus: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_plus", fallback: "Enjoy extra privacy features, supercharged performance, and next-level VPN customization.") }
   /// The subtitle of the Welcome screen when user upgrades to VPN Unlimited
-  public static var welcomeUpgradeSubtitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited", fallback: "Congratulations! You unlocked premium security and performance features on all Proton services, plus 500 GB total storage.\n\nEnjoy the best of Proton privacy.") }
+  public static var welcomeUpgradeSubtitleUnlimited: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited", fallback: "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.") }
   /// The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited
   public static var welcomeUpgradeSubtitleUnlimitedBold: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited_bold", fallback: "500 GB") }
   /// The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown
-  public static var welcomeUpgradeSubtitleUnlimitedMarkdown: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited_markdown", fallback: "Congratulations! You unlocked premium security and performance features on all Proton services, plus **500 GB** total storage.\n\nEnjoy the best of Proton privacy.") }
+  public static var welcomeUpgradeSubtitleUnlimitedMarkdown: String { return Localizable.tr("Localizable", "welcome_upgrade_subtitle_Unlimited_markdown", fallback: "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.") }
   /// The title of the Welcome screen when user upgrades, but we couldn't determine to what plan
   public static var welcomeUpgradeTitleFallback: String { return Localizable.tr("Localizable", "welcome_upgrade_title_fallback", fallback: "Congratulations!") }
   /// The title of the Welcome screen when user upgrades to VPN Plus
