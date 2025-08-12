@@ -64,6 +64,59 @@ public enum TestData {
         )
     }
 
+    /// Creates a server whose logical is active (status = 1) but all endpoints are under maintenance (status = 0).
+    public static func activeServerWithNoActiveEndpoints(
+        name: String? = nil,
+        countryCode: String = "CH",
+        tier: Int = 0,
+        load: Int = 0,
+        score: Double = 1
+    ) -> VPNServer {
+        let id = "active_no_active_endpoints"
+        return VPNServer(
+            logical: .init(
+                id: id,
+                name: name ?? id,
+                domain: "a",
+                load: load,
+                entryCountryCode: countryCode,
+                exitCountryCode: countryCode,
+                tier: tier,
+                score: score,
+                status: 1,
+                feature: .zero,
+                city: nil,
+                hostCountry: nil,
+                translatedCity: nil,
+                latitude: 47.22,
+                longitude: 8.32,
+                gatewayName: nil
+            ),
+            endpoints: [
+                Domain.ServerEndpoint(
+                    id: "endpoint1-\(id)",
+                    entryIp: nil,
+                    exitIp: "1",
+                    domain: "a1",
+                    status: 0,
+                    label: nil,
+                    x25519PublicKey: "",
+                    protocolEntries: nil
+                ),
+                Domain.ServerEndpoint(
+                    id: "endpoint2-\(id)",
+                    entryIp: nil,
+                    exitIp: "2",
+                    domain: "a2",
+                    status: 0,
+                    label: nil,
+                    x25519PublicKey: "",
+                    protocolEntries: nil
+                ),
+            ]
+        )
+    }
+
     public static let serverWithMultipleEndpointsAndOverrides = VPNServer(
         logical: .init(
             id: "overridesPlusLogical",

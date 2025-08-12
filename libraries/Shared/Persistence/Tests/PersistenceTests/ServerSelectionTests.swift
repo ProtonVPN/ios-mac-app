@@ -219,4 +219,16 @@ final class ServerSelectionTests: CaseIsolatedDatabaseTestCase {
 
         XCTAssertEqual(results.count, 0)
     }
+
+    /// Ensures that a logical with status 1 but all endpoints at status 0
+    /// is persisted with logical status forced to 0 (under maintenance).
+    func testLogicalStatusForcedToMaintenanceWhenNoActiveEndpointsAvailable() throws {
+        let serverResult = repository.getFirstServer(
+            filteredBy: [.logicalID("IR1")],
+            orderedBy: .none
+        )
+
+        let server = try XCTUnwrap(serverResult)
+        XCTAssertTrue(server.logical.isUnderMaintenance)
+    }
 }

@@ -48,9 +48,11 @@ extension VPNServer {
     }
 
     var logicalStatus: Persistence.LogicalStatus {
-        .init(
+        // Logical status can get out of sync with its endpoints. If no active endpoints are available, we mark the logical as under maintenance.
+        let hasActiveEndpoint = endpoints.contains { !$0.isUnderMaintenance }
+        return .init(
             logicalID: logical.id,
-            status: logical.status,
+            status: hasActiveEndpoint ? logical.status : 0,
             load: logical.load,
             score: logical.score
         )

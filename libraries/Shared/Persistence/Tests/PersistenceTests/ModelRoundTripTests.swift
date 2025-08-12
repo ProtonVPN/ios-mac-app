@@ -56,4 +56,17 @@ final class ModelToRecordRoundTripTests: TestIsolatedDatabaseTestCase {
         XCTAssertEqual(server, serverToInsert)
         XCTAssertEqual(server.supportedProtocols, [.all])
     }
+
+    func testLogicalStatusForcedToMaintenanceWhenAllEndpointsDown() throws {
+        let server = TestData.activeServerWithNoActiveEndpoints()
+
+        // Insert and fetch back
+        repository.upsert(servers: [server])
+
+        let fetched = repository.getFirstServer(filteredBy: [.logicalID(server.logical.id)], orderedBy: .none)
+        let fetchedServer = try XCTUnwrap(fetched)
+
+        // Logical status must be forced to underMaintenace due to all endpoints being under maintenance
+        XCTAssertTrue(fetchedServer.logical.isUnderMaintenance)
+    }
 }
