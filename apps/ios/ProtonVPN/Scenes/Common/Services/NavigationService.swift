@@ -224,8 +224,14 @@ final class NavigationService {
     }
 
     private func presentMainInterface() {
-        setupTabs()
-        showInitialModals()
+        log.debug("Presenting main interface, checking for modals to dismiss", category: .app)
+        windowService.dismissModal { [weak self] in
+            log.debug("Modal dismissal completed, setting up main interface", category: .app)
+            DispatchQueue.main.async {
+                self?.setupTabs()
+                self?.showInitialModals()
+            }
+        }
     }
 
     private func registerForPushNotificationsIfNeeded() {
