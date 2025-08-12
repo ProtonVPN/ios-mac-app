@@ -36,6 +36,20 @@ final class TabBarController: UITabBarController {
         }
     }
 
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
+    }
+
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setupTabBar()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupTabBar()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,6 +73,14 @@ final class TabBarController: UITabBarController {
     func setupView() {
         view.backgroundColor = .backgroundColor()
         selectedIndex = 0
+    }
+
+    private func setupTabBar() {
+        // Create and configure the custom TabBar
+        let customTabBar = TabBar()
+        customTabBar.isTranslucent = false
+        customTabBar.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        setValue(customTabBar, forKey: "tabBar")
     }
 
     private func setupQuickConnectView() {

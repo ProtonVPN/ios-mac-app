@@ -151,20 +151,5 @@
             </objects>
             <point key="canvasLocation" x="-1026.4000000000001" y="-1413.6431784107947"/>
         </scene>
-        <!--ProtonVPN-->
-        <scene sceneID="yl2-sM-qoP">
-            <objects>
-                <tabBarController storyboardIdentifier="TabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="TabBarController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" title="ProtonVPN" id="Wh4-tZ-Tb9"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="W28-zg-YXA" customClass="TabBar" customModule="ProtonVPN" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="975" width="768" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                    </tabBar>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1759" y="-1414"/>
-        </scene>
     </scenes>
 </document>

@@ -23,9 +23,17 @@
 import UIKit
 
 class TabBar: UITabBar {
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupTabBar()
+    }
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupTabBar()
+    }
+
+    private func setupTabBar() {
         isTranslucent = false
     }
 }

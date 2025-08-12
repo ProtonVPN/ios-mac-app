@@ -165,7 +165,7 @@ final class NavigationService {
 
     private lazy var connectionBarViewController = makeConnectionBarViewController()
 
-    private lazy var tabBarController = makeTabBarController()
+    private var tabBarController: TabBarController?
 
     var vpnGateway: VpnGatewayProtocol {
         appSessionManager.vpnGateway
@@ -198,8 +198,7 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
-        // early release view controllers in case of logging out
-        tabBarController?.setViewControllers([], animated: false)
+        tabBarController = nil
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
@@ -224,14 +223,8 @@ final class NavigationService {
     }
 
     private func presentMainInterface() {
-        log.debug("Presenting main interface, checking for modals to dismiss", category: .app)
-        windowService.dismissModal { [weak self] in
-            log.debug("Modal dismissal completed, setting up main interface", category: .app)
-            DispatchQueue.main.async {
-                self?.setupTabs()
-                self?.showInitialModals()
-            }
-        }
+        setupTabs()
+        showInitialModals()
     }
 
     private func registerForPushNotificationsIfNeeded() {
@@ -290,11 +283,14 @@ final class NavigationService {
     }
 
     private func setupTabs() {
-        guard let tabBarController else { return }
+        guard tabBarController == nil else {
+            // tabBarController is present from the guest mode
+            tabBarController?.selectedIndex = 0
+            return
+        }
 
-        tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
-
-        var tabViewControllers = [UIViewController]()
+        let tabBarVC = makeTabBarController()
+        var tabViewControllers: [UIViewController] = []
 
         let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
 
@@ -322,10 +318,11 @@ final class NavigationService {
             tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
 
-        tabBarController.setViewControllers(tabViewControllers, animated: false)
-        tabBarController.setupView()
+        tabBarVC.setViewControllers(tabViewControllers, animated: false)
+        tabBarVC.setupView()
 
-        windowService.show(viewController: tabBarController)
+        tabBarController = tabBarVC
+        windowService.show(viewController: tabBarVC)
     }
 
     func makeLaunchViewController() -> LaunchViewController? {
@@ -335,8 +332,8 @@ final class NavigationService {
         return nil
     }
 
-    private func makeTabBarController() -> TabBarController? {
-        guard let tabBarController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else { return nil }
+    private func makeTabBarController() -> TabBarController {
+        let tabBarController = TabBarController()
         tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
 
         return tabBarController
