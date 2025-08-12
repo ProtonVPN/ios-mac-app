@@ -127,7 +127,7 @@ public struct PlutoniumFeature {
         TextState(Localizable.turnSplitTunnelingOnDescription)
     }
 
-    private static let errorAlert = AlertState<Action.Alert> {
+    static let errorAlert = AlertState<Action.Alert> {
         TextState(Localizable.splitTunnelingAlertTitle)
     } actions: {
         SwiftNavigation.ButtonState {
@@ -137,7 +137,7 @@ public struct PlutoniumFeature {
         TextState(Localizable.splitTunnelingAlertDescription)
     }
 
-    private static let profileErrorAlert = AlertState<Action.Alert> {
+    static let profileErrorAlert = AlertState<Action.Alert> {
         TextState(Localizable.splitTunnelingAlertTitle)
     } actions: {
         SwiftNavigation.ButtonState {
