@@ -164,15 +164,31 @@ final class WindowServiceImplementation: WindowService {
     }
 
     func dismissModal(_ completion: (() -> Void)? = nil) {
-        DispatchQueue.main.async {
-            if let rootViewController = self.window.rootViewController {
-                if let topViewController = rootViewController.presentedViewController {
-                    topViewController.dismiss(animated: true, completion: completion)
-                } else {
-                    rootViewController.dismiss(animated: true, completion: completion)
-                }
+        guard Thread.isMainThread else {
+            // Switch to main queue if we're not already on it
+            DispatchQueue.main.async {
+                self.dismissModalIfNeeded(completion: completion)
             }
+            return
         }
+        dismissModalIfNeeded(completion: completion)
+    }
+
+    private func dismissModalIfNeeded(completion: (() -> Void)?) {
+        // Capture the root view controller at the start to avoid race conditions
+        guard let rootViewController = window.rootViewController else {
+            completion?()
+            return
+        }
+
+        // Capture the top view controller as well
+        guard let topViewController = rootViewController.presentedViewController else {
+            completion?()
+            return
+        }
+
+        // Now dismiss using the captured references
+        topViewController.dismiss(animated: true, completion: completion)
     }
 
     // MARK: - Alerts

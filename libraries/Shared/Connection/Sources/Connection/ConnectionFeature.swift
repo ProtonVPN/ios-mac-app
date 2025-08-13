@@ -76,6 +76,7 @@ public struct ConnectionFeature: Reducer, Sendable {
             case onLogout
             case connect(ConnectionPreparationIntent)
             case applySettings(Set<ConnectionFeatureChange.AgentFeature>)
+            case onSessionChange
             case disconnect
         }
 
@@ -152,6 +153,9 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case .input(.onLogout):
                 return .merge(.send(.stopObserving), .send(.core(.handleLogout)))
+
+            case .input(.onSessionChange):
+                return .send(.core(.handleLogout))
 
             case let .prepare(intent):
                 // protocol and port selection is only sensible while the tunnel is disconnected
@@ -442,6 +446,8 @@ extension ConnectionFeature.Action.Input: CustomDebugStringConvertible {
             ".applySettings(\(settings))"
         case .disconnect:
             ".disconnect"
+        case .onSessionChange:
+            ".onSessionChange"
         }
     }
 }

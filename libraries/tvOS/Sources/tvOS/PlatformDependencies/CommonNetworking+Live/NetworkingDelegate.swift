@@ -43,6 +43,13 @@ final class TVOSNetworkingDelegate: NetworkingDelegate {
         continuation.yield(false)
     }
 
+    func onGuestToAuthenticatedTransition() {
+        @Dependency(\.connectionBridge) var bridge
+        Task {
+            await bridge.push(intent: .onSessionChange)
+        }
+    }
+
     func onForceUpgrade(message _: String) {}
 
     var responseDelegateForLoginAndSignup: HumanVerifyResponseDelegate?

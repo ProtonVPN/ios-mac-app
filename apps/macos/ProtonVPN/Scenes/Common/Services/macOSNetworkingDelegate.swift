@@ -7,6 +7,7 @@
 //
 
 import CommonNetworking
+import Dependencies
 import Domain
 import Foundation
 import LegacyCommon
@@ -36,6 +37,13 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
     func onLogout() {
         alertService.push(alert: RefreshTokenExpiredAlert())
         continuation.yield(false)
+    }
+
+    func onGuestToAuthenticatedTransition() {
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        authenticationStorage.deleteKeys()
+        authenticationStorage.deleteCertificate()
+        log.info("Cleared VPN authentication data during guest to authenticated transition", category: .net)
     }
 
     func set(apiService _: APIService) {}
