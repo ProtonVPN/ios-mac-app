@@ -32,6 +32,7 @@ struct WhatsTheIssueFeature: Reducer {
         }
     }
 
+    @CasePathable
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
 
@@ -50,6 +51,7 @@ struct WhatsTheIssueFeature: Reducer {
             case contactForm(ContactFormFeature.State)
         }
 
+        @CasePathable
         enum Action: Equatable {
             case quickFixes(QuickFixesFeature.Action)
             case contactForm(ContactFormFeature.Action)
@@ -90,11 +92,11 @@ struct WhatsTheIssueFeature: Reducer {
                 return .none
             }
         }
-        .ifLet(\.route, action: /Action.route, then: {
-            Scope(state: /Route.State.quickFixes, action: /Route.Action.quickFixes, child: {
+        .ifLet(\.route, action: \.route, then: {
+            Scope(state: \.quickFixes, action: \.quickFixes, child: {
                 QuickFixesFeature()
             })
-            Scope(state: /Route.State.contactForm, action: /Route.Action.contactForm, child: {
+            Scope(state: \.contactForm, action: \.contactForm, child: {
                 ContactFormFeature()
             })
         })

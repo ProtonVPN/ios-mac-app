@@ -33,6 +33,7 @@ struct QuickFixesFeature: Reducer {
         }
     }
 
+    @CasePathable
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case next
@@ -62,7 +63,7 @@ struct QuickFixesFeature: Reducer {
                 return .none
             }
         }
-        .ifLet(\.contactFormState, action: /Action.contactFormAction) {
+        .ifLet(\.contactFormState, action: \.contactFormAction) {
             ContactFormFeature()
         }
     }

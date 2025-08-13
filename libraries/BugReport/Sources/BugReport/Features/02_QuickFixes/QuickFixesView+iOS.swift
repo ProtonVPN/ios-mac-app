@@ -148,20 +148,17 @@
 
     // MARK: - Preview
 
-    struct QuickFixesView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
-
-            return Group {
-                QuickFixesView(store: Store(
-                    initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
-                    reducer: { QuickFixesFeature() }
-                )
-                )
-            }
+        return Group {
+            QuickFixesView(store: Store(
+                initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
+                reducer: { QuickFixesFeature() }
+            )
+            )
         }
     }
 

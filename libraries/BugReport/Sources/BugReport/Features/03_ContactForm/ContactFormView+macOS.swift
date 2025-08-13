@@ -99,35 +99,45 @@
 
     // MARK: - Preview
 
-    struct ContactFormView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview("Empty form") {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
+        let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
-            let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
+        return ContactFormView(store: Store(
+            initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
+            reducer: { ContactFormFeature() }
+        ))
+        .frame(width: 400)
+    }
 
-            return Group {
-                ContactFormView(store: Store(
-                    initialState: ContactFormFeature.State(fields: bugReport.model.categories[0].inputFields, category: "aa"),
-                    reducer: { ContactFormFeature() }
-                ))
-                .previewDisplayName("Empty form")
+    #Preview("Short form") {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-                ContactFormView(store: Store(
-                    initialState: ContactFormFeature.State(fields: formFields, isSending: false),
-                    reducer: { ContactFormFeature() }
-                ))
-                .previewDisplayName("Short form")
+        let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
 
-                ContactFormView(store: Store(
-                    initialState: ContactFormFeature.State(fields: formFields, isSending: true),
-                    reducer: { ContactFormFeature() }
-                ))
-                .previewDisplayName("Loading")
-            }
-            .frame(width: 400)
-        }
+        return ContactFormView(store: Store(
+            initialState: ContactFormFeature.State(fields: formFields, isSending: false),
+            reducer: { ContactFormFeature() }
+        ))
+        .frame(width: 400)
+    }
+
+    #Preview("Loading") {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
+
+        let formFields = IdentifiedArrayOf(uniqueElements: [FormInputField(inputField: bugReport.model.categories[0].inputFields[0], stringValue: "Entered value")])
+
+        return ContactFormView(store: Store(
+            initialState: ContactFormFeature.State(fields: formFields, isSending: true),
+            reducer: { ContactFormFeature() }
+        ))
+        .frame(width: 400)
     }
 #endif

@@ -32,12 +32,13 @@
             }
         }
 
+        @CasePathable
         enum Action: Equatable {
             case whatsTheIssueAction(WhatsTheIssueFeature.Action)
         }
 
         var body: some ReducerOf<Self> {
-            Scope(state: \.whatsTheIssueState, action: /Action.whatsTheIssueAction) {
+            Scope(state: \.whatsTheIssueState, action: \.whatsTheIssueAction) {
                 WhatsTheIssueFeature()
             }
         }
@@ -64,19 +65,16 @@
         }
     }
 
-    struct ReportBugView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
+        let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
+        let reducer = ReportBugFeatureiOS()
 
-            let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
-            let reducer = ReportBugFeatureiOS()
-
-            return Group {
-                ReportBugView(store: Store(initialState: state, reducer: { reducer }))
-            }
+        return Group {
+            ReportBugView(store: Store(initialState: state, reducer: { reducer }))
         }
     }
 

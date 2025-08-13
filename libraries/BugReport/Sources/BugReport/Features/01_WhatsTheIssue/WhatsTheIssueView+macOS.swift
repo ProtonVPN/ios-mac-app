@@ -61,21 +61,15 @@
 
     // MARK: - Preview
 
-    struct WhatsTheIssueView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-
-            return Group {
-                WhatsTheIssueView(store: Store(
-                    initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                    reducer: { WhatsTheIssueFeature() }
-                )
-                )
-                .frame(width: 400.0)
-            }
-        }
+        return WhatsTheIssueView(store: Store(
+            initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+            reducer: { WhatsTheIssueFeature() }
+        )
+        ).frame(width: 400.0)
     }
 
 #endif

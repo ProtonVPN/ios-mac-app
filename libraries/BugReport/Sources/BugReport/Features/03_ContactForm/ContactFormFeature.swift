@@ -152,6 +152,7 @@ struct ContactFormFeature: Reducer {
         }
     }
 
+    @CasePathable
     enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case fieldStringValueChanged(FormInputField, String)
@@ -207,7 +208,7 @@ struct ContactFormFeature: Reducer {
             }
         }
 
-        .ifLet(\.resultState, action: /Action.resultViewAction, then: { BugReportResultFeature() })
+        .ifLet(\.resultState, action: \.resultViewAction, then: { BugReportResultFeature() })
     }
 }
 

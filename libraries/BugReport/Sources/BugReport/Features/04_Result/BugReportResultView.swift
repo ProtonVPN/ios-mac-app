@@ -107,20 +107,16 @@ public struct BugReportResultView: View {
 
 // MARK: - Preview
 
-struct BugReportResultView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            BugReportResultView(store: Store(
-                initialState: BugReportResultFeature.State(error: nil),
-                reducer: { BugReportResultFeature() }
-            ))
-            .previewDisplayName("Success")
+#Preview("Success") {
+    BugReportResultView(store: Store(
+        initialState: BugReportResultFeature.State(error: nil),
+        reducer: { BugReportResultFeature() }
+    ))
+}
 
-            BugReportResultView(store: Store(
-                initialState: BugReportResultFeature.State(error: "Just an error"),
-                reducer: { BugReportResultFeature() }
-            ))
-            .previewDisplayName("Error")
-        }
-    }
+#Preview("Error") {
+    BugReportResultView(store: Store(
+        initialState: BugReportResultFeature.State(error: "Just an error"),
+        reducer: { BugReportResultFeature() }
+    ))
 }

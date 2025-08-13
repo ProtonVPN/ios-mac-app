@@ -222,21 +222,16 @@
         }
     }
 
-    struct ReportBugView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
+        let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
+        let reducer = ReportBugFeatureMacOS()
 
-            let state = ReportBugFeatureMacOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
-            let reducer = ReportBugFeatureMacOS()
-
-            return Group {
-                ReportBugView(store: Store(initialState: state, reducer: { reducer }))
-                    .frame(width: 600, height: 600)
-            }
-        }
+        return ReportBugView(store: Store(initialState: state, reducer: { reducer }))
+            .frame(width: 600, height: 600)
     }
 
 #endif
