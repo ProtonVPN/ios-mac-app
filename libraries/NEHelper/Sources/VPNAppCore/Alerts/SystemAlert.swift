@@ -408,7 +408,7 @@ public final class LocationNotAvailableAlert: SystemAlert {
     }
 }
 
-public final class IKEPlutoniumConflictAlert: SystemAlert {
+public final class IKEv2PlutoniumConflictAlert: SystemAlert {
     public var title: String? {
         get {
             if let name = profileName {

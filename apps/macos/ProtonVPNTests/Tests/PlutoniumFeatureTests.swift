@@ -96,7 +96,7 @@ struct PlutoniumFeatureTests {
         }
 
         await store.send(.toggleModeClicked) {
-            $0.alert = PlutoniumFeature.errorAlert
+            $0.alert = PlutoniumFeature.unsupportedProtocolErrorAlert
         }
     }
 
@@ -118,7 +118,7 @@ struct PlutoniumFeatureTests {
         }
 
         await store.send(.toggleModeClicked) {
-            $0.alert = PlutoniumFeature.profileErrorAlert
+            $0.alert = PlutoniumFeature.unsupportedProfileErrorAlert
         }
     }
 

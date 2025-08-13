@@ -427,6 +427,8 @@ public enum Localizable {
   public static var differentServerEachTime: String { return Localizable.tr("Localizable", "_different_server_each_time", fallback: "Different server each time") }
   /// Button in some alerts
   public static var disable: String { return Localizable.tr("Localizable", "_disable", fallback: "Disable") }
+  /// Message added to the IKEv2 deprecation alert when split tunneling is switched on
+  public static var disablePlutoniumMessage: String { return Localizable.tr("Localizable", "_disable_plutonium_message", fallback: "This will disable split tunneling.") }
   /// Common word
   public static var disabled: String { return Localizable.tr("Localizable", "_disabled", fallback: "Disabled") }
   /// Common word
@@ -699,7 +701,7 @@ public enum Localizable {
   /// Button title for 'Enable Smart protocol'
   public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
   /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
-  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nThis will disable split tunneling. Learn more") }
+  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
   /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
   public static var ikeDeprecationAlertMessageLinkText: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message_link_text", fallback: "Learn more") }
   /// Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol.

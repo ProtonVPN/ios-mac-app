@@ -114,39 +114,6 @@ public struct PlutoniumFeature {
         _ = PlutoniumScanner.shared
     }
 
-    static let confirmAlert = AlertState<Action.Alert> {
-        TextState(Localizable.turnSplitTunnelingOnTitle)
-    } actions: {
-        SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
-            TextState(Localizable.enable)
-        }
-        SwiftNavigation.ButtonState(role: .cancel) {
-            TextState(Localizable.cancel)
-        }
-    } message: {
-        TextState(Localizable.turnSplitTunnelingOnDescription)
-    }
-
-    static let errorAlert = AlertState<Action.Alert> {
-        TextState(Localizable.splitTunnelingAlertTitle)
-    } actions: {
-        SwiftNavigation.ButtonState {
-            TextState(Localizable.ok)
-        }
-    } message: {
-        TextState(Localizable.splitTunnelingAlertDescription)
-    }
-
-    static let profileErrorAlert = AlertState<Action.Alert> {
-        TextState(Localizable.splitTunnelingAlertTitle)
-    } actions: {
-        SwiftNavigation.ButtonState {
-            TextState(Localizable.ok)
-        }
-    } message: {
-        TextState(Localizable.splitTunnelingProfileAlertDescription)
-    }
-
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
@@ -159,14 +126,14 @@ public struct PlutoniumFeature {
                 // is IKEv2 selected in general settings? We need to disable it
                 @Dependency(\.propertiesManager) var propertiesManager
                 if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
-                    state.alert = Self.errorAlert
+                    state.alert = Self.unsupportedProtocolErrorAlert
                     return .none
                 }
                 // Are we connected to vpn with an IKE profile? Can't enable Plutonium
                 if [.connecting, .connected].contains(vpnGateway.connection),
                    let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol,
                    vpnProtocol == .ike {
-                    state.alert = Self.profileErrorAlert
+                    state.alert = Self.unsupportedProfileErrorAlert
                     return .none
                 }
                 // Is kill switch is on? Ask to switch it off
@@ -282,5 +249,40 @@ extension PlutoniumActivated {
                 ips.removeAll { $0 == entry }
             }
         }
+    }
+}
+
+extension PlutoniumFeature {
+    static let confirmAlert = AlertState<Action.Alert> {
+        TextState(Localizable.turnSplitTunnelingOnTitle)
+    } actions: {
+        SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
+            TextState(Localizable.enable)
+        }
+        SwiftNavigation.ButtonState(role: .cancel) {
+            TextState(Localizable.cancel)
+        }
+    } message: {
+        TextState(Localizable.turnSplitTunnelingOnDescription)
+    }
+
+    static let unsupportedProtocolErrorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingAlertDescription)
+    }
+
+    static let unsupportedProfileErrorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingProfileAlertDescription)
     }
 }

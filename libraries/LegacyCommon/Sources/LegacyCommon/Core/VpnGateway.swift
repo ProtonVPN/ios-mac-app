@@ -464,7 +464,7 @@ public class VpnGateway: VpnGatewayProtocol {
         #if os(macOS)
             @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
             if let request, case .enabled = feature, [.vpnProtocol(.ike)].contains(`protocol`) {
-                showIKEPlutoniumConflictAlert(request: request)
+                showIKEv2PlutoniumConflictAlert(request: request)
                 return
             }
         #endif
@@ -907,8 +907,8 @@ private extension VpnGateway {
     }
 
     #if os(macOS)
-        private func showIKEPlutoniumConflictAlert(request: ConnectionRequest) {
-            let alert = IKEPlutoniumConflictAlert(profileName: request.profileName, disablePlutoniumHandler: { [weak self] in
+        private func showIKEv2PlutoniumConflictAlert(request: ConnectionRequest) {
+            let alert = IKEv2PlutoniumConflictAlert(profileName: request.profileName, disablePlutoniumHandler: { [weak self] in
                 @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
                 $feature.withLock {
                     $0.disable()
