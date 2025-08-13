@@ -170,7 +170,6 @@
 		79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5598520AB181000E6D3F6 /* NavigationService.swift */; };
 		79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */; };
 		79C559A420B1BD1600E6D3F6 /* WindowService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C559A320B1BD1600E6D3F6 /* WindowService.swift */; };
-		79DEE9092111A5E100C354EF /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DEE9082111A5E100C354EF /* TabBar.swift */; };
 		79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */; };
 		79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F986F220D838D90064C1C7 /* SettingsViewModel.swift */; };
 		79FD80E221107378003B16E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79FD80E121107377003B16E2 /* Assets.xcassets */; };
@@ -674,7 +673,6 @@
 		79C5598520AB181000E6D3F6 /* NavigationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationService.swift; sourceTree = "<group>"; };
 		79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerItemViewModel.swift; sourceTree = "<group>"; };
 		79C559A320B1BD1600E6D3F6 /* WindowService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowService.swift; sourceTree = "<group>"; };
-		79DEE9082111A5E100C354EF /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		79F17EBC20A30AC1004D2696 /* SwiftObjC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftObjC-Bridging-Header.h"; sourceTree = "<group>"; };
 		79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryItemViewModel.swift; sourceTree = "<group>"; };
 		79F986F220D838D90064C1C7 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -1171,7 +1169,6 @@
 				4C3474922A93C25B008BDE78 /* ImageSubtitleImageTableViewCell.swift */,
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
-				79DEE9082111A5E100C354EF /* TabBar.swift */,
 				D596B8682A79330400CF6E30 /* ImageSubtitleImageTableViewCell.xib */,
 				AD6099FA299B2343007E46BC /* ImageSubtitleTableViewCell.swift */,
 				AD609A02299B89C0007E46BC /* ImageSubtitleTableViewCell.xib */,
@@ -3065,7 +3062,6 @@
 				E551EB0529AF583D00B6612D /* Assets.swift in Sources */,
 				79C5598620AB181000E6D3F6 /* NavigationService.swift in Sources */,
 				E5B3049D28BF628E0093517A /* AnnouncementViewController.swift in Sources */,
-				79DEE9092111A5E100C354EF /* TabBar.swift in Sources */,
 				792B58C02150DEA3000BB3A3 /* StatusViewController.swift in Sources */,
 				AD1D1B8C2D41197F00C185FD /* SettingsClient.swift in Sources */,
 				66E34BAF27ABCD2C002FC827 /* SettingsAccountViewModel.swift in Sources */,

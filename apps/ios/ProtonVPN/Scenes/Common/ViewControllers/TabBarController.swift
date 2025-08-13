@@ -30,24 +30,18 @@ final class TabBarController: UITabBarController {
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
 
-    var viewModel: TabBarViewModel? {
-        didSet {
-            viewModel?.delegate = self
-        }
+    var viewModel: TabBarViewModel
+
+    init(viewModel: TabBarViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        viewModel.delegate = self
+        delegate = self
     }
 
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
-    }
-
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setupTabBar()
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupTabBar()
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -57,7 +51,6 @@ final class TabBarController: UITabBarController {
             traitOverrides.horizontalSizeClass = .compact
         }
 
-        delegate = self
         setupView()
         if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupQuickConnectView()
@@ -66,21 +59,12 @@ final class TabBarController: UITabBarController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        viewModel?.stateChanged()
+        viewModel.stateChanged()
     }
 
     func setupView() {
         view.backgroundColor = .backgroundColor()
         selectedIndex = 0
-    }
-
-    private func setupTabBar() {
-        // Create and configure the custom TabBar
-        let customTabBar = TabBar()
-        customTabBar.isTranslucent = false
-        customTabBar.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
-        setValue(customTabBar, forKey: "tabBar")
     }
 
     private func setupQuickConnectView() {
@@ -96,14 +80,11 @@ final class TabBarController: UITabBarController {
 
         view.addSubview(quickConnectButton)
 
-        let bottomItem: Any
-        bottomItem = view.safeAreaLayoutGuide
-
         quickConnectButton.translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .width, relatedBy: .equal, toItem: tabBar, attribute: .width, multiplier: 1 / CGFloat(tabBar.items?.count ?? 5), constant: 4)
         let heightConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 66)
         let centerXConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0)
-        let bottomConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .bottom, relatedBy: .equal, toItem: bottomItem, attribute: .bottom, multiplier: 1, constant: 6)
+        let bottomConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .bottom, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 6)
         view.addConstraints([widthConstraint, heightConstraint, centerXConstraint, bottomConstraint])
 
         disconnectedQuickConnect()
@@ -111,7 +92,7 @@ final class TabBarController: UITabBarController {
 
     @objc
     private func quickConnectTapped(_: UIButton) {
-        viewModel?.quickConnectTapped()
+        viewModel.quickConnectTapped()
     }
 }
 
@@ -151,15 +132,15 @@ extension TabBarController: UITabBarControllerDelegate {
 
         if viewController is ProtonQCViewController {
             return false
-        } else if let viewModel, viewController == viewControllers?.last { // settings
-            return viewModel.settingShouldBeSelected()
-        } else {
-            return true
         }
+        if viewController == viewControllers?.last { // settings
+            return viewModel.settingShouldBeSelected()
+        }
+        return true
     }
 
     func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
-        if let viewModel, let navigationController = viewController as? UINavigationController,
+        if let navigationController = viewController as? UINavigationController,
            navigationController.visibleViewController is SettingsViewController {
             viewModel.settingsTabTapped()
         }

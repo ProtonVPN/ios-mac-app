@@ -333,8 +333,7 @@ final class NavigationService {
     }
 
     private func makeTabBarController() -> TabBarController {
-        let tabBarController = TabBarController()
-        tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
+        let tabBarController = TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway))
 
         return tabBarController
     }
