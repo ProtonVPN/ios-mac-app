@@ -403,6 +403,10 @@ extension CoreNetworking: AuthDelegate {
                 // Clear the whole keychain to ensure credentials for guest user are cleared for WG context
                 authKeychain.clear()
                 unauthKeychain.clear()
+
+                // To prevent needNewKeys error
+                delegate.onGuestToAuthenticatedTransition()
+
                 try authKeychain.store(AuthCredentials(credential))
             }
         } catch {

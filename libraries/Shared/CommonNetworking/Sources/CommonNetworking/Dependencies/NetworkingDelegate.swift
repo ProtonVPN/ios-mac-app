@@ -27,6 +27,10 @@ public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     var sessionAuthenticatedEvents: AsyncStream<Bool> { get }
     func set(apiService: APIService)
     func onLogout()
+
+    /// Called when transitioning from guest mode to authenticated mode
+    /// This allows the delegate to clear VPN authentication data to prevent key conflicts
+    func onGuestToAuthenticatedTransition()
 }
 
 public protocol NetworkingDelegateFactory {
@@ -42,6 +46,7 @@ final class CoreNetworkingDelegateMock: NetworkingDelegate {
 
     func set(apiService _: APIService) {}
     func onLogout() {}
+    func onGuestToAuthenticatedTransition() {}
 
     func onForceUpgrade(message _: String) {}
 

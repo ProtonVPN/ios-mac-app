@@ -7,6 +7,7 @@
 //
 
 import CommonNetworking
+import Dependencies
 import Domain
 import Foundation
 import GoLibs
@@ -48,6 +49,13 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     func onLogout() {
         alertingService.push(alert: RefreshTokenExpiredAlert())
         continuation.yield(false)
+    }
+
+    func onGuestToAuthenticatedTransition() {
+        @Dependency(\.vpnAuthenticationStorage) var authenticationStorage
+        authenticationStorage.deleteKeys()
+        authenticationStorage.deleteCertificate()
+        log.info("Cleared VPN authentication data during guest to authenticated transition", category: .net)
     }
 }
 
