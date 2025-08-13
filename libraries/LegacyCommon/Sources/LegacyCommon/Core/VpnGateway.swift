@@ -461,13 +461,6 @@ public class VpnGateway: VpnGatewayProtocol {
             showProtocolDeprecatedAlert(request: request)
             return
         }
-        #if os(macOS)
-            @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-            if let request, case .enabled = feature, [.vpnProtocol(.ike)].contains(`protocol`) {
-                showIKEv2PlutoniumConflictAlert(request: request)
-                return
-            }
-        #endif
         siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
 

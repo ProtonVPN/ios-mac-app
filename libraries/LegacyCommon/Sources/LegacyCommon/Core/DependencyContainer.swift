@@ -148,13 +148,20 @@ open class Container: PropertiesToOverride {
         open var modelId: String? {
             shouldHaveOverridden()
         }
-    #endif
 
-    open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
-        [
-            MisconfiguredLocalNetworkIntercept(factory: self),
-        ]
-    }
+        open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
+            [
+                MisconfiguredLocalNetworkIntercept(factory: self),
+                PlutoniumIKEv2ConflictIntercept(factory: self),
+            ]
+        }
+    #else
+        open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
+            [
+                MisconfiguredLocalNetworkIntercept(factory: self),
+            ]
+        }
+    #endif
 
     // MARK: - Factories to override
 
