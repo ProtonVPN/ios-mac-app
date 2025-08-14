@@ -24,7 +24,7 @@ import SwiftUI
 import Strings
 
 public struct BugReportResultView: View {
-    let store: StoreOf<BugReportResultFeature>
+    @Perception.Bindable var store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
     @Environment(\.dismiss) var dismiss
