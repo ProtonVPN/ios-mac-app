@@ -26,15 +26,7 @@
     import SwiftNavigation
 
     public final actor PlutoniumScanner {
-        private static var task: Task<PlutoniumScanner, Never>?
-
-        public static var shared: PlutoniumScanner {
-            get async {
-                if let task { return await task.value }
-                task = Task { await PlutoniumScanner() }
-                return await task!.value
-            }
-        }
+        public static let shared = PlutoniumScanner()
 
         @Shared(.childBundles) var childBundles: [String: ChildBundle]
 
@@ -43,6 +35,7 @@
         private var cancellables: Set<AnyCancellable> = []
 
         private var task: Task<Void, any Error>?
+        private var continuation: AsyncStream<[PlutoniumApp]>.Continuation?
 
         private let debounceAmount: DispatchQueue.SchedulerTimeType.Stride
         private let scheduler: AnySchedulerOf<DispatchQueue>
@@ -50,14 +43,14 @@
         init(
             debounce: Int = 1,
             scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: "ch.proton.mac.plutonium_scanner").eraseToAnyScheduler()
-        ) async {
+        ) {
             self.debounceAmount = .seconds(debounce)
             self.scheduler = scheduler
-            startObservation()
         }
 
-        private func startObservation() {
+        public func startObservation() {
             cancellables.removeAll()
+            self.continuation?.finish()
 
             @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
             @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
@@ -68,9 +61,12 @@
                 $inclusionActivated.apps.publisher
             )
             .debounce(for: debounceAmount, scheduler: scheduler)
+            .filter { !$0.isEmpty } // when we finish the stream, we get an empty array, which we can ignore
             .sink {
                 continuation.yield($0)
             }.store(in: &cancellables)
+
+            self.continuation = continuation
 
             Task {
                 for await apps in asyncStream {

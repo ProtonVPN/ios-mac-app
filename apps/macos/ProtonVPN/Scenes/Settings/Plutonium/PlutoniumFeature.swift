@@ -112,7 +112,7 @@ public struct PlutoniumFeature {
 
         // Start the scanner when user first enters plutonium settings.
         Task {
-            _ = await PlutoniumScanner.shared
+            await PlutoniumScanner.shared.startObservation()
         }
     }
 
