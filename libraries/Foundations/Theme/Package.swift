@@ -20,7 +20,7 @@ let package = Package(
         .package(path: "../Ergonomics"),
         .package(path: "../PMLogger"),
         .package(path: "../../../external/protoncore"),
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
     ],
     targets: [
         .target(

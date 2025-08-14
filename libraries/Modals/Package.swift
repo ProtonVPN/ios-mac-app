@@ -22,7 +22,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-overture", exact: "0.5.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/pointfreeco/swift-navigation", .upToNextMajor(from: "2.3.0")),

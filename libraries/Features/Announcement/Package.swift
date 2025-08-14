@@ -26,7 +26,7 @@ let package = Package(
         .package(path: "../../LegacyCommon"),
         .package(path: "../../../external/protoncore"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.15.8"),
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
     ],
     targets: [
