@@ -21,7 +21,6 @@
     import Foundation
     import Strings
     import SwiftUI
-    import SwiftUINavigation
 
     public struct WhatsTheIssueView: View {
         @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
@@ -56,36 +55,11 @@
                         }
                         .listStyle(.plain)
                         .foregroundColor(colors.textPrimary)
-                        // NavigationLink inside the list
-                        .background(nextView())
                     }
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)
             }
-        }
-
-        private func nextView() -> some View {
-            NavigationLink(
-                item: $store.route,
-                onNavigate: { _ in
-                    print("navigate")
-                },
-                destination: { _ in
-                    let childStore = store.route
-                    switch childStore {
-                    case .quickFixes:
-                        QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
-
-                    case .contactForm:
-                        ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
-
-                    case .none:
-                        EmptyView()
-                    }
-                },
-                label: { EmptyView() }
-            )
         }
     }
 

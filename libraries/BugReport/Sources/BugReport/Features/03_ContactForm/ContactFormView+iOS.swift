@@ -95,21 +95,6 @@
                                     .padding(.horizontal)
                             }
                         }
-
-                        NavigationLink(
-                            item: $store.resultState,
-                            onNavigate: { _ in },
-                            destination: { _ in
-                                IfLetStore(
-                                    store.scope(
-                                        state: \.resultState,
-                                        action: \.resultViewAction
-                                    ),
-                                    then: { store in BugReportResultView(store: store) }
-                                )
-                            },
-                            label: { EmptyView() }
-                        )
                     }
                     .foregroundColor(colors.textPrimary)
                     // Custom Back button

@@ -98,22 +98,7 @@
 
                         VStack {
                             NavigationLink(
-                                item: $store.contactFormState,
-                                onNavigate: { active in
-                                    if active {
-                                        Task {
-                                            await store.send(.next)
-                                        }
-                                    }
-                                },
-                                destination: { _ in
-                                    if let childStore = store.scope(
-                                        state: \.contactFormState,
-                                        action: \.contactFormAction
-                                    ) {
-                                        ContactFormView(store: childStore)
-                                    }
-                                },
+                                state: ReportBugFeatureiOS.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)

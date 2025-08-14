@@ -27,6 +27,7 @@ public struct BugReportResultView: View {
     let store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
+    @Environment(\.dismiss) var dismiss
 
     public var body: some View {
         WithPerceptionTracking {
@@ -92,7 +93,7 @@ public struct BugReportResultView: View {
                 Spacer()
 
                 VStack {
-                    Button(action: { store.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
+                    Button(action: { dismiss() }, label: { Text(Localizable.brFailureButtonRetry) })
                         .buttonStyle(PrimaryButtonStyle())
 
                     Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })

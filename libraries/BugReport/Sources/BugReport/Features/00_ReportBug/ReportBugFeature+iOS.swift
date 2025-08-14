@@ -22,9 +22,17 @@
     import SwiftUI
 
     @Reducer
-    struct ReportBugFeatureiOS: Reducer {
+    struct ReportBugFeatureiOS {
+        @Reducer
+        enum Path {
+            case quickFixes(QuickFixesFeature)
+            case contactUs(ContactFormFeature)
+            case result(BugReportResultFeature)
+        }
+
         @ObservableState
-        struct State: Equatable {
+        struct State {
+            var path = StackState<Path.State>()
             var whatsTheIssueState: WhatsTheIssueFeature.State
 
             init(whatsTheIssueState: WhatsTheIssueFeature.State) {
@@ -33,7 +41,8 @@
         }
 
         @CasePathable
-        enum Action: Equatable {
+        enum Action {
+            case path(StackActionOf<Path>)
             case whatsTheIssueAction(WhatsTheIssueFeature.Action)
         }
 
@@ -41,26 +50,58 @@
             Scope(state: \.whatsTheIssueState, action: \.whatsTheIssueAction) {
                 WhatsTheIssueFeature()
             }
+
+            Reduce { state, action in
+                switch action {
+                case let .whatsTheIssueAction(.categorySelected(category)):
+                    if let suggestions = category.suggestions, !suggestions.isEmpty {
+                        state.path.append(ReportBugFeatureiOS.Path.State.quickFixes(
+                            QuickFixesFeature.State(category: category)
+                        ))
+                    } else {
+                        state.path.append(ReportBugFeatureiOS.Path.State.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
+                    }
+                    return .none
+
+                case let .path(.element(id: _, action: .contactUs(.sendResponseReceived(response)))):
+                    var error: String?
+                    if case let .failure(someError) = response {
+                        error = someError.localizedDescription
+                    }
+                    state.path.append(ReportBugFeatureiOS.Path.State.result(BugReportResultFeature.State(error: error)))
+                    return .none
+
+                case .path:
+                    return .none
+
+                case .whatsTheIssueAction:
+                    return .none
+                }
+            }
+            .forEach(\.path, action: \.path)
         }
     }
 
     public struct ReportBugView: View {
         @Perception.Bindable var store: StoreOf<ReportBugFeatureiOS>
 
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-        @Environment(\.colors) var colors: Colors
-
         public var body: some View {
-            WithPerceptionTracking {
-                NavigationView {
-                    WhatsTheIssueView(
-                        store: store.scope(
-                            state: \.whatsTheIssueState,
-                            action: \.whatsTheIssueAction
-                        )
+            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                WhatsTheIssueView(
+                    store: store.scope(
+                        state: \.whatsTheIssueState,
+                        action: \.whatsTheIssueAction
                     )
+                )
+            } destination: { store in
+                switch store.case {
+                case let .quickFixes(store):
+                    QuickFixesView(store: store)
+                case let .contactUs(store):
+                    ContactFormView(store: store)
+                case let .result(store):
+                    BugReportResultView(store: store)
                 }
-                .navigationViewStyle(.stack)
             }
         }
     }
@@ -69,13 +110,14 @@
         let bugReport = MockBugReportDelegate(model: .mock)
         CurrentEnv.bugReportDelegate = bugReport
         CurrentEnv.updateViewModel.updateIsAvailable = true
+        bugReport.sendCallback = { _, result in
+            result(.success(()))
+        }
 
         let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: bugReport.model.categories))
         let reducer = ReportBugFeatureiOS()
 
-        return Group {
-            ReportBugView(store: Store(initialState: state, reducer: { reducer }))
-        }
+        return ReportBugView(store: Store(initialState: state, reducer: { reducer }))
     }
 
 #endif

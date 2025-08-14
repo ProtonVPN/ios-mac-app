@@ -22,17 +22,15 @@ import Strings
 import SwiftUI
 
 @Reducer
-struct ContactFormFeature: Reducer {
+struct ContactFormFeature {
     @ObservableState
-    struct State: Equatable {
+    struct State {
         var fields: IdentifiedArrayOf<FormInputField>
         var isSending: Bool = false
-        var resultState: BugReportResultFeature.State?
 
-        init(fields: IdentifiedArrayOf<FormInputField>, isSending: Bool, resultState: BugReportResultFeature.State? = nil) {
+        init(fields: IdentifiedArrayOf<FormInputField>, isSending: Bool) {
             self.fields = fields
             self.isSending = isSending
-            self.resultState = resultState
         }
 
         // MARK: State helpers
@@ -152,15 +150,12 @@ struct ContactFormFeature: Reducer {
         }
     }
 
-    @CasePathable
-    enum Action: BindableAction, Equatable {
+    enum Action: BindableAction {
         case binding(BindingAction<State>)
         case fieldStringValueChanged(FormInputField, String)
         case fieldBoolValueChanged(FormInputField, Bool)
         case send
-        case sendResponseReceived(TaskResult<Bool>)
-        case resultViewClosed
-        case resultViewAction(BugReportResultFeature.Action)
+        case sendResponseReceived(Result<Bool, any Error>)
     }
 
     var body: some ReducerOf<Self> {
@@ -178,46 +173,20 @@ struct ContactFormFeature: Reducer {
                 state.isSending = true
                 let form = state.makeResult()
                 return .run { send in
-                    await send(.sendResponseReceived(TaskResult {
+                    await send(.sendResponseReceived(Result {
                         @Dependency(\.sendBugReport) var sendBugReport
                         return try await sendBugReport(form)
                     }))
                 }
 
-            case let .sendResponseReceived(response):
+            case .sendResponseReceived:
                 state.isSending = false
-                state.resultState = BugReportResultFeature.State(error: response.errorOrNil?.localizedDescription ?? nil)
-                return .none
-
-            case .resultViewClosed:
-                state.resultState = nil
-                return .none
-
-            // 04. Results
-
-            case .resultViewAction(.retry):
-                state.resultState = nil
-                return .none
-
-            case .resultViewAction:
                 return .none
 
             case .binding:
-                // Everything's done in BindingReducer()
                 return .none
             }
         }
-
-        .ifLet(\.resultState, action: \.resultViewAction, then: { BugReportResultFeature() })
-    }
-}
-
-private extension TaskResult<Bool> {
-    var errorOrNil: Error? {
-        if case let TaskResult.failure(error) = self {
-            return error
-        }
-        return nil
     }
 }
 
