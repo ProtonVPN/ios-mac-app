@@ -18,7 +18,7 @@ let package = Package(
         .package(path: "../../Foundations/Domain"),
         .package(path: "../../Foundations/Ergonomics"),
         .package(path: "../../Foundations/PMLogger"),
-        .package(url: "https://github.com/apple/swift-log.git", exact: "1.4.4"),
+        .package(url: "https://github.com/apple/swift-log.git", exact: "1.6.4"),
         .package(path: "../../Shared/Localization"), // LocaleWrapper is required for country code mappings
         .package(url: "https://github.com/pointfreeco/swift-dependencies", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/groue/GRDB.swift", exact: "6.29.2"),
