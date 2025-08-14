@@ -427,6 +427,8 @@ public enum Localizable {
   public static var differentServerEachTime: String { return Localizable.tr("Localizable", "_different_server_each_time", fallback: "Different server each time") }
   /// Button in some alerts
   public static var disable: String { return Localizable.tr("Localizable", "_disable", fallback: "Disable") }
+  /// Message added to the IKEv2 deprecation alert when split tunneling is switched on
+  public static var disablePlutoniumMessage: String { return Localizable.tr("Localizable", "_disable_plutonium_message", fallback: "This will disable split tunneling.") }
   /// Common word
   public static var disabled: String { return Localizable.tr("Localizable", "_disabled", fallback: "Disabled") }
   /// Common word
@@ -699,7 +701,7 @@ public enum Localizable {
   /// Button title for 'Enable Smart protocol'
   public static var ikeDeprecationAlertEnableSmartButtonTitle: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_enable_smart_button_title", fallback: "Enable Smart protocol") }
   /// Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
-  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nSplit tunneling settings will be ignored when using IKEv2.") }
+  public static var ikeDeprecationAlertMessage: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message", fallback: "This protocol will be removed soon. Consider switching to Smart protocol. Learn more") }
   /// Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios
   public static var ikeDeprecationAlertMessageLinkText: String { return Localizable.tr("Localizable", "_ike_deprecation_alert_message_link_text", fallback: "Learn more") }
   /// Title of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol.
@@ -2240,6 +2242,20 @@ public enum Localizable {
   public static var searchUsRegionsSample: String { return Localizable.tr("Localizable", "search_us_regions_sample", fallback: "California, Florida, Colorado...") }
   /// MacOS menu item; MacOS select item title;
   public static var selectAllMenuTitle: String { return Localizable.tr("Localizable", "select_all_menu_title", fallback: "Select All") }
+  /// Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  public static var splitTunnelingAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol. Learn more") }
+  /// Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  public static var splitTunnelingAlertTitle: String { return Localizable.tr("Localizable", "split_tunneling_alert_title", fallback: "Cannot enable split tunneling") }
+  /// Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  public static var splitTunnelingConnectToProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_description", fallback: "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more") }
+  /// Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  public static var splitTunnelingConnectToProfileAlertTitle: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_title", fallback: "Connect with IKEv2 protocol?") }
+  /// Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  public static func splitTunnelingConnectToProfileNameAlertTitle(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_name_alert_title", String(describing: p1), fallback: "Connect to %@?")
+  }
+  /// Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  public static var splitTunnelingProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_profile_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more") }
   /// Plural format key: "Hundreds of servers in %#@num_countries@"
   public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option1", p1, fallback: "Plural format key: \"Hundreds of servers in %#@num_countries@\"")

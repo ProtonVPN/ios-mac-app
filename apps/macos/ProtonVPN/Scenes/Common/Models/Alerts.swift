@@ -25,6 +25,8 @@ import LegacyCommon
 import Strings
 import VPNAppCore
 
+import Sharing
+
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = Localizable.deleteApplicationDataPopupTitle
     public var message: String? = Localizable.deleteApplicationDataPopupBody
@@ -66,7 +68,15 @@ public class QuitWarningAlert: SystemAlert {
 
 public class IkeDeprecatedAlert: SystemAlert {
     public var title: String? = Localizable.ikeDeprecationAlertTitle
-    public var message: String? = Localizable.ikeDeprecationAlertMessage
+    public var message: String? = {
+        @SharedReader(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+        if case .enabled = feature {
+            return Localizable.ikeDeprecationAlertMessage + "\n\n" + Localizable.disablePlutoniumMessage
+        } else {
+            return Localizable.ikeDeprecationAlertMessage
+        }
+    }()
+
     public let linkText: String = Localizable.ikeDeprecationAlertMessageLinkText
     public let confirmTitle: String = Localizable.ikeDeprecationAlertEnableSmartButtonTitle
     public let dismissTitle: String = Localizable.ikeDeprecationAlertContinueButtonTitle

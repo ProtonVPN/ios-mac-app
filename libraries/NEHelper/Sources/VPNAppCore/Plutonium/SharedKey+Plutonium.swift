@@ -44,6 +44,10 @@
         case disabled(Mode)
         case enabled(Mode)
 
+        public mutating func disable() {
+            self = .disabled(mode)
+        }
+
         public var mode: Mode {
             switch self {
             case let .disabled(mode), let .enabled(mode):

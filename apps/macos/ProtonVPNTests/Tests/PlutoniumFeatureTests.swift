@@ -20,6 +20,9 @@ import Testing
 
 import ComposableArchitecture
 
+import LegacyCommon
+
+import Foundation
 @testable import ProtonVPN
 @testable import VPNAppCore
 
@@ -33,8 +36,12 @@ struct PlutoniumFeatureTests {
 
     @Test
     func onAppear() async {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.connectionProtocol = .smartProtocol
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager = propertiesManager
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -51,12 +58,16 @@ struct PlutoniumFeatureTests {
     }
 
     @Test
-    func toggleModeConflict() async {
+    func toggleModeKillSwitchConflict() async {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.connectionProtocol = .smartProtocol
         $killSwitch.withLock {
             $0 = true
         }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager = propertiesManager
         }
 
         await store.send(.toggleModeClicked) {
@@ -72,9 +83,53 @@ struct PlutoniumFeatureTests {
     }
 
     @Test
-    func toggleMode() async {
+    func toggleModeIKEConflict() async {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.connectionProtocol = .vpnProtocol(.ike)
+        $killSwitch.withLock {
+            $0 = true
+        }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager = propertiesManager
+        }
+
+        await store.send(.toggleModeClicked) {
+            $0.alert = PlutoniumFeature.unsupportedProtocolErrorAlert
+        }
+    }
+
+    @Test
+    func toggleModeIKEProfileConflict() async {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.connectionProtocol = .smartProtocol
+        let gateway = VpnGatewayMock()
+        gateway.connection = .connected
+        let appStateManager = AppStateManagerMock()
+        appStateManager.mockActiveConnection = ConnectionConfiguration.ikev2ConnectionConfig
+        $killSwitch.withLock {
+            $0 = true
+        }
+        let store = TestStore(initialState: PlutoniumFeature.State()) {
+            PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
+        } withDependencies: {
+            $0.propertiesManager = propertiesManager
+        }
+
+        await store.send(.toggleModeClicked) {
+            $0.alert = PlutoniumFeature.unsupportedProfileErrorAlert
+        }
+    }
+
+    @Test
+    func toggleMode() async {
+        let propertiesManager = PropertiesManagerMock()
+        propertiesManager.connectionProtocol = .smartProtocol
+        let store = TestStore(initialState: PlutoniumFeature.State()) {
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
+        } withDependencies: {
+            $0.propertiesManager = propertiesManager
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -115,7 +170,7 @@ struct PlutoniumFeatureTests {
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         $feature.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         await store.send(.toggleModeClicked) {
@@ -133,7 +188,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.exclusion) }
         $featureApplied.withLock { $0 = .enabled(.exclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -155,7 +210,7 @@ struct PlutoniumFeatureTests {
         $feature.withLock { $0 = .enabled(.inclusion) }
         $featureApplied.withLock { $0 = .enabled(.inclusion) }
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         #expect(store.state.requiresReconnection == false)
         // modify the activated list
@@ -173,7 +228,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyIPsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         await store.send(.entryClicked(.ip("1.1.1.1"), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.ips = ["1.1.1.1"] }
@@ -197,7 +252,7 @@ struct PlutoniumFeatureTests {
     @Test
     func modifyAppsList() async {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
-            PlutoniumFeature()
+            PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         }
         await store.send(.entryClicked(.app(.huzza), .add, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [.huzza] }
@@ -208,5 +263,47 @@ struct PlutoniumFeatureTests {
         await store.send(.entryClicked(.app(.huzza), .remove, .exclusion)) {
             $0.$exclusionActivated.withLock { $0.apps = [] }
         }
+    }
+}
+
+extension ConnectionConfiguration {
+    static var ikev2ConnectionConfig: ConnectionConfiguration {
+        let server = ServerModel(
+            id: "",
+            name: "",
+            domain: "",
+            load: 0,
+            entryCountryCode: "",
+            exitCountryCode: "",
+            tier: 1,
+            feature: .zero,
+            city: nil,
+            ips: [ServerIp](),
+            score: 0.0,
+            status: 0,
+            location: ServerLocation(lat: 0, long: 0),
+            hostCountry: nil,
+            translatedCity: nil,
+            gatewayName: nil
+        )
+        let serverIp = ServerIp(
+            id: "",
+            entryIp: "",
+            exitIp: "",
+            domain: "",
+            status: 0
+        )
+        return ConnectionConfiguration(
+            id: UUID(),
+            server: server,
+            serverIp: serverIp,
+            vpnProtocol: .ike,
+            netShieldType: .off,
+            natType: .default,
+            safeMode: true,
+            portForwarding: true,
+            ports: [500],
+            intent: .fastest
+        )
     }
 }

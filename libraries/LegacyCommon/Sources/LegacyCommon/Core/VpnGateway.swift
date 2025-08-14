@@ -22,6 +22,7 @@
 import Foundation
 
 import Dependencies
+import Sharing
 
 import ProtonCoreFeatureFlags
 
@@ -460,7 +461,6 @@ public class VpnGateway: VpnGatewayProtocol {
             showProtocolDeprecatedAlert(request: request)
             return
         }
-
         siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         propertiesManager.lastConnectionRequest = request
 
@@ -898,4 +898,17 @@ private extension VpnGateway {
         })
         alertService?.push(alert: alert)
     }
+
+    #if os(macOS)
+        private func showIKEv2PlutoniumConflictAlert(request: ConnectionRequest) {
+            let alert = IKEv2PlutoniumConflictAlert(profileName: request.profileName, disablePlutoniumHandler: { [weak self] in
+                @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
+                $feature.withLock {
+                    $0.disable()
+                }
+                self?.connect(with: request)
+            })
+            alertService?.push(alert: alert)
+        }
+    #endif
 }

@@ -23,6 +23,7 @@ import ComposableArchitecture
 
 import Domain
 import Ergonomics
+import LegacyCommon
 import Strings
 import VPNAppCore
 
@@ -102,38 +103,45 @@ public struct PlutoniumFeature {
 
     @Shared(.killSwitch) var killSwitch: Bool
 
-    public init() {
-        // It doesn't make sense to start the scanner before the user starts making changes to the plutonium app lists
-        _ = PlutoniumScanner.shared
-    }
+    private var appStateManager: AppStateManager
+    private var vpnGateway: VpnGatewayProtocol
 
-    static let confirmAlert = AlertState<Action.Alert> {
-        TextState(Localizable.turnSplitTunnelingOnTitle)
-    } actions: {
-        SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
-            TextState(Localizable.continue)
-        }
-        SwiftNavigation.ButtonState(role: .cancel) {
-            TextState(Localizable.notNow)
-        }
-    } message: {
-        TextState(Localizable.turnSplitTunnelingOnDescription)
+    public init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+        self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
+
+        // Start the scanner when user first enters plutonium settings.
+        _ = PlutoniumScanner.shared
     }
 
     public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .toggleModeClicked:
-                // disabling plutonium, all ok
+                // Is plutonium currently enabled? Ok, disable
                 if case .enabled = state.feature {
                     return .send(.toggleModeConfirmed)
                 }
-                // kill switch is on, ask to switch it off
+
+                // is IKEv2 selected in general settings? We need to disable it
+                @Dependency(\.propertiesManager) var propertiesManager
+                if propertiesManager.connectionProtocol == .vpnProtocol(.ike) {
+                    state.alert = Self.unsupportedProtocolErrorAlert
+                    return .none
+                }
+                // Are we connected to vpn with an IKE profile? Can't enable Plutonium
+                if [.connecting, .connected].contains(vpnGateway.connection),
+                   let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol,
+                   vpnProtocol == .ike {
+                    state.alert = Self.unsupportedProfileErrorAlert
+                    return .none
+                }
+                // Is kill switch is on? Ask to switch it off
                 if killSwitch {
                     state.alert = Self.confirmAlert
                     return .none
                 }
-                // All ok, kill switch is off
+
                 return .send(.toggleModeConfirmed, animation: .default)
             case .toggleModeConfirmed:
                 switch state.feature {
@@ -144,9 +152,9 @@ public struct PlutoniumFeature {
                     state.$feature.withLock {
                         $0 = .enabled(mode)
                     }
-                case let .enabled(mode):
+                case .enabled:
                     state.$feature.withLock {
-                        $0 = .disabled(mode)
+                        $0.disable()
                     }
                 }
                 return .none
@@ -241,5 +249,40 @@ extension PlutoniumActivated {
                 ips.removeAll { $0 == entry }
             }
         }
+    }
+}
+
+extension PlutoniumFeature {
+    static let confirmAlert = AlertState<Action.Alert> {
+        TextState(Localizable.turnSplitTunnelingOnTitle)
+    } actions: {
+        SwiftNavigation.ButtonState(action: .toggleModeConfirmed) {
+            TextState(Localizable.enable)
+        }
+        SwiftNavigation.ButtonState(role: .cancel) {
+            TextState(Localizable.cancel)
+        }
+    } message: {
+        TextState(Localizable.turnSplitTunnelingOnDescription)
+    }
+
+    static let unsupportedProtocolErrorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingAlertDescription)
+    }
+
+    static let unsupportedProfileErrorAlert = AlertState<Action.Alert> {
+        TextState(Localizable.splitTunnelingAlertTitle)
+    } actions: {
+        SwiftNavigation.ButtonState {
+            TextState(Localizable.ok)
+        }
+    } message: {
+        TextState(Localizable.splitTunnelingProfileAlertDescription)
     }
 }

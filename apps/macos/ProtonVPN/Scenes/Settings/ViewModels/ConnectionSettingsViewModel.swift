@@ -23,6 +23,7 @@
 import Cocoa
 
 import Dependencies
+import Sharing
 
 import Domain
 import LegacyCommon
@@ -306,6 +307,8 @@ final class ConnectionSettingsViewModel {
                     userInitiated: true,
                     completion: changeCompletionHandler
                 )
+                @Shared(.plutoniumFeature) var plutonium
+                $plutonium.withLock { $0.disable() }
             }))
         }
     }
