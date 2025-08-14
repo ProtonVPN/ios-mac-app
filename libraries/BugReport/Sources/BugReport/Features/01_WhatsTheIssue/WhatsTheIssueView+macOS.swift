@@ -25,19 +25,12 @@
     public struct WhatsTheIssueView: View {
         @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
         @Environment(\.colors) var colors: Colors
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
         public var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .center) {
-                    StepProgress(step: 1, steps: 3, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
-                        .padding(.bottom)
-                        .transition(.opacity)
-
-                    UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                     Text(Localizable.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -58,6 +51,7 @@
                             }
                             .buttonStyle(CategoryButtonStyle())
                             .listRowBackground(colors.background)
+                            .listRowSeparator(.hidden)
                         }
                     }
                     .listStyle(.plain)

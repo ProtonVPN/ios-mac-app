@@ -85,22 +85,45 @@
     public struct ReportBugView: View {
         @Perception.Bindable var store: StoreOf<ReportBugFeatureMacOS>
 
+        @Environment(\.colors) var colors: Colors
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+
         public var body: some View {
-            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                WhatsTheIssueView(
-                    store: store.scope(
-                        state: \.whatsTheIssueState,
-                        action: \.whatsTheIssueAction
+            VStack(alignment: .center) {
+                if !store.path.contains(where: { pathState in
+                    if case .result = pathState {
+                        return true
+                    }
+                    return false
+                }) {
+                    StepProgress(
+                        step: UInt(store.path.count + 1),
+                        steps: 3,
+                        colorMain: colors.primary,
+                        colorText: colors.textAccent,
+                        colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak
                     )
-                )
-            } destination: { store in
-                switch store.case {
-                case let .quickFixes(store):
-                    QuickFixesView(store: store)
-                case let .contactUs(store):
-                    ContactFormView(store: store)
-                case let .result(store):
-                    BugReportResultView(store: store)
+                    .transition(.opacity)
+                }
+
+                UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
+                NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                    WhatsTheIssueView(
+                        store: store.scope(
+                            state: \.whatsTheIssueState,
+                            action: \.whatsTheIssueAction
+                        )
+                    )
+                } destination: { store in
+                    switch store.case {
+                    case let .quickFixes(store):
+                        QuickFixesView(store: store)
+                    case let .contactUs(store):
+                        ContactFormView(store: store)
+                    case let .result(store):
+                        BugReportResultView(store: store)
+                    }
                 }
             }
         }
