@@ -115,12 +115,20 @@
 
     public struct AppsProvider {
         public var enumerateAppsFolder: () -> [PlutoniumApp]
+        public var enumerateChildApplications: (PlutoniumApp) -> [PlutoniumApp]
     }
 
     extension AppsProvider: DependencyKey {
-        public static let liveValue: AppsProvider = .init(enumerateAppsFolder: FileManager.default.enumerateAppsFolder)
+        public static let liveValue: AppsProvider = .init(
+            enumerateAppsFolder: FileManager.default.enumerateAppsFolder,
+            enumerateChildApplications: FileManager.default.enumerateChildApplications(for:)
+        )
 
-        public static var testValue: AppsProvider = .init { [.huzza] }
+        public static var testValue: AppsProvider = .init {
+            [.huzza]
+        } enumerateChildApplications: { _ in
+            [.childOfHuzza]
+        }
     }
 
     public extension DependencyValues {
@@ -133,6 +141,10 @@
     extension PlutoniumApp {
         static var huzza: PlutoniumApp {
             .init(bundleIdentifier: "test_bundle_id", title: "Huzza!")
+        }
+
+        static var childOfHuzza: PlutoniumApp {
+            .init(bundleIdentifier: "test_child_bundle_id", title: "Huzza child!")
         }
     }
 

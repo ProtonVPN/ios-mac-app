@@ -19,6 +19,7 @@
 #if canImport(AppKit)
 
     import Combine
+    import Dependencies
     import Foundation
     import Sharing
 
@@ -90,7 +91,8 @@
         private func enumerationOperation(_ app: PlutoniumApp) -> () async throws -> (String, ChildBundle) {
             {
                 try Task.checkCancellation()
-                let plugins = FileManager.default.enumerateChildApplications(for: app)
+                @Dependency(\.appsProvider) var appsProvider
+                let plugins = appsProvider.enumerateChildApplications(app)
                 let ids = plugins.map(\.bundleIdentifier)
                 return (app.bundleIdentifier, ChildBundle(bundleIdentifiers: ids, lastTimeChecked: .now))
             }
