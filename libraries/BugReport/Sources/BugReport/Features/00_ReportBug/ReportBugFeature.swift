@@ -22,7 +22,7 @@ import SwiftUI
 
 @Reducer
 struct ReportBugFeature {
-    @Reducer
+    @Reducer(state: .equatable)
     enum Path {
         case quickFixes(QuickFixesFeature)
         case contactUs(ContactFormFeature)
@@ -30,13 +30,9 @@ struct ReportBugFeature {
     }
 
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var path = StackState<Path.State>()
         var whatsTheIssueState: WhatsTheIssueFeature.State
-
-        init(whatsTheIssueState: WhatsTheIssueFeature.State) {
-            self.whatsTheIssueState = whatsTheIssueState
-        }
     }
 
     @CasePathable
