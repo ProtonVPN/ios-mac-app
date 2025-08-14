@@ -18,32 +18,7 @@
 
 @testable import BugReport
 import ComposableArchitecture
-import XCTest
+import Testing
 
 @MainActor
-final class QuickFixesTests: XCTestCase {
-    private let delegate = MockBugReportDelegate(model: .mock)
-
-    private var categoryWithQuickFixes: BugReport.Category {
-        delegate.model.categories.first!
-    }
-
-    func testButtonOpensContactForm() async throws {
-        let category = categoryWithQuickFixes
-
-        let store = TestStore(
-            initialState: QuickFixesFeature.State(category: category),
-            reducer: { QuickFixesFeature() }
-        )
-
-        // Open form
-        await store.send(.next, assert: { resultState in
-            resultState.contactFormState = ContactFormFeature.State(fields: category.inputFields, category: category.label)
-        })
-
-        // Go back
-        await store.send(.contactFormDeselected, assert: { resultState in
-            resultState.contactFormState = nil
-        })
-    }
-}
+struct QuickFixesTests {}

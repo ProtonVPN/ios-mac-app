@@ -23,7 +23,7 @@ import SwiftUI
 @Reducer
 struct QuickFixesFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var category: Category
     }
 

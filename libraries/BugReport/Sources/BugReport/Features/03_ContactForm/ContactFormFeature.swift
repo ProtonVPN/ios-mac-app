@@ -24,7 +24,7 @@ import SwiftUI
 @Reducer
 struct ContactFormFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var fields: IdentifiedArrayOf<FormInputField>
         var isSending: Bool = false
 

@@ -23,7 +23,7 @@ import Foundation
 @Reducer
 struct BugReportResultFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var error: String?
     }
 

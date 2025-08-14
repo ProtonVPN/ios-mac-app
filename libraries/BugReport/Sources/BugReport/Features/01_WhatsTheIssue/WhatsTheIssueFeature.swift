@@ -22,7 +22,7 @@ import Foundation
 @Reducer
 struct WhatsTheIssueFeature {
     @ObservableState
-    struct State {
+    struct State: Equatable {
         var categories: [Category]
     }
 
