@@ -65,10 +65,10 @@
 "_reconnection_required" = "Необхідне перепідключення";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "Від’єднатися, щоби продовжити";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "Щоб увійти або створити обліковий запис, вам потрібно від’єднатися від VPN.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Обслуговування";
@@ -310,6 +310,21 @@
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Постійна VPN автоматично відновлюватиме з'єднання";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
 
 /* MacOS: About window title */
 "_about" = "Про нас";
@@ -929,7 +944,7 @@
 "_kill_switch_tooltip" = "Блокує весь мережевий трафік у випадку втрати VPN-тунелю.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "Переспрямування портів";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Постійна VPN";
@@ -969,6 +984,12 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Запобігання витоку подробиць DNS-запитів третім сторонам. Завжди увімкнено.";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Ключі безпеки";
@@ -1046,10 +1067,10 @@
 "_turn_ks_on_title" = "Увімкнути Kill Switch?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• Це вимкне роздільне тунелювання";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• Ви не матимете доступу до пристроїв у своїй локальній мережі";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
 "_turn_ks_on_description_ios" = "Ви не матимете доступу до пристроїв у своїй локальній мережі";
@@ -1390,19 +1411,22 @@
 "_offer_ending_" = "Завершується %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Активний порт:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "Номер активного порту";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "Копіювати номер порту";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "Завантаження...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "Оновлено %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
 
 "_quick_settings_title" = "Швидкі налаштування";
 
@@ -1413,13 +1437,19 @@
 "_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "Обхід мережевих екранів для можливості з’єднання з P2P-серверами та пристроями у вашій локальній мережі.";
 
 "_quick_settings_secureCore_note" = "Secure Core може знижувати швидкість VPN";
 
 "_quick_settings_netShield_note" = "Якщо вебсайти не завантажуються, спробуйте вимкнути NetShield";
 
 "_quick_settings_killSwitch_note" = "Якщо ви не можете з'єднатися з пристроями у вашій локальній мережі, спробуйте вимкнути Kill Switch.";
+
+"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+
+"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "Отримати Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Вдоскональте швидкість завантаження, водночас приховуючи свою IP-адресу.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Improve P2P speed";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Захист 10 пристроїв одночасно";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Оцініть додаткові функції приватності, вдосконалену продуктивність і налаштування VPN нового рівня.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Вітаємо! Ви розблокували функції безпеки й продуктивності рівня преміум у всіх службах Proton, а також отримали 500 ГБ обсягу сховища.\n\nНасолоджуйтеся найкращими функціями захисту приватності від Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Вітаємо! Ви розблокували функції безпеки й продуктивності рівня преміум у всіх службах Proton, а також отримали **500 ГБ** обсягу сховища.\n\nНасолоджуйтеся найкращими функціями захисту приватності від Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";

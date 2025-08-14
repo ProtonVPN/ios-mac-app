@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "VPN always-on akan menghubungkan Anda kembali secara otomatis";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Nomor port yang aktif: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Buka klien torrent atau aplikasi P2P Anda dan masukkan nomor ini.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Salin";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Nomor port yang aktif tidak dapat diperoleh";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Mulai ulang koneksi Anda dan coba lagi. Apabila hal ini tidak menyelesaikan masalah, coba gunakan server lain.";
+
 /* MacOS: About window title */
 "_about" = "Tentang";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Mencegah agar rincian kueri DNS Anda tidak bocor ke pihak ketiga. Selalu aktif.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Notifikasi penerusan port";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Dapatkan notifikasi pada saat nomor port aktif yang Anda gunakan berubah";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Kunci Keamanan";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Diperbarui %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Tidak tersedia";
+
 "_quick_settings_title" = "Pengaturan Cepat";
 
 "_quick_settings_secureCore_description" = "Alihkan data paling sensitif Anda melalui server teraman kami di negara ramah privasi.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Jika situs web tidak dimuat, coba nonaktifkan NetShield";
 
 "_quick_settings_killSwitch_note" = "Apabila Anda tidak dapat tersambung ke perangkat lain yang terdapat pada jaringan lokal Anda, cobalah untuk menonaktifkan kill switch.";
+
+"_quick_settings_portForwarding_note" = "Masukkan nomor port yang aktif ke aplikasi BitTorrent Anda untuk meningkatkan kecepatan P2P Anda";
+
+"_quick_settings_portForwarding_warningNote" = "Untuk menggunakan penerusan port, hubungkan ke server P2P";
+
+"_quick_settings_portForwarding_errorNote" = "Nomor port aktif tidak dapat diperoleh. Mulai ulang koneksi Anda dan coba lagi.";
 
 "_quick_settings_get_plus" = "Pilih Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Tingkatkan kecepatan unggahan dan unduhan Anda sambil menyembunyikan alamat IP Anda.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Tingkatkan kecepatan P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Jadikan performa pembagian berkas peer-to-peer (P2P) secepat kilat dengan VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Lindungi 10 perangkat secara bersamaan";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Nikmati berbagai fitur privasi tambahan, performa yang jauh lebih cepat, dan opsi kostumisasi VPN lanjutan.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Selamat! Anda telah memperoleh akses menuju berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan total ruang penyimpanan 500 GB.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "Anda telah membuka akses ke seluruh fitur premium Proton VPN, Mail, Calendar, Drive, dan Pass — beserta dengan total ruang penyimpanan 500 GB.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Selamat! Anda telah memperoleh akses menuju berbagai fitur keamanan dan performa premium pada seluruh layanan Proton, beserta dengan total ruang penyimpanan **500 GB**.\n\nNikmati privasi terbaik yang ditawarkan oleh Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Anda telah membuka akses ke seluruh fitur premium Proton VPN, Mail, Calendar, Drive, dan Pass — beserta dengan total ruang penyimpanan **500 GB**.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

@@ -65,10 +65,10 @@
 "_reconnection_required" = "再接続が必要です";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "接続解除して続行";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "サインインまたはアカウントを作成するには、VPNから接続解除する必要があります。";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "メンテナンス中";
@@ -310,6 +310,21 @@
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "常時接続の VPN により自動的に再接続されます";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
 
 /* MacOS: About window title */
 "_about" = "私たちについて";
@@ -929,7 +944,7 @@
 "_kill_switch_tooltip" = "VPNトンネルが無効になった場合、すべてのネットワークトラフィックをブロックします。";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "ポート転送";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "常時接続 VPN";
@@ -969,6 +984,12 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "DNS クエリの内容が外部に漏洩するのを防ぎます。この設定は常に有効です。";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "セキュリティキー";
@@ -1043,22 +1064,22 @@
 "_allow_lan_note" = "変更を適用するには再接続する必要があります";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_title" = "Enable kill switch?";
+"_turn_ks_on_title" = "キルスイッチを有効にしますか？";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• スプリットトンネルを無効化します";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• ローカルネットワーク上のデバイスにアクセスできなくなります";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
+"_turn_ks_on_description_ios" = "ローカルネットワーク上のデバイスにアクセスできなくなります";
 
 /* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
-"turn_split_tunneling_on_title" = "Enable split tunneling?";
+"turn_split_tunneling_on_title" = "スプリットトンネルを有効にしますか？";
 
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "This will disable kill switch.";
+"turn_split_tunneling_on_description" = "これはキルスイッチを無効化します。";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ プランを選択";
@@ -1390,19 +1411,22 @@
 "_offer_ending_" = "終了%@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "有効なポート:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "アクティブなポート番号";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "ポート番号をコピー";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "読み込み中...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "更新されました: %@";
+
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
 
 "_quick_settings_title" = "クイック設定";
 
@@ -1413,13 +1437,19 @@
 "_quick_settings_killSwitch_description" = "意図しない IP アドレスの漏洩を防ぐため、VPN 接続が切断された場合にインターネットを無効にします。";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "ファイアウォールを回避して、P2Pサーバーやローカルネットワーク内のデバイスに接続します。";
 
 "_quick_settings_secureCore_note" = "Secure Core を使用すると VPN の通信速度が低下する可能性があります";
 
 "_quick_settings_netShield_note" = "ウェブサイトが読み込まれない場合は、NetShield を無効にしてみてください";
 
 "_quick_settings_killSwitch_note" = "ローカルネットワーク上のデバイスに接続できない場合は、キルスイッチを無効にしてみてください。";
+
+"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+
+"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "PLUS を入手";
 
@@ -1503,7 +1533,7 @@
 "_sysex_error_description" = "システム拡張機能の有効化中にエラーが発生しました: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
-"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
+"_sysex_error_description_subcase_code_signature_invalid" = "アプリを再インストールして、再度お試しください。";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "/Applications フォルダーにアプリが正しくインストールされていることをご確認ください。";
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "あなたのIPアドレスを隠したままアップロードとダウンロード速度が向上します。";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Improve P2P speed";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "一度に10台のデバイスを保護";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "特別なプライバシー機能、高速パフォーマンス、および次世代のVPNカスタマイズをお楽しみください。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "おめでとうございます！すべてのProtonサービスでプレミアムなセキュリティとパフォーマンスの機能、さらに合計500 GBのストレージを解除しました。\n\nProtonプライバシーをお楽しみください。";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "おめでとうございます！すべてのProtonサービスでプレミアムなセキュリティとパフォーマンスの機能、さらに合計**500** GBのストレージを解除しました。\n\nProtonプライバシーをお楽しみください。";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2805,7 +2841,7 @@
 "_ike_deprecation_alert_title" = "IKEv2を有効にしますか？";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nSplit tunneling settings will be ignored when using IKEv2.";
+"_ike_deprecation_alert_message" = "このプロトコルは間もなく削除されます。Smartプロトコルへの切り替えをご検討ください。より詳しく\n\nIKEv2を使用している場合、スプリットトンネル設定は無視されます。";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "もっと詳しく知る";
@@ -2967,28 +3003,28 @@
 "_widgetAdoption_modal_instruction_button" = "分かりました";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "プライバシーに移行しましょう";
 
 /* iOS: Settings account section card description for guest mode */
-"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+"_settings_new_account_card_description" = "Proton アカウントを使用すると、パスワード マネージャー、暗号化されたメールとカレンダー、1 GB のクラウド ストレージを無料で入手できます。";
 
 /* iOS: Action account button on settings account section in guest mode */
-"_create_account_settings_title" = "Create account";
+"_create_account_settings_title" = "アカウントを作成する";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
+"_create_account_first_before_upgrade" = "アップグレードする前にアカウントを作成する必要があります。";
 
 /* iOS: Alert title for closing account creation flow */
-"_create_account_if_close_no_upgrade" = "If you don’t create an account you won’t be able to upgrade to VPN Plus";
+"_create_account_if_close_no_upgrade" = "アカウントを作成しない場合、VPN Plus にアップグレードすることはできません";
 
 /* iOS: Cancel button on account creation flow */
-"_create_account_cancel_upgrade" = "Cancel upgrade";
+"_create_account_cancel_upgrade" = "アップグレードをキャンセル";
 
 /* iOS: Continue button on account creation flow */
-"_create_account_continue_creating" = "Continue creating account";
+"_create_account_continue_creating" = "アカウント作成を続ける";
 
 /* iOS: Alert message after account creation in guest mode */
-"_account_created_title" = "Account created";
+"_account_created_title" = "アカウントが作成されました";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "高度なVPNカスタマイズ";

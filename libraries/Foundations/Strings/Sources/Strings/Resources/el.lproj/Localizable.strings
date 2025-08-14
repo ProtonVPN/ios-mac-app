@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Το Πάντα-ενεργό VPN θα σας επανασυνδέσει αυτόματα";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Ενεργός αριθμός θύρας: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Πηγαίνετε στον πελάτη torrent ή την εφαρμογή P2P και εισαγάγετε αυτόν τον αριθμό.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Αντιγραφή";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Δεν είναι δυνατή η ανάκτηση ενεργού αριθμού θύρας";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Κάντε επανεκκίνηση της σύνδεσής σας και δοκιμάστε ξανά. Εάν αυτό δεν λειτουργεί, δοκιμάστε έναν διαφορετικό διακομιστή.";
+
 /* MacOS: About window title */
 "_about" = "Σχετικά";
 
@@ -929,7 +944,7 @@
 "_kill_switch_tooltip" = "Αποκλείει όλη την κίνηση δικτύου όταν χαθεί η σήραγγα VPN.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Προώθηση θυρών";
+"_port_forwarding" = "Άνοιγμα θυρών";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Πάντα-ενεργό VPN";
@@ -969,6 +984,12 @@
 
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Αποτρέπει την διαρροή πληροφοριών του DNS queries σε τρίτους. Πάντα ανοιχτό.";
+
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Ειδοποιήσεις προώθησης θυρών";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Λάβετε ειδοποίηση όταν αλλάζει ο ενεργός σας αριθμός θύρας";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Κλειδιά Ασφαλείας";
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Ενημερώθηκε %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Μη διαθέσιμο";
+
 "_quick_settings_title" = "Γρήγορες Ρυθμίσεις";
 
 "_quick_settings_secureCore_description" = "Δρομολογήστε τα πιο ευαίσθητα δεδομένα σας μέσω των ασφαλέστερων διακομιστών μας σε χώρες φιλικές με την προστασία προσωπικών δεδομένων.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Εάν οι ιστότοποι δεν φορτώνονται, δοκιμάστε να απενεργοποιήσετε το NetShield";
 
 "_quick_settings_killSwitch_note" = "Αν δεν μπορείτε να συνδεθείτε σε συσκευές στο τοπικό σας δίκτυο, δοκιμάστε να απενεργοποιήσετε τη λειτουργία kill switch.";
+
+"_quick_settings_portForwarding_note" = "Εισαγάγετε τον αριθμό ενεργού θύρας στην εφαρμογή BitTorrent για να βελτιώσετε τις ταχύτητες P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Για να χρησιμοποιήσετε την προώθηση θυρών, συνδεθείτε σε διακομιστή P2P";
+
+"_quick_settings_portForwarding_errorNote" = "Δεν είναι δυνατή η ανάκτηση του ενεργού αριθμού θύρας. Επανεκκινήστε τη σύνδεσή σας και δοκιμάστε ξανά.";
 
 "_quick_settings_get_plus" = "Αποκτήστε Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Βελτιώστε τις ταχύτητες μεταφόρτωσης και λήψης ενώ αποκρύπτετε τη διεύθυνση IP σας.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Βελτιώστε την ταχύτητα P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Ενισχύστε την απόδοση κοινής χρήσης αρχείων peer-to-peer (P2P) με το VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Προστατέψτε 10 συσκευές ταυτόχρονα";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Απολαύστε επιπλέον λειτουργίες απορρήτου, υπερφορτισμένη απόδοση και επόμενου επιπέδου προσαρμογές VPN.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Συγχαρητήρια! Ξεκλειδώσατε κορυφαίες δυνατότητες ασφάλειας και απόδοσης σε όλες τις υπηρεσίες Proton, καθώς και συνολικό χώρο αποθήκευσης 500 GB.\n\nΑπολαύστε το καλύτερο του απορρήτου Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Συγχαρητήρια! Ξεκλειδώσατε κορυφαίες δυνατότητες ασφάλειας και απόδοσης σε όλες τις υπηρεσίες Proton, καθώς και συνολικό χώρο αποθήκευσης **500 GB**.\n\nΑπολαύστε το καλύτερο του απορρήτου Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "상시 VPN이 자동으로 VPN에 다시 연결해줍니다";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+
 /* MacOS: About window title */
 "_about" = "소개";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "제3자에게 DNS 쿼리 정보가 유출되는 것을 방지합니다. 항상 켜져 있습니다.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "보안 키";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "%@ 업데이트됨";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
+
 "_quick_settings_title" = "간편 설정";
 
 "_quick_settings_secureCore_description" = "개인 정보 보호 친화적인 국가에 있는 가장 안전한 서버를 통해 가장 민감한 데이터를 라우팅하세요.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "웹사이트가 로드되지 않는다면, NetShield를 비활성화해 보세요";
 
 "_quick_settings_killSwitch_note" = "디바이스가 로컬 네트워크에 연결할 수 없다면, 킬 스위치 해제를 시도하세요.";
+
+"_quick_settings_portForwarding_note" = "P2P 속도를 향상시키기 위해 BitTorrent 앱으로의 활성 포트 번호를 입력하세요.";
+
+"_quick_settings_portForwarding_warningNote" = "포트 포워딩을 사용하려면 P2P 서버로 연결하세요.";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "Plus 요금제 얻기";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "업로드와 다운로드 속도를 개선하면서 IP 주소는 숨깁니다.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "P2P 속도 향상";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "VPN Plus로 피어 투 피어 (P2P) 파일 공유 속도를 가속화하세요.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "동시에 10개 디바이스를 보호하세요";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "더 많은 개인정보 보호 기능과 강력한 성능, 그리고 한 차원 높은 VPN 사용자화를 사용해 보세요.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "축하합니다! 500GB 총 저장 공간을 포함한 프리미엄 보안과 성능 기능을 모든 Proton 서비스에서 사용하실 수 있습니다.\n\n강력한 Proton 개인정보 보호 기능을 누려보세요.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "축하합니다! **500GB** 총 저장 공간을 포함한 프리미엄 보안과 성능 기능을 모든 Proton 서비스에서 사용하실 수 있습니다.\n\n강력한 Proton 개인정보 보호 기능을 누려보세요.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";

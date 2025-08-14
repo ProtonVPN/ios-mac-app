@@ -83,7 +83,7 @@
 "_enabled" = "Activat";
 
 /* Common word */
-"_enable" = "Habilita";
+"_enable" = "Activa";
 
 /* Common word */
 "_disabled" = "Desactivat";
@@ -310,6 +310,21 @@
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "L'opció VPN sempre activa us tornarà a connectar automàticament.";
+
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Número de port actiu: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Aneu al vostre client de torrent o aplicació P2P i introduïu-hi aquest número.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copia";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "No es pot recuperar el número de port actiu";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Reinicieu la connexió i torneu-ho a provar. Si no funciona, proveu-ho a un servidor diferent.";
 
 /* MacOS: About window title */
 "_about" = "Quant a";
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Evita la filtració de detalls de consultes DNS a tercers. Sempre actiu.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Notificacions de redirecció de port";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Rebeu una notificació quan canviï el número de port actiu.";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Claus de seguretat";
 
@@ -1046,7 +1067,7 @@
 "_turn_ks_on_title" = "Voleu activar el kill switch?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• Això desactivarà la tunelització dividida";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• No podreu accedir als dispositius de la vostra xarxa local";
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "S'ha actualitzat %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "No disponible";
+
 "_quick_settings_title" = "Configuració ràpida";
 
 "_quick_settings_secureCore_description" = "Dirigiu el vostre contingut més sensible a través dels nostres servidors més segurs en països respectuosos amb la privacitat.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Si les webs no carreguen correctament, proveu de desactivar el NetShield";
 
 "_quick_settings_killSwitch_note" = "Si no us podeu connectar als dispositius de la xarxa local, proveu de desactivar el kill switch.";
+
+"_quick_settings_portForwarding_note" = "Introduïu el número de port actiu a la vostra aplicació de BitTorrent per millorar la velocitat P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Per a utilitzar la redirecció de ports, connecteu-vos a un servidor P2P";
+
+"_quick_settings_portForwarding_errorNote" = "No es pot recuperar el número de port actiu. Reinicieu la connexió i torneu-ho a provar.";
 
 "_quick_settings_get_plus" = "Obtingueu el pla Plus";
 
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Milloreu les velocitats de càrrega i descarrega mentre amagueu l'adreça IP";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Millora la velocitat P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Augmenteu el rendiment de l'intercanvi de fitxers peer-to-peer (P2P) amb VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Protegiu 10 dispositius alhora";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Gaudiu de funcions de privadesa addicionals, rendiment excepcional i una personalització de VPN d'un altre nivell.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Enhorabona! Heu desbloquejat funcions de seguretat i rendiment prèmium en tots els serveis de Proton, a més de 500 GB d'emmagatzematge total.\n\nGaudiu del millor de la privadesa de Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Enhorabona! Heu desbloquejat funcions de seguretat i rendiment prèmium en tots els serveis de Proton, a més de **500 GB** d'emmagatzematge total.\n\nGaudiu del millor de la privadesa de Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -3024,7 +3060,7 @@
 "_hermes_entities_form_addButton" = "Afegeix";
 
 /* Hermes entities Form main button title within dedicated Hermes Settings view on iOS */
-"_hermes_entities_form_addButton_full" = "Afegiu un nou servidor DNS";
+"_hermes_entities_form_addButton_full" = "Afegeix un nou servidor DNS";
 
 /* Hermes entities Form description within dedicated Hermes Settings view */
 "_hermes_entities_form_description" = "Introduïu l'adreça IPv4 del servidor";

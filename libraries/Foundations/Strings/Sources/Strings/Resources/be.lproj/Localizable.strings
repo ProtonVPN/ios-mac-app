@@ -311,6 +311,21 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Функцыя \"Пастаянны VPN\" будзе аднаўляць ваша падключэнне аўтаматычна";
 
+/* Subtitle of the Notification shown with the port number */
+"_port_forwarding_info_subtitle" = "Active port number: %@";
+
+/* Explanation of the Notification about port forwarding */
+"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+
+/* Copy button in the Notification about port forwarding */
+"_port_forwarding_info_copy_button" = "Copy";
+
+/* Subtitle of the Notification shown when a port mapping request failed */
+"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+
+/* Explanation of the Notification about a failed port mapping request */
+"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+
 /* MacOS: About window title */
 "_about" = "Аб праграме";
 
@@ -970,6 +985,12 @@
 /* MacOS: Settings -> Connection: description. */
 "_dns_leak_protection_tooltip" = "Прадухіляе ўцечку падрабязнасцяў аб запытах DNS староннім асобам. Заўсёды ўключана.";
 
+/* MacOS: Settings -> Port forwarding notifications */
+"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+
+/* MacOS: Settings -> Port forwarding notifications settings explained */
+"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+
 /* iOS Settings: table section cell */
 "_security_keys" = "Ключы бяспекі";
 
@@ -1404,6 +1425,9 @@
 /* Text appears under active port number indicating relative date */
 "_pf_updated" = "Абноўлена %@";
 
+/* Text appears in port forwarding view when any error is present */
+"_pf_error" = "Unavailable";
+
 "_quick_settings_title" = "Хуткія налады";
 
 "_quick_settings_secureCore_description" = "Перанакіроўвайце самыя канфідэнцыяльныя даныя праз нашы бяспечныя серверы ў краінах, дзе асабістыя звесткі абаронены законам.";
@@ -1420,6 +1444,12 @@
 "_quick_settings_netShield_note" = "Паспрабуйце адключыць NetShield, калі вэб-сайты не загружаюцца";
 
 "_quick_settings_killSwitch_note" = "Калі вы не можаце падключыцца да прылады ў вашай лакальнай сетцы, варта паспрабаваць адключыць Kill Switch.";
+
+"_quick_settings_portForwarding_note" = "Увядзіце нумар актыўнага парта ў праграму BitTorrent, каб палепшыць хуткасць P2P";
+
+"_quick_settings_portForwarding_warningNote" = "Падключыце сервер P2P, каб выкарыстоўваць перанакіраванне партоў";
+
+"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 
 "_quick_settings_get_plus" = "Перайсці на Plus";
 
@@ -2166,7 +2196,7 @@
 "_settings_title_restore_default_settings" = "Аднавіць прадвызначаныя налады";
 
 /* Title of the Sign Out cell in the Settings tab [Redesign_2023] */
-"_settings_title_sign_out" = "Выхад";
+"_settings_title_sign_out" = "Выйсці";
 
 /* Text describing the app version in the footer of the Settings tab. %@ will be replaced by a version number in the form of 5.0.0 (1234567890) [Redesign_2023] */
 "_settings_app_version" = "Версія праграмы: %@";
@@ -2489,6 +2519,12 @@
 /* Subtitle of p2p support upsell modal */
 "upsell_p2pSupport_subtitle" = "Палепшыце хуткасць спампоўвання і запампоўвання не раскрываючы свой IP-адрас.";
 
+/* Title of port forwarding upsell modal */
+"upsell_pfSupport_title" = "Павялічце хуткасць P2P";
+
+/* Subtitle of port forwarding support upsell modal */
+"upsell_pfSupport_subtitle" = "Павялічце прадукцыйнасць абагульвання файлаў у аднарангавых сетках (P2P) з тарыфным планам VPN Plus.";
+
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Абараніце да 10 прылад адначасова";
 
@@ -2634,10 +2670,10 @@
 "welcome_upgrade_subtitle_plus" = "Атрымлівайце асалоду ад дадатковых функцый прыватнасці, палепшанай прадукцыйнасці і больш гнуткага наладжвання вашага падключэння да VPN.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама 500 ГБ дыскавай прасторы ў сховішчы.\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Віншуем! Вы разблакіравалі прэміяльныя функцыі бяспекі і прадукцыйнасці ва ўсіх сэрвісах Proton, а таксама **500 ГБ** дыскавай прасторы ў сховішчы.\n\nАтрымлівайце асалоду ад палепшанай прыватнасці Proton.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
