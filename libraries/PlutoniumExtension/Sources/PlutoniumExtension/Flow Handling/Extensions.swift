@@ -239,6 +239,19 @@ extension NWEndpoint {
 
         return addr.asString
     }
+
+    func shouldAlwaysUseVpnInterface(dnsServers: Set<String>) -> Bool {
+        switch self {
+        case let .hostPort(.ipv4(address), _) where address.asString.flatMap { dnsServers.contains($0) } == true:
+            // Traffic to all DNS servers (WireGuard and CustomDNSs) should always go through WireGuard.
+            true
+        case .hostPort(_, 53):
+            // All DNS queries (port 53) should go through WireGuard
+            true
+        default:
+            false
+        }
+    }
 }
 
 extension IPv4Address {

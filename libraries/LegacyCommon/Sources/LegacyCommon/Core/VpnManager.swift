@@ -29,6 +29,7 @@ import ProtonCoreFeatureFlags
 import Domain
 import Ergonomics
 import ExtensionIPC
+import ExtensionManager
 import NetShield
 import VPNAppCore
 import VPNShared

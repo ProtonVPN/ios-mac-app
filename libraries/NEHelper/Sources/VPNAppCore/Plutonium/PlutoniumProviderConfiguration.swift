@@ -25,11 +25,13 @@
         public let plutoniumMode: PlutoniumFeatureToggle.Mode
         public let appIDs: Set<String>
         public let ips: Set<String>
+        public let dnsServers: Set<String>
 
         fileprivate enum Keys: String {
             case plutoniumMode
             case appIDs
             case ips
+            case dnsServers
         }
 
         public init(from dictionary: [String: Any]) throws {
@@ -56,6 +58,12 @@
             } else {
                 self.ips = []
             }
+
+            if let dnsServersArray = dictionary[Keys.dnsServers.rawValue] as? [String] {
+                self.dnsServers = Set(dnsServersArray)
+            } else {
+                self.dnsServers = []
+            }
         }
     }
 
@@ -65,7 +73,7 @@
     }
 
     public extension PlutoniumFeatureToggle {
-        func toProviderConfigurationDictionary() async -> [String: Any] {
+        func toProviderConfigurationDictionary(dnsServers: [String] = []) async -> [String: Any] {
             let activatedData: PlutoniumActivated = switch mode {
             case .exclusion:
                 SharedReader(.exclusionActivated).wrappedValue
@@ -87,6 +95,7 @@
                 PlutoniumProviderConfiguration.Keys.plutoniumMode.rawValue: mode.rawValue,
                 PlutoniumProviderConfiguration.Keys.appIDs.rawValue: Array(allBundleIdentifiers),
                 PlutoniumProviderConfiguration.Keys.ips.rawValue: Array(activatedData.ips),
+                PlutoniumProviderConfiguration.Keys.dnsServers.rawValue: dnsServers,
             ]
         }
     }

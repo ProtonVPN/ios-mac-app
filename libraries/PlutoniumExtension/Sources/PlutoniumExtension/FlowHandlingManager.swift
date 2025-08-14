@@ -28,6 +28,7 @@ actor FlowHandlingManager {
 
     private let appIDs: Set<String>
     private let ipSet: Set<String>
+    private let dnsRequestHandling: (list: Set<String>, isInclusionMode: Bool)
     private let vpnInterface: NWInterface
 
     /// Cached copy for internal sync access where async isn't possible.
@@ -65,6 +66,8 @@ actor FlowHandlingManager {
 
         switch plutoniumConfiguration.plutoniumMode {
         case .exclusion:
+            self.dnsRequestHandling = (list: plutoniumConfiguration.dnsServers, isInclusionMode: false)
+
             // Start monitoring internet interface updates
             let internetInterfaceStream = await NWInterface.findInternetInterface(vpnInterfaceName: vpnNetworkInterfaceName)
             self.networkInterfaceMonitorTask = Task { [weak self] in
@@ -86,6 +89,8 @@ actor FlowHandlingManager {
 
         case .inclusion:
             self.networkInterface = vpnInterface
+            self.dnsRequestHandling = (list: plutoniumConfiguration.dnsServers, isInclusionMode: true)
+
             log
                 .info(
                     "FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface.name)."
@@ -233,6 +238,7 @@ actor FlowHandlingManager {
                 udpFlow: udpFlow,
                 targetInterface: interface,
                 vpnInterface: vpnInterface,
+                dnsServers: dnsRequestHandling.list,
                 endpointForwardingMode: endpointForwardingMode
             )
             return .forward(handler: handler)
@@ -270,6 +276,13 @@ actor FlowHandlingManager {
     }
 
     private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {
+        if endpoint?.shouldAlwaysUseVpnInterface(dnsServers: dnsRequestHandling.list) == true {
+            // This request is going to a DNS server.
+            // It should always be routed through the tunnel.
+            // Returning `true` if in inclusion mode, `false` if in exclusion mode.
+            return dnsRequestHandling.isInclusionMode
+        }
+
         guard let endpoint, let ipString = endpoint.ipv4String else { return false }
         return ipSet.contains(ipString)
     }

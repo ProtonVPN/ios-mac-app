@@ -31,6 +31,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     private let udpFlow: NEAppProxyUDPFlow
     private let vpnInterface: NWInterface
+    private let dnsServers: Set<String>
     private let targetInterface: NWInterface
     private let endpointForwardingMode: EndpointForwardingMode
     private var connectionLifecycleTasks: [NWEndpoint: Task<Void, Never>] = [:]
@@ -48,11 +49,13 @@ final actor UDPFlowHandler: FlowHandler {
         udpFlow: NEAppProxyUDPFlow,
         targetInterface: NWInterface,
         vpnInterface: NWInterface, // We always require the VPN interface to manage selective interface options for endpoints and DNS queries.
+        dnsServers: Set<String>,
         endpointForwardingMode: EndpointForwardingMode
     ) {
         self.udpFlow = udpFlow
         self.targetInterface = targetInterface
         self.vpnInterface = vpnInterface
+        self.dnsServers = dnsServers
         self.endpointForwardingMode = endpointForwardingMode
         log.debug("UDP flow handler initialized for interface \(targetInterface.name)")
     }
@@ -334,7 +337,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     private func interfaceFor(endpoint: NWEndpoint) -> NWInterface? {
         // If the endpoint needs to be forwarded through the Wireguard network, it goes always to VPN interface.
-        if endpoint.shouldUseWireguardInterfaceAnyway {
+        if endpoint.shouldAlwaysUseVpnInterface(dnsServers: dnsServers) {
             return vpnInterface
         }
         // If the connection to the endpoint should be forwarded, the target interface will be used.
@@ -363,25 +366,7 @@ extension UDPFlowHandler: Hashable {
     }
 }
 
-private extension IPv4Address {
-    static let protonDNS = IPv4Address("10.2.0.1")
-}
-
 private extension NWEndpoint {
-    var shouldUseWireguardInterfaceAnyway: Bool {
-        switch self {
-        case let .hostPort(.ipv4(address), _) where address == .protonDNS:
-            // TODO: VPNAPPL-2911 - Retrieve DNS settings from WG extension and use here.
-            // Traffic to WireGuard DNS server (10.2.0.1) should always go through WireGuard.
-            true
-        case .hostPort(_, 53):
-            // All DNS queries (port 53) should go through WireGuard
-            true
-        default:
-            false
-        }
-    }
-
     func shouldForward(_ mode: EndpointForwardingMode) -> Bool {
         switch mode {
         case .all:

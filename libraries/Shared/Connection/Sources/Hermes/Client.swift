@@ -143,6 +143,19 @@ public extension HermesResolver {
     static let proton: HermesResolver = try! HermesResolver(ipAddress: "10.2.0.1")
 }
 
+public extension HermesClient {
+    var currentResolvers: [HermesResolver] {
+        let hermesIsEnabled: Bool = isEnabled().wrappedValue
+
+        var hermesResolvers: [HermesResolver] = [.proton]
+        if hermesIsEnabled {
+            hermesResolvers.insert(contentsOf: activeHermesResolvers().wrappedValue, at: 0)
+        }
+
+        return hermesResolvers
+    }
+}
+
 #if DEBUG
     extension HermesResolver: ExpressibleByStringLiteral {
         public init(stringLiteral value: StringLiteralType) {
