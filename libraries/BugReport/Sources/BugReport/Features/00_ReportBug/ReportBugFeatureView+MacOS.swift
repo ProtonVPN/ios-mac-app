@@ -68,6 +68,7 @@
                                 BugReportResultView(store: store)
                             }
                         }
+                        .animation(.easeInOut(duration: 0.3), value: store.path.count)
                     }
                 }
             }
