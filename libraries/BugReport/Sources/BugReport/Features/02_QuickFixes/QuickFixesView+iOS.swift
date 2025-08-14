@@ -98,7 +98,7 @@
 
                         VStack {
                             NavigationLink(
-                                state: ReportBugFeatureiOS.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
+                                state: ReportBugFeature.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)

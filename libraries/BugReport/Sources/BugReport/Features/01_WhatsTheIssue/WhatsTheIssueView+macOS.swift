@@ -53,8 +53,8 @@
                             .listRowBackground(colors.background)
                             .listRowSeparator(.hidden)
                         }
+                        .listStyle(.plain)
                     }
-                    .listStyle(.plain)
                     .padding(.top, 32)
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))

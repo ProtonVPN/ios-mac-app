@@ -44,35 +44,11 @@
                         }
                         .padding(.horizontal)
 
-                        VStack {
-                            if let suggestions = store.category.suggestions {
-                                ForEach(suggestions) { suggestion in
-                                    VStack(alignment: .leading) {
-                                        if let link = suggestion.link, let url = URL(string: link) {
-                                            Link(destination: url) {
-                                                HStack(alignment: .top) {
-                                                    Image(Asset.icLightbulb.name, bundle: assetsBundle)
-                                                        .renderingMode(.template)
-                                                        .foregroundColor(colors.qfIcon)
-                                                    Text(suggestion.text)
-                                                        .lineSpacing(7)
-                                                        .multilineTextAlignment(.leading)
-                                                        .frame(minHeight: 24, alignment: .leading)
-                                                    Spacer()
-                                                    Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
-                                                        .renderingMode(.template)
-                                                        .foregroundColor(colors.externalLinkIcon)
-                                                }
-                                            }
-                                            .padding(.horizontal)
-                                            .onHover { inside in
-                                                if inside {
-                                                    NSCursor.pointingHand.push()
-                                                } else {
-                                                    NSCursor.pop()
-                                                }
-                                            }
-                                        } else {
+                        if let suggestions = store.category.suggestions {
+                            List(suggestions) { suggestion in
+                                VStack(alignment: .leading) {
+                                    if let link = suggestion.link, let url = URL(string: link) {
+                                        Link(destination: url) {
                                             HStack(alignment: .top) {
                                                 Image(Asset.icLightbulb.name, bundle: assetsBundle)
                                                     .renderingMode(.template)
@@ -82,16 +58,40 @@
                                                     .multilineTextAlignment(.leading)
                                                     .frame(minHeight: 24, alignment: .leading)
                                                 Spacer()
+                                                Image(Asset.icArrowOutSquare.name, bundle: assetsBundle)
+                                                    .renderingMode(.template)
+                                                    .foregroundColor(colors.externalLinkIcon)
                                             }
-                                            .padding(.horizontal)
                                         }
-                                        Divider().hidden()
+                                        .padding(.horizontal)
+                                        .onHover { inside in
+                                            if inside {
+                                                NSCursor.pointingHand.push()
+                                            } else {
+                                                NSCursor.pop()
+                                            }
+                                        }
+                                    } else {
+                                        HStack(alignment: .top) {
+                                            Image(Asset.icLightbulb.name, bundle: assetsBundle)
+                                                .renderingMode(.template)
+                                                .foregroundColor(colors.qfIcon)
+                                            Text(suggestion.text)
+                                                .lineSpacing(7)
+                                                .multilineTextAlignment(.leading)
+                                                .frame(minHeight: 24, alignment: .leading)
+                                            Spacer()
+                                        }
+                                        .padding(.horizontal)
                                     }
                                 }
+                                .listRowBackground(colors.background)
+                                .listRowSeparator(.hidden)
                             }
+                            .scrollContentBackground(.hidden)
+                            .padding(.top, 32)
+                            .padding(.bottom, 16)
                         }
-                        .padding(.top, 32)
-                        .padding(.bottom, 16)
 
                         Text(Localizable.br2Footer)
                             .foregroundColor(colors.textSecondary)
@@ -100,7 +100,7 @@
                             .padding(.bottom, 32)
 
                         NavigationLink(
-                            state: ReportBugFeatureMacOS.Path.State
+                            state: ReportBugFeature.Path.State
                                 .contactUs(
                                     ContactFormFeature
                                         .State(fields: store.category.inputFields, category: store.category.label)
@@ -108,23 +108,22 @@
                             label: {
                                 Text(Localizable.br2ButtonNext)
                                     .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
-                                    .padding(.horizontal, 16)
                                     .background(colors.interactive)
                                     .foregroundColor(.white)
                                     .cornerRadius(8)
                             }
                         )
                     }
-                    .foregroundColor(colors.textPrimary)
-                    .navigationBarBackButtonHidden(true)
-                    .toolbar {
-                        ToolbarItem(placement: .navigation) {
-                            Button(action: {
-                                dismiss()
-                            }, label: {
-                                Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
-                            })
-                        }
+                }
+                .foregroundColor(colors.textPrimary)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
+                        })
                     }
                 }
             }
