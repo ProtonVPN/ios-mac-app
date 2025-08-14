@@ -889,7 +889,6 @@ final class SettingsViewModel {
     }
 
     private func pushLogSelectionViewController() {
-        log.info("Build info: \(appInfo.debugInfoString)")
         push(viewController: settingsService.makeLogSelectionViewController())
     }
 

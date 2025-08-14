@@ -23,9 +23,7 @@ import OSLog
 public class OSLogContent: LogContent {
     private let scope: OSLogStore.Scope
     private let since: Date?
-    private var filter: ((OSLogEntryLog) -> Bool) = {
-        $0.process == "ProtonVPN"
-    }
+    private var filter: ((OSLogEntryLog) -> Bool)?
 
     public init(
         scope: OSLogStore.Scope = .currentProcessIdentifier,
@@ -34,10 +32,7 @@ public class OSLogContent: LogContent {
     ) {
         self.scope = scope
         self.since = since
-
-        if let filter {
-            self.filter = filter
-        }
+        self.filter = filter
     }
 
     private let dateFormatter = ISO8601DateFormatter()
@@ -54,17 +49,16 @@ public class OSLogContent: LogContent {
                     store.position(timeIntervalSinceLatestBoot: 1)
                 }
 
-                let entries = try store.getEntries(at: position)
-                    .compactMap { $0 as? OSLogEntryLog }
-                    .filter(self.filter)
-                    .map {
-                        "\($0.process) | " +
-                            "\($0.subsystem) | " +
-                            "\(dateFormatter.string(from: $0.date)) | " +
-                            "\($0.level.stringValue.uppercased()) | " +
-                            "\($0.composedMessage)"
+                let result = try store.getEntries(at: position)
+                    .reduce(into: "==> \(Self.debugInfoString)\n") { partialResult, message in
+                        guard let message = message as? OSLogEntryLog else { return }
+                        partialResult += "\(message.process) | " +
+                            "\(message.subsystem) | " +
+                            "\(dateFormatter.string(from: message.date)) | " +
+                            "\(message.level.stringValue.uppercased()) | " +
+                            "\(message.composedMessage)\n"
                     }
-                let result = entries.joined(separator: "\n")
+
                 callback(result)
             } catch {
                 callback("Error collecting logs: \(error)")

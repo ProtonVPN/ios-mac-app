@@ -167,7 +167,6 @@ class CountriesSectionViewModel {
 
     typealias Factory = AppStateManagerFactory
         & CoreAlertServiceFactory
-        & ModelIdCheckerFactory
         & NetShieldPropertyProviderFactory
         & PortForwardingPropertyProviderFactory
         & PropertiesManagerFactory

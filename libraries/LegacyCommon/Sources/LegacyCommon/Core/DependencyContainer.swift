@@ -145,10 +145,6 @@ open class Container: PropertiesToOverride {
     // MARK: - Configs to override
 
     #if os(macOS)
-        open var modelId: String? {
-            shouldHaveOverridden()
-        }
-
         open var vpnConnectionInterceptPolicies: [VpnConnectionInterceptPolicyItem] {
             [
                 MisconfiguredLocalNetworkIntercept(factory: self),
@@ -246,11 +242,7 @@ extension Container: ProfileManagerFactory {
 
 extension Container: AppInfoFactory {
     public func makeAppInfo(context: AppContext) -> AppInfo {
-        #if os(macOS)
-            return AppInfoImplementation(context: context, modelName: modelId)
-        #else
-            return AppInfoImplementation(context: context)
-        #endif
+        AppInfoImplementation(context: context)
     }
 }
 

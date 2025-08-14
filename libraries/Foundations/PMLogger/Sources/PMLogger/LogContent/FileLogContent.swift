@@ -29,7 +29,11 @@ public class FileLogContent: LogContent {
     public func loadContent(callback: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let contents = try? String(contentsOf: self.file)
-            callback(contents ?? "")
+            callback(
+                contents.map {
+                    "==> \(Self.debugInfoString)\n" + $0
+                } ?? ""
+            )
         }
     }
 }

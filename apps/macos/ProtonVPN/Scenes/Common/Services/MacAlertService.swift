@@ -74,23 +74,6 @@ final class MacAlertService {
     }
 }
 
-public final class NEKSOnT2Alert: SystemAlert {
-    public var title: String? = Localizable.neksT2Title
-    public var message: String? = Localizable.neksT2Description
-    public var actions: [AlertAction] = []
-    public var isError: Bool = false
-    public var dismiss: (() -> Void)?
-
-    public let link = Localizable.neksT2Hyperlink
-    public let killSwitchOffAction: AlertAction
-    public let connectAnywayAction: AlertAction
-
-    public init(killSwitchOffHandler: @escaping () -> Void, connectAnywayHandler: @escaping () -> Void) {
-        self.killSwitchOffAction = AlertAction(title: Localizable.wgksKsOff, style: .confirmative, handler: killSwitchOffHandler)
-        self.connectAnywayAction = AlertAction(title: Localizable.neksT2Connect, style: .destructive, handler: connectAnywayHandler)
-    }
-}
-
 extension MacAlertService: CoreAlertService {
     func push(alert: SystemAlert) {
         executeOnUIThread {
@@ -264,9 +247,6 @@ extension MacAlertService: CoreAlertService {
 
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
-
-        case let neKST2Alert as NEKSOnT2Alert:
-            show(neKST2Alert)
 
         case is ProtonUnreachableAlert:
             showDefaultSystemAlert(alert)
@@ -448,11 +428,6 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: DiscourageSecureCoreAlert) {
         let viewController = ModalsFactory.discourageSecureCoreViewController(onDontShowAgain: alert.onDontShowAgain, onActivate: alert.onActivate, onCancel: alert.dismiss, onLearnMore: alert.onLearnMore)
         windowService.presentKeyModal(viewController: viewController)
-    }
-
-    private func show(_ alert: NEKSOnT2Alert) {
-        let vc = NET2WarningPopupViewController(viewModel: WarningPopupViewModel(alert: alert))
-        windowService.presentKeyModal(viewController: vc)
     }
 
     private func show(_ alert: ProtocolDeprecatedAlert) {

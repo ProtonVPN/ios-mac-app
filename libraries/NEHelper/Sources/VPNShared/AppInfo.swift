@@ -24,6 +24,7 @@ import Foundation
 import Dependencies
 import Domain
 import Ergonomics
+import PMLogger
 
 public protocol AppInfoFactory {
     func makeAppInfo(context: AppContext) -> AppInfo
@@ -75,7 +76,7 @@ public extension AppInfo {
         #if os(iOS)
             return "iOS"
         #elseif os(macOS)
-            return "Mac OS X"
+            return "macOS"
         #elseif os(watchOS)
             return "watchOS"
         #elseif os(tvOS)
@@ -119,21 +120,12 @@ public class AppInfoImplementation: AppInfo {
         context: AppContext = .default,
         bundle: Bundle = .main,
         processInfo: ProcessInfo = .processInfo,
-        modelName: String? = nil
+        modelName: String? = FileLogContent.modelName
     ) {
         self.context = context
         self.processName = processInfo.processName
         self.osVersion = processInfo.operatingSystemVersion
-
-        if let modelName {
-            self.modelName = modelName
-        } else {
-            #if canImport(UIKit)
-                self.modelName = UIDevice.current.modelName
-            #elseif os(macOS)
-                self.modelName = Host.current().localizedName ?? nil
-            #endif
-        }
+        self.modelName = modelName
 
         guard let file = bundle.path(forResource: "Client", ofType: "plist"),
               let clientDict = NSDictionary(contentsOfFile: file) as? [String: Any],

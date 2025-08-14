@@ -33,12 +33,11 @@ import VPNAppCore
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     @Dependency(\.appFeaturePropertyProvider) var featurePropertyProvider
 
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & ModelIdCheckerFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PropertiesManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var modelIdChecker: ModelIdCheckerProtocol = factory.makeModelIdChecker()
 
     override var learnLink: String {
         VPNLink.killSwitchSupport.urlString
@@ -105,49 +104,15 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
             }
         }
 
-        let connectAfterLocalNetworkWarning = {
+        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: { dismissCallback in
+            defer { dismissCallback() }
+
             if self.featurePropertyProvider.getValue(for: ExcludeLocalNetworks.self) == .off, case .disabled = plutonium {
                 confirmKillSwitchOn()
                 return
             }
+
             self.alertService.push(alert: KillSwitchConflictAlert(confirmHandler: confirmKillSwitchOn, cancelHandler: nil))
-        }
-
-        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: { dismissCallback in
-            guard self.modelIdChecker.isT2Mac else {
-                connectAfterLocalNetworkWarning()
-                dismissCallback()
-                return
-            }
-
-            log.info(
-                "User receiving T2 warning after attempting to enable Kill Switch",
-                category: .connectionConnect,
-                event: .trigger,
-                metadata: ["feature": "killSwitch"]
-            )
-            self.alertService.push(alert: NEKSOnT2Alert(
-                killSwitchOffHandler: {
-                    log.info(
-                        "User has disabled Kill Switch after receiving T2 warning",
-                        category: .connectionConnect,
-                        event: .trigger,
-                        metadata: ["feature": "killSwitch"]
-                    )
-                    dismissCallback()
-                },
-                connectAnywayHandler: {
-                    log.info(
-                        "User has proceeded with enabling Kill Switch on a T2 device. Fireworks shall ensue.",
-                        category: .connectionConnect,
-                        event: .trigger,
-                        metadata: ["feature": "killSwitch"]
-                    )
-                    connectAfterLocalNetworkWarning()
-                    dismissCallback()
-                }
-            )
-            )
         })
     }
 }
