@@ -34,6 +34,7 @@
             WithPerceptionTracking {
                 ZStack {
                     colors.background.ignoresSafeArea()
+
                     VStack(spacing: 0) {
                         StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
                             .padding(.bottom)
@@ -104,7 +105,6 @@
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))
-
                     .environment(\.isLoading, store.isSending)
                 }
             }

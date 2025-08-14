@@ -22,202 +22,86 @@
     import SwiftUI
 
     @Reducer
-    struct ReportBugFeatureMacOS: Reducer {
+    struct ReportBugFeatureMacOS {
+        @Reducer
+        enum Path {
+            case quickFixes(QuickFixesFeature)
+            case contactUs(ContactFormFeature)
+            case result(BugReportResultFeature)
+        }
+
         @ObservableState
         struct State {
-            var steps: UInt = 3
-            var step: UInt {
-                if step4State != nil {
-                    return 0
-                } else if step3aState != nil || step3bState != nil {
-                    return 3
-                } else if step2State != nil {
-                    return 2
-                }
-                return 1
-            }
-
-            // We have two possible paths: 1st with quick fixes view and 2nd that goes
-            // straight to contact form. Depending on the path contact form store may be
-            // saved directly in this store (path 1) or as a route inside step1 store.
-            //
-            // 1) step1 -> step2 -> step3a -> step4
-            // 2) step1 ->          step3b -> step4
-            //
-
-            var step1State: WhatsTheIssueFeature.State
-
-            var step2State: QuickFixesFeature.State? {
-                get {
-                    guard let route = step1State.route else {
-                        return nil
-                    }
-                    switch route {
-                    case let .quickFixes(state):
-                        return state
-                    case .contactForm:
-                        return nil
-                    }
-                }
-                set {
-                    if let newValue {
-                        step1State.route = .quickFixes(newValue)
-                    } else {
-                        step1State.route = nil
-                    }
-                }
-            }
-
-            var step3aState: ContactFormFeature.State?
-
-            var step3bState: ContactFormFeature.State? {
-                get {
-                    guard let route = step1State.route else {
-                        return nil
-                    }
-                    switch route {
-                    case .quickFixes:
-                        return nil
-                    case let .contactForm(state):
-                        return state
-                    }
-                } set {
-                    if let newValue {
-                        step1State.route = .contactForm(newValue)
-                    } else {
-                        step1State.route = nil
-                    }
-                }
-            }
-
-            private var step3State: ContactFormFeature.State? {
-                step3aState ?? step3bState
-            }
-
-            var step4State: BugReportResultFeature.State? {
-                get {
-                    step3State?.resultState
-                }
-                set {
-                    step3aState?.resultState = newValue
-                }
-            }
+            var path = StackState<Path.State>()
+            var whatsTheIssueState: WhatsTheIssueFeature.State
 
             init(whatsTheIssueState: WhatsTheIssueFeature.State) {
-                self.step1State = whatsTheIssueState
+                self.whatsTheIssueState = whatsTheIssueState
             }
         }
 
+        @CasePathable
         enum Action {
-            case backPressed
-            case step1(WhatsTheIssueFeature.Action)
-            case step2(QuickFixesFeature.Action)
-            case step3a(ContactFormFeature.Action)
-            case step3b(ContactFormFeature.Action)
-            case step4(BugReportResultFeature.Action)
-        }
-
-        public enum ContactFormParent {
-            case whatsTheIssue
-            case quickFixes
+            case path(StackActionOf<Path>)
+            case whatsTheIssueAction(WhatsTheIssueFeature.Action)
         }
 
         var body: some ReducerOf<Self> {
-            Scope(state: \.step1State, action: /Action.step1) {
+            Scope(state: \.whatsTheIssueState, action: \.whatsTheIssueAction) {
                 WhatsTheIssueFeature()
             }
-            .ifLet(\.step2State, action: /Action.step2, then: { QuickFixesFeature() })
-            .ifLet(\.step3aState, action: /Action.step3a, then: { ContactFormFeature() })
-            .ifLet(\.step3bState, action: /Action.step3b, then: { ContactFormFeature() })
-            .ifLet(\.step4State, action: /Action.step4, then: { BugReportResultFeature() })
 
             Reduce { state, action in
                 switch action {
-                case .step2(.next):
-                    if let category = state.step2State?.category {
-                        state.step3aState = ContactFormFeature.State(
-                            fields: category.inputFields,
-                            category: category.label
-                        )
+                case let .whatsTheIssueAction(.categorySelected(category)):
+                    if let suggestions = category.suggestions, !suggestions.isEmpty {
+                        state.path.append(ReportBugFeatureMacOS.Path.State.quickFixes(
+                            QuickFixesFeature.State(category: category)
+                        ))
+                    } else {
+                        state.path.append(ReportBugFeatureMacOS.Path.State.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
                     }
                     return .none
 
-                case .backPressed:
-                    if state.step3aState != nil {
-                        state.step3aState = nil
-                        return .none
-                    } else if state.step3bState != nil {
-                        return .send(.step1(.contactFormDeselected))
-                    } else if state.step2State != nil {
-                        return .send(.step1(.quickFixesDeselected))
+                case let .path(.element(id: _, action: .contactUs(.sendResponseReceived(response)))):
+                    var error: String?
+                    if case let .failure(someError) = response {
+                        error = someError.localizedDescription
                     }
+                    state.path.append(ReportBugFeatureMacOS.Path.State.result(BugReportResultFeature.State(error: error)))
                     return .none
 
-                case let .step4(subAction):
-                    // "Redirect" action according to the path of the user towards the
-                    // contact form.
-                    let newAction = state.step3aState != nil
-                        ? Action.step3a(ContactFormFeature.Action.resultViewAction(subAction))
-                        : Action.step3b(ContactFormFeature.Action.resultViewAction(subAction))
-                    return .send(newAction)
+                case .path:
+                    return .none
 
-                default:
+                case .whatsTheIssueAction:
                     return .none
                 }
             }
+            .forEach(\.path, action: \.path)
         }
     }
 
     public struct ReportBugView: View {
         @Perception.Bindable var store: StoreOf<ReportBugFeatureMacOS>
-        @Environment(\.colors) var colors: Colors
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-
-        private let verticalPadding = 32.0
-        private let horizontalPadding = 126.0
 
         public var body: some View {
-            WithPerceptionTracking {
-                VStack(alignment: .leading, spacing: 0) {
-                    if let childStore = store.scope(state: \.step4State, action: \.step4) {
-                        BugReportResultView(store: childStore)
-                            .padding(.horizontal, horizontalPadding)
-
-                    } else {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Button("", action: { store.send(.backPressed, animation: .default) })
-                                .buttonStyle(BackButtonStyle())
-                                .opacity(store.step > 1 ? 1 : 0)
-
-                            StepProgress(step: store.step, steps: store.steps, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
-                                .padding(.bottom)
-                                .transition(.opacity)
-
-                            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-                        }
-                        .transition(.opacity)
-                        .padding(.horizontal, horizontalPadding)
-
-                        ScrollView {
-                            if let childStore = store.scope(state: \.step3aState, action: \.step3a) {
-                                ContactFormView(store: childStore)
-
-                            } else if let childStore = store.scope(state: \.step3bState, action: \.step1.route.contactForm) {
-                                ContactFormView(store: childStore)
-
-                            } else if let childStore = store.scope(state: \.step2State, action: \.step2) {
-                                QuickFixesView(store: childStore)
-
-                            } else {
-                                let childStore = store.scope(state: \.step1State, action: \.step1)
-                                WhatsTheIssueView(store: childStore)
-                            }
-                        }
-                        .padding(.horizontal, horizontalPadding)
-                    }
+            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                WhatsTheIssueView(
+                    store: store.scope(
+                        state: \.whatsTheIssueState,
+                        action: \.whatsTheIssueAction
+                    )
+                )
+            } destination: { store in
+                switch store.case {
+                case let .quickFixes(store):
+                    QuickFixesView(store: store)
+                case let .contactUs(store):
+                    ContactFormView(store: store)
+                case let .result(store):
+                    BugReportResultView(store: store)
                 }
-                .padding(.top, verticalPadding)
-                .background(colors.background)
             }
         }
     }

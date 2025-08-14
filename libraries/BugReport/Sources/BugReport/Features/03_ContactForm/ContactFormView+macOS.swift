@@ -23,76 +23,101 @@
     import SwiftUI
 
     public struct ContactFormView: View {
-        let store: StoreOf<ContactFormFeature>
+        @Perception.Bindable var store: StoreOf<ContactFormFeature>
+
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
         @Environment(\.colors) var colors: Colors
+        @Environment(\.dismiss) private var dismiss
 
         public var body: some View {
             WithPerceptionTracking {
-                VStack {
-                    VStack(spacing: 20) {
-                        ForEach(store.fields) { field in
-                            if !field.hidden {
-                                switch field.inputField.type {
-                                case .textSingleLine:
-                                    SingleLineTextInputView(
-                                        field: field.inputField,
-                                        value: Binding(
-                                            get: { field.stringValue },
-                                            set: {
-                                                guard $0 != field.stringValue else { return }
-                                                store.send(.fieldStringValueChanged(field, $0))
-                                            }
-                                        )
-                                    )
-                                case .textMultiLine:
-                                    MultiLineTextInputView(
-                                        field: field.inputField,
-                                        value: Binding(
-                                            get: { field.stringValue },
-                                            set: {
-                                                guard $0 != field.stringValue else { return }
-                                                store.send(.fieldStringValueChanged(field, $0))
-                                            }
-                                        )
-                                    )
-                                    .frame(height: 155, alignment: .top)
-                                case .switch:
-                                    SwitchInputView(
-                                        field: field.inputField,
-                                        value: Binding(
-                                            get: { field.boolValue },
-                                            set: { store.send(.fieldBoolValueChanged(field, $0)) }
-                                        )
-                                    )
+                ZStack {
+                    colors.background.ignoresSafeArea()
+
+                    VStack {
+                        StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
+                            .padding(.bottom)
+
+                        UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
+                        ScrollView {
+                            VStack(spacing: 20) {
+                                ForEach(store.fields) { field in
+                                    if !field.hidden {
+                                        switch field.inputField.type {
+                                        case .textSingleLine:
+                                            SingleLineTextInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.stringValue },
+                                                    set: {
+                                                        guard $0 != field.stringValue else { return }
+                                                        store.send(.fieldStringValueChanged(field, $0))
+                                                    }
+                                                )
+                                            )
+                                        case .textMultiLine:
+                                            MultiLineTextInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.stringValue },
+                                                    set: {
+                                                        guard $0 != field.stringValue else { return }
+                                                        store.send(.fieldStringValueChanged(field, $0))
+                                                    }
+                                                )
+                                            )
+                                            .frame(height: 155, alignment: .top)
+                                        case .switch:
+                                            SwitchInputView(
+                                                field: field.inputField,
+                                                value: Binding(
+                                                    get: { field.boolValue },
+                                                    set: { store.send(.fieldBoolValueChanged(field, $0)) }
+                                                )
+                                            )
+                                        }
+                                    }
                                 }
+
+                                if store.showLogsInfo {
+                                    HStack(alignment: .top, spacing: 0) {
+                                        Image(Asset.icInfoCircle.name, bundle: Bundle.module)
+                                            .padding(0)
+
+                                        Text(Localizable.br3LogsDisabled)
+                                            .font(.footnote)
+                                            .foregroundColor(colors.textSecondary)
+                                            .padding(.leading, 8)
+                                    }
+                                    .padding(.horizontal)
+                                }
+
+                                Button(action: {
+                                    store.send(.send, animation: .default)
+                                }, label: {
+                                    Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend)
+                                })
+                                .disabled(!store.isSending && !store.canBeSent)
+                                .buttonStyle(PrimaryButtonStyle())
+                                .padding(.horizontal)
                             }
                         }
-
-                        if store.showLogsInfo {
-                            HStack(alignment: .top, spacing: 0) {
-                                Image(Asset.icInfoCircle.name, bundle: Bundle.module)
-                                    .padding(0)
-
-                                Text(Localizable.br3LogsDisabled)
-                                    .font(.footnote)
-                                    .foregroundColor(colors.textSecondary)
-                                    .padding(.leading, 8)
-                            }
-                            .padding(.horizontal)
-                        }
-
-                        Button(action: {
-                            store.send(.send, animation: .default)
-
-                        }, label: { Text(store.isSending ? Localizable.br3ButtonSending : Localizable.br3ButtonSend) })
-                            .disabled(!store.isSending && !store.canBeSent)
-                            .buttonStyle(PrimaryButtonStyle())
-                            .padding(.horizontal)
                     }
+                    .foregroundColor(colors.textPrimary)
+                    .navigationBarBackButtonHidden(true)
+                    .toolbar {
+                        ToolbarItem(placement: .navigation) {
+                            Button(action: {
+                                dismiss()
+                            }, label: {
+                                Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
+                            })
+                        }
+                    }
+                    .environment(\.isLoading, store.isSending)
                 }
-                .environment(\.isLoading, store.isSending)
-                .background(colors.background)
             }
         }
     }

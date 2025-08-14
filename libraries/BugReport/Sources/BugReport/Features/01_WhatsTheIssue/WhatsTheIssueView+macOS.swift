@@ -22,40 +22,49 @@
     import Strings
     import SwiftUI
 
-    // Mac view is a little bit different. Plus it doesn't have Navigation links and all
-    // navigation is handled by root view.
-
     public struct WhatsTheIssueView: View {
-        let store: StoreOf<WhatsTheIssueFeature>
+        @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
         @Environment(\.colors) var colors: Colors
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
 
         public var body: some View {
-            VStack(alignment: .center) {
-                Text(Localizable.br1Title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(colors.textPrimary)
-                    .padding(.horizontal)
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .center) {
+                    StepProgress(step: 1, steps: 3, colorMain: colors.primary, colorText: colors.textAccent, colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak)
+                        .padding(.bottom)
+                        .transition(.opacity)
+
+                    UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
+                    Text(Localizable.br1Title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(colors.textPrimary)
+                        .padding(.horizontal)
+
                     WithPerceptionTracking {
-                        ForEach(store.categories) { category in
-                            Button(category.label, action: { store.send(.categorySelected(category), animation: .default) })
-                                .onHover { inside in
-                                    if inside {
-                                        NSCursor.pointingHand.push()
-                                    } else {
-                                        NSCursor.pop()
-                                    }
+                        List(store.state.categories) { category in
+                            Button(category.label, action: {
+                                store.send(.categorySelected(category), animation: .default)
+                            })
+                            .onHover { inside in
+                                if inside {
+                                    NSCursor.pointingHand.push()
+                                } else {
+                                    NSCursor.pop()
                                 }
+                            }
+                            .buttonStyle(CategoryButtonStyle())
+                            .listRowBackground(colors.background)
                         }
                     }
+                    .listStyle(.plain)
+                    .padding(.top, 32)
                 }
-                .buttonStyle(CategoryButtonStyle())
-                .listStyle(.plain)
-                .padding(.top, 32)
+                .navigationTitle(Text(Localizable.brWindowTitle))
             }
-            .background(colors.background)
         }
     }
 
