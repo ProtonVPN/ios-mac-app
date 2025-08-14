@@ -20,6 +20,14 @@ import Foundation
 import IssueReporting
 
 public enum DomainConstants {
+    public enum BundleID {
+        #if os(iOS)
+            public static let main = "ch.protonmail.vpn"
+        #elseif os(macOS)
+            public static let main = "ch.protonvpn.mac"
+        #endif
+    }
+
     public enum AppGroups {
         #if os(iOS) || os(tvOS)
             public static let main = "group.ch.protonmail.vpn"
