@@ -93,7 +93,7 @@
                             })
                             .disabled(!store.isSending && !store.canBeSent)
                             .buttonStyle(PrimaryButtonStyle())
-                            .padding(.horizontal)
+                            .padding([.horizontal, .bottom], 16)
                         }
                     }
                 }

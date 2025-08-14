@@ -113,6 +113,8 @@
                                     .cornerRadius(8)
                             }
                         )
+                        .buttonStyle(PlainButtonStyle())
+                        .padding([.horizontal, .bottom], 16)
                     }
                 }
                 .foregroundColor(colors.textPrimary)
