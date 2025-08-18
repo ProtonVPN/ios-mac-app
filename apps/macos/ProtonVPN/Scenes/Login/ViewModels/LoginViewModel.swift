@@ -315,6 +315,9 @@ final class LoginViewModel {
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
                 self.isTwoFactorStep = false
                 self.logInFailure?(nil, nil)
+            } else if case CommonVpnError.noConnectionsAvailable = error {
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: .noOrganization))
+                self.logInFailure?(nil, nil)
             } else {
                 self.logInFailure?(error.localizedDescription, nil)
             }

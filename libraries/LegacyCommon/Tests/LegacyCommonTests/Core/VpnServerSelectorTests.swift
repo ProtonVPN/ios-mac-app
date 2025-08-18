@@ -132,6 +132,49 @@ class VpnServerSelectorTests: XCTestCase {
         XCTAssertEqual(server?.id, "GB0")
     }
 
+    func testSelectsFastestNotGateway() throws {
+        let mockServers = [
+            Self.makeMockServer(id: "GBX", countryCode: "GB", gatewayName: "X", tier: 3, score: 0, feature: .restricted),
+            Self.makeMockServer(id: "GB0", countryCode: "GB", tier: 3, score: 1),
+        ]
+
+        var repository: ServerRepository = withDependencies {
+            $0.databaseConfiguration = .withTestExecutor(databaseType: .ephemeral)
+        } operation: {
+            ServerRepository.liveValue
+        }
+
+        repository.upsert(servers: mockServers)
+
+        let connectionRequest = ConnectionRequest(
+            serverType: .unspecified,
+            connectionType: .fastest,
+            connectionProtocol: connectionProtocol,
+            netShieldType: .off,
+            natType: .default,
+            safeMode: true,
+            portForwarding: true,
+            profileId: nil,
+            profileName: nil,
+            trigger: nil
+        )
+
+        let server = withDependencies {
+            $0.serverRepository = repository
+        } operation: {
+            let selector = VpnServerSelector(
+                serverType: .unspecified,
+                userTier: 3,
+                connectionProtocol: connectionProtocol,
+                smartProtocolConfig: smartProtocolConfig,
+                appStateGetter: appStateGetter
+            )
+            return selector.selectServer(connectionRequest: connectionRequest)
+        }
+
+        XCTAssertEqual(server?.id, "GB0")
+    }
+
     func testSelectsFastestInCountry() throws {
         let currentUserTier = 3
         let type = ServerType.unspecified

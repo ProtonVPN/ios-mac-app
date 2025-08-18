@@ -208,6 +208,12 @@ public class VpnApiService {
                     return
                 }
 
+                guard !serversJson.isEmpty else {
+                    // throw error to log the user the hell out
+                    result = .failure(CommonVpnError.subuserWithoutSessions)
+                    return
+                }
+
                 var serverModels: [ServerModel] = []
                 for json in serversJson {
                     do {

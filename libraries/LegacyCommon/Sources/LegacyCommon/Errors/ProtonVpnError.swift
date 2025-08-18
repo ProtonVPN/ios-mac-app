@@ -47,6 +47,7 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
 
     // User
     case subuserWithoutSessions = "SUWS"
+    case noConnectionsAvailable = "NCAV"
 
     // MARK: - Error Descriptions
 
@@ -76,6 +77,8 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
             Localizable.errorUserCredentialsExpired
         case .vpnCredentialsMissing:
             Localizable.errorVpnCredentialsMissing
+        case .noConnectionsAvailable:
+            "No connections available"
         }
     }
 }

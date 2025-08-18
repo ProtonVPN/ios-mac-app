@@ -49,6 +49,13 @@ public extension QueryInterfaceRequest {
         case .fastest:
             order(statusAlias[LogicalStatus.Columns.score].asc)
 
+        case .fastestGatewaysLast:
+            // Standard servers first, gateways last.
+            order(
+                logicalAlias[Logical.Columns.gatewayName].descNullsFirst,
+                statusAlias[LogicalStatus.Columns.score].asc
+            )
+
         case .nameAscending:
             order(logicalAlias[Logical.Columns.namePrefix].asc, logicalAlias[Logical.Columns.sequenceNumber].asc)
         }
