@@ -34,7 +34,9 @@
 
             delegate.updateAvailabilityChanged = { available in
                 withAnimation {
-                    CurrentEnv.updateViewModel.updateIsAvailable = available
+                    DispatchQueue.main.async {
+                        CurrentEnv.updateViewModel.updateIsAvailable = available
+                    }
                 }
             }
             delegate.checkUpdateAvailability()

@@ -52,11 +52,9 @@ struct ReportBugFeature {
             switch action {
             case let .whatsTheIssueAction(.categorySelected(category)):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
-                    state.path.append(ReportBugFeature.Path.State.quickFixes(
-                        QuickFixesFeature.State(category: category)
-                    ))
+                    state.path.append(.quickFixes(QuickFixesFeature.State(category: category)))
                 } else {
-                    state.path.append(ReportBugFeature.Path.State.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
+                    state.path.append(.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
                 }
                 return .none
 
@@ -65,7 +63,7 @@ struct ReportBugFeature {
                 if case let .failure(someError) = response {
                     error = someError.localizedDescription
                 }
-                state.path.append(ReportBugFeature.Path.State.result(BugReportResultFeature.State(error: error)))
+                state.path.append(.result(BugReportResultFeature.State(error: error)))
                 return .none
 
             case .path:
@@ -91,7 +89,9 @@ extension ReportBugFeature.State {
                 return 2
             }
             // no quick fixes, only contact form
-            return 3
+            if path.last?.hasContactUs == true {
+                return 3
+            }
         }
         // quick fixes + contact form, **not** contact form + result
         if path.count == 2, path.last?.hasResult == false {
