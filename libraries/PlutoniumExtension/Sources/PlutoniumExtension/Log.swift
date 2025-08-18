@@ -18,14 +18,69 @@
 
 import Foundation
 import Logging
+import os.log
 import PMLogger
 
-package let log: Logger = {
-    // TODO: VPNAPPL-2789: Introduce correct logging system.
+// Global logger for Plutonium extension
+package let log: Logging.Logger = .init(label: "ProtonVPN.Plutonium.logger")
 
-    let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
-    let multiplexLogHandler = MultiplexLogHandler([osLogHandler])
+// MARK: - Public Logging Setup
+
+/// Setup logging infrastructure for Plutonium extension (called from main.swift)
+public func setupPlutoniumLogging() {
+    let multiplexLogHandler: MultiplexLogHandler
+    do {
+        let logFile = try getPlutoniumLogFileURL()
+        let fileLogHandler = FileLogHandler(logFile)
+
+        // Configure rotation settings (match WireGuard)
+        fileLogHandler.maxFileSize = 1024 * 100 // 100 KiB
+        fileLogHandler.maxArchivedFilesCount = 1 // 1 archived file
+
+        // Combine OSLog and file logging
+        let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
+        multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
+
+        os_log("Plutonium logging configured with file: %{public}s", log: OSLog.default, type: .info, logFile.path)
+    } catch {
+        os_log("Failed to setup file logging for Plutonium: %{public}s", log: OSLog.default, type: .error, String(describing: error))
+        // Fallback to OSLog only
+        multiplexLogHandler = MultiplexLogHandler([OSLogHandler(formatter: OSLogFormatter())])
+    }
+
+    // Bootstrap the logging system
     LoggingSystem.bootstrap { _ in multiplexLogHandler }
+}
 
-    return Logger(label: "ProtonVPN.PlutoniumExtension.logger")
-}()
+// Used for logs in Plutonium IPC Service
+public func plutoniumIPCLog(_ message: String) {
+    log.info("\(message)", category: .ipc)
+}
+
+// MARK: - Public Helpers
+
+public enum PlutoniumLogError: Error {
+    case fileNotFound
+}
+
+public func getPlutoniumLogFileURL(createIfMissing: Bool = true) throws -> URL {
+    // System extension safe log location (survives system cleanups)
+    let libraryDir = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+    let logsDir = libraryDir.appendingPathComponent("Logs", isDirectory: true)
+
+    // Ensure directory exists
+    try FileManager.default.createDirectory(at: logsDir, withIntermediateDirectories: true, attributes: nil)
+
+    let logFile = logsDir.appendingPathComponent("Plutonium-Extension.log")
+
+    // Create file if it doesn't exist
+    if !FileManager.default.fileExists(atPath: logFile.path) {
+        if createIfMissing {
+            FileManager.default.createFile(atPath: logFile.path, contents: nil)
+        } else {
+            throw PlutoniumLogError.fileNotFound
+        }
+    }
+
+    return logFile
+}

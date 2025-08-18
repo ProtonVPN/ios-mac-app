@@ -70,10 +70,12 @@ public protocol LogContentProvider {
     public class MacOSLogContentProvider: LogContentProvider {
         private let folder: URL
         private let wireguardProtocolFactory: WireguardProtocolFactory
+        private let plutoniumLogProvider: NetworkExtensionLogProvider
 
-        public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory) {
+        public init(appLogsFolder folder: URL, wireguardProtocolFactory: WireguardProtocolFactory, plutoniumLogProvider: NetworkExtensionLogProvider) {
             self.folder = folder
             self.wireguardProtocolFactory = wireguardProtocolFactory
+            self.plutoniumLogProvider = plutoniumLogProvider
         }
 
         public func getLogData(for source: LogSource) -> LogContent {
@@ -86,6 +88,9 @@ public protocol LogContentProvider {
 
             case .wireguard:
                 NELogContent(neLogProvider: wireguardProtocolFactory)
+
+            case .plutonium:
+                NELogContent(neLogProvider: plutoniumLogProvider)
             }
         }
     }

@@ -23,6 +23,7 @@
 import AppKit
 import BugReport
 import CommonNetworking
+import Domain
 import Ergonomics
 import Foundation
 import LegacyCommon
@@ -38,6 +39,7 @@ final class DependencyContainer: Container {
         appGroup: config.appGroup,
         factory: self
     )
+    private lazy var plutoniumLogProvider = PlutoniumMacLogProvider(factory: self)
     private lazy var vpnAuthentication: VpnAuthentication = VpnAuthenticationManager(self)
 
     private lazy var appSessionManager: AppSessionManagerImplementation = .init(factory: self)
@@ -146,9 +148,11 @@ final class DependencyContainer: Container {
         let appLogsFolder = makeLogFileManager()
             .getFileUrl(named: AppConstants.Filenames.appLogFilename)
             .deletingLastPathComponent()
+
         return MacOSLogContentProvider(
             appLogsFolder: appLogsFolder,
-            wireguardProtocolFactory: makeWireguardProtocolFactory()
+            wireguardProtocolFactory: makeWireguardProtocolFactory(),
+            plutoniumLogProvider: plutoniumLogProvider
         )
     }
 

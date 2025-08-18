@@ -60,6 +60,7 @@ class AppConstants {
         static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
         static let wireGuardLogFilename = "WireGuard.log"
+        static let plutoniumLogFilename = "SplitTunneling.log"
     }
 
     enum NetworkExtensions {

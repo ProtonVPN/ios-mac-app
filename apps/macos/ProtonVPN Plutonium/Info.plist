@@ -30,5 +30,21 @@
     <string></string>
     <key>TeamIdentifierPrefix</key>
     <string>$(TeamIdentifierPrefix)</string>
+    <key>OSLogPreferences</key>
+    <dict>
+        <key>PROTON-PLUTONIUM</key>
+        <dict>
+            <key>DEFAULT-OPTIONS</key>
+            <dict>
+                <key>Level</key>
+                <dict>
+                    <key>Enable</key>
+                    <string>$(OSLOG_LEVEL_ENABLE)</string>
+                    <key>Persist</key>
+                    <string>$(OSLOG_LEVEL_PERSIST)</string>
+                </dict>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>

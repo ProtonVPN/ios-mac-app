@@ -124,6 +124,9 @@
                                         <menuItem title="View WireGuard Logs_" id="mvz-nO-aHe" userLabel="Logs Item">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem title="View Split Tunneling Logs_" identifier="plutonium-logs-item" id="3TZ-uP-Bqy" userLabel="Logs Item">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem title="Clear All Data" id="OOQ-ac-X8f">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -177,6 +180,7 @@
                         <outlet property="helpItem" destination="OK2-4f-4vJ" id="IBe-qE-jlf"/>
                         <outlet property="helpMenu" destination="wED-7F-VQJ" id="dyB-Ri-iNg"/>
                         <outlet property="logsItem" destination="Td7-XY-QFc" id="nHY-1C-tGF"/>
+                        <outlet property="logsPlutoniumItem" destination="3TZ-uP-Bqy" id="bIA-nI-0Zx"/>
                         <outlet property="logsWGItem" destination="mvz-nO-aHe" id="BZn-Im-Tml"/>
                         <outlet property="reportAnIssueItem" destination="a5J-cy-nfO" id="4BY-VB-g72"/>
                         <outlet property="systemExtensionTutorialItem" destination="cug-Q3-QKr" id="9xr-gO-F6Q"/>

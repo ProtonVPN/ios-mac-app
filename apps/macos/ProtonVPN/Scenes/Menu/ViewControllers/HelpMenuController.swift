@@ -22,6 +22,7 @@
 
 import Cocoa
 import Dependencies
+import Domain
 import LegacyCommon
 import Strings
 import VPNAppCore
@@ -31,6 +32,7 @@ class HelpMenuController: NSObject {
     @IBOutlet var reportAnIssueItem: NSMenuItem!
     @IBOutlet var logsItem: NSMenuItem!
     @IBOutlet var logsWGItem: NSMenuItem!
+    @IBOutlet var logsPlutoniumItem: NSMenuItem!
     @IBOutlet var helpItem: NSMenuItem!
     @IBOutlet var systemExtensionTutorialItem: NSMenuItem!
     @IBOutlet var clearApplicationDataItem: NSMenuItem!
@@ -66,6 +68,12 @@ class HelpMenuController: NSObject {
         logsWGItem.target = self
         logsWGItem.action = #selector(openWGLogsAction)
 
+        logsPlutoniumItem.title = Localizable.plutoniumLogs
+        logsPlutoniumItem.isEnabled = true
+        logsPlutoniumItem.target = self
+        logsPlutoniumItem.action = #selector(openPlutoniumLogsAction)
+        logsPlutoniumItem.isHidden = !VPNFeatureFlagType.plutoniumMacOS.enabled
+
         clearApplicationDataItem.title = Localizable.clearApplicationData
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self
@@ -94,6 +102,11 @@ class HelpMenuController: NSObject {
     @objc
     private func openWGLogsAction() {
         viewModel.openWGVpnLogsFolderAction()
+    }
+
+    @objc
+    private func openPlutoniumLogsAction() {
+        viewModel.openPlutoniumLogsFolderAction()
     }
 
     @objc
