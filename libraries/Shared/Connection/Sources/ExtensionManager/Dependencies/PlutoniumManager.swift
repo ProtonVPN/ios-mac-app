@@ -19,8 +19,11 @@
 #if os(macOS)
 
     import ComposableArchitecture
+    import CoreConnection
     import Dependencies
+    import Hermes
     import NetworkExtension
+    import VPNAppCore
 
     public struct PlutoniumManager: DependencyKey, TestDependencyKey {
         public var start: () async throws -> Void
@@ -40,7 +43,11 @@
         public static let liveValue = PlutoniumManager(
             start: {
                 @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-                let manager = try await getManager(providerConfig: feature.toProviderConfigurationDictionary())
+                @Dependency(\.hermesClient) var hermesClient
+                let manager = try await getManager(
+                    providerConfig: feature
+                        .toProviderConfigurationDictionary(dnsServers: hermesClient.currentResolvers.map(\.location))
+                )
                 try manager.connection.startVPNTunnel()
                 log.info("Plutonium started")
             },

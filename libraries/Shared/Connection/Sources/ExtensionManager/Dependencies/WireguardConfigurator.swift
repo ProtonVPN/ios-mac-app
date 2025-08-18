@@ -57,14 +57,8 @@ extension ConnectionConfigurationProvider: DependencyKey {
     public static var liveValue: ConnectionConfigurationProvider {
         ConnectionConfigurationProvider {
             @Dependency(\.hermesClient) var hermesClient
-            let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
 
-            var hermesResolvers: [HermesResolver] = [.proton]
-            if hermesIsEnabled {
-                hermesResolvers.insert(contentsOf: hermesClient.activeHermesResolvers().wrappedValue, at: 0)
-            }
-
-            let wireguardConfig = WireguardConfig(dns: hermesResolvers.map(\.location))
+            let wireguardConfig = WireguardConfig(dns: hermesClient.currentResolvers.map(\.location))
             return ConnectionConfiguration(username: "ProtonVPN", wireguardConfig: wireguardConfig)
         }
     }
