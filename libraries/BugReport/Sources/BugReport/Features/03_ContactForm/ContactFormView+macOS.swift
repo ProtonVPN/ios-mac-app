@@ -103,6 +103,7 @@
                         .padding([.horizontal, .bottom], 16)
                     }
                 }
+                .environment(\.isLoading, store.isSending)
             }
             .foregroundColor(colors.textPrimary)
             .navigationBarBackButtonHidden(true)
@@ -115,7 +116,6 @@
                     })
                 }
             }
-            .environment(\.isLoading, store.isSending)
         }
     }
 

@@ -96,6 +96,7 @@
                                     .padding(.horizontal)
                             }
                         }
+                        .environment(\.isLoading, store.isSending)
                     }
                     .foregroundColor(colors.textPrimary)
                     // Custom Back button
@@ -105,7 +106,6 @@
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))
-                    .environment(\.isLoading, store.isSending)
                 }
             }
         }

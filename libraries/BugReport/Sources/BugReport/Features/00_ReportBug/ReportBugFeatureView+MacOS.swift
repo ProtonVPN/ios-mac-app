@@ -33,15 +33,10 @@
                     colors.background.ignoresSafeArea()
 
                     VStack(alignment: .center) {
-                        if !store.path.contains(where: { pathState in
-                            if case .result = pathState {
-                                return true
-                            }
-                            return false
-                        }) {
+                        if store.currentStep != 0 {
                             StepProgress(
-                                step: UInt(store.path.count + 1),
-                                steps: 3,
+                                step: store.currentStep,
+                                steps: store.steps,
                                 colorMain: colors.primary,
                                 colorText: colors.textAccent,
                                 colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak

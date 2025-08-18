@@ -31,6 +31,8 @@ struct ReportBugFeature {
 
     @ObservableState
     struct State: Equatable {
+        let steps: UInt = 3
+
         var path = StackState<Path.State>()
         var whatsTheIssueState: WhatsTheIssueFeature.State
     }
@@ -74,5 +76,50 @@ struct ReportBugFeature {
             }
         }
         .forEach(\.path, action: \.path)
+    }
+}
+
+extension ReportBugFeature.State {
+    var currentStep: UInt {
+        // starting point on what's the issue
+        if path.isEmpty {
+            return 1
+        }
+        // either quick fixes or contact form
+        if path.count == 1 {
+            if path.last?.hasQuickFixes == true {
+                return 2
+            }
+            // no quick fixes, only contact form
+            return 3
+        }
+        // quick fixes + contact form, **not** contact form + result
+        if path.count == 2, path.last?.hasResult == false {
+            return 3
+        }
+        return 0
+    }
+}
+
+extension ReportBugFeature.Path.State {
+    var hasQuickFixes: Bool {
+        switch self {
+        case .quickFixes: true
+        default: false
+        }
+    }
+
+    var hasContactUs: Bool {
+        switch self {
+        case .contactUs: true
+        default: false
+        }
+    }
+
+    var hasResult: Bool {
+        switch self {
+        case .result: true
+        default: false
+        }
     }
 }
