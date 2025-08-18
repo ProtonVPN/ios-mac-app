@@ -379,6 +379,14 @@ public enum Localizable {
   public static var createAccountFirstBeforeUpgrade: String { return Localizable.tr("Localizable", "_create_account_first_before_upgrade", fallback: "You need to create an account before you can upgrade") }
   /// iOS: Alert title for closing account creation flow
   public static var createAccountIfCloseNoUpgrade: String { return Localizable.tr("Localizable", "_create_account_if_close_no_upgrade", fallback: "If you don’t create an account you won’t be able to upgrade to VPN Plus") }
+  /// iOS: Alert title for report an issue attempt in guest mode
+  public static var createAccountReportAnIssueGuestMode: String { return Localizable.tr("Localizable", "_create_account_report_an_issue_guest_mode", fallback: "Create an account to continue") }
+  /// iOS: Alert cancel button for report an issue attempt in guest mode
+  public static var createAccountReportAnIssueGuestModeCancelButton: String { return Localizable.tr("Localizable", "_create_account_report_an_issue_guest_mode_cancel_button", fallback: "Cancel") }
+  /// iOS: Alert create account button for report an issue attempt in guest mode
+  public static var createAccountReportAnIssueGuestModeCreateAccountButton: String { return Localizable.tr("Localizable", "_create_account_report_an_issue_guest_mode_create_account_button", fallback: "Create account") }
+  /// iOS: Alert sign in button for report an issue attempt in guest mode
+  public static var createAccountReportAnIssueGuestModeSignInButton: String { return Localizable.tr("Localizable", "_create_account_report_an_issue_guest_mode_sign_in_button", fallback: "Sign in") }
   /// iOS: Action account button on settings account section in guest mode
   public static var createAccountSettingsTitle: String { return Localizable.tr("Localizable", "_create_account_settings_title", fallback: "Create account") }
   /// MacOS: Buttons in several places; iOS: profile creation screen title

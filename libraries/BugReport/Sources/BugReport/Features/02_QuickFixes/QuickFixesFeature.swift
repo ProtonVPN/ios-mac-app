@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Strings
 import SwiftUI
 
 @Reducer
@@ -25,13 +26,73 @@ struct QuickFixesFeature {
     @ObservableState
     struct State: Equatable {
         var category: Category
+
+        @Presents package var alert: AlertState<Action.Alert>?
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case alert(PresentationAction<Alert>)
+        case attemptContactUs
+        case contactUs
+
+        @CasePathable
+        enum Alert {
+            case createAccount
+            case signIn
+            case cancel
+        }
     }
+
+    @Dependency(\.isUserCredentialless) private var isUserCredentialless
+    @Dependency(\.createAccount) private var createAccount
+    @Dependency(\.signIn) private var signIn
 
     var body: some ReducerOf<Self> {
         BindingReducer()
+
+        Reduce { state, action in
+            switch action {
+            case .attemptContactUs:
+                if isUserCredentialless() {
+                    state.alert = signInAlert
+                    return .none
+                }
+                return .send(.contactUs)
+
+            case .contactUs:
+                return .none
+
+            case .alert(.presented(.createAccount)):
+                // trigger dependency to show create account in navigation service
+                return .run { _ in
+                    createAccount()
+                }
+
+            case .alert(.presented(.signIn)):
+                // trigger dependency to show sign in in navigation service
+                return .run { _ in
+                    signIn()
+                }
+
+            case .alert:
+                return .none
+
+            case .binding:
+                return .none
+            }
+        }
+        .ifLet(\.$alert, action: \.alert)
+    }
+
+    private var signInAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.createAccountReportAnIssueGuestMode) },
+            actions: {
+                ButtonState(action: .send(.createAccount), label: { TextState(Localizable.createAccountReportAnIssueGuestModeCreateAccountButton) })
+                ButtonState(action: .send(.signIn), label: { TextState(Localizable.createAccountReportAnIssueGuestModeSignInButton) })
+                ButtonState(role: .cancel, action: .send(.cancel), label: { TextState(Localizable.createAccountReportAnIssueGuestModeCancelButton) })
+            }
+        )
     }
 }

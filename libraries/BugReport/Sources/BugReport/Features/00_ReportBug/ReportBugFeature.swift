@@ -58,6 +58,11 @@ struct ReportBugFeature {
                 }
                 return .none
 
+            case let .path(.element(id: id, action: .quickFixes(.contactUs))):
+                guard let quickFixes = state.path[id: id]?.quickFixes else { return .none }
+                state.path.append(.contactUs(ContactFormFeature.State(fields: quickFixes.category.inputFields, category: quickFixes.category.label)))
+                return .none
+
             case let .path(.element(id: _, action: .contactUs(.sendResponseReceived(response)))):
                 var error: String?
                 if case let .failure(someError) = response {

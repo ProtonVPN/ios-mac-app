@@ -90,8 +90,8 @@
                         Spacer()
 
                         VStack {
-                            NavigationLink(
-                                state: ReportBugFeature.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
+                            Button(
+                                action: { store.send(.attemptContactUs) },
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
@@ -119,6 +119,7 @@
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))
+                    .alert($store.scope(state: \.alert, action: \.alert))
                 }
             }
         }

@@ -23,6 +23,9 @@ public protocol BugReportDelegate: AnyObject {
     /// Configuration for Dynamic Bug Report UI.
     var model: BugReportModel { get }
 
+    /// Indicates whether a user is credentialless
+    var isUserCredentialless: Bool { get }
+
     /// If app knows users email, it should be returned here.
     var prefilledEmail: String { get }
 
@@ -47,4 +50,10 @@ public protocol BugReportDelegate: AnyObject {
 
     /// Callback that starts updating the app.
     func updateApp()
+
+    /// Callback that shows create account from protoncore
+    func createAccount()
+
+    /// Callback that shows sign in from protoncore
+    func signIn()
 }
