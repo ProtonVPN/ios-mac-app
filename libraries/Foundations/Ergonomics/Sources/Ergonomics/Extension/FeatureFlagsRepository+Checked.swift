@@ -46,7 +46,7 @@ public class CheckedFeatureFlagsRepository {
     /// Safe wrapper around FeatureFlagsRepository.shared.isEnabled() that asserts if called before fetchFlags()
     public func isEnabled(_ flag: any FeatureFlagTypeProtocol, reloadValue: Bool = false) -> Bool {
         assert(hasFetchedFlags, "Should not call isEnabled() before loading flags")
-        repository.isEnabled(flag, reloadValue: reloadValue)
+        return repository.isEnabled(flag, reloadValue: reloadValue)
     }
 }
 
