@@ -119,7 +119,7 @@ struct ReportBugFeature {
         .ifLet(\.$alert, action: \.alert)
     }
 
-    private var signInAlert: AlertState<Action.Alert> {
+    var signInAlert: AlertState<Action.Alert> {
         AlertState(
             title: { TextState(Localizable.createAccountReportAnIssueGuestMode) },
             actions: {
