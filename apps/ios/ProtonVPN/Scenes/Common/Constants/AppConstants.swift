@@ -20,11 +20,12 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Domain
 import UIKit
 import VPNShared
 
 class AppConstants {
-    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? "ch.protonmail.vpn").asMainAppBundleIdentifier
+    static var appBundleId: String = (Bundle.main.bundleIdentifier ?? DomainConstants.BundleID.main).asMainAppBundleIdentifier
 
     enum NetworkExtensions {
         static let openVpn = "\(appBundleId).OpenVPN-Extension"

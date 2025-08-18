@@ -111,7 +111,9 @@ public struct PlutoniumFeature {
         self.vpnGateway = vpnGateway
 
         // Start the scanner when user first enters plutonium settings.
-        _ = PlutoniumScanner.shared
+        Task {
+            await PlutoniumScanner.shared.startObservation()
+        }
     }
 
     public var body: some Reducer<State, Action> {

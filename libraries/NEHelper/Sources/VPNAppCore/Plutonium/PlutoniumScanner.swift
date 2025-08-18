@@ -19,17 +19,15 @@
 #if canImport(AppKit)
 
     import Combine
+    import Dependencies
     import Foundation
     import Sharing
 
     import CombineSchedulers
     import SwiftNavigation
 
-    public final class PlutoniumScanner {
-        public static let shared: PlutoniumScanner = .init()
-
-        @SharedReader(.exclusionActivated) private var exclusionActivated: PlutoniumActivated
-        @SharedReader(.inclusionActivated) private var inclusionActivated: PlutoniumActivated
+    public final actor PlutoniumScanner {
+        public static let shared = PlutoniumScanner()
 
         @Shared(.childBundles) var childBundles: [String: ChildBundle]
 
@@ -38,28 +36,47 @@
         private var cancellables: Set<AnyCancellable> = []
 
         private var task: Task<Void, any Error>?
+        private var continuation: AsyncStream<[PlutoniumApp]>.Continuation?
 
-        var workGroup: ThrowingTaskGroup<(String, ChildBundle), any Error>?
+        private let debounceAmount: DispatchQueue.SchedulerTimeType.Stride
+        private let scheduler: AnySchedulerOf<DispatchQueue>
 
         init(
             debounce: Int = 1,
-            scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: #file, qos: .utility).eraseToAnyScheduler()
+            scheduler: AnySchedulerOf<DispatchQueue> = DispatchQueue(label: "ch.proton.mac.plutonium_scanner").eraseToAnyScheduler()
         ) {
-            let debounceAmount: DispatchQueue.SchedulerTimeType.Stride = .seconds(debounce)
+            self.debounceAmount = .seconds(debounce)
+            self.scheduler = scheduler
+        }
 
-            Publishers.CombineLatest(
+        public func startObservation() {
+            cancellables.removeAll()
+            self.continuation?.finish()
+
+            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+
+            let (asyncStream, continuation) = AsyncStream<[PlutoniumApp]>.makeStream()
+            Publishers.Merge(
                 $exclusionActivated.apps.publisher,
                 $inclusionActivated.apps.publisher
             )
             .debounce(for: debounceAmount, scheduler: scheduler)
-            .map { $0.0 + $0.1 }
-            .sink { [weak self] apps in
-                self?.startScanning(apps)
+            .filter { !$0.isEmpty } // when we finish the stream, we get an empty array, which we can ignore
+            .sink {
+                continuation.yield($0)
             }.store(in: &cancellables)
+
+            self.continuation = continuation
+
+            Task {
+                for await apps in asyncStream {
+                    startScanning(apps)
+                }
+            }
         }
 
         public func waitForScanToComplete() async {
-            try? await workGroup?.waitForAll()
             _ = await task?.result
         }
 
@@ -74,45 +91,35 @@
         private func enumerationOperation(_ app: PlutoniumApp) -> () async throws -> (String, ChildBundle) {
             {
                 try Task.checkCancellation()
-                let plugins = FileManager.default.enumerateChildApplications(for: app)
+                @Dependency(\.appsProvider) var appsProvider
+                let plugins = appsProvider.enumerateChildApplications(app)
                 let ids = plugins.map(\.bundleIdentifier)
                 return (app.bundleIdentifier, ChildBundle(bundleIdentifiers: ids, lastTimeChecked: .now))
             }
         }
 
         private func collect(from group: ThrowingTaskGroup<(String, ChildBundle), any Error>) async {
-            var collected = [String: ChildBundle]()
             do {
                 for try await value in group {
-                    collected[value.0] = value.1
-                }
-                $childBundles.withLock {
-                    $0.merge(collected) {
-                        $1 // the new
+                    $childBundles.withLock {
+                        $0[value.0] = value.1
                     }
+                    try Task.checkCancellation()
                 }
-            } catch { // update anyway
-                $childBundles.withLock {
-                    $0.merge(collected) {
-                        $1 // the new
-                    }
-                }
-            }
-            workGroup = nil
+            } catch {}
         }
 
         private func startScanning(_ apps: [PlutoniumApp]) {
-            @Shared(.childBundles) var childBundles: [String: ChildBundle]
             task?.cancel()
             task = Task {
+                @Shared(.childBundles) var childBundles: [String: ChildBundle]
                 await Task.yield() // allow time for childBundles to update from the last scan
                 await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
-                    self.workGroup = group
                     apps
                         .uniques(by: \.bundleIdentifier)
                         .filter { shouldScan(child: childBundles[$0.bundleIdentifier]) }
                         .map(enumerationOperation)
-                        .forEach { group.addTask(priority: .utility, operation: $0) }
+                        .forEach { group.addTask(operation: $0) }
 
                     await collect(from: group)
                 }

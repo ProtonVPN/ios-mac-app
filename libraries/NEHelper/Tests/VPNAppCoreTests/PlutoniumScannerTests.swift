@@ -35,12 +35,14 @@
                 debounce: 0,
                 scheduler: .immediate
             )
+            await scanner.startObservation()
 
             #expect(childBundles.isEmpty)
 
-            $exclusionActivated.withLock {
-                $0.apps = [.huzza]
+            $exclusionActivated.apps.withLock {
+                $0 = [.huzza]
             }
+            #expect(childBundles.isEmpty)
             await scanner.waitForScanToComplete()
             #expect(!childBundles.isEmpty)
         }
@@ -51,12 +53,14 @@
                 debounce: 0,
                 scheduler: .immediate
             )
+            await scanner.startObservation()
 
             #expect(childBundles.isEmpty)
 
             $inclusionActivated.withLock {
                 $0.apps = [.huzza]
             }
+            #expect(childBundles.isEmpty)
             await scanner.waitForScanToComplete()
             #expect(!childBundles.isEmpty)
         }

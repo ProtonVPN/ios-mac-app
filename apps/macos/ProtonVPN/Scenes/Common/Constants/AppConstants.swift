@@ -21,11 +21,10 @@
 //
 
 import Cocoa
+import Domain
 import VPNShared
 
 class AppConstants {
-    static let bundleId = "ch.protonvpn.mac"
-
     enum Windows {
         static let loginWidth: CGFloat = 340
         static let loginHeight: CGFloat = 600
@@ -63,8 +62,8 @@ class AppConstants {
     }
 
     enum NetworkExtensions {
-        static let openVpn = "\(AppConstants.bundleId).OpenVPN-Extension"
-        static let wireguard = "\(AppConstants.bundleId).WireGuardiOS-Extension"
+        static let openVpn = "\(DomainConstants.BundleID.main).OpenVPN-Extension"
+        static let wireguard = "\(DomainConstants.BundleID.main).WireGuardiOS-Extension"
     }
 
     enum Time {
