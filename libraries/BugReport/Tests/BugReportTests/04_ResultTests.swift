@@ -25,7 +25,7 @@ import Testing
 struct ResultTests {
     @Test("Pressing finish calls the delegate")
     func pressingFinishCallsTheDelegate() async throws {
-        let delegateCalled = LockIsolated(false)
+        var delegateCalled = false
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
@@ -33,7 +33,7 @@ struct ResultTests {
             withDependencies: {
                 $0.finishBugReport = {
                     Task { @MainActor in
-                        delegateCalled.setValue(true)
+                        delegateCalled = true
                     }
                 }
             }
@@ -44,12 +44,12 @@ struct ResultTests {
         // Give the async operation a moment to complete
         try await Task.sleep(for: .milliseconds(10))
 
-        #expect(await delegateCalled.value)
+        #expect(delegateCalled == true)
     }
 
     @Test("Pressing troubleshooting calls the delegate")
     func pressingTroubleshootingCallsTheDelegate() async throws {
-        let delegateCalled = LockIsolated(false)
+        var delegateCalled = false
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
@@ -57,7 +57,7 @@ struct ResultTests {
             withDependencies: {
                 $0.troubleshoot = {
                     Task { @MainActor in
-                        delegateCalled.setValue(true)
+                        delegateCalled = true
                     }
                 }
             }
@@ -68,6 +68,6 @@ struct ResultTests {
         // Give the async operation a moment to complete
         try await Task.sleep(for: .milliseconds(10))
 
-        #expect(await delegateCalled.value)
+        #expect(delegateCalled == true)
     }
 }

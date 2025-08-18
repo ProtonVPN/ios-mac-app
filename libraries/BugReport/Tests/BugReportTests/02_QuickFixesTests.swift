@@ -21,4 +21,26 @@ import ComposableArchitecture
 import Testing
 
 @MainActor
-struct QuickFixesTests {}
+struct QuickFixesTests {
+    private let delegate = MockBugReportDelegate(model: .mock)
+
+    private var categoryWithQuickFixes: BugReport.Category {
+        delegate.model.categories.first!
+    }
+
+    private var categoryWithoutQuickFixes: BugReport.Category {
+        delegate.model.categories.last!
+    }
+
+    @Test("No logic is present in quick fixes apart binding")
+    func selectedCategory() async {
+        let store = TestStore(
+            initialState: QuickFixesFeature.State(category: categoryWithQuickFixes),
+            reducer: { QuickFixesFeature() }
+        )
+
+        await store.send(.binding(.set(\.category, categoryWithoutQuickFixes))) {
+            $0.category = categoryWithoutQuickFixes
+        }
+    }
+}
