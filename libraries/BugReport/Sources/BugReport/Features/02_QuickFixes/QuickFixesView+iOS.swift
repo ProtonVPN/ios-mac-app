@@ -91,7 +91,7 @@
 
                         VStack {
                             Button(
-                                action: { store.send(.attemptContactUs) },
+                                action: { store.send(.contactUs) },
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
@@ -119,7 +119,6 @@
                     }, label: {
                         Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
                     }))
-                    .alert($store.scope(state: \.alert, action: \.alert))
                 }
             }
         }

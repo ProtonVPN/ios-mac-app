@@ -64,6 +64,7 @@
                         }
                     }
                 }
+                .alert($store.scope(state: \.alert, action: \.alert))
             }
         }
     }
