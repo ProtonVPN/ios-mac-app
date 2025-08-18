@@ -24,19 +24,14 @@
 
     public struct WhatsTheIssueView: View {
         @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-        @Environment(\.colors) var colors: Colors
+
+        @Environment(\.colors) private var colors: Colors
 
         public var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    StepProgress(step: 1, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
-                        .padding(.bottom)
-
-                    UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                     Text(Localizable.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)

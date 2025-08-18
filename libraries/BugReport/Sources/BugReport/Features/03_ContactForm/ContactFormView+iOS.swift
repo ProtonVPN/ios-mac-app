@@ -25,9 +25,7 @@
     public struct ContactFormView: View {
         @Perception.Bindable var store: StoreOf<ContactFormFeature>
 
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-
-        @Environment(\.colors) var colors: Colors
+        @Environment(\.colors) private var colors: Colors
         @Environment(\.dismiss) private var dismiss
 
         public var body: some View {
@@ -36,11 +34,6 @@
                     colors.background.ignoresSafeArea()
 
                     VStack(spacing: 0) {
-                        StepProgress(step: 3, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
-                            .padding(.bottom)
-
-                        UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                         ScrollView {
                             VStack(spacing: 20) {
                                 ForEach(store.fields) { field in

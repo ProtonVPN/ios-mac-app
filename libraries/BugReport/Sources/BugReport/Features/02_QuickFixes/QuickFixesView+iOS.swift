@@ -25,10 +25,8 @@
     public struct QuickFixesView: View {
         @Perception.Bindable var store: StoreOf<QuickFixesFeature>
 
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-
         let assetsBundle = CurrentEnv.assetsBundle
-        @Environment(\.colors) var colors: Colors
+        @Environment(\.colors) private var colors: Colors
         @Environment(\.dismiss) private var dismiss
 
         public var body: some View {
@@ -37,11 +35,6 @@
                     colors.background.ignoresSafeArea()
 
                     VStack(alignment: .leading, spacing: 0) {
-                        StepProgress(step: 2, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
-                            .padding(.bottom)
-
-                        UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                         VStack(alignment: .leading, spacing: 8) {
                             Text(Localizable.br2Title)
                                 .font(.title2)

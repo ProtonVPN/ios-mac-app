@@ -24,22 +24,45 @@
     public struct ReportBugView: View {
         @Perception.Bindable var store: StoreOf<ReportBugFeature>
 
+        @Environment(\.colors) var colors: Colors
+        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
+
         public var body: some View {
-            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-                WhatsTheIssueView(
-                    store: store.scope(
-                        state: \.whatsTheIssueState,
-                        action: \.whatsTheIssueAction
-                    )
-                )
-            } destination: { store in
-                switch store.case {
-                case let .quickFixes(store):
-                    QuickFixesView(store: store)
-                case let .contactUs(store):
-                    ContactFormView(store: store)
-                case let .result(store):
-                    BugReportResultView(store: store)
+            WithPerceptionTracking {
+                ZStack {
+                    colors.background.ignoresSafeArea()
+
+                    VStack(alignment: .center) {
+                        if store.currentStep != 0 {
+                            StepProgress(
+                                step: store.currentStep,
+                                steps: store.steps,
+                                colorMain: colors.primary,
+                                colorText: colors.textAccent,
+                                colorSecondary: colors.backgroundStrong ?? colors.backgroundWeak
+                            )
+                            .transition(.opacity)
+
+                            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+                        }
+                        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+                            WhatsTheIssueView(
+                                store: store.scope(
+                                    state: \.whatsTheIssueState,
+                                    action: \.whatsTheIssueAction
+                                )
+                            )
+                        } destination: { store in
+                            switch store.case {
+                            case let .quickFixes(store):
+                                QuickFixesView(store: store)
+                            case let .contactUs(store):
+                                ContactFormView(store: store)
+                            case let .result(store):
+                                BugReportResultView(store: store)
+                            }
+                        }
+                    }
                 }
             }
         }
