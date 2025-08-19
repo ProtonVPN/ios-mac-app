@@ -20,6 +20,7 @@ import Foundation
 
 class MockBugReportDelegate: BugReportDelegate {
     var model: BugReportModel
+    var isUserCredentialless: Bool = false
     var prefilledEmail: String = ""
     var prefilledUsername: String = ""
 
@@ -57,5 +58,17 @@ class MockBugReportDelegate: BugReportDelegate {
 
     func updateApp() {
         updateAppCallback?()
+    }
+
+    var createAccountCallback: (() -> Void)?
+
+    func createAccount() {
+        createAccountCallback?()
+    }
+
+    var signInCallback: (() -> Void)?
+
+    func signIn() {
+        signInCallback?()
     }
 }

@@ -72,9 +72,11 @@ struct ReportBugFeatureTests {
         )
 
         // Send categorySelected action for a category without quick fixes
-        await store.send(.whatsTheIssueAction(.categorySelected(categoryWithoutQuickFixes))) {
+        await store.send(.whatsTheIssueAction(.categorySelected(categoryWithoutQuickFixes)))
+
+        await store.receive(\.attemptContactUs) {
             // Verify that the path now contains a contactUs state
-            $0.path.append(.contactUs(ContactFormFeature.State(fields: categoryWithoutQuickFixes.inputFields, category: categoryWithoutQuickFixes.label)))
+            $0.path[id: 0] = .contactUs(ContactFormFeature.State(fields: categoryWithoutQuickFixes.inputFields, category: categoryWithoutQuickFixes.label))
         }
 
         // Verify the path contains the expected contact form state
@@ -84,6 +86,30 @@ struct ReportBugFeatureTests {
         } else {
             #expect(Bool(false), "Expected contactUs path element")
         }
+    }
+
+    @Test("Navigate to contact form when credentialless")
+    func choosingCategoryWithQuickFixesWhenCredentiallessShouldShowAlert() async {
+        let store = TestStore(
+            initialState: ReportBugFeature.State(
+                path: StackState(),
+                whatsTheIssueState: .init(categories: delegate.model.categories)
+            ),
+            reducer: { ReportBugFeature() },
+            withDependencies: {
+                $0.isUserCredentialless = { true }
+            }
+        )
+
+        // Send categorySelected action for a category without quick fixes
+        await store.send(.whatsTheIssueAction(.categorySelected(categoryWithoutQuickFixes)))
+
+        await store.receive(\.attemptContactUs) {
+            $0.alert = ReportBugFeature().signInAlert
+        }
+
+        // nothing pushed onto stack
+        #expect(store.state.path.isEmpty)
     }
 
     @Test("Navigate to quick fixes, then to contact form")
@@ -132,6 +158,40 @@ struct ReportBugFeatureTests {
             #expect(contactFormState.fields.count == categoryWithQuickFixes.inputFields.count + 4)
         } else {
             #expect(Bool(false), "Expected second path element to be contactUs")
+        }
+    }
+
+    @Test("Navigate to quick fixes in credentialless, then attempt navigate to contact form")
+    func choosingCategoryWithQuickFixesWhenCredentiallessThenTryToContactForm() async {
+        let store = TestStore(
+            initialState: ReportBugFeature.State(
+                path: StackState(),
+                whatsTheIssueState: .init(categories: delegate.model.categories)
+            ),
+            reducer: { ReportBugFeature() },
+            withDependencies: {
+                $0.isUserCredentialless = { true }
+            }
+        )
+
+        // First, navigate to quick fixes
+        await store.send(.whatsTheIssueAction(.categorySelected(categoryWithQuickFixes))) {
+            $0.path.append(.quickFixes(QuickFixesFeature.State(category: categoryWithQuickFixes)))
+        }
+
+        // Verify quick fixes navigation
+        #expect(store.state.path.count == 1)
+        if case let .quickFixes(quickFixesState) = store.state.path.first {
+            #expect(quickFixesState.category.id == categoryWithQuickFixes.id)
+        } else {
+            #expect(Bool(false), "Expected quickFixes path element")
+        }
+
+        // Now test that we can't navigate to contact form from quick fixes
+
+        await store.send(.path(.element(id: 0, action: .quickFixes(.contactUs))))
+        await store.receive(\.attemptContactUs) {
+            $0.alert = ReportBugFeature().signInAlert
         }
     }
 

@@ -18,6 +18,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Strings
 import SwiftUI
 
 @Reducer
@@ -35,13 +36,28 @@ struct ReportBugFeature {
 
         var path = StackState<Path.State>()
         var whatsTheIssueState: WhatsTheIssueFeature.State
+
+        @Presents package var alert: AlertState<Action.Alert>?
     }
 
     @CasePathable
     enum Action {
         case path(StackActionOf<Path>)
         case whatsTheIssueAction(WhatsTheIssueFeature.Action)
+        case alert(PresentationAction<Alert>)
+        case attemptContactUs(Category)
+
+        @CasePathable
+        enum Alert {
+            case createAccount
+            case signIn
+            case cancel
+        }
     }
+
+    @Dependency(\.isUserCredentialless) private var isUserCredentialless
+    @Dependency(\.createAccount) private var createAccount
+    @Dependency(\.signIn) private var signIn
 
     var body: some ReducerOf<Self> {
         Scope(state: \.whatsTheIssueState, action: \.whatsTheIssueAction) {
@@ -53,10 +69,13 @@ struct ReportBugFeature {
             case let .whatsTheIssueAction(.categorySelected(category)):
                 if let suggestions = category.suggestions, !suggestions.isEmpty {
                     state.path.append(.quickFixes(QuickFixesFeature.State(category: category)))
-                } else {
-                    state.path.append(.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
+                    return .none
                 }
-                return .none
+                return .send(.attemptContactUs(category))
+
+            case let .path(.element(id: id, action: .quickFixes(.contactUs))):
+                guard let quickFixes = state.path[id: id]?.quickFixes else { return .none }
+                return .send(.attemptContactUs(quickFixes.category))
 
             case let .path(.element(id: _, action: .contactUs(.sendResponseReceived(response)))):
                 var error: String?
@@ -69,11 +88,46 @@ struct ReportBugFeature {
             case .path:
                 return .none
 
+            case let .attemptContactUs(category):
+                guard !isUserCredentialless() else {
+                    state.alert = signInAlert
+                    return .none
+                }
+                state.path.append(.contactUs(ContactFormFeature.State(fields: category.inputFields, category: category.label)))
+                return .none
+
+            case .alert(.presented(.createAccount)):
+                // trigger dependency to show create account in navigation service
+                return .run { _ in
+                    createAccount()
+                }
+
+            case .alert(.presented(.signIn)):
+                // trigger dependency to show sign in in navigation service
+                return .run { _ in
+                    signIn()
+                }
+
+            case .alert:
+                return .none
+
             case .whatsTheIssueAction:
                 return .none
             }
         }
         .forEach(\.path, action: \.path)
+        .ifLet(\.$alert, action: \.alert)
+    }
+
+    var signInAlert: AlertState<Action.Alert> {
+        AlertState(
+            title: { TextState(Localizable.createAccountReportAnIssueGuestMode) },
+            actions: {
+                ButtonState(action: .send(.createAccount), label: { TextState(Localizable.createAccountReportAnIssueGuestModeCreateAccountButton) })
+                ButtonState(action: .send(.signIn), label: { TextState(Localizable.createAccountReportAnIssueGuestModeSignInButton) })
+                ButtonState(role: .cancel, action: .send(.cancel), label: { TextState(Localizable.createAccountReportAnIssueGuestModeCancelButton) })
+            }
+        )
     }
 }
 

@@ -90,8 +90,8 @@
                         Spacer()
 
                         VStack {
-                            NavigationLink(
-                                state: ReportBugFeature.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
+                            Button(
+                                action: { store.send(.contactUs) },
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)

@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import BugReport
+import Dependencies
 import Foundation
 import ProtonCoreAPIClient
 import VPNAppCore
@@ -31,7 +32,12 @@ public protocol DynamicBugReportManagerFactory {
 }
 
 public class DynamicBugReportManager {
-    public var model: BugReportModel = .mock
+    public var model: BugReportModel
+    public var isUserCredentialless: Bool {
+        @Dependency(\.authKeychain) var authKeychain
+        return authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+    }
+
     public var prefilledEmail: String {
         get {
             propertiesManager.reportBugEmail ?? ""
@@ -46,6 +52,8 @@ public class DynamicBugReportManager {
     }
 
     public var closeBugReportHandler: (() -> Void)? // To not have a dependency on windowService
+    public var createAccountCallback: (() -> Void)? // To not have a depdendency on navigationService
+    public var signInCallback: (() -> Void)? // To not have a depdendency on navigationService
 
     private var api: ReportsApiService
     private var storage: DynamicBugReportStorage
@@ -96,7 +104,7 @@ public class DynamicBugReportManager {
         self.logContentProvider = logContentProvider
         self.logSources = logSources
 
-        self.model = storage.fetch() ?? getDefaultConfig()
+        self.model = storage.fetch() ?? Self.getDefaultConfig()
         setupRefresh()
     }
 
@@ -121,7 +129,7 @@ public class DynamicBugReportManager {
         }
     }
 
-    private func getDefaultConfig() -> BugReportModel {
+    private static func getDefaultConfig() -> BugReportModel {
         let bundle = Bundle.legacyCommonEvilDoNotUseThis
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
             log.error("BugReportConfig.json file not found. Returning empty config.", category: .app)
@@ -225,5 +233,13 @@ extension DynamicBugReportManager: BugReportDelegate {
             let available = await self.updateChecker.isUpdateAvailable()
             self.updateAvailabilityChanged?(available)
         }
+    }
+
+    public func createAccount() {
+        createAccountCallback?()
+    }
+
+    public func signIn() {
+        signInCallback?()
     }
 }

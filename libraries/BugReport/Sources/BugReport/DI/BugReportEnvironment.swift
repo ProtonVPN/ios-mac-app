@@ -102,7 +102,52 @@ private enum FinishBugReportKey: DependencyKey {
     }
 }
 
+// MARK: - Create account / sign in
+
+extension DependencyValues {
+    var createAccount: @Sendable () -> Void {
+        get { self[CreateAccountKey.self] }
+        set { self[CreateAccountKey.self] = newValue }
+    }
+}
+
+private enum CreateAccountKey: DependencyKey {
+    static let liveValue: @Sendable () -> Void = {
+        CurrentEnv.bugReportDelegate?.createAccount()
+    }
+}
+
+extension DependencyValues {
+    var signIn: @Sendable () -> Void {
+        get { self[SignInKey.self] }
+        set { self[SignInKey.self] = newValue }
+    }
+}
+
+private enum SignInKey: DependencyKey {
+    static let liveValue: @Sendable () -> Void = {
+        CurrentEnv.bugReportDelegate?.signIn()
+    }
+}
+
 // MARK: - Pre-filled values
+
+extension DependencyValues {
+    var isUserCredentialless: @Sendable () -> Bool {
+        get { self[IsUserCredentiallessKey.self] }
+        set { self[IsUserCredentiallessKey.self] = newValue }
+    }
+}
+
+private enum IsUserCredentiallessKey: DependencyKey {
+    static let liveValue: @Sendable () -> Bool = {
+        CurrentEnv.bugReportDelegate?.isUserCredentialless == true
+    }
+
+    static let testValue: @Sendable () -> Bool = {
+        CurrentEnv.bugReportDelegate?.isUserCredentialless == true
+    }
+}
 
 extension DependencyValues {
     var preFilledEmail: @Sendable () -> String? {

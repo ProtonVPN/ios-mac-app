@@ -203,6 +203,13 @@ final class NavigationService {
 
     func presentLogin(flow: LoginFlowType = .normal) {
         guard let tabBarController else { return }
+        guard Thread.isMainThread else {
+            // Switch to main queue if we're not already on it
+            DispatchQueue.main.async {
+                self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
+            }
+            return
+        }
         loginService.presentLoginFlow(over: tabBarController, flow: flow)
     }
 
@@ -212,6 +219,13 @@ final class NavigationService {
     }
 
     func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
+        guard Thread.isMainThread else {
+            // Switch to main queue if we're not already on it
+            DispatchQueue.main.async {
+                self.loginService.presentSignUpFlow(over: uiViewController, flow: flow)
+            }
+            return
+        }
         loginService.presentSignUpFlow(over: uiViewController, flow: flow)
     }
 
@@ -476,9 +490,21 @@ extension NavigationService: SettingsService {
     func presentReportBug() {
         let manager = factory.makeDynamicBugReportManager()
         if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: Colors()) {
-            manager.closeBugReportHandler = {
-                self.windowService.dismissModal {}
+            manager.closeBugReportHandler = { [weak self] in
+                self?.windowService.dismissModal {}
             }
+            manager.createAccountCallback = { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.presentSignUp()
+                }
+            }
+
+            manager.signInCallback = { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.presentLogin(flow: .credentiallessUpsell)
+                }
+            }
+
             windowService.present(modal: viewController)
             return
         }

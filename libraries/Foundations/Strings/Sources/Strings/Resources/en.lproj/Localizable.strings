@@ -2920,6 +2920,18 @@
 /* iOS: Alert message after account creation in guest mode */
 "_account_created_title" = "Account created";
 
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Advanced VPN customization";
 

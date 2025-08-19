@@ -29,9 +29,20 @@ struct QuickFixesFeature {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case contactUs
     }
 
     var body: some ReducerOf<Self> {
         BindingReducer()
+
+        Reduce { _, action in
+            switch action {
+            case .contactUs:
+                .none
+
+            case .binding:
+                .none
+            }
+        }
     }
 }
