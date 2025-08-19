@@ -622,8 +622,11 @@ extension NavigationService: LoginServiceDelegate {
 
     @MainActor
     func userDidSignUp() {
-        onboardingService.showOnboarding()
+        onboardingService.showOnboarding(overTabBarController: tabBarController)
         propertiesManager.isOnboardingInProgress = true
+        // in case we're transitioning from guest -> registered improve UX by selecting first tab
+        // in normal flow (start -> sign up) tabbarcontroller is nil
+        switchTab(index: 0)
         Task {
             let service = await factory.makeTelemetryService()
             try await service.onboardingEvent(.onboardingStart)
