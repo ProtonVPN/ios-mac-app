@@ -203,14 +203,9 @@ final class NavigationService {
 
     func presentLogin(flow: LoginFlowType = .normal) {
         guard let tabBarController else { return }
-        guard Thread.isMainThread else {
-            // Switch to main queue if we're not already on it
-            DispatchQueue.main.async {
-                self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
-            }
-            return
+        executeOnUIThread {
+            self.loginService.presentLoginFlow(over: tabBarController, flow: flow)
         }
-        loginService.presentLoginFlow(over: tabBarController, flow: flow)
     }
 
     func presentSignUp() {
@@ -219,14 +214,9 @@ final class NavigationService {
     }
 
     func presentSignUp(over uiViewController: UIViewController, flow: LoginFlowType = .normal) {
-        guard Thread.isMainThread else {
-            // Switch to main queue if we're not already on it
-            DispatchQueue.main.async {
-                self.loginService.presentSignUpFlow(over: uiViewController, flow: flow)
-            }
-            return
+        executeOnUIThread {
+            self.loginService.presentSignUpFlow(over: uiViewController, flow: flow)
         }
-        loginService.presentSignUpFlow(over: uiViewController, flow: flow)
     }
 
     func switchTab(index: Int) {
