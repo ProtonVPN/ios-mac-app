@@ -27,7 +27,6 @@ import Strings
 import UIKit
 
 final class TroubleshootViewController: UIViewController {
-    // Views
     private var headerView: UIView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .secondaryBackgroundColor()
@@ -51,26 +50,25 @@ final class TroubleshootViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.backgroundColor = .backgroundColor()
         $0.rowHeight = UITableView.automaticDimension
-        $0.estimatedRowHeight = 44.0
-        $0.sectionHeaderHeight = 28
-        $0.sectionFooterHeight = 28
+        $0.estimatedRowHeight = 80.0
         $0.alwaysBounceVertical = true
         $0.register(TroubleshootingCell.self, forCellReuseIdentifier: TroubleshootingCell.cellIdentifier)
         $0.register(TroubleshootingSwitchCell.self, forCellReuseIdentifier: TroubleshootingSwitchCell.switchCellId)
         $0.dataSource = self
     }
 
-    // Data
     public var viewModel: TroubleshootViewModel
 
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    // MARK: - Init
 
     init(_ viewModel: TroubleshootViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {

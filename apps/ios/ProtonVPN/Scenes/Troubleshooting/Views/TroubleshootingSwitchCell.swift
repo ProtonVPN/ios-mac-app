@@ -23,22 +23,20 @@
 import UIKit
 
 final class TroubleshootingSwitchCell: TroubleshootingCell {
-    // MARK: - Static Properties
-
     static var switchCellId: String { String(describing: self) }
 
-    // Views
     private lazy var toggleSwitch: UISwitch = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
-    // MARK: - Initialization
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupSwitchView()
-        setupSwitchConstraints()
     }
 
     @available(*, unavailable)
@@ -49,19 +47,7 @@ final class TroubleshootingSwitchCell: TroubleshootingCell {
     // MARK: - Setup
 
     private func setupSwitchView() {
-        contentView.addSubview(toggleSwitch)
-    }
-
-    private func setupSwitchConstraints() {
-        NSLayoutConstraint.activate([
-            // Toggle switch constraints
-            toggleSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            toggleSwitch.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 8),
-
-            // Update description label trailing constraint to accommodate switch
-            descriptionLabel.trailingAnchor.constraint(equalTo: toggleSwitch.leadingAnchor, constant: -8),
-        ])
+        mainStackView.addArrangedSubview(toggleSwitch)
     }
 
     // MARK: - Public Properties
@@ -82,5 +68,9 @@ final class TroubleshootingSwitchCell: TroubleshootingCell {
     @objc
     private func switchChanged() {
         isOnChanged?(toggleSwitch.isOn)
+
+        // Force layout update to ensure proper rendering
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 }

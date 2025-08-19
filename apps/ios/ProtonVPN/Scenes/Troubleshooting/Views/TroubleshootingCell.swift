@@ -24,12 +24,9 @@ import Ergonomics
 import UIKit
 
 class TroubleshootingCell: UITableViewCell {
-    // MARK: - Static Properties
-
     static var cellIdentifier: String { String(describing: self) }
 
-    // Views
-    var titleLabel: UILabel = .init().with {
+    private var titleLabel: UILabel = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.numberOfLines = 0
         $0.lineBreakMode = .byTruncatingTail
@@ -37,22 +34,41 @@ class TroubleshootingCell: UITableViewCell {
         $0.font = UIFont.boldSystemFont(ofSize: 17)
     }
 
-    var descriptionLabel: UITextView = .init().with {
+    private var descriptionLabel: UITextView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.isScrollEnabled = false // Enables auto-height
         $0.isUserInteractionEnabled = true
         $0.isEditable = false
         $0.isSelectable = true
         $0.textContainer.lineFragmentPadding = 0
-//        $0.backgroundColor = backgroundColor
+        $0.textContainerInset = .zero
         $0.tintColor = .brandColor()
         $0.linkTextAttributes = [
             .foregroundColor: UIColor.brandColor(),
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
+        $0.backgroundColor = .clear
     }
 
-    // MARK: - Initialization
+    private var textsStackView: UIStackView = .init().with {
+        $0.axis = .vertical
+        $0.alignment = .leading
+        $0.spacing = 8
+        $0.distribution = .fill
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+    }
+
+    var mainStackView: UIStackView = .init().with {
+        $0.axis = .horizontal
+        $0.alignment = .center
+        $0.spacing = 16
+        $0.distribution = .fill
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    // MARK: - Init
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,24 +88,17 @@ class TroubleshootingCell: UITableViewCell {
         backgroundColor = .backgroundColor()
         selectionStyle = .none
 
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(descriptionLabel)
+        [titleLabel, descriptionLabel].forEach(textsStackView.addArrangedSubview)
+        [textsStackView].forEach(mainStackView.addArrangedSubview)
+        contentView.addSubview(mainStackView)
     }
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // Title label constraints
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            titleLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 16),
-
-            // Description label constraints
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
-            descriptionLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 30),
+            mainStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            mainStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            mainStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            mainStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
         ])
     }
 
@@ -118,6 +127,10 @@ class TroubleshootingCell: UITableViewCell {
             string.addTextAttributes(withColor: .weakTextColor(), font: UIFont.systemFont(ofSize: 17), alignment: .left)
             descriptionLabel.attributedText = string
             descriptionLabel.sizeToFit()
+
+            // Force layout update to ensure proper text rendering
+            setNeedsLayout()
+            layoutIfNeeded()
         }
     }
 }
