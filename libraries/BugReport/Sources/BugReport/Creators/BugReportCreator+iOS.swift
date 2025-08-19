@@ -34,16 +34,18 @@
 
             delegate.updateAvailabilityChanged = { available in
                 withAnimation {
-                    CurrentEnv.updateViewModel.updateIsAvailable = available
+                    DispatchQueue.main.async {
+                        CurrentEnv.updateViewModel.updateIsAvailable = available
+                    }
                 }
             }
             delegate.checkUpdateAvailability()
 
-            let reducer = ReportBugFeatureiOS()
+            let reducer = ReportBugFeature()
             #if DEBUG
                 ._printChanges() // Only print changes while debugging
             #endif
-            let state = ReportBugFeatureiOS.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
+            let state = ReportBugFeature.State(whatsTheIssueState: WhatsTheIssueFeature.State(categories: delegate.model.categories))
             let store = Store(
                 initialState: state,
                 reducer: { reducer }

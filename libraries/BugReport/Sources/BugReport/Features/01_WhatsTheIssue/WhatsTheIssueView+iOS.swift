@@ -21,23 +21,17 @@
     import Foundation
     import Strings
     import SwiftUI
-    import SwiftUINavigation
 
     public struct WhatsTheIssueView: View {
         @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-        @Environment(\.colors) var colors: Colors
+
+        @Environment(\.colors) private var colors: Colors
 
         public var body: some View {
             ZStack {
                 colors.background.ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 0) {
-                    StepProgress(step: 1, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
-                        .padding(.bottom)
-
-                    UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                     Text(Localizable.br1Title)
                         .font(.title2)
                         .fontWeight(.bold)
@@ -56,55 +50,27 @@
                         }
                         .listStyle(.plain)
                         .foregroundColor(colors.textPrimary)
-                        // NavigationLink inside the list
-                        .background(nextView())
                     }
                 }
                 .navigationTitle(Text(Localizable.brWindowTitle))
                 .navigationBarTitleDisplayMode(.inline)
             }
         }
-
-        private func nextView() -> some View {
-            NavigationLink(
-                item: $store.route,
-                onNavigate: { _ in
-                    print("navigate")
-                },
-                destination: { _ in
-                    let childStore = store.route
-                    switch childStore {
-                    case .quickFixes:
-                        QuickFixesView(store: store.scope(state: \.route?.quickFixes, action: \.route.quickFixes)!)
-
-                    case .contactForm:
-                        ContactFormView(store: store.scope(state: \.route?.contactForm, action: \.route.contactForm)!)
-
-                    case .none:
-                        EmptyView()
-                    }
-                },
-                label: { EmptyView() }
-            )
-        }
     }
 
     // MARK: - Preview
 
-    struct WhatsTheIssueView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
-
-            return Group {
-                WhatsTheIssueView(store: Store(
-                    initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                    reducer: { WhatsTheIssueFeature() }
-                )
-                )
-            }
+        return Group {
+            WhatsTheIssueView(store: Store(
+                initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+                reducer: { WhatsTheIssueFeature() }
+            )
+            )
         }
     }
 

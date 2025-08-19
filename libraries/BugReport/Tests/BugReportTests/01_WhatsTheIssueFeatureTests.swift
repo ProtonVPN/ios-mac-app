@@ -18,10 +18,10 @@
 
 @testable import BugReport
 import ComposableArchitecture
-import XCTest
+import Testing
 
 @MainActor
-final class WhatsTheIssueFeatureTests: XCTestCase {
+struct WhatsTheIssueFeatureTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithQuickFixes: BugReport.Category {
@@ -32,36 +32,25 @@ final class WhatsTheIssueFeatureTests: XCTestCase {
         delegate.model.categories.last!
     }
 
-    // This depends on categories preset in BugReportModel.mock. First one has to have quick fixes.
-    func testCategorySelectionShowsQuickFixesIfPossible() async throws {
+    @Test
+    func categorySelectionShowsQuickFixesIfPossible() async {
         let store = TestStore(
             initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
             reducer: { WhatsTheIssueFeature() }
         )
 
         let category = categoryWithQuickFixes
-        await store.send(.categorySelected(category), assert: { resultState in
-            resultState.route = .quickFixes(QuickFixesFeature.State(category: category))
-        })
-
-        await store.send(.quickFixesDeselected, assert: { resultState in
-            resultState.route = nil
-        })
+        await store.send(.categorySelected(category))
     }
 
-    // This depends on categories preset in BugReportModel.mock. Last one has to have no quick fixes.
-    func testCategorySelectionShowsFormIfNoQuickFixesProvided() async throws {
+    @Test
+    func categorySelectionShowsFormIfNoQuickFixesProvided() async {
         let store = TestStore(
             initialState: WhatsTheIssueFeature.State(categories: delegate.model.categories),
             reducer: { WhatsTheIssueFeature() }
         )
 
         let category = categoryWithoutQuickFixes
-        await store.send(.categorySelected(category), assert: { resultState in
-            resultState.route = .contactForm(ContactFormFeature.State(fields: category.inputFields, category: category.label))
-        })
-        await store.send(.contactFormDeselected, assert: { resultState in
-            resultState.route = nil
-        })
+        await store.send(.categorySelected(category))
     }
 }

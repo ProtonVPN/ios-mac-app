@@ -18,17 +18,18 @@
 
 @testable import BugReport
 import ComposableArchitecture
-import XCTest
+import Testing
 
 @MainActor
-final class ContactFormTests: XCTestCase {
+struct ContactFormTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithoutQuickFixes: BugReport.Category {
         delegate.model.categories.last!
     }
 
-    func testFormAcceptsDataFromUser() async throws {
+    @Test
+    func formAcceptsDataFromUser() async {
         // Short String
         let shortStringField = InputField(
             label: "Short string field",
@@ -65,32 +66,33 @@ final class ContactFormTests: XCTestCase {
         )
 
         // Short String
-        await store.send(.fieldStringValueChanged(shortStringFormField, "New value"), assert: { resultState in
+        await store.send(.fieldStringValueChanged(shortStringFormField, "New value")) { resultState in
             resultState.fields[id: shortStringFormField.id]?.stringValue = "New value"
-        })
+        }
 
         // Long String
-        await store.send(.fieldStringValueChanged(longStringFormField, "New  very long value"), assert: { resultState in
+        await store.send(.fieldStringValueChanged(longStringFormField, "New  very long value")) { resultState in
             resultState.fields[id: longStringFormField.id]?.stringValue = "New  very long value"
-        })
+        }
 
         // Boolean
-        await store.send(.fieldBoolValueChanged(boolFormField, true), assert: { resultState in
+        await store.send(.fieldBoolValueChanged(boolFormField, true)) { resultState in
             resultState.fields[id: boolFormField.id]?.boolValue = true
-        })
-        await store.send(.fieldBoolValueChanged(boolFormField, false), assert: { resultState in
+        }
+        await store.send(.fieldBoolValueChanged(boolFormField, false)) { resultState in
             resultState.fields[id: boolFormField.id]?.boolValue = false
-        })
+        }
     }
 
-    func testFormIsSent() async throws {
+    @Test
+    func formIsSent() async {
         let store = TestStore(
             // ContactFormFeature.State initialiser automatically adds few fields, like email, which is mandatory
             initialState: ContactFormFeature.State(fields: [], category: "Category"),
             reducer: { ContactFormFeature() },
             withDependencies: {
                 $0.sendBugReport = { bugReportResult async throws in
-                    XCTAssertEqual(bugReportResult.email, "email@hotmail.com")
+                    #expect(bugReportResult.email == "email@hotmail.com")
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
                     return true
                 }
@@ -98,30 +100,27 @@ final class ContactFormTests: XCTestCase {
         )
 
         // Mandatory field is not filled
-        XCTAssertFalse(store.state.canBeSent)
+        #expect(store.state.canBeSent == false)
 
         let emailField = store.state.fields.first!
-        await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com"), assert: { resultState in
+        await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com")) { resultState in
             resultState.fields[id: emailField.id]?.stringValue = "email@hotmail.com"
-        })
+        }
 
         // Mandatory field is filled
-        XCTAssertTrue(store.state.canBeSent)
+        #expect(store.state.canBeSent)
 
         // Send bug report
-        await store.send(.send, assert: { resultState in
+        await store.send(.send) { resultState in
             resultState.isSending = true // UI shows that somethings happening
-        })
-        await store.receive(.sendResponseReceived(TaskResult { true }), assert: { resultState in
+        }
+        await store.receive(\.sendResponseReceived.success) { resultState in
             resultState.isSending = false
-            resultState.resultState = BugReportResultFeature.State(error: nil)
-        })
-        await store.send(.resultViewClosed, assert: { resultState in
-            resultState.resultState = nil
-        })
+        }
     }
 
-    func testErrorIsPresented() async throws {
+    @Test
+    func errorIsPresented() async {
         let errorThrown = BugReportEnvironmentError.delegateNotSet
 
         let store = TestStore(
@@ -130,7 +129,7 @@ final class ContactFormTests: XCTestCase {
             reducer: { ContactFormFeature() },
             withDependencies: {
                 $0.sendBugReport = { bugReportResult async throws in
-                    XCTAssertEqual(bugReportResult.email, "email@hotmail.com")
+                    #expect(bugReportResult.email == "email@hotmail.com")
                     try await Task.sleep(nanoseconds: UInt64(1)) // Let's make this truly async
                     throw errorThrown
                 }
@@ -139,27 +138,21 @@ final class ContactFormTests: XCTestCase {
         )
 
         // Mandatory field is not filled
-        XCTAssertFalse(store.state.canBeSent)
+        #expect(store.state.canBeSent == false)
 
         let emailField = store.state.fields.first!
-        await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com"), assert: { resultState in
+        await store.send(.fieldStringValueChanged(emailField, "email@hotmail.com")) { resultState in
             resultState.fields[id: emailField.id]?.stringValue = "email@hotmail.com"
-        })
+        }
 
         // Mandatory field is filled
-        XCTAssertTrue(store.state.canBeSent)
+        #expect(store.state.canBeSent)
 
-        await store.send(.send, assert: { resultState in
+        await store.send(.send) { resultState in
             resultState.isSending = true // UI shows that somethings happening
-        })
-        await store.receive(.sendResponseReceived(TaskResult.failure(errorThrown)), assert: { resultState in
+        }
+        await store.receive(\.sendResponseReceived.failure) { resultState in
             resultState.isSending = false
-            resultState.resultState = BugReportResultFeature.State(error: errorThrown.localizedDescription)
-        })
-
-        // Pressing Retry in result window moves user back to form
-        await store.send(.resultViewAction(.retry), assert: { resultState in
-            resultState.resultState = nil
-        })
+        }
     }
 }

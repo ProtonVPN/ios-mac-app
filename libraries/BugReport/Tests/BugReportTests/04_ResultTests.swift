@@ -18,43 +18,56 @@
 
 @testable import BugReport
 import ComposableArchitecture
-import XCTest
+import Testing
 
+@Suite
 @MainActor
-final class ResultTests: XCTestCase {
-    func testPressingFinishCallsTheDelegate() async throws {
-        let expectationDelegateIsCalled = XCTestExpectation(description: "Delegate has to be called")
+struct ResultTests {
+    @Test("Pressing finish calls the delegate")
+    func pressingFinishCallsTheDelegate() async throws {
+        var delegateCalled = false
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
             reducer: { BugReportResultFeature() },
             withDependencies: {
                 $0.finishBugReport = {
-                    expectationDelegateIsCalled.fulfill()
+                    Task { @MainActor in
+                        delegateCalled = true
+                    }
                 }
             }
         )
 
         await store.send(.finish)
 
-        await fulfillment(of: [expectationDelegateIsCalled], timeout: 0.2)
+        // Give the async operation a moment to complete
+        try await Task.sleep(for: .milliseconds(10))
+
+        #expect(delegateCalled == true)
     }
 
-    func testPressingTroubleshootingCallsTheDelegate() async throws {
-        let expectationDelegateIsCalled = XCTestExpectation(description: "Delegate has to be called")
+    @Test("Pressing troubleshooting calls the delegate")
+    func pressingTroubleshootingCallsTheDelegate() async throws {
+        var delegateCalled = false
 
         let store = TestStore(
             initialState: BugReportResultFeature.State(error: nil),
             reducer: { BugReportResultFeature() },
             withDependencies: {
                 $0.troubleshoot = {
-                    expectationDelegateIsCalled.fulfill()
+                    Task { @MainActor in
+                        delegateCalled = true
+                    }
                 }
             }
         )
 
         await store.send(.troubleshoot)
 
-        await fulfillment(of: [expectationDelegateIsCalled], timeout: 0.2)
+        // Give the async operation a moment to complete
+        try await Task.sleep(for: .milliseconds(10))
+
+        #expect(delegateCalled == true)
     }
 }

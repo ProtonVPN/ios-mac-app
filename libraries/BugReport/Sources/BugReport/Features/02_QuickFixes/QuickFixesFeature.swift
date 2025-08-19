@@ -21,49 +21,17 @@ import Foundation
 import SwiftUI
 
 @Reducer
-struct QuickFixesFeature: Reducer {
+struct QuickFixesFeature {
     @ObservableState
     struct State: Equatable {
         var category: Category
-        var contactFormState: ContactFormFeature.State?
-
-        init(category: Category, contactFormState: ContactFormFeature.State? = nil) {
-            self.category = category
-            self.contactFormState = contactFormState
-        }
     }
 
-    enum Action: BindableAction, Equatable {
+    enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case next
-        case contactFormAction(ContactFormFeature.Action)
-        case contactFormDeselected // Used only on mac
     }
 
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce { state, action in
-            switch action {
-            case .next:
-                state.contactFormState = ContactFormFeature.State(fields: state.category.inputFields, category: state.category.label)
-                return .none
-
-            // 03. Contact form
-
-            case .contactFormDeselected:
-                state.contactFormState = nil
-                return .none
-
-            case .contactFormAction:
-                return .none
-
-            case .binding:
-                // Everything's done in BindingReducer()
-                return .none
-            }
-        }
-        .ifLet(\.contactFormState, action: /Action.contactFormAction) {
-            ContactFormFeature()
-        }
     }
 }

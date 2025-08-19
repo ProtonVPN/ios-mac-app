@@ -20,83 +20,27 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct WhatsTheIssueFeature: Reducer {
+struct WhatsTheIssueFeature {
     @ObservableState
     struct State: Equatable {
         var categories: [Category]
-        var route: Route.State?
-
-        init(categories: [Category], route: Route.State? = nil) {
-            self.categories = categories
-            self.route = route
-        }
     }
 
-    enum Action: BindableAction, Equatable {
+    enum Action: BindableAction {
         case binding(BindingAction<State>)
-
         case categorySelected(Category)
-        case route(Route.Action)
-
-        case quickFixesDeselected
-        case contactFormDeselected
-    }
-
-    @Reducer
-    struct Route {
-        @ObservableState
-        enum State: Equatable {
-            case quickFixes(QuickFixesFeature.State)
-            case contactForm(ContactFormFeature.State)
-        }
-
-        enum Action: Equatable {
-            case quickFixes(QuickFixesFeature.Action)
-            case contactForm(ContactFormFeature.Action)
-        }
     }
 
     var body: some ReducerOf<Self> {
         BindingReducer()
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
-            case let .categorySelected(category):
-                if let suggestions = category.suggestions, !suggestions.isEmpty {
-                    state.route = .quickFixes(QuickFixesFeature.State(category: category))
-                } else {
-                    state.route = .contactForm(ContactFormFeature.State(fields: category.inputFields, category: category.label))
-                }
-                return .none
-
-            case .route:
-                return .none
-
-            // 02. Quick fixes
-
-            case .quickFixesDeselected:
-                state.route = nil
-                return .none
-
-            // 03. Contact form
-
-            case .contactFormDeselected:
-                state.route = nil
-                return .none
-
-            // Other
-
             case .binding:
-                // Everything's done in BindingReducer()
-                return .none
+                .none
+
+            case .categorySelected:
+                .none
             }
         }
-        .ifLet(\.route, action: /Action.route, then: {
-            Scope(state: /Route.State.quickFixes, action: /Route.Action.quickFixes, child: {
-                QuickFixesFeature()
-            })
-            Scope(state: /Route.State.contactForm, action: /Route.Action.contactForm, child: {
-                ContactFormFeature()
-            })
-        })
     }
 }

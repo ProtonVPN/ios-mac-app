@@ -41,6 +41,7 @@ struct StepProgress: View {
                     Rectangle()
                         .fill(colorMain)
                         .frame(maxWidth: geo.size.width * CGFloat(step) / CGFloat(steps))
+                        .animation(.easeInOut(duration: 0.3), value: step)
                 }
             }
             .frame(height: barHeight)
@@ -50,6 +51,7 @@ struct StepProgress: View {
                 .font(font)
                 .foregroundColor(colorText)
                 .padding(.horizontal)
+                .animation(.easeInOut(duration: 0.3), value: step)
         }
         .padding(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
     }

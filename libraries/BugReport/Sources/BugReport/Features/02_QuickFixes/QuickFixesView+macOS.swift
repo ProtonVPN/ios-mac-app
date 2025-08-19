@@ -27,22 +27,25 @@
 
         let assetsBundle = CurrentEnv.assetsBundle
         @Environment(\.colors) var colors: Colors
+        @Environment(\.dismiss) private var dismiss
 
         var body: some View {
             WithPerceptionTracking {
-                VStack(alignment: .center) {
-                    VStack(alignment: .center, spacing: 8) {
-                        Text(Localizable.br2Title)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(Localizable.br2Subtitle)
-                            .font(.subheadline)
-                    }
-                    .padding(.horizontal)
+                ZStack {
+                    colors.background.ignoresSafeArea()
 
-                    VStack {
+                    VStack(alignment: .center) {
+                        VStack(alignment: .center, spacing: 8) {
+                            Text(Localizable.br2Title)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Text(Localizable.br2Subtitle)
+                                .font(.subheadline)
+                        }
+                        .padding(.horizontal)
+
                         if let suggestions = store.category.suggestions {
-                            ForEach(suggestions) { suggestion in
+                            List(suggestions) { suggestion in
                                 VStack(alignment: .leading) {
                                     if let link = suggestion.link, let url = URL(string: link) {
                                         Link(destination: url) {
@@ -59,7 +62,6 @@
                                                     .renderingMode(.template)
                                                     .foregroundColor(colors.externalLinkIcon)
                                             }
-                                            .frame(width: 310) // Magic number that that prevents button to be too wide. Should be changed in case we change the width of ReportBug window.
                                         }
                                         .padding(.horizontal)
                                         .onHover { inside in
@@ -82,47 +84,62 @@
                                         }
                                         .padding(.horizontal)
                                     }
-                                    Divider().hidden() // Makes view fill whole width
                                 }
+                                .listRowBackground(colors.background)
+                                .listRowSeparator(.hidden)
                             }
+                            .scrollContentBackground(.hidden)
+                            .padding(.top, 32)
+                            .padding(.bottom, 16)
                         }
+
+                        Text(Localizable.br2Footer)
+                            .foregroundColor(colors.textSecondary)
+                            .font(.footnote)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.bottom, 32)
+
+                        NavigationLink(
+                            state: ReportBugFeature.Path.State
+                                .contactUs(
+                                    ContactFormFeature
+                                        .State(fields: store.category.inputFields, category: store.category.label)
+                                ),
+                            label: {
+                                Text(Localizable.br2ButtonNext)
+                                    .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
+                                    .background(colors.interactive)
+                                    .foregroundColor(.white)
+                                    .cornerRadius(8)
+                            }
+                        )
+                        .buttonStyle(PlainButtonStyle())
+                        .padding([.horizontal, .bottom], 16)
                     }
-                    .padding(.top, 32)
-                    .padding(.bottom, 16)
-
-                    Text(Localizable.br2Footer)
-                        .foregroundColor(colors.textSecondary)
-                        .font(.footnote)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.bottom, 32)
-
-                    Button(action: {
-                        store.send(.next, animation: .default)
-                    }, label: {
-                        Text(Localizable.br2ButtonNext)
-                    })
-                    .buttonStyle(PrimaryButtonStyle())
-                    .padding(.horizontal)
                 }
                 .foregroundColor(colors.textPrimary)
-                .background(colors.background)
+                .navigationBarBackButtonHidden(true)
+                .toolbar {
+                    ToolbarItem(placement: .navigation) {
+                        Button(action: {
+                            dismiss()
+                        }, label: {
+                            Image(systemName: "chevron.left").foregroundColor(colors.textPrimary)
+                        })
+                    }
+                }
             }
         }
     }
 
     // MARK: - Preview
 
-    struct QuickFixesView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-
-            return Group {
-                QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]), reducer: { QuickFixesFeature() })
-                )
-            }
-        }
+        return QuickFixesView(store: Store(initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]), reducer: { QuickFixesFeature() })
+        )
     }
 
 #endif

@@ -25,10 +25,8 @@
     public struct QuickFixesView: View {
         @Perception.Bindable var store: StoreOf<QuickFixesFeature>
 
-        @StateObject var updateViewModel: UpdateViewModel = CurrentEnv.updateViewModel
-
         let assetsBundle = CurrentEnv.assetsBundle
-        @Environment(\.colors) var colors: Colors
+        @Environment(\.colors) private var colors: Colors
         @Environment(\.dismiss) private var dismiss
 
         public var body: some View {
@@ -37,11 +35,6 @@
                     colors.background.ignoresSafeArea()
 
                     VStack(alignment: .leading, spacing: 0) {
-                        StepProgress(step: 2, steps: 3, colorMain: colors.interactive, colorText: colors.textAccent, colorSecondary: colors.interactiveActive)
-                            .padding(.bottom)
-
-                        UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
-
                         VStack(alignment: .leading, spacing: 8) {
                             Text(Localizable.br2Title)
                                 .font(.title2)
@@ -98,22 +91,7 @@
 
                         VStack {
                             NavigationLink(
-                                item: $store.contactFormState,
-                                onNavigate: { active in
-                                    if active {
-                                        Task {
-                                            await store.send(.next)
-                                        }
-                                    }
-                                },
-                                destination: { _ in
-                                    if let childStore = store.scope(
-                                        state: \.contactFormState,
-                                        action: \.contactFormAction
-                                    ) {
-                                        ContactFormView(store: childStore)
-                                    }
-                                },
+                                state: ReportBugFeature.Path.State.contactUs(ContactFormFeature.State(fields: store.category.inputFields, category: store.category.label)),
                                 label: {
                                     Text(Localizable.br2ButtonNext)
                                         .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
@@ -148,20 +126,17 @@
 
     // MARK: - Preview
 
-    struct QuickFixesView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
+        CurrentEnv.updateViewModel.updateIsAvailable = true
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-            CurrentEnv.updateViewModel.updateIsAvailable = true
-
-            return Group {
-                QuickFixesView(store: Store(
-                    initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
-                    reducer: { QuickFixesFeature() }
-                )
-                )
-            }
+        return Group {
+            QuickFixesView(store: Store(
+                initialState: QuickFixesFeature.State(category: bugReport.model.categories[0]),
+                reducer: { QuickFixesFeature() }
+            )
+            )
         }
     }
 

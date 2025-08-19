@@ -27,9 +27,8 @@ struct BugReportResultFeature {
         var error: String?
     }
 
-    enum Action: Equatable {
+    enum Action {
         case finish
-        case retry
         case troubleshoot
     }
 
@@ -41,10 +40,6 @@ struct BugReportResultFeature {
                     @Dependency(\.finishBugReport) var finish
                     finish()
                 }
-
-            case .retry:
-                // Retry is done on the parent view
-                .none
 
             case .troubleshoot:
                 .run(priority: .userInitiated) { _ in

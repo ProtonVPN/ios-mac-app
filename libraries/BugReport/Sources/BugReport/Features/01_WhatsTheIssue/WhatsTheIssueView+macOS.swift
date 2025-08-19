@@ -22,60 +22,57 @@
     import Strings
     import SwiftUI
 
-    // Mac view is a little bit different. Plus it doesn't have Navigation links and all
-    // navigation is handled by root view.
-
     public struct WhatsTheIssueView: View {
-        let store: StoreOf<WhatsTheIssueFeature>
+        @Perception.Bindable var store: StoreOf<WhatsTheIssueFeature>
         @Environment(\.colors) var colors: Colors
 
         public var body: some View {
-            VStack(alignment: .center) {
-                Text(Localizable.br1Title)
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .foregroundColor(colors.textPrimary)
-                    .padding(.horizontal)
+            ZStack {
+                colors.background.ignoresSafeArea()
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .center) {
+                    Text(Localizable.br1Title)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(colors.textPrimary)
+                        .padding(.horizontal)
+
                     WithPerceptionTracking {
-                        ForEach(store.categories) { category in
-                            Button(category.label, action: { store.send(.categorySelected(category), animation: .default) })
-                                .onHover { inside in
-                                    if inside {
-                                        NSCursor.pointingHand.push()
-                                    } else {
-                                        NSCursor.pop()
-                                    }
+                        List(store.state.categories) { category in
+                            Button(category.label, action: {
+                                store.send(.categorySelected(category), animation: .default)
+                            })
+                            .onHover { inside in
+                                if inside {
+                                    NSCursor.pointingHand.push()
+                                } else {
+                                    NSCursor.pop()
                                 }
+                            }
+                            .buttonStyle(CategoryButtonStyle())
+                            .listRowBackground(colors.background)
+                            .listRowSeparator(.hidden)
                         }
+                        .listStyle(.plain)
                     }
+                    .padding(.top, 32)
                 }
-                .buttonStyle(CategoryButtonStyle())
-                .listStyle(.plain)
-                .padding(.top, 32)
+                .navigationTitle(Text(Localizable.brWindowTitle))
             }
-            .background(colors.background)
         }
     }
 
     // MARK: - Preview
 
-    struct WhatsTheIssueView_Previews: PreviewProvider {
-        private static let bugReport = MockBugReportDelegate(model: .mock)
+    #Preview {
+        let bugReport = MockBugReportDelegate(model: .mock)
+        CurrentEnv.bugReportDelegate = bugReport
 
-        static var previews: some View {
-            CurrentEnv.bugReportDelegate = bugReport
-
-            return Group {
-                WhatsTheIssueView(store: Store(
-                    initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
-                    reducer: { WhatsTheIssueFeature() }
-                )
-                )
-                .frame(width: 400.0)
-            }
-        }
+        return WhatsTheIssueView(store: Store(
+            initialState: WhatsTheIssueFeature.State(categories: bugReport.model.categories),
+            reducer: { WhatsTheIssueFeature() }
+        )
+        ).frame(width: 400.0)
     }
 
 #endif

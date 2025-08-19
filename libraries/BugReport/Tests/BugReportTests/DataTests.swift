@@ -17,22 +17,40 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 @testable import BugReport
-import XCTest
+import Foundation
+import Testing
 
-final class DataTests: XCTestCase {
-    func testJSONDecodes() throws {
+@Suite
+struct DataTests {
+    @Test("JSON decodes correctly")
+    func jSONDecodes() throws {
         let bundle = Bundle.module
         guard let testFile1 = bundle.url(forResource: "example1", withExtension: "json") else {
-            XCTFail("example1.json file not found")
-            return
+            throw GenericError("example1.json file not found")
         }
 
-        let data = try! Data(contentsOf: testFile1)
+        let data = try Data(contentsOf: testFile1)
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         let model = try decoder.decode(BugReportModel.self, from: data)
 
-        XCTAssertEqual(model.categories.first?.label, "Browsing speed_")
-        XCTAssertEqual(model.categories.first?.suggestions?.last?.text, "Try a different server. Servers in nearby countries often have faster connection speeds.")
+        #expect(model.categories.first?.label == "Browsing speed_")
+        #expect(model.categories.first?.suggestions?.last?.text == "Try a different server. Servers in nearby countries often have faster connection speeds.")
     }
 }
+
+public struct GenericError: Error {
+    public let message: String
+
+    public init(message: String) {
+        self.message = message
+    }
+}
+
+extension GenericError: ExpressibleByStringLiteral {
+    public init(stringLiteral value: String) {
+        self = GenericError(message: value)
+    }
+}
+
+extension GenericError: ExpressibleByStringInterpolation {}

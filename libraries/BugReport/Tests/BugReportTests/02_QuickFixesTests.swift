@@ -18,32 +18,29 @@
 
 @testable import BugReport
 import ComposableArchitecture
-import XCTest
+import Testing
 
 @MainActor
-final class QuickFixesTests: XCTestCase {
+struct QuickFixesTests {
     private let delegate = MockBugReportDelegate(model: .mock)
 
     private var categoryWithQuickFixes: BugReport.Category {
         delegate.model.categories.first!
     }
 
-    func testButtonOpensContactForm() async throws {
-        let category = categoryWithQuickFixes
+    private var categoryWithoutQuickFixes: BugReport.Category {
+        delegate.model.categories.last!
+    }
 
+    @Test("No logic is present in quick fixes apart binding")
+    func selectedCategory() async {
         let store = TestStore(
-            initialState: QuickFixesFeature.State(category: category),
+            initialState: QuickFixesFeature.State(category: categoryWithQuickFixes),
             reducer: { QuickFixesFeature() }
         )
 
-        // Open form
-        await store.send(.next, assert: { resultState in
-            resultState.contactFormState = ContactFormFeature.State(fields: category.inputFields, category: category.label)
-        })
-
-        // Go back
-        await store.send(.contactFormDeselected, assert: { resultState in
-            resultState.contactFormState = nil
-        })
+        await store.send(.binding(.set(\.category, categoryWithoutQuickFixes))) {
+            $0.category = categoryWithoutQuickFixes
+        }
     }
 }

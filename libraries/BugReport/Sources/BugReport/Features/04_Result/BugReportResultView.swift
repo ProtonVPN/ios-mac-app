@@ -24,9 +24,10 @@ import SwiftUI
 import Strings
 
 public struct BugReportResultView: View {
-    let store: StoreOf<BugReportResultFeature>
+    @Perception.Bindable var store: StoreOf<BugReportResultFeature>
 
     @Environment(\.colors) var colors: Colors
+    @Environment(\.dismiss) var dismiss
 
     public var body: some View {
         WithPerceptionTracking {
@@ -92,7 +93,7 @@ public struct BugReportResultView: View {
                 Spacer()
 
                 VStack {
-                    Button(action: { store.send(.retry) }, label: { Text(Localizable.brFailureButtonRetry) })
+                    Button(action: { dismiss() }, label: { Text(Localizable.brFailureButtonRetry) })
                         .buttonStyle(PrimaryButtonStyle())
 
                     Button(action: { store.send(.troubleshoot) }, label: { Text(Localizable.brFailureButtonTroubleshoot) })
@@ -107,20 +108,16 @@ public struct BugReportResultView: View {
 
 // MARK: - Preview
 
-struct BugReportResultView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            BugReportResultView(store: Store(
-                initialState: BugReportResultFeature.State(error: nil),
-                reducer: { BugReportResultFeature() }
-            ))
-            .previewDisplayName("Success")
+#Preview("Success") {
+    BugReportResultView(store: Store(
+        initialState: BugReportResultFeature.State(error: nil),
+        reducer: { BugReportResultFeature() }
+    ))
+}
 
-            BugReportResultView(store: Store(
-                initialState: BugReportResultFeature.State(error: "Just an error"),
-                reducer: { BugReportResultFeature() }
-            ))
-            .previewDisplayName("Error")
-        }
-    }
+#Preview("Error") {
+    BugReportResultView(store: Store(
+        initialState: BugReportResultFeature.State(error: "Just an error"),
+        reducer: { BugReportResultFeature() }
+    ))
 }
