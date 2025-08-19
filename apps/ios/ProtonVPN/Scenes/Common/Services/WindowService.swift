@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import Foundation
 import GSMessages
 import UIKit
@@ -164,30 +165,22 @@ final class WindowServiceImplementation: WindowService {
     }
 
     func dismissModal(_ completion: (() -> Void)? = nil) {
-        guard Thread.isMainThread else {
-            // Switch to main queue if we're not already on it
-            DispatchQueue.main.async {
-                self.dismissModalIfNeeded(completion: completion)
-            }
-            return
+        executeOnUIThread {
+            self.dismissModalIfNeeded(completion: completion)
         }
-        dismissModalIfNeeded(completion: completion)
     }
 
     private func dismissModalIfNeeded(completion: (() -> Void)?) {
-        // Capture the root view controller at the start to avoid race conditions
         guard let rootViewController = window.rootViewController else {
             completion?()
             return
         }
 
-        // Capture the top view controller as well
         guard let topViewController = rootViewController.presentedViewController else {
-            completion?()
+            rootViewController.dismiss(animated: true, completion: completion)
             return
         }
 
-        // Now dismiss using the captured references
         topViewController.dismiss(animated: true, completion: completion)
     }
 
