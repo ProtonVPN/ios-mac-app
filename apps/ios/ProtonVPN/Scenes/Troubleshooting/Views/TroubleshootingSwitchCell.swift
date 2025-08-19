@@ -22,9 +22,49 @@
 
 import UIKit
 
-class TroubleshootingSwitchCell: TroubleshootingCell {
+final class TroubleshootingSwitchCell: TroubleshootingCell {
+    // MARK: - Static Properties
+
+    static var switchCellId: String { String(describing: self) }
+
     // Views
-    @IBOutlet private var toggleSwitch: UISwitch!
+    private lazy var toggleSwitch: UISwitch = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+    }
+
+    // MARK: - Initialization
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupSwitchView()
+        setupSwitchConstraints()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Setup
+
+    private func setupSwitchView() {
+        contentView.addSubview(toggleSwitch)
+    }
+
+    private func setupSwitchConstraints() {
+        NSLayoutConstraint.activate([
+            // Toggle switch constraints
+            toggleSwitch.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            toggleSwitch.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            toggleSwitch.leadingAnchor.constraint(equalTo: descriptionLabel.trailingAnchor, constant: 8),
+
+            // Update description label trailing constraint to accommodate switch
+            descriptionLabel.trailingAnchor.constraint(equalTo: toggleSwitch.leadingAnchor, constant: -8),
+        ])
+    }
+
+    // MARK: - Public Properties
 
     var isOn: Bool {
         get {
@@ -37,11 +77,7 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
 
     var isOnChanged: ((Bool) -> Void)?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        toggleSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-    }
+    // MARK: - Actions
 
     @objc
     private func switchChanged() {

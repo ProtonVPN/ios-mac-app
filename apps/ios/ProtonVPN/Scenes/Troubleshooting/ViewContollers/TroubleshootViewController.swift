@@ -20,20 +20,48 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import LegacyCommon
 import ProtonCoreUIFoundations
 import Strings
 import UIKit
 
-class TroubleshootViewController: UIViewController {
+final class TroubleshootViewController: UIViewController {
     // Views
-    @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var closeButton: UIButton!
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var headerView: UIView!
+    private var headerView: UIView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .secondaryBackgroundColor()
+    }
+
+    private var titleLabel: UILabel = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.textAlignment = .center
+        $0.lineBreakMode = .byTruncatingTail
+        $0.attributedText = Localizable.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
+    }
+
+    private lazy var closeButton: UIButton = .init(type: .custom).with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setImage(IconProvider.crossBig, for: .normal)
+        $0.tintColor = .normalTextColor()
+        $0.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+    }
+
+    private lazy var tableView: UITableView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .backgroundColor()
+        $0.rowHeight = UITableView.automaticDimension
+        $0.estimatedRowHeight = 44.0
+        $0.sectionHeaderHeight = 28
+        $0.sectionFooterHeight = 28
+        $0.alwaysBounceVertical = true
+        $0.register(TroubleshootingCell.self, forCellReuseIdentifier: TroubleshootingCell.cellIdentifier)
+        $0.register(TroubleshootingSwitchCell.self, forCellReuseIdentifier: TroubleshootingSwitchCell.switchCellId)
+        $0.dataSource = self
+    }
 
     // Data
-    public var viewModel: TroubleshootViewModel!
+    public var viewModel: TroubleshootViewModel
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
@@ -41,39 +69,61 @@ class TroubleshootViewController: UIViewController {
     }
 
     init(_ viewModel: TroubleshootViewModel) {
-        super.init(nibName: "TroubleshootViewController", bundle: nil)
         self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupTableView()
-        setupView()
+        setupViews()
+        setupConstraints()
     }
 
-    private func setupTableView() {
-        tableView.register(TroubleshootingCell.nib, forCellReuseIdentifier: TroubleshootingCell.identifier)
-        tableView.register(TroubleshootingSwitchCell.nib, forCellReuseIdentifier: TroubleshootingSwitchCell.identifier)
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44.0
-        tableView.dataSource = self
-    }
+    // MARK: - Setup
 
-    private func setupView() {
+    private func setupViews() {
+        // Configure main view
         view.backgroundColor = .backgroundColor()
-        tableView.backgroundColor = .backgroundColor()
 
-        headerView.backgroundColor = .secondaryBackgroundColor()
-        titleLabel.attributedText = Localizable.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
-        closeButton.setImage(IconProvider.crossBig, for: .normal)
-        closeButton.tintColor = .normalTextColor()
+        view.addSubview(headerView)
+        headerView.addSubview(titleLabel)
+        headerView.addSubview(closeButton)
+
+        view.addSubview(tableView)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            // Header view constraints
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.heightAnchor.constraint(equalToConstant: 60),
+
+            // Title label constraints
+            titleLabel.centerXAnchor.constraint(equalTo: headerView.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
+
+            // Close button constraints
+            closeButton.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            closeButton.topAnchor.constraint(equalTo: headerView.topAnchor),
+            closeButton.bottomAnchor.constraint(equalTo: headerView.bottomAnchor),
+            closeButton.widthAnchor.constraint(equalToConstant: 60),
+            closeButton.heightAnchor.constraint(equalToConstant: 60),
+
+            // Table view constraints
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     // MARK: User actions
 
-    @IBAction
-    func closeButtonTapped(_: Any) {
+    @objc
+    func closeButtonTapped() {
         viewModel.cancel()
     }
 }
@@ -90,7 +140,7 @@ extension TroubleshootViewController: UITableViewDataSource {
 
         var cell: TroubleshootingCell
         if let actionable = item as? ActionableTroubleshootItem {
-            guard let tempCell = tableView.dequeueReusableCell(withIdentifier: TroubleshootingSwitchCell.identifier) as? TroubleshootingSwitchCell else {
+            guard let tempCell = tableView.dequeueReusableCell(withIdentifier: TroubleshootingSwitchCell.switchCellId) as? TroubleshootingSwitchCell else {
                 return UITableViewCell()
             }
             tempCell.isOn = actionable.isOn
@@ -99,7 +149,7 @@ extension TroubleshootViewController: UITableViewDataSource {
             }
             cell = tempCell
         } else {
-            guard let tempCell = tableView.dequeueReusableCell(withIdentifier: TroubleshootingCell.identifier) as? TroubleshootingCell else {
+            guard let tempCell = tableView.dequeueReusableCell(withIdentifier: TroubleshootingCell.cellIdentifier) as? TroubleshootingCell else {
                 return UITableViewCell()
             }
             cell = tempCell
