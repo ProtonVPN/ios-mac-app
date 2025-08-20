@@ -1081,6 +1081,24 @@
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "This will disable kill switch.";
 
+/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Cannot enable split tunneling";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Hanki %@-tilaus";
 
@@ -2841,7 +2859,10 @@
 "_ike_deprecation_alert_title" = "Otetaanko IKEv2 käyttöön?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "This protocol will be removed soon. Consider switching to Smart protocol. Learn more\n\nSplit tunneling settings will be ignored when using IKEv2.";
+"_ike_deprecation_alert_message" = "Tämä protokolla poistetaan pian. Harkitse vaihtamista Smart-protokollaan. Lue lisää";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "This will disable split tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Lue lisää";
@@ -3084,7 +3105,7 @@
 "_hermes_entities_footnote_single" = "If your custom DNS server doesn’t work, the default Proton VPN DNS will be used.";
 
 /* Hermes entities footnote with multiple entities within dedicated Hermes Settings view */
-"_hermes_entities_footnote_multiple" = "We’ll try to connect to these servers in order. If none of them work, the VPN DNS will be used.";
+"_hermes_entities_footnote_multiple" = "Yritämme yhdistää näihin palvelimiin järjestyksessä. Jos mikään niistä ei toimi, käytetään VPN-DNS:ää.";
 
 /* Hermes conflict notification title within alert when enabling Hermes */
 "_hermes_conflict_hermesOn_title" = "Otetaanko mukautettu DNS käyttöön?";
@@ -3117,4 +3138,4 @@
 "_hermes_settings_isOff" = "Ei käytössä";
 
 /* Hermes apply changes notification window title */
-"_hermes_applyChanges_description" = "Your connection needs to be restarted to apply this change.";
+"_hermes_applyChanges_description" = "Yhteytesi on muodostettava uudelleen muutoksen käyttöönottamiseksi.";

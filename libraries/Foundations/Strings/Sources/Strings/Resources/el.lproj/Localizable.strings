@@ -1081,6 +1081,24 @@
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Αυτό θα απενεργοποιήσει το kill switch.";
 
+/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Δεν είναι δυνατή η ενεργοποίηση της διαίρεσης σήραγγας";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2. Μάθετε περισσότερα";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο IKEv2. Για να χρησιμοποιήσετε τη διαίρεση σήραγγας, αλλάξτε το πρωτόκολλο του προφίλ σας ή αποσυνδεθείτε από το προφίλ. Μάθετε περισσότερα";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_description" = "Η διαίρεση σήραγγας δεν είναι συμβατή με το πρωτόκολλο του προφίλ σας (IKEv2). Η σύνδεση θα απενεργοποιήσει τη διαίρεση σήραγγας. Μάθετε περισσότερα";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Σύνδεση με πρωτόκολλο IKEv2;";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Σύνδεση με %@?";
+
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Αποκτήστε το πλάνο %@";
 
@@ -2670,10 +2688,10 @@
 "welcome_upgrade_subtitle_plus" = "Απολαύστε επιπλέον λειτουργίες απορρήτου, υπερφορτισμένη απόδοση και επόμενου επιπέδου προσαρμογές VPN.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "Ξεκλειδώσατε όλες τις premium λειτουργίες των Proton VPN, Mail, Calendar, Drive και Pass — και 500 GB συνολικό χώρο αποθήκευσης.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Έχετε ξεκλειδώσει όλες τις premium λειτουργίες Proton VPN, Mail, Calendar, Drive και Pass — και **500 GB** συνολικού αποθηκευτικού χώρου.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2841,7 +2859,10 @@
 "_ike_deprecation_alert_title" = "Ενεργοποίηση IKEv2;";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Αυτό το πρωτόκολλο θα αφαιρεθεί σύντομα. Σκεφτείτε να μεταβείτε στο πρωτόκολλο Smart. Μάθετε περισσότερα\n\nΟι ρυθμίσεις του διαχωρισμένης σήραγγας θα αγνοηθούν όταν χρησιμοποιείτε το IKEv2.";
+"_ike_deprecation_alert_message" = "Αυτό το πρωτόκολλο θα καταργηθεί σύντομα. Εξετάστε το ενδεχόμενο μετάβασης στο Smart πρωτόκολλο. Μάθετε περισσότερα";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "Αυτό θα απενεργοποιήσει τη διαίρεση σήραγγας.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Μάθετε περισσότερα";

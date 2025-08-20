@@ -1081,6 +1081,24 @@
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Tindakan ini akan menonaktifkan kill switch.";
 
+/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Split tunneling tidak dapat diaktifkan";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2. Pelajari lebih lanjut";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol IKEv2. Untuk menggunakan split tunneling, ubah protokol pada profil Anda atau putuskan sambungan profil. Pelajari lebih lanjut";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_description" = "Split tunneling tidak kompatibel dengan protokol pada profil Anda (IKEv2). Menghubungkan ke profil akan menonaktifkan split tunneling. Pelajari lebih lanjut";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Hubungkan dengan protokol IKEv2?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Hubungkan ke %@?";
+
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Dapatkan Paket %@";
 
@@ -2841,7 +2859,10 @@
 "_ike_deprecation_alert_title" = "Aktifkan IKEv2?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "Protokol ini akan segera dihapus. Pertimbangkan untuk beralih ke protokol Smart. Pelajari lebih lanjut\n\nPengaturan split tunneling akan diabaikan pada saat Anda menggunakan IKEv2.";
+"_ike_deprecation_alert_message" = "Protokol ini akan segera dihapus. Pertimbangkan untuk beralih ke protokol Smart. Pelajari lebih lanjut";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "Tindakan ini akan menonaktifkan split tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Pelajari lebih lanjut";

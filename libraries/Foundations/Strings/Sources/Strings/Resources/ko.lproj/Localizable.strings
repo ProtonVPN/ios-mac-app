@@ -312,19 +312,19 @@
 "_always_on_will_reconnect" = "상시 VPN이 자동으로 VPN에 다시 연결해줍니다";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "활성 포트 번호: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "토렌트 클라이언트 또는 P2P 앱으로 이동하여 이 번호를 입력하세요.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "복사";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "활성 포트 번호 검색 불가";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "연결 재시작 후 다시 시도하십시오. 문제 재발시 다른 서버로 다시 시도하십시오.";
 
 /* MacOS: About window title */
 "_about" = "소개";
@@ -986,10 +986,10 @@
 "_dns_leak_protection_tooltip" = "제3자에게 DNS 쿼리 정보가 유출되는 것을 방지합니다. 항상 켜져 있습니다.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "포트 포워딩 알림";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "활성 포트 번호 변경시 알림을 받습니다.";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "보안 키";
@@ -1080,6 +1080,24 @@
 
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "킬 스위치가 비활성화됩니다.";
+
+/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "Cannot enable split tunneling";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ 플랜 얻기";
@@ -1426,7 +1444,7 @@
 "_pf_updated" = "%@ 업데이트됨";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "사용할 수 없음";
 
 "_quick_settings_title" = "간편 설정";
 
@@ -1449,7 +1467,7 @@
 
 "_quick_settings_portForwarding_warningNote" = "포트 포워딩을 사용하려면 P2P 서버로 연결하세요.";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "활성 포트 번호를 가져올 수 없음. 연결 재시작 후 다시 시도하십시오.";
 
 "_quick_settings_get_plus" = "Plus 요금제 얻기";
 
@@ -2670,10 +2688,10 @@
 "welcome_upgrade_subtitle_plus" = "더 많은 개인정보 보호 기능과 강력한 성능, 그리고 한 차원 높은 VPN 사용자화를 사용해 보세요.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "프리미엄 Proton VPN, Mail, Calendar, Drive, Pass 기능과 500 GB 총 저장 공간을 잠금 해제하셨어요.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "프리미엄 Proton VPN, Mail, Calendar, Drive, Pass 기능과 **500 GB** 총 저장 공간을 잠금 해제하셨어요.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2841,7 +2859,10 @@
 "_ike_deprecation_alert_title" = "IKEv2를 활성화하시겠습니까?";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "이 프로토콜은 곧 삭제될 예정입니다. Smart 프로토콜로 전환을 고려해 보십시오. 더 알아보기\n\nIKEv2를 사용할 때 분할 터널링 설정은 무시됩니다.";
+"_ike_deprecation_alert_message" = "이 프로토콜은 곧 제거됩니다. 스마트 프로토콜로 전환하는 것을 고려해 보세요. 더 알아보기";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "This will disable split tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "더 알아보기";

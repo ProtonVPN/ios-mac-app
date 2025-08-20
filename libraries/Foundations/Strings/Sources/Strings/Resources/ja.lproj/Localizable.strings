@@ -312,19 +312,19 @@
 "_always_on_will_reconnect" = "常時接続の VPN により自動的に再接続されます";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "アクティブなポート番号: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "お客様のトレントクライアントまたはP2Pアプリを開き、この番号を入力してください。";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "コピー";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "アクティブなポート番号を取得できません";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "接続を再起動して、もう一度お試しください。それでも解決しない場合は、別のサーバーをお試しください。";
 
 /* MacOS: About window title */
 "_about" = "私たちについて";
@@ -986,10 +986,10 @@
 "_dns_leak_protection_tooltip" = "DNS クエリの内容が外部に漏洩するのを防ぎます。この設定は常に有効です。";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "ポート転送通知";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "お客様の有効なポート転送番号が変更されたときに通知を受け取る";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "セキュリティキー";
@@ -1080,6 +1080,24 @@
 
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "これはキルスイッチを無効化します。";
+
+/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_title" = "スプリットトンネルを有効にできません";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_alert_description" = "スプリットトンネルはIKEv2プロトコルと互換性がありません。より詳しく";
+
+/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "スプリットトンネルはIKEv2プロトコルと互換性がありません。スプリットトンネルを使用するには、プロファイルのプロトコルを変更するか、プロファイルから接続を解除してください。より詳しく";
+
+/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_description" = "スプリットトンネルはお客様のプロファイルのプロトコル (IKEv2) と互換性がありません。接続することで、スプリットトンネルが無効化されます。より詳しく";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "IKEv2プロトコルで接続しますか？";
+
+/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+"split_tunneling_connect_to_profile_name_alert_title" = "%@ に接続しますか？";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ プランを選択";
@@ -1426,7 +1444,7 @@
 "_pf_updated" = "更新されました: %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "使用不可";
 
 "_quick_settings_title" = "クイック設定";
 
@@ -1445,11 +1463,11 @@
 
 "_quick_settings_killSwitch_note" = "ローカルネットワーク上のデバイスに接続できない場合は、キルスイッチを無効にしてみてください。";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "P2P速度を向上させるために、BitTorrentアプリにアクティブなポート番号を入力してください";
 
-"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+"_quick_settings_portForwarding_warningNote" = "ポート転送を利用するには、P2Pサーバーに接続してください";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "アクティブなポート番号を取得できません。接続を再起動して、もう一度お試しください。";
 
 "_quick_settings_get_plus" = "PLUS を入手";
 
@@ -2520,10 +2538,10 @@
 "upsell_p2pSupport_subtitle" = "あなたのIPアドレスを隠したままアップロードとダウンロード速度が向上します。";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "P2Pの速度を上げる";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "VPN Plusでピアツーピア(P2P)ファイル共有のパフォーマンスを強化";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "一度に10台のデバイスを保護";
@@ -2670,10 +2688,10 @@
 "welcome_upgrade_subtitle_plus" = "特別なプライバシー機能、高速パフォーマンス、および次世代のVPNカスタマイズをお楽しみください。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "あなたはすべてのプレミアムProton VPN、Mail、Calendar、Drive、Passの機能をアンロックしました — さらに合計500 GBのストレージも。";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "あなたはすべてのプレミアムProton VPN、Mail、Calendar、Drive、Passの機能をアンロックしました — さらに合計**500 GB**のストレージも。";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2841,7 +2859,10 @@
 "_ike_deprecation_alert_title" = "IKEv2を有効にしますか？";
 
 /* Body of the deprecation of IKEv2 protocol alert on MacOS. Shown when the user attempts to switch to IKEv2 protocol. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
-"_ike_deprecation_alert_message" = "このプロトコルは間もなく削除されます。Smartプロトコルへの切り替えをご検討ください。より詳しく\n\nIKEv2を使用している場合、スプリットトンネル設定は無視されます。";
+"_ike_deprecation_alert_message" = "このプロトコルはすぐに削除されます。スマートプロトコルへの切り替えをご検討ください。より詳しくはこちら";
+
+/* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
+"_disable_plutonium_message" = "これによりスプリットトンネルが無効化されます。";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "もっと詳しく知る";
