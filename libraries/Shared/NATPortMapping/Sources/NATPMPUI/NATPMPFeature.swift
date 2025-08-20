@@ -25,7 +25,7 @@ import NATPortMapping
 public struct NATPMPFeature: Sendable {
     @ObservableState
     public enum State: Equatable {
-        case loading
+        case loading(lastExternalPortNumber: UInt16?, lastUsedUpdateDate: Date?)
         case loaded(externalPortNumber: UInt16, updateDate: Date)
         case error
     }
@@ -47,7 +47,7 @@ public struct NATPMPFeature: Sendable {
         Reduce { state, action in
             switch action {
             case .startPortMappingObservation:
-                state = .loading
+                state = .loading(lastExternalPortNumber: state.externalPortNumber, lastUsedUpdateDate: state.updateDate)
                 return .publisher {
                     natPortMappingService.portMappingStream
                         .removeDuplicates(by: { prevResult, nextResult in
@@ -77,12 +77,17 @@ public struct NATPMPFeature: Sendable {
             case let .portMapped(portMappingResponse):
                 // check if the last value is not yet expired
                 guard portMappingResponse.deadlineDate > date.now else { return .none }
-                state = .loaded(externalPortNumber: portMappingResponse.mappedExternalPort, updateDate: portMappingResponse.createDate)
+                let updateDate: Date = if state.externalPortNumber == portMappingResponse.mappedExternalPort, let savedDate = state.updateDate {
+                    savedDate
+                } else {
+                    portMappingResponse.createDate
+                }
+                state = .loaded(externalPortNumber: portMappingResponse.mappedExternalPort, updateDate: updateDate)
                 return .none
 
             // if nat pmp service returned `nil`
             case .portMappingReceivedNil:
-                state = .loading
+                state = .loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)
                 return .none
 
             case .portMappingFailed:
@@ -105,7 +110,9 @@ extension NATPMPFeature.State {
         switch self {
         case let .loaded(portNumber, _):
             portNumber
-        case .loading, .error:
+        case let .loading(lastUsedExternalPortNumber, _):
+            lastUsedExternalPortNumber
+        case .error:
             nil
         }
     }
@@ -114,7 +121,9 @@ extension NATPMPFeature.State {
         switch self {
         case let .loaded(_, date):
             date
-        case .loading, .error:
+        case let .loading(_, lastUsedUpdateDate):
+            lastUsedUpdateDate
+        case .error:
             nil
         }
     }

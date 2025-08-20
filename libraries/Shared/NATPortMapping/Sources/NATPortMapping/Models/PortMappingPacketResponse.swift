@@ -51,6 +51,26 @@ public struct PortMappingPacketResponse: Sendable {
 
     // MARK: - Init
 
+    init(
+        version: UInt8,
+        opcode: UInt8,
+        resultCode: UInt16,
+        epochTime: UInt32,
+        internalPort: UInt16,
+        mappedExternalPort: UInt16,
+        mappingLifetime: UInt32,
+        createDate: Date
+    ) {
+        self.version = version
+        self.opcode = opcode
+        self.resultCode = resultCode
+        self.epochTime = epochTime
+        self.internalPort = internalPort
+        self.mappedExternalPort = mappedExternalPort
+        self.mappingLifetime = mappingLifetime
+        self.createDate = createDate
+    }
+
     init(from data: Data) throws {
         guard data.count >= 16 else {
             throw NATPortMappingError.malformedPacket

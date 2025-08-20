@@ -26,7 +26,7 @@ public struct NATPMPPortView: View {
     @Perception.Bindable var store: StoreOf<NATPMPFeature>
 
     public init() {
-        let store = Store(initialState: .loading) {
+        let store = Store(initialState: .loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)) {
             NATPMPFeature()
         }
         self.init(store: store)
