@@ -1827,7 +1827,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Conecte-se a servidores de alta velocidade ao redor do mundo e assista a seus programas favoritos com proteção VPN."
+            "value" : "Conecte-se a servidores de alta velocidade do mundo todo e assista a seus programas favoritos com proteção VPN."
           }
         },
         "ro" : {
@@ -6832,6 +6832,12 @@
             "value" : "Resolviendo"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ratkaistaan"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8962,7 +8968,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ocorreu um problema.\nVerifique sua conexão de rede"
+            "value" : "Ocorreu um problema.\nVerifique sua conexão com a rede"
           }
         },
         "ro" : {
@@ -11147,7 +11153,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando for solicitado seu código de verificação, digite (consultando...)"
+            "value" : "Quando seu código de verificação for solicitado, digite (consultando...)"
           }
         },
         "ro" : {
