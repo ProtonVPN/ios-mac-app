@@ -35,8 +35,9 @@ struct LinkButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Self.Configuration) -> some View {
         configuration.label
-            .font(.system(size: 12, weight: .semibold))
+            .font(.body(emphasised: true))
             .foregroundColor(helpForegroundColor(isPressed: configuration.isPressed))
             .onHover { isHovered = $0 }
+            .linkPointer()
     }
 }

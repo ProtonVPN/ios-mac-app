@@ -78,7 +78,8 @@ public enum VPNLink: String, CaseIterable {
     case moderateNAT = "https://protonvpn.com/support/moderate-nat"
     case safeMode = "https://protonvpn.com/support/non-standard-ports"
     case loginProblems = "https://protonvpn.com/support/login-problems"
-    case systemExtensionsInstallationHelp = "https://protonvpn.com/support/how-to-change-vpn-protocols"
+    case systemExtensionsInstallationHelpMacOS15 = "https://protonvpn.com/support/how-to-change-vpn-protocols?ref=mac#macos15"
+    case systemExtensionsInstallationHelp = "https://protonvpn.com/support/how-to-change-vpn-protocols?ref=mac"
     case hermes = "https://protonvpn.com/support/custom-dns#ios-and-ipados"
     case hermesMacOS = "https://protonvpn.com/support/custom-dns#macos"
 
@@ -88,7 +89,7 @@ public enum VPNLink: String, CaseIterable {
     case learnMoreTor = "https://protonvpn.com/support/tor-vpn"
     case learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained"
     case learnMoreTelemetry = "https://protonvpn.com/support/share-usage-statistics"
-    case learnMorePlutonium = "https://protonvpn.com/support/protonvpn-plutonium#macos"
+    case learnMorePlutonium = "https://protonvpn.com/support/protonvpn-split-tunneling"
 
     case ping = "https://account.protonvpn.com/api/tests/ping"
     case protocolDeprecations = "https://protonvpn.com/blog/remove-vpn-protocols-apple"

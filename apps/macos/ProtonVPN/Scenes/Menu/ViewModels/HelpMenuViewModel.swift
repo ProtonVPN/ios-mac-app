@@ -95,7 +95,7 @@ class HelpMenuViewModel {
     }
 
     func systemExtensionTutorialAction() {
-        windowService.openSystemExtensionGuideWindow(cancelledHandler: {})
+        windowService.openSystemExtensionGuideWindow(origin: .inAppPrompt([]), cancelledHandler: {})
     }
 
     func selectClearApplicationData() {

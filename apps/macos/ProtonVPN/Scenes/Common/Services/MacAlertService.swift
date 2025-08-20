@@ -363,7 +363,10 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {
-        windowService.openSystemExtensionGuideWindow(cancelledHandler: alert.cancelHandler)
+        windowService.openSystemExtensionGuideWindow(
+            origin: alert.origin,
+            cancelledHandler: alert.cancelHandler
+        )
     }
 
     private func show(_ alert: P2pForwardedAlert) {

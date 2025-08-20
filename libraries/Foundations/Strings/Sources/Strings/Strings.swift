@@ -1663,14 +1663,6 @@ public enum Localizable {
   public static var switchSideButtonOn: String { return Localizable.tr("Localizable", "_switch_side_button_on", fallback: "ON") }
   /// The app was unable to enable system extensions on the device, which are required for connecting using WireGuard.
   public static var sysexCannotEnable: String { return Localizable.tr("Localizable", "_sysex_cannot_enable", fallback: "Cannot enable System Extension") }
-  /// Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen."
-  public static var sysexDescription1: String { return Localizable.tr("Localizable", "_sysex_description_1", fallback: "To use Proton VPN, you’ll need to enable **custom VPN protocols** on your Mac.") }
-  /// Part 2 of the description of the system extension wizard in mac
-  public static var sysexDescription2: String { return Localizable.tr("Localizable", "_sysex_description_2", fallback: "Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers.") }
-  /// Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions
-  public static var sysexDescription3: String { return Localizable.tr("Localizable", "_sysex_description_3", fallback: "To continue, click **Open System Settings**, then follow the video instructions on this screen.") }
-  /// Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions
-  public static var sysexDescription4: String { return Localizable.tr("Localizable", "_sysex_description_4", fallback: "To continue, click **Open Security Preferences**, then follow the video instructions on this screen.") }
   /// Configuration completed. Now you can browse the internet faster with the best VPN technologies.
   public static var sysexEnabledDescription: String { return Localizable.tr("Localizable", "_sysex_enabled_description", fallback: "Configuration completed. Now you can browse the internet faster with the best VPN technologies.") }
   /// Configuration completed
@@ -1691,14 +1683,62 @@ public enum Localizable {
   }
   /// This error subcase when installing system extensions means that the user's device, likely through an MDM policy, disallows installation of system extensions of this (or any) type.
   public static var sysexErrorDescriptionSubcaseForbiddenBySystemPolicy: String { return Localizable.tr("Localizable", "_sysex_error_description_subcase_forbidden_by_system_policy", fallback: "the current system policy prohibits activating extensions on your device.") }
-  /// Default action in the system extension wizard in mac. macOS Ventura
-  public static var sysexOpenSecurityPreferences: String { return Localizable.tr("Localizable", "_sysex_open_security_preferences", fallback: "Open Security Preferences") }
-  /// Default action in the system extension wizard in mac. Pre-macOS Ventura
+  /// Open System Settings
   public static var sysexOpenSystemSettings: String { return Localizable.tr("Localizable", "_sysex_open_system_settings", fallback: "Open System Settings") }
-  /// Title of the system extension wizard in mac
-  public static var sysexSetUpProtonVpn: String { return Localizable.tr("Localizable", "_sysex_set_up_proton_vpn", fallback: "Set up Proton VPN") }
   /// Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.
   public static var sysexSettingsDescription: String { return Localizable.tr("Localizable", "_sysex_settings_description", fallback: "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.") }
+  /// Open Network Extensions
+  public static var sysexTutorialButtonOpen: String { return Localizable.tr("Localizable", "_sysex_tutorial_button_open", fallback: "Open Network Extensions") }
+  /// Didn't work?
+  public static var sysexTutorialDidntWork: String { return Localizable.tr("Localizable", "_sysex_tutorial_didnt_work", fallback: "Didn't work?") }
+  /// Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.
+  public static var sysexTutorialFeatureSt: String { return Localizable.tr("Localizable", "_sysex_tutorial_feature_st", fallback: "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.") }
+  /// Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.
+  public static var sysexTutorialFeatureWg: String { return Localizable.tr("Localizable", "_sysex_tutorial_feature_wg", fallback: "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.") }
+  /// How to enable extensions
+  public static var sysexTutorialHowToEnable: String { return Localizable.tr("Localizable", "_sysex_tutorial_how_to_enable", fallback: "How to enable extensions") }
+  /// Need help?
+  public static var sysexTutorialNeedHelp: String { return Localizable.tr("Localizable", "_sysex_tutorial_need_help", fallback: "Need help?") }
+  /// Authenticate with password or Touch ID if asked.
+  public static var sysexTutorialStepAuthenticate: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_authenticate", fallback: "Authenticate with password or Touch ID if asked.") }
+  /// Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.
+  public static var sysexTutorialStepAuthenticateDetails: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_authenticate_details", fallback: "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.") }
+  /// You should see a message that says "System software from application ProtonVPN was blocked.". Click **Allow**.
+  public static var sysexTutorialStepClickAllow: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_click_allow", fallback: "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.") }
+  /// Click **Open Network Extensions.**
+  public static var sysexTutorialStepClickOpen: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_click_open", fallback: "Click **Open Network Extensions.**") }
+  /// Click **Open System Settings**, then go to **Privacy & Security → Security.**
+  public static var sysexTutorialStepClickSecurity: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_click_security", fallback: "Click **Open System Settings**, then go to **Privacy & Security → Security.**") }
+  /// Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.
+  public static var sysexTutorialStepTurnOnBothDone: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_both_done", fallback: "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.") }
+  /// Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.
+  public static var sysexTutorialStepTurnOnBothOk: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_both_ok", fallback: "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.") }
+  /// Turn on the extensions you need, then click **Done**.
+  public static var sysexTutorialStepTurnOnExtensionsDone: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_extensions_done", fallback: "Turn on the extensions you need, then click **Done**.") }
+  /// Turn on the extensions you need, then click **OK**.
+  public static var sysexTutorialStepTurnOnExtensionsOk: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_extensions_ok", fallback: "Turn on the extensions you need, then click **OK**.") }
+  /// Turn on the **split tunneling** switch, then click **Done**.
+  public static var sysexTutorialStepTurnOnStDone: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_st_done", fallback: "Turn on the **split tunneling** switch, then click **Done**.") }
+  /// Turn on the **split tunneling** switch, then click **OK**.
+  public static var sysexTutorialStepTurnOnStOk: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_st_ok", fallback: "Turn on the **split tunneling** switch, then click **OK**.") }
+  /// Turn on the **WireGuard** switch, then click **Done**.
+  public static var sysexTutorialStepTurnOnWgDone: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_wg_done", fallback: "Turn on the **WireGuard** switch, then click **Done**.") }
+  /// Turn on the **WireGuard** switch, then click **OK**.
+  public static var sysexTutorialStepTurnOnWgOk: String { return Localizable.tr("Localizable", "_sysex_tutorial_step_turn_on_wg_ok", fallback: "Turn on the **WireGuard** switch, then click **OK**.") }
+  /// To use Proton VPN, you need to enable the following system extensions on your Mac:
+  public static var sysexTutorialSubtitleApp: String { return Localizable.tr("Localizable", "_sysex_tutorial_subtitle_app", fallback: "To use Proton VPN, you need to enable the following system extensions on your Mac:") }
+  /// To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.
+  public static var sysexTutorialSubtitleFeatures: String { return Localizable.tr("Localizable", "_sysex_tutorial_subtitle_features", fallback: "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.") }
+  /// To use split tunneling, you need to enable the following system extensions on your Mac:
+  public static var sysexTutorialSubtitleSt: String { return Localizable.tr("Localizable", "_sysex_tutorial_subtitle_st", fallback: "To use split tunneling, you need to enable the following system extensions on your Mac:") }
+  /// To use WireGuard, you need to enable the following system extensions on your Mac:
+  public static var sysexTutorialSubtitleWg: String { return Localizable.tr("Localizable", "_sysex_tutorial_subtitle_wg", fallback: "To use WireGuard, you need to enable the following system extensions on your Mac:") }
+  /// Enable system extensions to continue
+  public static var sysexTutorialTitleEnable: String { return Localizable.tr("Localizable", "_sysex_tutorial_title_enable", fallback: "Enable system extensions to continue") }
+  /// Enable Proton VPN system extensions
+  public static var sysexTutorialTitleEnableProton: String { return Localizable.tr("Localizable", "_sysex_tutorial_title_enable_proton", fallback: "Enable Proton VPN system extensions") }
+  /// Set up Proton VPN
+  public static var sysexTutorialTitleSetup: String { return Localizable.tr("Localizable", "_sysex_tutorial_title_setup", fallback: "Set up Proton VPN") }
   /// Main mac app menu item
   public static var systemExtensionTutorialMenuItem: String { return Localizable.tr("Localizable", "_system_extension_tutorial_menu_item", fallback: "System Extension Tutorial") }
   /// MacOS: Settings -> General: name of field.

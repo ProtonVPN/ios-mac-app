@@ -253,7 +253,7 @@
                     return
                 }
 
-                let tour = SystemExtensionTourAlert(cancelHandler: {
+                let tour = SystemExtensionTourAlert(origin: .firstAppLaunch, cancelHandler: {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "cancelled"])
                     DispatchQueue.main.async {
                         actionHandler(.failure(.tourCancelled))

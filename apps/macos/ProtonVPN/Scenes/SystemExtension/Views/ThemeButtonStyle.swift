@@ -83,5 +83,6 @@ struct ThemeButtonStyle: ButtonStyle {
             .background(backgroundColor(isPressed: configuration.isPressed))
             .cornerRadius(.themeRadius8)
             .onHover { isHovered = $0 }
+            .linkPointer()
     }
 }
