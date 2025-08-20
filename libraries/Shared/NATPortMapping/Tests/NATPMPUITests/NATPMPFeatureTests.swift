@@ -46,7 +46,7 @@ struct NATPMPFeatureTests {
         await store.receive(\.portMappingReceivedNil)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
+            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000))
         }
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 2000) }
@@ -56,17 +56,17 @@ struct NATPMPFeatureTests {
         mockService.portMappingStream.value = .success(secondResponse)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 2000))
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000))
         }
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 3000) }
 
-        // Send third response with same port (should update responseDate)
+        // Send third response with same port
         let thirdResponse = createPortMappingResponse(externalPort: 9090)
         mockService.portMappingStream.value = .success(thirdResponse)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 3000))
+            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000))
         }
 
         // Stop port mapping observation
@@ -102,7 +102,7 @@ struct NATPMPFeatureTests {
 
         // still valid mapping from before there was no observation
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 7777, updateDate: nowDate, responseDate: nowDate)
+            $0 = .loaded(externalPortNumber: 7777, updateDate: nowDate)
         }
 
         // Stop port mapping observation

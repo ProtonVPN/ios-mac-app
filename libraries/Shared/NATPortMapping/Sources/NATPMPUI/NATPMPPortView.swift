@@ -41,11 +41,10 @@ public struct NATPMPPortView: View {
             switch store.state {
             case .loading:
                 LoadingPortView()
-            case let .loaded(externalPortNumber, updateDate, responseDate):
+            case let .loaded(externalPortNumber, updateDate):
                 ActivePortView(
                     portNumber: externalPortNumber,
-                    updateDate: updateDate,
-                    responseDate: responseDate
+                    updateDate: updateDate
                 )
             case .error:
                 PortErrorView()
@@ -65,7 +64,6 @@ public struct NATPMPPortView: View {
 struct ActivePortView: View {
     let portNumber: UInt16
     let updateDate: Date
-    let responseDate: Date
 
     @State private var hovered = false
     @State private var showCopiedTooltip = false
@@ -294,8 +292,7 @@ private func copyPortNumber(_ portNumber: UInt16, onCopied: (() -> Void)? = nil)
             // Active state
             ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
-                responseDate: Date()
+                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
             )
 
             // Loading state

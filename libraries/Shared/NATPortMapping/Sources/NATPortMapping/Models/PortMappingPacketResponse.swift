@@ -44,7 +44,7 @@ public struct PortMappingPacketResponse: Sendable {
         MappingResultCode(rawValue: resultCode) ?? .unsupportedOpcode
     }
 
-    let createDate: Date
+    public let createDate: Date
     public var deadlineDate: Date {
         createDate.addingTimeInterval(TimeInterval(mappingLifetime))
     }

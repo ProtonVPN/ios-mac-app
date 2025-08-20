@@ -26,7 +26,7 @@ public struct NATPMPFeature: Sendable {
     @ObservableState
     public enum State: Equatable {
         case loading
-        case loaded(externalPortNumber: UInt16, updateDate: Date, responseDate: Date)
+        case loaded(externalPortNumber: UInt16, updateDate: Date)
         case error
     }
 
@@ -50,6 +50,18 @@ public struct NATPMPFeature: Sendable {
                 state = .loading
                 return .publisher {
                     natPortMappingService.portMappingStream
+                        .removeDuplicates(by: { prevResult, nextResult in
+                            switch (prevResult, nextResult) {
+                            case let (.success(prevPortMapping), .success(nextPortMapping)):
+                                // consume next value only if mapped ports are not the same
+                                prevPortMapping?.mappedExternalPort == nextPortMapping?.mappedExternalPort
+                            case (.success, .failure), (.failure, .success):
+                                false
+                            case (.failure, .failure):
+                                // we don't differentiate errors; thus all subsequent errors are "equal"
+                                true
+                            }
+                        })
                         .compactMap { portMappingResult in
                             switch portMappingResult {
                             case let .success(portMapping):
@@ -65,10 +77,7 @@ public struct NATPMPFeature: Sendable {
             case let .portMapped(portMappingResponse):
                 // check if the last value is not yet expired
                 guard portMappingResponse.deadlineDate > date.now else { return .none }
-
-                let externalPortNumber = portMappingResponse.mappedExternalPort
-                let updateDate: Date = (state.externalPortNumber != externalPortNumber ? date.now : state.updateDate) ?? date.now
-                state = .loaded(externalPortNumber: externalPortNumber, updateDate: updateDate, responseDate: date.now)
+                state = .loaded(externalPortNumber: portMappingResponse.mappedExternalPort, updateDate: portMappingResponse.createDate)
                 return .none
 
             // if nat pmp service returned `nil`
@@ -94,7 +103,7 @@ private enum CancelID {
 extension NATPMPFeature.State {
     var externalPortNumber: UInt16? {
         switch self {
-        case let .loaded(portNumber, _, _):
+        case let .loaded(portNumber, _):
             portNumber
         case .loading, .error:
             nil
@@ -103,7 +112,7 @@ extension NATPMPFeature.State {
 
     var updateDate: Date? {
         switch self {
-        case let .loaded(_, date, _):
+        case let .loaded(_, date):
             date
         case .loading, .error:
             nil

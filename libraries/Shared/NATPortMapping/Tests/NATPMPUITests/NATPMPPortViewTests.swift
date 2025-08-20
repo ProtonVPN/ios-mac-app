@@ -33,8 +33,7 @@ struct NATPMPPortViewTests {
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
-                responseDate: Date()
+                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
             )
             let nsView = NSHostingView(rootView: view)
 
@@ -49,8 +48,7 @@ struct NATPMPPortViewTests {
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
-                responseDate: Date()
+                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
