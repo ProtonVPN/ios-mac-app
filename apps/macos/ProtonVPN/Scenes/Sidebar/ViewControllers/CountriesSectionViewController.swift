@@ -311,7 +311,7 @@ final class CountriesSectionViewController: NSViewController {
 
     private func updatePortForwardingAlertBage() {
         if viewModel.isConnected, viewModel.portForwardingIsOn, !viewModel.connectedServerSupportsP2P {
-            portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
+            portForwardingWarningImage?.image = Theme.Asset.orangeExclamationMark.image
             portForwardingWarningImage?.isHidden = false
         } else {
             portForwardingWarningImage?.isHidden = true

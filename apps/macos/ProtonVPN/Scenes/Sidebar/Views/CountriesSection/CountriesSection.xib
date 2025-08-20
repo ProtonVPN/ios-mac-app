@@ -230,7 +230,7 @@
                                             <constraint firstAttribute="height" constant="16" id="NVo-0W-x00"/>
                                             <constraint firstAttribute="width" constant="16" id="aD8-fA-scQ"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-exclamation-triangle-filled" id="lcc-E8-DnK"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="orange-exclamation-mark" id="lcc-E8-DnK"/>
                                         <color key="contentTintColor" name="AtomicTangerine"/>
                                     </imageView>
                                 </subviews>
@@ -394,10 +394,10 @@
     <resources>
         <image name="ic-arrow-up-bounce-left" width="24" height="24"/>
         <image name="ic-cross-circle-filled" width="24" height="24"/>
-        <image name="ic-exclamation-triangle-filled" width="24" height="24"/>
         <image name="ic-lock" width="24" height="24"/>
         <image name="ic-shield" width="24" height="24"/>
         <image name="ic-switch-on" width="24" height="24"/>
+        <image name="orange-exclamation-mark" width="16" height="16"/>
         <namedColor name="AtomicTangerine">
             <color red="1" green="0.60784313725490191" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
