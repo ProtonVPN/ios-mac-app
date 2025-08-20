@@ -272,6 +272,10 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             dropdownLearnMore.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
             dropdownLearnMore.heightAnchor.constraint(equalToConstant: 15),
 
+            // Dropdown icon size
+            dropdownNoteImageView.heightAnchor.constraint(equalToConstant: 16),
+            dropdownNoteImageView.widthAnchor.constraint(equalToConstant: 16),
+
             // Options view constraints
             buttonsAndNoteView.topAnchor.constraint(equalTo: dropdownLearnMore.bottomAnchor, constant: 12),
             buttonsAndNoteView.leadingAnchor.constraint(equalTo: dropdownLearnMore.leadingAnchor),
