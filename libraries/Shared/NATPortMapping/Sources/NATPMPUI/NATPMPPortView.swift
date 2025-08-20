@@ -68,44 +68,63 @@ struct ActivePortView: View {
     let responseDate: Date
 
     @State private var hovered = false
+    @State private var showCopiedTooltip = false
 
     var body: some View {
         Button(action: {
-            copyPortNumber(portNumber)
+            copyPortNumber(portNumber) {
+                // Show copied tooltip
+                showCopiedTooltip = true
+
+                // Hide tooltip after 2 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showCopiedTooltip = false
+                    }
+                }
+            }
         }) {
-            VStack(alignment: .leading, spacing: .themeSpacing12) {
+            VStack(alignment: .leading, spacing: .themeSpacing4) {
                 // Header with status indicator
                 Text(Localizable.pfActivePortNumber)
                     .foregroundColor(Color(.text, .weak))
                     .themeFont(.callout(emphasised: true))
 
                 // Port number with copy button
-                HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
+                HStack(alignment: .center, spacing: .themeSpacing4) {
                     // Green status indicator
                     Asset.pfIndicator.swiftUIImage
                         .resizable()
                         .frame(.square(.themeSpacing16))
 
-                    VStack(alignment: .leading, spacing: .themeSpacing8) {
-                        HStack(spacing: .themeSpacing4) {
-                            Text(String(portNumber))
-                                .foregroundColor(Color(.text))
-                                .font(.title2(emphasised: false))
-
-                            IconProvider.squares
-                                .resizable()
-                                .frame(.square(.themeSpacing16))
-
-                            Spacer()
+                    Text(String(portNumber))
+                        .foregroundColor(Color(.text))
+                        .font(.title2(emphasised: false))
+                        .offset(y: 1)
+                        .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
+                            Text(Localizable.pfCopied)
+                                .padding(.vertical, 8)
+                                .padding(.horizontal, 16)
                         }
-                        HStack {
-                            // Update timestamp
-                            Text(formatUpdateTime(updateDate))
-                                .foregroundColor(Color(.text, .weak))
-                                .themeFont(.callout(emphasised: false))
-                            Spacer()
-                        }
-                    }
+
+                    IconProvider.squares
+                        .resizable()
+                        .frame(.square(.themeSpacing16))
+
+                    Spacer()
+                }
+
+                HStack(spacing: .themeSpacing4) {
+                    Asset.pfIndicator.swiftUIImage
+                        .resizable()
+                        .opacity(0)
+                        .frame(.square(.themeSpacing16))
+
+                    // Update timestamp
+                    Text(formatUpdateTime(updateDate))
+                        .foregroundColor(Color(.text, .weak))
+                        .themeFont(.callout(emphasised: false))
+                    Spacer()
                 }
             }
             .padding(.themeSpacing16)
@@ -257,11 +276,14 @@ public struct StatusPortView: View {
     }
 }
 
-private func copyPortNumber(_ portNumber: UInt16) {
+private func copyPortNumber(_ portNumber: UInt16, onCopied: (() -> Void)? = nil) {
     let portString = String(portNumber)
     let pasteboard = NSPasteboard.general
     pasteboard.clearContents()
     pasteboard.setString(portString, forType: .string)
+
+    // Call the callback if provided
+    onCopied?()
 }
 
 // MARK: - Preview
