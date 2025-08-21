@@ -54,7 +54,6 @@ protocol QuickSettingConfiguration {
     var type: QuickSettingType { get }
     var presenter: QuickSettingDropdownPresenterProtocol { get }
     var button: QuickSettingButton { get }
-    var container: NSBox { get }
 
     func createViewController() -> QuickSettingDetailViewController
     func handleStateUpdate(connectionInfo: ConnectionInfo) -> QuickSettingState
@@ -66,7 +65,6 @@ struct GenericQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType
     let presenter: QuickSettingDropdownPresenterProtocol
     let button: QuickSettingButton
-    let container: NSBox
 
     func createViewController() -> QuickSettingDetailViewController {
         QuickSettingDetailViewController(presenter)
@@ -83,7 +81,6 @@ struct NetShieldQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType = .netShieldDisplay
     let presenter: QuickSettingDropdownPresenterProtocol
     let button: QuickSettingButton
-    let container: NSBox
 
     func createViewController() -> QuickSettingDetailViewController {
         QuickSettingDetailNetShieldViewController(presenter)
@@ -100,7 +97,6 @@ struct PortForwardingQuickSettingConfiguration: QuickSettingConfiguration {
     let type: QuickSettingType = .portForwardingDisplay
     let presenter: QuickSettingDropdownPresenterProtocol
     let button: QuickSettingButton
-    let container: NSBox
 
     func createViewController() -> QuickSettingDetailViewController {
         QuickSettingDetailPFViewController(presenter)

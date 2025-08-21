@@ -25,28 +25,24 @@ enum QuickSettingFactory {
     static func createConfiguration(
         type: QuickSettingType,
         presenter: QuickSettingDropdownPresenterProtocol,
-        button: QuickSettingButton,
-        container: NSBox
+        button: QuickSettingButton
     ) -> QuickSettingConfiguration {
         switch type {
         case .netShieldDisplay:
             NetShieldQuickSettingConfiguration(
                 presenter: presenter,
-                button: button,
-                container: container
+                button: button
             )
         case .portForwardingDisplay:
             PortForwardingQuickSettingConfiguration(
                 presenter: presenter,
-                button: button,
-                container: container
+                button: button
             )
         case .secureCoreDisplay, .killSwitchDisplay:
             GenericQuickSettingConfiguration(
                 type: type,
                 presenter: presenter,
-                button: button,
-                container: container
+                button: button
             )
         }
     }
