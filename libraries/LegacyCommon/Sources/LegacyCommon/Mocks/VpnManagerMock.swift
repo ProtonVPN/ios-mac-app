@@ -93,5 +93,9 @@
 
         public private(set) var isLocalAgentConnected: Bool?
         public var localAgentStateChanged: ((Bool?) -> Void)?
+
+        public func startNATPortMappingService() {}
+
+        public func stopNATPortMappingService() {}
     }
 #endif
