@@ -22,9 +22,35 @@
 
 import UIKit
 
-class TroubleshootingSwitchCell: TroubleshootingCell {
-    // Views
-    @IBOutlet private var toggleSwitch: UISwitch!
+final class TroubleshootingSwitchCell: TroubleshootingCell {
+    static var switchCellId: String { String(describing: self) }
+
+    private lazy var toggleSwitch: UISwitch = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.addTarget(self, action: #selector(switchChanged), for: .valueChanged)
+        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        $0.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+    }
+
+    // MARK: - Init
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupSwitchView()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Setup
+
+    private func setupSwitchView() {
+        mainStackView.addArrangedSubview(toggleSwitch)
+    }
+
+    // MARK: - Public Properties
 
     var isOn: Bool {
         get {
@@ -37,14 +63,14 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
 
     var isOnChanged: ((Bool) -> Void)?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        toggleSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
-    }
+    // MARK: - Actions
 
     @objc
     private func switchChanged() {
         isOnChanged?(toggleSwitch.isOn)
+
+        // Force layout update to ensure proper rendering
+        setNeedsLayout()
+        layoutIfNeeded()
     }
 }

@@ -241,9 +241,7 @@
 		D572E5712AB487D900CBD2B7 /* BannerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */; };
 		D573D114264A70980033CE19 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D573D113264A70980033CE19 /* UIKit.framework */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
-		D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8124518567003C34B9 /* TroubleshootViewController.xib */; };
 		D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
-		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
@@ -255,7 +253,6 @@
 		D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
 		D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
-		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
@@ -735,9 +732,7 @@
 		D572E56F2AB487D900CBD2B7 /* BannerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerViewCell.swift; sourceTree = "<group>"; };
 		D573D113264A70980033CE19 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D580AB8024518567003C34B9 /* TroubleshootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewController.swift; sourceTree = "<group>"; };
-		D580AB8124518567003C34B9 /* TroubleshootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootViewController.xib; sourceTree = "<group>"; };
 		D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingCell.swift; sourceTree = "<group>"; };
-		D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingCell.xib; sourceTree = "<group>"; };
 		D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinator.swift; sourceTree = "<group>"; };
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
@@ -750,7 +745,6 @@
 		D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingSwitchCell.swift; sourceTree = "<group>"; };
-		D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingSwitchCell.xib; sourceTree = "<group>"; };
 		D5AAA127229D23F500EA839A /* credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertService.swift; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
@@ -1659,9 +1653,7 @@
 			isa = PBXGroup;
 			children = (
 				D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */,
-				D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */,
 				D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */,
-				D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2078,7 +2070,6 @@
 			isa = PBXGroup;
 			children = (
 				D580AB8024518567003C34B9 /* TroubleshootViewController.swift */,
-				D580AB8124518567003C34B9 /* TroubleshootViewController.xib */,
 			);
 			path = ViewContollers;
 			sourceTree = "<group>";
@@ -2741,7 +2732,6 @@
 				4CF2981B2A7D3B8E00DEB23F /* pl.lproj in Resources */,
 				E5814EDD2B481F4E00ACF2A7 /* OfferBannerViewCell.xib in Resources */,
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
-				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */,
 				E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
@@ -2760,7 +2750,6 @@
 				4CF2981D2A7D3B8E00DEB23F /* cs.lproj in Resources */,
 				4CF298212A7D3B8E00DEB23F /* en.lproj in Resources */,
 				E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */,
-				D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */,
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
 				E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */,
@@ -2773,7 +2762,6 @@
 				ADA7343729B1893E00CF8F77 /* NetShieldStatsTableViewCell.xib in Resources */,
 				4CF2982A2A7D3B8E00DEB23F /* it.lproj in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
-				D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */,
 				4CF298222A7D3B8E00DEB23F /* ro.lproj in Resources */,
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
