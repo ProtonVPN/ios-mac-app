@@ -118,10 +118,12 @@ struct ActivePortView: View {
                         .opacity(0)
                         .frame(.square(.themeSpacing16))
 
-                    // Update timestamp
-                    Text(formatUpdateTime(updateDate))
-                        .foregroundColor(Color(.text, .weak))
-                        .themeFont(.callout(emphasised: false))
+                    TimelineView(.periodic(from: updateDate, by: 1)) { context in
+                        Text(formatUpdateTime(updateDate, currentTime: context.date))
+                            .foregroundColor(Color(.text, .weak))
+                            .themeFont(.callout(emphasised: false))
+                    }
+
                     Spacer()
                 }
             }
@@ -140,7 +142,7 @@ struct ActivePortView: View {
         .help(Localizable.pfCopyPortNumber)
     }
 
-    // MARK: - Sate
+    // MARK: - State
 
     private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
@@ -149,9 +151,8 @@ struct ActivePortView: View {
         return formatter
     }()
 
-    private func formatUpdateTime(_ date: Date) -> String {
-        @Dependency(\.date.now) var now
-        let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: now)
+    private func formatUpdateTime(_ date: Date, currentTime: Date) -> String {
+        let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: currentTime)
         return Localizable.pfUpdated(timeAgo)
     }
 }
