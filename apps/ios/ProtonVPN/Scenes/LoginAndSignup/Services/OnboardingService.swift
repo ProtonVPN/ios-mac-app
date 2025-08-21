@@ -41,7 +41,7 @@ protocol OnboardingService: AnyObject {
     var delegate: OnboardingServiceDelegate? { get set }
 
     @MainActor
-    func showOnboarding()
+    func showOnboarding(overTabBarController tabBarController: UITabBarController?)
 
     @MainActor
     func showPaywall()
@@ -72,11 +72,17 @@ final class OnboardingModuleService {
 
 @MainActor
 extension OnboardingModuleService: OnboardingService {
-    func showOnboarding() {
+    func showOnboarding(overTabBarController tabBarController: UITabBarController? = nil) {
         log.debug("Starting onboarding", category: .app)
         let navigationController = UINavigationController(rootViewController: welcomeToProtonViewController())
         navigationController.setNavigationBarHidden(true, animated: false)
-        windowService.show(viewController: navigationController)
+        if tabBarController != nil {
+            // we're showing onboarding over tabbar, guest -> create account
+            navigationController.modalPresentationStyle = .fullScreen
+            windowService.present(modal: navigationController)
+        } else {
+            windowService.show(viewController: navigationController)
+        }
     }
 
     func showPaywall() {

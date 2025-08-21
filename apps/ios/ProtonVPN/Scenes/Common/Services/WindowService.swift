@@ -29,7 +29,13 @@ protocol WindowServiceFactory {
 }
 
 protocol WindowService: AnyObject {
+    /// Will assign provided `viewController` as a `rootViewController` and call `makeKeyAndVisible`
+    /// - Parameter viewController: a controller to make a root one
     func show(viewController: UIViewController)
+    /// Will try to find topmost navigation controller and push provided `viewController`
+    /// - Parameters:
+    ///   - controller: a controller to push onto the navigation stack
+    ///   - checkForDuplicates: a flag to check if a controller of the same class is already present in the stack
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)
     func popStackToRoot()
 
