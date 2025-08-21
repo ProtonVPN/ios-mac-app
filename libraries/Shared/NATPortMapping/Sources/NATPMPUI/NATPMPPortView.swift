@@ -133,6 +133,7 @@ struct ActivePortView: View {
             }
         }
         .onHover { isHovered in
+            guard hovered != isHovered else { return }
             hovered = isHovered
         }
         .buttonStyle(.plain)
