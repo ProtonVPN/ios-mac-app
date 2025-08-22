@@ -30,6 +30,7 @@ import struct Domain.VPNConnectionFeatures
 import Ergonomics
 import Localization
 import Strings
+import VPNShared
 
 // TODO: Consider splitting into separate loading/refreshing reducers.
 public struct CertificateAuthenticationFeature: Reducer {
@@ -149,16 +150,28 @@ public struct CertificateAuthenticationFeature: Reducer {
             case let .loadingFromStorageFinished(.loaded(data)):
                 let storedFeatures = data.features
                 let currentFeatures = featureProvider.connectionFeatures()
-                guard storedFeatures == currentFeatures else {
+
+                guard let storedFeatures else {
+                    log.info("Current certificate has been stored without features. Need refresh", category: .userCert)
+                    return .send(.refreshCertificate)
+                }
+
+                switch ConnectionFeatureComparator.storedFeatures(storedFeatures, satisfy: currentFeatures) {
+                case .success:
+                    state = .loaded(data)
+                    return .send(.loadingFinished(.success(data)))
+                case let .failure(reason):
                     log.info(
                         "Current features have evolved from stored features. Certificate needs refresh",
                         category: .connection,
-                        metadata: ["storedFeatures": "\(optional: storedFeatures)", "currentFeatures": "\(currentFeatures)"]
+                        metadata: [
+                            "storedFeatures": "\(storedFeatures)",
+                            "currentFeatures": "\(currentFeatures)",
+                            "reason": "\(reason)",
+                        ]
                     )
                     return .send(.refreshCertificate)
                 }
-                state = .loaded(data)
-                return .send(.loadingFinished(.success(data)))
 
             case let .loadingFromStorageFinished(failureReason):
                 guard case .loading = state else {

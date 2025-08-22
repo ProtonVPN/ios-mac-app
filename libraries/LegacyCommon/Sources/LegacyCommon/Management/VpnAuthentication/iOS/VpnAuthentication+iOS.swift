@@ -388,21 +388,26 @@ import VPNShared
                     metadata: ["validUntil": "\(authData.certificate.validUntil)"]
                 )
             }
-
-            @Dependency(\.featureFlagProvider) var featureFlagProvider
-            let safeModeFeatureEnabled = featureFlagProvider[\.safeMode]
+            guard let features else {
+                return false
+            }
 
             let storedFeatures = authenticationStorage.getStoredCertificateFeatures()
-            if let features, !features.equals(other: storedFeatures, safeModeFeatureEnabled: safeModeFeatureEnabled) {
+            guard let storedFeatures else {
+                return true
+            }
+            switch ConnectionFeatureComparator.storedFeatures(storedFeatures, satisfy: features) {
+            case .success:
+                return false
+
+            case let .failure(reason):
                 log.info(
                     "Current features are different from saved certificate's features - certificate needs refresh.",
                     category: .userCert,
-                    metadata: ["currentFeatures": "\(features)", "savedFeatures": "\(String(describing: storedFeatures))"]
+                    metadata: ["currentFeatures": "\(features)", "savedFeatures": "\(storedFeatures)", "reason": "\(reason)"]
                 )
                 return true
             }
-
-            return false
         }
 
         enum ManagerUnavailable: Error {

@@ -159,6 +159,17 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
 
     // MARK: - Private
 
+    private func have(features: VPNConnectionFeatures, evolvedFrom storedFeatures: VPNConnectionFeatures) -> Bool {
+        let comparisonResult = ConnectionFeatureComparator.storedFeatures(storedFeatures, satisfy: features)
+        switch comparisonResult {
+        case .success:
+            return false
+        case let .failure(reason):
+            log.info("Stored features do not satisfy required features", category: .userCert, metadata: ["reason": "\(reason)"])
+            return true
+        }
+    }
+
     private func certificateDoesNeedRefreshing(features: VPNConnectionFeatures?) -> Bool {
         // If we're able to get a certificate from the keychain...
         guard let storedCert = vpnAuthenticationStorage.getStoredCertificate() else {
@@ -174,7 +185,7 @@ public final class ExtensionCertificateRefreshManager: RefreshManager {
             }
 
             // and the features we stored from the last request are the same as the ones for this request...
-            guard storedFeatures.equals(other: features, safeModeFeatureEnabled: true) else {
+            if have(features: features, evolvedFrom: storedFeatures) {
                 log.info("Features have been updated (or haven't been stored), refreshing.", category: .userCert)
                 return true
             }
