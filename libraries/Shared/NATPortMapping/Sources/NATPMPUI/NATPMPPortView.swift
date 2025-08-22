@@ -101,8 +101,8 @@ struct ActivePortView: View {
                         .offset(y: 1)
                         .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
                             Text(Localizable.pfCopied)
-                                .padding(.vertical, 8)
-                                .padding(.horizontal, 16)
+                                .padding(.vertical, .themeSpacing8)
+                                .padding(.horizontal, .themeSpacing16)
                         }
 
                     IconProvider.squares
