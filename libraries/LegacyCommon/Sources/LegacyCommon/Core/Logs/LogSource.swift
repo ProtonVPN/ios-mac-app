@@ -12,6 +12,10 @@ import Strings
 public enum LogSource: CaseIterable {
     case app
     case wireguard
+    #if os(macOS)
+        case plutonium
+    #endif
+
     case osLog
 
     // osLog source is used only for bug reports
@@ -21,6 +25,9 @@ public enum LogSource: CaseIterable {
         switch self {
         case .app: Localizable.applicationLogs
         case .wireguard: Localizable.wireguardLogs
+        #if os(macOS)
+            case .plutonium: Localizable.plutoniumLogs
+        #endif
         case .osLog: "os_log" // Not used in UI
         }
     }

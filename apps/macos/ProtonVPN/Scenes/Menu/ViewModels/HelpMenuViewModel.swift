@@ -22,9 +22,9 @@
 
 import Cocoa
 import Dependencies
+import LegacyCommon
 
 import Domain
-import LegacyCommon
 import PMLogger
 import VPNShared
 
@@ -83,6 +83,14 @@ class HelpMenuViewModel {
         logContentProvider.getLogData(for: .wireguard).loadContent { logContent in
             self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.wireGuardLogFilename)
             self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
+        }
+    }
+
+    func openPlutoniumLogsFolderAction() {
+        guard VPNFeatureFlagType.plutoniumMacOS.enabled else { return }
+        logContentProvider.getLogData(for: .plutonium).loadContent { logContent in
+            self.logFileManager.dump(logs: logContent, toFile: AppConstants.Filenames.plutoniumLogFilename)
+            self.navService.openLogsFolder(filename: AppConstants.Filenames.plutoniumLogFilename)
         }
     }
 

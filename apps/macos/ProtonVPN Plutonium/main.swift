@@ -18,9 +18,14 @@
 
 import Foundation
 import NetworkExtension
+import PlutoniumExtension
+
+let ipc = IPCPlutoniumService(withExtension: IPCHelper.extensionMachServiceName(from: Bundle.main), logger: { plutoniumIPCLog("\($0)") })
 
 autoreleasepool {
+    setupPlutoniumLogging()
     NEProvider.startSystemExtensionMode()
+    ipc.startListener()
 }
 
 dispatchMain()

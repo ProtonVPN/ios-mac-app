@@ -1152,6 +1152,8 @@ public enum Localizable {
   public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "${_plutonium_include_mode_ips}") }
   /// Header of the excluded apps list
   public static var plutoniumInclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_inclusion_list_apps", fallback: "Protected apps") }
+  /// macOS main menu: Help -> Split Tunneling logs row
+  public static var plutoniumLogs: String { return Localizable.tr("Localizable", "_plutonium_logs", fallback: "Split Tunneling Logs") }
   /// Description when user didn't include any apps in the list
   public static var plutoniumNoApps: String { return Localizable.tr("Localizable", "_plutonium_no_apps", fallback: "No apps selected") }
   /// Empty list title, appears when no elements are present

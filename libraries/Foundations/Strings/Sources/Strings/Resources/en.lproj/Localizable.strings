@@ -1687,6 +1687,9 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "${_plutonium_include_mode_ips}";
 
+/* macOS main menu: Help -> Split Tunneling logs row */
+"_plutonium_logs" = "Split Tunneling Logs";
+
 // MARK: Local agent
 
 "_local_agent_server_error_title" = "Server error";

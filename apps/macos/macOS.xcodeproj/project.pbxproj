@@ -333,6 +333,10 @@
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
 		EB29024B2E3129E400C200E7 /* ch.protonvpn.mac.Transparent-Proxy.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		EB4E2CA52E535C31003EA83C /* PlutoniumMacLogProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */; };
+		EB4E2CAC2E5369A1003EA83C /* IPCServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641C227D261FB00EEFB1D /* IPCServerConnection.swift */; };
+		EB4E2CAD2E5369E7003EA83C /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B927D25C5D00EEFB1D /* CodeSignatureComparitor.swift */; };
+		EB4E2CB12E536E57003EA83C /* IPCHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092F26B42B63008C9F2C /* IPCHelper.swift */; };
 		EBA003142E03008B00A8CC06 /* WireguardNetworkInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */; };
 		EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8641B427D22A6900EEFB1D /* IPCClientConnection.swift */; };
 		EBB751C52DA7D4C900F79994 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
@@ -877,6 +881,7 @@
 		E9F88DE627B544E0003E5179 /* Colors+BugReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Colors+BugReport.swift"; path = "../../../../macos/ProtonVPN/Scenes/ReportBug/Colors+BugReport.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
+		EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumMacLogProvider.swift; sourceTree = "<group>"; };
 		EBA003132E03008B00A8CC06 /* WireguardNetworkInterface.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardNetworkInterface.swift; sourceTree = "<group>"; };
 		EBB751C42DA7D4C800F79994 /* ch.protonvpn.mac.Transparent-Proxy.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.Transparent-Proxy.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
@@ -1727,6 +1732,7 @@
 		E9AF94C526B7F81700AA1A5F /* VPN */ = {
 			isa = PBXGroup;
 			children = (
+				EB4E2CA42E535C31003EA83C /* PlutoniumMacLogProvider.swift */,
 				E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */,
 				E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */,
 				9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */,
@@ -3281,7 +3287,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB4E2CAD2E5369E7003EA83C /* CodeSignatureComparitor.swift in Sources */,
+				EB4E2CB12E536E57003EA83C /* IPCHelper.swift in Sources */,
 				EBA0032E2E031ABF00A8CC06 /* IPCClientConnection.swift in Sources */,
+				EB4E2CAC2E5369A1003EA83C /* IPCServerConnection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3517,6 +3526,7 @@
 				EEBB82EC1F1DF6120041432A /* OverviewViewController.swift in Sources */,
 				E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */,
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
+				EB4E2CA52E535C31003EA83C /* PlutoniumMacLogProvider.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
@@ -4501,6 +4511,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN Plutonium/PlutoniumNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -4539,6 +4550,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN Plutonium/PlutoniumNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -4577,6 +4589,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN Plutonium/PlutoniumNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Profile;
@@ -4615,6 +4628,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN Plutonium/PlutoniumNetworkExtension-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Staging;
