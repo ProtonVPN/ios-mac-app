@@ -277,11 +277,17 @@ final class LoginViewModel: ObservableObject {
     /// - Parameter shouldDefaultToSmartIfPossible: If system extensions are approved, sets default protocol to smart.
     /// - Parameter shouldStartTour: Controls whether the sysex tour is shown, if approval is required.
     private func checkSysexApprovalAndAdjustProtocol(shouldDefaultToSmartIfPossible: Bool, shouldStartTour: Bool) {
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour) { result in
+        let includedExtensionTypes: [SystemExtensionType] = propertiesManager.isSubsequentLaunch ? [.wireGuard] : [.wireGuard, .plutonium]
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, includedTypes: includedExtensionTypes) { result, _ in
             switch result {
-            case .success:
+            case let .success(success):
                 if shouldDefaultToSmartIfPossible {
-                    self.propertiesManager.smartProtocol = true
+                    switch success {
+                    case .installed, .upgraded:
+                        self.propertiesManager.smartProtocol = true
+                    case .alreadyThere:
+                        break
+                    }
                 }
             case .failure:
                 let currentProtocol = self.propertiesManager.connectionProtocol

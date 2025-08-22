@@ -58,7 +58,7 @@
         }
 
         func testInstallingExtensionForTheFirstTimeSimply() {
-            let approvalRequired = SystemExtensionType.allCases.map { XCTestExpectation(description: "Approval required for \($0.rawValue)") }
+            let approvalRequired = SystemExtensionType.allCases.filter(\.featureEnabled).map { XCTestExpectation(description: "Approval required for \($0.rawValue)") }
             let installFinished = XCTestExpectation(description: "Finish install")
             let alertShown = XCTestExpectation(description: "alertShown")
             alertShown.expectedFulfillmentCount = 2
@@ -73,7 +73,7 @@
                 approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
             }
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: SystemExtensionType.allCases) { installResult, _ in
                 result = installResult
                 installFinished.fulfill()
             }
@@ -102,7 +102,7 @@
         }
 
         func testInstallingExtensionForTheFirstTimeSubmittingMultipleRequests() {
-            let approvalRequired = SystemExtensionType.allCases.map { XCTestExpectation(description: "Approval required for \($0.rawValue)") }
+            let approvalRequired = SystemExtensionType.allCases.filter(\.featureEnabled).map { XCTestExpectation(description: "Approval required for \($0.rawValue)") }
             var initialRequests: [SystemExtensionRequest] = []
 
             let installFinished = XCTestExpectation(description: "Finish install")
@@ -114,7 +114,7 @@
                 approvalRequired.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
             }
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: SystemExtensionType.allCases) { result, _ in
                 installResult = result
                 installFinished.fulfill()
             }
@@ -130,14 +130,14 @@
                 var cancelResult: SystemExtensionResult?
                 let installCancelled = XCTestExpectation(description: "Cancel install attempt #\(attempt)")
 
-                sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+                sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: SystemExtensionType.allCases) { result, _ in
                     cancelResult = result
                     installCancelled.fulfill()
                 }
                 wait(for: [installCancelled], timeout: expectationTimeout)
 
-                guard case .success(.alreadyThere) = cancelResult else {
-                    XCTFail("Expected second request to be cancelled, but got \(String(describing: cancelResult)) instead")
+                guard case .failure(.tourCancelled) = cancelResult else {
+                    XCTFail("Expected second request to be treated as a cancelled tour, but got \(String(describing: cancelResult)) instead")
                     continue
                 }
             }
@@ -178,7 +178,7 @@
                 XCTFail("Shouldn't need to request for approval, extensions are being upgraded")
             }
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: SystemExtensionType.allCases) { installResult, _ in
                 result = installResult
                 installFinished.fulfill()
             }
@@ -215,7 +215,7 @@
             let installFinished = XCTestExpectation(description: "Wait for installation error")
             var result: SystemExtensionResult?
 
-            let requestPending = SystemExtensionType.allCases.map { XCTestExpectation(description: "Request pending for \($0.rawValue)") }
+            let requestPending = SystemExtensionType.allCases.filter(\.featureEnabled).map { XCTestExpectation(description: "Request pending for \($0.rawValue)") }
             var initialRequests: [SystemExtensionRequest] = []
 
             sysextManager.requestIsPending = { request in
@@ -223,7 +223,7 @@
                 requestPending.first(where: { $0.description.contains(request.request.identifier) })?.fulfill()
             }
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true) { installResult in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: SystemExtensionType.allCases) { installResult, _ in
                 result = installResult
                 installFinished.fulfill()
             }
@@ -248,7 +248,7 @@
             let installFinished = XCTestExpectation(description: "Finish install")
             var result: SystemExtensionResult?
 
-            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { installResult in
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false, includedTypes: SystemExtensionType.allCases) { installResult, _ in
                 result = installResult
                 installFinished.fulfill()
             }
@@ -263,6 +263,46 @@
             }
 
             XCTAssertEqual(sysextManager.installedExtensions.count, 0, "No extensions should be installed when tour was skipped")
+        }
+
+        func testInstallingOnlyWireGuardExtensionWhenSubsetProvided() {
+            let approvalRequired = XCTestExpectation(description: "Approval required for wireguard")
+            let installFinished = XCTestExpectation(description: "Finish install")
+            let alertShown = XCTestExpectation(description: "alertShown")
+            alertShown.expectedFulfillmentCount = 2
+            var result: SystemExtensionResult?
+
+            alertService.alertAdded = { _ in
+                alertShown.fulfill()
+            }
+
+            sysextManager.requestRequiresUserApproval = { [unowned self] request in
+                sysextManager.approve(request: request)
+                if request.request.identifier == SystemExtensionType.wireGuard.rawValue {
+                    approvalRequired.fulfill()
+                }
+            }
+
+            sysextManager.checkAndInstallOrUpdateExtensionsIfNeeded(
+                shouldStartTour: true,
+                includedTypes: [.wireGuard]
+            ) { installResult, _ in
+                result = installResult
+                installFinished.fulfill()
+            }
+
+            wait(for: [approvalRequired, alertShown, installFinished], timeout: expectationTimeout)
+
+            guard case .success(.installed) = result else {
+                XCTFail("Expected system extensions to install successfully but got \(String(describing: result))")
+                return
+            }
+
+            XCTAssertEqual(sysextManager.installedExtensions.count, 1, "Should have installed one extension")
+            XCTAssert(
+                sysextManager.installedExtensions.contains { $0.bundleId == SystemExtensionType.wireGuard.rawValue },
+                "Should have installed WireGuard extension"
+            )
         }
     }
 

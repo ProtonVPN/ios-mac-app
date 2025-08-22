@@ -96,7 +96,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { result in
+        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { result, _ in
             switch result {
             case .success:
                 performConnection()
