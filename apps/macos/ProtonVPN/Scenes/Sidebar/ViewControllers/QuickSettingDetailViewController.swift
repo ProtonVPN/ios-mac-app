@@ -324,7 +324,7 @@ private extension QuickSettingDetailViewController {
         enum Arrow {
             static let topOffset: CGFloat = 4
             static let width: CGFloat = 30
-            static let heightToWidthRatio: CGFloat = 6 / 18
+            static let heightToWidthRatio: CGFloat = 1 / 3
         }
 
         enum ContentBox {

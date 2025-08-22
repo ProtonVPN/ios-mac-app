@@ -139,7 +139,7 @@ final class QuickSettingsManager {
         let container = NSBox().with {
             $0.boxType = .custom
             $0.borderType = .noBorder
-            $0.cornerRadius = 4
+            $0.cornerRadius = .themeRadius4
             $0.titlePosition = .noTitle
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.fillColor = NSColor.clear
