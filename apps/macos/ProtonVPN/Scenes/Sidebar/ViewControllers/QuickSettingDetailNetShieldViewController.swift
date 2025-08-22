@@ -31,17 +31,10 @@ final class QuickSettingDetailNetShieldViewController: QuickSettingDetailViewCon
         super.viewDidLoad()
 
         // NetShield stats container
-        contentBox.addSubview(netShieldStatsContainer)
+        titleHeaderStackView.insertArrangedSubview(netShieldStatsContainer, at: 1)
 
-        dropdownDescriptionTopViewConstraint.isActive = false
         NSLayoutConstraint.activate([
-            // NetShield stats container constraints
-            netShieldStatsContainer.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16),
-            netShieldStatsContainer.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
-            netShieldStatsContainer.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
             netShieldStatsContainer.heightAnchor.constraint(equalToConstant: 72),
-
-            dropdownDescription.topAnchor.constraint(equalTo: netShieldStatsContainer.bottomAnchor, constant: 16),
         ])
 
         setupNetShieldStatsContainer()

@@ -24,7 +24,6 @@ import LegacyCommon
 protocol QuickSettingsManagerDelegate: AnyObject {
     func quickSettingsManager(_ manager: QuickSettingsManager, didShowSetting type: QuickSettingType)
     func quickSettingsManagerDidHideAllSettings(_ manager: QuickSettingsManager)
-    func quickSettingsManager(_ manager: QuickSettingsManager, needsWindowResize: Bool)
 }
 
 // MARK: - Manager Class
@@ -94,8 +93,10 @@ final class QuickSettingsManager {
     private func setupConstraints(for view: NSView, in container: NSBox) {
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            view.heightAnchor.constraint(equalTo: container.heightAnchor),
-            view.widthAnchor.constraint(equalTo: container.widthAnchor),
+            view.topAnchor.constraint(equalTo: container.topAnchor),
+            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
     }
 
@@ -132,11 +133,6 @@ final class QuickSettingsManager {
         button.detailOpened = true
 
         delegate?.quickSettingsManager(self, didShowSetting: type)
-
-        // Handle NetShield window resize requirement
-        if type == .netShieldDisplay {
-            delegate?.quickSettingsManager(self, needsWindowResize: true)
-        }
     }
 
     private func createContainer(in parentView: NSView) -> NSBox {
@@ -155,7 +151,7 @@ final class QuickSettingsManager {
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 48),
             container.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
-            container.widthAnchor.constraint(equalToConstant: AppConstants.Windows.loginWidth),
+            container.widthAnchor.constraint(equalTo: parentView.widthAnchor),
             container.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
         ])
 

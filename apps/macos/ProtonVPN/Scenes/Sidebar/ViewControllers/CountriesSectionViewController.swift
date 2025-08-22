@@ -493,18 +493,4 @@ extension CountriesSectionViewController: QuickSettingsManagerDelegate {
 
         serverListTableView.reloadData()
     }
-
-    func quickSettingsManager(_: QuickSettingsManager, needsWindowResize: Bool) {
-        guard needsWindowResize else { return }
-
-        let expectedHeight = 784.0 // determined experimentally, not worth finding a "right" solution given the imminent changes
-
-        if let window = view.window,
-           window.frame.height < expectedHeight {
-            var newFrame = window.frame
-            newFrame.size.height = expectedHeight
-            newFrame.origin.y -= expectedHeight - window.frame.height // the window should gain size towards the bottom.
-            view.window?.setFrame(newFrame, display: true)
-        }
-    }
 }

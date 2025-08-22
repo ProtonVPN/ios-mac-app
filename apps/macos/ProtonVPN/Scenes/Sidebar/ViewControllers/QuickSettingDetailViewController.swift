@@ -69,9 +69,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.isSelectable = false
         $0.isBezeled = false
         $0.drawsBackground = false
-        $0.font = NSFont.systemFont(ofSize: 16)
-        $0.textColor = .labelColor
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.preferredMaxLayoutWidth = Dimensions.maxTextFieldWidth
         $0.setAccessibilityIdentifier("QSTitle")
     }
 
@@ -80,10 +79,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.isSelectable = false
         $0.isBezeled = false
         $0.drawsBackground = false
-        $0.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        $0.textColor = .labelColor
-        $0.cell?.wraps = true
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.preferredMaxLayoutWidth = Dimensions.maxTextFieldWidth
         $0.setAccessibilityIdentifier("QSDescription")
     }
 
@@ -95,6 +92,16 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.title = Localizable.learnMore
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.setAccessibilityIdentifier("LearnMoreButton")
+    }
+
+    var titleHeaderStackView: NSStackView = .init().with {
+        $0.orientation = .vertical
+        $0.alignment = .leading
+        $0.spacing = .themeSpacing16
+        $0.distribution = .fillProportionally
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.wantsLayer = true
+        $0.layer?.masksToBounds = false
     }
 
     var dropdownUpgradeButton: PrimaryActionButton = .init(frame: .zero).with {
@@ -124,10 +131,8 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.isSelectable = false
         $0.isBezeled = false
         $0.drawsBackground = false
-        $0.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
-        $0.textColor = .labelColor
-        $0.cell?.wraps = true
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.preferredMaxLayoutWidth = Dimensions.maxTextFieldWidth
         $0.setAccessibilityIdentifier("QSNote")
     }
 
@@ -154,17 +159,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         $0.alignment = .centerX
         $0.spacing = .themeSpacing16
         $0.distribution = .fillProportionally
-        $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    lazy var dropdownDescriptionTopViewConstraint: NSLayoutConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
-
-    private var detailBox: NSBox = .init().with {
-        $0.boxType = .custom
-        $0.borderType = .noBorder
-        $0.cornerRadius = .themeRadius4
-        $0.titlePosition = .noTitle
-        $0.fillColor = NSColor(white: 1, alpha: 0.0)
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -210,23 +204,15 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     // MARK: - Setup Views
 
     private func setupViews() {
-        // Detail box (outer container)
-        view.addSubview(detailBox)
-
         // Arrow image view
-        detailBox.addSubview(arrowIV)
+        view.addSubview(arrowIV)
 
         // Content box
-        detailBox.addSubview(contentBox)
+        view.addSubview(contentBox)
 
-        // Title text field
-        contentBox.addSubview(dropdownTitle)
+        [dropdownTitle, dropdownDescription, dropdownLearnMore].forEach(titleHeaderStackView.addArrangedSubview)
 
-        // Description text field
-        contentBox.addSubview(dropdownDescription)
-
-        // Learn more button
-        contentBox.addSubview(dropdownLearnMore)
+        contentBox.addSubview(titleHeaderStackView)
 
         // Note text field
         [dropdownNoteImageView, dropdownNote].forEach(dropdownNoteStackView.addArrangedSubview)
@@ -240,50 +226,40 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            // Detail box constraints
-            detailBox.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            detailBox.topAnchor.constraint(equalTo: view.topAnchor),
-            detailBox.widthAnchor.constraint(equalTo: view.widthAnchor),
-            detailBox.heightAnchor.constraint(equalTo: view.heightAnchor),
-
             // Arrow image view constraints
-            arrowIV.topAnchor.constraint(equalTo: detailBox.topAnchor, constant: 4),
-            arrowIV.widthAnchor.constraint(equalToConstant: 30),
-            arrowIV.heightAnchor.constraint(equalTo: arrowIV.widthAnchor, multiplier: 6 / 18),
+            arrowIV.topAnchor.constraint(equalTo: view.topAnchor, constant: Dimensions.Arrow.topOffset),
+            arrowIV.widthAnchor.constraint(equalToConstant: Dimensions.Arrow.width),
+            arrowIV.heightAnchor
+                .constraint(equalTo: arrowIV.widthAnchor, multiplier: Dimensions.Arrow.heightToWidthRatio),
 
             // Content box constraints
-            contentBox.topAnchor.constraint(equalTo: arrowIV.bottomAnchor, constant: -1),
-            contentBox.leadingAnchor.constraint(equalTo: detailBox.leadingAnchor, constant: 20),
-            contentBox.trailingAnchor.constraint(equalTo: detailBox.trailingAnchor, constant: -20),
-            contentBox.bottomAnchor.constraint(lessThanOrEqualTo: detailBox.bottomAnchor, constant: -7),
+            contentBox.topAnchor.constraint(equalTo: arrowIV.bottomAnchor, constant: Dimensions.ContentBox.topOffset),
+            contentBox.leadingAnchor
+                .constraint(equalTo: view.leadingAnchor, constant: Dimensions.ContentBox.horizontalOffset),
+            contentBox.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Dimensions.ContentBox.horizontalOffset),
+            contentBox.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: Dimensions.ContentBox.bottomOffset),
 
             // Title text field constraints
-            dropdownTitle.topAnchor.constraint(equalTo: contentBox.topAnchor, constant: 24),
-            dropdownTitle.leadingAnchor.constraint(equalTo: contentBox.leadingAnchor, constant: 16),
-            dropdownTitle.trailingAnchor.constraint(equalTo: contentBox.trailingAnchor, constant: -16),
-
-            // Description text field constraints
-            dropdownDescriptionTopViewConstraint,
-            dropdownDescription.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
-            dropdownDescription.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
-
-            // Learn more button constraints
-            dropdownLearnMore.topAnchor.constraint(equalTo: dropdownDescription.bottomAnchor, constant: 4),
-            dropdownLearnMore.leadingAnchor.constraint(equalTo: dropdownTitle.leadingAnchor),
-            dropdownLearnMore.heightAnchor.constraint(equalToConstant: 15),
+            titleHeaderStackView.topAnchor
+                .constraint(equalTo: contentBox.topAnchor, constant: Dimensions.TitleHeaderView.topOffset),
+            titleHeaderStackView.leadingAnchor
+                .constraint(equalTo: contentBox.leadingAnchor, constant: Dimensions.TitleHeaderView.horizontalOffset),
+            titleHeaderStackView.trailingAnchor.constraint(equalTo: contentBox.trailingAnchor, constant: -Dimensions.TitleHeaderView.horizontalOffset),
 
             // Dropdown icon size
-            dropdownNoteImageView.heightAnchor.constraint(equalToConstant: 16),
-            dropdownNoteImageView.widthAnchor.constraint(equalToConstant: 16),
+            dropdownNoteImageView.heightAnchor.constraint(equalToConstant: Dimensions.DropdownNoteImage.height),
+            dropdownNoteImageView.widthAnchor.constraint(equalToConstant: Dimensions.DropdownNoteImage.width),
 
             // Options view constraints
-            buttonsAndNoteView.topAnchor.constraint(equalTo: dropdownLearnMore.bottomAnchor, constant: 12),
-            buttonsAndNoteView.leadingAnchor.constraint(equalTo: dropdownLearnMore.leadingAnchor),
-            buttonsAndNoteView.trailingAnchor.constraint(equalTo: dropdownTitle.trailingAnchor),
-            buttonsAndNoteView.bottomAnchor.constraint(equalTo: contentBox.bottomAnchor, constant: -16),
+            buttonsAndNoteView.topAnchor
+                .constraint(equalTo: titleHeaderStackView.bottomAnchor, constant: Dimensions.ButtonsAndNote.topOffset),
+            buttonsAndNoteView.leadingAnchor.constraint(equalTo: titleHeaderStackView.leadingAnchor),
+            buttonsAndNoteView.trailingAnchor.constraint(equalTo: titleHeaderStackView.trailingAnchor),
+            buttonsAndNoteView.bottomAnchor
+                .constraint(equalTo: contentBox.bottomAnchor, constant: Dimensions.ButtonsAndNote.bottomOffset),
 
             // Upgrade button constraints
-            dropdownUpgradeButton.heightAnchor.constraint(equalToConstant: 33),
+            dropdownUpgradeButton.heightAnchor.constraint(equalToConstant: Dimensions.UpgradeButton.height),
 
             dropdownOptionsView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor),
             dropdownNoteStackView.widthAnchor.constraint(equalTo: buttonsAndNoteView.widthAnchor),
@@ -291,11 +267,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         // Arrow horizontal constraint
         arrowHorizontalConstraint.isActive = true
-
-        // Alternative description constraint
-        let alternativeDescriptionConstraint = dropdownDescription.topAnchor.constraint(equalTo: dropdownTitle.bottomAnchor, constant: 16)
-        alternativeDescriptionConstraint.priority = NSLayoutConstraint.Priority(999)
-        alternativeDescriptionConstraint.isActive = true
     }
 
     // MARK: - Utils
@@ -345,5 +316,42 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
 
         dropdownUpgradeButton.isHidden = !needsUpgrade
         dropdownNoteStackView.isHidden = dropdownNote.attributedStringValue.length < 1
+    }
+}
+
+private extension QuickSettingDetailViewController {
+    enum Dimensions {
+        enum Arrow {
+            static let topOffset: CGFloat = 4
+            static let width: CGFloat = 30
+            static let heightToWidthRatio: CGFloat = 6 / 18
+        }
+
+        enum ContentBox {
+            static let topOffset: CGFloat = -1
+            static let horizontalOffset: CGFloat = 20
+            static let bottomOffset: CGFloat = -7
+        }
+
+        enum TitleHeaderView {
+            static let topOffset: CGFloat = 24
+            static let horizontalOffset: CGFloat = 16
+        }
+
+        enum DropdownNoteImage {
+            static let height: CGFloat = 16
+            static let width: CGFloat = 16
+        }
+
+        enum ButtonsAndNote {
+            static let topOffset: CGFloat = 12
+            static let bottomOffset: CGFloat = -16
+        }
+
+        enum UpgradeButton {
+            static let height: CGFloat = 33
+        }
+
+        static let maxTextFieldWidth: CGFloat = AppConstants.Windows.loginWidth - ContentBox.horizontalOffset * 2 - TitleHeaderView.horizontalOffset * 2
     }
 }
