@@ -40,6 +40,7 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-sharing", .upToNextMajor(from: "2.3.3")),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.3.1")),
         .package(url: "https://github.com/getsentry/sentry-cocoa", exact: "8.36.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", .upToNextMajor(from: "1.17.6")),
     ],
     targets: [
         .target(
@@ -106,7 +107,10 @@ let package = Package(
                 .product(name: "TimerMock", package: "Timer"),
             ]
         ),
-        .testTarget(name: "VPNAppCoreTests", dependencies: ["VPNAppCore"]),
+        .testTarget(name: "VPNAppCoreTests", dependencies: [
+            "VPNAppCore",
+            .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+        ]),
         .testTarget(name: "VPNSharedTests", dependencies: ["VPNShared"]),
         .testTarget(name: "NEHelperTests", dependencies: ["NEHelper", "VPNSharedTesting"]),
         .testTarget(name: "VPNCryptoTests", dependencies: ["VPNCrypto"]),

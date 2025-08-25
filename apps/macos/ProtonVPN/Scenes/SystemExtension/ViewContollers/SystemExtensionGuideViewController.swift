@@ -53,10 +53,10 @@ class SystemExtensionGuideViewController: NSViewController {
     }
 
     override func loadView() {
-        let tutorialView = SystemExtensionsTutorialView(model: .init(
+        let tutorialView = SystemExtensionsTutorialView(
             isSequoiaOrNewer: isSequoiaOrNewer,
             origin: origin
-        ))
+        )
         .preferredColorScheme(.dark)
         view = NSHostingView(rootView: tutorialView)
     }
