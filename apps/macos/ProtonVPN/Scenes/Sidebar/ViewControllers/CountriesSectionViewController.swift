@@ -86,10 +86,6 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var listTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
 
-    @IBOutlet var secureCoreContainer: NSBox!
-    @IBOutlet var netshieldContainer: NSBox!
-    @IBOutlet var killSwitchContainer: NSBox!
-    @IBOutlet var portForwardingContainer: NSBox!
     @IBOutlet var netShieldStatsLabel: NSTextField?
     @IBOutlet var portForwardingWarningImage: NSImageView!
 
@@ -126,10 +122,10 @@ final class CountriesSectionViewController: NSViewController {
         setupPortForwardingAlertBage()
         observeAppearance()
 
-        secureCoreBtn.setAccessibilityChildren([secureCoreContainer as Any])
-        netShieldBtn.setAccessibilityChildren([netshieldContainer as Any])
-        killSwitchBtn.setAccessibilityChildren([killSwitchContainer as Any])
-        portForwardingBtn.setAccessibilityChildren([portForwardingContainer as Any])
+        secureCoreBtn.setAccessibilityChildren([secureCoreSectionView as Any])
+        netShieldBtn.setAccessibilityChildren([netShieldSectionView as Any])
+        killSwitchBtn.setAccessibilityChildren([killSwitchSectionView as Any])
+        portForwardingBtn.setAccessibilityChildren([portForwardingSectionView as Any])
     }
 
     override func viewWillAppear() {
@@ -311,7 +307,7 @@ final class CountriesSectionViewController: NSViewController {
 
     private func updatePortForwardingAlertBage() {
         if viewModel.isConnected, viewModel.portForwardingIsOn, !viewModel.connectedServerSupportsP2P {
-            portForwardingWarningImage?.image = AppTheme.Icon.exclamationTriangleFilled
+            portForwardingWarningImage?.image = Theme.Asset.orangeExclamationMark.image
             portForwardingWarningImage?.isHidden = false
         } else {
             portForwardingWarningImage?.isHidden = true
@@ -496,19 +492,5 @@ extension CountriesSectionViewController: QuickSettingsManagerDelegate {
         serverListScrollView.block = false
 
         serverListTableView.reloadData()
-    }
-
-    func quickSettingsManager(_: QuickSettingsManager, needsWindowResize: Bool) {
-        guard needsWindowResize else { return }
-
-        let expectedHeight = 784.0 // determined experimentally, not worth finding a "right" solution given the imminent changes
-
-        if let window = view.window,
-           window.frame.height < expectedHeight {
-            var newFrame = window.frame
-            newFrame.size.height = expectedHeight
-            newFrame.origin.y -= expectedHeight - window.frame.height // the window should gain size towards the bottom.
-            view.window?.setFrame(newFrame, display: true)
-        }
     }
 }

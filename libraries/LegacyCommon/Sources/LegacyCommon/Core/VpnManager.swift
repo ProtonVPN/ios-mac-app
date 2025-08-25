@@ -63,6 +63,11 @@ public protocol VpnManagerProtocol {
     func set(natType: NATType)
     func set(safeMode: Bool)
     func set(portForwarding: Bool)
+
+    #if os(macOS)
+        func startNATPortMappingService()
+        func stopNATPortMappingService()
+    #endif
 }
 
 public protocol VpnManagerFactory {
@@ -789,15 +794,9 @@ public final class VpnManager: VpnManagerProtocol {
             disconnectCompletion = nil
             setRemoteAuthenticationEndpoint(provider: nil)
             disconnectLocalAgent()
-            #if os(macOS)
-                stopNATPortMappingService()
-            #endif
         case .connected:
             setRemoteAuthenticationEndpoint(provider: vpnManager.vpnConnection as? ProviderMessageSender)
             connectLocalAgent()
-            #if os(macOS)
-                startNATPortMappingService()
-            #endif
         default:
             break
         }

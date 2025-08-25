@@ -105,12 +105,15 @@ public class AppStateManagerImplementation: AppStateManager {
             guard displayState != oldValue else {
                 return
             }
+            displayStateStreamContinuation.yield(displayState)
 
             DispatchQueue.main.async { [displayState] in
                 AppEvent.appStateManagerDisplayStateChange.post(displayState)
             }
         }
     }
+
+    private var (displayStateStream, displayStateStreamContinuation) = AsyncStream<AppDisplayState>.makeStream()
 
     private var vpnState: VpnState = .invalid {
         didSet {
@@ -456,6 +459,19 @@ public class AppStateManagerImplementation: AppStateManager {
         $killSwitch.publisher.removeDuplicates().receive(on: RunLoop.main).sink { [weak self] _ in
             self?.killSwitchChanged()
         }.store(in: &cancellables)
+
+        #if os(macOS)
+            Task {
+                for await displayState in displayStateStream {
+                    switch displayState {
+                    case .connected:
+                        vpnManager.startNATPortMappingService()
+                    default:
+                        vpnManager.stopNATPortMappingService()
+                    }
+                }
+            }
+        #endif
     }
 
     private func vpnStateChanged() {

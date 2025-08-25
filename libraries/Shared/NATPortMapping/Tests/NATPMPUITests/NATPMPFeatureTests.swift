@@ -28,7 +28,7 @@ struct NATPMPFeatureTests {
     func startPortMappingReceiveAndStop() async {
         let mockService = NATPortMappingServiceMock()
 
-        let store = TestStore(initialState: NATPMPFeature.State.loading) {
+        let store = TestStore(initialState: NATPMPFeature.State.loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)) {
             NATPMPFeature()
         } withDependencies: {
             $0.natPortMappingService = mockService
@@ -39,51 +39,54 @@ struct NATPMPFeatureTests {
         await store.send(.startPortMappingObservation)
 
         // Send first port mapping response
-        let firstResponse = createPortMappingResponse(externalPort: 8080)
+        let firstResponseDate = Date(timeIntervalSince1970: 999)
+        let firstResponse = createPortMappingResponse(externalPort: 8080, createDate: firstResponseDate)
         mockService.portMappingStream.value = .success(firstResponse)
 
         // observation started before first response; current value subject holds `nil`
         await store.receive(\.portMappingReceivedNil)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 8080, updateDate: Date(timeIntervalSince1970: 1000), responseDate: Date(timeIntervalSince1970: 1000))
+            $0 = .loaded(externalPortNumber: 8080, updateDate: firstResponseDate)
         }
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 2000) }
 
         // Send second port mapping response with different port
-        let secondResponse = createPortMappingResponse(externalPort: 9090)
+        let secondResponseDate = Date(timeIntervalSince1970: 1999)
+        let secondResponse = createPortMappingResponse(externalPort: 9090, createDate: secondResponseDate)
         mockService.portMappingStream.value = .success(secondResponse)
 
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 2000))
+            $0 = .loaded(externalPortNumber: 9090, updateDate: secondResponseDate)
         }
 
         store.dependencies.date = DateGenerator { Date(timeIntervalSince1970: 3000) }
 
-        // Send third response with same port (should update responseDate)
-        let thirdResponse = createPortMappingResponse(externalPort: 9090)
+        // Send third response with same port
+        let thirdResponseDate = Date(timeIntervalSince1970: 2999)
+        let thirdResponse = createPortMappingResponse(externalPort: 9090, createDate: thirdResponseDate)
         mockService.portMappingStream.value = .success(thirdResponse)
 
-        await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 9090, updateDate: Date(timeIntervalSince1970: 2000), responseDate: Date(timeIntervalSince1970: 3000))
-        }
+        // no actions received since we filter duplicated mapping responses by port number
 
         // Stop port mapping observation
         await store.send(.stopPortMappingObservation)
 
         // send fourth response; no active subscription
         let fourthResponseCreateDate = Date()
-        let fourthResponse = createPortMappingResponse(externalPort: 6666)
+        let fourthResponse = createPortMappingResponse(externalPort: 6666, createDate: fourthResponseCreateDate)
         store.dependencies.date = DateGenerator { fourthResponseCreateDate.addingTimeInterval(161) }
 
         mockService.portMappingStream.value = .success(fourthResponse)
 
         // Restart port mapping observation
         await store.send(.startPortMappingObservation) {
-            $0 = .loading
+            // loading state holds previously used data
+            $0 = .loading(lastExternalPortNumber: 9090, lastUsedUpdateDate: secondResponseDate)
         }
 
+        // nothing happens because mapping has expired: now is fourthResponseCreateDate + 161, lifetime is 60
         await store.receive(\.portMapped)
 
         // Stop port mapping observation
@@ -91,7 +94,7 @@ struct NATPMPFeatureTests {
 
         // send fifth response; no active subscription
         let fifthResponseCreateDate = Date()
-        let fifthResponse = createPortMappingResponse(externalPort: 7777)
+        let fifthResponse = createPortMappingResponse(externalPort: 7777, createDate: fifthResponseCreateDate)
         let nowDate = fifthResponseCreateDate.addingTimeInterval(5)
         store.dependencies.date = DateGenerator { nowDate }
 
@@ -102,7 +105,7 @@ struct NATPMPFeatureTests {
 
         // still valid mapping from before there was no observation
         await store.receive(\.portMapped) {
-            $0 = .loaded(externalPortNumber: 7777, updateDate: nowDate, responseDate: nowDate)
+            $0 = .loaded(externalPortNumber: 7777, updateDate: fifthResponseCreateDate)
         }
 
         // Stop port mapping observation
@@ -116,7 +119,9 @@ struct NATPMPFeatureTests {
     func startPortMappingReceiveError() async {
         let mockService = NATPortMappingServiceMock()
 
-        let store = TestStore(initialState: NATPMPFeature.State.loading) {
+        let store = TestStore(
+            initialState: NATPMPFeature.State.loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)
+        ) {
             NATPMPFeature()
         } withDependencies: {
             $0.natPortMappingService = mockService
@@ -143,27 +148,16 @@ struct NATPMPFeatureTests {
 
     // MARK: - Helper functions
 
-    private func createPortMappingResponse(externalPort: UInt16) -> PortMappingPacketResponse {
-        // Create a packet response data array
-        // version: 0, opcode: 129 (UDP response), result code: 0 (success)
-        // epoch time: 1000 (matches test date)
-        // internal port: 1234 (arbitrary)
-        // external port: as specified
-        // lifetime: 7200 (arbitrary)
-
-        var data = Data()
-        data.append(0) // version
-        data.append(129) // opcode (UDP response)
-        data.append(contentsOf: UInt16(0).bigEndian.bytes) // result code (success)
-        data.append(contentsOf: UInt32(1000).bigEndian.bytes) // epoch time
-        data.append(contentsOf: UInt16(1234).bigEndian.bytes) // internal port
-        data.append(contentsOf: externalPort.bigEndian.bytes) // external port
-        data.append(contentsOf: UInt32(60).bigEndian.bytes) // lifetime
-
-        do {
-            return try PortMappingPacketResponse(from: data)
-        } catch {
-            fatalError("Failed to create test PortMappingPacketResponse: \(error)")
-        }
+    private func createPortMappingResponse(externalPort: UInt16, createDate: Date) -> PortMappingPacketResponse {
+        PortMappingPacketResponse(
+            version: 0,
+            opcode: 129, // UDP response
+            resultCode: 0, // success
+            epochTime: 1000,
+            internalPort: 1234,
+            mappedExternalPort: externalPort,
+            mappingLifetime: 60,
+            createDate: createDate
+        )
     }
 }

@@ -24,7 +24,6 @@ import LegacyCommon
 protocol QuickSettingsManagerDelegate: AnyObject {
     func quickSettingsManager(_ manager: QuickSettingsManager, didShowSetting type: QuickSettingType)
     func quickSettingsManagerDidHideAllSettings(_ manager: QuickSettingsManager)
-    func quickSettingsManager(_ manager: QuickSettingsManager, needsWindowResize: Bool)
 }
 
 // MARK: - Manager Class
@@ -33,7 +32,9 @@ final class QuickSettingsManager {
     private var configurations: [QuickSettingConfiguration] = []
     private var viewControllers: [QuickSettingType: QuickSettingDetailViewController] = [:]
     private var currentlyShownType: QuickSettingType?
+    private var containers: [QuickSettingType: NSBox] = [:]
 
+    weak var parentViewController: NSViewController?
     weak var delegate: QuickSettingsManagerDelegate?
 
     // MARK: - Setup
@@ -43,42 +44,35 @@ final class QuickSettingsManager {
             QuickSettingFactory.createConfiguration(
                 type: .secureCoreDisplay,
                 presenter: viewModel.secureCorePresenter,
-                button: parentViewController.secureCoreBtn,
-                container: parentViewController.secureCoreContainer
+                button: parentViewController.secureCoreBtn
             ),
             QuickSettingFactory.createConfiguration(
                 type: .netShieldDisplay,
                 presenter: viewModel.netShieldPresenter,
-                button: parentViewController.netShieldBtn,
-                container: parentViewController.netshieldContainer
+                button: parentViewController.netShieldBtn
             ),
             QuickSettingFactory.createConfiguration(
                 type: .killSwitchDisplay,
                 presenter: viewModel.killSwitchPresenter,
-                button: parentViewController.killSwitchBtn,
-                container: parentViewController.killSwitchContainer
+                button: parentViewController.killSwitchBtn
             ),
             QuickSettingFactory.createConfiguration(
                 type: .portForwardingDisplay,
                 presenter: viewModel.portForwardingPresenter,
-                button: parentViewController.portForwardingBtn,
-                container: parentViewController.portForwardingContainer
+                button: parentViewController.portForwardingBtn
             ),
         ]
 
         for config in configurations {
             setupConfiguration(config, in: parentViewController)
         }
+
+        self.parentViewController = parentViewController
     }
 
     private func setupConfiguration(_ config: QuickSettingConfiguration, in parent: NSViewController) {
         let viewController = config.createViewController()
         viewControllers[config.type] = viewController
-
-        // Setup view hierarchy
-        viewController.viewWillAppear()
-        config.container.addSubview(viewController.view)
-        setupConstraints(for: viewController.view, in: config.container)
 
         // Setup interactions
         config.button.toolTip = config.presenter.title
@@ -99,20 +93,21 @@ final class QuickSettingsManager {
     private func setupConstraints(for view: NSView, in container: NSBox) {
         view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            container.heightAnchor.constraint(equalTo: view.heightAnchor),
-            container.widthAnchor.constraint(equalTo: view.widthAnchor),
+            view.topAnchor.constraint(equalTo: container.topAnchor),
+            view.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            view.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
     }
 
     // MARK: - User Interaction
 
     func handleButtonTap(for type: QuickSettingType) {
-        let container = getContainer(for: type)
-        let isCurrentlyHidden = container?.isHidden ?? true
+        let isCurrentlyShown = currentlyShownType == type
 
         hideAllSettings()
 
-        if isCurrentlyHidden {
+        if !isCurrentlyShown {
             showSetting(type)
         }
     }
@@ -120,18 +115,47 @@ final class QuickSettingsManager {
     private func showSetting(_ type: QuickSettingType) {
         currentlyShownType = type
 
-        guard let container = getContainer(for: type),
-              let button = getButton(for: type) else { return }
+        guard let button = getButton(for: type),
+              let parentView = parentViewController?.view else { return }
+
+        // Create container if it doesn't exist
+        let container = createContainer(in: parentView)
+        containers[type] = container
+
+        // Get or create view controller
+        guard let viewController = viewControllers[type] else { return }
+
+        // Setup view hierarchy
+        viewController.viewWillAppear()
+        container.addSubview(viewController.view)
+        setupConstraints(for: viewController.view, in: container)
 
         button.detailOpened = true
-        container.isHidden = false
 
         delegate?.quickSettingsManager(self, didShowSetting: type)
+    }
 
-        // Handle NetShield window resize requirement
-        if type == .netShieldDisplay {
-            delegate?.quickSettingsManager(self, needsWindowResize: true)
+    private func createContainer(in parentView: NSView) -> NSBox {
+        let container = NSBox().with {
+            $0.boxType = .custom
+            $0.borderType = .noBorder
+            $0.cornerRadius = .themeRadius4
+            $0.titlePosition = .noTitle
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.fillColor = NSColor.clear
         }
+
+        parentView.addSubview(container)
+
+        // Setup constraints
+        NSLayoutConstraint.activate([
+            container.topAnchor.constraint(equalTo: parentView.topAnchor, constant: 48),
+            container.centerXAnchor.constraint(equalTo: parentView.centerXAnchor),
+            container.widthAnchor.constraint(equalTo: parentView.widthAnchor),
+            container.bottomAnchor.constraint(equalTo: parentView.bottomAnchor),
+        ])
+
+        return container
     }
 
     func hideAllSettings() {
@@ -139,8 +163,17 @@ final class QuickSettingsManager {
 
         for config in configurations {
             config.button.detailOpened = false
-            config.container.isHidden = true
         }
+
+        // Remove and destroy all containers
+        for (type, container) in containers {
+            container.removeFromSuperview()
+            // Remove child view controller
+            if let viewController = viewControllers[type] {
+                viewController.removeFromParent()
+            }
+        }
+        containers.removeAll()
 
         delegate?.quickSettingsManagerDidHideAllSettings(self)
     }
@@ -174,19 +207,11 @@ final class QuickSettingsManager {
 
     // MARK: - Helper Methods
 
-    private func getContainer(for type: QuickSettingType) -> NSBox? {
-        configurations.first(where: { $0.type == type })?.container
-    }
-
     private func getButton(for type: QuickSettingType) -> QuickSettingButton? {
         configurations.first(where: { $0.type == type })?.button
     }
 
     var isAnySettingDisplayed: Bool {
         currentlyShownType != nil
-    }
-
-    func getViewController<T: QuickSettingDetailViewController>(ofType _: T.Type) -> T? {
-        viewControllers.values.compactMap { $0 as? T }.first
     }
 }

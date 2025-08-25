@@ -1412,6 +1412,9 @@
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "Copy port number";
 
+/* Text appears as popup after copy action */
+"_pf_copied" = "Copied";
+
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Loading...";
 

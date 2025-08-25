@@ -26,7 +26,7 @@ public struct NATPMPPortView: View {
     @Perception.Bindable var store: StoreOf<NATPMPFeature>
 
     public init() {
-        let store = Store(initialState: .loading) {
+        let store = Store(initialState: .loading(lastExternalPortNumber: nil, lastUsedUpdateDate: nil)) {
             NATPMPFeature()
         }
         self.init(store: store)
@@ -41,11 +41,10 @@ public struct NATPMPPortView: View {
             switch store.state {
             case .loading:
                 LoadingPortView()
-            case let .loaded(externalPortNumber, updateDate, responseDate):
+            case let .loaded(externalPortNumber, updateDate):
                 ActivePortView(
                     portNumber: externalPortNumber,
-                    updateDate: updateDate,
-                    responseDate: responseDate
+                    updateDate: updateDate
                 )
             case .error:
                 PortErrorView()
@@ -65,47 +64,67 @@ public struct NATPMPPortView: View {
 struct ActivePortView: View {
     let portNumber: UInt16
     let updateDate: Date
-    let responseDate: Date
 
     @State private var hovered = false
+    @State private var showCopiedTooltip = false
 
     var body: some View {
         Button(action: {
-            copyPortNumber(portNumber)
+            copyPortNumber(portNumber) {
+                // Show copied tooltip
+                showCopiedTooltip = true
+
+                // Hide tooltip after 2 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        showCopiedTooltip = false
+                    }
+                }
+            }
         }) {
-            VStack(alignment: .leading, spacing: .themeSpacing12) {
+            VStack(alignment: .leading, spacing: .themeSpacing4) {
                 // Header with status indicator
                 Text(Localizable.pfActivePortNumber)
                     .foregroundColor(Color(.text, .weak))
                     .themeFont(.callout(emphasised: true))
 
                 // Port number with copy button
-                HStack(alignment: .firstTextBaseline, spacing: .themeSpacing8) {
+                HStack(alignment: .center, spacing: .themeSpacing4) {
                     // Green status indicator
                     Asset.pfIndicator.swiftUIImage
                         .resizable()
                         .frame(.square(.themeSpacing16))
 
-                    VStack(alignment: .leading, spacing: .themeSpacing8) {
-                        HStack(spacing: .themeSpacing4) {
-                            Text(String(portNumber))
-                                .foregroundColor(Color(.text))
-                                .font(.title2(emphasised: false))
-
-                            IconProvider.squares
-                                .resizable()
-                                .frame(.square(.themeSpacing16))
-
-                            Spacer()
+                    Text(String(portNumber))
+                        .foregroundColor(Color(.text))
+                        .font(.title2(emphasised: false))
+                        .offset(y: 1)
+                        .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
+                            Text(Localizable.pfCopied)
+                                .padding(.vertical, .themeSpacing8)
+                                .padding(.horizontal, .themeSpacing16)
                         }
-                        HStack {
-                            // Update timestamp
-                            Text(formatUpdateTime(updateDate))
-                                .foregroundColor(Color(.text, .weak))
-                                .themeFont(.callout(emphasised: false))
-                            Spacer()
-                        }
+
+                    IconProvider.squares
+                        .resizable()
+                        .frame(.square(.themeSpacing16))
+
+                    Spacer()
+                }
+
+                HStack(spacing: .themeSpacing4) {
+                    Asset.pfIndicator.swiftUIImage
+                        .resizable()
+                        .opacity(0)
+                        .frame(.square(.themeSpacing16))
+
+                    TimelineView(.periodic(from: updateDate, by: 1)) { context in
+                        Text(formatUpdateTime(updateDate, currentTime: context.date))
+                            .foregroundColor(Color(.text, .weak))
+                            .themeFont(.callout(emphasised: false))
                     }
+
+                    Spacer()
                 }
             }
             .padding(.themeSpacing16)
@@ -116,13 +135,14 @@ struct ActivePortView: View {
             }
         }
         .onHover { isHovered in
+            guard hovered != isHovered else { return }
             hovered = isHovered
         }
         .buttonStyle(.plain)
         .help(Localizable.pfCopyPortNumber)
     }
 
-    // MARK: - Sate
+    // MARK: - State
 
     private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
         let formatter = RelativeDateTimeFormatter()
@@ -131,9 +151,8 @@ struct ActivePortView: View {
         return formatter
     }()
 
-    private func formatUpdateTime(_ date: Date) -> String {
-        @Dependency(\.date.now) var now
-        let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: now)
+    private func formatUpdateTime(_ date: Date, currentTime: Date) -> String {
+        let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: currentTime)
         return Localizable.pfUpdated(timeAgo)
     }
 }
@@ -257,11 +276,14 @@ public struct StatusPortView: View {
     }
 }
 
-private func copyPortNumber(_ portNumber: UInt16) {
+private func copyPortNumber(_ portNumber: UInt16, onCopied: (() -> Void)? = nil) {
     let portString = String(portNumber)
     let pasteboard = NSPasteboard.general
     pasteboard.clearContents()
     pasteboard.setString(portString, forType: .string)
+
+    // Call the callback if provided
+    onCopied?()
 }
 
 // MARK: - Preview
@@ -272,8 +294,7 @@ private func copyPortNumber(_ portNumber: UInt16) {
             // Active state
             ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60), // 35 minutes ago
-                responseDate: Date()
+                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
             )
 
             // Loading state

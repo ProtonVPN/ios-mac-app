@@ -267,6 +267,7 @@ final class ConnectionSettingsViewModel {
     }
 
     func setProtocol(_ connectionProtocol: ConnectionProtocol, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard connectionProtocol != selectedProtocol else { return }
         sysexPending = true
         switch connectionProtocol {
         case .smartProtocol:

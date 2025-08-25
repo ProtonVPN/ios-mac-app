@@ -12,7 +12,6 @@
                 <outlet property="bottomHorizontalLine" destination="j34-Mf-pR3" id="2fw-Zd-SHn"/>
                 <outlet property="clearSearchBtn" destination="ngW-Fz-8Yk" id="Ebc-Ai-8HV"/>
                 <outlet property="killSwitchBtn" destination="1zu-fE-s41" id="HVd-zK-KQW"/>
-                <outlet property="killSwitchContainer" destination="ly1-uI-H8k" id="P0N-0G-p2T"/>
                 <outlet property="killSwitchSectionView" destination="Jr2-NA-2AB" id="Q71-pC-heB"/>
                 <outlet property="listLeadingConstraint" destination="AkH-nz-rRf" id="eLG-bn-7ra"/>
                 <outlet property="listTrailingConstraint" destination="eYc-kp-Qvn" id="x8J-HP-eOb"/>
@@ -20,9 +19,7 @@
                 <outlet property="netShieldBtn" destination="COp-Cy-iCa" id="NQi-fi-I3y"/>
                 <outlet property="netShieldSectionView" destination="Uag-7s-udL" id="82m-sY-u6Z"/>
                 <outlet property="netShieldStatsLabel" destination="3XG-4r-1Ju" id="xB9-JL-j1T"/>
-                <outlet property="netshieldContainer" destination="wdu-7r-MZX" id="JzR-yp-ZGs"/>
                 <outlet property="portForwardingBtn" destination="Rzy-Ia-icv" id="UOl-Tj-LcR"/>
-                <outlet property="portForwardingContainer" destination="70D-ga-Vzk" id="ItE-cQ-3JK"/>
                 <outlet property="portForwardingSectionView" destination="TZf-1B-kbr" id="l2D-k3-pMl"/>
                 <outlet property="portForwardingWarningImage" destination="mPu-VB-GXX" id="gXj-2Q-qTB"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
@@ -30,7 +27,6 @@
                 <outlet property="searchIcon" destination="8u3-tX-dep" id="dSA-jo-Plh"/>
                 <outlet property="searchTextField" destination="SQG-nw-URT" id="KoE-mG-DN1"/>
                 <outlet property="secureCoreBtn" destination="JrW-be-2tC" id="Yeu-YT-APa"/>
-                <outlet property="secureCoreContainer" destination="xcp-Uy-Ngx" id="FZS-IU-IJ4"/>
                 <outlet property="secureCoreSectionView" destination="vbU-RU-3aG" id="JXt-pb-ow4"/>
                 <outlet property="serverListScrollView" destination="Ybt-K1-fU1" id="UsB-Me-zqU"/>
                 <outlet property="serverListTableView" destination="cyQ-Pz-NoP" id="LIA-l0-uhW"/>
@@ -72,7 +68,7 @@
                                                 <rect key="frame" x="1" y="1" width="1000" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
+                                                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
                                                         <rect key="frame" x="0.0" y="0.0" width="1000" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O64-lx-a5C">
@@ -160,7 +156,7 @@
                                         </buttonCell>
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
-                                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
+                                    <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-4r-1Ju">
                                         <rect key="frame" x="152" y="32" width="20" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="939-Qe-cvS"/>
@@ -230,7 +226,7 @@
                                             <constraint firstAttribute="height" constant="16" id="NVo-0W-x00"/>
                                             <constraint firstAttribute="width" constant="16" id="aD8-fA-scQ"/>
                                         </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic-exclamation-triangle-filled" id="lcc-E8-DnK"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="orange-exclamation-mark" id="lcc-E8-DnK"/>
                                         <color key="contentTintColor" name="AtomicTangerine"/>
                                     </imageView>
                                 </subviews>
@@ -276,7 +272,7 @@
                         <rect key="frame" x="1" y="1" width="1107" height="44"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQG-nw-URT" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SQG-nw-URT" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
                                 <rect key="frame" x="30" y="14" width="1039" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" id="Rqr-HB-5ac">
                                     <font key="font" metaFont="system"/>
@@ -320,73 +316,25 @@
                     </constraints>
                     <color key="borderColor" red="0.24705882352941178" green="0.24705882352941178" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </box>
-                <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="xcp-Uy-Ngx" userLabel="SecureCoreContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                    <view key="contentView" id="vBk-kT-dS0">
-                        <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </box>
-                <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wdu-7r-MZX" userLabel="NetshieldContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                    <view key="contentView" id="uJo-HA-Gbx">
-                        <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </box>
-                <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="ly1-uI-H8k" userLabel="KillSwitchContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                    <view key="contentView" id="64N-EU-ex4">
-                        <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </box>
-                <box hidden="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="70D-ga-Vzk" userLabel="PortForwardingContainer">
-                    <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                    <view key="contentView" id="TOa-KV-aVT">
-                        <rect key="frame" x="0.0" y="0.0" width="1149" height="459"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                </box>
             </subviews>
             <constraints>
-                <constraint firstItem="xcp-Uy-Ngx" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="056-n9-69p"/>
                 <constraint firstItem="j34-Mf-pR3" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="09o-py-XPi"/>
-                <constraint firstItem="wdu-7r-MZX" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="48" id="1t1-Na-BDs"/>
-                <constraint firstAttribute="bottom" secondItem="ly1-uI-H8k" secondAttribute="bottom" id="2k0-Uu-zeW"/>
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="top" secondItem="KXN-5h-obj" secondAttribute="top" id="5UP-eD-LET"/>
                 <constraint firstAttribute="trailing" secondItem="j34-Mf-pR3" secondAttribute="trailing" id="9LX-kE-DXe"/>
                 <constraint firstAttribute="trailing" secondItem="62O-3H-Vui" secondAttribute="trailing" constant="14" id="9vh-Ih-lvs"/>
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="top" secondItem="qf9-9Y-IsT" secondAttribute="bottom" constant="8" id="AaB-5p-t3i"/>
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="AkH-nz-rRf"/>
-                <constraint firstItem="70D-ga-Vzk" firstAttribute="width" secondItem="xcp-Uy-Ngx" secondAttribute="width" id="Eru-Ae-JdO"/>
-                <constraint firstItem="70D-ga-Vzk" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="48" id="FHE-dM-BfH"/>
-                <constraint firstItem="xcp-Uy-Ngx" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="48" id="GYL-Uq-07r"/>
-                <constraint firstItem="xcp-Uy-Ngx" firstAttribute="width" secondItem="c22-O7-iKe" secondAttribute="width" id="IQo-Nk-ea5"/>
-                <constraint firstItem="70D-ga-Vzk" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="KJz-Wg-BaS"/>
                 <constraint firstItem="qf9-9Y-IsT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="LrI-lG-a0n"/>
                 <constraint firstItem="KXN-5h-obj" firstAttribute="trailing" secondItem="Ybt-K1-fU1" secondAttribute="trailing" id="PEr-zn-ZM7"/>
                 <constraint firstItem="62O-3H-Vui" firstAttribute="height" secondItem="qf9-9Y-IsT" secondAttribute="height" constant="8" id="TCC-ST-1Oy"/>
-                <constraint firstAttribute="bottom" secondItem="xcp-Uy-Ngx" secondAttribute="bottom" id="UcA-rm-s1d"/>
                 <constraint firstItem="KXN-5h-obj" firstAttribute="leading" secondItem="Ybt-K1-fU1" secondAttribute="leading" id="W30-f3-ZIZ"/>
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="top" secondItem="j34-Mf-pR3" secondAttribute="bottom" id="atF-z6-NKg"/>
                 <constraint firstItem="qf9-9Y-IsT" firstAttribute="top" secondItem="62O-3H-Vui" secondAttribute="bottom" id="cdk-fe-BKf"/>
                 <constraint firstAttribute="bottom" secondItem="Ybt-K1-fU1" secondAttribute="bottom" id="dlO-F7-PdK"/>
                 <constraint firstAttribute="trailing" secondItem="Ybt-K1-fU1" secondAttribute="trailing" id="eYc-kp-Qvn"/>
-                <constraint firstItem="ly1-uI-H8k" firstAttribute="width" secondItem="xcp-Uy-Ngx" secondAttribute="width" id="gth-D9-z9C"/>
-                <constraint firstAttribute="bottom" secondItem="70D-ga-Vzk" secondAttribute="bottom" id="iGh-NW-14d"/>
-                <constraint firstItem="wdu-7r-MZX" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="sqQ-Ko-j1f"/>
                 <constraint firstItem="62O-3H-Vui" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="14" id="sqk-q4-SEA"/>
-                <constraint firstItem="wdu-7r-MZX" firstAttribute="width" secondItem="xcp-Uy-Ngx" secondAttribute="width" id="ufi-Yu-aDF"/>
                 <constraint firstItem="62O-3H-Vui" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="8" id="vah-6r-vpt"/>
                 <constraint firstAttribute="trailing" secondItem="qf9-9Y-IsT" secondAttribute="trailing" constant="20" id="vbz-t6-6if"/>
-                <constraint firstItem="ly1-uI-H8k" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="48" id="we8-AB-xKd"/>
-                <constraint firstItem="ly1-uI-H8k" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="x9R-ee-9ah"/>
-                <constraint firstAttribute="bottom" secondItem="wdu-7r-MZX" secondAttribute="bottom" id="yWp-km-cGm"/>
             </constraints>
             <point key="canvasLocation" x="-4223.5" y="325.5"/>
         </customView>
@@ -394,10 +342,10 @@
     <resources>
         <image name="ic-arrow-up-bounce-left" width="24" height="24"/>
         <image name="ic-cross-circle-filled" width="24" height="24"/>
-        <image name="ic-exclamation-triangle-filled" width="24" height="24"/>
         <image name="ic-lock" width="24" height="24"/>
         <image name="ic-shield" width="24" height="24"/>
         <image name="ic-switch-on" width="24" height="24"/>
+        <image name="orange-exclamation-mark" width="16" height="16"/>
         <namedColor name="AtomicTangerine">
             <color red="1" green="0.60784313725490191" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

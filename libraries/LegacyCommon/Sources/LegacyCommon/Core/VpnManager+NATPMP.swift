@@ -21,7 +21,7 @@
     import NATPMPUI
 
     extension VpnManager {
-        func startNATPortMappingService() {
+        public func startNATPortMappingService() {
             guard portForwardingPropertyProvider.portForwarding == true else { return }
             guard let gatewayAddress = getVPNGatewayAddress() else {
                 log.error("Cannot start NAT port mapping - unable to determine gateway address", category: .connection)
@@ -33,7 +33,7 @@
             log.info("NAT port mapping service started", category: .connection)
         }
 
-        func stopNATPortMappingService() {
+        public func stopNATPortMappingService() {
             @Dependency(\.natPortMappingService) var natPortMappingService
             Task {
                 await natPortMappingService.cancelPortMapping()

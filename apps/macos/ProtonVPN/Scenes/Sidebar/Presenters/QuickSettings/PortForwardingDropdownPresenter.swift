@@ -59,7 +59,6 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsPortForwardingDescription.styled(font: .themeFont(.small), alignment: .left)
-        viewController?.dropdownNote.stringValue = ""
         viewController?.dropdownUpgradeButton.isHidden = true
 
         if propertiesManager.featureFlags.netShield {
