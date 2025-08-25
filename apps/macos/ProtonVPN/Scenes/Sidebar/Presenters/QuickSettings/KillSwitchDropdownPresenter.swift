@@ -63,12 +63,14 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsKillSwitchNote.styled(.weak, font: .themeFont(.small), alignment: .left)
         viewController?.dropdownUpgradeButton.isHidden = true
 
-        if propertiesManager.featureFlags.netShield {
+        if VPNFeatureFlagType.portForwarding.enabled {
             // (width - traling - leading) / number of buttons
             let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = oneButtonWidth / 2
         } else {
-            // nothing, will point at the center
+            // (width - traling - leading) / number of buttons
+            let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 3
+            viewController?.arrowHorizontalConstraint.constant = oneButtonWidth
         }
     }
 

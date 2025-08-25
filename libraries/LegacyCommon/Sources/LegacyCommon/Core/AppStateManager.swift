@@ -461,13 +461,15 @@ public class AppStateManagerImplementation: AppStateManager {
         }.store(in: &cancellables)
 
         #if os(macOS)
-            Task {
-                for await displayState in displayStateStream {
-                    switch displayState {
-                    case .connected:
-                        vpnManager.startNATPortMappingService()
-                    default:
-                        vpnManager.stopNATPortMappingService()
+            if VPNFeatureFlagType.portForwarding.enabled {
+                Task {
+                    for await displayState in displayStateStream {
+                        switch displayState {
+                        case .connected:
+                            vpnManager.startNATPortMappingService()
+                        default:
+                            vpnManager.stopNATPortMappingService()
+                        }
                     }
                 }
             }

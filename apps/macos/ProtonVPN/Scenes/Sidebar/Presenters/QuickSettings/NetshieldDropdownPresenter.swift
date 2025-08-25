@@ -101,10 +101,12 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownDescription.attributedStringValue = Localizable.quickSettingsNetShieldDescription.styled(font: .themeFont(.small), alignment: .left)
         viewController?.dropdownNote.attributedStringValue = Localizable.quickSettingsNetShieldNote.styled(.weak, font: .themeFont(.small), alignment: .left)
 
-        if propertiesManager.featureFlags.netShield {
+        if VPNFeatureFlagType.portForwarding.enabled {
             // (width - traling - leading) / number of buttons
             let oneButtonWidth = (AppConstants.Windows.sidebarWidth - 18 - 18) / 4
             viewController?.arrowHorizontalConstraint.constant = -(oneButtonWidth / 2)
+        } else {
+            // nothing, will point at the center
         }
     }
 

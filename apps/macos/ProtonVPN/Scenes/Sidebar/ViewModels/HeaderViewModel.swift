@@ -306,6 +306,7 @@ final class HeaderViewModel {
     }
 
     private func startNatPmpObservation() {
+        guard VPNFeatureFlagType.portForwarding.enabled else { return }
         natPmpCancellable = nil
         guard portForwardingPropertyProvider.portForwarding == true else {
             delegate?.mappedPortChanged(to: nil)
