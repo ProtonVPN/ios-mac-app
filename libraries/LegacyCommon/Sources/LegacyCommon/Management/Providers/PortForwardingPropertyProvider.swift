@@ -73,5 +73,8 @@ public class PortForwardingPropertyProviderImplementation: PortForwardingPropert
 }
 
 public struct PortForwardingFeature: PaidAppFeature {
-    public static let featureFlag: KeyPath<FeatureFlags, Bool>? = \.portForwarding
+    public static func canUse(userTier: Int, featureFlags _: FeatureFlags) -> FeatureAuthorizationResult {
+        guard userTier.isPaidTier else { return .failure(.requiresUpgrade) }
+        return .success
+    }
 }
