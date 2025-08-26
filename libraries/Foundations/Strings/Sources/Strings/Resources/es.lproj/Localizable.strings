@@ -1437,6 +1437,9 @@
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "Copy port number";
 
+/* Text appears as popup after copy action */
+"_pf_copied" = "Copiado";
+
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Loading...";
 
@@ -1517,26 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Tu conexión se reiniciará para cambiar el modo de Smart Protocol.";
 
-/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Para utilizar Proton VPN, necesitarás activar los **protocolos VPN personalizados** en tu Mac.";
+"_sysex_tutorial_title_setup" = "Configuración de Proton VPN";
 
-/* Part 2 of the description of the system extension wizard in mac */
-"_sysex_description_2" = "Los protocolos personalizados permiten conexiones más rápidas y seguras y los necesitarás activados para conectarte a la mayoría de los servidores VPN de Proton.";
+"_sysex_tutorial_title_enable" = "Activar extensiones del sistema para continuar";
 
-/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "Para continuar, pulsa **Abrir los ajustes del sistema**, luego sigue las instrucciones del video en esta pantalla.";
+"_sysex_tutorial_title_enable_proton" = "Activar las extensiones del sistema de Proton VPN";
 
-/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Para continuar, pulse **Abrir los ajustes del sistema**, luego sigue las instrucciones del video en esta pantalla.";
+"_sysex_tutorial_how_to_enable" = "Cómo activar extensiones";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Configuración de Proton VPN";
+"_sysex_tutorial_subtitle_app" = "Para usar Proton VPN, necesitas activar las siguientes extensiones del sistema en tu Mac:";
 
-/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_tutorial_subtitle_st" = "Para usar túnel dividido, necesitas activar las siguientes extensiones de sistema en tu Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "Para usar WireGuard, necesitas activar las siguientes extensiones del sistema en tu Mac:";
+
+"_sysex_tutorial_subtitle_features" = "Para usar ciertas funciones de VPN (y la mayoría de los protocolos), necesitas tener las extensiones de sistema de Proton VPN activadas en tu Mac.";
+
+"_sysex_tutorial_step_click_open" = "Haz clic en **Abrir Extensiones de red.**";
+
+"_sysex_tutorial_step_click_security" = "Haz clic en **Abrir Ajustes del sistema**, luego ve a **Privacidad y seguridad → Seguridad.**";
+
+"_sysex_tutorial_step_click_allow" = "Deberías ver un mensaje que dice \"El software del sistema de la aplicación ProtonVPN fue bloqueado.\". Haz clic en **Permitir**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Activa los interruptores de **WireGuard** y **túnel dividido**, luego haz clic en **Hecho**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "Activa el interruptor de **túnel dividido**, luego haz clic en **Hecho**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "Activa el interruptor de **WireGuard**, luego haz clic en **Listo**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "Activa las extensiones que necesitas y luego haz clic en **Hecho**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Activa las extensiones que necesitas, luego haz clic en **Aceptar**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "Activa los interruptores de **WireGuard** y **túnel dividido**, luego haz clic en **Aceptar**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "Activa el interruptor de **túnel dividido**, luego haz clic en **Aceptar**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "Activa el interruptor de **WireGuard**, luego haz clic en **Aceptar**.";
+
+"_sysex_tutorial_step_authenticate" = "Autentícate con contraseña o Touch ID si se te pide.";
+
+"_sysex_tutorial_step_authenticate_details" = "Autentícate con Touch ID o contraseña si se te pide. En algunos dispositivos, también podrías necesitar hacer clic en un botón **Detalles**.";
+
+"_sysex_tutorial_feature_wg" = "Activa el protocolo WireGuard VPN. Necesitas esto para conectar a la mayoría de los servidores VPN.";
+
+"_sysex_tutorial_feature_st" = "Te permite excluir aplicaciones de confianza y direcciones IP de tu conexión VPN. Función Plus.";
+
+"_sysex_tutorial_button_open" = "Abrir Extensiones de red";
+
 "_sysex_open_system_settings" = "Abrir los ajustes del sistema";
 
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Abrir las preferencias de seguridad";
+"_sysex_tutorial_didnt_work" = "¿No funcionó?";
+
+"_sysex_tutorial_need_help" = "¿Necesitas ayuda?";
 
 "_sysex_settings_description" = "Proton VPN requiere cargar una extensión del sistema para aprovechar el protocolo inteligente, OpenVPN y WireGuard.";
 
@@ -1757,6 +1793,9 @@
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
+
+/* macOS main menu: Help -> Split Tunneling logs row */
+"_plutonium_logs" = "Registros del túnel dividido";
 
 "_local_agent_server_error_title" = "Error del servidor";
 
@@ -3046,6 +3085,18 @@
 
 /* iOS: Alert message after account creation in guest mode */
 "_account_created_title" = "Se ha creado la cuenta";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Crea una cuenta para continuar";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Crear una cuenta";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Iniciar sesión";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancelar";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Personalización avanzada de VPN";

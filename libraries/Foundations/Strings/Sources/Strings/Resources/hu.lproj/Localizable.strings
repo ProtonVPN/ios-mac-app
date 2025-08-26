@@ -65,10 +65,10 @@
 "_reconnection_required" = "Újracsatlakozás szükséges";
 
 /* Users must be disconnected to switch accounts. This is the title of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_required" = "Disconnect to continue";
+"_disconnect_required" = "Leválasztás a folytatáshoz";
 
 /* Users must be disconnected to switch accounts. This is the description of an alert shown when attempting to sign in or create an account while using guest mode and connected to the VPN. */
-"_disconnect_to_sign_in_description" = "To sign in or create an account, you need to be disconnected from VPN.";
+"_disconnect_to_sign_in_description" = "A bejelentkezéshez vagy fiók létrehozásához le kell csatlakoznia a VPN-ről.";
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Karbantartás";
@@ -312,19 +312,19 @@
 "_always_on_will_reconnect" = "A mindig bekapcsolt VPN automatikusan újracsatlakozik";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "Aktív portszám: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "Menjen a torrent kliensére vagy a P2P alkalmazásába, és írja be ezt a számot.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "Másolás";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "Nem sikerült lekérni az aktív portszámot";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "Indítsa újra a kapcsolatát, és próbálja újra. Ha ez nem működik, próbáljon meg másik szervert.";
 
 /* MacOS: About window title */
 "_about" = "Névjegy";
@@ -944,7 +944,7 @@
 "_kill_switch_tooltip" = "Blokkolja az összes hálózati forgalmat, ha a VPN-alagút elveszik.";
 
 /* MacOS: Settings -> Port forwarding: name of field. */
-"_port_forwarding" = "Port forwarding";
+"_port_forwarding" = "Port átirányítás";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Mindig bekapcsolt VPN";
@@ -986,10 +986,10 @@
 "_dns_leak_protection_tooltip" = "Megakadályozza a DNS-lekérdezések részleteinek kiszivárgását harmadik felek számára. Mindig bekapcsolva.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "Port átirányítási értesítések";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "Értesítést kap, ha a port átirányítási száma megváltozik";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Hitelesítési kulcsok";
@@ -1064,40 +1064,40 @@
 "_allow_lan_note" = "Vegye figyelembe, hogy a kapcsolatát újra kell indítani a módosítás alkalmazásához.";
 
 /* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_title" = "Enable kill switch?";
+"_turn_ks_on_title" = "Vészkapcsoló bekapcsolása?";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
-"_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
+"_turn_ks_on_description_macos_st_conflict" = "• Ez letiltja a megosztott alagútépítést";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
-"_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
+"_turn_ks_on_description_macos_lan_conflict" = "• Nem fog tudni hozzáférni a helyi hálózaton lévő eszközökhöz";
 
 /* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
-"_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
+"_turn_ks_on_description_ios" = "Nem fog tudni hozzáférni eszközökhöz a helyi hálózatán.";
 
 /* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
-"turn_split_tunneling_on_title" = "Enable split tunneling?";
+"turn_split_tunneling_on_title" = "Osztott alagút bekapcsolása?";
 
 /* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
-"turn_split_tunneling_on_description" = "This will disable kill switch.";
+"turn_split_tunneling_on_description" = "Ez hatástalanítja a vészkapcsolót.";
 
 /* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "Nem lehet engedélyezni az osztott alagutat";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Az osztott alagút nem kompatibilis az IKEv2 protokollal. További információk";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Az osztott alagút nem kompatibilis az IKEv2 protokollal. Az osztott alagút használatához módosítsa profiljának protokollját, vagy válassza le a profilt. További információk";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+"split_tunneling_connect_to_profile_alert_description" = "Az osztott alagút nem kompatibilis profilja protokolljával (IKEv2). A kapcsolódás letiltja az osztott alagutat. További információk";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "Kapcsolódás IKEv2 protokollal?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "Kapcsolódás: %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@ csomag kiválasztása";
@@ -1429,22 +1429,25 @@
 "_offer_ending_" = "Vége %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "Aktív port:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "Aktív portszám";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "Port számának másolása";
+
+/* Text appears as popup after copy action */
+"_pf_copied" = "Copied";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "Betöltés...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "Frissítve %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "Nem elérhető";
 
 "_quick_settings_title" = "Gyorsbeállítások";
 
@@ -1455,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Az IP cím szivárgás elkerülése végett letiltja az internetkapcsolatot, ha a VPN kapcsolat megszakad";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "A tűzfalak megkerülése a P2P-kiszolgálókhoz és a helyi hálózaton belüli eszközökhöz való csatlakozáshoz.";
 
 "_quick_settings_secureCore_note" = "A Secure Core csökkentheti a VPN sebességét";
 
@@ -1463,11 +1466,11 @@
 
 "_quick_settings_killSwitch_note" = "Ha nem tud csatlakozni a helyi hálózaton lévő eszközökhöz, próbálja meg a kill switch kikapcsolását.";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "Adja meg az aktív portszámot a BitTorrent alkalmazásban a P2P sebesség javításához";
 
-"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+"_quick_settings_portForwarding_warningNote" = "Portátirányítás használatához csatlakozzon egy P2P-szerverhez";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "Nem sikerült lekérni az aktív portszámot. Indítsa újra a kapcsolatot, és próbálja meg újra.";
 
 "_quick_settings_get_plus" = "Plus választása";
 
@@ -1517,26 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "A kapcsolat újraindul a Smart Protocol üzemmód megváltoztatásához.";
 
-/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "A Proton VPN használatához engedélyeznie kell a **általános VPN protokollokat** a Mac számítógépén.";
+"_sysex_tutorial_title_setup" = "Set up Proton VPN";
 
-/* Part 2 of the description of the system extension wizard in mac */
-"_sysex_description_2" = "Az egyéni protokollok gyorsabb és biztonságosabb kapcsolatokat tesznek lehetővé, és a legtöbb Proton VPN-kiszolgálóhoz való csatlakozáshoz engedélyezni kell őket.";
+"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
-/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "A folytatáshoz kattintson a **Rendszerbeállítások megnyitása** gombra, majd kövesse a képernyőn megjelenő videoutasításokat.";
+"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
 
-/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "A folytatáshoz kattintson a **Biztonsági beállítások megnyitása** gombra, majd kövesse a képernyőn megjelenő videoutasításokat.";
+"_sysex_tutorial_how_to_enable" = "How to enable extensions";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Proton VPN beállítása";
+"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
 
-/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+
+"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+
+"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+
+"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+
+"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+
+"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+
+"_sysex_tutorial_button_open" = "Open Network Extensions";
+
 "_sysex_open_system_settings" = "Rendszerbeállítások megnyitása";
 
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Biztonsági beállítások megnyitása";
+"_sysex_tutorial_didnt_work" = "Didn't work?";
+
+"_sysex_tutorial_need_help" = "Need help?";
 
 "_sysex_settings_description" = "A Proton VPN-nek szüksége van egy System Extension betöltésére, hogy be tudja emelni a Smart Protocolt, az OpenVPN-t és a WireGuardot.";
 
@@ -1551,7 +1587,7 @@
 "_sysex_error_description" = "Hiba történt a rendszerbővítmények engedélyezése közben: %@";
 
 /* This error subcase when installing system extensions means that the system was unable to verify the system extension code signature. Reinstalling the app is known to help resolve this problem. */
-"_sysex_error_description_subcase_code_signature_invalid" = "please reinstall the app and try again.";
+"_sysex_error_description_subcase_code_signature_invalid" = "Kérjük, telepítse ismét az alkalmazást, és próbálja meg újra.";
 
 /* This error subcase when installing system extensions means that the user tried to enable system extensions while the application was not run from a supported location. One such supported location is the /Applications folder. */
 "_sysex_error_description_subcase_bad_location" = "kérjük, győződjön meg arról, hogy az alkalmazás megfelelően van telepítve az /Applications mappába.";
@@ -1757,6 +1793,9 @@
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
+
+/* macOS main menu: Help -> Split Tunneling logs row */
+"_plutonium_logs" = "Osztott alagút naplók";
 
 "_local_agent_server_error_title" = "Szerverhiba";
 
@@ -2538,10 +2577,10 @@
 "upsell_p2pSupport_subtitle" = "Javítsa a feltöltési és letöltési sebességet, miközben elrejti IP-címét.";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "P2P sebesség növelése";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Turbózza fel a peer-to-peer (P2P) fájlmegosztás teljesítményét a VPN Plus segítségével.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Védjen 10 eszközt egyszerre";
@@ -2688,10 +2727,10 @@
 "welcome_upgrade_subtitle_plus" = "Élvezze az extra adatvédelmi funkciókat, a felturbózott teljesítményt és a következő szintű VPN testreszabást.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "Feloldotta az összes prémium Proton VPN, Mail, Naptár, Drive és Pass funkciót — és 500 GB teljes tárhelyet.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Feloldotta az összes prémium Proton VPN, Mail, naptár, drive és Pass funkciót — és **500 GB** teljes tárhelyet.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2862,7 +2901,7 @@
 "_ike_deprecation_alert_message" = "Ezt a protokollt hamarosan eltávolítjuk. Fontolja meg az átállást a Smart protokollra. További információk";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "Ez letiltja a megosztott alagútépítést.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "További információk";
@@ -3024,28 +3063,40 @@
 "_widgetAdoption_modal_instruction_button" = "Megvan";
 
 /* iOS: Settings account section card title for guest mode */
-"_make_the_move_to_privacy" = "Make the move to privacy";
+"_make_the_move_to_privacy" = "Lépjen az adatvédelem irányába";
 
 /* iOS: Settings account section card description for guest mode */
-"_settings_new_account_card_description" = "Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.";
+"_settings_new_account_card_description" = "Szerezzen jelszókezelőt, titkosított levelezést, naptárat, valamint 1 GB felhőalapú tárhelyet ingyenesen, Proton-fiókkal.";
 
 /* iOS: Action account button on settings account section in guest mode */
-"_create_account_settings_title" = "Create account";
+"_create_account_settings_title" = "Fiók létrehozása";
 
 /* iOS: Alert title for purchase attempt in guest mode */
-"_create_account_first_before_upgrade" = "You need to create an account before you can upgrade";
+"_create_account_first_before_upgrade" = "Létre kell hoznia egy fiókot, mielőtt verziót frissítene";
 
 /* iOS: Alert title for closing account creation flow */
-"_create_account_if_close_no_upgrade" = "If you don’t create an account you won’t be able to upgrade to VPN Plus";
+"_create_account_if_close_no_upgrade" = "Ha nem hoz létre fiókot, nem lesz képes verzió frissítésre a VPN Plusra.";
 
 /* iOS: Cancel button on account creation flow */
-"_create_account_cancel_upgrade" = "Cancel upgrade";
+"_create_account_cancel_upgrade" = "Frissítés törlése";
 
 /* iOS: Continue button on account creation flow */
-"_create_account_continue_creating" = "Continue creating account";
+"_create_account_continue_creating" = "Fióklétrehozás folytatása";
 
 /* iOS: Alert message after account creation in guest mode */
-"_account_created_title" = "Account created";
+"_account_created_title" = "Fiók létrehozva";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Hozzon létre fiókot a folytatáshoz";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Fiók létrehozása";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Bejelentkezés";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Mégsem";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Haladó VPN testreszabás";

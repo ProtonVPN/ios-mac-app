@@ -1437,6 +1437,9 @@
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "Salin nomor port";
 
+/* Text appears as popup after copy action */
+"_pf_copied" = "Disalin";
+
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Memuat...";
 
@@ -1517,26 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Koneksi Anda akan dimulai ulang untuk mengubah mode Smart Protokol.";
 
-/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Untuk dapat menggunakan Proton VPN, Anda perlu untuk mengaktifkan **protokol VPN khusus** pada perangkat Mac Anda.";
+"_sysex_tutorial_title_setup" = "Set up Proton VPN";
 
-/* Part 2 of the description of the system extension wizard in mac */
-"_sysex_description_2" = "Protokol khusus memungkinkan koneksi VPN yang lebih cepat dan aman. Di samping itu, protokol ini juga diperlukan untuk menghubungkan perangkat Anda ke sebagian besar server Proton VPN.";
+"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
-/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "Untuk melanjutkan, klik **Buka Pengaturan Sistem** dan ikuti instruksi yang tertera pada video yang muncul di layar ini.";
+"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
 
-/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Untuk melanjutkan, klik **Buka Preferensi Keamanan** dan ikuti instruksi video yang muncul pada layar ini.";
+"_sysex_tutorial_how_to_enable" = "How to enable extensions";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Atur Proton VPN";
+"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
 
-/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+
+"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+
+"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+
+"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+
+"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+
+"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+
+"_sysex_tutorial_button_open" = "Open Network Extensions";
+
 "_sysex_open_system_settings" = "Buka Pengaturan Sistem";
 
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Buka Preferensi Keamanan";
+"_sysex_tutorial_didnt_work" = "Didn't work?";
+
+"_sysex_tutorial_need_help" = "Need help?";
 
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
 
@@ -1757,6 +1793,9 @@
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
+
+/* macOS main menu: Help -> Split Tunneling logs row */
+"_plutonium_logs" = "Log Split Tunneling";
 
 "_local_agent_server_error_title" = "Kesalahan server";
 
@@ -3046,6 +3085,18 @@
 
 /* iOS: Alert message after account creation in guest mode */
 "_account_created_title" = "Akun dibuat";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Buat akun untuk melanjutkan";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Buat akun";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Masuk";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Batal";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Kustomisasi VPN lanjutan";

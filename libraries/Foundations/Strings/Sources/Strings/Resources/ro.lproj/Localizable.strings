@@ -1082,22 +1082,22 @@
 "turn_split_tunneling_on_description" = "Aceasta va dezactiva întrerupătorul de conexiune.";
 
 /* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "Nu se poate activa divizarea traficului";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2. Detalii";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul IKEv2. Pentru a utiliza divizarea traficului, schimbați protocolul profilului sau deconectați-vă de la profil. Detalii";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+"split_tunneling_connect_to_profile_alert_description" = "Divizarea traficului nu este compatibilă cu protocolul profilului actual (IKEv2). Conectarea va dezactiva divizarea traficului. Detalii";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "Conectare la protocolul IKEv2?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "Conectare la %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Luați planul %@";
@@ -1437,6 +1437,9 @@
 /* Text appears as hint when hovering mouse over the assigned port number */
 "_pf_copy_port_number" = "Copier număr port";
 
+/* Text appears as popup after copy action */
+"_pf_copied" = "S-a copiat";
+
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Se încarcă…";
 
@@ -1517,26 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Conexiunea va fi restabilită pentru a schimba modul pentru Smart Protocol.";
 
-/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "Pentru a utiliza Proton VPN, trebuie să activați **protocoale personale VPN** în Mac.";
+"_sysex_tutorial_title_setup" = "Set up Proton VPN";
 
-/* Part 2 of the description of the system extension wizard in mac */
-"_sysex_description_2" = "Protocoalele personale permit conexiuni mai rapide și mai sigure și va trebui să le activați pentru a vă conecta la majoritatea serverelor Proton.";
+"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
-/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "Pentru a continua, faceți clic pe **Deschidere setări sistem**, apoi urmați instrucțiunile video de pe acest ecran.";
+"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
 
-/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "Pentru a continua, faceți clic pe **Deschidere preferințe securitate**, apoi urmați instrucțiunile video de pe acest ecran.";
+"_sysex_tutorial_how_to_enable" = "How to enable extensions";
 
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Setare Proton VPN";
+"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
 
-/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+
+"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+
+"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+
+"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+
+"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+
+"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+
+"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+
+"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+
+"_sysex_tutorial_button_open" = "Open Network Extensions";
+
 "_sysex_open_system_settings" = "Deschidere setări sistem";
 
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Deschidere preferințe securitate";
+"_sysex_tutorial_didnt_work" = "Didn't work?";
+
+"_sysex_tutorial_need_help" = "Need help?";
 
 "_sysex_settings_description" = "Proton VPN necesită încărcarea unei extensii de sistem pentru a beneficia de Smart Protocol, OpenVPN sau WireGuard.";
 
@@ -1757,6 +1793,9 @@
 
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
+
+/* macOS main menu: Help -> Split Tunneling logs row */
+"_plutonium_logs" = "Jurnal divizare trafic";
 
 "_local_agent_server_error_title" = "Eroare server";
 
@@ -2862,7 +2901,7 @@
 "_ike_deprecation_alert_message" = "Acest protocol va fi eliminat în curând. Luați în considerare trecerea la protocolul Smart. Aflați mai multe.";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "Aceasta va dezactiva divizarea traficului.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Detalii";
@@ -3046,6 +3085,18 @@
 
 /* iOS: Alert message after account creation in guest mode */
 "_account_created_title" = "Contul a fost creat.";
+
+/* iOS: Alert title for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode" = "Creați un cont pentru a continua";
+
+/* iOS: Alert create account button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Creare cont";
+
+/* iOS: Alert sign in button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Autentificare";
+
+/* iOS: Alert cancel button for report an issue attempt in guest mode */
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Anulare";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Personalizare avansată VPN";
