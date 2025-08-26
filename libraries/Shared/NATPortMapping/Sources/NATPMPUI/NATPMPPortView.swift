@@ -76,9 +76,7 @@ struct ActivePortView: View {
 
                 // Hide tooltip after 2 seconds
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    withAnimation(.easeInOut(duration: 0.2)) {
-                        showCopiedTooltip = false
-                    }
+                    showCopiedTooltip = false
                 }
             }
         }) {
