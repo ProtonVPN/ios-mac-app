@@ -260,7 +260,6 @@
 		E565986C2820FEDD004F2240 /* WarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E565986B2820FEDD004F2240 /* WarningView.swift */; };
 		E567FFAC2B9B3A2700ECD823 /* AppTheme.Style+Tier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */; };
 		E56EB5E82DDF66410059996D /* EditMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56EB5E72DDF66410059996D /* EditMenuController.swift */; };
-		E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */; };
 		E57B263229C3188D00533B7C /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E57B263129C3188D00533B7C /* AVKit.framework */; };
 		E57E4CA02DBBD00600E24BF7 /* PlutoniumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E4C9F2DBBD00600E24BF7 /* PlutoniumFeature.swift */; };
 		E57E4CA12DBBD00600E24BF7 /* PlutoniumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */; };
@@ -275,15 +274,11 @@
 		E5C384662D96AAA5003494D5 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = E5C384652D96AAA5003494D5 /* Settings */; };
 		E5C3847E2D96B9DE003494D5 /* Modals in Frameworks */ = {isa = PBXBuildFile; productRef = E5C3847D2D96B9DE003494D5 /* Modals */; };
 		E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */; };
-		E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */; };
-		E5C4EF3F29B882C10013ACB2 /* ThemeButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C4EF3E29B882C10013ACB2 /* ThemeButtonStyle.swift */; };
 		E5C7F0B32DE8A98700A7AD13 /* ClearButtonModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */; };
-		E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CCA11729B2057700BDE32B /* VideoTourModel.swift */; };
 		E5CFAACE29E92E8300C36735 /* AppTheme+Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */; };
 		E5DA73C12DC4D1930057B273 /* ThemeToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */; };
 		E5DA73C52DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C42DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift */; };
 		E5DA73C92DCCCADF0057B273 /* GhostButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73C82DCCCADF0057B273 /* GhostButtonStyle.swift */; };
-		E5DA73CB2DCCF4F50057B273 /* LinkPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73CA2DCCF4F20057B273 /* LinkPointer.swift */; };
 		E5DA73D42DD23A970057B273 /* PlutoniumFeatureState+UIExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA73D32DD23A8B0057B273 /* PlutoniumFeatureState+UIExtension.swift */; };
 		E5E48CF72A4C363700B09111 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF62A4C363700B09111 /* ComposableArchitecture */; };
 		E5E48CF92A4C365000B09111 /* ConnectionDetails in Frameworks */ = {isa = PBXBuildFile; productRef = E5E48CF82A4C365000B09111 /* ConnectionDetails */; };
@@ -821,7 +816,6 @@
 		E565986B2820FEDD004F2240 /* WarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WarningView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/WarningView.swift; sourceTree = "<group>"; };
 		E567FFAB2B9B3A2600ECD823 /* AppTheme.Style+Tier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppTheme.Style+Tier.swift"; sourceTree = "<group>"; };
 		E56EB5E72DDF66410059996D /* EditMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuController.swift; sourceTree = "<group>"; };
-		E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionTutorialView.swift; sourceTree = "<group>"; };
 		E57B263129C3188D00533B7C /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		E57E4C9D2DBBD00600E24BF7 /* Plutonium+NSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Plutonium+NSViewController.swift"; sourceTree = "<group>"; };
 		E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumView.swift; sourceTree = "<group>"; };
@@ -835,15 +829,11 @@
 		E5C00F142A1612950030076F /* NavigationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRobot.swift; sourceTree = "<group>"; };
 		E5C3415D29FBBADE00A26614 /* ProtonVPN_redesignApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVPN_redesignApp.swift; sourceTree = "<group>"; };
 		E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
-		E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkButtonStyle.swift; sourceTree = "<group>"; };
-		E5C4EF3E29B882C10013ACB2 /* ThemeButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeButtonStyle.swift; sourceTree = "<group>"; };
 		E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearButtonModifier.swift; sourceTree = "<group>"; };
-		E5CCA11729B2057700BDE32B /* VideoTourModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTourModel.swift; sourceTree = "<group>"; };
 		E5CFAACD29E92E8300C36735 /* AppTheme+Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppTheme+Icons.swift"; sourceTree = "<group>"; };
 		E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeToggleStyle.swift; sourceTree = "<group>"; };
 		E5DA73C42DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlutoniumSelectionButtonLabel.swift; sourceTree = "<group>"; };
 		E5DA73C82DCCCADF0057B273 /* GhostButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostButtonStyle.swift; sourceTree = "<group>"; };
-		E5DA73CA2DCCF4F20057B273 /* LinkPointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPointer.swift; sourceTree = "<group>"; };
 		E5DA73D32DD23A8B0057B273 /* PlutoniumFeatureState+UIExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlutoniumFeatureState+UIExtension.swift"; sourceTree = "<group>"; };
 		E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerRepresentable.swift; sourceTree = "<group>"; };
 		E5EB08C3281FC4A700F29B20 /* TwoFactorView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = TwoFactorView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Login/ViewControllers/TwoFactorView.xib; sourceTree = "<group>"; };
@@ -1554,16 +1544,6 @@
 			path = SideBar;
 			sourceTree = "<group>";
 		};
-		E5772AE229B0B9970076D824 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E5772AE329B0B9A90076D824 /* SystemExtensionTutorialView.swift */,
-				E5C4EF3C29B882AF0013ACB2 /* LinkButtonStyle.swift */,
-				E5C4EF3E29B882C10013ACB2 /* ThemeButtonStyle.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		E57E4CA32DBBD01B00E24BF7 /* Plutonium */ = {
 			isa = PBXGroup;
 			children = (
@@ -1571,7 +1551,6 @@
 				E57E4C9D2DBBD00600E24BF7 /* Plutonium+NSViewController.swift */,
 				E5C7F0B22DE8A98400A7AD13 /* ClearButtonModifier.swift */,
 				E57E4C9E2DBBD00600E24BF7 /* PlutoniumView.swift */,
-				E5DA73CA2DCCF4F20057B273 /* LinkPointer.swift */,
 				E50E24B82DD4CE940046A14D /* ItemProvider.swift */,
 				E5DA73C42DCB880D0057B273 /* PlutoniumSelectionButtonLabel.swift */,
 				E5DA73C02DC4D1930057B273 /* ThemeToggleStyle.swift */,
@@ -2182,10 +2161,8 @@
 		F36ECE142611DD900089B898 /* SystemExtension */ = {
 			isa = PBXGroup;
 			children = (
-				E5772AE229B0B9970076D824 /* Views */,
 				F36ECE4F2611E2FA0089B898 /* Services */,
 				F36ECE152611DD9E0089B898 /* ViewContollers */,
-				F36ECE162611DDAB0089B898 /* ViewModels */,
 				6E59328A6167356242BBBD90 /* Windows */,
 			);
 			path = SystemExtension;
@@ -2197,14 +2174,6 @@
 				E5C4EF3A29B611C20013ACB2 /* SystemExtensionGuideViewController.swift */,
 			);
 			path = ViewContollers;
-			sourceTree = "<group>";
-		};
-		F36ECE162611DDAB0089B898 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				E5CCA11729B2057700BDE32B /* VideoTourModel.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		F36ECE172611DDC00089B898 /* Views */ = {
@@ -3407,7 +3376,6 @@
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
 				F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */,
 				A4F2B9782E31070C00B807B8 /* QuickSettingDetailViewController.swift in Sources */,
-				E5DA73CB2DCCF4F50057B273 /* LinkPointer.swift in Sources */,
 				421E42622639788000AE6AF9 /* CountriesServersHeaderViewModel.swift in Sources */,
 				E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */,
 				42314C6A255AC2FD00B7BDCC /* QuickSettingDropdownOptionPresenter.swift in Sources */,
@@ -3459,7 +3427,6 @@
 				EE35FC331F1CB82B00CFE26F /* SidebarTabBarViewController.swift in Sources */,
 				EEE3B5F51F53F8EC00E86CFA /* CountryAnnotationView.swift in Sources */,
 				EE5B174F1F39E4E100879BE0 /* LargeConnectButton.swift in Sources */,
-				E5C4EF3D29B882AF0013ACB2 /* LinkButtonStyle.swift in Sources */,
 				663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */,
 				EE4E7DF91F629195000F7D5E /* WindowController.swift in Sources */,
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
@@ -3477,7 +3444,6 @@
 				E5F1112E27CE3A1D007DEC0D /* SettingsDropDownView.swift in Sources */,
 				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
-				E5C4EF3F29B882C10013ACB2 /* ThemeButtonStyle.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
 				D59A13612A98EA8300A3D1D7 /* FastestConnectionViewModel.swift in Sources */,
 				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,
@@ -3495,7 +3461,6 @@
 				E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */,
 				EE8EF1EB1F1FB8380057CD94 /* InteractiveActionButton.swift in Sources */,
 				EE27DB481F47095300D2FF2B /* AccountViewController.swift in Sources */,
-				E5772AE429B0B9A90076D824 /* SystemExtensionTutorialView.swift in Sources */,
 				EE13E4371F543F4000E50B06 /* MapSectionViewModel.swift in Sources */,
 				D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */,
 				E13464D32035774200C0DB7D /* ShadowView.swift in Sources */,
@@ -3554,7 +3519,6 @@
 				E5FF89612A810043002B4A49 /* SidebarReducer.swift in Sources */,
 				E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */,
 				E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */,
-				E5CCA11829B2057700BDE32B /* VideoTourModel.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				E5FF895D2A810043002B4A49 /* LoginFeature.swift in Sources */,

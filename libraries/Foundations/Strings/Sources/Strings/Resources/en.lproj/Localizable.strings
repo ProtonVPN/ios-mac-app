@@ -1481,22 +1481,44 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Your connection will be restarted to change the Smart Protocol mode.";
 
-// MARK: OpenVPN /  WireGuard / System Extensions
+// MARK: System Extensions tutorial
 
-/* Part 1 of the description of the system extension wizard in mac. The whole text: "To use Proton VPN, you’ll need to enable custom VPN protocols on your Mac. Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers. To continue, click Open Security Preferences, then follow the video instructions on this screen." */
-"_sysex_description_1" = "To use Proton VPN, you’ll need to enable **custom VPN protocols** on your Mac.";
-/* Part 2 of the description of the system extension wizard in mac */
-"_sysex_description_2" = "Custom protocols allow for faster and more secure connections, and you’ll need them enabled to connect to most Proton VPN servers.";
-/* Part 3 of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_3" = "To continue, click **Open System Settings**, then follow the video instructions on this screen.";
-/* Alternative for Part 3 for pre-ventura of the description of the system extension wizard in mac. Text in bold is the same as the title of the button in the system alert when installing system extensions */
-"_sysex_description_4" = "To continue, click **Open Security Preferences**, then follow the video instructions on this screen.";
-/* Title of the system extension wizard in mac */
-"_sysex_set_up_proton_vpn" = "Set up Proton VPN";
-/* Default action in the system extension wizard in mac. Pre-macOS Ventura */
+"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+
+"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+
+"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+
+"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+
+"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+
+"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+
+"_sysex_tutorial_button_open" = "Open Network Extensions";
 "_sysex_open_system_settings" = "Open System Settings";
-/* Default action in the system extension wizard in mac. macOS Ventura */
-"_sysex_open_security_preferences" = "Open Security Preferences";
+
+"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_need_help" = "Need help?";
+
+// MARK: WireGuard configuration
 
 "_sysex_settings_description" = "Proton VPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
@@ -1616,7 +1638,7 @@
 // MARK: Plutonium
 
 /* Settings page row title */
-"_plutonium_title" = "${PLUTONIUM}";
+"_plutonium_title" = "Split Tunneling";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Enter a valid IPv4 address";
@@ -1667,28 +1689,28 @@
 "_plutonium_empty_ip_list_content" = "No IP addresses yet";
 
 /* Plutonium upsell view subtitle */
-"_plutonium_upsell_subtitle" = "${_plutonium_upsell_subtitle}";
+"_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
 
 /* Plutonium feature description */
-"_plutonium_customize_connection" = "${_plutonium_customize_connection}";
+"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
 /* Description of the plutonium feature operation mode */
-"_plutonium_exclude_mode_description" = "${_plutonium_exclude_mode_description}";
+"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
 /* Description of the plutonium feature operation mode */
-"_plutonium_include_mode_description" = "${_plutonium_include_mode_description}";
+"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
-"_plutonium_exclude_mode_apps" = "${_plutonium_exclude_mode_apps}";
+"_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
 
 /* Description of the included apps list */
-"_plutonium_include_mode_apps" = "${_plutonium_include_mode_apps}";
+"_plutonium_include_mode_apps" = "Only these apps are protected by VPN.";
 
 /* Header of the excluded ips list */
-"_plutonium_exclude_mode_ips" = "${_plutonium_exclude_mode_ips}";
+"_plutonium_exclude_mode_ips" = "Excluded IP addresses";
 
 /* Header of the included ips list */
-"_plutonium_include_mode_ips" = "${_plutonium_include_mode_ips}";
+"_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split Tunneling logs row */
 "_plutonium_logs" = "Split Tunneling Logs";

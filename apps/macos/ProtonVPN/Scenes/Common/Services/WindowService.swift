@@ -60,7 +60,7 @@ protocol WindowService: WindowControllerDelegate {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
     func openPlutoniumWindow()
-    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void)
+    func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void)
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert)
 
     func bringWindowsToForeground() -> Bool
@@ -256,8 +256,11 @@ class WindowServiceImplementation: WindowService {
         windowController.window?.positionWindow(size: Theme.Constants.settingsViewSize)
     }
 
-    func openSystemExtensionGuideWindow(cancelledHandler: @escaping () -> Void) {
-        let controller = SystemExtensionGuideViewController(cancelledHandler: cancelledHandler)
+    func openSystemExtensionGuideWindow(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {
+        let controller = SystemExtensionGuideViewController(
+            origin: origin,
+            cancelledHandler: cancelledHandler
+        )
         controller.windowService = self
         let windowController = SysexGuideWindowController(viewController: controller)
         windowController.delegate = controller

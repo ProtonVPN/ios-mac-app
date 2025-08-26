@@ -1006,9 +1006,22 @@ public final class DisconnectToSignInAlert: SystemAlert {
         public var dismiss: (() -> Void)?
         public var cancelHandler: () -> Void
 
-        public init(cancelHandler: @escaping () -> Void) {
+        public let origin: Origin
+
+        public enum Origin {
+            case firstAppLaunch
+            case inAppPrompt([Feature])
+        }
+
+        public enum Feature: CaseIterable {
+            case wireguard
+            case splitTunneling
+        }
+
+        public init(origin: Origin, cancelHandler: @escaping () -> Void) {
             self.cancelHandler = cancelHandler
             self.dismiss = cancelHandler
+            self.origin = origin
         }
     }
 #endif

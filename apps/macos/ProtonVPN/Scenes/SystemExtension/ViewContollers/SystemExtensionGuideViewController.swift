@@ -22,6 +22,7 @@ import SwiftUI
 
 import Domain
 import LegacyCommon
+import VPNAppCore
 
 class SystemExtensionGuideViewController: NSViewController {
     private var cancellables = Set<AnyCancellable>()
@@ -32,7 +33,10 @@ class SystemExtensionGuideViewController: NSViewController {
 
     var cancelledHandler: () -> Void
 
-    init(cancelledHandler: @escaping () -> Void) {
+    let origin: SystemExtensionTourAlert.Origin
+
+    init(origin: SystemExtensionTourAlert.Origin, cancelledHandler: @escaping () -> Void) {
+        self.origin = origin
         self.cancelledHandler = cancelledHandler
         super.init(nibName: nil, bundle: nil)
     }
@@ -42,8 +46,19 @@ class SystemExtensionGuideViewController: NSViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private var isSequoiaOrNewer = if #available(macOS 15, *) {
+        true
+    } else {
+        false
+    }
+
     override func loadView() {
-        view = NSHostingView(rootView: SystemExtensionTutorialView().preferredColorScheme(.dark))
+        let tutorialView = SystemExtensionsTutorialView(
+            isSequoiaOrNewer: isSequoiaOrNewer,
+            origin: origin
+        )
+        .preferredColorScheme(.dark)
+        view = NSHostingView(rootView: tutorialView)
     }
 
     override func viewDidLoad() {

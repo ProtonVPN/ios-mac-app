@@ -16,14 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+#if canImport(AppKit)
 
-extension View {
-    func linkPointer() -> some View {
-        if #available(macOS 15.0, *) {
-            return self.pointerStyle(.link)
-        } else {
-            return self
+    import SwiftUI
+
+    public extension View {
+        func linkPointer() -> some View {
+            if #available(macOS 15.0, *) {
+                return self.pointerStyle(.link)
+            } else {
+                return self
+            }
         }
     }
-}
+#endif
