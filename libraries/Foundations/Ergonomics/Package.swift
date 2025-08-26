@@ -22,6 +22,8 @@ let package = Package(
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", .upToNextMajor(from: "1.18.0")),
         .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", .upToNextMajor(from: "1.4.2")),
         .package(url: "https://github.com/pointfreeco/swift-concurrency-extras", .upToNextMajor(from: "1.1.0")),
+        .package(url: "https://github.com/apple/swift-async-algorithms", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/pointfreeco/swift-clocks", .upToNextMajor(from: "1.0.5")),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -29,7 +31,9 @@ let package = Package(
         .target(
             name: "Ergonomics",
             dependencies: [
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Clocks", package: "swift-clocks"),
                 .product(name: "IssueReporting", package: "xctest-dynamic-overlay"),
                 .product(name: "ConcurrencyExtras", package: "swift-concurrency-extras"),
                 .product(name: "ProtonCoreFeatureFlags", package: "protoncore"),
@@ -38,7 +42,10 @@ let package = Package(
         ),
         .testTarget(
             name: "ErgonomicsTests",
-            dependencies: ["Ergonomics"]
+            dependencies: [
+                "Ergonomics",
+                .product(name: "Clocks", package: "swift-clocks"),
+            ]
         ),
     ]
 )

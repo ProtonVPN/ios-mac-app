@@ -94,14 +94,44 @@ extension CertificateRefreshClient {
         }
     }
 
-    private static func forkSession() async throws(CertificateRefreshError) -> String {
+    struct ForkingExhaustedRetriesError: Swift.Error {}
+
+    private static func retry<Output>(
+        count: Int,
+        retryDelay: Duration,
+        operation: () async throws -> Output
+    ) async throws -> Output {
+        @Dependency(\.continuousClock) var clock
+
+        for _ in 0 ..< count {
+            do {
+                return try await operation()
+            } catch {
+                try await clock.sleep(for: retryDelay)
+                continue
+            }
+        }
+
+        try Task.checkCancellation()
+
+        throw ForkingExhaustedRetriesError()
+    }
+
+    private static func forkSession(retries _: Int) async throws(CertificateRefreshError) -> String {
         @Dependency(\.sessionService) var sessionService
+
         do {
-            return try await sessionService.selector(.appContext(.wireGuardExtension))
+            return try await retry(count: 3, retryDelay: .seconds(1)) {
+                try await sessionService.selector(.appContext(.wireGuardExtension))
+            }
         } catch {
-            throw .sessionForkingFailed(error)
+            throw CertificateRefreshError.sessionForkingFailed(ForkingExhaustedRetriesError())
         }
     }
+
+    private static let pathStatusCheckingInterval: Duration = .milliseconds(250)
+    private static let pathStatusDeadline: Duration = .seconds(2)
+    private static let forkingSessionRetriesCount: Int = 3
 
     public static let liveValue: CertificateRefreshClient = .init(
         refreshCertificate: { features throws(CertificateRefreshError) in
@@ -111,13 +141,33 @@ extension CertificateRefreshClient {
         },
         pushSelector: { () throws(CertificateRefreshError) in
             @Dependency(\.tunnelMessageSender) var messageSender
+            @Dependency(\.continuousClock) var clock
             @Dependency(\.sessionService) var sessionService
+            @Dependency(\.nwStatusStream) var nwStatusStream
 
-            let selector = try await forkSession()
-            let cookie = sessionService.sessionCookie()
-            let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: cookie)
-            let response = try await send(request: request)
-            try parse(response: response) // if this doesn't throw, all is good
+            do {
+                // Let's make sure we have a `.satisfied` path status before performing the `forkSession` function call
+                try await nwStatusStream()
+                    .when(
+                        equals: .satisfied,
+                        every: Self.pathStatusCheckingInterval,
+                        on: AnyClock(clock),
+                        deadline: Self.pathStatusDeadline
+                    ) {
+                        let selector = try await forkSession(retries: Self.forkingSessionRetriesCount)
+                        let cookie = sessionService.sessionCookie()
+                        let request = WireguardProviderRequest.setApiSelector(selector, withSessionCookie: cookie)
+                        let response = try await send(request: request)
+                        try parse(response: response) // if this doesn't throw, all is good
+                    }
+            } catch let error as CancellationError {
+                throw CertificateRefreshError.cancelled
+            } catch let error as CertificateRefreshError {
+                throw error
+            } catch {
+                assertionFailure("Pushing selector failed with an unhandled error: \(error)")
+                log.error("Pushing selector failed with an unhandled error: \(error)")
+            }
         }
     )
 }

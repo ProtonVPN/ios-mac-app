@@ -27,11 +27,11 @@ package extension Shared where Value: Equatable {
     /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
     /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
     /// - Parameters:
-    ///   - match: the closure to perform the check on the `newValue`.
+    ///   - checkingValue: the value that we'll check against.
     ///   - interval: the interval at which we check if ``deadline`` has passed.
     ///   - clock: the clock on which we base time calculations.
-    ///   - deadline: the deadline that determines at which point we're calling
-    ///   - operation: the operation you want to perform.
+    ///   - deadlineDuration: the deadline that determines at which point we're calling.
+    ///   - operation: the operation that will be performed.
     func when<C: Clock>(
         equals checkingValue: Value,
         every interval: C.Duration,
@@ -64,8 +64,8 @@ package extension SharedReader where Value: CasePathable {
     ///   - caseKeyPath: the ``PartialCaseKeyPath`` that will allow to perform the check on the `newValue`.
     ///   - interval: the interval at which we check if ``deadline`` has passed.
     ///   - clock: the clock on which we base time calculations.
-    ///   - deadline: the deadline that determines at which point we're calling
-    ///   - operation: the operation you want to perform.
+    ///   - deadlineDuration: the deadline that determines at which point we're calling.
+    ///   - operation: the operation that will be performed.
     func when<C: Clock>(
         willBe caseKeyPath: PartialCaseKeyPath<Value>,
         every interval: C.Duration,
@@ -95,10 +95,10 @@ package extension SharedReader where Value: Equatable {
     /// When the value matches the check, the ``operation`` closure is executed once and the function returns.
     /// If the deadline passes, the ``operation`` closure is executed once and the function returns.
     /// - Parameters:
-    ///   - match: the closure to perform the check on the `newValue`.
+    ///   - checkingValue: the value that we'll check against.
     ///   - interval: the interval at which we check if ``deadline`` has passed.
     ///   - clock: the clock on which we base time calculations.
-    ///   - deadline: the deadline that determines at which point we're calling
+    ///   - deadlineDuration: the deadline that determines at which point we're calling.
     ///   - operation: the operation you want to perform.
     func when<C: Clock>(
         equals checkingValue: Value,
