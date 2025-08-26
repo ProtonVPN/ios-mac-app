@@ -11,23 +11,22 @@
             <connections>
                 <outlet property="bottomHorizontalLine" destination="j34-Mf-pR3" id="2fw-Zd-SHn"/>
                 <outlet property="clearSearchBtn" destination="ngW-Fz-8Yk" id="Ebc-Ai-8HV"/>
+                <outlet property="killSwitchBox" destination="Jel-VH-8db" id="C5k-aG-puE"/>
                 <outlet property="killSwitchBtn" destination="1zu-fE-s41" id="HVd-zK-KQW"/>
-                <outlet property="killSwitchSectionView" destination="Jr2-NA-2AB" id="Q71-pC-heB"/>
                 <outlet property="listLeadingConstraint" destination="AkH-nz-rRf" id="eLG-bn-7ra"/>
                 <outlet property="listTrailingConstraint" destination="eYc-kp-Qvn" id="x8J-HP-eOb"/>
-                <outlet property="netShieldBox" destination="AVF-NI-b29" id="fu0-ap-1bb"/>
+                <outlet property="netShieldBox" destination="AVF-NI-b29" id="rHe-Zt-ubc"/>
                 <outlet property="netShieldBtn" destination="COp-Cy-iCa" id="NQi-fi-I3y"/>
-                <outlet property="netShieldSectionView" destination="Uag-7s-udL" id="82m-sY-u6Z"/>
                 <outlet property="netShieldStatsLabel" destination="3XG-4r-1Ju" id="xB9-JL-j1T"/>
+                <outlet property="portForwardingBox" destination="GDw-dz-hFz" id="BcW-F9-DcV"/>
                 <outlet property="portForwardingBtn" destination="Rzy-Ia-icv" id="UOl-Tj-LcR"/>
-                <outlet property="portForwardingSectionView" destination="TZf-1B-kbr" id="l2D-k3-pMl"/>
                 <outlet property="portForwardingWarningImage" destination="mPu-VB-GXX" id="gXj-2Q-qTB"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
                 <outlet property="searchBox" destination="qf9-9Y-IsT" id="4Z6-q8-u8I"/>
                 <outlet property="searchIcon" destination="8u3-tX-dep" id="dSA-jo-Plh"/>
                 <outlet property="searchTextField" destination="SQG-nw-URT" id="KoE-mG-DN1"/>
+                <outlet property="secureCoreBox" destination="ouP-mR-rPp" id="Qug-GA-udh"/>
                 <outlet property="secureCoreBtn" destination="JrW-be-2tC" id="Yeu-YT-APa"/>
-                <outlet property="secureCoreSectionView" destination="vbU-RU-3aG" id="JXt-pb-ow4"/>
                 <outlet property="serverListScrollView" destination="Ybt-K1-fU1" id="UsB-Me-zqU"/>
                 <outlet property="serverListTableView" destination="cyQ-Pz-NoP" id="LIA-l0-uhW"/>
                 <outlet property="shadowView" destination="KXN-5h-obj" id="RpF-7n-EpE"/>

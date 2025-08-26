@@ -59,6 +59,8 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     /// Enable web purchases for iOS users in WebView
     case iapToWebView = "IapToWebView"
+
+    case portForwarding = "DisplayPortForwarding"
 }
 
 public extension FeatureFlagsRepository {

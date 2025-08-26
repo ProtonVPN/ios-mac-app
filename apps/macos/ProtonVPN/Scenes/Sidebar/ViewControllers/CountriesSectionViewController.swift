@@ -71,12 +71,10 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var clearSearchBtn: NSButton!
 
     @IBOutlet var quickSettingsStack: QuickSettingsStack!
-    @IBOutlet var secureCoreSectionView: NSView!
-    @IBOutlet var netShieldSectionView: NSView!
-    @IBOutlet var killSwitchSectionView: NSView!
-    @IBOutlet var portForwardingSectionView: NSView!
-
+    @IBOutlet var secureCoreBox: NSBox!
     @IBOutlet var netShieldBox: NSBox!
+    @IBOutlet var killSwitchBox: NSBox!
+    @IBOutlet var portForwardingBox: NSBox!
 
     @IBOutlet var secureCoreBtn: QuickSettingButton!
     @IBOutlet var netShieldBtn: QuickSettingButton!
@@ -121,11 +119,6 @@ final class CountriesSectionViewController: NSViewController {
         addNetShieldObservers()
         setupPortForwardingAlertBage()
         observeAppearance()
-
-        secureCoreBtn.setAccessibilityChildren([secureCoreSectionView as Any])
-        netShieldBtn.setAccessibilityChildren([netShieldSectionView as Any])
-        killSwitchBtn.setAccessibilityChildren([killSwitchSectionView as Any])
-        portForwardingBtn.setAccessibilityChildren([portForwardingSectionView as Any])
     }
 
     override func viewWillAppear() {
@@ -156,6 +149,16 @@ final class CountriesSectionViewController: NSViewController {
 
     private func setupView() {
         view.wantsLayer = true
+
+        secureCoreBtn.setAccessibilityChildren([secureCoreBox as Any])
+        netShieldBtn.setAccessibilityChildren([netShieldBox as Any])
+        killSwitchBtn.setAccessibilityChildren([killSwitchBox as Any])
+        if VPNFeatureFlagType.portForwarding.enabled {
+            portForwardingBox.isHidden = false
+            portForwardingBtn.setAccessibilityChildren([portForwardingBox as Any])
+        } else {
+            portForwardingBox.isHidden = true
+        }
     }
 
     private func setupColors() {
@@ -315,6 +318,7 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func updatePortForwardingView() {
+        guard VPNFeatureFlagType.portForwarding.enabled else { return }
         @Dependency(\.natPortMappingService) var natPortMappingService
         if case .failure = natPortMappingService.portMappingStream.value {
             quickSettingsManager.updateState(connectionInfo: .pfError(isConnected: viewModel.isConnected))
