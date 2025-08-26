@@ -341,6 +341,7 @@ final class HeaderViewModel {
 
                 case .failure:
                     self?.sendPortForwardingNotificationErrorIfNeeded()
+                    self?.delegate?.mappedPortChanged(to: nil)
                 }
             })
     }

@@ -85,7 +85,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
                 }
 
                 // Send response to stream
-                portMappingStream.value = .success(portMappingResponse)
+                portMappingStream.send(.success(portMappingResponse))
 
                 // Schedule next renewal if successful
                 await scheduleNextRenewal(
@@ -100,7 +100,7 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
 
     func cancelPortMapping() async {
         // since we cancelled port mapping for any reason the current value is invalid
-        portMappingStream.value = .success(nil)
+        portMappingStream.send(.success(nil))
         await renewalTask.cancelRenewal()
     }
 

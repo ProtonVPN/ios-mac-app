@@ -71,7 +71,6 @@ public struct NATPMPFeature: Sendable {
                                 return .portMappingFailed
                             }
                         }
-                        .replaceError(with: .portMappingFailed)
                 }.cancellable(id: CancelID.portMappingStream, cancelInFlight: true)
 
             case let .portMapped(portMappingResponse):
