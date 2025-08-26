@@ -299,9 +299,6 @@ final class NavigationService {
         let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
 
         if isRedesign {
-            @Dependency(\.credentialsProvider) var credentials
-            @Shared(.userTier) var userTier
-            $userTier.withLock { $0 = credentials.tier }
             let home = HomeFeatureCreator.homeViewController()
             tabViewControllers.append(home)
         }

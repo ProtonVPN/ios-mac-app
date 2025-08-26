@@ -24,6 +24,7 @@ import Foundation
 import UIKit
 
 import Dependencies
+import Sharing
 
 import Domain
 import Ergonomics
@@ -103,7 +104,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
 
-    private var userTier: Int = .freeTier
+    @Shared(.userTier) var userTier
     private var state: ModelState = .standard([])
 
     var activeView: ServerType {
@@ -112,10 +113,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     var secureCoreOn: Bool {
         state.serverType == .secureCore
-    }
-
-    var maxTier: Int {
-        (try? keychain.fetchCached().maxTier) ?? .freeTier
     }
 
     public typealias Factory = AppStateManagerFactory
@@ -158,7 +155,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         self.vpnGateway = vpnGateway
         self.countryService = countryService
 
-        refreshTier()
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
         fillTableData()
         addObservers()
@@ -274,18 +270,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
 
     // MARK: - Private functions
 
-    private func refreshTier() {
-        do {
-            if try (keychain.fetchCached()).isDelinquent {
-                userTier = .freeTier
-                return
-            }
-            userTier = try vpnGateway.userTier()
-        } catch {
-            userTier = .freeTier
-        }
-    }
-
     private func content(for index: Int) -> [Row] {
         guard let section = section(index) else {
             return []
@@ -333,7 +317,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     @objc
     private func reloadContent() {
         executeOnUIThread {
-            self.refreshTier()
             self.setStateOf(type: self.propertiesManager.serverTypeToggle)
             self.fillTableData()
             self.delegate?.onContentChange()
