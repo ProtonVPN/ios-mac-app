@@ -170,9 +170,8 @@ final class SettingsViewModel {
     // MARK: - Header section
 
     func viewForFooter() -> UIView {
-        let view = AppVersionView.loadViewFromNib() as AppVersionView
-        view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
-        view.appVersionLabel.text = Localizable.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))"
+        let view = AppVersionView()
+        view.setVersionText(Localizable.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))")
         return view
     }
 

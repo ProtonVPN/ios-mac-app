@@ -26,55 +26,89 @@ import UIKit
 import ProtonCoreUIFoundations
 
 import Announcement
-import LegacyCommon
-
 import Domain
+import Ergonomics
+import LegacyCommon
 import Strings
 
 final class MapViewController: UIViewController {
     private let mapFrame = CGRect(x: 80, y: 104, width: 2600, height: 2206) // correct ratio of Mercator projection map
 
-    @IBOutlet private var secureCoreBar: UIView!
-    @IBOutlet private var secureCoreLabel: UILabel!
-    @IBOutlet private var secureCoreSwitch: ConfirmationToggleSwitch!
-    @IBOutlet private var mapView: UIImageView!
-    @IBOutlet private var scrollView: UIScrollView!
+    private var secureCoreBar: UIView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .backgroundColor()
+    }
 
-    var viewModel: MapViewModel?
+    private var secureCoreLabel: UILabel = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.text = Localizable.useSecureCore
+        $0.textColor = .normalTextColor()
+    }
+
+    private var secureCoreSwitch: ConfirmationToggleSwitch = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    private var mapView: UIImageView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.contentMode = .scaleAspectFit
+        $0.image = Asset.mainMap.image
+    }
+
+    private lazy var scrollView: UIScrollView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.decelerationRate = UIScrollView.DecelerationRate.normal
+        $0.bouncesZoom = false
+        $0.minimumZoomScale = 0.5
+        $0.maximumZoomScale = 1.25
+        $0.delegate = self
+    }
 
     var lastZoom: CGFloat = 1
 
     private var initialMoveAndZoomDone = false
     private var initialMoveAndZoomFrame = CGRect(x: 1040, y: 500, width: 500, height: 500)
 
-    @IBOutlet var connectionBarContainerView: UIView!
-    public var connectionBarViewController: ConnectionBarViewController?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        tabBarItem = UITabBarItem(title: Localizable.map, image: IconProvider.map, tag: 1)
-        tabBarItem.accessibilityIdentifier = "Map"
+    private var connectionBarContainerView: UIView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        mapView.image = Asset.mainMap.image
+    public var connectionBarViewController: ConnectionBarViewController?
 
-        viewModel?.contentChanged = { [weak self] in self?.contentChanged() }
-        viewModel?.connectionStateChanged = { [weak self] in
+    private let viewModel: MapViewModel
+
+    // MARK: - Init
+
+    init(viewModel: MapViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.contentChanged = { [weak self] in self?.contentChanged() }
+        self.viewModel.connectionStateChanged = { [weak self] in
             DispatchQueue.main.async {
-                self?.secureCoreSwitch?.isEnabled = self?.viewModel?.enableViewToggle ?? false
+                self?.secureCoreSwitch.isEnabled = self?.viewModel.enableViewToggle ?? false
                 self?.setConnection()
             }
         }
-        viewModel?.reorderAnnotations = { [weak self] in
+        self.viewModel.reorderAnnotations = { [weak self] in
             DispatchQueue.main.async {
                 self?.reorderAnnotations()
             }
         }
 
+        tabBarItem = UITabBarItem(title: Localizable.map, image: IconProvider.map, tag: 1)
+        tabBarItem.accessibilityIdentifier = "Map"
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         setupView()
+        setupConstraints()
         setupConnectionBar()
         setupSecureCoreBar()
         addAnnotations()
@@ -87,16 +121,50 @@ final class MapViewController: UIViewController {
         navigationItem.title = Localizable.map
         view.backgroundColor = .backgroundColor()
 
-        scrollView.decelerationRate = UIScrollView.DecelerationRate.normal
-        scrollView.bouncesZoom = false
-        scrollView.minimumZoomScale = 0.5
-        scrollView.maximumZoomScale = 1.25
-        scrollView.delegate = self
+        view.addSubview(connectionBarContainerView)
+        view.addSubview(secureCoreBar)
+        secureCoreBar.addSubview(secureCoreLabel)
+        secureCoreBar.addSubview(secureCoreSwitch)
+        view.addSubview(scrollView)
+        scrollView.addSubview(mapView)
 
-        if let viewModel {
-            let gestureRecognizer = UITapGestureRecognizer(target: viewModel, action: #selector(viewModel.mapTapped))
-            mapView.addGestureRecognizer(gestureRecognizer)
-        }
+        let gestureRecognizer = UITapGestureRecognizer(target: viewModel, action: #selector(viewModel.mapTapped))
+        mapView.addGestureRecognizer(gestureRecognizer)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            connectionBarContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            connectionBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            connectionBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            connectionBarContainerView.heightAnchor.constraint(equalToConstant: .themeSpacing48),
+
+            secureCoreBar.topAnchor.constraint(equalTo: connectionBarContainerView.bottomAnchor),
+            secureCoreBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            secureCoreBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            secureCoreBar.heightAnchor.constraint(equalToConstant: Dimensions.SecureCoreBar.height),
+
+            secureCoreLabel.leadingAnchor.constraint(equalTo: secureCoreBar.leadingAnchor, constant: .themeSpacing16),
+            secureCoreLabel.centerYAnchor.constraint(equalTo: secureCoreBar.centerYAnchor),
+            secureCoreLabel.trailingAnchor.constraint(equalTo: secureCoreSwitch.leadingAnchor, constant: -.themeSpacing16),
+
+            secureCoreSwitch.trailingAnchor.constraint(equalTo: secureCoreBar.trailingAnchor, constant: -.themeSpacing16),
+            secureCoreSwitch.centerYAnchor.constraint(equalTo: secureCoreBar.centerYAnchor),
+            secureCoreSwitch.widthAnchor.constraint(equalToConstant: Dimensions.SecureCoreSwitch.width),
+            secureCoreSwitch.heightAnchor.constraint(equalToConstant: Dimensions.SecureCoreSwitch.height),
+
+            scrollView.topAnchor.constraint(equalTo: secureCoreBar.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            mapView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            mapView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            mapView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+        ])
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -109,22 +177,17 @@ final class MapViewController: UIViewController {
     }
 
     private func setupSecureCoreBar() {
-        secureCoreBar.backgroundColor = .backgroundColor()
-        secureCoreLabel.textColor = .normalTextColor()
-        secureCoreLabel.text = Localizable.useSecureCore
-        if let viewModel {
-            secureCoreSwitch.isEnabled = viewModel.enableViewToggle
-            secureCoreSwitch.isOn = viewModel.secureCoreOn
-        }
+        secureCoreSwitch.isEnabled = viewModel.enableViewToggle
+        secureCoreSwitch.isOn = viewModel.secureCoreOn
         secureCoreSwitch.tapped = { [weak self] in
-            let toOn = self?.viewModel?.secureCoreOn == true
-            self?.viewModel?.toggleState(toOn: !toOn) { [weak self] succeeded in
+            let toOn = self?.viewModel.secureCoreOn == true
+            self?.viewModel.toggleState(toOn: !toOn) { [weak self] succeeded in
                 DispatchQueue.main.async {
                     guard let self else {
                         return
                     }
 
-                    self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
+                    self.secureCoreSwitch.setOn(self.viewModel.secureCoreOn, animated: true)
 
                     if succeeded {
                         self.removeAnnotations()
@@ -142,9 +205,7 @@ final class MapViewController: UIViewController {
     }
 
     private func addAnnotations() {
-        guard let annotations = viewModel?.annotations else { return }
-
-        for annotation in annotations {
+        for annotation in viewModel.annotations {
             let countryAnnotation = CountryAnnotation(frame: CGRect.zero, viewModel: annotation)
             mapView.addSubview(countryAnnotation)
             positionAnnotationInMap(countryAnnotation)
@@ -169,7 +230,7 @@ final class MapViewController: UIViewController {
             }
         }
 
-        viewModel?.connections.forEach { connection in
+        for connection in viewModel.connections {
             let connectionView = ConnectionView(frame: CGRect.zero, viewModel: connection)
             mapView.addSubview(connectionView)
             positionConnectionInMap(connectionView)
@@ -296,8 +357,6 @@ final class MapViewController: UIViewController {
     }
 
     private func contentChanged() {
-        guard let viewModel else { return }
-
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         removeAnnotations()
         addAnnotations()
@@ -312,5 +371,18 @@ extension MapViewController: UIScrollViewDelegate {
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         resizeAnnotations()
         lastZoom = scrollView.zoomScale
+    }
+}
+
+extension MapViewController {
+    private enum Dimensions {
+        enum SecureCoreBar {
+            static let height: CGFloat = 50
+        }
+
+        enum SecureCoreSwitch {
+            static let width: CGFloat = 51
+            static let height: CGFloat = 31
+        }
     }
 }

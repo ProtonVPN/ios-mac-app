@@ -26,39 +26,51 @@ import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 
 import Announcement
-import LegacyCommon
-
 import Domain
+import Ergonomics
+import LegacyCommon
 import Strings
 
 final class SettingsViewController: UIViewController {
-    @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var connectionBarContainerView: UIView!
+    private var tableView: UITableView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.separatorColor = .normalSeparatorColor()
+        $0.separatorInset = .zero
+        $0.backgroundColor = .backgroundColor()
+        $0.cellLayoutMarginsFollowReadableWidth = true
+        $0.contentInset.bottom = UIConstants.cellHeight
+    }
+
+    private lazy var connectionBarContainerView: UIView = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
 
     var connectionBarViewController: ConnectionBarViewController?
     var genericDataSource: GenericTableViewDataSource?
-    var viewModel: SettingsViewModel? {
-        didSet {
-            viewModel?.showModalController = { [weak self] viewController in
-                self?.present(viewController, animated: true)
-            }
-            viewModel?.pushHandler = { [weak self] viewController, translucent, hidesBackButton in
-                self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
-            }
-            viewModel?.reloadNeeded = { [weak self] in
-                guard let self, isViewLoaded else {
-                    return
-                }
 
-                setupTableView()
-                tableView.reloadData()
-            }
+    private let viewModel: SettingsViewModel
+
+    // MARK: - Init
+
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+
+        self.viewModel.showModalController = { [weak self] viewController in
+            self?.present(viewController, animated: true)
         }
-    }
+        self.viewModel.pushHandler = { [weak self] viewController, translucent, hidesBackButton in
+            self?.pushViewController(viewController, translucentNavBar: translucent, hidesBackButton: hidesBackButton)
+        }
+        self.viewModel.reloadNeeded = { [weak self] in
+            guard let self, isViewLoaded else {
+                return
+            }
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
+            setupTableView()
+            tableView.reloadData()
+        }
+        // Set up tab bar item
         if FeatureFlagsRepository.isRedesigniOSEnabled {
             tabBarItem = UITabBarItem(title: Localizable.settings, image: IconProvider.cogWheel, tag: 3)
         } else {
@@ -67,15 +79,15 @@ final class SettingsViewController: UIViewController {
         tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
 
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupView()
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            connectionBarContainerView.removeFromSuperview()
-        } else {
-            setupConnectionBar()
-        }
 
         AppEvent.announcementStorageContent.subscribe(self, selector: #selector(setupAnnouncements))
     }
@@ -94,22 +106,40 @@ final class SettingsViewController: UIViewController {
         navigationItem.title = Localizable.settings
         view.backgroundColor = .backgroundColor()
         view.layer.backgroundColor = UIColor.backgroundColor().cgColor
+
+        view.addSubview(tableView)
+
+        if FeatureFlagsRepository.isRedesigniOSEnabled {
+            NSLayoutConstraint.activate([
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        } else {
+            view.addSubview(connectionBarContainerView)
+
+            NSLayoutConstraint.activate([
+                connectionBarContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                connectionBarContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                connectionBarContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                connectionBarContainerView.heightAnchor.constraint(equalToConstant: .themeSpacing48),
+
+                tableView.topAnchor.constraint(equalTo: connectionBarContainerView.bottomAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+
+            setupConnectionBar()
+        }
     }
 
     private func setupTableView() {
-        guard let viewModel else { return }
-
         genericDataSource = GenericTableViewDataSource(for: tableView, with: viewModel.tableViewData)
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
-
-        tableView.separatorColor = .normalSeparatorColor()
-        tableView.separatorInset = .zero
-        tableView.backgroundColor = .backgroundColor()
-        tableView.cellLayoutMarginsFollowReadableWidth = true
-
         tableView.tableFooterView = viewModel.viewForFooter()
-        tableView.contentInset.bottom = UIConstants.cellHeight
     }
 
     private func pushViewController(_ viewController: UIViewController, translucentNavBar: Bool, hidesBackButton: Bool) {

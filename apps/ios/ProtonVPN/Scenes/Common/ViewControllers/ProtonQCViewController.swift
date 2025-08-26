@@ -24,11 +24,15 @@ import LegacyCommon
 import Strings
 import UIKit
 
-class ProtonQCViewController: UIViewController {
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
+final class ProtonQCViewController: UIViewController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
         tabBarItem = UITabBarItem(title: Localizable.quickConnect, image: nil, tag: 2)
         tabBarItem.accessibilityIdentifier = "Quick Connect"
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

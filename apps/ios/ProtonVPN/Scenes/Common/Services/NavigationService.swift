@@ -71,7 +71,7 @@ protocol ProfileService {
 // MARK: Settings Service
 
 protocol SettingsService {
-    func makeSettingsViewController() -> SettingsViewController?
+    func makeSettingsViewController() -> SettingsViewController
     func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> UIViewController
     func makeHermesSettingsViewController(viewModel: HermesSettingsViewModel) -> HermesSettingsViewController
@@ -122,7 +122,6 @@ final class NavigationService {
     // MARK: Storyboards
 
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
-    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
@@ -294,29 +293,20 @@ final class NavigationService {
         }
 
         let tabBarVC = makeTabBarController()
-        var tabViewControllers: [UIViewController] = []
-
-        let isRedesign = FeatureFlagsRepository.isRedesigniOSEnabled
-
-        if isRedesign {
-            let home = HomeFeatureCreator.homeViewController()
-            tabViewControllers.append(home)
-        }
-
-        tabViewControllers.append(UINavigationController(rootViewController: makeCountriesViewController()))
-
-        if !isRedesign {
-            tabViewControllers.append(UINavigationController(rootViewController: makeMapViewController()))
-
-            if let protonQCViewController = mainStoryboard.instantiateViewController(withIdentifier: "ProtonQCViewController") as? ProtonQCViewController {
-                tabViewControllers.append(protonQCViewController)
-            }
-        }
-
-        tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
-
-        if let settingsViewController = makeSettingsViewController() {
-            tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
+        let tabViewControllers: [UIViewController] = if FeatureFlagsRepository.isRedesigniOSEnabled {
+            [
+                HomeFeatureCreator.homeViewController(),
+                UINavigationController(rootViewController: makeCountriesViewController()),
+                UINavigationController(rootViewController: makeProfilesViewController()),
+                UINavigationController(rootViewController: makeSettingsViewController()),
+            ]
+        } else {
+            [
+                UINavigationController(rootViewController: makeCountriesViewController()),
+                UINavigationController(rootViewController: makeMapViewController()),
+                ProtonQCViewController(),
+                UINavigationController(rootViewController: makeSettingsViewController()),
+            ]
         }
 
         tabBarVC.setViewControllers(tabViewControllers, animated: false)
@@ -359,8 +349,8 @@ extension NavigationService: CountryService {
 
 extension NavigationService: MapService {
     func makeMapViewController() -> MapViewController {
-        let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: MapViewController.self)) as! MapViewController
-        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
+        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: alertService, vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
+        let mapViewController = MapViewController(viewModel: mapViewModel)
         mapViewController.connectionBarViewController = makeConnectionBarViewController()
         return mapViewController
     }
@@ -419,14 +409,11 @@ extension NavigationService: ProfileService {
 }
 
 extension NavigationService: SettingsService {
-    func makeSettingsViewController() -> SettingsViewController? {
-        if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
-            settingsViewController.connectionBarViewController = makeConnectionBarViewController()
-            return settingsViewController
-        }
-
-        return nil
+    func makeSettingsViewController() -> SettingsViewController {
+        let settingsViewModel = SettingsViewModel(factory: factory, protocolService: self, vpnGateway: vpnGateway)
+        let settingsViewController = SettingsViewController(viewModel: settingsViewModel)
+        settingsViewController.connectionBarViewController = makeConnectionBarViewController()
+        return settingsViewController
     }
 
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
