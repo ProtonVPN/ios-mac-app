@@ -11,15 +11,15 @@ import Logging
 import NetworkExtension
 import os
 
+import Dependencies
 import WireGuardKit
-
-import ExtensionIPC
-import NEHelper
-import VPNShared
 
 import Domain
 import Ergonomics
+import ExtensionIPC
+import NEHelper
 import Timer
+import VPNShared
 
 final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDelegate {
     private var timerFactory: TimerFactory!
@@ -562,4 +562,16 @@ extension WireGuardLogLevel {
             .error
         }
     }
+}
+
+extension BuildConfigurationChecker: @retroactive DependencyKey {
+    public static let liveValue: BuildConfigurationChecker = .init(buildConfiguration: {
+        #if DEBUG
+            return .debug
+        #elseif STAGING
+            return .staging
+        #else
+            return .release
+        #endif
+    })
 }

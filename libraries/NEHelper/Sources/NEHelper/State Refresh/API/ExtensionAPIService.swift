@@ -150,13 +150,14 @@ public final class ExtensionAPIService {
     // MARK: - Private variables
 
     private var apiUrl: String {
-        #if DEBUG
+        @Dependency(\.buildConfigurationChecker) var buildConfigurationChecker
+        if buildConfigurationChecker.buildConfiguration() != .release {
             let storageKey = StorageKeys.apiEndpoint
             if storage.contains(storageKey), let url = storage.getValue(forKey: storageKey) as? String {
                 log.debug("Using API: \(url) ", category: .api)
                 return url
             }
-        #endif
+        }
 
         return "https://vpn-api.proton.me"
     }
