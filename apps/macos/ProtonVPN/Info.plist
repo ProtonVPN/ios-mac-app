@@ -51,7 +51,7 @@
 	<key>SUEnableInstallerLauncherService</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://protonvpn.com/download/macos-update2.xml</string>
+	<string>https://protonvpn.com/download/macos/updates/v4/sparkle.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
