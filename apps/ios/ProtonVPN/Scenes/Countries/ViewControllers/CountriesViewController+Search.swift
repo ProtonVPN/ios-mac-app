@@ -53,7 +53,7 @@ extension CountriesViewController: SearchCoordinatorDelegate {
             return .secureCore
         }
 
-        if viewModel.maxTier.isFreeTier {
+        if viewModel.userTier?.isFreeTier == true {
             return .standard(.free)
         }
         return .standard(.plus)
