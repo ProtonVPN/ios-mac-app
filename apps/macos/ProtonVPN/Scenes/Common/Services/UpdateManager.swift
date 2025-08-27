@@ -35,7 +35,6 @@ protocol UpdateManagerFactory {
 
 final class UpdateManager: NSObject {
     private static let updateChillInterval: TimeInterval = .hours(1)
-    private static let feedURLString = "https://protonvpn.com/download/macos/updates/v4/sparkle.xml"
 
     public typealias Factory = PropertiesManagerFactory
     private let factory: Factory
@@ -56,6 +55,10 @@ final class UpdateManager: NSObject {
         }
 
         return false
+    }
+
+    public var feedURLString: String? {
+        Bundle.main.infoDictionary?["SUFeedURL"] as? String
     }
 
     public var currentVersion: String? {
@@ -213,7 +216,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     }
 
     func feedURLString(for _: SPUUpdater) -> String? {
-        Self.feedURLString
+        feedURLString
     }
 
     func updaterMayCheck(forUpdates _: SPUUpdater) -> Bool {
