@@ -42,6 +42,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     @Dependency(\.nwStatusStream) private var nwStatusStream
 
     private static let defaultConnectionTimeout = Duration.seconds(30)
+    private static let pathStatusDebounceDuration = Duration.milliseconds(500)
 
     public init() {}
 
