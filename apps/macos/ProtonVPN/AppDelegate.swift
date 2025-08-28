@@ -113,63 +113,69 @@ extension AppDelegate: NSApplicationDelegate {
             FeatureFlagsRepository.shared.setFlagOverride(feature, value)
         }
 
-        setupCoreIntegration()
-        setupLogsForApp()
+        Task {
+            // wait for feature flags to be fetched
+            await setupCoreIntegration()
+            // Continue with the rest of the initialization after setupCoreIntegration completes
+            await MainActor.run {
+                setupLogsForApp()
 
-        log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
+                log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
 
-        AppStartup.processStartAppleEvent()
+                AppStartup.processStartAppleEvent()
 
-        LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
+                LegacyDefaultsMigration.migrateLargeData(from: provider.getDefaults())
 
-        // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
-        signal(SIGPIPE, SIG_IGN)
+                // Ignore SIGPIPE errors, which can happen when receiving mach messages or writing to sockets.
+                signal(SIGPIPE, SIG_IGN)
 
-        checkMigration()
-        migrateIfNeeded {
-            self.setNSCodingModuleName()
-            self.setupDebugHelpers()
+                checkMigration()
+                migrateIfNeeded {
+                    self.setNSCodingModuleName()
+                    self.setupDebugHelpers()
 
-            SentryHelper.setupSentry(
-                dsn: ObfuscatedConstants.sentryDsnmacOS,
-                isEnabled: { [weak self] in
-                    self?.isTelemetryAllowed() ?? false
-                },
-                getUserId: { [weak self] in
-                    self?.container.makeAuthKeychainHandle().userId
+                    SentryHelper.setupSentry(
+                        dsn: ObfuscatedConstants.sentryDsnmacOS,
+                        isEnabled: { [weak self] in
+                            self?.isTelemetryAllowed() ?? false
+                        },
+                        getUserId: { [weak self] in
+                            self?.container.makeAuthKeychainHandle().userId
+                        }
+                    )
+
+                    AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
+                    #if !REDESIGN
+                        self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
+                        self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
+                        self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
+                        self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
+                        self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+                    #endif
+                    self.notificationManager = self.container.makeNotificationManager()
+                    self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
+                    _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
+                    _ = self.container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
+
+                    if self.startedAtLogin() {
+                        DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
+                    }
+
+                    // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
+                    if (try? self.container.makeVpnKeychain().fetchCached()) != nil {
+                        self.checkSysexAndAdjustGlobalProtocol()
+                    }
+
+                    Task { @MainActor in
+                        await self.container.makeVpnManager().prepareManagersTask?.value
+                        await self.navigationService.launched()
+                    }
+
+                    self.registerForTelemetryChanges()
+
+                    self.container.applicationDidFinishLaunching()
                 }
-            )
-
-            AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-            #if !REDESIGN
-                self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-                self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-                self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-                self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-                self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-            #endif
-            self.notificationManager = self.container.makeNotificationManager()
-            self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
-            _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
-            _ = self.container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
-
-            if self.startedAtLogin() {
-                DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-
-            // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
-            if (try? self.container.makeVpnKeychain().fetchCached()) != nil {
-                self.checkSysexAndAdjustGlobalProtocol()
-            }
-
-            Task { @MainActor in
-                await self.container.makeVpnManager().prepareManagersTask?.value
-                await self.navigationService.launched()
-            }
-
-            self.registerForTelemetryChanges()
-
-            self.container.applicationDidFinishLaunching()
         }
 
         NSAppleEventManager.shared().setEventHandler(self, andSelector: #selector(getUrl(_:withReplyEvent:)), forEventClass: AEEventClass(kInternetEventClass), andEventID: AEEventID(kAEGetURL))
@@ -397,7 +403,7 @@ extension AppDelegate {
         PMLog.disableExternalLogging()
     }
 
-    private func setupCoreIntegration() {
+    private func setupCoreIntegration() async {
         ColorProvider.brand = .vpn
 
         ProtonCoreLog.PMLog.callback = { message, level in
@@ -409,37 +415,35 @@ extension AppDelegate {
             }
         }
 
-        Task {
-            let apiService = container.makeNetworking().apiService
-            do {
-                let session = try await apiService.acquireSessionIfNeeded().get()
-                switch session {
-                case let .sessionAlreadyPresent(authCredential), let .sessionFetchedAndAvailable(authCredential):
-                    FeatureFlagsRepository.shared.setApiService(apiService)
-                    if !authCredential.userID.isEmpty {
-                        FeatureFlagsRepository.shared.setUserId(authCredential.userID)
-                    }
-
-                    await CheckedFeatureFlagsRepository.shared.fetchFlags()
-
-                    let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
-
-                    if isTelemetryEnabled {
-                        enableExternalLogging()
-                    } else {
-                        disableExternalLogging()
-                    }
-                default:
-                    break
+        let apiService = container.makeNetworking().apiService
+        do {
+            let session = try await apiService.acquireSessionIfNeeded().get()
+            switch session {
+            case let .sessionAlreadyPresent(authCredential), let .sessionFetchedAndAvailable(authCredential):
+                FeatureFlagsRepository.shared.setApiService(apiService)
+                if !authCredential.userID.isEmpty {
+                    FeatureFlagsRepository.shared.setUserId(authCredential.userID)
                 }
-            } catch {
-                log.error(
-                    "acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched",
-                    category: .api, event: .response, metadata: ["error": "\(error)"]
-                )
+
+                await CheckedFeatureFlagsRepository.shared.fetchFlags()
+
+                let isTelemetryEnabled = telemetrySettings.telemetryCrashReports
+
+                if isTelemetryEnabled {
+                    enableExternalLogging()
+                } else {
+                    disableExternalLogging()
+                }
+            default:
+                break
             }
-            ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
+        } catch {
+            log.error(
+                "acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched",
+                category: .api, event: .response, metadata: ["error": "\(error)"]
+            )
         }
+        ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 
     private func registerForTelemetryChanges() {
