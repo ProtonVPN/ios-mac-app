@@ -71,7 +71,7 @@
             )
 
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .disconnecting(nil),
+                tunnelState: .init(internalState: .disconnecting, maskedState: .disconnecting(nil)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
@@ -119,7 +119,8 @@
 
             mockVPNSession.status = .disconnected // Simulate the disconnection attempt finishing
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected) {
-                $0.core.tunnel = .disconnected(nil)
+                $0.core.tunnel.internalState = .disconnected
+                $0.core.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) {
                 $0.reconnectionIntent = nil
@@ -136,18 +137,21 @@
             await fulfillment(of: [portSelectionExpectation], timeout: 0) // Let's verify port selection occurred before connection
             await store.receive(\.core.connect)
             await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel = .preparingConnection(reconnectingServerInfo)
+                $0.core.tunnel.maskedState = .preparingConnection(reconnectingServerInfo)
             }
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
             await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel = .connecting(reconnectingServerInfo)
+                $0.core.tunnel.internalState = .connecting
+                $0.core.tunnel.maskedState = .connecting(reconnectingServerInfo)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.core.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.core.tunnel.tunnelStatusChanged.connected) {
+                $0.core.tunnel.internalState = .connected
+            }
             await store.receive(\.core.tunnel.connectionFinished.success) {
-                $0.core.tunnel = .connected(TunnelConnectionResponse(logicalInfo: reconnectingServerInfo, connectionDate: now))
+                $0.core.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: reconnectingServerInfo, connectionDate: now))
             }
             await store.receive(coreStateChange(from: \.starting, to: \.connecting))
 
@@ -213,7 +217,7 @@
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .connecting(initialServerInfo),
+                tunnelState: .init(internalState: .connecting, maskedState: .connecting(initialServerInfo)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
@@ -396,7 +400,7 @@
             await store.send(.input(.connect(preparationIntent)))
 
             await store.receive(\.core.tunnel.connect) {
-                $0.core.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.core.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
 
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
@@ -404,7 +408,7 @@
 
             environment.vpnSession.status = .connecting // Sends a `NEVPNStatusDidChange` notification
             await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel = .connecting(connectedLogicalServer)
+                $0.core.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             // The extension has started, but must not be interrupted until it is connected.

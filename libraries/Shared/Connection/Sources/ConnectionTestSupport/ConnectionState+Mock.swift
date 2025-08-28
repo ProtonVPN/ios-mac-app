@@ -40,7 +40,10 @@ public extension ConnectionFeature.State {
             connectionState: .connected(intent, .mock, .now, nil),
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
-                tunnelState: .connected(.init(logicalInfo: .init(logicalID: "abc", serverID: "abc"), connectionDate: .now)),
+                tunnelState: .init(
+                    internalState: .connected,
+                    maskedState: .connected(.init(logicalInfo: .init(logicalID: "abc", serverID: "abc"), connectionDate: .now))
+                ),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),
                 localAgentState: .connected(nil)
             )

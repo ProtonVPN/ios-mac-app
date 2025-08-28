@@ -101,8 +101,12 @@ extension ConnectionError: ProtonVPNError {
             "SVRM"
         case let .timeout(stage):
             switch stage {
-            case .tunnelStartingAndConnecting:
+            case .tunnel(.configuration):
+                "TOTI"
+            case .tunnel(.start):
                 "TOTS"
+            case .tunnel(.connection):
+                "TOTC"
             case .refreshingCertificate:
                 "TORC"
             case .connectingToLocalAgentServer:

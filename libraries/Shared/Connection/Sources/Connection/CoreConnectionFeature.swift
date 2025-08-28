@@ -60,7 +60,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         public var currentNwStatus: NWPath.Status = .requiresConnection
 
         package init(
-            tunnelState: ExtensionFeature.State = .unknown,
+            tunnelState: ExtensionFeature.State = .init(internalState: .invalid, maskedState: .unknown),
             certAuthState: CertificateAuthenticationFeature.State = .idle,
             localAgentState: LocalAgentFeature.State = .disconnected(nil),
             shouldDisconnectWhenAllowed: Bool = false
@@ -237,7 +237,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             return .send(.certAuth(.loadAuthenticationData))
 
         case let .certAuth(.loadingFinished(.success(authData))):
-            guard case let .connected(tunnelConnectionInfo) = state.tunnel else {
+            guard case let .connected(tunnelConnectionInfo) = state.tunnel.maskedState else {
                 log.error("Finished loading auth data but tunnel is not connected")
                 return .send(.disconnect(.connectionFailure(.tunnel(.tunnelAborted))))
             }
@@ -298,7 +298,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .localAgent(.event(.state(.disconnected))):
-            guard case .disconnected = state.tunnel else { return .none }
+            guard case .disconnected = state.tunnel.maskedState else { return .none }
             // Now that we're fully disconnected, let's cancel the timeout
             return .cancel(id: CancelID.connectionTimeout)
 
@@ -409,9 +409,9 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     private func clearErrorsFromPreviousAttempts(state: inout State) {
-        if case let .disconnected(tunnelError) = state.tunnel, let tunnelError {
+        if case let .disconnected(tunnelError) = state.tunnel.maskedState, let tunnelError {
             log.info("Resetting tunnel connection error from previous connection attempt: \(tunnelError)")
-            state.tunnel = .disconnected(nil)
+            state.tunnel.maskedState = .disconnected(nil)
         }
         if case let .failed(certAuthError) = state.certAuth {
             log.info("Resetting cert auth error from previous connection attempt: \(certAuthError)")
@@ -441,8 +441,19 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     }
 
     private func getConnectionStage(_ state: State) -> ConnectionStage {
-        guard state.tunnel.is(\.connected) else {
-            return .tunnelStartingAndConnecting
+        guard state.tunnel.maskedState.is(\.connected) else {
+            if case .invalid = state.tunnel.internalState {
+                return .tunnel(.configuration)
+            }
+            switch state.tunnel.maskedState {
+            case .preparingConnection:
+                return .tunnel(.start)
+            case .connecting:
+                return .tunnel(.connection)
+            default:
+                log.assertionFailure("timed out with tunnel in unexpected state: \(state.tunnel)")
+                return .tunnel(.connection)
+            }
         }
         guard state.certAuth.is(\.loaded) else {
             return .refreshingCertificate
@@ -459,7 +470,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     public enum ConnectionStage: Equatable, Sendable {
         /// We have failed to start the network extension process, or the the extension failed to transition to the
         /// `connected` state.
-        case tunnelStartingAndConnecting
+        case tunnel(TunnelConnectionStage)
         /// We've established the tunnel to the server, but failed to refresh our certificate.
         /// The refresh process can time out during the following:
         ///  - forking our main app session
@@ -472,12 +483,34 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         /// We've established the tunnel to the server, and we have a valid certificate, but we've not been able to
         /// establish a connection to the Local Agent remote server.
         case connectingToLocalAgentServer
+
+        @CasePathable
+        public enum TunnelConnectionStage: Equatable, Sendable {
+            /// Before a tunnel can be started, a valid VPN configuration must be saved in the system settings.
+            /// Saving a configuration requires explicit user permission, which the system prompts for the first time
+            /// the app attempts to save one.
+            ///
+            /// A connection attempt may time out at this stage if:
+            ///  - the user does not enter their passcode within the timeout window
+            ///  - the system fails to present the VPN configuration screen or passcode prompt
+            case configuration
+            /// A connection attempt may time out at this stage if we successfully configure the tunnel, but never
+            /// observe it transitioning to the `.connecting` state. This can happen due to incorrectly set up
+            /// `NEVPNStatusDidChange` notifications observers.
+            case start
+            /// We time out with this error if we successfully configure the tunnel, but never observe it transitioning
+            /// to the `.connected` state.
+            case connection
+        }
     }
 }
 
 extension CoreConnectionFeature.State {
+    /// At startup, we don't want to assume that we have a configuration saved already.
+    /// After we subscribe to tunnel status changes, we will soon update the internal state to the appropriate
+    /// value, and also update the masked state accordingly.
     public static let initialCoreConnectionState: CoreConnectionFeature.State = .init(
-        tunnelState: .unknown,
+        tunnelState: .init(internalState: .invalid, maskedState: .unknown),
         certAuthState: .idle,
         localAgentState: .disconnected(nil)
     )

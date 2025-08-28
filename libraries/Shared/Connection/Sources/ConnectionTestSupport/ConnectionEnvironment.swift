@@ -91,7 +91,7 @@
                     connectionState: .resolving,
                     shouldRegisterServerChangeOnConnection: false,
                     core: .init(
-                        tunnelState: .unknown,
+                        tunnelState: .init(internalState: .disconnected, maskedState: .unknown),
                         certAuthState: .idle,
                         localAgentState: .disconnected(nil)
                     )

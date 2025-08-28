@@ -28,7 +28,7 @@ final class CoreConnectionStateTests: XCTestCase {
     func testLocalAgentErrorResolvesToError() async {
         let goTLSError: LAConnectionCreationError = .goTLSError(.privateKeyDoesNotMatchPublicKey, underlyingError: "" as GenericError)
         let state = CoreConnectionState(
-            tunnelState: .disconnected(nil),
+            tunnelState: .init(internalState: .disconnected, maskedState: .disconnected(nil)),
             certAuthState: .idle,
             localAgentState: .disconnected(.failedToEstablishConnection(goTLSError))
         )
@@ -38,7 +38,7 @@ final class CoreConnectionStateTests: XCTestCase {
 
     func testTunnelConnectingResolvesToStarting() async {
         let state = CoreConnectionState(
-            tunnelState: .connecting(nil),
+            tunnelState: .init(internalState: .connecting, maskedState: .connecting(nil)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
@@ -52,7 +52,7 @@ final class CoreConnectionStateTests: XCTestCase {
         let response = TunnelConnectionResponse(logicalInfo: server, connectionDate: now)
 
         let state = CoreConnectionState(
-            tunnelState: .connected(response),
+            tunnelState: .init(internalState: .connected, maskedState: .connected(response)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
@@ -62,7 +62,7 @@ final class CoreConnectionStateTests: XCTestCase {
 
     func testTunnelConnectingLocalAgentDisconnectedResolvesToStarting() async {
         let state = CoreConnectionState(
-            tunnelState: .connecting(nil),
+            tunnelState: .init(internalState: .connecting, maskedState: .connecting(nil)),
             certAuthState: .idle,
             localAgentState: .disconnected(nil)
         )
