@@ -817,10 +817,16 @@ public final class SubuserWithoutConnectionsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public let role: UserRole
+    public enum Mode {
+        case noServers
+        case loadingError
+        case connectionsDisabled
+    }
 
-    public init(role: UserRole) {
-        self.role = role
+    public let mode: Mode
+
+    public init(mode: Mode) {
+        self.mode = mode
     }
 }
 

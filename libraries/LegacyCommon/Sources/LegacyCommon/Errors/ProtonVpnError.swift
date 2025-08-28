@@ -70,7 +70,7 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
         case .keychainWriteFailed:
             Localizable.errorKeychainWrite
         case .subuserWithoutSessions:
-            Localizable.subuserAlertDescription1
+            Localizable.subuserAlertDescription
         case .userCredentialsMissing:
             Localizable.errorUserCredentialsMissing
         case .userCredentialsExpired:
@@ -78,7 +78,7 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
         case .vpnCredentialsMissing:
             Localizable.errorVpnCredentialsMissing
         case .noConnectionsAvailable:
-            "No connections available"
+            Localizable.noConnectionsAvailable
         }
     }
 }

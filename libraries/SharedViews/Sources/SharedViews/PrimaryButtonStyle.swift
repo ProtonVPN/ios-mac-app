@@ -30,7 +30,7 @@ public struct PrimaryButtonStyle: ButtonStyle {
             .foregroundColor(Color(.text, .primary))
         #if canImport(UIKit)
             .frame(maxWidth: .infinity, minHeight: .themeSpacing32)
-            .font(.body1())
+            .font(.body1(.semibold))
         #elseif canImport(Cocoa)
             .padding(.horizontal, .themeSpacing24)
             .padding(.vertical, .themeSpacing6)

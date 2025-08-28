@@ -259,11 +259,10 @@ extension CoreLoginService: LoginErrorPresenter {
     func willPresentError(error: LoginError, from _: UIViewController) -> Bool {
         switch error {
         case .generic(_, _, CommonVpnError.noConnectionsAvailable):
-            alertService.push(alert: SubuserWithoutConnectionsAlert(role: .noOrganization))
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
             return true
         case .generic(_, _, CommonVpnError.subuserWithoutSessions):
-            let role = propertiesManager.userRole
-            alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
             return true
         case let .generic(_, code: _, originalError: originalError):
             // show a custom alert with a way to show the troubleshooting screen

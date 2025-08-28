@@ -210,7 +210,7 @@ public class VpnApiService {
 
                 guard !serversJson.isEmpty else {
                     // throw error to log the user the hell out
-                    result = .failure(CommonVpnError.subuserWithoutSessions)
+                    result = .failure(CommonVpnError.noConnectionsAvailable)
                     return
                 }
 
