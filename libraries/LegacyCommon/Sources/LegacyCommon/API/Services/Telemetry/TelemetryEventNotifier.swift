@@ -117,7 +117,10 @@ public class TelemetryEventNotifier {
         case .cellular:
             .mobile
         }
-        telemetryService?.reachabilityChanged(networkType)
+
+        Task {
+            await telemetryService?.reachabilityChanged(networkType)
+        }
     }
 
     private func userInitiatedVPNChange(_ notification: Notification) {
@@ -125,7 +128,10 @@ public class TelemetryEventNotifier {
               let change = notification.object as? UserInitiatedVPNChange else {
             return
         }
-        telemetryService?.userInitiatedVPNChange(change)
+
+        Task {
+            await telemetryService?.userInitiatedVPNChange(change)
+        }
     }
 
     private func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) {

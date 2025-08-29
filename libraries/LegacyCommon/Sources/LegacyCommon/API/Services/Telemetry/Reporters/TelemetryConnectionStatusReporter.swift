@@ -32,7 +32,7 @@ protocol TelemetryTimer {
     var timeConnecting: TimeInterval { get throws }
 }
 
-class TelemetryConnectionStatusReporter {
+actor TelemetryConnectionStatusReporter {
     struct Error: Swift.Error {
         let localizedDescription: String
     }
@@ -70,6 +70,14 @@ class TelemetryConnectionStatusReporter {
 
         self.telemetryEventScheduler = telemetryEventScheduler
         self.businessEventScheduler = businessEventScheduler
+    }
+
+    public func setNetworkType(_ type: ConnectionDimensions.NetworkType) {
+        networkType = type
+    }
+
+    public func setUserInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
+        userInitiatedVPNChange = change
     }
 
     @available(*, deprecated, message: "Use connectionStateChanged() for the new Connection Feature instead.")
@@ -396,19 +404,19 @@ class TelemetryConnectionStatusReporter {
     }
 
     private func vpnTrigger(eventType: ConnectionEvent.Event) -> UserInitiatedVPNChange.VPNTrigger {
-        let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = { [weak self] in
+        let newConnection: () -> UserInitiatedVPNChange.VPNTrigger = {
             if FeatureFlagsRepository.isConnectionFeatureEnabled {
-                if case .connected = self?.previousConnectionState,
+                if case .connected = self.previousConnectionState,
                    case .vpnDisconnection = eventType {
                     return .newConnection
                 }
             } else {
-                if self?.previousConnectionStatus == .connected,
+                if self.previousConnectionStatus == .connected,
                    case .vpnDisconnection = eventType {
                     return .newConnection
                 }
 
-                let lastConnectionTrigger = self?.propertiesManager.lastConnectionRequest?.trigger
+                let lastConnectionTrigger = self.propertiesManager.lastConnectionRequest?.trigger
                 return lastConnectionTrigger ?? .auto
             }
             return .auto
@@ -417,6 +425,7 @@ class TelemetryConnectionStatusReporter {
         guard let userInitiatedVPNChange else {
             return newConnection()
         }
+
         switch userInitiatedVPNChange {
         case let .connect(trigger):
             return trigger ?? newConnection()

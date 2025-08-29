@@ -50,8 +50,8 @@ public protocol TelemetryService: AnyObject {
 
     func vpnGatewayConnectionChanged(_ connectionStatus: ConnectionStatus) async throws
     func connectionStateChanged(_ connectionState: ConnectionState) async throws
-    func userInitiatedVPNChange(_ change: UserInitiatedVPNChange)
-    func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType)
+    func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async
+    func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async
 }
 
 /// Collects information about connection status updates and upsell.
@@ -94,12 +94,12 @@ public class TelemetryServiceImplementation: TelemetryService {
         self.eventNotifier.telemetryService = self
     }
 
-    public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) {
-        telemetryConnectionStatusReporter.networkType = networkType
+    public func reachabilityChanged(_ networkType: ConnectionDimensions.NetworkType) async {
+        await telemetryConnectionStatusReporter.setNetworkType(networkType)
     }
 
-    public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) {
-        telemetryConnectionStatusReporter.userInitiatedVPNChange = change
+    public func userInitiatedVPNChange(_ change: UserInitiatedVPNChange) async {
+        await telemetryConnectionStatusReporter.setUserInitiatedVPNChange(change)
     }
 
     public func onboardingEvent(_ event: OnboardingEvent.Event) async throws {
