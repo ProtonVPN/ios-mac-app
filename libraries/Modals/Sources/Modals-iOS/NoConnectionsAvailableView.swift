@@ -19,6 +19,7 @@
 import SwiftUI
 
 import Domain
+import ModalsShared
 import SharedViews
 import Strings
 import Theme
@@ -26,15 +27,9 @@ import Theme
 public struct NoConnectionsAvailableView: View {
     @Environment(\.dismiss) var dismiss
 
-    public enum Mode {
-        case noServers
-        case loadingError
-        case connectionsDisabled
-    }
+    let mode: NoConnectionsAvailableMode
 
-    let mode: Mode
-
-    public init(mode: Mode) {
+    public init(mode: NoConnectionsAvailableMode) {
         self.mode = mode
     }
 
@@ -63,28 +58,6 @@ public struct NoConnectionsAvailableView: View {
         }
         .padding(.horizontal, .themeSpacing16)
         .background(Color(.background))
-    }
-}
-
-extension NoConnectionsAvailableView.Mode {
-    var subtitle: String {
-        switch self {
-        case .noServers, .connectionsDisabled:
-            Localizable.noServersSubtitle
-        case .loadingError:
-            Localizable.serversLoadingErrorSubtitle
-        }
-    }
-
-    var helpString: LocalizedStringResource? {
-        switch self {
-        case .connectionsDisabled:
-            .init(stringLiteral: Localizable.noServersHelpString(VPNLink.assignVPNConnections.rawValue))
-        case .loadingError:
-            .init(stringLiteral: Localizable.noServersContactUs(VPNLink.contact.rawValue))
-        case .noServers:
-            nil
-        }
     }
 }
 

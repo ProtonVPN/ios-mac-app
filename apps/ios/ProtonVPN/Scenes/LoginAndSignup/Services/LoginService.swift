@@ -264,6 +264,9 @@ extension CoreLoginService: LoginErrorPresenter {
         case .generic(_, _, CommonVpnError.subuserWithoutSessions):
             alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
             return true
+        case .generic(_, _, CommonVpnError.logicalsEndpointFailed):
+            alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
+            return true
         case let .generic(_, code: _, originalError: originalError):
             // show a custom alert with a way to show the troubleshooting screen
             // for networking and tls errors

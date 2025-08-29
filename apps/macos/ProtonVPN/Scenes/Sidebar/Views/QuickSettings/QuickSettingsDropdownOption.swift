@@ -176,7 +176,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
             case .unselected:
                 return .normal
             case .selected:
-                return [.interactive, .hint] + hover
+                return .link + hover
             }
         case .text, .icon:
             switch state {
@@ -185,7 +185,7 @@ extension QuickSettingsDropdownOption: CustomStyleContext {
             case .unselected:
                 return .normal
             case .selected:
-                return [.interactive, .hint] + hover
+                return .link + hover
             }
         default:
             break

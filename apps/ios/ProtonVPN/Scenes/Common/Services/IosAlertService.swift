@@ -512,13 +512,3 @@ private extension ReconnectInfo {
         ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }
 }
-
-extension SubuserWithoutConnectionsAlert.Mode {
-    var modeForView: NoConnectionsAvailableView.Mode {
-        switch self {
-        case .connectionsDisabled: .connectionsDisabled
-        case .noServers: .noServers
-        case .loadingError: .loadingError
-        }
-    }
-}

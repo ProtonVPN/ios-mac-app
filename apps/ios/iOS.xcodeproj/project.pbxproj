@@ -327,6 +327,7 @@
 		E52508A32B3439E6006E6998 /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		E52508A42B3439E6006E6998 /* MapViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E129C66922A8E8EA00D8437E /* MapViewModelTests.swift */; };
 		E52508A52B3439E6006E6998 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
+		E52CE25F2E65A8CD005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52CE25E2E65A8C8005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */; };
 		E531EB3C2A78EE9D00E56D7D /* fusion in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3B2A78EE9D00E56D7D /* fusion */; };
 		E531EB3E2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3D2A78EF6300E56D7D /* ProtonCoreTestingToolkitUITestsLogin */; };
 		E531EB402A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI in Frameworks */ = {isa = PBXBuildFile; productRef = E531EB3F2A78F74900E56D7D /* ProtonCoreTestingToolkitUnitTestsLoginUI */; };
@@ -812,6 +813,7 @@
 		E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleTextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
+		E52CE25E2E65A8C8005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubuserWithoutConnectionsAlert+Extension.swift"; sourceTree = "<group>"; };
 		E532A8AC29252FFD00096D2D /* InformationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationTableViewCell.swift; sourceTree = "<group>"; };
 		E551EB0329AF570E00B6612D /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		E551EB0429AF583D00B6612D /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -1931,6 +1933,7 @@
 			children = (
 				060D071525D34599002B98B8 /* AppSessionManager.swift */,
 				D5F5689A23263C7D00795953 /* IosAlertService.swift */,
+				E52CE25E2E65A8C8005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */,
 				79C5598520AB181000E6D3F6 /* NavigationService.swift */,
 				E59FD94E2C58C5E30078A117 /* HomeFeatureCreator.swift */,
 				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
@@ -2895,6 +2898,7 @@
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
 				66BE97862DE0C6D600715454 /* HermesUI-iOS.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
+				E52CE25F2E65A8CD005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				7904DA4920E6BA3E008A4FCB /* ColorPickerViewModel.swift in Sources */,
 				F37F741E27CF877A00F1C621 /* Search+Configuration.swift in Sources */,

@@ -311,12 +311,16 @@ final class LoginViewModel {
                 self.alertService.push(alert: alert)
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.subuserWithoutSessions = error {
-                let role = self.propertiesManager.userRole
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: role))
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
                 self.isTwoFactorStep = false
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.noConnectionsAvailable = error {
-                self.alertService.push(alert: SubuserWithoutConnectionsAlert(role: .noOrganization))
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
+                self.isTwoFactorStep = false
+                self.logInFailure?(nil, nil)
+            } else if case CommonVpnError.logicalsEndpointFailed = error {
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
+                self.isTwoFactorStep = false
                 self.logInFailure?(nil, nil)
             } else {
                 self.logInFailure?(error.localizedDescription, nil)

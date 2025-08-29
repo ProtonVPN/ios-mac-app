@@ -47,7 +47,7 @@ class MapHeaderViewModel {
 
     var description: NSAttributedString {
         let text = (isConnected ? Localizable.connected : Localizable.disconnected).uppercased()
-        let style: AppTheme.Style = isConnected ? [.interactive, .hint] : .danger
+        let style: AppTheme.Style = isConnected ? .link : .danger
         return text.styled(style, font: .themeFont(literalSize: 19, bold: true))
     }
 

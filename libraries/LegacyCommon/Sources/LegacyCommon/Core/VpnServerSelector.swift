@@ -175,7 +175,7 @@ extension ConnectionRequest {
             [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
-            [.features(.init(required: .zero, excluded: []))]
+            []
         }
     }
 

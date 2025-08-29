@@ -232,6 +232,14 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
             throw CommonVpnError.subuserWithoutSessions
+        } catch CommonVpnError.noConnectionsAvailable {
+            log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw CommonVpnError.noConnectionsAvailable
+        } catch CommonVpnError.logicalsEndpointFailed {
+            log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw CommonVpnError.logicalsEndpointFailed
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             @Dependency(\.serverRepository) var serverRepository

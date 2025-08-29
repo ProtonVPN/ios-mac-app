@@ -48,6 +48,7 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
     // User
     case subuserWithoutSessions = "SUWS"
     case noConnectionsAvailable = "NCAV"
+    case logicalsEndpointFailed = "LEPF"
 
     // MARK: - Error Descriptions
 
@@ -79,6 +80,8 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
             Localizable.errorVpnCredentialsMissing
         case .noConnectionsAvailable:
             Localizable.noConnectionsAvailable
+        case .logicalsEndpointFailed:
+            Localizable.serversLoadingErrorSubtitle
         }
     }
 }

@@ -37,10 +37,9 @@ class SubuserAlertWindowController: WindowController {
             return
         }
 
-        window.styleMask.remove(NSWindow.StyleMask.miniaturizable)
         window.styleMask.remove(NSWindow.StyleMask.resizable)
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: .darkAqua)
-        window.backgroundColor = .color(.background, .weak)
+        window.backgroundColor = .color(.background)
     }
 }

@@ -209,7 +209,7 @@ public class VpnApiService {
                 }
 
                 guard !serversJson.isEmpty else {
-                    // throw error to log the user the hell out
+                    // throw error to log the user out
                     result = .failure(CommonVpnError.noConnectionsAvailable)
                     return
                 }
@@ -224,8 +224,8 @@ public class VpnApiService {
                 }
                 result = .success(.modified(at: lastModified, servers: serverModels, freeServersOnly: freeTier))
 
-            case let .failure(error):
-                result = .failure(error)
+            case .failure:
+                result = .failure(CommonVpnError.logicalsEndpointFailed)
             }
         }
     }

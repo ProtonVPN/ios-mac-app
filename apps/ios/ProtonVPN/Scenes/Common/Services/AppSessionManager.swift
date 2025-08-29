@@ -332,6 +332,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
             throw CommonVpnError.noConnectionsAvailable
+        } catch CommonVpnError.logicalsEndpointFailed {
+            log.error("Failed downloading logicals endpoint. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw CommonVpnError.logicalsEndpointFailed
         } catch {
             // In case getting vpn properties fails, we don't log user out in all cases. Instead
             // check if we can continue.
