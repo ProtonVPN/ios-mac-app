@@ -64,6 +64,7 @@ final class NATPortMappingClient: Sendable {
                 connection.cancel()
                 return response
             } catch NATPortMappingError.timeoutError {
+                log.debug("NAT-PMP continue attempts on timeout: (\(attempt)/\(Self.MAX_RETRIES))")
                 // retry on timeoutErrors given retries left
                 continue
             } catch {
@@ -135,11 +136,13 @@ final class NATPortMappingClient: Sendable {
             group.addTask {
                 let (data, _) = try await connection.receiveMessageAsync()
                 if Date() > attemptStart.addingTimeInterval(retryDelay) {
+                    log.error("Failed to receive NAT-PMP response: timeoutError in receive task")
                     // this might happen if timeout is reached
                     connection.cancel()
                     throw NATPortMappingError.timeoutError
                 }
                 guard let data, !data.isEmpty else {
+                    log.error("Failed to receive NAT-PMP response: invalidResponse")
                     throw NATPortMappingError.invalidResponse
                 }
                 return try PortMappingPacketResponse(from: data)
@@ -148,12 +151,14 @@ final class NATPortMappingClient: Sendable {
             // Add timeout task
             group.addTask {
                 try await Task.sleep(for: .seconds(retryDelay))
+                log.error("Failed to receive NAT-PMP response: timeoutError in timeout task")
                 connection.cancel()
                 throw NATPortMappingError.timeoutError
             }
 
             // Return the first result (either success or timeout)
             guard let result = try await group.next() else {
+                log.error("Failed to receive NAT-PMP response: timeoutError")
                 throw NATPortMappingError.timeoutError
             }
 
