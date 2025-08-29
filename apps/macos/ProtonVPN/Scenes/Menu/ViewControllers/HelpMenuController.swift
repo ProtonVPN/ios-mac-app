@@ -46,6 +46,7 @@ class HelpMenuController: NSObject {
 
     func update(with viewModel: HelpMenuViewModel) {
         self.viewModel = viewModel
+        logsPlutoniumItem.isHidden = !VPNFeatureFlagType.plutoniumMacOS.enabled
     }
 
     // MARK: - Private
@@ -72,7 +73,6 @@ class HelpMenuController: NSObject {
         logsPlutoniumItem.isEnabled = true
         logsPlutoniumItem.target = self
         logsPlutoniumItem.action = #selector(openPlutoniumLogsAction)
-        logsPlutoniumItem.isHidden = !VPNFeatureFlagType.plutoniumMacOS.enabled
 
         clearApplicationDataItem.title = Localizable.clearApplicationData
         clearApplicationDataItem.isEnabled = true
