@@ -50,10 +50,10 @@ enum RowViewModel {
 
 private enum Section {
     case gateways(title: String, rows: [Row], serversFilter: ((ServerModel) -> Bool)?)
-    case countries(title: String, rows: [Row], serversFilter: ((ServerModel) -> Bool)?, showFeatureIcons: Bool)
+    case countries(title: String?, rows: [Row], serversFilter: ((ServerModel) -> Bool)?, showFeatureIcons: Bool)
     case profiles(title: String, rows: [Row])
 
-    var title: String {
+    var title: String? {
         switch self {
         case let .gateways(title, _, _): title
         case let .countries(title, _, _, _): title
@@ -387,12 +387,15 @@ class CountriesViewModel: SecureCoreToggleHandler {
         let firstRows = (isRedesign || userTier == 0) ? [fastest] : []
 
         switch userTier {
-        case 0: // Free
+        case .freeTier:
             let rowsFree = firstRows
-            newTableData.append(.profiles(
-                title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
-                rows: rowsFree
-            ))
+            if !currentContent.isEmpty {
+                let profiles: Section = .profiles(
+                    title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
+                    rows: rowsFree
+                )
+                newTableData.append(profiles)
+            }
             let rows = [banner] + currentContent.map {
                 RowViewModel.serverGroup(countryCellModel(
                     serversGroup: $0,
@@ -402,45 +405,32 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 ))
             }
             let countryCount = rows.count - 1 // Subtract one to account for the banner row
+            let title = countryCount != 0 ? "\(Localizable.locationsPlus) (\(countryCount))" : nil
             newTableData.append(.countries(
-                title: "\(Localizable.locationsPlus) (\(countryCount))",
+                title: title,
                 rows: rows,
                 serversFilter: defaultServersFilter,
                 showFeatureIcons: true
             ))
-        case 1: // Basic
-            let rows = firstRows + currentContent
-                .filter { $0.minTier < 2 }
-                .map {
-                    RowViewModel.serverGroup(countryCellModel(
-                        serversGroup: $0,
-                        serversFilter: defaultServersFilter,
-                        showCountryConnectButton: true,
-                        showFeatureIcons: true
-                    ))
-                }
-            newTableData.append(.countries(
-                title: "\(Localizable.locationsAll) (\(rows.count))",
-                rows: rows,
-                serversFilter: defaultServersFilter,
-                showFeatureIcons: true
-            ))
+
         default: // Plus and up
-            let rows = firstRows + currentContent
-                .map {
-                    RowViewModel.serverGroup(countryCellModel(
-                        serversGroup: $0,
-                        serversFilter: defaultServersFilter,
-                        showCountryConnectButton: true,
-                        showFeatureIcons: true
-                    ))
-                }
-            newTableData.append(.countries(
-                title: "\(Localizable.locationsAll) (\(rows.count))",
-                rows: rows,
-                serversFilter: defaultServersFilter,
-                showFeatureIcons: true
-            ))
+            if !currentContent.isEmpty {
+                let rows = firstRows + currentContent
+                    .map {
+                        RowViewModel.serverGroup(countryCellModel(
+                            serversGroup: $0,
+                            serversFilter: defaultServersFilter,
+                            showCountryConnectButton: true,
+                            showFeatureIcons: true
+                        ))
+                    }
+                newTableData.append(.countries(
+                    title: "\(Localizable.locationsAll) (\(rows.count))",
+                    rows: rows,
+                    serversFilter: defaultServersFilter,
+                    showFeatureIcons: true
+                ))
+            }
         }
         tableData = newTableData
     }
