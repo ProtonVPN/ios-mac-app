@@ -145,7 +145,6 @@
 		793ECF3E2148E84500C186A7 /* TooltipTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */; };
 		793ECF412148EA0B00C186A7 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */; };
 		793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */; };
-		793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 793ECF432149041A00C186A7 /* AppVersionView.xib */; };
 		793ECF462149045400C186A7 /* AppVersionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793ECF452149045400C186A7 /* AppVersionView.swift */; };
 		7950441721183E6E0022ED35 /* ColorPickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7950441621183E6E0022ED35 /* ColorPickerItem.swift */; };
 		7950441B21183FBD0022ED35 /* ProfilesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7950441A21183FBC0022ED35 /* ProfilesTableViewCell.swift */; };
@@ -370,7 +369,6 @@
 		E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D02A73AF1D00D9BDC0 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25C92A73ADC500D9BDC0 /* country-names.plist */; };
 		E5FD25D22A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */; };
-		E5FE544A2DB7AEE800AFB78C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FE54492DB7AEE800AFB78C /* Main.storyboard */; };
 		E5FE54562DB7B4F500AFB78C /* Profiles.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E93F769327C788740033B88F /* WGLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93F769227C788740033B88F /* WGLogFormatter.swift */; };
@@ -645,7 +643,6 @@
 		793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TooltipTableViewCell.xib; sourceTree = "<group>"; };
 		793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
 		793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonTableViewCell.xib; sourceTree = "<group>"; };
-		793ECF432149041A00C186A7 /* AppVersionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppVersionView.xib; sourceTree = "<group>"; };
 		793ECF452149045400C186A7 /* AppVersionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionView.swift; sourceTree = "<group>"; };
 		7950441621183E6E0022ED35 /* ColorPickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerItem.swift; sourceTree = "<group>"; };
 		7950441A21183FBC0022ED35 /* ProfilesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTableViewCell.swift; sourceTree = "<group>"; };
@@ -837,7 +834,6 @@
 		E5FA6F2727C7E12200E781FC /* SubuserAlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = SubuserAlertViewController.storyboard; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.storyboard"; sourceTree = "<group>"; };
 		E5FD25C92A73ADC500D9BDC0 /* country-names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "country-names.plist"; sourceTree = "<group>"; };
 		E5FD25D12A73AFCF00D9BDC0 /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProtonVPN_ike_root.der; path = ../../libraries/LegacyCommon/Sources/LegacyCommon/Resources/ProtonVPN_ike_root.der; sourceTree = "<group>"; };
-		E5FE54492DB7AEE800AFB78C /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E5FE54552DB7B4F500AFB78C /* Profiles.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profiles.storyboard; sourceTree = "<group>"; };
 		E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E93F769227C788740033B88F /* WGLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WGLogFormatter.swift; sourceTree = "<group>"; };
@@ -1614,7 +1610,6 @@
 			children = (
 				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
-				E5FE54492DB7AEE800AFB78C /* Main.storyboard */,
 				D5BCDC7B25303825004BAEE8 /* Announcements */,
 				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
@@ -2092,7 +2087,6 @@
 				66E34BB927AC0980002FC827 /* ButtonWithLoadingTableViewCell.swift */,
 				66E34BB727AC0978002FC827 /* ButtonWithLoadingTableViewCell.xib */,
 				793ECF452149045400C186A7 /* AppVersionView.swift */,
-				793ECF432149041A00C186A7 /* AppVersionView.xib */,
 				793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */,
 				793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */,
 				E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */,
@@ -2720,7 +2714,6 @@
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
-				793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */,
 				4CF2982F2A7D3B8E00DEB23F /* fr.lproj in Resources */,
 				4CF298172A7D3B8E00DEB23F /* id.lproj in Resources */,
 				428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */,
@@ -2755,7 +2748,6 @@
 				E5FD25CF2A73AF1C00D9BDC0 /* country-names.plist in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
-				E5FE544A2DB7AEE800AFB78C /* Main.storyboard in Resources */,
 				D596B86A2A79330500CF6E30 /* ImageSubtitleImageTableViewCell.xib in Resources */,
 				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
 				660251132DE7461E001D5E7C /* UpsellStandardTableViewCell.xib in Resources */,

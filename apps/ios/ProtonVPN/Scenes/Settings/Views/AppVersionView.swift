@@ -20,15 +20,61 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Ergonomics
 import UIKit
 
-class AppVersionView: UIView {
-    @IBOutlet var appVersionLabel: UILabel!
+final class AppVersionView: UIView {
+    // MARK: - UI Elements
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    private let appVersionLabel: UILabel = .init().with {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.textAlignment = .center
+        $0.numberOfLines = 0
+        $0.lineBreakMode = .byTruncatingTail
+        $0.font = UIFont.systemFont(ofSize: 15)
+        $0.textColor = .weakTextColor()
+    }
 
+    // MARK: - Initialization
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Setup
+
+    private func setupView() {
         backgroundColor = .backgroundColor()
-        appVersionLabel.textColor = .weakTextColor()
+
+        addSubview(appVersionLabel)
+        setupConstraints()
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            appVersionLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            appVersionLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            appVersionLabel.topAnchor.constraint(equalTo: topAnchor, constant: Dimensions.topInset),
+            appVersionLabel.heightAnchor.constraint(equalToConstant: Dimensions.height),
+        ])
+    }
+
+    // MARK: - Public Interface
+
+    func setVersionText(_ text: String) {
+        appVersionLabel.text = text
+    }
+}
+
+extension AppVersionView {
+    private enum Dimensions {
+        static let topInset: CGFloat = 20
+        static let height: CGFloat = 20
     }
 }

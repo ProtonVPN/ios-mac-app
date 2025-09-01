@@ -161,8 +161,8 @@ private class SettingsServiceMock: SettingsService {
         LogsViewController(viewModel: LogsViewModel(title: "Test title", logContent: LogContentMock(isEmpty: false)))
     }
 
-    func makeSettingsViewController() -> SettingsViewController? {
-        nil
+    func makeSettingsViewController() -> SettingsViewController {
+        fatalError("Not implemented")
     }
 
     func makeSettingsAccountViewController() -> SettingsAccountViewController? {
