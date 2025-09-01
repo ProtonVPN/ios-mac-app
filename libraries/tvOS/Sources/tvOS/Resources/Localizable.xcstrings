@@ -1270,7 +1270,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sigur doriți să vă deconectați din Proton VPN?"
+            "value" : "Vă deconectați din Proton VPN?"
           }
         },
         "ru" : {
