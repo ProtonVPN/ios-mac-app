@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "IP-ის გაჟონვის თავიდან ასაცილებლად VPN შეერთების გათიშვის შემთხვევაში ინტერნეტის გამორთვა.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "Secure Core -მა შეიძლება VPN -ის სიჩქარე შეამციროს";
 

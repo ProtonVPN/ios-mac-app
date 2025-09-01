@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Az IP cím szivárgás elkerülése végett letiltja az internetkapcsolatot, ha a VPN kapcsolat megszakad";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "A tűzfalak megkerülése a P2P-kiszolgálókhoz és a helyi hálózaton belüli eszközökhöz való csatlakozáshoz.";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "A Secure Core csökkentheti a VPN sebességét";
 
