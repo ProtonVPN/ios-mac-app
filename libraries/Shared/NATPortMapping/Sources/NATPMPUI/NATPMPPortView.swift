@@ -225,6 +225,7 @@ public class MappedPort: ObservableObject {
 public struct StatusPortView: View {
     @ObservedObject public var portModel: MappedPort = .init()
     @State private var hovered = false
+    @State private var showCopiedTooltip = false
 
     public init(portModel: MappedPort) {
         self.portModel = portModel
@@ -234,7 +235,15 @@ public struct StatusPortView: View {
         if let portNumber = portModel.portNumber {
             HStack {
                 Button(action: {
-                    copyPortNumber(portNumber)
+                    copyPortNumber(portNumber) {
+                        // Show copied tooltip
+                        showCopiedTooltip = true
+
+                        // Hide tooltip after 2 seconds
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            showCopiedTooltip = false
+                        }
+                    }
                 }) {
                     HStack(spacing: .themeSpacing4) {
                         Text(Localizable.pfActivePortStatus)
@@ -248,6 +257,11 @@ public struct StatusPortView: View {
                         Text(String(portNumber))
                             .foregroundColor(Color(.text))
                             .font(.title3(emphasised: false))
+                            .popover(isPresented: $showCopiedTooltip, arrowEdge: .top) {
+                                Text(Localizable.pfCopied)
+                                    .padding(.vertical, .themeSpacing8)
+                                    .padding(.horizontal, .themeSpacing16)
+                            }
 
                         IconProvider.squares
                             .resizable()
