@@ -82,6 +82,12 @@ class TabBarButton: NSButton {
         isHovered = false
     }
 
+    // VPNAPPL-2874: Tahoe workaround
+    // Without this override, the target/action is not invoked on Tahoe
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+    }
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 

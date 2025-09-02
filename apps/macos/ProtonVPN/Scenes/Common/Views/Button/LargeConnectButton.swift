@@ -53,6 +53,12 @@ class LargeConnectButton: HoverDetectionButton {
         let title: String = isConnected ? Localizable.disconnect : Localizable.quickConnect
         attributedTitle = style(title, font: .themeFont(.heading4))
     }
+
+    // VPNAPPL-2874: Tahoe workaround
+    // Without this override, the target/action is not invoked on Tahoe
+    override func mouseDown(with event: NSEvent) {
+        super.mouseDown(with: event)
+    }
 }
 
 extension LargeConnectButton: CustomStyleContext {
