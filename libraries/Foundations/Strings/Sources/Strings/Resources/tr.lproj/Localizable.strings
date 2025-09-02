@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Smart Protocol kullanmak için bağlantınız yeniden başlatılacak.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Proton VPN kurulumunu yap";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "İlerlemek için sistem eklentilerini kullanıma alın.";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Proton VPN sistem eklentilerini kullanıma al";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Eklentiler nasıl kullanıma alınır?";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Proton VPN kullanabilmek için Mac bilgisayarınızda şu sistem eklentilerini kullanıma almalısınız:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Ayrılmış tünellemeyi kullanabilmek için Mac bilgisayarınızda şu sistem eklentilerini kullanıma almalısınız:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "WireGuard kullanabilmek için Mac bilgisayarınızda şu sistem eklentilerini kullanıma almalısınız:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Belirli VPN özelliklerini (ve çoğu iletişim kuralını) kullanabilmek için Mac bilgisayarınızda Proton VPN sistem eklentilerini kullanıma almalısınız.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "**Ağ eklentilerini aç** üzerine tıklayın.";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "**Sistem ayarlarını aç** üzerine tıklayıp **Gizlilik ve Güvenlik → Güvenlik** bölümüne gidin.";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Şu iletiyi görmelisiniz: \"ProtonVPN uygulamasının sistem yazılımı engellendi.\" **İzin Ver** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "**WireGuard** ve **Ayrılmış tünelleme** seçeneklerini açıp **Bitti** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "**Ayrılmış tünelleme** seçeneğini açıp **Bitti** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "**WireGuard** seçeneğini açıp **Bitti** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Gerek duyduğunuz eklentileri açıp **Bitti** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Gerek duyduğunuz eklentileri açıp **Tamam** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "**WireGuard** ve **Ayrılmış tünelleme** seçeneklerini açıp **Tamam** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "**Ayrılmış tünelleme** seçeneğini açıp **Tamam** üzerine tıklayın.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "**WireGuard** seçeneğini açıp **Tamam** üzerine tıklayın.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "İstenirse parola veya Touch ID ile kimliğinizi doğrulayın.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "İstenirse Touch ID veya parola ile kimliğinizi doğrulayın. Bazı aygıtlarda, **Ayrıntılar** yazan bir düğmeye de tıklamanız gerekebilir.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "WireGuard VPN iletişim kuralını kullanıma alır. Çoğu VPN sunucusuna bağlantı kurmak için buna gerek duyacaksınız.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Güvenilir uygulamaların ve IP adreslerinin VPN bağlantınıza katılmamasını sağlar. Plus özelliğidir.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Ağ eklentilerini aç";
 
 "_sysex_open_system_settings" = "Sistem ayarlarını aç";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "İşe yaramadı mı?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Yardım mı gerekiyor?";
 
 "_sysex_settings_description" = "Proton VPN uygulamasının, Smart Protocol, OpenVPN ve WireGuard özelliklerini kullanabilmesi için bir sistem eklentisi yüklenmelidir.";
 

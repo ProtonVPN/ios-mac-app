@@ -219,7 +219,7 @@
 
 "_reconnecting_to" = "S'està tornant a connectar a %@";
 
-"_reconnecting" = "S'està configurant una nova connexió VPN per protegir la vostra IP";
+"_reconnecting" = "Configuració d'una nova connexió VPN per protegir la vostra IP";
 
 /* iOS status view */
 "_connected_to" = "Connectat a";
@@ -1082,7 +1082,7 @@
 "turn_split_tunneling_on_description" = "Això desactivarà el kill switch.";
 
 /* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "No es pot habilitar la tunelització dividida";
+"split_tunneling_alert_title" = "No es pot activar la tunelització dividida";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Saber-ne més";
@@ -1094,7 +1094,7 @@
 "split_tunneling_connect_to_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol del vostre perfil (IKEv2). En connectar-vos, es desactivarà la tunelització dividida. Saber-ne més";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Us voleu connectar amb el protocol IKEv2?";
+"split_tunneling_connect_to_profile_alert_title" = "Voleu connectar amb el protocol IKEv2?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Us voleu connectar a %@?";
@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "La vostra connexió es reiniciarà per canviar al mode Smart Protocol.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Configureu Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Habiliteu les extensions del sistema per continuar";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Habiliteu les extensions del sistema de Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Com habilitar les extensions";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Per utilitzar Proton VPN, cal que habiliteu les següents extensions del sistema al vostre Mac:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Per utilitzar la tunelització dividida, cal que habiliteu les següents extensions del sistema al vostre Mac:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Per utilitzar WireGuard, cal que habiliteu les següents extensions del sistema al vostre Mac:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Per utilitzar algunes característiques de la VPN (i la majoria de protocols), cal que tingueu les extensions del sistema de Proton VPN habilitades al vostre Mac.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Feu clic a **Obrir Extensions de xarxa.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Feu clic a **Obrir Preferències del sistema** i, a continuació, aneu a **Privacitat i seguretat → Seguretat.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Hauríeu de veure un missatge que diu \"El programari del sistema de l'aplicació ProtonVPN ha estat bloquejat.\". Feu clic a **Permetre**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Activeu els commutadors de **WireGuard** i **tunelització dividida** i, a continuació, feu clic a **Fet**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Activeu l'interruptor de **tunelització dividida** i, a continuació, feu clic a **Fet**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Activeu l'interruptor de **WireGuard** i, a continuació, feu clic a **Fet**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Activeu les extensions que necessiteu i, a continuació, feu clic a **Fet**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Activeu les extensions que necessiteu i, a continuació, feu clic a **D'acord**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Activeu els commutadors de **WireGuard** i **tunelització dividida** i, a continuació, feu clic a **D'acord**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Activeu l'interruptor de **tunelització dividida** i, a continuació, feu clic a **D'acord**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Activeu l'interruptor de **WireGuard** i, tot seguit, feu clic a **Acceptar**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Autentiqueu-vos amb la contrasenya o el Touch ID si se us demana.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Autentiqueu-vos amb Touch ID o contrasenya si se us demana. En alguns dispositius, pot ser que també hàgiu de fer clic en un botó que digui **Detalls**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Habiliteu el protocol WireGuard VPN. És necessari per connectar-se a la majoria de servidors VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Us permet excloure aplicacions de confiança i adreces IP de la vostra connexió VPN. És una característica Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Obrir Extensions de xarxa";
 
 "_sysex_open_system_settings" = "Obre les preferències del sistema";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "No funciona?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Necessiteu ajuda?";
 
 "_sysex_settings_description" = "Proton VPN requereix carregar una extensió del sistema per utilitzar Smart Protocol, OpenVPN i WireGuard.";
 

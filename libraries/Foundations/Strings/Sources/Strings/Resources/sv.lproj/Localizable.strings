@@ -1088,7 +1088,7 @@
 "split_tunneling_alert_description" = "Split tunneling är inte kompatibelt med IKEv2-protokollet. Lär dig mer";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Split tunneling är inte kompatibel med IKEv2-protokollet. För att använda split tunneling, ändra ditt profilprotokoll eller koppla från profilen. Lär dig mer";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling är inte kompatibelt med din profils protokoll (IKEv2). Anslutning kommer inaktivera split tunneling. Lär dig mer";
@@ -1538,7 +1538,7 @@
 
 "_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Klicka **Öppna Systeminställningar**, gå sedan till **Integritet och Säkerhet → Säkerhet.**";
 
 "_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
 
@@ -1558,13 +1558,13 @@
 
 "_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Autentisera med lösenord eller Touch ID om du blir ombedd.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Autentisera med Touch ID eller lösenord om du blir ombedd. På vissa enheter kan du också behöva klicka på en knapp där det står **Detaljer**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Aktiverar WireGuard VPN-protokollet. Du behöver detta för att ansluta till de flesta VPN-servrar.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Låter dig exkludera betrodda appar och IP-adresser från din VPN-anslutning. Plus-funktion.";
 
 "_sysex_tutorial_button_open" = "Open Network Extensions";
 

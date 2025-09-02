@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Неабходны перазапуск падключэння для змены рэжыму Smart Protocol.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Наладзіць Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Уключыць сістэмныя пашырэнні, каб працягнуць";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Уключыць сістэмныя пашырэнні Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Як уключыць пашырэнні";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Каб выкарыстоўваць Proton VPN, вам неабходна ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Каб выкарыстоўваць Split Tunneling, вам трэба ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Каб выкарыстоўваць WireGuard, вам трэба ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Каб выкарыстоўваць пэўныя функцыі VPN (і большасць пратаколаў), вам трэба мець уключанымі сістэмныя пашырэнні Proton VPN на вашым Mac.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Націсніце **Адкрыць пашырэнні сеткі.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Націсніце **Адкрыць сістэмныя налады**, затым перайдзіце ў **Прыватнасць і бяспека → Бяспека.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Вы павінны ўбачыць паведамленне, у якім будзе напісана: \"Сістэмнае праграмнае забеспячэнне ад праграмы ProtonVPN было заблакавана.\". Націсніце **Дазволіць**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Уключыце пераключальнікі **WireGuard** і **Split Tunneling**, затым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Уключыце пераключальнік **Split Tunneling**, затым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Уключыце пераключальнік **WireGuard**, затым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Уключыце патрэбныя вам пашырэнні, затым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Уключыце патрэбныя пашырэнні, затым націсніце **ОК**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Уключыце пераключальнікі **WireGuard** і **Split Tunneling**, затым націсніце **ОК**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Уключыце пераключальнік **Split Tunneling**, затым націсніце **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Уключыце пераключальнік **WireGuard**, затым націсніце **ОК**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Аўтэнтыфікуйцеся з дапамогай пароля або Touch ID, калі будзе прапанавана.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Аўтэнтыфікуйцеся з Touch ID або паролем, калі будзе запыт. На некаторых прыладах вам таксама можа спатрэбіцца націснуць кнопку з надпісам **Падрабязнасці**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Уключае пратакол WireGuard VPN. Гэта неабходна для падключэння да большасці VPN-сервераў.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Дазваляе выключаць давераныя праграмы і IP-адрасы з вашага VPN-падключэння. Функцыя Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Адкрыць пашырэнні сеткі";
 
 "_sysex_open_system_settings" = "Адкрыць сістэмныя налады";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Не працуе?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Неабходна дапамога?";
 
 "_sysex_settings_description" = "Proton VPN неабходна загрузіць сістэмнае пашырэнне для выкарыстання Smart Protocol, OpenVPN і WireGuard.";
 

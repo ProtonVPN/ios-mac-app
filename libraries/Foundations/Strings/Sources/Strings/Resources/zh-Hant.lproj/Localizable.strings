@@ -318,7 +318,7 @@
 "_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "複製";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
 "_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
@@ -1094,10 +1094,10 @@
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "使用 IKEv2 協定連接？";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "已連線到 %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "取得 %@ 方案";
@@ -1429,22 +1429,22 @@
 "_offer_ending_" = "結束 %@";
 
 /* Text appears in main view with the assigned port */
-"_pf_active_port_status" = "Active port:";
+"_pf_active_port_status" = "在用通訊埠:";
 
 /* Text appears in port forwarding view with the assigned port */
-"_pf_active_port_number" = "Active port number";
+"_pf_active_port_number" = "在用通訊埠號碼";
 
 /* Text appears as hint when hovering mouse over the assigned port number */
-"_pf_copy_port_number" = "Copy port number";
+"_pf_copy_port_number" = "複製通訊埠號碼";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "已複製";
 
 /* Text appears in port forwarding view during loading */
-"_pf_loading" = "Loading...";
+"_pf_loading" = "載入中‧‧‧";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "已更新 %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Unavailable";
@@ -1520,15 +1520,15 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "將會重新連線以更改智慧通訊協定模式。";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "設置 Proton VPN";
 
 "_sysex_tutorial_title_enable" = "Enable system extensions to continue";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "啟用 Proton VPN 系統延伸功能";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "如何啟用延伸功能";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "若要使用 Proton VPN，需要在您的 Mac 上啟用下列系統延伸功能：";
 
 "_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
 
