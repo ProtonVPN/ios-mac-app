@@ -18,6 +18,8 @@
 
 #if os(macOS)
     import Dependencies
+    import Domain
+    import Foundation
     import NATPMPUI
 
     extension VpnManager {
@@ -28,13 +30,14 @@
                 return
             }
             @Dependency(\.natPortMappingService) var natPortMappingService
-            // Start your service
+            AppEvent.portForwarding.subscribe(self, selector: #selector(handlePortForwardingChange))
             natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
             log.info("NAT port mapping service started", category: .connection)
         }
 
         public func stopNATPortMappingService() {
             @Dependency(\.natPortMappingService) var natPortMappingService
+            AppEvent.portForwarding.unsubscribe(self)
             Task {
                 await natPortMappingService.cancelPortMapping()
                 log.info("NAT port mapping service stopped", category: .connection)
@@ -76,6 +79,14 @@
 
             log.info("Using WireGuard DNS/gateway: \(gateway)", category: .connection)
             return gateway
+        }
+
+        @objc
+        private func handlePortForwardingChange(_: Notification) {
+            // this is a scenario when a PF flag was reset back to `false` by a BE
+            if portForwardingPropertyProvider.portForwarding == false {
+                stopNATPortMappingService()
+            }
         }
     }
 #endif

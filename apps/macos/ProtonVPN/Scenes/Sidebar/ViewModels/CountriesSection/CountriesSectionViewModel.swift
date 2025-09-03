@@ -228,6 +228,7 @@ class CountriesSectionViewModel {
             .planChanged,
             .userDelinquent,
             .announcementStorageContent,
+            .portForwarding,
         ]
         reloadDataEvents.subscribe(self, selector: #selector(reloadDataOnChange))
 
