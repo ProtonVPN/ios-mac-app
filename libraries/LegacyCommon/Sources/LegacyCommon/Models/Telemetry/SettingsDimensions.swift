@@ -46,6 +46,12 @@ public struct SettingsDimensions: Encodable {
         case isHermesEnabled = "is_custom_dns_enabled"
         case isSystemCustomDNSEnabled = "is_system_custom_dns_enabled"
         case isPortForwardingEnabled = "is_port_forwarding_enabled"
+        #if os(macOS)
+            case isSplitTunnelingEnabled = "is_split_tunneling_enabled"
+            case splitTunnelingMode = "split_tunneling_mode"
+            case splitTunnelingAppsCount = "split_tunneling_apps_count"
+            case splitTunnelingIpsCount = "split_tunneling_ips_count"
+        #endif
     }
 
     public enum DefaultConnectionType: String, Encodable {
@@ -115,6 +121,50 @@ public struct SettingsDimensions: Encodable {
         case `true`
         case `false`
     }
+
+    #if os(macOS)
+        let isSplitTunnelingEnabled: IsSplitTunnelingEnabled
+        let splitTunnelingMode: SplitTunnelingMode
+        let splitTunnelingAppsCount: SplitTunnelingCount
+        let splitTunnelingIpsCount: SplitTunnelingCount
+
+        public enum IsSplitTunnelingEnabled: String, Encodable {
+            case `true`
+            case `false`
+        }
+
+        public enum SplitTunnelingMode: String, Encodable {
+            case exclude
+            case include
+            case na = "n/a"
+        }
+
+        public enum SplitTunnelingCount: String, Encodable {
+            case zero = "0"
+            case one = "1"
+            case twoToFour = "2-4"
+            case fiveToNine = "5-9"
+            case tenToNineteen = "10-19"
+            case twentyOrMore = ">=20"
+
+            public init(count: Int) {
+                switch count {
+                case 0:
+                    self = .zero
+                case 1:
+                    self = .one
+                case 2 ... 4:
+                    self = .twoToFour
+                case 5 ... 9:
+                    self = .fiveToNine
+                case 10 ... 19:
+                    self = .tenToNineteen
+                default:
+                    self = .twentyOrMore
+                }
+            }
+        }
+    #endif
 }
 
 extension SettingsDimensions: CustomDebugStringConvertible {
