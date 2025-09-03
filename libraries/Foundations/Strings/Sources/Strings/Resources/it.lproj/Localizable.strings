@@ -1530,7 +1530,7 @@
 
 "_sysex_tutorial_subtitle_app" = "Per utilizzare Proton VPN, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Per usare WireGuard, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
 "_sysex_tutorial_subtitle_wg" = "Per usare WireGuard, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
@@ -1544,35 +1544,35 @@
 
 "_sysex_tutorial_step_turn_on_both_done" = "Attiva gli interruttori di **WireGuard** e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Attiva le estensioni che ti servono, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Attiva le estensioni che ti servono, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Attiva gli interruttori di **WireGuard** e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Autentica con password o Touch ID se richiesto.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Autenticati con Touch ID o password, se richiesto. Su alcuni dispositivi, potresti anche aver bisogno di cliccare su un pulsante che dice **Dettagli**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Attiva il protocollo VPN WireGuard. Ti serve per connettere alla maggior parte dei server VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Ti permette di escludere app attendibili e indirizzi IP dalla tua connessione VPN. Funzionalità Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Clicca Apri Estensioni Rete";
 
 "_sysex_open_system_settings" = "Apri le impostazioni di sistema";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Non ha funzionato?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Hai bisogno di aiuto?";
 
 "_sysex_settings_description" = "Proton VPN richiede di caricare un'Estensione del Sistema per sfruttare lo Smart Protocol, OpenVPN e WireGuard.";
 

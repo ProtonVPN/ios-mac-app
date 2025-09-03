@@ -1438,7 +1438,7 @@
 "_pf_copy_port_number" = "Kopier portnummer";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "Kopiert";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Laster...";
@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Tilkoblingen din startes på nytt for å endre Smart Protocol-modusen.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Konfigurer Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Aktiver systemutvidelser for å fortsette";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Aktiver systemutvidelser for Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Hvordan aktivere utvidelser";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "For å bruke Proton VPN må du aktivere følgende systemutvidelser på Mac-en din:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "For å bruke delt tunnelering må du aktivere følgende systemutvidelser på Mac-en din:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "For å bruke WireGuard må du aktivere følgende systemutvidelser på Mac-en din:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "For å bruke visse VPN-funksjoner (og de fleste protokoller), må du ha Proton VPN-systemutvidelser aktivert på Mac-en din.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Klikk på **åpne nettverksutvidelser.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Klikk på **Åpne systeminnstillinger**, deretter gå til **Personvern & Sikkerhet → Sikkerhet.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Du skal se en melding som sier \"Systemprogramvare fra applikasjon Proton VPN ble blokkert.\" Klikk **Tillat**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Slå på bryterne for **WireGuard** og **delt tunnelering**, og klikk deretter **Fullført**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Slå på **delt tunnelering**-bryteren, og klikk **Fullført**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Slå på **WireGuard**-bryteren, klikk deretter **Fullført**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Slå på utvidelsene du trenger, klikk deretter på **Fullført**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Slå på utvidelsene du trenger, klikk deretter **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Slå på bryterne for **WireGuard** og **delt tunnelering**, og klikk deretter **OK**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Slå på **delt tunnelering**-bryteren, og klikk **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Slå på **WireGuard**-bryteren, klikk deretter **OK**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Autentiser med passord eller Touch ID hvis du blir spurt.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Autentiser med Touch ID eller passord hvis du blir bedt om det. På noen enheter må du kanskje også klikke på en knapp som sier **Detaljer**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Aktiverer WireGuard VPN-protokollen. Du trenger dette for å koble til de fleste VPN-tjenere.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Lar deg ekskludere klarerte apper og IP-adresser fra VPN-tilkoblingen din. Plus-funksjon.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Åpne nettverksutvidelser";
 
 "_sysex_open_system_settings" = "Åpne systeminnstillinger";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Fungerte det ikke?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Trenger du hjelp?";
 
 "_sysex_settings_description" = "Proton VPN krever å laste inn en systemutvidelse for å utnytte Smart Protocol, OpenVPN og WireGuard.";
 

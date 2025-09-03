@@ -312,19 +312,19 @@
 "_always_on_will_reconnect" = "Vždy zapnutá VPN vás automaticky znovu pripojí";
 
 /* Subtitle of the Notification shown with the port number */
-"_port_forwarding_info_subtitle" = "Active port number: %@";
+"_port_forwarding_info_subtitle" = "Číslo aktívneho portu: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Go to your torrent client or P2P app and enter this number.";
+"_port_forwarding_info_body" = "Prejdite do svojho torrentového klienta alebo P2P aplikácie a zadajte toto číslo.";
 
 /* Copy button in the Notification about port forwarding */
-"_port_forwarding_info_copy_button" = "Copy";
+"_port_forwarding_info_copy_button" = "Kopírovať";
 
 /* Subtitle of the Notification shown when a port mapping request failed */
-"_port_forwarding_error_subtitle" = "Cannot retrieve active port number";
+"_port_forwarding_error_subtitle" = "Nie je možné získať číslo aktívneho portu";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Restart your connection and try again. If that doesn’t work, try a different server.";
+"_port_forwarding_error_body" = "Reštartujte pripojenie a skúste to znova. Ak to nepomôže, vyskúšajte iný server.";
 
 /* MacOS: About window title */
 "_about" = "O aplikácii";
@@ -986,10 +986,10 @@
 "_dns_leak_protection_tooltip" = "Zabrániť úniku podrobností o dotazoch DNS tretím stranám. Vždy zapnuté.";
 
 /* MacOS: Settings -> Port forwarding notifications */
-"_settings_port_forwarding_notifications_title" = "Port forwarding notifications";
+"_settings_port_forwarding_notifications_title" = "Notifikácie presmerovania portov";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Get notified when your active port number changes";
+"_settings_port_forwarding_notifications_info" = "Nechajte si zaslať upozornenie, keď sa zmení číslo vášho aktívneho portu";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Bezpečnostné kľúče";
@@ -1082,22 +1082,22 @@
 "turn_split_tunneling_on_description" = "Toto vypne kill switch.";
 
 /* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_title" = "Cannot enable split tunneling";
+"split_tunneling_alert_title" = "Nie je možné povoliť rozdelené tunelovanie";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2. Viac informácií";
 
 /* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom IKEv2. Ak chcete používať rozdelené tunelovanie, zmeňte protokol svojho profilu alebo sa odpojte od profilu. Viac informácií";
 
 /* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+"split_tunneling_connect_to_profile_alert_description" = "Rozdelené tunelovanie nie je kompatibilné s protokolom vášho profilu (IKEv2). Pripojením sa rozdelené tunelovanie deaktivuje. Viac informácií";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
+"split_tunneling_connect_to_profile_alert_title" = "Pripojiť sa pomocou protokolu IKEv2?";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
+"split_tunneling_connect_to_profile_name_alert_title" = "Pripojiť k %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Získajte plán %@";
@@ -1438,7 +1438,7 @@
 "_pf_copy_port_number" = "Kopírovať číslo portu";
 
 /* Text appears as popup after copy action */
-"_pf_copied" = "Copied";
+"_pf_copied" = "Skopírované";
 
 /* Text appears in port forwarding view during loading */
 "_pf_loading" = "Načítavanie...";
@@ -1447,7 +1447,7 @@
 "_pf_updated" = "Aktualizované %@";
 
 /* Text appears in port forwarding view when any error is present */
-"_pf_error" = "Unavailable";
+"_pf_error" = "Nedostupné";
 
 "_quick_settings_title" = "Rýchle nastavenia";
 
@@ -1466,11 +1466,11 @@
 
 "_quick_settings_killSwitch_note" = "Ak sa nemôžete pripojiť k zariadeniam v miestnej sieti, skúste vypnúť kill switch.";
 
-"_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
+"_quick_settings_portForwarding_note" = "Zadajte číslo aktívneho portu do aplikácie BitTorrent, aby ste zvýšili rýchlosť P2P";
 
-"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+"_quick_settings_portForwarding_warningNote" = "Ak chcete použiť presmerovanie portov, pripojte sa k P2P serveru";
 
-"_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
+"_quick_settings_portForwarding_errorNote" = "Nie je možné získať číslo aktívneho portu. Reštartujte pripojenie a skúste to znova.";
 
 "_quick_settings_get_plus" = "Zakúpiť Plus";
 
@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Vaše pripojenie sa reštartuje, aby sa zmenil režim Smart Protocol.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Nastaviť Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Povoliť systémové rozšírenia pre pokračovanie";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Povoliť systémové rozšírenia Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Ako povoliť rozšírenia";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Ak chcete používať Proton VPN, musíte na svojom počítači Mac povoliť nasledujúce systémové rozšírenia:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Ak chcete používať rozdelené tunelovanie, musíte na počítači Mac povoliť nasledujúce systémové rozšírenia:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Ak chcete používať WireGuard, musíte na svojom počítači Mac povoliť nasledujúce systémové rozšírenia:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Ak chcete používať určité funkcie VPN (a väčšinu protokolov), musíte mať na svojom počítači Mac povolené systémové rozšírenia Proton VPN.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Kliknite na **Otvoriť sieťové rozšírenia.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Kliknite na **Otvoriť nastavenia systému** a prejdite do časti **Súkromie a bezpečnosť → Bezpečnosť.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Mala by sa zobraziť správa „Systémový softvér z aplikácie ProtonVPN bol blokovaný.“. Kliknite na **Povoliť**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Zapnite prepínače **WireGuard** a **rozdelené tunelovanie**, potom kliknite na **Hotovo**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Zapnite prepínač **rozdelené tunelovanie** a kliknite na **Hotovo**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Zapnite prepínač **WireGuard** a potom kliknite na **Hotovo**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Zapnite rozšírenia, ktoré potrebujete, potom kliknite na **Hotovo**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Zapnite rozšírenia, ktoré potrebujete, potom kliknite na **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Zapnite prepínače **WireGuard** a **rozdelené tunelovanie**, potom kliknite na **OK**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Zapnite prepínač **rozdelené tunelovanie**, potom kliknite na **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Zapnite prepínač **WireGuard** a potom kliknite na **OK**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Na vyžiadanie sa overte pomocou hesla alebo Touch ID.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Ak sa objaví výzva, overte sa pomocou Touch ID alebo hesla. Na niektorých zariadeniach môže byť potrebné kliknúť aj na tlačidlo **Podrobnosti**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Aktivuje protokol WireGuard VPN. Potrebujete ho na pripojenie k väčšine serverov VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Umožňuje vylúčiť dôveryhodné aplikácie a IP adresy z vášho VPN pripojenia. Funkcia Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Otvoriť rozšírenia siete";
 
 "_sysex_open_system_settings" = "Otvoriť systémové nastavenia";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Nefunguje?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Potrebujete pomôcť?";
 
 "_sysex_settings_description" = "Proton VPN vyžaduje načítanie systémového rozšírenia, aby bolo možné využívať protokoly Smart Protocol, OpenVPN a WireGuard.";
 
@@ -1795,7 +1795,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split Tunneling logs row */
-"_plutonium_logs" = "Split Tunneling Logs";
+"_plutonium_logs" = "Protokoly rozdeleného tunelovania";
 
 "_local_agent_server_error_title" = "Chyba servera";
 
@@ -2577,10 +2577,10 @@
 "upsell_p2pSupport_subtitle" = "Zlepšite rýchlosť odosielania a sťahovania a zároveň skryte svoju IP adresu.";
 
 /* Title of port forwarding upsell modal */
-"upsell_pfSupport_title" = "Improve P2P speed";
+"upsell_pfSupport_title" = "Zvýšiť rýchlosť P2P";
 
 /* Subtitle of port forwarding support upsell modal */
-"upsell_pfSupport_subtitle" = "Supercharge peer-to-peer (P2P) file sharing performance with VPN Plus.";
+"upsell_pfSupport_subtitle" = "Zvýšte výkon pri peer-to-peer (P2P) zdieľaní súborov pomocou VPN Plus.";
 
 /* Title of devices upsell modal */
 "upsell_devices_title" = "Chráňte až 10 zariadení súčasne";
@@ -2727,10 +2727,10 @@
 "welcome_upgrade_subtitle_plus" = "Vychutnajte si ďalšie funkcie ochrany súkromia, vyšší výkon a prispôsobenie VPN na novej úrovni.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and 500 GB total storage.";
+"welcome_upgrade_subtitle_Unlimited" = "Odomkli ste všetky prémiové funkcie Proton VPN, Mailu, Kalendára, Jednotky a Passu — a 500 GB celkového úložiska.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "You unlocked all premium Proton VPN, Mail, Calendar, Drive, and Pass features — and **500 GB** total storage.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Odomkli ste všetky prémiové funkcie Proton VPN, Mailu, Kalendára, Jednotky a Pass — a **500 GB** celkového úložiska.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 GB";
@@ -2901,7 +2901,7 @@
 "_ike_deprecation_alert_message" = "Tento protokol bude čoskoro odstránený. Zvážte prechod na Smart protocol. Zistite viac";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "This will disable split tunneling.";
+"_disable_plutonium_message" = "Týmto zakážete split tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Zistiť viac";
@@ -3087,16 +3087,16 @@
 "_account_created_title" = "Účet vytvorený";
 
 /* iOS: Alert title for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode" = "Create an account to continue";
+"_create_account_report_an_issue_guest_mode" = "Pre pokračovanie si vytvorte účet";
 
 /* iOS: Alert create account button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_create_account_button" = "Create account";
+"_create_account_report_an_issue_guest_mode_create_account_button" = "Vytvoriť účet";
 
 /* iOS: Alert sign in button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_sign_in_button" = "Sign in";
+"_create_account_report_an_issue_guest_mode_sign_in_button" = "Prihlásiť sa";
 
 /* iOS: Alert cancel button for report an issue attempt in guest mode */
-"_create_account_report_an_issue_guest_mode_cancel_button" = "Cancel";
+"_create_account_report_an_issue_guest_mode_cancel_button" = "Zrušiť";
 
 /* Hermes Feature Upsell title within dedicated upsell screen */
 "_hermes_upsell_title" = "Pokročilé prispôsobenie VPN";

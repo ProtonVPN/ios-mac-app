@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Smart Protocolモードを変更するために接続が再起動されます。";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Proton VPN をセットアップ";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "続行するにはシステム機能拡張を有効にしてください";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Proton VPN システム機能拡張を有効にする";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "システム機能拡張を有効にする方法";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Proton VPN を使用するには、お使いのMacで次のシステム機能拡張を有効にする必要があります。";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "スプリットトンネルを使用するには、お使いのMacで以下のシステム機能拡張を有効にする必要があります。";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "WireGuardを使用するには、お使いのMacで以下のシステム機能拡張を有効にする必要があります:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "特定のVPN機能（およびほとんどのプロトコル）を使用するには、お使いのMacでProton VPNのシステム機能拡張を有効にする必要があります。";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "**ネットワーク拡張機能を開く**をクリック";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "**システム設定を開く**をクリックし、次に**プライバシーとセキュリティ→セキュリティ**に移動してください。";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "「アプリProtonVPNからのシステムソフトウェアがブロックされました。」というメッセージが表示されます。**許可** をクリックしてください。";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "**WireGuard** と **スプリットトンネル** スイッチをオンにし、**完了**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "**スプリットトンネル**スイッチをオンにし、次に**完了**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "**WireGuard** スイッチをオンにして、**完了**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "必要な拡張機能をオンにし、次に**完了**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "必要な機能拡張をオンにし、**OK**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "**WireGuard** と **スプリットトンネル** スイッチをオンにし、**OK**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "**スプリットトンネル**スイッチをオンにし、次に**OK**をクリックします。";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "**WireGuard** スイッチをオンにして、**OK**をクリックします。";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "要求された場合、パスワードまたはTouch IDで認証してください。";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "要求された場合は、Touch ID またはパスワードで認証してください。一部のデバイスでは、「**詳細**」と表示されているボタンをクリックする必要がある場合もあります。";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "WireGuard VPNプロトコルを有効にします。ほとんどのVPNサーバーに接続するには、これが必要です。";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "お客様のVPN接続から信頼済みアプリとIPアドレスを除外できます。プラス機能。";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "ネットワーク拡張機能を開く";
 
 "_sysex_open_system_settings" = "システム設定を開く";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "うまく動作しませんか？";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "お困りですか？";
 
 "_sysex_settings_description" = "Proton VPN は、スマートプロトコル、OpenVPN、WireGuard を活用するためにシステム機能拡張を読み込む必要があります。";
 

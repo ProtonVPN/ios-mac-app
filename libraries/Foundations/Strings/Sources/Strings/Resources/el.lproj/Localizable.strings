@@ -1522,51 +1522,51 @@
 
 "_sysex_tutorial_title_setup" = "Ρυθμίστε το Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Ενεργοποιήστε τις επεκτάσεις συστήματος για να συνεχίσετε";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Ενεργοποιήστε τις επεκτάσεις συστήματος του Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Πώς να ενεργοποιήσετε επεκτάσεις";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Για να χρησιμοποιήσετε το Proton VPN, πρέπει να ενεργοποιήσετε τις παρακάτω επεκτάσεις συστήματος στο Mac σας:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Για να χρησιμοποιήσετε τη διαίρεση σήραγγας, πρέπει να ενεργοποιήσετε τις παρακάτω επεκτάσεις συστήματος στο Mac σας:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Για να χρησιμοποιήσετε το WireGuard, πρέπει να ενεργοποιήσετε τις παρακάτω επεκτάσεις συστήματος στο Mac σας:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Για να χρησιμοποιήσετε ορισμένες λειτουργίες VPN (και τα περισσότερα πρωτόκολλα), πρέπει να έχετε ενεργοποιημένες τις επεκτάσεις συστήματος του Proton VPN στο Mac σας.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Κάντε κλικ στο **Άνοιγμα επεκτάσεων δικτύου.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Κάντε κλικ στο **Άνοιγμα Ρυθμίσεων Συστήματος**, έπειτα μεταβείτε στην ενότητα **Απόρρητο & Ασφάλεια → Ασφάλεια.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Θα πρέπει να δείτε ένα μήνυμα που λέει \"Το λογισμικό συστήματος από την εφαρμογή ProtonVPN αποκλείστηκε.\". Κάντε κλικ στο **Αποδοχή**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Ενεργοποιήστε τους διακόπτες **WireGuard** και **split tunneling**, έπειτα κάντε κλικ στο **Τέλος**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Ενεργοποιήστε τον διακόπτη **split tunneling**, στη συνέχεια κάντε κλικ στο **Τέλος**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Ενεργοποιήστε το διακόπτη **WireGuard**, μετά πατήστε **Τέλος**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Ενεργοποιήστε τις επεκτάσεις που χρειάζεστε και μετά κάντε κλικ στο **Τέλος**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Ενεργοποιήστε τις επεκτάσεις που χρειάζεστε και μετά κάντε κλικ στο **ΟΚ**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Ενεργοποιήστε τους διακόπτες **WireGuard** και **split tunneling**, έπειτα κάντε κλικ στο **ΟΚ**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Ενεργοποιήστε τον διακόπτη **split tunneling**, στη συνέχεια κάντε κλικ στο **ΟΚ**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Ενεργοποιήστε το διακόπτη **WireGuard**, μετά πατήστε **ΟΚ**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Αυθεντικοποιηθείτε με κωδικό ή Touch ID αν ζητηθεί.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Πιστοποιηθείτε με Touch ID ή κωδικό, αν ζητηθεί. Σε ορισμένες συσκευές, ίσως χρειαστεί επίσης να πατήσετε ένα κουμπί που αναφέρει **Λεπτομέρειες**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Ενεργοποιεί το πρωτόκολλο WireGuard VPN. Το χρειάζεστε αυτό για να συνδεθείτε στους περισσότερους διακομιστές VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Σας επιτρέπει να εξαιρέσετε αξιόπιστες εφαρμογές και διευθύνσεις IP από τη σύνδεσή σας στο VPN. Λειτουργία Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Άνοιγμα Επεκτάσεων Δικτύου";
 
 "_sysex_open_system_settings" = "Άνοιγμα Ρυθμίσεων Συστήματος";
 
