@@ -62,6 +62,8 @@ public struct NATPMPPortView: View {
 // MARK: - Active Port View
 
 struct ActivePortView: View {
+    static let toolTipHideDelayInterval: DispatchTimeInterval = .seconds(2)
+
     let portNumber: UInt16
     let updateDate: Date
 
@@ -75,7 +77,7 @@ struct ActivePortView: View {
                 showCopiedTooltip = true
 
                 // Hide tooltip after 2 seconds
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Self.toolTipHideDelayInterval) {
                     showCopiedTooltip = false
                 }
             }
@@ -223,6 +225,8 @@ public class MappedPort: ObservableObject {
 }
 
 public struct StatusPortView: View {
+    static let toolTipHideDelayInterval: DispatchTimeInterval = .seconds(2)
+
     @ObservedObject public var portModel: MappedPort = .init()
     @State private var hovered = false
     @State private var showCopiedTooltip = false
@@ -240,7 +244,7 @@ public struct StatusPortView: View {
                         showCopiedTooltip = true
 
                         // Hide tooltip after 2 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + Self.toolTipHideDelayInterval) {
                             showCopiedTooltip = false
                         }
                     }
