@@ -339,8 +339,16 @@ public enum Localizable {
   public static var connectionTimedOut: String { return Localizable.tr("Localizable", "_connection_timed_out", fallback: "Connection timed out") }
   /// Text that should be bold in _connection_timed_out string
   public static var connectionTimedOutBold: String { return Localizable.tr("Localizable", "_connection_timed_out_bold", fallback: "timed out") }
-  /// Header before the list of connections available for free users (in the country list)
+  /// Header of the connections list for free users
   public static var connectionsFree: String { return Localizable.tr("Localizable", "_connections_free", fallback: "Free connections") }
+  /// Header of the countries list for free users
+  public static func connectionsFreeWithCount(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connections_free_with_count", String(describing: p1), fallback: "Free connections (%@)")
+  }
+  /// Header of the countries list for paid users
+  public static func connectionsPaidWithCount(_ p1: Any) -> String {
+    return Localizable.tr("Localizable", "_connections_paid_with_count", String(describing: p1), fallback: "Plus locations (%@)")
+  }
   /// Text addressing to contact costumer support on several sites of the app
   public static var contactOurSupport: String { return Localizable.tr("Localizable", "_contact_our_support", fallback: "Contact our support") }
   /// Continue

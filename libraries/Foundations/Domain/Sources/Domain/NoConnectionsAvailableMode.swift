@@ -16,15 +16,33 @@
 //  You should have received a copy of the GNU General Public License
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Modals
-import VPNAppCore
+import Foundation
+import Strings
 
-extension SubuserWithoutConnectionsAlert.Mode {
-    var modeForView: NoConnectionsAvailableMode {
+public enum NoConnectionsAvailableMode {
+    case noServers
+    case loadingError
+    case connectionsDisabled
+}
+
+public extension NoConnectionsAvailableMode {
+    var subtitle: String {
         switch self {
-        case .connectionsDisabled: .connectionsDisabled
-        case .noServers: .noServers
-        case .loadingError: .loadingError
+        case .noServers, .connectionsDisabled:
+            Localizable.noServersSubtitle
+        case .loadingError:
+            Localizable.serversLoadingErrorSubtitle
+        }
+    }
+
+    var helpString: LocalizedStringResource? {
+        switch self {
+        case .connectionsDisabled:
+            .init(stringLiteral: Localizable.noServersHelpString(VPNLink.assignVPNConnections.rawValue))
+        case .loadingError:
+            .init(stringLiteral: Localizable.noServersContactUs(VPNLink.contact.rawValue))
+        case .noServers:
+            nil
         }
     }
 }

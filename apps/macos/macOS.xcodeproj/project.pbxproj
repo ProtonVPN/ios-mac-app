@@ -248,7 +248,6 @@
 		E50B623F28B4D30F004D533B /* AnnouncementImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E50B623E28B4D30F004D533B /* AnnouncementImageViewController.xib */; };
 		E50E24B92DD4CE950046A14D /* ItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50E24B82DD4CE940046A14D /* ItemProvider.swift */; };
 		E51122DC27D0B6780088FCAC /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51122DB27D0B6780088FCAC /* XCUIElement+Extensions.swift */; };
-		E52CE2612E65A8F1005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52CE2602E65A8F0005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */; };
 		E5316EE32ADE8EC800380430 /* NSView+ClipToBounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */; };
 		E53D7457291925380006E499 /* FeatureRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E53D7456291925380006E499 /* FeatureRowView.xib */; };
 		E551EB0829AF7C1300B6612D /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = E551EB0729AF7C1300B6612D /* Assets.swift */; };
@@ -793,7 +792,6 @@
 		E524A0F82A60015A003DB5D8 /* LoginFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFeature.swift; sourceTree = "<group>"; };
 		E524A0FA2A60119D003DB5D8 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		E52B8BAD29FBB7E700517FFC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		E52CE2602E65A8F0005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SubuserWithoutConnectionsAlert+Extension.swift"; sourceTree = "<group>"; };
 		E5316EE22ADE8EC800380430 /* NSView+ClipToBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+ClipToBounds.swift"; sourceTree = "<group>"; };
 		E53CB3A92A43275E00D58D20 /* InitialStateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialStateProvider.swift; sourceTree = "<group>"; };
 		E53D7456291925380006E499 /* FeatureRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureRowView.xib; sourceTree = "<group>"; };
@@ -1928,7 +1926,6 @@
 				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
 				E142F24C20A9B45800029163 /* UpdateManager.swift */,
 				EE4E7DF41F6276C9000F7D5E /* WindowService.swift */,
-				E52CE2602E65A8F0005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift */,
 				F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */,
 				E9E5F98327C667170068309F /* AppCertificateRefreshManager.swift */,
 			);
@@ -3496,7 +3493,6 @@
 				EEA5563A1F1F59690061F43F /* DisabledScrollView.swift in Sources */,
 				42BEF94826317670009180A7 /* FeaturesOverlayViewController.swift in Sources */,
 				E13464AD20342D2A00C0DB7D /* FeatureIcon.swift in Sources */,
-				E52CE2612E65A8F1005FCA60 /* SubuserWithoutConnectionsAlert+Extension.swift in Sources */,
 				E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */,
 				EECEF3DE1F169B4800A16606 /* CountryItemCellView.swift in Sources */,
 				A4A7C7672E437F66002652F2 /* QuickSettingType.swift in Sources */,

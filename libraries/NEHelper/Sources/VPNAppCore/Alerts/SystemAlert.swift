@@ -817,15 +817,9 @@ public final class SubuserWithoutConnectionsAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
 
-    public enum Mode {
-        case noServers
-        case loadingError
-        case connectionsDisabled
-    }
+    public let mode: NoConnectionsAvailableMode
 
-    public let mode: Mode
-
-    public init(mode: Mode) {
+    public init(mode: NoConnectionsAvailableMode) {
         self.mode = mode
     }
 }

@@ -23,7 +23,6 @@ public typealias ImageAsset = ModalsShared.ImageAsset
 public typealias ModalType = ModalsShared.ModalType
 public typealias UserAccountUpdateViewModel = ModalsShared.UserAccountUpdateViewModel
 public typealias DiscourageSecureCoreFeature = ModalsShared.DiscourageSecureCoreFeature
-public typealias NoConnectionsAvailableMode = ModalsShared.NoConnectionsAvailableMode
 
 import ModalsServices
 

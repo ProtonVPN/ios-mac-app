@@ -391,7 +391,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
             let rowsFree = firstRows
             if !currentContent.isEmpty {
                 let profiles: Section = .profiles(
-                    title: "\(Localizable.connectionsFree) (\(rowsFree.count))",
+                    title: Localizable.connectionsFreeWithCount(rowsFree.count),
                     rows: rowsFree
                 )
                 newTableData.append(profiles)
@@ -405,7 +405,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
                 ))
             }
             let countryCount = rows.count - 1 // Subtract one to account for the banner row
-            let title = countryCount != 0 ? "\(Localizable.locationsPlus) (\(countryCount))" : nil
+            let title = countryCount != 0 ? Localizable.connectionsPaidWithCount(countryCount) : nil
             newTableData.append(.countries(
                 title: title,
                 rows: rows,

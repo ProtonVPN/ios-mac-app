@@ -491,7 +491,7 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        let controller = UIHostingController(rootView: NoConnectionsAvailableView(mode: alert.mode.modeForView))
+        let controller = UIHostingController(rootView: NoConnectionsAvailableView(mode: alert.mode))
         windowService.present(modal: controller)
     }
 

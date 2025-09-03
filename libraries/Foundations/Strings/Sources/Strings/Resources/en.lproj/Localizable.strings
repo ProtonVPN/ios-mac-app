@@ -1615,8 +1615,15 @@
 "_locations_free" = "Free locations";
 "_locations_plus" = "Plus locations";
 "_locations_gateways" = "Gateways";
-/* Header before the list of connections available for free users (in the country list) */
+
+/* Header of the connections list for free users */
 "_connections_free" = "Free connections";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "What's a gateway?";
