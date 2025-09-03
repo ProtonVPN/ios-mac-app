@@ -66,6 +66,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
     }
 
     // TODO: When doing redesign for macOS preserve logic for choosing .p2p servers when PF is on
+    // https://protonag.atlassian.net/browse/VPNAPPL-3035
     public func connect(withIntent intent: ConnectionSpec) async throws {
         let wireguardConfig = propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(

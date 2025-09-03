@@ -90,7 +90,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
 
             // other protocols are not supported
             default:
-                break
+                assertionFailure("not supported protocol in port forwarding presenter")
             }
 
             dismissCallback()
@@ -130,7 +130,7 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
 
                 // other protocols are not supported
                 default:
-                    break
+                    assertionFailure("not supported protocol in port forwarding presenter")
                 }
 
                 dismissCallback()
