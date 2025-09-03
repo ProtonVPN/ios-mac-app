@@ -65,6 +65,7 @@ public class VpnGateway2: VpnGatewayProtocol2 {
         self.portForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
     }
 
+    // TODO: When doing redesign for macOS preserve logic for choosing .p2p servers when PF is on
     public func connect(withIntent intent: ConnectionSpec) async throws {
         let wireguardConfig = propertiesManager.wireguardConfig
         let availabilityCheckerResolver = availabilityCheckerResolverFactory.makeAvailabilityCheckerResolver(

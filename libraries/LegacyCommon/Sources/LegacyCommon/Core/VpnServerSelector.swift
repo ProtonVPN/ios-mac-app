@@ -79,7 +79,7 @@ class VpnServerSelector {
     }
 
     /// Returns a server that best suits connection request
-    public func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
+    public func selectServer(connectionRequest: ConnectionRequest, fallbackToStandard: Bool = false) -> ServerModel? {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
 
@@ -102,7 +102,16 @@ class VpnServerSelector {
             ]
         )
 
-        let result = repository.getFirstServer(filteredBy: filters, orderedBy: order)
+        var result: VPNServer? = repository.getFirstServer(filteredBy: filters, orderedBy: order)
+        // this should be the only case when we want to enforce p2p for PF but there are no p2p servers
+        if result == nil, fallbackToStandard, type == .p2p {
+            // just do filtering again without p2p limitation
+            result = repository
+                .getFirstServer(
+                    filteredBy: connectionRequest.locationFilters + [VPNServerFilter.features(.standard)],
+                    orderedBy: order
+                )
+        }
 
         guard let server = result else {
             log.error("No servers satisfy requested criteria", category: .persistence)
