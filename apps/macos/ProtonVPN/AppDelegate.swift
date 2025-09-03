@@ -62,12 +62,11 @@ import VPNShared
     let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
     class AppDelegate: NSObject {
-        @Dependency(\.defaultsProvider) var provider
-        public private(set) static var wasRecentlyActive = false
         @IBOutlet var protonVpnMenu: ProtonVpnMenuController!
         @IBOutlet var profilesMenu: ProfilesMenuController!
         @IBOutlet var helpMenu: HelpMenuController!
         @IBOutlet var statusMenu: StatusMenuWindowController!
+
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -78,6 +77,10 @@ import VPNShared
         private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
 
         private var tokens: [NotificationToken] = []
+
+        @Dependency(\.defaultsProvider) private var provider
+        public private(set) static var wasRecentlyActive = false
+        private var appHasCompletedInitialSetup: Bool = false
     }
 #else
     class AppDelegate: NSObject {
@@ -174,6 +177,7 @@ extension AppDelegate: NSApplicationDelegate {
                     self.registerForTelemetryChanges()
 
                     self.container.applicationDidFinishLaunching()
+                    self.appHasCompletedInitialSetup = true
                 }
             }
         }
@@ -214,7 +218,8 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        navigationService.handleApplicationReopen(hasVisibleWindows: flag)
+        guard appHasCompletedInitialSetup else { return false }
+        return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
 
     func applicationDidBecomeActive(_: Notification) {
