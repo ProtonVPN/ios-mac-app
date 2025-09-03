@@ -45,11 +45,6 @@ public enum ConnectionError: Error, Equatable, Sendable {
         }
     }
 
-    /// Asked to connect with a protocol that is no longer supported, such as OpenVPN.
-    ///
-    /// This error (should be) quite rare and will only happen when the user has stale configuration data from a
-    /// previous version of the app.
-    case unexpectedProtocol(VpnProtocol)
     /// An error occurred while performing certificate authentication.
     ///
     /// This could be a mismatch, a failure to fetch, an IPC error, or some other unexpected issue.
@@ -73,8 +68,6 @@ extension ConnectionError: ProtonVPNError {
 
     public var errorDescription: String? {
         switch self {
-        case let .unexpectedProtocol(vpnProtocol):
-            Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
         case let .certAuth(certAuthError):
             certAuthError.errorDescription
         case let .tunnel(tunnelError):
@@ -94,22 +87,6 @@ extension ConnectionError: ProtonVPNError {
 
     public var charCode: FourCharCode {
         switch self {
-        case let .unexpectedProtocol(vpnProtocol):
-            switch vpnProtocol {
-            case .ike:
-                "UXIK"
-            case let .openVpn(transport):
-                transport == .tcp ? "UXOT" : "UXOU"
-            case let .wireGuard(transport):
-                switch transport {
-                case .udp:
-                    "UXWU"
-                case .tcp:
-                    "UXWT"
-                case .tls:
-                    "UXWS"
-                }
-            }
         case let .certAuth(certAuthError):
             certAuthError.charCode
         case .tunnel:
@@ -165,6 +142,12 @@ extension ConnectionError: AlertConvertibleError {
             return agentError.alert
         case .preparation(.featureNotReady):
             break
+        case .preparation(.protocolSelectionError(.cancelled)):
+            break
+        case .preparation(.protocolSelectionError(.portSelectionFailed)):
+            break
+        case .preparation(.protocolSelectionError(.unexpectedProtocol)):
+            break
         case let .preparation(.wrapped(wrappedError)):
             return wrappedError.alert
         case .serverMissing:
@@ -172,8 +155,6 @@ extension ConnectionError: AlertConvertibleError {
         case .intentMissing:
             break
         case .timeout:
-            break
-        case .unexpectedProtocol:
             break
         }
 

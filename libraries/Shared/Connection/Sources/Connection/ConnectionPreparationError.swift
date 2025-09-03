@@ -35,6 +35,7 @@ import Strings
 public enum ConnectionPreparationError: ProtonVPNError, Equatable {
     /// We found the feature in an unexpected non-disconnected state upon finishing preparation
     case featureNotReady
+    case protocolSelectionError(ProtocolSelectionError)
     case wrapped(ConnectionError.WrappedError)
 
     public static let errorDomain = "ConnectionPreparationErrorDomain"
@@ -44,13 +45,39 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         case .featureNotReady:
             "PRNR" // PReparation Not Ready
 
+        case .protocolSelectionError(.cancelled):
+            "PRCC"
+
+        case .protocolSelectionError(.portSelectionFailed):
+            "PRPS"
+
+        case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)):
+            switch vpnProtocol {
+            case .ike:
+                "UXIK"
+            case let .openVpn(transport):
+                transport == .tcp ? "UXOT" : "UXOU"
+            case let .wireGuard(transport):
+                switch transport {
+                case .udp:
+                    "UXWU"
+                case .tcp:
+                    "UXWT"
+                case .tls:
+                    "UXWS"
+                }
+            }
+
         case .wrapped:
             "PRWE" // PReparation Wrapped Error
         }
     }
 
     public var errorDescription: String? {
-        includeCode(inside: Localizable.connectionErrorPreparation)
+        if case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)) = self {
+            return Localizable.connectionErrorUnexpectedProtocol(vpnProtocol.localizedDescription, errorCodeString)
+        }
+        return includeCode(inside: Localizable.connectionErrorPreparation)
     }
 
     public var underlyingError: (any Error)? {

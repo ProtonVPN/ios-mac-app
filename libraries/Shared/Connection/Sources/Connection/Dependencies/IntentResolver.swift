@@ -31,26 +31,44 @@ public enum ConnectionIntentResolutionError: Error, Equatable {
     case secureCoreUnavailable
 }
 
+@CasePathable
+public enum ProtocolSelectionError: Error, Equatable {
+    case cancelled
+    /// Asked to connect with a protocol that is no longer supported, such as OpenVPN.
+    ///
+    /// This error (should be) quite rare and will only happen when the user has stale configuration data from a
+    /// previous version of the app.
+    case unexpectedProtocol(VpnProtocol)
+    /// The server did not respond to our pings on every port we tried.
+    case portSelectionFailed
+}
+
 struct ConnectionIntentResolver: DependencyKey, Sendable {
-    let resolve: @Sendable (ConnectionPreparationIntent) async throws -> ServerConnectionIntent
+    let resolve: @Sendable (ConnectionPreparationIntent) async throws(ProtocolSelectionError) -> ServerConnectionIntent
     let authorize: @Sendable (ConnectionPreparationIntent, Int) throws(ConnectionIntentResolutionError) -> Void
 
-    static let liveValue: ConnectionIntentResolver = .init { intent in
+    static let liveValue: ConnectionIntentResolver = .init { intent throws(ProtocolSelectionError) in
         @Dependency(\.connectionFeatureProvider) var connectionFeatureProvider
         @Dependency(\.smartPortSelector) var portSelector
 
         let specifiedProtocol = intent.connectionProtocol ?? connectionFeatureProvider.connectionProtocol()
         log.debug("Resolved connection protocol", category: .connection, metadata: ["protocol": "\(specifiedProtocol)"])
 
-        let portSelectionResult = try await portSelector.select(intent.server.endpoint, specifiedProtocol)
-        try Task.checkCancellation()
+        let portSelectionResult = await portSelector.select(intent.server.endpoint, specifiedProtocol)
+        if Task.isCancelled {
+            throw .cancelled
+        }
 
         guard case let .wireGuard(transport) = portSelectionResult.chosenProtocol else {
-            throw ConnectionError.unexpectedProtocol(portSelectionResult.chosenProtocol)
+            throw .unexpectedProtocol(portSelectionResult.chosenProtocol)
         }
 
         let ports = portSelectionResult.ports
         log.debug("WG transport and ports selected", category: .connection, metadata: ["transport": "\(transport)", "port": "\(ports)"])
+
+        if ports.isEmpty {
+            throw .portSelectionFailed
+        }
 
         let features = connectionFeatureProvider.connectionFeatures()
         let tunnelFeatures = connectionFeatureProvider.tunnelFeatures()
