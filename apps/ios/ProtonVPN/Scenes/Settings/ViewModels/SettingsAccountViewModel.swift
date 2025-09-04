@@ -200,7 +200,7 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        if true { // TODO: Use PaymentsV1 FF
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
             planService.presentSubscriptionManagement()
         } else {
             Task { [weak self] in

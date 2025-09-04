@@ -26,9 +26,11 @@ import UIKit
 
 import Dependencies
 
+import ProtonCoreFeatureFlags
 import ProtonCoreUIFoundations
 
 import Announcement
+import Domain
 import LegacyCommon
 import Modals
 import Persistence
@@ -332,7 +334,7 @@ extension IosAlertService: CoreAlertService {
             return
         }
         let onPrimaryButtonTap: (() -> Void)? = { [weak self] in
-            if true { // TODO: Use PaymentsV1 FF
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
                 self?.planService.presentPlanSelection()
             } else {
                 Task {
@@ -373,7 +375,7 @@ extension IosAlertService: CoreAlertService {
 
     private func show(alert: UpsellAlert, modalType: Modals.ModalType) {
         let viewController: UIViewController
-        if true { // TODO: Use PaymentsV1 FF
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
             let oneClickPayment: OneClickPayment
             do {
                 oneClickPayment = try OneClickPayment(
@@ -550,7 +552,7 @@ extension IosAlertService: CoreAlertService {
         let upgradeAction: (() -> Void) = { [weak self] in
             guard let self else { return }
             windowService.dismissModal {
-                if true { // TODO: Use PaymentsV1 FF
+                if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
                     self.planService.presentPlanSelection()
                 } else {
                     Task {

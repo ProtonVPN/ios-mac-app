@@ -23,6 +23,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Domain
 import LegacyCommon
 import Modals
 import Persistence
@@ -137,7 +138,7 @@ extension OnboardingModuleService: OnboardingService {
 
     private func createOneClickIapVC() -> UIViewController? {
         let viewController: UIViewController
-        if true { // TODO: Use PaymentsV1 FF
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
             let oneClickPayment: OneClickPayment
             do {
                 oneClickPayment = try OneClickPayment(

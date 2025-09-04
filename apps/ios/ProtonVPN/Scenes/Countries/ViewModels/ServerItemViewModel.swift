@@ -160,7 +160,7 @@ class ServerItemViewModel: ServerItemViewModelCore {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
             log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
-            if true { // TODO: Use PaymentsV1 FF
+            if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
                 planService.presentPlanSelection()
             } else {
                 Task {
