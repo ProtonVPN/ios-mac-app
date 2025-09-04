@@ -25,6 +25,7 @@ import ConnectionInventory
 import Ergonomics
 import Hermes
 import Timer
+import VPNAppCore
 import VPNShared
 import WidgetKit
 
@@ -102,18 +103,37 @@ final class TelemetrySettingsReporter {
     }
 
     private func sendHeartbeat() async throws {
-        let dimensions = await SettingsDimensions(
-            defaultConnectionType: defaultConnectionType(),
-            appIcon: .default,
-            userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
-            widgetCount: widgetCount(),
-            firstWidgetSize: firstWidgetSize(),
-            isIPv6Enabled: .false,
-            hermesCount: hermesCount(),
-            firstHermesAddressFamily: firstHermesAddressFamily(),
-            isHermesEnabled: isHermesEnabled(),
-            isPortForwardingEnabled: isPortForwardingEnabled()
-        )
+        #if os(macOS)
+            let dimensions = await SettingsDimensions(
+                defaultConnectionType: defaultConnectionType(),
+                appIcon: .default,
+                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                widgetCount: widgetCount(),
+                firstWidgetSize: firstWidgetSize(),
+                isIPv6Enabled: .false,
+                hermesCount: hermesCount(),
+                firstHermesAddressFamily: firstHermesAddressFamily(),
+                isHermesEnabled: isHermesEnabled(),
+                isPortForwardingEnabled: isPortForwardingEnabled(),
+                isSplitTunnelingEnabled: isSplitTunnelingEnabled(),
+                splitTunnelingMode: splitTunnelingMode(),
+                splitTunnelingAppsCount: splitTunnelingAppsCount(),
+                splitTunnelingIpsCount: splitTunnelingIpsCount()
+            )
+        #else
+            let dimensions = await SettingsDimensions(
+                defaultConnectionType: defaultConnectionType(),
+                appIcon: .default,
+                userTier: CommonTelemetryDimensions.userTier(vpnKeychain: vpnKeychain),
+                widgetCount: widgetCount(),
+                firstWidgetSize: firstWidgetSize(),
+                isIPv6Enabled: .false,
+                hermesCount: hermesCount(),
+                firstHermesAddressFamily: firstHermesAddressFamily(),
+                isHermesEnabled: isHermesEnabled(),
+                isPortForwardingEnabled: isPortForwardingEnabled()
+            )
+        #endif
         let heartbeatEvent = SettingsEvent(event: .settingsHeartbeat, dimensions: dimensions)
 
         try await telemetryEventScheduler.report(event: heartbeatEvent)
@@ -213,4 +233,72 @@ final class TelemetrySettingsReporter {
             return nil
         }
     }
+
+    #if os(macOS)
+
+        // MARK: - Split Tunneling Telemetry
+
+        private func isSplitTunnelingEnabled() -> SettingsDimensions.IsSplitTunnelingEnabled {
+            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            switch plutoniumFeature {
+            case .enabled:
+                return .true
+            case .disabled:
+                return .false
+            }
+        }
+
+        private func splitTunnelingMode() -> SettingsDimensions.SplitTunnelingMode {
+            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            switch plutoniumFeature {
+            case let .enabled(mode):
+                switch mode {
+                case .exclusion:
+                    return .exclude
+                case .inclusion:
+                    return .include
+                }
+            case .disabled:
+                return .na
+            }
+        }
+
+        private func splitTunnelingAppsCount() -> SettingsDimensions.SplitTunnelingCount {
+            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+
+            switch plutoniumFeature {
+            case let .enabled(mode):
+                let appsCount: Int = switch mode {
+                case .exclusion:
+                    exclusionActivated.apps.count
+                case .inclusion:
+                    inclusionActivated.apps.count
+                }
+                return SettingsDimensions.SplitTunnelingCount(count: appsCount)
+            case .disabled:
+                return .zero
+            }
+        }
+
+        private func splitTunnelingIpsCount() -> SettingsDimensions.SplitTunnelingCount {
+            @SharedReader(.plutoniumFeature) var plutoniumFeature: PlutoniumFeatureToggle
+            @SharedReader(.exclusionActivated) var exclusionActivated: PlutoniumActivated
+            @SharedReader(.inclusionActivated) var inclusionActivated: PlutoniumActivated
+
+            switch plutoniumFeature {
+            case let .enabled(mode):
+                let ipsCount: Int = switch mode {
+                case .exclusion:
+                    exclusionActivated.ips.count
+                case .inclusion:
+                    inclusionActivated.ips.count
+                }
+                return SettingsDimensions.SplitTunnelingCount(count: ipsCount)
+            case .disabled:
+                return .zero
+            }
+        }
+    #endif
 }
