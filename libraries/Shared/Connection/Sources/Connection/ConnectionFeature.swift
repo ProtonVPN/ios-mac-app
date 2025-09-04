@@ -62,7 +62,7 @@ public struct ConnectionFeature: Reducer, Sendable {
     @dynamicMemberLookup
     public enum Action: Sendable {
         case prepare(ConnectionPreparationIntent)
-        case finishedPreparing(Result<ServerConnectionIntent, Error>)
+        case finishedPreparing(Result<ServerConnectionIntent, ProtocolSelectionError>)
         case core(CoreConnectionFeature.Action)
         case input(Input)
         case delegate(Delegate)
@@ -164,8 +164,12 @@ public struct ConnectionFeature: Reducer, Sendable {
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .connecting(.unresolved(intent))),
                     .run { send in
-                        let result = await Result { try await intentResolver.resolve(intent) }
-                        return await send(.finishedPreparing(result))
+                        do throws(ProtocolSelectionError) {
+                            let result = try await intentResolver.resolve(intent)
+                            return await send(.finishedPreparing(.success(result)))
+                        } catch {
+                            return await send(.finishedPreparing(.failure(error)))
+                        }
                     }.cancellable(id: CancelID.preparation, cancelInFlight: true)
                 )
 
@@ -192,10 +196,9 @@ public struct ConnectionFeature: Reducer, Sendable {
 
             case let .finishedPreparing(.failure(error)):
                 log.error("Failed to preparing connection with error: \(error)")
-                let wrappedError = ConnectionError.WrappedError(wrapped: error)
                 return .concatenate(
                     updateStateSendingEffectIfNecessary(&state, to: .disconnected),
-                    .send(.delegate(.connectionFailed(.preparation(.wrapped(wrappedError)))))
+                    .send(.delegate(.connectionFailed(.preparation(.protocolSelectionError(error)))))
                 )
 
             case let .core(.delegate(.stateChanged(_, .disconnected(.some(error))))):

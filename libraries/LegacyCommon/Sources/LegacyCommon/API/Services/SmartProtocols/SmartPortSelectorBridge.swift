@@ -54,7 +54,15 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
                 // This is better than returning shuffled port for the app to connect with a random one
                 // because it might cause the app to think it is connected even if it is not and result in various local agent failures
                 DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
-                    self?.wireguardUdpChecker.getFirstToRespondPort(server: serverIp) { result in
+                    log.debug("Retrying port selection", category: .connectionConnect)
+                    guard let self else {
+                        // VPNAPPL-3034 prevent self from being deallocated until retries are completed.
+                        // Converting this class to a struct and removing [weak self] causes a SIGABRT.
+                        log.debug("\(Self.self) deallocated before the retry attempt", category: .connectionConnect)
+                        completion([])
+                        return
+                    }
+                    wireguardUdpChecker.getFirstToRespondPort(server: serverIp) { result in
                         if let port = result {
                             completion([port])
                             return

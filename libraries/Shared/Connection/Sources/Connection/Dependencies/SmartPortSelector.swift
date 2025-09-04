@@ -34,7 +34,7 @@ public struct SmartPortSelectorBridge: Sendable {
     public typealias SelectHandler = @Sendable (
         _ endpoint: ServerEndpoint,
         _ connectionProtocol: ConnectionProtocol
-    ) async throws -> ServerEndpointPortResolution
+    ) async -> ServerEndpointPortResolution
 
     public internal(set) var select: SelectHandler
 

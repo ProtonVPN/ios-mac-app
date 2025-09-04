@@ -286,10 +286,14 @@
 
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
 
-            store.dependencies.connectionIntentResolver = .init(resolve: { _ in
+            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(ProtocolSelectionError) in
                 @Dependency(\.continuousClock) var clock
-                try await clock.sleep(for: .seconds(2))
-                try Task.checkCancellation()
+                do {
+                    try await clock.sleep(for: .seconds(2))
+                    try Task.checkCancellation()
+                } catch {
+                    throw .cancelled
+                }
                 XCTFail("Preparation should have been cancelled")
                 return .mock()
             }, authorize: { _, _ in
@@ -328,7 +332,7 @@
             store.dependencies.connectionIntentStorage = .init(getConnectionIntent: { .mock() }, set: { _ in })
             store.dependencies.smartPortSelector = .init(select: { _, _ in
                 @Dependency(\.continuousClock) var clock
-                try await clock.sleep(for: .seconds(2))
+                try? await clock.sleep(for: .seconds(2))
                 return .init(chosenProtocol: .wireGuard(.udp), ports: [1337])
             })
 
@@ -381,8 +385,6 @@
             environment.tunnelManager.didStopTunnelCallback = { XCTFail("Tunnel was stopped too early") }
 
             let server = Server.mock
-            let features = VPNConnectionFeatures.mock
-            let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let preparationIntent = ConnectionPreparationIntent(spec: .defaultFastest, server: .mock)
@@ -497,10 +499,14 @@
             let store = environment.createConnectionTestStore()
 
             // Set up a failure that should happen during connection preparation
-            let preparationError = ConnectionError.unexpectedProtocol(.ike)
-            store.dependencies.connectionIntentResolver = .init(resolve: { _ in
+            let preparationError = ProtocolSelectionError.unexpectedProtocol(.ike)
+            store.dependencies.connectionIntentResolver = .init(resolve: { _ throws(ProtocolSelectionError) in
                 @Dependency(\.continuousClock) var clock
-                try await clock.sleep(for: .seconds(1))
+                do {
+                    try await clock.sleep(for: .seconds(1))
+                } catch {
+                    throw .cancelled
+                }
                 throw preparationError
             }, authorize: { _, _ in
             })
@@ -518,6 +524,33 @@
             await store.receive(\.finishedPreparing.failure)
             await store.receive(stateChange(to: \.disconnected))
             await store.receive(\.delegate.connectionFailed.preparation)
+        }
+
+        @MainActor
+        func testFeatureSendsDelegateActionWhenPortSelectionFails() async {
+            let environment = ConnectionEnvironment.disconnected()
+            let store = environment.createConnectionTestStore()
+
+            // Set up a failure that should happen during connection preparation
+            let preparationError = ProtocolSelectionError.portSelectionFailed
+
+            // Let's make sure that if the server does not respond to our pings on any port, we error out immediately
+            let protocolSelectionResult = ServerEndpointPortResolution(chosenProtocol: .wireGuard(.udp), ports: [])
+            store.dependencies.smartPortSelector = .init(select: { _, _ in protocolSelectionResult })
+
+            store.exhaustivity = .off
+            await store.send(.input(.onLaunch))
+            await store.receive(stateChange(to: \.disconnected))
+
+            await store.send(.input(.connect(.init(spec: .defaultFastest, server: .ca))))
+            await store.receive(\.prepare)
+            await store.receive(stateChange(to: \.connecting.unresolved))
+
+            await environment.clock.advance(by: .seconds(1))
+
+            await store.receive(\.finishedPreparing.failure)
+            await store.receive(stateChange(to: \.disconnected))
+            await store.receive(\.delegate.connectionFailed.preparation.protocolSelectionError.portSelectionFailed)
         }
 
         @MainActor
@@ -691,9 +724,13 @@
 
             let expectedResolvedIntent = ServerConnectionIntent(spec: canadaSpec, server: .ca, tunnelSettings: .mock, features: .mock)
 
-            store.dependencies.connectionIntentResolver = .init(resolve: { intent in
+            store.dependencies.connectionIntentResolver = .init(resolve: { intent throws(ProtocolSelectionError) in
                 @Dependency(\.continuousClock) var clock
-                try await clock.sleep(for: .seconds(2))
+                do {
+                    try await clock.sleep(for: .seconds(2))
+                } catch {
+                    throw .cancelled
+                }
                 return .init(spec: intent.spec, server: intent.server, tunnelSettings: .mock, features: .mock)
             }, authorize: { _, _ in
             })
