@@ -188,7 +188,7 @@ extension OnboardingModuleService: OnboardingService {
                 return nil
             }
 
-            oneClickPaymentV2.completionHandler = { [weak self] in
+            oneClickPaymentV2.completionHandler = { [weak self] _ in
                 self?.onboardingCoordinatorDidFinish()
             }
 

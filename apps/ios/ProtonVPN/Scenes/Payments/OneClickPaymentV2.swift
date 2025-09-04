@@ -47,7 +47,7 @@ final class OneClickPaymentV2 {
         return true
     }
 
-    var completionHandler: () -> Void = {
+    var completionHandler: ((() -> Void)?) -> Void = { _ in
         assertionFailure("You have to override this completionHandler!")
     }
 
@@ -103,7 +103,7 @@ final class OneClickPaymentV2 {
     @objc
     private func userDidDismissWelcomeScreen(_: Notification) {
         log.debug("Received UserDismissedWelcomeScreen notification, completing flow", category: .iap)
-        completionHandler()
+        completionHandler(nil)
     }
 
     func plansClient(validationHandler: ((PlanOptionV2, ComposedPlan?) -> Void)? = nil, notNowHandler: (() -> Void)? = nil) -> PlansClientV2 {
@@ -130,9 +130,14 @@ final class OneClickPaymentV2 {
                     )
             },
             notNow: { [weak self] error in
-                log.error("OneClickPayment notNow callback called", category: .iap, metadata: ["error": "\(error)"])
+                log
+                    .error(
+                        "OneClickPayment notNow callback called",
+                        category: .iap,
+                        metadata: ["error": "\(String(describing: error))"]
+                    )
                 notNowHandler?()
-                self?.completionHandler()
+                self?.completionHandler(nil)
             }
         )
         return client
@@ -156,22 +161,23 @@ final class OneClickPaymentV2 {
         }
         if VPNFeatureFlagType.iapToWebView.enabled {
             let paymentsWebViewController = PaymentsWebViewController(url: url, completionHandler: { [weak self] in
-                Task {
-                    await self?.planService.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: "vpn2024",
-                            offerReference: "VPNINTROPRICE2024",
-                            flowType: .external
-                        )
+                self?.completionHandler {
+                    Task {
+                        await self?.planService.delegate?
+                            .paymentTransactionDidFinish(
+                                modalSource: nil,
+                                newPlanName: "vpn2024",
+                                offerReference: "VPNINTROPRICE2024",
+                                flowType: .external
+                            )
+                    }
                 }
-                self?.completionHandler()
             })
             windowService.present(modal: paymentsWebViewController)
         } else {
             @Dependency(\.linkOpener) var linkOpener
             linkOpener.open(url)
-            completionHandler()
+            completionHandler(nil)
         }
     }
 
@@ -196,14 +202,17 @@ final class OneClickPaymentV2 {
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
-            await planService.delegate?
-                .paymentTransactionDidFinish(
-                    modalSource: nil,
-                    newPlanName: purchasedPlan.plan.name,
-                    offerReference: nil,
-                    flowType: .oneClick
-                )
-            completionHandler()
+            completionHandler { [weak self] in
+                Task {
+                    await self?.planService.delegate?
+                        .paymentTransactionDidFinish(
+                            modalSource: nil,
+                            newPlanName: purchasedPlan.plan.name,
+                            offerReference: nil,
+                            flowType: .oneClick
+                        )
+                }
+            }
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
         } catch {

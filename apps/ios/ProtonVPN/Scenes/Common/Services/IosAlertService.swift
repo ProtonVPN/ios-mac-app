@@ -431,8 +431,9 @@ extension IosAlertService: CoreAlertService {
                 return
             }
 
-            oneClickPaymentV2.completionHandler = { [weak self] in
+            oneClickPaymentV2.completionHandler = { [weak self] completion in
                 self?.windowService.dismissModal(nil)
+                completion?()
             }
 
             viewController = modalsFactory.upsellViewControllerV2(
