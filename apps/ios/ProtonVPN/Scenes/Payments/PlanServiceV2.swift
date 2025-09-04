@@ -150,6 +150,7 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         }
         // unsubscribe from previous subscriptions
         transactionSubscriptionCancellable = nil
+        TransactionsObserver.shared.stop()
 
         let appInfo = AppInfoImplementation(context: .mainApp)
 
