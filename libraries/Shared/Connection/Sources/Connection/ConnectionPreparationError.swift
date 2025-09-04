@@ -51,22 +51,20 @@ public enum ConnectionPreparationError: ProtonVPNError, Equatable {
         case .protocolSelectionError(.portSelectionFailed):
             "PRPS"
 
-        case let .protocolSelectionError(.unexpectedProtocol(vpnProtocol)):
-            switch vpnProtocol {
-            case .ike:
-                "UXIK"
-            case let .openVpn(transport):
-                transport == .tcp ? "UXOT" : "UXOU"
-            case let .wireGuard(transport):
-                switch transport {
-                case .udp:
-                    "UXWU"
-                case .tcp:
-                    "UXWT"
-                case .tls:
-                    "UXWS"
-                }
-            }
+        case .protocolSelectionError(.unexpectedProtocol(.ike)):
+            "UXIK"
+
+        case let .protocolSelectionError(.unexpectedProtocol(.openVpn(transport))):
+            if case .tcp = transport { "UXOT" } else { "UXOU" }
+
+        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.udp))):
+            "UXWU"
+
+        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.tcp))):
+            "UXWT"
+
+        case .protocolSelectionError(.unexpectedProtocol(.wireGuard(.tls))):
+            "UXWS"
 
         case .wrapped:
             "PRWE" // PReparation Wrapped Error

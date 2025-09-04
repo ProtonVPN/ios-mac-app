@@ -56,6 +56,8 @@ final class SmartPortSelectorImplementation: SmartPortSelector {
                 DispatchQueue.global().asyncAfter(deadline: .now() + 1) { [weak self] in
                     log.debug("Retrying port selection", category: .connectionConnect)
                     guard let self else {
+                        // VPNAPPL-3034 prevent self from being deallocated until retries are completed.
+                        // Converting this class to a struct and removing [weak self] causes a SIGABRT.
                         log.debug("\(Self.self) deallocated before the retry attempt", category: .connectionConnect)
                         completion([])
                         return
