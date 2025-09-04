@@ -236,10 +236,6 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
             throw CommonVpnError.noConnectionsAvailable
-        } catch CommonVpnError.logicalsEndpointFailed {
-            log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
-            logOutCleanup()
-            throw CommonVpnError.logicalsEndpointFailed
         } catch {
             log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
             @Dependency(\.serverRepository) var serverRepository
@@ -343,6 +339,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         authKeychain.clear()
         vpnKeychain.clear()
         announcementRefresher.clear()
+
+        @Dependency(\.serverManager) var serverManager
+        serverManager.purgeAllServers()
 
         let vpnAuthenticationTimeoutInSeconds = 2
 

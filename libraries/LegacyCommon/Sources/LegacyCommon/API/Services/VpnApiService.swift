@@ -191,7 +191,7 @@ public class VpnApiService {
                 freeTier: freeTier,
                 lastModified: shouldSendLastModifiedValue ? lastModified : nil
             )
-        ) { [weak self] (response: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) in
+        ) { (response: Result<IfModifiedSinceResponse<JSONDictionary>, Error>) in
             let result: Result<ServerInfoResponse, Error>
             defer { completion(result) }
 
@@ -224,13 +224,8 @@ public class VpnApiService {
                 }
                 result = .success(.modified(at: lastModified, servers: serverModels, freeServersOnly: freeTier))
 
-            case let .failure(error):
-                if self?.serverRepository.isEmpty ?? false {
-                    // log the user out if we failed this request and we have nothing in the db
-                    result = .failure(CommonVpnError.logicalsEndpointFailed)
-                } else {
-                    result = .failure(error)
-                }
+            case .failure:
+                result = .failure(CommonVpnError.logicalsEndpointFailed)
             }
         }
     }
