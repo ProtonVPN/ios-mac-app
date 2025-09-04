@@ -32,7 +32,11 @@ public class NELogContent: LogContent {
 
     public func loadContent(callback: @escaping (String) -> Void) {
         neLogProvider.logs { content in
-            callback(content ?? "")
+            callback(
+                content.map {
+                    "==> \(Self.debugInfoString)\n" + $0
+                } ?? ""
+            )
         }
     }
 }

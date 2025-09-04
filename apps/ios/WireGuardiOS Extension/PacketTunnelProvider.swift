@@ -26,7 +26,10 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
     private var appInfo: AppInfo
     private var certificateRefreshManager: ExtensionCertificateRefreshManager!
     private var serverStatusRefreshManager: ServerStatusRefreshManager!
+
     private var killSwitchSettingObservation: NSKeyValueObservation!
+    private var adapterStateObservation: NSKeyValueObservation!
+
     private let vpnAuthenticationStorage: VpnAuthenticationStorageSync
 
     private var currentWireguardServer: StoredWireguardConfig?
@@ -96,6 +99,7 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
 
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited (processID: \(ProcessInfo().processIdentifier))")
+        adapterStateObservation?.invalidate()
     }
 
     /// NetworkExtension appears to have a bug where connections sent through the tunnel time out
@@ -131,6 +135,18 @@ final class PacketTunnelProvider: NEPacketTunnelProvider, ExtensionAPIServiceDel
         } else { // New connection
             certificateRefreshManager.start {}
         }
+
+        adapterStateObservation = adapter.observe(\.state, options: [.old, .new], changeHandler: { [weak self] _, change in
+            guard let value = change.newValue else { return }
+            switch value {
+            case .started:
+                self?.certificateRefreshManager.start {}
+            case .temporaryShutdown:
+                self?.certificateRefreshManager.stop {}
+            case .stopped:
+                return
+            }
+        })
 
         #if CHECK_CONNECTIVITY
             startTestingConnectivity()

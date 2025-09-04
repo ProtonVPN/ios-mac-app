@@ -100,12 +100,6 @@ final class DependencyContainer: Container {
         Container.sharedContainer = self
     }
 
-    // MARK: - Overridden config methods
-
-    override var modelId: String? {
-        makeModelIdChecker().modelId
-    }
-
     // MARK: - Overridden factory methods
 
     // MARK: NetworkingDelegate
@@ -297,14 +291,6 @@ extension DependencyContainer: BugReportCreatorFactory {
 extension DependencyContainer: AppCertificateRefreshManagerFactory {
     func makeAppCertificateRefreshManager() -> AppCertificateRefreshManager {
         appCertificateRefreshManager
-    }
-}
-
-// MARK: ModelIdCheckerFactory
-
-extension DependencyContainer: ModelIdCheckerFactory {
-    func makeModelIdChecker() -> ModelIdCheckerProtocol {
-        ModelIdChecker()
     }
 }
 

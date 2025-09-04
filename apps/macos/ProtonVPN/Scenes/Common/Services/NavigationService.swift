@@ -272,10 +272,47 @@ extension NavigationService {
         updateManager.checkForUpdates(appSessionManager, userInitiated: true)
     }
 
+    // If the user is manually showing the logs in Finder to share with someone, make sure that the log file
+    // contains the debug information for the device, to the best of our ability.
+    func ensureLogsContainDebugInfo(at url: URL) {
+        guard let fileHandle = FileHandle(forUpdatingAtPath: url.path(percentEncoded: false)) else {
+            return
+        }
+
+        let filePrefix = "==> "
+        guard let prefixData = try? fileHandle.read(upToCount: filePrefix.count) else {
+            return
+        }
+
+        if let string = String(data: prefixData, encoding: .ascii), string == filePrefix {
+            return
+        }
+
+        guard let remainingData = try? fileHandle.readToEnd() else {
+            return
+        }
+
+        let debugInfoString = filePrefix + FileLogContent.debugInfoString + "\n"
+        guard let infoStringData = debugInfoString.data(using: .utf8) else {
+            return
+        }
+
+        do {
+            try fileHandle.seek(toOffset: 0)
+        } catch {
+            return
+        }
+
+        try? fileHandle.write(contentsOf: infoStringData + prefixData + remainingData)
+    }
+
     func openLogsFolder(filename: String? = nil) {
         let logFileManager = factory.makeLogFileManager()
         let filename = filename ?? AppConstants.Filenames.appLogFilename
-        NSWorkspace.shared.activateFileViewerSelecting([logFileManager.getFileUrl(named: filename)])
+        let fileUrl = logFileManager.getFileUrl(named: filename)
+        ensureLogsContainDebugInfo(at: fileUrl)
+
+        NSWorkspace.shared.activateFileViewerSelecting([fileUrl])
     }
 
     func openSettings(to tab: SettingsTab) {

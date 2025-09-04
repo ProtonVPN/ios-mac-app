@@ -74,7 +74,6 @@ class HelpMenuViewModel {
     }
 
     func openLogsFolderAction() {
-        logDebugInfoString()
         navService.openLogsFolder()
     }
 

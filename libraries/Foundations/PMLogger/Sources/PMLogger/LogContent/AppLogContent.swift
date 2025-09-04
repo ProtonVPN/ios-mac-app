@@ -37,7 +37,7 @@ public class AppLogContent: LogContent {
 
     public func loadContent(callback: @escaping (String) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = self.urls.reduce("") { prev, url in
+            let result = self.urls.reduce("==> \(Self.debugInfoString)\n") { prev, url in
                 guard let contents = try? String(contentsOf: url) else {
                     return prev
                 }
