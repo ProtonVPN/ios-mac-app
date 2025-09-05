@@ -62,12 +62,11 @@ import VPNShared
     let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
     class AppDelegate: NSObject {
-        @Dependency(\.defaultsProvider) var provider
-        public private(set) static var wasRecentlyActive = false
         @IBOutlet var protonVpnMenu: ProtonVpnMenuController!
         @IBOutlet var profilesMenu: ProfilesMenuController!
         @IBOutlet var helpMenu: HelpMenuController!
         @IBOutlet var statusMenu: StatusMenuWindowController!
+
         let container = DependencyContainer()
         lazy var navigationService = container.makeNavigationService()
         private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
@@ -78,6 +77,10 @@ import VPNShared
         private lazy var telemetrySettings: TelemetrySettings = container.makeTelemetrySettings()
 
         private var tokens: [NotificationToken] = []
+
+        @Dependency(\.defaultsProvider) private var provider
+        public private(set) static var wasRecentlyActive = false
+        private var appHasCompletedInitialSetup: Bool = false
     }
 #else
     class AppDelegate: NSObject {
@@ -130,51 +133,54 @@ extension AppDelegate: NSApplicationDelegate {
                 signal(SIGPIPE, SIG_IGN)
 
                 checkMigration()
-                migrateIfNeeded {
-                    self.setNSCodingModuleName()
-                    self.setupDebugHelpers()
+                setNSCodingModuleName()
+                setupDebugHelpers()
 
-                    SentryHelper.setupSentry(
-                        dsn: ObfuscatedConstants.sentryDsnmacOS,
-                        isEnabled: { [weak self] in
-                            self?.isTelemetryAllowed() ?? false
-                        },
-                        getUserId: { [weak self] in
-                            self?.container.makeAuthKeychainHandle().userId
-                        }
-                    )
-
-                    AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
-                    #if !REDESIGN
-                        self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())
-                        self.profilesMenu.update(with: self.container.makeProfilesMenuViewModel())
-                        self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
-                        self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
-                        self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-                    #endif
-                    self.notificationManager = self.container.makeNotificationManager()
-                    self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
-                    _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
-                    _ = self.container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
-
-                    if self.startedAtLogin() {
-                        DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
+                SentryHelper.setupSentry(
+                    dsn: ObfuscatedConstants.sentryDsnmacOS,
+                    isEnabled: { [weak self] in
+                        self?.isTelemetryAllowed() ?? false
+                    },
+                    getUserId: { [weak self] in
+                        self?.container.makeAuthKeychainHandle().userId
                     }
+                )
 
-                    // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
-                    if (try? self.container.makeVpnKeychain().fetchCached()) != nil {
-                        self.checkSysexAndAdjustGlobalProtocol()
-                    }
+                AppLaunchRoutine.execute(propertiesManager: propertiesManager)
+                #if !REDESIGN
+                    protonVpnMenu.update(with: container.makeProtonVpnMenuViewModel())
+                    profilesMenu.update(with: container.makeProfilesMenuViewModel())
+                    helpMenu.update(with: container.makeHelpMenuViewModel())
+                    statusMenu.update(with: container.makeStatusMenuWindowModel())
+                    container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+                #endif
+                notificationManager = container.makeNotificationManager()
+                container.makeMaintenanceManagerHelper().startMaintenanceManager()
+                _ = container.makeUpdateManager() // Load update manager so it has a chance to update xml url
+                _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
 
-                    Task { @MainActor in
-                        await self.container.makeVpnManager().prepareManagersTask?.value
-                        await self.navigationService.launched()
-                    }
-
-                    self.registerForTelemetryChanges()
-
-                    self.container.applicationDidFinishLaunching()
+                if startedAtLogin() {
+                    DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
                 }
+
+                // Check sysex approval and protocol deprecation and revert to Smart or IKE if necessary, but only if we're logged in
+                if (try? container.makeVpnKeychain().fetchCached()) != nil {
+                    checkSysexAndAdjustGlobalProtocol()
+                }
+            }
+
+            // run it in a syncrhonous way
+            await Task { @MainActor in
+                await self.container.makeVpnManager().prepareManagersTask?.value
+                await self.navigationService.launched()
+            }.value
+
+            await MainActor.run {
+                registerForTelemetryChanges()
+
+                container.applicationDidFinishLaunching()
+                // because of much async work we have to ensure that we initialised everything
+                appHasCompletedInitialSetup = true
             }
         }
 
@@ -214,7 +220,10 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        navigationService.handleApplicationReopen(hasVisibleWindows: flag)
+        // This is called during app start, but we don't want to show any windows/screens etc
+        // before everything is initialised in applicationDidFinishLaunching
+        guard appHasCompletedInitialSetup else { return false }
+        return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
 
     func applicationDidBecomeActive(_: Notification) {
@@ -258,28 +267,6 @@ extension AppDelegate: NSApplicationDelegate {
         log.info("applicationShouldTerminate", category: .os)
         provider.getDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
-    }
-
-    private func migrateIfNeeded(completion: @escaping (() -> Void)) {
-        do {
-            try FileManager.default.copyItem(atPath: AppConstants.FilePaths.sandbox, toPath: AppConstants.FilePaths.userDefaults)
-
-            // Restart the app so that it picks up the copied user defaults instead of creating a new one
-            restartApp()
-        } catch let error as NSError {
-            switch error.code {
-            case NSFileReadNoSuchFileError:
-                log.info("No file to migrate", category: .app)
-            case NSFileWriteFileExistsError:
-                log.info("Migration not required", category: .app)
-            default:
-                log.error("Migration error code: \((error as NSError).code)", category: .app) // don't show full error text because it can contain system username
-            }
-
-            DispatchQueue.main.async {
-                completion()
-            }
-        }
     }
 
     private func checkSysexAndAdjustGlobalProtocol() {

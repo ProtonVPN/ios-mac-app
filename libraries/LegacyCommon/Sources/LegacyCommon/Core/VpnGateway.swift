@@ -107,9 +107,18 @@ public class VpnGateway: VpnGatewayProtocol {
         (try? userTier()) ?? .freeTier
     }
 
-    private var serverTypeToggle: ServerType {
-        propertiesManager.secureCoreToggle ? .secureCore : .standard
+    private func serverTypeToggle(checkPF: Bool) -> ServerType {
+        if propertiesManager.secureCoreToggle {
+            .secureCore
+        } else if checkPF, portForwarding == true {
+            .p2p
+        } else {
+            .standard
+        }
     }
+
+    // we need to save usedServerType in order to compare it in changeActiveServerType method
+    private var usedServerTypeToggle: ServerType?
 
     private var globalConnectionProtocol: ConnectionProtocol {
         if propertiesManager.smartProtocol {
@@ -245,7 +254,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func changeActiveServerType(_ serverType: ServerType) {
-        guard serverTypeToggle != serverType else { return }
+        guard usedServerTypeToggle != serverType else { return }
 
         propertiesManager.secureCoreToggle = serverType == .secureCore
 
@@ -286,8 +295,10 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func quickConnectConnectionRequest(trigger: UserInitiatedVPNChange.VPNTrigger) -> ConnectionRequest {
+        let serverType = serverTypeToggle(checkPF: true)
+        usedServerTypeToggle = serverType
         let defaultQCConnectionRequest = ConnectionRequest(
-            serverType: serverTypeToggle,
+            serverType: serverType,
             connectionType: .fastest,
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldType,
@@ -319,14 +330,19 @@ public class VpnGateway: VpnGatewayProtocol {
     }
 
     public func connectTo(serverGroup: ServerGroupInfo.Kind, ofType _: ServerType, trigger: UserInitiatedVPNChange.VPNTrigger = .country) {
-        let connectionType: ConnectionRequestType = switch serverGroup {
+        let connectionType: ConnectionRequestType
+        let serverType: ServerType
+        switch serverGroup {
         case let .country(code):
-            .country(code, .fastest)
+            connectionType = .country(code, .fastest)
+            serverType = serverTypeToggle(checkPF: true)
         case let .gateway(name):
-            .gateway(name: name)
+            connectionType = .gateway(name: name)
+            serverType = serverTypeToggle(checkPF: false)
         }
+        usedServerTypeToggle = serverType
         let connectionRequest = ConnectionRequest(
-            serverType: serverTypeToggle,
+            serverType: serverType,
             connectionType: connectionType,
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldType,
@@ -340,9 +356,12 @@ public class VpnGateway: VpnGatewayProtocol {
         connect(with: connectionRequest)
     }
 
+    // currently only used in iOS
     public func connectTo(country countryCode: String, city: String) {
+        let serverType = serverTypeToggle(checkPF: false)
+        usedServerTypeToggle = serverType
         let connectionRequest = ConnectionRequest(
-            serverType: serverTypeToggle,
+            serverType: serverType,
             connectionType: .city(country: countryCode, city: city),
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldType,
@@ -359,8 +378,10 @@ public class VpnGateway: VpnGatewayProtocol {
 
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
+        let serverType = serverTypeToggle(checkPF: false)
+        usedServerTypeToggle = serverType
         let connectionRequest = ConnectionRequest(
-            serverType: serverTypeToggle,
+            serverType: serverType,
             connectionType: .country(server.countryCode, countryType),
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldType,
@@ -479,8 +500,9 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         // If server type of the request is unspecified, we must update the server type
         // according to whether SecureCore is toggled on or not
-        let serverType = request.serverType == .unspecified ? serverTypeToggle : request.serverType
+        let serverType = request.serverType == .unspecified ? serverTypeToggle(checkPF: true) : request.serverType
         let requestWithUpdatedServerType = request.withChanged(serverType: serverType)
+        usedServerTypeToggle = serverType
 
         propertiesManager.lastConnectionIntent = ConnectionSpec(connectionRequest: requestWithUpdatedServerType)
 
@@ -537,7 +559,8 @@ public class VpnGateway: VpnGatewayProtocol {
                 notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             }
 
-            let selected = selector.selectServer(connectionRequest: connectionRequest)
+            // when we want to enforce p2p we'll fallback to the fastest if no p2p servers found
+            let selected = selector.selectServer(connectionRequest: connectionRequest, fallbackToStandard: connectionRequest.serverType == .p2p)
             log.debug("Server selected: \(selected?.logDescription ?? "-")", category: .connectionConnect)
             return selected
 
@@ -851,9 +874,11 @@ private extension VpnGateway {
                 appStateManager.state
             }
         )
+        let serverType = serverTypeToggle(checkPF: true)
+        usedServerTypeToggle = serverType
 
         let request = ConnectionRequest(
-            serverType: serverTypeToggle,
+            serverType: serverType,
             connectionType: .fastest,
             connectionProtocol: globalConnectionProtocol,
             netShieldType: netShieldPropertyProvider.netShieldType,
@@ -874,7 +899,7 @@ private extension VpnGateway {
             netShieldType: request.netShieldType,
             natType: request.natType,
             safeMode: request.safeMode,
-            portForwarding: portForwarding,
+            portForwarding: request.portForwarding,
             intent: request.connectionType
         )
         return ReconnectInfo(

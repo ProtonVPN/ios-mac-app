@@ -117,11 +117,11 @@ extension CertificateRefreshClient {
         throw ForkingExhaustedRetriesError()
     }
 
-    private static func forkSession(retries _: Int) async throws(CertificateRefreshError) -> String {
+    private static func forkSession(retries: Int) async throws(CertificateRefreshError) -> String {
         @Dependency(\.sessionService) var sessionService
 
         do {
-            return try await retry(count: 3, retryDelay: .seconds(1)) {
+            return try await retry(count: retries, retryDelay: .seconds(1)) {
                 try await sessionService.selector(.appContext(.wireGuardExtension))
             }
         } catch {

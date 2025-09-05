@@ -26,12 +26,13 @@ import Theme
 import VPNAppCore
 
 final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
-    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory
+    typealias Factory = AppStateManagerFactory & CoreAlertServiceFactory & PortForwardingPropertyProviderFactory & PropertiesManagerFactory & VpnGatewayFactory & VpnManagerFactory
 
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var portForwardingPropertyProvider: PortForwardingPropertyProvider = factory.makePortForwardingPropertyProvider()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     override var learnLink: String {
         VPNLink.portForwardingSupport.urlString
@@ -75,10 +76,23 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: { [weak self] dismissCallback in
             guard let self else { return }
             portForwardingPropertyProvider.portForwarding = false
-            if vpnGateway.connection == .connected {
-                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                vpnGateway.retryConnection()
+            switch vpnManager.currentVpnProtocol {
+            case .wireGuard:
+                log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                vpnManager.set(portForwarding: false)
+                vpnManager.stopNATPortMappingService()
+
+            case .ike:
+                if vpnGateway.connection == .connected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                    vpnGateway.retryConnection()
+                }
+
+            // other protocols are not supported
+            default:
+                assertionFailure("not supported protocol in port forwarding presenter")
             }
+
             dismissCallback()
         })
     }
@@ -100,10 +114,25 @@ final class PortForwardingDropdownPresenter: QuickSettingDropdownPresenter {
                     return
                 }
                 portForwardingPropertyProvider.portForwarding = true
-                if vpnGateway.connection == .connected {
-                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
-                    vpnGateway.retryConnection()
+                switch vpnManager.currentVpnProtocol {
+                case .wireGuard:
+                    log.info("Send feature to the local agent", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                    vpnManager.set(portForwarding: true)
+                    if vpnGateway.connection == .connected {
+                        vpnManager.startNATPortMappingService()
+                    }
+
+                case .ike:
+                    if vpnGateway.connection == .connected {
+                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "portForwarding"])
+                        vpnGateway.retryConnection()
+                    }
+
+                // other protocols are not supported
+                default:
+                    assertionFailure("not supported protocol in port forwarding presenter")
                 }
+
                 dismissCallback()
             }
         )

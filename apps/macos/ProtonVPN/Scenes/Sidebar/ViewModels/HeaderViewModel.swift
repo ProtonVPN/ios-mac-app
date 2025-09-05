@@ -235,6 +235,7 @@ final class HeaderViewModel {
         let connectionChangedEvents: [AppEvent] = [
             .activeServerTypeChanged,
             .connectionStateChanged,
+            .portForwarding,
         ]
         connectionChangedEvents.subscribe(self, selector: #selector(vpnConnectionChanged))
 

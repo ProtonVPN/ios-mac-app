@@ -2332,7 +2332,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C13B9822A742387008A04C2 /* PBXTargetDependency */,
 				D573CFD0264A6A1F0033CE19 /* PBXTargetDependency */,
 				D55455562280280B006574F9 /* PBXTargetDependency */,
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
@@ -3204,9 +3203,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4C13B9822A742387008A04C2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-		};
 		791DE5F1208DDA3200A29EA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 791DE5D8208DDA3000A29EA5 /* ProtonVPN */;

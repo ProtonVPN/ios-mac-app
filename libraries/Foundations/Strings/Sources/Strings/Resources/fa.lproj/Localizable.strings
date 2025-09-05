@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "اگر ارتباط VPN قطع شد اینترنت خود را قطع کنید تا از نشتی تصادفی IP جلوگیری شود.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Bypass firewalls to connect to P2P servers and devices in your local network.";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "Secure Core سرعت VPN را ممکن است کاهش دهد";
 

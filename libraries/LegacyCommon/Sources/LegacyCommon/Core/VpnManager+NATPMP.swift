@@ -17,7 +17,10 @@
 //  along with Proton VPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS)
+    import Connection
     import Dependencies
+    import Domain
+    import Foundation
     import NATPMPUI
 
     extension VpnManager {
@@ -28,13 +31,14 @@
                 return
             }
             @Dependency(\.natPortMappingService) var natPortMappingService
-            // Start your service
+            AppEvent.portForwarding.subscribe(self, selector: #selector(handlePortForwardingChange))
             natPortMappingService.startPortMapping(gatewayAddress: gatewayAddress)
             log.info("NAT port mapping service started", category: .connection)
         }
 
         public func stopNATPortMappingService() {
             @Dependency(\.natPortMappingService) var natPortMappingService
+            AppEvent.portForwarding.unsubscribe(self)
             Task {
                 await natPortMappingService.cancelPortMapping()
                 log.info("NAT port mapping service stopped", category: .connection)
@@ -70,12 +74,30 @@
             @Dependency(\.propertiesManager) var propertiesManager
 
             let wgConfig = propertiesManager.wireguardConfig
-            // Extract DNS servers (which act as gateways)
-            let dnsServers = wgConfig.dnsServers ?? ["10.2.0.1"]
-            let gateway = dnsServers.first ?? "10.2.0.1"
+            let gateway: String
+
+            @Dependency(\.hermesClient) var hermesClient
+            @Dependency(\.featureAuthorizerProvider) var featureAuthorizerProvider
+            let hermesIsEnabled: Bool = hermesClient.isEnabled().wrappedValue
+            let hermesIsAllowed = featureAuthorizerProvider.authorizer(for: HermesFeature.self)().isAllowed
+            if hermesIsEnabled, hermesIsAllowed {
+                gateway = "10.2.0.1"
+            } else {
+                // Extract DNS servers (which act as gateways)
+                let dnsServers = wgConfig.dnsServers ?? ["10.2.0.1"]
+                gateway = dnsServers.first ?? "10.2.0.1"
+            }
 
             log.info("Using WireGuard DNS/gateway: \(gateway)", category: .connection)
             return gateway
+        }
+
+        @objc
+        private func handlePortForwardingChange(_: Notification) {
+            // this is a scenario when a PF flag was reset back to `false` by a BE
+            if portForwardingPropertyProvider.portForwarding == false {
+                stopNATPortMappingService()
+            }
         }
     }
 #endif

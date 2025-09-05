@@ -1253,7 +1253,7 @@ public enum Localizable {
   /// Don't block
   public static var quickSettingsNetshieldOptionOff: String { return Localizable.tr("Localizable", "_quick_settings_netshield_option_off", fallback: "Don't block") }
   /// Text for Port forwarding quick setting in the app
-  public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Bypass firewalls to connect to P2P servers and devices in your local network.") }
+  public static var quickSettingsPortForwardingDescription: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_description", fallback: "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.") }
   /// Cannot retrieve active port number. Restart your connection and try again.
   public static var quickSettingsPortForwardingErrorNote: String { return Localizable.tr("Localizable", "_quick_settings_portForwarding_errorNote", fallback: "Cannot retrieve active port number. Restart your connection and try again.") }
   /// Enter the active port number into your BitTorrent app to improve your P2P speeds
