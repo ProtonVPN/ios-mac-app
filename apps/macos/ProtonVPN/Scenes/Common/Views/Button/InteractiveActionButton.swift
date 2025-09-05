@@ -50,6 +50,6 @@ class InteractiveActionButton: HoverDetectionButton {
 
     private func setAttributedTitle() {
         let hover: AppTheme.Style = isHovered ? .hovered : []
-        attributedTitle = title.styled([.interactive, .hint] + hover, font: .themeFont(fontSize), alignment: alignment)
+        attributedTitle = title.styled(.link + hover, font: .themeFont(fontSize), alignment: alignment)
     }
 }

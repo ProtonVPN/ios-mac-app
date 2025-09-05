@@ -208,6 +208,12 @@ public class VpnApiService {
                     return
                 }
 
+                guard !serversJson.isEmpty else {
+                    // throw error to log the user out
+                    result = .failure(CommonVpnError.noConnectionsAvailable)
+                    return
+                }
+
                 var serverModels: [ServerModel] = []
                 for json in serversJson {
                     do {
@@ -218,8 +224,8 @@ public class VpnApiService {
                 }
                 result = .success(.modified(at: lastModified, servers: serverModels, freeServersOnly: freeTier))
 
-            case let .failure(error):
-                result = .failure(error)
+            case .failure:
+                result = .failure(CommonVpnError.logicalsEndpointFailed)
             }
         }
     }

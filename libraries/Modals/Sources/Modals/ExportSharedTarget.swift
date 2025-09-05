@@ -33,12 +33,14 @@ public typealias PlanDuration = ModalsServices.PlanDuration
     import Modals_macOS
 
     public typealias ModalsFactory = Modals_macOS.ModalsFactory
+    public typealias NoConnectionsAvailableView = Modals_macOS.NoConnectionsAvailableView
 
 #endif
 
 #if canImport(Modals_iOS)
     import Modals_iOS
 
+    public typealias NoConnectionsAvailableView = Modals_iOS.NoConnectionsAvailableView
     public typealias ModalsFactory = Modals_iOS.ModalsFactory
     public typealias PlansClient = Modals_iOS.PlansClient
     public typealias TelemetrySettingsViewController = Modals_iOS.TelemetrySettingsViewController

@@ -270,8 +270,8 @@ class WindowServiceImplementation: WindowService {
     }
 
     func openSubuserAlertWindow(alert: SubuserWithoutConnectionsAlert) {
-        let controller = SubuserMacAlertViewController()
-        controller.role = alert.role
+        let controller = NSHostingController(rootView: Modals.NoConnectionsAvailableView(mode: alert.mode))
+        controller.title = ""
         let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self
         activeWindowControllers.insert(windowController)

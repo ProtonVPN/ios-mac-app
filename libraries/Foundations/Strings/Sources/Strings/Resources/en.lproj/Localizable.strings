@@ -1615,8 +1615,15 @@
 "_locations_free" = "Free locations";
 "_locations_plus" = "Plus locations";
 "_locations_gateways" = "Gateways";
-/* Header before the list of connections available for free users (in the country list) */
+
+/* Header of the connections list for free users */
 "_connections_free" = "Free connections";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "What's a gateway?";
@@ -1754,14 +1761,27 @@
 "_neks_t2_connect" = "Enable anyway";
 
 
-// MARK: Subuser alert
+// MARK: Try logging again alert
 
-"_subuser_alert_title" = "Thanks for upgrading to Business/Visionary";
-"_subuser_alert_description1" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to sign in and protect all your devices.";
-"_subuser_alert_description3" = "There is currently no VPN connection enabled for this account. To start your journey with Proton VPN please contact your administrator.";
-"_subuser_alert_enable_connections_button" = "Enable VPN connections";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
+
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Sign in again";
+
+/* Modal title */
+"no_connections_available" = "No VPN connections available";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+
+/* Modal help text */
+"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
 
 // MARK: Moderate NAT
 

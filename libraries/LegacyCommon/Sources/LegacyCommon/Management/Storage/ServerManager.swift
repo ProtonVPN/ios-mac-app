@@ -31,8 +31,14 @@ public struct ServerManager: DependencyKey {
         _ lastModifiedAt: String?
     ) -> Void
 
-    init(updateServers: @Sendable @escaping (_: [VPNServer], _: Bool, _: String?) -> Void) {
+    private var purgeServers: () -> Void
+
+    init(
+        updateServers: @Sendable @escaping (_: [VPNServer], _: Bool, _: String?) -> Void,
+        purgeServers: @escaping () -> Void
+    ) {
         self.updateServers = updateServers
+        self.purgeServers = purgeServers
     }
 
     public static let liveValue: ServerManager = .init(
@@ -68,6 +74,12 @@ public struct ServerManager: DependencyKey {
             }
 
             NotificationCenter.default.post(ServerListUpdateNotification(data: .servers), object: nil)
+        },
+        purgeServers: {
+            @Dependency(\.serverRepository) var repository
+            _ = repository.delete(serversWithIDsNotIn: [], maxTier: .max)
+            repository.deleteMetadata(for: .lastModifiedFree)
+            repository.deleteMetadata(for: .lastModifiedAll)
         }
     )
 
@@ -80,12 +92,17 @@ public extension ServerManager {
     func update(servers: [VPNServer], freeServersOnly: Bool, lastModifiedAt: String?) {
         updateServers(servers, freeServersOnly, lastModifiedAt)
     }
+
+    func purgeAllServers() {
+        purgeServers()
+    }
 }
 
 #if DEBUG
     public extension ServerManager {
         static var noOp: ServerManager {
-            ServerManager { _, _, _ in () }
+            ServerManager { _, _, _ in
+            } purgeServers: {}
         }
     }
 #endif

@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import SwiftUI
 import UIKit
 
 import Dependencies
@@ -490,9 +491,7 @@ extension IosAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SubuserWithoutConnectionsAlert) {
-        let storyboard = UIStoryboard(name: "SubuserAlertViewController", bundle: Bundle.main)
-        guard let controller = storyboard.instantiateInitialViewController() as? SubuserAlertViewController else { return }
-        controller.role = alert.role
+        let controller = UIHostingController(rootView: NoConnectionsAvailableView(mode: alert.mode))
         windowService.present(modal: controller)
     }
 
@@ -509,7 +508,7 @@ extension IosAlertService: CoreAlertService {
 }
 
 private extension ReconnectInfo {
-    func servers() -> (from: (String, Image), to: (String, Image)) {
+    func servers() -> (from: (String, UIImage), to: (String, UIImage)) {
         ((fromServer.name, fromServer.image), (toServer.name, toServer.image))
     }
 }

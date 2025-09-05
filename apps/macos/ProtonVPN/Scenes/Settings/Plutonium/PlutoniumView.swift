@@ -156,7 +156,7 @@ public struct PlutoniumView: View {
                 Link(destination: VPNLink.learnMorePlutonium.url) {
                     Text(Localizable.learnMore)
                         .themeFont(.body(emphasised: true))
-                        .foregroundStyle(Color(.text, [.interactive, .hint]))
+                        .foregroundStyle(Color(.text, .link))
                 }
             }
             if case .enabled = store.feature {
@@ -403,7 +403,7 @@ public struct PlutoniumView: View {
                 .foregroundColor(Color(.text, .hint))
                 + Text(Localizable.plutoniumImportAppsSubtitle2)
                 .themeFont(.footnote(emphasised: false))
-                .foregroundColor(Color(.text, [.interactive, .hint]))
+                .foregroundColor(Color(.text, .link))
         }
         .padding(.themeSpacing8)
     }

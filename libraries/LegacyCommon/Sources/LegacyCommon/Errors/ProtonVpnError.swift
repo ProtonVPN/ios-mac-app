@@ -47,6 +47,8 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
 
     // User
     case subuserWithoutSessions = "SUWS"
+    case noConnectionsAvailable = "NCAV"
+    case logicalsEndpointFailed = "LEPF"
 
     // MARK: - Error Descriptions
 
@@ -69,13 +71,17 @@ public enum CommonVpnError: FourCharCode, ProtonVPNError {
         case .keychainWriteFailed:
             Localizable.errorKeychainWrite
         case .subuserWithoutSessions:
-            Localizable.subuserAlertDescription1
+            Localizable.subuserAlertDescription
         case .userCredentialsMissing:
             Localizable.errorUserCredentialsMissing
         case .userCredentialsExpired:
             Localizable.errorUserCredentialsExpired
         case .vpnCredentialsMissing:
             Localizable.errorVpnCredentialsMissing
+        case .noConnectionsAvailable:
+            Localizable.noConnectionsAvailable
+        case .logicalsEndpointFailed:
+            Localizable.serversLoadingErrorSubtitle
         }
     }
 }

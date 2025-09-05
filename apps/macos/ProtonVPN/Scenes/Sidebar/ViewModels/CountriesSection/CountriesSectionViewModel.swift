@@ -694,8 +694,10 @@ class CountriesSectionViewModel {
     }
 
     /// Includes upsell banner
-    private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection {
+    private func allLocationsSection(for groups: [ServerGroupInfo]) -> ServerSection? {
         let cellModels = cells(forCountriesInGroups: groups, minTierFilter: { _ in true })
+        if cellModels.isEmpty { return nil }
+
         return ServerSection(
             header: allLocationsHeader(locationCount: cellModels.count),
             cells: [offerBannerCellModel].compactMap { $0 } + cellModels

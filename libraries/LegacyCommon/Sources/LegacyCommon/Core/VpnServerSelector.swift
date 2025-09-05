@@ -184,8 +184,7 @@ extension ConnectionRequest {
             [.kind(.country(code: countryCode)), .city(city)]
 
         case .fastest, .random:
-            // Exclude gateways. We could also use the .kind(.country) filter for this purpose.
-            [.features(.init(required: .zero, excluded: .restricted))]
+            []
         }
     }
 
@@ -208,7 +207,7 @@ extension ConnectionRequest {
             .fastest
 
         case .fastest:
-            .fastest
+            .fastestGatewaysLast
 
         case .random:
             .random

@@ -328,6 +328,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             log.error("User with insufficient sessions detected. Throwing an error instead of logging in.", category: .app)
             logOutCleanup()
             throw CommonVpnError.subuserWithoutSessions
+        } catch CommonVpnError.noConnectionsAvailable {
+            log.error("User with no connections assigned. Throwing an error instead of logging in.", category: .app)
+            logOutCleanup()
+            throw CommonVpnError.noConnectionsAvailable
         } catch {
             // In case getting vpn properties fails, we don't log user out in all cases. Instead
             // check if we can continue.
@@ -479,6 +483,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         planService.clear()
         searchStorage.clear()
         review.clear()
+
+        @Dependency(\.serverManager) var serverManager
+        serverManager.purgeAllServers()
 
         let vpnAuthenticationTimeoutInSeconds = 2
         group.enter()

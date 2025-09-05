@@ -25,14 +25,14 @@
         @State var isHovered = false
 
         func helpForegroundColor(isPressed: Bool) -> Color {
-            var style: AppTheme.Style = [.interactive, .hint]
+            var style: AppTheme.Style = .link
             if isHovered {
-                style = [.interactive, .hint, .hovered]
+                style = style.union(.hovered)
             }
             if isPressed {
-                style = [.interactive, .hint, .active]
+                style = style.union(.active)
             }
-            return .init(NSColor.color(.text, style))
+            return .init(.text, style)
         }
 
         func makeBody(configuration: Self.Configuration) -> some View {
