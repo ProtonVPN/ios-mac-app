@@ -77,6 +77,15 @@ final class NATPortMappingServiceImplementation: NATPortMappingService, Sendable
                         externalPort: externalPort,
                         currentMappingExpirationDate: currentMappingExpirationDate
                     )
+                // we'll send second request with toggled protocol to support simultaneously both UDP and TCP
+                let portMappingResponseToggledProtocol = try await natPmpClient
+                    .requestPortMapping(
+                        gatewayAddress: gatewayAddress,
+                        portProtocol: portProtocol.toggle(),
+                        internalPort: internalPort,
+                        externalPort: externalPort,
+                        currentMappingExpirationDate: currentMappingExpirationDate
+                    )
 
                 // ensure that BE sent success mapping
                 guard portMappingResponse.mappedResultCode == .success else {

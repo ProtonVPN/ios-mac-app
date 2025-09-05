@@ -21,6 +21,15 @@ import Foundation
 public enum PortMappingProtocol: UInt8, Sendable {
     case udp = 1
     case tcp = 2
+
+    func toggle() -> PortMappingProtocol {
+        switch self {
+        case .udp:
+            .tcp
+        case .tcp:
+            .udp
+        }
+    }
 }
 
 struct PortMappingPacketRequest {
