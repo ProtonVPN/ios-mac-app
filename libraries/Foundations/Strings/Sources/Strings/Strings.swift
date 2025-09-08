@@ -1132,15 +1132,15 @@ public enum Localizable {
   public static var plutoniumAddressExists: String { return Localizable.tr("Localizable", "_plutonium_address_exists", fallback: "Address already added") }
   /// Header title of all available apps section
   public static var plutoniumAllApps: String { return Localizable.tr("Localizable", "_plutonium_all_apps", fallback: "All apps") }
-  /// Plutonium feature description
+  /// Split tunneling feature description
   public static var plutoniumCustomizeConnection: String { return Localizable.tr("Localizable", "_plutonium_customize_connection", fallback: "Customize your connection by deciding which apps and IP addresses are protected by VPN.") }
   /// Description of an empty list of IPs
   public static var plutoniumEmptyIpListContent: String { return Localizable.tr("Localizable", "_plutonium_empty_ip_list_content", fallback: "No IP addresses yet") }
-  /// Title of the plutonium feature operation mode
+  /// Title of the split tunneling feature operation mode
   public static var plutoniumExcludeMode: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode", fallback: "Exclude mode") }
   /// Description of the included apps list
   public static var plutoniumExcludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_apps", fallback: "These apps connect without VPN protection.") }
-  /// Description of the plutonium feature operation mode
+  /// Description of the split tunneling feature operation mode
   public static var plutoniumExcludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_description", fallback: "Allow selected apps and IP addresses to connect without VPN protection.") }
   /// Header of the excluded ips list
   public static var plutoniumExcludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_exclude_mode_ips", fallback: "Excluded IP addresses") }
@@ -1152,18 +1152,18 @@ public enum Localizable {
   public static var plutoniumImportAppsSubtitle2: String { return Localizable.tr("Localizable", "_plutonium_import_apps_subtitle_2", fallback: "browse apps") }
   /// Title of a button that opens a panel for file selection
   public static var plutoniumImportAppsTitle: String { return Localizable.tr("Localizable", "_plutonium_import_apps_title", fallback: "Import apps") }
-  /// Title of the plutonium feature operation mode
+  /// Title of the split tunneling feature operation mode
   public static var plutoniumIncludeMode: String { return Localizable.tr("Localizable", "_plutonium_include_mode", fallback: "Include mode") }
   /// Description of the included apps list
   public static var plutoniumIncludeModeApps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_apps", fallback: "Only these apps are protected by VPN.") }
-  /// Description of the plutonium feature operation mode
+  /// Description of the split tunneling feature operation mode
   public static var plutoniumIncludeModeDescription: String { return Localizable.tr("Localizable", "_plutonium_include_mode_description", fallback: "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.") }
   /// Header of the included ips list
   public static var plutoniumIncludeModeIps: String { return Localizable.tr("Localizable", "_plutonium_include_mode_ips", fallback: "Protected IP addresses") }
   /// Header of the excluded apps list
   public static var plutoniumInclusionListApps: String { return Localizable.tr("Localizable", "_plutonium_inclusion_list_apps", fallback: "Protected apps") }
-  /// macOS main menu: Help -> Split Tunneling logs row
-  public static var plutoniumLogs: String { return Localizable.tr("Localizable", "_plutonium_logs", fallback: "Split Tunneling Logs") }
+  /// macOS main menu: Help -> Split tunneling logs row
+  public static var plutoniumLogs: String { return Localizable.tr("Localizable", "_plutonium_logs", fallback: "Split tunneling Logs") }
   /// Description when user didn't include any apps in the list
   public static var plutoniumNoApps: String { return Localizable.tr("Localizable", "_plutonium_no_apps", fallback: "No apps selected") }
   /// Empty list title, appears when no elements are present
@@ -1171,10 +1171,10 @@ public enum Localizable {
   /// Text appears when user makes any configuration changes that require reconnection
   public static var plutoniumReconnectionNotice: String { return Localizable.tr("Localizable", "_plutonium_reconnection_notice", fallback: "Changes apply when you reconnect") }
   /// Settings page row title
-  public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "Split Tunneling") }
-  /// Plutonium upsell view subtitle
+  public static var plutoniumTitle: String { return Localizable.tr("Localizable", "_plutonium_title", fallback: "Split tunneling") }
+  /// Split tunneling upsell view subtitle
   public static var plutoniumUpsellSubtitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_subtitle", fallback: "Divide your traffic into VPN and non-VPN tunnels with split tunneling.") }
-  /// Plutonium upsell view title
+  /// Split tunneling upsell view title
   public static var plutoniumUpsellTitle: String { return Localizable.tr("Localizable", "_plutonium_upsell_title", fallback: "Get the best of both worlds") }
   /// IP entry validation error
   public static var plutoniumValidationError: String { return Localizable.tr("Localizable", "_plutonium_validation_error", fallback: "Enter a valid IPv4 address") }
@@ -1830,13 +1830,13 @@ public enum Localizable {
   public static var tryAgain: String { return Localizable.tr("Localizable", "_try_again", fallback: "Try again") }
   /// Disable kill switch and retry
   public static var tryAgainWithoutKillswitch: String { return Localizable.tr("Localizable", "_try_again_without_killswitch", fallback: "Disable kill switch and retry") }
-  /// [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
+  /// [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on
   public static var turnKsOnDescriptionIos: String { return Localizable.tr("Localizable", "_turn_ks_on_description_ios", fallback: "You won't be able to access devices on your local network") }
   /// [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on
   public static var turnKsOnDescriptionMacosLanConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_lan_conflict", fallback: "• You won't be able to access devices on your local network") }
-  /// [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on
+  /// [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on
   public static var turnKsOnDescriptionMacosStConflict: String { return Localizable.tr("Localizable", "_turn_ks_on_description_macos_st_conflict", fallback: "• This will disable split tunneling") }
-  /// Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on
+  /// Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on
   public static var turnKsOnTitle: String { return Localizable.tr("Localizable", "_turn_ks_on_title", fallback: "Enable kill switch?") }
   /// Turn on
   public static var turnOn: String { return Localizable.tr("Localizable", "_turn_on", fallback: "Turn on") }
@@ -2308,19 +2308,19 @@ public enum Localizable {
   public static var selectAllMenuTitle: String { return Localizable.tr("Localizable", "select_all_menu_title", fallback: "Select All") }
   /// Modal subtitle
   public static var serversLoadingErrorSubtitle: String { return Localizable.tr("Localizable", "servers_loading_error_subtitle", fallback: "We couldn’t load the server list.") }
-  /// Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  /// Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled
   public static var splitTunnelingAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol. Learn more") }
-  /// Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  /// Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled
   public static var splitTunnelingAlertTitle: String { return Localizable.tr("Localizable", "split_tunneling_alert_title", fallback: "Cannot enable split tunneling") }
-  /// Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  /// Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled
   public static var splitTunnelingConnectToProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_description", fallback: "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more") }
-  /// Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  /// Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled
   public static var splitTunnelingConnectToProfileAlertTitle: String { return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_alert_title", fallback: "Connect with IKEv2 protocol?") }
-  /// Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled
+  /// Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled
   public static func splitTunnelingConnectToProfileNameAlertTitle(_ p1: Any) -> String {
     return Localizable.tr("Localizable", "split_tunneling_connect_to_profile_name_alert_title", String(describing: p1), fallback: "Connect to %@?")
   }
-  /// Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled
+  /// Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled
   public static var splitTunnelingProfileAlertDescription: String { return Localizable.tr("Localizable", "split_tunneling_profile_alert_description", fallback: "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more") }
   /// Plural format key: "Hundreds of servers in %#@num_countries@"
   public static func subscriptionUpgradeOption1(_ p1: Int) -> String {
@@ -2330,9 +2330,9 @@ public enum Localizable {
   public static func subscriptionUpgradeOption2(_ p1: Int) -> String {
     return Localizable.tr("Localizable", "subscription_upgrade_option2", p1, fallback: "Plural format key: \"Connect up to %#@num_devices@ at the same time\"")
   }
-  /// Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on
+  /// Description text of alert shown if user tries to enable split tunneling when KillSwitch is on
   public static var turnSplitTunnelingOnDescription: String { return Localizable.tr("Localizable", "turn_split_tunneling_on_description", fallback: "This will disable kill switch.") }
-  /// Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on
+  /// Title of alert shown if user tries to enable split tunneling when KillSwitch is on
   public static var turnSplitTunnelingOnTitle: String { return Localizable.tr("Localizable", "turn_split_tunneling_on_title", fallback: "Enable split tunneling?") }
   /// Title for the Two-factor authentication screen
   public static var twoFactorAuthentication: String { return Localizable.tr("Localizable", "two_factor_authentication", fallback: "Two-factor authentication") }

@@ -30,7 +30,7 @@
         public var stop: () async throws -> Void
 
         private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
-        private static let descriptionText = "ProtonVPN Plutonium"
+        private static let descriptionText = "ProtonVPN Split tunneling"
 
         private init(
             start: @escaping () async throws -> Void,
@@ -49,14 +49,14 @@
                         .toProviderConfigurationDictionary(dnsServers: hermesClient.currentResolvers.map(\.location))
                 )
                 try manager.connection.startVPNTunnel()
-                log.info("Plutonium started")
+                log.info("Split tunneling started")
             },
             stop: {
                 updateAppliedConfiguration()
                 let manager = try await getManager()
                 guard manager.connection.status == .connected else { return }
                 manager.connection.stopVPNTunnel()
-                log.info("Plutonium stopped")
+                log.info("Split tunneling stopped")
             }
         )
 

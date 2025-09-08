@@ -30,13 +30,13 @@ class IPCPlutoniumService: XPCBaseService {
 
 extension IPCPlutoniumService {
     override public func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
-        log("Got getLogs XPC request for Plutonium")
+        log("Got getLogs XPC request for split tunneling")
         do {
             let logFile = try getPlutoniumLogFileURL(createIfMissing: false)
             let logContent = try String(contentsOf: logFile)
             completionHandler(logContent.data(using: .utf8))
         } catch {
-            log("Error reading Plutonium logs: \(error)")
+            log("Error reading split tunneling logs: \(error)")
             completionHandler(nil)
         }
     }

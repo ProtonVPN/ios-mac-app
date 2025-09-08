@@ -2,49 +2,49 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>AppIdentifierPrefix</key>
-    <string>$(AppIdentifierPrefix)</string>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>$(DEVELOPMENT_LANGUAGE)</string>
-    <key>CFBundleDisplayName</key>
-    <string>Proton VPN Plutonium</string>
-    <key>CFBundleExecutable</key>
-    <string>$(EXECUTABLE_NAME)</string>
-    <key>CFBundleIdentifier</key>
-    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>CFBundleInfoDictionaryVersion</key>
-    <string>6.0</string>
-    <key>CFBundleName</key>
-    <string>$(PRODUCT_NAME)</string>
-    <key>CFBundlePackageType</key>
-    <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
-    <key>CFBundleShortVersionString</key>
-    <string>$(MARKETING_VERSION)</string>
-    <key>CFBundleVersion</key>
-    <string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>$(MACOSX_DEPLOYMENT_TARGET)</string>
-    <key>NSHumanReadableCopyright</key>
-    <string>Copyright © 2025 Proton Technologies AG. All rights reserved.</string>
-    <key>NSSystemExtensionUsageDescription</key>
-    <string></string>
-    <key>TeamIdentifierPrefix</key>
-    <string>$(TeamIdentifierPrefix)</string>
-    <key>OSLogPreferences</key>
-    <dict>
-        <key>PROTON-PLUTONIUM</key>
-        <dict>
-            <key>DEFAULT-OPTIONS</key>
-            <dict>
-                <key>Level</key>
-                <dict>
-                    <key>Enable</key>
-                    <string>$(OSLOG_LEVEL_ENABLE)</string>
-                    <key>Persist</key>
-                    <string>$(OSLOG_LEVEL_PERSIST)</string>
-                </dict>
-            </dict>
-        </dict>
-    </dict>
+	<key>AppIdentifierPrefix</key>
+	<string>$(AppIdentifierPrefix)</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>ProtonVPN split tunneling</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2025 Proton Technologies AG. All rights reserved.</string>
+	<key>NSSystemExtensionUsageDescription</key>
+	<string></string>
+	<key>TeamIdentifierPrefix</key>
+	<string>$(TeamIdentifierPrefix)</string>
+	<key>OSLogPreferences</key>
+	<dict>
+		<key>PROTON-PLUTONIUM</key>
+		<dict>
+			<key>DEFAULT-OPTIONS</key>
+			<dict>
+				<key>Level</key>
+				<dict>
+					<key>Enable</key>
+					<string>$(OSLOG_LEVEL_ENABLE)</string>
+					<key>Persist</key>
+					<string>$(OSLOG_LEVEL_PERSIST)</string>
+				</dict>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>
