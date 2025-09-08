@@ -43,8 +43,12 @@ final class ConnectionSwitchingTests: BaseConnectionTestCase {
         #else
             try super.setUpWithError()
 
-            CheckedFeatureFlagsRepository.shared.setApiService(container.networking.apiService)
-            await CheckedFeatureFlagsRepository.shared.fetchFlags()
+            await withDependencies {
+                $0.continuousClock = ContinuousClock()
+            } operation: {
+                CheckedFeatureFlagsRepository.shared.setApiService(container.networking.apiService)
+                await CheckedFeatureFlagsRepository.shared.fetchFlags()
+            }
         #endif
     }
 

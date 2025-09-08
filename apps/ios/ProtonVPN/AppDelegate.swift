@@ -63,6 +63,7 @@ public let log: Logging.Logger = .init(label: "ProtonVPN.logger")
 
 final class AppDelegate: UIResponder {
     private static let acceptedDeepLinkChallengeInterval: TimeInterval = 10
+    private static let sessionAcquisitionTimeout: Duration = .seconds(5)
 
     @Dependency(\.defaultsProvider) var defaultsProvider
     @Dependency(\.cryptoService) var cryptoService
@@ -395,7 +396,9 @@ extension AppDelegate {
 
         let apiService = container.makeNetworking().apiService
         do {
-            let session = try await apiService.acquireSessionIfNeeded().get()
+            let session = try await withTimeout(of: Self.sessionAcquisitionTimeout) {
+                try await apiService.acquireSessionIfNeeded().get()
+            }
             switch session {
             case let .sessionAlreadyPresent(credential), let .sessionFetchedAndAvailable(credential):
                 if !credential.userID.isEmpty {
@@ -415,13 +418,13 @@ extension AppDelegate {
             case .sessionUnavailableAndNotFetched:
                 log.error("acquireSessionIfNeeded didn't fetch a session, flag fetch may fail", category: .api, event: .response)
             }
-
-            CheckedFeatureFlagsRepository.shared.setApiService(apiService)
         } catch {
             log.error("acquireSessionIfNeeded didn't succeed and therefore feature flags didn't get fetched", category: .api, event: .response, metadata: ["error": "\(error)"])
         }
 
+        CheckedFeatureFlagsRepository.shared.setApiService(apiService)
         await CheckedFeatureFlagsRepository.shared.fetchFlags()
+
         ObservabilityEnv.current.setupWorld(requestPerformer: apiService)
     }
 

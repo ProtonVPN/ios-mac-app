@@ -22,8 +22,10 @@ import ProtonCoreServices
 
 /// A wrapper around FeatureFlagsRepository that tracks whether fetchFlags() has been called
 /// and asserts if isEnabled() is used before initialization.
-public class CheckedFeatureFlagsRepository {
+public final class CheckedFeatureFlagsRepository {
     public static let shared = CheckedFeatureFlagsRepository()
+
+    private static let flagsFetchingTimeoutDuration: Duration = .seconds(5)
 
     private var _hasFetchedFlags: UInt32 = 0
     private let repository = FeatureFlagsRepository.shared
@@ -35,7 +37,7 @@ public class CheckedFeatureFlagsRepository {
     // We should move to Atomic<Bool> once our minimum deployment target is iOS 18 or later.
     // OSAtomic* functions were deprecated in iOS 10.
     public func fetchFlags() async {
-        try? await repository.fetchFlags()
+        try? await withTimeout(of: Self.flagsFetchingTimeoutDuration) { try? await self.repository.fetchFlags() }
         OSAtomicCompareAndSwap32(0, 1, &_hasFetchedFlags)
     }
 

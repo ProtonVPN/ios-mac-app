@@ -86,7 +86,11 @@ class AppSessionRefreshTimerTests: CaseIsolatedDatabaseTestCase {
             delegate: self
         )
         CheckedFeatureFlagsRepository.shared.setApiService(networking.apiService)
-        await CheckedFeatureFlagsRepository.shared.fetchFlags()
+        await withDependencies {
+            $0.continuousClock = ContinuousClock()
+        } operation: {
+            await CheckedFeatureFlagsRepository.shared.fetchFlags()
+        }
     }
 
     override func tearDown() {

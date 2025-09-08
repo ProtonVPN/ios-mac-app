@@ -320,6 +320,8 @@ extension CoreLoginService: LoginErrorPresenter {
 // MARK: LoginService
 
 extension CoreLoginService: LoginService {
+    private static let asyncRequestsTimeoutDuration: Duration = .seconds(5)
+
     @MainActor
     func attemptSilentLogIn() async -> SilentLoginResult {
         if appSessionManager.loadDataWithoutFetching() {
@@ -329,11 +331,21 @@ extension CoreLoginService: LoginService {
         }
 
         do {
-            try await appSessionManager.attemptSilentLogIn()
-            return .loggedIn
+            return try await withTimeout(of: Self.asyncRequestsTimeoutDuration) {
+                try await self.appSessionManager.attemptSilentLogIn()
+                return .loggedIn
+            }
         } catch {
-            try? await appSessionManager.loadDataWithoutLogin()
-            return .notLoggedIn
+            log.error("Silent logIn attempt failed with error: \(error)")
+            do {
+                return try await withTimeout(of: Self.asyncRequestsTimeoutDuration) {
+                    try await self.appSessionManager.loadDataWithoutLogin()
+                    return .notLoggedIn
+                }
+            } catch {
+                log.error("Loading data without login failed with error: \(error), considering user as not logged in.")
+                return .notLoggedIn
+            }
         }
     }
 

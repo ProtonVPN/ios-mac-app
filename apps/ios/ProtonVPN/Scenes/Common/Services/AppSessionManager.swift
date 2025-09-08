@@ -186,6 +186,8 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     }
 
     func loadDataWithoutLogin() async throws {
+        log.info("Attempting to load data without login")
+
         let shouldRefreshServers = await shouldRefreshServersAccordingToUserTier
         let appState = await appStateManager.stateThreadSafe
         let properties: VpnProperties
