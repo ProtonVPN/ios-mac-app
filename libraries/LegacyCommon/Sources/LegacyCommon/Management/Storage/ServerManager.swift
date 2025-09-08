@@ -63,6 +63,7 @@ public struct ServerManager: DependencyKey {
             ])
 
             repository.upsert(servers: servers)
+            log.info("Updated servers", category: .persistence, metadata: ["updatedServerCount": "\(servers.count)"])
 
             // Store the last modified value, so we can use it when making subsequent logicals requests, to take
             // advantage of the `If-Modified-Since` header
