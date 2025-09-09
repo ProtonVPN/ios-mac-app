@@ -46,5 +46,15 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NetworkExtension</key>
+	<dict>
+		<key>NEMachServiceName</key>
+		<string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac.Transparent-Proxy</string>
+		<key>NEProviderClasses</key>
+		<dict>
+			<key>com.apple.networkextension.app-proxy</key>
+			<string>$(PRODUCT_MODULE_NAME).TransparentProxyProvider</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

@@ -1034,7 +1034,6 @@
 		EBB751D32DA7D4C900F79994 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Info-Debug.plist",
 				Info.plist,
 			);
 			target = EBB751C32DA7D4C800F79994 /* ProtonVPN split tunneling */;
@@ -4442,7 +4441,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ProtonVPN Plutonium/Info-Debug.plist";
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -4560,7 +4559,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ProtonVPN Plutonium/Info-Debug.plist";
+				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
