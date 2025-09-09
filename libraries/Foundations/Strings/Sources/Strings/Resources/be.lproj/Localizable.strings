@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Адключае інтэрнэт у выпадку разрыву падключэння па VPN для прадухілення выпадковай уцечкі IP-адраса.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Абыходзьце міжсеткавыя экраны для падключэння да сервераў P2P і прылад у вашай лакальнай сетцы.";
+"_quick_settings_portForwarding_description" = "Паляпшае хуткасць торэнту і гульняў, дазваляючы прамыя P2P-падключэнні праз прызначаны порт.";
 
 "_quick_settings_secureCore_note" = "Secure Core можа знізіць хуткасць падключэння па VPN";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Шлюзы";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Бясплатныя падключэнні";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Бясплатныя падключэнні (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Размяшчэнні сервераў Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Што такое шлюз?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Усё роўна ўключыць";
 
-"_subuser_alert_title" = "Дзякуй, што палепшылі да Business/Visionary";
+"_subuser_alert_description" = "Пачынаючы знаёмства з Proton VPN, прызначце падключэнні па VPN вашаму ўліковаму запісу або любым іншым падпарадкаваным уліковым запісам.";
 
-"_subuser_alert_description1" = "Пачынаючы знаёмства з Proton VPN, прызначце падключэнні па VPN вашаму ўліковаму запісу або любым іншым падпарадкаваным уліковым запісам.";
-
-"_subuser_alert_description2" = "Гэты крок зойме ўсяго некалькі хвілін. Пасля гэтага ў вас будзе магчымасць увайсці і абараніць усе вашы прылады.";
-
-"_subuser_alert_description3" = "У дадзены момант не выяўлена ўключаных падключэнняў па VPN для гэтага ўліковага запісу. Звяжыцеся са сваім адміністратарам, каб пачаць знаёмства з Proton VPN.";
-
-"_subuser_alert_enable_connections_button" = "Уключыць падключэнні па VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Увайсці яшчэ раз";
+
+/* Modal title */
+"no_connections_available" = "Няма даступных падключэнняў па VPN";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Папрасіце свайго адміністратара ўключыць доступ да VPN для вашага ўліковага запісу.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Немагчыма загрузіць спіс сервераў.";
+
+/* Modal help text */
+"no_servers_help_string" = "Калі вашаму адміністратару патрэбна дапамога з уключэннем доступу па VPN, адпраўце яму **[гэтыя інструкцыі.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Патрэбна дапамога? **[Звяжыцеся з намі](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Умераны NAT";

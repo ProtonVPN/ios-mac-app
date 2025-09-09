@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Portas de entrada";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Ligações gratuitas";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "O que é uma porta de entrada?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Ativar mesmo assim";
 
-"_subuser_alert_title" = "Agradecemos a sua actualização para Business/Visionary.";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
 
-"_subuser_alert_description1" = "Para começar a sua viagem no Proton VPN, ative as ligações VPN para a sua conta ou qualquer outra sub-conta.";
-
-"_subuser_alert_description2" = "Este passo demorará apenas alguns minutos. Em seguida, poderá autenticar-se e proteger todos os seus dispositivos.";
-
-"_subuser_alert_description3" = "Actualmente não existe nenhuma ligação VPN ativada para esta conta. Para iniciar a sua jornada com o Proton VPN, contacte o seu administrador.";
-
-"_subuser_alert_enable_connections_button" = "Ativar as ligações VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Iniciar sessão novamente";
+
+/* Modal title */
+"no_connections_available" = "No VPN connections available";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+
+/* Modal help text */
+"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderado";

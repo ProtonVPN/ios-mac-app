@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "VPN bağlantısı kesildiğinde IP adresinizin isteğiniz dışında sızmasını engellemek için internet erişimini kapatır.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Yerel ağınızdaki P2P sunuculara ve aygıtlara bağlanmak için güvenlik duvarlarını aşar.";
+"_quick_settings_portForwarding_description" = "Belirlenmiş bir bağlantı noktası üzerinden doğrudan P2P bağlantılarına izin vermek torrent ve oyun hızlarını iyileştirir.";
 
 "_quick_settings_secureCore_note" = "Secure Core, VPN hızını azaltabilir";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Ağ geçitleri";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Free bağlantıları";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free bağlantıları (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus konumları (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Ağ geçidi nedir?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Gene de aç";
 
-"_subuser_alert_title" = "Business/Visionary tarifesine yükselttiğiniz için teşekkürler";
+"_subuser_alert_description" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınızda ya da başka bir alt hesapta VPN bağlantılarını açın.";
 
-"_subuser_alert_description1" = "Proton VPN yolculuğunuza başlamak için lütfen hesabınızda ya da başka bir alt hesapta VPN bağlantılarını açın.";
-
-"_subuser_alert_description2" = "Bu adım birkaç dakika sürecek. Bundan sonra oturum açabilir ve tüm aygıtlarınızı koruyabilirsiniz.";
-
-"_subuser_alert_description3" = "Şu anda bu hesap için herhangi bir VPN bağlantısı açılmamış. Proton VPN yolcuğunuza başlamak için yöneticinizle görüşün.";
-
-"_subuser_alert_enable_connections_button" = "VPN bağlantılarını aç";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Yeniden oturum aç";
+
+/* Modal title */
+"no_connections_available" = "Kullanılabilecek bir VPN bağlantısı yok";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Yöneticinizden hesabınız için VPN özelliğini açmasını isteyin.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Sunucu listesi yüklenemedi.";
+
+/* Modal help text */
+"no_servers_help_string" = "Yöneticiniz VPN erişimini açmak için yardıma gerek duyarsa ona **[bu yönergeyi](%@)** gönderin.";
+
+/* Modal help text */
+"no_servers_contact_us" = "Yardım mı gerekiyor? **[Bizimle görüşün](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Ilımlı NAT";

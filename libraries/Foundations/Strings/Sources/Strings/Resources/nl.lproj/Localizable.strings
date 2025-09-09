@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Schakelt internet uit als de VPN-verbinding wegvalt om onbedoeld IP-lekken te voorkomen.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Omzeil firewalls om verbinding te maken met P2P-servers en apparaten in uw lokale netwerk.";
+"_quick_settings_portForwarding_description" = "Verbetert torrent- en gamingsnelheden door directe P2P-verbindingen toe te staan via een toegewezen poort.";
 
 "_quick_settings_secureCore_note" = "Secure Core kan de VPN-snelheid verlagen";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Toegangspoort";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Gratis verbindingen";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Gratis verbindingen (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus-locaties (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Wat is een toegangspoort?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Toch inschakelen";
 
-"_subuser_alert_title" = "Bedankt voor de upgrade naar Business/Visionary";
+"_subuser_alert_description" = "Om uw reis met Proton VPN te beginnen wijst u VPN-verbindingen toe aan uw account of een ander subaccount.";
 
-"_subuser_alert_description1" = "Om uw reis met Proton VPN te beginnen wijst u VPN-verbindingen toe aan uw account of een ander subaccount.";
-
-"_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich inloggen en al uw apparaten beveiligen.";
-
-"_subuser_alert_description3" = "Er is momenteel geen VPN-verbinding ingeschakeld voor deze account. Om uw reis met Proton VPN te starten, contacteer uw beheerder.";
-
-"_subuser_alert_enable_connections_button" = "Schakel VPN-verbindingen in";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Opnieuw inloggen";
+
+/* Modal title */
+"no_connections_available" = "Geen VPN-verbindingen beschikbaar";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Vraag uw beheerder om VPN-toegang voor uw account in te schakelen.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "De serverlijst kon niet worden geladen.";
+
+/* Modal help text */
+"no_servers_help_string" = "Als uw beheerder hulp nodig heeft bij het inschakelen van VPN-toegang, stuur hen dan **deze instructies%@**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Hulp nodig? **Neem contact met ons op%@**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Gemiddelde NAT";

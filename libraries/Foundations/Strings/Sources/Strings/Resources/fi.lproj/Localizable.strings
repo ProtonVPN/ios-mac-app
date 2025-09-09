@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Yhdyskäytävät";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Ilmaisyhteydet";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Mikä on yhdyskäytävä?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Käytä silti";
 
-"_subuser_alert_title" = "Kiitos Professional-/Visionary-päivityksestä";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
 
-"_subuser_alert_description1" = "Jatkaaksesi Proton VPN:n käyttöä, määritä VPN-yhteydet. Tämä on tehtävä myös organisaatiosi muille käyttäjille.";
-
-"_subuser_alert_description2" = "Tämä vaihe kestää vain muutamia minuutteja, jonka jälkeen voit kirjautua sisään ja suojata kaikki laitteesi.";
-
-"_subuser_alert_description3" = "Tilin käyttöön ei tällä hetkellä ole määritetty VPN-yhteyksiä. Aloita Proton VPN -matkasi olemalla yhteydessä ylläpitoosi.";
-
-"_subuser_alert_enable_connections_button" = "Määritä VPN-yhteydet";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Kirjaudu sisään uudelleen";
+
+/* Modal title */
+"no_connections_available" = "No VPN connections available";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+
+/* Modal help text */
+"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Keskitasoinen NAT";

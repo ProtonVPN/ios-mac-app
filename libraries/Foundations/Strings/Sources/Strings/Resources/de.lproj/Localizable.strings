@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Trennt die Verbindung zum Internet, wenn die VPN-Verbindung abbricht, um einen versehentlichen IP-Leak zu verhindern.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Umgehe Firewalls, um eine Verbindung zu P2P-Servern und Geräten in deinem lokalen Netzwerk herzustellen.";
+"_quick_settings_portForwarding_description" = "Verbessert die Geschwindigkeit beim Torrenting und Gaming, indem direkte P2P-Verbindungen über einen bestimmten Port ermöglicht werden.";
 
 "_quick_settings_secureCore_note" = "„Secure Core” kann die VPN-Geschwindigkeit reduzieren";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Gateways";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Free-Verbindungen";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Kostenlose Verbindungen (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus-Standorte (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Was ist ein Gateway?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Trotzdem aktivieren";
 
-"_subuser_alert_title" = "Danke für das Upgrade auf Business/Visionary";
+"_subuser_alert_description" = "Um damit zu beginnen, Proton VPN zu nutzen, aktiviere bitte VPN-Verbindungen für dein Konto oder einem anderen Unterkonto.";
 
-"_subuser_alert_description1" = "Um damit zu beginnen Proton VPN zu nutzen, aktiviere in deinem Konto oder einem anderen Unterkonto VPN-Verbindungen.";
-
-"_subuser_alert_description2" = "Dieser Schritt dauert nur wenige Minuten. Danach kannst du dich anmelden und alle deine Geräte schützen.";
-
-"_subuser_alert_description3" = "In diesem Konto ist derzeit keine VPN-Verbindung aktiviert. Um damit zu beginnen, Proton VPN zu nutzen, kontaktiere bitte deinen Administrator.";
-
-"_subuser_alert_enable_connections_button" = "VPN-Verbindungen aktivieren";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Erneut anmelden";
+
+/* Modal title */
+"no_connections_available" = "Keine VPN-Verbindungen verfügbar";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Bitte deinen Administrator, den VPN-Zugang für dein Konto freizuschalten.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Die Serverliste konnte nicht geladen werden.";
+
+/* Modal help text */
+"no_servers_help_string" = "Wenn dein Administrator Hilfe bei der Aktivierung des VPN-Zugangs benötigt, sende ihm bitte **[diese Anleitung](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Hilfe gewünscht? **[Kontaktiere uns](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderates NAT";

@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Вимикає інтернет, якщо втрачається VPN-з'єднання, щоб запобігти випадковому розкриттю IP-адреси.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Обхід мережевих екранів для можливості з’єднання з P2P-серверами та пристроями у вашій локальній мережі.";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "Secure Core може знижувати швидкість VPN";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Мережеві шлюзи";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Безплатні з'єднання";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Що таке мережевий шлюз?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Усе одно увімкнути";
 
-"_subuser_alert_title" = "Дякуємо за передплату Business/Visionary";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
 
-"_subuser_alert_description1" = "Щоб почати свою подорож у Proton VPN, увімкніть VPN-з'єднання для свого облікового запису або будь-якого іншого підлеглого облікового запису.";
-
-"_subuser_alert_description2" = "Цей крок займе всього кілька хвилин. Після цього ви зможете ввійти в систему і захистити всі свої пристрої.";
-
-"_subuser_alert_description3" = "Наразі для цього облікового запису не ввімкнено VPN-з'єднання. Щоб почати свою подорож з Proton VPN, зв'яжіться з вашим адміністратором.";
-
-"_subuser_alert_enable_connections_button" = "Увімкнути VPN-з'єднання";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Увійти знову";
+
+/* Modal title */
+"no_connections_available" = "No VPN connections available";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+
+/* Modal help text */
+"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Помірне NAT";

@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Disabilita internet se la connessione VPN cade per evitare perdite accidentali di IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Evita i firewall per connetterti ai server P2P e ai dispositivi nella tua rete locale.";
+"_quick_settings_portForwarding_description" = "Migliora la velocità di torrenting e di gioco consentendo connessioni P2P dirette tramite una porta dedicata.";
 
 "_quick_settings_secureCore_note" = "Secure Core può ridurre la velocità VPN";
 
@@ -1530,7 +1530,7 @@
 
 "_sysex_tutorial_subtitle_app" = "Per utilizzare Proton VPN, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
-"_sysex_tutorial_subtitle_st" = "Per usare WireGuard, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
+"_sysex_tutorial_subtitle_st" = "Per usare split tunneling, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
 "_sysex_tutorial_subtitle_wg" = "Per usare WireGuard, devi attivare le seguenti estensioni di sistema sul tuo Mac:";
 
@@ -1544,9 +1544,9 @@
 
 "_sysex_tutorial_step_turn_on_both_done" = "Attiva gli interruttori di **WireGuard** e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Attiva l'opzione **split tunneling**, poi fai clic su **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Attiva l’opzione **WireGuard**, poi fai clic su **Fatto**.";
 
 "_sysex_tutorial_step_turn_on_extensions_done" = "Attiva le estensioni che ti servono, quindi clicca **Fatto**.";
 
@@ -1554,9 +1554,9 @@
 
 "_sysex_tutorial_step_turn_on_both_ok" = "Attiva gli interruttori di **WireGuard** e **split tunneling**, quindi clicca **Fatto**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Attiva l'opzione **split tunneling**, poi fai clic su **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Attiva gli interruttori di WireGuard e **split tunneling**, quindi clicca **Fatto**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Attiva l’opzione **WireGuard**, poi fai clic su **OK**.";
 
 "_sysex_tutorial_step_authenticate" = "Autentica con password o Touch ID se richiesto.";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Gateway";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Connessioni gratuite";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Connessioni gratuite (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Località Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Cos'è un gateway?";
@@ -1795,7 +1801,7 @@
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
 /* macOS main menu: Help -> Split Tunneling logs row */
-"_plutonium_logs" = "Log del tunneling selettivo";
+"_plutonium_logs" = "Registri split tunneling";
 
 "_local_agent_server_error_title" = "Errore del server";
 
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Abilita comunque";
 
-"_subuser_alert_title" = "Grazie per l'aggiornamento a Business/Visionary";
+"_subuser_alert_description" = "Per iniziare il tuo viaggio in Proton VPN, abilita le connessioni VPN al tuo account o a qualsiasi altro account secondario.";
 
-"_subuser_alert_description1" = "Per iniziare il tuo viaggio in Proton VPN, abilita le connessioni VPN al tuo account o a qualsiasi altro account secondario.";
-
-"_subuser_alert_description2" = "Questo passaggio richiederà solo pochi minuti. Dopodiché sarai in grado di accedere e proteggere tutti i tuoi dispositivi.";
-
-"_subuser_alert_description3" = "Al momento non è abilitata alcuna connessione VPN per questo account. Per iniziare il tuo viaggio con Proton VPN, contatta il tuo amministratore.";
-
-"_subuser_alert_enable_connections_button" = "Abilita le connessioni VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Accedi di nuovo";
+
+/* Modal title */
+"no_connections_available" = "Nessuna connessione VPN disponibile";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Chiedi al tuo amministratore di abilitare l’accesso VPN per il tuo account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Non è stato possibile caricare l’elenco dei server.";
+
+/* Modal help text */
+"no_servers_help_string" = "Se il tuo amministratore ha bisogno di aiuto per abilitare l’accesso VPN, inviagli **queste istruzioni%@**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Hai bisogno di aiuto? **Contattaci%@**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderato";

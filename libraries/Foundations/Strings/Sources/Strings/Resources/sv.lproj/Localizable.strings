@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Inaktiverar internet om VPN-anslutningen avbryts för att förhindra oavsiktlig IP-läcka.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Kringgå brandväggar för att ansluta till P2P-servrar och enheter i ditt lokala nätverk.";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "Secure Core kan minska VPN-hastighet";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Gateways";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Free-anslutningar";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus-platser (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Vad är en gateway?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Aktivera ändå";
 
-"_subuser_alert_title" = "Tack för att du uppgraderar till Business/Visionary";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
 
-"_subuser_alert_description1" = "För att starta din resa i Proton VPN, aktivera VPN-anslutningar till ditt konto eller något annat underkonto.";
-
-"_subuser_alert_description2" = "Detta steg tar bara några minuter. Efter det kommer du att kunna logga in och skydda alla dina enheter.";
-
-"_subuser_alert_description3" = "Det finns för närvarande ingen VPN-anslutning aktiverad för detta konto. För att börja din resa med Proton VPN, kontakta din administratör.";
-
-"_subuser_alert_enable_connections_button" = "Aktivera VPN-anslutningar";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Logga in igen";
+
+/* Modal title */
+"no_connections_available" = "Inga VPN-anslutningar tillgängliga";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Be din administratör att aktivera VPN-åtkomst för ditt konto.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Vi kunde inte ladda serverlistan.";
+
+/* Modal help text */
+"no_servers_help_string" = "Om din administratör behöver hjälp med att aktivera VPN-åtkomst, skicka dem **[dessa instruktioner.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Behöver du hjälp? **[Kontakta oss](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Måttlig NAT";
