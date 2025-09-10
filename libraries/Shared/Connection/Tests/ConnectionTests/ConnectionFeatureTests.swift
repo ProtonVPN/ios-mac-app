@@ -71,7 +71,7 @@
             )
 
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .init(internalState: .disconnecting, maskedState: .disconnecting(nil)),
+                tunnelState: .init(neState: .disconnecting, maskedState: .disconnecting(nil)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )
@@ -119,7 +119,7 @@
 
             mockVPNSession.status = .disconnected // Simulate the disconnection attempt finishing
             await store.receive(\.core.tunnel.tunnelStatusChanged.disconnected) {
-                $0.core.tunnel.internalState = .disconnected
+                $0.core.tunnel.neState = .disconnected
                 $0.core.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(coreStateChange(from: \.disconnecting, to: \.disconnected)) {
@@ -142,13 +142,13 @@
             await store.receive(coreStateChange(from: \.disconnected, to: \.starting))
             await store.receive(\.core.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.core.tunnel.tunnelStatusChanged.connecting) {
-                $0.core.tunnel.internalState = .connecting
+                $0.core.tunnel.neState = .connecting
                 $0.core.tunnel.maskedState = .connecting(reconnectingServerInfo)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
             await store.receive(\.core.tunnel.tunnelStatusChanged.connected) {
-                $0.core.tunnel.internalState = .connected
+                $0.core.tunnel.neState = .connected
             }
             await store.receive(\.core.tunnel.connectionFinished.success) {
                 $0.core.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: reconnectingServerInfo, connectionDate: now))
@@ -217,7 +217,7 @@
             // accurately model starting a reducer in the fully connected state yet.
             // It's not a problem, since we always start from the resolving state when running in the app.
             let coreState = CoreConnectionFeature.State(
-                tunnelState: .init(internalState: .connecting, maskedState: .connecting(initialServerInfo)),
+                tunnelState: .init(neState: .connecting, maskedState: .connecting(initialServerInfo)),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: connectionFeatures)),
                 localAgentState: .disconnected(nil)
             )

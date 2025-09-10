@@ -42,13 +42,13 @@ public struct ExtensionFeature: Reducer, Sendable {
 
     public struct State: Equatable, Sendable {
         /// The last reported state of the extension, unperturbed
-        package var internalState: NEVPNStatus
+        package var neState: NEVPNStatus
         /// Holds some extra information, giving us the ability to be more responsive with how we report state to the
         /// parent feature
         package var maskedState: ExtensionState
 
-        package init(internalState: NEVPNStatus, maskedState: ExtensionState) {
-            self.internalState = internalState
+        package init(neState: NEVPNStatus, maskedState: ExtensionState) {
+            self.neState = neState
             self.maskedState = maskedState
         }
 
@@ -126,7 +126,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connecting):
-                state.internalState = .connecting
+                state.neState = .connecting
                 // We should be transitioning into this state from `.preparingConnection`
                 // Let's try to propagate server info from this previous state.
                 let existingServerInfo: LogicalServerInfo? = state.maskedState.preparingConnection ?? nil
@@ -134,7 +134,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .none
 
             case .tunnelStatusChanged(.connected):
-                state.internalState = .connected
+                state.neState = .connected
                 if state.maskedState.is(\.connected) {
                     // When testing, we sometimes want to start off a test case with already `connected` state.
                     // But we need to subscribe to state changes, and `startObservingStateChanges` yields an initial
@@ -163,26 +163,26 @@ public struct ExtensionFeature: Reducer, Sendable {
                 }
 
             case .tunnelStatusChanged(.disconnecting):
-                state.internalState = .disconnecting
+                state.neState = .disconnecting
                 let existingError = state.maskedState.disconnecting ?? nil // Potential cause of disconnection
                 state.maskedState = .disconnecting(existingError)
                 return .none
 
             case .tunnelStatusChanged(.invalid):
-                state.internalState = .invalid
+                state.neState = .invalid
                 // A notable scenario in which the tunnel state is invalid is before the user gives the app permission
                 // to manage VPN configurations
                 state.maskedState = .disconnected(nil)
                 return logLastDisconnectEffect
 
             case .tunnelStatusChanged(.disconnected):
-                state.internalState = .disconnected
+                state.neState = .disconnected
                 let existingError = state.maskedState.disconnecting ?? nil // Potential cause of disconnection
                 state.maskedState = .disconnected(existingError)
                 return .none
 
             case .tunnelStatusChanged(.reasserting):
-                state.internalState = .reasserting
+                state.neState = .reasserting
                 // We don't need to model a reasserting status. Our tunnel should only briefly enter this state
                 // Currently, we don't even explicitly set this state in the `PacketTunnelProvider` implementation.
                 return .none
@@ -215,7 +215,7 @@ public struct ExtensionFeature: Reducer, Sendable {
                 return .send(.disconnect(.unknownServer))
 
             case let .tunnelStatusChanged(unknownFutureStatus):
-                state.internalState = unknownFutureStatus
+                state.neState = unknownFutureStatus
                 log.error("Unknown tunnel status", category: .connection, metadata: ["error": "\(unknownFutureStatus)"])
                 assertionFailure("Unknown tunnel status \(unknownFutureStatus)")
                 return .none

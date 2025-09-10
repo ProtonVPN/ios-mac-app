@@ -67,13 +67,13 @@
             await store.receive(\.tunnelStartRequestFinished.success)
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0.internalState = .connecting
+                $0.neState = .connecting
                 $0.maskedState = .connecting(logicalServerInfo)
             }
 
             await mockClock.advance(by: .milliseconds(500))
             await store.receive(\.tunnelStatusChanged.connected) {
-                $0.internalState = .connected
+                $0.neState = .connected
             }
             await store.receive(\.connectionFinished.success) {
                 $0.maskedState = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
@@ -94,7 +94,7 @@
             mockManager.connection.connectedServer = previouslyConnectedServer
             let now = Date.now
 
-            let store = TestStore(initialState: .init(internalState: .invalid, maskedState: .unknown)) {
+            let store = TestStore(initialState: .init(neState: .invalid, maskedState: .unknown)) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
@@ -103,7 +103,7 @@
 
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.connected) {
-                $0.internalState = .connected
+                $0.neState = .connected
                 $0.maskedState = .connecting(nil)
             }
             await store.receive(\.connectionFinished.success) {
@@ -138,7 +138,7 @@
 
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.invalid) {
-                $0.internalState = .invalid
+                $0.neState = .invalid
             }
 
             let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
@@ -156,6 +156,6 @@
     }
 
     extension ExtensionFeature.State {
-        static let disconnected: Self = .init(internalState: .disconnected, maskedState: .disconnected(nil))
+        static let disconnected: Self = .init(neState: .disconnected, maskedState: .disconnected(nil))
     }
 #endif

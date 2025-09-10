@@ -41,7 +41,7 @@ public extension ConnectionFeature.State {
             shouldRegisterServerChangeOnConnection: false,
             core: .init(
                 tunnelState: .init(
-                    internalState: .connected,
+                    neState: .connected,
                     maskedState: .connected(.init(logicalInfo: .init(logicalID: "abc", serverID: "abc"), connectionDate: .now))
                 ),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: keys), certificate: certificate, features: .mock)),

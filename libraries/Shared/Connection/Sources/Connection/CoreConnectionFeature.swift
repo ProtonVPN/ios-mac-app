@@ -60,7 +60,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
         public var currentNwStatus: NWPath.Status = .requiresConnection
 
         package init(
-            tunnelState: ExtensionFeature.State = .init(internalState: .invalid, maskedState: .unknown),
+            tunnelState: ExtensionFeature.State = .init(neState: .invalid, maskedState: .unknown),
             certAuthState: CertificateAuthenticationFeature.State = .idle,
             localAgentState: LocalAgentFeature.State = .disconnected(nil),
             shouldDisconnectWhenAllowed: Bool = false
@@ -442,7 +442,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
 
     private func getConnectionStage(_ state: State) -> ConnectionStage {
         guard state.tunnel.maskedState.is(\.connected) else {
-            if case .invalid = state.tunnel.internalState {
+            if case .invalid = state.tunnel.neState {
                 return .tunnel(.configuration)
             }
             switch state.tunnel.maskedState {
@@ -510,7 +510,7 @@ extension CoreConnectionFeature.State {
     /// After we subscribe to tunnel status changes, we will soon update the internal state to the appropriate
     /// value, and also update the masked state accordingly.
     public static let initialCoreConnectionState: CoreConnectionFeature.State = .init(
-        tunnelState: .init(internalState: .invalid, maskedState: .unknown),
+        tunnelState: .init(neState: .invalid, maskedState: .unknown),
         certAuthState: .idle,
         localAgentState: .disconnected(nil)
     )
