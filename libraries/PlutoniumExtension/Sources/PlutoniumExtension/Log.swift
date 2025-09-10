@@ -41,9 +41,9 @@ public func setupPlutoniumLogging() {
         let osLogHandler = OSLogHandler(formatter: OSLogFormatter())
         multiplexLogHandler = MultiplexLogHandler([osLogHandler, fileLogHandler])
 
-        os_log("Plutonium logging configured with file: %{public}s", log: OSLog.default, type: .info, logFile.path)
+        os_log("Split tunneling logging configured with file: %{public}s", log: OSLog.default, type: .info, logFile.path)
     } catch {
-        os_log("Failed to setup file logging for Plutonium: %{public}s", log: OSLog.default, type: .error, String(describing: error))
+        os_log("Failed to setup file logging for Split tunneling: %{public}s", log: OSLog.default, type: .error, String(describing: error))
         // Fallback to OSLog only
         multiplexLogHandler = MultiplexLogHandler([OSLogHandler(formatter: OSLogFormatter())])
     }
@@ -71,7 +71,7 @@ public func getPlutoniumLogFileURL(createIfMissing: Bool = true) throws -> URL {
     // Ensure directory exists
     try FileManager.default.createDirectory(at: logsDir, withIntermediateDirectories: true, attributes: nil)
 
-    let logFile = logsDir.appendingPathComponent("Plutonium-Extension.log")
+    let logFile = logsDir.appendingPathComponent("Split tunneling-Extension.log")
 
     // Create file if it doesn't exist
     if !FileManager.default.fileExists(atPath: logFile.path) {
