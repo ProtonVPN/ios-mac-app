@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "VPN 连接断开时切断网络传输，防止 IP 地址意外泄露。";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "绕过防火墙连接到本地网络中的 P2P 服务器和设备。";
+"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
 
 "_quick_settings_secureCore_note" = "Secure Core 可能会降低 VPN 速度";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "网关";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "免费版连接数";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Free connections (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus locations (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "什么是网关？";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "仍然开启";
 
-"_subuser_alert_title" = "感谢您升级到商业/Visionary计划";
+"_subuser_alert_description" = "To start your journey in Proton VPN please enable VPN connections to your account or any other sub-account.";
 
-"_subuser_alert_description1" = "要开始您的 Proton VPN 之旅，请启用与您的账户或任何其他子账户的 VPN 连接。";
-
-"_subuser_alert_description2" = "此操作只需要几分钟，完成后就可以在所有设备上登录账户保护隐私了。";
-
-"_subuser_alert_description3" = "当前没有为此账户启用 VPN 连接。要开始使用 Proton VPN，请联系您的管理员。";
-
-"_subuser_alert_enable_connections_button" = "启用 VPN 连接";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "再次登录";
+
+/* Modal title */
+"no_connections_available" = "No VPN connections available";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ask your administrator to enable VPN access for your account.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "We couldn’t load the server list.";
+
+/* Modal help text */
+"no_servers_help_string" = "If your administrator needs help enabling VPN access, send them **[these instructions.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Need help? **[Contact us](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "中等 NAT";

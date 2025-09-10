@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Απενεργοποιεί το Διαδίκτυο εάν διακοπεί η σύνδεση VPN για να αποφευχθεί η διαρροή IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Παρακάμψτε τα τείχη προστασίας για να συνδεθείτε σε διακομιστές και συσκευές P2P στο τοπικό σας δίκτυο.";
+"_quick_settings_portForwarding_description" = "Βελτιώνει τις ταχύτητες torrenting και παιχνιδιών επιτρέποντας άμεσες P2P συνδέσεις μέσω μιας καθορισμένης θύρας.";
 
 "_quick_settings_secureCore_note" = "Το Secure Core μπορεί να μειώσει την ταχύτητα του VPN";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Πύλες";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Δωρεάν συνδέσεις";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Δωρεάν συνδέσεις (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Τοποθεσίες Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Τι είναι μία πύλη;";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Ενεργοποίηση οπωσδήποτε";
 
-"_subuser_alert_title" = "Ευχαριστούμε για την αναβάθμιση σε Business/Visionary";
+"_subuser_alert_description" = "Για να ξεκινήσετε το ταξίδι σας στο Proton VPN, ενεργοποιήστε τις συνδέσεις VPN στον λογαριασμό σας ή σε οποιονδήποτε άλλο δευτερεύοντα λογαριασμό.";
 
-"_subuser_alert_description1" = "Για να ξεκινήσετε το ταξίδι σας στο Proton VPN, ενεργοποιήστε τις συνδέσεις VPN στον λογαριασμό σας ή σε οποιονδήποτε άλλο δευτερεύοντα λογαριασμό.";
-
-"_subuser_alert_description2" = "Αυτό το βήμα θα πάρει μόνο λίγα λεπτά. Μετά θα μπορείτε να συνδέεστε, και να προστατεύετε όλες τις συσκευές σας.";
-
-"_subuser_alert_description3" = "Αυτήν τη στιγμή δεν υπάρχει ενεργοποιημένη σύνδεση VPN για αυτόν τον λογαριασμό. Για να ξεκινήσετε το ταξίδι σας με το Proton VPN, επικοινωνήστε με τον διαχειριστή σας.";
-
-"_subuser_alert_enable_connections_button" = "Ενεργοποίηση συνδέσεων VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Συνδεθείτε ξανά";
+
+/* Modal title */
+"no_connections_available" = "Δεν υπάρχουν διαθέσιμες συνδέσεις VPN";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Ζητήστε από τον διαχειριστή σας να ενεργοποιήσει την πρόσβαση VPN για τον λογαριασμό σας.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Δεν ήταν δυνατή η φόρτωση της λίστας διακομιστών.";
+
+/* Modal help text */
+"no_servers_help_string" = "Εάν ο διαχειριστής σας χρειάζεται βοήθεια με την ενεργοποίηση της πρόσβασης VPN, στείλτε του **[αυτές τις οδηγίες.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Χρειάζεστε βοήθεια; **[Επικοινωνήστε μαζί μας](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Παραμετροποιήστε το NAT";

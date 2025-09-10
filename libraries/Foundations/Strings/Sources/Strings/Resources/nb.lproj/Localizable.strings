@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Deaktiverer internett hvis VPN-tilkoblingen faller ut for å forhindre utilsiktet IP-lekkasje.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Omgå brannmurer for å koble til P2P-tjenere og enheter i ditt lokale nettverk.";
+"_quick_settings_portForwarding_description" = "Forbedrer torrent- og spillhastigheter ved å tillate direkte P2P-tilkoblinger gjennom en angitt port.";
 
 "_quick_settings_secureCore_note" = "Secure Core kan redusere VPN-hastighet";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Porttjenere";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Gratis forbindelser";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Gratis forbindelser (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Plus-plasseringer (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Hva er en gateway (porttjener)?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Aktiver uansett";
 
-"_subuser_alert_title" = "Takk for oppgradering til Business/Visionary";
+"_subuser_alert_description" = "For å starte reisen din i Proton VPN, aktiver VPN-tilkoblinger til kontoen din eller en hvilken som helst annen underkonto.";
 
-"_subuser_alert_description1" = "For å starte reisen din i Proton VPN, aktiver VPN-tilkoblinger til kontoen din eller en hvilken som helst annen underkonto.";
-
-"_subuser_alert_description2" = "Dette trinnet tar bare noen få minutter. Etter det vil du kunne logge på og beskytte alle enhetene dine.";
-
-"_subuser_alert_description3" = "Det er for øyeblikket ingen VPN-tilkobling aktivert for denne kontoen. For å starte reisen din med Proton VPN, kontakt administratoren din.";
-
-"_subuser_alert_enable_connections_button" = "Aktiver VPN-forbindelser";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Logg på igjen";
+
+/* Modal title */
+"no_connections_available" = "Ingen VPN-tilkoblinger tilgjengelig";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Be administratoren din om å aktivere VPN-tilgang for kontoen din.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Vi kunne ikke laste inn tjenerlisten.";
+
+/* Modal help text */
+"no_servers_help_string" = "Hvis administratoren din trenger hjelp med å aktivere VPN-tilgang, send dem **[disse instruksjonene.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Trenger du hjelp? **[Kontakt oss](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderat NAT";

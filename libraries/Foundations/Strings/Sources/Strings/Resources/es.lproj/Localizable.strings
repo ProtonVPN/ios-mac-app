@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Desactiva internet si la conexión VPN cae para prevenir una fuga accidental de IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Improves torrenting and gaming speeds by allowing direct P2P connections through a designated port.";
+"_quick_settings_portForwarding_description" = "Mejora la velocidad de descarga de torrents y juegos permitiendo conexiones P2P directas a través de un puerto específico.";
 
 "_quick_settings_secureCore_note" = "Secure Core puede reducir la velocidad de la VPN";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Puertas de enlace";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Conexiones gratuitas";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Conexiones gratuitas (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Ubicaciones Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "¿Qué es una puerta de enlace?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Activar de todos modos";
 
-"_subuser_alert_title" = "Gracias por actualizar a Business/Visionary";
+"_subuser_alert_description" = "Para comenzar tu viaje en Proton VPN, activa las conexiones VPN en tu cuenta o en cualquier otra subcuenta.";
 
-"_subuser_alert_description1" = "Para continuar con proton VPN, activa las conexiones VPN. También tendrás que hacer esto para cualquier usuario de tu organización.";
-
-"_subuser_alert_description2" = "Este paso te llevará sólo unos minutos. Después de eso podrás iniciar sesión y proteger todos tus dispositivos.";
-
-"_subuser_alert_description3" = "Actualmente no hay ninguna conexión VPN activada para esta cuenta. Para comenzar tu viaje en Proton VPN contacta con tu administrador.";
-
-"_subuser_alert_enable_connections_button" = "Activar conexiones VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Iniciar sesión de nuevo";
+
+/* Modal title */
+"no_connections_available" = "No hay conexiones VPN disponibles";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Pide a tu administrador que active el acceso a la VPN para tu cuenta.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "No hemos podido cargar la lista de servidores.";
+
+/* Modal help text */
+"no_servers_help_string" = "Si tu administrador necesita ayuda para activar el acceso a la VPN, envíale **[estas instrucciones.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "¿Necesitas ayuda? **[Contáctanos](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderada";

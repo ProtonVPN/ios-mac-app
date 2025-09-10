@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Zakáže internet při přerušení VPN spojení, čímž zabrání úniku IP adresy.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Obejděte firewally a připojte se k P2P serverům a zařízením ve vaší místní síti.";
+"_quick_settings_portForwarding_description" = "Zvyšuje rychlost torrentů a her tím, že umožňuje přímé připojení P2P skrze určený port.";
 
 "_quick_settings_secureCore_note" = "Secure Core může snížit rychlost VPN";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Brány";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Připojení Free";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Připojení Free (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Umístění Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Co je to brána?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Přesto povolit";
 
-"_subuser_alert_title" = "Děkujeme, že jste přešli na tarif Business/Visionary";
+"_subuser_alert_description" = "Pro použití Proton VPN prosím povolte VPN připojení k vašemu účtu nebo k podřízenému účtu.";
 
-"_subuser_alert_description1" = "Pro použití Proton VPN prosím povolte VPN připojení k vašemu účtu nebo k podřízenému účtu.";
-
-"_subuser_alert_description2" = "Tento krok zabere jen několik minut. Poté se budete moci přihlásit a chránit všechna svá zařízení.";
-
-"_subuser_alert_description3" = "V současné době není pro tento účet povoleno žádné připojení VPN. Chcete-li začít používat Proton VPN, kontaktujte prosím svého správce.";
-
-"_subuser_alert_enable_connections_button" = "Povolit VPN připojení";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Přihlásit se znovu";
+
+/* Modal title */
+"no_connections_available" = "Nejsou dostupná žádná VPN připojení";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Požádejte svého správce, aby povolil přístup VPN pro váš účet.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Nepodařilo se nám načíst seznam serverů.";
+
+/* Modal help text */
+"no_servers_help_string" = "Pokud váš správce potřebuje pomoc s povolením přístupu VPN, odešlete mu **[tyto instrukce.](%@)**";
+
+/* Modal help text */
+"no_servers_contact_us" = "Potřebujete pomoc? **[Kontaktujte nás](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "Moderate NAT";

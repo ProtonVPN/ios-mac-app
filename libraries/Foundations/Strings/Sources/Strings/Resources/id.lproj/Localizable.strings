@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Menonaktifkan internet pada saat koneksi VPN terputus untuk mencegah kebocoran IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Melewati firewall untuk menghubungkan Anda ke server dan perangkat P2P dalam jaringan lokal Anda.";
+"_quick_settings_portForwarding_description" = "Meningkatkan keecepatan torrent dan gaming dengan mengizinkan koneksi P2P secara langsung melalui port yang ditentukan.";
 
 "_quick_settings_secureCore_note" = "Secure Core dapat menurunkan kecepatan VPN";
 
@@ -1520,59 +1520,59 @@
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Koneksi Anda akan dimulai ulang untuk mengubah mode Smart Protokol.";
 
-"_sysex_tutorial_title_setup" = "Set up Proton VPN";
+"_sysex_tutorial_title_setup" = "Atur Proton VPN";
 
-"_sysex_tutorial_title_enable" = "Enable system extensions to continue";
+"_sysex_tutorial_title_enable" = "Aktifkan ekstensi sistem untuk melanjutkan";
 
-"_sysex_tutorial_title_enable_proton" = "Enable Proton VPN system extensions";
+"_sysex_tutorial_title_enable_proton" = "Aktifkan ekstensi sistem Proton VPN";
 
-"_sysex_tutorial_how_to_enable" = "How to enable extensions";
+"_sysex_tutorial_how_to_enable" = "Cara mengaktifkan ekstensi";
 
-"_sysex_tutorial_subtitle_app" = "To use Proton VPN, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_app" = "Untuk menggunakan Proton VPN, Anda perlu mengaktifkan ekstensi sistem berikut pada perangkat Mac Anda:";
 
-"_sysex_tutorial_subtitle_st" = "To use split tunneling, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_st" = "Untuk menggunakan split tunneling, Anda perlu mengaktifkan ekstensi sistem berikut pada perangkat Mac Anda:";
 
-"_sysex_tutorial_subtitle_wg" = "To use WireGuard, you need to enable the following system extensions on your Mac:";
+"_sysex_tutorial_subtitle_wg" = "Untuk menggunakan WireGuard, Anda perlu mengaktifkan ekstensi sistem berikut pada perangkat Mac Anda:";
 
-"_sysex_tutorial_subtitle_features" = "To use certain VPN features (and most protocols), you need to have Proton VPN system extensions enabled on your Mac.";
+"_sysex_tutorial_subtitle_features" = "Untuk menggunakan fitur VPN tertentu (dan sebagian besar protokol), Anda perlu mengaktifkan ekstensi sistem Proton VPN pada perangkat Mac Anda.";
 
-"_sysex_tutorial_step_click_open" = "Click **Open Network Extensions.**";
+"_sysex_tutorial_step_click_open" = "Klik **Buka Ekstensi Jaringan.**";
 
-"_sysex_tutorial_step_click_security" = "Click **Open System Settings**, then go to **Privacy & Security → Security.**";
+"_sysex_tutorial_step_click_security" = "Klik **Buka Pengaturan Sistem**, lalu buka **Privasi & Keamanan → Keamanan.**";
 
-"_sysex_tutorial_step_click_allow" = "You should see a message that says \"System software from application ProtonVPN was blocked.\". Click **Allow**.";
+"_sysex_tutorial_step_click_allow" = "Anda seharusnya akan melihat pesan yang berbunyi \"Perangkat lunak sistem dari aplikasi ProtonVPN diblokir.\". Klik **Izinkan**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Turn on the **WireGuard** and **split tunneling** switches, then click **Done**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Nyalakan tombol **WireGuard** dan **split tunneling**, lalu klik **Selesai**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Turn on the **split tunneling** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Nyalakan tombol **split tunneling**, lalu klik **Selesai**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Turn on the **WireGuard** switch, then click **Done**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Nyalakan tombol **WireGuard**, lalu klik **Selesai**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Turn on the extensions you need, then click **Done**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Aktifkan ekstensi yang Anda butuhkan, lalu klik **Selesai**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Turn on the extensions you need, then click **OK**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Aktifkan ekstensi yang Anda butuhkan, lalu klik **OK**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Turn on the **WireGuard** and **split tunneling** switches, then click **OK**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Nyalakan tombol **WireGuard** dan **split tunneling**, lalu klik **OK**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Turn on the **split tunneling** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Nyalakan tombol **split tunneling**, lalu klik **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Nyalakan tombol **WireGuard**, lalu klik **OK**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Autorisir diri Anda dengan kata sandi atau Touch ID apabila diminta.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Autorisir diri Anda dengan Touch ID atau kata sandi apabila diminta. Pada perangkat tertentu, Anda mungkin juga perlu untuk mengeklik tombol yang bertuliskan **Rincian**.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Mengaktifkan protokol VPN WireGuard. Anda akan memerlukan protokol ini untuk dapat terhubung ke sebagian besar server VPN.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Memungkinkan Anda untuk mengecualikan aplikasi dan alamat IP yang terpercaya dari koneksi VPN Anda. Fitur Plus.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Buka Ekstensi Jaringan";
 
 "_sysex_open_system_settings" = "Buka Pengaturan Sistem";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Tidak membantu?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Butuh bantuan?";
 
 "_sysex_settings_description" = "Proton VPN membutuhkan modul System Extension untuk dapat mengaktifkan Smart Protocol, OpenVPN, dan WireGuard.";
 
@@ -1698,8 +1698,14 @@
 
 "_locations_gateways" = "Gateway";
 
-/* Header before the list of connections available for free users (in the country list) */
+/* Header of the connections list for free users */
 "_connections_free" = "Koneksi Free";
+
+/* Header of the countries list for free users */
+"_connections_free_with_count" = "Koneksi Free (%@)";
+
+/* Header of the countries list for paid users */
+"_connections_paid_with_count" = "Lokasi Plus (%@)";
 
 /* Gateways info modals title (both iOS and macOS) */
 "_gateways_modal_title" = "Apa itu gateway?";
@@ -1838,17 +1844,25 @@
 
 "_neks_t2_connect" = "Tetap aktifkan";
 
-"_subuser_alert_title" = "Terima kasih karena telah meningkatkan ke Business/Visionary";
+"_subuser_alert_description" = "Untuk mulai menggunakan Proton VPN, silakan tetapkan koneksi VPN pada akun Anda atau sub-akun lainnya.";
 
-"_subuser_alert_description1" = "Untuk melanjutkan ke Proton VPN, mohon aktifkan koneksi VPN ke akun ini. Anda juga akan perlu untuk melakukan hal yang sama bagi para pengguna lain pada organisasi Anda.";
-
-"_subuser_alert_description2" = "Langkah ini hanya akan memakan waktu beberapa menit. Setelahnya, Anda akan dapat masuk dan melindungi seluruh perangkat Anda.";
-
-"_subuser_alert_description3" = "Akun ini sedang tidak memiliki koneksi VPN yang aktif. Untuk mulai menggunakan Proton VPN, silakan hubungi administrator Anda.";
-
-"_subuser_alert_enable_connections_button" = "Aktifkan koneksi VPN";
-
+/* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Masuk kembali";
+
+/* Modal title */
+"no_connections_available" = "Tidak ada koneksi VPN yang tersedia";
+
+/* Modal subtitle */
+"no_servers_subtitle" = "Mintalah administrator Anda untuk mengaktifkan akses VPN bagi akun Anda.";
+
+/* Modal subtitle */
+"servers_loading_error_subtitle" = "Kami tidak dapat memuat daftar server.";
+
+/* Modal help text */
+"no_servers_help_string" = "Apabila administrator Anda memerlukan bantuan untuk mengaktifkan akses VPN, kirimkan **[instruksi ini](%@)** kepada mereka.";
+
+/* Modal help text */
+"no_servers_contact_us" = "Butuh bantuan? **[Hubungi kami](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT Moderat";
