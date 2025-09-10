@@ -80,8 +80,10 @@
 		661C76D12DE48E04005AE583 /* HermesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661C76D02DE48E00005AE583 /* HermesWindowController.swift */; };
 		663552142DB7D41E0012B712 /* HermesNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552132DB7D4160012B712 /* HermesNotifications.swift */; };
 		663552162DB7D4920012B712 /* HermesDefinitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663552152DB7D48F0012B712 /* HermesDefinitions.swift */; };
+		66474BD92E7083120058726C /* AnyTwoFactorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66474BD82E70830A0058726C /* AnyTwoFactorView.swift */; };
 		665897452DE5F95300295938 /* HermesUI-macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665897442DE5F95300295938 /* HermesUI-macOS.swift */; };
 		66A8A0CB2DBA8B4C0064CB10 /* HermesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */; };
+		66A9A7F42E71B8BE00846A1E /* AnyTwoFactorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A9A7F32E71B8B700846A1E /* AnyTwoFactorViewModel.swift */; };
 		66FC40D32DA94A7D0010CD8D /* HermesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */; };
 		66FEF8792B7A680F00452A8D /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FEF8782B7A680F00452A8D /* OverlayViewController.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
@@ -622,8 +624,10 @@
 		661C76D02DE48E00005AE583 /* HermesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesWindowController.swift; sourceTree = "<group>"; };
 		663552132DB7D4160012B712 /* HermesNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesNotifications.swift; sourceTree = "<group>"; };
 		663552152DB7D48F0012B712 /* HermesDefinitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesDefinitions.swift; sourceTree = "<group>"; };
+		66474BD82E70830A0058726C /* AnyTwoFactorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTwoFactorView.swift; sourceTree = "<group>"; };
 		665897442DE5F95300295938 /* HermesUI-macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HermesUI-macOS.swift"; sourceTree = "<group>"; };
 		66A8A0CA2DBA8B490064CB10 /* HermesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModelTests.swift; sourceTree = "<group>"; };
+		66A9A7F32E71B8B700846A1E /* AnyTwoFactorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyTwoFactorViewModel.swift; sourceTree = "<group>"; };
 		66FC40D22DA94A7A0010CD8D /* HermesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HermesViewModel.swift; sourceTree = "<group>"; };
 		66FEF8782B7A680F00452A8D /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewController.swift; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1250,6 +1254,14 @@
 				665897442DE5F95300295938 /* HermesUI-macOS.swift */,
 			);
 			path = Hermes;
+			sourceTree = "<group>";
+		};
+		66474BD72E7083050058726C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				66474BD82E70830A0058726C /* AnyTwoFactorView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6E59328A6167356242BBBD90 /* Windows */ = {
@@ -1962,6 +1974,7 @@
 		F36ECE032611DBAC0089B898 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				66474BD72E7083050058726C /* Views */,
 				F34AC17527F33E1A0007FF93 /* Services */,
 				F36ECE042611DBB30089B898 /* ViewControllers */,
 				F36ECE052611DBDF0089B898 /* ViewModels */,
@@ -1991,6 +2004,7 @@
 		F36ECE052611DBDF0089B898 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				66A9A7F32E71B8B700846A1E /* AnyTwoFactorViewModel.swift */,
 				EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */,
 				E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */,
 			);
@@ -3356,6 +3370,7 @@
 				A4A7C7622E437F3D002652F2 /* QuickSettingsManager.swift in Sources */,
 				E5C4EF3B29B611C20013ACB2 /* SystemExtensionGuideViewController.swift in Sources */,
 				E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */,
+				66474BD92E7083120058726C /* AnyTwoFactorView.swift in Sources */,
 				E5EB08C6281FD2B900F29B20 /* TwoFactorView.swift in Sources */,
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
 				F34AC17927F345BB0007FF93 /* NSProgressIndicator+Extensions.swift in Sources */,
@@ -3433,6 +3448,7 @@
 				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,
 				E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */,
 				EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */,
+				66A9A7F42E71B8BE00846A1E /* AnyTwoFactorViewModel.swift in Sources */,
 				E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */,
 				EE2FE5931F5ECD6B00ABA7DE /* ConnectionOverlay.swift in Sources */,
 				D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */,
