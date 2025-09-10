@@ -75,6 +75,17 @@ final class LoginViewController: NSViewController {
         return view
     }()
 
+    private lazy var anyTwoFactorContainerView: AnyTwoFactorView = {
+        let view = AnyTwoFactorView(viewModel: .init(loginViewModel: self.viewModel, twoFactorDelegate: self))
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        view.topAnchor.constraint(equalTo: self.logoImage.bottomAnchor, constant: 48).isActive = true
+        view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        return view
+    }()
+
     #if DEBUG
         private lazy var environmentSelectionView: NSHostingView<EnvironmentSelectorDesktopView> = {
             let environmentsView = EnvironmentSelectorDesktopView { [weak self] in
@@ -216,6 +227,8 @@ final class LoginViewController: NSViewController {
     private func setupTwoFactorView() {
         twoFactorView.isHidden = true
         twoFactorView.delegate = self
+
+        anyTwoFactorContainerView.isHidden = true
     }
 
     private func setupOnboardingView() {
@@ -316,7 +329,14 @@ final class LoginViewController: NSViewController {
                 self?.reachabilityCheckIndicator.stopAnimation(nil)
             }
         }
-        viewModel.twoFactorRequired = { [weak self] in self?.presentTwoFactorScreen(withErrorDescription: nil) }
+        viewModel.twoFactorRequired = { [weak self] authOptions in
+            guard let viewModel = self?.anyTwoFactorContainerView.viewModel else {
+                assertionFailure()
+                return
+            }
+            viewModel.authenticationOptions = authOptions
+            self?.presentTwoFactorScreen(twoFactorViewModel: viewModel, withErrorDescription: nil)
+        }
         viewModel.ssoChallengeReceived = { [weak self] request in
             DispatchQueue.main.async { [weak self] in
                 self?.showSSOWebView(request: request)
@@ -351,16 +371,32 @@ final class LoginViewController: NSViewController {
         }
     #endif
 
-    private func presentTwoFactorScreen(withErrorDescription description: String?) {
-        twoFactorView.warningMessage = description
+    private func presentTwoFactorScreen(twoFactorViewModel _: AnyTwoFactorViewModel, withErrorDescription description: String?) {
+        switch viewModel.twoFactorViewKind {
+        case .none:
+            assertionFailure("This method shouldn't be called with this TwoFactorViewKind value")
+            fallthrough
+        case .askTOTP:
+            twoFactorView.warningMessage = description
 
-        onboardingView.isHidden = true
-        twoFactorView.isHidden = false
-        logoImage.isHidden = false
+            onboardingView.isHidden = true
+            twoFactorView.isHidden = false
+            logoImage.isHidden = false
 
-        _ = twoFactorView.becomeFirstResponder()
+            _ = twoFactorView.becomeFirstResponder()
 
-        loadingView.animate(false)
+            loadingView.animate(false)
+        case .askAny2FA:
+            // twoFactorView.warningMessage = description
+
+            onboardingView.isHidden = true
+            anyTwoFactorContainerView.isHidden = false
+            logoImage.isHidden = false
+
+            _ = twoFactorView.becomeFirstResponder()
+
+            loadingView.animate(false)
+        }
     }
 
     private func showSSOWebView(request: URLRequest) {
@@ -374,14 +410,15 @@ final class LoginViewController: NSViewController {
         onboardingView.isHidden = true
         logoImage.isHidden = true
         twoFactorView.isHidden = true
+        anyTwoFactorContainerView.isHidden = true
 
         loadingView.isHidden = false
         loadingView.animate(true)
     }
 
     private func handleLoginFailure(_ errorMessage: String?, _ errorCode: Int? = nil) {
-        if viewModel.isTwoFactorStep {
-            presentTwoFactorScreen(withErrorDescription: errorMessage)
+        if viewModel.twoFactorViewKind.shouldShowTwoFactorScreen, let twoFactorViewModel = viewModel.twoFactorViewModel {
+            presentTwoFactorScreen(twoFactorViewModel: twoFactorViewModel, withErrorDescription: errorMessage)
         } else if let errorCode, errorCode == ProtonCoreServices.APIErrorCode.switchToSSOError {
             signInWithSSOButtonAction()
             presentOnboardingScreen(withErrorDescription: errorMessage, warningType: .info)

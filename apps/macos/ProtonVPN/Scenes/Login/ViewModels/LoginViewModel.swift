@@ -44,7 +44,22 @@ struct LoginViewModelError: Swift.Error {
     let localizedDescription: String
 }
 
-final class LoginViewModel {
+final class LoginViewModel: ObservableObject {
+    enum TwoFactorViewKind {
+        case none
+        case askTOTP
+        case askAny2FA
+
+        var shouldShowTwoFactorScreen: Bool {
+            switch self {
+            case .none:
+                false
+            case .askTOTP, .askAny2FA:
+                true
+            }
+        }
+    }
+
     typealias Factory =
         AppSessionManagerFactory &
         CoreAlertServiceFactory & NavigationServiceFactory &
@@ -75,11 +90,16 @@ final class LoginViewModel {
     var logInFailure: ((String?, Int?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
     var checkInProgress: ((Bool) -> Void)?
-    var twoFactorRequired: (() -> Void)?
+    var twoFactorRequired: ((AuthenticationOptions?) -> Void)?
     var ssoChallengeReceived: ((URLRequest) -> Void)?
     var initialError: String?
 
-    private(set) var isTwoFactorStep: Bool = false
+    private(set) var twoFactorViewKind: TwoFactorViewKind = .none
+    private(set) var twoFactorViewModel: AnyTwoFactorViewModel? {
+        didSet {
+            print("Hey")
+        }
+    }
 
     init(factory: Factory, initialError: String? = nil) {
         self.factory = factory
@@ -197,8 +217,15 @@ final class LoginViewModel {
         }
     }
 
+    func provideFido(signature: Fido2Signature) {
+        logInInProgress?()
+        loginService.provideFido2Signature(signature) { [weak self] result in
+            self?.handleLoginResult(result: result)
+        }
+    }
+
     func cancelTwoFactor() {
-        isTwoFactorStep = false
+        twoFactorViewKind = .none
     }
 
     func updateAvailableDomains() {
@@ -230,9 +257,12 @@ final class LoginViewModel {
                         break
                     }
                 }
-            case .askTOTP, .askAny2FA:
-                isTwoFactorStep = true
-                twoFactorRequired?()
+            case .askTOTP:
+                twoFactorViewKind = .askTOTP
+                twoFactorRequired?(nil)
+            case let .askAny2FA(authenticationOptions):
+                twoFactorViewKind = .askAny2FA
+                twoFactorRequired?(authenticationOptions)
             case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress, .askFIDO2:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
                 logInFailure?(Localizable.loginUnsupportedState, nil)
@@ -271,7 +301,7 @@ final class LoginViewModel {
             // after entering wrong 2FA code 3 times the access token gets invalidated
             // the users cannot continue entering the 2FA code, they need to start over
             // the state is reset back to the username + password form and error is shown
-            isTwoFactorStep = false
+            twoFactorViewKind = .none
             logInFailure?(message, nil)
         case let .invalidCredentials(message: message), let .invalid2FACode(message: message):
             // invalid credentials or 2FA code entered, show the most specific error message
@@ -312,15 +342,15 @@ final class LoginViewModel {
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.subuserWithoutSessions = error {
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .connectionsDisabled))
-                self.isTwoFactorStep = false
+                self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.noConnectionsAvailable = error {
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .noServers))
-                self.isTwoFactorStep = false
+                self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else if case CommonVpnError.logicalsEndpointFailed = error {
                 self.alertService.push(alert: SubuserWithoutConnectionsAlert(mode: .loadingError))
-                self.isTwoFactorStep = false
+                self.twoFactorViewKind = .none
                 self.logInFailure?(nil, nil)
             } else {
                 self.logInFailure?(error.localizedDescription, nil)
