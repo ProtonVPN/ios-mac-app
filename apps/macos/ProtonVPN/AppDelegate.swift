@@ -293,16 +293,6 @@ extension AppDelegate: NSApplicationDelegate {
         }
     }
 
-    private func restartApp() {
-        log.info("Restart app", category: .os)
-        let appPath = Bundle.main.bundleURL.absoluteString
-        let relaunchAppProcess = Process()
-        relaunchAppProcess.launchPath = "/usr/bin/open"
-        relaunchAppProcess.arguments = [appPath]
-        relaunchAppProcess.launch()
-        exit(0)
-    }
-
     private func setNSCodingModuleName() {
         // Force all encoded objects to be decoded and encoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")

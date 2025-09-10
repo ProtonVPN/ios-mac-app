@@ -49,12 +49,6 @@ class AppConstants {
         static let uninstallSysexesOnTerminate = "UninstallSysexesOnTerminate"
     }
 
-    enum FilePaths {
-        static let sandbox = ("~/Library/Containers/ch.protonvpn.mac/Data/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
-        static let starterSandbox = ("~/Library/Containers/ch.protonvpn.ProtonVPNStarter/" as NSString).expandingTildeInPath
-        static let userDefaults = ("~/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
-    }
-
     enum Filenames {
         static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
