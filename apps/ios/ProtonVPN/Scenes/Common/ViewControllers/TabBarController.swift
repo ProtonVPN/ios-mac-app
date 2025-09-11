@@ -30,18 +30,10 @@ final class TabBarController: UITabBarController {
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
 
-    var viewModel: TabBarViewModel
-
-    init(viewModel: TabBarViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-        viewModel.delegate = self
-        delegate = self
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    var viewModel: TabBarViewModel? {
+        didSet {
+            viewModel?.delegate = self
+        }
     }
 
     override func viewDidLoad() {
@@ -51,6 +43,7 @@ final class TabBarController: UITabBarController {
             traitOverrides.horizontalSizeClass = .compact
         }
 
+        delegate = self
         setupView()
         if !FeatureFlagsRepository.isRedesigniOSEnabled {
             setupQuickConnectView()
@@ -59,7 +52,8 @@ final class TabBarController: UITabBarController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.stateChanged()
+
+        viewModel?.stateChanged()
     }
 
     func setupView() {
@@ -92,7 +86,7 @@ final class TabBarController: UITabBarController {
 
     @objc
     private func quickConnectTapped(_: UIButton) {
-        viewModel.quickConnectTapped()
+        viewModel?.quickConnectTapped()
     }
 }
 
@@ -132,15 +126,15 @@ extension TabBarController: UITabBarControllerDelegate {
 
         if viewController is ProtonQCViewController {
             return false
-        }
-        if viewController == viewControllers?.last { // settings
+        } else if let viewModel, viewController == viewControllers?.last { // settings
             return viewModel.settingShouldBeSelected()
+        } else {
+            return true
         }
-        return true
     }
 
     func tabBarController(_: UITabBarController, didSelect viewController: UIViewController) {
-        if let navigationController = viewController as? UINavigationController,
+        if let viewModel, let navigationController = viewController as? UINavigationController,
            navigationController.visibleViewController is SettingsViewController {
             viewModel.settingsTabTapped()
         }
