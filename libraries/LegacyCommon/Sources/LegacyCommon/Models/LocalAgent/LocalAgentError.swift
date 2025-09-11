@@ -73,6 +73,9 @@ enum LocalAgentError: Error {
     case certificateNotProvided
     case serverSessionDoesNotMatch
     case systemError(LocalAgentErrorSystemError)
+    case tfaRequired
+    case tfaExpired
+    case tfaLocationChanged
 }
 
 extension LocalAgentError {
@@ -122,6 +125,12 @@ extension LocalAgentError {
             return .certificateNotProvided
         case 86202: // Server session doesn't match: Use the correct ed25519/x25519 key
             return .serverSessionDoesNotMatch
+        case 86120: // The server requires a more recent 2FA, for an unspecified reason
+            return .tfaRequired
+        case 86121: // The server requires a more recent 2FA, 2FA validity has expired
+            return .tfaExpired
+        case 86122: // The server requires a more recent 2FA, as it's a new connection or the client address has roamed
+            return .tfaLocationChanged
         case 86211:
             return .systemError(.netshield)
         case 86226:

@@ -82,6 +82,40 @@ private struct SwiftUITwoFactorView: NSViewRepresentable {
     }
 }
 
+private struct SwiftUILoginButton: NSViewRepresentable {
+    @Binding var isEnabled: Bool
+    let action: ButtonAction
+
+    func makeNSView(context: Context) -> LoginButton {
+        let button = LoginButton()
+        button.displayTitle = Localizable.authenticate
+        button.target = context.coordinator
+        button.action = #selector(Coordinator.onButtonTapped)
+        return button
+    }
+
+    func updateNSView(_ nsView: LoginButton, context _: Context) {
+        nsView.isEnabled = isEnabled
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(buttonAction: action)
+    }
+
+    final class Coordinator: NSObject {
+        let buttonAction: ButtonAction
+
+        init(buttonAction: @escaping ButtonAction) {
+            self.buttonAction = buttonAction
+        }
+
+        @objc
+        func onButtonTapped(sender _: Any?) {
+            buttonAction()
+        }
+    }
+}
+
 @MainActor
 struct HardwareKeyTwoFactorView: View {
     let onAuthenticateAction: () -> Void
@@ -92,15 +126,29 @@ struct HardwareKeyTwoFactorView: View {
                 Image("login-hardware-key")
                     .resizable()
                     .frame(width: 292, height: 150)
-                Text("Insert the U2F or FIDO key linked to your Proton Account. Learn more") // TODO: Learn more Link
+
+                Text(
+                    base: "Insert the U2F or FIDO key linked to your Proton Account. Learn more",
+                    linkText: "Learn more",
+                    urlString: VPNLink.fido.urlString
+                )
+                .foregroundStyle(Color(.text, .weak))
+                .multilineTextAlignment(.leading)
             }
 
-            Button(Localizable.authenticate) {
+            Spacer()
+                .frame(height: 66.0)
+
+            SwiftUILoginButton(isEnabled: .constant(true)) {
                 onAuthenticateAction()
             }
-            .buttonStyle(ThemeButtonStyle(padding: .small, style: .primary))
+            .frame(height: 40.0)
+            .frame(minWidth: 150.0)
+            .fixedSize(horizontal: true, vertical: false)
+
+            Spacer()
         }
-        .padding()
+        .padding(.horizontal, .themeSpacing24)
     }
 }
 
@@ -173,8 +221,8 @@ struct AnyTwoFactorSwiftUIView: View {
             } message: { error in
                 Text(error.recoverySuggestion ?? Localizable.genericErrorTitle)
             }
-            .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical)
         }
     }
 }
@@ -187,5 +235,20 @@ private extension AnyTwoFactorSwiftUIView.TwoFactorKind {
         case .hardwareKey:
             "Security key"
         }
+    }
+}
+
+private extension Text {
+    init(base: some StringProtocol, linkText: some StringProtocol, urlString: String) {
+        var attributedString = AttributedString(base)
+        attributedString.font = .themeFont(.callout(emphasised: false))
+
+        if let linkRange = attributedString.range(of: linkText) {
+            attributedString[linkRange].link = URL(string: urlString)!
+            attributedString[linkRange].font = Font.themeFont(.callout(emphasised: true))
+            attributedString[linkRange].foregroundColor = Color(.text, .interactive)
+        }
+
+        self.init(attributedString)
     }
 }

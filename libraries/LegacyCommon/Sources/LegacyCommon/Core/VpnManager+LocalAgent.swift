@@ -326,6 +326,19 @@ extension VpnManager: LocalAgentDelegate {
         case let .systemError(error):
             log.error("Local agent reported system error for \(error), the setting will be reverted, showing alert to the user", category: .localAgent, event: .error)
             alertService?.push(alert: DomainErrorAlert(alert: error.alert))
+        case .tfaExpired, .tfaRequired, .tfaLocationChanged:
+            log.error("Two factor authentication required", metadata: ["reason": "\(error)"])
+            alertService?.push(
+                alert: TwoFactorAuthenticationRequiredAlert(
+                    // TODO: Open appropriate link
+                    // openTFAHandler: {
+                    //     @Dependency(\.linkOpener) var linkOpener
+                    //     linkOpener.open(.fidoJail)
+                    // },
+                    disconnectHandler: {
+                        self.disconnect {}
+                    }
+                ))
         }
     }
 

@@ -99,6 +99,8 @@ public enum VPNLink: String, CaseIterable {
     case dedicatedIps = "https://protonvpn.com/support/dedicated-ips"
     case t2ChipKnowledgeBase = "https://protonvpn.com/support/macos-t2-chip-kill-switch"
 
+    case fido = "https://proton.me/support/two-factor-authentication-2fa"
+
     public var url: URL {
         // All URLs get tested in URLTests
         guard let url = URL(string: urlString) else {

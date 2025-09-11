@@ -229,6 +229,9 @@ extension LocalAgentError: AlertConvertibleError {
              .systemError,
              .unknown:
             break
+        case .authenticationError:
+            // TODO: `Alert` conforming 2FA alert here
+            break
         }
         return .connectionFailedAlert
     }

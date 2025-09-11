@@ -387,8 +387,6 @@ final class LoginViewController: NSViewController {
 
             loadingView.animate(false)
         case .askAny2FA:
-            // twoFactorView.warningMessage = description
-
             onboardingView.isHidden = true
             anyTwoFactorContainerView.isHidden = false
             logoImage.isHidden = false
@@ -444,6 +442,7 @@ final class LoginViewController: NSViewController {
 
         onboardingView.isHidden = false
         twoFactorView.isHidden = true
+        anyTwoFactorContainerView.isHidden = true
         loadingView.isHidden = true
 
         #if DEBUG

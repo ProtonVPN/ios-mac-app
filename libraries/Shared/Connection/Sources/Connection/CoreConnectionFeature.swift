@@ -375,10 +375,15 @@ public struct CoreConnectionFeature: Reducer, Sendable {
     private func effectToResolve(error: LocalAgentError) -> Effect<Action> {
         switch error.resolutionStrategy {
         case .none:
-            .none
+            return .none
+
+        case let .showAlert(alert):
+            @Dependency(\.pushAlert) var pushAlert
+            pushAlert(alert)
+            return .none
 
         case .disconnect(.immediately):
-            .merge(
+            return .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 certificateRefreshCancellation,
                 .send(.localAgent(.disconnect(.agentError(error)))),
@@ -386,7 +391,7 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .disconnect(.withNewKeys):
-            .merge(
+            return .merge(
                 .cancel(id: CancelID.connectionTimeout),
                 certificateRefreshCancellation,
                 .send(.certAuth(.regenerateKeys)), // also removes the certificate
@@ -395,13 +400,13 @@ public struct CoreConnectionFeature: Reducer, Sendable {
             )
 
         case .reconnect(.withNewCertificate):
-            .concatenate(
+            return .concatenate(
                 .send(.localAgent(.disconnect(nil))),
                 .send(.certAuth(.loadAuthenticationData)) // will refresh our certificate
             )
 
         case .reconnect(.withExistingCertificate):
-            .concatenate(
+            return .concatenate(
                 .send(.localAgent(.disconnect(nil))),
                 .send(.certAuth(.loadAuthenticationData)) // *may* refresh our certificate
             )
