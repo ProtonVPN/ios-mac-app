@@ -52,6 +52,21 @@ public enum LocalAgentErrorSystemError: FourCharCode, ProtonVPNError, AlertConve
     }
 }
 
+public enum LocalAgentTwoFactorAuthenticationError: FourCharCode, ProtonVPNError {
+    public static let errorDomain = "LocalAgent2FAErrorDomain"
+
+    /// The server requires a more recent 2FA, for an unspecified reason.
+    case authenticationRequired = "LA2R"
+    /// The server requires a more recent 2FA, 2FA validity has expired.
+    /// This is more specific than `authenticationRequired` to give the user an explanation, but the behavior is
+    /// exactly the same.
+    case authenticationExpired = "LA2E"
+    /// The server requires a more recent 2FA, as it’s a new connection or the client address has roamed.
+    /// From the client perspective, this can be handled as `authenticationRequired` (if the client supports it),
+    /// or ad-interim by asking the user to provide a 2FA via the browser.
+    case authenticationLocationChanged = "LA2L"
+}
+
 /// A collection of errors that can be reported by the Local Agent.
 /// Each case is defined with an appropriate resolution strategy.
 /// For more information, check [Shared VPN Libraries](https://github.com/ProtonVPN/go-vpn-lib/tree/master/localAgent)
@@ -108,6 +123,10 @@ public enum LocalAgentError: ProtonVPNError {
 
     /// Feature could not be set - try again or on another server
     case systemError(LocalAgentErrorSystemError)
+
+    /// Server requires two factor authentication
+    case authenticationError(LocalAgentTwoFactorAuthenticationError)
+
     case unknown(code: Int)
 
     public var charCode: FourCharCode {
@@ -150,8 +169,10 @@ public enum LocalAgentError: ProtonVPNError {
             "LCNP"
         case .serverSessionDoesNotMatch:
             "LSNM"
-        case .systemError:
-            "LSER"
+        case let .systemError(systemError):
+            systemError.charCode
+        case let .authenticationError(authError):
+            authError.charCode
         case .unknown:
             "LUNK"
         }

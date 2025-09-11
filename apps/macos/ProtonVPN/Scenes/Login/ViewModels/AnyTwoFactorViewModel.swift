@@ -108,6 +108,7 @@ final class AnyTwoFactorViewModel: NSObject {
         case let .securityKeyPublicKey(signature), let .platformPublicKey(signature):
             loginViewModel.provideFido(signature: signature)
         case let .error(error):
+            showErrorAlert = true
             twoFactorError = .wrapped(error)
         }
     }
@@ -134,6 +135,7 @@ extension AnyTwoFactorViewModel: ASAuthorizationControllerDelegate {
             continuation.yield(.error(Error.missingAuthenticationOptions))
             return
         }
+
         switch authorization.credential {
         case let credentialAssertion as ASAuthorizationSecurityKeyPublicKeyCredentialAssertion:
             let signature = Fido2Signature(credentialAssertion: credentialAssertion, authenticationOptions: authenticationOptions)
@@ -166,6 +168,34 @@ extension AnyTwoFactorViewModel: ASAuthorizationControllerPresentationContextPro
 }
 
 extension AnyTwoFactorViewModel.Error: ProtonVPNError {
+    var recoverySuggestion: String? {
+        "An error occured (\(errorCodeString)). Please retry."
+    }
+
+    var errorDescription: String? {
+        switch self {
+        case .missingAuthenticationOptions:
+            "Missing authentication options"
+        case .unknownAuthorizationCredentials:
+            "Unknown authorization credentials"
+        case .authenticationServicesFailure:
+            "Authentication Services failure"
+        case let .wrapped(error):
+            error.localizedDescription
+        }
+    }
+
+    var underlyingError: (any Error)? {
+        switch self {
+        case let .authenticationServicesFailure(error):
+            error
+        case let .wrapped(protonVPNError):
+            protonVPNError
+        case .missingAuthenticationOptions, .unknownAuthorizationCredentials:
+            nil
+        }
+    }
+
     var charCode: FourCharCode {
         switch self {
         case .missingAuthenticationOptions:

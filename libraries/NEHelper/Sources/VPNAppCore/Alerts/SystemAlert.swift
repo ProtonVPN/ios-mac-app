@@ -956,6 +956,30 @@ public final class DisconnectToSignInAlert: SystemAlert {
     }
 }
 
+/// Shown when the user must perform an action to authenticate themselves to regain VPN connectivity
+// TODO: Localize this alert
+public final class TwoFactorAuthenticationRequiredAlert: SystemAlert {
+    public var title: String? = "2FA Required"
+    public var message: String? = """
+    You are connected to the VPN, but all traffic is blocked.
+    You need to go to the authentication page provided by security and authenticate with your hardware key.
+    After that the traffic will be enabled.
+    """
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(
+        // openTFAHandler: @escaping () -> Void,
+        disconnectHandler: (() -> Void)? = nil
+    ) {
+        // Once the appropriate URL is available, replace the OK action with one to open the URL
+        // actions.append(AlertAction(title: "Open 2FA", style: .confirmative, handler: openTFAHandler))
+        actions.append(AlertAction(title: "OK", style: .confirmative, handler: {}))
+        actions.append(AlertAction(title: "Disconnect", style: .cancel, handler: disconnectHandler))
+    }
+}
+
 #if canImport(SystemExtensions)
     public final class SysexEnabledAlert: SystemAlert {
         public var title: String? = Localizable.sysexEnabledTitle

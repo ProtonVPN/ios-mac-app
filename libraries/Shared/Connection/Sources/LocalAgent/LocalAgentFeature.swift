@@ -26,6 +26,7 @@ import class GoLibs.LocalAgentFeatures
 import Domain
 import Ergonomics
 import Strings
+import VPNAppCore
 
 #if canImport(UIKit)
     import class UIKit.UIApplication
@@ -344,6 +345,7 @@ extension LocalAgentConnectionError: ProtonVPNError {
 package enum LocalAgentErrorResolutionStrategy {
     /// Do nothing, error might resolve itself or doesn't warrant a response
     case none
+    case showAlert(SystemAlert)
     case disconnect(DisconnectionStrategy)
     case reconnect(ReconnectionStrategy)
 
@@ -374,6 +376,13 @@ package extension LocalAgentError {
         case .systemError:
             // Most likely we just failed to apply a feature/setting
             return .none
+
+        case let .authenticationError(authError):
+            let twoFactorAlert = TwoFactorAuthenticationRequiredAlert(disconnectHandler: {
+                // Use connection bridge or capture `send` to send the `disconnect` effect here
+                log.assertionFailure("Disconnect action is unimplemented", category: .connection)
+            })
+            return .showAlert(twoFactorAlert)
 
         case .restrictedServer:
             // Restricted server, unable to verify the certificate yet: Wait or try another server
