@@ -25,6 +25,7 @@ import LegacyCommon
 import Foundation
 @testable import ProtonVPN
 @testable import VPNAppCore
+import VPNSharedTesting
 
 @MainActor
 struct PlutoniumFeatureTests {
@@ -36,12 +37,35 @@ struct PlutoniumFeatureTests {
 
     @Test
     func onAppear() async {
+        let clock = TestClock()
         let propertiesManager = PropertiesManagerMock()
+        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+        let alertService = CoreAlertServiceDummy()
+        let profileManager = ProfileManager(
+            propertiesManager: propertiesManager,
+            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        )
+        let systemExtensionManager = SystemExtensionManagerMock(
+            factory: SystemExtensionManagerMockFactory(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain,
+                profileManager: profileManager,
+                alertService: alertService
+            )
+        )
         propertiesManager.connectionProtocol = .smartProtocol
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
+            $0.continuousClock = clock
             $0.propertiesManager = propertiesManager
+            $0.systemExtensionManager = systemExtensionManager
+        }
+        systemExtensionManager.requestRequiresUserApproval = { request in
+            Task {
+                try await clock.sleep(for: .nanoseconds(1))
+                systemExtensionManager.approve(request: request)
+            }
         }
         #expect(store.state.requiresReconnection == false)
 
@@ -49,17 +73,34 @@ struct PlutoniumFeatureTests {
             $0.discoveredApps = [.huzza]
         }
 
-        await store.send(.toggleModeClicked) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.installExtensions)
+        await clock.advance(by: .seconds(1))
+        await store.receive(\.extensionInstallationCompleted) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
-        await store.receive(\.toggleModeConfirmed)
     }
 
     @Test
     func toggleModeKillSwitchConflict() async {
+        let clock = TestClock()
         let propertiesManager = PropertiesManagerMock()
+        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+        let alertService = CoreAlertServiceDummy()
+        let profileManager = ProfileManager(
+            propertiesManager: propertiesManager,
+            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        )
+        let systemExtensionManager = SystemExtensionManagerMock(
+            factory: SystemExtensionManagerMockFactory(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain,
+                profileManager: profileManager,
+                alertService: alertService
+            )
+        )
         propertiesManager.connectionProtocol = .smartProtocol
         $killSwitch.withLock {
             $0 = true
@@ -67,7 +108,15 @@ struct PlutoniumFeatureTests {
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
+            $0.continuousClock = clock
             $0.propertiesManager = propertiesManager
+            $0.systemExtensionManager = systemExtensionManager
+        }
+        systemExtensionManager.requestRequiresUserApproval = { request in
+            Task {
+                try await clock.sleep(for: .nanoseconds(1))
+                systemExtensionManager.approve(request: request)
+            }
         }
 
         await store.send(.toggleModeClicked) {
@@ -75,16 +124,33 @@ struct PlutoniumFeatureTests {
         }
         await store.send(.alert(.presented(.toggleModeConfirmed))) {
             $0.alert = nil
+        }
+        await store.receive(\.installExtensions)
+        await clock.advance(by: .seconds(1))
+        await store.receive(\.extensionInstallationCompleted) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
-        await store.receive(\.toggleModeConfirmed)
     }
 
     @Test
     func toggleModeIKEConflict() async {
         let propertiesManager = PropertiesManagerMock()
+        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+        let alertService = CoreAlertServiceDummy()
+        let profileManager = ProfileManager(
+            propertiesManager: propertiesManager,
+            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        )
+        let systemExtensionManager = SystemExtensionManagerMock(
+            factory: SystemExtensionManagerMockFactory(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain,
+                profileManager: profileManager,
+                alertService: alertService
+            )
+        )
         propertiesManager.connectionProtocol = .vpnProtocol(.ike)
         $killSwitch.withLock {
             $0 = true
@@ -93,6 +159,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
             $0.propertiesManager = propertiesManager
+            $0.systemExtensionManager = systemExtensionManager
         }
 
         await store.send(.toggleModeClicked) {
@@ -103,6 +170,21 @@ struct PlutoniumFeatureTests {
     @Test
     func toggleModeIKEProfileConflict() async {
         let propertiesManager = PropertiesManagerMock()
+        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+        let alertService = CoreAlertServiceDummy()
+        let profileManager = ProfileManager(
+            propertiesManager: propertiesManager,
+            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        )
+        let systemExtensionManager = SystemExtensionManagerMock(
+            factory: SystemExtensionManagerMockFactory(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain,
+                profileManager: profileManager,
+                alertService: alertService
+            )
+        )
+
         propertiesManager.connectionProtocol = .smartProtocol
         let gateway = VpnGatewayMock()
         gateway.connection = .connected
@@ -115,6 +197,7 @@ struct PlutoniumFeatureTests {
             PlutoniumFeature(appStateManager: appStateManager, vpnGateway: gateway)
         } withDependencies: {
             $0.propertiesManager = propertiesManager
+            $0.systemExtensionManager = systemExtensionManager
         }
 
         await store.send(.toggleModeClicked) {
@@ -124,21 +207,46 @@ struct PlutoniumFeatureTests {
 
     @Test
     func toggleMode() async {
+        let clock = TestClock()
         let propertiesManager = PropertiesManagerMock()
+        let vpnKeychain = VpnKeychainMock(planName: "free", maxTier: .max)
+        let alertService = CoreAlertServiceDummy()
+        let profileManager = ProfileManager(
+            propertiesManager: propertiesManager,
+            profileStorage: ProfileStorage(authKeychain: MockAuthKeychain())
+        )
+        let systemExtensionManager = SystemExtensionManagerMock(
+            factory: SystemExtensionManagerMockFactory(
+                propertiesManager: propertiesManager,
+                vpnKeychain: vpnKeychain,
+                profileManager: profileManager,
+                alertService: alertService
+            )
+        )
         propertiesManager.connectionProtocol = .smartProtocol
         let store = TestStore(initialState: PlutoniumFeature.State()) {
             PlutoniumFeature(appStateManager: AppStateManagerMock(), vpnGateway: VpnGatewayMock())
         } withDependencies: {
+            $0.continuousClock = clock
             $0.propertiesManager = propertiesManager
+            $0.systemExtensionManager = systemExtensionManager
+        }
+        systemExtensionManager.requestRequiresUserApproval = { request in
+            Task {
+                try await clock.sleep(for: .nanoseconds(1))
+                systemExtensionManager.approve(request: request)
+            }
         }
         #expect(store.state.requiresReconnection == false)
 
-        await store.send(.toggleModeClicked) {
+        await store.send(.toggleModeClicked)
+        await store.receive(\.installExtensions)
+        await clock.advance(by: .seconds(1))
+        await store.receive(\.extensionInstallationCompleted) {
             $0.$feature.withLock {
                 $0 = .enabled(.exclusion)
             }
         }
-        await store.receive(\.toggleModeConfirmed)
         #expect(store.state.requiresReconnection == true)
 
         await store.send(.modeSelectionClicked(.inclusion)) {

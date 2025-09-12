@@ -17,8 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 #if os(macOS) && DEBUG
+    import Dependencies
     import Foundation
     import SystemExtensions
+    import VPNSharedTesting
 
     public class SystemExtensionManagerMock: SystemExtensionManager {
         public var pendingRequests: [(SystemExtensionRequest, ExtensionInfo)] = []
@@ -117,6 +119,36 @@
             pendingRequests.removeAll { pendingRequest, _ in pendingRequest.uuid == request.uuid }
             request.request(request.request, didFailWithError: error)
             requestFinished?(request)
+        }
+    }
+
+    public class SystemExtensionManagerMockFactory: SystemExtensionManager.Factory {
+        var propertiesManager: PropertiesManagerMock
+        var vpnKeychain: VpnKeychainMock
+        var alertService: CoreAlertServiceDummy
+        var profileManager: ProfileManager!
+
+        public init(propertiesManager: PropertiesManagerMock, vpnKeychain: VpnKeychainMock, profileManager: ProfileManager, alertService: CoreAlertServiceDummy) {
+            self.propertiesManager = propertiesManager
+            self.vpnKeychain = vpnKeychain
+            self.alertService = alertService
+            self.profileManager = profileManager
+        }
+
+        public func makeCoreAlertService() -> CoreAlertService {
+            alertService
+        }
+
+        public func makePropertiesManager() -> PropertiesManagerProtocol {
+            propertiesManager
+        }
+
+        public func makeVpnKeychain() -> VpnKeychainProtocol {
+            vpnKeychain
+        }
+
+        public func makeProfileManager() -> ProfileManager {
+            profileManager
         }
     }
 #endif

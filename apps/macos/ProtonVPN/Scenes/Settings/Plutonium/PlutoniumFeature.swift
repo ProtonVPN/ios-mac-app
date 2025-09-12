@@ -20,6 +20,7 @@ import Foundation
 import SwiftUI
 
 import ComposableArchitecture
+import Dependencies
 
 import Domain
 import Ergonomics
@@ -88,6 +89,8 @@ public struct PlutoniumFeature {
     @CasePathable
     public enum Action {
         case toggleModeClicked
+        case installExtensions
+        case extensionInstallationCompleted(SystemExtensionResult)
         case toggleModeConfirmed
         case modeSelectionClicked(PlutoniumFeatureToggle.Mode)
         case entryClicked(State.Entry, State.Operation, PlutoniumFeatureToggle.Mode)
@@ -138,13 +141,51 @@ public struct PlutoniumFeature {
                     state.alert = Self.unsupportedProfileErrorAlert
                     return .none
                 }
+
                 // Is kill switch is on? Ask to switch it off
                 if killSwitch {
                     state.alert = Self.confirmAlert
                     return .none
                 }
 
-                return .send(.toggleModeConfirmed, animation: .default)
+                return .send(.installExtensions, animation: .default)
+            case .installExtensions:
+                @Dependency(\.systemExtensionManager) var systemExtensionManager
+                return .run { send in
+                    let result: SystemExtensionResult = await withCheckedContinuation { (continuation: CheckedContinuation<SystemExtensionResult, Never>) in
+                        systemExtensionManager.installOrUpdateExtensionsIfNeeded(
+                            shouldStartTour: true,
+                            includedTypes: [.wireGuard, .plutonium]
+                        ) { result, _ in
+                            continuation.resume(returning: result)
+                        }
+                    }
+                    await send(.extensionInstallationCompleted(result))
+                }
+            case let .extensionInstallationCompleted(result):
+                switch result {
+                case .success:
+                    // Extensions installed successfully, proceed with enabling plutonium
+                    switch state.feature {
+                    case let .disabled(mode):
+                        $killSwitch.withLock {
+                            $0 = false
+                        }
+                        state.$feature.withLock {
+                            $0 = .enabled(mode)
+                        }
+                    case .enabled:
+                        // Do nothing
+                        break
+                    }
+                case .failure:
+                    // Extensions failed to install, keep plutonium disabled
+                    // The feature should already be disabled, but ensure it stays that way
+                    state.$feature.withLock {
+                        $0.disable()
+                    }
+                }
+                return .none
             case .toggleModeConfirmed:
                 switch state.feature {
                 case let .disabled(mode):
@@ -192,7 +233,7 @@ public struct PlutoniumFeature {
                 }
                 return .none
             case .alert(.presented(.toggleModeConfirmed)):
-                return .send(.toggleModeConfirmed)
+                return .send(.installExtensions)
             case .alert:
                 return .none
             }
