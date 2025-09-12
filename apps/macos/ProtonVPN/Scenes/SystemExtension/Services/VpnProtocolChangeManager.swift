@@ -142,24 +142,25 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             return
         }
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
-            switch result {
-            case .success:
-                self?.propertiesManager.vpnProtocol = vpnProtocol
-                performSwitchAction()
-                completion(.success)
-            case let .failure(error):
-                log.error(
-                    "Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
-                    category: .connectionConnect
-                )
+        sysexManager
+            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
+                switch result {
+                case .success:
+                    self?.propertiesManager.vpnProtocol = vpnProtocol
+                    performSwitchAction()
+                    completion(.success)
+                case let .failure(error):
+                    log.error(
+                        "Protocol (\(vpnProtocol)) was not set because sysex check/installation failed: \(error)",
+                        category: .connectionConnect
+                    )
 
-                if case let .installationError(installError) = error,
-                   let alert = SysexInstallingErrorAlert(error: installError) {
-                    self?.alertService.push(alert: alert)
+                    if case let .installationError(installError) = error,
+                       let alert = SysexInstallingErrorAlert(error: installError) {
+                        self?.alertService.push(alert: alert)
+                    }
+                    completion(.failure(error))
                 }
-                completion(.failure(error))
             }
-        }
     }
 }

@@ -366,64 +366,66 @@ final class ConnectionSettingsViewModel {
     }
 
     private func enableSmartProtocol(and then: ProtocolSwitchAction, _ completion: @escaping (Result<Void, Error>) -> Void) {
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: true) { [weak self] result in
-            self?.sysexPending = false
+        sysexManager
+            .installOrUpdateExtensionsIfNeeded(shouldStartTour: true, includedTypes: [.wireGuard]) { [weak self] result, _ in
+                self?.sysexPending = false
 
-            switch result {
-            case .success:
-                self?.propertiesManager.smartProtocol = true
-                self?.selectedProtocol = .smartProtocol
+                switch result {
+                case .success:
+                    self?.propertiesManager.smartProtocol = true
+                    self?.selectedProtocol = .smartProtocol
 
-                switch then {
-                case .disconnect:
-                    log.info(
-                        "Will disconnect after VPN feature change",
-                        category: .connectionConnect,
-                        event: .trigger,
-                        metadata: ["feature": "smartProtocol"]
-                    )
-                    self?.vpnGateway.disconnect { completion(.success) }
-                case .reconnect:
-                    log.info(
-                        "Connection will restart after VPN feature change",
-                        category: .connectionConnect,
-                        event: .trigger,
-                        metadata: ["feature": "smartProtocol"]
-                    )
-                    self?.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
-                    completion(.success)
-                case .doNothing:
-                    log.info(
-                        "Smart protocol was enabled",
-                        category: .connectionConnect,
-                        event: .trigger,
-                        metadata: ["feature": "smartProtocol"]
-                    )
-                    completion(.success)
+                    switch then {
+                    case .disconnect:
+                        log.info(
+                            "Will disconnect after VPN feature change",
+                            category: .connectionConnect,
+                            event: .trigger,
+                            metadata: ["feature": "smartProtocol"]
+                        )
+                        self?.vpnGateway.disconnect { completion(.success) }
+                    case .reconnect:
+                        log.info(
+                            "Connection will restart after VPN feature change",
+                            category: .connectionConnect,
+                            event: .trigger,
+                            metadata: ["feature": "smartProtocol"]
+                        )
+                        self?.vpnGateway.reconnect(with: ConnectionProtocol.smartProtocol)
+                        completion(.success)
+                    case .doNothing:
+                        log.info(
+                            "Smart protocol was enabled",
+                            category: .connectionConnect,
+                            event: .trigger,
+                            metadata: ["feature": "smartProtocol"]
+                        )
+                        completion(.success)
+                    }
+                case let .failure(error):
+                    if case let .installationError(installError) = error,
+                       let alert = SysexInstallingErrorAlert(error: installError) {
+                        self?.alertService.push(alert: alert)
+                    }
+                    completion(.failure(error))
                 }
-            case let .failure(error):
-                if case let .installationError(installError) = error,
-                   let alert = SysexInstallingErrorAlert(error: installError) {
-                    self?.alertService.push(alert: alert)
-                }
-                completion(.failure(error))
-            }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                self?.reloadNeeded?()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                    self?.reloadNeeded?()
+                }
             }
-        }
     }
 
     private func checkSysexOrResetProtocol(_: ConnectionProtocol) {
         sysexPending = true
-        sysexManager.checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false) { [weak self] result in
-            guard let self else { return }
-            sysexPending = false
-            if case .failure = result {
-                selectedProtocol = .vpnProtocol(.ike)
+        sysexManager
+            .checkAndInstallOrUpdateExtensionsIfNeeded(shouldStartTour: false, includedTypes: [.wireGuard]) { [weak self] result, _ in
+                guard let self else { return }
+                sysexPending = false
+                if case .failure = result {
+                    selectedProtocol = .vpnProtocol(.ike)
+                }
             }
-        }
     }
 
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {

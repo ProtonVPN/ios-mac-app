@@ -410,20 +410,24 @@ class CreateNewProfileViewModel {
         protocolPending?(true)
         sysexTourCancelled = resetProtocol
 
-        sysexManager.installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` else { return }
+        sysexManager
+            .installOrUpdateExtensionsIfNeeded(
+                shouldStartTour: shouldStartTour,
+                includedTypes: [.wireGuard]
+            ) { result, _ in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
 
-                protocolPending?(false)
+                    protocolPending?(false)
 
-                if let error = result.error {
-                    log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
-                    resetProtocol()
+                    if let error = result.error {
+                        log.warning("Resetting protocol due to sysex failure", metadata: ["error": "\(error)"])
+                        resetProtocol()
+                    }
+
+                    completionHandler?(result)
                 }
-
-                completionHandler?(result)
             }
-        }
     }
 
     // MARK: Populate fields from an existing profile, or save it to the profile manager

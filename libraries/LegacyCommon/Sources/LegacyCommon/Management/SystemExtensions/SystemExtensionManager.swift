@@ -82,21 +82,70 @@
 
         private typealias InstallationState = [SystemExtensionType: SystemExtensionRequest.State]
 
-        private func reduce(installationResults: InstallationState, didRequireUserApproval: Bool) -> SystemExtensionResult {
-            installationResults.reduce(into: .success(.alreadyThere)) { accumulator, sysexInstallationResult in
-                if case .failure = accumulator { return }
-                let (type, installationResult) = sysexInstallationResult
+        private func processExtensionResults(installationResults: InstallationState, didRequireUserApproval: Bool) -> (accumulated: SystemExtensionResult, results: [SystemExtensionType: SystemExtensionResult]) {
+            var results: [SystemExtensionType: SystemExtensionResult] = [:]
+            var accumulated: SystemExtensionResult = .success(.alreadyThere)
+
+            for (type, installationResult) in installationResults {
+                let individualResult: SystemExtensionResult
                 switch installationResult {
                 case .cancelled, .superseded:
-                    break
+                    individualResult = .success(.alreadyThere)
                 case .succeeded:
-                    accumulator = .success(didRequireUserApproval ? .installed : .upgraded)
+                    individualResult = .success(didRequireUserApproval ? .installed : .upgraded)
                 case let .failed(error):
-                    accumulator = .failure(.installationError(internalError: error))
+                    individualResult = .failure(.installationError(internalError: error))
                 default:
                     log.assertionFailure("\(type.rawValue) had unexpected final state \(installationResult)")
+                    individualResult = .success(.alreadyThere)
+                }
+
+                results[type] = individualResult
+
+                // Accumulate overall result with failure precedence and success upgrade/install mapping
+                if case .failure = accumulated {
+                    // Preserve the first failure
+                } else {
+                    switch individualResult {
+                    case let .failure(error):
+                        accumulated = .failure(error)
+                    case .success(.alreadyThere):
+                        break
+                    case .success:
+                        accumulated = .success(didRequireUserApproval ? .installed : .upgraded)
+                    }
                 }
             }
+
+            // if approval was required in this run but we finished with only cancelled/superseded
+            // (no success and no failure), report a cancelled tour instead of
+            // success(.alreadyThere).
+            if didRequireUserApproval {
+                var sawSuccess = false
+                var sawFailure = false
+                var onlyCancelledOrSuperseded = true
+
+                for state in installationResults.values {
+                    switch state {
+                    case .succeeded:
+                        sawSuccess = true
+                        onlyCancelledOrSuperseded = false
+                    case .failed:
+                        sawFailure = true
+                        onlyCancelledOrSuperseded = false
+                    case .cancelled, .superseded:
+                        break
+                    default:
+                        onlyCancelledOrSuperseded = false
+                    }
+                }
+
+                if !sawSuccess, !sawFailure, onlyCancelledOrSuperseded {
+                    accumulated = .failure(.tourCancelled)
+                }
+            }
+
+            return (accumulated: accumulated, results: results)
         }
 
         private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -152,6 +201,8 @@
         ///             This callback will *not* be called if no extensions require approval.
         /// - Parameter installationFinishedHandler: Called when installation is finished, regardless of success.
         private func submitInstallationRequests(
+            includedTypes: [SystemExtensionType],
+            userInitiated: Bool,
             userActionRequiredHandler: @escaping ((Int) -> Void),
             installationFinishedHandler: @escaping ((InstallationState) -> Void)
         ) {
@@ -162,17 +213,16 @@
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
 
-            for type in SystemExtensionType.allCases where type.featureEnabled {
+            for type in includedTypes where type.featureEnabled {
                 finishedInstalling.enter()
                 installStatesKnown.enter()
 
-                let install = SystemExtensionRequest.install(type: type, manager: self) { stateChange in
+                let install = SystemExtensionRequest.install(type: type, userInitiated: userInitiated, manager: self) { stateChange in
                     var prevState: SystemExtensionRequest.State?
                     queue.sync {
                         prevState = states[type]
                         states[type] = stateChange
                     }
-
                     switch stateChange {
                     case .replacing:
                         break
@@ -202,18 +252,20 @@
             }
         }
 
-        /// Installs all extensions, provided the following hold true:
+        /// Installs the specified system extensions if needed, provided the following hold true:
         /// - The user is logged in
         /// - The default connection protocol requires a system extension, OR
         /// - The user has created a custom profile containing a protocol requiring a system extension
         ///
         /// - Parameters:
         ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
-        ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
+        ///     and approval is required, `actionHandler` will report `.failure(.tourSkipped)`.
+        ///   - includedTypes: The extensions to check and install. Pass `SystemExtensionType.allCases` to include all.
         ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
         public func checkAndInstallOrUpdateExtensionsIfNeeded(
             shouldStartTour: Bool,
-            actionHandler: @escaping (SystemExtensionResult) -> Void
+            includedTypes: [SystemExtensionType],
+            actionHandler: @escaping (SystemExtensionResult, [SystemExtensionType: SystemExtensionResult]) -> Void
         ) {
             // do not check if the user is not logged in to avoid showing the installation prompt on the
             // login screen on first start
@@ -228,56 +280,92 @@
                 return
             }
 
-            installOrUpdateExtensionsIfNeeded(shouldStartTour: shouldStartTour, actionHandler: actionHandler)
+            installOrUpdateExtensionsIfNeeded(
+                shouldStartTour: shouldStartTour,
+                includedTypes: includedTypes,
+                actionHandler: actionHandler
+            )
         }
 
-        /// Installs all extensions. This will result in system extension dialogs appearing if the user has
+        /// Installs or updates the specified system extensions. This will result in system extension dialogs appearing if the user has
         /// not approved any on the system yet.
         ///
         /// - Parameters:
         ///   - shouldStartTour: Whether the system extension tour should be shown if user approval is required. When false,
-        ///   and approval is required, actionHandler will report `.failure(.tourSkipped)`.
+        ///     and approval is required, `actionHandler` will report `.failure(.tourSkipped)`.
+        ///   - includedTypes: The extensions to install or update. Pass `SystemExtensionType.allCases` to include all.
         ///   - actionHandler: A completion handler invoked when installation or system extension tour complete or fail.
+        ///                    Receives both the accumulated result and individual results for each extension type.
         public func installOrUpdateExtensionsIfNeeded(
             shouldStartTour: Bool,
-            actionHandler: @escaping (SystemExtensionResult) -> Void
+            includedTypes: [SystemExtensionType],
+            actionHandler: @escaping (SystemExtensionResult, [SystemExtensionType: SystemExtensionResult]) -> Void
         ) {
             var didRequireUserApproval = false
 
-            submitInstallationRequests(userActionRequiredHandler: { [unowned self] _ in
+            submitInstallationRequests(includedTypes: includedTypes, userInitiated: shouldStartTour, userActionRequiredHandler: { [unowned self] _ in
                 didRequireUserApproval = true
 
                 guard shouldStartTour else {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "skipped"])
-                    actionHandler(.failure(.tourSkipped))
+                    let skippedResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
+                        uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourSkipped)) }
+                    )
+                    actionHandler(.failure(.tourSkipped), skippedResults)
                     return
                 }
 
                 let tour = SystemExtensionTourAlert(origin: .firstAppLaunch, cancelHandler: {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "cancelled"])
                     DispatchQueue.main.async {
-                        actionHandler(.failure(.tourCancelled))
+                        let cancelledResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
+                            uniqueKeysWithValues: includedTypes.map { ($0, .failure(.tourCancelled)) }
+                        )
+                        actionHandler(.failure(.tourCancelled), cancelledResults)
                         AppEvent.systemExtensionTourCancelled.post()
                     }
                 })
 
                 alertService.push(alert: tour)
             }, installationFinishedHandler: { installationResults in
-                let result = self.reduce(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
-                log.debug("Finished installation with result: \(result)", category: .sysex)
+                var (accumulated, results) = self.processExtensionResults(installationResults: installationResults, didRequireUserApproval: didRequireUserApproval)
+                log.debug("Finished installation with results: \(results)", category: .sysex)
 
-                switch result {
-                case let .success(success):
-                    SentryHelper.shared?.log(message: "Sysex installation succeeded.", extra: ["success": success])
-                case let .failure(failure):
-                    if case let .installationError(internalError) = failure {
-                        SentryHelper.shared?.log(error: internalError)
+                // Log individual results
+                for (type, result) in results {
+                    switch result {
+                    case let .success(success):
+                        SentryHelper.shared?.log(message: "Sysex installation succeeded for \(type.rawValue).", extra: ["success": success])
+                    case let .failure(failure):
+                        if case let .installationError(internalError) = failure {
+                            SentryHelper.shared?.log(error: internalError)
+                        }
+                    }
+                }
+
+                // If tour was intended (shouldStartTour == true) but the run finished with only
+                // cancelled/superseded (no success and no failure), report a cancelled tour instead
+                // of success(.alreadyThere) to avoid silently succeeding.
+                if shouldStartTour {
+                    let values = installationResults.values
+                    let anySuccess = values.contains { if case .succeeded = $0 { true } else { false } }
+                    let anyFailure = values.contains { if case .failed = $0 { true } else { false } }
+                    let allCancelledOrSuperseded = values.allSatisfy {
+                        switch $0 {
+                        case .cancelled, .superseded: true
+                        default: false
+                        }
+                    }
+
+                    if !anySuccess, !anyFailure, allCancelledOrSuperseded {
+                        accumulated = .failure(.tourCancelled)
                     }
                 }
 
                 DispatchQueue.main.async {
-                    actionHandler(result)
-                    if case .success(.installed) = result {
+                    actionHandler(accumulated, results)
+
+                    if case .success(.installed) = accumulated {
                         AppEvent.systemExtensionsAllInstalled.post(didRequireUserApproval)
                         self.alertService.push(alert: SysexEnabledAlert())
                     }
@@ -297,6 +385,7 @@
         let request: OSSystemExtensionRequest
         let stateChangeCallback: StateChangeCallback
         unowned let manager: SystemExtensionManager
+        let userInitiated: Bool
 
         let uuid = UUID()
 
@@ -331,16 +420,19 @@
             action: Action,
             request: OSSystemExtensionRequest,
             stateChange: @escaping StateChangeCallback,
-            manager: SystemExtensionManager
+            manager: SystemExtensionManager,
+            userInitiated: Bool
         ) {
             self.action = action
             self.request = request
             self.stateChangeCallback = stateChange
             self.manager = manager
+            self.userInitiated = userInitiated
         }
 
         static func install(
             type: SystemExtensionType,
+            userInitiated: Bool,
             manager: SystemExtensionManager,
             stateChange: @escaping StateChangeCallback
         ) -> Self {
@@ -351,7 +443,8 @@
                     queue: SystemExtensionManager.requestQueue
                 ),
                 stateChange: stateChange,
-                manager: manager
+                manager: manager,
+                userInitiated: userInitiated
             )
             result.request.delegate = result
             return result
@@ -369,7 +462,8 @@
                     queue: SystemExtensionManager.requestQueue
                 ),
                 stateChange: stateChange,
-                manager: manager
+                manager: manager,
+                userInitiated: false
             )
             result.request.delegate = result
             return result
@@ -403,6 +497,15 @@
                     bundleId: ext.bundleIdentifier
                 )
             )
+
+            // Allow equal-version replacement when the run is user-initiated to surface the approval flow.
+            if !shouldReplace, userInitiated {
+                let isEqualVersion = (existing.bundleShortVersion == ext.bundleShortVersion) && (existing.bundleVersion == ext.bundleVersion)
+                if isEqualVersion {
+                    stateChangeCallback(.replacing)
+                    return .replace
+                }
+            }
 
             // Don't call stateChangeCallback(.cancelled) here, we do that when sysextd calls us again
             // with `request(_:didFailWithError:)`.
