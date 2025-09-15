@@ -125,11 +125,13 @@ open class Container: PropertiesToOverride {
             // TelemetryService listens to notifications and sends telemetry events based on that.
             self.telemetryService = await makeTelemetryService()
 
-            if !propertiesManager.isSubsequentLaunch {
+            if !propertiesManager.firstLaunchReported {
                 // The app launched for the first time since the last install.
                 // Since the telemetry is on by default, there is no way of disabling this event.
                 // If we remove the app, we'll still be logged in, but the telemetry settings will be reset to it's default, "On" state.
                 try? await telemetryService?.onboardingEvent(.firstLaunch)
+                propertiesManager.firstLaunchReported = true
+            } else if vpnKeychain.userIsLoggedIn { // we flip this bool only on the second launch and only when the user is logged in
                 propertiesManager.isSubsequentLaunch = true
             }
 
