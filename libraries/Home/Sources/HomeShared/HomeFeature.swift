@@ -52,6 +52,7 @@ public struct HomeFeature {
     public enum Destination {
         case changeServer(ChangeServerFeature)
         case connectionDetails(ConnectionScreenFeature)
+        case localAgentNotice(LocalAgentNoticeFeature)
         case freeConnectionsInfo(FreeConnectionInfoFeature)
         case defaultConnection(DefaultConnectionFeature)
         case whatsNew(WhatsNewPresenterFeature)
@@ -70,6 +71,7 @@ public struct HomeFeature {
         package var connectionStatus: ConnectionStatusFeature.State
         package var announcementBanner: AnnouncementBannerFeature.State
         package var whatsNewChecker: WhatsNewCheckerFeature.State
+        package var localAgentNotice: LocalAgentNoticeFeature.State
 
         fileprivate var shouldPushAlert: Bool = false
 
@@ -87,6 +89,7 @@ public struct HomeFeature {
             self.connection = .initialState
             self.announcementBanner = .noBanner
             self.whatsNewChecker = .init()
+            self.localAgentNotice = .init()
         }
     }
 
@@ -121,6 +124,8 @@ public struct HomeFeature {
 
         case whatsNewChecker(WhatsNewCheckerFeature.Action)
         case whatsNewPresenter(WhatsNewPresenterFeature.Action)
+
+        case localAgentNotice(LocalAgentNoticeFeature.Action)
 
         /// Start bug report flow
         case helpButtonPressed
@@ -162,6 +167,9 @@ public struct HomeFeature {
         }
         Scope(state: \.whatsNewChecker, action: \.whatsNewChecker) {
             WhatsNewCheckerFeature()
+        }
+        Scope(state: \.localAgentNotice, action: \.localAgentNotice) {
+            LocalAgentNoticeFeature()
         }
         Reduce { state, action in
             switch action {
@@ -280,6 +288,11 @@ public struct HomeFeature {
             case .destination(.presented(.whatsNew(.dismissItem))):
                 state.destination = nil
                 return .none
+            case .destination(.presented(.localAgentNotice(.disconnect))):
+                state.destination = nil
+                return .send(.disconnect(.fidoAuthentication))
+            case .destination(.presented(.localAgentNotice(.openFidoAuthentication))):
+                return .none
             case .destination:
                 return .none
             case .map:
@@ -323,6 +336,9 @@ public struct HomeFeature {
                     }
                     pushAlert(alert)
                 }
+            case let .connection(.delegate(.localAgentNotice(authenticationError))):
+                state.destination = .localAgentNotice(.init(code: authenticationError.charCode))
+                return .none
             case .connection:
                 return .none
             case .didDismissChangeServer:
@@ -332,6 +348,8 @@ public struct HomeFeature {
                 }
                 return .none
             case .announcementBanner:
+                return .none
+            case .localAgentNotice:
                 return .none
             }
         }

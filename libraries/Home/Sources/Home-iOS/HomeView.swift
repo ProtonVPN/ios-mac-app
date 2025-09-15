@@ -93,43 +93,12 @@ public struct HomeView: View {
 
     private var contentWithSheets: some View {
         content
-            .sheet(
-                item: $store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
-            ) { store in
-                WithPerceptionTracking {
-                    ConnectionScreenView(store: store)
-                        .presentationDetents([.large])
-                        .presentationDragIndicator(.visible)
-                }
-            }
-            .sheet(item: $store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
-                store.send(.didDismissChangeServer)
-            }) { store in
-                WithPerceptionTracking {
-                    ChangeServerModal(store: store)
-                }
-            }
-            .sheet(
-                item: $store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
-            ) { store in
-                WithPerceptionTracking {
-                    DefaultConnectionSheet(store: store)
-                        .presentationDragIndicator(.visible)
-                        .presentationDetents([.medium, .large])
-                }
-            }
-            .sheet(
-                item: $store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
-            ) { store in
-                WithPerceptionTracking {
-                    WhatsNewViewContainer(store: store)
-                }
-            }
-            .sheet(item: $store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
-                WithPerceptionTracking {
-                    FreeConnectionInfoModal(store: store)
-                }
-            }
+            .connectionDetailsSheet(store: $store)
+            .changeServerSheet(store: $store)
+            .defaultConnectionSheet(store: $store)
+            .whatsNewSheet(store: $store)
+            .freeConnectionsInfoSheet(store: $store)
+            .localAgentNoticeSheet(store: $store)
     }
 
     private var content: some View {
@@ -239,6 +208,69 @@ public struct HomeView: View {
         }
         .onPreferenceChange(ViewHeightPreferenceKey.self) { viewHeight in
             connectionViewHeight = viewHeight
+        }
+    }
+}
+
+// This extension helps the compiler to typecheck in a reasonable amount of time
+private extension View {
+    func connectionDetailsSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.connectionDetails, action: \.destination.connectionDetails)
+        ) { store in
+            WithPerceptionTracking {
+                ConnectionScreenView(store: store)
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+            }
+        }
+    }
+
+    func changeServerSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.changeServer, action: \.destination.changeServer), onDismiss: {
+            store.wrappedValue.send(.didDismissChangeServer)
+        }) { store in
+            WithPerceptionTracking {
+                ChangeServerModal(store: store)
+            }
+        }
+    }
+
+    func defaultConnectionSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.defaultConnection, action: \.destination.defaultConnection)
+        ) { store in
+            WithPerceptionTracking {
+                DefaultConnectionSheet(store: store)
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.medium, .large])
+            }
+        }
+    }
+
+    func whatsNewSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(
+            item: store.scope(state: \.destination?.whatsNew, action: \.destination.whatsNew)
+        ) { store in
+            WithPerceptionTracking {
+                WhatsNewViewContainer(store: store)
+            }
+        }
+    }
+
+    func freeConnectionsInfoSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.freeConnectionsInfo, action: \.destination.freeConnectionsInfo)) { store in
+            WithPerceptionTracking {
+                FreeConnectionInfoModal(store: store)
+            }
+        }
+    }
+
+    func localAgentNoticeSheet(store: ComposableArchitecture.Bindable<StoreOf<HomeFeature>>) -> some View {
+        sheet(item: store.scope(state: \.destination?.localAgentNotice, action: \.destination.localAgentNotice)) { store in
+            WithPerceptionTracking {
+                LocalAgentNoticeView(store: store)
+            }
         }
     }
 }

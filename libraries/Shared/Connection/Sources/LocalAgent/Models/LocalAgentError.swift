@@ -240,6 +240,12 @@ extension LocalAgentError {
             return .systemError(.splitTcp)
         case 86241:
             return .systemError(.safeMode)
+        case 86120: // The server requires a more recent 2FA, for an unspecified reason
+            return .authenticationError(.authenticationRequired)
+        case 86121: // The server requires a more recent 2FA, 2FA validity has expired
+            return .authenticationError(.authenticationExpired)
+        case 86122: // The server requires a more recent 2FA, as it's a new connection or the client address has roamed
+            return .authenticationError(.authenticationLocationChanged)
         default:
             log.error("Trying to parse unknown local agent error \(code)", category: .localAgent)
             return .unknown(code: code)

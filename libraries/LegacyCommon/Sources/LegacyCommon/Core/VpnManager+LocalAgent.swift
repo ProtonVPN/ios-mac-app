@@ -29,6 +29,7 @@ import NetShield
 import VPNAppCore
 import VPNShared
 
+import CommonNetworking
 import Domain
 import Ergonomics
 
@@ -330,11 +331,10 @@ extension VpnManager: LocalAgentDelegate {
             log.error("Two factor authentication required", metadata: ["reason": "\(error)"])
             alertService?.push(
                 alert: TwoFactorAuthenticationRequiredAlert(
-                    // TODO: Open appropriate link
-                    // openTFAHandler: {
-                    //     @Dependency(\.linkOpener) var linkOpener
-                    //     linkOpener.open(.fidoJail)
-                    // },
+                    openTFAHandler: {
+                        @Dependency(\.linkOpener) var linkOpener
+                        linkOpener.open(ObfuscatedConstants.fidoPortal)
+                    },
                     disconnectHandler: {
                         self.disconnect {}
                     }

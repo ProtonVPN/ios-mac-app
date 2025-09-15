@@ -200,6 +200,7 @@ public enum UserInitiatedVPNChange {
         case newConnection = "new_connection"
         case exit
         case signout
+        case fidoAuthentication
     }
 
     case connect(VPNTrigger?)
