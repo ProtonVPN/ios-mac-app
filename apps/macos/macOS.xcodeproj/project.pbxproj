@@ -1040,7 +1040,7 @@
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = EBB751C32DA7D4C800F79994 /* ProtonVPN split tunneling */;
+			target = EBB751C32DA7D4C800F79994 /* ProtonVPN Split Tunneling */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -2783,9 +2783,9 @@
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
 			productType = "com.apple.product-type.system-extension";
 		};
-		EBB751C32DA7D4C800F79994 /* ProtonVPN split tunneling */ = {
+		EBB751C32DA7D4C800F79994 /* ProtonVPN Split Tunneling */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN split tunneling" */;
+			buildConfigurationList = EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN Split Tunneling" */;
 			buildPhases = (
 				EBB751C02DA7D4C800F79994 /* Sources */,
 				EBB751C12DA7D4C800F79994 /* Frameworks */,
@@ -2798,7 +2798,7 @@
 			fileSystemSynchronizedGroups = (
 				EBB751C62DA7D4C900F79994 /* ProtonVPN Plutonium */,
 			);
-			name = "ProtonVPN split tunneling";
+			name = "ProtonVPN Split Tunneling";
 			packageProductDependencies = (
 				EBB751D52DA94CD800F79994 /* PlutoniumExtension */,
 			);
@@ -3000,7 +3000,7 @@
 				EED534801EEC112000013607 /* ProtonVPN-mac */,
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				E93C4F1526A1C1F30006680C /* ProtonVPN WireGuard */,
-				EBB751C32DA7D4C800F79994 /* ProtonVPN split tunneling */,
+				EBB751C32DA7D4C800F79994 /* ProtonVPN Split Tunneling */,
 				E93C4F1026A1C1450006680C /* WireGuardGoBridgemacOS */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
@@ -3593,7 +3593,7 @@
 		};
 		EBB751CC2DA7D4C900F79994 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = EBB751C32DA7D4C800F79994 /* ProtonVPN split tunneling */;
+			target = EBB751C32DA7D4C800F79994 /* ProtonVPN Split Tunneling */;
 			targetProxy = EBB751CB2DA7D4C900F79994 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -4456,9 +4456,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4496,9 +4495,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4535,9 +4533,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4574,9 +4571,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "ProtonVPN Plutonium/Info.plist";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Proton Technologies AG. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -4929,7 +4925,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN split tunneling" */ = {
+		EBB751D42DA7D4C900F79994 /* Build configuration list for PBXNativeTarget "ProtonVPN Split Tunneling" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EBB751CF2DA7D4C900F79994 /* Debug */,
