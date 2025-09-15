@@ -118,11 +118,9 @@ struct ActivePortView: View {
                         .opacity(0)
                         .frame(.square(.themeSpacing16))
 
-                    TimelineView(.periodic(from: updateDate, by: 1)) { context in
-                        Text(formatUpdateTime(updateDate, currentTime: context.date))
-                            .foregroundColor(Color(.text, .weak))
-                            .themeFont(.callout(emphasised: false))
-                    }
+                    Text(formatUpdateTime(updateDate))
+                        .foregroundColor(Color(.text, .weak))
+                        .themeFont(.callout(emphasised: false))
 
                     Spacer()
                 }
@@ -144,15 +142,17 @@ struct ActivePortView: View {
 
     // MARK: - State
 
-    private static let relativeDateTimeFormatter: RelativeDateTimeFormatter = {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.dateTimeStyle = .named
-        formatter.unitsStyle = .full
+    private static var dateFormatter: DateFormatter {
+        @Dependency(\.locale) var locale
+        let formatter = DateFormatter()
+        formatter.locale = locale
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
         return formatter
-    }()
+    }
 
-    private func formatUpdateTime(_ date: Date, currentTime: Date) -> String {
-        let timeAgo = Self.relativeDateTimeFormatter.localizedString(for: date, relativeTo: currentTime)
+    private func formatUpdateTime(_ date: Date) -> String {
+        let timeAgo = Self.dateFormatter.string(from: date)
         return Localizable.pfUpdated(timeAgo)
     }
 }

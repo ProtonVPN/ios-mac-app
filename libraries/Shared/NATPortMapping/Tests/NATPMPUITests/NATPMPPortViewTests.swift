@@ -27,32 +27,98 @@ import Testing
 @Suite(.serialized, .snapshots(record: .missing))
 struct NATPMPPortViewTests {
     @Test
-    func loadedView() {
+    func loadedViewEnUS() {
         withDependencies {
             $0.date.now = .init()
+            $0.locale = Locale(identifier: "en_US")
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
             )
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 84)))
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
         }
     }
 
     @Test
-    func loadedViewDark() {
+    func loadedViewDarkEnUK() {
         withDependencies {
             $0.date.now = .init()
+            $0.locale = Locale(identifier: "en_UK")
         } operation: {
             let view = ActivePortView(
                 portNumber: 36528,
-                updateDate: Date().addingTimeInterval(-35 * 60) // 35 minutes ago
+                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
             ).environment(\.colorScheme, .dark)
             let nsView = NSHostingView(rootView: view)
 
-            assertSnapshot(of: nsView, as: .image(size: .init(width: 268, height: 84)))
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+        }
+    }
+
+    @Test
+    func loadedViewEsES() {
+        withDependencies {
+            $0.date.now = .init()
+            $0.locale = Locale(identifier: "es_ES")
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
+            )
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+        }
+    }
+
+    @Test
+    func loadedViewDarkFrCH() {
+        withDependencies {
+            $0.date.now = .init()
+            $0.locale = Locale(identifier: "fr_CH")
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
+            ).environment(\.colorScheme, .dark)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+        }
+    }
+
+    @Test
+    func loadedViewDeCH() {
+        withDependencies {
+            $0.date.now = .init()
+            $0.locale = Locale(identifier: "de_CH")
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
+            )
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
+        }
+    }
+
+    @Test
+    func loadedViewDarkUk() {
+        withDependencies {
+            $0.date.now = .init()
+            $0.locale = Locale(identifier: "uk")
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date(timeIntervalSince1970: 1_757_936_455)
+            ).environment(\.colorScheme, .dark)
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 290, height: 84)))
         }
     }
 

@@ -1419,7 +1419,7 @@
 "_pf_loading" = "Loading...";
 
 /* Text appears under active port number indicating relative date */
-"_pf_updated" = "Updated %@";
+"_pf_updated" = "Last updated: %@";
 
 /* Text appears in port forwarding view when any error is present */
 "_pf_error" = "Unavailable";
