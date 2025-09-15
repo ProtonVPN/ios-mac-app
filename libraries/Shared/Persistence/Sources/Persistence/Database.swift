@@ -61,7 +61,7 @@ public enum DatabaseType: CustomStringConvertible {
 }
 
 extension DatabaseWriter {
-    private static func createQueue(databaseType: DatabaseType, configuration: Configuration) throws -> DatabaseQueue {
+    private static func createWriter(databaseType: DatabaseType, configuration: Configuration) throws -> DatabaseWriter {
         switch databaseType {
         case .inMemory:
             return try DatabaseQueue(named: "global", configuration: configuration)
@@ -73,7 +73,7 @@ extension DatabaseWriter {
             return try DatabaseQueue(configuration: configuration)
 
         case let .physical(path):
-            let writer = try DatabaseQueue(path: path, configuration: configuration)
+            let writer = try DatabasePool(path: path, configuration: configuration)
 
             // Check if database contains unknown migrations from the future
             if try Migrator.default.containsUnknownMigrations(writer) {
@@ -93,17 +93,17 @@ extension DatabaseWriter {
                 assertionFailure("Uknown migration(s) detected in database!")
 
                 // Create fresh database
-                return try DatabaseQueue(path: path, configuration: configuration)
+                return try DatabasePool(path: path, configuration: configuration)
             }
 
             return writer
         }
     }
 
-    public static func from(databaseConfiguration: DatabaseConfiguration) -> DatabaseQueue {
+    public static func from(databaseConfiguration: DatabaseConfiguration) -> DatabaseWriter {
         let databaseType = databaseConfiguration.databaseType
 
-        log.info("Preparing database queue", category: .persistence, metadata: ["type": "\(databaseType)"])
+        log.info("Preparing database writer", category: .persistence, metadata: ["type": "\(databaseType)"])
 
         var config = Configuration() // GRDB config, not to be confused with our `DatabaseConfiguration`
 
@@ -113,7 +113,7 @@ extension DatabaseWriter {
             db.add(function: localizedCountryName.createFunctionForRegistration())
         }
 
-        let queue = try! createQueue(databaseType: databaseType, configuration: config)
+        let queue = try! createWriter(databaseType: databaseType, configuration: config)
 
         let schemaVersion = databaseConfiguration.schemaVersion
         try! Migrator.default.migrate(queue, upTo: schemaVersion)
