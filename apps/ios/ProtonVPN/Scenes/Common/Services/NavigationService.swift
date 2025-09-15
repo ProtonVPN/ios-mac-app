@@ -305,6 +305,7 @@ final class NavigationService {
                 UINavigationController(rootViewController: makeCountriesViewController()),
                 UINavigationController(rootViewController: makeMapViewController()),
                 ProtonQCViewController(),
+                UINavigationController(rootViewController: makeProfilesViewController()),
                 UINavigationController(rootViewController: makeSettingsViewController()),
             ]
         }
