@@ -49,7 +49,8 @@
                   let bundleIdentifier = bundle.bundleIdentifier,
                   DomainConstants.BundleID.main != bundleIdentifier else { return nil }
             self.bundleIdentifier = bundleIdentifier
-            self.title = url.deletingPathExtension().lastPathComponent
+            let localizedName = bundle.localizedInfoDictionary?["CFBundleDisplayName"] as? String
+            self.title = localizedName ?? url.deletingPathExtension().lastPathComponent
         }
 
         public static func == (lhs: Self, rhs: Self) -> Bool {
@@ -89,7 +90,11 @@
                 }
             }
 
-            return apps.uniques(by: \.bundleIdentifier).sorted { $0.title < $1.title }
+            return apps
+                .uniques(by: \.bundleIdentifier)
+                .sorted {
+                    $0.title.compare($1.title, options: [.diacriticInsensitive, .caseInsensitive]) == .orderedAscending
+                }
         }
 
         func enumerateChildApplications(for app: PlutoniumApp) -> [PlutoniumApp] {
