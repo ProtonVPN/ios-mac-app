@@ -1063,40 +1063,40 @@
 
 "_allow_lan_note" = "Учтите, что для применения этого изменения, ваше подключение должно быть перезапущено";
 
-/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "Enable kill switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• This will disable split tunneling";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• You won't be able to access devices on your local network";
 
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "You won't be able to access devices on your local network";
 
-/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Enable split tunneling?";
 
-/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "This will disable kill switch.";
 
-/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Connect to %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "Необходимо перезапустить соединение, чтобы применить это изменение";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling";
+"_plutonium_title" = "Split tunneling";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Введите действительный IPv4 адрес";
@@ -1746,10 +1746,10 @@
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "Нет выбранных приложений";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Режим исключения";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_include_mode" = "Режим включения";
 
 /* Header of the excluded apps list */
@@ -1770,22 +1770,22 @@
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "browse apps";
 
-/* Plutonium upsell view title */
+/* Split tunneling upsell view title */
 "_plutonium_upsell_title" = "Получите лучшее из обоих миров";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "No IP addresses yet";
 
-/* Plutonium upsell view subtitle */
+/* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "Divide your traffic into VPN and non-VPN tunnels with split tunneling.";
 
-/* Plutonium feature description */
+/* Split tunneling feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
@@ -1800,8 +1800,8 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
-/* macOS main menu: Help -> Split Tunneling logs row */
-"_plutonium_logs" = "Split Tunneling Logs";
+/* macOS main menu: Help -> Split tunneling logs row */
+"_plutonium_logs" = "Split tunneling Logs";
 
 "_local_agent_server_error_title" = "Ошибка сервера";
 

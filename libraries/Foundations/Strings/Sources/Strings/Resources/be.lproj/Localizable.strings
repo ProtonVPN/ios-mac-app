@@ -315,7 +315,7 @@
 "_port_forwarding_info_subtitle" = "Нумар актыўнага парта: %@";
 
 /* Explanation of the Notification about port forwarding */
-"_port_forwarding_info_body" = "Перайдзіце ў ваш торэнт-кліент або P2P праграму і ўвядзіце гэты нумар.";
+"_port_forwarding_info_body" = "Перайдзіце ў свой кліент торэнт або праграму P2P і ўвядзіце гэты нумар.";
 
 /* Copy button in the Notification about port forwarding */
 "_port_forwarding_info_copy_button" = "Капіяваць";
@@ -324,7 +324,7 @@
 "_port_forwarding_error_subtitle" = "Немагчыма атрымаць нумар актыўнага порта";
 
 /* Explanation of the Notification about a failed port mapping request */
-"_port_forwarding_error_body" = "Перазапусціце ваша падключэнне і паспрабуйце зноў. Калі гэта не спрацуе, паспрабуйце іншы сервер.";
+"_port_forwarding_error_body" = "Перазапусціце ваша падключэнне і паспрабуйце яшчэ раз. Калі гэта не спрацуе, паспрабуйце іншы сервер.";
 
 /* MacOS: About window title */
 "_about" = "Аб праграме";
@@ -989,7 +989,7 @@
 "_settings_port_forwarding_notifications_title" = "Апавяшчэнні перанакіравання партоў";
 
 /* MacOS: Settings -> Port forwarding notifications settings explained */
-"_settings_port_forwarding_notifications_info" = "Апавяшчаць пра змену вашага нумара актыўнага порта";
+"_settings_port_forwarding_notifications_info" = "Апавяшчаць, калі змяняецца нумар актыўнага парта";
 
 /* iOS Settings: table section cell */
 "_security_keys" = "Ключы бяспекі";
@@ -1063,40 +1063,40 @@
 
 "_allow_lan_note" = "Звярніце ўвагу, што вам неабходна перападключыцца, каб былі ўжыты змены";
 
-/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "Уключыць Kill Switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Гэта дзеянне прывядзе да адключэння Split Tunneling";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• У вас больш не будзе магчымасці атрымліваць доступ да прылад у вашай лакальнай сетцы";
 
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "У вас больш не будзе магчымасці атрымліваць доступ да прылад у вашай лакальнай сетцы";
 
-/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Уключыць Split Tunelling?";
 
-/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Гэта дзеянне прывядзе да адключэння Kill Switch.";
 
-/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Немагчыма ўключыць Split Tunelling";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Даведацца больш";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Каб выкарыстоўваць Split Tunneling, зменіце пратакол профілю ці адключыцеся ад профілю. Даведацца больш";
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
+"split_tunneling_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам IKEv2. Зменіце пратакол профілю або адключыцеся ад профілю, каб выкарыстоўваць Split Tunneling. Даведацца больш";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "Split Tunneling не сумяшчальны з пратаколам вашага профілю (IKEv2). Падключэнне адключыць Split Tunneling. Даведацца больш";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
-"split_tunneling_connect_to_profile_alert_title" = "Падключыць з IKEv2 пратаколам?";
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+"split_tunneling_connect_to_profile_alert_title" = "Падключыць з пратаколам IKEv2?";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Падключыцца да %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Адключае інтэрнэт у выпадку разрыву падключэння па VPN для прадухілення выпадковай уцечкі IP-адраса.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Паляпшае хуткасць торэнту і гульняў, дазваляючы прамыя P2P-падключэнні праз прызначаны порт.";
+"_quick_settings_portForwarding_description" = "Паляпшае хуткасць торэнтаў і гульняў, дазваляючы рабіць наўпроставыя падключэнні P2P праз прызначаны порт.";
 
 "_quick_settings_secureCore_note" = "Secure Core можа знізіць хуткасць падключэння па VPN";
 
@@ -1470,7 +1470,7 @@
 
 "_quick_settings_portForwarding_warningNote" = "Падключыце сервер P2P, каб выкарыстоўваць перанакіраванне партоў";
 
-"_quick_settings_portForwarding_errorNote" = "Немагчыма атрымаць нумар актыўнага порта. Перазапусціце ваша падключэнне і паспрабуйце зноў.";
+"_quick_settings_portForwarding_errorNote" = "Немагчыма атрымаць нумар актыўнага парта. Перазапусціце ваша падключэнне і паспрабуйце яшчэ раз.";
 
 "_quick_settings_get_plus" = "Перайсці на Plus";
 
@@ -1528,43 +1528,43 @@
 
 "_sysex_tutorial_how_to_enable" = "Як уключыць пашырэнні";
 
-"_sysex_tutorial_subtitle_app" = "Каб выкарыстоўваць Proton VPN, вам неабходна ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
+"_sysex_tutorial_subtitle_app" = "Вам неабходна ўключыць наступныя сістэмныя пашырэнні на сваім Mac, каб выкарыстоўваць Proton VPN:";
 
-"_sysex_tutorial_subtitle_st" = "Каб выкарыстоўваць Split Tunneling, вам трэба ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
+"_sysex_tutorial_subtitle_st" = "Вам неабходна ўключыць наступныя сістэмныя пашырэнні на сваім Mac, каб выкарыстоўваць Split Tunneling:";
 
-"_sysex_tutorial_subtitle_wg" = "Каб выкарыстоўваць WireGuard, вам трэба ўключыць наступныя сістэмныя пашырэнні на вашым Mac:";
+"_sysex_tutorial_subtitle_wg" = "Вам неабходна ўключыць наступныя сістэмныя пашырэнні на сваім Mac, каб выкарыстоўваць WireGuard:";
 
-"_sysex_tutorial_subtitle_features" = "Каб выкарыстоўваць пэўныя функцыі VPN (і большасць пратаколаў), вам трэба мець уключанымі сістэмныя пашырэнні Proton VPN на вашым Mac.";
+"_sysex_tutorial_subtitle_features" = "Уключыце сістэмныя пашырэнні Proton VPN на сваім Mac, каб выкарыстоўваць пэўныя функцыі VPN.";
 
 "_sysex_tutorial_step_click_open" = "Націсніце **Адкрыць пашырэнні сеткі.**";
 
-"_sysex_tutorial_step_click_security" = "Націсніце **Адкрыць сістэмныя налады**, затым перайдзіце ў **Прыватнасць і бяспека → Бяспека.**";
+"_sysex_tutorial_step_click_security" = "Націсніце **Адкрыць сістэмныя налады**, а потым перайдзіце ў раздзел **Прыватнасць і бяспека → Бяспека.**";
 
-"_sysex_tutorial_step_click_allow" = "Вы павінны ўбачыць паведамленне, у якім будзе напісана: \"Сістэмнае праграмнае забеспячэнне ад праграмы ProtonVPN было заблакавана.\". Націсніце **Дазволіць**.";
+"_sysex_tutorial_step_click_allow" = "Вы павінны ўбачыць паведамленне, у якім будзе напісана: \"Сістэмнае праграмнае забеспячэнне ад праграмы ProtonVPN было заблакіравана.\". Націсніце **Дазволіць**.";
 
-"_sysex_tutorial_step_turn_on_both_done" = "Уключыце пераключальнікі **WireGuard** і **Split Tunneling**, затым націсніце **Гатова**.";
+"_sysex_tutorial_step_turn_on_both_done" = "Уключыце пратакол **WireGuard** і функцыю **Split Tunneling**, а потым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_st_done" = "Уключыце пераключальнік **Split Tunneling**, затым націсніце **Гатова**.";
+"_sysex_tutorial_step_turn_on_st_done" = "Уключыце функцыю **Split Tunneling**, а потым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_wg_done" = "Уключыце пераключальнік **WireGuard**, затым націсніце **Гатова**.";
+"_sysex_tutorial_step_turn_on_wg_done" = "Уключыце пратакол **WireGuard**, а потым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_extensions_done" = "Уключыце патрэбныя вам пашырэнні, затым націсніце **Гатова**.";
+"_sysex_tutorial_step_turn_on_extensions_done" = "Уключыце неабходныя пашырэнні, а потым націсніце **Гатова**.";
 
-"_sysex_tutorial_step_turn_on_extensions_ok" = "Уключыце патрэбныя пашырэнні, затым націсніце **ОК**.";
+"_sysex_tutorial_step_turn_on_extensions_ok" = "Уключыце неабходныя пашырэнні, а потым націсніце **ОК**.";
 
-"_sysex_tutorial_step_turn_on_both_ok" = "Уключыце пераключальнікі **WireGuard** і **Split Tunneling**, затым націсніце **ОК**.";
+"_sysex_tutorial_step_turn_on_both_ok" = "Уключыце пратакол **WireGuard** і функцыю **Split Tunneling**, а потым націсніце **ОК**.";
 
-"_sysex_tutorial_step_turn_on_st_ok" = "Уключыце пераключальнік **Split Tunneling**, затым націсніце **OK**.";
+"_sysex_tutorial_step_turn_on_st_ok" = "Уключыце функцыю **Split Tunneling**, а потым націсніце **OK**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Уключыце пераключальнік **WireGuard**, затым націсніце **ОК**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Уключыце пратакол **WireGuard**, а потым націсніце **ОК**.";
 
-"_sysex_tutorial_step_authenticate" = "Аўтэнтыфікуйцеся з дапамогай пароля або Touch ID, калі будзе прапанавана.";
+"_sysex_tutorial_step_authenticate" = "Прайдзіце аўтэнтыфікацыю з дапамогай пароля або Touch ID, калі вас папросяць гэта зрабіць.";
 
-"_sysex_tutorial_step_authenticate_details" = "Аўтэнтыфікуйцеся з Touch ID або паролем, калі будзе запыт. На некаторых прыладах вам таксама можа спатрэбіцца націснуць кнопку з надпісам **Падрабязнасці**.";
+"_sysex_tutorial_step_authenticate_details" = "Прайдзіце аўтэнтыфікацыю з дапамогай пароля або Touch ID, калі вас папросяць гэта зрабіць. На некаторых прыладах можа таксама спатрэбіцца націснуць кнопку з надпісам **Падрабязнасці**.";
 
-"_sysex_tutorial_feature_wg" = "Уключае пратакол WireGuard VPN. Гэта неабходна для падключэння да большасці VPN-сервераў.";
+"_sysex_tutorial_feature_wg" = "Уключае пратакол WireGuard VPN. Гэта неабходна для падключэння да большасці сервераў VPN.";
 
-"_sysex_tutorial_feature_st" = "Дазваляе выключаць давераныя праграмы і IP-адрасы з вашага VPN-падключэння. Функцыя Plus.";
+"_sysex_tutorial_feature_st" = "Дазваляе выключаць давераныя праграмы і IP-адрасы з вашага падключэння па VPN. Функцыя Plus.";
 
 "_sysex_tutorial_button_open" = "Адкрыць пашырэнні сеткі";
 
@@ -1746,10 +1746,10 @@
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "Праграмы не выбраны";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Рэжым выключэння";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_include_mode" = "Рэжым уключэння";
 
 /* Header of the excluded apps list */
@@ -1770,22 +1770,22 @@
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "агляд праграм";
 
-/* Plutonium upsell view title */
+/* Split tunneling upsell view title */
 "_plutonium_upsell_title" = "Атрымлівайце лепшае ад абодвух светаў";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Яшчэ няма IP-адрасоў";
 
-/* Plutonium upsell view subtitle */
+/* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "З функцыяй Split Tunneling вы зможаце дзяліць свой трафік на той, які будзе праходзіць праз тунэлі VPN і на той, які будзе абыходзіцца без іх.";
 
-/* Plutonium feature description */
+/* Split tunneling feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
@@ -1800,7 +1800,7 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
-/* macOS main menu: Help -> Split Tunneling logs row */
+/* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Журналы Split Tunneling";
 
 "_local_agent_server_error_title" = "Памылка сервера";
@@ -1853,13 +1853,13 @@
 "no_connections_available" = "Няма даступных падключэнняў па VPN";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Папрасіце свайго адміністратара ўключыць доступ да VPN для вашага ўліковага запісу.";
+"no_servers_subtitle" = "Папрасіце свайго адміністратара ўключыць доступ па VPN для вашага ўліковага запісу.";
 
 /* Modal subtitle */
 "servers_loading_error_subtitle" = "Немагчыма загрузіць спіс сервераў.";
 
 /* Modal help text */
-"no_servers_help_string" = "Калі вашаму адміністратару патрэбна дапамога з уключэннем доступу па VPN, адпраўце яму **[гэтыя інструкцыі.](%@)**";
+"no_servers_help_string" = "Адпраўце свайму адміністратару **[гэтыя інструкцыі.](%@)**. Яны аблегчаць задачу з уключэннем доступу па VPN.";
 
 /* Modal help text */
 "no_servers_contact_us" = "Патрэбна дапамога? **[Звяжыцеся з намі](%@)**";
@@ -2702,7 +2702,7 @@
 "modals_whats_new_redesign_subtitle" = "Мы абнавілі дызайн і перанеслі некаторыя элементы, каб зрабіць праграму больш простай у выкарыстанні.";
 
 /* Title of recents related content of the "What's new" screen */
-"modals_whats_new_recents_title" = "Уводзіны ў раздзел \"Нядаўнія\";
+"modals_whats_new_recents_title" = "Уводзіны ў раздзел \"Нядаўнія\"";
 
 /* Subtitle of recents related content of the "What's new" screen */
 "modals_whats_new_recents_subtitle" = "Цяпер паўторна падключацца да вашых абраных сервераў стала яшчэ прасцей. Глядзіце свае нядаўнія падключэнні на галоўным экране або замацоўвайце іх для хуткага доступу.";
@@ -2741,10 +2741,10 @@
 "welcome_upgrade_subtitle_plus" = "Атрымлівайце асалоду ад дадатковых функцый прыватнасці, палепшанай прадукцыйнасці і больш гнуткага наладжвання вашага падключэння да VPN.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited */
-"welcome_upgrade_subtitle_Unlimited" = "Вы разблакіравалі ўсе прэміяльныя функцыі Proton VPN, Пошты, Календара, Дыска, функцый Pass — і 500 ГБ агульнага сховішча.";
+"welcome_upgrade_subtitle_Unlimited" = "Вы разблакіравалі ўсе прэміяльныя функцыі праграм Proton VPN, Mail, Calendar, Drive і Pass, а таксама 500 ГБ агульнага сховішча.";
 
 /* The subtitle of the Welcome screen when user upgrades to VPN Unlimited with markdown */
-"welcome_upgrade_subtitle_Unlimited_markdown" = "Вы разблакіравалі ўсе прэміяльныя функцыі Proton VPN, Пошты, Календара, Дыска, функцый Pass — і **500 ГБ** агульнага сховішча.";
+"welcome_upgrade_subtitle_Unlimited_markdown" = "Вы разблакіравалі ўсе прэміяльныя функцыі праграм Proton VPN, Mail, Calendar, Drive і Pass, а таксама **500 ГБ** агульнага сховішча.";
 
 /* The bold portion of the subtitle of the Welcome screen when user upgrades to VPN Unlimited */
 "welcome_upgrade_subtitle_Unlimited_bold" = "500 ГБ";
@@ -2915,7 +2915,7 @@
 "_ike_deprecation_alert_message" = "Гэты пратакол будзе неўзабаве выдалены. Падумайце, каб перайсці на пратакол Smart. Даведацца больш";
 
 /* Message added to the IKEv2 deprecation alert when split tunneling is switched on */
-"_disable_plutonium_message" = "Гэта прывядзе да адключэння Split Tunneling.";
+"_disable_plutonium_message" = "Гэта дзеянне прывядзе да адключэння Split Tunneling.";
 
 /* Link text for the hyperlink to https://protonvpn.com/support/discontinuing-ikev2-openvpn-macos-ios */
 "_ike_deprecation_alert_message_link_text" = "Даведацца больш";

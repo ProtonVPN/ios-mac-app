@@ -1063,40 +1063,40 @@
 
 "_allow_lan_note" = "Tome en cuenta que la conexión debe reiniciarse para aplicar este cambio";
 
-/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "¿Activar el interruptor de bloqueo?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Esta acción desactivará el túnel dividido";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• No podrá acceder a los dispositivos en su red local";
 
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "No podrá acceder a los dispositivos en su red local";
 
-/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "¿Activar el túnel dividido?";
 
-/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Esto desactivará el interruptor de bloqueo.";
 
-/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "No se puede activar el túnel dividido";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "El túnel dividido no es compatible con el protocolo IKEv2. Más información";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_profile_alert_description" = "El túnel dividido no es compatible con el protocolo IKEv2. Para usar el túnel dividido, cambie el protocolo de su perfil o desconéctese del perfil. Más información";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "El túnel dividido no es compatible con el protocolo de su perfil (IKEv2). Conectarse desactivará el túnel dividido. Más información";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "¿Conectar con el protocolo IKEv2?";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "¿Conectar a %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
@@ -1458,7 +1458,7 @@
 "_quick_settings_killSwitch_description" = "Desactiva internet si la conexión VPN cae para evitar fugas accidentales de IP.";
 
 /* Text for Port forwarding quick setting in the app */
-"_quick_settings_portForwarding_description" = "Mejora la velocidad de torrenting y juegos al permitir conexiones P2P directas a través de un puerto designado.";
+"_quick_settings_portForwarding_description" = "Mejora la velocidad de descarga de torrents y juegos permitiendo conexiones P2P directas a través de un puerto específico.";
 
 "_quick_settings_secureCore_note" = "Secure Core podría reducir la velocidad de la VPN";
 
@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "Debe reiniciar la conexión para aplicar este cambio";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling";
+"_plutonium_title" = "Túnel dividido";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Ingrese una dirección IPv4 válida";
@@ -1746,10 +1746,10 @@
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "Ninguna aplicación seleccionada";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Modo de exclusión";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_include_mode" = "Modo de inclusión";
 
 /* Header of the excluded apps list */
@@ -1770,22 +1770,22 @@
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "explorar aplicaciones";
 
-/* Plutonium upsell view title */
+/* Split tunneling upsell view title */
 "_plutonium_upsell_title" = "Obtenga lo mejor de ambas opciones";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Aún no hay direcciones IP";
 
-/* Plutonium upsell view subtitle */
+/* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "Divida el tráfico en túneles VPN y no VPN con el túnel dividido.";
 
-/* Plutonium feature description */
+/* Split tunneling feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
@@ -1800,7 +1800,7 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
-/* macOS main menu: Help -> Split Tunneling logs row */
+/* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registros del túnel dividido";
 
 "_local_agent_server_error_title" = "Error de servidor";
@@ -1844,7 +1844,7 @@
 
 "_neks_t2_connect" = "Activar de todos modos";
 
-"_subuser_alert_description" = "Para empezar tu viaje con Proton VPN, por favor habilita las conexiones VPN en tu cuenta o en cualquier otra subcuenta.";
+"_subuser_alert_description" = "Para empezar su viaje con Proton VPN, active las conexiones VPN en su cuenta o en cualquier otra subcuenta.";
 
 /* Button title in a modal informing the user that he needs to log in again */
 "_subuser_alert_login_button" = "Iniciar sesión de nuevo";
@@ -1853,16 +1853,16 @@
 "no_connections_available" = "No hay conexiones VPN disponibles";
 
 /* Modal subtitle */
-"no_servers_subtitle" = "Pide a tu administrador que active el acceso VPN para tu cuenta.";
+"no_servers_subtitle" = "Pida a su administrador que active el acceso VPN en su cuenta.";
 
 /* Modal subtitle */
 "servers_loading_error_subtitle" = "No pudimos cargar la lista de servidores.";
 
 /* Modal help text */
-"no_servers_help_string" = "Si tu administrador necesita ayuda para habilitar el acceso a VPN, envíales **[estas instrucciones.](%@)**";
+"no_servers_help_string" = "Si su administrador necesita ayuda para activar el acceso a VPN, envíele **[estas instrucciones.](%@)**";
 
 /* Modal help text */
-"no_servers_contact_us" = "¿Necesitas ayuda? **[Contáctanos](%@)**";
+"no_servers_contact_us" = "¿Necesita ayuda? **[Contáctenos](%@)**";
 
 /* Moderate NAT feature title in Settings */
 "_moderate_nat_title" = "NAT moderada";

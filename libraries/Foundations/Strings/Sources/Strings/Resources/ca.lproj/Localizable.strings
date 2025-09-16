@@ -1063,40 +1063,40 @@
 
 "_allow_lan_note" = "Cal reiniciar la connexió per a fer efectiu el canvi.";
 
-/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "Voleu activar el kill switch?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Això desactivarà la tunelització dividida";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• No podreu accedir als dispositius de la vostra xarxa local";
 
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "No podreu accedir als dispositius de la vostra xarxa local";
 
-/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Voleu activar la tunelització dividida?";
 
-/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Això desactivarà el kill switch.";
 
-/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "No es pot activar la tunelització dividida";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Saber-ne més";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol IKEv2. Per utilitzar la tunelització dividida, canvieu el protocol del vostre perfil o desconnecteu-vos del perfil. Saber-ne més";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "La tunelització dividida no és compatible amb el protocol del vostre perfil (IKEv2). En connectar-vos, es desactivarà la tunelització dividida. Saber-ne més";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Voleu connectar amb el protocol IKEv2?";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Us voleu connectar a %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "La vostra connexió necessita reiniciar-se per aplicar els canvis.";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling";
+"_plutonium_title" = "Tunelització dividida";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Introduïu una adreça IPv4 vàlida";
@@ -1746,10 +1746,10 @@
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "No hi ha aplicacions seleccionades.";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Mode d'exclusió";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_include_mode" = "Mode d'inclusió";
 
 /* Header of the excluded apps list */
@@ -1770,22 +1770,22 @@
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "explora les aplicacions";
 
-/* Plutonium upsell view title */
+/* Split tunneling upsell view title */
 "_plutonium_upsell_title" = "Aconseguiu el millor dels dos mons";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Encara no hi ha adreces IP";
 
-/* Plutonium upsell view subtitle */
+/* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "Dividiu el trànsit en túnels VPN i no VPN amb tunelització dividida.";
 
-/* Plutonium feature description */
+/* Split tunneling feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
@@ -1800,7 +1800,7 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
-/* macOS main menu: Help -> Split Tunneling logs row */
+/* macOS main menu: Help -> Split tunneling logs row */
 "_plutonium_logs" = "Registres de la tunelització dividida";
 
 "_local_agent_server_error_title" = "Error del servidor";

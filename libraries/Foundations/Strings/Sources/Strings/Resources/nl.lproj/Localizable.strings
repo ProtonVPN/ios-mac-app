@@ -1063,40 +1063,40 @@
 
 "_allow_lan_note" = "Merk op dat uw verbinding opnieuw gestart moet worden om deze wijziging toe te passen";
 
-/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* Title of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_title" = "IP-beveiliging inschakelen?";
 
-/* [mac] Description text of alert shown if user tries to enable KillSwitch when Split Tunneling is on */
+/* [mac] Description text of alert shown if user tries to enable KillSwitch when split tunneling is on */
 "_turn_ks_on_description_macos_st_conflict" = "• Hiermee wordt split tunneling uitgeschakeld";
 
 /* [mac] Description text of alert shown if user tries to enable KillSwitch when Allow LAN is on */
 "_turn_ks_on_description_macos_lan_conflict" = "• U zult geen toegang hebben tot apparaten op uw lokaal netwerk.";
 
-/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or Split Tunneling is on */
+/* [ios] Description text of alert shown if user tries to enable KillSwitch when Allow LAN or split tunneling is on */
 "_turn_ks_on_description_ios" = "U zult geen toegang hebben tot apparaten op uw lokaal netwerk";
 
-/* Title of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Title of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_title" = "Split tunneling inschakelen?";
 
-/* Description text of alert shown if user tries to enable Split Tunneling when KillSwitch is on */
+/* Description text of alert shown if user tries to enable split tunneling when KillSwitch is on */
 "turn_split_tunneling_on_description" = "Hiermee wordt de kill switch uitgeschakeld.";
 
-/* Title of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Title of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_title" = "Kan split tunneling niet inschakelen";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol. Meer informatie";
 
-/* Description of alert shown if user tries to enable Split Tunneling when IKEv2 is enabled */
+/* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
 "split_tunneling_profile_alert_description" = "Split tunneling is niet compatibel met het IKEv2-protocol. Om split tunneling te gebruiken, wijzigt u uw profielprotocol of koppelt u los van het profiel. Meer informatie";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is niet compatibel met het protocol van uw profiel (IKEv2). Verbinden zal split tunneling uitschakelen. Meer informatie";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Verbinden met IKEv2-protocol?";
 
-/* Title of alert shown if user tries to connect to an IKEv2 profile and Split Tunneling is enabled */
+/* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_name_alert_title" = "Verbind met %@?";
 
 /* %@ is a plan name e.g. Get Plus Plan */
@@ -1556,23 +1556,23 @@
 
 "_sysex_tutorial_step_turn_on_st_ok" = "Schakel de **split tunneling**-schakelaar in en klik vervolgens op **Gereed**.";
 
-"_sysex_tutorial_step_turn_on_wg_ok" = "Turn on the **WireGuard** switch, then click **OK**.";
+"_sysex_tutorial_step_turn_on_wg_ok" = "Schakel de **WireGuard**-schakelaar in en klik vervolgens op **Gereed**.";
 
-"_sysex_tutorial_step_authenticate" = "Authenticate with password or Touch ID if asked.";
+"_sysex_tutorial_step_authenticate" = "Authenticeer met wachtwoord of Touch ID indien gevraagd.";
 
-"_sysex_tutorial_step_authenticate_details" = "Authenticate with Touch ID or password if asked. On some devices, you might also need to click on a button that says **Details**.";
+"_sysex_tutorial_step_authenticate_details" = "Authenticeer u met Touch ID of wachtwoord indien gevraagd. Op sommige apparaten moet u mogelijk ook op een knop klikken die **gegevens** vermeldt.";
 
-"_sysex_tutorial_feature_wg" = "Enables the WireGuard VPN protocol. You need this to connect to most VPN servers.";
+"_sysex_tutorial_feature_wg" = "Schakelt het WireGuard VPN-protocol in. U hebt dit nodig om met de meeste VPN-servers te verbinden.";
 
-"_sysex_tutorial_feature_st" = "Lets you exclude trusted apps and IP addresses from your VPN connection. Plus feature.";
+"_sysex_tutorial_feature_st" = "Hiermee kunt u vertrouwde apps en IP-adressen uitsluiten van uw VPN-verbinding. Plus-functie.";
 
-"_sysex_tutorial_button_open" = "Open Network Extensions";
+"_sysex_tutorial_button_open" = "Open Netwerkextensies";
 
 "_sysex_open_system_settings" = "Open Systeeminstellingen";
 
-"_sysex_tutorial_didnt_work" = "Didn't work?";
+"_sysex_tutorial_didnt_work" = "Niet gelukt?";
 
-"_sysex_tutorial_need_help" = "Need help?";
+"_sysex_tutorial_need_help" = "Heeft u hulp nodig?";
 
 "_sysex_settings_description" = "Proton VPN vereist het laden van een Systeem Extensie om gebruik te maken van Smart Protocol, OpenVPN en WireGuard.";
 
@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "Uw verbinding moet opnieuw worden gestart om deze wijziging toe te passen";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling";
+"_plutonium_title" = "Split tunneling";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Voer een geldig IPv4-adres in";
@@ -1746,10 +1746,10 @@
 /* Description when user didn't include any apps in the list */
 "_plutonium_no_apps" = "Geen apps geselecteerd";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_exclude_mode" = "Uitsluit-modus";
 
-/* Title of the plutonium feature operation mode */
+/* Title of the split tunneling feature operation mode */
 "_plutonium_include_mode" = "Toevoeg-modus";
 
 /* Header of the excluded apps list */
@@ -1770,22 +1770,22 @@
 /* Subtitle of a button that opens a panel for file selection. Part 2 of 2. The whole string reads: "Drag and drop here or browse apps" */
 "_plutonium_import_apps_subtitle_2" = "apps browsen";
 
-/* Plutonium upsell view title */
+/* Split tunneling upsell view title */
 "_plutonium_upsell_title" = "Krijg het beste van beide werelden";
 
 /* Description of an empty list of IPs */
 "_plutonium_empty_ip_list_content" = "Nog geen IP-adressen";
 
-/* Plutonium upsell view subtitle */
+/* Split tunneling upsell view subtitle */
 "_plutonium_upsell_subtitle" = "Verdeel uw verkeer in VPN- en niet-VPN-tunnels met split tunneling.";
 
-/* Plutonium feature description */
+/* Split tunneling feature description */
 "_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
 
-/* Description of the plutonium feature operation mode */
+/* Description of the split tunneling feature operation mode */
 "_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
@@ -1800,8 +1800,8 @@
 /* Header of the included ips list */
 "_plutonium_include_mode_ips" = "Protected IP addresses";
 
-/* macOS main menu: Help -> Split Tunneling logs row */
-"_plutonium_logs" = "Split Tunneling Logboeken";
+/* macOS main menu: Help -> Split tunneling logs row */
+"_plutonium_logs" = "Split tunneling Logs";
 
 "_local_agent_server_error_title" = "Serverfout";
 
