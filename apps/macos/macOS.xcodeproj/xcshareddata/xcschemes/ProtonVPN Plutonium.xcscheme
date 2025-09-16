@@ -18,7 +18,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EBB751C32DA7D4C800F79994"
                BuildableName = "ch.protonvpn.mac.Transparent-Proxy.systemextension"
-               BlueprintName = "ProtonVPN split tunneling"
+               BlueprintName = "ProtonVPN Split Tunneling"
                ReferencedContainer = "container:macOS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

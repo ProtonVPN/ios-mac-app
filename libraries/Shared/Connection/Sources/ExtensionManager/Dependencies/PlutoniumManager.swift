@@ -30,7 +30,7 @@
         public var stop: () async throws -> Void
 
         private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
-        private static let descriptionText = "ProtonVPN Split tunneling"
+        private static let descriptionText = "Proton VPN Split tunneling"
 
         private init(
             start: @escaping () async throws -> Void,
