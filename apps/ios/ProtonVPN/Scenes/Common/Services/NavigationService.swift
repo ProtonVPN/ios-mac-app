@@ -121,7 +121,6 @@ final class NavigationService {
 
     // MARK: Storyboards
 
-    private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var launchStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
@@ -198,8 +197,7 @@ final class NavigationService {
 
     func presentWelcome(initialError: String?) {
         loginService.showWelcome(initialError: initialError, withOverlayViewController: nil)
-        // early release view controllers in case of logging out
-        tabBarController?.setViewControllers([], animated: false)
+        tabBarController = nil
     }
 
     func presentLogin(flow: LoginFlowType = .normal) {
@@ -294,37 +292,22 @@ final class NavigationService {
             return
         }
 
-        guard let tabBarVC = makeTabBarController() else {
-            log.assertionFailure("Could not create tab bar view controller")
-            return
-        }
-
-        var tabViewControllers: [UIViewController]
-        if FeatureFlagsRepository.isRedesigniOSEnabled {
-            @Dependency(\.credentialsProvider) var credentials
-            @Shared(.userTier) var userTier
-            $userTier.withLock { $0 = credentials.tier }
-
-            tabViewControllers = [
+        let tabBarVC = makeTabBarController()
+        let tabViewControllers: [UIViewController] = if FeatureFlagsRepository.isRedesigniOSEnabled {
+            [
                 HomeFeatureCreator.homeViewController(),
                 UINavigationController(rootViewController: makeCountriesViewController()),
                 UINavigationController(rootViewController: makeProfilesViewController()),
                 UINavigationController(rootViewController: makeSettingsViewController()),
             ]
         } else {
-            tabViewControllers = [
+            [
                 UINavigationController(rootViewController: makeCountriesViewController()),
                 UINavigationController(rootViewController: makeMapViewController()),
-            ]
-
-            if let qcViewController = mainStoryboard.instantiateViewController(withIdentifier: "ProtonQCViewController") as? ProtonQCViewController {
-                tabViewControllers.append(qcViewController)
-            }
-
-            tabViewControllers.append(contentsOf: [
+                ProtonQCViewController(),
                 UINavigationController(rootViewController: makeProfilesViewController()),
                 UINavigationController(rootViewController: makeSettingsViewController()),
-            ])
+            ]
         }
 
         tabBarVC.setViewControllers(tabViewControllers, animated: false)
@@ -341,9 +324,8 @@ final class NavigationService {
         return nil
     }
 
-    private func makeTabBarController() -> TabBarController? {
-        guard let tabBarController = mainStoryboard.instantiateViewController(withIdentifier: "TabBarController") as? TabBarController else { return nil }
-        tabBarController.viewModel = TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway)
+    private func makeTabBarController() -> TabBarController {
+        let tabBarController = TabBarController(viewModel: TabBarViewModel(navigationService: self, sessionManager: appSessionManager, appStateManager: appStateManager, vpnGateway: vpnGateway))
 
         return tabBarController
     }

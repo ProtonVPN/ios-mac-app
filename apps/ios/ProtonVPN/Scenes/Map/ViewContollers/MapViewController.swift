@@ -51,7 +51,7 @@ final class MapViewController: UIViewController {
 
     private var mapView: UIImageView = .init().with {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.image = Asset.mainMap.image
     }
 
@@ -162,8 +162,6 @@ final class MapViewController: UIViewController {
             mapView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             mapView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             mapView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            mapView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            mapView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
         ])
     }
 
