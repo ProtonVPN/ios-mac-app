@@ -53,6 +53,7 @@ final class MapViewController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.contentMode = .scaleAspectFill
         $0.image = Asset.mainMap.image
+        $0.isUserInteractionEnabled = true
     }
 
     private lazy var scrollView: UIScrollView = .init().with {
