@@ -386,7 +386,7 @@ final class LoginViewController: NSViewController {
             _ = twoFactorView.becomeFirstResponder()
 
             loadingView.animate(false)
-        case .askAny2FA:
+        case .askFIDO2, .askAny2FA:
             onboardingView.isHidden = true
             anyTwoFactorContainerView.isHidden = false
             logoImage.isHidden = false

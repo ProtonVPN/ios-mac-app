@@ -184,17 +184,21 @@ struct AnyTwoFactorSwiftUIView: View {
     // the default value will be the one selected when view appears
     @State private var twoFactorKind: TwoFactorKind = .hardwareKey
 
+    @State private var showPicker: Bool = false
+
     var body: some View {
         WithPerceptionTracking {
             VStack {
-                Picker("", selection: $twoFactorKind) {
-                    ForEach(TwoFactorKind.allCases, id: \.self) { kind in
-                        Text(kind.pickerMenuTitle)
-                            .tag(kind.rawValue)
+                if showPicker {
+                    Picker("", selection: $twoFactorKind) {
+                        ForEach(TwoFactorKind.allCases, id: \.self) { kind in
+                            Text(kind.pickerMenuTitle)
+                                .tag(kind.rawValue)
+                        }
                     }
+                    .pickerStyle(.segmented)
+                    .padding()
                 }
-                .pickerStyle(.segmented)
-                .padding()
 
                 switch twoFactorKind {
                 case .totp:
@@ -223,6 +227,14 @@ struct AnyTwoFactorSwiftUIView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical)
+            .onReceive(viewModel.loginViewModel.$twoFactorViewKind) { newValue in
+                switch newValue {
+                case .none, .askTOTP, .askFIDO2:
+                    showPicker = false
+                case .askAny2FA:
+                    showPicker = true
+                }
+            }
         }
     }
 }

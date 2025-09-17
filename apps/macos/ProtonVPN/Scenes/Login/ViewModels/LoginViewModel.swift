@@ -48,13 +48,14 @@ final class LoginViewModel: ObservableObject {
     enum TwoFactorViewKind {
         case none
         case askTOTP
+        case askFIDO2
         case askAny2FA
 
         var shouldShowTwoFactorScreen: Bool {
             switch self {
             case .none:
                 false
-            case .askTOTP, .askAny2FA:
+            case .askTOTP, .askAny2FA, .askFIDO2:
                 true
             }
         }
@@ -94,12 +95,8 @@ final class LoginViewModel: ObservableObject {
     var ssoChallengeReceived: ((URLRequest) -> Void)?
     var initialError: String?
 
-    private(set) var twoFactorViewKind: TwoFactorViewKind = .none
-    private(set) var twoFactorViewModel: AnyTwoFactorViewModel? {
-        didSet {
-            print("Hey")
-        }
-    }
+    @Published private(set) var twoFactorViewKind: TwoFactorViewKind = .none
+    private(set) var twoFactorViewModel: AnyTwoFactorViewModel?
 
     init(factory: Factory, initialError: String? = nil) {
         self.factory = factory
@@ -263,7 +260,10 @@ final class LoginViewModel: ObservableObject {
             case let .askAny2FA(authenticationOptions):
                 twoFactorViewKind = .askAny2FA
                 twoFactorRequired?(authenticationOptions)
-            case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress, .askFIDO2:
+            case let .askFIDO2(authenticationOptions):
+                twoFactorViewKind = .askFIDO2
+                twoFactorRequired?(authenticationOptions)
+            case .askSecondPassword, .chooseInternalUsernameAndCreateInternalAddress:
                 log.error("Unsupported login scenario", category: .app, metadata: ["result": "\(result)"])
                 logInFailure?(Localizable.loginUnsupportedState, nil)
             }
