@@ -77,41 +77,102 @@
                 }
             }
 
-            // 2. find or create
-            let manager: NETransparentProxyManager
-            if let existing = managers.first(where: {
-                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                    .providerBundleIdentifier == bundleId
-            }) {
-                manager = existing
-                if let protocolConfig = manager.protocolConfiguration as? NETunnelProviderProtocol {
-                    protocolConfig.providerConfiguration = providerConfig
-                    manager.protocolConfiguration = protocolConfig
-                }
-            } else {
-                let newManager = NETransparentProxyManager()
-                let protocolConfig = NETunnelProviderProtocol()
-                protocolConfig.providerBundleIdentifier = bundleId
-                protocolConfig.serverAddress = "127.0.0.1"
-                protocolConfig.providerConfiguration = providerConfig
-                newManager.protocolConfiguration = protocolConfig
-                newManager.localizedDescription = descriptionText
-                newManager.isEnabled = true
-                manager = newManager
+            // 2. Find managers with the same bundle ID
+            let managersWithSameBundleId = managers.filter { manager in
+                (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
             }
 
-            // 3. save the updated manager
+            // 3. Handle different scenarios
+            switch managersWithSameBundleId.count {
+            case 0:
+                // No existing manager - create new one
+                log.info("No existing manager found, creating new one")
+                return try await createNewManager(providerConfig: providerConfig)
+
+            case 1:
+                // Exactly one existing manager - reuse it
+                let existingManager = managersWithSameBundleId[0]
+
+                // Update configuration if needed
+                if let protocolConfig = existingManager.protocolConfiguration as? NETunnelProviderProtocol {
+                    protocolConfig.providerConfiguration = providerConfig
+                    existingManager.protocolConfiguration = protocolConfig
+                }
+
+                // Save the updated configuration
+                try await saveManagerToPreferences(existingManager, context: "existing manager configuration")
+
+                return existingManager
+
+            default:
+                // Multiple existing managers - clean up duplicates and keep one
+                log.warning("Found \(managersWithSameBundleId.count) duplicate managers, cleaning up")
+
+                // Keep the first one and remove the rest
+                let managerToKeep = managersWithSameBundleId[0]
+                let managersToRemove = Array(managersWithSameBundleId.dropFirst())
+
+                // Remove duplicate managers
+                for managerToRemove in managersToRemove {
+                    do {
+                        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                            managerToRemove.removeFromPreferences { error in
+                                if let error {
+                                    log.warning("Failed to remove duplicate manager: \(error)")
+                                    continuation.resume(throwing: error)
+                                } else {
+                                    log.info("Successfully removed duplicate manager")
+                                    continuation.resume(returning: ())
+                                }
+                            }
+                        }
+                    } catch {
+                        log.warning("Error removing duplicate manager: \(error)")
+                        // Continue even if removal fails
+                    }
+                }
+
+                // Update the kept manager's configuration
+                if let protocolConfig = managerToKeep.protocolConfiguration as? NETunnelProviderProtocol {
+                    protocolConfig.providerConfiguration = providerConfig
+                    managerToKeep.protocolConfiguration = protocolConfig
+                }
+
+                // Save the updated configuration
+                try await saveManagerToPreferences(managerToKeep, context: "kept manager configuration")
+
+                return managerToKeep
+            }
+        }
+
+        private static func createNewManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
+            let newManager = NETransparentProxyManager()
+            let protocolConfig = NETunnelProviderProtocol()
+            protocolConfig.providerBundleIdentifier = bundleId
+            protocolConfig.serverAddress = "127.0.0.1"
+            protocolConfig.providerConfiguration = providerConfig
+            newManager.protocolConfiguration = protocolConfig
+            newManager.localizedDescription = descriptionText
+            newManager.isEnabled = true
+
+            // Save the new manager with proper error handling
+            try await saveManagerToPreferences(newManager, context: "new manager")
+
+            return newManager
+        }
+
+        private static func saveManagerToPreferences(_ manager: NETransparentProxyManager, context: String) async throws {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                 manager.saveToPreferences { error in
                     if let error {
-                        continuation.resume(throwing: error)
+                        log.error("Failed to save \(context): \(error)")
+                        continuation.resume(throwing: PlutoniumManagerError.saveFailed(error))
                     } else {
+                        log.info("Successfully saved \(context)")
                         continuation.resume(returning: ())
                     }
                 }
             }
-
-            return manager
         }
 
         private static func updateAppliedConfiguration() {
@@ -141,6 +202,17 @@
             first {
                 ($0.protocolConfiguration as? NETunnelProviderProtocol)?
                     .providerBundleIdentifier == bundleId
+            }
+        }
+    }
+
+    enum PlutoniumManagerError: Error {
+        case saveFailed(Error)
+
+        var localizedDescription: String {
+            switch self {
+            case let .saveFailed(error):
+                "Failed to save transparent proxy manager: \(error.localizedDescription)"
             }
         }
     }
