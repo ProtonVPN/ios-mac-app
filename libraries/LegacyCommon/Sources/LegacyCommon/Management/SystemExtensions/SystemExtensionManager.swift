@@ -203,12 +203,12 @@
         private func submitInstallationRequests(
             includedTypes: [SystemExtensionType],
             userInitiated: Bool,
-            userActionRequiredHandler: @escaping ((Int) -> Void),
+            userActionRequiredHandler: @escaping (([SystemExtensionType]) -> Void),
             installationFinishedHandler: @escaping ((InstallationState) -> Void)
         ) {
             let queue = DispatchQueue(label: "ch.protonvpn.sysext.status.\(UUID().uuidString)")
             var states: InstallationState = [:]
-            var extensionsRequiringApproval = 0
+            var extensionsRequiringApproval = [SystemExtensionType]()
 
             let finishedInstalling = DispatchGroup()
             let installStatesKnown = DispatchGroup()
@@ -227,7 +227,7 @@
                     case .replacing:
                         break
                     case .userActionRequired:
-                        queue.sync { extensionsRequiringApproval += 1 }
+                        queue.sync { extensionsRequiringApproval.append(type) }
                         installStatesKnown.leave()
                     case .failed, .succeeded, .superseded, .cancelled:
                         if case .userActionRequired = prevState {} else {
@@ -242,7 +242,7 @@
             }
 
             installStatesKnown.notify(queue: SystemExtensionManager.requestQueue) {
-                guard extensionsRequiringApproval > 0 else { return }
+                guard extensionsRequiringApproval.count > 0 else { return }
 
                 userActionRequiredHandler(extensionsRequiringApproval)
             }
@@ -303,7 +303,7 @@
         ) {
             var didRequireUserApproval = false
 
-            submitInstallationRequests(includedTypes: includedTypes, userInitiated: shouldStartTour, userActionRequiredHandler: { [unowned self] _ in
+            submitInstallationRequests(includedTypes: includedTypes, userInitiated: shouldStartTour, userActionRequiredHandler: { [unowned self] installationState in
                 didRequireUserApproval = true
 
                 guard shouldStartTour else {
@@ -315,7 +315,13 @@
                     return
                 }
 
-                let tour = SystemExtensionTourAlert(origin: .firstAppLaunch, cancelHandler: {
+                let origin: SystemExtensionTourAlert.Origin = if propertiesManager.isSubsequentLaunch {
+                    .inAppPrompt(installationState.map(\.feature))
+                } else {
+                    .firstAppLaunch
+                }
+
+                let tour = SystemExtensionTourAlert(origin: origin, cancelHandler: {
                     SentryHelper.shared?.log(message: "Sysex tour ended.", extra: ["reason": "cancelled"])
                     DispatchQueue.main.async {
                         let cancelledResults: [SystemExtensionType: SystemExtensionResult] = Dictionary(
@@ -543,4 +549,14 @@
             manager.outstandingRequests.remove(self)
         }
     }
+
+private extension SystemExtensionType {
+    var feature: SystemExtensionTourAlert.Feature {
+        switch self {
+        case .plutonium: return .splitTunneling
+        case .wireGuard: return .wireguard
+        }
+    }
+}
+
 #endif

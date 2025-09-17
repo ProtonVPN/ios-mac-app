@@ -123,6 +123,10 @@ class HelpMenuViewModel {
         vpnKeychain.clear()
         authKeychain.clear()
 
+        let sharedConfigURL = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: DomainConstants.AppGroups.main)!
+        try? FileManager.default.removeItem(at: sharedConfigURL)
+
         vpnAuthenticationStorage.deleteCertificate()
         vpnAuthenticationStorage.deleteKeys()
 
