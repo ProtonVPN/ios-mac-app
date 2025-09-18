@@ -1435,7 +1435,7 @@
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
 "_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling kill switch.";
 "_quick_settings_portForwarding_note" = "Enter the active port number into your BitTorrent app to improve your P2P speeds";
-"_quick_settings_portForwarding_warningNote" = "To use port forwarding, connect to a P2P server";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 "_quick_settings_portForwarding_errorNote" = "Cannot retrieve active port number. Restart your connection and try again.";
 "_quick_settings_get_plus" = "Get Plus";
 "_applying_settings_" = "Applying settings";
