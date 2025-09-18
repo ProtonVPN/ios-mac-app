@@ -143,6 +143,7 @@ final class QuickSettingsManager {
             $0.titlePosition = .noTitle
             $0.translatesAutoresizingMaskIntoConstraints = false
             $0.fillColor = NSColor.clear
+            $0.wantsLayer = true
         }
 
         parentView.addSubview(container)
