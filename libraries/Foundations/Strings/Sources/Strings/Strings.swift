@@ -1100,7 +1100,7 @@ public enum Localizable {
   public static var pfLoading: String { return Localizable.tr("Localizable", "_pf_loading", fallback: "Loading...") }
   /// Text appears under active port number indicating relative date
   public static func pfUpdated(_ p1: Any) -> String {
-    return Localizable.tr("Localizable", "_pf_updated", String(describing: p1), fallback: "Updated %@")
+    return Localizable.tr("Localizable", "_pf_updated", String(describing: p1), fallback: "Last updated: %@")
   }
   /// iOS: placeholder in phone verification screen
   public static var phoneCountryCodePlaceholder: String { return Localizable.tr("Localizable", "_phone_country_code_placeholder", fallback: "Code") }
