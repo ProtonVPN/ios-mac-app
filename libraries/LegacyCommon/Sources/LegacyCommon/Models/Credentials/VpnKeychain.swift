@@ -253,35 +253,54 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
 
     private func setPasswordData(_ data: Data, forKey key: String) throws {
-        do {
-            var query = formBaseQuery(forKey: key)
-            query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
-            query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
-            query[kSecReturnData as AnyHashable] = kCFBooleanTrue
+        // First, try to get existing password data
+        let existingData = try? getPasswordData(forKey: key)
 
-            var secItem: AnyObject?
-            let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
-            if result != errSecSuccess {
-                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
-            }
+        // If data exists and is the same, skip the operation
+        if let existingData, existingData == data {
+            log.debug("Skipping password data storage for key \(key), data is unchanged")
+            return
+        }
 
-            // If current item is the same as the one we want to write, just skip it
-            guard let secItemDict = secItem as? [String: AnyObject],
-                  let oldPasswordData = secItemDict[kSecValueData as String] as? Data,
-                  data == oldPasswordData
-            else {
-                throw NSError(domain: NSOSStatusErrorDomain, code: -1, userInfo: nil)
-            }
-        } catch {
+        // If data exists but is different, delete it first
+        if existingData != nil {
             try? clearPassword(forKey: key)
+        }
 
-            var query = formBaseQuery(forKey: key)
-            query[kSecValueData as AnyHashable] = data
+        // Add the new password data
+        var query = formBaseQuery(forKey: key)
+        query[kSecValueData as AnyHashable] = data
 
-            let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
-            if result != errSecSuccess {
+        let result = KeychainEnvironment.secItemAdd(query as CFDictionary, nil)
+        if result != errSecSuccess {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
+        }
+
+        log.debug("Successfully stored password data for key \(key)")
+    }
+
+    private func getPasswordData(forKey key: String) throws -> Data? {
+        var query = formBaseQuery(forKey: key)
+        query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
+        query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
+        query[kSecReturnData as AnyHashable] = kCFBooleanTrue
+
+        var secItem: AnyObject?
+        let result = KeychainEnvironment.secItemCopyMatching(query as CFDictionary, &secItem)
+
+        switch result {
+        case errSecItemNotFound:
+            return nil
+        case errSecSuccess:
+            guard let secItemDict = secItem as? [String: AnyObject] else {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
+            guard let passwordData = secItemDict[kSecValueData as String] as? Data else {
+                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
+            }
+            return passwordData
+        default:
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
 
