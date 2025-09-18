@@ -114,6 +114,7 @@ final class PacketTunnelManager: TunnelManager {
     }
 
     func startTunnel(with intent: ServerConnectionIntent) async throws {
+        // The following call may prompt the user to give permissions to our app to modify VPN configs
         let manager = try await updateTunnel(for: .connection(intent))
         try Task.checkCancellation()
         try manager.session.startTunnel()

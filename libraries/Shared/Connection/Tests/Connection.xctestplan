@@ -1,40 +1,31 @@
 {
   "configurations" : [
     {
-      "id" : "0F5DDA1D-B6FA-4DBA-B15E-1C462ABF48D3",
-      "name" : "Test Scheme Action",
+      "id" : "F6D72D18-CA67-4C03-AE32-747C8932B414",
+      "name" : "Configuration 1",
       "options" : {
 
       }
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : {
-      "targets" : [
-        {
-          "containerPath" : "container:",
-          "identifier" : "CertificateAuthentication",
-          "name" : "CertificateAuthentication"
-        },
-        {
-          "containerPath" : "container:",
-          "identifier" : "Connection",
-          "name" : "Connection"
-        },
-        {
-          "containerPath" : "container:",
-          "identifier" : "CoreConnection",
-          "name" : "CoreConnection"
-        },
-        {
-          "containerPath" : "container:",
-          "identifier" : "LocalAgent",
-          "name" : "LocalAgent"
-        }
-      ]
-    }
+
   },
   "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "HermesTests",
+        "name" : "HermesTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ExtensionManagerTests",
+        "name" : "ExtensionManagerTests"
+      }
+    },
     {
       "target" : {
         "containerPath" : "container:",
@@ -52,22 +43,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "ExtensionManagerTests",
-        "name" : "ExtensionManagerTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
         "identifier" : "CertificateAuthenticationTests",
         "name" : "CertificateAuthenticationTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:",
-        "identifier" : "HermesTests",
-        "name" : "HermesTests"
       }
     }
   ],

@@ -101,6 +101,7 @@
             if status == .disconnected {
                 return
             }
+            status = .disconnecting
             disconnectionTask = Task {
                 @Dependency(\.continuousClock) var clock
                 try await clock.sleep(for: disconnectionDuration)

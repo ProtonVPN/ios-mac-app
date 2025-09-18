@@ -49,8 +49,7 @@
             mockManager.connection.startupDuration = .milliseconds(250)
             mockManager.connection.connectionDuration = .milliseconds(500)
 
-            let disconnected = ExtensionFeature.State.disconnected(nil)
-            let store = TestStore(initialState: disconnected) {
+            let store = TestStore(initialState: .disconnected) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.continuousClock = mockClock
@@ -62,19 +61,22 @@
             await store.receive(\.tunnelStatusChanged.disconnected)
 
             await store.send(.connect(intent)) {
-                $0 = .preparingConnection(logicalServerInfo)
+                $0.maskedState = .preparingConnection(logicalServerInfo)
             }
 
             await store.receive(\.tunnelStartRequestFinished.success)
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.tunnelStatusChanged.connecting) {
-                $0 = .connecting(logicalServerInfo)
+                $0.neState = .connecting
+                $0.maskedState = .connecting(logicalServerInfo)
             }
 
             await mockClock.advance(by: .milliseconds(500))
-            await store.receive(\.tunnelStatusChanged.connected)
+            await store.receive(\.tunnelStatusChanged.connected) {
+                $0.neState = .connected
+            }
             await store.receive(\.connectionFinished.success) {
-                $0 = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
+                $0.maskedState = .connected(TunnelConnectionResponse(logicalInfo: logicalServerInfo, connectionDate: now))
             }
 
             await store.send(.stopObservingStateChanges)
@@ -92,7 +94,7 @@
             mockManager.connection.connectedServer = previouslyConnectedServer
             let now = Date.now
 
-            let store = TestStore(initialState: .unknown) {
+            let store = TestStore(initialState: .init(neState: .invalid, maskedState: .unknown)) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.tunnelManager = mockManager
@@ -101,10 +103,11 @@
 
             await store.send(.startObservingStateChanges)
             await store.receive(\.tunnelStatusChanged.connected) {
-                $0 = .connecting(nil)
+                $0.neState = .connected
+                $0.maskedState = .connecting(nil)
             }
             await store.receive(\.connectionFinished.success) {
-                $0 = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
+                $0.maskedState = .connected(TunnelConnectionResponse(logicalInfo: previouslyConnectedServer, connectionDate: now))
             }
 
             await store.send(.stopObservingStateChanges)
@@ -120,8 +123,7 @@
                 lastDisconnectError: nil
             )
 
-            let disconnected = ExtensionFeature.State.disconnected(nil)
-            let store = TestStore(initialState: disconnected) {
+            let store = TestStore(initialState: .disconnected) {
                 ExtensionFeature()
             } withDependencies: {
                 $0.continuousClock = mockClock
@@ -135,19 +137,25 @@
             let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
 
             await store.send(.startObservingStateChanges)
-            await store.receive(\.tunnelStatusChanged.invalid)
+            await store.receive(\.tunnelStatusChanged.invalid) {
+                $0.neState = .invalid
+            }
 
             let permissionDenied: Error = "NEVPNErrorDomain Code=5 permission denied" as GenericError
             mockManager.tunnelStartErrorToThrow = permissionDenied
 
             await store.send(.connect(intent)) {
-                $0 = .preparingConnection(logicalServerInfo)
+                $0.maskedState = .preparingConnection(logicalServerInfo)
             }
             await store.receive(\.tunnelStartRequestFinished.failure) {
-                $0 = .disconnected(.tunnelStartFailed(permissionDenied))
+                $0.maskedState = .disconnected(.tunnelStartFailed(permissionDenied))
             }
 
             await store.send(.stopObservingStateChanges)
         }
+    }
+
+    extension ExtensionFeature.State {
+        static let disconnected: Self = .init(neState: .disconnected, maskedState: .disconnected(nil))
     }
 #endif

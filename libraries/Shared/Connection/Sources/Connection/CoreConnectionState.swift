@@ -42,7 +42,7 @@ public enum CoreConnectionState: Equatable, Sendable, CasePathable {
         certAuthState: CertificateAuthenticationFeature.State,
         localAgentState: LocalAgentFeature.State
     ) {
-        switch (tunnelState, localAgentState) {
+        switch (tunnelState.maskedState, localAgentState) {
         case (.unknown, _):
             self = .unknown
 

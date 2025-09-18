@@ -65,7 +65,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -91,19 +91,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -135,9 +138,12 @@
                 $0.localAgent = .disconnecting(nil)
             }
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
             await store.receive(stateChange(from: \.connected, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
 
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.localAgent.event.state.disconnected) {
@@ -145,7 +151,8 @@
             }
             await mockClock.advance(by: .milliseconds(750))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
             await store.send(.stopObserving)
@@ -174,7 +181,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -226,19 +233,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -258,11 +268,15 @@
             await store.receive(\.certAuth.cancelRefreshes)
             await store.receive(\.localAgent.disconnect)
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
             await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
@@ -315,7 +329,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
             let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -353,19 +367,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -383,7 +400,8 @@
             // Simulate the tunnel crashing or being manually disconnected by the user
             mockManager.connection.status = .disconnected
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.connecting, to: \.disconnected))
 
@@ -445,7 +463,10 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
             let certRefreshStarted = XCTestExpectation(description: "Cert refresh process should have been started")
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(
+                tunnelState: .init(neState: .disconnected, maskedState: .disconnected(nil)),
+                localAgentState: .disconnected(nil)
+            )
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -471,19 +492,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -510,7 +534,8 @@
             // Simulate the tunnel crashing or being manually disconnected by the user
             mockManager.connection.status = .disconnected
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.connected, to: \.disconnected))
 
@@ -550,7 +575,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -581,19 +606,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -613,14 +641,17 @@
             await store.receive(\.certAuth.cancelRefreshes)
             await store.receive(\.localAgent.disconnect)
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
-
             await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
 
             await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
@@ -659,7 +690,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -685,22 +716,25 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             let keysCleared = XCTestExpectation(description: "Keys should have been cleared")
             mockStorage.keysDeleted = { keysCleared.fulfill() }
 
             await mockClock.advance(by: .seconds(1))
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -727,14 +761,18 @@
 
             await store.receive(\.localAgent.disconnect)
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
+            }
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
             }
 
             await fulfillment(of: [keysCleared], timeout: 0) // Make sure keys were also cleared from the keychain
 
             await mockClock.advance(by: .seconds(1))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
@@ -772,7 +810,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -798,19 +836,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -843,9 +884,12 @@
                 $0.localAgent = .disconnecting(.agentError(.policyViolationDelinquent))
             }
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
             await store.receive(stateChange(from: \.connected, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
 
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.localAgent.event.state.disconnected) {
@@ -853,7 +897,8 @@
             }
             await mockClock.advance(by: .milliseconds(750))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
@@ -863,7 +908,7 @@
 
             // Ensure that the final state post-disconnection contains the error so that it can be shown in the UI
             let disconnectedWithPolicyViolationDelinquent: CoreConnectionFeature.State = .init(
-                tunnelState: .disconnected(nil),
+                tunnelState: .disconnected,
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(.agentError(.policyViolationDelinquent))
             )
@@ -900,7 +945,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(
-                tunnelState: .disconnected(nil),
+                tunnelState: .disconnected,
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(nil)
             )
@@ -936,18 +981,21 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -1019,7 +1067,10 @@
             await store.receive(\.localAgent.stopAllObservations)
 
             let connectedWithRefreshedCertificate: CoreConnectionFeature.State = .init(
-                tunnelState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now)),
+                tunnelState: .init(
+                    neState: .connected,
+                    maskedState: .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                ),
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: refreshedCertificate, features: features)),
                 localAgentState: .connected(nil)
             )
@@ -1064,7 +1115,7 @@
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
             let disconnected = CoreConnectionFeature.State(
-                tunnelState: .disconnected(nil),
+                tunnelState: .disconnected,
                 certAuthState: .loaded(.init(keys: .init(fromLegacyKeys: mockKeys), certificate: mockCertificate, features: features)),
                 localAgentState: .disconnected(nil)
             )
@@ -1093,19 +1144,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -1127,9 +1181,12 @@
                 $0.localAgent = .disconnecting(nil)
             }
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
             await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
 
             await store.send(.stopObserving)
             await store.receive(\.tunnel.stopObservingStateChanges)
@@ -1163,7 +1220,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -1190,19 +1247,22 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
             await store.receive(\.tunnel.tunnelStartRequestFinished.success)
             await store.receive(\.tunnel.tunnelStatusChanged.connecting) {
-                $0.tunnel = .connecting(connectedLogicalServer)
+                $0.tunnel.neState = .connecting
+                $0.tunnel.maskedState = .connecting(connectedLogicalServer)
             }
 
             await mockClock.advance(by: .seconds(1)) // Give MockVPNSession time to establish connection
-            await store.receive(\.tunnel.tunnelStatusChanged.connected)
+            await store.receive(\.tunnel.tunnelStatusChanged.connected) {
+                $0.tunnel.neState = .connected
+            }
             await store.receive(\.tunnel.connectionFinished.success) {
-                $0.tunnel = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
+                $0.tunnel.maskedState = .connected(TunnelConnectionResponse(logicalInfo: connectedLogicalServer, connectionDate: now))
             }
             await store.receive(stateChange(from: \.starting, to: \.connecting))
 
@@ -1231,9 +1291,12 @@
                 $0.localAgent = .disconnecting(.agentError(.maxSessionsPro))
             }
             await store.receive(\.tunnel.disconnect) {
-                $0.tunnel = .disconnecting(nil)
+                $0.tunnel.maskedState = .disconnecting(nil)
             }
             await store.receive(stateChange(from: \.connecting, to: \.disconnecting))
+            await store.receive(\.tunnel.tunnelStatusChanged.disconnecting) {
+                $0.tunnel.neState = .disconnecting
+            }
 
             await mockClock.advance(by: .milliseconds(250))
             await store.receive(\.localAgent.event.state.disconnected) {
@@ -1241,7 +1304,8 @@
             }
             await mockClock.advance(by: .milliseconds(750))
             await store.receive(\.tunnel.tunnelStatusChanged.disconnected) {
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.neState = .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.disconnecting, to: \.disconnected))
 
@@ -1251,8 +1315,9 @@
         }
 
         /// Resilience test - assert that the feature gracefully handles not receiving the expected tunnel status changes
+        /// If this happens in production, we're most likely not correctly subscribed to tunnel status notifications.
         @MainActor
-        func testConnectionTimesOutIfTunnelStartRequestSucceedsButExtensionDoesNotStartConnecting() async {
+        func testConnectionTimesOutWithStartErrorIfTunnelStartRequestSucceedsButExtensionDoesNotStartConnecting() async {
             let mockAgent = LocalAgentMock(state: .disconnected)
             let mockSession = VPNSessionMock(status: .disconnected)
             mockSession.startupDuration = .seconds(60) // Tunnel should not enter .connecting state before connection timeout
@@ -1264,7 +1329,7 @@
             let tunnelSettings = TunnelSettings.mock
             let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
 
-            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected(nil), localAgentState: .disconnected(nil))
+            let disconnected = CoreConnectionFeature.State(tunnelState: .disconnected, localAgentState: .disconnected(nil))
 
             let store = TestStore(initialState: disconnected) {
                 CoreConnectionFeature()
@@ -1289,7 +1354,7 @@
 
             await store.send(.connect(intent))
             await store.receive(\.tunnel.connect) {
-                $0.tunnel = .preparingConnection(connectedLogicalServer)
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
             }
             await store.receive(stateChange(from: \.disconnected, to: \.starting))
 
@@ -1299,15 +1364,94 @@
             // Let's verify that if this does not happen, we do not get stuck in a connecting/disconnecting state forever.
 
             await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
+
+            XCTAssertEqual(mockSession.status, .disconnected)
             await store.receive(\.timeout)
-            await store.receive(\.disconnect.connectionFailure.timeout.tunnelStartingAndConnecting)
-            await store.receive(\.delegate.error.timeout.tunnelStartingAndConnecting)
+            await store.receive(\.disconnect.connectionFailure.timeout.tunnel.start)
+            await store.receive(\.delegate.error.timeout.tunnel.start)
             await store.receive(\.certAuth.cancelRefreshes)
 
             await store.receive(\.localAgent.disconnect)
             await store.receive(\.tunnel.disconnect) {
                 // If we never started the tunnel, we should transition straight away into .disconnected
-                $0.tunnel = .disconnected(nil)
+                $0.tunnel.maskedState = .disconnected(nil)
+            }
+            await store.receive(stateChange(from: \.starting, to: \.disconnected))
+
+            await mockClock.advance(by: .milliseconds(250))
+
+            await store.send(.stopObserving)
+            await store.receive(\.tunnel.stopObservingStateChanges)
+            await store.receive(\.localAgent.stopAllObservations)
+        }
+
+        /// In order to save the VPN configuration for the first time, the user must give permission and enter their
+        /// passcode when the system navigates them to the VPN settings. Here we are verifying that we correctly
+        /// either of these scenarios:
+        ///  - the user takes too long to enter their passcode
+        ///  - the system does not present the VPN settings screen/passcode screen
+        @MainActor
+        func testConnectionTimesOutWithConfigurationErrorIfConfigurationIsNotSavedInTime() async {
+            let mockAgent = LocalAgentMock(state: .disconnected)
+            let mockSession = VPNSessionMock(status: .invalid)
+            let mockManager = MockTunnelManager(connection: mockSession)
+            // We want to block the start task to prevent transitioning into .connecting
+            mockManager.tunnelStartDuration = .seconds(60)
+            let mockClock = TestClock()
+
+            let server = Server.mock
+            let features = VPNConnectionFeatures.mock
+            let tunnelSettings = TunnelSettings.mock
+            let connectedLogicalServer = LogicalServerInfo(logicalID: server.logical.id, serverID: server.endpoint.id)
+
+            let disconnected = CoreConnectionFeature.State(
+                tunnelState: .init(neState: .invalid, maskedState: .disconnected(nil)),
+                localAgentState: .disconnected(nil)
+            )
+
+            let store = TestStore(initialState: disconnected) {
+                CoreConnectionFeature()
+            } withDependencies: {
+                $0.date = .constant(.now)
+                $0.continuousClock = mockClock
+                $0.tunnelManager = mockManager
+                $0.vpnKeysGenerator = VPNKeysGenerator(generateKeys: { .mock() })
+                $0.localAgent = mockAgent
+                $0.serverIdentifier = .init(fullServerInfo: { _ in .mock })
+            }
+
+            await store.send(.startObserving)
+            await store.receive(\.tunnel.startObservingStateChanges)
+            await store.receive(\.localAgent.startObservingEvents)
+
+            // Model the VPN as not configured (no configuration saved to VPN settings)
+            await store.receive(\.tunnel.tunnelStatusChanged.invalid)
+
+            // Connection
+
+            let intent = ServerConnectionIntent(spec: .defaultFastest, server: server, tunnelSettings: tunnelSettings, features: features)
+
+            await store.send(.connect(intent))
+            await store.receive(\.tunnel.connect) {
+                $0.tunnel.maskedState = .preparingConnection(connectedLogicalServer)
+            }
+            await store.receive(stateChange(from: \.disconnected, to: \.starting))
+
+            // We want to test what happens if the tunnel start task never completes.
+            await mockClock.advance(by: .seconds(30)) // Fast foward until we should be timing out the connection
+
+            await store.receive(\.timeout)
+            XCTAssertEqual(mockSession.status, .invalid) // Let's verify the tunnel is in the expected state
+
+            // We never configured the tunnel, so we should fail at the configuration stage
+            await store.receive(\.disconnect.connectionFailure.timeout.tunnel.configuration)
+            await store.receive(\.delegate.error.timeout.tunnel.configuration)
+            await store.receive(\.certAuth.cancelRefreshes)
+
+            await store.receive(\.localAgent.disconnect)
+            await store.receive(\.tunnel.disconnect) {
+                // If we never started the tunnel, we should transition straight away into .disconnected
+                $0.tunnel.maskedState = .disconnected(nil)
             }
             await store.receive(stateChange(from: \.starting, to: \.disconnected))
 
@@ -1330,5 +1474,9 @@
                 strict: strict
             )
         }
+    }
+
+    extension ExtensionFeature.State {
+        static let disconnected: Self = .init(neState: .disconnected, maskedState: .disconnected(nil))
     }
 #endif
