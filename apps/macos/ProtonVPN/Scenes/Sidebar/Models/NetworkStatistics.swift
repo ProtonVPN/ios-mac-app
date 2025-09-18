@@ -103,13 +103,12 @@ class NetworkStatistics {
         let addr = trafficPointer.pointee.ifa_addr.pointee
         guard addr.sa_family == UInt8(AF_LINK) else { return nil }
 
-        let wwanInterfacePrefix = "pdp_ip"
-        let wifiInterfacePrefix = "en"
+        let tunInterfacePrefix = "utun"
         let name: String! = String(cString: trafficPointer.pointee.ifa_name)
         var networkData: UnsafeMutablePointer<if_data>?
         var traffic = NetworkTraffic()
 
-        if name.hasPrefix(wifiInterfacePrefix) || name.hasPrefix(wwanInterfacePrefix) {
+        if name.hasPrefix(tunInterfacePrefix) {
             networkData = unsafeBitCast(trafficPointer.pointee.ifa_data, to: UnsafeMutablePointer<if_data>.self)
             if let data = networkData {
                 traffic.uploadCount += data.pointee.ifi_obytes
