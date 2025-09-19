@@ -290,14 +290,20 @@ public class VpnKeychain: VpnKeychainProtocol {
 
         switch result {
         case errSecItemNotFound:
+            log.debug("Get password data storage for key \(key) failed: \(result). Item not found")
             return nil
         case errSecSuccess:
             guard let secItemDict = secItem as? [String: AnyObject],
                   let passwordData = secItemDict[kSecValueData as String] as? Data else {
+                log
+                    .debug(
+                        "Get password data storage for key \(key) failed. Invalid result: \(String(describing: secItem))"
+                    )
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
             return passwordData
         default:
+            log.debug("Get password data storage for key \(key) failed: \(result)")
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
     }
@@ -313,6 +319,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
+        log.debug("Cleared password data storage for key \(key), data was changed")
     }
 
     private func formBaseQuery(forKey key: String) -> [AnyHashable: Any] {
