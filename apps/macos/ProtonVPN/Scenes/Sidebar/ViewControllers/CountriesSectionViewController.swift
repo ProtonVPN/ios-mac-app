@@ -85,7 +85,6 @@ final class CountriesSectionViewController: NSViewController {
     @IBOutlet var listLeadingConstraint: NSLayoutConstraint!
 
     @IBOutlet var netShieldStatsLabel: NSTextField?
-    @IBOutlet var portForwardingWarningImage: NSImageView!
 
     fileprivate let viewModel: CountriesSectionViewModel
 
@@ -117,7 +116,6 @@ final class CountriesSectionViewController: NSViewController {
         setupQuickSettings()
         setupNetShieldBadge()
         addNetShieldObservers()
-        setupPortForwardingAlertBage()
         observeAppearance()
     }
 
@@ -297,25 +295,7 @@ final class CountriesSectionViewController: NSViewController {
         })
     }
 
-    // MARK: - Port forwarding alert badge
-
-    private func setupPortForwardingAlertBage() {
-        portForwardingWarningImage?.wantsLayer = true
-        portForwardingWarningImage?.contentTintColor = .color(.icon, .warning)
-
-        DispatchQueue.main.async {
-            self.updatePortForwardingAlertBage()
-        }
-    }
-
-    private func updatePortForwardingAlertBage() {
-        if viewModel.isConnected, viewModel.portForwardingIsOn, !viewModel.connectedServerSupportsP2P {
-            portForwardingWarningImage?.image = Theme.Asset.orangeExclamationMark.image
-            portForwardingWarningImage?.isHidden = false
-        } else {
-            portForwardingWarningImage?.isHidden = true
-        }
-    }
+    // MARK: - Port forwarding
 
     private func updatePortForwardingView() {
         guard VPNFeatureFlagType.portForwarding.enabled else { return }
@@ -346,7 +326,6 @@ final class CountriesSectionViewController: NSViewController {
     }
 
     private func contentChanged(_ contentChange: ContentChange) {
-        updatePortForwardingAlertBage()
         updatePortForwardingView()
 
         if contentChange.reset {

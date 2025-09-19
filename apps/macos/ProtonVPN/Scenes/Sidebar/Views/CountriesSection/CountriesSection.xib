@@ -20,7 +20,6 @@
                 <outlet property="netShieldStatsLabel" destination="3XG-4r-1Ju" id="xB9-JL-j1T"/>
                 <outlet property="portForwardingBox" destination="GDw-dz-hFz" id="BcW-F9-DcV"/>
                 <outlet property="portForwardingBtn" destination="Rzy-Ia-icv" id="UOl-Tj-LcR"/>
-                <outlet property="portForwardingWarningImage" destination="mPu-VB-GXX" id="gXj-2Q-qTB"/>
                 <outlet property="quickSettingsStack" destination="62O-3H-Vui" id="48B-PC-fbt"/>
                 <outlet property="searchBox" destination="qf9-9Y-IsT" id="4Z6-q8-u8I"/>
                 <outlet property="searchIcon" destination="8u3-tX-dep" id="dSA-jo-Plh"/>
@@ -219,22 +218,11 @@
                                         </buttonCell>
                                         <color key="contentTintColor" white="1" alpha="0.97997359149999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </button>
-                                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mPu-VB-GXX" userLabel="Warning">
-                                        <rect key="frame" x="112" y="31" width="16" height="16"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="NVo-0W-x00"/>
-                                            <constraint firstAttribute="width" constant="16" id="aD8-fA-scQ"/>
-                                        </constraints>
-                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="orange-exclamation-mark" id="lcc-E8-DnK"/>
-                                        <color key="contentTintColor" name="AtomicTangerine"/>
-                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="Rzy-Ia-icv" firstAttribute="leading" secondItem="TZf-1B-kbr" secondAttribute="leading" constant="8" id="4ld-6B-pkf"/>
                                     <constraint firstAttribute="trailing" secondItem="Rzy-Ia-icv" secondAttribute="trailing" constant="8" id="6nt-I5-fmR"/>
-                                    <constraint firstItem="mPu-VB-GXX" firstAttribute="centerX" secondItem="TZf-1B-kbr" secondAttribute="centerX" constant="8" id="JMa-md-9pi"/>
                                     <constraint firstAttribute="bottom" secondItem="Rzy-Ia-icv" secondAttribute="bottom" constant="12" id="M5e-b2-sr8"/>
-                                    <constraint firstItem="mPu-VB-GXX" firstAttribute="centerY" secondItem="TZf-1B-kbr" secondAttribute="centerY" constant="-12" id="tkD-Iu-U7Q"/>
                                     <constraint firstItem="Rzy-Ia-icv" firstAttribute="top" secondItem="TZf-1B-kbr" secondAttribute="top" constant="4" id="wZO-Am-rHa"/>
                                 </constraints>
                             </view>
@@ -344,10 +332,6 @@
         <image name="ic-lock" width="24" height="24"/>
         <image name="ic-shield" width="24" height="24"/>
         <image name="ic-switch-on" width="24" height="24"/>
-        <image name="orange-exclamation-mark" width="16" height="16"/>
-        <namedColor name="AtomicTangerine">
-            <color red="1" green="0.60784313725490191" blue="0.3843137254901961" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="MobileBrandLighten20">
             <color red="0.54117647058823526" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

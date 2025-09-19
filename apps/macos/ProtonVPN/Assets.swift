@@ -235,6 +235,7 @@ internal enum Asset {
   internal static let neagentIndicator2 = ImageAsset(name: "neagent_indicator_2")
   internal static let hermesSplashScreen = ImageAsset(name: "hermesSplashScreen")
   internal static let qsDetailTriangle = ImageAsset(name: "qs_detail_triangle")
+  internal static let loginHardwareKey = ImageAsset(name: "login-hardware-key")
   internal static let worldMap = ImageAsset(name: "world-map")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name
