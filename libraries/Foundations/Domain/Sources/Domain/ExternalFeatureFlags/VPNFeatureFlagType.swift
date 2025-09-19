@@ -62,7 +62,7 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
 
     case portForwarding = "DisplayPortForwarding"
 
-    case usePaymentsV1 = "UsePaymentsV1"
+    case usePaymentsV2 = "UsePaymentsV2"
 }
 
 public extension FeatureFlagsRepository {

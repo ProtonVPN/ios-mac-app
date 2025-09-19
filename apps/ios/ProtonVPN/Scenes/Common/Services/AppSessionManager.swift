@@ -120,10 +120,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
-            planService.delegate = self
-        } else {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
             planServiceV2.setDelegate(self)
+        } else {
+            planService.delegate = self
         }
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
@@ -371,10 +371,10 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV1) {
-            try await planService.updateServicePlans()
-        } else {
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
             try await planServiceV2.fetchAppleStatus()
+        } else {
+            try await planService.updateServicePlans()
         }
     }
 
