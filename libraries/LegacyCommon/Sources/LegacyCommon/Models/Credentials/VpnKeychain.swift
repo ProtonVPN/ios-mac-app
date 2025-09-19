@@ -292,10 +292,8 @@ public class VpnKeychain: VpnKeychainProtocol {
         case errSecItemNotFound:
             return nil
         case errSecSuccess:
-            guard let secItemDict = secItem as? [String: AnyObject] else {
-                throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
-            }
-            guard let passwordData = secItemDict[kSecValueData as String] as? Data else {
+            guard let secItemDict = secItem as? [String: AnyObject],
+                  let passwordData = secItemDict[kSecValueData as String] as? Data else {
                 throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
             }
             return passwordData
