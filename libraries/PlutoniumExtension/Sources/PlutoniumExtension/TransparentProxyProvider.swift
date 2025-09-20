@@ -111,7 +111,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
             return false
         }
 
-        switch flowHandlingManager.actionForFlow(flow) {
+        switch flowHandlingManager.routeActionForFlow(flow) {
         case .dontHandle:
             return false
         case let .forward(handler: handler):

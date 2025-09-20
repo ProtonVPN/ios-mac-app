@@ -217,11 +217,12 @@ actor FlowHandlingManager {
         log.info("Internet interface set to \(interface)")
     }
 
-    nonisolated func actionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
+    nonisolated func routeActionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
         guard let interface = networkInterface else {
             return .dontHandle
         }
-        if let tcpFlow = flow as? NEAppProxyTCPFlow {
+        switch flow {
+        case let tcpFlow as NEAppProxyTCPFlow:
             guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(
                 tcpFlow.remoteEndpoint
             ) else {
@@ -232,7 +233,7 @@ actor FlowHandlingManager {
                 targetInterface: interface
             ) else { return .dontHandle }
             return .forward(handler: handler)
-        } else if let udpFlow = flow as? NEAppProxyUDPFlow {
+        case let udpFlow as NEAppProxyUDPFlow:
             let endpointForwardingMode = appIDExists(udpFlow.sourceAppIdentifier) ? EndpointForwardingMode.all : .only(ips: ipSet)
             let handler = UDPFlowHandler(
                 udpFlow: udpFlow,
@@ -242,8 +243,9 @@ actor FlowHandlingManager {
                 endpointForwardingMode: endpointForwardingMode
             )
             return .forward(handler: handler)
+        default:
+            return .dontHandle
         }
-        return .dontHandle
     }
 
     // MARK: - Public registration helpers

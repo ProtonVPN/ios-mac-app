@@ -25,7 +25,7 @@ import VPNShared
 /// One instance per `NEAppProxyUDPFlow`.
 /// There will be an individual connection with its own queue per endpoint in the flow, which will be reused throughout the handling of the UDP flow.
 final actor UDPFlowHandler: FlowHandler {
-    private let id = UUID()
+    let id = UUID()
 
     // MARK: - Stored properties
 
@@ -57,7 +57,7 @@ final actor UDPFlowHandler: FlowHandler {
         self.vpnInterface = vpnInterface
         self.dnsServers = dnsServers
         self.endpointForwardingMode = endpointForwardingMode
-        log.debug("UDP flow handler initialized for interface \(targetInterface.name)")
+        logDebug("UDP flow handler initialized for interface \(targetInterface.name)")
     }
 
     // MARK: - Public
@@ -85,7 +85,7 @@ final actor UDPFlowHandler: FlowHandler {
             try await openFlow()
             await readLoop()
         } catch {
-            log.error("UDP flow handler error: \(error.localizedDescription)")
+            logError("UDP flow handler error: \(error.localizedDescription)")
         }
         await cleanup()
     }
@@ -102,7 +102,7 @@ final actor UDPFlowHandler: FlowHandler {
                 }
             }
         }
-        log.debug("UDP flow opened successfully, local endpoint: \(String(describing: udpFlow.localEndpoint))")
+        logDebug("UDP flow opened successfully, local endpoint: \(String(describing: udpFlow.localEndpoint))")
     }
 
     private func readLoop() async {
@@ -139,7 +139,7 @@ final actor UDPFlowHandler: FlowHandler {
         if let sendChannel = sendChannels[endpoint] {
             sendChannel.yield(data)
         } else {
-            log.error("No send channel available for endpoint \(endpoint)")
+            logError("No send channel available for endpoint \(endpoint)")
         }
     }
 
@@ -150,7 +150,7 @@ final actor UDPFlowHandler: FlowHandler {
 
         let interfaceToUse = interfaceFor(endpoint: endpoint)
 
-        log.debug("Using \(interfaceToUse?.name ?? "default") interface for \(endpoint)")
+        logDebug("Using \(interfaceToUse?.name ?? "default") interface for \(endpoint)")
 
         // Create the send channel for this connection
         let (sendStream, sendContinuation) = AsyncStream<Data>.makeStream()
@@ -162,7 +162,7 @@ final actor UDPFlowHandler: FlowHandler {
         }
 
         connectionLifecycleTasks[endpoint] = connectionTask
-        log.debug("Started connection lifecycle task for \(endpoint)")
+        logDebug("Started connection lifecycle task for \(endpoint)")
     }
 
     private func handleConnectionLifecycle(for endpoint: NWEndpoint, interface: NWInterface?, sendStream: AsyncStream<Data>) async {
@@ -182,7 +182,7 @@ final actor UDPFlowHandler: FlowHandler {
 
         await monitorConnectionStates(connection: connection, endpoint: endpoint, sendStream: sendStream)
 
-        log.debug("Connection lifecycle ended for \(endpoint)")
+        logDebug("Connection lifecycle ended for \(endpoint)")
     }
 
     /// State monitoring and data forwarding for a connection
@@ -190,27 +190,27 @@ final actor UDPFlowHandler: FlowHandler {
         stateLoop: for await state in connection.states {
             switch state {
             case .setup:
-                log.debug("UDP connection setup for \(endpoint)")
+                logDebug("UDP connection setup for \(endpoint)")
             case .preparing:
-                log.debug("UDP connection preparing for \(endpoint)")
+                logDebug("UDP connection preparing for \(endpoint)")
             case let .waiting(error):
-                log.debug("UDP connection waiting for \(endpoint): \(error.localizedDescription)")
+                logDebug("UDP connection waiting for \(endpoint): \(error.localizedDescription)")
             case .ready:
-                log.debug("UDP connection ready for \(endpoint)")
+                logDebug("UDP connection ready for \(endpoint)")
                 startDataForwarding(connection: connection, endpoint: endpoint, sendStream: sendStream)
             case let .failed(error):
-                log.error("UDP connection failed for \(endpoint): \(error.localizedDescription)")
+                logDebug("UDP connection failed for \(endpoint): \(error.localizedDescription)")
                 break stateLoop
             case .cancelled:
-                log.debug("UDP connection cancelled for \(endpoint)")
+                logDebug("UDP connection cancelled for \(endpoint)")
                 break stateLoop
             @unknown default:
-                log.debug("UDP connection for \(endpoint) entered an unknown state")
+                logDebug("UDP connection for \(endpoint) entered an unknown state")
             }
         }
 
         connection.cancel()
-        log.debug("State monitoring ended for \(endpoint)")
+        logDebug("State monitoring ended for \(endpoint)")
     }
 
     // MARK: - Data forwarding management
@@ -226,7 +226,7 @@ final actor UDPFlowHandler: FlowHandler {
         }
 
         dataForwardingTasks[endpoint] = (sendTask, receiveTask)
-        log.debug("Started parallel data forwarding tasks for \(endpoint)")
+        logDebug("Started parallel data forwarding tasks for \(endpoint)")
     }
 
     // MARK: - Connection handling
@@ -234,20 +234,20 @@ final actor UDPFlowHandler: FlowHandler {
     private func handleSending(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
         for await data in sendStream {
             guard !Task.isCancelled else {
-                log.debug("Sending task cancelled for \(endpoint)")
+                logDebug("Sending task cancelled for \(endpoint)")
                 break
             }
 
             await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-                connection.send(content: data) { error in
+                connection.send(content: data) { [weak self] error in
                     if let error {
-                        log.error("Failed to send datagram to \(endpoint): \(error.localizedDescription)")
+                        self?.logError("Failed to send datagram to \(endpoint): \(error.localizedDescription)")
                     }
                     continuation.resume()
                 }
             }
         }
-        log.debug("Send stream ended for \(endpoint)")
+        logDebug("Send stream ended for \(endpoint)")
     }
 
     private func handleReceiving(connection: AsyncConnection, endpoint: NWEndpoint) async {
@@ -258,9 +258,9 @@ final actor UDPFlowHandler: FlowHandler {
 
                 // Send the received data back to the flow
                 await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-                    udpFlow.writeDatagramsUniversal([(data, endpoint)]) { error in
+                    udpFlow.writeDatagramsUniversal([(data, endpoint)]) { [weak self] error in
                         if let error {
-                            log.error("Failed to write response to flow: \(error.localizedDescription)")
+                            self?.logError("Failed to write response to flow: \(error.localizedDescription)")
                         }
                         continuation.resume()
                     }
@@ -268,11 +268,11 @@ final actor UDPFlowHandler: FlowHandler {
 
                 if isComplete { break }
             } catch {
-                log.error("Error receiving from \(endpoint): \(error.localizedDescription)")
+                logError("Error receiving from \(endpoint): \(error.localizedDescription)")
                 break
             }
         }
-        log.debug("Receive loop ended for \(endpoint)")
+        logDebug("Receive loop ended for \(endpoint)")
     }
 
     // MARK: - Cleanup
@@ -281,27 +281,27 @@ final actor UDPFlowHandler: FlowHandler {
         guard !didCleanup else { return }
         didCleanup = true
 
-        log.debug("Cleaning up \(connectionLifecycleTasks.count) connection lifecycle tasks and \(dataForwardingTasks.count) data forwarding task pairs")
+        logDebug("Cleaning up \(connectionLifecycleTasks.count) connection lifecycle tasks and \(dataForwardingTasks.count) data forwarding task pairs")
 
         // Cancel all data forwarding tasks first
         for (endpoint, tasks) in dataForwardingTasks {
             tasks.sendTask.cancel()
             tasks.receiveTask.cancel()
-            log.debug("Cancelled data forwarding tasks for endpoint \(endpoint)")
+            logDebug("Cancelled data forwarding tasks for endpoint \(endpoint)")
         }
         dataForwardingTasks.removeAll()
 
         // Finish all send channels
         for (endpoint, sendChannel) in sendChannels {
             sendChannel.finish()
-            log.debug("Finished send channel for endpoint \(endpoint)")
+            logDebug("Finished send channel for endpoint \(endpoint)")
         }
         sendChannels.removeAll()
 
         // Cancel all connection lifecycle tasks
         for (endpoint, task) in connectionLifecycleTasks {
             task.cancel()
-            log.debug("Cancelled connection lifecycle task for endpoint \(endpoint)")
+            logDebug("Cancelled connection lifecycle task for endpoint \(endpoint)")
         }
         connectionLifecycleTasks.removeAll()
 
@@ -309,7 +309,7 @@ final actor UDPFlowHandler: FlowHandler {
         udpFlow.closeWriteWithError(nil)
 
         await onClose?()
-        log.debug("UDP flow handler cleanup completed")
+        logDebug("UDP flow handler cleanup completed")
     }
 
     // MARK: - Helper methods
@@ -319,19 +319,19 @@ final actor UDPFlowHandler: FlowHandler {
         if let tasks = dataForwardingTasks.removeValue(forKey: endpoint) {
             tasks.sendTask.cancel()
             tasks.receiveTask.cancel()
-            log.debug("Cancelled data forwarding tasks for endpoint \(endpoint)")
+            logDebug("Cancelled data forwarding tasks for endpoint \(endpoint)")
         }
 
         // Clean up send channel
         if let sendChannel = sendChannels.removeValue(forKey: endpoint) {
             sendChannel.finish()
-            log.debug("Finished send channel for endpoint \(endpoint)")
+            logDebug("Finished send channel for endpoint \(endpoint)")
         }
 
         // Clean up main connection lifecycle task
         if let task = connectionLifecycleTasks.removeValue(forKey: endpoint) {
             task.cancel()
-            log.debug("Cleaned up connection lifecycle task for endpoint \(endpoint)")
+            logDebug("Cleaned up connection lifecycle task for endpoint \(endpoint)")
         }
     }
 

@@ -25,6 +25,14 @@ public final class AsyncConnection: Sendable {
     private let stateStream: AsyncStream<NWConnection.State>
     private let stateContinuation: AsyncStream<NWConnection.State>.Continuation
 
+    public var isCancelled: Bool {
+        if case .cancelled = connection.state {
+            true
+        } else {
+            false
+        }
+    }
+
     public init(to endpoint: NWEndpoint, using parameters: NWParameters) {
         self.connection = NWConnection(to: endpoint, using: parameters)
 
@@ -80,6 +88,8 @@ public final class AsyncConnection: Sendable {
     }
 
     deinit {
-        cancel()
+        if !isCancelled {
+            cancel()
+        }
     }
 }

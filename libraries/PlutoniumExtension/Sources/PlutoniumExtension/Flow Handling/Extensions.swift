@@ -32,27 +32,7 @@ import NetworkExtension
  * on older macOS while using new APIs on macOS 15+.
  */
 
-extension NEAppProxyTCPFlow {
-    /// Returns the correct remote endpoint for both < macOS 15 and ≥ macOS 15.
-    var remoteEndpoint: NWEndpoint? {
-        if #available(macOS 15, *) {
-            self.remoteFlowEndpoint
-        } else {
-            value(forKey: "remoteEndpoint") as? NWEndpoint
-        }
-    }
-}
-
 extension NEAppProxyUDPFlow {
-    /// Returns the correct local endpoint for both < macOS 15 and ≥ macOS 15.
-    var localEndpoint: NWEndpoint? {
-        if #available(macOS 15, *) {
-            self.localFlowEndpoint
-        } else {
-            value(forKey: "localEndpoint") as? NWEndpoint
-        }
-    }
-
     /// Reads datagrams using the appropriate API for the macOS version:
     /// On macOS 15+:     `readDatagrams()`
     /// On older macOS:   `readDatagrams(completionHandler:)`
