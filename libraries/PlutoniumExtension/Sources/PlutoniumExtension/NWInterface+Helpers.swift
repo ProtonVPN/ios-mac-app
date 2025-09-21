@@ -22,6 +22,21 @@ import Foundation
 import Network
 import VPNAppCore
 
+enum NWInterfaceHelpers {
+    private nonisolated(unsafe) static var networkHandle: UnsafeMutableRawPointer?
+    private nonisolated(unsafe) static var createWithIndex: (@convention(c) (UInt32) -> nw_interface_t?)?
+
+    static func retrieveInterface(with index: Int) -> nw_interface_t? {
+        if networkHandle == nil {
+            networkHandle = dlopen("/System/Library/Frameworks/Network.framework/Network", RTLD_LAZY)
+            if let symbol = dlsym(networkHandle, "nw_interface_create_with_index") {
+                createWithIndex = unsafeBitCast(symbol, to: (@convention(c) (UInt32) -> nw_interface_t?).self)
+            }
+        }
+        return createWithIndex?(UInt32(index))
+    }
+}
+
 extension NWInterface {
     /// Find network interface by exact interface name
     static func findBy(name interfaceName: String?) async -> NWInterface? {

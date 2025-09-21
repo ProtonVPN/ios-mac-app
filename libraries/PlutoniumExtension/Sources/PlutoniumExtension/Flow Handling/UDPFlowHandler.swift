@@ -61,6 +61,7 @@ final actor UDPFlowHandler: FlowHandler {
         self.vpnInterface = vpnInterface
         self.dnsServers = dnsServers
         self.endpointForwardingMode = endpointForwardingMode
+
         logDebug("UDP flow handler initialized for interface \(targetInterface.name)")
     }
 
@@ -153,6 +154,10 @@ final actor UDPFlowHandler: FlowHandler {
         guard connectionLifecycleTasks[endpoint] == nil else { return }
 
         let interfaceToUse = interfaceFor(endpoint: endpoint)
+
+        if let interfaceToUse {
+            udpFlow.networkInterface = NWInterfaceHelpers.retrieveInterface(with: interfaceToUse.index)
+        }
 
         logDebug("Using \(interfaceToUse?.name ?? "default") interface for \(endpoint)")
 
@@ -249,7 +254,8 @@ final actor UDPFlowHandler: FlowHandler {
 
     private func handleSending(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
         for await data in sendStream {
-            guard !Task.isCancelled else {
+            let shouldCancel = Task.isCancelled || connection.isCancelled
+            guard !shouldCancel else {
                 logDebug("Sending task cancelled for \(endpoint)")
                 break
             }
@@ -267,7 +273,8 @@ final actor UDPFlowHandler: FlowHandler {
     }
 
     private func handleReceiving(connection: AsyncConnection, endpoint: NWEndpoint) async {
-        while !Task.isCancelled {
+        let shouldCancel = Task.isCancelled || connection.isCancelled
+        while !shouldCancel {
             do {
                 let (data, isComplete) = try await connection.receiveMessageAsync()
                 guard let data, !data.isEmpty else { break }
@@ -353,10 +360,10 @@ final actor UDPFlowHandler: FlowHandler {
 
     private func interfaceFor(endpoint: NWEndpoint) -> NWInterface? {
         // If the endpoint needs to be forwarded through the Wireguard network, it goes always to VPN interface.
-        if endpoint.shouldAlwaysUseVpnInterface(dnsServers: dnsServers) {
+        // If the connection to the endpoint should be forwarded, the target interface will be used.
+        if endpoint.isDNSRequest, endpoint.ipv4String == "10.2.0.1" {
             return vpnInterface
         }
-        // If the connection to the endpoint should be forwarded, the target interface will be used.
         if endpoint.shouldForward(endpointForwardingMode) {
             return targetInterface
         }
