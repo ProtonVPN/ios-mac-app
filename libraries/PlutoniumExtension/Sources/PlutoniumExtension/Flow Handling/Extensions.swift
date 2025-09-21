@@ -32,6 +32,39 @@ import NetworkExtension
  * on older macOS while using new APIs on macOS 15+.
  */
 
+extension NENetworkRule {
+    static var dnsRule: NENetworkRule {
+        get throws {
+            if #available(macOS 15, *) {
+                return .init(
+                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any),
+                    remotePrefix: 32,
+                    localNetworkEndpoint: nil,
+                    localPrefix: 0,
+                    protocol: .any,
+                    direction: .outbound
+                )
+            } else {
+                let selectorName = "initWithDestinationHost:protocol:"
+                let sel = NSSelectorFromString(selectorName)
+
+                guard responds(to: sel) else {
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1337)
+                }
+
+                let endpoint = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
+                let nwProtocolValue: NSInteger = 0 // NENetworkRuleProtocolAny
+
+                guard let value = perform(sel, with: endpoint, with: nwProtocolValue)?.takeUnretainedValue() as? NENetworkRule else {
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1337)
+                }
+
+                return value
+            }
+        }
+    }
+}
+
 extension NEAppProxyUDPFlow {
     /// Reads datagrams using the appropriate API for the macOS version:
     /// On macOS 15+:     `readDatagrams()`

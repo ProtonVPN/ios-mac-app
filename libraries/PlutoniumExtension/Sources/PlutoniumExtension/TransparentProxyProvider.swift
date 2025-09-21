@@ -143,7 +143,12 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
 
         if capturingTraffic {
             settings.includedNetworkRules = [allTCPRule, allUDPRule]
-            settings.excludedNetworkRules = []
+            do {
+                let rule = try NENetworkRule.dnsRule
+                settings.excludedNetworkRules = [rule]
+            } catch {
+                settings.excludedNetworkRules = []
+            }
         } else {
             settings.includedNetworkRules = []
             settings.excludedNetworkRules = [allTCPRule, allUDPRule]
