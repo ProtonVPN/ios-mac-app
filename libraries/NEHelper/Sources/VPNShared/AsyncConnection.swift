@@ -83,6 +83,7 @@ public final class AsyncConnection: Sendable {
     }
 
     public func cancel() {
+        connection.stateUpdateHandler = nil
         connection.cancel()
         stateContinuation.finish()
     }

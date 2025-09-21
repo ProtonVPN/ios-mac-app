@@ -18,6 +18,30 @@
 
 import NetworkExtension
 
+extension NEAppProxyFlow {
+    var isDNSFlow: Bool {
+        switch self {
+        case let tcpFlow as NEAppProxyTCPFlow:
+            tcpFlow.remoteEndpoint?.isDNSRequest == true
+        case let udpFlow as NEAppProxyUDPFlow:
+            udpFlow.localEndpoint?.isDNSRequest == true
+        default:
+            false
+        }
+    }
+}
+
+extension NWEndpoint {
+    var isDNSRequest: Bool {
+        switch self {
+        case .hostPort(_, 53):
+            true
+        default:
+            false
+        }
+    }
+}
+
 extension NEAppProxyTCPFlow {
     /// Returns the correct remote endpoint for both < macOS 15 and ≥ macOS 15.
     var remoteEndpoint: NWEndpoint? {

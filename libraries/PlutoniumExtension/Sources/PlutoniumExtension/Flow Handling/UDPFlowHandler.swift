@@ -21,9 +21,7 @@ import Network
 import NetworkExtension
 import VPNShared
 
-#if DEBUG
-    import Besogne
-#endif
+import Besogne
 
 /// Handles UDP flow copying between network interfaces.
 /// One instance per `NEAppProxyUDPFlow`.
@@ -43,7 +41,7 @@ final actor UDPFlowHandler: FlowHandler {
     private var sendChannels: [NWEndpoint: AsyncStream<Data>.Continuation] = [:]
 
     private var didCleanup = false
-    private var onClose: (@Sendable () async -> Void)?
+    private var onClose: (() -> Void)?
 
     private var handlerTask: Task<Void, Never>?
 
@@ -67,7 +65,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     // MARK: - Public
 
-    func start(onClose: @escaping @Sendable () async -> Void) async {
+    func start(onClose: @escaping @Sendable () -> Void) {
         guard handlerTask == nil else { return }
 
         self.onClose = onClose
@@ -196,13 +194,11 @@ final actor UDPFlowHandler: FlowHandler {
 
     /// State monitoring and data forwarding for a connection
     private func monitorConnectionStates(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
-        #if DEBUG
-            let monitoring = Besogne(description: "State connection monitoring")
+        let monitoring = Besogne(description: "State connection monitoring")
 
-            let scope = monitoring.enter()
+        let scope = monitoring.enter()
 
-            logDebug("State connection monitoring for app \(udpFlow.sourceAppIdentifier ?? "") on \(endpoint)")
-        #endif
+        logDebug("State connection monitoring for app \(udpFlow.sourceAppIdentifier ?? "") on \(endpoint)")
 
         stateLoop: for await state in connection.states {
             switch state {
@@ -229,9 +225,7 @@ final actor UDPFlowHandler: FlowHandler {
         connection.cancel()
         logDebug("State monitoring ended for \(endpoint)")
 
-        #if DEBUG
-            scope.leave()
-        #endif
+        scope.leave()
     }
 
     // MARK: - Data forwarding management
@@ -300,7 +294,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     // MARK: - Cleanup
 
-    private func cleanup() async {
+    private func cleanup() {
         guard !didCleanup else { return }
         didCleanup = true
 
@@ -331,7 +325,7 @@ final actor UDPFlowHandler: FlowHandler {
         udpFlow.closeReadWithError(nil)
         udpFlow.closeWriteWithError(nil)
 
-        await onClose?()
+        onClose?()
         logDebug("UDP flow handler cleanup completed")
     }
 

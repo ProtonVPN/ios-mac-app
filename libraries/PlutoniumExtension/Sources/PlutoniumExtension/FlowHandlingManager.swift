@@ -149,26 +149,22 @@ actor FlowHandlingManager {
         vpnUnavailableTimeoutTask = nil
     }
 
-    private func add(_ handler: TCPFlowHandler) {
+    private func add(_ handler: TCPFlowHandler) async {
         activeTCPHandlers.insert(handler)
 
-        // Start with cleanup callback
-        Task {
-            await handler.start { [weak self] in
-                guard let self else { return }
-                await remove(handler)
+        await handler.start() {
+            Task {
+                await self.remove(handler)
             }
         }
     }
 
-    private func add(_ handler: UDPFlowHandler) {
+    private func add(_ handler: UDPFlowHandler) async {
         activeUDPHandlers.insert(handler)
 
-        // Start with cleanup callback
-        Task {
-            await handler.start { [weak self] in
-                guard let self else { return }
-                await remove(handler)
+        await handler.start {
+            Task {
+                await self.remove(handler)
             }
         }
     }
@@ -205,6 +201,8 @@ actor FlowHandlingManager {
         // Cancel VPN unavailable timeout
         vpnUnavailableTimeoutTask?.cancel()
         vpnUnavailableTimeoutTask = nil
+
+        log.debug("Flow cleanup completed")
     }
 
     private func updateNetworkInterface(_ interface: NWInterface?) {
@@ -221,17 +219,17 @@ actor FlowHandlingManager {
         guard let interface = networkInterface else {
             return .dontHandle
         }
+        guard !flow.isDNSFlow else {
+            return .dontHandle
+        }
         switch flow {
         case let tcpFlow as NEAppProxyTCPFlow:
-            guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(
-                tcpFlow.remoteEndpoint
-            ) else {
+            guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(tcpFlow.remoteEndpoint) else {
                 return .dontHandle
             }
-            guard let handler = TCPFlowHandler(
-                tcpFlow: tcpFlow,
-                targetInterface: interface
-            ) else { return .dontHandle }
+            guard let handler = TCPFlowHandler(tcpFlow: tcpFlow, targetInterface: interface) else {
+                return .dontHandle
+            }
             return .forward(handler: handler)
         case let udpFlow as NEAppProxyUDPFlow:
             let endpointForwardingMode = appIDExists(udpFlow.sourceAppIdentifier) ? EndpointForwardingMode.all : .only(ips: ipSet)
@@ -278,13 +276,12 @@ actor FlowHandlingManager {
     }
 
     private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {
-        if endpoint?.shouldAlwaysUseVpnInterface(dnsServers: dnsRequestHandling.list) == true {
-            // This request is going to a DNS server.
-            // It should always be routed through the tunnel.
-            // Returning `true` if in inclusion mode, `false` if in exclusion mode.
-            return dnsRequestHandling.isInclusionMode
-        }
-
+//        if endpoint?.shouldAlwaysUseVpnInterface(dnsServers: dnsRequestHandling.list) == true {
+//            // This request is going to a DNS server.
+//            // It should always be routed through the tunnel.
+//            // Returning `true` if in inclusion mode, `false` if in exclusion mode.
+//            return dnsRequestHandling.isInclusionMode
+//        }
         guard let endpoint, let ipString = endpoint.ipv4String else { return false }
         return ipSet.contains(ipString)
     }

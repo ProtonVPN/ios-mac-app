@@ -37,7 +37,7 @@ extension NENetworkRule {
         get throws {
             if #available(macOS 15, *) {
                 return .init(
-                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any),
+                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: "10.2.0.1", port: .any),
                     remotePrefix: 32,
                     localNetworkEndpoint: nil,
                     localPrefix: 0,
@@ -251,19 +251,6 @@ extension NWEndpoint {
         else { return nil }
 
         return addr.asString
-    }
-
-    func shouldAlwaysUseVpnInterface(dnsServers: Set<String>) -> Bool {
-        switch self {
-        case let .hostPort(.ipv4(address), _) where address.asString.flatMap { dnsServers.contains($0) } == true:
-            // Traffic to all DNS servers (WireGuard and CustomDNSs) should always go through WireGuard.
-            true
-        case .hostPort(_, 53):
-            // All DNS queries (port 53) should go through WireGuard
-            true
-        default:
-            false
-        }
     }
 }
 
