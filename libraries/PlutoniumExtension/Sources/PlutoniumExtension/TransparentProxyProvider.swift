@@ -105,6 +105,14 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         completionHandler()
     }
 
+    override open func sleep() async {
+        log.debug("Proxy provider put to sleep...")
+    }
+
+    override open func wake() {
+        log.debug("Proxy provider waking up...")
+    }
+
     override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         guard let flowHandlingManager else {
             log.error("Flow Handling helper is not available.")
