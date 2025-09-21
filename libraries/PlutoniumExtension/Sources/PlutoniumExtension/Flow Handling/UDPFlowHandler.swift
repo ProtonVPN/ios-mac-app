@@ -21,6 +21,10 @@ import Network
 import NetworkExtension
 import VPNShared
 
+#if DEBUG
+    import Besogne
+#endif
+
 /// Handles UDP flow copying between network interfaces.
 /// One instance per `NEAppProxyUDPFlow`.
 /// There will be an individual connection with its own queue per endpoint in the flow, which will be reused throughout the handling of the UDP flow.
@@ -187,6 +191,14 @@ final actor UDPFlowHandler: FlowHandler {
 
     /// State monitoring and data forwarding for a connection
     private func monitorConnectionStates(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
+        #if DEBUG
+            let monitoring = Besogne(description: "State connection monitoring")
+
+            let scope = monitoring.enter()
+
+            logDebug("State connection monitoring for app \(udpFlow.sourceAppIdentifier ?? "") on \(endpoint)")
+        #endif
+
         stateLoop: for await state in connection.states {
             switch state {
             case .setup:
@@ -211,6 +223,10 @@ final actor UDPFlowHandler: FlowHandler {
 
         connection.cancel()
         logDebug("State monitoring ended for \(endpoint)")
+
+        #if DEBUG
+            scope.leave()
+        #endif
     }
 
     // MARK: - Data forwarding management

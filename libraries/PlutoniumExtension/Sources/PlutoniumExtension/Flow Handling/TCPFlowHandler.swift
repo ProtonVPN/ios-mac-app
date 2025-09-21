@@ -21,6 +21,8 @@ import Network
 import NetworkExtension
 import VPNShared
 
+import Besogne
+
 /// Handles TCP flow copying between network interfaces.
 /// One instance per `NEAppProxyTCPFlow`.
 final actor TCPFlowHandler: FlowHandler {
@@ -68,11 +70,13 @@ final actor TCPFlowHandler: FlowHandler {
         self.onClose = onClose
 
         let states = connection.states
-        connectionLifecycleTask = Task { [weak self] in
-            guard let self else { return }
+        connectionLifecycleTask = Task {
+            let besogne = Besogne(description: "TCP State updates")
+            let scope = besogne.enter()
             for await state in states {
                 await handleStateUpdate(state)
             }
+            scope.leave()
         }
 
         connection.start(queue: connectionQueue)
