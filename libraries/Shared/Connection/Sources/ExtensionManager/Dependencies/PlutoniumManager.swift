@@ -32,6 +32,29 @@
         private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
         private static let descriptionText = "Proton VPN Split tunneling"
 
+        private actor ManagerCoordinator {
+            private var cachedManager: NETransparentProxyManager?
+
+            func getManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
+                // If we have a cached manager, update its config and return it
+                if let cachedManager {
+                    if let protocolConfig = cachedManager.protocolConfiguration as? NETunnelProviderProtocol {
+                        protocolConfig.providerConfiguration = providerConfig
+                        cachedManager.protocolConfiguration = protocolConfig
+                    }
+                    try await PlutoniumManager.saveManagerToPreferences(cachedManager, context: "cached manager configuration")
+                    return cachedManager
+                }
+
+                // No cached manager, load from preferences
+                let manager = try await PlutoniumManager.loadOrCreateManager(providerConfig: providerConfig)
+                cachedManager = manager
+                return manager
+            }
+        }
+
+        private static let coordinator = ManagerCoordinator()
+
         private init(
             start: @escaping () async throws -> Void,
             stop: @escaping () async throws -> Void
@@ -44,7 +67,7 @@
             start: {
                 @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
                 @Dependency(\.hermesClient) var hermesClient
-                let manager = try await getManager(
+                let manager = try await coordinator.getManager(
                     providerConfig: feature
                         .toProviderConfigurationDictionary(dnsServers: hermesClient.currentResolvers.map(\.location))
                 )
@@ -53,7 +76,7 @@
             },
             stop: {
                 updateAppliedConfiguration()
-                let manager = try await getManager()
+                let manager = try await coordinator.getManager()
                 guard manager.connection.status == .connected else { return }
                 manager.connection.stopVPNTunnel()
                 log.info("Split tunneling stopped")
@@ -65,7 +88,7 @@
             stop: {}
         )
 
-        private static func getManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
+        private static func loadOrCreateManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
             // 1. load all saved managers
             let managers = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[NETransparentProxyManager], Error>) in
                 NETransparentProxyManager.loadAllFromPreferences { list, error in
