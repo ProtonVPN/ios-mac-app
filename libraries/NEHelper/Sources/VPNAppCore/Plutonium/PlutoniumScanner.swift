@@ -71,7 +71,7 @@
 
             Task {
                 for await apps in asyncStream {
-                    startScanning(apps)
+                    await startScanning(apps)
                 }
             }
         }
@@ -112,8 +112,9 @@
             return values
         }
 
-        private func startScanning(_ apps: [PlutoniumApp]) {
-            task?.cancel()
+        private func startScanning(_ apps: [PlutoniumApp]) async {
+            task?.cancel() // don't start more operations
+            _ = await task?.result // but finish the ones that are started
             task = Task {
                 await Task.yield() // allow time for childBundles to update from the last scan
                 let operations = apps
