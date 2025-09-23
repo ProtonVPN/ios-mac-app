@@ -1780,7 +1780,7 @@
 "_plutonium_upsell_subtitle" = "使用分梭通道將您的網路流量分流到 VPN 和非 VPN 通道。";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+"_plutonium_customize_connection" = "Exclude selected apps and IP addresses from your VPN connection.";
 
 /* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";

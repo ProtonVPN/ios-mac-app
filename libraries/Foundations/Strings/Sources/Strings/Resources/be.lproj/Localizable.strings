@@ -1780,7 +1780,7 @@
 "_plutonium_upsell_subtitle" = "З функцыяй Split Tunneling вы зможаце дзяліць свой трафік на той, які будзе праходзіць праз тунэлі VPN і на той, які будзе абыходзіцца без іх.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+"_plutonium_customize_connection" = "Exclude selected apps and IP addresses from your VPN connection.";
 
 /* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
