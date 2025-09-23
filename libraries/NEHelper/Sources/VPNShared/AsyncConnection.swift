@@ -33,6 +33,10 @@ public final class AsyncConnection: Sendable {
         }
     }
 
+    public var interface: NWInterface? {
+        connection.parameters.requiredInterface
+    }
+
     public init(to endpoint: NWEndpoint, using parameters: NWParameters) {
         self.connection = NWConnection(to: endpoint, using: parameters)
 
@@ -40,8 +44,8 @@ public final class AsyncConnection: Sendable {
         self.stateStream = stream
         self.stateContinuation = continuation
 
-        connection.stateUpdateHandler = { [stateContinuation] state in
-            stateContinuation.yield(state)
+        connection.stateUpdateHandler = { [weak self] state in
+            self?.stateContinuation.yield(state)
         }
     }
 

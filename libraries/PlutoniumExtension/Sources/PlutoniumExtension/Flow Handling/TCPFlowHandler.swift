@@ -130,7 +130,7 @@ final actor TCPFlowHandler: FlowHandler {
     // MARK: ‑ Data forwarding
 
     private func startDataForwarding() async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) -> Void in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
             tcpFlow.open(withLocalEndpoint: nil) { error in
                 if let error {
                     continuation.resume(throwing: error)
@@ -195,10 +195,10 @@ final actor TCPFlowHandler: FlowHandler {
             }
         }
 
-        return await handleSendResult(sendError)
+        return handleSendResult(sendError)
     }
 
-    private func handleSendResult(_ error: NWError?) async -> Bool {
+    private func handleSendResult(_ error: NWError?) -> Bool {
         if let error {
             logError("Error sending to tunnel: \(error.localizedDescription)")
             stop()
@@ -244,22 +244,25 @@ final actor TCPFlowHandler: FlowHandler {
             return false
         }
 
-        guard let data, !data.isEmpty else {
-            if isDone {
-                stop()
-                return false
+        if let data {
+            if data.isEmpty {
+                return handleFlowWriteResult(nil, isDone: isDone)
             }
+
+            // Write data to flow and wait for completion
+            let writeError = await withCheckedContinuation { continuation in
+                tcpFlow.write(data) { writeError in
+                    continuation.resume(returning: writeError)
+                }
+            }
+
+            return handleFlowWriteResult(writeError, isDone: isDone)
+        } else if isDone {
+            stop()
+            return false
+        } else {
             return true
         }
-
-        // Write data to flow and wait for completion
-        let writeError = await withCheckedContinuation { continuation in
-            tcpFlow.write(data) { writeError in
-                continuation.resume(returning: writeError)
-            }
-        }
-
-        return handleFlowWriteResult(writeError, isDone: isDone)
     }
 
     private func handleFlowWriteResult(_ error: Error?, isDone: Bool) -> Bool {

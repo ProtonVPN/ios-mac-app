@@ -90,13 +90,13 @@ final actor UDPFlowHandler: FlowHandler {
         } catch {
             logError("UDP flow handler error: \(error.localizedDescription)")
         }
-        await cleanup()
+        cleanup()
     }
 
     // MARK: - Flow helpers
 
     private func openFlow() async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Swift.Error>) in
             udpFlow.open(withLocalEndpoint: nil) { error in
                 if let error {
                     continuation.resume(throwing: error)
@@ -110,10 +110,17 @@ final actor UDPFlowHandler: FlowHandler {
 
     private func readLoop() async {
         while !Task.isCancelled {
-            guard let datagrams = try? await readDatagrams(), !datagrams.isEmpty else { break }
+            do {
+                let datagrams = try await readDatagrams()
+                if datagrams.isEmpty {
+                    break
+                }
 
-            for (data, endpoint) in datagrams {
-                await forwardDatagram(data, to: endpoint)
+                for (data, endpoint) in datagrams {
+                    await forwardDatagram(data, to: endpoint)
+                }
+            } catch {
+                log.error("No datagrams received, error: \(error)")
             }
         }
     }
@@ -136,7 +143,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     private func forwardDatagram(_ data: Data, to endpoint: NWEndpoint) async {
         // Ensure we have a connection task for this endpoint
-        await ensureConnectionTask(for: endpoint)
+        ensureConnectionTask(for: endpoint)
 
         // Send the data to the connection task through the channel
         if let sendChannel = sendChannels[endpoint] {
@@ -148,7 +155,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     // MARK: - Connection management
 
-    private func ensureConnectionTask(for endpoint: NWEndpoint) async {
+    private func ensureConnectionTask(for endpoint: NWEndpoint) {
         guard connectionLifecycleTasks[endpoint] == nil else { return }
 
         let interfaceToUse = interfaceFor(endpoint: endpoint)
@@ -177,6 +184,7 @@ final actor UDPFlowHandler: FlowHandler {
         if let interface {
             parameters.requiredInterface = interface
         }
+        parameters.preferNoProxies = true
         parameters.allowLocalEndpointReuse = true
 
         let connection = AsyncConnection(to: endpoint, using: parameters)
@@ -194,7 +202,7 @@ final actor UDPFlowHandler: FlowHandler {
 
     /// State monitoring and data forwarding for a connection
     private func monitorConnectionStates(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
-        let monitoring = Besogne(description: "State connection monitoring")
+        let monitoring = Besogne(description: "UDP State connection monitoring")
 
         let scope = monitoring.enter()
 
@@ -233,7 +241,15 @@ final actor UDPFlowHandler: FlowHandler {
     private func startDataForwarding(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) {
         // Start sending and receiving tasks in parallel, tracking them for proper cleanup
         let sendTask = Task {
-            await handleSending(connection: connection, endpoint: endpoint, sendStream: sendStream)
+            do {
+                try await handleSending(connection: connection, endpoint: endpoint, sendStream: sendStream)
+            } catch Error.abortSendingWithConnectionCancelled {
+                log.warning("Send task abort due to connection being cancelled")
+            } catch is CancellationError {
+                log.debug("Send task received explicit cancellation error")
+            } catch {
+                log.critical("Send task received an expected errro: \(error)")
+            }
         }
 
         let receiveTask = Task {
@@ -246,20 +262,27 @@ final actor UDPFlowHandler: FlowHandler {
 
     // MARK: - Connection handling
 
-    private func handleSending(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async {
+    private enum Error: Swift.Error {
+        case abortSendingWithConnectionCancelled
+    }
+
+    private func handleSending(connection: AsyncConnection, endpoint: NWEndpoint, sendStream: AsyncStream<Data>) async throws {
         for await data in sendStream {
-            let shouldCancel = Task.isCancelled || connection.isCancelled
-            guard !shouldCancel else {
-                logDebug("Sending task cancelled for \(endpoint)")
-                break
+            try Task.checkCancellation()
+
+            if connection.isCancelled {
+                throw Error.abortSendingWithConnectionCancelled
             }
 
-            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-                connection.send(content: data) { [weak self] error in
+            log.debug("Received datagram for stream, sending to endpoint \(endpoint) on \(connection.interface)")
+
+            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Swift.Error>) in
+                connection.send(content: data) { error in
                     if let error {
-                        self?.logError("Failed to send datagram to \(endpoint): \(error.localizedDescription)")
+                        continuation.resume(throwing: error)
+                    } else {
+                        continuation.resume()
                     }
-                    continuation.resume()
                 }
             }
         }
@@ -355,8 +378,8 @@ final actor UDPFlowHandler: FlowHandler {
     private func interfaceFor(endpoint: NWEndpoint) -> NWInterface? {
         // If the endpoint needs to be forwarded through the Wireguard network, it goes always to VPN interface.
         // If the connection to the endpoint should be forwarded, the target interface will be used.
-        if endpoint.isDNSRequest, endpoint.ipv4String == "10.2.0.1" {
-            return vpnInterface
+        if endpoint.isDNSRequest {
+            return nil
         }
         if endpoint.shouldForward(endpointForwardingMode) {
             return targetInterface
