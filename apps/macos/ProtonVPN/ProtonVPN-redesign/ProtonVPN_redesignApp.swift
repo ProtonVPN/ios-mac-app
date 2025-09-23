@@ -94,13 +94,12 @@
             .windowStyle(HiddenTitleBarWindowStyle())
             .appCommands(appDelegate: appDelegate, store: appReducer)
             .onChange(of: scenePhase, perform: scenePhaseChanged) // The SwiftUI lifecycle events
-            // .defaultPosition(.center) // macOS 13
-            if #available(macOS 13.0, *) {
-                MenuBarExtra("MenuBarExtra", systemImage: "hammer") {
-                    EmptyView()
-                }
-                .menuBarExtraStyle(.window)
+            .defaultPosition(.center)
+
+            MenuBarExtra("MenuBarExtra", systemImage: "hammer") {
+                EmptyView()
             }
+            .menuBarExtraStyle(.window)
         }
 
         func scenePhaseChanged(newScenePhase: ScenePhase) {

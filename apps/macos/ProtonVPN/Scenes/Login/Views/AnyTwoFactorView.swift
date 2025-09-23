@@ -179,7 +179,7 @@ struct AnyTwoFactorSwiftUIView: View {
         case hardwareKey
     }
 
-    @Perception.Bindable var viewModel: AnyTwoFactorViewModel
+    @Bindable var viewModel: AnyTwoFactorViewModel
 
     // the default value will be the one selected when view appears
     @State private var twoFactorKind: TwoFactorKind = .hardwareKey

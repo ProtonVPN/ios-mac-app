@@ -32,7 +32,7 @@ import UniformTypeIdentifiers
 import VPNAppCore
 
 public struct PlutoniumView: View {
-    @Perception.Bindable public var store: StoreOf<PlutoniumFeature>
+    @Bindable public var store: StoreOf<PlutoniumFeature>
 
     public init(store: StoreOf<PlutoniumFeature>) {
         self.store = store
