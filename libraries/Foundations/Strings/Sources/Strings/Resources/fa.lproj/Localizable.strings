@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling";
+"_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Enter a valid IPv4 address";

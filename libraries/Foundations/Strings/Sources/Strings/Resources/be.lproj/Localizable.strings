@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "Перазапусціце падключэнне, каб ужыць змены";
 
 /* Settings page row title */
-"_plutonium_title" = "Split Tunneling";
+"_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Увядзіце сапраўдны адрас IPv4";

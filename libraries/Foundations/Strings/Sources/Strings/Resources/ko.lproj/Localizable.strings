@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "이 변경을 적용하려면 다시 연결해야 합니다";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling";
+"_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "유효한 IPv4 주소를 입력하세요";

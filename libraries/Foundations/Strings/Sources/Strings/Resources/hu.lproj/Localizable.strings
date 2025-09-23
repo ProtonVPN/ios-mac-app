@@ -1726,7 +1726,7 @@
 "_action_requires_reconnect" = "A módosítás alkalmazásához a kapcsolatot újra kell indítani";
 
 /* Settings page row title */
-"_plutonium_title" = "Split tunneling";
+"_plutonium_title" = "Split tunneling (experimental)";
 
 /* IP entry validation error */
 "_plutonium_validation_error" = "Adjon meg egy érvényes IPv4 címet";
