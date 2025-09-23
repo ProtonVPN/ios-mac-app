@@ -71,7 +71,7 @@
 
             Task {
                 for await apps in asyncStream {
-                    startScanning(apps)
+                    await startScanning(apps)
                 }
             }
         }
@@ -79,12 +79,13 @@
         public func waitForScanToComplete() async {
             _ = await task?.result
         }
-
-        private func shouldScan(child: ChildBundle?) -> Bool {
+        
+        private func shouldScan(_ app: PlutoniumApp) -> Bool {
+            let child = childBundles[app.bundleIdentifier]
             if let lastTimeChecked = child?.lastTimeChecked {
-                -lastTimeChecked.timeIntervalSinceNow > Self.scanInterval
+                return -lastTimeChecked.timeIntervalSinceNow > Self.scanInterval
             } else {
-                true
+                return true
             }
         }
 
@@ -98,30 +99,37 @@
             }
         }
 
-        private func collect(from group: ThrowingTaskGroup<(String, ChildBundle), any Error>) async {
+        private func collect(from group: ThrowingTaskGroup<(String, ChildBundle), any Error>) async -> [(String, ChildBundle)] {
+            var values: [(String, ChildBundle)] = []
             do {
                 for try await value in group {
-                    $childBundles.withLock {
-                        $0[value.0] = value.1
-                    }
+                    values.append(value)
                     try Task.checkCancellation()
                 }
-            } catch {}
+            } catch {
+                return values
+            }
+            return values
         }
 
-        private func startScanning(_ apps: [PlutoniumApp]) {
-            task?.cancel()
+        private func startScanning(_ apps: [PlutoniumApp]) async {
+            task?.cancel() // don't start more operations
+            _ = await task?.result // but finish the ones that are started
             task = Task {
-                @Shared(.childBundles) var childBundles: [String: ChildBundle]
                 await Task.yield() // allow time for childBundles to update from the last scan
-                await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
-                    apps
-                        .uniques(by: \.bundleIdentifier)
-                        .filter { shouldScan(child: childBundles[$0.bundleIdentifier]) }
-                        .map(enumerationOperation)
+                let operations = apps
+                    .uniques(by: \.bundleIdentifier)
+                    .filter(shouldScan)
+                    .map(enumerationOperation)
+                let collected = await withThrowingTaskGroup(of: (String, ChildBundle).self) { group in
+                    operations
                         .forEach { group.addTask(operation: $0) }
-
-                    await collect(from: group)
+                    return await collect(from: group)
+                }
+                $childBundles.withLock {
+                    $0.merge(collected) { _, new in
+                        new
+                    }
                 }
             }
         }
