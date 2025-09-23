@@ -202,17 +202,7 @@ final class OneClickPaymentV2 {
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
-            completionHandler { [weak self] in
-                Task {
-                    await self?.planService.delegate?
-                        .paymentTransactionDidFinish(
-                            modalSource: nil,
-                            newPlanName: purchasedPlan.plan.name,
-                            offerReference: nil,
-                            flowType: .oneClick
-                        )
-                }
-            }
+            completionHandler(nil)
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
         } catch {
