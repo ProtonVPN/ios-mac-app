@@ -1780,7 +1780,7 @@
 "_plutonium_upsell_subtitle" = "Separa il tuo traffico in tunnel VPN e non-VPN con lo split tunneling.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Customize your connection by deciding which apps and IP addresses are protected by VPN.";
+"_plutonium_customize_connection" = "Exclude selected apps and IP addresses from your VPN connection.";
 
 /* Description of the split tunneling feature operation mode */
 "_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
