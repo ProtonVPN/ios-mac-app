@@ -93,6 +93,10 @@ public final class VpnManager: VpnManagerProtocol {
     // hacky way to initiase DependencyValues before we enter LocalAgentQueue to avoid deadlock during tests
     @Dependency(\.timerFactory) var timerFactory
 
+    #if os(macOS)
+        private var plutoniumUpdateTask: Task<Void, Never>?
+    #endif
+
     var currentVpnProtocolFactory: VpnProtocolFactory? {
         guard let currentVpnProtocol else {
             return nil
@@ -756,7 +760,8 @@ public final class VpnManager: VpnManagerProtocol {
         #if os(macOS)
             // Prevents creating a plutonium tunnel config if the FF is disabled.
             if VPNFeatureFlagType.plutoniumMacOS.enabled {
-                Task {
+                plutoniumUpdateTask?.cancel()
+                plutoniumUpdateTask = Task {
                     do {
                         try await updatePlutoniumStateIfNeeded()
                     } catch {
