@@ -81,6 +81,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                             plutoniumConfiguration: configuration,
                             onVpnUnavailable: sendableVpnUnavailableCallback.call
                         )
+                        await manager.resume()
                         sendableCompletion.call(nil, manager: manager)
                     } catch {
                         log.error("Failed to initialize flow handling manager: \(error)")
@@ -107,10 +108,19 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
 
     override open func sleep() async {
         log.debug("Proxy provider put to sleep...")
+
+        flowHandlingManager?.cleanupAllHandlers()
+        await super.sleep()
     }
 
     override open func wake() {
+        super.wake()
+
         log.debug("Proxy provider waking up...")
+        guard let manager = flowHandlingManager else { return }
+        Task { [manager] in
+            await manager.resume()
+        }
     }
 
     override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {

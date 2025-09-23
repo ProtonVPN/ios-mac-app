@@ -59,7 +59,7 @@ extension NWInterface {
     /// The next network interface after WireGuard accommodates any potential network service reorderings
     /// made by the user in macOS network preferences.
     /// Returns an AsyncStream that continuously provides updates when the internet interface changes
-    static func findInternetInterface(vpnInterfaceName: String) async -> AsyncStream<NWInterface?> {
+    static func findInternetInterface(vpnInterfaceName: String) -> AsyncStream<NWInterface?> {
         @Dependency(\.nwPathStream) var nwPathStream
 
         let pathStream = nwPathStream()
@@ -89,7 +89,7 @@ extension NWInterface {
     /// Returns an AsyncStream that continuously provides updates on the interface availability
     /// When the interface is available, it returns the interface
     /// When the interface is not available, it returns nil
-    static func monitorInterface(name interfaceName: String) async -> AsyncStream<NWInterface?> {
+    static func monitorInterface(name interfaceName: String) -> AsyncStream<NWInterface?> {
         @Dependency(\.nwPathStream) var nwPathStream
 
         let pathStream = nwPathStream()
