@@ -48,6 +48,12 @@
             self = .disabled(mode)
         }
 
+        public mutating func enable() {
+            // TODO: Change with [VPNAPPL-3084]
+            self = .enabled(.exclusion)
+//            self = .enabled(mode)
+        }
+
         public var mode: Mode {
             switch self {
             case let .disabled(mode), let .enabled(mode):

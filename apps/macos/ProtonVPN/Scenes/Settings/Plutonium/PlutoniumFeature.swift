@@ -167,12 +167,12 @@ public struct PlutoniumFeature {
                 case .success:
                     // Extensions installed successfully, proceed with enabling plutonium
                     switch state.feature {
-                    case let .disabled(mode):
+                    case .disabled:
                         $killSwitch.withLock {
                             $0 = false
                         }
                         state.$feature.withLock {
-                            $0 = .enabled(mode)
+                            $0.enable()
                         }
                     case .enabled:
                         // Do nothing
@@ -188,12 +188,12 @@ public struct PlutoniumFeature {
                 return .none
             case .toggleModeConfirmed:
                 switch state.feature {
-                case let .disabled(mode):
+                case .disabled:
                     $killSwitch.withLock {
                         $0 = false
                     }
                     state.$feature.withLock {
-                        $0 = .enabled(mode)
+                        $0.enable()
                     }
                 case .enabled:
                     state.$feature.withLock {

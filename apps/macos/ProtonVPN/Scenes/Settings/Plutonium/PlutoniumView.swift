@@ -159,7 +159,8 @@ public struct PlutoniumView: View {
                         .foregroundStyle(Color(.text, .link))
                 }
             }
-            if case .enabled = store.feature {
+            // TODO: Remove `false` with [VPNAPPL-3084]
+            if false, case .enabled = store.feature {
                 Spacer().frame(height: .themeSpacing24)
                 Picker("", selection: selectionBinding()) {
                     pickerContent()
