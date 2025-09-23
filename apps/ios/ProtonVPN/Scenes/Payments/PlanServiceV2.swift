@@ -48,8 +48,9 @@ protocol PlanServiceV2 {
 }
 
 final class CorePlanServiceV2: PlanServiceV2, Sendable {
-    private var cancellables: [AnyCancellable] = []
+    private var authCredentialsChangedCancellable: Cancellable?
     private var transactionSubscriptionCancellable: Cancellable?
+    private var paymentsV2Cancellables: [AnyCancellable] = []
 
     @Dependency(\.dohConfiguration) private var doh
     @Dependency(\.authKeychain) private var authKeychain
@@ -58,6 +59,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
     private var remoteManager: RemoteManagerProviding?
     private var plansComposer: PlansComposerProviding?
     private var protonPlansManager: ProtonPlansManagerProviding?
+
+    private var paymentsV2: PaymentsV2?
 
     private let iapCachedStatus: IapCachedStatus = .init()
 
@@ -92,11 +95,10 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         recreateTransactionSubscription(authCredentials: authCredentials)
 
         // setup subscription to react to auth credentials change
-        AppEvent.authCredentialsChanged.publisher
+        self.authCredentialsChangedCancellable = AppEvent.authCredentialsChanged.publisher
             .sink { [weak self] _ in
                 self?.handleAuthCredentialsChanged()
             }
-            .store(in: &cancellables)
     }
 
     func setDelegate(_ delegate: PlanServiceDelegate) {
@@ -214,15 +216,35 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 
         let appInfo = AppInfoImplementation(context: .mainApp)
 
+        paymentsV2 = PaymentsV2()
+        paymentsV2?.transactionProgress.sink { [weak self] transactionProgress in
+            self?.handleTransactionProgress(transactionProgress)
+        }.store(in: &paymentsV2Cancellables)
+        paymentsV2?.viewCycleState.sink { [weak self] paymentsV2ViewState in
+            self?.handlePaymentsV2ViewState(state: paymentsV2ViewState)
+        }.store(in: &paymentsV2Cancellables)
+
+        // can only throw if no presentationMode is provided
         Task { @MainActor in
-            // can only throw if no presentationMode is provided
-            try? PaymentsV2().showAvailablePlans(
+            try? paymentsV2?.showAvailablePlans(
                 presentationMode: .modal,
                 sessionID: authCredentials.sessionId,
                 accessToken: authCredentials.accessToken,
                 appVersion: appInfo.appVersion,
                 doh: doh
             )
+        }
+    }
+
+    private func handlePaymentsV2ViewState(state: ViewCycleState) {
+        switch state {
+        case .none:
+            return
+        case .displayed:
+            return
+        case .dismissed:
+            paymentsV2Cancellables.removeAll()
+            paymentsV2 = nil
         }
     }
 
@@ -257,6 +279,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.error("Purchase failed due to unable to get user transaction UUID", category: .iap)
         case .unknownError:
             log.error("Purchase failed", category: .iap)
+        case .waitingTokenResponse:
+            log.debug("Waiting for token response", category: .iap)
         }
     }
 }
