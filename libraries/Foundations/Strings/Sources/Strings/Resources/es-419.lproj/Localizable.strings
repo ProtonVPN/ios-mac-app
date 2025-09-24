@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Ingrese el número de puerto activo en su aplicación BitTorrent para mejorar sus velocidades P2P.";
 
-"_quick_settings_portForwarding_warningNote" = "Para usar la redirección de puertos, conéctese a un servidor P2P";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "No se puede recuperar el número de puerto activo. Reinicie su conexión e inténtelo de nuevo.";
 

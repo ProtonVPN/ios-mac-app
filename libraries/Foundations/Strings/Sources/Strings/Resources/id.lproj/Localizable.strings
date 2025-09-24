@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Masukkan nomor port yang aktif ke aplikasi BitTorrent Anda untuk meningkatkan kecepatan P2P Anda";
 
-"_quick_settings_portForwarding_warningNote" = "Untuk menggunakan penerusan port, hubungkan ke server P2P";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Nomor port aktif tidak dapat diperoleh. Mulai ulang koneksi Anda dan coba lagi.";
 

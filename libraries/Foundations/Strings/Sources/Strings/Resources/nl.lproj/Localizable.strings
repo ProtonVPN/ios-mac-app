@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Voer het actieve poortnummer in op uw BitTorrent-app in om uw P2P-snelheid te verbeteren";
 
-"_quick_settings_portForwarding_warningNote" = "Om port forwarding te gebruiken, verbindt u met een P2P-server";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Kan geen actief poortnummer ophalen. Herstart uw verbinding en probeer het opnieuw.";
 

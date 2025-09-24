@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Adja meg az aktív portszámot a BitTorrent alkalmazásban a P2P sebesség javításához";
 
-"_quick_settings_portForwarding_warningNote" = "Portátirányítás használatához csatlakozzon egy P2P-szerverhez";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Nem sikerült lekérni az aktív portszámot. Indítsa újra a kapcsolatot, és próbálja meg újra.";
 
