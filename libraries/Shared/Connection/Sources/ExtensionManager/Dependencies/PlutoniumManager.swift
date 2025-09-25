@@ -25,39 +25,106 @@
     import NetworkExtension
     import VPNAppCore
 
+    @globalActor
+    actor PlutoniumActor {
+        static let shared = PlutoniumActor()
+    }
+
     public struct PlutoniumManager: DependencyKey, TestDependencyKey {
-        public var start: () async throws -> Void
-        public var stop: () async throws -> Void
+        public internal(set) var start: () async throws -> Void
+        public internal(set) var stop: () async throws -> Void
 
         private static let bundleId = "ch.protonvpn.mac.Transparent-Proxy"
         private static let descriptionText = "Proton VPN Split tunneling"
 
-        private actor ManagerCoordinator {
-            private var cachedManager: NETransparentProxyManager?
+        @PlutoniumActor
+        private final class ManagerCoordinator {
+            @Shared(.plutoniumFeature) private var feature: PlutoniumFeatureToggle
+            @Dependency(\.hermesClient) private var hermesClient
 
-            func getManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
-                // If we have a cached manager, update its config and return it
-                if let cachedManager {
-                    if let protocolConfig = cachedManager.protocolConfiguration as? NETunnelProviderProtocol {
-                        protocolConfig.providerConfiguration = providerConfig
-                        cachedManager.protocolConfiguration = protocolConfig
-                    }
-                    try await PlutoniumManager.saveManagerToPreferences(cachedManager, context: "cached manager configuration")
-                    return cachedManager
+            private var rawProviderConfig: [String: Any] {
+                get async {
+                    let resolvers = hermesClient.currentResolvers.map(\.location)
+                    return await feature.toProviderConfigurationDictionary(dnsServers: resolvers)
+                }
+            }
+
+            private var getManagerTask: Task<NETransparentProxyManager, any Error>?
+
+            func getManager() async throws -> NETransparentProxyManager {
+                if let task = getManagerTask {
+                    return try await task.value
                 }
 
-                // No cached manager, load from preferences
-                let manager = try await PlutoniumManager.loadOrCreateManager(providerConfig: providerConfig)
-                cachedManager = manager
+                let task = Task<NETransparentProxyManager, any Error> {
+                    let newManager = try await _getManager()
+                    self.getManagerTask = nil
+                    return newManager
+                }
+
+                getManagerTask = task
+                return try await task.value
+            }
+
+            private func _getManager() async throws -> NETransparentProxyManager {
+                let managers = try await loadPlutoniumManagers()
+                let rawProviderConfig = await rawProviderConfig
+
+                switch managers.count {
+                case 0:
+                    // No existing manager - create new one
+                    log.info("No existing manager found, creating new one")
+                    _ = try await createNewManager(providerConfig: rawProviderConfig)
+                case 1:
+                    // Exactly one existing manager - let's check if configuration has changed
+                    let manager = managers[0]
+
+                    let currentConf = try PlutoniumProviderConfiguration(from: rawProviderConfig)
+
+                    // if the configurations are the same, let's early exit
+                    if let managerConf = manager.plutoniumProviderConfiguration, currentConf == managerConf {
+                        break
+                    }
+
+                    try await update(configuration: rawProviderConfig, of: manager, context: "existing manager configuration")
+                default:
+                    // Multiple existing managers - clean up duplicates and keep one
+                    log.warning("Found \(managers.count) duplicate managers, cleaning up")
+
+                    // Keep the first one and remove the rest
+                    let managerToKeep = managers[0]
+
+                    // Remove duplicate managers
+                    try await PlutoniumManager.removeDuplicateManagers(managers[1...])
+
+                    try await update(configuration: rawProviderConfig, of: managerToKeep, context: "kept manager configuration")
+                }
+
+                // but we have to reload anyway!
+                let reloadedManagers = try await loadPlutoniumManagers()
+
+                guard let manager = reloadedManagers.first else {
+                    throw PlutoniumManagerError.noAvailableManager
+                }
+
                 return manager
+            }
+
+            private func update(
+                configuration: [String: Any],
+                of manager: NETransparentProxyManager,
+                context: String
+            ) async throws {
+                manager.providerConfiguration = configuration
+                try await PlutoniumManager.saveManagerToPreferences(manager, context: context)
             }
         }
 
-        private static let coordinator = ManagerCoordinator()
+        @PlutoniumActor private static let coordinator = ManagerCoordinator()
 
         private init(
-            start: @escaping () async throws -> Void,
-            stop: @escaping () async throws -> Void
+            start: @escaping @PlutoniumActor () async throws -> Void,
+            stop: @escaping @PlutoniumActor () async throws -> Void
         ) {
             self.start = start
             self.stop = stop
@@ -65,12 +132,7 @@
 
         public static let liveValue = PlutoniumManager(
             start: {
-                @Shared(.plutoniumFeature) var feature: PlutoniumFeatureToggle
-                @Dependency(\.hermesClient) var hermesClient
-                let manager = try await coordinator.getManager(
-                    providerConfig: feature
-                        .toProviderConfigurationDictionary(dnsServers: hermesClient.currentResolvers.map(\.location))
-                )
+                let manager = try await coordinator.getManager()
                 try manager.connection.startVPNTunnel()
                 log.info("Split tunneling started")
             },
@@ -88,87 +150,15 @@
             stop: {}
         )
 
-        private static func loadOrCreateManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
-            // 1. load all saved managers
-            let managers = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[NETransparentProxyManager], Error>) in
-                NETransparentProxyManager.loadAllFromPreferences { list, error in
-                    if let error {
-                        continuation.resume(throwing: error)
-                    } else {
-                        continuation.resume(returning: list ?? [])
-                    }
-                }
-            }
-
-            // 2. Find managers with the same bundle ID
-            let managersWithSameBundleId = managers.filter { manager in
-                (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == bundleId
-            }
-
-            // 3. Handle different scenarios
-            switch managersWithSameBundleId.count {
-            case 0:
-                // No existing manager - create new one
-                log.info("No existing manager found, creating new one")
-                return try await createNewManager(providerConfig: providerConfig)
-
-            case 1:
-                // Exactly one existing manager - reuse it
-                let existingManager = managersWithSameBundleId[0]
-
-                // Update configuration if needed
-                if let protocolConfig = existingManager.protocolConfiguration as? NETunnelProviderProtocol {
-                    protocolConfig.providerConfiguration = providerConfig
-                    existingManager.protocolConfiguration = protocolConfig
-                }
-
-                // Save the updated configuration
-                try await saveManagerToPreferences(existingManager, context: "existing manager configuration")
-
-                return existingManager
-
-            default:
-                // Multiple existing managers - clean up duplicates and keep one
-                log.warning("Found \(managersWithSameBundleId.count) duplicate managers, cleaning up")
-
-                // Keep the first one and remove the rest
-                let managerToKeep = managersWithSameBundleId[0]
-                let managersToRemove = Array(managersWithSameBundleId.dropFirst())
-
-                // Remove duplicate managers
-                for managerToRemove in managersToRemove {
-                    do {
-                        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-                            managerToRemove.removeFromPreferences { error in
-                                if let error {
-                                    log.warning("Failed to remove duplicate manager: \(error)")
-                                    continuation.resume(throwing: error)
-                                } else {
-                                    log.info("Successfully removed duplicate manager")
-                                    continuation.resume(returning: ())
-                                }
-                            }
-                        }
-                    } catch {
-                        log.warning("Error removing duplicate manager: \(error)")
-                        // Continue even if removal fails
-                    }
-                }
-
-                // Update the kept manager's configuration
-                if let protocolConfig = managerToKeep.protocolConfiguration as? NETunnelProviderProtocol {
-                    protocolConfig.providerConfiguration = providerConfig
-                    managerToKeep.protocolConfiguration = protocolConfig
-                }
-
-                // Save the updated configuration
-                try await saveManagerToPreferences(managerToKeep, context: "kept manager configuration")
-
-                return managerToKeep
-            }
+        @PlutoniumActor
+        fileprivate static func loadPlutoniumManagers() async throws -> [NETransparentProxyManager] {
+            try await NETransparentProxyManager.loadAllFromPreferences().with(bundleId: bundleId)
         }
 
-        private static func createNewManager(providerConfig: [String: Any]? = nil) async throws -> NETransparentProxyManager {
+        @PlutoniumActor
+        private static func createNewManager(
+            providerConfig: [String: Any]? = nil
+        ) async throws -> NETransparentProxyManager {
             let newManager = NETransparentProxyManager()
             let protocolConfig = NETunnelProviderProtocol()
             protocolConfig.providerBundleIdentifier = bundleId
@@ -184,6 +174,7 @@
             return newManager
         }
 
+        @PlutoniumActor
         private static func saveManagerToPreferences(_ manager: NETransparentProxyManager, context: String) async throws {
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                 manager.saveToPreferences { error in
@@ -194,6 +185,29 @@
                         log.info("Successfully saved \(context)")
                         continuation.resume(returning: ())
                     }
+                }
+            }
+        }
+
+        @PlutoniumActor
+        private static func removeDuplicateManagers(_ managers: some Sequence<NETransparentProxyManager>) async throws {
+            // Remove duplicate managers
+            for managerToRemove in managers {
+                do {
+                    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+                        managerToRemove.removeFromPreferences { error in
+                            if let error {
+                                log.warning("--- Failed to remove duplicate manager: \(error)")
+                                continuation.resume(throwing: error)
+                            } else {
+                                log.info("--- Successfully removed duplicate manager")
+                                continuation.resume(returning: ())
+                            }
+                        }
+                    }
+                } catch {
+                    log.warning("Error removing duplicate manager: \(error)")
+                    // Continue even if removal fails
                 }
             }
         }
@@ -220,22 +234,43 @@
         }
     }
 
+    extension NETransparentProxyManager {
+        var plutoniumProviderConfiguration: PlutoniumProviderConfiguration? {
+            providerConfiguration.flatMap { try? PlutoniumProviderConfiguration(from: $0) }
+        }
+
+        var providerConfiguration: [String: Any]? {
+            get {
+                tunnelProtocolConfiguration?.providerConfiguration
+            }
+            set {
+                tunnelProtocolConfiguration?.providerConfiguration = newValue
+            }
+        }
+
+        var tunnelProtocolConfiguration: NETunnelProviderProtocol? {
+            protocolConfiguration as? NETunnelProviderProtocol
+        }
+    }
+
     extension Collection where Element: NETransparentProxyManager {
-        func firstMatching(bundleId: String) -> NETransparentProxyManager? {
-            first {
-                ($0.protocolConfiguration as? NETunnelProviderProtocol)?
-                    .providerBundleIdentifier == bundleId
+        func with(bundleId: String) -> [NETransparentProxyManager] {
+            filter {
+                $0.tunnelProtocolConfiguration?.providerBundleIdentifier == bundleId
             }
         }
     }
 
-    enum PlutoniumManagerError: Error {
+    public enum PlutoniumManagerError: Error {
+        case noAvailableManager
         case saveFailed(Error)
 
         var localizedDescription: String {
             switch self {
             case let .saveFailed(error):
-                "Failed to save transparent proxy manager: \(error.localizedDescription)"
+                "Failed to save transparent proxy manager: \(error.localizedDescription)."
+            case .noAvailableManager:
+                "No available transparent proxy manager has been found."
             }
         }
     }
