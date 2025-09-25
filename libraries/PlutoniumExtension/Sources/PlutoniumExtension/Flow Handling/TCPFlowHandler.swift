@@ -65,7 +65,8 @@ final actor TCPFlowHandler: FlowHandler {
     }
 
     // MARK: ‑ Public
-    func start(onClose: @escaping @Sendable () -> Void) async {
+
+    func start(onClose: @escaping @Sendable () -> Void) {
         self.onClose = onClose
 
         let states = connection.states

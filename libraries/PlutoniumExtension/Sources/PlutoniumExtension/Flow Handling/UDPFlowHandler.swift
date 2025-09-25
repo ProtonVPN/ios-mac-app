@@ -274,7 +274,7 @@ final actor UDPFlowHandler: FlowHandler {
                 throw Error.abortSendingWithConnectionCancelled
             }
 
-            log.debug("Received datagram for stream, sending to endpoint \(endpoint) on \(connection.interface)")
+            log.debug("Received datagram for stream, sending to endpoint \(endpoint) on \(String(describing: connection.interface))")
 
             try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Swift.Error>) in
                 connection.send(content: data) { error in
@@ -354,27 +354,6 @@ final actor UDPFlowHandler: FlowHandler {
 
     // MARK: - Helper methods
 
-    private func cleanupConnection(for endpoint: NWEndpoint) async {
-        // Cancel data forwarding tasks
-        if let tasks = dataForwardingTasks.removeValue(forKey: endpoint) {
-            tasks.sendTask.cancel()
-            tasks.receiveTask.cancel()
-            logDebug("Cancelled data forwarding tasks for endpoint \(endpoint)")
-        }
-
-        // Clean up send channel
-        if let sendChannel = sendChannels.removeValue(forKey: endpoint) {
-            sendChannel.finish()
-            logDebug("Finished send channel for endpoint \(endpoint)")
-        }
-
-        // Clean up main connection lifecycle task
-        if let task = connectionLifecycleTasks.removeValue(forKey: endpoint) {
-            task.cancel()
-            logDebug("Cleaned up connection lifecycle task for endpoint \(endpoint)")
-        }
-    }
-
     private func interfaceFor(endpoint: NWEndpoint) -> NWInterface? {
         // If the endpoint needs to be forwarded through the Wireguard network, it goes always to VPN interface.
         // If the connection to the endpoint should be forwarded, the target interface will be used.
@@ -403,6 +382,27 @@ extension UDPFlowHandler: Hashable {
 
     nonisolated func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+}
+
+private extension UDPFlowHandler {
+    var flowInterface: NWInterface? {
+        if #available(macOS 15.0, *) {
+            return udpFlow.interface
+        } else {
+            // just to test
+            guard let networkInterface = udpFlow.networkInterface else {
+                return nil
+            }
+            let interfaceName = String(cString: nw_interface_get_name(networkInterface))
+            if interfaceName.contains("utun") {
+                return vpnInterface
+            }
+            if interfaceName.contains("en0") {
+                return targetInterface
+            }
+            return nil
+        }
     }
 }
 

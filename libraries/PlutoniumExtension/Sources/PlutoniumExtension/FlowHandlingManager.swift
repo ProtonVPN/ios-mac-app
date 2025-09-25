@@ -245,13 +245,15 @@ actor FlowHandlingManager {
             }
             return .forward(handler: handler)
         case let udpFlow as NEAppProxyUDPFlow:
-            let endpointForwardingMode = appIDExists(udpFlow.sourceAppIdentifier) ? EndpointForwardingMode.all : .only(ips: ipSet)
+            guard appIDExists(udpFlow.sourceAppIdentifier) else {
+                return .dontHandle
+            }
             let handler = UDPFlowHandler(
                 udpFlow: udpFlow,
                 targetInterface: interface,
                 vpnInterface: vpnInterface,
                 dnsServers: dnsRequestHandling.list,
-                endpointForwardingMode: endpointForwardingMode
+                endpointForwardingMode: .all
             )
             return .forward(handler: handler)
         default:
