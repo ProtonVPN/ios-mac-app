@@ -197,10 +197,10 @@
                     try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
                         managerToRemove.removeFromPreferences { error in
                             if let error {
-                                log.warning("--- Failed to remove duplicate manager: \(error)")
+                                log.warning("Failed to remove duplicate manager: \(error)")
                                 continuation.resume(throwing: error)
                             } else {
-                                log.info("--- Successfully removed duplicate manager")
+                                log.info("Successfully removed duplicate manager")
                                 continuation.resume(returning: ())
                             }
                         }
