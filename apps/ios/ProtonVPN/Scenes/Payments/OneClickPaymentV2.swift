@@ -202,7 +202,6 @@ final class OneClickPaymentV2 {
         do {
             let purchasedPlan = try await buyPlan(planOption: selectedPlan)
             log.debug("Purchased plan: \(String(describing: purchasedPlan.plan.name))", category: .iap)
-            completionHandler(nil)
         } catch let error as ProtonPlansManagerError {
             self.buyPlanErrorHandler(error)
         } catch {
