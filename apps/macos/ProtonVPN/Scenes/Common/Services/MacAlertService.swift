@@ -261,7 +261,7 @@ extension MacAlertService: CoreAlertService {
             show(alert)
 
         case let alert as IKEv2PlutoniumConflictAlert:
-            showDefaultSystemAlert(alert)
+            show(alert)
 
         case is ConnectingWithBadLANAlert:
             showDefaultSystemAlert(alert)
@@ -439,6 +439,11 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: IkeDeprecatedAlert) {
+        let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
+        windowService.presentKeyModal(viewController: vc)
+    }
+
+    private func show(_ alert: IKEv2PlutoniumConflictAlert) {
         let vc = ProtocolDeprecatedViewController(viewModel: WarningPopupViewModel(alert: alert))
         windowService.presentKeyModal(viewController: vc)
     }

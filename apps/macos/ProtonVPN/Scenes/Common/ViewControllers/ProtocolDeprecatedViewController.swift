@@ -67,4 +67,17 @@ extension WarningPopupViewModel {
             cancelTitle: alert.dismissTitle
         )
     }
+
+    convenience init(alert: IKEv2PlutoniumConflictAlert) {
+        self.init(
+            title: alert.title!,
+            description: alert.message!,
+            linkDescription: alert.linkText,
+            url: VPNLink.splitTunnelingMacOS.urlString,
+            onConfirm: alert.disablePlutoniumHandler,
+            confirmTitle: alert.disablePlutoniumTitle,
+            onCancel: alert.dismiss,
+            cancelTitle: alert.dismissTitle
+        )
+    }
 }

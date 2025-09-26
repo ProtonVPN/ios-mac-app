@@ -101,6 +101,7 @@ public struct PlutoniumFeature {
         @CasePathable
         public enum Alert {
             case toggleModeConfirmed
+            case learnMoreTapped
         }
     }
 
@@ -232,6 +233,10 @@ public struct PlutoniumFeature {
                     $0 = .enabled(mode)
                 }
                 return .none
+            case .alert(.presented(.learnMoreTapped)):
+                @Dependency(\.linkOpener) var linkOpener
+                linkOpener.open(VPNLink.splitTunnelingMacOS.url)
+                return .none
             case .alert(.presented(.toggleModeConfirmed)):
                 return .send(.installExtensions)
             case .alert:
@@ -312,6 +317,9 @@ extension PlutoniumFeature {
     static let unsupportedProtocolErrorAlert = AlertState<Action.Alert> {
         TextState(Localizable.splitTunnelingAlertTitle)
     } actions: {
+        SwiftNavigation.ButtonState(action: .learnMoreTapped) {
+            TextState(Localizable.modalsCommonLearnMore)
+        }
         SwiftNavigation.ButtonState {
             TextState(Localizable.ok)
         }
@@ -322,6 +330,9 @@ extension PlutoniumFeature {
     static let unsupportedProfileErrorAlert = AlertState<Action.Alert> {
         TextState(Localizable.splitTunnelingAlertTitle)
     } actions: {
+        SwiftNavigation.ButtonState(action: .learnMoreTapped) {
+            TextState(Localizable.modalsCommonLearnMore)
+        }
         SwiftNavigation.ButtonState {
             TextState(Localizable.ok)
         }
