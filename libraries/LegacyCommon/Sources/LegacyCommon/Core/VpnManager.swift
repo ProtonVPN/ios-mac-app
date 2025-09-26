@@ -764,6 +764,8 @@ public final class VpnManager: VpnManagerProtocol {
                 plutoniumUpdateTask = Task {
                     do {
                         try await updatePlutoniumStateIfNeeded()
+                    } catch let PlutoniumManagerError.saveFailed(error) {
+                        log.error("Error while saving plutonium manager: \(error)")
                     } catch {
                         log.error("Error while updating plutonium state: \(error.localizedDescription)")
                     }
