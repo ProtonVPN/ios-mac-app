@@ -1780,13 +1780,13 @@
 "_plutonium_upsell_subtitle" = "Del trafikken din inn i VPN- og ikke-VPN-tunneler med delt tunnelering.";
 
 /* Split tunneling feature description */
-"_plutonium_customize_connection" = "Exclude selected apps and IP addresses from your VPN connection.";
+"_plutonium_customize_connection" = "Exclude selected apps from your VPN connection.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_exclude_mode_description" = "Allow selected apps and IP addresses to connect without VPN protection.";
+"_plutonium_exclude_mode_description" = "Allow selected apps to connect without VPN protection.";
 
 /* Description of the split tunneling feature operation mode */
-"_plutonium_include_mode_description" = "Only selected apps and IP addresses connect with VPN protection. All other traffic is unprotected.";
+"_plutonium_include_mode_description" = "Only selected apps connect with VPN protection. All other traffic is unprotected.";
 
 /* Description of the included apps list */
 "_plutonium_exclude_mode_apps" = "These apps connect without VPN protection.";
