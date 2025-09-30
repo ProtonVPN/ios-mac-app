@@ -138,12 +138,15 @@ public struct PlutoniumView: View {
                 PlutoniumSelectionButtonLabel(mode: store.feature.mode, listType: .apps)
             }
 
-            Divider()
+            // TODO: Remove `if false` with [VPNAPPL-3084]
+            if false {
+                Divider()
 
-            Button {
-                ipsSheet.toggle()
-            } label: {
-                PlutoniumSelectionButtonLabel(mode: store.feature.mode, listType: .ips)
+                Button {
+                    ipsSheet.toggle()
+                } label: {
+                    PlutoniumSelectionButtonLabel(mode: store.feature.mode, listType: .ips)
+                }
             }
         }
         .buttonStyle(.plain)
