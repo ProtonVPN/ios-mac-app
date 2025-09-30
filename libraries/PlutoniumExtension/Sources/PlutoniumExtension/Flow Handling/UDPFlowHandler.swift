@@ -310,7 +310,7 @@ final actor UDPFlowHandler: FlowHandler {
                 logError("Error receiving from \(endpoint): \(error.localizedDescription)")
                 break
             }
-        } while Task.isCancelled || connection.isCancelled
+        } while !(Task.isCancelled || connection.isCancelled)
 
         logDebug("Receive loop ended for \(endpoint)")
     }
