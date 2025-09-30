@@ -39,7 +39,7 @@ extension FlowHandler {
             let message = "(\(id)) \(message())"
             log.info(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.info(message(), metadata, file: file, function: function, line: line)
+            log.info(message(), metadata: metadata(), file: file, function: function, line: line)
         #endif
     }
 
@@ -55,7 +55,7 @@ extension FlowHandler {
             let message = "(\(id)) \(message())"
             log.debug(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.debug(message(), metadata: metadata, file: file, function: function, line: line)
+            log.debug(message(), metadata: metadata(), file: file, function: function, line: line)
         #endif
     }
 
@@ -71,7 +71,7 @@ extension FlowHandler {
             let message = "(\(id)) \(message())"
             log.error(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.error(message(), metadata: metadata, file: file, function: function, line: line)
+            log.error(message(), metadata: metadata(), file: file, function: function, line: line)
         #endif
     }
 }
