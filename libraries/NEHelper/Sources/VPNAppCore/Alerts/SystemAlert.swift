@@ -422,25 +422,20 @@ public final class IKEv2PlutoniumConflictAlert: SystemAlert {
 
     var profileName: String?
     public var message: String? = Localizable.splitTunnelingConnectToProfileAlertDescription
+    public let linkText: String = Localizable.splitTunnelingConnectToProfileAlertLink
+
     public var actions: [AlertAction] = []
     public var isError: Bool = true
+
+    public let dismissTitle = Localizable.cancel
     public var dismiss: (() -> Void)?
 
+    public let disablePlutoniumTitle = Localizable.connect
     public let disablePlutoniumHandler: () -> Void
 
     public init(profileName: String?, disablePlutoniumHandler: @escaping (() -> Void)) {
         self.profileName = profileName
         self.disablePlutoniumHandler = disablePlutoniumHandler
-        actions.append(AlertAction(
-            title: Localizable.connect,
-            style: .confirmative,
-            handler: disablePlutoniumHandler
-        ))
-        actions.append(AlertAction(
-            title: Localizable.cancel,
-            style: .cancel,
-            handler: {}
-        ))
     }
 }
 

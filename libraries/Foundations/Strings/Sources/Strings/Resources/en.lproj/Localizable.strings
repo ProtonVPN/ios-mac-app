@@ -1069,13 +1069,16 @@
 "split_tunneling_alert_title" = "Cannot enable split tunneling";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. Learn more";
+"split_tunneling_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol.";
 
 /* Description of alert shown if user tries to enable split tunneling when IKEv2 is enabled */
-"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile. Learn more";
+"split_tunneling_profile_alert_description" = "Split tunneling is not compatible with the IKEv2 protocol. To use split tunneling, change your profile protocol or disconnect from the profile.";
 
-/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
+/* Description of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled. The 'Learn More' text is a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
 "split_tunneling_connect_to_profile_alert_description" = "Split tunneling is not compatible with your profile’s protocol (IKEv2). Connecting will disable split tunneling. Learn more";
+
+/* The text inside the IKEv2 & Split Tunneling conflict alert. It will be displayed as a hyperlink to https://protonvpn.com/support/protonvpn-split-tunneling#macos */
+"split_tunneling_connect_to_profile_alert_link" = "Learn more";
 
 /* Title of alert shown if user tries to connect to an IKEv2 profile and split tunneling is enabled */
 "split_tunneling_connect_to_profile_alert_title" = "Connect with IKEv2 protocol?";
