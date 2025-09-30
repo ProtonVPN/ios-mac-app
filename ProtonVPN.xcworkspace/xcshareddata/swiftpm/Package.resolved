@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "besogne",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/McNight/Besogne.git",
+      "state" : {
+        "revision" : "688950427e6cdaf1a77fb63153426d407017bbad",
+        "version" : "0.0.2"
+      }
+    },
+    {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",

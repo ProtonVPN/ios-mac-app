@@ -28,7 +28,10 @@ actor FlowHandlingManager {
 
     private let appIDs: Set<String>
     private let ipSet: Set<String>
+    private let mode: PlutoniumFeatureToggle.Mode
+
     private let dnsRequestHandling: (list: Set<String>, isInclusionMode: Bool)
+    private let vpnInterfaceName: String
     private let vpnInterface: NWInterface
 
     /// Cached copy for internal sync access where async isn't possible.
@@ -51,7 +54,11 @@ actor FlowHandlingManager {
 
     // MARK: Initialisation
 
-    init(vpnNetworkInterfaceName: String, plutoniumConfiguration: PlutoniumProviderConfiguration, onVpnUnavailable: @escaping @Sendable () -> Void) async throws {
+    init(
+        vpnNetworkInterfaceName: String,
+        plutoniumConfiguration: PlutoniumProviderConfiguration,
+        onVpnUnavailable: @escaping @Sendable () -> Void
+    ) async throws {
         guard let vpnInterface = await NWInterface.findBy(name: vpnNetworkInterfaceName) else {
             log.error("No VPN interface found with name \(vpnNetworkInterfaceName).")
             throw PlutoniumError.vpnInterfaceNotFound
@@ -63,42 +70,48 @@ actor FlowHandlingManager {
 
         self.appIDs = plutoniumConfiguration.appIDs
         self.ipSet = plutoniumConfiguration.ips
+        self.mode = plutoniumConfiguration.plutoniumMode
+        self.vpnInterfaceName = vpnNetworkInterfaceName
 
-        switch plutoniumConfiguration.plutoniumMode {
+        switch mode {
         case .exclusion:
             self.dnsRequestHandling = (list: plutoniumConfiguration.dnsServers, isInclusionMode: false)
+        case .inclusion:
+            self.networkInterface = vpnInterface
+            self.dnsRequestHandling = (list: plutoniumConfiguration.dnsServers, isInclusionMode: true)
 
+            log.info(
+                "FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface.name)."
+            )
+        }
+    }
+
+    public func resume() {
+        if case .exclusion = mode {
             // Start monitoring internet interface updates
-            let internetInterfaceStream = await NWInterface.findInternetInterface(vpnInterfaceName: vpnNetworkInterfaceName)
-            self.networkInterfaceMonitorTask = Task { [weak self] in
+            let internetInterfaceStream = NWInterface.findInternetInterface(vpnInterfaceName: vpnInterfaceName)
+            networkInterfaceMonitorTask = Task { [weak self] in
+                guard let self else { return }
+
                 var hasInitialInterface = false
                 for await interface in internetInterfaceStream {
-                    await self?.updateNetworkInterface(interface)
+                    await updateNetworkInterface(interface)
                     if !hasInitialInterface {
                         if interface != nil {
-                            log.info("FlowHandlingManager initialised in exclusion mode with \(self?.appIDs.count ?? 0) excluded apps, \(self?.ipSet.count ?? 0) excluded IPs and internet interface \(interface?.name ?? "undefined").")
+                            log.info("FlowHandlingManager initialised in exclusion mode with \(appIDs.count) excluded apps, \(ipSet.count) excluded IPs and internet interface \(interface?.name ?? "undefined").")
                             hasInitialInterface = true
                         } else {
-                            log.error("No internet interface found before VPN with interface name \(vpnNetworkInterfaceName).")
-                            self?.onVpnUnavailable()
+                            log.error("No internet interface found before VPN with interface name \(vpnInterfaceName).")
+                            onVpnUnavailable()
                             return
                         }
                     }
                 }
             }
-
-        case .inclusion:
-            self.networkInterface = vpnInterface
-            self.dnsRequestHandling = (list: plutoniumConfiguration.dnsServers, isInclusionMode: true)
-
-            log
-                .info(
-                    "FlowHandlingManager initialised in inclusion mode with \(appIDs.count) included apps, \(ipSet.count) included IPs and VPN interface \(vpnInterface.name)."
-                )
         }
 
         // Start monitoring VPN interface
-        startVPNInterfaceMonitoring(name: vpnNetworkInterfaceName)
+        startVPNInterfaceMonitoring(name: vpnInterfaceName)
     }
 
     private func startVPNInterfaceMonitoring(name vpnInterfaceName: String) {
@@ -107,7 +120,7 @@ actor FlowHandlingManager {
         vpnNetworkInterfaceMonitorTask = Task { [weak self] in
             guard let self else { return }
 
-            let vpnInterfaceStream = await NWInterface.monitorInterface(name: vpnInterfaceName)
+            let vpnInterfaceStream = NWInterface.monitorInterface(name: vpnInterfaceName)
 
             // Monitor for interface disappearance
             for await vpnInterface in vpnInterfaceStream {
@@ -149,26 +162,22 @@ actor FlowHandlingManager {
         vpnUnavailableTimeoutTask = nil
     }
 
-    private func add(_ handler: TCPFlowHandler) {
+    private func add(_ handler: TCPFlowHandler) async {
         activeTCPHandlers.insert(handler)
 
-        // Start with cleanup callback
-        Task {
-            await handler.start { [weak self] in
-                guard let self else { return }
-                await remove(handler)
+        await handler.start {
+            Task {
+                await self.remove(handler)
             }
         }
     }
 
-    private func add(_ handler: UDPFlowHandler) {
+    private func add(_ handler: UDPFlowHandler) async {
         activeUDPHandlers.insert(handler)
 
-        // Start with cleanup callback
-        Task {
-            await handler.start { [weak self] in
-                guard let self else { return }
-                await remove(handler)
+        await handler.start {
+            Task {
+                await self.remove(handler)
             }
         }
     }
@@ -205,6 +214,8 @@ actor FlowHandlingManager {
         // Cancel VPN unavailable timeout
         vpnUnavailableTimeoutTask?.cancel()
         vpnUnavailableTimeoutTask = nil
+
+        log.debug("Flow cleanup completed")
     }
 
     private func updateNetworkInterface(_ interface: NWInterface?) {
@@ -217,33 +228,37 @@ actor FlowHandlingManager {
         log.info("Internet interface set to \(interface)")
     }
 
-    nonisolated func actionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
+    nonisolated func routeActionForFlow(_ flow: NEAppProxyFlow) -> RouteAction {
         guard let interface = networkInterface else {
             return .dontHandle
         }
-        if let tcpFlow = flow as? NEAppProxyTCPFlow {
-            guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(
-                tcpFlow.remoteEndpoint
-            ) else {
+        guard !flow.isDNSFlow else {
+            return .dontHandle
+        }
+        switch flow {
+        case let tcpFlow as NEAppProxyTCPFlow:
+            guard appIDExists(tcpFlow.sourceAppIdentifier) || endpointIPExists(tcpFlow.remoteEndpoint) else {
                 return .dontHandle
             }
-            guard let handler = TCPFlowHandler(
-                tcpFlow: tcpFlow,
-                targetInterface: interface
-            ) else { return .dontHandle }
+            guard let handler = TCPFlowHandler(tcpFlow: tcpFlow, targetInterface: interface) else {
+                return .dontHandle
+            }
             return .forward(handler: handler)
-        } else if let udpFlow = flow as? NEAppProxyUDPFlow {
-            let endpointForwardingMode = appIDExists(udpFlow.sourceAppIdentifier) ? EndpointForwardingMode.all : .only(ips: ipSet)
+        case let udpFlow as NEAppProxyUDPFlow:
+            guard appIDExists(udpFlow.sourceAppIdentifier) else {
+                return .dontHandle
+            }
             let handler = UDPFlowHandler(
                 udpFlow: udpFlow,
                 targetInterface: interface,
                 vpnInterface: vpnInterface,
                 dnsServers: dnsRequestHandling.list,
-                endpointForwardingMode: endpointForwardingMode
+                endpointForwardingMode: .all
             )
             return .forward(handler: handler)
+        default:
+            return .dontHandle
         }
-        return .dontHandle
     }
 
     // MARK: - Public registration helpers
@@ -276,13 +291,6 @@ actor FlowHandlingManager {
     }
 
     private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {
-        if endpoint?.shouldAlwaysUseVpnInterface(dnsServers: dnsRequestHandling.list) == true {
-            // This request is going to a DNS server.
-            // It should always be routed through the tunnel.
-            // Returning `true` if in inclusion mode, `false` if in exclusion mode.
-            return dnsRequestHandling.isInclusionMode
-        }
-
         guard let endpoint, let ipString = endpoint.ipv4String else { return false }
         return ipSet.contains(ipString)
     }

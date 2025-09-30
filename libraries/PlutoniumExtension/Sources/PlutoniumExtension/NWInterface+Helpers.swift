@@ -22,6 +22,28 @@ import Foundation
 import Network
 import VPNAppCore
 
+/// A namespace for accessing functions that are available within the Network framework but not exposed to Swift.
+enum NWInterfaceHelpers {
+    // A cached handle to the Network framework
+    private nonisolated(unsafe) static var networkHandle: UnsafeMutableRawPointer?
+    // A *function pointer* to the `nw_interface_create_with_index` C function
+    private nonisolated(unsafe) static var createWithIndex: (@convention(c) (UInt32) -> nw_interface_t?)?
+
+    /// Retrieves the interface as a C `nw_interface_t` object from the interface index.
+    /// - Parameter index: the index of the interface.
+    /// - Returns: the `nw_interface_t` associated with this index, `nil` otherwise.
+    static func retrieveInterface(with index: Int) -> nw_interface_t? {
+        if networkHandle == nil {
+            networkHandle = dlopen("/System/Library/Frameworks/Network.framework/Network", RTLD_LAZY)
+            // let's search for this precise symbol
+            if let symbol = dlsym(networkHandle, "nw_interface_create_with_index") {
+                createWithIndex = unsafeBitCast(symbol, to: (@convention(c) (UInt32) -> nw_interface_t?).self)
+            }
+        }
+        return createWithIndex?(UInt32(index))
+    }
+}
+
 extension NWInterface {
     /// Find network interface by exact interface name
     static func findBy(name interfaceName: String?) async -> NWInterface? {
@@ -44,7 +66,7 @@ extension NWInterface {
     /// The next network interface after WireGuard accommodates any potential network service reorderings
     /// made by the user in macOS network preferences.
     /// Returns an AsyncStream that continuously provides updates when the internet interface changes
-    static func findInternetInterface(vpnInterfaceName: String) async -> AsyncStream<NWInterface?> {
+    static func findInternetInterface(vpnInterfaceName: String) -> AsyncStream<NWInterface?> {
         @Dependency(\.nwPathStream) var nwPathStream
 
         let pathStream = nwPathStream()
@@ -74,7 +96,7 @@ extension NWInterface {
     /// Returns an AsyncStream that continuously provides updates on the interface availability
     /// When the interface is available, it returns the interface
     /// When the interface is not available, it returns nil
-    static func monitorInterface(name interfaceName: String) async -> AsyncStream<NWInterface?> {
+    static func monitorInterface(name interfaceName: String) -> AsyncStream<NWInterface?> {
         @Dependency(\.nwPathStream) var nwPathStream
 
         let pathStream = nwPathStream()

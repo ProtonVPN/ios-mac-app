@@ -32,27 +32,40 @@ import NetworkExtension
  * on older macOS while using new APIs on macOS 15+.
  */
 
-extension NEAppProxyTCPFlow {
-    /// Returns the correct remote endpoint for both < macOS 15 and ≥ macOS 15.
-    var remoteEndpoint: NWEndpoint? {
-        if #available(macOS 15, *) {
-            self.remoteFlowEndpoint
-        } else {
-            value(forKey: "remoteEndpoint") as? NWEndpoint
+extension NENetworkRule {
+    static var dnsRule: NENetworkRule {
+        get throws {
+            if #available(macOS 15, *) {
+                return .init(
+                    remoteNetworkEndpoint: NWEndpoint.hostPort(host: "10.2.0.1", port: .any),
+                    remotePrefix: 32,
+                    localNetworkEndpoint: nil,
+                    localPrefix: 0,
+                    protocol: .any,
+                    direction: .outbound
+                )
+            } else {
+                let selectorName = "initWithDestinationHost:protocol:"
+                let sel = NSSelectorFromString(selectorName)
+
+                guard responds(to: sel) else {
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
+                }
+
+                let endpoint = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
+                let nwProtocolValue: NSInteger = 0 // NENetworkRuleProtocolAny
+
+                guard let value = perform(sel, with: endpoint, with: nwProtocolValue)?.takeUnretainedValue() as? NENetworkRule else {
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
+                }
+
+                return value
+            }
         }
     }
 }
 
 extension NEAppProxyUDPFlow {
-    /// Returns the correct local endpoint for both < macOS 15 and ≥ macOS 15.
-    var localEndpoint: NWEndpoint? {
-        if #available(macOS 15, *) {
-            self.localFlowEndpoint
-        } else {
-            value(forKey: "localEndpoint") as? NWEndpoint
-        }
-    }
-
     /// Reads datagrams using the appropriate API for the macOS version:
     /// On macOS 15+:     `readDatagrams()`
     /// On older macOS:   `readDatagrams(completionHandler:)`
@@ -238,19 +251,6 @@ extension NWEndpoint {
         else { return nil }
 
         return addr.asString
-    }
-
-    func shouldAlwaysUseVpnInterface(dnsServers: Set<String>) -> Bool {
-        switch self {
-        case let .hostPort(.ipv4(address), _) where address.asString.flatMap { dnsServers.contains($0) } == true:
-            // Traffic to all DNS servers (WireGuard and CustomDNSs) should always go through WireGuard.
-            true
-        case .hostPort(_, 53):
-            // All DNS queries (port 53) should go through WireGuard
-            true
-        default:
-            false
-        }
     }
 }
 

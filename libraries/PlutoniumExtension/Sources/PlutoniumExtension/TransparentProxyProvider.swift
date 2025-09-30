@@ -81,6 +81,7 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
                             plutoniumConfiguration: configuration,
                             onVpnUnavailable: sendableVpnUnavailableCallback.call
                         )
+                        await manager.resume()
                         sendableCompletion.call(nil, manager: manager)
                     } catch {
                         log.error("Failed to initialize flow handling manager: \(error)")
@@ -105,13 +106,30 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
         completionHandler()
     }
 
+    override open func sleep() async {
+        log.debug("Proxy provider put to sleep...")
+
+        flowHandlingManager?.cleanupAllHandlers()
+        await super.sleep()
+    }
+
+    override open func wake() {
+        super.wake()
+
+        log.debug("Proxy provider waking up...")
+        guard let manager = flowHandlingManager else { return }
+        Task { [manager] in
+            await manager.resume()
+        }
+    }
+
     override open func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
         guard let flowHandlingManager else {
             log.error("Flow Handling helper is not available.")
             return false
         }
 
-        switch flowHandlingManager.actionForFlow(flow) {
+        switch flowHandlingManager.routeActionForFlow(flow) {
         case .dontHandle:
             return false
         case let .forward(handler: handler):
@@ -143,7 +161,12 @@ open class PlutoniumTransparentProxyProvider: NETransparentProxyProvider {
 
         if capturingTraffic {
             settings.includedNetworkRules = [allTCPRule, allUDPRule]
-            settings.excludedNetworkRules = []
+            do {
+                let rule = try NENetworkRule.dnsRule
+                settings.excludedNetworkRules = [rule]
+            } catch {
+                settings.excludedNetworkRules = []
+            }
         } else {
             settings.includedNetworkRules = []
             settings.excludedNetworkRules = [allTCPRule, allUDPRule]

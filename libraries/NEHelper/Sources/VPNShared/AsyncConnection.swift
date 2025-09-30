@@ -25,6 +25,14 @@ public final class AsyncConnection: Sendable {
     private let stateStream: AsyncStream<NWConnection.State>
     private let stateContinuation: AsyncStream<NWConnection.State>.Continuation
 
+    public var isCancelled: Bool {
+        connection.state == .cancelled
+    }
+
+    public var interface: NWInterface? {
+        connection.parameters.requiredInterface
+    }
+
     public init(to endpoint: NWEndpoint, using parameters: NWParameters) {
         self.connection = NWConnection(to: endpoint, using: parameters)
 
@@ -32,8 +40,8 @@ public final class AsyncConnection: Sendable {
         self.stateStream = stream
         self.stateContinuation = continuation
 
-        connection.stateUpdateHandler = { [stateContinuation] state in
-            stateContinuation.yield(state)
+        connection.stateUpdateHandler = { [weak self] state in
+            self?.stateContinuation.yield(state)
         }
     }
 
@@ -75,11 +83,14 @@ public final class AsyncConnection: Sendable {
     }
 
     public func cancel() {
+        connection.stateUpdateHandler = nil
         connection.cancel()
         stateContinuation.finish()
     }
 
     deinit {
-        cancel()
+        if !isCancelled {
+            cancel()
+        }
     }
 }

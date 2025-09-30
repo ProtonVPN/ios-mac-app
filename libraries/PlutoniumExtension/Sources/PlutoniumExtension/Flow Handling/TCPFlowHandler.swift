@@ -21,10 +21,12 @@ import Network
 import NetworkExtension
 import VPNShared
 
+import Besogne
+
 /// Handles TCP flow copying between network interfaces.
 /// One instance per `NEAppProxyTCPFlow`.
 final actor TCPFlowHandler: FlowHandler {
-    private let id = UUID()
+    let id = UUID()
 
     // MARK: ‑ Constants
 
@@ -36,7 +38,7 @@ final actor TCPFlowHandler: FlowHandler {
     private let tcpFlow: NEAppProxyTCPFlow
     private let connectionQueue: DispatchQueue
     private var isCancelled = false
-    private var onClose: (@Sendable () async -> Void)?
+    private var onClose: (() -> Void)?
     private var connectionLifecycleTask: Task<Void, Never>?
 
     // MARK: ‑ Init
@@ -52,32 +54,32 @@ final actor TCPFlowHandler: FlowHandler {
             return nil
         }
 
-        self.connectionQueue = DispatchQueue(
-            label: "ch.protonvpn.plutonium.tcp-\(UUID().uuidString)",
-            qos: .userInitiated
-        )
+        self.connectionQueue = DispatchQueue(label: "ch.protonvpn.plutonium.tcp-\(id)", qos: .userInitiated)
 
-        log.debug("TCP flow handler initialized for remote endpoint \(remoteEndpoint) on interface \(targetInterface)")
         self.connection = AsyncConnection(to: remoteEndpoint, using: parameters)
+
+        logDebug("TCP flow handler initialized for remote endpoint \(remoteEndpoint) on interface \(targetInterface)")
     }
 
     // MARK: ‑ Public
 
-    func start(onClose: @escaping @Sendable () async -> Void) async {
+    func start(onClose: @escaping @Sendable () -> Void) {
         self.onClose = onClose
 
         let states = connection.states
-        connectionLifecycleTask = Task { [weak self] in
-            guard let self else { return }
+        connectionLifecycleTask = Task {
+            let besogne = Besogne(description: "TCP State updates")
+            let scope = besogne.enter()
             for await state in states {
                 await handleStateUpdate(state)
             }
+            scope.leave()
         }
 
         connection.start(queue: connectionQueue)
     }
 
-    func stop() async {
+    func stop() {
         guard !isCancelled else { return }
         isCancelled = true
 
@@ -90,8 +92,8 @@ final actor TCPFlowHandler: FlowHandler {
         connectionLifecycleTask?.cancel()
         connectionLifecycleTask = nil
 
-        await onClose?()
-        log.info("TCP tunnel connection closed")
+        onClose?()
+        logDebug("TCP tunnel connection closed")
     }
 
     // MARK: ‑ Connection state handling
@@ -99,33 +101,40 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleStateUpdate(_ state: NWConnection.State) async {
         switch state {
         case .setup:
-            log.debug("TCP connection setup")
+            logDebug("TCP connection setup")
         case .preparing:
-            log.debug("TCP connection preparing")
+            logDebug("TCP connection preparing")
         case let .waiting(error):
-            log.debug("TCP connection waiting: \(error.localizedDescription)")
+            logDebug("TCP connection waiting: \(error.localizedDescription)")
         case .ready:
-            log.debug("TCP flow handler connection ready")
-            await startDataForwarding()
+            logDebug("TCP flow handler connection ready")
+            do {
+                try await startDataForwarding()
+                await handleFlowOpened(nil)
+            } catch {
+                await handleFlowOpened(error)
+            }
         case let .failed(error):
-            log.error("TCP flow handler connection failed: \(error.localizedDescription)")
-            await stop()
+            logDebug("TCP flow handler connection failed: \(error.localizedDescription)")
+            stop()
         case .cancelled:
-            log.debug("TCP connection cancelled")
-            await stop()
+            logDebug("TCP connection cancelled")
+            stop()
         @unknown default:
-            log.debug("TCP connection entered an unknown state")
+            logDebug("TCP connection entered an unknown state")
         }
     }
 
     // MARK: ‑ Data forwarding
 
-    private func startDataForwarding() async {
-        await withCheckedContinuation { continuation in
-            tcpFlow.open(withLocalEndpoint: nil) { [weak self] error in
-                continuation.resume()
-                guard let self else { return }
-                Task { await self.handleFlowOpened(error) }
+    private func startDataForwarding() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, any Error>) in
+            tcpFlow.open(withLocalEndpoint: nil) { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume()
+                }
             }
         }
     }
@@ -133,11 +142,11 @@ final actor TCPFlowHandler: FlowHandler {
     private func handleFlowOpened(_ error: Error?) async {
         if let error {
             log.error("Failed to open TCP flow: \(error.localizedDescription)")
-            await stop()
+            stop()
             return
         }
 
-        log.debug("TCP flow opened successfully, starting bidirectional forwarding")
+        logDebug("TCP flow opened successfully, starting bidirectional forwarding")
 
         async let flowToConnection: Void = forwardFromFlowToConnection()
         async let connectionToFlow: Void = forwardFromConnectionToFlow()
@@ -166,14 +175,14 @@ final actor TCPFlowHandler: FlowHandler {
 
     private func handleFlowRead(data: Data?, error: Error?) async -> Bool {
         if let error {
-            log.error("Error reading from TCP flow: \(error.localizedDescription)")
-            await stop()
+            logError("Error reading from TCP flow: \(error.localizedDescription)")
+            stop()
             return false
         }
 
         guard let data, !data.isEmpty else {
-            log.info("TCP flow closed by client")
-            await stop()
+            logInfo("TCP flow closed by client")
+            stop()
             return false
         }
 
@@ -184,13 +193,13 @@ final actor TCPFlowHandler: FlowHandler {
             }
         }
 
-        return await handleSendResult(sendError)
+        return handleSendResult(sendError)
     }
 
-    private func handleSendResult(_ error: NWError?) async -> Bool {
+    private func handleSendResult(_ error: NWError?) -> Bool {
         if let error {
-            log.error("Error sending to tunnel: \(error.localizedDescription)")
-            await stop()
+            logError("Error sending to tunnel: \(error.localizedDescription)")
+            stop()
             return false
         }
         return true // Continue the loop
@@ -228,38 +237,41 @@ final actor TCPFlowHandler: FlowHandler {
         error: NWError?
     ) async -> Bool {
         if let error {
-            log.error("Error receiving from tunnel: \(error.localizedDescription)")
-            await stop()
+            logError("Error receiving from tunnel: \(error.localizedDescription)")
+            stop()
             return false
         }
 
-        guard let data, !data.isEmpty else {
-            if isDone {
-                await stop()
-                return false
+        if let data {
+            if data.isEmpty {
+                return handleFlowWriteResult(nil, isDone: isDone)
             }
+
+            // Write data to flow and wait for completion
+            let writeError = await withCheckedContinuation { continuation in
+                tcpFlow.write(data) { writeError in
+                    continuation.resume(returning: writeError)
+                }
+            }
+
+            return handleFlowWriteResult(writeError, isDone: isDone)
+        } else if isDone {
+            stop()
+            return false
+        } else {
             return true
         }
-
-        // Write data to flow and wait for completion
-        let writeError = await withCheckedContinuation { continuation in
-            tcpFlow.write(data) { writeError in
-                continuation.resume(returning: writeError)
-            }
-        }
-
-        return await handleFlowWriteResult(writeError, isDone: isDone)
     }
 
-    private func handleFlowWriteResult(_ error: Error?, isDone: Bool) async -> Bool {
+    private func handleFlowWriteResult(_ error: Error?, isDone: Bool) -> Bool {
         if let error {
-            log.error("Error writing to TCP flow: \(error.localizedDescription)")
-            await stop()
+            logError("Error writing to TCP flow: \(error.localizedDescription)")
+            stop()
             return false
         }
 
         if isDone {
-            await stop()
+            stop()
             return false
         }
 
