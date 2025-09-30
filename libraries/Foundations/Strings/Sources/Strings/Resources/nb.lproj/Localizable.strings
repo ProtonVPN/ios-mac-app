@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Skriv inn det aktive portnummeret i BitTorrent-appen for å forbedre P2P-hastighetene dine.";
 
-"_quick_settings_portForwarding_warningNote" = "Hvis du vil bruke viderekobling av porter, kobler du til en P2P-tjener";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Kan ikke hente aktivt portnummer. Start tilkoblingen din på nytt og prøv igjen.";
 

@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Introduceți numărul portului activ în aplicația BitTorrent pentru a vă îmbunătăți viteza P2P.";
 
-"_quick_settings_portForwarding_warningNote" = "Pentru a folosi redirecționarea portului, conectați-vă la un server P2P.";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Nu se poate prelua numărul portului activ. Reporniți conexiunea și reîncercați.";
 

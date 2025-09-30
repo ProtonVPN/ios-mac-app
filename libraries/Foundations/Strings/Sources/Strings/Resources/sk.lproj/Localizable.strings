@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Zadajte číslo aktívneho portu do aplikácie BitTorrent, aby ste zvýšili rýchlosť P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Ak chcete použiť presmerovanie portov, pripojte sa k P2P serveru";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Nie je možné získať číslo aktívneho portu. Reštartujte pripojenie a skúste to znova.";
 

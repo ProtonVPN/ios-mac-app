@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Εισαγάγετε τον αριθμό ενεργού θύρας στην εφαρμογή BitTorrent για να βελτιώσετε τις ταχύτητες P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Για να χρησιμοποιήσετε την προώθηση θυρών, συνδεθείτε σε διακομιστή P2P";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Δεν είναι δυνατή η ανάκτηση του ενεργού αριθμού θύρας. Επανεκκινήστε τη σύνδεσή σας και δοκιμάστε ξανά.";
 

@@ -71,7 +71,7 @@ final class QuickSettingDetailPFViewController: QuickSettingDetailViewController
             portView.isHidden = false
             dropdownNoteStackView.isHidden = false
             dropdownNoteImageView.isHidden = false
-            dropdownNoteImageView.image = AppTheme.Icon.exclamationTriangleFilled
+            dropdownNoteImageView.image = AppTheme.Icon.infoCircleFilled
             dropdownNoteImageView.contentTintColor = .color(.icon, .warning)
             dropdownNote.attributedStringValue = Localizable.quickSettingsPortForwardingWarningNote
                 .styled(.weak, font: .themeFont(.small), alignment: .left)

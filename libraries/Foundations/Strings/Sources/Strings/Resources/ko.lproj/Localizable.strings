@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P 속도를 향상시키기 위해 BitTorrent 앱으로의 활성 포트 번호를 입력하세요.";
 
-"_quick_settings_portForwarding_warningNote" = "포트 포워딩을 사용하려면 P2P 서버로 연결하세요.";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "활성 포트 번호를 가져올 수 없음. 연결 재시작 후 다시 시도하십시오.";
 

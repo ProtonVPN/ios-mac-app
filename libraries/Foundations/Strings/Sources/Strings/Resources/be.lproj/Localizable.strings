@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "Увядзіце нумар актыўнага парта ў праграму BitTorrent, каб палепшыць хуткасць P2P";
 
-"_quick_settings_portForwarding_warningNote" = "Падключыце сервер P2P, каб выкарыстоўваць перанакіраванне партоў";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Немагчыма атрымаць нумар актыўнага парта. Перазапусціце ваша падключэнне і паспрабуйце яшчэ раз.";
 

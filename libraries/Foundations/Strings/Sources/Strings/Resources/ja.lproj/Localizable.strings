@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P速度を向上させるために、BitTorrentアプリにアクティブなポート番号を入力してください";
 
-"_quick_settings_portForwarding_warningNote" = "ポート転送を利用するには、P2Pサーバーに接続してください";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "アクティブなポート番号を取得できません。接続を再起動して、もう一度お試しください。";
 

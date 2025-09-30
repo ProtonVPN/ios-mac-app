@@ -1468,7 +1468,7 @@
 
 "_quick_settings_portForwarding_note" = "P2P hızınızı artırmak için BitTorrent uygulamanıza etkin bağlantı noktası numaranızı yazın";
 
-"_quick_settings_portForwarding_warningNote" = "Bağlantı noktası yönlendirmeyi kullanmak için bir P2P sunucusuna bağlanın";
+"_quick_settings_portForwarding_warningNote" = "Connect to a P2P server to improve torrenting speeds";
 
 "_quick_settings_portForwarding_errorNote" = "Etkin bağlantı noktası numarası bulunamadı. Bağlantınızı yeniden başlatıp yeniden deneyin.";
 
