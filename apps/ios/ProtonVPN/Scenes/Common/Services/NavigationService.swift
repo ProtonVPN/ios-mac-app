@@ -189,8 +189,10 @@ final class NavigationService {
 
         switch await loginService.attemptSilentLogIn() {
         case .loggedIn:
+            log.debug("Silent login succesfull", category: .app)
             presentMainInterface()
-        case .notLoggedIn:
+        case .notLoggedIn(let error):
+            log.debug("Silent login failed with error: \(error)", category: .app)
             presentWelcome(initialError: nil)
         }
     }

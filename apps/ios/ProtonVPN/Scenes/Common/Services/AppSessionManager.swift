@@ -44,6 +44,7 @@ import Strings
 enum SessionStatus {
     case notEstablished
     case established
+    case undetermined
 }
 
 protocol AppSessionManagerFactory {
@@ -105,8 +106,9 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
 
-    var sessionStatus: SessionStatus = .notEstablished {
+    var sessionStatus: SessionStatus = .undetermined {
         didSet {
+            log.info(.init(stringLiteral: "Session status is now \(sessionStatus)"), category: .app)
             log.info("Session status is now \(sessionStatus)", category: .app)
         }
     }
