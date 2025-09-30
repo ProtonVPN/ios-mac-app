@@ -49,14 +49,14 @@ extension NENetworkRule {
                 let sel = NSSelectorFromString(selectorName)
 
                 guard responds(to: sel) else {
-                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1337)
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
                 }
 
                 let endpoint = NWEndpoint.hostPort(host: .init("10.2.0.1"), port: .any)
                 let nwProtocolValue: NSInteger = 0 // NENetworkRuleProtocolAny
 
                 guard let value = perform(sel, with: endpoint, with: nwProtocolValue)?.takeUnretainedValue() as? NENetworkRule else {
-                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1337)
+                    throw NSError(domain: "ProtonVPNPlutonium.DNSNetworkRuleError", code: 1)
                 }
 
                 return value

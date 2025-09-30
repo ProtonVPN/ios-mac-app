@@ -248,7 +248,7 @@ final actor UDPFlowHandler: FlowHandler {
             } catch is CancellationError {
                 log.debug("Send task received explicit cancellation error")
             } catch {
-                log.critical("Send task received an expected errro: \(error)")
+                log.critical("Send task received an expected error: \(error)")
             }
         }
 
@@ -290,8 +290,7 @@ final actor UDPFlowHandler: FlowHandler {
     }
 
     private func handleReceiving(connection: AsyncConnection, endpoint: NWEndpoint) async {
-        let shouldCancel = Task.isCancelled || connection.isCancelled
-        while !shouldCancel {
+        repeat {
             do {
                 let (data, isComplete) = try await connection.receiveMessageAsync()
                 guard let data, !data.isEmpty else { break }
@@ -311,7 +310,8 @@ final actor UDPFlowHandler: FlowHandler {
                 logError("Error receiving from \(endpoint): \(error.localizedDescription)")
                 break
             }
-        }
+        } while Task.isCancelled || connection.isCancelled
+
         logDebug("Receive loop ended for \(endpoint)")
     }
 

@@ -30,48 +30,48 @@ extension FlowHandler {
     @inlinable
     public func logInfo(
         _ message: @autoclosure () -> Logger.Message,
-        metadata _: @autoclosure () -> Logger.Metadata? = nil,
+        metadata: @autoclosure () -> Logger.Metadata? = nil,
         file: String = #fileID,
         function: String = #function,
         line: UInt = #line
     ) {
         #if DEBUG
             let message = "(\(id)) \(message())"
-            log.info(.init(stringLiteral: message), file: file, function: function, line: line)
+            log.info(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.info(message(), file: file, function: function, line: line)
+            log.info(message(), metadata, file: file, function: function, line: line)
         #endif
     }
 
     @inlinable
     public func logDebug(
         _ message: @autoclosure () -> Logger.Message,
-        metadata _: @autoclosure () -> Logger.Metadata? = nil,
+        metadata: @autoclosure () -> Logger.Metadata? = nil,
         file: String = #fileID,
         function: String = #function,
         line: UInt = #line
     ) {
         #if DEBUG
             let message = "(\(id)) \(message())"
-            log.debug(.init(stringLiteral: message), file: file, function: function, line: line)
+            log.debug(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.debug(message(), file: file, function: function, line: line)
+            log.debug(message(), metadata: metadata, file: file, function: function, line: line)
         #endif
     }
 
     @inlinable
     public func logError(
         _ message: @autoclosure () -> Logger.Message,
-        metadata _: @autoclosure () -> Logger.Metadata? = nil,
+        metadata: @autoclosure () -> Logger.Metadata? = nil,
         file: String = #fileID,
         function: String = #function,
         line: UInt = #line
     ) {
         #if DEBUG
             let message = "(\(id)) \(message())"
-            log.error(.init(stringLiteral: message), file: file, function: function, line: line)
+            log.error(.init(stringLiteral: message), metadata: metadata(), file: file, function: function, line: line)
         #else
-            log.error(message(), file: file, function: function, line: line)
+            log.error(message(), metadata: metadata, file: file, function: function, line: line)
         #endif
     }
 }

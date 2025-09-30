@@ -54,10 +54,7 @@ final actor TCPFlowHandler: FlowHandler {
             return nil
         }
 
-        self.connectionQueue = DispatchQueue(
-            label: "ch.protonvpn.plutonium.tcp-\(UUID().uuidString)",
-            qos: .userInitiated
-        )
+        self.connectionQueue = DispatchQueue(label: "ch.protonvpn.plutonium.tcp-\(id)", qos: .userInitiated)
 
         self.connection = AsyncConnection(to: remoteEndpoint, using: parameters)
 

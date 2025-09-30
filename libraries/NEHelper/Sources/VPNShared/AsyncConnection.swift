@@ -26,11 +26,7 @@ public final class AsyncConnection: Sendable {
     private let stateContinuation: AsyncStream<NWConnection.State>.Continuation
 
     public var isCancelled: Bool {
-        if case .cancelled = connection.state {
-            true
-        } else {
-            false
-        }
+        connection.state == .cancelled
     }
 
     public var interface: NWInterface? {

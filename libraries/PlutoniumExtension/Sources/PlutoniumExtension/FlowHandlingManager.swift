@@ -291,12 +291,6 @@ actor FlowHandlingManager {
     }
 
     private nonisolated func endpointIPExists(_ endpoint: NWEndpoint?) -> Bool {
-//        if endpoint?.shouldAlwaysUseVpnInterface(dnsServers: dnsRequestHandling.list) == true {
-//            // This request is going to a DNS server.
-//            // It should always be routed through the tunnel.
-//            // Returning `true` if in inclusion mode, `false` if in exclusion mode.
-//            return dnsRequestHandling.isInclusionMode
-//        }
         guard let endpoint, let ipString = endpoint.ipv4String else { return false }
         return ipSet.contains(ipString)
     }
