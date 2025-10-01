@@ -56,7 +56,7 @@ public class MockAuthKeychain: AuthKeychainHandle {
         credentialsWereStored?()
     }
 
-    public func clear() {
+    public func clear(_ reason: ClearKeychainReason) {
         credentials = [:]
         credentialsWereCleared?()
     }

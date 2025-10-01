@@ -490,7 +490,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         FeatureFlagsRepository.shared.clearUserId()
 
-        authKeychain.clear()
+        authKeychain.clear(.logOutCleanup)
         vpnKeychain.clear()
         announcementRefresher.clear()
         planService.clear()

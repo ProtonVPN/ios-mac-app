@@ -386,7 +386,7 @@ extension CoreNetworking: AuthDelegate {
         // invalidating authenticated session should clear the unauth session as well,
         // because we should fetch a new unauth session afterwards
         unauthKeychain.clear()
-        authKeychain.clear()
+        authKeychain.clear(.authenticatedSessionInvalidated)
         delegate.onLogout()
     }
 
@@ -401,7 +401,7 @@ extension CoreNetworking: AuthDelegate {
                 unauthKeychain.store(AuthCredential(credential))
             } else {
                 // Clear the whole keychain to ensure credentials for guest user are cleared for WG context
-                authKeychain.clear()
+                authKeychain.clear(.guestModeCleanup)
                 unauthKeychain.clear()
 
                 // To prevent needNewKeys error
@@ -456,7 +456,7 @@ extension CoreNetworking: AuthDelegate {
 extension CoreNetworking: AuthSessionInvalidatedDelegate {
     public func sessionWasInvalidated(for _: String, isAuthenticatedSession: Bool) {
         log.debug("Session invalidated", category: .net, metadata: ["isAuth": "\(isAuthenticatedSession)"])
-        authKeychain.clear()
+        authKeychain.clear(.authenticatedSessionInvalidated)
         if isAuthenticatedSession {
             delegate.onLogout()
         }

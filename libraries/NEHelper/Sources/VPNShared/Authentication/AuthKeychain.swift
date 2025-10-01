@@ -29,6 +29,13 @@ import KeychainAccess
     import WidgetKit
 #endif
 
+public enum ClearKeychainReason {
+    case logOutCleanup
+    case recoveryAttemptFromAFailedKeychainWrite
+    case authenticatedSessionInvalidated
+    case guestModeCleanup
+}
+
 public protocol AuthKeychainHandle {
     var username: String? { get }
     var userId: String? { get }
@@ -39,7 +46,7 @@ public protocol AuthKeychainHandle {
     func fetch(forContext: AppContext?) -> AuthCredentials?
     func fetch(forContext: AppContext?) throws -> AuthCredentials
     func store(_ credentials: AuthCredentials, forContext: AppContext?) throws
-    func clear()
+    func clear(_ reason: ClearKeychainReason)
 }
 
 public extension AuthKeychainHandle {
@@ -115,8 +122,8 @@ public final class AuthKeychain {
         try `default`.store(credentials)
     }
 
-    public static func clear() {
-        `default`.clear()
+    public static func clear(_ reason: ClearKeychainReason) {
+        `default`.clear(reason)
     }
 
     private let keychain = KeychainActor()
@@ -204,7 +211,7 @@ extension AuthKeychain: AuthKeychainHandle {
         } catch {
             log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
-                clear()
+                clear(.recoveryAttemptFromAFailedKeychainWrite)
                 let data = try JSONEncoder().encode(credentials)
                 try keychain.set(data, key: key)
             } catch let error2 {
@@ -229,8 +236,8 @@ extension AuthKeychain: AuthKeychainHandle {
         #endif
     }
 
-    public func clear() {
-        log.debug("Clearing auth credentials from keychain", category: .keychain)
+    public func clear(_ reason: ClearKeychainReason) {
+        log.debug("Clearing auth credentials from keychain, reason: \(reason)", category: .keychain)
         keychain.clear(contextValues: [String](StorageKey.contextKeys.values))
         saveToCache(nil)
     }
