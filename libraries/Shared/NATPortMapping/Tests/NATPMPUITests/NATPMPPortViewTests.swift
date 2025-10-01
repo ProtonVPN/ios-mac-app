@@ -43,6 +43,22 @@ struct NATPMPPortViewTests {
     }
 
     @Test
+    func loadedViewEnUSBut2Lines() {
+        withDependencies {
+            $0.date.now = .init()
+            $0.locale = Locale(identifier: "en_US")
+        } operation: {
+            let view = ActivePortView(
+                portNumber: 36528,
+                updateDate: Date(timeIntervalSince1970: 1_757_929_224)
+            )
+            let nsView = NSHostingView(rootView: view)
+
+            assertSnapshot(of: nsView, as: .image(size: .init(width: 190, height: 84)))
+        }
+    }
+
+    @Test
     func loadedViewDarkEnUK() {
         withDependencies {
             $0.date.now = .init()

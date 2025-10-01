@@ -121,6 +121,7 @@ struct ActivePortView: View {
                     Text(formatUpdateTime(updateDate))
                         .foregroundColor(Color(.text, .weak))
                         .themeFont(.callout(emphasised: false))
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Spacer()
                 }
