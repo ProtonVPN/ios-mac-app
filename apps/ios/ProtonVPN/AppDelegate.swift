@@ -83,6 +83,9 @@ final class AppDelegate: UIResponder {
 
     override init() {
         super.init()
+
+        setupLogsForApp()
+
         // WARNING: Be sure `setUpNSCoding` is run before there is a slight chance that we'll be decoding ANYTHING.
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
@@ -119,7 +122,6 @@ extension AppDelegate: UIApplicationDelegate {
 
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
         Task { @MainActor in
-            setupLogsForApp()
             setupDebugHelpers()
 
             await setupCoreIntegration()

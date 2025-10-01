@@ -33,7 +33,7 @@ log.error("Couldn't determine if protocol \"\(vpnProtocol.localizedDescription)\
 
 ### Log categories and events
 
-`Logger+Categories.swift` contains all the log categories and evenets used to categorizes logs for easier debugging. More about categories and evenets can be read on Confluence. 
+`Logger+Categories.swift` contains all the log categories and events used to categorizes logs for easier debugging. More about categories and events can be read on Confluence. 
 
 
 ## Main parts

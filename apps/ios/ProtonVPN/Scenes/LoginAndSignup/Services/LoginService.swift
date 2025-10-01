@@ -36,7 +36,12 @@ protocol LoginServiceFactory: AnyObject {
 
 enum SilentLoginResult {
     case loggedIn
-    case notLoggedIn
+    case notLoggedIn(Reason)
+
+    enum Reason {
+        case sessionNotEstablished
+        case otherError(Error)
+    }
 }
 
 enum LoginFlowType {
@@ -327,7 +332,7 @@ extension CoreLoginService: LoginService {
         if appSessionManager.loadDataWithoutFetching() {
             appSessionRefresher.refreshData()
 
-            return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn
+            return appSessionManager.sessionStatus == .established ? .loggedIn : .notLoggedIn(.sessionNotEstablished)
         }
 
         do {
@@ -336,15 +341,15 @@ extension CoreLoginService: LoginService {
                 return .loggedIn
             }
         } catch {
-            log.error("Silent logIn attempt failed with error: \(error)")
+            log.error("Silent login attempt failed with error: \(error)")
             do {
                 return try await withTimeout(of: Self.asyncRequestsTimeoutDuration) {
                     try await self.appSessionManager.loadDataWithoutLogin()
-                    return .notLoggedIn
+                    return .notLoggedIn(.otherError(error))
                 }
             } catch {
                 log.error("Loading data without login failed with error: \(error), considering user as not logged in.")
-                return .notLoggedIn
+                return .notLoggedIn(.otherError(error))
             }
         }
     }
