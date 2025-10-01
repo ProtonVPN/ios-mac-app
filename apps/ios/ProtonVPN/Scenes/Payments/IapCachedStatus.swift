@@ -36,11 +36,7 @@ final class IapCachedStatus {
             if let status = try? storage.get(IAPSupportStatusV2.self, forKey: UserCachedStatusKeys.iapSupportStatus.rawValue) {
                 return status
             }
-            // If we can't find it, then fall back to the old value with a nil reason.
-            guard provider.getDefaults().bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue) else {
-                return .disabled(localizedReason: nil)
-            }
-            return .enabled
+            return .disabled(localizedReason: nil)
         }
         set {
             try? storage.set(newValue, forKey: UserCachedStatusKeys.iapSupportStatus.rawValue)

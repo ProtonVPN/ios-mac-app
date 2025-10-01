@@ -82,7 +82,7 @@ struct PlanOptionsListViewV2: View {
 
     private var contentView: some View {
         VStack(spacing: .themeSpacing16) {
-            ForEach(viewModel.plans, id: \.self) { option in
+            ForEach(viewModel.plans, id: \.id) { option in
                 if viewModel.isLoading {
                     loadingView
                 } else {

@@ -86,6 +86,8 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         }
     }
 
+    @Dependency(\.appInfo) private var appInfo
+
     // MARK: - Init
 
     init() {
@@ -110,7 +112,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
             log.info("No auth credentials to create payment managers", category: .iap)
             return clear()
         }
-        let appInfo = AppInfoImplementation(context: .mainApp)
 
         let remoteManager = RemoteManager(
             sessionID: authCredentials.sessionId,
@@ -153,8 +154,6 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         // unsubscribe from previous subscriptions
         transactionSubscriptionCancellable = nil
         TransactionsObserver.shared.stop()
-
-        let appInfo = AppInfoImplementation(context: .mainApp)
 
         let transactionsObserverConfiguration = TransactionsObserverConfiguration(
             sessionID: authCredentials.sessionId,
@@ -211,10 +210,9 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
         }
         guard let authCredentials = authKeychain.fetch() else {
             // no login info present
+            log.error("Presenting subscription management requires login info", category: .iap)
             return
         }
-
-        let appInfo = AppInfoImplementation(context: .mainApp)
 
         paymentsV2 = PaymentsV2()
         paymentsV2?.transactionProgress.sink { [weak self] transactionProgress in
@@ -226,13 +224,17 @@ final class CorePlanServiceV2: PlanServiceV2, Sendable {
 
         // can only throw if no presentationMode is provided
         Task { @MainActor in
-            try? paymentsV2?.showAvailablePlans(
-                presentationMode: .modal,
-                sessionID: authCredentials.sessionId,
-                accessToken: authCredentials.accessToken,
-                appVersion: appInfo.appVersion,
-                doh: doh
-            )
+            do {
+                try paymentsV2?.showAvailablePlans(
+                    presentationMode: .modal,
+                    sessionID: authCredentials.sessionId,
+                    accessToken: authCredentials.accessToken,
+                    appVersion: appInfo.appVersion,
+                    doh: doh
+                )
+            } catch {
+                log.error("No payment presentation mode provided")
+            }
         }
     }
 

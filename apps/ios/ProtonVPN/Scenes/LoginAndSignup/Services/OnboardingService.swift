@@ -100,13 +100,14 @@ extension OnboardingModuleService: OnboardingService {
 
     private func welcomeToProtonViewController() -> UIViewController {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
-            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
-                let getStartedVC = self.onboardingGetStartedViewController()
-                self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
+            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: { [weak self] in
+                guard let self else { return }
+                let getStartedVC = onboardingGetStartedViewController()
+                windowService.addToStack(getStartedVC, checkForDuplicates: false)
             })
         } else {
-            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
-                self.postOnboardingAction()
+            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: { [weak self] in
+                self?.postOnboardingAction()
             })
         }
     }
@@ -114,14 +115,14 @@ extension OnboardingModuleService: OnboardingService {
     private func onboardingGetStartedViewController() -> UIViewController {
         assert(FeatureFlagsRepository.isRedesigniOSEnabled)
 
-        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
-            self.postOnboardingAction()
-        } onFeatureUpdate: { feature in
+        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
+            self?.postOnboardingAction()
+        } onFeatureUpdate: { [weak self] feature in
             switch feature {
             case let .toggle(.statistics, _, _, state):
-                self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
+                self?.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
             case let .toggle(.crashes, _, _, state):
-                self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
+                self?.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }
@@ -157,13 +158,14 @@ extension OnboardingModuleService: OnboardingService {
                 return nil
             }
 
-            oneClickPaymentV2.completionHandler = { [weak self] _ in
+            oneClickPaymentV2.completionHandler = { [weak self] completion in
                 self?.onboardingCoordinatorDidFinish()
+                completion?()
             }
 
-            viewController = oneClickPaymentV2.oneClickIAPViewController(dismissAction: {
-                self.windowService.dismissModal {
-                    self.onboardingCoordinatorDidFinish()
+            viewController = oneClickPaymentV2.oneClickIAPViewController(dismissAction: { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.onboardingCoordinatorDidFinish()
                 }
             })
             self.oneClickPaymentV2 = oneClickPaymentV2
@@ -192,9 +194,9 @@ extension OnboardingModuleService: OnboardingService {
                 self?.onboardingCoordinatorDidFinish()
             }
 
-            viewController = oneClickPayment.oneClickIAPViewController(dismissAction: {
-                self.windowService.dismissModal {
-                    self.onboardingCoordinatorDidFinish()
+            viewController = oneClickPayment.oneClickIAPViewController(dismissAction: { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.onboardingCoordinatorDidFinish()
                 }
             })
             self.oneClickPayment = oneClickPayment

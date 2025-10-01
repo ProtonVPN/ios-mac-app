@@ -41,7 +41,7 @@ public struct PlansClientV2 {
     }
 }
 
-// TODO: Migrate to @MainActor once overall codebase is ready for it
+// TODO: Migrate to @MainActor once overall codebase is ready for it https://protonag.atlassian.net/browse/VPNAPPL-3104
 
 final class PlanOptionsListViewModelV2: ObservableObject {
     let client: PlansClientV2

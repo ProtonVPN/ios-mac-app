@@ -166,7 +166,7 @@ final class OneClickPaymentV2 {
                         await self?.planService.delegate?
                             .paymentTransactionDidFinish(
                                 modalSource: nil,
-                                newPlanName: "vpn2024",
+                                newPlanName: "vpn2024", // TODO: update it to be dynamic https://protonag.atlassian.net/browse/VPNAPPL-3103
                                 offerReference: "VPNINTROPRICE2024",
                                 flowType: .external
                             )
@@ -185,7 +185,7 @@ final class OneClickPaymentV2 {
     func validate(selectedPlan: PlanOptionV2) async {
         // first check if user is credentialless
         @Dependency(\.authKeychain) var authKeychain
-        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
         guard !userIsCredentialLess else {
             // show modal "You need to create an account before you can upgrade" first
             let createAccountFirstAlert = UpgradeCreateAccountAlert { [weak self] in
@@ -217,11 +217,11 @@ final class OneClickPaymentV2 {
             log.error("Unable to match proton plan to store product \(productId)", category: .iap, metadata: ["error": "\(error)"])
             alertService.push(alert: PaymentAlert(message: error.localizedDescription, isError: true))
         case .unableToGetUserTransactionUUID:
-            break
+            log.debug("Unable to get user transaction UUID", category: .iap)
         case .unableToRestorePurchases:
             log.debug("Unable to restore purchases", category: .iap)
         case .transactionCancelledByUser:
-            break
+            log.debug("Transaction cancelled by user", category: .iap)
         case .transactionPending:
             log.debug("Transaction pending", category: .iap)
         case .transactionUnknownError:
@@ -243,6 +243,7 @@ final class OneClickPaymentV2 {
         } else {
             await planService.countryCode
         }
+        // TODO: fetch eligible country code from the BE. https://protonag.atlassian.net/browse/VPNAPPL-3103
         let userIsEligibleFor2YPlan = userAppStoreCountryCode == "usa" // https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
         let shouldShowTwoYearsWebPlan = userIsEligibleFor2YPlan && FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.iapToWeb)
 
@@ -331,7 +332,7 @@ extension OneClickPaymentV2 {
 }
 
 extension OneClickPaymentV2.UnavailableError: ProtonVPNError {
-    static var errorDomain: String = "OneClickPayment.UnavailableError"
+    static var errorDomain: String = "OneClickPaymentUnavailableError"
 
     var charCode: FourCharCode {
         switch self {
@@ -347,7 +348,7 @@ extension OneClickPaymentV2.UnavailableError: ProtonVPNError {
 }
 
 extension OneClickPaymentV2.PurchaseError: ProtonVPNError {
-    static var errorDomain: String = "OneClickPayment.PurchaseError"
+    static var errorDomain: String = "OneClickPaymentPurchaseError"
 
     var charCode: FourCharCode {
         switch self {

@@ -43,6 +43,7 @@ public struct PlanOptionV2: Hashable {
         guard purchaseType == .web else {
             return nil
         }
+        // TODO: https://protonag.atlassian.net/browse/VPNAPPL-3103
         return Localizable.subscriptionRenewalDate(date, "US$79.95")
     }
 
