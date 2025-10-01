@@ -198,7 +198,7 @@ final class OneClickPayment {
     func validate(selectedPlan: PlanOption) async {
         // first check if user is credentialless
         @Dependency(\.authKeychain) var authKeychain
-        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
         guard !userIsCredentialLess else {
             // show modal "You need to create an account before you can upgrade" first
             let createAccountFirstAlert = UpgradeCreateAccountAlert { [weak self] in

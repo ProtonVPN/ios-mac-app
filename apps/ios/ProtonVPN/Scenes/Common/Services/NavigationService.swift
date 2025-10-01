@@ -191,7 +191,7 @@ final class NavigationService {
         case .loggedIn:
             log.debug("Silent login succesfull", category: .app)
             presentMainInterface()
-        case .notLoggedIn(let error):
+        case let .notLoggedIn(error):
             log.debug("Silent login failed with error: \(error)", category: .app)
             presentWelcome(initialError: nil)
         }
@@ -495,7 +495,7 @@ extension NavigationService: SettingsService {
 
     @MainActor
     func makePasswordChangeViewController(mode: PasswordChangeModule.PasswordChangeMode) -> PasswordChangeViewController? {
-        guard let authCredentials = authKeychain.fetch(forContext: .mainApp) else {
+        guard let authCredentials = authKeychain.fetch() else {
             log.error("AuthCredentials not found", category: .app)
             return nil
         }

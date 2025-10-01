@@ -232,7 +232,7 @@ final class SettingsViewModel {
     }
 
     private var accountSection: TableViewSection {
-        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
         guard !userIsCredentialLess else {
             let handler: (NewAccountCardView.Action) -> Void = { [weak self] action in
                 let presentScreen: (NewAccountCardView.Action) -> Void = { [weak self] action in
@@ -753,7 +753,7 @@ final class SettingsViewModel {
     }
 
     private var bottomSection: TableViewSection {
-        let userIsCredentialLess = authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
         var cells: [TableViewCellModel] = [
             .button(title: Localizable.reportBug, accessibilityIdentifier: Localizable.reportBug, color: .normalTextColor(), handler: { [reportBug] in
                 reportBug()

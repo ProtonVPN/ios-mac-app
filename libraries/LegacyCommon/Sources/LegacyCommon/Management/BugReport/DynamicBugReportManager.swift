@@ -35,7 +35,7 @@ public class DynamicBugReportManager {
     public var model: BugReportModel
     public var isUserCredentialless: Bool {
         @Dependency(\.authKeychain) var authKeychain
-        return authKeychain.fetch(forContext: .mainApp)?.isCredentialLess ?? false
+        return authKeychain.fetch()?.isCredentialLess ?? false
     }
 
     public var prefilledEmail: String {
