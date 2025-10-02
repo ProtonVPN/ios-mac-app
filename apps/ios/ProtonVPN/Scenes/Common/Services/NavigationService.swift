@@ -527,7 +527,7 @@ extension NavigationService: SettingsService {
 
     private func processPasswordChange(authCredential: AuthCredential, userInfo: UserInfo) {
         do {
-            try authKeychain.store(AuthCredentials(.init(authCredential)))
+            try authKeychain.store(AuthCredentials(.init(authCredential)), source: .passwordChange)
             propertiesManager.userInfo = userInfo
             windowService.popStackToRoot()
             windowService.present(message: Localizable.passwordChangedSuccessfully, type: .success, accessibilityIdentifier: nil)

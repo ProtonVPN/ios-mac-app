@@ -150,7 +150,7 @@ class ExtensionAPIServiceTestCase: XCTestCase, ExtensionAPIServiceDelegate {
             userId: "bravo",
             scopes: [],
             mailboxPassword: ""
-        ))
+        ), source: .sessionObtained)
         timerFactory = TimerFactoryMock()
 
         apiService = ExtensionAPIService(

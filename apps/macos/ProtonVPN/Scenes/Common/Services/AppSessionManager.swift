@@ -126,7 +126,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
     private func attemptLogin(with authCredentials: AuthCredentials) async throws {
         do {
-            try authKeychain.store(authCredentials)
+            try authKeychain.store(authCredentials, source: .userLogin)
             unauthKeychain.clear()
         } catch {
             throw CommonVpnError.keychainWriteFailed
@@ -336,7 +336,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
             FeatureFlagsRepository.shared.clearUserId()
         }
 
-        authKeychain.clear()
+        authKeychain.clear(.logOutCleanup)
         vpnKeychain.clear()
         announcementRefresher.clear()
 

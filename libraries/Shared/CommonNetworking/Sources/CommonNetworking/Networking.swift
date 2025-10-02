@@ -374,7 +374,7 @@ extension CoreNetworking: AuthDelegate {
             if authCredential.isForUnauthenticatedSession {
                 unauthKeychain.store(authCredential)
             } else {
-                try authKeychain.store(AuthCredentials(.init(authCredential)))
+                try authKeychain.store(AuthCredentials(.init(authCredential)), source: .additionalCredentialsInfoObtained)
             }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
@@ -407,7 +407,7 @@ extension CoreNetworking: AuthDelegate {
                 // To prevent needNewKeys error
                 delegate.onGuestToAuthenticatedTransition()
 
-                try authKeychain.store(AuthCredentials(credential))
+                try authKeychain.store(AuthCredentials(credential), source: .sessionObtained)
             }
         } catch {
             log.error("Failed to save updated credentials", category: .keychain, event: .change)
@@ -439,7 +439,7 @@ extension CoreNetworking: AuthDelegate {
         do {
             if let authCredentials = authKeychain.fetch(),
                authCredentials.sessionId == sessionUID {
-                try authKeychain.store(authCredentials.updatedWithAuth(auth: credential))
+                try authKeychain.store(authCredentials.updatedWithAuth(auth: credential), source: .credentialsUpdated)
 
             } else if let unauthCredential = unauthKeychain.fetch(),
                       unauthCredential.sessionID == sessionUID {

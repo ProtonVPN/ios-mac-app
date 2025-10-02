@@ -478,7 +478,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         self.credentials = credentials
     }
 
-    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?) throws {
+    func store(_ credentials: VPNShared.AuthCredentials, forContext _: AppContext?, source: VPNShared.AuthCredentialsSource) throws {
         self.credentials = credentials
     }
 
@@ -490,7 +490,7 @@ class AuthKeychainHandleMock: AuthKeychainHandle {
         return credentials
     }
 
-    func clear() {}
+    func clear(_ reason: VPNShared.ClearKeychainReason) { }
 }
 
 private class AppSessionManagerAlertServiceMock: CoreAlertService {

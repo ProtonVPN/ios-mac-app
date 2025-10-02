@@ -150,7 +150,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     @MainActor
     func finishLogin(authCredentials: AuthCredentials) async throws {
         do {
-            try authKeychain.store(authCredentials)
+            try authKeychain.store(authCredentials, source: .userLogin)
             unauthKeychain.clear()
             vpnKeychain.clear()
             propertiesManager.logoutCleanup()

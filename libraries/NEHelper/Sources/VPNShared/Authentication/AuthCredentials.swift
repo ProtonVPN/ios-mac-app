@@ -39,14 +39,16 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
     public var mailboxPassword: String = ""
     public var isCredentialLess: Bool = false
 
-    override public var description: String {
-        "Username: \(username)\n" +
-            "Access token: \(accessToken)\n" +
-            "Refresh token: \(refreshToken)\n" +
-            "Session ID: \(sessionId)\n" +
-            "User ID: \(userId ?? "<empty>")\n" +
-            "Scopes: \(scopes)\n" +
-            "Mailbox Password: \(mailboxPassword)\n"
+    public override var debugDescription: String {
+        """
+        Username:           \(username)
+        Access token:       \(accessToken)
+        Refresh token:      \(refreshToken)
+        Session ID:         \(sessionId)
+        User ID:            \(userId ?? "<empty>")
+        Scopes:             \(scopes)
+        Mailbox Password:   \(mailboxPassword)
+        """
     }
 
     public init(version: Int? = nil, username: String, accessToken: String, refreshToken: String, sessionId: String, userId: String?, scopes: [String], mailboxPassword: String?, isCredentialLess: Bool = false) {
@@ -130,5 +132,17 @@ public final class AuthCredentials: NSObject, NSSecureCoding, Codable {
         self.scopes = try container.decode([String].self, forKey: .scopes)
         self.mailboxPassword = try container.decodeIfPresent(String.self, forKey: .mailboxPassword) ?? ""
         self.isCredentialLess = try container.decodeIfPresent(Bool.self, forKey: .isCredentialLess) ?? false
+    }
+}
+
+extension AuthCredentials {
+    func withAddedScopes(_ addedScopes: [String]) -> AuthCredentials {
+        .init(username: username,
+              accessToken: accessToken,
+              refreshToken: refreshToken,
+              sessionId: sessionId,
+              userId: userId,
+              scopes: scopes.isEmpty ? addedScopes : scopes,
+              mailboxPassword: mailboxPassword)
     }
 }
