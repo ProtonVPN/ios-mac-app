@@ -61,6 +61,8 @@ public enum VPNFeatureFlagType: String, FeatureFlagTypeProtocol {
     case iapToWebView = "IapToWebView"
 
     case portForwarding = "DisplayPortForwarding"
+
+    case usePaymentsV2 = "UsePaymentsV2"
 }
 
 public extension FeatureFlagsRepository {

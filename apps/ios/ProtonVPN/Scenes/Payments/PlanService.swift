@@ -35,11 +35,6 @@ protocol PlanServiceFactory {
     func makePlanService() -> PlanService
 }
 
-protocol PlanServiceDelegate: AnyObject {
-    @MainActor
-    func paymentTransactionDidFinish(modalSource: UpsellModalSource?, newPlanName: String?, offerReference: String?, flowType: UpsellEvent.FlowType?) async
-}
-
 protocol PlanService {
     var iapStatus: IAPSupportStatus { get }
     var countriesCount: Int { get }

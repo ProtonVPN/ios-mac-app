@@ -32,6 +32,20 @@ public final class ModalsFactory {
         .hostingController()
     }
 
+    public func upsellViewControllerV2(
+        modalType: ModalType,
+        client: PlansClientV2,
+        dismissAction: (() -> Void)? = nil
+    ) -> UIViewController {
+        PlanOptionsViewV2(
+            viewModel: .init(client: client),
+            modalType: modalType,
+            displayBodyFeatures: !modalType.hasNewUpsellScreen,
+            dismissAction: dismissAction
+        )
+        .hostingController()
+    }
+
     // This method uses the new `ModalView` and eventually all upsell modals should be migrated to this one
     // For now, only the welcome(plus/unlimited/fallback) modals use it.
     public func modalViewController(

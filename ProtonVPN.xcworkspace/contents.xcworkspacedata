@@ -169,7 +169,4 @@
          location = "group:scripts">
       </FileRef>
    </Group>
-   <FileRef
-      location = "group:libraries/Shared/Connection/Tests/Connection.xctestplan">
-   </FileRef>
 </Workspace>

@@ -298,7 +298,6 @@
 		E5FF89652A810046002B4A49 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC742A430A720058B3D9 /* SideBarView.swift */; };
 		E5FF89662A810046002B4A49 /* SideBarItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E552FC762A430A720058B3D9 /* SideBarItemView.swift */; };
 		E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E48D042A4D729B00B09111 /* LoginViewControllerRepresentable.swift */; };
-		E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FFC8992816AEFC00E355DA /* PlanService.swift */; };
 		E641220654A45F3C689A756A /* UpgradeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470ECBEC78B00733301D477F /* UpgradeButton.swift */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
@@ -837,7 +836,6 @@
 		E5EB08C8281FDF4800F29B20 /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		E5F1112B27CE184A007DEC0D /* SettingsTickboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTickboxView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsTickboxView.swift; sourceTree = "<group>"; };
 		E5F1112D27CE3A1D007DEC0D /* SettingsDropDownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDropDownView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Settings/ViewControllers/SettingsDropDownView.swift; sourceTree = "<group>"; };
-		E5FFC8992816AEFC00E355DA /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../macos/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		E928092E26B42739008C9F2C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../macos/ExtensionsIPC/README.md; sourceTree = "<group>"; };
 		E928092F26B42B63008C9F2C /* IPCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCHelper.swift; path = ../../macos/ExtensionsIPC/IPCHelper.swift; sourceTree = "<group>"; };
@@ -1585,14 +1583,6 @@
 			path = "ProtonVPN/ProtonVPN-redesign";
 			sourceTree = SOURCE_ROOT;
 		};
-		E5FFC8982816AEF200E355DA /* Payments */ = {
-			isa = PBXGroup;
-			children = (
-				E5FFC8992816AEFC00E355DA /* PlanService.swift */,
-			);
-			path = Payments;
-			sourceTree = "<group>";
-		};
 		E928092926B147C0008C9F2C /* IPC */ = {
 			isa = PBXGroup;
 			children = (
@@ -1869,7 +1859,6 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				E5FFC8982816AEF200E355DA /* Payments */,
 				42BEF9442631760E009180A7 /* Features */,
 				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
@@ -3517,7 +3506,6 @@
 				42082651256BB78600A621EC /* NSView+Children.swift in Sources */,
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
 				E5FF89612A810043002B4A49 /* SidebarReducer.swift in Sources */,
-				E5FFC89A2816AEFC00E355DA /* PlanService.swift in Sources */,
 				E5FF89672A810280002B4A49 /* LoginViewControllerRepresentable.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,

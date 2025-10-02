@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
+import Dependencies
 import Foundation
 import UIKit
 
@@ -60,6 +61,8 @@ final class SettingsAccountViewModel {
     var pushHandler: ((UIViewController) -> Void)?
     var viewControllerFetcher: (() -> UIViewController?)?
     var reloadNeeded: (() -> Void)?
+
+    @Dependency(\.planServiceV2) private var planServiceV2
 
     init(factory: Factory) {
         self.factory = factory
@@ -197,7 +200,14 @@ final class SettingsAccountViewModel {
 
     /// Open screen with info about current plan
     private func manageSubscriptionAction() {
-        planService.presentSubscriptionManagement()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            Task { [weak self] in
+                guard let self else { return }
+                await planServiceV2.presentSubscriptionManagement(alertService: alertService)
+            }
+        } else {
+            planService.presentSubscriptionManagement()
+        }
     }
 
     private func deleteAccount() {

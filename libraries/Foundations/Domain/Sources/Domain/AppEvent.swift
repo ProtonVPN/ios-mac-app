@@ -78,6 +78,8 @@ public enum AppEvent: String {
     case portForwarding
     /// The Port Forwarding Notification setting changed
     case portForwardingNotifications
+    /// The user's Auth credentials changed.
+    case authCredentialsChanged
 
     // MARK: API-Driven
 

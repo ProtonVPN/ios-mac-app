@@ -23,6 +23,7 @@ import Dependencies
 
 import ProtonCoreFeatureFlags
 
+import Domain
 import LegacyCommon
 import Modals
 import Persistence
@@ -57,6 +58,7 @@ final class OnboardingModuleService {
     private let navigationService: NavigationService
 
     private var oneClickPayment: OneClickPayment?
+    private var oneClickPaymentV2: OneClickPaymentV2?
     private var oneClickIapVC: UIViewController?
 
     weak var delegate: OnboardingServiceDelegate?
@@ -98,13 +100,14 @@ extension OnboardingModuleService: OnboardingService {
 
     private func welcomeToProtonViewController() -> UIViewController {
         if FeatureFlagsRepository.isRedesigniOSEnabled {
-            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: {
-                let getStartedVC = self.onboardingGetStartedViewController()
-                self.windowService.addToStack(getStartedVC, checkForDuplicates: false)
+            modalsFactory.modalViewController(modalType: .onboardingWelcome, primaryAction: { [weak self] in
+                guard let self else { return }
+                let getStartedVC = onboardingGetStartedViewController()
+                windowService.addToStack(getStartedVC, checkForDuplicates: false)
             })
         } else {
-            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: {
-                self.postOnboardingAction()
+            modalsFactory.modalViewController(modalType: .welcomeToProton, primaryAction: { [weak self] in
+                self?.postOnboardingAction()
             })
         }
     }
@@ -112,14 +115,14 @@ extension OnboardingModuleService: OnboardingService {
     private func onboardingGetStartedViewController() -> UIViewController {
         assert(FeatureFlagsRepository.isRedesigniOSEnabled)
 
-        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) {
-            self.postOnboardingAction()
-        } onFeatureUpdate: { feature in
+        return modalsFactory.modalViewController(modalType: .onboardingGetStarted) { [weak self] in
+            self?.postOnboardingAction()
+        } onFeatureUpdate: { [weak self] feature in
             switch feature {
             case let .toggle(.statistics, _, _, state):
-                self.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
+                self?.delegate?.telemetrySettings.updateTelemetryUsageData(isOn: state)
             case let .toggle(.crashes, _, _, state):
-                self.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
+                self?.delegate?.telemetrySettings.updateTelemetryCrashReports(isOn: state)
             default:
                 assertionFailure("Onboarding interactive feature not handled")
             }
@@ -135,38 +138,70 @@ extension OnboardingModuleService: OnboardingService {
     }
 
     private func createOneClickIapVC() -> UIViewController? {
-        let oneClickPayment: OneClickPayment
-        do {
-            oneClickPayment = try OneClickPayment(
-                alertService: alertService,
-                windowService: windowService,
-                planService: planService,
-                payments: planService.payments,
-                createAccountFirstClosure: { [weak self] in
-                    guard let oneClickIapVC = self?.oneClickIapVC else { return }
-                    self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+        let viewController: UIViewController
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            let oneClickPaymentV2: OneClickPaymentV2
+            do {
+                oneClickPaymentV2 = try OneClickPaymentV2(
+                    alertService: alertService,
+                    windowService: windowService,
+                    createAccountFirstClosure: { [weak self] in
+                        guard let oneClickIapVC = self?.oneClickIapVC else { return }
+                        self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+                    }
+                )
+            } catch {
+                log.error("Encountered payments error: \(error)")
+                windowService.dismissModal {
+                    self.onboardingCoordinatorDidFinish()
                 }
-            )
-        } catch {
-            log.error("Encountered payments error: \(error)")
-            windowService.dismissModal {
-                self.onboardingCoordinatorDidFinish()
+                return nil
             }
-            return nil
-        }
 
-        oneClickPayment.completionHandler = { [weak self] in
-            self?.onboardingCoordinatorDidFinish()
-        }
-
-        let oneClickIapVC = oneClickPayment.oneClickIAPViewController(dismissAction: {
-            self.windowService.dismissModal {
-                self.onboardingCoordinatorDidFinish()
+            oneClickPaymentV2.completionHandler = { [weak self] completion in
+                self?.onboardingCoordinatorDidFinish()
+                completion?()
             }
-        })
-        self.oneClickPayment = oneClickPayment
-        self.oneClickIapVC = oneClickIapVC
 
+            viewController = oneClickPaymentV2.oneClickIAPViewController(dismissAction: { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.onboardingCoordinatorDidFinish()
+                }
+            })
+            self.oneClickPaymentV2 = oneClickPaymentV2
+        } else {
+            let oneClickPayment: OneClickPayment
+            do {
+                oneClickPayment = try OneClickPayment(
+                    alertService: alertService,
+                    windowService: windowService,
+                    planService: planService,
+                    payments: planService.payments,
+                    createAccountFirstClosure: { [weak self] in
+                        guard let oneClickIapVC = self?.oneClickIapVC else { return }
+                        self?.navigationService.presentSignUp(over: oneClickIapVC, flow: .credentiallessUpsell)
+                    }
+                )
+            } catch {
+                log.error("Encountered payments error: \(error)")
+                windowService.dismissModal {
+                    self.onboardingCoordinatorDidFinish()
+                }
+                return nil
+            }
+
+            oneClickPayment.completionHandler = { [weak self] in
+                self?.onboardingCoordinatorDidFinish()
+            }
+
+            viewController = oneClickPayment.oneClickIAPViewController(dismissAction: { [weak self] in
+                self?.windowService.dismissModal {
+                    self?.onboardingCoordinatorDidFinish()
+                }
+            })
+            self.oneClickPayment = oneClickPayment
+        }
+        oneClickIapVC = viewController
         return oneClickIapVC
     }
 }

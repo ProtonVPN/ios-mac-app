@@ -105,6 +105,7 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
     lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     @Dependency(\.announcementRefresher) var announcementRefresher: AnnouncementRefresher
+    @Dependency(\.planServiceV2) private var planServiceV2
 
     var sessionStatus: SessionStatus = .undetermined {
         didSet {
@@ -119,7 +120,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
         self.factory = factory
         super.init(factory: factory)
 
-        planService.delegate = self
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            planServiceV2.setDelegate(self)
+        } else {
+            planService.delegate = self
+        }
 
         AppEvent.appStateManagerStateChange.subscribe(self, selector: #selector(updateState))
         AppEvent.userEngagedWithUpsellAlert.subscribe(self, selector: #selector(userEngagedWithUpsell))
@@ -366,7 +371,11 @@ final class AppSessionManagerImplementation: AppSessionRefresherImplementation, 
 
         // Refresh certificate but don't log out in case of an error.
         try await refreshVpnAuthCertificate()
-        try await planService.updateServicePlans()
+        if FeatureFlagsRepository.shared.isEnabled(VPNFeatureFlagType.usePaymentsV2) {
+            try await planServiceV2.fetchAppleStatus()
+        } else {
+            try await planService.updateServicePlans()
+        }
     }
 
     // swiftlint:enable function_body_length
