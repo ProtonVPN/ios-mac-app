@@ -100,7 +100,7 @@ private extension DateFormatter {
     static var renewalDateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale.current
-        dateFormatter.dateFormat = "dd MMM YYYY"
+        dateFormatter.dateStyle = .long
         return dateFormatter
     }
 }
