@@ -83,7 +83,8 @@ class TelemetryUpsellReporter {
         let daysSinceAccountCreation = Date().timeIntervalSince(accountCreationDate) / .days(1)
 
         @Dependency(\.authKeychain) var authKeychain
-        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
+        @Dependency(\.unauthKeychain) var unauthKeychain
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
 
         let event = UpsellEvent(
             event: event,

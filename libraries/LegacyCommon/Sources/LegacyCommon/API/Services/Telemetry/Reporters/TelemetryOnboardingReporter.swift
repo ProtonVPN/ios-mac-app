@@ -44,7 +44,8 @@ class TelemetryOnboardingReporter {
         let cached = try? vpnKeychain.fetchCached()
         let planName = cached?.planName ?? "free"
         @Dependency(\.authKeychain) var authKeychain
-        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? false
+        @Dependency(\.unauthKeychain) var unauthKeychain
+        let userIsCredentialLess = authKeychain.fetch()?.isCredentialLess ?? unauthKeychain.fetch()?.isCredentialLess ?? false
 
         let event = OnboardingEvent(
             event: event,
